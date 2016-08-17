@@ -11,6 +11,7 @@ import top from '../components/Top'
 import left from '../components/Left'
 import center_top from '../components/center_top'
 import center from '../components/Center'
+import store from '../vuex/store'
 
 export default {
   components: {
@@ -18,6 +19,7 @@ export default {
     left,
     center_top,
     center
-  }
+  },
+  store
 }
 </script>

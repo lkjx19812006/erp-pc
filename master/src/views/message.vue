@@ -1,18 +1,23 @@
 <template>
 <div>
  message
-</div>
+
+ <button @click='increment'>Increment +1</button>
+  <button @click='decrement'>Increment -1</button>
+ </div>
+
 
 </template>
 
 <script>
-import top from '../components/Top'
-import left from '../components/Left'
+import { increment,decrement } from '../vuex/actions'
 
 export default {
-  components: {
-    top,
-    left
+ vuex: { 
+    actions: {
+      increment: increment,
+      decrement:decrement
+    }
   }
 }
 </script>

@@ -6,9 +6,10 @@
 
 
 <script>
-    export default {
-        
-    }
+import store from './vuex/store' //后面讲vuex 配置会提到
+export default {
+    store
+}
 </script>
 <style>
  #main {
