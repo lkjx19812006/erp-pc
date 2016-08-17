@@ -1,9 +1,10 @@
 <template>
   <div id="app">
+    <nav_top></nav_top>
     <img class="logo" src="../assets/logo.png">
     <hello></hello>
     <p>
-      Welcome to your Vue.js app!ssdfdgddfg
+      Welcome to your Vue.js appssss!
     </p>
    
   </div>
@@ -11,32 +12,29 @@
 
 <script>
 import Hello from '../components/Hello'
-
+import nav_top from '../components/top'
 export default {
   components: {
-    Hello
+    Hello,
+    nav_top
   }
 }
 </script>
 
 <style>
-html {
-  height: 100%;
-}
 
-body {
+ /* body {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-}
+ }  */
 
 #app {
   color: #2c3e50;
-  margin-top: -100px;
-  max-width: 600px;
+  max-width: 100%;
   font-family: Source Sans Pro, Helvetica, sans-serif;
-  text-align: center;
+  text-align: left;
 }
 
 #app a {

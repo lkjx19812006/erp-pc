@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App'
 import VueRouter from 'vue-router'
 import configRouter from './router'
+
+require('./assets/mui.min.css')
 require('./assets/style.css') 
 
 Vue.use(VueRouter)

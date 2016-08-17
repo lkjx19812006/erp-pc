@@ -2,5 +2,34 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-08-17 13:40:10
+* @Last Modified time: 2016-08-17 14:40:27
 */
+@CHARSET "UTF-8";
+* {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+html,body{
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+body{
+	background: #f4f6f9;
+	 font-family: '微软雅黑',Source Sans Pro, Helvetica, sans-serif;
+	width: 100%;
+}
+.content_bg{
+	background: #f4f6f9;
+}
+.gray_bg{
+	background: #16325c;
+}
+.high_bg{
+	background: #003077;
+}
+.light_bg{
+	background: #fff;
+}
