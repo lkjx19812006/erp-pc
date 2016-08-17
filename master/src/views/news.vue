@@ -1,4 +1,5 @@
 <template>
+
  <div>
 	news
  <h3>Count is {{ counterValue }}</h3>

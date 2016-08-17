@@ -1,6 +1,7 @@
 <template>
- <div>
+<div>
  message
+
  <button @click='increment'>Increment +1</button>
   <button @click='decrement'>Increment -1</button>
  </div>
