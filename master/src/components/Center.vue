@@ -1,31 +1,28 @@
 <template>
-  <div  class="top">
-    {{ msg }}
-  </div>
-
+    <div class="top">
+        {{ msg }}
+    </div>
 </template>
-
 <script>
 export default {
-  data () {
-    return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
-      msg: '中部头部'
+    data() {
+        return {
+            // note: changing this line won't causes changes
+            // with hot-reload because the reloaded component
+            // preserves its current state and we are modifying
+            // its initial state.
+            msg: '中部头部'
+        }
     }
-  }
 }
 </script>
-
 <style scoped>
 h1 {
-  color: #42b983;
+    color: #42b983;
 }
 
- .top {
-        height:30px;
-        background-color: green;
-    }
+.top {
+    height: 30px;
+    background-color: green;
+}
 </style>
