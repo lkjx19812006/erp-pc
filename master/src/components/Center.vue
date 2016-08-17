@@ -1,9 +1,8 @@
 <template>
-  <div  id="left">
-    <ul><li><a v-link="{ path: '/home/news' }">Go to news /foo</a></li>
-    <li><a v-link="{ path: '/home/message'}">Go to message/foo/bar</a></li>
-    </ul>
+  <div  class="top">
+    {{ msg }}
   </div>
+
 </template>
 
 <script>
@@ -14,7 +13,7 @@ export default {
       // with hot-reload because the reloaded component
       // preserves its current state and we are modifying
       // its initial state.
-      msg: '左边'
+      msg: '中部头部'
     }
   }
 }
@@ -24,10 +23,9 @@ export default {
 h1 {
   color: #42b983;
 }
- #left {
-        float:left;
-        width:20%;
-        height:90%;
-        background-color: white;
+
+ .top {
+        height:30px;
+        background-color: green;
     }
 </style>
