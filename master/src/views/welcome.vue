@@ -3,11 +3,7 @@
     <img class="logo" src="../assets/logo.png">
     <hello></hello>
     <p>
-<<<<<<< HEAD:master/src/views/welcome.vue
       Welcome to your Vue.js app!ssdfdgddfg
-=======
-      Welcome to your Vue.js app!sdfsds
->>>>>>> c16e2c4429ca1513e3207a1cd1b47a7e37d65f81:master/src/views/welcome.vue
     </p>
    
   </div>
