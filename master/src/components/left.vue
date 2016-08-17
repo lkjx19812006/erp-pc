@@ -5,46 +5,52 @@
         </div>
         <ul class="left_menu">
             <li>
-                <div class="bleft">
-                    <img src="../assets/images/icon_main.png" height="21" width="21">
+                <div v-link="" class="menu_div">
+                      <div class="bleft">
+                          <img src="../assets/images/icon_main.png" height="21" width="21">
+                      </div>
+                      <a>主页</a>
                 </div>
-                <a>主页</a>
             </li>
             <li>
-                <div class="bleft">
-                    <img src="../assets/images/icon_change.png" height="21" width="21">
+               <div v-link="" class="menu_div">
+                    <div class="bleft">
+                        <img src="../assets/images/icon_change.png" height="21" width="21">
+                    </div>
+                    <a>业务机会</a>
                 </div>
-                <a>业务机会</a>
             </li>
-            <li  @click="system_data()">
-                <div v-link="{ path: '/home/news' }" class="menu_div">
+            <li >
+                <div v-link="{ path: '/home/news'}" class="menu_div">
                     <div class="bleft">
                         <img src="../assets/images/icon_base.png" height="21" width="21">
                     </div>
                     <a>系統基础数据</a>
-                <div>
+                </div>
                 <div class="bshow">
-                    <dl>
-                      <dt>
+                    <dl class="bshow_dl mui-clearfix">
+                      <dd>
                           <div class="bleft">
                               <img src="../assets/images/icon_order.png" height="15" width="15">
                           </div>
-                          <dd>我的订单</dd>
-                      </dt>
-                      <dt>
+                          <span class="con_active">我的订单</span>
+                      </dd>
+                      <dd>
                           <div class="bleft">
                             <img src="../assets/images/icon_order.png" height="15" width="15">
                           </div>
-                          <dd>部门订单</dd>
-                      </dt>
+                          <span>部门订单</span>
+                      </dd>
                     </dl>
                 </div>
             </li>
-            <li v-link="{ path: '/home/message'}">
-                <div class="bleft">
-                    <img src="../assets/images/icon_data.png" height="17" width="21">
+            <li>
+               <div v-link="{ path: '/home/message'}" class="menu_div">
+                    <div class="bleft">
+                        <img src="../assets/images/icon_data.png" height="17" width="21">
+                    </div>
+                    <a>业务基础数据</a>
                 </div>
-                <a>业务基础数据</a>
             </li>
         </ul>
     </div>
@@ -96,10 +102,10 @@ export default {
 }
 
 .left_menu li{
-  margin-bottom: 10px;
+  margin-bottom: 10px; 
+  position: relative;
 }
 .menu_div{
-    position: relative;
     height: 40px;
     line-height: 40px;
     border-radius: 5px;
@@ -113,7 +119,7 @@ export default {
     font-size: 14px;
 }
 
-.left_menu .bleft {
+.menu_div .bleft {
     float: left;
     width: 32px;
     height: 32px;
@@ -133,6 +139,12 @@ export default {
    background: #16325c;
 }
 .bshow{
-    position: absolute;
+   
+}
+.bshow_dl .bleft{
+    float: left;
+}
+.bshow_dl .con_active{
+  color: #fa6705;
 }
 </style>
