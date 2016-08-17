@@ -2,7 +2,7 @@
   "name": "master",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "wei",
+  "author": "weixb <weixb@yaocaimaimai.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",

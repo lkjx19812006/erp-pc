@@ -1,7 +1,14 @@
-
 <template>
-  <Hello></Hello>
+  <div id="app">
+    <img class="logo" src="../assets/logo.png">
+    <hello></hello>
+    <p>
+      Welcome to your Vue.js app!ssdfdgddfg
+    </p>
+   
+  </div>
 </template>
+
 <script>
 import Hello from '../components/Hello'
 
