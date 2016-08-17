@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-    <nav_top></nav_top>
-    <img class="logo" src="../assets/logo.png">
     <hello></hello>
     <p>
       Welcome to your Vue.js appssss!
@@ -12,11 +10,9 @@
 
 <script>
 import Hello from '../components/Hello'
-import nav_top from '../components/top'
 export default {
   components: {
     Hello,
-    nav_top
   }
 }
 </script>

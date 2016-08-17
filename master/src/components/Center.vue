@@ -1,31 +1,26 @@
 <template>
-  <div  class="top">
-    {{ msg }}
-  </div>
+   <div id="center">
+   <router-view></router-view>
+   </div>
 
 </template>
-
 <script>
+
 export default {
+ /*,
   data () {
     return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
-      msg: '中部头部'
-    }
-  }
+      msg: '1111'
+    }*/
 }
 </script>
-
 <style scoped>
-h1 {
-  color: #42b983;
+#center {
+    height: calc(100% - 130px);
+    position: absolute;
+    right: 0;
+    top: 130px;
+    overflow: auto;
+    left: 240px;
 }
-
- .top {
-        height:30px;
-        background-color: green;
-    }
 </style>

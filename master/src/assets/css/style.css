@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-08-17 14:40:27
+* @Last Modified time: 2016-08-17 17:15:28
 */
 @CHARSET "UTF-8";
 * {
@@ -15,6 +15,9 @@ html,body{
 	width: 100%;
 	padding: 0;
 	margin: 0;
+}
+ul,li{
+	list-style: none;
 }
 body{
 	background: #f4f6f9;
@@ -32,4 +35,10 @@ body{
 }
 .light_bg{
 	background: #fff;
+}
+.left{
+	float: left;
+}
+.right{
+	float: right;
 }
