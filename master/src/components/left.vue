@@ -20,14 +20,14 @@
                     <a>业务机会</a>
                 </div>
             </li>
-            <li >
+            <li  @click="system_data()">
                 <div v-link="{ path: '/home/news'}" class="menu_div">
                     <div class="bleft">
                         <img src="../assets/images/icon_base.png" height="21" width="21">
                     </div>
                     <a>系統基础数据</a>
                 </div>
-                <div class="bshow">
+                <div class="bshow" v-if="willshow">
                     <dl class="bshow_dl mui-clearfix">
                       <dd>
                           <div class="bleft">
@@ -63,25 +63,21 @@ export default {
             // with hot-reload because the reloaded component
             // preserves its current state and we are modifying
             // its initial state.
-            msg: '左边'
+            msg: '左边',
+            willshow:true
         }
-    }
-}
-/*var leftVue = new Vue(){
-    el:'#left',
-    data:{
-       willshow:true
     },
     methods:{
           system_data:function(){
             if(this.willshow==true){
-              this.willshow==false;
+              this.willshow=false;
             }else{
-              this.willshow==true;
+              this.willshow=true;
             }
           },
     }
-}*/
+}
+
 </script>
 <style scoped>
 #left {
