@@ -6,21 +6,21 @@
         <ul class="left_menu">
             <li>
                 <div v-link="" class="menu_div">
-                      <div class="bleft">
-                          <img src="../assets/images/icon_main.png" height="21" width="21">
-                      </div>
-                      <a>主页</a>
+                    <div class="bleft">
+                        <img src="../assets/images/icon_main.png" height="21" width="21">
+                    </div>
+                    <a>主页</a>
                 </div>
             </li>
             <li>
-               <div v-link="" class="menu_div">
+                <div v-link="" class="menu_div">
                     <div class="bleft">
                         <img src="../assets/images/icon_change.png" height="21" width="21">
                     </div>
                     <a>业务机会</a>
                 </div>
             </li>
-            <li >
+            <li>
                 <div v-link="{ path: '/home/news'}" class="menu_div">
                     <div class="bleft">
                         <img src="../assets/images/icon_base.png" height="21" width="21">
@@ -29,59 +29,57 @@
                 </div>
                 <div class="bshow">
                     <dl class="bshow_dl mui-clearfix">
-                      <dd>
-                          <div class="bleft">
-                              <img src="../assets/images/icon_order.png" height="15" width="15">
-                          </div>
-                          <span class="con_active">我的订单</span>
-                      </dd>
-                      <dd>
-                          <div class="bleft">
-                            <img src="../assets/images/icon_order.png" height="15" width="15">
-                          </div>
-                          <span>部门订单</span>
-                      </dd>
+                        <dd>
+                            <div class="bleft">
+                                <img src="../assets/images/icon_order.png" height="15" width="15">
+                            </div>
+                            <span class="con_active">我的订单</span>
+                        </dd>
+                        <dd>
+                            <div class="bleft">
+                                <img src="../assets/images/icon_order.png" height="15" width="15">
+                            </div>
+                            <span>部门订单</span>
+                        </dd>
                     </dl>
                 </div>
             </li>
             <li>
-               <div v-link="{ path: '/home/message'}" class="menu_div">
+                <div v-link="{ path: '/home/message'}" class="menu_div">
                     <div class="bleft">
                         <img src="../assets/images/icon_data.png" height="17" width="21">
                     </div>
-                    <a>业务基础数据</a>
+                    <a>业务基础数据{{getList[0].categoryid}}</a>
                 </div>
             </li>
         </ul>
     </div>
 </template>
 <script>
+import {
+    getList
+} from '../vuex/getters'
+import {
+    initList
+} from '../vuex/actions'
 export default {
     data() {
-        return {
-            // note: changing this line won't causes changes
-            // with hot-reload because the reloaded component
-            // preserves its current state and we are modifying
-            // its initial state.
-            msg: '左边'
-        }
-    }
-}
-/*var leftVue = new Vue(){
-    el:'#left',
-    data:{
-       willshow:true
-    },
-    methods:{
-          system_data:function(){
-            if(this.willshow==true){
-              this.willshow==false;
-            }else{
-              this.willshow==true;
+            return {
+                msg: '左边'
             }
-          },
-    }
-}*/
+        },
+        vuex: {
+            getters: {
+                 getList
+            },
+            actions: {
+                 initList
+            }
+        },
+        created() {
+            this.initList();
+        }
+}
 </script>
 <style scoped>
 #left {
@@ -101,11 +99,12 @@ export default {
     padding: 0 16px;
 }
 
-.left_menu li{
-  margin-bottom: 10px; 
-  position: relative;
+.left_menu li {
+    margin-bottom: 10px;
+    position: relative;
 }
-.menu_div{
+
+.menu_div {
     height: 40px;
     line-height: 40px;
     border-radius: 5px;
@@ -135,16 +134,18 @@ export default {
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
 }
-.v-link-active{
-   background: #16325c;
+
+.v-link-active {
+    background: #16325c;
 }
-.bshow{
-   
-}
-.bshow_dl .bleft{
+
+.bshow {}
+
+.bshow_dl .bleft {
     float: left;
 }
-.bshow_dl .con_active{
-  color: #fa6705;
+
+.bshow_dl .con_active {
+    color: #fa6705;
 }
 </style>
