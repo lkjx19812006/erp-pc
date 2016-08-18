@@ -1,51 +1,57 @@
 <template>
-    <div id="left" class="high_bg">
-        <div class="menu">
+    <div id="left" class="left high_bg" v-bind:class="[left, { left: isB, left_close: isC }]" transition="expand">
+        <div class="menu" @click="menu()">
             <img src="../assets/images/icon_menu.png" height="14" width="21" />
         </div>
         <ul class="left_menu">
             <li>
                 <div v-link="" class="menu_div">
-                      <div class="bleft">
-                          <img src="../assets/images/icon_main.png" height="21" width="21">
-                      </div>
-                      <a>主页</a>
+                    <div class="bleft">
+                        <img src="../assets/images/icon_main.png" height="21" width="21">
+                    </div>
+                    <a>主页</a>
                 </div>
             </li>
             <li>
-               <div v-link="" class="menu_div">
+                <div v-link="" class="menu_div">
                     <div class="bleft">
                         <img src="../assets/images/icon_change.png" height="21" width="21">
                     </div>
                     <a>业务机会</a>
                 </div>
             </li>
-            <li  @click="system_data()">
-                <div v-link="{ path: '/home/news'}" class="menu_div">
+            <li>
+                <div v-link="{ path: '/home/news'}" class="menu_div" @click="system_data()">
                     <div class="bleft">
                         <img src="../assets/images/icon_base.png" height="21" width="21">
                     </div>
                     <a>系統基础数据</a>
                 </div>
-                <div class="bshow" v-if="willshow">
+                <div class="bshow" v-if="willshow" transition="expand">
                     <dl class="bshow_dl mui-clearfix">
-                      <dd>
-                          <div class="bleft">
-                              <img src="../assets/images/icon_order.png" height="15" width="15">
-                          </div>
-                          <span class="con_active">我的订单</span>
-                      </dd>
-                      <dd>
-                          <div class="bleft">
-                            <img src="../assets/images/icon_order.png" height="15" width="15">
-                          </div>
-                          <span>部门订单</span>
-                      </dd>
+                        <dd class="mui-clearfix">
+                            <i class="fold_line_active"></i>
+                            <div class="fold_content">
+                                <div class="bleft">
+                                    <img src="../assets/images/icon_order.png" height="15" width="15">
+                                </div>
+                                <span class="con_active">我的订单</span>
+                            </div>
+                        </dd>
+                        <dd class="mui-clearfix">
+                            <i class="fold_line"></i>
+                            <div class="fold_content">
+                                <div class="bleft">
+                                    <img src="../assets/images/icon_order.png" height="15" width="15">
+                                </div>
+                                <span>部门订单</span>
+                            </div>
+                        </dd>
                     </dl>
                 </div>
             </li>
             <li>
-               <div v-link="{ path: '/home/message'}" class="menu_div">
+                <div v-link="{ path: '/home/message'}" class="menu_div">
                     <div class="bleft">
                         <img src="../assets/images/icon_data.png" height="17" width="21">
                     </div>
@@ -58,38 +64,60 @@
 <script>
 export default {
     data() {
-        return {
-            // note: changing this line won't causes changes
-            // with hot-reload because the reloaded component
-            // preserves its current state and we are modifying
-            // its initial state.
-            msg: '左边',
-            willshow:true
-        }
-    },
-    methods:{
-          system_data:function(){
-            if(this.willshow==true){
-              this.willshow=false;
-            }else{
-              this.willshow=true;
+            return {
+                // note: changing this line won't causes changes
+                // with hot-reload because the reloaded component
+                // preserves its current state and we are modifying
+                // its initial state.
+                msg: '左边',
+                willshow: true,
+                isB: true,
+                isC: false
             }
-          },
-    }
+        },
+        methods: {
+            system_data: function() { //点击菜单展开或关闭
+                if (this.willshow == true) {
+                    this.willshow = false;
+                } else {
+                    this.willshow = true;
+                }
+            },
+            menu: function() {
+                if (this.isB == true) {
+                    this.isB = false;
+                    this.isC = true;
+                } else {
+                    this.isB = true;
+                    this.isC = false;
+                }
+            }
+        }
 }
-
 </script>
 <style scoped>
-#left {
+.left {
     height: 100%;
     position: fixed;
     top: 60px;
     width: 240px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.left_close {
+    width: 50px;
+    height: 100%;
+    position: fixed;
+    top: 60px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .menu {
     padding-left: 16px;
-    margin: 20px 0 35px 0;
+    margin: 0px 0 30px 0;
+    padding-top: 20px
 }
 
 .left_menu {
@@ -97,11 +125,12 @@ export default {
     padding: 0 16px;
 }
 
-.left_menu li{
-  margin-bottom: 10px; 
-  position: relative;
+.left_menu li {
+    margin-bottom: 10px;
+    position: relative;
 }
-.menu_div{
+
+.menu_div {
     height: 40px;
     line-height: 40px;
     border-radius: 5px;
@@ -131,16 +160,66 @@ export default {
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
 }
-.v-link-active{
-   background: #16325c;
+
+.v-link-active {
+    background: #16325c;
 }
-.bshow{
-   
+
+.bshow {}
+
+.bshow_dl dd {
+    margin-left: 15px;
+    position: relative;
+    color: #fff;
 }
-.bshow_dl .bleft{
+
+.bshow_dl .bleft {
     float: left;
+    padding-top: 2px;
+    padding-right: 4px;
 }
-.bshow_dl .con_active{
-  color: #fa6705;
+
+.bshow_dl .con_active {
+    color: #fa6705;
+}
+
+.bshow_dl .fold_content {
+    margin-top: 8px;
+    margin-left: 18px;
+}
+
+.bshow_dl .fold_line {
+    height: 32px;
+    display: inline-block;
+    color: #fff;
+    position: absolute;
+    margin-top: -12px;
+    width: 15px;
+    border-left: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.fold_line_active {
+    height: 22px;
+    display: inline-block;
+    color: #fff;
+    position: absolute;
+    margin-top: -2px;
+    width: 15px;
+    border-left: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.expand-transition {
+    transition: all .5s ease-in-out 0.1s;
+    overflow: hidden;
+}
+
+/* .expand-enter 定义进入的开始状态 */
+/* .expand-leave 定义离开的结束状态 */
+.expand-enter,
+.expand-leave {
+    opacity: 0;
+    height: 0;
 }
 </style>
