@@ -4,8 +4,12 @@ import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import configRouter from './router'
 
+
+
 require('./assets/css/mui.min.css')
 require('./assets/css/style.css') 
+
+Vue.directive('echarts', require('./directives/echarts'));
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
