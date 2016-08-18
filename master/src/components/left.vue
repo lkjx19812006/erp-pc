@@ -1,61 +1,30 @@
 <template>
-    <div id="left" class="left high_bg" v-bind:class="[left, { left: isB, left_close: isC }]" transition="expand">
+    <div id="left" class="left high_bg" v-bind:class="{'left':getMenu==240,'left_close':getMenu==50}" transition="expand">
         <div class="menu" @click="menu()">
             <img src="../assets/images/icon_menu.png" height="14" width="21" />
         </div>
+        {{getCount}}
         <ul class="left_menu">
-            <li>
-                <div v-link="" class="menu_div">
+        <!-- li左侧菜单列表循环 -->
+            <li v-for="item  in  getList">
+                <div v-link="item.path" class="menu_div" @click="system_data(item.categoryid)">
                     <div class="bleft">
-                        <img src="../assets/images/icon_main.png" height="21" width="21">
+                        <img v-bind:src="item.img" height="21" width="21">
                     </div>
-                    <a>主页</a>
+                    <a>{{item.category}}</a>
                 </div>
-            </li>
-            <li>
-                <div v-link="" class="menu_div">
-                    <div class="bleft">
-                        <img src="../assets/images/icon_change.png" height="21" width="21">
-                    </div>
-                    <a>业务机会</a>
-                </div>
-            </li>
-            <li>
-                <div v-link="{ path: '/home/news'}" class="menu_div" @click="system_data()">
-                    <div class="bleft">
-                        <img src="../assets/images/icon_base.png" height="21" width="21">
-                    </div>
-                    <a>系統基础数据</a>
-                </div>
-                <div class="bshow" v-if="willshow" transition="expand">
+                 <div class="bshow" v-if="willshow==item.categoryid" transition="expand_trans">
                     <dl class="bshow_dl mui-clearfix">
-                        <dd class="mui-clearfix">
-                            <i class="fold_line_active"></i>
-                            <div class="fold_content">
-                                <div class="bleft">
-                                    <img src="../assets/images/icon_order.png" height="15" width="15">
-                                </div>
-                                <span class="con_active">我的订单</span>
-                            </div>
-                        </dd>
-                        <dd class="mui-clearfix">
+                        <dd class="mui-clearfix" v-for="sub in item.subcategory">
                             <i class="fold_line"></i>
                             <div class="fold_content">
                                 <div class="bleft">
-                                    <img src="../assets/images/icon_order.png" height="15" width="15">
+                                    <img v-bind:src="sub.img" height="15" width="15">
                                 </div>
-                                <span>部门订单</span>
+                                <span>{{sub.subcategory}}</span>
                             </div>
                         </dd>
                     </dl>
-                </div>
-            </li>
-            <li>
-                <div v-link="{ path: '/home/message'}" class="menu_div">
-                    <div class="bleft">
-                        <img src="../assets/images/icon_data.png" height="17" width="21">
-                    </div>
-                    <a>业务基础数据{{getList[0].categoryid}}</a>
                 </div>
             </li>
         </ul>
@@ -63,49 +32,41 @@
 </template>
 <script>
 import {
-    getList
+    getList,
+     getMenu
 } from '../vuex/getters'
 import {
-    initList
+    initList,
+    menuBar
 } from '../vuex/actions'
 export default {
     data() {
             return {
                 msg: '左边',
-                willshow: true,
-                isB: true,
-                isC: false
+                willshow: 0
             }
         },
         vuex: {
             getters: {
-                getList
+                getList,
+                getMenu
             },
             actions: {
-                initList
-            }
+                initList,
+                 menuBar
+            },
         },
         created() {
             this.initList();
         },
-    methods: {
-        system_data: function() { //点击菜单展开或关闭
-            if (this.willshow == true) {
-                this.willshow = false;
-            } else {
-                this.willshow = true;
-            }
-        },
-        menu: function() {
-            if (this.isB == true) {
-                this.isB = false;
-                this.isC = true;
-            } else {
-                this.isB = true;
-                this.isC = false;
-            }
+        methods: {
+            system_data: function(id) { //点击菜单展开或关闭
+                    this.willshow = id;
+            },
+            menu: function() {
+                this.menuBar();
+            },
         }
-    }
 }
 </script>
 <style scoped>
@@ -117,13 +78,16 @@ export default {
     overflow: hidden;
     white-space: nowrap;
 }
+.left:hover {
+  overflow: auto;
+}
 
 .left_close {
     width: 50px;
     height: 100%;
     position: fixed;
     top: 60px;
-    overflow: hidden;
+    overflow: hidden !important;
     white-space: nowrap;
 }
 
@@ -173,12 +137,12 @@ export default {
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
 }
-
+.v-link-active ~ .bshow dd:first-of-type span{
+    color: #fa6705;
+}
 .v-link-active {
     background: #16325c;
 }
-
-.bshow {}
 
 .bshow_dl dd {
     margin-left: 15px;
@@ -190,10 +154,6 @@ export default {
     float: left;
     padding-top: 2px;
     padding-right: 4px;
-}
-
-.bshow_dl .con_active {
-    color: #fa6705;
 }
 
 .bshow_dl .fold_content {
@@ -212,7 +172,7 @@ export default {
     border-bottom: 1px solid #fff;
 }
 
-.fold_line_active {
+.bshow_dl dd:first-child .fold_line{
     height: 22px;
     display: inline-block;
     color: #fff;
@@ -222,20 +182,27 @@ export default {
     border-left: 1px solid #fff;
     border-bottom: 1px solid #fff;
 }
-
 .expand-transition {
     transition: all .5s ease-in-out 0.1s;
-    overflow: hidden;
+    overflow: inherit;
 }
 
-
 /* .expand-enter 定义进入的开始状态 */
-
-
 /* .expand-leave 定义离开的结束状态 */
-
 .expand-enter,
 .expand-leave {
+    opacity: 0;
+    height: 0;
+}
+.expand_trans{
+    transition: all;
+    overflow: inherit;
+}
+
+/* .expand-enter 定义进入的开始状态 */
+/* .expand-leave 定义离开的结束状态 */
+.expand_trans-enter,
+.expand_trans-leave {
     opacity: 0;
     height: 0;
 }
