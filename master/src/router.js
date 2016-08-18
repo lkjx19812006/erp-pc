@@ -22,7 +22,18 @@ export default (router)=>router.map({
                 component:require('./views/main')
             },
             '/change':{
-                component:require('./views/chance')
+                name:'change',
+                component:require('./views/chance'),
+                subRoutes:{
+                        '/': {
+                        component: {
+                          template: '<p>Default sub view for go</p>'
+                        }
+                    },
+                    '/partchange':{
+                        component: require('./views/partchange')
+                    },
+                }
             },
             '/unclient':{
                 component:require('./views/potential_client')
@@ -55,16 +66,16 @@ export default (router)=>router.map({
                 component:require('./views/base_data')
             },
             '/reports':{
-                component:require('./views/message')
+                component:require('./views/reports')
             },
             '/board':{
-                component:require('./views/message')
+                component:require('./views/board')
             },
-            '/report':{
-                component:require('./views/message')
+            '/record':{
+                component:require('./views/record')
             },
             '/set':{
-                component:require('./views/message')
+                component:require('./views/set')
             },
              /*router.redirect({
                 '*':'main'

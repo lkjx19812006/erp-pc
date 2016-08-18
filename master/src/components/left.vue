@@ -21,7 +21,7 @@
                                 <div class="bleft">
                                     <img v-bind:src="sub.img" height="15" width="15">
                                 </div>
-                                <span>{{sub.subcategory}}</span>
+                                <span v-link="sub.path">{{sub.subcategory}}</span>
                             </div>
                         </dd>
                     </dl>

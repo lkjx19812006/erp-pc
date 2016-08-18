@@ -9,7 +9,7 @@ const state = {
    count: 0,
    list:[
     {"categoryid":0,"category":"主页","img":"../src/assets/images/icon_main.png","path":"/home/main","subcategory":[]},
-    {"categoryid":1,"category":"业务机会","img":"../src/assets/images/icon_change.png","path":"/home/change","subcategory":[{"subcategoryId":1,"subcategory":"个人业务机会","img":"../src/assets/images/icon_order.png"},{"subcategoryId":2,"subcategory":"部门业务机会","img":"../src/assets/images/icon_order.png"}]},
+    {"categoryid":1,"category":"业务机会","img":"../src/assets/images/icon_change.png","path":"/home/change","subcategory":[{"subcategoryId":1,"subcategory":"个人业务机会","img":"../src/assets/images/icon_order.png","path":"/home/change"},{"subcategoryId":2,"subcategory":"部门业务机会","img":"../src/assets/images/icon_order.png","path":"/home/partchange"}]},
     {"categoryid":2,"category":"潜在客户","img":"../src/assets/images/icon_unuser.png","path":"/home/unclient","subcategory":[]},
     {"categoryid":3,"category":"客户","img":"../src/assets/images/icon_user.png","path":"/home/client","subcategory":[]},
     {"categoryid":4,"category":"意向","img":"../src/assets/images/order_intent.png","path":"/home/order_intent","subcategory":[]},

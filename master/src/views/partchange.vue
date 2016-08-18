@@ -1,5 +1,5 @@
 	<template>
 		<div>
-			业务chance
+			部门业务机会
 		</div>
 	</template>
