@@ -32,7 +32,7 @@
 <script>
 import {
     getList,
-     getMenu
+    getMenu
 } from '../vuex/getters'
 import {
     initList,
@@ -52,7 +52,7 @@ export default {
             },
             actions: {
                 initList,
-                 menuBar
+                menuBar
             },
         },
         created() {
