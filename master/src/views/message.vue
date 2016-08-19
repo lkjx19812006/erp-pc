@@ -12,7 +12,6 @@ import {
     decrement
 } from '../vuex/actions'
 
-var echarts = require('echarts');
 
 export default {
     vuex: {
@@ -68,12 +67,6 @@ export default {
                 yAxis: [{
                     type: 'value',
                     name: 'Budget (million USD)',
-                    axisLabel: {
-                        formatter: function(a) {
-                            a = +a;
-                            return isFinite(a) ? echarts.format.addCommas(+a / 100) : '';
-                        }
-                    }
                 }],
                 dataZoom: [{
                     show: true,

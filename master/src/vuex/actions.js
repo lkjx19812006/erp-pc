@@ -14,11 +14,24 @@ export const initList = ({ dispatch }) => {
             console.log('fail');
         });
 };
-
-export const initCharts = ({ dispatch }) => {
+//柱状图
+export const freshCharts = ({ dispatch},getCharList) => {
+    if(getCharList)getCharList.load=true;
     Vue.http.get(apiUrl.charList)
         .then((res) => {
-            dispatch(types.INIT_CHARTS, res.data);
+            dispatch(types.CHANGE_CHARTS, res.data);
+             console.log(res.data);
+        },(res) => {
+            console.log('fail');
+        });
+};
+
+//折线图
+export const freshLinecharts = ({ dispatch},getLinechart) => {
+    if(getLinechart)getLinechart.load=true;
+    Vue.http.get(apiUrl.linechart)
+        .then((res) => {
+            dispatch(types.CHANGE_LINECHARTS, res.data);
              console.log(res.data);
         },(res) => {
             console.log('fail');

@@ -3,7 +3,6 @@ import {
     DECREMENT,
     INIT_LIST,
     MENU_BAR,
-    INIT_CHARTS
 } from '../mutation-types'
 
 const state = {
@@ -26,13 +25,7 @@ const state = {
         { "categoryid": 14, "category": "日志", "img": "/static/images/icon_report.png", "path": "/home/record", "subcategory": [] },
         { "categoryid": 15, "category": "设置", "img": "/static/images/icon_set.png", "path": "/home/set", "subcategory": [] }
     ],
-    left: 240,
-    charList: {
-        "timeList": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-        "achieveList": [100, 500, 200, 222, 332, 566, 55, 888, 5000, 4020, 463, 821],
-        "achieveListed": [200, 550, 270, 2742, 332, 516, 545, 887, 500, 720, 463, 821],
-        "achieveListc": [180, 510, 240, 272, 372, 566, 550, 488, 500, 4120, 413, 811]
-    }
+    left: 240
 }
 
 
@@ -55,12 +48,6 @@ const mutations = {
         } else {
             state.left = 240;
         }
-    },
-    [INIT_CHARTS](state, data) {
-        console.log(state.list);
-        console.log(state.charList);
-        console.log(data);
-        state.charList = data.results;
     }
 }
 
