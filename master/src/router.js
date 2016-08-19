@@ -1,89 +1,110 @@
-export default (router)=>router.map({
-    '/':{
-        name:'welcome',//应用首页
-        component:require('./views/welcome') //加载index页面
+export default (router) => router.map({
+    '/': {
+        name: 'welcome', //应用首页
+        component: function(resolve) {
+                require(['./views/welcome'], resolve)
+            } //加载index页面
     },
-    '/home':{
-    	name:'home',
-    	component:require('./views/home'),
-    	subRoutes:{
-    		 '/': {
-            	component: {
-                  template: '<p>Default sub view for Foo</p>'
-                }
-          },
-    		/*'/news': {
-                component: require('./views/news')
-            },
-            '/message': {
-                component: require('./views/message')
-            },*/
-            '/main':{
-                component:require('./views/message')
-            },
-            '/change':{
-                name:'change',
-                component:require('./views/news'),
-                subRoutes:{
-                        '/': {
-                        component: {
-                          template: '<p>Default sub view for go</p>'
-                        }
-                    },
-                    '/partchange':{
-                        component: require('./views/partchange')
-                    },
+    '/home': {
+        name: 'home',
+        component: function(resolve) {
+            require(['./views/home'], resolve)
+        },
+        auth: true,
+        subRoutes: {
+            '*': {
+                component: function(resolve) {
+                    require(['./views/message'], resolve)
                 }
             },
-            '/unclient':{
-                component:require('./views/potential_client')
+            '/main': {
+                component: function(resolve) {
+                    require(['./views/message'], resolve)
+                }
             },
-            '/client':{
-                component:require('./views/client')
+            '/change/:id': {
+                name: 'change',
+                component: function(resolve) {
+                    require(['./views/partchange'], resolve)
+                }
             },
-            '/order_intent':{
-                component:require('./views/order_intent')
+            '/unclient': {
+                component: function(resolve) {
+                    require(['./views/potential_client'], resolve)
+                }
             },
-            '/order':{
-                component:require('./views/order')
+            '/client': {
+                component: function(resolve) {
+                    require(['./views/client'], resolve)
+                }
             },
-            '/company':{
-                component:require('./views/compact')
+            '/order_intent': {
+                component: function(resolve) {
+                    require(['./views/order_intent'], resolve)
+                }
             },
-            '/person':{
-                component:require('./views/employee')
+            '/order': {
+                component: function(resolve) {
+                    require(['./views/order'], resolve)
+                }
             },
-            '/achive':{
-                component:require('./views/achivement')
+            '/company': {
+                component: function(resolve) {
+                    require(['./views/compact'], resolve)
+                }
             },
-            '/scope':{
-                component:require('./views/scope')
+            '/person': {
+                component: function(resolve) {
+                    require(['./views/employee'], resolve)
+                }
             },
-            '/base':{
-                component:require('./views/system_data')
+            '/achive': {
+                component: function(resolve) {
+                    require(['./views/achivement'], resolve)
+                }
             },
-            '/base_data':{
-                component:require('./views/base_data')
+            '/scope': {
+                component: function(resolve) {
+                    require(['./views/scope'], resolve)
+                }
             },
-            '/reports':{
-                component:require('./views/reports')
+            '/base': {
+                component: function(resolve) {
+                    require(['./views/system_data'], resolve)
+                }
             },
-            '/board':{
-                component:require('./views/board')
+            '/base_data': {
+                component: function(resolve) {
+                    require(['./views/base_data'], resolve)
+                }
             },
-            '/record':{
-                component:require('./views/record')
+            '/reports': {
+                component: function(resolve) {
+                    require(['./views/reports'], resolve)
+                }
             },
-            '/set':{
-                component:require('./views/set')
+            '/board': {
+                component: function(resolve) {
+                    require(['./views/board'], resolve)
+                }
             },
-             /*router.redirect({
+            '/record': {
+                component: function(resolve) {
+                    require(['./views/record'], resolve)
+                }
+            },
+            '/set': {
+                component: function(resolve) {
+                    require(['./views/set'], resolve)
+                }
+            },
+            /*router.redirect({
                 '*':'main'
             })*/
-    	}
+        }
     },
-    '*':{//除'/'以外的所有路由，均跳转到404页面
-        name:'404',
-        component:require('./views/404')// 加载404页面
+    '*': { //除'/'以外的所有路由，均跳转到404页面
+        name: '404',
+        component: require('./views/404') // 加载404页面
     }
 })

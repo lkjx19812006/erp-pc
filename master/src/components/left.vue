@@ -5,8 +5,8 @@
         </div>
         <ul class="left_menu">
         <!-- li左侧菜单列表循环 -->
-            <li v-for="item  in  getList">
-                <div v-link="item.path" class="menu_div" @click="system_data(item.categoryid)">
+            <li v-for="item  in  getList" >
+                <div v-el="wrap" v-link="item.path" class="menu_div" @click="system_data(item.categoryid)">
                     <div class="bleft">
                         <img v-bind:src="item.img" height="21" width="21">
                     </div>
@@ -57,6 +57,7 @@ export default {
         },
         created() {
             this.initList();
+            console.log( this.wrap);
         },
         methods: {
             system_data: function(id) { //点击菜单展开或关闭

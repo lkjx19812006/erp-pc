@@ -23,4 +23,9 @@ const router = new VueRouter({
 
 configRouter(router)//注入路由规则
 
+router.beforeEach(function ({ to, next }) {
+ console.log(to);
+    next()
+})
+
 router.start(Vue.extend(App),'#app')
