@@ -1,11 +1,11 @@
 <template>
     <div class="achive">
-        <div class="achive_top mui-clearfix">
+        <div class="achive_top clear">
             <nav class="title left">部门销售业绩报表</nav>
             <div class="achive_time right">
             	<a class="select_btn">
             		<span class="select_btn_time">2017年</span>
-            		<img src="../assets/images/down_arrow.png" height="13" width="24" />
+            		<span class="select_btn_img"><img src="../assets/images/down_arrow.png" height="13" width="24" /></span>
             	</a>
             </div>
         </div>
@@ -133,7 +133,6 @@
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	-ms-border-radius: 5px;
-	padding:8px 5px;
 	background: #fff;
 }
 .select_btn_time{
@@ -141,6 +140,11 @@
 	color: #333;
 	padding:8px 15px 8px 10px;
 	border-right: 1px solid #ccc;
+	float: left;
+}
+.select_btn_img{
+	float: right;
+	padding: 13px 7px 0;
 }
 .calute_show{
 	text-align: right;

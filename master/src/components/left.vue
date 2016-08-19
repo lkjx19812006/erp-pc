@@ -3,7 +3,6 @@
         <div class="menu" @click="menu()">
             <img src="../assets/images/icon_menu.png" height="14" width="21" />
         </div>
-        {{getCount}}
         <ul class="left_menu">
         <!-- li左侧菜单列表循环 -->
             <li v-for="item  in  getList">
@@ -14,8 +13,8 @@
                     <a>{{item.category}}</a>
                 </div>
                  <div class="bshow" v-if="willshow==item.categoryid" transition="expand_trans">
-                    <dl class="bshow_dl mui-clearfix">
-                        <dd class="mui-clearfix" v-for="sub in item.subcategory"  v-link="sub.path">
+                    <dl class="bshow_dl" clear>
+                        <dd class="clear" v-for="sub in item.subcategory"  v-link="sub.path">
                             <i class="fold_line"></i>
                             <div class="fold_content">
                                 <div class="bleft">
@@ -126,10 +125,13 @@ export default {
     width: 32px;
     height: 32px;
     margin-right: 16px;
-    margin-top: 5px;
+    margin-top: 4px;
     text-align: center;
 }
-
+.menu_div .bleft img{
+    margin:auto;
+    margin-top: 4px;
+}
 .v-link-active >.bleft {
     background: #fa6705;
     border-radius: 5px;
@@ -155,9 +157,8 @@ export default {
     padding-top: 2px;
     padding-right: 4px;
 }
-
 .bshow_dl .fold_content {
-    margin-top: 8px;
+    padding-top: 9px;
     margin-left: 18px;
 }
 
