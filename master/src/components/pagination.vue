@@ -1,13 +1,13 @@
 <template>
-  <ul class='mui-pagination'>
+  <ul class='pagination'>
     <li v-if="this.combination.cur>1" ><a v-on:click="combination.cur-- ,pageClick()"><span> « </span></a></li>
-    <li v-else class='mui-disabled'><a><span> « </span></a></li>
-    <li v-for="index in indexs"  v-bind:class="{'mui-active': combination.cur === index }">
+    <li v-else class='disabled'><a><span> « </span></a></li>
+    <li v-for="index in indexs"  v-bind:class="{'active': combination.cur === index }">
       <a v-on:click="btnClick(index)">{{ index }}</a>
     </li>
     <li v-if="this.combination.cur != this.combination.all" ><a v-on:click="combination.cur++,pageClick()"><span> » </span></a></li>
-    <li v-else class="mui-disabled"><a><span> » </span></a></li>
-    <li class="mui-disabled"><a>共<i>{{ combination.all }}</i>页</a></li>
+    <li v-else class="disabled"><a><span> » </span></a></li>
+    <li class="disabled"><a>共<i>{{ combination.all }}</i>页</a></li>
   </ul>
 </template>
 
