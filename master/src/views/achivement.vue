@@ -49,8 +49,7 @@
 			        right:'0',
 			        margin:[5,0],
 			        textStyle: {
-			            color: '#333',
-			            font-size:'14px',
+			            color: '#333'
 			        }
                 },
                 grid: {
