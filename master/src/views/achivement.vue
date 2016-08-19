@@ -5,7 +5,7 @@
             <div class="achive_time right">
                 <a class="select_btn">
                     <span class="select_btn_time">2017年</span>
-                    <span class="select_btn_img"><img src="../assets/images/down_arrow.png" height="13" width="24" /></span>
+                    <span class="select_btn_img"><img src="/static/images/down_arrow.png" height="13" width="24" /></span>
                 </a>
             </div>
         </div>

@@ -2,7 +2,7 @@
     <div class="center_top light_bg mui-clearfix" v-bind:class="{'center_top':getMenu==240,'center_nav':getMenu==50}" transition="expand">
         <div class="new_time left">{{ msg }}</div>
         <div class="right head_info">
-            <img src="../assets/images/head.png" height="52" width="52" />
+            <img src="/static/images/head.png" height="52" width="52" />
         </div>
     </div>
 </template>

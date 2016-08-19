@@ -1,7 +1,7 @@
 //左侧菜单
 const _listUrl={
-	list:'list.json',
-	charList:'chart.json'
+	list:'/static/data/list.json',
+	charList:'/static/data/chart.json'
 };
 
 export default _listUrl;

@@ -1,7 +1,7 @@
 <template>
     <div id="left" class="left high_bg" v-bind:class="{'left':getMenu==240,'left_close':getMenu==50}" transition="expand">
         <div class="menu" @click="menu()">
-            <img src="../assets/images/icon_menu.png" height="14" width="21" />
+            <img src="/static/images/icon_menu.png" height="14" width="21" />
         </div>
         <ul class="left_menu">
         <!-- li左侧菜单列表循环 -->

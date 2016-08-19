@@ -1,6 +1,6 @@
 <template>
   <div  class="top gray_bg">
-   <img src="../assets/images/logo.png" height="47" width="58" />
+   <img src="/static/images/logo.png" height="47" width="58" />
   </div>
 </template>
 

@@ -1,8 +1,0 @@
-{
-	results:[
-		{categoryid:1,category:'业务机会',img:'../images/logo.png',subcategory:[{subcategoryId:1,subcategory:'个人业务机会',img:'../images/logo.png'},{subcategoryId:2,subcategory:'部门业务机会',img:'../images/logo.png'}]},
-		{categoryid:2,category:'潜在客户',img:'../images/logo.png',subcategory:[]}
-	],
-	msg:'success',
-	code:200
-}
