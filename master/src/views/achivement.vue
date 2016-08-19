@@ -3,7 +3,7 @@
         <div class="achive_top clear">
             <nav class="title left">部门销售业绩报表</nav>
             <div class="achive_time right">
-                <a class="select_btn">
+                <a class="select_btn" @click="freshCharts(getCharList)">
                     <span class="select_btn_time">2017年</span>
                     <span class="select_btn_img"><img src="/static/images/down_arrow.png" height="13" width="24" /></span>
                 </a>
@@ -11,7 +11,7 @@
         </div>
         <div class="achive_top">
             <div class="chart_body">
-                <div class="chart" v-echarts="barChartOption" :loading="barChartLoading"></div>
+                <div class="chart" v-echarts="getCharList.options" :loading="getCharList.load"></div>
                 <p>2017年部门销售业绩报表</p>
             </div>
         </div>
@@ -19,120 +19,30 @@
 </template>
 <script>
 import {
-    getcharList
+    getCharList
 } from '../vuex/getters'
 import {
-    initCharts
+    freshCharts
 } from '../vuex/actions'
-var echarts = require('echarts');
 export default {
     data() {
             return {
-                barChartOption: {
-                    tooltip: {
-                        trigger: 'item'
-                    },
-                    calculable: true,
-                    color: ['#9966ff', '#66cccc', '#ff9900'],
-                    legend: {
-                        data: ['Growth', '三方合营1', '三方合营2', '三方合营'],
-                        itemGap: 1,
-                        orient: 'vertical',
-                        top: 'top',
-                        right: '0',
-                        margin: [5, 0],
-                        itemWidth: 50,
-                        itemHeight: 10,
-                        textStyle: {
-                            color: '#333',
-                            fontSize: '14'
-                        }
-                    },
-                    grid: {
-                        top: '10%',
-                        left: '34',
-                        right: '5%',
-                        containLabel: true,
-                        textStyle: {
-                            color: '#333',
-                            fontSize: '14'
-                        }
-                    },
-                    xAxis: [{
-                        type: 'category',
-                        name: '时间/月',
-                        data: this.getcharList.timeList,
-                        textStyle: {
-                            color: '#003077',
-                            fontSize: '14'
-                        }
-                    }],
-                    yAxis: [{
-                        type: 'value',
-                        name: '业绩/元',
-                        textStyle: {
-                            color: '#003077',
-                            fontSize: '14'
-                        },
-                        axisLabel: {
-                            formatter: function(a) {
-                                a = +a;
-                                return isFinite(a) ? echarts.format.addCommas(+a) : '';
-                            }
-                        }
-                    }],
-                    dataZoom: [{
-                        show: false,
-                        start: 0,
-                        end: 100
-                    }, {
-                        type: 'inside',
-                        start: 0,
-                        end: 100
-                    }, {
-                        show: false,
-                        yAxisIndex: 0,
-                        filterMode: 'empty',
-                        width: 30,
-                        height: '80%',
-                        showDataShadow: false,
-                        left: '93%'
-                    }],
-                    series: [{
-                        name: '三方合营1',
-                        type: 'bar',
-                        barGap: '0',
-                        data: this.getcharList.achieveList
-                    }, {
-                        name: '三方合营2',
-                        type: 'bar',
-                        barGap: '0',
-                        data: this.getcharList.achieveListed
-                    }, {
-                        name: '三方合营',
-                        type: 'bar',
-                        barGap: '0',
-                        data: this.getcharList.achieveListc
-                    }]
-                },
-                barChartLoading: false
+
             }
         },
         vuex: {
             getters: {
-                getcharList
+                getCharList
             },
             actions: {
-                initCharts
+                freshCharts
             },
         },
         created() {
-
-            console.log('sssss');
-            if(this.getcharList.achieveListc.length==0){this.initCharts();}
-        },
-        methods(){
-        	
+            this.freshCharts();
+            // if(this.getcharList.achieveListc.length==0){
+            // 	this.initCharts();
+            // }
         }
 }
 </script>
