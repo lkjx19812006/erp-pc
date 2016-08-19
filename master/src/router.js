@@ -12,18 +12,18 @@ export default (router)=>router.map({
                   template: '<p>Default sub view for Foo</p>'
                 }
           },
-    		'/news': {
+    		/*'/news': {
                 component: require('./views/news')
             },
             '/message': {
                 component: require('./views/message')
-            },
+            },*/
             '/main':{
-                component:require('./views/main')
+                component:require('./views/message')
             },
             '/change':{
                 name:'change',
-                component:require('./views/chance'),
+                component:require('./views/news'),
                 subRoutes:{
                         '/': {
                         component: {
