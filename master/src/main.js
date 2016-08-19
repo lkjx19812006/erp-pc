@@ -5,8 +5,6 @@ import VueRouter from 'vue-router'
 import configRouter from './router'
 
 
-
-require('./assets/css/mui.min.css')
 require('./assets/css/style.css') 
 
 Vue.directive('echarts', require('./directives/echarts'));
@@ -18,7 +16,7 @@ Vue.http.options.emulateJSON = true
 Vue.http.options.emulateHTTP = true
 const router = new VueRouter({
   hashbang: true,
-  history: true,
+  history: false,
   saveScrollPosition: true,
   suppressTransitionError: true
 })
