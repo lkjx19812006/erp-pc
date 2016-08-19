@@ -8,3 +8,7 @@ export const getList = (state)=>{
 	
 	console.log(JSON.parse(JSON.stringify(state.category.list)));
 	return JSON.parse(JSON.stringify(state.category.list));}
+export const getcharList = (state)=>{
+
+console.log(JSON.parse(JSON.stringify(state.category.charList)));
+return JSON.parse(JSON.stringify(state.category.charList));}

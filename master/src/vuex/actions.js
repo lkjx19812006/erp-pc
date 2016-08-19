@@ -14,3 +14,13 @@ export const initList = ({ dispatch }) => {
             console.log('fail');
         });
 };
+
+export const initCharts = ({ dispatch }) => {
+    Vue.http.get(apiUrl.charList)
+        .then((res) => {
+            dispatch(types.INIT_CHARTS, res.data);
+             console.log(res.data);
+        },(res) => {
+            console.log('fail');
+        });
+};
