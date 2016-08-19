@@ -4,7 +4,8 @@
         <p>
             Welcome to your Vue.js appssss!
         </p>
-</div>
+    </div>
+    <div>
         <show-model :param="modelParam"></show-model>
         <button v-on:click="btnClick('hello')">hello</button>
         <button v-on:click="btnClick('test')">hello</button>

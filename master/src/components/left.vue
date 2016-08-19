@@ -15,13 +15,13 @@
                 </div>
                  <div class="bshow" v-if="willshow==item.categoryid" transition="expand_trans">
                     <dl class="bshow_dl mui-clearfix">
-                        <dd class="mui-clearfix" v-for="sub in item.subcategory">
+                        <dd class="mui-clearfix" v-for="sub in item.subcategory"  v-link="sub.path">
                             <i class="fold_line"></i>
                             <div class="fold_content">
                                 <div class="bleft">
                                     <img v-bind:src="sub.img" height="15" width="15">
                                 </div>
-                                <span v-link="sub.path">{{sub.subcategory}}</span>
+                                <span>{{sub.subcategory}}</span>
                             </div>
                         </dd>
                     </dl>
