@@ -4,6 +4,9 @@
     </div>
 </template>
 <script>
+import {
+    getList
+} from '../vuex/getters'
 export default {
     components: {
     },
@@ -12,15 +15,17 @@ export default {
            
         }
     },
-  route: {
-  data ({ to: { params: { id }}}) {
-  	console.log(id);
-    // return Promise.all([
-    //   userService.get(userId),
-    //   postsService.getForUser(userId)
-    // ]).then(([user, post]) => ({ user, post }))
-  }
-}
+     vuex: {
+            getters: {
+                getList
+            }
+        },
+ created(){
+ 	if(this.$route.query.id>this.getList[1].subcategory.length||isNaN(this.$route.query.id)){
+ 		this.$route.query.id=0;
+ 	}
+ 	
+ }
 }
 </script>
 <style scoped>
