@@ -1,35 +1,41 @@
 <template>
-    <div>
-        部门业务机会
-        <div v-loaders ></div>
-        <pulse-loader :loading="true" :color="#5dc596" :size="15px"></pulse-loader>
-    </div>
+    <div>部门业务机会</div>
+    <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
+    <p>{{ message }}</p>
+    <input type='text' v-model="message | twoWays">
 </template>
 <script>
 import {
     getList
 } from '../vuex/getters'
 
+import demo from '../filters/demo'
 export default {
     components: {
-    	
+
     },
     data() {
         return {
-           
+            message: 'hello',
+            color: '#5dc596',
+            size: '15px',
+            loading: true
         }
     },
-     vuex: {
-            getters: {
-                getList
-            }
-        },
- created(){
- 	if(this.$route.query.id>this.getList[1].subcategory.length||isNaN(this.$route.query.id)){
- 		this.$route.query.id=0;
- 	}
-
- }
+    vuex: {
+        getters: {
+            getList
+        }
+    },
+    created() {
+        if (this.$route.query.id > this.getList[1].subcategory.length || isNaN(this.$route.query.id)) {
+            this.$route.query.id = 0;
+        }
+    },
+    filter: (demo, {
+        read: function(val) {},
+        write: function(newVal, oldVal) {}
+    })
 }
 </script>
 <style scoped>

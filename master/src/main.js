@@ -7,11 +7,13 @@ import VueAnimatedList from 'vue-animated-list'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 
+
 require('./assets/css/style.css') 
 
 Vue.component('PulseLoader',PulseLoader);
 
 Vue.directive('echarts', require('./directives/echarts'));
+
 Vue.use(VueAnimatedList)
 Vue.use(VueRouter)
 Vue.use(VueResource)
