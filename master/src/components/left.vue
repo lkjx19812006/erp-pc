@@ -4,23 +4,23 @@
             <img src="/static/images/icon_menu.png" height="14" width="21" />
         </div>
         <ul class="left_menu">
-        <!-- li左侧菜单列表循环 -->
-            <li v-for="item  in  getList" >
-                <div v-el="wrap" v-link="item.path" class="menu_div" @click="system_data(item.categoryid)">
+            <!-- li左侧菜单列表循环 -->
+            <li v-for="item  in  getList">
+                <div  v-link="item.path" class="menu_div" @click="init_data(item.categoryid)">
                     <div class="bleft">
                         <img v-bind:src="item.img" height="21" width="21">
                     </div>
                     <a>{{item.category}}</a>
                 </div>
-                 <div class="bshow" v-if="willshow==item.categoryid" transition="expand_trans">
+                <div class="bshow" v-if="$route.path.split('?')[0]==item.path.split('?')[0]" transition="expand_trans">
                     <dl class="bshow_dl" clear>
-                        <dd class="clear" v-for="sub in item.subcategory"  v-link="sub.path">
+                        <dd class="clear" v-for="sub in item.subcategory" v-link="sub.path">
                             <i class="fold_line"></i>
                             <div class="fold_content">
                                 <div class="bleft">
                                     <img v-bind:src="sub.img" height="15" width="15">
                                 </div>
-                                <span>{{sub.subcategory}}</span>
+                                <span class="{{$route.query.id==$index?'active_font':''}}">{{sub.subcategory}}</span>
                             </div>
                         </dd>
                     </dl>
@@ -41,8 +41,7 @@ import {
 export default {
     data() {
             return {
-                msg: '左边',
-                willshow: 0
+                msg: '左边'
             }
         },
         vuex: {
@@ -57,11 +56,11 @@ export default {
         },
         created() {
             this.initList();
-            console.log( this.wrap);
+            console.log(this.$route);
         },
         methods: {
-            system_data: function(id) { //点击菜单展开或关闭
-                    this.willshow = id;
+            init_data: function(id) { //点击菜单展开或关闭
+                console.log(id);
             },
             menu: function() {
                 this.menuBar();
@@ -78,8 +77,9 @@ export default {
     overflow: hidden;
     white-space: nowrap;
 }
+
 .left:hover {
-  overflow: auto;
+    overflow: auto;
 }
 
 .left_close {
@@ -129,10 +129,12 @@ export default {
     margin-top: 4px;
     text-align: center;
 }
-.menu_div .bleft img{
-    margin:auto;
+
+.menu_div .bleft img {
+    margin: auto;
     margin-top: 4px;
 }
+
 .v-link-active >.bleft {
     background: #fa6705;
     border-radius: 5px;
@@ -140,9 +142,15 @@ export default {
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
 }
-.v-link-active ~ .bshow dd:first-of-type span{
+
+/*.v-link-active ~ .bshow dd:first-of-type span {
+    color: #fa6705;
+}*/
+
+.active_font{
     color: #fa6705;
 }
+
 .v-link-active {
     background: #16325c;
 }
@@ -158,6 +166,7 @@ export default {
     padding-top: 2px;
     padding-right: 4px;
 }
+
 .bshow_dl .fold_content {
     padding-top: 9px;
     margin-left: 18px;
@@ -174,7 +183,7 @@ export default {
     border-bottom: 1px solid #fff;
 }
 
-.bshow_dl dd:first-child .fold_line{
+.bshow_dl dd:first-child .fold_line {
     height: 22px;
     display: inline-block;
     color: #fff;
@@ -184,25 +193,35 @@ export default {
     border-left: 1px solid #fff;
     border-bottom: 1px solid #fff;
 }
+
 .expand-transition {
     transition: all .5s ease-in-out 0.1s;
     overflow: inherit;
 }
 
+
 /* .expand-enter 定义进入的开始状态 */
+
+
 /* .expand-leave 定义离开的结束状态 */
+
 .expand-enter,
 .expand-leave {
     opacity: 0;
     height: 0;
 }
-.expand_trans{
+
+.expand_trans {
     transition: all;
     overflow: inherit;
 }
 
+
 /* .expand-enter 定义进入的开始状态 */
+
+
 /* .expand-leave 定义离开的结束状态 */
+
 .expand_trans-enter,
 .expand_trans-leave {
     opacity: 0;

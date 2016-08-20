@@ -22,7 +22,7 @@ export default (router) => router.map({
                     require(['./views/message'], resolve)
                 }
             },
-            '/change/:id': {
+            '/change': {
                 name: 'change',
                 component: function(resolve) {
                     require(['./views/partchange'], resolve)

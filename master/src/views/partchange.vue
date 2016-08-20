@@ -1,6 +1,6 @@
 <template>
     <div>
-        部门业务机会{{$route.params.id}}
+        部门业务机会
     </div>
 </template>
 <script>
