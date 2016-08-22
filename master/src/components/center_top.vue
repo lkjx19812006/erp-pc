@@ -34,9 +34,11 @@ export default {
     position: fixed;
     right: 0;
     white-space: nowrap;
+    overflow: hidden;
     left: 240px;
-    box-shadow: 0px 2px 2px #ccc;
+    box-shadow: 0px 2px 2px #999;
     top: 60px;
+    border-bottom: 1px solid #eee;
 }
 
 .center_nav {

@@ -5,22 +5,27 @@
 </template>
 <script>
 export default {
-    components: {
-    },
+    components: {},
     data() {
         return {
-           
+
         }
     },
-  route: {
-  data ({ to: { params: { id }}}) {
-  	console.log(id);
-    // return Promise.all([
-    //   userService.get(userId),
-    //   postsService.getForUser(userId)
-    // ]).then(([user, post]) => ({ user, post }))
-  }
-}
+    route: {
+        data({
+            to: {
+                params: {
+                    id
+                }
+            }
+        }) {
+            console.log(id);
+            // return Promise.all([
+            //   userService.get(userId),
+            //   postsService.getForUser(userId)
+            // ]).then(([user, post]) => ({ user, post }))
+        }
+    }
 }
 </script>
 <style scoped>

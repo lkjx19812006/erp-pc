@@ -77,6 +77,7 @@ export default {
     width: 240px;
     overflow: hidden;
     white-space: nowrap;
+    z-index: 100;
 }
 .left:hover {
   overflow: auto;

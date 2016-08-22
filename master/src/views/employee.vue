@@ -16,13 +16,13 @@
             </div>
             <div class="complete_rate">
             	<span>个人业绩完成率</span>
-            	<a class="select_btn">
+            	<a class="select_btn"  @click="freshPiecharts(getPiechart)"> 
                     <span class="select_btn_date">2016年7月</span>
                     <span class="select_btn_img"><img src="/static/images/down_arrow.png" height="13" width="24" /></span>
                 </a>
             </div>
             <div class="pie_chart">
-            	 <div class="Piechart" v-echarts="getLinechart.options" :loading="getLinechart.load"></div>
+            	 <div class="Piechart" v-echarts="getPiechart.options" :loading="getPiechart.load"></div>
             </div>
         </div>
         <div class="employee_right">
@@ -32,10 +32,12 @@
 </template>
 <script>
 import {
-    getLinechart
+    getLinechart,
+     getPiechart
 } from '../vuex/getters'
 import {
-    freshLinecharts
+    freshLinecharts,
+    freshPiecharts
 } from '../vuex/actions'
 export default {
     data() {
@@ -45,14 +47,17 @@ export default {
         },
         vuex: {
             getters: {
-                getLinechart
+                getLinechart,
+                 getPiechart
             },
             actions: {
-                freshLinecharts
+                freshLinecharts,
+                 freshPiecharts
             },
         },
         created() {
             this.freshLinecharts();
+             this.freshPiecharts();
             // if(this.getcharList.achieveListc.length==0){
             // 	this.initCharts();
             // }
@@ -62,7 +67,8 @@ export default {
 <style scoped>
 .employee {
     position: relative;
-    margin: 25px 30px 0 40px;
+    padding: 25px 30px 0 40px;
+    background: #fff;
 }
 
 .employee_left {

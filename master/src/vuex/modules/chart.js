@@ -2,13 +2,14 @@
  * @Author: huili.sun
  * @Date:   2016-08-19 14:46:10
  * @Last Modified by:   huili.sun
- * @Last Modified time: 2016-08-19 18:48:16
+ * @Last Modified time: 2016-08-22 09:36:19
  */
 
 'use strict';
 import {
     CHANGE_CHARTS,
-    CHANGE_LINECHARTS
+    CHANGE_LINECHARTS,
+     CHANGE_PIECHARTS
 } from '../mutation-types'
 
 const state = {
@@ -105,7 +106,7 @@ const state = {
             trigger: 'item'
         },
         calculable: true,
-        color: ['#3399FF '],
+        color: ['#3399FF'],
         legend: {
             data: ['Growth', '个人业绩'],
             itemGap: 1,
@@ -178,20 +179,41 @@ const state = {
     },
     lineChartLoading: false,
 
-    calculable: false,
-    series: [{
-        name: '访问来源',
-        type: 'pie',
-        radius: '65%',
-        center: ['50%', '50%'],
-        data: [{
-            value: 335,
-            name: '已完成'
-        }, {
-            value: 310,
-            name: '未完成'
-        }]
-    }]
+    PieChartOption: {
+          tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+          },
+          color: ['#fa6705', '#ccc'],
+          legend: {
+            orient : 'vertical',
+            x : 'left',
+            data:['已完成','未完成'],
+            show: false
+          },
+          toolbox: {
+            show : true,
+            feature : {
+              //mark : {show: true},
+              //dataView : {show: true, readOnly: false},
+              restore : {show: false},
+              //saveAsImage : {show: true}
+            }
+          },
+          calculable : false,
+          series : [
+            {
+              name:'饼图实例',
+              type:'pie',
+              radius : '55%',
+              center: ['50%', '60%'],
+              data:[
+                    {value:700, name:'已完成'},
+                    {value:200, name:'未完成'}
+                ]
+            }
+          ]
+      },PieChartLoading: false
 }
 
 const mutations = {
@@ -207,6 +229,11 @@ const mutations = {
         state.lineChartOption.xAxis.data = data.results.dateList;
         state.lineChartOption.series.data = data.results.achieveList;
         state.lineChartLoading=false;
+    },
+     [CHANGE_PIECHARTS](state, data) {
+        state.PieChartOption.legend.data = data.results.dateList;
+        state.PieChartOption.series.data = data.results.achieveList;
+        state.PieChartLoading=false;
     }
 }
 

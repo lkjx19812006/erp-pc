@@ -9,29 +9,41 @@ export const initList = ({ dispatch }) => {
     Vue.http.get(apiUrl.list)
         .then((res) => {
             dispatch(types.INIT_LIST, res.data);
-             console.log(res.data);
-        },(res) => {
+            console.log(res.data);
+        }, (res) => {
             console.log('fail');
         });
 };
 //柱状图
-export const freshCharts = ({ dispatch},getCharList) => {
-    if(getCharList)getCharList.load=true;
+export const freshCharts = ({ dispatch }, getCharList) => {
+    if (getCharList) getCharList.load = true;
     Vue.http.get(apiUrl.charList)
         .then((res) => {
             dispatch(types.CHANGE_CHARTS, res.data);
-             console.log(res.data);
-        },(res) => {
+            console.log(res.data);
+        }, (res) => {
             console.log('fail');
         });
 };
 
 //折线图
-export const freshLinecharts = ({ dispatch},getLinechart) => {
-    if(getLinechart)getLinechart.load=true;
+export const freshLinecharts = ({ dispatch }, getLinechart) => {
+    if (getLinechart) getLinechart.load = true;
     Vue.http.get(apiUrl.linechart)
         .then((res) => {
             dispatch(types.CHANGE_LINECHARTS, res.data);
+            console.log(res.data);
+        }, (res) => {
+            console.log('fail');
+        });
+};
+
+//饼状图
+export const freshPiecharts = ({ dispatch},getPiechart) => {
+    if(getPiechart)getPiechart.load=true;
+    Vue.http.get(apiUrl.piechart)
+        .then((res) => {
+            dispatch(types.CHANGE_PIECHARTS, res.data);
              console.log(res.data);
         },(res) => {
             console.log('fail');

@@ -30,3 +30,13 @@ export const getLinechart = (state) => {
     console.log(option);
     return option;
 }
+
+export const getPiechart = (state) => {
+    const option={
+        options:JSON.parse(JSON.stringify(state.echarts.PieChartOption)),
+        load:JSON.parse(JSON.stringify(state.echarts.PieChartLoading))
+    } ;
+    console.log(option);
+    return option;
+}
+

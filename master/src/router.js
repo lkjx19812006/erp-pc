@@ -43,7 +43,8 @@ export default (router) => router.map({
                     require(['./views/order_intent'], resolve)
                 }
             },
-            '/order': {
+            '/order/:id': {
+                name:'order',
                 component: function(resolve) {
                     require(['./views/order'], resolve)
                 }

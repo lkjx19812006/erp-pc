@@ -24,7 +24,9 @@ export default {
     right: 0;
     top: 130px;
     overflow: auto;
+    overflow-x: hidden;
     left: 240px;
+    white-space: nowrap;
 }
 .center_top{
     height: calc(100% - 130px);
