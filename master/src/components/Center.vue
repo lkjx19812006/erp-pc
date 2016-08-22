@@ -23,10 +23,9 @@ export default {
     position: absolute;
     right: 0;
     top: 130px;
-    overflow: auto;
-    overflow-x: hidden;
     left: 240px;
     white-space: nowrap;
+    min-width: 1200px;
 }
 .center_top{
     height: calc(100% - 130px);

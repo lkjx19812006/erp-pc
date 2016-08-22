@@ -1,21 +1,15 @@
 <template>
-    <div v-show="param.show" class="modal">
-        <div class="mui-popover mui-active" style="display: block; top: 50px; left: 10%;width:80%;bottom:50px">
+    <div v-show="param.show" class="modal  fade" tabindex="-1" role="dialog">
+        <div class="container modal_con">
             <div @click="param.show = false" class="top-title">
-                <i class="mui-icon mui-icon-close big-font"></i>
+                <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
             <div :show.sync="param.show">
                 <hello-model v-show="param.name=='hello'"></hello-model>
                 <test-model v-show="param.name=='test'"></test-model>
             </div>
-            <!--   <div class="mui-scroll-wrapper" data-scroll="2">
-        <div class="mui-scroll" style="transform: translate3d(0px, 0px, 0px) translateZ(0px); transition-duration: 0ms;">
-      sdfsfs
         </div>
-     </div>
- -->
-        </div>
-    </div>
+</div>
 </template>
 <script>
 import helloModel from '../components/helloModel'
@@ -35,12 +29,24 @@ export default {
 </script>
 <style scoped>
 .modal {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
     opacity: 0.5;
     background-color: #000;
+    display: block;
+}
+.modal_con{
+     display: block;
+     position: absolute;
+     top: 91px; 
+     margin:auto;
+     left: 0;
+     right: 0;
+     width:80%;
+     bottom:50px;
+     background-color: #fff;
+     border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
 }
 .big-font{
 	font-size: 36px;
@@ -48,5 +54,12 @@ export default {
 .top-title{
 	position: absolute;
 	right: 0;
+    top: 0;
+    margin-top: -28px;
+    margin-right: -22px;
+}
+.top-title span{
+    font-size: 32px;
+
 }
 </style>

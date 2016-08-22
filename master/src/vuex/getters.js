@@ -17,8 +17,6 @@ export const getCharList = (state) => {
     	options:JSON.parse(JSON.stringify(state.echarts.barChartOption)),
     	load:JSON.parse(JSON.stringify(state.echarts.barChartLoading))
     } ;
-
-    console.log(option);
     return option;
 }
 
@@ -27,7 +25,6 @@ export const getLinechart = (state) => {
     	options:JSON.parse(JSON.stringify(state.echarts.lineChartOption)),
     	load:JSON.parse(JSON.stringify(state.echarts.lineChartLoading))
     } ;
-    console.log(option);
     return option;
 }
 
@@ -36,7 +33,9 @@ export const getPiechart = (state) => {
         options:JSON.parse(JSON.stringify(state.echarts.PieChartOption)),
         load:JSON.parse(JSON.stringify(state.echarts.PieChartLoading))
     } ;
-    console.log(option);
     return option;
 }
 
+export const getOrderlist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.list));
+}

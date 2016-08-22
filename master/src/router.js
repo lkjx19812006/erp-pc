@@ -22,7 +22,7 @@ export default (router) => router.map({
                     require(['./views/message'], resolve)
                 }
             },
-            '/change/:id': {
+            '/change': {
                 name: 'change',
                 component: function(resolve) {
                     require(['./views/partchange'], resolve)
@@ -43,7 +43,7 @@ export default (router) => router.map({
                     require(['./views/order_intent'], resolve)
                 }
             },
-            '/order/:id': {
+            '/order': {
                 name:'order',
                 component: function(resolve) {
                     require(['./views/order'], resolve)

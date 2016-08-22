@@ -73,7 +73,7 @@ export default {
 
 .employee_left {
     position: relative;
-    width: 1070px;
+    width: 950px;
     float: left;
     border-right: 1px solid #ccc;
     padding-right: 30px;

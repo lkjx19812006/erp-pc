@@ -17,8 +17,7 @@ export default {
                 // with hot-reload because the reloaded component
                 // preserves its current state and we are modifying
                 // its initial state.
-                msg: '最后更新时间:2016-7-22 12:23:36',
-                wantshow: true
+                msg: '最后更新时间:2016-7-22 12:23:36'
             }
         },
         vuex: {
@@ -34,7 +33,6 @@ export default {
     position: fixed;
     right: 0;
     white-space: nowrap;
-    overflow: hidden;
     left: 240px;
     box-shadow: 0px 2px 2px #999;
     top: 60px;

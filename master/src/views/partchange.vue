@@ -1,31 +1,41 @@
 <template>
-    <div>
-        部门业务机会{{$route.params.id}}
-    </div>
+    <div>部门业务机会</div>
+    <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
+    <p>{{ message }}</p>
+    <input type='text' v-model="message | twoWays">
 </template>
 <script>
+import {
+    getList
+} from '../vuex/getters'
+
+import demo from '../filters/demo'
 export default {
-    components: {},
+    components: {
+
+    },
     data() {
         return {
-
+            message: 'hello',
+            color: '#5dc596',
+            size: '15px',
+            loading: true
         }
     },
-    route: {
-        data({
-            to: {
-                params: {
-                    id
-                }
-            }
-        }) {
-            console.log(id);
-            // return Promise.all([
-            //   userService.get(userId),
-            //   postsService.getForUser(userId)
-            // ]).then(([user, post]) => ({ user, post }))
+    vuex: {
+        getters: {
+            getList
         }
-    }
+    },
+    created() {
+        if (this.$route.query.id > this.getList[1].subcategory.length || isNaN(this.$route.query.id)) {
+            this.$route.query.id = 0;
+        }
+    },
+    filter: (demo, {
+        read: function(val) {},
+        write: function(newVal, oldVal) {}
+    })
 }
 </script>
 <style scoped>

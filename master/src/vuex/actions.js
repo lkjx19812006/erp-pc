@@ -20,7 +20,6 @@ export const freshCharts = ({ dispatch }, getCharList) => {
     Vue.http.get(apiUrl.charList)
         .then((res) => {
             dispatch(types.CHANGE_CHARTS, res.data);
-            console.log(res.data);
         }, (res) => {
             console.log('fail');
         });
@@ -32,7 +31,6 @@ export const freshLinecharts = ({ dispatch }, getLinechart) => {
     Vue.http.get(apiUrl.linechart)
         .then((res) => {
             dispatch(types.CHANGE_LINECHARTS, res.data);
-            console.log(res.data);
         }, (res) => {
             console.log('fail');
         });
@@ -44,8 +42,19 @@ export const freshPiecharts = ({ dispatch},getPiechart) => {
     Vue.http.get(apiUrl.piechart)
         .then((res) => {
             dispatch(types.CHANGE_PIECHARTS, res.data);
-             console.log(res.data);
         },(res) => {
             console.log('fail');
+        });
+};
+
+export const orderList = ({ dispatch },param) => {
+    param.loading=true;
+    Vue.http.get(apiUrl.orderTable)
+        .then((res) => {
+            dispatch(types.ORDER_TABLE, res.data);
+            param.loading=false; 
+        }, (res) => {
+            console.log('fail');
+            param.loading=false;  
         });
 };

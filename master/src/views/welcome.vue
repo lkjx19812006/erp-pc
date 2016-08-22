@@ -10,8 +10,6 @@
         <button v-on:click="btnClick('hello')">hello</button>
         <button v-on:click="btnClick('test')">hello</button>
     </div>
-
-
 </template>
 <script>
 import Hello from '../components/Hello'
@@ -35,17 +33,16 @@ export default {
           this.modelParam.show=true;
         }
     },
-     route: {
-    activate: function (transition) {
-      console.log('hook-example activated!')
-      transition.next()
-    },
-    deactivate: function (transition) {
-      console.log('hook-example deactivated!')
-      transition.next()
-    
-  }
-}
+    route: {
+        activate: function (transition) {
+          console.log('hook-example activated!')
+          transition.next()
+        },
+        deactivate: function (transition) {
+          console.log('hook-example deactivated!')
+          transition.next()
+      }
+    }
 }
 </script>
 <style scoped>

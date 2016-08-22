@@ -3,12 +3,18 @@ import App from './App'
 import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import configRouter from './router'
+import VueAnimatedList from 'vue-animated-list'
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+
 
 
 require('./assets/css/style.css') 
 
+Vue.component('PulseLoader',PulseLoader);
+
 Vue.directive('echarts', require('./directives/echarts'));
 
+Vue.use(VueAnimatedList)
 Vue.use(VueRouter)
 Vue.use(VueResource)
 Vue.http.options.root = '/src/assets/data'
