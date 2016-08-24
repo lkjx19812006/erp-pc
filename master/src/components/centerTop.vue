@@ -36,7 +36,7 @@ export default {
     left: 240px;
     box-shadow: 0px 2px 2px #999;
     top: 60px;
-    border-bottom: 1px solid #eee;
+    z-index: 1000;
 }
 
 .center_nav {

@@ -47,8 +47,8 @@ export const freshPiecharts = ({ dispatch},getPiechart) => {
         });
 };
 
-export const orderInquiry = ({ dispatch },param) => {
-    param.loading=true;
+export const getOrderList = ({dispatch},param) => {
+      param.loading=true;
     Vue.http.get(apiUrl.orderTable)
         .then((res) => {
             dispatch(types.ORDER_TABLE, res.data);
@@ -60,8 +60,23 @@ export const orderInquiry = ({ dispatch },param) => {
 };
 
 export const changeShowStatue =({dispatch },param) => {
-    console.log(param);
+    /*param.show=true;*/
     dispatch(types.CHANGE_SHOW_STATUE, param);
-   
+     if(res.data.results[id].param){
+            res.data.results[id].param=!res.data.results[id].param;
+        }
+       /* console.log(res.data.results[0].show);*/
+        console.log(res.data.results[id].param);
 };
 
+export const getClientList = ({dispatch},param) => {
+      param.loading=true;
+    Vue.http.get(apiUrl.clientList)
+        .then((res) => {
+            dispatch(types.CLIENT_INFO, res.data);
+            param.loading=false; 
+        }, (res) => {
+            console.log('fail');
+            param.loading=false;  
+        });
+};

@@ -3,121 +3,127 @@
         <div class="order_search">
             <div class="clear">
                 <div class="my_order col-xs-2">我的订单</div>
-                <div class="col-xs-7 my_order_search">
-                    <div class="name_search">
+                <div class="col-xs-8 my_order_search">
+                    <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
                         <input type="text" class="search_input" placeholder="按名字搜索">
                     </div>
-                    <div class="ordertel_search">
+                    <div class="ordertel_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
                         <input type="text" class="search_input" placeholder="按订单号搜索">
                     </div>
-                    <div class="tel_search">
+                    <div class="tel_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
                         <input type="text" maxlength="11" class="search_input" placeholder="按电话搜索">
                     </div>
                 </div>
-                <div class="right">
-                    <!-- <show-model :param="modelParam"></show-model> -->
-                    <dialog-model :param="modelParam"></dialog-model>
-                    <button class="new_btn" @click="newOrder('new')">新建</button>
+                <div class="right col-xs-2">
+                    <dialog-model :param="dialogParam"></dialog-model>
+                    <button class="new_btn" @click="newOrder('new')" data-toggle="modal" data-target="#myModal">新建</button>
                 </div>
             </div>
         </div>  
         <div class="order_table">
-            <div class="table">
-                <ul class="clear">
-                    <li><a>名称</a></li>
-                    <li><a>交易模式</a></li>
-                    <li><a>订单号</a></li>
-                    <li><a>购货单位</a></li>
-                    <li><a>联系电话</a></li>
-                    <li><a>交易人</a></li>
-                    <li><a>订单时间</a></li>
-                    <li><a>物流状态</a></li>
-                    <li></li>
-                </ul>
-            </div>
-            <div class="table table_hover">
-                <pulse-loader :loading="viewParam.loading" :color="color" :size="size"></pulse-loader>
-                <ul class="clear" v-for="item in getOrderlist" v-cloak>
-                    <li>{{item.orderStatus}}</li>
-                    <li>{{item.orderModule}}</li>
-                    <li>{{item.orderNum}}</li>
-                    <li>{{item.orderUnit}}</li>
-                    <li>{{item.orderTel}}</li>
-                    <li>{{item.orderPerson}}</li>
-                    <li>{{item.orderTime}}</li>
-                    <li>{{item.orderLogstatus}}</li>
-                    <li @click="edit($index)">
-                       <img height="24" width="24" src="/static/images/default_arrow.png" />
-                    </li>
-                    <div class="order_action"  v-show='item.show' transition="expand">
-                        <ul>
-                            <li><a>编辑</a></li>
-                            <li><a>修改</a></li>
-                        </ul>
-                    </div>
-                </ul>
-            </div>
+           <div class="table">
+              <ul class="clear">
+                  <li><a>名称</a></li>
+                  <li><a>交易模式</a></li>
+                  <li><a>订单号</a></li>
+                  <li><a>购货单位</a></li>
+                  <li><a>联系电话</a></li>
+                  <li><a>交易人</a></li>
+                  <li><a>订单时间</a></li>
+                  <li><a>物流状态</a></li>
+                  <li></li>
+              </ul>
+          </div>
+          <div class="table table_hover">
+              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+              <ul class="clear" v-for="item in initOrderlist" v-cloak>
+                  <li>{{item.orderStatus}}</li>
+                  <li>{{item.orderModule}}</li>
+                  <li>{{item.orderNum}}</li>
+                  <li>{{item.orderUnit}}</li>
+                  <li>{{item.orderTel}}</li>
+                  <li>{{item.orderPerson}}</li>
+                  <li>{{item.orderTime}}</li>
+                  <li>{{item.orderLogstatus}}{{item.show}}</li>
+                  <li @click="edit($index)">
+                     <img height="24" width="24" src="/static/images/default_arrow.png" />
+                  </li>
+                  <div class="order_action"  v-show='item.show' transition="expand">
+                      <ul>
+                          <li><a>编辑</a></li>
+                          <li><a>修改</a></li>
+                      </ul>
+                  </div>
+              </ul>
+          </div> 
         </div>
     </div>
-    
+    <div class="order_pagination">
+        <pagination :combination="list"></pagination>
+    </div>
 </template>
 <script>
-import dialogModel from '../components/showDialog'
+import pagination from '../components/pagination'
+import dialogModel from '../components/orderInformationDialog'
 import {
     getList,
-    getOrderlist
+    initOrderlist
 } from '../vuex/getters'
 import {
-    orderInquiry,
+    getOrderList,
     changeShowStatue
 } from '../vuex/actions'
 
 export default {
     components: {
-        dialogModel
+        dialogModel,
+        pagination
     },
     data() {
         return {
-            viewParam: {
+            loadParam: {
                 loading: true
             },
-            modelParam:{
+            dialogParam:{
                  show: false,
                  name: 'new'
             },
-            testData:this.getOrderlist,
-            show:false
+            show:true,
+            list: {all:8,cur:1}
         }
     },
     vuex: {
         getters: {
             getList,
-            getOrderlist
+            initOrderlist
         },
         actions: {
-            orderInquiry,
+            getOrderList,
             changeShowStatue
         }
     },
     created() {
-        this.orderInquiry(this.viewParam);
+        this.getOrderList(this.loadParam);
+       /* this.changeShowStatue();*/
         if (this.$route.query.id > this.getList[1].subcategory.length || isNaN(this.$route.query.id)) {
             this.$route.query.id = 0;
         }
     },
     methods: {
         edit: function(id) {
-
-            /*this.$store.state.table.list[0].show = Object.assign({}, item, { show: true });*/
-            //this.$store.state.table.list[id].show=true;
-            //console.log(this.$store.state.table.list[id].show)       
+            if(this.$store.state.table.list[id].show){
+                this.$store.state.table.list[id].show=!this.$store.state.table.list[id].show;
+            }else{
+                 this.$store.state.table.list[id].show=true;
+            }
+            console.log(this.$store.state.table)       
         },
         newOrder:function(value){
-             this.modelParam.name=value;
-             this.modelParam.show=true;
+             this.dialogParam.name=value;
+             this.dialogParam.show=true;
         }
     },
      route: {
@@ -149,14 +155,14 @@ export default {
     padding: 0;
 }
 .my_order_search{
-    min-width: 742px;
+    
 }
 .name_search,
 .ordertel_search,
 .tel_search {
     position: relative;
     border: 1px solid #ccc;
-    float: left;
+    display: inline-block;
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -164,9 +170,8 @@ export default {
     background: #fff;
     height: 30px;
     line-height: 28px;
-    margin-right: 11%;
+     margin-right: 7%; 
 }
-
 .tel_search {
     margin-right: 0;
 }
@@ -294,6 +299,13 @@ export default {
 }
 
 .v-spinner {
+    text-align: center;
+}
+.order_pagination{
+    position: absolute;;
+    bottom: 50px;
+    left:0;
+    right: 0;
     text-align: center;
 }
 </style>

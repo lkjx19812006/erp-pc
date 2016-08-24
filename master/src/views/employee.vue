@@ -1,6 +1,6 @@
 <template>
     <div class="employee clear">
-        <div class="employee_left">
+        <div class="employee_left col-md-8">
             <div class="employee_top" @click="freshLinecharts(getLinechart)">
                 <a class="select_btn clear">
                     <span class="select_btn_person">个人业绩</span>
@@ -25,7 +25,7 @@
             	 <div class="Piechart" v-echarts="getPiechart.options" :loading="getPiechart.load"></div>
             </div>
         </div>
-        <div class="employee_right">
+        <div class="employee_right col-md-4">
             <p class="employee_right_title">消息</p>
             <div class="employee_right_message">
                 <div class="employee_message_view">
@@ -85,16 +85,14 @@ export default {
 
 .employee_left {
     position: relative;
-    width: 950px;
-    float: left;
+    /* width: 950px; */
     border-right: 1px solid #ccc;
     padding-right: 30px;
 }
 
 .employee_right {
-    margin-left: 30px;
     float: left;
-    width: calc(100% - 1000px);
+   /*  width: calc(100% - 1000px); */
 }
 .employee_right_title{
     color: #333;

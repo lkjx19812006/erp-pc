@@ -3,7 +3,8 @@ const _listUrl={
 	charList:'/static/data/chart.json',
 	linechart:'/static/data/linechart.json',
 	piechart:'/static/data/piechart.json',
-	orderTable:'/static/data/order.json'
+	orderTable:'/static/data/order.json',
+	clientList:'/static/data/client.json'
 };
 
 export default _listUrl;

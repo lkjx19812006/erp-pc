@@ -1,5 +1,5 @@
 <template>
-    <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -34,8 +34,11 @@
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">新建文件</label>
-                                <input type="file" />
-                                <input type="file" />
+                                <div class="editpage_img clearfix">
+                                    <img src="/static/images/logo.png" class="img-rounded" width="100px" height="100px">
+                                    <img src="/static/images/logo.png" class="img-rounded" width="100px" height="100px">
+                                    <img src="/static/images/logo.png" class="img-rounded" width="100px" height="100px">
+                                </div>
                             </div>
                         </div>
                         <div class="editpageright">
@@ -116,6 +119,7 @@ export default {
     right: 0;
     max-width: 840px;
     min-width: 480px;
+    max-height: 710px;
     bottom: 50px;
     padding: 0;
     background-color: #fff;
@@ -159,7 +163,6 @@ export default {
     overflow: hidden;
     overflow-y: auto;
     padding: 10px 30px 30px 30px;
-    max-height: 500px;
 }
 
 .editsection {
@@ -224,11 +227,7 @@ export default {
     border-top: 1px solid #ddd;
     text-align: right;
     padding: 10px 20px;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 10;
+    margin-top: 50px;
 }
 
 .edit_footer button {
@@ -242,5 +241,12 @@ export default {
 
 .btn-close {
     color: #fa6705;
+}
+.editpage_img{
+    width: 90%;
+}
+.editpage_img img{
+    display: inline-block;
+    background: #ccc;
 }
 </style>

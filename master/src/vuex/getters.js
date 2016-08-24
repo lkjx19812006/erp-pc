@@ -41,6 +41,10 @@ export const getPiechart = (state) => {
     return option;
 }
 
-export const getOrderlist = (state) => {
+export const initOrderlist = (state) => {
     return parseJson(state.table.list);
+}
+
+export const initClientlist = (state) => {
+    return parseJson(state.table.clientList);
 }
