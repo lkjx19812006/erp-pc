@@ -1,3 +1,8 @@
+const parseJson =(data) =>{
+return JSON.parse(JSON.stringify(data));
+}
+
+
 export const getCount = (state) => {
     return state.category.count
 };
@@ -37,5 +42,5 @@ export const getPiechart = (state) => {
 }
 
 export const getOrderlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.list));
+    return parseJson(state.table.list);
 }

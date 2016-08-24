@@ -18,11 +18,12 @@
                     </div>
                 </div>
                 <div class="right">
-                	<show-dialog :param="modelPopup"></show-dialog>
-                    <button class="new_btn" @click="new_order('new')">新建</button>
+                    <!-- <show-model :param="modelParam"></show-model> -->
+                    <dialog-model :param="modelParam"></dialog-model>
+                    <button class="new_btn" @click="newOrder('new')">新建</button>
                 </div>
             </div>
-        </div>
+        </div>  
         <div class="order_table">
             <div class="table">
                 <ul class="clear">
@@ -39,19 +40,19 @@
             </div>
             <div class="table table_hover">
                 <pulse-loader :loading="viewParam.loading" :color="color" :size="size"></pulse-loader>
-                <ul class="clear" v-for="items in getOrderlist" v-cloak>
-                    <li>{{items.orderStatus}}</li>
-                    <li>{{items.orderModule}}</li>
-                    <li>{{items.orderNum}}</li>
-                    <li>{{items.orderUnit}}</li>
-                    <li>{{items.orderTel}}</li>
-                    <li>{{items.orderPerson}}</li>
-                    <li>{{items.orderTime}}</li>
-                    <li>{{items.orderLogstatus}}</li>
-                    <li @click.stop="edit(items.orderId)">
+                <ul class="clear" v-for="item in getOrderlist" v-cloak>
+                    <li>{{item.orderStatus}}</li>
+                    <li>{{item.orderModule}}</li>
+                    <li>{{item.orderNum}}</li>
+                    <li>{{item.orderUnit}}</li>
+                    <li>{{item.orderTel}}</li>
+                    <li>{{item.orderPerson}}</li>
+                    <li>{{item.orderTime}}</li>
+                    <li>{{item.orderLogstatus}}</li>
+                    <li @click="edit($index)">
                        <img height="24" width="24" src="/static/images/default_arrow.png" />
                     </li>
-                    <div class="order_action" v-show="!items.is_ordershow" transition="expand">
+                    <div class="order_action"  v-show='item.show' transition="expand">
                         <ul>
                             <li><a>编辑</a></li>
                             <li><a>修改</a></li>
@@ -64,29 +65,31 @@
     
 </template>
 <script>
-import show_dialog from '../components/show_dialog'
+import dialogModel from '../components/showDialog'
 import {
     getList,
     getOrderlist
 } from '../vuex/getters'
 import {
-    orderList
+    orderInquiry,
+    changeShowStatue
 } from '../vuex/actions'
 
 export default {
     components: {
-    	show_dialog
+        dialogModel
     },
     data() {
         return {
             viewParam: {
-                is_order: true,
-                is_show:false,
                 loading: true
             },
-            modelPopup:{
-            	 show: false
-            }
+            modelParam:{
+                 show: false,
+                 name: 'new'
+            },
+            testData:this.getOrderlist,
+            show:false
         }
     },
     vuex: {
@@ -95,39 +98,37 @@ export default {
             getOrderlist
         },
         actions: {
-            orderList
+            orderInquiry,
+            changeShowStatue
         }
     },
     created() {
-        this.orderList(this.viewParam);
+        this.orderInquiry(this.viewParam);
         if (this.$route.query.id > this.getList[1].subcategory.length || isNaN(this.$route.query.id)) {
             this.$route.query.id = 0;
         }
     },
-    route: {
-	    activate: function (transition) {
-	      console.log('hook-example activated!')
-	      transition.next()
-	    },
-	    deactivate: function (transition) {
-	      console.log('hook-example deactivated!')
-	      transition.next()
-	  }
-	},
     methods: {
         edit: function(id) {
-            if (this.viewParam.is_ordershow == true) {
-                this.viewParam.is_order = false;
-                this.viewParam.is_show = true;
-            } else {
-                this.viewParam.is_order = true;
-                this.viewParam.is_show = false;
-            }
+
+            /*this.$store.state.table.list[0].show = Object.assign({}, item, { show: true });*/
+            //this.$store.state.table.list[id].show=true;
+            //console.log(this.$store.state.table.list[id].show)       
         },
-        new_order:function(value){
-        	 this.modelPopup.name=value;
-        	 this.modelPopup.show=true;
+        newOrder:function(value){
+             this.modelParam.name=value;
+             this.modelParam.show=true;
         }
+    },
+     route: {
+        activate: function (transition) {
+          console.log('hook-example activated!')
+          transition.next()
+        },
+        deactivate: function (transition) {
+          console.log('hook-example deactivated!')
+          transition.next()
+      }
     }
 }
 </script>
@@ -138,7 +139,7 @@ export default {
 }
 
 .order_search {
-    margin: 25px 30px 0 40px;
+    padding: 25px 30px 0 40px;
 }
 
 .my_order {
@@ -148,7 +149,7 @@ export default {
     padding: 0;
 }
 .my_order_search{
-	min-width: 742px;
+    min-width: 742px;
 }
 .name_search,
 .ordertel_search,
@@ -244,7 +245,7 @@ export default {
 
 .order_action {
     position: absolute;
-    right: 20px;
+    right: 55px;
     padding: 10px 0;
     top: 32px;
     border: 1px solid #ccc;
@@ -253,7 +254,6 @@ export default {
     z-index: 10;
     min-width: 90px;
     max-width: 200px;
-    display: none;
 }
 
 .order_show {
@@ -283,7 +283,7 @@ export default {
 }
 
 .expand-transition {
-    transition: all .5s ease-in-out 0.1s;
+    transition: all .3s ease;
     overflow: inherit;
 }
 

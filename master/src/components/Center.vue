@@ -25,7 +25,7 @@ export default {
     top: 130px;
     left: 240px;
     white-space: nowrap;
-    min-width: 1200px;
+    min-width: 1500px;
 }
 .center_top{
     height: calc(100% - 130px);

@@ -26,14 +26,26 @@
             </div>
         </div>
         <div class="employee_right">
-            右测消息
+            <p class="employee_right_title">消息</p>
+            <div class="employee_right_message">
+                <div class="employee_message_view">
+                    <div class="message_view_left">
+                         <span></span>
+                         <p>您有一条审核信息等待审核</p>
+                         <time>2016-07-25 12:23:36</time>
+                    </div>
+                    <div class="message_view_right">
+                        <img src="/static/images/default_arrow.png" height="24" width="24">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script>
 import {
     getLinechart,
-     getPiechart
+    getPiechart
 } from '../vuex/getters'
 import {
     freshLinecharts,
@@ -79,7 +91,47 @@ export default {
     padding-right: 30px;
 }
 
-.employee_right {}
+.employee_right {
+    margin-left: 30px;
+    float: left;
+    width: calc(100% - 1000px);
+}
+.employee_right_title{
+    color: #333;
+    font-size: 20px;
+}
+.employee_right_message{
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+    white-space: nowrap;
+}
+.employee_message_view{
+    position: relative;
+    border: 1px solid #ddd;
+    padding:10px 8px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    margin-bottom: 10px;
+}
+.message_view_left{
+    color: #333;
+    font-size: 16px;
+}
+.message_view_left span{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+.message_view_left time{
+    color: #999;
+    font-size: 14px;
+}
+.message_view_right{
+    position: absolute;
+    right: 14px;
+    top: 23px;
+    vertical-align: middle;
+}
 .employee_top{
 	margin-bottom: 20px;
 }

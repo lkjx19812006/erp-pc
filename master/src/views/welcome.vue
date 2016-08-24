@@ -39,7 +39,6 @@ export default {
           transition.next()
         },
         deactivate: function (transition) {
-          console.log('hook-example deactivated!')
           transition.next()
       }
     }

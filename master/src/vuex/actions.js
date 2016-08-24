@@ -47,7 +47,7 @@ export const freshPiecharts = ({ dispatch},getPiechart) => {
         });
 };
 
-export const orderList = ({ dispatch },param) => {
+export const orderInquiry = ({ dispatch },param) => {
     param.loading=true;
     Vue.http.get(apiUrl.orderTable)
         .then((res) => {
@@ -58,3 +58,10 @@ export const orderList = ({ dispatch },param) => {
             param.loading=false;  
         });
 };
+
+export const changeShowStatue =({dispatch },param) => {
+    console.log(param);
+    dispatch(types.CHANGE_SHOW_STATUE, param);
+   
+};
+
