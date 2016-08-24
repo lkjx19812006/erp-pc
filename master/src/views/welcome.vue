@@ -5,6 +5,7 @@
             Welcome to your Vue.js appssss!
         </p>
     </div>
+    <div class="image_demo"><press-image></press-image></div>
     <div>
         <show-model :param="modelParam"></show-model>
         <button v-on:click="btnClick('hello')">hello</button>
@@ -13,11 +14,13 @@
 </template>
 <script>
 import Hello from '../components/Hello'
+import pressImage from '../components/imagePress'
 import showModel from './showmodel'
 export default {
     components: {
         Hello,
-        showModel
+        showModel,
+        pressImage
     },
     data() {
         return {
@@ -29,18 +32,23 @@ export default {
     },
     methods: {
         btnClick: function(value) {
-          this.modelParam.name=value;
-          this.modelParam.show=true;
+            this.modelParam.name = value;
+            this.modelParam.show = true;
         }
     },
     route: {
-        activate: function (transition) {
-          console.log('hook-example activated!')
-          transition.next()
+        activate: function(transition) {
+            console.log('hook-example activated!')
+            transition.next()
         },
-        deactivate: function (transition) {
-          transition.next()
-      }
+        deactivate: function(transition) {
+            transition.next()
+        }
+    },
+    events: {
+        getImageData: function(imageData) {
+            console.log(imageData);
+        }
     }
 }
 </script>
@@ -65,6 +73,11 @@ export default {
 }
 
 .logo {
+    width: 100px;
+    height: 100px
+}
+
+.image_demo{
     width: 100px;
     height: 100px
 }
