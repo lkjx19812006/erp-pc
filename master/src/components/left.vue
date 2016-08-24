@@ -6,7 +6,7 @@
         <ul class="left_menu">
             <!-- li左侧菜单列表循环 -->
             <li v-for="item  in  getList" transition="item">
-                <div  v-link="item.path" class="menu_div" @click="init_data(item.categoryid)">
+                <div v-link="item.path" class="menu_div" @click="init_data(item.categoryid)">
                     <div class="bleft">
                         <img v-bind:src="item.img" height="21" width="21">
                     </div>
@@ -59,7 +59,8 @@ export default {
             console.log(this.$route);
         },
         methods: {
-            init_data: function(id) { 
+            init_data: function(id) {
+
             },
             menu: function() {
                 this.menuBar();
@@ -69,31 +70,39 @@ export default {
 </script>
 <style scoped>
 .item {
-      box-sizing: border-box;
-      background-color: #eee;
-      border: 1px solid black;
-      display: inline-block;
-      width: 100px;
-      height: 100px;
-    }
-    .item-transition {
-      transition: opacity .5s ease;
-    }
-    .item-enter {
-      opacity: 0;
-    }
-    .item-leave {
-      opacity: 0;
-      position: absolute; /* important for removal move to work */
-    }
-    .item-move {
-      color: red;
-      transition: transform .5s cubic-bezier(.55,0,.1,1); /* applied when moving */
-    }
-.item-move {
-  /* applied to the element when moving */
-  transition: transform .5s cubic-bezier(.55,0,.1,1);
+    box-sizing: border-box;
+    background-color: #eee;
+    border: 1px solid black;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
 }
+
+.item-transition {
+    transition: opacity .5s ease;
+}
+
+.item-enter {
+    opacity: 0;
+}
+
+.item-leave {
+    opacity: 0;
+    position: absolute;
+    /* important for removal move to work */
+}
+
+.item-move {
+    color: red;
+    transition: transform .5s cubic-bezier(.55, 0, .1, 1);
+    /* applied when moving */
+}
+
+.item-move {
+    /* applied to the element when moving */
+    transition: transform .5s cubic-bezier(.55, 0, .1, 1);
+}
+
 .left {
     height: 100%;
     position: fixed;
@@ -115,6 +124,7 @@ export default {
     top: 60px;
     overflow: hidden !important;
     white-space: nowrap;
+    z-index: 999;
 }
 
 .menu {
@@ -169,11 +179,12 @@ export default {
     -ms-border-radius: 5px;
 }
 
+
 /*.v-link-active ~ .bshow dd:first-of-type span {
     color: #fa6705;
 }*/
 
-.active_font{
+.active_font {
     color: #fa6705;
 }
 
@@ -225,12 +236,6 @@ export default {
     overflow: inherit;
 }
 
-
-/* .expand-enter 定义进入的开始状态 */
-
-
-/* .expand-leave 定义离开的结束状态 */
-
 .expand-enter,
 .expand-leave {
     opacity: 0;
@@ -241,13 +246,6 @@ export default {
     transition: all;
     overflow: inherit;
 }
-
-
-/* .expand-enter 定义进入的开始状态 */
-
-
-/* .expand-leave 定义离开的结束状态 */
-
 .expand_trans-enter,
 .expand_trans-leave {
     opacity: 0;

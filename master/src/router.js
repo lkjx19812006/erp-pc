@@ -25,7 +25,7 @@ export default (router) => router.map({
             '/change': {
                 name: 'change',
                 component: function(resolve) {
-                    require(['./views/partchange'], resolve)
+                    require(['./views/partchance'], resolve)
                 }
             },
             '/unclient': {
@@ -60,6 +60,7 @@ export default (router) => router.map({
                 }
             },
             '/achive': {
+                name:'achive',
                 component: function(resolve) {
                     require(['./views/achivement'], resolve)
                 }
@@ -70,11 +71,13 @@ export default (router) => router.map({
                 }
             },
             '/base': {
+                name:'base',
                 component: function(resolve) {
                     require(['./views/system_data'], resolve)
                 }
             },
             '/base_data': {
+                name:'base_data',
                 component: function(resolve) {
                     require(['./views/base_data'], resolve)
                 }

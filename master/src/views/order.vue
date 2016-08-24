@@ -85,7 +85,9 @@ export default {
     data() {
         return {
             loadParam: {
-                loading: true
+                loading: true,
+                color: '#5dc596',
+                size: '15px'
             },
             dialogParam:{
                  show: false,
