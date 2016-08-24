@@ -35,9 +35,15 @@
                             <div class="editpage-input">
                                 <label class="editlabel">新建文件</label>
                                 <div class="editpage_img clearfix">
-                                    <img src="/static/images/logo.png" class="img-rounded" width="100px" height="100px">
-                                    <img src="/static/images/logo.png" class="img-rounded" width="100px" height="100px">
-                                    <img src="/static/images/logo.png" class="img-rounded" width="100px" height="100px">
+                                    <div class="editpage-image col-md-4">
+                                        <press-image></press-image>
+                                     </div>
+                                     <div class="editpage-image col-md-4">
+                                        <press-image></press-image>
+                                     </div>
+                                     <div class="editpage-image col-md-4">
+                                        <press-image></press-image>
+                                     </div>
                                 </div>
                             </div>
                         </div>
@@ -88,9 +94,10 @@
     </div>
 </template>
 <script>
+import pressImage from '../components/imagePress.vue'
 export default {
     components: {
-
+        pressImage
     },
     props: ['param'],
     data() {
@@ -248,5 +255,8 @@ export default {
 .editpage_img img{
     display: inline-block;
     background: #ccc;
+}
+.editpage-image{
+    display: inline-block;
 }
 </style>

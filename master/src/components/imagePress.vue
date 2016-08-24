@@ -1,11 +1,9 @@
 <template>
     <div class="img_div">
-    <form >
-
-        <input type="file" @change="previewImg" class="input_image" >
-        <img v-bind:src="image" class="image_show" >
-        <img src="../../static/images/close.png" v-show="close" @click="delImage" class="close_image">
-
+        <form>
+            <input type="file" @change="previewImg" class="input_image" >
+                 <img v-bind:src="image" class="image_show" >
+                <img src="../../static/images/close.png" v-show="close" @click="delImage" class="close_image">
         </form>
     </div>
 </template>
@@ -13,7 +11,7 @@
 export default {
     data() {
             return {
-                image: "../../static/images/head.png",
+                image: "../../static/images/default_image.png",
                 close:false
             }
         },
@@ -74,7 +72,7 @@ export default {
                 console.log(e.target.parentElement);
                 e.target.parentElement.reset();
                 this.close=false;
-                this.image="../../static/images/head.png";
+                this.image="../../static/images/default_image.png";
                 this.$dispatch("getImageData", this.image);
 
             }
@@ -103,7 +101,8 @@ h1 {
 
 .close_image{
     position: absolute;
-    top:-30px;
-    right: -30px;
+    top: -16px;
+    right: -14px;
+    width: 30px;
 }
 </style>

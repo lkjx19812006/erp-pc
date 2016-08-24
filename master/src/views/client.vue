@@ -206,7 +206,17 @@
                             </div>
                             <div class="client-detailInfo">
                                 <label>文件</label>
-                                <input type="file" />
+                                <div class="clearfix">
+	                                 <div class="client-image col-md-4">
+	                                 	<press-image></press-image>
+	                                 </div>
+	                                 <div class="client-image col-md-4">
+	                                 	<press-image></press-image>
+	                                 </div>
+	                                 <div class="client-image col-md-4">
+	                                 	<press-image></press-image>
+	                                 </div>
+                                 </div>
                             </div>
                             <div class="client-detailInfo">
                                 <img class="left" src="/static/images/blackselect.png" height="28" width="28" />
@@ -229,9 +239,10 @@ import {
 import {
     getClientList
 } from '../vuex/actions'
+import pressImage from '../components/imagePress'
 export default {
 	components: {
-
+		pressImage
 	},
     vuex: {
         getters: {
@@ -400,5 +411,9 @@ section article {
 .client-editbtn {
     text-align: right;
     margin-top: 15px;
+}
+.client-image{
+	display: inline-block;
+
 }
 </style>
