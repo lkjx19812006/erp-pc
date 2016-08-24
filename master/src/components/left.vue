@@ -101,7 +101,7 @@ export default {
     width: 240px;
     overflow: hidden;
     white-space: nowrap;
-    z-index: 100;
+    z-index: 999;
 }
 
 .left:hover {

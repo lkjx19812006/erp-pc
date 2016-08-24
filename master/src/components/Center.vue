@@ -27,4 +27,12 @@ export default {
     white-space: nowrap;
    /*  min-width: 1500px; */
 }
+.center_top{
+    height: calc(100% - 130px);
+    position: absolute;
+    right: 0;
+    top: 130px;
+    overflow: auto;
+    left: 50px;
+}
 </style>
