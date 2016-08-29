@@ -1,12 +1,14 @@
 <template>
-    <drawdel-model :param="modelParam"></drawdel-model>
-    <ingredient-model :param="ingredientParam"></ingredient-model>
-    <entprise-model :param="entpriseParam"></entprise-model>
+    <drawdel-model :param="modelParam" v-if="!baseshow"></drawdel-model>
+    <ingredient-model :param="ingredientParam" v-if="!baseshow"></ingredient-model>
+    <entprise-model :param="entpriseParam" v-if="!baseshow"></entprise-model>
+    <enterprise-model :param="dialogParam" v-if="!baseshow" ></enterprise-model> 
+    <draw-model :param="dialogParam" v-if="!baseshow" ></draw-model>
+    <component-model :param="dialogParam" v-if="!baseshow"></component-model> 
     <div class="service-data" v-show="$route.path.split('=')[1]==0">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">企业</div>
             <div class="right col-xs-2">
-                <enterprise-model :param="dialogParam"></enterprise-model> 
                 <button class="new_btn" @click="enterprise('enedit')" data-toggle="modal" data-target="#myModal">新建</button>
             </div>
         </div>
@@ -86,7 +88,6 @@
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">成分</div>
             <div class="right col-xs-2">
-                <component-model :param="dialogParam"></component-model> 
                 <button class="new_btn" @click="component('data')" data-toggle="modal" data-target="#myModal">新建</button>
             </div>
         </div>
@@ -144,7 +145,6 @@
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">提取物</div>
             <div class="right col-xs-2">
-              <draw-model :param="dialogParam"></draw-model>
                 <button class="new_btn" @click="draw('data')" data-toggle="modal" data-target="#myModal">新建</button>
             </div>
         </div>
@@ -245,16 +245,17 @@ export default {
             },
             modelParam:{
                 show:false,
-                $index:'id'
+                id:'$index',
             },
             ingredientParam:{
                 show:false,
-                $index:'id'
+                id:'$index',
             },
             entpriseParam:{
                 show:false,
-                $index:'id'
-            }
+                id:'$index',
+            },
+            baseshow:true
         }
     },
     vuex: {
@@ -314,12 +315,15 @@ export default {
         },
         delOperation:function(id){
             this.modelParam.show = true;
+            this.modelParam.$index=id;
         },
         delIngredit:function(id){
             this.ingredientParam.show = true;
+            this.ingredientParam.$index=id;
         },
         entpriseDel:function(id){
             this.entpriseParam.show = true;
+            this.entpriseParam.$index=id;
         }
     },
      route: {

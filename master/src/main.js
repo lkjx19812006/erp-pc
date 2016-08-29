@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import VueResource from 'vue-resource'
+import VueValidator from 'vue-validator'
 import VueRouter from 'vue-router'
 import configRouter from './router'
 import VueAnimatedList from 'vue-animated-list'
@@ -17,6 +18,7 @@ Vue.directive('echarts', require('./directives/echarts'));
 Vue.use(VueAnimatedList)
 Vue.use(VueRouter)
 Vue.use(VueResource)
+Vue.use(VueValidator)
 Vue.http.options.root = '/src/assets/data'
 Vue.http.options.emulateJSON = true
 Vue.http.options.emulateHTTP = true

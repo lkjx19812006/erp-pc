@@ -13,27 +13,28 @@
                 <section class="editsection" v-cloak>
                     <div class="editpage">
                         <div class="editpageleft">
-                            <div class="editpage-input">
+                            <div class="editpage-input"
+                            >
                                 <label class="editlabel">编号</label>
-                                <input type="text" class="edit-input" value="{{systemDataId}}"/>
+                                <input type="text" class="form-control edit-input" value="{{initSystemlist[param.id].systemDataId}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">类型</label>
-                                <input type="text" class="edit-input" value="{{systemDataCode}}"/>
+                                <input type="text" class="form-control edit-input" value="{{initSystemlist[param.id].systemDataCode}}"/>
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">状态</label>
-                                <input type="text" class="edit-input"  value="{{systemDataType}}"/>
+                                <input type="text" class="form-control edit-input"  value="{{initSystemlist[param.id].systemDataType}}"/>
                             </div>
                         </div>
                         <div class="editpageright">
                             <div class="editpage-input">
                                 <label class="editlabel">编码</label>
-                                <input type="text" class="edit-input" value="{{systemDescribe}}"/>
+                                <input type="text" class="form-control edit-input" value="{{initSystemlist[param.id].systemDescribe}}"/>
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">描述</label>
-                                <input type="text" class="edit-input" value="{{systemStatus}}"/>
+                                <input type="text" class="form-control edit-input" value="{{initSystemlist[param.id].systemStatus}}"/>
                             </div>
                         </div>
                     </div>
@@ -42,7 +43,7 @@
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="confirm()">确定</button>
+            <button type="button" class="btn  btn-confirm" @click="updateDataInfo()">确定</button>
         </div>
     </div>
 </template>
@@ -51,37 +52,30 @@ import {
     initSystemlist
 } from '../vuex/getters'
 import {
-    getSystemData
+    getSystemData,
+    addDatainfo
 } from '../vuex/actions'
 export default {
     components: {
        
     },
-    props: ['param','id'],
+    props: ['param'],
     data() {
         return {
-/*             loadParam: {
-                loading: true,
-                color: '#5dc596',
-                size: '15px'
-            }*/
+
         }
     },
     methods:{
-        confirm:function(){
 
-        }
     },
      vuex: {
         getters: {
             initSystemlist
         },
         actions: {
-            getSystemData
+            getSystemData,
+            addDatainfo
         }
-    },
-     created(){
-      /*  this.getSystemData();*/
     },
      route: {
         activate: function (transition) {

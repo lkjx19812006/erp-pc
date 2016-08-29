@@ -14,3 +14,5 @@ export const PROVINCE_DATA = 'PROVINCE_DATA' //系统数据
 export const SERVICE_ENTERPRISE = 'SERVICE_ENTERPRISE' //业务企业数据
 export const SERVICE_COMPONENT = 'SERVICE_COMPONENT' //业务成分数据
 export const SERVICE_DRAW = 'SERVICE_DRAW' //业务提取物数据
+export const ADD_DATA = 'ADD_DATA' //添加数据
+export const UPDATE_DATA = 'UPDATE_DATA' //添加数据

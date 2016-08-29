@@ -5,63 +5,71 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>编辑枚举类型</h3>
+            <h3>新建枚举类型{{param.id}}</h3>
         </div>
+    <validator name="validation1">
+     <form novalidate>
         <div class="edit-model">
-            <form name="editOrderinfo" action="javascript:void(0)">
                 <section class="editsection">
                     <div class="editpage">
                         <div class="editpageleft">
                             <div class="editpage-input">
+                                <p class="system_danger"  v-if="$validation1.systemDataId.required">请输入编号</p> 
+                                <p class="system_danger"  v-if="$validation1.systemDataId.minlength">您输入的编码应不少于五位数</p> 
                                 <label class="editlabel">编号</label>
-                                <input type="text" class="edit-input"  />
-                               <!--  v-model="table.rowA.columnA"v-validate:message-aa="{required:true}" -->
+                                <input type="text" class="form-control  edit-input" id="systemDataId" v-validate:systemDataId="{required:true,minlength:3}"  initial="off" />
                             </div>
                             <div class="editpage-input">
+                                <p class="system_danger"  v-if="$validation1.systemDataType.required">请输入类型</p> 
                                 <label class="editlabel">类型</label>
-                                <input type="text" class="edit-input" />
+                                <input type="text" class="form-control  edit-input" id="systemDataType" initial="off"  v-validate:systemDataType="['required']" />
                             </div>
                             <div class="editpage-input">
+                                <p class="system_danger"  v-if="$validation1.systemStatus.required">请输入状态</p> 
                                 <label class="editlabel">状态</label>
-                                <input type="text" class="edit-input" />
+                                <input type="text" class="form-control  edit-input" id="systemStatus"  v-validate:systemStatus="['required']" />
                             </div>
                         </div>
                         <div class="editpageright">
                             <div class="editpage-input">
+                                <p class="system_danger"  v-if="$validation1.systemDataCode.required">请输入编码</p> 
                                 <label class="editlabel">编码</label>
-                                <input type="text" class="edit-input" />
+                                <input type="text" class="form-control  edit-input" id="systemDataCode" v-validate:systemDataCode="['required']" />
                             </div>
                             <div class="editpage-input">
+                                <p class="system_danger"  v-if="$validation1.systemDescribe.required">请输入描述</p> 
                                 <label class="editlabel">描述</label>
-                                <input type="text" class="edit-input" />
+                                <input type="text" class="form-control  edit-input" id="systemDescribe" v-validate:systemDescribe="['required']"/>
                             </div>
                         </div>
                     </div>
                 </section>
-            </form>
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="confirm()">保存</button>
+            <button type="submit" class="btn  btn-confirm" v-if="$validation1.valid">保存</button>
         </div>
+    </form>
+</validator>
     </div>
 </template>
 <script>
-import pressImage from '../components/imagePress.vue'
 export default {
     components: {
-        pressImage
+        
     },
     props: ['param'],
     data() {
         return {
-           
+           systemDataId:'',
+           systemDataCode:'',
+           systemDataType:'',
+           systemDescribe:'',
+           systemStatus:''
         }
     },
     methods:{
-        confirm:function(){
-
-        }
+    
     }
 }
 </script>
@@ -213,5 +221,9 @@ export default {
 }
 .editpage-image{
     display: inline-block;
+}
+.system_danger{
+    color: red;
+    margin-bottom: 0;
 }
 </style>

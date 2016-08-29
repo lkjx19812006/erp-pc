@@ -7,16 +7,17 @@ import {
    SERVICE_ENTERPRISE,
    SERVICE_COMPONENT,
    SERVICE_DRAW,
-   DELETE_SHOW_STATUE
-
+   DELETE_SHOW_STATUE,
+   ADD_DATA,
+   UPDATE_DATA
 } from '../mutation-types'
 
 const state = {
   	list:[
-  	  {"orderId":0,"orderStatus":"药材","orderModule":"代理商","orderNum":"1234567890","orderUnit":"金融科技","orderTel":"13162875213","orderPerson":"大大","orderTime":"2016-09-18","orderLogstatus":"运输中","show":true},
-  	  {"orderId":1,"orderStatus":"人参","orderModule":"代理商","orderNum":"1234567890","orderUnit":"金融科技","orderTel":"13162875213","orderPerson":"达达","orderTime":"2016-09-18","orderLogstatus":"运输中","show":true},
-  	  {"orderId":2,"orderStatus":"未完成","orderModule":"代理商","orderNum":"1234567890","orderUnit":"金融科技","orderTel":"13162875213","orderPerson":"大大","orderTime":"2016-09-28","orderLogstatus":"运输完成","show":true},
-  	  {"orderId":3,"orderStatus":"已完成","orderModule":"代理商","orderNum":"1234567890","orderUnit":"金融科技","orderTel":"13162875213","orderPerson":"规格","orderTime":"2016-09-18","orderLogstatus":"运输中","show":true}
+  	  {"orderId":0,"orderName":"药材","orderModule":"代理商","orderNum":"1234567890","orderUnit":"金融科技","orderTel":"13162875213","orderPerson":"大大","orderTime":"2016-09-18","orderLogstatus":"运输中","show":true},
+  	  {"orderId":1,"orderName":"人参","orderModule":"代理商","orderNum":"1234567890","orderUnit":"金融科技","orderTel":"13162875213","orderPerson":"达达","orderTime":"2016-09-18","orderLogstatus":"运输中","show":true},
+  	  {"orderId":2,"orderName":"未完成","orderModule":"代理商","orderNum":"1234567890","orderUnit":"金融科技","orderTel":"13162875213","orderPerson":"大大","orderTime":"2016-09-28","orderLogstatus":"运输完成","show":true},
+  	  {"orderId":3,"orderName":"已完成","orderModule":"代理商","orderNum":"1234567890","orderUnit":"金融科技","orderTel":"13162875213","orderPerson":"规格","orderTime":"2016-09-18","orderLogstatus":"运输中","show":true}
   	],
     clientList:[
         {"clientId":0,"clientName":"孙慧","clientJob":"代理商","clientTel":"13162875213","clientEmail":"sunhuili@163.com"},
@@ -24,10 +25,11 @@ const state = {
         {"clientId":2,"clientName":"杨宁","clientJob":"代理商","clientTel":"15698522632","clientEmail":"yangning@163.com"}
     ],
     systemDataList:[
-        {"systemDataId":0,"systemDataCode":"3444","systemDataType":"1","systemDescribe":"1234567890","systemStatus":"enene","show":true},
-        {"systemDataId":1,"systemDataCode":"dddd","systemDataType":"2","systemDescribe":"1234567890","systemStatus":"enene","show":true},
-        {"systemDataId":2,"systemDataCode":"3445","systemDataType":"3","systemDescribe":"1234567890","systemStatus":"enene","show":true},
-        {"systemDataId":3,"systemDataCode":"4444","systemDataType":"4","systemDescribe":"1234567890","systemStatus":"enene","show":true}
+        {"systemDataId":0,"systemDataCode":"022112","systemDataType":"1","systemDescribe":"123456789011","systemStatus":"enene"},
+        {"systemDataId":1,"systemDataCode":"1112","systemDataType":"2","systemDescribe":"1234567890","systemStatus":"enene"},
+        {"systemDataId":2,"systemDataCode":"34445","systemDataType":"3","systemDescribe":"1234567890","systemStatus":"enene"},
+        {"systemDataId":3,"systemDataCode":"45555","systemDataType":"2","systemDescribe":"1234567890","systemStatus":"enene"},
+        {"systemDataId":4,"systemDataCode":"4fff5","systemDataType":"5","systemDescribe":"1234567890","systemStatus":"enene"}
     ],
     provinceDataList:[
        {"provinceId":0,"provinceName":"中国","provinceRank":"222","provinceIcon":"1111","provinceIOS":"22222"},
@@ -65,8 +67,21 @@ const mutations = {
     },
 
     [DELETE_SHOW_STATUE](state,id){
-        console.log(id);
+        state.systemDataList.splice(id,1);
+        state.enterpriseList.splice(id,1);
+        state.componentList.splice(id,1);
+        state.drawList.splice(id,1);
     },
+
+    [ADD_DATA](state,id){
+        state.systemDataList.push(state.systemDataList[id]);
+        console.log( state.systemDataList.push(state.systemDataList[id]))
+    },
+
+    [UPDATE_DATA](state,id){
+       /* state.systemDataList.$set(id,initSystemlist[param.id]);*/
+    },
+
     [PROVINCE_DATA](state,data){
          state.provinceDataList =data.results.provinceDataList;
     },

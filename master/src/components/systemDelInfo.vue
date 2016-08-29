@@ -6,15 +6,17 @@
 	    	<p class="model-tips">是否确定删除此枚举类型？</p>
 	    	<div class="model-footer">
 	    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-	    		<button type="button" class="btn btn-orange" @click="deleteShowStatue(param)">删除{{param}}</button>
+	    		<button type="button" class="btn btn-orange" @click="deleteShowStatue(param.$index,param.show=false)">删除</button>
 	    	</div>
-	    </div>
+	    </div> 
 	</div>
 </template>
 <script>
 import { 
-    deleteShowStatue
+    deleteShowStatue,
+    getSystemData
  } from '../vuex/actions'
+
 export default {
     data() {
         return {
@@ -23,7 +25,8 @@ export default {
     },
     vuex:{
         actions: {
-            deleteShowStatue
+            deleteShowStatue,
+            getSystemData
         }
     },
     props:['param'],

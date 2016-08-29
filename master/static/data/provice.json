@@ -1,5 +1,5 @@
 {"results":{
-	"pagination":{"nowpage":"1","pagesize":"10","totalnum":"10","total":"100","pageshow":"2","prev_text":"上一页","prev_next":"下一页"},
+	"pagination":{"nowpage":"1","pagesize":"10","totalnum":"10","total":"100","pageshow":"2"},
 	 "provinceDataList":[
 	    	{"provinceId":0,"provinceName":"中国1","provinceRank":"2122","provinceIcon":"1111","provinceIOS":"22222"},
 		    {"provinceId":1,"provinceName":"上海1","provinceRank":"222","provinceIcon":"1111","provinceIOS":"22222"},

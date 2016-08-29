@@ -6,15 +6,15 @@
                 <div class="col-xs-8 my_order_search">
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" class="search_input" placeholder="按名字搜索">
+                        <input type="text" class="search_input" v-model="orderName" placeholder="按名字搜索">
                     </div>
                     <div class="ordertel_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" class="search_input" placeholder="按订单号搜索">
+                        <input type="text" class="search_input" v-model="orderNum" placeholder="按订单号搜索">
                     </div>
                     <div class="tel_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" maxlength="11" class="search_input" placeholder="按电话搜索">
+                        <input type="text" maxlength="11" class="search_input" v-model="orderTel" placeholder="按电话搜索">
                     </div>
                 </div>
                 <div class="right col-xs-2">
@@ -39,8 +39,8 @@
           </div>
           <div class="table table_hover">
               <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-              <ul class="clear" v-for="item in initOrderlist" v-cloak>
-                  <li>{{item.orderStatus}}</li>
+              <ul class="clear" v-for="item in initOrderlist | filterBy searchText  in 'orderName' 'orderNum' 'orderTel'"  v-cloak >
+                  <li>{{item.orderName}}</li>
                   <li>{{item.orderModule}}</li>
                   <li>{{item.orderNum}}</li>
                   <li>{{item.orderUnit}}</li>
@@ -94,7 +94,9 @@ export default {
                  name: 'new'
             },
             show:true,
-            list: {all:8,cur:1}
+            list: {all:8,cur:1},
+            searchText:'',
+            orderName:''
         }
     },
     vuex: {

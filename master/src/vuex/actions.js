@@ -97,12 +97,19 @@ export const getSystemData = ({dispatch},param) => {
 };
 
 export const deleteShowStatue =({dispatch },param) => {
-    dispatch(types.DELETE_SHOW_STATUE, param);
+    dispatch(types.DELETE_SHOW_STATUE,param);
        console.log(param);
-      /*if(res.data.results.systemDataList[id].param){
-            res.data.results.systemDataList[id].param.$remove(id);
-        }*/
 };
+
+export const saveDataInfo = ({dispatch},param) => {
+    dispatch(types.ADD_DATA,param);
+    console.log(param)
+};
+
+export const updateDataInfo = ({dispatch},param) => {
+    dispatch(types.UPDATE_DATA,param);
+    console.log(param)
+}
 
 export const getProvinceData = ({dispatch},param) => {
       param.loading=true;

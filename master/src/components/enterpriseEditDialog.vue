@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
          <div class="edit-content">
-            <h3>编辑新建企业</h3>
+            <h3>新建企业</h3>
         </div>
         <div class="edit-model">
             <form name="editOrderinfo" action="javascript:void(0)">

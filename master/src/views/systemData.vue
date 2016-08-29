@@ -1,10 +1,12 @@
 <template>
+    <delete-model :param="delParam" v-if="!delmodel"></delete-model>
+    <modify-model :param="modifyParam" v-if="!model"></modify-model>
+    <system-model :param="dialogParam" v-if="!editmodel"></system-model>
     <div class="myOrder" v-show="$route.path.split('=')[1]==0">
         <div class="order_search">
             <div class="clear">
                 <div class="my_order col-xs-2">枚举类型</div>
                 <div class="right col-xs-2">
-                    <system-model :param="dialogParam"></system-model>
                     <button class="new_btn" @click="dataBase('data')" data-toggle="modal" data-target="#myModal">新建</button>
                 </div>
             </div>
@@ -33,10 +35,8 @@
                   </li>
                   <div class="order_action"  v-show='item.show' transition="expand">
                       <ul>
-                      	  <modify-model :param="modifyParam"></modify-model>
                           <li @click="modify($index)"><a>编辑</a></li>
-                          <!-- <modify-model :param="modifyParam"></modify-model> -->
-                          <li><a>删除</a></li>
+                          <li @click="del($index)"><a>删除</a></li>
                       </ul>
                   </div>
               </ul>
@@ -79,6 +79,7 @@
 import pagination from '../components/pagination'
 import systemModel from '../components/systemDataInfoDialog'
 import modifyModel from '../components/systemUpdateInfo'
+import deleteModel from '../components/systemDelInfo'
 import {
     getList,
     initSystemlist,
@@ -94,7 +95,8 @@ export default {
     components: {
         systemModel,
         pagination,
-        modifyModel
+        modifyModel,
+        deleteModel
     },
     data() {
         return {
@@ -108,11 +110,18 @@ export default {
                  name: 'data'   
             },
             modifyParam:{
-            	$index:'id',
+            	id:'',
             	show:false
             },
+            delParam:{
+                id:'',
+                show:false
+            },
             show:true,
-            list: {all:8,cur:1}
+            list: {all:8,cur:1},
+            model:true,
+            editmodel:true,
+            delmodel:true
         }
     },
     vuex: {
@@ -133,7 +142,6 @@ export default {
         if (this.$route.query.id > this.getList[10].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
             this.$route.query.id = 0;
         }
-        console.log(this.$route.query.id);
     },
     methods: {
         editData: function(id) {
@@ -146,10 +154,18 @@ export default {
         dataBase:function(value){
              this.dialogParam.name=value;
              this.dialogParam.show=true;
+             this.editmodel = false;
         },
         modify:function(id){
-        	this.modifyParam.$index=id;
-            this.modifyParam.show=true;
+        	this.modifyParam.id=id;
+          this.modifyParam.show=true;
+          this.model=false;
+        },
+         del:function(id){
+            this.delParam.id=id;
+             this.delmodel=false;
+             this.delParam.show=true;
+             this.$store.state.table.systemDataList[id].show=false;
         }
     },
      route: {
