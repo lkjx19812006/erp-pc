@@ -1,24 +1,10 @@
 <template>
-    <div class="myOrder">
+    <div class="myOrder" v-show="$route.path.split('=')[1]==0">
         <div class="order_search">
             <div class="clear">
-                <div class="my_order col-xs-2">系统数据</div>
-                <!-- <div class="col-xs-8 my_order_search">
-                    <div class="name_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" class="search_input" placeholder="按名字搜索">
-                    </div>
-                    <div class="ordertel_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" class="search_input" placeholder="按订单号搜索">
-                    </div>
-                    <div class="tel_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" maxlength="11" class="search_input" placeholder="按电话搜索">
-                    </div>
-                </div> -->
+                <div class="my_order col-xs-2">枚举类型</div>
                 <div class="right col-xs-2">
-                    <dialog-model :param="dialogParam"></dialog-model>
+                    <system-model :param="dialogParam"></system-model>
                     <button class="new_btn" @click="dataBase('data')" data-toggle="modal" data-target="#myModal">新建</button>
                 </div>
             </div>
@@ -36,21 +22,51 @@
           </div>
           <div class="table table_hover">
               <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-              <ul class="clear" v-for="item in initOrderlist" v-cloak>
-                  <li>{{item.orderStatus}}</li>
-                  <li>{{item.orderModule}}</li>
-                  <li>{{item.orderNum}}</li>
-                  <li>{{item.orderUnit}}</li>
-                  <li>{{item.orderTel}}</li>
-                  <li @click="edit($index)">
+              <ul class="clear" v-for="item in initSystemlist" v-cloak>
+                  <li>{{item.systemDataId}}</li>
+                  <li>{{item.systemDataCode}}</li>
+                  <li>{{item.systemDataType}}</li>
+                  <li>{{item.systemDescribe}}</li>
+                  <li>{{item.systemStatus}}</li>
+                  <li @click="editData($index)">
                      <img height="24" width="24" src="/static/images/default_arrow.png" />
                   </li>
                   <div class="order_action"  v-show='item.show' transition="expand">
                       <ul>
-                          <li><a>编辑</a></li>
-                          <li><a>修改</a></li>
+                      	  <modify-model :param="modifyParam"></modify-model>
+                          <li @click="modify($index)"><a>编辑</a></li>
+                          <!-- <modify-model :param="modifyParam"></modify-model> -->
+                          <li><a>删除</a></li>
                       </ul>
                   </div>
+              </ul>
+          </div> 
+        </div>
+    </div>
+     <div class="myOrder" v-show="$route.path.split('=')[1]==1">
+        <div class="order_search">
+            <div class="clear">
+                <div class="my_order col-xs-2">省市区</div>
+            </div>
+        </div>  
+        <div class="order_table">
+           <div class="table">
+              <ul class="clear">
+                  <li><a>编号</a></li>
+                  <li><a>名称</a></li>
+                  <li><a>级别</a></li>
+                  <li><a>图标</a></li>
+                  <li><a>IOS编码</a></li>
+              </ul>
+          </div>
+          <div class="table table_hover"  v-cloak>
+              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+              <ul class="clear" v-for="item in initProvincelist">
+                  <li>{{item.provinceId}}</li>
+                  <li>{{item.provinceName}}</li>
+                  <li>{{item.provinceRank}}</li>
+                  <li>{{item.provinceIcon}}</li>
+                  <li>{{item.provinceIOS}}</li>
               </ul>
           </div> 
         </div>
@@ -61,20 +77,24 @@
 </template>
 <script>
 import pagination from '../components/pagination'
-import dialogModel from '../components/orderInformationDialog'
+import systemModel from '../components/systemDataInfoDialog'
+import modifyModel from '../components/systemUpdateInfo'
 import {
     getList,
-    initOrderlist
+    initSystemlist,
+    initProvincelist
 } from '../vuex/getters'
 import {
-    getOrderList,
+    getSystemData,
+    getProvinceData,
     changeShowStatue
 } from '../vuex/actions'
 
 export default {
     components: {
-        dialogModel,
-        pagination
+        systemModel,
+        pagination,
+        modifyModel
     },
     data() {
         return {
@@ -85,7 +105,11 @@ export default {
             },
             dialogParam:{
                  show: false,
-                 name: 'data'
+                 name: 'data'   
+            },
+            modifyParam:{
+            	$index:'id',
+            	show:false
             },
             show:true,
             list: {all:8,cur:1}
@@ -94,32 +118,38 @@ export default {
     vuex: {
         getters: {
             getList,
-            initOrderlist
+            initSystemlist,
+            initProvincelist
         },
         actions: {
-            getOrderList,
-            changeShowStatue
+            getSystemData,
+            changeShowStatue,
+            getProvinceData
         }
     },
     created() {
-        this.getOrderList(this.loadParam);
-       /* this.changeShowStatue();*/
-        if (this.$route.query.id > this.getList[1].subcategory.length || isNaN(this.$route.query.id)) {
+        this.getSystemData(this.loadParam);
+        this.getProvinceData(this.loadParam);
+        if (this.$route.query.id > this.getList[10].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
             this.$route.query.id = 0;
         }
+        console.log(this.$route.query.id);
     },
     methods: {
-        edit: function(id) {
-            if(this.$store.state.table.list[id].show){
-                this.$store.state.table.list[id].show=!this.$store.state.table.list[id].show;
+        editData: function(id) {
+            if(this.$store.state.table.systemDataList[id].show == true){
+                this.$store.state.table.systemDataList[id].show=!this.$store.state.table.systemDataList[id].show;
             }else{
-                 this.$store.state.table.list[id].show=true;
-            }
-            console.log(this.$store.state.table)       
+                 this.$store.state.table.systemDataList[id].show=true;
+            }       
         },
         dataBase:function(value){
              this.dialogParam.name=value;
              this.dialogParam.show=true;
+        },
+        modify:function(id){
+        	this.modifyParam.$index=id;
+            this.modifyParam.show=true;
         }
     },
      route: {
@@ -246,7 +276,7 @@ export default {
 
 .order_action {
     position: absolute;
-    right: 55px;
+    right: 96px;
     padding: 10px 0;
     top: 32px;
     border: 1px solid #ccc;
@@ -259,7 +289,7 @@ export default {
 
 .order_show {
     position: absolute;
-    right: 20px;
+    right: 96px;
     padding: 10px 0;
     top: 32px;
     border: 1px solid #ccc;
@@ -281,6 +311,7 @@ export default {
     color: #003077;
     padding: 5px 5px 5px 10px;
     display: block;
+    cursor: pointer;
 }
 
 .expand-transition {

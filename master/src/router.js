@@ -30,7 +30,7 @@ export default (router) => router.map({
             },
             '/unclient': {
                 component: function(resolve) {
-                    require(['./views/potential_client'], resolve)
+                    require(['./views/news'], resolve)
                 }
             },
             '/client': {
@@ -73,13 +73,13 @@ export default (router) => router.map({
             '/base': {
                 name:'base',
                 component: function(resolve) {
-                    require(['./views/system_data'], resolve)
+                    require(['./views/systemData'], resolve)
                 }
             },
-            '/base_data': {
-                name:'base_data',
+            '/baseData': {
+                name:'baseData',
                 component: function(resolve) {
-                    require(['./views/base_data'], resolve)
+                    require(['./views/baseData'], resolve)
                 }
             },
             '/reports': {
@@ -101,10 +101,7 @@ export default (router) => router.map({
                 component: function(resolve) {
                     require(['./views/set'], resolve)
                 }
-            },
-            /*router.redirect({
-                '*':'main'
-            })*/
+            }
         }
     },
     '*': { //除'/'以外的所有路由，均跳转到404页面

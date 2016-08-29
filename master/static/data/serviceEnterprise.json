@@ -1,0 +1,10 @@
+{
+	"results":{
+	    "enterpriseList":[
+	    		{"enterpriseId":0,"enterpriseCode":"021122","enterpriseClassify":"1","enterpriseName":"上海冕冠","enterprisePhone":"13162875213","enterpriseContact":"大神","enterpriseIntroduce":"好好好好哄","enterpriseLegal":"卡卡","enterpriseCompany":"来啦","enterpriseRange":"包括很多、很多、、、","enterpriseArea":"上海虹口区","enterpriseAddr":"上海虹口江湾镇","enterpriseRegist":"上海虹口江湾镇","enterpriseDate":"2015-07-07","enterpriseDeadline":"2030-7-7"},
+				{"enterpriseId":1,"enterpriseCode":"3243","enterpriseClassify":"15","enterpriseName":"上海冕冠","enterprisePhone":"13162875213","enterpriseContact":"大神","enterpriseIntroduce":"好好好好哄","enterpriseLegal":"卡卡","enterpriseCompany":"来啦","enterpriseRange":"包括很多、很多、、、","enterpriseArea":"上海虹口区","enterpriseAddr":"上海虹口江湾镇","enterpriseRegist":"上海虹口江湾镇","enterpriseDate":"2015-07-07","enterpriseDeadline":"2030-7-7"}
+	   		 ]
+	   	},
+	"msg":"success",
+	"code":200
+}

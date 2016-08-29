@@ -1,0 +1,10 @@
+{
+	"results":{
+		"drawList":[
+		    {"drawId":0,"drawchinese":"明明11","drawenglish":"sunny","drawlatin":"ddd","drawactive":"0.5g","drawratio":"1:6","drawclientName":"法规","drawproduct":"上海","drawspec":"颗","drawprice":"155元/斤"},
+			{"drawId":1,"drawchinese":"小小","drawenglish":"emma","drawlatin":"ddd","drawactive":"0.5g","drawratio":"1:6","drawclientName":"法规","drawproduct":"上海","drawspec":"颗","drawprice":"155元/斤"},
+			{"drawId":2,"drawchinese":"手机","drawenglish":"ddd","drawlatin":"ddd","drawactive":"0.5g","drawratio":"1:6","drawclientName":"法规","drawproduct":"上海","drawspec":"颗","drawprice":"155元/斤"}
+	    ]},
+	"msg":"success",
+	"code":200
+}

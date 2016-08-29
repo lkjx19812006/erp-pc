@@ -1,6 +1,6 @@
 <template>
    
-                 <div>加油吧，兄弟！！！！！！</div>
+   <div class="model-header">加油吧，兄弟！！！！！！</div>
              
 </template>
 <script>
@@ -11,5 +11,11 @@ export default {
 }
 </script>
 <style scoped>
-
+	.model-header{
+		background-color: #fff;
+		border-radius: 5px;
+	    -webkit-border-radius: 5px;
+	    -moz-border-radius: 5px;
+	    -ms-border-radius: 5px;
+	}
 </style>

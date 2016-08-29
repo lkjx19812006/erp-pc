@@ -1,0 +1,10 @@
+{
+	"results":{
+	   "componentList":[
+	   			{"componentId":0,"componentName":"人参","componentOwn":"饮片厂","componentname":"ddd","componentContent":"0.5g","componentUnit":"克","componenttype":"来啦"},
+				{"componentId":1,"componentName":"红茶","componentOwn":"药品厂","componentname":"ffd","componentContent":"0.5g","componentUnit":"克","componenttype":"来啦"}
+	     ]
+	   },
+	"msg":"success",
+	"code":200
+}

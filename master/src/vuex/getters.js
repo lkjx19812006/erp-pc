@@ -12,8 +12,6 @@ export const getMenu = (state) => {
 };
 
 export const getList = (state) => {
-
-    console.log(JSON.parse(JSON.stringify(state.category.list)));
     return JSON.parse(JSON.stringify(state.category.list));
 }
 
@@ -47,4 +45,24 @@ export const initOrderlist = (state) => {
 
 export const initClientlist = (state) => {
     return parseJson(state.table.clientList);
+}
+
+export const initSystemlist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.systemDataList)); 
+    console.log(state.table.systemDataList) 
+} 
+export const initProvincelist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.provinceDataList));  
+}
+
+export const initEnterpriselist = (state) => {
+    return parseJson(state.table.enterpriseList);  
+}
+
+export const initConponentlist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.componentList));  
+}
+
+export const initDrawlist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.drawList));  
 }

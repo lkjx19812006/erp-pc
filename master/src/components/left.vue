@@ -16,7 +16,7 @@
                     <dl class="bshow_dl" clear>
                         <dd class="clear" v-for="sub in item.subcategory" v-link="sub.path" transition="item">
                             <i class="fold_line"></i>
-                            <div class="fold_content">
+                            <div class="fold_content" >
                                 <div class="bleft">
                                     <img v-bind:src="sub.img" height="15" width="15">
                                 </div>

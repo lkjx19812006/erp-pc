@@ -9,7 +9,6 @@ export const initList = ({ dispatch }) => {
     Vue.http.get(apiUrl.list)
         .then((res) => {
             dispatch(types.INIT_LIST, res.data);
-            console.log(res.data);
         }, (res) => {
             console.log('fail');
         });
@@ -65,7 +64,6 @@ export const changeShowStatue =({dispatch },param) => {
      if(res.data.results[id].param){
             res.data.results[id].param=!res.data.results[id].param;
         }
-       /* console.log(res.data.results[0].show);*/
         console.log(res.data.results[id].param);
 };
 
@@ -74,6 +72,91 @@ export const getClientList = ({dispatch},param) => {
     Vue.http.get(apiUrl.clientList)
         .then((res) => {
             dispatch(types.CLIENT_INFO, res.data);
+            param.loading=false; 
+            console.log(res.data)
+        }, (res) => {
+            console.log('fail');
+            param.loading=false;  
+        });
+};
+
+export const getSystemData = ({dispatch},param) => {
+      param.loading=true;
+    Vue.http.get(apiUrl.dataBaseList)
+        .then((res) => {
+            for(var i in res.data.results.systemDataList){
+               res.data.results.systemDataList[i].show=false; 
+               res.data.results.systemDataList[i].delInfo = false;
+            }
+            dispatch(types.SYSTEM_DATA, res.data);
+            param.loading=false; 
+        }, (res) => {
+            console.log('fail');
+            param.loading=false;  
+        });
+};
+
+export const deleteShowStatue =({dispatch },param) => {
+    dispatch(types.DELETE_SHOW_STATUE, param);
+       console.log(param);
+      /*if(res.data.results.systemDataList[id].param){
+            res.data.results.systemDataList[id].param.$remove(id);
+        }*/
+};
+
+export const getProvinceData = ({dispatch},param) => {
+      param.loading=true;
+    Vue.http.get(apiUrl.provinceList)
+        .then((res) => {
+            for(var i in res.data.results.provinceList){
+               res.data.results.provinceList[i].show=false; 
+            }
+            dispatch(types.PROVINCE_DATA, res.data);
+            param.loading=false; 
+        }, (res) => {
+            console.log('fail');
+            param.loading=false;  
+        });
+};
+
+export const getEnterpriseData = ({dispatch},param) => {
+      param.loading=true;
+    Vue.http.get(apiUrl.enterpriseList)
+        .then((res) => {
+            for(var i in res.data.results.enterpriseList){
+               res.data.results.enterpriseList[i].show=false; 
+            }
+            dispatch(types.SERVICE_ENTERPRISE, res.data);
+            param.loading=false; 
+        }, (res) => {
+            console.log('fail');
+            param.loading=false;  
+        });
+};
+
+export const getComponentData = ({dispatch},param) => {
+    param.loading=true;
+    Vue.http.get(apiUrl.componentList)
+        .then((res) => {
+            for(var i in res.data.results.componentList){
+               res.data.results.componentList[i].show=false; 
+            }
+            dispatch(types.SERVICE_COMPONENT, res.data);
+            param.loading=false; 
+        }, (res) => {
+            console.log('fail');
+            param.loading=false;  
+        });
+};
+
+export const getDrawData = ({dispatch},param) => {
+    param.loading=true;
+    Vue.http.get(apiUrl.drawList)
+        .then((res) => {
+            for(var i in res.data.results.drawList){
+               res.data.results.drawList[i].show=false; 
+            }
+            dispatch(types.SERVICE_DRAW, res.data);
             param.loading=false; 
         }, (res) => {
             console.log('fail');

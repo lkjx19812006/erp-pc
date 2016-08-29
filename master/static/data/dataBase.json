@@ -1,16 +1,11 @@
 {
 	"results":{
 	    "systemDataList":[
-		    {"systemDataId":0,"systemDataCode":"0222","systemDataType":"1","systemDescribe":"1234567890","systemStatus":"enene"},
+		    {"systemDataId":0,"systemDataCode":"022112","systemDataType":"1","systemDescribe":"123456789011","systemStatus":"enene"},
 			{"systemDataId":1,"systemDataCode":"1112","systemDataType":"1","systemDescribe":"1234567890","systemStatus":"enene"},
 			{"systemDataId":2,"systemDataCode":"34445","systemDataType":"1","systemDescribe":"1234567890","systemStatus":"enene"},
 			{"systemDataId":3,"systemDataCode":"45555","systemDataType":"1","systemDescribe":"1234567890","systemStatus":"enene"}
-	       ],
-	    "provinceDataList":[
-	    	{"provinceId":0,"provinceName":"中国","provinceRank":"222","provinceIcon":"1111","provinceIOS":"22222"},
-		    {"provinceId":1,"provinceName":"中国","provinceRank":"222","provinceIcon":"1111","provinceIOS":"22222"},
-		    {"provinceId":2,"provinceName":"中国","provinceRank":"222","provinceIcon":"1111","provinceIOS":"22222"}
-	      ]
+	       ]
 	    },
 	"msg":"success",
 	"code":200

@@ -1,15 +1,14 @@
 <template>
-    <div v-show="param.show" class="modal  fade" tabindex="-1" role="dialog">
-        <div class="container modal_con">
-            <div @click="param.show = false" class="top-title">
-                <span class="glyphicon glyphicon-remove-circle"></span>
-            </div>
-            <div :show.sync="param.show">
-                <hello-model v-show="param.name=='hello'"></hello-model>
-                <test-model v-show="param.name=='test'"></test-model>
-            </div>
+    <div v-show="param.show" class="modal  fade" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con" v-show="param.show">
+        <div @click="param.show = false" class="top-title">
+            <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
-</div>
+        <div :show.sync="param.show">
+            <hello-model v-show="param.name=='hello'"></hello-model>
+            <test-model v-show="param.name=='test'"></test-model>
+        </div>
+    </div>
 </template>
 <script>
 import helloModel from '../components/helloModel'
@@ -33,33 +32,32 @@ export default {
     background-color: #000;
     display: block;
 }
-.modal_con{
-     display: block;
-     position: absolute;
-     top: 91px; 
-     margin:auto;
-     left: 0;
-     right: 0;
-     width:80%;
-     bottom:50px;
-     background-color: #fff;
-     border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
+
+.modal_con {
+    position: absolute;
+    width: 50%;
+    right: 0;
+    left: 0;
+    height: 100%;
+    margin: 130px auto;
+    z-index: 1080;
+    padding: 0 5px;
 }
-.big-font{
-	font-size: 36px;
+
+.big-font {
+    font-size: 36px;
 }
-.top-title{
-	position: absolute;
-	right: 0;
+
+.top-title {
+    position: absolute;
+    right: 0;
     top: 0;
     margin-top: -28px;
     margin-right: -22px;
 }
-.top-title span{
-    font-size: 32px;
 
+.top-title span {
+    font-size: 30px;
+    color: #fff;
 }
 </style>
