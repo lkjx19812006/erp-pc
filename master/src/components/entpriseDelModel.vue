@@ -9,20 +9,20 @@
 	    	<p class="model-tips">是否确定删除此企业信息？</p>
 	    	<div class="model-footer">
 	    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-	    		<button type="button" class="btn btn-orange" @click="deleteShowStatue(param.$index,param.show=false)">删除</button>
+	    		<button type="button" class="btn btn-orange" @click="deleteCompanyStatus(param.id,param.show=false)">删除</button>
 	    	</div>
 	    </div>
 	</div>
 </template>
 <script>
 import {
-    deleteShowStatue,
+    deleteCompanyStatus,
     getEnterpriseData
 } from '../vuex/actions'
 export default {
      vuex:{
         actions: {
-            deleteShowStatue,
+            deleteCompanyStatus,
             getEnterpriseData
         }
     },

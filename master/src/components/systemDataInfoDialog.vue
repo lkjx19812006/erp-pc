@@ -1,75 +1,83 @@
 <template>
-    <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建枚举类型{{param.id}}</h3>
+            <h3>新建枚举类型</h3>
         </div>
-    <validator name="validation1">
-     <form novalidate>
-        <div class="edit-model">
-                <section class="editsection">
-                    <div class="editpage">
-                        <div class="editpageleft">
-                            <div class="editpage-input">
-                                <p class="system_danger"  v-if="$validation1.systemDataId.required">请输入编号</p> 
-                                <p class="system_danger"  v-if="$validation1.systemDataId.minlength">您输入的编码应不少于五位数</p> 
-                                <label class="editlabel">编号</label>
-                                <input type="text" class="form-control  edit-input" id="systemDataId" v-validate:systemDataId="{required:true,minlength:3}"  initial="off" />
+        <validator name="validation">
+            <form novalidate>
+                <div class="edit-model">
+                    <section class="editsection">
+                        <div class="editpage">
+                            <div class="editpageleft">
+                                <div class="editpage-input">
+                                    <label class="editlabel" for="system">编号 <span class="system_danger" v-if="$validation.system.required||$validation.system.minlength">请输入编号且不少于三位数</span></label>
+                                    <input type="text" class="form-control  edit-input" id="system" v-validate:system="{required:true,minlength:3}" v-model="systemData.systemDataId"  />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel" for="systemtype">类型
+                                        <span class="system_danger" v-if="$validation.systemtype.required">请输入类型</span> </label>
+                                    <input type="text" class="form-control  edit-input" id="systemtype" v-validate:systemtype="['required']" v-model="systemData.systemDataCode" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel" for="systemstatus">状态
+                                        <span class="system_danger" v-if="$validation.systemstatus.required">请输入状态</span></label>
+                                    <input type="text" class="form-control  edit-input" id="systemstatus" v-validate:systemstatus="['required']" v-model="systemData.systemDataType" />
+                                </div>
                             </div>
-                            <div class="editpage-input">
-                                <p class="system_danger"  v-if="$validation1.systemDataType.required">请输入类型</p> 
-                                <label class="editlabel">类型</label>
-                                <input type="text" class="form-control  edit-input" id="systemDataType" initial="off"  v-validate:systemDataType="['required']" />
-                            </div>
-                            <div class="editpage-input">
-                                <p class="system_danger"  v-if="$validation1.systemStatus.required">请输入状态</p> 
-                                <label class="editlabel">状态</label>
-                                <input type="text" class="form-control  edit-input" id="systemStatus"  v-validate:systemStatus="['required']" />
+                            <div class="editpageright">
+                                <div class="editpage-input">
+                                    <label class="editlabel" for="systemcode">编码
+                                        <span class="system_danger" v-if="$validation.systemcode.required">请输入编码</span> </label>
+                                    <input type="text" class="form-control  edit-input" id="systemcode" v-validate:systemcode="['required']" v-model="systemData.systemDescribe" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel" for="describe">描述
+                                        <span class="system_danger" v-if="$validation.describe.required">请输入描述</span> </label>
+                                    <input type="text" class="form-control  edit-input" id="describe" v-validate:describe="['required']" v-model="systemData.systemStatus" />
+                                </div>
                             </div>
                         </div>
-                        <div class="editpageright">
-                            <div class="editpage-input">
-                                <p class="system_danger"  v-if="$validation1.systemDataCode.required">请输入编码</p> 
-                                <label class="editlabel">编码</label>
-                                <input type="text" class="form-control  edit-input" id="systemDataCode" v-validate:systemDataCode="['required']" />
-                            </div>
-                            <div class="editpage-input">
-                                <p class="system_danger"  v-if="$validation1.systemDescribe.required">请输入描述</p> 
-                                <label class="editlabel">描述</label>
-                                <input type="text" class="form-control  edit-input" id="systemDescribe" v-validate:systemDescribe="['required']"/>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-        </div>
-        <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="submit" class="btn  btn-confirm" v-if="$validation1.valid">保存</button>
-        </div>
-    </form>
-</validator>
+                    </section>
+                </div>
+                <div class="edit_footer">
+                    <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="saveDataInfo(systemData,param.show = false)">保存</button>
+                </div>
+            </form>
+        </validator>
     </div>
 </template>
 <script>
+import {
+    getSystemData,
+    saveDataInfo
+} from '../vuex/actions'
 export default {
     components: {
-        
+
     },
     props: ['param'],
     data() {
         return {
-           systemDataId:'',
-           systemDataCode:'',
-           systemDataType:'',
-           systemDescribe:'',
-           systemStatus:''
+            systemData: {
+                systemDataId: '',
+                systemDataCode: '',
+                systemDataType: '',
+                systemDescribe: '',
+                systemStatus: ''
+            }
+
         }
     },
-    methods:{
-    
+    vuex: {
+        actions: {
+            getSystemData,
+            saveDataInfo
+        }
     }
 }
 </script>
@@ -89,7 +97,7 @@ export default {
     right: 0;
     max-width: 630px;
     min-width: 380px;
-    max-height: 510px;
+    max-height: 445px;
     bottom: 50px;
     padding: 0;
     background-color: #fff;
@@ -97,7 +105,6 @@ export default {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
-    /*层数高度不够增加层数*/
     z-index: 1080;
     overflow: hidden;
     overflow-y: auto;
@@ -212,18 +219,24 @@ export default {
 .btn-close {
     color: #fa6705;
 }
-.editpage_img{
+
+.editpage_img {
     width: 90%;
 }
-.editpage_img img{
+
+.editpage_img img {
     display: inline-block;
     background: #ccc;
 }
-.editpage-image{
+
+.editpage-image {
     display: inline-block;
 }
-.system_danger{
+
+.system_danger {
     color: red;
     margin-bottom: 0;
+    font-weight: 100;
+    font-size: 12px;
 }
 </style>

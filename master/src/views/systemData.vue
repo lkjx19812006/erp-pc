@@ -7,7 +7,7 @@
             <div class="clear">
                 <div class="my_order col-xs-2">枚举类型</div>
                 <div class="right col-xs-2">
-                    <button class="new_btn" @click="dataBase('data')" data-toggle="modal" data-target="#myModal">新建</button>
+                    <button class="new_btn" @click="newData('data')" data-toggle="modal" data-target="#myModal">新建</button>
                 </div>
             </div>
         </div>  
@@ -35,7 +35,7 @@
                   </li>
                   <div class="order_action"  v-show='item.show' transition="expand">
                       <ul>
-                          <li @click="modify($index)"><a>编辑</a></li>
+                          <li @click="modify($index,item)"><a>编辑</a></li>
                           <li @click="del($index)"><a>删除</a></li>
                       </ul>
                   </div>
@@ -151,21 +151,24 @@ export default {
                  this.$store.state.table.systemDataList[id].show=true;
             }       
         },
-        dataBase:function(value){
+        newData:function(value){
              this.dialogParam.name=value;
              this.dialogParam.show=true;
              this.editmodel = false;
         },
-        modify:function(id){
-        	this.modifyParam.id=id;
-          this.modifyParam.show=true;
-          this.model=false;
+        modify:function(id,item){
+          	this.modifyParam.id=id;
+            this.modifyParam.show=true;
+            this.model=false;
+            this.$broadcast('getParam');
+            if(this.$store.state.table.systemDataList[id].show == true){
+              this.$store.state.table.systemDataList[id].show=!this.$store.state.table.systemDataList[id].show;
+            }
         },
          del:function(id){
             this.delParam.id=id;
-             this.delmodel=false;
-             this.delParam.show=true;
-             this.$store.state.table.systemDataList[id].show=false;
+            this.delmodel=false;
+            this.delParam.show=true;
         }
     },
      route: {

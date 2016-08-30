@@ -1,5 +1,5 @@
 <template>
-    <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal"  role="dialog"></div>
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -9,32 +9,30 @@
         </div>
         <div class="edit-model">
             <form name="editOrderinfo" action="javascript:void(0)">
-             <!--  <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader> -->
                 <section class="editsection" v-cloak>
                     <div class="editpage">
                         <div class="editpageleft">
-                            <div class="editpage-input"
-                            >
+                            <div class="editpage-input">
                                 <label class="editlabel">编号</label>
-                                <input type="text" class="form-control edit-input" value="{{initSystemlist[param.id].systemDataId}}" />
+                                <input type="text" v-model='systemData.systemDataId' class="form-control edit-input" value="{{systemData.systemDataId}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">类型</label>
-                                <input type="text" class="form-control edit-input" value="{{initSystemlist[param.id].systemDataCode}}"/>
+                                <input type="text" v-model='systemData.systemDataCode' class="form-control edit-input" value="{{systemData.systemDataCode}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">状态</label>
-                                <input type="text" class="form-control edit-input"  value="{{initSystemlist[param.id].systemDataType}}"/>
+                                <input type="text" v-model='systemData.systemDataType' class="form-control edit-input" value="{{systemData.systemDataType}}" />
                             </div>
                         </div>
                         <div class="editpageright">
                             <div class="editpage-input">
                                 <label class="editlabel">编码</label>
-                                <input type="text" class="form-control edit-input" value="{{initSystemlist[param.id].systemDescribe}}"/>
+                                <input type="text" v-model='systemData.systemDescribe' class="form-control edit-input" value="{{systemData.systemDescribe}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">描述</label>
-                                <input type="text" class="form-control edit-input" value="{{initSystemlist[param.id].systemStatus}}"/>
+                                <input type="text" v-model="systemData.systemStatus" class="form-control edit-input" value="{{systemData.systemStatus}}" />
                             </div>
                         </div>
                     </div>
@@ -43,7 +41,7 @@
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="updateDataInfo()">确定</button>
+            <button type="button" class="btn  btn-confirm" @click="updateDataInfo(systemData,param.show = false)">确定</button>
         </div>
     </div>
 </template>
@@ -53,39 +51,50 @@ import {
 } from '../vuex/getters'
 import {
     getSystemData,
-    addDatainfo
+    updateDataInfo
 } from '../vuex/actions'
 export default {
-    components: {
-       
-    },
     props: ['param'],
     data() {
         return {
-
+            systemData: {
+                systemDataId: this.initSystemlist[this.param.id].systemDataId,
+                systemDataCode: this.initSystemlist[this.param.id].systemDataCode,
+                systemDataType: this.initSystemlist[this.param.id].systemDataType,
+                systemDescribe: this.initSystemlist[this.param.id].systemDescribe,
+                systemStatus: this.initSystemlist[this.param.id].systemStatus,
+                id: this.param.id
+            }
         }
     },
-    methods:{
-
-    },
-     vuex: {
+    vuex: {
         getters: {
             initSystemlist
         },
         actions: {
             getSystemData,
-            addDatainfo
+            updateDataInfo
         }
     },
-     route: {
-        activate: function (transition) {
-          console.log('hook-example activated!')
-          transition.next()
+    route: {
+        activate: function(transition) {
+            console.log('hook-example activated!')
+            transition.next()
         },
-        deactivate: function (transition) {
-          console.log('hook-example deactivated!')
-          transition.next()
-      }
+        deactivate: function(transition) {
+            console.log('hook-example deactivated!')
+            transition.next()
+        }
+    },
+    events: {
+        'getParam' () {
+            this.$set('systemData.systemDataId', this.initSystemlist[this.param.id].systemDataId);
+            this.$set('systemData.systemDataCode', this.initSystemlist[this.param.id].systemDataCode);
+            this.$set('systemData.systemDataType', this.initSystemlist[this.param.id].systemDataType);
+            this.$set('systemData.systemStatus', this.initSystemlist[this.param.id].systemStatus);
+            this.$set('systemData.systemDescribe', this.initSystemlist[this.param.id].systemDescribe);
+            this.$set('systemData.id', this.param.id);
+        }
     }
 }
 </script>
@@ -228,14 +237,17 @@ export default {
 .btn-close {
     color: #fa6705;
 }
-.editpage_img{
+
+.editpage_img {
     width: 90%;
 }
-.editpage_img img{
+
+.editpage_img img {
     display: inline-block;
     background: #ccc;
 }
-.editpage-image{
+
+.editpage-image {
     display: inline-block;
 }
 </style>

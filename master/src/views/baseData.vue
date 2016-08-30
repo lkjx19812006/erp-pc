@@ -1,15 +1,15 @@
 <template>
-    <drawdel-model :param="modelParam" v-if="!baseshow"></drawdel-model>
-    <ingredient-model :param="ingredientParam" v-if="!baseshow"></ingredient-model>
-    <entprise-model :param="entpriseParam" v-if="!baseshow"></entprise-model>
+    <drawdel-model :param="modelParam" v-if="!drawdel"></drawdel-model>
+    <ingredient-model :param="ingredientParam" v-if="!ingredient"></ingredient-model>
+    <entprise-model :param="entpriseParam" v-if="!entprise"></entprise-model>
     <enterprise-model :param="dialogParam" v-if="!baseshow" ></enterprise-model> 
-    <draw-model :param="dialogParam" v-if="!baseshow" ></draw-model>
-    <component-model :param="dialogParam" v-if="!baseshow"></component-model> 
+    <draw-model :param="dialogParam" v-if="!drawshow" ></draw-model>
+    <component-model :param="dialogParam" v-if="!componentshow"></component-model> 
     <div class="service-data" v-show="$route.path.split('=')[1]==0">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">企业</div>
             <div class="right col-xs-2">
-                <button class="new_btn" @click="enterprise('enedit')" data-toggle="modal" data-target="#myModal">新建</button>
+                <button class="new_btn" @click="newEnterprise('enedit')" data-toggle="modal" data-target="#myModal">新建</button>
             </div>
         </div>
         <div class="order_table">
@@ -245,17 +245,22 @@ export default {
             },
             modelParam:{
                 show:false,
-                id:'$index',
+                id:'',
             },
             ingredientParam:{
                 show:false,
-                id:'$index',
+                id:'',
             },
             entpriseParam:{
                 show:false,
-                id:'$index',
+                id:'',
             },
-            baseshow:true
+            baseshow:true,
+            drawdel:true,
+            ingredient:true,
+            entprise:true,
+            drawshow:true,
+            componnetshow:true
         }
     },
     vuex: {
@@ -280,17 +285,20 @@ export default {
         }
     },
     methods: {
-        enterprise:function(value){
+        newEnterprise:function(value){
             this.dialogParam.show= true;
             this.dialogParam.name = value;
+            this.baseshow=false;
         },
         component:function(value){
             this.dialogParam.show= true;
             this.dialogParam.name = value;
+            this.componnetshow=false;
         },
         draw:function(value){
              this.dialogParam.show= true;
              this.dialogParam.name = value;
+             this.drawshow=false;
         },
         etpriseEdit: function(id) {
             if(this.$store.state.table.enterpriseList[id].show){
@@ -315,15 +323,18 @@ export default {
         },
         delOperation:function(id){
             this.modelParam.show = true;
-            this.modelParam.$index=id;
+            this.modelParam.id=id;
+             this.drawdel=false;
         },
         delIngredit:function(id){
             this.ingredientParam.show = true;
-            this.ingredientParam.$index=id;
+            this.ingredientParam.id=id;
+             this.ingredient=false;
         },
         entpriseDel:function(id){
             this.entpriseParam.show = true;
-            this.entpriseParam.$index=id;
+            this.entpriseParam.id=id;
+             this.entprise=false;
         }
     },
      route: {

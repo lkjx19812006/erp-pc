@@ -8,6 +8,9 @@ import {
    SERVICE_COMPONENT,
    SERVICE_DRAW,
    DELETE_SHOW_STATUE,
+   DELETE_COMPANY_STATUS,
+   DELETE_COMPONENT_STATUS,
+   DELETE_DRAW_STATUS,
    ADD_DATA,
    UPDATE_DATA
 } from '../mutation-types'
@@ -57,7 +60,6 @@ const mutations = {
     },
     [CHANGE_SHOW_STATUE](state,id){
         state.list[id].show=!state.list[id].show;
-        console.log(state.list[id].show);
     },
     [CLIENT_INFO](state,data){
         state.clientList = data.results;
@@ -68,18 +70,32 @@ const mutations = {
 
     [DELETE_SHOW_STATUE](state,id){
         state.systemDataList.splice(id,1);
+    },
+    [DELETE_COMPANY_STATUS](state,id){
         state.enterpriseList.splice(id,1);
-        state.componentList.splice(id,1);
-        state.drawList.splice(id,1);
+    },
+     [DELETE_COMPONENT_STATUS](state,id){
+       state.componentList.splice(id,1);
+    },
+     [DELETE_DRAW_STATUS](state,id){
+         state.drawList.splice(id,1);
     },
 
-    [ADD_DATA](state,id){
-        state.systemDataList.push(state.systemDataList[id]);
-        console.log( state.systemDataList.push(state.systemDataList[id]))
+    [ADD_DATA](state,data){
+        state.systemDataList.push({
+          "systemDataId":data.systemDataId,
+          "systemDataCode":data.systemDataCode,
+          "systemDataType":data.systemDataType,
+          "systemDescribe":data.systemDescribe,
+          "systemStatus":data.systemStatus});
     },
 
-    [UPDATE_DATA](state,id){
-       /* state.systemDataList.$set(id,initSystemlist[param.id]);*/
+    [UPDATE_DATA](state,data){
+       state.systemDataList[data.id].systemDataId=data.systemDataId;
+       state.systemDataList[data.id].systemDataCode=data.systemDataCode;
+       state.systemDataList[data.id].systemDataType=data.systemDataType;
+       state.systemDataList[data.id].systemDescribe=data.systemDescribe;
+       state.systemDataList[data.id].systemStatus=data.systemStatus;
     },
 
     [PROVINCE_DATA](state,data){

@@ -96,19 +96,25 @@ export const getSystemData = ({dispatch},param) => {
         });
 };
 
-export const deleteShowStatue =({dispatch },param) => {
+export const deleteShowStatue =({dispatch},param) => {
     dispatch(types.DELETE_SHOW_STATUE,param);
-       console.log(param);
+};
+export const deleteCompanyStatus =({dispatch },param) => {
+    dispatch(types.DELETE_COMPANY_STATUS,param);
+};
+export const deleteComponentStatus =({dispatch },param) => {
+    dispatch(types.DELETE_COMPONENT_STATUS,param);
+};
+export const deleteDrawStatus =({dispatch },param) => {
+    dispatch(types.DELETE_DRAW_STATUS,param);
 };
 
-export const saveDataInfo = ({dispatch},param) => {
-    dispatch(types.ADD_DATA,param);
-    console.log(param)
+export const saveDataInfo = ({dispatch},data) => {
+    dispatch(types.ADD_DATA,data);
 };
 
 export const updateDataInfo = ({dispatch},param) => {
     dispatch(types.UPDATE_DATA,param);
-    console.log(param)
 }
 
 export const getProvinceData = ({dispatch},param) => {

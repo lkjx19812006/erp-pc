@@ -9,15 +9,14 @@
 	    	<p class="model-tips">是否确定删除此提取物？</p>
 	    	<div class="model-footer">
 	    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-	    		<button type="button" class="btn btn-orange" @click="deleteShowStatue(param.$index,param.show=false)">删除</button>
+	    		<button type="button" class="btn btn-orange" @click="deleteDrawStatus(param.id,param.show=false)">删除</button>
 	    	</div>
 	    </div>
 	</div>
 </template>
 <script>
 import {
-    deleteShowStatue,
-    getEnterpriseData
+    deleteDrawStatus
 } from '../vuex/actions'
 export default {
     data() {
@@ -27,8 +26,7 @@ export default {
     },
     vuex:{
         actions:{
-            deleteShowStatue,
-            getEnterpriseData
+            deleteDrawStatus
         }
     },
     props:['param'],
