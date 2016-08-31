@@ -1,8 +1,8 @@
 {
 	"results":{
 	   "componentList":[
-	   			{"componentId":0,"componentName":"人参","componentOwn":"饮片厂","componentname":"ddd","componentContent":"0.5g","componentUnit":"克","componenttype":"来啦"},
-				{"componentId":1,"componentName":"红茶","componentOwn":"药品厂","componentname":"ffd","componentContent":"0.5g","componentUnit":"克","componenttype":"来啦"}
+   			{"code":0,"name":"人参","company_name":"饮片厂","breed_name":"ddd","quantity":"0.5g","unit":"克","status":"提取物"},
+			{"code":1,"name":"红茶","company_name":"药品厂","breed_name":"ffd","quantity":"0.5g","unit":"克","status":"药材"}
 	     ]
 	   },
 	"msg":"success",

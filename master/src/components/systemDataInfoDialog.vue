@@ -15,29 +15,29 @@
                             <div class="editpageleft">
                                 <div class="editpage-input">
                                     <label class="editlabel" for="system">编号 <span class="system_danger" v-if="$validation.system.required||$validation.system.minlength">请输入编号且不少于三位数</span></label>
-                                    <input type="text" class="form-control  edit-input" id="system" v-validate:system="{required:true,minlength:3}" v-model="systemData.systemDataId"  />
+                                    <input type="text" class="form-control  edit-input" id="system" v-validate:system="{required:true,minlength:3}" v-model="systemData.id"  />
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel" for="systemtype">类型
                                         <span class="system_danger" v-if="$validation.systemtype.required">请输入类型</span> </label>
-                                    <input type="text" class="form-control  edit-input" id="systemtype" v-validate:systemtype="['required']" v-model="systemData.systemDataCode" />
+                                    <input type="text" class="form-control  edit-input" id="systemtype" v-validate:systemtype="['required']" v-model="systemData.type" />
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel" for="systemstatus">状态
                                         <span class="system_danger" v-if="$validation.systemstatus.required">请输入状态</span></label>
-                                    <input type="text" class="form-control  edit-input" id="systemstatus" v-validate:systemstatus="['required']" v-model="systemData.systemDataType" />
+                                    <input type="text" class="form-control  edit-input" id="systemstatus" v-validate:systemstatus="['required']" v-model="systemData.status" />
                                 </div>
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input">
                                     <label class="editlabel" for="systemcode">编码
                                         <span class="system_danger" v-if="$validation.systemcode.required">请输入编码</span> </label>
-                                    <input type="text" class="form-control  edit-input" id="systemcode" v-validate:systemcode="['required']" v-model="systemData.systemDescribe" />
+                                    <input type="text" class="form-control  edit-input" id="systemcode" v-validate:systemcode="['required']" v-model="systemData.code" />
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel" for="describe">描述
                                         <span class="system_danger" v-if="$validation.describe.required">请输入描述</span> </label>
-                                    <input type="text" class="form-control  edit-input" id="describe" v-validate:describe="['required']" v-model="systemData.systemStatus" />
+                                    <input type="text" class="form-control  edit-input" id="describe" v-validate:describe="['required']" v-model="systemData.desc" />
                                 </div>
                             </div>
                         </div>
@@ -45,7 +45,8 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="saveDataInfo(systemData,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" 
+                     @click="saveDataInfo(systemData,param.show = false)">保存</button>
                 </div>
             </form>
         </validator>
@@ -64,11 +65,11 @@ export default {
     data() {
         return {
             systemData: {
-                systemDataId: '',
-                systemDataCode: '',
-                systemDataType: '',
-                systemDescribe: '',
-                systemStatus: ''
+                id: '',
+                code: '',
+                type: '',
+                desc: '',
+                status: ''
             }
 
         }

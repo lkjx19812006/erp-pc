@@ -2,9 +2,11 @@
     <drawdel-model :param="modelParam" v-if="!drawdel"></drawdel-model>
     <ingredient-model :param="ingredientParam" v-if="!ingredient"></ingredient-model>
     <entprise-model :param="entpriseParam" v-if="!entprise"></entprise-model>
-    <enterprise-model :param="dialogParam" v-if="!baseshow" ></enterprise-model> 
+    <enterprise-model :param="enterdialogParam" v-if="!baseshow" ></enterprise-model> 
     <draw-model :param="dialogParam" v-if="!drawshow" ></draw-model>
-    <component-model :param="dialogParam" v-if="!componentshow"></component-model> 
+    <component-model :param="dialogParam" v-if="!componentshow"></component-model>
+    <modify-model :param="modifyParam" v-if="!modifyenter"></modify-model>
+
     <div class="service-data" v-show="$route.path.split('=')[1]==0">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">企业</div>
@@ -20,17 +22,16 @@
                         <th>编 码</th>
                         <th>分类码</th>
                         <th>企业名称</th>
-                        <th>联系人</th>
                         <th>电 话</th>
-                        <th>介 绍</th>
                         <th>法定代表人</th>
                         <th>企业代表人</th>
                         <th>生产范围</th>
-                        <th>省 市</th>
+                        <th>所在省</th>
+                        <th>所在市</th>
                         <th>注册地址</th>
-                        <th>生产地址</th>
                         <th>发证日期</th>
                         <th>有效截止日</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <thead class="space">
@@ -48,32 +49,27 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
                     </tr>
                 </thead> 
                 <tbody>
                     <tr v-for="item in initEnterpriselist" v-cloak>
-                        <td>{{item.enterpriseCode}}</td>
-                        <td>{{item.enterpriseClassify}}</td>
-                        <td>{{item.enterpriseName}}</td>
-                        <td>{{item.enterprisePhone}}</td>
-                        <td>{{item.enterpriseContact}}</td>
-                        <td>{{item.enterpriseIntroduce}}</td>
-                        <td>{{item.enterpriseLegal}}</td>
-                        <td>{{item.enterpriseCompany}}</td>
-                        <td>{{item.enterpriseRange}}</td>
-                        <td>{{item.enterpriseArea}}</td>
-                        <td>{{item.enterpriseAddr}}</td>
-                        <td>{{item.enterpriseRegist}}</td>
-                        <td>{{item.enterpriseDate}}</td>
-                        <td>{{item.enterpriseDeadline}}</td>
+                        <td>{{item.number}}</td>
+                        <td>{{item.category | categorystate}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.tel | telstate}}</td>
+                        <td>{{item.legalPerson}}</td>
+                        <td>{{item.principal}}</td>
+                        <td>{{item.bizScope}}</td>
+                        <td>{{item.province}}</td>
+                        <td>{{item.city}}</td>
+                        <td>{{item.address}}</td>
+                        <td>{{item.ctime}}</td>
+                        <td>{{item.utime}}</td>
                         <td @click="etpriseEdit($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="component_action" v-show='item.show' transition="expand">
                                 <ul>
-                                    <li>编辑</li>
+                                    <li @click="modifyEnter($index)">编辑</li>
                                     <li @click="entpriseDel($index)">删除</li>
                                 </ul>
                             </div>
@@ -102,7 +98,7 @@
                         <th>成分名</th>
                         <th>含 量</th>
                         <th>单 位</th>
-                        <th>类型</th>
+                        <th>状态</th>
                     </tr>
                 </thead>
                 <thead class="space">
@@ -119,18 +115,18 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initConponentlist" v-cloak>
-                        <td>{{item.componentId}}</td>
-                        <td>{{item.componentName}}</td>
-                        <td>{{item.componentOwn}}</td>
-                        <td>{{item.componentname}}</td>
-                        <td>{{item.componentContent}}</td>
-                        <td>{{item.componentUnit}}</td>
-                        <td>{{item.componenttype}}</td>
+                        <td>{{item.code}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.company_name}}</td>
+                        <td>{{item.breed_name}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.unit}}</td>
+                        <td>{{item.status}}</td>
                         <td @click="componentEdit($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="component_action" v-show='item.show' transition="expand">
                                 <ul>
-                                    <li>编辑</li>
+                                    <li  @click="modifyComp($index,item)">编辑</li>
                                     <li  @click="delIngredit($index)">删除</li>
                                 </ul>
                             </div>
@@ -150,7 +146,7 @@
         </div>
         <div class="order_table">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-            <table class="table table-hover table_color">
+            <table class="table table-hover table_color"  v-cloak>
                 <thead>
                     <tr>
                         <th>中文名</th>
@@ -179,7 +175,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initDrawlist" v-cloak>
+                    <tr v-for="item in initDrawlist">
                         <td>{{item.drawchinese}}</td>
                         <td>{{item.drawenglish}}</td>
                         <td>{{item.drawlatin}}</td>
@@ -203,14 +199,20 @@
             </table>
         </div>
     </div>
+     <div class="base_pagination">
+        <pagination :combination="list"></pagination>
+    </div>
 </template>
 <script>
+import pagination from '../components/pagination'
 import enterpriseModel  from '../components/enterpriseEditDialog'
 import componentModel  from '../components/componentEditDialog'
 import drawModel from '../components/drawEditDialog'
 import drawdelModel from '../components/drawDeleteModel'
 import ingredientModel from '../components/ingredientDelModel'
 import entpriseModel from '../components/entpriseDelModel'
+import modifyModel from '../components/enterpriseUpdate'
+import filter from '../filters/filters'
 import {
     getList,
     initEnterpriselist,
@@ -229,38 +231,54 @@ export default {
         drawModel,
         drawdelModel,
         ingredientModel,
-        entpriseModel
+        entpriseModel,
+        modifyModel,
+        pagination
     },
     data(){
         return {
             dialogParam:{
                 show:false,
-                name:'enedit',
                 name:'data'
             },
-             loadParam: {
+            enterdialogParam:{
+                show:false,
+                name:'enedit'
+            },
+            loadParam: {
                 loading: true,
                 color: '#5dc596',
                 size: '15px'
             },
             modelParam:{
                 show:false,
-                id:'',
+                id:''
             },
             ingredientParam:{
                 show:false,
-                id:'',
+                id:''
             },
             entpriseParam:{
                 show:false,
-                id:'',
+                id:''
+            },
+            modifyParam:{
+                 show:false,
+                 id:''
             },
             baseshow:true,
             drawdel:true,
             ingredient:true,
             entprise:true,
             drawshow:true,
-            componnetshow:true
+            componnetshow:true,
+            modifyenter:true,
+            list: {all:8,cur:1}
+        }
+    },
+    events: {
+        fresh: function(input) {
+         console.log(input);
         }
     },
     vuex: {
@@ -286,8 +304,8 @@ export default {
     },
     methods: {
         newEnterprise:function(value){
-            this.dialogParam.show= true;
-            this.dialogParam.name = value;
+            this.enterdialogParam.show= true;
+            this.enterdialogParam.name = value;
             this.baseshow=false;
         },
         component:function(value){
@@ -306,6 +324,7 @@ export default {
             }else{
                this.$store.state.table.enterpriseList[id].show = true;
             }
+            console.log(this.$store.state.table.enterpriseList[id].show)
         },
         componentEdit:function(id){
             if(this.$store.state.table.componentList[id].show){
@@ -320,6 +339,18 @@ export default {
             }else{
                this.$store.state.table.drawList[id].show = true;
             }
+        },
+        modifyEnter:function(id){
+            this.modifyParam.id=id;
+            this.modifyParam.show=true;
+            this.modifyenter=false;
+            this.$broadcast('getParam');
+            /*if(this.$store.state.table.enterpriseList[id].show == true){
+              this.$store.state.table.enterpriseList[id].show=!this.$store.state.table.enterpriseList[id].show;
+            }*/
+        },
+        modifyComp:function(id,item){
+
         },
         delOperation:function(id){
             this.modelParam.show = true;
@@ -346,7 +377,10 @@ export default {
           console.log('hook-example deactivated!')
           transition.next()
         }
-    }
+    },
+    filter:(filter,{
+      
+    })
 }
 </script>
 <style scoped>
@@ -435,5 +469,9 @@ export default {
     text-align: left;
     padding:3px 8px;
     cursor: pointer;
+}
+.base_pagination{
+    margin: auto;
+    text-align: center;
 }
 </style>

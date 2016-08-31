@@ -48,15 +48,14 @@ export const initClientlist = (state) => {
 }
 
 export const initSystemlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.systemDataList)); 
-    console.log(state.table.systemDataList) 
+    return JSON.parse(JSON.stringify(state.table.enumlist)); 
 } 
 export const initProvincelist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.provinceDataList));  
+    return JSON.parse(JSON.stringify(state.table.list));  
 }
 
 export const initEnterpriselist = (state) => {
-    return parseJson(state.table.enterpriseList);  
+    return JSON.parse(JSON.stringify(state.table.enterpriseList));  
 }
 
 export const initConponentlist = (state) => {

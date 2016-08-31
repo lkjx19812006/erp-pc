@@ -84,12 +84,13 @@ export const getSystemData = ({dispatch},param) => {
       param.loading=true;
     Vue.http.get(apiUrl.dataBaseList)
         .then((res) => {
-            for(var i in res.data.results.systemDataList){
-               res.data.results.systemDataList[i].show=false; 
-               res.data.results.systemDataList[i].delInfo = false;
+            for(var i in res.data.results.enumlist){
+               res.data.results.enumlist[i].show=false; 
+               res.data.results.enumlist[i].delInfo = false;
             }
             dispatch(types.SYSTEM_DATA, res.data);
             param.loading=false; 
+            console.log(res.data)
         }, (res) => {
             console.log('fail');
             param.loading=false;  
@@ -99,9 +100,7 @@ export const getSystemData = ({dispatch},param) => {
 export const deleteShowStatue =({dispatch},param) => {
     dispatch(types.DELETE_SHOW_STATUE,param);
 };
-export const deleteCompanyStatus =({dispatch },param) => {
-    dispatch(types.DELETE_COMPANY_STATUS,param);
-};
+
 export const deleteComponentStatus =({dispatch },param) => {
     dispatch(types.DELETE_COMPONENT_STATUS,param);
 };
@@ -115,14 +114,14 @@ export const saveDataInfo = ({dispatch},data) => {
 
 export const updateDataInfo = ({dispatch},param) => {
     dispatch(types.UPDATE_DATA,param);
-}
+};
 
 export const getProvinceData = ({dispatch},param) => {
       param.loading=true;
     Vue.http.get(apiUrl.provinceList)
         .then((res) => {
-            for(var i in res.data.results.provinceList){
-               res.data.results.provinceList[i].show=false; 
+            for(var i in res.data.results.list){
+               res.data.results.list[i].show=false; 
             }
             dispatch(types.PROVINCE_DATA, res.data);
             param.loading=false; 
@@ -132,21 +131,63 @@ export const getProvinceData = ({dispatch},param) => {
         });
 };
 
-export const getEnterpriseData = ({dispatch},param) => {
+export const getEnterpriseData = ({dispatch},param) => { // 企业列表
       param.loading=true;
-    Vue.http.get(apiUrl.enterpriseList)
-        .then((res) => {
-            for(var i in res.data.results.enterpriseList){
-               res.data.results.enterpriseList[i].show=false; 
+    Vue.http({
+        /*method:'GET',*/
+        type: "GET",
+        url:apiUrl.enterpriseList,
+        data:{'type':'AAA','name':'公司','page':1,'pageSize':10},
+        emulateJSON: true,
+        headers: {
+                "X-Requested-With": "XMLHttpRequest"
             }
-            dispatch(types.SERVICE_ENTERPRISE, res.data);
-            param.loading=false; 
+        }).then((res) => {
+            console.log(res.json());
+            for(var i in res.json().result.list){
+               res.json().result.list[i].show=false; 
+            }
+             dispatch(types.SERVICE_ENTERPRISE, res.json());
+             param.loading=false; 
         }, (res) => {
             console.log('fail');
             param.loading=false;  
         });
 };
+export const saveCompany = ({dispatch},data) => { //新建企业信息
+     Vue.http({
+        type:"POST",
+        url:apiUrl.enterpriseList,
+        emulateJSON: true,
+        headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        }).then((res) => {
+            console.log(res.json())
+            dispatch(types.SAVE_COMPANY_DATA,res.json())
+        },(res) => {
+            console.log('fail');
+        });
+};
 
+
+export const updateEnterInfo = ({dispatch},param) => { //修改企业信息
+     Vue.http.put(apiUrl.enterpriseList,id)
+        .then((res) => {
+            dispatch(types.UPDATE_ENTER_DATA,res.param);
+        },(res) => {
+            console.log('fail');
+        }); 
+};
+export const deleteCompanyStatus =({dispatch },param) => { //删除企业信息
+      Vue.http.delete(apiUrl.enterpriseList)
+        .then((res) => {
+            dispatch(types.DELETE_COMPANY_STATUS,param)
+        },(res) => {
+            console.log('fail');
+        });
+    
+};
 export const getComponentData = ({dispatch},param) => {
     param.loading=true;
     Vue.http.get(apiUrl.componentList)

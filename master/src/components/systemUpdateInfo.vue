@@ -14,25 +14,25 @@
                         <div class="editpageleft">
                             <div class="editpage-input">
                                 <label class="editlabel">编号</label>
-                                <input type="text" v-model='systemData.systemDataId' class="form-control edit-input" value="{{systemData.systemDataId}}" />
+                                <input type="text" v-model='systemData.id' class="form-control edit-input" value="{{systemData.id}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">类型</label>
-                                <input type="text" v-model='systemData.systemDataCode' class="form-control edit-input" value="{{systemData.systemDataCode}}" />
+                                <input type="text" v-model='systemData.type' class="form-control edit-input" value="{{systemData.type}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">状态</label>
-                                <input type="text" v-model='systemData.systemDataType' class="form-control edit-input" value="{{systemData.systemDataType}}" />
+                                <input type="text" v-model='systemData.status' class="form-control edit-input" value="{{systemData.status}}" />
                             </div>
                         </div>
                         <div class="editpageright">
                             <div class="editpage-input">
                                 <label class="editlabel">编码</label>
-                                <input type="text" v-model='systemData.systemDescribe' class="form-control edit-input" value="{{systemData.systemDescribe}}" />
+                                <input type="text" v-model='systemData.code' class="form-control edit-input" value="{{systemData.code}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">描述</label>
-                                <input type="text" v-model="systemData.systemStatus" class="form-control edit-input" value="{{systemData.systemStatus}}" />
+                                <input type="text" v-model="systemData.desc" class="form-control edit-input" value="{{systemData.desc}}" />
                             </div>
                         </div>
                     </div>
@@ -58,11 +58,11 @@ export default {
     data() {
         return {
             systemData: {
-                systemDataId: this.initSystemlist[this.param.id].systemDataId,
-                systemDataCode: this.initSystemlist[this.param.id].systemDataCode,
-                systemDataType: this.initSystemlist[this.param.id].systemDataType,
-                systemDescribe: this.initSystemlist[this.param.id].systemDescribe,
-                systemStatus: this.initSystemlist[this.param.id].systemStatus,
+                id: this.initSystemlist[this.param.id].id,
+                code: this.initSystemlist[this.param.id].code,
+                type: this.initSystemlist[this.param.id].type,
+                desc: this.initSystemlist[this.param.id].desc,
+                status: this.initSystemlist[this.param.id].status,
                 id: this.param.id
             }
         }
@@ -88,11 +88,11 @@ export default {
     },
     events: {
         'getParam' () {
-            this.$set('systemData.systemDataId', this.initSystemlist[this.param.id].systemDataId);
-            this.$set('systemData.systemDataCode', this.initSystemlist[this.param.id].systemDataCode);
-            this.$set('systemData.systemDataType', this.initSystemlist[this.param.id].systemDataType);
-            this.$set('systemData.systemStatus', this.initSystemlist[this.param.id].systemStatus);
-            this.$set('systemData.systemDescribe', this.initSystemlist[this.param.id].systemDescribe);
+            this.$set('systemData.id', this.initSystemlist[this.param.id].id);
+            this.$set('systemData.code', this.initSystemlist[this.param.id].code);
+            this.$set('systemData.type', this.initSystemlist[this.param.id].type);
+            this.$set('systemData.status', this.initSystemlist[this.param.id].status);
+            this.$set('systemData.desc', this.initSystemlist[this.param.id].desc);
             this.$set('systemData.id', this.param.id);
         }
     }

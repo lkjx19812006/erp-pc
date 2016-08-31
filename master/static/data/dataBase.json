@@ -1,11 +1,11 @@
 {
 	"results":{
-	    "systemDataList":[
-		    {"systemDataId":0,"systemDataCode":"022112","systemDataType":"1","systemDescribe":"123456789011","systemStatus":"enene"},
-			{"systemDataId":1,"systemDataCode":"1112","systemDataType":"2","systemDescribe":"1234567890","systemStatus":"enene"},
-			{"systemDataId":2,"systemDataCode":"34445","systemDataType":"3","systemDescribe":"1234567890","systemStatus":"enene"},
-			{"systemDataId":3,"systemDataCode":"45555","systemDataType":"2","systemDescribe":"1234567890","systemStatus":"enene"},
-			{"systemDataId":4,"systemDataCode":"4fff5","systemDataType":"5","systemDescribe":"1234567890","systemStatus":"enene"}
+	    "enumlist":[
+		    {"id":0,"code":"4334","type":"1","desc":"123456789011","status":"0"},
+			{"id":1,"code":"1112","type":"2","desc":"1234567890","status":"1"},
+			{"id":2,"code":"34445","type":"3","desc":"1234567890","status":"0"},
+			{"id":3,"code":"45555","type":"2","desc":"1234567890","status":"1"},
+			{"id":4,"code":"4fff5","type":"5","desc":"1234567890","status":"1"}
 	       ]
 	    },
 	"msg":"success",

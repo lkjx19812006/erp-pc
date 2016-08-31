@@ -6,51 +6,54 @@
         </div>
          <div class="edit-content">
             <h3>编辑新建成分</h3>
-        </div>
-        <div class="edit-model">
-            <form name="editOrderinfo" action="javascript:void(0)">
+            </div>
+       <validator name="validation">
+        <form novalidate>
+            <div class="edit-model">
                 <section class="editsection">
                     <div class="editpage">
                         <div class="editpageleft">
                             <div class="editpage-input">
                                 <label class="editlabel">编码</label>
-                                <input type="text" class="edit-input"  />
+                                <input type="text" class="form-control edit-input"  id="code" v-validate:code="['required']"/>
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">所属药厂</label>
-                                <input type="text" class="edit-input" />
+                                <input type="text" class="form-control edit-input" v-validate:classify="['required']" id="classify" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">含量</label>
-                                <input type="text" class="edit-input" />
+                                <input type="text" class="form-control edit-input" v-validate:code="['required']" id=""/>
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">类型</label>
-                                <input type="text" class="edit-input" />
+                                <input type="text" class="form-control edit-input" v-validate:code="['required']"/>
                             </div>
                         </div>
                         <div class="editpageright">
                             <div class="editpage-input">
                                 <label class="editlabel">药品名</label>
-                                <input type="text" class="edit-input" />
+                                <input type="text" class="form-control edit-input" v-validate:code="['required']"/>
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">成分名</label>
-                                <input type="text" class="edit-input" />
+                                <input type="text" class="form-control edit-input" v-validate:code="['required']"/>
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">单位</label>
-                                <input type="text" class="edit-input" />
+                                <input type="text" class="form-control edit-input" v-validate:code="['required']"/>
                             </div>
                         </div>
                     </div>
                 </section>
-            </form>
-        </div>
-        <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="confirm()">保存</button>
-        </div>
+            </div>
+            <div class="edit_footer">
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm(param.show = false)">保存</button>
+            </div>
+        </form>
+    </validator>
+</div>
 </template>
 <script>
 export default {
@@ -60,7 +63,7 @@ export default {
     props: ['param'],
     data() {
         return {
-
+           
         }
     },
      route: {

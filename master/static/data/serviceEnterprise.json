@@ -1,8 +1,8 @@
 {
 	"results":{
 	    "enterpriseList":[
-	    		{"enterpriseId":0,"enterpriseCode":"021122","enterpriseClassify":"1","enterpriseName":"上海冕冠","enterprisePhone":"13162875213","enterpriseContact":"大神","enterpriseIntroduce":"好好好好哄","enterpriseLegal":"卡卡","enterpriseCompany":"来啦","enterpriseRange":"包括很多、很多、、、","enterpriseArea":"上海虹口区","enterpriseAddr":"上海虹口江湾镇","enterpriseRegist":"上海虹口江湾镇","enterpriseDate":"2015-07-07","enterpriseDeadline":"2030-7-7"},
-				{"enterpriseId":1,"enterpriseCode":"3243","enterpriseClassify":"15","enterpriseName":"上海冕冠","enterprisePhone":"13162875213","enterpriseContact":"大神","enterpriseIntroduce":"好好好好哄","enterpriseLegal":"卡卡","enterpriseCompany":"来啦","enterpriseRange":"包括很多、很多、、、","enterpriseArea":"上海虹口区","enterpriseAddr":"上海虹口江湾镇","enterpriseRegist":"上海虹口江湾镇","enterpriseDate":"2015-07-07","enterpriseDeadline":"2030-7-7"}
+	    		{"id":0,"number":"00","category":"021122","name":"上海冕冠","tel":"13162875213","legal_person":"卡卡","principal":"来啦","biz_scope":"包括很多、很多、、、","province":"上海虹口区","city":"虹口区","address":"上海虹口江湾镇","release_date":"2015-07-07","due_date":"2030-7-7"},
+				{"id":1,"number":"11","category":"3243","name":"上海冕冠","tel":"13162875213","legal_person":"卡卡","principal":"来啦","biz_scope":"包括很多、很多、、、","province":"上海虹口区","city":"虹口区","address":"上海虹口江湾镇","release_date":"2015-07-07","due_date":"2030-7-7"}
 	   		 ]
 	   	},
 	"msg":"success",

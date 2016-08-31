@@ -25,11 +25,11 @@
           <div class="table table_hover">
               <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
               <ul class="clear" v-for="item in initSystemlist" v-cloak>
-                  <li>{{item.systemDataId}}</li>
-                  <li>{{item.systemDataCode}}</li>
-                  <li>{{item.systemDataType}}</li>
-                  <li>{{item.systemDescribe}}</li>
-                  <li>{{item.systemStatus}}</li>
+                  <li>{{item.id}}</li>
+                  <li>{{item.code}}</li>
+                  <li>{{item.type}}</li>
+                  <li>{{item.desc}}</li>
+                  <li>{{item.status}}</li>
                   <li @click="editData($index)">
                      <img height="24" width="24" src="/static/images/default_arrow.png" />
                   </li>
@@ -56,17 +56,17 @@
                   <li><a>名称</a></li>
                   <li><a>级别</a></li>
                   <li><a>图标</a></li>
-                  <li><a>IOS编码</a></li>
+                  <li><a>ISO编码</a></li>
               </ul>
           </div>
           <div class="table table_hover"  v-cloak>
               <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
               <ul class="clear" v-for="item in initProvincelist">
-                  <li>{{item.provinceId}}</li>
-                  <li>{{item.provinceName}}</li>
-                  <li>{{item.provinceRank}}</li>
-                  <li>{{item.provinceIcon}}</li>
-                  <li>{{item.provinceIOS}}</li>
+                  <li>{{item.two_number}}</li>
+                  <li>{{item.cname}}</li>
+                  <li>{{item.level}}</li>
+                  <li>{{item.icon}}</li>
+                  <li>{{item.iso}}</li>
               </ul>
           </div> 
         </div>
@@ -145,10 +145,10 @@ export default {
     },
     methods: {
         editData: function(id) {
-            if(this.$store.state.table.systemDataList[id].show == true){
-                this.$store.state.table.systemDataList[id].show=!this.$store.state.table.systemDataList[id].show;
+            if(this.$store.state.table.enumlist[id].show == true){
+                this.$store.state.table.enumlist[id].show=!this.$store.state.table.enumlist[id].show;
             }else{
-                 this.$store.state.table.systemDataList[id].show=true;
+                 this.$store.state.table.enumlist[id].show=true;
             }       
         },
         newData:function(value){
@@ -161,8 +161,8 @@ export default {
             this.modifyParam.show=true;
             this.model=false;
             this.$broadcast('getParam');
-            if(this.$store.state.table.systemDataList[id].show == true){
-              this.$store.state.table.systemDataList[id].show=!this.$store.state.table.systemDataList[id].show;
+            if(this.$store.state.table.enumlist[id].show == true){
+              this.$store.state.table.enumlist[id].show=!this.$store.state.table.enumlist[id].show;
             }
         },
          del:function(id){
@@ -348,10 +348,7 @@ export default {
     text-align: center;
 }
 .order_pagination{
-    position: absolute;;
-    bottom: 50px;
-    left:0;
-    right: 0;
+    margin: 0 auto;
     text-align: center;
 }
 </style>

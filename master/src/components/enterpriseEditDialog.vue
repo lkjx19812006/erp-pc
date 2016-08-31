@@ -4,83 +4,81 @@
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
-         <div class="edit-content">
+        <div class="edit-content">
             <h3>新建企业</h3>
         </div>
-        <div class="edit-model">
-            <form name="editOrderinfo" action="javascript:void(0)">
-                <section class="editsection">
-                    <div class="editpage">
-                        <div class="editpageleft">
-                            <div class="editpage-input">
-                                <label class="editlabel">编码</label>
-                                <input type="text" class="edit-input"  />
+        <validator name="validation">
+            <form novalidate>
+                <div class="edit-model">
+                    <section class="editsection">
+                        <div class="editpage">
+                            <div class="editpageleft">
+                                <div class="editpage-input">
+                                    <label class="editlabel">编码</label>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.number" id="code" v-validate:code="['required']" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">企业名称</label>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.name" id="name" v-validate:name="['required']" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">电话</label>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.tel" id="tel" v-validate:tel="['required']"/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">法定负责人</label>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.legalPerson" id="legal" v-validate:legal="['required']"/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">生产范围</label>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.bizScope" id="range" v-validate:range="['required']"/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">注册地址</label>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.address" id="address" v-validate:address="['required']" />
+                                </div>
                             </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">企业名称</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">电话</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">法定负责人</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">生产范围</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">注册地址</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">发证日期</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                        </div>
-                        <div class="editpageright">
-                            <div class="editpage-input">
-                                <label class="editlabel">分类码</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">联系人</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">介绍</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">企业代表人</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">省市</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">生产地址</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">有效截止日</label>
-                                <input type="text" class="edit-input" />
+                            <div class="editpageright">
+                                <div class="editpage-input">
+                                    <label class="editlabel">分类码</label>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.category" id="category" v-validate:category="['required']" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">企业代表人</label>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.principal" id="principal" v-validate:principal="['required']"/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">所在省</label>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.province" id="province" v-validate:province="['required']"/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">所在市</label>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.city" id="city" v-validate:city="['required']"/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">有效截止日</label>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.utime" id="utime" v-validate:utime="['required']" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">发证日期</label>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.ctime" id="ctime" v-validate:ctime="['required']"/>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                </div>
+                <div class="edit_footer">
+                    <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="saveCompany(enterpriseData,param.show = false)">保存</button>
+                </div>
             </form>
-        </div>
-        <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="confirm()">保存</button>
-        </div>
+        </validator>
+    </div>
 </template>
 <script>
+import {
+    saveCompany
+} from '../vuex/actions'
 export default {
     components: {
 
@@ -88,18 +86,36 @@ export default {
     props: ['param'],
     data() {
         return {
-
+            enterpriseData: {
+                number: '',
+                category: '',
+                name: '',
+                tel: '',
+                legalPerson: '',
+                principal: '',
+                bizScope: '',
+                province: '',
+                city: '',
+                address: '',
+                ctime: '',
+                utime: ''
+            }
         }
     },
-     route: {
-        activate: function (transition) {
-          console.log('hook-example activated!')
-          transition.next()
+    vuex:{
+        actions:{
+            saveCompany
+        }
+    },
+    route: {
+        activate: function(transition) {
+            console.log('hook-example activated!')
+            transition.next()
         },
-        deactivate: function (transition) {
-          console.log('hook-example deactivated!')
-          transition.next()
-      }
+        deactivate: function(transition) {
+            console.log('hook-example deactivated!')
+            transition.next()
+        }
     }
 }
 </script>
@@ -127,7 +143,6 @@ export default {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
-    /*层数高度不够增加层数*/
     z-index: 1080;
     overflow: hidden;
     overflow-y: auto;
@@ -242,14 +257,17 @@ export default {
 .btn-close {
     color: #fa6705;
 }
-.editpage_img{
+
+.editpage_img {
     width: 90%;
 }
-.editpage_img img{
+
+.editpage_img img {
     display: inline-block;
     background: #ccc;
 }
-.editpage-image{
+
+.editpage-image {
     display: inline-block;
 }
 </style>
