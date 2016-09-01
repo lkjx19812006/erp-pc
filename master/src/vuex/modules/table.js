@@ -36,7 +36,7 @@ const state = {
         {"id":3,"code":"45555","type":"2","desc":"1234567890","status":"1"},
         {"id":4,"code":"4fff5","type":"5","desc":"1234567890","status":"1"}
     ],
-    list:[
+    locationlist:[
         {"twoNumber":0,"cname":"中国1","level":"2122","icon":"1111","iso":"22222"},
         {"twoNumber":1,"cname":"上海1","level":"222","icon":"1111","iso":"22222"},
         {"twoNumber":2,"cname":"河南1","level":"222","icon":"1111","iso":"22222"}
@@ -66,8 +66,8 @@ const mutations = {
     [CLIENT_INFO](state,data){
         state.clientList = data.results;
     },
-    [SYSTEM_DATA](state,data){
-         state.enumlist = data.results.enumlist;
+    [SYSTEM_DATA](state,data){ //枚举类型
+         state.enumlist = data;
     },
 
     [DELETE_SHOW_STATUE](state,id){
@@ -134,16 +134,16 @@ const mutations = {
     },
  
     [PROVINCE_DATA](state,data){   //省市区
-         state.list =data;
+         state.locationlist = data;
     },
-    [SERVICE_COMPONENT](state,data){
-         state.componentList = data.results.componentList;
+    [SERVICE_COMPONENT](state,data){  //成分
+         state.componentList = data;
     },
-    [SERVICE_ENTERPRISE](state,data){
+    [SERVICE_ENTERPRISE](state,data){  //企业
         state.enterpriseList = data; 
     },
-    [SERVICE_DRAW](state,data){
-         state.drawList = data.results.drawList;
+    [SERVICE_DRAW](state,data){  //提取物
+         state.drawList = data;
     }
 }
 

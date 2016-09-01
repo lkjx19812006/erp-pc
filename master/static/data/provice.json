@@ -1,5 +1,5 @@
 {"results":{
-	 "list":[
+	 "locationlist":[
 	    	{"two_number":0,"cname":"中国1","level":"2122","icon":"1111","iso":"22222"},
 		    {"two_number":1,"cname":"上海1","level":"222","icon":"1111","iso":"22222"},
 		    {"two_number":2,"cname":"河南1","level":"222","icon":"1111","iso":"22222"}

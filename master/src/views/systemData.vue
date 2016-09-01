@@ -12,67 +12,100 @@
             </div>
         </div>  
         <div class="order_table">
-           <div class="table">
-              <ul class="clear">
-                  <li><a>编号</a></li>
-                  <li><a>编码</a></li>
-                  <li><a>类型</a></li>
-                  <li><a>描述</a></li>
-                  <li><a>状态</a></li>
-                  <li></li>
-              </ul>
+          <div class="cover_loading">
+              <pulse-loader :loading="loadParam1.loading" :color="color" :size="size"></pulse-loader>
           </div>
-          <div class="table table_hover">
-              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-              <ul class="clear" v-for="item in initSystemlist" v-cloak>
-                  <li>{{item.id}}</li>
-                  <li>{{item.code}}</li>
-                  <li>{{item.type}}</li>
-                  <li>{{item.desc}}</li>
-                  <li>{{item.status}}</li>
-                  <li @click="editData($index)">
-                     <img height="24" width="24" src="/static/images/default_arrow.png" />
-                  </li>
-                  <div class="order_action"  v-show='item.show' transition="expand">
-                      <ul>
-                          <li @click="modify($index,item)"><a>编辑</a></li>
-                          <li @click="del($index)"><a>删除</a></li>
-                      </ul>
-                  </div>
-              </ul>
-          </div> 
+           <table class="table table-hover table_color"  v-cloak>
+              <thead>
+                  <tr>
+                     <th>编号</th>
+                     <th>编码</th>
+                     <th>类型</th>
+                     <th>描述</th>
+                     <th>状态</th>
+                   </tr>
+                </thead>
+                <thead class="space">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in initSystemlist"> 
+                    <td>{{item.id}}</td>
+                    <td>{{item.code | systemcode}}</td>
+                    <td>{{item.type | systemtype}}</td>
+                    <td>{{item.desc | systemdesc}}</td>
+                    <td>{{item.status}}</td>
+                    <td  @click="editData($index)">
+                      <img height="24" width="24" src="/static/images/default_arrow.png" />
+                       <div class="component_action" v-show='item.show' transition="expand">
+                          <ul>
+                              <li @click="modify($index,item)">编辑</li>
+                              <li @click="del($index)">删除</li>
+                          </ul>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+         <div class="order_pagination">
+            <pagination :combination="loadParam1"></pagination>
         </div>
     </div>
+    <!-- begin省市区 -->
      <div class="myOrder" v-show="$route.path.split('=')[1]==1">
+       <div class="cover_loading">
+            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader> 
+        </div>
         <div class="order_search">
             <div class="clear">
                 <div class="my_order col-xs-2">省市区</div>
             </div>
         </div>  
-        <div class="order_table">
-           <div class="table">
-              <ul class="clear">
-                  <li><a>编号</a></li>
-                  <li><a>名称</a></li>
-                  <li><a>级别</a></li>
-                  <li><a>图标</a></li>
-                  <li><a>ISO编码</a></li>
-              </ul>
-          </div>
-          <div class="table table_hover"  v-cloak>
-              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-              <ul class="clear" v-for="item in initProvincelist">
-                  <li>{{item.twoNumber}}</li>
-                  <li>{{item.cname}}</li>
-                  <li>{{item.level}}</li>
-                  <li>{{item.icon}}</li>
-                  <li>{{item.iso}}</li>
-              </ul>
-          </div> 
+        <div class="order_table" v-cloak>
+              <table class="table table-hover table_color">
+                <thead>
+                      <tr>
+                          <th>编号</th>
+                          <th>名称</th>
+                          <th>英文名称</th>
+                          <th>级别</th>
+                          <th>图标</th>
+                          <th>ISO编码</th>
+                      </tr>
+                  </thead>
+                  <thead class="space">
+                      <tr>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr v-for="item in initProvincelist" v-cloak>
+                          <td>{{item.twoNumber | numberstate}}</td>
+                          <td>{{item.cname}}</td>
+                          <td>{{item.nameEn}}</td>
+                          <td>{{item.level}}</td>
+                          <td>{{item.icon | iconstate}}</td>
+                          <td>{{item.iso | isostate}}</td>
+                      </tr>
+                  </tbody>
+              </table>
         </div>
-    </div>
-    <div class="order_pagination">
-        <pagination :combination="loadParam"></pagination>
+         <div class="order_pagination">
+            <pagination :combination="loadParam"></pagination>
+        </div>
     </div>
 </template>
 <script>
@@ -80,6 +113,7 @@ import pagination from '../components/pagination'
 import systemModel from '../components/systemDataInfoDialog'
 import modifyModel from '../components/systemUpdateInfo'
 import deleteModel from '../components/systemDelInfo'
+import filter from '../filters/filters'
 import {
     getList,
     initSystemlist,
@@ -96,11 +130,19 @@ export default {
         systemModel,
         pagination,
         modifyModel,
-        deleteModel
+        deleteModel,
+        filter
     },
     data() {
         return {
             loadParam: {
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                all:10,
+                cur:1
+            },
+            loadParam1:{
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
@@ -129,7 +171,13 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getProvinceData(this.loadParam);
+            this.loadParam1.cur = input;
+            this.getSystemData(this.loadParam1);
         }
+    },
+    watch: {
+        cur: function(oldValue , newValue)
+        {console.log(arguments)}
     },
     vuex: {
         getters: {
@@ -144,8 +192,8 @@ export default {
         }
     },
     created() {
-        this.getSystemData(this.loadParam);
-        this.getProvinceData(this.loadParam);
+        this.getSystemData(this.loadParam1,this.loadParam1.all);
+        this.getProvinceData(this.loadParam,this.loadParam.all);
         if (this.$route.query.id > this.getList[10].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
             this.$route.query.id = 0;
         }
@@ -187,7 +235,10 @@ export default {
           console.log('hook-example deactivated!')
           transition.next()
       }
-    }
+    },
+    filter:(filter,{
+
+    })
 }
 </script>
 <style scoped>
@@ -357,5 +408,68 @@ export default {
 .order_pagination{
     margin: 0 auto;
     text-align: center;
+}
+.table_color {
+    background-color: #fff;
+}
+
+.table>tbody>tr>td,
+.table>tbody>tr>th,
+.table>tfoot>tr>td,
+.table>tfoot>tr>th,
+.table>thead>tr>td,
+.table>thead>tr>th {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    position: relative;
+}
+
+.table>thead>tr>th {
+    border-bottom: 0;
+    color: #003077;
+    font-weight: 100;
+}
+.table>tbody{
+    position: relative;
+}
+.table>tbody>tr{
+    position: relative;
+}
+.space>tr>th {
+    background-color: #f4f6f9;
+    height: 10px;
+}
+.component_action{
+    position: absolute;
+    right: 20px;
+    padding: 10px 0;
+    top:32px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    z-index: 10;
+    min-width: 90px;
+    max-width: 200px;
+}
+.component_action ul{
+    margin-bottom: 0;
+}
+.component_action ul li{
+    text-align: left;
+    padding:3px 8px;
+    cursor: pointer;
+}
+.base_pagination{
+    margin: auto;
+    text-align: center;
+}
+.cover_loading{
+   text-align: center;
+   position: absolute;
+   top: 40%;
+   z-index: 1100;
+   left: 0;
+   right: 0
 }
 </style>

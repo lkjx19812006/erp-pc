@@ -33,7 +33,15 @@ module.exports = {
         '/sys/**':{
                 target: 'http://192.168.1.248:70',  
                 changeOrigin: true
-            }  
+            },
+        '/recipe/**':{
+            target: 'http://192.168.1.248:70',  
+            changeOrigin: true
+            },
+        '/Extractive/**':{
+            target: 'http://192.168.1.248:70',  
+            changeOrigin: true
+            }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README

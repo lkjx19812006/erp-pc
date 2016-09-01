@@ -51,7 +51,7 @@ export const initSystemlist = (state) => {
     return JSON.parse(JSON.stringify(state.table.enumlist)); 
 } 
 export const initProvincelist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.list));  
+    return JSON.parse(JSON.stringify(state.table.locationlist));  
 }
 
 export const initEnterpriselist = (state) => {

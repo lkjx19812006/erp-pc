@@ -4,11 +4,10 @@
     <entprise-model :param="entpriseParam" v-if="!entprise"></entprise-model>
     <enterprise-model :param="enterdialogParam" v-if="!baseshow" ></enterprise-model> 
     <draw-model :param="dialogParam" v-if="!drawshow" ></draw-model>
-    <component-model :param="dialogParam" v-if="!componentshow"></component-model>
     <modify-model :param="modifyParam" v-if="!modifyenter"></modify-model>
 
     <div class="service-data" v-show="$route.path.split('=')[1]==0">
-     <div class="cover_loading">
+        <div class="cover_loading">
             <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader> 
         </div>
         <div class="service-nav clearfix">
@@ -80,17 +79,17 @@
                 </tbody>
             </table>
         </div>
+         <div class="base_pagination">
+            <pagination :combination="loadParam"></pagination>
+        </div>
     </div>
     <!-- 成分 -->
     <div class="service-data" v-show="$route.path.split('=')[1]==1">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">成分</div>
-            <div class="right col-xs-2">
-                <button class="new_btn" @click="component('data')" data-toggle="modal" data-target="#myModal">新建</button>
-            </div>
         </div>
         <div class="order_table">
-        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+        <pulse-loader :loading="loadParam1.loading" :color="color" :size="size"></pulse-loader>
             <table class="table table-hover table_color">
                 <thead>
                     <tr>
@@ -112,42 +111,43 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in initConponentlist" v-cloak>
                         <td>{{item.code}}</td>
                         <td>{{item.name}}</td>
-                        <td>{{item.company_name}}</td>
-                        <td>{{item.breed_name}}</td>
+                        <td>{{item.companyName | companyname}}</td>
+                        <td>{{item.breedName}}</td>
                         <td>{{item.quantity}}</td>
                         <td>{{item.unit}}</td>
                         <td>{{item.status}}</td>
-                        <td @click="componentEdit($index)">
-                            <img height="24" width="24" src="/static/images/default_arrow.png" />
-                            <div class="component_action" v-show='item.show' transition="expand">
-                                <ul>
-                                    <li  @click="modifyComp($index,item)">编辑</li>
-                                    <li  @click="delIngredit($index)">删除</li>
-                                </ul>
-                            </div>
-                        </td>
+                       <!--  <td @click="componentEdit($index)">
+                           <img height="24" width="24" src="/static/images/default_arrow.png" />
+                           <div class="component_action" v-show='item.show' transition="expand">
+                               <ul>
+                                   <li  @click="modifyComp($index,item)">编辑</li>
+                                   <li  @click="delIngredit($index)">删除</li>
+                               </ul>
+                           </div>
+                       </td> -->
                     </tr>
                 </tbody>
             </table>
         </div>
+         <div class="base_pagination">
+            <pagination :combination="loadParam1"></pagination>
+        </div>
     </div>
     <!-- 提取物 -->
     <div class="service-data" v-show="$route.path.split('=')[1]==2">
+        <div class="cover_loading">
+            <pulse-loader :loading="loadParam2.loading" :color="color" :size="size"></pulse-loader> 
+        </div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">提取物</div>
-            <div class="right col-xs-2">
-                <button class="new_btn" @click="draw('data')" data-toggle="modal" data-target="#myModal">新建</button>
-            </div>
         </div>
         <div class="order_table">
-        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             <table class="table table-hover table_color"  v-cloak>
                 <thead>
                     <tr>
@@ -173,42 +173,41 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in initDrawlist">
-                        <td>{{item.drawchinese}}</td>
+                        <td>{{item.name}}</td>
                         <td>{{item.drawenglish}}</td>
                         <td>{{item.drawlatin}}</td>
                         <td>{{item.drawactive}}</td>
                         <td>{{item.drawratio}}</td>
-                        <td>{{item.drawclientName}}</td>
+                        <td>{{item.contactsName}}</td>
                         <td>{{item.drawproduct}}</td>
                         <td>{{item.drawspec}}</td>
                         <td>{{item.drawprice}}</td>
-                        <td  @click="drawEdit($index)">
-                            <img height="24" width="24" src="/static/images/default_arrow.png" />
-                            <div class="component_action" v-show='item.show' transition="expand">
-                                <ul>
-                                    <li>编辑</li>
-                                    <li @click="delOperation($index)">删除</li>
-                                </ul>
-                            </div>
-                        </td>
+                       <!--  <td  @click="drawEdit($index)">
+                           <img height="24" width="24" src="/static/images/default_arrow.png" />
+                           <div class="component_action" v-show='item.show' transition="expand">
+                               <ul>
+                                   <li>编辑</li>
+                                   <li @click="delOperation($index)">删除</li>
+                               </ul>
+                           </div>
+                       </td> -->
                      </tr>
                 </tbody>
             </table>
+        </div> 
+        <div class="base_pagination">
+            <pagination :combination="loadParam2"></pagination>
         </div>
     </div>
-     <div class="base_pagination">
-        <pagination :combination="loadParam"></pagination>
-    </div>
+    
 </template>
 <script>
 import pagination from '../components/pagination'
 import enterpriseModel  from '../components/enterpriseEditDialog'
-import componentModel  from '../components/componentEditDialog'
 import drawModel from '../components/drawEditDialog'
 import drawdelModel from '../components/drawDeleteModel'
 import ingredientModel from '../components/ingredientDelModel'
@@ -229,13 +228,13 @@ import {
 export default {
     components:{
         enterpriseModel,
-        componentModel,
         drawModel,
         drawdelModel,
         ingredientModel,
         entpriseModel,
         modifyModel,
-        pagination
+        pagination,
+        filter
     },
     data(){
         return {
@@ -248,6 +247,20 @@ export default {
                 name:'enedit'
             },
             loadParam: {
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                cur:1,
+                all:7
+            },
+            loadParam1:{
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                cur:1,
+                all:7
+            },
+            loadParam2:{
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
@@ -283,6 +296,10 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getEnterpriseData(this.loadParam);
+            this.loadParam1.cur = input;
+            this.getComponentData(this.loadParam1);
+            this.loadParam2.cur = input;
+            this.getDrawData(this.loadParam2);
         }
     },
     watch: {
@@ -304,8 +321,8 @@ export default {
     },
     created() {
         this.getEnterpriseData(this.loadParam,this.loadParam.all);
-        this.getComponentData(this.loadParam);
-        this.getDrawData(this.loadParam);
+        this.getComponentData(this.loadParam1,this.loadParam1.all);
+        this.getDrawData(this.loadParam2,this.loadParam2.all);
         if (this.$route.query.id > this.getList[10].subcategory.length || isNaN(this.$route.query.id) || !this.$route.query.id) {
             this.$route.query.id = 0;
         }
@@ -333,13 +350,6 @@ export default {
                this.$store.state.table.enterpriseList[id].show = true;
             }
         },
-        componentEdit:function(id){
-            if(this.$store.state.table.componentList[id].show){
-                this.$store.state.table.componentList[id].show = !this.$store.state.table.componentList[id].show;
-            }else{
-               this.$store.state.table.componentList[id].show = true;
-            }
-        },
         drawEdit:function(id){
             if(this.$store.state.table.drawList[id].show){
                 this.$store.state.table.drawList[id].show = !this.$store.state.table.drawList[id].show;
@@ -356,18 +366,10 @@ export default {
               this.$store.state.table.enterpriseList[id].show=!this.$store.state.table.enterpriseList[id].show;
             }
         },
-        modifyComp:function(id,item){
-
-        },
         delOperation:function(id){
             this.modelParam.show = true;
             this.modelParam.id=id;
             this.drawdel=false;
-        },
-        delIngredit:function(id){
-            this.ingredientParam.show = true;
-            this.ingredientParam.id=id;
-            this.ingredient=false;
         },
         entpriseDel:function(id){
             this.entpriseParam.show = true;
@@ -481,6 +483,7 @@ export default {
 .base_pagination{
     margin: auto;
     text-align: center;
+    margin-top: 70px;
 }
 .cover_loading{
    text-align: center;

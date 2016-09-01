@@ -80,17 +80,24 @@ export const getClientList = ({dispatch},param) => {
         });
 };
 
-export const getSystemData = ({dispatch},param) => {
+export const getSystemData = ({dispatch},param) => {  //枚举类型
       param.loading=true;
-    Vue.http.get(apiUrl.dataBaseList)
-        .then((res) => {
-            for(var i in res.data.results.enumlist){
-               res.data.results.enumlist[i].show=false; 
-               res.data.results.enumlist[i].delInfo = false;
+    Vue.http({
+        type:'GET',
+        url:apiUrl.dataBaseList+'/query?type&page='+param.cur+'&pageSize=10',
+        emulateJSON: true,
+        headers: {
+                "X-Requested-With": "XMLHttpRequest"
             }
-            dispatch(types.SYSTEM_DATA, res.data);
+        }).then((res) => {
+            var obj1 = res.json().result.list;
+            for(var i in obj1){
+               obj1[i].show=false; 
+               obj1[i].delInfo = false;
+            }
+            dispatch(types.SYSTEM_DATA,obj1);
+            param.all =  res.json().result.pages;
             param.loading=false; 
-            console.log(res.data)
         }, (res) => {
             console.log('fail');
             param.loading=false;  
@@ -119,21 +126,20 @@ export const updateDataInfo = ({dispatch},param) => {
 export const getProvinceData = ({dispatch},param) => {  //省市区列表
       param.loading=true;
     Vue.http({
-        method:'GET',
         type:'GET',
-        url:apiUrl.provinceList,
+        url:apiUrl.provinceList+'/?page='+param.cur+'&pageSize=10',
         emulateJSON: true,
         headers: {
                 "X-Requested-With": "XMLHttpRequest"
             }
         }).then((res) => {
-            console.log(res.json())
             var obj=res.json().result.list;
             for(var i in obj){
                obj[i].show=false; 
             }
             dispatch(types.PROVINCE_DATA, obj);
             param.loading=false; 
+            param.all =  res.json().result.pages;
         }, (res) => {
             console.log('fail');
             param.loading=false;  
@@ -144,7 +150,7 @@ export const getEnterpriseData = ({dispatch},param) => { // 企业列表
     param.loading=true;
     Vue.http({
         type: "GET",
-        url:apiUrl.enterpriseList+'query/?type=AAA&name=公司&page='+param.cur+'&pageSize=10',
+        url:apiUrl.enterpriseList+'query/?type&name=公司&page='+param.cur+'&pageSize=10',
         emulateJSON: true,
         headers: {
                 "X-Requested-With": "XMLHttpRequest"
@@ -154,9 +160,8 @@ export const getEnterpriseData = ({dispatch},param) => { // 企业列表
             for(var i in obj){
                obj[i].show=false; 
             }
-            console.log(res.json())
             dispatch(types.SERVICE_ENTERPRISE, obj);
-            param.all =  res.json().result.total;
+            param.all =  res.json().result.pages;
             param.loading=false; 
         }, (res) => {
             console.log('fail');
@@ -166,7 +171,7 @@ export const getEnterpriseData = ({dispatch},param) => { // 企业列表
 export const saveCompany = ({dispatch},data) => { //新建企业信息
      Vue.http({
         type:"POST",
-        url:apiUrl.enterpriseList+'query/?type=AAA&name=公司',
+        url:apiUrl.enterpriseList+'query/?type&name=公司',
         emulateJSON: true,
         headers: {
                 "X-Requested-With": "XMLHttpRequest"
@@ -214,14 +219,19 @@ export const deleteCompanyStatus =({dispatch },data) => { //删除企业信息
         });
     
 };
-export const getComponentData = ({dispatch},param) => {
+export const getComponentData = ({dispatch},param) => {  //成分
     param.loading=true;
-    Vue.http.get(apiUrl.componentList)
-        .then((res) => {
-            for(var i in res.data.results.componentList){
-               res.data.results.componentList[i].show=false; 
+    Vue.http({
+        type:'GET',
+        url:apiUrl.componentList+'/'+'query/?page='+param.cur+'&pageSize=10',
+        emulateJSON: true,
+        headers: {
+                "X-Requested-With": "XMLHttpRequest"
             }
-            dispatch(types.SERVICE_COMPONENT, res.data);
+        }).then((res) => {
+            var aa= res.json().result.list;
+            dispatch(types.SERVICE_COMPONENT,aa);
+            param.all =  res.json().result.pages;
             param.loading=false; 
         }, (res) => {
             console.log('fail');
@@ -229,14 +239,17 @@ export const getComponentData = ({dispatch},param) => {
         });
 };
 
-export const getDrawData = ({dispatch},param) => {
+export const getDrawData = ({dispatch},param) => { //提取物
     param.loading=true;
-    Vue.http.get(apiUrl.drawList)
-        .then((res) => {
-            for(var i in res.data.results.drawList){
-               res.data.results.drawList[i].show=false; 
-            }
-            dispatch(types.SERVICE_DRAW, res.data);
+    Vue.http({
+        type:'GET',
+        url:apiUrl.drawList+'/'+'query?page='+param.cur+'&pageSize=10',
+        emulateJSON: true
+        }).then((res) => {
+            console.log(res.json())
+            var dd = res.json().result.list;
+            dispatch(types.SERVICE_DRAW, dd);
+            param.all = res.json().result.pages;
             param.loading=false; 
         }, (res) => {
             console.log('fail');

@@ -12,7 +12,7 @@ export default (router) => router.map({
         },
         auth: true,
         subRoutes: {
-            '*': {
+            '/*any': {
                 component: function(resolve) {
                     require(['./views/message'], resolve)
                 }

@@ -7,11 +7,11 @@ const _listUrl={
 	piechart:'/static/data/piechart.json',
 	orderTable:'/static/data/order.json',
 	clientList:'/static/data/client.json',
-	dataBaseList:'/static/data/dataBase.json',
+	dataBaseList:ctx+'/sys/enum',
 	provinceList:ctx+'/sys/location',
 	enterpriseList:ctx+'/company/',
-	componentList:'/static/data/serviceComponent.json',
-	drawList:'/static/data/serviceDraw.json'
+	componentList:ctx+'/recipe',
+	drawList:ctx+'/Extractive'
 };
 
 export default _listUrl;

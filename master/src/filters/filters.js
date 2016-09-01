@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 Vue.filter('categorystate', function(val){
 	var val = val;
-	if(val='null'){
+	if(val==null){
 		 return '无';
 	}else{
 		return ''+val;
@@ -11,9 +11,68 @@ Vue.filter('categorystate', function(val){
 
 Vue.filter('telstate', function(val){
 	var val = val;
-	if(val='null'){
+	if(val==null){
 		 return '无';
 	}else{
 		return ''+val;
+	}
+});
+  
+Vue.filter('numberstate', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else{
+		return val;
+	}
+});
+Vue.filter('iconstate', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else{
+		return ''+val;
+	}
+});
+Vue.filter('isostate', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else{
+		return val;
+	}
+});
+  
+Vue.filter('systemcode', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else{
+		return val;
+	}
+});
+Vue.filter('systemtype', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else{
+		return val;
+	}
+});
+Vue.filter('systemdesc', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else{
+		return val;
+	}
+});
+
+Vue.filter('companyname', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else{
+		return val;
 	}
 });
