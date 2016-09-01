@@ -37,9 +37,9 @@ const state = {
         {"id":4,"code":"4fff5","type":"5","desc":"1234567890","status":"1"}
     ],
     list:[
-        {"two_number":0,"cname":"中国1","level":"2122","icon":"1111","iso":"22222"},
-        {"two_number":1,"cname":"上海1","level":"222","icon":"1111","iso":"22222"},
-        {"two_number":2,"cname":"河南1","level":"222","icon":"1111","iso":"22222"}
+        {"twoNumber":0,"cname":"中国1","level":"2122","icon":"1111","iso":"22222"},
+        {"twoNumber":1,"cname":"上海1","level":"222","icon":"1111","iso":"22222"},
+        {"twoNumber":2,"cname":"河南1","level":"222","icon":"1111","iso":"22222"}
     ],
     enterpriseList:[
         {"id":0,"number":"00","category":"0ww","name":"上海ee冕冠","tel":"13162875213","legal_person":"卡卡","principal":"来啦","biz_scope":"包括很多、很多、、、","province":"上海虹口区","city":"虹口区","address":"上海虹口江湾镇","release_date":"2015-07-07","due_date":"2018-07-07","show":"true"},
@@ -73,10 +73,10 @@ const mutations = {
     [DELETE_SHOW_STATUE](state,id){
         state.enumlist.splice(id,1);
     },
-    [DELETE_COMPANY_STATUS](state,id){
+    [DELETE_COMPANY_STATUS](state,id){ //企业删除
         state.enterpriseList.splice(id,1);
     },
-     [DELETE_COMPONENT_STATUS](state,id){
+     [DELETE_COMPONENT_STATUS](state,id){ //成分删除
        state.componentList.splice(id,1);
     },
      [DELETE_DRAW_STATUS](state,id){
@@ -132,15 +132,15 @@ const mutations = {
         state.enterpriseList[data.id].ctime=data.ctime;
         state.enterpriseList[data.id].utime=data.utime;
     },
-
-    [PROVINCE_DATA](state,data){
-         state.list =data.results.list;
+ 
+    [PROVINCE_DATA](state,data){   //省市区
+         state.list =data;
     },
     [SERVICE_COMPONENT](state,data){
          state.componentList = data.results.componentList;
     },
     [SERVICE_ENTERPRISE](state,data){
-        state.enterpriseList = data.result.list; 
+        state.enterpriseList = data; 
     },
     [SERVICE_DRAW](state,data){
          state.drawList = data.results.drawList;

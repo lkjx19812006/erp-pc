@@ -8,14 +8,16 @@
     <modify-model :param="modifyParam" v-if="!modifyenter"></modify-model>
 
     <div class="service-data" v-show="$route.path.split('=')[1]==0">
+     <div class="cover_loading">
+            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader> 
+        </div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">企业</div>
             <div class="right col-xs-2">
                 <button class="new_btn" @click="newEnterprise('enedit')" data-toggle="modal" data-target="#myModal">新建</button>
             </div>
         </div>
-        <div class="order_table">
-            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader> 
+        <div class="order_table"  v-cloak>
             <table class="table table-hover table_color">
                 <thead>
                     <tr>
@@ -52,7 +54,7 @@
                     </tr>
                 </thead> 
                 <tbody>
-                    <tr v-for="item in initEnterpriselist" v-cloak>
+                    <tr v-for="item in initEnterpriselist" >
                         <td>{{item.number}}</td>
                         <td>{{item.category | categorystate}}</td>
                         <td>{{item.name}}</td>
@@ -200,7 +202,7 @@
         </div>
     </div>
      <div class="base_pagination">
-        <pagination :combination="list"></pagination>
+        <pagination :combination="loadParam"></pagination>
     </div>
 </template>
 <script>
@@ -248,7 +250,9 @@ export default {
             loadParam: {
                 loading: true,
                 color: '#5dc596',
-                size: '15px'
+                size: '15px',
+                cur:1,
+                all:7
             },
             modelParam:{
                 show:false,
@@ -272,14 +276,18 @@ export default {
             entprise:true,
             drawshow:true,
             componnetshow:true,
-            modifyenter:true,
-            list: {all:8,cur:1}
+            modifyenter:true
         }
     },
     events: {
         fresh: function(input) {
-         console.log(input);
+            this.loadParam.cur = input;
+            this.getEnterpriseData(this.loadParam);
         }
+    },
+    watch: {
+        cur: function(oldValue , newValue)
+        {console.log(arguments)}
     },
     vuex: {
         getters: {
@@ -295,7 +303,7 @@ export default {
         }
     },
     created() {
-        this.getEnterpriseData(this.loadParam);
+        this.getEnterpriseData(this.loadParam,this.loadParam.all);
         this.getComponentData(this.loadParam);
         this.getDrawData(this.loadParam);
         if (this.$route.query.id > this.getList[10].subcategory.length || isNaN(this.$route.query.id) || !this.$route.query.id) {
@@ -324,7 +332,6 @@ export default {
             }else{
                this.$store.state.table.enterpriseList[id].show = true;
             }
-            console.log(this.$store.state.table.enterpriseList[id].show)
         },
         componentEdit:function(id){
             if(this.$store.state.table.componentList[id].show){
@@ -345,9 +352,9 @@ export default {
             this.modifyParam.show=true;
             this.modifyenter=false;
             this.$broadcast('getParam');
-            /*if(this.$store.state.table.enterpriseList[id].show == true){
+            if(this.$store.state.table.enterpriseList[id].show == true){
               this.$store.state.table.enterpriseList[id].show=!this.$store.state.table.enterpriseList[id].show;
-            }*/
+            }
         },
         modifyComp:function(id,item){
 
@@ -355,17 +362,17 @@ export default {
         delOperation:function(id){
             this.modelParam.show = true;
             this.modelParam.id=id;
-             this.drawdel=false;
+            this.drawdel=false;
         },
         delIngredit:function(id){
             this.ingredientParam.show = true;
             this.ingredientParam.id=id;
-             this.ingredient=false;
+            this.ingredient=false;
         },
         entpriseDel:function(id){
             this.entpriseParam.show = true;
             this.entpriseParam.id=id;
-             this.entprise=false;
+            this.entprise=false;
         }
     },
      route: {
@@ -417,6 +424,7 @@ export default {
     margin-right: 30px;
     border-top: 1px solid #ddd;
     background: #fff;  
+    text-align: center;
 }
 
 .table_color {
@@ -473,5 +481,13 @@ export default {
 .base_pagination{
     margin: auto;
     text-align: center;
+}
+.cover_loading{
+   text-align: center;
+   position: absolute;
+   top: 40%;
+   z-index: 1100;
+   left: 0;
+   right: 0
 }
 </style>

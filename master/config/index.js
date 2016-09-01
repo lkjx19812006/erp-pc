@@ -29,6 +29,10 @@ module.exports = {
         '/company/**':{  
                 target: 'http://192.168.1.248:70',  
                 changeOrigin: true
+            },
+        '/sys/**':{
+                target: 'http://192.168.1.248:70',  
+                changeOrigin: true
             }  
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

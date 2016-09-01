@@ -62,7 +62,7 @@
           <div class="table table_hover"  v-cloak>
               <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
               <ul class="clear" v-for="item in initProvincelist">
-                  <li>{{item.two_number}}</li>
+                  <li>{{item.twoNumber}}</li>
                   <li>{{item.cname}}</li>
                   <li>{{item.level}}</li>
                   <li>{{item.icon}}</li>
@@ -72,7 +72,7 @@
         </div>
     </div>
     <div class="order_pagination">
-        <pagination :combination="list"></pagination>
+        <pagination :combination="loadParam"></pagination>
     </div>
 </template>
 <script>
@@ -103,7 +103,9 @@ export default {
             loadParam: {
                 loading: true,
                 color: '#5dc596',
-                size: '15px'
+                size: '15px',
+                all:10,
+                cur:1
             },
             dialogParam:{
                  show: false,
@@ -118,10 +120,15 @@ export default {
                 show:false
             },
             show:true,
-            list: {all:8,cur:1},
             model:true,
             editmodel:true,
             delmodel:true
+        }
+    },
+    events: {
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getProvinceData(this.loadParam);
         }
     },
     vuex: {

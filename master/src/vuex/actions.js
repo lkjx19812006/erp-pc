@@ -116,14 +116,23 @@ export const updateDataInfo = ({dispatch},param) => {
     dispatch(types.UPDATE_DATA,param);
 };
 
-export const getProvinceData = ({dispatch},param) => {
+export const getProvinceData = ({dispatch},param) => {  //省市区列表
       param.loading=true;
-    Vue.http.get(apiUrl.provinceList)
-        .then((res) => {
-            for(var i in res.data.results.list){
-               res.data.results.list[i].show=false; 
+    Vue.http({
+        method:'GET',
+        type:'GET',
+        url:apiUrl.provinceList,
+        emulateJSON: true,
+        headers: {
+                "X-Requested-With": "XMLHttpRequest"
             }
-            dispatch(types.PROVINCE_DATA, res.data);
+        }).then((res) => {
+            console.log(res.json())
+            var obj=res.json().result.list;
+            for(var i in obj){
+               obj[i].show=false; 
+            }
+            dispatch(types.PROVINCE_DATA, obj);
             param.loading=false; 
         }, (res) => {
             console.log('fail');
@@ -132,23 +141,23 @@ export const getProvinceData = ({dispatch},param) => {
 };
 
 export const getEnterpriseData = ({dispatch},param) => { // 企业列表
-      param.loading=true;
+    param.loading=true;
     Vue.http({
-        /*method:'GET',*/
         type: "GET",
-        url:apiUrl.enterpriseList,
-        data:{'type':'AAA','name':'公司','page':1,'pageSize':10},
+        url:apiUrl.enterpriseList+'query/?type=AAA&name=公司&page='+param.cur+'&pageSize=10',
         emulateJSON: true,
         headers: {
                 "X-Requested-With": "XMLHttpRequest"
             }
         }).then((res) => {
-            console.log(res.json());
-            for(var i in res.json().result.list){
-               res.json().result.list[i].show=false; 
+            var obj=res.json().result.list;
+            for(var i in obj){
+               obj[i].show=false; 
             }
-             dispatch(types.SERVICE_ENTERPRISE, res.json());
-             param.loading=false; 
+            console.log(res.json())
+            dispatch(types.SERVICE_ENTERPRISE, obj);
+            param.all =  res.json().result.total;
+            param.loading=false; 
         }, (res) => {
             console.log('fail');
             param.loading=false;  
@@ -157,7 +166,7 @@ export const getEnterpriseData = ({dispatch},param) => { // 企业列表
 export const saveCompany = ({dispatch},data) => { //新建企业信息
      Vue.http({
         type:"POST",
-        url:apiUrl.enterpriseList,
+        url:apiUrl.enterpriseList+'query/?type=AAA&name=公司',
         emulateJSON: true,
         headers: {
                 "X-Requested-With": "XMLHttpRequest"
@@ -172,17 +181,34 @@ export const saveCompany = ({dispatch},data) => { //新建企业信息
 
 
 export const updateEnterInfo = ({dispatch},param) => { //修改企业信息
-     Vue.http.put(apiUrl.enterpriseList,id)
-        .then((res) => {
+     Vue.http({
+        type:'PUT',
+        url:apiUrl.enterpriseList,
+        emulateJSON: true,
+        headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        }).then((res) => {
             dispatch(types.UPDATE_ENTER_DATA,res.param);
         },(res) => {
             console.log('fail');
         }); 
 };
-export const deleteCompanyStatus =({dispatch },param) => { //删除企业信息
-      Vue.http.delete(apiUrl.enterpriseList)
-        .then((res) => {
-            dispatch(types.DELETE_COMPANY_STATUS,param)
+export const deleteCompanyStatus =({dispatch },data) => { //删除企业信息
+    console.log(data)
+    var id= data;
+    console.log(id)
+      Vue.http({
+        type:'DELETE',
+        url:apiUrl.enterpriseList+id,
+        emulateJSON: true,
+        headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        }).then((res) => {
+            dispatch(types.DELETE_COMPANY_STATUS,res.data)
+            console.log(res.data)
+            console.log('删除成功')
         },(res) => {
             console.log('fail');
         });

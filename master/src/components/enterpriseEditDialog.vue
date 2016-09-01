@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">发证日期</label>
-                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.ctime" id="ctime" v-validate:ctime="['required']"/>
+                                    <input type="text" class="form-control edit-input" v-model="enterpriseData.release_date" id="ctime" v-validate:ctime="['required']"/>
                                 </div>
                             </div>
                         </div>

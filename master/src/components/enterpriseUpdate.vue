@@ -21,11 +21,11 @@
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">法定代表人</label>
-                                <input type="text" v-model='companyData.legal_person' class="form-control edit-input" value="{{companyData.legal_person}}" />
+                                <input type="text" v-model='companyData.legalPerson' class="form-control edit-input" value="{{companyData.legalPerson}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">生产范围</label>
-                                <input type="text" v-model="companyData.biz_scope" class="form-control edit-input" value="{{companyData.biz_scope}}" />
+                                <input type="text" v-model="companyData.bizScopebizScope" class="form-control edit-input" value="{{companyData.bizScope}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">所在市</label>
@@ -33,17 +33,17 @@
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">发证日期</label>
-                                <input type="text" v-model="companyData.release_date" class="form-control edit-input" value="{{companyData.release_date}}" />
+                                <input type="text" v-model="companyData.ctime" class="form-control edit-input" value="{{companyData.ctime}}" />
                             </div>
                         </div>
                         <div class="editpageright">
                             <div class="editpage-input">
                                 <label class="editlabel">分类码</label>
-                                <input type="text" v-model='companyData.category' class="form-control edit-input" value="{{companyData.category}}" />
+                                <input type="text" v-model='companyData.category' class="form-control edit-input" value="{{companyData.category | categorystate}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">电话</label>
-                                <input type="text" v-model="companyData.tel" class="form-control edit-input" value="{{companyData.tel}}" />
+                                <input type="text" v-model="companyData.tel" class="form-control edit-input" value="{{companyData.tel | telstate}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">企业代表人</label>
@@ -59,7 +59,7 @@
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">有效截止日</label>
-                                <input type="text" v-model="companyData.due_date" class="form-control edit-input" value="{{companyData.due_date}}" />
+                                <input type="text" v-model="companyData.utime" class="form-control edit-input" value="{{companyData.utime}}" />
                             </div>
                         </div>
                     </div>
@@ -72,6 +72,7 @@
     </div>
 </template>
 <script>
+import filter from '../filters/filters'
 import {
     initEnterpriselist
 } from '../vuex/getters'
@@ -88,14 +89,14 @@ export default {
                 category: this.initEnterpriselist[this.param.id].category,
                 name: this.initEnterpriselist[this.param.id].name,
                 tel: this.initEnterpriselist[this.param.id].tel,
-                legal_person: this.initEnterpriselist[this.param.id].legal_person,
+                legalPerson: this.initEnterpriselist[this.param.id].legalPerson,
                 principal: this.initEnterpriselist[this.param.id].principal,
-                biz_scope: this.initEnterpriselist[this.param.id].biz_scope,
+                bizScope: this.initEnterpriselist[this.param.id].bizScope,
                 province: this.initEnterpriselist[this.param.id].province,
                 city: this.initEnterpriselist[this.param.id].city,
                 address: this.initEnterpriselist[this.param.id].address,
-                release_date: this.initEnterpriselist[this.param.id].release_date,
-                due_date: this.initEnterpriselist[this.param.id].due_date,
+                ctime: this.initEnterpriselist[this.param.id].ctime,
+                utime: this.initEnterpriselist[this.param.id].utime,
                 id: this.param.id
             }
         }
@@ -125,17 +126,20 @@ export default {
             this.$set('companyData.category', this.initEnterpriselist[this.param.id].category);
             this.$set('companyData.name', this.initEnterpriselist[this.param.id].name);
             this.$set('companyData.tel', this.initEnterpriselist[this.param.id].tel);
-            this.$set('companyData.legal_person', this.initEnterpriselist[this.param.id].legal_person);
+            this.$set('companyData.legalPerson', this.initEnterpriselist[this.param.id].legalPerson);
             this.$set('companyData.principal', this.initEnterpriselist[this.param.id].principal);
-            this.$set('companyData.biz_scope', this.initEnterpriselist[this.param.id].biz_scope);
+            this.$set('companyData.bizScope', this.initEnterpriselist[this.param.id].bizScope);
             this.$set('companyData.province', this.initEnterpriselist[this.param.id].province);
             this.$set('companyData.city', this.initEnterpriselist[this.param.id].city);
             this.$set('companyData.address', this.initEnterpriselist[this.param.id].address);
-            this.$set('companyData.release_date', this.initEnterpriselist[this.param.id].release_date);
-            this.$set('companyData.due_date', this.initEnterpriselist[this.param.id].due_date);
+            this.$set('companyData.ctime', this.initEnterpriselist[this.param.id].ctime);
+            this.$set('companyData.utime', this.initEnterpriselist[this.param.id].utime);
             this.$set('companyData.id', this.param.id);
         }
-    }
+    },
+    filter:(filter,{
+      
+    })
 }
 </script>
 <style scoped>

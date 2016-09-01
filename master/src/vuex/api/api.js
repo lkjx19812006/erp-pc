@@ -8,8 +8,8 @@ const _listUrl={
 	orderTable:'/static/data/order.json',
 	clientList:'/static/data/client.json',
 	dataBaseList:'/static/data/dataBase.json',
-	provinceList:'/static/data/provice.json',
-	enterpriseList:ctx+'/company/query/?type=AAA&name=公司&page=1&pageSize=10',
+	provinceList:ctx+'/sys/location',
+	enterpriseList:ctx+'/company/',
 	componentList:'/static/data/serviceComponent.json',
 	drawList:'/static/data/serviceDraw.json'
 };
