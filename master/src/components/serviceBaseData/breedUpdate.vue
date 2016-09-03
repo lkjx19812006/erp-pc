@@ -5,34 +5,32 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>编辑枚举类型</h3>
+            <h3>编辑药材</h3>
         </div>
         <div class="edit-model">
             <form name="editOrderinfo" action="javascript:void(0)">
                 <section class="editsection" v-cloak>
+                        <input type="hidden"  class="form-control edit-input" value="{{categoryData.id}}" />
                     <div class="editpage">
                         <div class="editpageleft">
                             <div class="editpage-input">
-                                <label class="editlabel">编号</label>
-                                <input type="text" v-model='systemData.id' class="form-control edit-input" value="{{systemData.id}}" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">类型</label>
-                                <input type="text" v-model='systemData.type' class="form-control edit-input" value="{{systemData.type}}" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">状态</label>
-                                <input type="text" v-model='systemData.status' class="form-control edit-input" value="{{systemData.status}}" />
-                            </div>
-                        </div>
-                        <div class="editpageright">
-                            <div class="editpage-input">
                                 <label class="editlabel">编码</label>
-                                <input type="text" v-model='systemData.code' class="form-control edit-input" value="{{systemData.code}}" />
+                                <input type="text" v-model='categoryData.code' class="form-control edit-input" value="{{categoryData.code | breedcode}}" />
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">描述</label>
-                                <input type="text" v-model="systemData.desc" class="form-control edit-input" value="{{systemData.desc}}" />
+                                <label class="editlabel">品种名称</label>
+                                <input type="text" v-model='categoryData.name' class="form-control edit-input" value="{{categoryData.name}}" />
+                            </div>
+                           <div class="editpage-input">
+                              <label class="editlabel">品种分类选择</label>
+                              <select class="form-control" v-model="categoryData.selected" style="width:90%;">
+                                  <!-- <option>{{categoryData.selected}}</option> -->
+                                <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
+                              </select>
+                          </div> 
+                            <div class="editpage-input">
+                                <label class="editlabel">图标</label>
+                                <img :src="categoryData.icon"  alt="药材图标" />
                             </div>
                         </div>
                     </div>
@@ -41,39 +39,45 @@
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="updateDataInfo(systemData,param.show = false)">确定</button>
+            <button type="button" class="btn  btn-confirm" @click="updateBreedInfo(categoryData,categoryData.sub=param.id,param.show = false)">确定</button>
         </div>
     </div>
 </template>
 <script>
+import filter from '../../filters/filters'
 import {
-    initSystemlist
-} from '../vuex/getters'
+    initBreedlist,
+    initCategorylist
+} from '../../vuex/getters'
 import {
-    getSystemData,
-    updateDataInfo
-} from '../vuex/actions'
+    getBreedData,
+    updateBreedInfo,
+    getCategoryData
+} from '../../vuex/actions'
 export default {
     props: ['param'],
+    components:{
+        filter
+    },
     data() {
         return {
-            systemData: {
-                id: this.initSystemlist[this.param.id].id,
-                code: this.initSystemlist[this.param.id].code,
-                type: this.initSystemlist[this.param.id].type,
-                desc: this.initSystemlist[this.param.id].desc,
-                status: this.initSystemlist[this.param.id].status,
-                id: this.param.id
+             categoryData: {
+                id: this.initBreedlist[this.param.id].id,
+                code: this.initBreedlist[this.param.id].code,
+                name: this.initBreedlist[this.param.id].name,
+                selected: this.initBreedlist[this.param.id].categoryId
             }
         }
     },
     vuex: {
         getters: {
-            initSystemlist
+            initBreedlist,
+            initCategorylist
         },
         actions: {
-            getSystemData,
-            updateDataInfo
+            getBreedData,
+            updateBreedInfo,
+            getCategoryData
         }
     },
     route: {
@@ -88,13 +92,15 @@ export default {
     },
     events: {
         'getParam' () {
-            this.$set('systemData.id', this.initSystemlist[this.param.id].id);
-            this.$set('systemData.code', this.initSystemlist[this.param.id].code);
-            this.$set('systemData.type', this.initSystemlist[this.param.id].type);
-            this.$set('systemData.status', this.initSystemlist[this.param.id].status);
-            this.$set('systemData.desc', this.initSystemlist[this.param.id].desc);
-            this.$set('systemData.id', this.param.id);
+            this.$set('categoryData.name', this.initBreedlist[this.param.id].name);
+            this.$set('categoryData.code', this.initBreedlist[this.param.id].code);
+            this.$set('categoryData.selected', this.initBreedlist[this.param.id].categoryId);
+            this.$set('categoryData.id', this.initBreedlist[this.param.id].id);
         }
+    },
+    filter:(filter,{}),
+    created() {
+        this.getCategoryData();
     }
 }
 </script>

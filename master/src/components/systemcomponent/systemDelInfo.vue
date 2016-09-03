@@ -1,23 +1,21 @@
 <template>
   <div v-show="param.show" class="modal  fade" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
-        <div @click="param.show = false" class="top-title">
-            <span class="glyphicon glyphicon-remove-circle"></span>
-        </div>
 	    <div class="model-header">
-	    	<h4>删除提取物</h4>
-	    	<p class="model-tips">是否确定删除此提取物？</p>
+	    	<h4>删除枚举类型</h4>
+	    	<p class="model-tips">是否确定删除此枚举类型？</p>
 	    	<div class="model-footer">
 	    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-	    		<button type="button" class="btn btn-orange" @click="deleteDrawStatus(param.id,param.show=false)">删除</button>
+	    		<button type="button" class="btn btn-orange" @click="deleteShowStatue(param.id,param.show=false)">删除</button>
 	    	</div>
-	    </div>
+	    </div> 
 	</div>
 </template>
 <script>
-import {
-    deleteDrawStatus
-} from '../vuex/actions'
+import { 
+    deleteShowStatue
+ } from '../../vuex/actions'
+
 export default {
     data() {
         return {
@@ -25,14 +23,11 @@ export default {
         }
     },
     vuex:{
-        actions:{
-            deleteDrawStatus
+        actions: {
+            deleteShowStatue
         }
     },
-    props:['param'],
-    methods:{
-    	
-    }
+    props:['param']
 }
 </script>
 <style scoped>

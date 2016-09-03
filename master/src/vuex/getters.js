@@ -65,3 +65,13 @@ export const initConponentlist = (state) => {
 export const initDrawlist = (state) => {
     return JSON.parse(JSON.stringify(state.table.drawList));  
 }
+
+export const initBreedlist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.breedList));  
+}
+export const initCategorylist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.categoryList)); 
+}
+export const initSpeclist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.specList)); 
+}

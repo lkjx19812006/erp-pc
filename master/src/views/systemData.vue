@@ -6,6 +6,12 @@
         <div class="order_search">
             <div class="clear">
                 <div class="my_order col-xs-2">枚举类型</div>
+                <div class="col-xs-8 my_order_search">
+                    <div class="name_search clearfix">
+                        <img src="/static/images/search.png" height="24" width="24">
+                        <input type="text" class="search_input" v-model="loadParam1.type" placeholder="按类型搜索" v-on:keyup="typeSearch(loadParam1.type)">
+                    </div>
+                </div>
                 <div class="right col-xs-2">
                     <button class="new_btn" @click="newData('data')" data-toggle="modal" data-target="#myModal">新建</button>
                 </div>
@@ -18,11 +24,12 @@
            <table class="table table-hover table_color"  v-cloak>
               <thead>
                   <tr>
-                     <th>编号</th>
                      <th>编码</th>
+                     <th>名称</th>
                      <th>类型</th>
                      <th>描述</th>
                      <th>状态</th>
+                     <th></th>
                    </tr>
                 </thead>
                 <thead class="space">
@@ -36,9 +43,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in initSystemlist"> 
-                    <td>{{item.id}}</td>
+                  <tr v-for="item in initSystemlist">  
                     <td>{{item.code | systemcode}}</td>
+                    <td>{{item.name}}</td>
                     <td>{{item.type | systemtype}}</td>
                     <td>{{item.desc | systemdesc}}</td>
                     <td>{{item.status}}</td>
@@ -110,9 +117,9 @@
 </template>
 <script>
 import pagination from '../components/pagination'
-import systemModel from '../components/systemDataInfoDialog'
-import modifyModel from '../components/systemUpdateInfo'
-import deleteModel from '../components/systemDelInfo'
+import systemModel from '../components/systemcomponent/systemDataInfoDialog'
+import modifyModel from '../components/systemcomponent/systemUpdateInfo'
+import deleteModel from '../components/systemcomponent/systemDelInfo'
 import filter from '../filters/filters'
 import {
     getList,
@@ -122,7 +129,8 @@ import {
 import {
     getSystemData,
     getProvinceData,
-    changeShowStatue
+    changeShowStatue,
+    getSystemSearch
 } from '../vuex/actions'
 
 export default {
@@ -147,7 +155,8 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 all:10,
-                cur:1
+                cur:1,
+                type:''
             },
             dialogParam:{
                  show: false,
@@ -188,7 +197,8 @@ export default {
         actions: {
             getSystemData,
             changeShowStatue,
-            getProvinceData
+            getProvinceData,
+            getSystemSearch
         }
     },
     created() {
@@ -199,6 +209,9 @@ export default {
         }
     },
     methods: {
+        typeSearch: function(type) {
+            this.getSystemSearch(this.loadParam1,this.loadParam1.all);
+        },
         editData: function(id) {
             if(this.$store.state.table.enumlist[id].show == true){
                 this.$store.state.table.enumlist[id].show=!this.$store.state.table.enumlist[id].show;
@@ -212,10 +225,12 @@ export default {
              this.editmodel = false;
         },
         modify:function(id,item){
+          console.log(id)
           	this.modifyParam.id=id;
             this.modifyParam.show=true;
             this.model=false;
             this.$broadcast('getParam');
+            console.log(this.$store.state.table.enumlist[id].show)
             if(this.$store.state.table.enumlist[id].show == true){
               this.$store.state.table.enumlist[id].show=!this.$store.state.table.enumlist[id].show;
             }

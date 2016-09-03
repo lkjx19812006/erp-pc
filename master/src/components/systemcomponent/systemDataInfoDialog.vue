@@ -15,7 +15,7 @@
                             <div class="editpageleft">
                                 <div class="editpage-input">
                                     <label class="editlabel" for="system">编号 <span class="system_danger" v-if="$validation.system.required||$validation.system.minlength">请输入编号且不少于三位数</span></label>
-                                    <input type="text" class="form-control  edit-input" id="system" v-validate:system="{required:true,minlength:3}" v-model="systemData.id"  />
+                                    <input type="text" class="form-control  edit-input" id="system" v-validate:system="{required:true,minlength:3}" v-model="systemData.name"  />
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel" for="systemtype">类型
@@ -56,7 +56,7 @@
 import {
     getSystemData,
     saveDataInfo
-} from '../vuex/actions'
+} from '../../vuex/actions'
 export default {
     components: {
 
@@ -65,7 +65,7 @@ export default {
     data() {
         return {
             systemData: {
-                id: '',
+                name: '',
                 code: '',
                 type: '',
                 desc: '',

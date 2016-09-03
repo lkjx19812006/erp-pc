@@ -36,223 +36,450 @@ export const freshLinecharts = ({ dispatch }, getLinechart) => {
 };
 
 //饼状图
-export const freshPiecharts = ({ dispatch},getPiechart) => {
-    if(getPiechart)getPiechart.load=true;
+export const freshPiecharts = ({ dispatch }, getPiechart) => {
+    if (getPiechart) getPiechart.load = true;
     Vue.http.get(apiUrl.piechart)
         .then((res) => {
             dispatch(types.CHANGE_PIECHARTS, res.data);
-        },(res) => {
+        }, (res) => {
             console.log('fail');
         });
 };
 
-export const getOrderList = ({dispatch},param) => {
-      param.loading=true;
+export const getOrderList = ({ dispatch }, param) => {
+    param.loading = true;
     Vue.http.get(apiUrl.orderTable)
         .then((res) => {
             dispatch(types.ORDER_TABLE, res.data);
-            param.loading=false; 
+            param.loading = false;
         }, (res) => {
             console.log('fail');
-            param.loading=false;  
+            param.loading = false;
         });
 };
 
-export const changeShowStatue =({dispatch },param) => {
+export const changeShowStatue = ({ dispatch }, param) => {
     /*param.show=true;*/
     dispatch(types.CHANGE_SHOW_STATUE, param);
-     if(res.data.results[id].param){
-            res.data.results[id].param=!res.data.results[id].param;
-        }
-        console.log(res.data.results[id].param);
+    if (res.data.results[id].param) {
+        res.data.results[id].param = !res.data.results[id].param;
+    }
+    console.log(res.data.results[id].param);
 };
 
-export const getClientList = ({dispatch},param) => {
-      param.loading=true;
+export const getClientList = ({ dispatch }, param) => {
+    param.loading = true;
     Vue.http.get(apiUrl.clientList)
         .then((res) => {
             dispatch(types.CLIENT_INFO, res.data);
-            param.loading=false; 
+            param.loading = false;
             console.log(res.data)
         }, (res) => {
             console.log('fail');
-            param.loading=false;  
+            param.loading = false;
         });
 };
 
-export const getSystemData = ({dispatch},param) => {  //枚举类型
-      param.loading=true;
+export const getSystemData = ({ dispatch }, param) => { //枚举类型
+    param.loading = true;
     Vue.http({
-        type:'GET',
-        url:apiUrl.dataBaseList+'/query?type&page='+param.cur+'&pageSize=10',
+        method: 'GET',
+        url: apiUrl.dataBaseList + '/query?type&page=' + param.cur + '&pageSize=10',
         emulateJSON: true,
         headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        }).then((res) => {
-            var obj1 = res.json().result.list;
-            for(var i in obj1){
-               obj1[i].show=false; 
-               obj1[i].delInfo = false;
-            }
-            dispatch(types.SYSTEM_DATA,obj1);
-            param.all =  res.json().result.pages;
-            param.loading=false; 
-        }, (res) => {
-            console.log('fail');
-            param.loading=false;  
-        });
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj1 = res.json().result.list;
+        for (var i in obj1) {
+            obj1[i].show = false;
+            obj1[i].delInfo = false;
+            obj1[i].id;
+        }
+        dispatch(types.SYSTEM_DATA, obj1);
+        param.all = res.json().result.pages;
+        console.log(res.json())
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
 };
-
-export const deleteShowStatue =({dispatch},param) => {
-    dispatch(types.DELETE_SHOW_STATUE,param);
-};
-
-export const deleteComponentStatus =({dispatch },param) => {
-    dispatch(types.DELETE_COMPONENT_STATUS,param);
-};
-export const deleteDrawStatus =({dispatch },param) => {
-    dispatch(types.DELETE_DRAW_STATUS,param);
-};
-
-export const saveDataInfo = ({dispatch},data) => {
-    dispatch(types.ADD_DATA,data);
-};
-
-export const updateDataInfo = ({dispatch},param) => {
-    dispatch(types.UPDATE_DATA,param);
-};
-
-export const getProvinceData = ({dispatch},param) => {  //省市区列表
-      param.loading=true;
+export const getSystemSearch = ({ dispatch }, param) => { //搜索枚举类型
+    param.loading = true;
     Vue.http({
-        type:'GET',
-        url:apiUrl.provinceList+'/?page='+param.cur+'&pageSize=10',
+        method: 'GET',
+        url: apiUrl.dataBaseList + '/query?type='+param.type+'&page=' + param.cur + '&pageSize=10',
         emulateJSON: true,
         headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        }).then((res) => {
-            var obj=res.json().result.list;
-            for(var i in obj){
-               obj[i].show=false; 
-            }
-            dispatch(types.PROVINCE_DATA, obj);
-            param.loading=false; 
-            param.all =  res.json().result.pages;
-        }, (res) => {
-            console.log('fail');
-            param.loading=false;  
-        });
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj1 = res.json().result.list;
+        dispatch(types.SYSTEM_DATA, obj1);
+        param.all = res.json().result.pages;
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
 };
-
-export const getEnterpriseData = ({dispatch},param) => { // 企业列表
-    param.loading=true;
+export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
+    const body ={
+        code: data.code,
+        desc: data.desc,
+        id: data.id,
+        name: data.name,
+        status: data.status,
+        type: data.type
+    }
     Vue.http({
-        type: "GET",
-        url:apiUrl.enterpriseList+'query/?type&name=公司&page='+param.cur+'&pageSize=10',
-        emulateJSON: true,
+        method: 'POST',
+        url: apiUrl.dataBaseList + '/',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
         headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        }).then((res) => {
-            var obj=res.json().result.list;
-            for(var i in obj){
-               obj[i].show=false; 
-            }
-            dispatch(types.SERVICE_ENTERPRISE, obj);
-            param.all =  res.json().result.pages;
-            param.loading=false; 
-        }, (res) => {
-            console.log('fail');
-            param.loading=false;  
-        });
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('添加成功')
+        dispatch(types.ADD_DATA, data);
+    }, (res) => {
+        console.log('fail');
+    });
 };
-export const saveCompany = ({dispatch},data) => { //新建企业信息
-     Vue.http({
-        type:"POST",
-        url:apiUrl.enterpriseList+'query/?type&name=公司',
+export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
+    console.log(param)
+    const data = {
+        code: param.code,
+        desc: param.desc,
+        id: param.id,
+        name: param.name,
+        status: param.status,
+        type: param.type
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.dataBaseList + '/',
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.UPDATE_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    });
+};
+
+export const deleteShowStatue = ({ dispatch }, param) => { //删除枚举
+    dispatch(types.DELETE_SHOW_STATUE, param);
+    console.log(param)
+    /*Vue.http({
+        method: 'DELETE',
+        url: apiUrl.dataBaseList + '/'+param,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('删除成功')
+        dispatch(types.DELETE_SHOW_STATUE, param);
+    }, (res) => {
+        console.log('fail');
+    });*/
+};
+
+export const deleteComponentStatus = ({ dispatch }, param) => {
+    dispatch(types.DELETE_COMPONENT_STATUS, param);
+};
+export const deleteDrawStatus = ({ dispatch }, param) => {
+    dispatch(types.DELETE_DRAW_STATUS, param);
+};
+
+export const getProvinceData = ({ dispatch }, param) => { //省市区列表
+    param.loading = true;
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.provinceList + '/?page=' + param.cur + '&pageSize=10',
         emulateJSON: true,
         headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        }).then((res) => {
-            console.log(res.json())
-            dispatch(types.SAVE_COMPANY_DATA,res.json())
-        },(res) => {
-            console.log('fail');
-        });
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj = res.json().result.list;
+        for (var i in obj) {
+            obj[i].show = false;
+        }
+        dispatch(types.PROVINCE_DATA, obj);
+        param.loading = false;
+        param.all = res.json().result.pages;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+};
+
+export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
+    param.loading = true;
+    Vue.http({
+        method: "GET",
+        url: apiUrl.enterpriseList + 'query/?type&name=公司&page=' + param.cur + '&pageSize=10',
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj = res.json().result.list;
+        for (var i in obj) {
+            obj[i].show = false;
+        }
+        dispatch(types.SERVICE_ENTERPRISE, obj);
+        param.all = res.json().result.pages;
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+};
+export const saveCompany = ({ dispatch }, data) => { //新建企业信息X
+    Vue.http({
+        method: "POST",
+        url: apiUrl.enterpriseList + 'query/?type&name=公司',
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        console.log(res.json())
+        dispatch(types.SAVE_COMPANY_DATA, res.json())
+    }, (res) => {
+        console.log('fail');
+    });
 };
 
 
-export const updateEnterInfo = ({dispatch},param) => { //修改企业信息
-     Vue.http({
-        type:'PUT',
-        url:apiUrl.enterpriseList,
+export const updateEnterInfo = ({ dispatch }, param) => { //修改企业信息X
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.enterpriseList + '/',
         emulateJSON: true,
         headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        }).then((res) => {
-            dispatch(types.UPDATE_ENTER_DATA,res.param);
-        },(res) => {
-            console.log('fail');
-        }); 
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        dispatch(types.UPDATE_ENTER_DATA, res.param);
+    }, (res) => {
+        console.log('fail');
+    });
 };
-export const deleteCompanyStatus =({dispatch },data) => { //删除企业信息
+export const deleteCompanyStatus = ({ dispatch }, data) => { //删除企业信息X
     console.log(data)
-    var id= data;
+    var id = data;
     console.log(id)
-      Vue.http({
-        type:'DELETE',
-        url:apiUrl.enterpriseList+id,
-        emulateJSON: true,
-        headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        }).then((res) => {
-            dispatch(types.DELETE_COMPANY_STATUS,res.data)
-            console.log(res.data)
-            console.log('删除成功')
-        },(res) => {
-            console.log('fail');
-        });
-    
-};
-export const getComponentData = ({dispatch},param) => {  //成分
-    param.loading=true;
     Vue.http({
-        type:'GET',
-        url:apiUrl.componentList+'/'+'query/?page='+param.cur+'&pageSize=10',
+        method: 'DELETE',
+        url: apiUrl.enterpriseList + id,
         emulateJSON: true,
         headers: {
-                "X-Requested-With": "XMLHttpRequest"
-            }
-        }).then((res) => {
-            var aa= res.json().result.list;
-            dispatch(types.SERVICE_COMPONENT,aa);
-            param.all =  res.json().result.pages;
-            param.loading=false; 
-        }, (res) => {
-            console.log('fail');
-            param.loading=false;  
-        });
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        dispatch(types.DELETE_COMPANY_STATUS, res.data)
+        console.log(res.data)
+        console.log('删除成功')
+    }, (res) => {
+        console.log('fail');
+    });
+
+};
+export const getComponentData = ({ dispatch }, param) => { //成分
+    param.loading = true;
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.componentList + '/' + 'query/?page=' + param.cur + '&pageSize=10',
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var aa = res.json().result.list;
+        dispatch(types.SERVICE_COMPONENT, aa);
+        param.all = res.json().result.pages;
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
 };
 
-export const getDrawData = ({dispatch},param) => { //提取物
-    param.loading=true;
+export const getDrawData = ({ dispatch }, param) => { //提取物
+    param.loading = true;
     Vue.http({
-        type:'GET',
-        url:apiUrl.drawList+'/'+'query?page='+param.cur+'&pageSize=10',
+        method: 'GET',
+        url: apiUrl.drawList + '/' + 'query?page=' + param.cur + '&pageSize=10',
         emulateJSON: true
-        }).then((res) => {
-            console.log(res.json())
-            var dd = res.json().result.list;
-            dispatch(types.SERVICE_DRAW, dd);
-            param.all = res.json().result.pages;
-            param.loading=false; 
-        }, (res) => {
-            console.log('fail');
-            param.loading=false;  
-        });
+    }).then((res) => {
+        console.log(res.json())
+        var dd = res.json().result.list;
+        dispatch(types.SERVICE_DRAW, dd);
+        param.all = res.json().result.pages;
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
 };
+
+export const getBreedData = ({ dispatch }, param) => { //药材
+     param.loading = true;
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.breedList + '/' + '?page=' + param.cur + '&pageSize=10',
+        emulateJSON: true,
+         headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        }).then((res) => {
+        var breed = res.json().result.list;
+        for(var i in breed){
+            breed[i].show=false;
+        }
+        dispatch(types.BREED_DATA, breed);
+        param.all = res.json().result.pages;
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+};
+
+export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
+     param.loading = true;
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.breedList + '/' + '?name='+param.name+'&page=' + param.cur + '&pageSize=10',
+        emulateJSON: true,
+         headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        }).then((res) => {
+        var search = res.json().result.list;
+        dispatch(types.BREED_DATA, search);
+        param.all = res.json().result.pages;
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+};
+export const getCategoryData = ({ dispatch }, param) => { // 获取品种信息
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.categoryList,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+            }
+        }).then((res) => {
+        var cInfo = res.json().result;
+        dispatch(types.CATEGORY_DATA,cInfo);
+    }, (res) => {
+        console.log('fail');
+    });
+};
+export const getSpecData = ({ dispatch }, param) => { // 获取规格信息
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.specList,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+            }
+        }).then((res) => {
+        var spec = res.json().result;
+        dispatch(types.SPEC_DATA,spec);
+    }, (res) => {
+        console.log('fail');
+    });
+};
+export const saveBreed = ({ dispatch }, data) => { //新增药材信息
+    const data1={
+        categoryId:data.selected,
+        name:data.name,
+        code:data.code
+       /* icon:data.icon*/
+    } 
+    Vue.http({
+        method: "POST",
+        url: apiUrl.breedList + '/',
+        emulateHTTP: true,
+        body: data1,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('添加成功')
+        dispatch(types.BREED_DATA,data)
+    }, (res) => {
+        console.log('fail');
+    });
+};
+
+export const updateBreedInfo = ({ dispatch }, param) => { //修改药材信息
+    console.log(param)
+    const updatedata = {
+        code: param.code,
+        name: param.name,
+        categoryId: param.selected,
+        id:param.id
+        /*icon: param.icon,*/
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.breedList +'/',
+        emulateHTTP: false,
+        params:param.id,
+        body: updatedata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.UPDATE_BREED_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const deleteBreedstatus = ({ dispatch }, param) => { //删除药材信息
+    console.log(param)
+    Vue.http({
+        method: 'DELETE',
+        url: apiUrl.breedList + '/'+param,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('删除成功')
+        dispatch(types.DELETE_BREED_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    });
+};
+

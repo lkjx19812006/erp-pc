@@ -5,19 +5,19 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 	    <div class="model-header">
-	    	<h4>删除成分</h4>
-	    	<p class="model-tips">是否确定删除此成分信息？</p>
+	    	<h4>删除提取物</h4>
+	    	<p class="model-tips">是否确定删除此提取物？</p>
 	    	<div class="model-footer">
 	    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-	    		<button type="button" class="btn btn-orange" @click="deleteComponentStatus(param.id,param.show=false)">删除</button>
+	    		<button type="button" class="btn btn-orange" @click="deleteDrawStatus(param.id,param.show=false)">删除</button>
 	    	</div>
 	    </div>
 	</div>
 </template>
 <script>
 import {
-    deleteComponentStatus
-} from '../vuex/actions'
+    deleteDrawStatus
+} from '../../vuex/actions'
 export default {
     data() {
         return {
@@ -26,7 +26,7 @@ export default {
     },
     vuex:{
         actions:{
-            deleteComponentStatus
+            deleteDrawStatus
         }
     },
     props:['param'],

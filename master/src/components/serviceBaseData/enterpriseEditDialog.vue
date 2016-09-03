@@ -78,7 +78,7 @@
 <script>
 import {
     saveCompany
-} from '../vuex/actions'
+} from '../../vuex/actions'
 export default {
     components: {
 

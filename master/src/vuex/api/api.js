@@ -11,7 +11,10 @@ const _listUrl={
 	provinceList:ctx+'/sys/location',
 	enterpriseList:ctx+'/company/',
 	componentList:ctx+'/recipe',
-	drawList:ctx+'/Extractive'
+	drawList:ctx+'/Extractive',
+	breedList:ctx+'/breed',
+	categoryList:ctx+'/category/',
+	specList:ctx+'/breed/spec/'
 };
 
 export default _listUrl;

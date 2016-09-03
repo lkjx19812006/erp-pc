@@ -72,14 +72,14 @@
     </div>
 </template>
 <script>
-import filter from '../filters/filters'
+import filter from '../../filters/filters'
 import {
     initEnterpriselist
-} from '../vuex/getters'
+} from '../../vuex/getters'
 import {
     getEnterpriseData,
     updateEnterInfo
-} from '../vuex/actions'
+} from '../../vuex/actions'
 export default {
     props: ['param'],
     data() {

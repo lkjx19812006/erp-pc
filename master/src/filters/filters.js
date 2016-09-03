@@ -76,3 +76,21 @@ Vue.filter('companyname', function(val){
 		return val;
 	}
 });
+
+Vue.filter('breedcode', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else{
+		return val;
+	}
+})
+
+Vue.filter('categorycode', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else{
+		return val;
+	}
+})

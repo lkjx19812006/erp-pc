@@ -1,0 +1,10 @@
+{
+	"results":{
+	 "categoryList":[
+	    	{"code":"0","name":"全草类"},
+            {"code":"0","name":"花类"}
+	      ]
+	    },
+	"msg":"success",
+	"code":200
+}

@@ -158,42 +158,7 @@ export default {
     font-size: 20px;
     padding: 0;
 }
-.my_order_search{
-    
-}
-.name_search,
-.ordertel_search,
-.tel_search {
-    position: relative;
-    border: 1px solid #ccc;
-    display: inline-block;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    background: #fff;
-    height: 30px;
-    line-height: 28px;
-     margin-right: 7%; 
-}
-.tel_search {
-    margin-right: 0;
-}
 
-.name_search>img,
-.ordertel_search>img,
-.tel_search>img {
-    float: left;
-    margin-top: 2px;
-    margin-left: 1px;
-}
-
-.search_input {
-    color: #666;
-    font-size: 14px;
-    float: left;
-    text-indent: 5px;
-}
 
 .new_btn {
     float: right;

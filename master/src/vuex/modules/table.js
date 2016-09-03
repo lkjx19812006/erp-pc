@@ -14,7 +14,13 @@ import {
    ADD_DATA,
    UPDATE_DATA,
    SAVE_COMPANY_DATA,
-   UPDATE_ENTER_DATA
+   UPDATE_ENTER_DATA,
+   BREED_DATA,
+   ADD_BREED_DATA,
+   DELETE_BREED_DATA,
+   CATEGORY_DATA,
+   UPDATE_BREED_DATA,
+   SPEC_DATA
 } from '../mutation-types'
 
 const state = {
@@ -52,6 +58,18 @@ const state = {
     drawList:[
          {"drawId":0,"drawchinese":"明明1","drawenglish":"sunny","drawlatin":"ddd","drawactive":"0.5g","drawratio":"1:6","drawclientName":"法规","drawproduct":"上海","drawspec":"颗","drawprice":"155元/斤"},
          {"drawId":1,"drawchinese":"小小1","drawenglish":"emma","drawlatin":"ddd","drawactive":"0.5g","drawratio":"1:6","drawclientName":"法规","drawproduct":"上海","drawspec":"颗","drawprice":"155元/斤"}
+    ],
+    breedList:[
+         {"category_id":0,"code":"111","name":"人参","icon":"dddd","show":"true"},
+         {"category_id":1,"code":"222","name":"蓝蝴蝶","icon":"ddd","show":"true"}
+    ],
+    categoryList:[
+          {"code":"0","name":"全草类","show":"true"},
+          {"code":"0","name":"花类","show":"true"}
+    ],
+    specList:[
+          {"breed_id":"0","name":"块","show":"true"},
+          {"breed_id":"0","name":"颗","show":"true"}
     ]
 
 }
@@ -79,13 +97,13 @@ const mutations = {
      [DELETE_COMPONENT_STATUS](state,id){ //成分删除
        state.componentList.splice(id,1);
     },
-     [DELETE_DRAW_STATUS](state,id){
+    [DELETE_DRAW_STATUS](state,id){
          state.drawList.splice(id,1);
     },
 
-    [ADD_DATA](state,data){
+    [ADD_DATA](state,data){ //枚举
         state.enumlist.push({
-          "id":data.id,
+          "name":data.name,
           "code":data.code,
           "type":data.type,
           "desc":data.desc,
@@ -110,15 +128,16 @@ const mutations = {
           })
     },
 
-    [UPDATE_DATA](state,data){
-       state.enumlist[data.id].id=data.id;
-       state.enumlist[data.id].code=data.code;
-       state.enumlist[data.id].type=data.type;
-       state.enumlist[data.id].desc=data.desc;
-       state.enumlist[data.id].status=data.status;
+    [UPDATE_DATA](state,data){   //枚举修改
+       state.enumlist[data.sub].id=data.id;
+       state.enumlist[data.sub].name=data.name;
+       state.enumlist[data.sub].code=data.code;
+       state.enumlist[data.sub].type=data.type;
+       state.enumlist[data.sub].desc=data.desc;
+       state.enumlist[data.sub].status=data.status;
     },
 
-    [UPDATE_ENTER_DATA](state,data){
+    [UPDATE_ENTER_DATA](state,data){  //企业修改
         state.enterpriseList[data.id].number=data.number;
         state.enterpriseList[data.id].category=data.category;
         state.enterpriseList[data.id].name=data.name;
@@ -143,7 +162,38 @@ const mutations = {
         state.enterpriseList = data; 
     },
     [SERVICE_DRAW](state,data){  //提取物
-         state.drawList = data;
+        state.drawList = data;
+    },
+    [BREED_DATA](state,data){  //药材
+       state.breedList = data;
+    },
+
+    [ADD_BREED_DATA](state,data){ //新增药材
+       state.breedList.push({
+          "code":data.code,
+          "name":data.name,
+          "icon":data.icon,
+          "categoryId":data.id
+       })
+    }, 
+
+    [DELETE_BREED_DATA](state,id){ //删除药材信息
+         state.breedList.splice(id,1);
+         console.log(id)
+    },
+
+    [CATEGORY_DATA](state,data){  //品种显示
+        state.categoryList = data;
+    },
+
+    [UPDATE_BREED_DATA](state,data){  //修改药材
+        state.breedList[data.sub].code=data.code;
+        state.breedList[data.sub].categoryId=data.categoryId;
+        state.breedList[data.sub].name=data.name;
+        state.breedList[data.sub].id=data.id;
+    },
+    [SPEC_DATA](state,data){  // 获取规格
+        state.specList = data;
     }
 }
 
