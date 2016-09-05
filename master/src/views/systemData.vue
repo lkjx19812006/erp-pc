@@ -50,11 +50,11 @@
                     <td>{{item.desc | systemdesc}}</td>
                     <td>{{item.status}}</td>
                     <td  @click="editData($index)">
-                      <img height="24" width="24" src="/static/images/default_arrow.png" />
+                      <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
                        <div class="component_action" v-show='item.show' transition="expand">
                           <ul>
-                              <li @click="modify($index,item)">编辑</li>
-                              <li @click="del($index)">删除</li>
+                              <li @click="modify($index)">编辑</li>
+                              <li @click="del($index,item.id)">删除</li>
                           </ul>
                         </div>
                     </td>
@@ -224,8 +224,7 @@ export default {
              this.dialogParam.show=true;
              this.editmodel = false;
         },
-        modify:function(id,item){
-          console.log(id)
+        modify:function(id){
           	this.modifyParam.id=id;
             this.modifyParam.show=true;
             this.model=false;
@@ -235,7 +234,7 @@ export default {
               this.$store.state.table.enumlist[id].show=!this.$store.state.table.enumlist[id].show;
             }
         },
-         del:function(id){
+         del:function(sub,id){
             this.delParam.id=id;
             this.delmodel=false;
             this.delParam.show=true;

@@ -8,19 +8,16 @@ import {
    SERVICE_COMPONENT,
    SERVICE_DRAW,
    DELETE_SHOW_STATUE,
-   DELETE_COMPANY_STATUS,
-   DELETE_COMPONENT_STATUS,
-   DELETE_DRAW_STATUS,
    ADD_DATA,
    UPDATE_DATA,
-   SAVE_COMPANY_DATA,
    UPDATE_ENTER_DATA,
    BREED_DATA,
    ADD_BREED_DATA,
    DELETE_BREED_DATA,
    CATEGORY_DATA,
    UPDATE_BREED_DATA,
-   SPEC_DATA
+   SPEC_DATA,
+   LOCAL_DATA
 } from '../mutation-types'
 
 const state = {
@@ -49,7 +46,7 @@ const state = {
     ],
     enterpriseList:[
         {"id":0,"number":"00","category":"0ww","name":"上海ee冕冠","tel":"13162875213","legal_person":"卡卡","principal":"来啦","biz_scope":"包括很多、很多、、、","province":"上海虹口区","city":"虹口区","address":"上海虹口江湾镇","release_date":"2015-07-07","due_date":"2018-07-07","show":"true"},
-        {"id":1,"number":"11","category":"3243","name":"上海冕冠","tel":"13162875213","legal_person":"卡卡","principal":"来啦","biz_scope":"包括很多、很多、、、","province":"上海虹口区","city":"虹口区","address":"上海虹口江湾镇","release_date":"2015-07-07","due_date":"2018-07-07","show":"true"}   
+        {"id":1,"number":"11","category":"3243","name":"上海冕冠","tel":"13162875213","legal_person":"卡卡","principal":"来啦","biz_scope":"包括很多、很多、、、","province":"上海虹口区","city":"虹口区","address":"上海虹口江湾镇","release_date":"2015-07-07","due_date":"2018-07-07","show":"false"}   
     ],
     componentList:[
         {"code":0,"name":"人参","company_name":"饮片厂","breed_name":"ddd","quantity":"0.5g","unit":"克","status":"提取物"},
@@ -69,7 +66,11 @@ const state = {
     ],
     specList:[
           {"breed_id":"0","name":"块","show":"true"},
-          {"breed_id":"0","name":"颗","show":"true"}
+          {"breed_id":"0","name":"颗","show":"false"}
+    ],
+    localList:[
+        {"breed_id":"0","name":"云南","show":"true"},
+        {"breed_id":"0","name":"昆明","show":"false"}
     ]
 
 }
@@ -88,20 +89,7 @@ const mutations = {
          state.enumlist = data;
     },
 
-    [DELETE_SHOW_STATUE](state,id){
-        state.enumlist.splice(id,1);
-    },
-    [DELETE_COMPANY_STATUS](state,id){ //企业删除
-        state.enterpriseList.splice(id,1);
-    },
-     [DELETE_COMPONENT_STATUS](state,id){ //成分删除
-       state.componentList.splice(id,1);
-    },
-    [DELETE_DRAW_STATUS](state,id){
-         state.drawList.splice(id,1);
-    },
-
-    [ADD_DATA](state,data){ //枚举
+    [ADD_DATA](state,data){ // 新增枚举
         state.enumlist.push({
           "name":data.name,
           "code":data.code,
@@ -109,23 +97,6 @@ const mutations = {
           "desc":data.desc,
           "status":data.status
         });
-    },
-
-    [SAVE_COMPANY_DATA](state,data){
-          state.enterpriseList.push({
-              'number': data.number,
-              'category':data.category,
-              'name': data.name,
-              'tel': data.tel,
-              'legal_person': data.legal_person,
-              'principal': data.principal,
-              'biz_scope': data.biz_scope,
-              'province': data.province,
-              'city': data.city,
-              'address':data.address,
-              'release_date': data.release_date,
-              'due_date': data.due_date
-          })
     },
 
     [UPDATE_DATA](state,data){   //枚举修改
@@ -136,22 +107,9 @@ const mutations = {
        state.enumlist[data.sub].desc=data.desc;
        state.enumlist[data.sub].status=data.status;
     },
-
-    [UPDATE_ENTER_DATA](state,data){  //企业修改
-        state.enterpriseList[data.id].number=data.number;
-        state.enterpriseList[data.id].category=data.category;
-        state.enterpriseList[data.id].name=data.name;
-        state.enterpriseList[data.id].tel=data.tel;
-        state.enterpriseList[data.id].legalPerson=data.legalPerson;
-        state.enterpriseList[data.id].principal=data.principal;
-        state.enterpriseList[data.id].bizScope=data.bizScope;
-        state.enterpriseList[data.id].province=data.number;
-        state.enterpriseList[data.id].city=data.city;
-        state.enterpriseList[data.id].address=data.address;
-        state.enterpriseList[data.id].ctime=data.ctime;
-        state.enterpriseList[data.id].utime=data.utime;
+    [DELETE_SHOW_STATUE](state,id){   //删除枚举
+       state.enumlist.splice(id,1);
     },
- 
     [PROVINCE_DATA](state,data){   //省市区
          state.locationlist = data;
     },
@@ -179,7 +137,6 @@ const mutations = {
 
     [DELETE_BREED_DATA](state,id){ //删除药材信息
          state.breedList.splice(id,1);
-         console.log(id)
     },
 
     [CATEGORY_DATA](state,data){  //品种显示
@@ -194,6 +151,9 @@ const mutations = {
     },
     [SPEC_DATA](state,data){  // 获取规格
         state.specList = data;
+    },
+    [LOCAL_DATA](state,data){  //获取产地
+        state.localList = data;
     }
 }
 

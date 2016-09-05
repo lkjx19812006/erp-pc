@@ -16,14 +16,12 @@
 </template>
 <script>
 import {
-    deleteCompanyStatus,
-    getEnterpriseData
+    deleteCompanyStatus 
 } from '../../vuex/actions'
 export default {
      vuex:{
         actions: {
-            deleteCompanyStatus,
-            getEnterpriseData
+            deleteCompanyStatus
         }
     },
     data() {
@@ -31,10 +29,7 @@ export default {
         	
         }
     },
-    props:['param'],
-    methods:{
-    	
-    }
+    props:['param']
 }
 </script>
 <style scoped>
@@ -45,7 +40,7 @@ export default {
 }
 
 .modal_con {
-    position: absolute;
+    position: fixed;
     width: 50%;
     right: 0;
     left: 0;

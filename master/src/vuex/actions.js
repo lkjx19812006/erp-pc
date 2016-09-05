@@ -5,6 +5,7 @@ import apiUrl from './api/api'
 export const increment = ({ dispatch }) => dispatch(types.INCREMENT)
 export const decrement = ({ dispatch }) => dispatch(types.DECREMENT)
 export const menuBar = ({ dispatch }) => dispatch(types.MENU_BAR)
+export const getToggle = ({ dispatch }) => dispatch(types.FOLD)
 export const initList = ({ dispatch }) => {
     Vue.http.get(apiUrl.list)
         .then((res) => {
@@ -94,7 +95,6 @@ export const getSystemData = ({ dispatch }, param) => { //枚举类型
         for (var i in obj1) {
             obj1[i].show = false;
             obj1[i].delInfo = false;
-            obj1[i].id;
         }
         dispatch(types.SYSTEM_DATA, obj1);
         param.all = res.json().result.pages;
@@ -104,7 +104,7 @@ export const getSystemData = ({ dispatch }, param) => { //枚举类型
         console.log('fail');
         param.loading = false;
     });
-};
+}
 export const getSystemSearch = ({ dispatch }, param) => { //搜索枚举类型
     param.loading = true;
     Vue.http({
@@ -116,6 +116,9 @@ export const getSystemSearch = ({ dispatch }, param) => { //搜索枚举类型
         }
     }).then((res) => {
         var obj1 = res.json().result.list;
+        for (var i in obj1) {
+            obj1[i].show = false;
+        }
         dispatch(types.SYSTEM_DATA, obj1);
         param.all = res.json().result.pages;
         param.loading = false;
@@ -123,7 +126,7 @@ export const getSystemSearch = ({ dispatch }, param) => { //搜索枚举类型
         console.log('fail');
         param.loading = false;
     });
-};
+}
 export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
     const body ={
         code: data.code,
@@ -179,9 +182,9 @@ export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
 };
 
 export const deleteShowStatue = ({ dispatch }, param) => { //删除枚举
-    dispatch(types.DELETE_SHOW_STATUE, param);
+    /*dispatch(types.DELETE_SHOW_STATUE, param);*/
     console.log(param)
-    /*Vue.http({
+    Vue.http({
         method: 'DELETE',
         url: apiUrl.dataBaseList + '/'+param,
         emulateHTTP: false,
@@ -195,14 +198,7 @@ export const deleteShowStatue = ({ dispatch }, param) => { //删除枚举
         dispatch(types.DELETE_SHOW_STATUE, param);
     }, (res) => {
         console.log('fail');
-    });*/
-};
-
-export const deleteComponentStatus = ({ dispatch }, param) => {
-    dispatch(types.DELETE_COMPONENT_STATUS, param);
-};
-export const deleteDrawStatus = ({ dispatch }, param) => {
-    dispatch(types.DELETE_DRAW_STATUS, param);
+    });
 };
 
 export const getProvinceData = ({ dispatch }, param) => { //省市区列表
@@ -250,57 +246,7 @@ export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
         param.loading = false;
     });
 };
-export const saveCompany = ({ dispatch }, data) => { //新建企业信息X
-    Vue.http({
-        method: "POST",
-        url: apiUrl.enterpriseList + 'query/?type&name=公司',
-        emulateJSON: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-    }).then((res) => {
-        console.log(res.json())
-        dispatch(types.SAVE_COMPANY_DATA, res.json())
-    }, (res) => {
-        console.log('fail');
-    });
-};
 
-
-export const updateEnterInfo = ({ dispatch }, param) => { //修改企业信息X
-    Vue.http({
-        method: 'PUT',
-        url: apiUrl.enterpriseList + '/',
-        emulateJSON: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-    }).then((res) => {
-        dispatch(types.UPDATE_ENTER_DATA, res.param);
-    }, (res) => {
-        console.log('fail');
-    });
-};
-export const deleteCompanyStatus = ({ dispatch }, data) => { //删除企业信息X
-    console.log(data)
-    var id = data;
-    console.log(id)
-    Vue.http({
-        method: 'DELETE',
-        url: apiUrl.enterpriseList + id,
-        emulateJSON: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-    }).then((res) => {
-        dispatch(types.DELETE_COMPANY_STATUS, res.data)
-        console.log(res.data)
-        console.log('删除成功')
-    }, (res) => {
-        console.log('fail');
-    });
-
-};
 export const getComponentData = ({ dispatch }, param) => { //成分
     param.loading = true;
     Vue.http({
@@ -337,7 +283,7 @@ export const getDrawData = ({ dispatch }, param) => { //提取物
         console.log('fail');
         param.loading = false;
     });
-};
+}
 
 export const getBreedData = ({ dispatch }, param) => { //药材
      param.loading = true;
@@ -345,7 +291,7 @@ export const getBreedData = ({ dispatch }, param) => { //药材
         method: 'GET',
         url: apiUrl.breedList + '/' + '?page=' + param.cur + '&pageSize=10',
         emulateJSON: true,
-         headers: {
+        headers: {
             "X-Requested-With": "XMLHttpRequest"
         }
         }).then((res) => {
@@ -360,7 +306,23 @@ export const getBreedData = ({ dispatch }, param) => { //药材
         console.log('fail');
         param.loading = false;
     });
-};
+}
+export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情
+    console.log(param.id)
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.breedList + '/details/'+param.id,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        }).then((res) => {
+        var breed = res.json().result;
+        dispatch(types.BREED_DATA, breed);
+    }, (res) => {
+        console.log('fail');
+    });
+}
 
 export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
      param.loading = true;
@@ -368,12 +330,12 @@ export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
         method: 'GET',
         url: apiUrl.breedList + '/' + '?name='+param.name+'&page=' + param.cur + '&pageSize=10',
         emulateJSON: true,
-         headers: {
+        headers: {
             "X-Requested-With": "XMLHttpRequest"
-        }
+         }
         }).then((res) => {
-        var search = res.json().result.list;
-        dispatch(types.BREED_DATA, search);
+        var breed = res.json().result.list;
+        dispatch(types.BREED_DATA, breed);
         param.all = res.json().result.pages;
         param.loading = false;
     }, (res) => {
@@ -395,7 +357,7 @@ export const getCategoryData = ({ dispatch }, param) => { // 获取品种信息
     }, (res) => {
         console.log('fail');
     });
-};
+}
 export const getSpecData = ({ dispatch }, param) => { // 获取规格信息
     Vue.http({
         method: 'GET',
@@ -405,12 +367,27 @@ export const getSpecData = ({ dispatch }, param) => { // 获取规格信息
             "X-Requested-With": "XMLHttpRequest"
             }
         }).then((res) => {
-        var spec = res.json().result;
+        var spec = res.json().result.list;
         dispatch(types.SPEC_DATA,spec);
     }, (res) => {
         console.log('fail');
     });
-};
+}
+export const getLocaldata = ({ dispatch }, param) => { // 获取产地信息
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.localList,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+            }
+        }).then((res) => {
+        var spec = res.json().result.list;
+        dispatch(types.LOCAL_DATA,spec);
+    }, (res) => {
+        console.log('fail');
+    });
+}
 export const saveBreed = ({ dispatch }, data) => { //新增药材信息
     const data1={
         categoryId:data.selected,

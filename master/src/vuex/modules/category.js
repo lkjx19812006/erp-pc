@@ -2,7 +2,8 @@ import {
     INCREMENT,
     DECREMENT,
     INIT_LIST,
-    MENU_BAR
+    MENU_BAR,
+    FOLD
 } from '../mutation-types'
 
 const state = {
@@ -25,7 +26,8 @@ const state = {
         {"categoryid":14,"category":"日志","img":"/static/images/icon_report.png","path":"/home/record","subcategory":[]},
         {"categoryid":15,"category":"设置","img":"/static/images/icon_set.png","path":"/home/set","subcategory":[]}
     ],
-    left: 240
+    left: 240,
+    expand:true
 }
 
 
@@ -47,6 +49,13 @@ const mutations = {
             state.left = 50;
         } else {
             state.left = 240;
+        }
+    },
+    [FOLD](state){
+        if(state.expand == true){
+            state.expand = false
+        }else{
+            state.expand = true
         }
     }
 }

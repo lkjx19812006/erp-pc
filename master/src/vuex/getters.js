@@ -10,7 +10,9 @@ export const getCount = (state) => {
 export const getMenu = (state) => {
     return state.category.left
 };
-
+export const initToggle = (state) =>{  //折叠效果
+    return state.category.expand
+}
 export const getList = (state) => {
     return JSON.parse(JSON.stringify(state.category.list));
 }
@@ -74,4 +76,7 @@ export const initCategorylist = (state) => {
 }
 export const initSpeclist = (state) => {
     return JSON.parse(JSON.stringify(state.table.specList)); 
+}
+export const initLocallist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.localList)); 
 }

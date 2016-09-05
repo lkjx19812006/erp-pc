@@ -1,0 +1,187 @@
+<template>
+    <breed-model :param="breedParam" v-if="!breedshow"></breed-model>
+    <breeddel-model :param="delParam" v-if="!delshow"></breeddel-model>
+    <breedrevise-model :param="reviseParam" v-if="!reviseshow"></breedrevise-model>
+    <detail-model :param="changeParam" v-if="changeShow"></detail-model>
+    <div v-show="!changeShow">
+        <div class="service-nav clearfix">
+            <div class="my_enterprise col-xs-2">药材列表</div>
+            <div class="col-xs-8 my_order_search">
+                <div class="name_search clearfix">
+                    <img src="/static/images/search.png" height="24" width="24">
+                    <input type="text" class="search_input" placeholder="按品种类别搜索">
+                </div>
+                <div class="ordertel_search clearfix">
+                    <img src="/static/images/search.png" height="24" width="24">
+                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按品种名称搜索" v-on:keyup="categoryNameSearch(loadParam.name)">
+                </div>
+            </div>
+            <div class="right col-xs-2">
+                <button class="new_btn" @click="createBreed('create')">新建</button>
+            </div>
+        </div>
+        <div class="order_table">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_color" v-cloak>
+                <thead>
+                    <tr>
+                        <th>编码</th>
+                        <th>品种名称</th>
+                        <th>图标</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <thead class="space">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in initBreedlist" @click="editBreed(item.id)">
+                        <td>{{item.code | breedcode}}</td>
+                        <td>{{item.name}}</td>
+                        <td><img :src="item.icon" alt="药材图标" height="80px" /></td>
+                        <td @click.stop="breedClick($index)">
+                            <img height="24" width="24" src="../../../static/images/default_arrow.png" />
+                            <div class="breed_action" v-show='item.show' transition="expand">
+                                <ul>
+                                    <li @click="modifyBreed($index,item)">编辑</li>
+                                    <li @click="delBreed($index,item.id)">删除</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="base_pagination">
+            <pagination :combination="loadParam"></pagination>
+        </div>
+    </div>
+</template>
+<script type="text/javascript">
+import pagination from '../../components/pagination'
+import pressImage from '../../components/imagePress'
+import filter from '../../filters/filters'
+import breedModel from '../../components/serviceBaseData/createBreedDialog'
+import breeddelModel from '../../components/serviceBaseData/breedDelete'
+import breedreviseModel from '../../components/serviceBaseData/breedUpdate'
+import detailModel from '../../components/serviceBaselist/breeddetail'
+import {
+    initBreedlist,
+} from '../../vuex/getters'
+import {
+    getBreedData,
+    getBreedNameSearch,
+    getBreedDetail
+} from '../../vuex/actions'
+export default {
+    components: {
+        pagination,
+        pressImage,
+        breedModel,
+        breeddelModel,
+        breedreviseModel,
+        filter,
+        detailModel
+    },
+    data() {
+        return {
+            loadParam: {
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7
+            },
+            breedParam: {
+                show: false,
+                name: ''
+            },
+            reviseParam: {
+                show: false,
+                id: ''
+            },
+            delParam: {
+                show: false,
+                id: ''
+            },
+            changeParam:{
+                show: false,
+                id: ''
+            },
+            baseshow: true,
+            breedshow: true,
+            changeShow: false,
+            delshow: true,
+            reviseshow: true,
+            breedBaseData: this.initBreedlist
+        }
+    },
+    vuex: {
+        getters: {
+            initBreedlist
+        },
+        actions: {
+            getBreedData,
+            getBreedNameSearch,
+            getBreedDetail
+        }
+    },
+    created() {
+        this.getBreedData(this.loadParam, this.loadParam.all);
+    },
+    methods: {
+        categoryNameSearch: function(name) {
+            this.getBreedNameSearch(this.loadParam, this.loadParam.all);
+        },
+        createBreed: function(value) {
+            this.breedParam.show = true;
+            this.breedParam.name = value;
+            this.breedshow = false;
+        },
+        breedClick: function(id) {
+            if (this.$store.state.table.breedList[id].show) {
+                this.$store.state.table.breedList[id].show = !this.$store.state.table.breedList[id].show;
+            } else {
+                this.$store.state.table.breedList[id].show = true;
+            }
+        },
+        editBreed: function(id) {
+            this.changeParam.show = true;
+            this.changeParam.id = id;
+            this.changeShow=true;
+            this.getBreedDetail(this.changeParam);
+        },
+        delBreed: function(sub, id) {
+            this.delParam.show = true;
+            this.delParam.id = id;
+            this.delshow = false;
+        },
+        modifyBreed: function(id) {
+            this.reviseParam.id = id;
+            this.reviseParam.show = true;
+            this.reviseshow = false;
+            this.$broadcast('getParam');
+            if (this.$store.state.table.breedList[id].show == true) {
+                this.$store.state.table.breedList[id].show = !this.$store.state.table.breedList[id].show;
+            }
+        }
+    },
+    events: {
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getBreedData(this.loadParam);
+        }
+    },
+    filter: (filter, {})
+}
+</script>
+<style scoped>
+
+</style>

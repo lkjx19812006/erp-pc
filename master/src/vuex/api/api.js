@@ -14,7 +14,8 @@ const _listUrl={
 	drawList:ctx+'/Extractive',
 	breedList:ctx+'/breed',
 	categoryList:ctx+'/category/',
-	specList:ctx+'/breed/spec/'
+	specList:ctx+'/breed/spec/',
+	localList:ctx+'/breed/local/'
 };
 
 export default _listUrl;
