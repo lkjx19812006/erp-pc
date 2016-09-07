@@ -1,21 +1,21 @@
-const ctx = '';
+const ctx = '/crm/api/v1';
+const local='/static/data/';
+
 
 const _listUrl={
-	list:'/static/data/list.json',
-	charList:'/static/data/chart.json',
-	linechart:'/static/data/linechart.json',
-	piechart:'/static/data/piechart.json',
-	orderTable:'/static/data/order.json',
-	clientList:'/static/data/client.json',
+	list:local+'list.json',
+	charList:local+'chart.json',
+	linechart:local+'linechart.json',
+	piechart:local+'piechart.json',
+	orderTable:local+'order.json',
+	clientList:local+'client.json',
 	dataBaseList:ctx+'/sys/enum',
 	provinceList:ctx+'/sys/location',
 	enterpriseList:ctx+'/company/',
 	componentList:ctx+'/recipe',
-	drawList:ctx+'/Extractive',
+	drawList:ctx+'/extractive',
 	breedList:ctx+'/breed',
-	categoryList:ctx+'/category/',
-	specList:ctx+'/breed/spec/',
-	localList:ctx+'/breed/local/'
+	categoryList:ctx+'/category/'
 };
 
 export default _listUrl;

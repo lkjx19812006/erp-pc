@@ -1,88 +1,99 @@
 <template>
+   <detail-model  :param="companyParam" v-if="companyParam.show"></detail-model>
     <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
     </div>
-    <div class="service-nav clearfix">
-        <div class="my_enterprise col-xs-2">企业</div>
-    </div>
-    <div class="order_table" v-cloak>
-        <table class="table table-hover table_color">
-            <thead>
-                <tr>
-                    <th>编 码</th>
-                    <th>分类码</th>
-                    <th>企业名称</th>
-                    <th>电 话</th>
-                    <th>法定代表人</th>
-                    <th>企业代表人</th>
-                    <th>生产范围</th>
-                    <th>所在省</th>
-                    <th>所在市</th>
-                    <th>注册地址</th>
-                    <th>发证日期</th>
-                    <th>有效截止日</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <thead class="space">
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in initEnterpriselist">
-                    <td>{{item.number}}</td>
-                    <td>{{item.category | categorystate}}</td>
-                    <td>{{item.name}}</td>
-                    <td>{{item.tel | telstate}}</td>
-                    <td>{{item.legalPerson}}</td>
-                    <td>{{item.principal}}</td>
-                    <td>{{item.bizScope}}</td>
-                    <td>{{item.province}}</td>
-                    <td>{{item.city}}</td>
-                    <td>{{item.address}}</td>
-                    <td>{{item.ctime}}</td>
-                    <td>{{item.utime}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="base_pagination">
-        <pagination :combination="loadParam"></pagination>
+    <div v-show="!companyParam.show">
+        <div class="service-nav clearfix">
+            <div class="my_enterprise col-xs-2">企业</div>
+            <div class="col-xs-8 my_order_search">
+                <div class="name_search clearfix">
+                    <img src="/static/images/search.png" height="24" width="24">
+                    <input type="text" class="search_input" placeholder="按企业名称搜索">
+                </div>
+                <div class="name_search clearfix">
+                    <img src="/static/images/search.png" height="24" width="24">
+                    <input type="text" class="search_input" placeholder="按生产范围搜索">
+                </div>
+                <div class="name_search clearfix">
+                    <img src="/static/images/search.png" height="24" width="24">
+                    <input type="text" class="search_input" placeholder="按所在省搜索">
+                </div>
+                <div class="name_search clearfix">
+                    <img src="/static/images/search.png" height="24" width="24">
+                    <input type="text" class="search_input" placeholder="按分类码搜索">
+                </div>
+            </div>
+        </div>
+        <div class="order_table" v-cloak>
+            <table class="table table-hover table_color table-striped">
+                <thead>
+                    <tr>
+                        <th>分类码</th>
+                        <th>企业名称</th>
+                        <th>电 话</th>
+                        <th>企业代表人</th>
+                        <th>生产范围</th>
+                        <th>所在省</th>
+                        <th>所在市</th>
+                        <th>注册地址</th>
+                    </tr>
+                </thead>
+                <thead class="space">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in initEnterpriselist" @click="companyDetail(item.id)"  >
+                        <td>{{item.category | categorystate}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.tel | telstate}}</td>
+                        <td>{{item.principal}}</td>
+                        <td>{{item.bizScope}}</td>
+                        <td>{{item.province}}</td>
+                        <td>{{item.city}}</td>
+                        <td>{{item.address}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="base_pagination">
+            <pagination :combination="loadParam"></pagination>
+        </div>
     </div>
 </template>
 <script>
 import pagination from '../../components/pagination'
 import filter from '../../filters/filters'
+import detailModel  from '../serviceBaselist/companydetail'
 import {
     initEnterpriselist
 } from '../../vuex/getters'
 import {
-    getEnterpriseData
+    getEnterpriseData,
+    getCompanyDetail
 } from '../../vuex/actions'
 export default {
     components: {
         pagination,
-        filter
+        filter,
+        detailModel
     },
     vuex: {
         getters: {
             initEnterpriselist
         },
         actions: {
-            getEnterpriseData
+            getEnterpriseData,
+            getCompanyDetail
         }
     },
     data() {
@@ -94,13 +105,21 @@ export default {
                 cur: 1,
                 all: 8
             },
+            companyParam:{
+                id:'',
+                show:false
+            }
         }
     },
     created() {
         this.getEnterpriseData(this.loadParam, this.loadParam.all)
     },
     methods: {
-
+        companyDetail:function(id){
+            this.companyParam.show = true;
+            this.companyParam.id = id;
+            this.getCompanyDetail(this.companyParam);
+        }
     },
     events: {
         fresh: function(input) {
@@ -122,5 +141,5 @@ export default {
 }
 </script>
 <style scoped>
-	
+
 </style>

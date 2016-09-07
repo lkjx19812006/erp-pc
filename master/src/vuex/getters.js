@@ -10,9 +10,6 @@ export const getCount = (state) => {
 export const getMenu = (state) => {
     return state.category.left
 };
-export const initToggle = (state) =>{  //折叠效果
-    return state.category.expand
-}
 export const getList = (state) => {
     return JSON.parse(JSON.stringify(state.category.list));
 }
@@ -48,35 +45,35 @@ export const initOrderlist = (state) => {
 export const initClientlist = (state) => {
     return parseJson(state.table.clientList);
 }
-
+/*--系统基础数据--*/
 export const initSystemlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.enumlist)); 
+    return JSON.parse(JSON.stringify(state.table.systemBaseList.enumlist)); 
 } 
 export const initProvincelist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.locationlist));  
+    return JSON.parse(JSON.stringify(state.table.systemBaseList.locationlist));  
 }
-
+/*--业务基础数据--*/
 export const initEnterpriselist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.enterpriseList));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.enterpriseList));  
 }
-
 export const initConponentlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.componentList));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.componentList));  
 }
-
 export const initDrawlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.drawList));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.drawList));  
+}
+export const initBreedlist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.breedList));  
 }
 
-export const initBreedlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.breedList));  
+export const initCompanyDetail = (state) => {
+    return JSON.parse(JSON.stringify(state.table.companyDetail)); 
 }
+export const initBreedDetail = (state) => {
+    return JSON.parse(JSON.stringify(state.table.breedDetail));  
+} 
+
 export const initCategorylist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.categoryList)); 
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.categoryList)); 
 }
-export const initSpeclist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.specList)); 
-}
-export const initLocallist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.localList)); 
-}
+

@@ -21,7 +21,7 @@
           <div class="cover_loading">
               <pulse-loader :loading="loadParam1.loading" :color="color" :size="size"></pulse-loader>
           </div>
-           <table class="table table-hover table_color"  v-cloak>
+           <table class="table table-hover table_color table-striped"  v-cloak>
               <thead>
                   <tr>
                      <th>编码</th>
@@ -30,7 +30,7 @@
                      <th>描述</th>
                      <th>状态</th>
                      <th></th>
-                   </tr>
+                  </tr>
                 </thead>
                 <thead class="space">
                     <tr>
@@ -83,14 +83,12 @@
                           <th>编号</th>
                           <th>名称</th>
                           <th>英文名称</th>
-                          <th>级别</th>
-                          <th>图标</th>
+                          <th>级别</th> 
                           <th>ISO编码</th>
                       </tr>
                   </thead>
                   <thead class="space">
                       <tr>
-                          <th></th>
                           <th></th>
                           <th></th>
                           <th></th>
@@ -104,7 +102,6 @@
                           <td>{{item.cname}}</td>
                           <td>{{item.nameEn}}</td>
                           <td>{{item.level}}</td>
-                          <td>{{item.icon | iconstate}}</td>
                           <td>{{item.iso | isostate}}</td>
                       </tr>
                   </tbody>
@@ -213,10 +210,10 @@ export default {
             this.getSystemSearch(this.loadParam1,this.loadParam1.all);
         },
         editData: function(id) {
-            if(this.$store.state.table.enumlist[id].show == true){
-                this.$store.state.table.enumlist[id].show=!this.$store.state.table.enumlist[id].show;
+            if(this.$store.state.table.systemBaseList.enumlist[id].show == true){
+                this.$store.state.table.systemBaseList.enumlist[id].show=!this.$store.state.table.systemBaseList.enumlist[id].show;
             }else{
-                 this.$store.state.table.enumlist[id].show=true;
+                 this.$store.state.table.systemBaseList.enumlist[id].show=true;
             }       
         },
         newData:function(value){
@@ -229,9 +226,9 @@ export default {
             this.modifyParam.show=true;
             this.model=false;
             this.$broadcast('getParam');
-            console.log(this.$store.state.table.enumlist[id].show)
-            if(this.$store.state.table.enumlist[id].show == true){
-              this.$store.state.table.enumlist[id].show=!this.$store.state.table.enumlist[id].show;
+            console.log(this.$store.state.table.systemBaseList.enumlist[id].show)
+            if(this.$store.state.table.systemBaseList.enumlist[id].show == true){
+              this.$store.state.table.systemBaseList.enumlist[id].show=!this.$store.state.table.systemBaseList.enumlist[id].show;
             }
         },
          del:function(sub,id){
@@ -251,7 +248,6 @@ export default {
       }
     },
     filter:(filter,{
-
     })
 }
 </script>
@@ -334,7 +330,6 @@ export default {
     background: #fff;
     position: relative;
     margin-bottom: 10px;
-    border-top: 1px solid #ddd;
 }
 
 .order_table .table > ul {
@@ -423,27 +418,7 @@ export default {
     margin: 0 auto;
     text-align: center;
 }
-.table_color {
-    background-color: #fff;
-}
 
-.table>tbody>tr>td,
-.table>tbody>tr>th,
-.table>tfoot>tr>td,
-.table>tfoot>tr>th,
-.table>thead>tr>td,
-.table>thead>tr>th {
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-    font-size: 14px;
-    position: relative;
-}
-
-.table>thead>tr>th {
-    border-bottom: 0;
-    color: #003077;
-    font-weight: 100;
-}
 .table>tbody{
     position: relative;
 }

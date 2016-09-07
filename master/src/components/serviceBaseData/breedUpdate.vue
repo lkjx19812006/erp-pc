@@ -24,14 +24,9 @@
                            <div class="editpage-input">
                               <label class="editlabel">品种分类选择</label>
                               <select class="form-control" v-model="categoryData.selected" style="width:90%;">
-                                  <!-- <option>{{categoryData.selected}}</option> -->
                                 <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                               </select>
                           </div> 
-                            <div class="editpage-input">
-                                <label class="editlabel">图标</label>
-                                <img :src="categoryData.icon"  alt="药材图标" />
-                            </div>
                         </div>
                     </div>
                 </section>
@@ -114,13 +109,13 @@ export default {
 .modal_con {
     display: block;
     position: fixed;
-    top: 217px;
+    top: 156px;
     margin: auto;
     left: 0;
     right: 0;
     max-width: 630px;
     min-width: 380px;
-    max-height: 500px;
+    max-height: 456px;
     bottom: 50px;
     padding: 0;
     background-color: #fff;

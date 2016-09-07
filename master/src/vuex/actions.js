@@ -5,7 +5,6 @@ import apiUrl from './api/api'
 export const increment = ({ dispatch }) => dispatch(types.INCREMENT)
 export const decrement = ({ dispatch }) => dispatch(types.DECREMENT)
 export const menuBar = ({ dispatch }) => dispatch(types.MENU_BAR)
-export const getToggle = ({ dispatch }) => dispatch(types.FOLD)
 export const initList = ({ dispatch }) => {
     Vue.http.get(apiUrl.list)
         .then((res) => {
@@ -59,14 +58,6 @@ export const getOrderList = ({ dispatch }, param) => {
         });
 };
 
-export const changeShowStatue = ({ dispatch }, param) => {
-    /*param.show=true;*/
-    dispatch(types.CHANGE_SHOW_STATUE, param);
-    if (res.data.results[id].param) {
-        res.data.results[id].param = !res.data.results[id].param;
-    }
-    console.log(res.data.results[id].param);
-};
 
 export const getClientList = ({ dispatch }, param) => {
     param.loading = true;
@@ -85,7 +76,7 @@ export const getSystemData = ({ dispatch }, param) => { //枚举类型
     param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.dataBaseList + '/query?type&page=' + param.cur + '&pageSize=10',
+        url: apiUrl.dataBaseList + '/query?type&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -98,7 +89,7 @@ export const getSystemData = ({ dispatch }, param) => { //枚举类型
         }
         dispatch(types.SYSTEM_DATA, obj1);
         param.all = res.json().result.pages;
-        console.log(res.json())
+        console.log(res.json().result)
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -109,7 +100,7 @@ export const getSystemSearch = ({ dispatch }, param) => { //搜索枚举类型
     param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.dataBaseList + '/query?type='+param.type+'&page=' + param.cur + '&pageSize=10',
+        url: apiUrl.dataBaseList + '/query?type='+param.type+'&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -205,7 +196,7 @@ export const getProvinceData = ({ dispatch }, param) => { //省市区列表
     param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.provinceList + '/?page=' + param.cur + '&pageSize=10',
+        url: apiUrl.provinceList + '/?page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -228,7 +219,7 @@ export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
     param.loading = true;
     Vue.http({
         method: "GET",
-        url: apiUrl.enterpriseList + 'query/?type&name=公司&page=' + param.cur + '&pageSize=10',
+        url: apiUrl.enterpriseList + 'query/?type&name=公司&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -245,13 +236,108 @@ export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
         console.log('fail');
         param.loading = false;
     });
-};
+}
+export const getCompanyDetail = ({ dispatch }, param) => { //获取企业详情
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.enterpriseList + '/'+param.id,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        }).then((res) => {
+        var obj = res.json().result;
+        var arr = obj.companyContacts;
+        obj.companyContacts={
+            arr:arr,
+            show:true
+        };
+        for(var i in obj.companyContacts.arr){
+            obj.companyContacts.arr[i].show=false;
+        }
+        console.log(res.json().result.companyContacts)
+        dispatch(types.SERVICE_ENTERPRISE_DETAIL,obj);
+    }, (res) => {
+        console.log('fail');
+    });
+}
+export const contactDel = ({ dispatch }, param) => { //删除企业联系人
+    console.log(param)
+    Vue.http({
+        method: 'DELETE',
+        url: apiUrl.enterpriseList +param,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('删除成功')
+        dispatch(types.DELETE_CONTACT_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    });
+}
+export const alterCompany = ({ dispatch }, param) => { //修改企业联系人
+    const alterdata = {
+        name:param.name,
+        cid:param.cid,
+        phone:param.phone,
+        tel:param.tel,
+        email:param.email,
+        wechart:param.wechart
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.enterpriseList + param.url,
+        emulateHTTP: false,
+        body: alterdata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.UPDATE_CONTACT_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+export const createContact = ({ dispatch }, param,id) => { //新增企业联系人
+    const data1={
+        "name":param.name,
+        "cid":id,
+        "tel":param.tel,
+        "phone":param.phone,
+        "wechart":param.wechart,
+        "email":param.email,
+        "qq":param.qq
+    }
+    Vue.http({
+        method: "POST",
+        url: apiUrl.enterpriseList+'contract',
+        emulateHTTP: true,
+        body: data1,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('联系人添加成功')
+        dispatch(types.ADD_CONTACT_DATA,param)
+    }, (res) => {
+        console.log('fail');
+    });
+}
 
 export const getComponentData = ({ dispatch }, param) => { //成分
     param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.componentList + '/' + 'query/?page=' + param.cur + '&pageSize=10',
+        url: apiUrl.componentList + '/' + 'query/?page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -271,7 +357,7 @@ export const getDrawData = ({ dispatch }, param) => { //提取物
     param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.drawList + '/' + 'query?page=' + param.cur + '&pageSize=10',
+        url: apiUrl.drawList + '/' + 'query?page=' + param.cur + '&pageSize=15',
         emulateJSON: true
     }).then((res) => {
         console.log(res.json())
@@ -289,7 +375,7 @@ export const getBreedData = ({ dispatch }, param) => { //药材
      param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.breedList + '/' + '?page=' + param.cur + '&pageSize=10',
+        url: apiUrl.breedList + '/' + '?page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -308,7 +394,6 @@ export const getBreedData = ({ dispatch }, param) => { //药材
     });
 }
 export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情
-    console.log(param.id)
     Vue.http({
         method: 'GET',
         url: apiUrl.breedList + '/details/'+param.id,
@@ -318,7 +403,57 @@ export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情
         }
         }).then((res) => {
         var breed = res.json().result;
-        dispatch(types.BREED_DATA, breed);
+           /* var object;
+            if (breed.specs) {
+                object = breed.specs;
+            } else if(breed.locals) {
+                object = breed.locals;
+            }else if(breed.alias){
+                object = breed.alias;
+            }else if(breed.units){
+                object = breed.units;
+            }
+            object={
+                arr:object,
+                show:true
+            };
+
+            for(var i in object.arr){
+               object.arr[i].show=false;
+            }*/
+        var arr=breed.specs;
+        breed.specs={
+            arr:arr,
+            show:true
+        };
+        for(var i in breed.specs.arr){
+           breed.specs.arr[i].show=false;
+        }
+        var arr=breed.locals;
+        breed.locals={
+            arr:arr,
+            show:true
+        };
+        for(var j in breed.locals.arr){
+           breed.locals.arr[j].show=false;
+        }
+        var arr = breed.alias;
+        breed.alias={
+            arr:arr,
+            show:true
+        };
+        for(var j in breed.alias.arr){
+           breed.alias.arr[j].show=false;
+        }
+        var arr = breed.units;
+        breed.units={
+            arr:arr,
+            show:true
+        };
+        for(var j in breed.units.arr){
+           breed.units.arr[j].show=false;
+        }
+        dispatch(types.BREED_DETAIL_DATA, breed);
     }, (res) => {
         console.log('fail');
     });
@@ -328,7 +463,7 @@ export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
      param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.breedList + '/' + '?name='+param.name+'&page=' + param.cur + '&pageSize=10',
+        url: apiUrl.breedList + '/' + '?breedName='+param.name+'&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -358,42 +493,12 @@ export const getCategoryData = ({ dispatch }, param) => { // 获取品种信息
         console.log('fail');
     });
 }
-export const getSpecData = ({ dispatch }, param) => { // 获取规格信息
-    Vue.http({
-        method: 'GET',
-        url: apiUrl.specList,
-        emulateJSON: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-            }
-        }).then((res) => {
-        var spec = res.json().result.list;
-        dispatch(types.SPEC_DATA,spec);
-    }, (res) => {
-        console.log('fail');
-    });
-}
-export const getLocaldata = ({ dispatch }, param) => { // 获取产地信息
-    Vue.http({
-        method: 'GET',
-        url: apiUrl.localList,
-        emulateJSON: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-            }
-        }).then((res) => {
-        var spec = res.json().result.list;
-        dispatch(types.LOCAL_DATA,spec);
-    }, (res) => {
-        console.log('fail');
-    });
-}
+
 export const saveBreed = ({ dispatch }, data) => { //新增药材信息
     const data1={
         categoryId:data.selected,
         name:data.name,
         code:data.code
-       /* icon:data.icon*/
     } 
     Vue.http({
         method: "POST",
@@ -407,11 +512,60 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
         }
     }).then((res) => {
         console.log('添加成功')
-        dispatch(types.BREED_DATA,data)
+        dispatch(types.ADD_BREED_DATA,data);
+        console.log(data)
     }, (res) => {
         console.log('fail');
     });
-};
+}
+
+export const createSpec = ({ dispatch },param,id) => { //新增药材相关
+    console.log(param.url)
+    const data1={
+        name:param.name,
+        breedId:id
+    } 
+    Vue.http({
+        method: "POST",
+        url: apiUrl.breedList+param.url,
+        emulateHTTP: true,
+        body: data1,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('添加成功')
+        dispatch(types.ADDSPEC_DATA,param);
+        name='';
+    }, (res) => {
+        console.log('fail');
+    })
+}
+//新增药材别名
+export const saveAlias = ({ dispatch }, param,id) => { 
+    const data1={
+        alias:param.name,
+        breedId:id
+    } 
+    Vue.http({
+        method: "POST",
+        url: apiUrl.breedList+'/alias/',
+        emulateHTTP: true,
+        body: data1,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('别名添加成功')
+        dispatch(types.ADDSPEC_DATA,param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 
 export const updateBreedInfo = ({ dispatch }, param) => { //修改药材信息
     console.log(param)
@@ -440,6 +594,52 @@ export const updateBreedInfo = ({ dispatch }, param) => { //修改药材信息
         console.log('fail');
     })
 }
+export const alterSpec = ({ dispatch }, param) => { //修改药材规格
+    const alterdata = {
+        name:param.name,
+        id:param.id,
+        breedId:param.breedId
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.breedList +param.url,
+        emulateHTTP: false,
+        body: alterdata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.UPDATE_SPEC_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+export const alterAlias = ({ dispatch }, param) => { //修改药材别名
+    const alterdata = {
+        alias:param.name,
+        id:param.id,
+        breedId:param.breedId
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.breedList +param.url,
+        emulateHTTP: false,
+        body: alterdata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.UPDATE_SPEC_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 
 export const deleteBreedstatus = ({ dispatch }, param) => { //删除药材信息
     console.log(param)
@@ -458,5 +658,23 @@ export const deleteBreedstatus = ({ dispatch }, param) => { //删除药材信息
     }, (res) => {
         console.log('fail');
     });
-};
+}
 
+export const specDel = ({ dispatch }, param) => { //删除breeddetail相关药材信息
+    console.log(param)
+    Vue.http({
+        method: 'DELETE',
+        url: apiUrl.breedList + param.url +param.id,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('删除成功')
+        dispatch(types.DELETE_SPECS_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    });
+}

@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-09-05 14:42:50
+* @Last Modified time: 2016-09-07 17:17:42
 */
 * {
 	padding: 0;
@@ -153,7 +153,16 @@ body{
 .table_color {
     background-color: #fff;
 }
-
+.table-striped>thead>tr{
+    background-color: #004796;
+     color: #fff;
+}
+.table-striped>tbody>tr:nth-of-type(odd){
+    background-color: #fff;
+}
+.table-striped>tbody>tr:nth-of-type(even){
+    background-color: #eee;
+}
 .table>tbody>tr>td,
 .table>tbody>tr>th,
 .table>tfoot>tr>td,
@@ -169,7 +178,6 @@ body{
 
 .table>thead>tr>th {
     border-bottom: 0;
-    color: #003077;
     font-weight: 100;
 }
 
@@ -249,10 +257,11 @@ body{
 .client-section {
     padding: 28px 15px 40px 20px;
     position: relative;
+    background-color: #fff;
 }
 
 .section_title {
-    font-size: 20px;
+    font-size: 18px;
     color: #333;
     border-bottom: 1px solid #ddd;
     padding: 15px 0;
@@ -263,7 +272,7 @@ body{
     margin-top: 6px;
     margin-left: 26px;
     display: inline-block;
-    font-size: 20px;
+    font-size: 17px;
     color: #333;
 }
 
@@ -278,7 +287,7 @@ body{
 
 .panel-body ul li {
     display: inline-block;
-    margin-right: 5%;
+    margin-right: 3%;
     /* overflow: hidden; */
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -360,12 +369,6 @@ body{
     font-size: 16px;
 }
 
-.btn-orange {
-    background-color: #fa6705;
-    color: #fff;
-    font-size: 18px;
-}
-
 .client-editbtn {
     text-align: right;
     margin-top: 15px;
@@ -375,6 +378,35 @@ body{
     display: inline-block;
     padding-left: 0;
 }
+/* --  删除弹框 --- */
+.modal_con{
+    position: fixed;
+    width: 426px;
+    right: 0;
+    left: 0;
+    height: 100%;
+    margin: 130px auto;
+    z-index: 1080;
+    padding: 0 5px;
+}
+.model-tips{
+    padding: 33px 10px;
+    font-size: 16px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 0;
+    font-size: 20px
+}
+.model-header h4{
+    padding: 16px;
+    margin: 0;
+    border-bottom: 1px solid #ddd;
+    color: #fa6705;
+}
+.btn-orange{
+    background-color: #fa6705;
+    color: #fff;
+}
+
 
 [v-cloak] {
   display: none;

@@ -2,14 +2,14 @@
  * @Author: huili.sun
  * @Date:   2016-08-19 14:46:10
  * @Last Modified by:   huili.sun
- * @Last Modified time: 2016-08-22 09:36:19
+ * @Last Modified time: 2016-09-07 19:31:57
  */
 
 'use strict';
 import {
     CHANGE_CHARTS,
     CHANGE_LINECHARTS,
-     CHANGE_PIECHARTS
+    CHANGE_PIECHARTS
 } from '../mutation-types'
 
 const state = {

@@ -18,8 +18,7 @@
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">职务</label>
-                                <input type="text" class="edit-input" />
-                            </div>
+                                <inrigh
                             <div class="editpage-input">
                                 <label class="editlabel">公司名称</label>
                                 <input type="text" class="edit-input" />

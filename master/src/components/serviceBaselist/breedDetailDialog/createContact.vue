@@ -1,46 +1,43 @@
 <template>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container edit_modal_con" v-show="param.show">
+    <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建枚举类型</h3>
+            <h3>新建企业联系人</h3>
         </div>
         <validator name="validation">
             <form novalidate>
                 <div class="edit-model">
                     <section class="editsection">
-                        <div class="editpage">
+                        <div class="editpage" v-cloak>
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel" for="system">编号 <span class="system_danger" v-if="$validation.system.required||$validation.system.minlength">请输入编号且不少于三位数</span></label>
-                                    <input type="text" class="form-control  edit-input" id="system" v-validate:system="{required:true,minlength:3}" v-model="systemData.name"  />
+                                    <label class="editlabel">联系人</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="contactData.name" v-validate:name="['required']" />
+                                </div>
+                                 <div class="editpage-input">
+                                    <label class="editlabel">邮箱</label>
+                                    <input type="text" class="form-control edit-input"  id="email" v-model="contactData.email" v-validate:email="['required']" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel" for="systemtype">类型
-                                        <span class="system_danger" v-if="$validation.systemtype.required">请输入类型</span> </label>
-                                    <input type="text" class="form-control  edit-input" id="systemtype" v-validate:systemtype="['required']" v-model="systemData.type" />
-                                </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel" for="systemstatus">状态
-                                        <span class="system_danger" v-if="$validation.systemstatus.required">请输入状态</span></label>
-                                        <select class="form-control" v-model="systemData.status" id="systemstatus" v-validate:systemstatus="['required']" style="width:90%;">
-                                           <option>0</option>
-                                           <option>1</option>
-                                       </select>
+                                    <label class="editlabel">微信</label>
+                                    <input type="text" class="form-control edit-input"  id="wechart" v-model="contactData.wechart" v-validate:wechart="['required']" />
                                 </div>
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input">
-                                    <label class="editlabel" for="systemcode">编码
-                                        <span class="system_danger" v-if="$validation.systemcode.required">请输入编码</span> </label>
-                                    <input type="text" class="form-control  edit-input" id="systemcode" v-validate:systemcode="['required']" v-model="systemData.code" />
+                                    <label class="editlabel">手机号</label>
+                                    <input type="text" class="form-control edit-input"  id="phone" v-model="contactData.phone" v-validate:phone="['required']" />
                                 </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel" for="describe">描述
-                                        <span class="system_danger" v-if="$validation.describe.required">请输入描述</span> </label>
-                                    <input type="text" class="form-control  edit-input" id="describe" v-validate:describe="['required']" v-model="systemData.desc" />
+                                 <div class="editpage-input">
+                                    <label class="editlabel">电话</label>
+                                    <input type="text" class="form-control edit-input"  id="tel" v-model="contactData.tel" />
+                                </div>
+                                 <div class="editpage-input">
+                                    <label class="editlabel">QQ</label>
+                                    <input type="text" class="form-control edit-input"  id="qq" v-model="contactData.qq" v-validate:qq="['required']" />
                                 </div>
                             </div>
                         </div>
@@ -48,8 +45,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" 
-                     @click="saveDataInfo(systemData,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm"  @click="createContact(contactData,param.id,param.show = false)">保存</button>
                 </div>
             </form>
         </validator>
@@ -57,9 +53,8 @@
 </template>
 <script>
 import {
-    getSystemData,
-    saveDataInfo
-} from '../../vuex/actions'
+    createContact
+} from '../../../vuex/actions'
 export default {
     components: {
 
@@ -67,20 +62,29 @@ export default {
     props: ['param'],
     data() {
         return {
-            systemData: {
+            contactData: {
                 name: '',
-                code: '',
-                type: '',
-                desc: '',
-                status: ''
+                tel:'',
+                phone:'',
+                wechart:'',
+                email:'',
+                qq:''
             }
-
         }
     },
     vuex: {
         actions: {
-            getSystemData,
-            saveDataInfo
+            createContact
+        }
+    },
+    route: {
+        activate: function(transition) {
+            console.log('hook-example activated!')
+            transition.next()
+        },
+        deactivate: function(transition) {
+            console.log('hook-example deactivated!')
+            transition.next()
         }
     }
 }
@@ -92,7 +96,7 @@ export default {
     display: block;
 }
 
-.edit_modal_con {
+.modal_con {
     display: block;
     position: fixed;
     top: 91px;
@@ -100,8 +104,8 @@ export default {
     left: 0;
     right: 0;
     max-width: 630px;
-    min-width: 380px;
-    max-height: 445px;
+    min-width: 200px;
+    max-height: 300px;
     bottom: 50px;
     padding: 0;
     background-color: #fff;
@@ -235,12 +239,5 @@ export default {
 
 .editpage-image {
     display: inline-block;
-}
-
-.system_danger {
-    color: red;
-    margin-bottom: 0;
-    font-weight: 100;
-    font-size: 12px;
 }
 </style>

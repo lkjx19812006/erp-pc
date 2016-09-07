@@ -1,71 +1,78 @@
 <template>
-    <div class="service-nav clearfix">
-        <div class="my_enterprise col-xs-2">成分</div>
-    </div>
-    <div class="order_table">
-        <div class="cover_loading">
-            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+    <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
+    <div v-show="!changeParam.show">
+        <div class="service-nav clearfix">
+            <div class="my_enterprise col-xs-2">成分</div>
         </div>
-        <table class="table table-hover table_color">
-            <thead>
-                <tr>
-                    <th>编 码</th>
-                    <th>药品名</th>
-                    <th>所属药厂</th>
-                    <th>成分名</th>
-                    <th>含 量</th>
-                    <th>单 位</th>
-                    <th>状态</th>
-                </tr>
-            </thead>
-            <thead class="space">
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in initConponentlist" v-cloak>
-                    <td>{{item.code}}</td>
-                    <td>{{item.name}}</td>
-                    <td>{{item.companyName | companyname}}</td>
-                    <td>{{item.breedName}}</td>
-                    <td>{{item.quantity}}</td>
-                    <td>{{item.unit}}</td>
-                    <td>{{item.status}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="base_pagination">
-        <pagination :combination="loadParam"></pagination>
+        <div class="order_table">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_color table-striped" v-cloak>
+                <thead>
+                    <tr>
+                        <th>编 码</th>
+                        <th>药品名称</th>
+                        <th>品种名称</th>
+                        <th>公司名称</th>
+                        <th>含 量</th>
+                        <th>单 位</th>
+                        <th>状态</th>
+                    </tr>
+                </thead>
+                <thead class="space">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in initConponentlist"  @click="clickRecipe(item.id)">
+                        <td>{{item.code}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.breedName}}</td>
+                        <td>{{item.companyName | companyname}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.unit}}</td>
+                        <td>{{item.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="base_pagination">
+            <pagination :combination="loadParam"></pagination>
+        </div>
     </div>
 </template>
 <script type="text/javascript">
 import pagination from '../../components/pagination'
 import filter from '../../filters/filters'
+import detailModel from '../serviceBaselist/recipeDetail'
 import {
     initConponentlist
 } from '../../vuex/getters'
 import {
-    getComponentData
+    getComponentData,
+    getRecipeDetail
 } from '../../vuex/actions'
 export default {
     components: {
         pagination,
-        filter
+        filter,
+        detailModel
     },
     vuex: {
         getters: {
             initConponentlist
         },
         actions: {
-            getComponentData
+            getComponentData,
+            getRecipeDetail
         }
     },
     data() {
@@ -77,13 +84,21 @@ export default {
                 cur: 1,
                 all: 7
             },
+            changeParam: {
+                show: false,
+                id: ''
+            }
         }
     },
     created() {
         this.getComponentData(this.loadParam, this.loadParam.all)
     },
     methods: {
-
+        clickRecipe:function(id){
+            this.changeParam.show = true;
+            this.changeParam.id = id;
+            this.getRecipeDetail(this.changeParam);
+        }
     },
     events: {
         fresh: function(input) {
@@ -105,5 +120,4 @@ export default {
 }
 </script>
 <style scoped>
-
 </style>

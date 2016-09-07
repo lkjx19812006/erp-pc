@@ -1,9 +1,9 @@
 <template>
-    <breed-model :param="breedParam" v-if="!breedshow"></breed-model>
-    <breeddel-model :param="delParam" v-if="!delshow"></breeddel-model>
-    <breedrevise-model :param="reviseParam" v-if="!reviseshow"></breedrevise-model>
-    <detail-model :param="changeParam" v-if="changeShow"></detail-model>
-    <div v-show="!changeShow">
+    <breed-model :param="breedParam" v-if="breedParam.show"></breed-model>
+    <breeddel-model :param="delParam" v-if="delParam.show"></breeddel-model>
+    <breedrevise-model :param="reviseParam" v-if="reviseParam.show"></breedrevise-model>
+    <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
+    <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">药材列表</div>
             <div class="col-xs-8 my_order_search">
@@ -24,12 +24,12 @@
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color" v-cloak>
+            <table class="table table-hover table_color table-striped" v-cloak>
                 <thead>
                     <tr>
                         <th>编码</th>
+                        <th>品种类别</th>
                         <th>品种名称</th>
-                        <th>图标</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -42,13 +42,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initBreedlist" @click="editBreed(item.id)">
+                    <tr v-for="item in initBreedlist"  @click="editBreed(item.id)">
                         <td>{{item.code | breedcode}}</td>
+                        <th>{{item.categoryId}}</th>
                         <td>{{item.name}}</td>
-                        <td><img :src="item.icon" alt="药材图标" height="80px" /></td>
                         <td @click.stop="breedClick($index)">
                             <img height="24" width="24" src="../../../static/images/default_arrow.png" />
-                            <div class="breed_action" v-show='item.show' transition="expand">
+                            <div class="breed_action" v-show="item.show" >
                                 <ul>
                                     <li @click="modifyBreed($index,item)">编辑</li>
                                     <li @click="delBreed($index,item.id)">删除</li>
@@ -115,11 +115,6 @@ export default {
                 show: false,
                 id: ''
             },
-            baseshow: true,
-            breedshow: true,
-            changeShow: false,
-            delshow: true,
-            reviseshow: true,
             breedBaseData: this.initBreedlist
         }
     },
@@ -146,16 +141,17 @@ export default {
             this.breedshow = false;
         },
         breedClick: function(id) {
-            if (this.$store.state.table.breedList[id].show) {
-                this.$store.state.table.breedList[id].show = !this.$store.state.table.breedList[id].show;
+            console.log(id);
+            console.log(this.$store.state.table.basicBaseList.breedList[id]);
+            if (this.$store.state.table.basicBaseList.breedList[id].show) {
+                this.$store.state.table.basicBaseList.breedList[id].show = !this.$store.state.table.basicBaseList.breedList[id].show;
             } else {
-                this.$store.state.table.breedList[id].show = true;
+                this.$store.state.table.basicBaseList.breedList[id].show = true;
             }
         },
         editBreed: function(id) {
             this.changeParam.show = true;
             this.changeParam.id = id;
-            this.changeShow=true;
             this.getBreedDetail(this.changeParam);
         },
         delBreed: function(sub, id) {
@@ -168,8 +164,8 @@ export default {
             this.reviseParam.show = true;
             this.reviseshow = false;
             this.$broadcast('getParam');
-            if (this.$store.state.table.breedList[id].show == true) {
-                this.$store.state.table.breedList[id].show = !this.$store.state.table.breedList[id].show;
+            if (this.$store.state.table.basicBaseList.breedList[id].show == true) {
+                this.$store.state.table.basicBaseList.breedList[id].show = !this.$store.state.table.basicBaseList.breedList[id].show;
             }
         }
     },
@@ -183,5 +179,8 @@ export default {
 }
 </script>
 <style scoped>
-
+.breed_action {
+    top: 33px;
+    right: 106px;
+}
 </style>

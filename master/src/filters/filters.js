@@ -94,3 +94,12 @@ Vue.filter('categorycode', function(val){
 		return val;
 	}
 })
+
+Vue.filter('catestate', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else{
+		return val;
+	}
+})

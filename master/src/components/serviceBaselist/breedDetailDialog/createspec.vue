@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建药材</h3>
+            <h3>新建{{param.title}}</h3>
         </div>
         <validator name="validation">
             <form novalidate>
@@ -14,70 +14,30 @@
                         <div class="editpage" v-cloak>
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel">编码</label>
-                                    <input type="text" class="form-control edit-input"  id="code" v-model="breedData.code" v-validate:code="['required']" />
+                                    <label class="editlabel">{{param.namelist}}</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.name" v-validate:name="['required']" />
                                 </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">品种名称</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="breedData.name" v-validate:category="['required']" />
-                                </div>
-                                <div class="editpage-input">
-                                   <label class="editlabel">品种类别</label>
-                                   <select class="form-control" v-model="breedData.selected" style="width:90%;">
-                                       <option   v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
-                                   </select>
-                               </div>
-                               <!--  <div class="editpage-input">
-                                   <label class="editlabel">上传图标</label>
-                                   <div class="editpage_img clearfix">
-                                       <div class="editpage-image col-md-4">
-                                           <press-image></press-image>
-                                       </div>
-                                   </div>
-                               </div> -->
                             </div>
                         </div>
                     </section>
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="saveBreed(breedData,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.id,param.breedId,param.show = false)">保存</button>
                 </div>
             </form>
         </validator>
     </div>
 </template>
 <script>
-import pressImage from '../../components/imagePress'
-import {
-    initCategorylist
-} from  '../../vuex/getters'
-import {
-    saveBreed,
-    getCategoryData
-} from '../../vuex/actions'
 export default {
     components: {
-        pressImage
+
     },
     props: ['param'],
     data() {
         return {
-            breedData: {
-                code: '',
-                name: '',
-                selected:'',
-                show:false
-            }
-        }
-    },
-    vuex: {
-        getters:{
-            initCategorylist
-        },
-        actions: {
-            saveBreed,
-            getCategoryData
+          
         }
     },
     route: {
@@ -89,9 +49,6 @@ export default {
             console.log('hook-example deactivated!')
             transition.next()
         }
-    },
-    created() {
-        this.getCategoryData();
     }
 }
 </script>
@@ -107,12 +64,12 @@ export default {
     position: fixed;
     top: 91px;
     margin: auto;
+    width: 44%;
     left: 0;
-    width:44%;
     right: 0;
     max-width: 630px;
-    min-width: 380px;
-    max-height: 450px;
+    min-width: 200px;
+    max-height: 300px;
     bottom: 50px;
     padding: 0;
     background-color: #fff;

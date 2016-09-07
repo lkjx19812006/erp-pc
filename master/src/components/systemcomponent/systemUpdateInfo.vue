@@ -23,7 +23,11 @@
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">状态</label>
-                                <input type="text" v-model='systemData.status' class="form-control edit-input" value="{{systemData.status}}" />
+                                <select class="form-control" v-model="systemData.status"  style="width:90%;">
+                                   <option>{{systemData.status}}</option>
+                                   <option>0</option>
+                                   <option>1</option>
+                               </select>
                             </div>
                         </div>
                         <div class="editpageright">
@@ -111,6 +115,7 @@ export default {
     position: fixed;
     top: 217px;
     margin: auto;
+    width: 44%;
     left: 0;
     right: 0;
     max-width: 630px;
@@ -123,7 +128,6 @@ export default {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
-    /*层数高度不够增加层数*/
     z-index: 1080;
     overflow: hidden;
     overflow-y: auto;
