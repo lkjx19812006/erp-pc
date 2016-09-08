@@ -1,6 +1,6 @@
 <template>
     <breed-model :param="breedParam" v-if="breedParam.show"></breed-model>
-    <breeddel-model :param="delParam" v-if="delParam.show"></breeddel-model>
+    <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <breedrevise-model :param="reviseParam" v-if="reviseParam.show"></breedrevise-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <div v-show="!changeParam.show">
@@ -42,16 +42,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initBreedlist"  @click="editBreed(item.id)">
+                    <tr v-for="item in initBreedlist" @click="editBreed(item.id)">
                         <td>{{item.code | breedcode}}</td>
                         <th>{{item.categoryId}}</th>
                         <td>{{item.name}}</td>
                         <td @click.stop="breedClick($index)">
                             <img height="24" width="24" src="../../../static/images/default_arrow.png" />
-                            <div class="breed_action" v-show="item.show" >
+                            <div class="breed_action" v-show="item.show">
                                 <ul>
                                     <li @click="modifyBreed($index,item)">编辑</li>
-                                    <li @click="delBreed($index,item.id)">删除</li>
+                                    <li @click="specDelete({
+                                                    id:item.id,
+                                                    show:true,
+                                                    name:item.name,
+                                                    title:'药材',
+                                                    link:deleteInfo,
+                                                    url:'/breed/',
+                                                    key:'breedList'
+                                                    },item.show=false)">删除</li>
                                 </ul>
                             </div>
                         </td>
@@ -69,7 +77,7 @@ import pagination from '../../components/pagination'
 import pressImage from '../../components/imagePress'
 import filter from '../../filters/filters'
 import breedModel from '../../components/serviceBaseData/createBreedDialog'
-import breeddelModel from '../../components/serviceBaseData/breedDelete'
+import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import breedreviseModel from '../../components/serviceBaseData/breedUpdate'
 import detailModel from '../../components/serviceBaselist/breeddetail'
 import {
@@ -78,14 +86,15 @@ import {
 import {
     getBreedData,
     getBreedNameSearch,
-    getBreedDetail
+    getBreedDetail,
+    deleteInfo
 } from '../../vuex/actions'
 export default {
     components: {
         pagination,
         pressImage,
         breedModel,
-        breeddelModel,
+        deletebreedModel,
         breedreviseModel,
         filter,
         detailModel
@@ -107,11 +116,11 @@ export default {
                 show: false,
                 id: ''
             },
-            delParam: {
+            deleteParam: {
                 show: false,
                 id: ''
             },
-            changeParam:{
+            changeParam: {
                 show: false,
                 id: ''
             },
@@ -125,7 +134,8 @@ export default {
         actions: {
             getBreedData,
             getBreedNameSearch,
-            getBreedDetail
+            getBreedDetail,
+            deleteInfo
         }
     },
     created() {
@@ -138,7 +148,6 @@ export default {
         createBreed: function(value) {
             this.breedParam.show = true;
             this.breedParam.name = value;
-            this.breedshow = false;
         },
         breedClick: function(id) {
             console.log(id);
@@ -154,10 +163,8 @@ export default {
             this.changeParam.id = id;
             this.getBreedDetail(this.changeParam);
         },
-        delBreed: function(sub, id) {
-            this.delParam.show = true;
-            this.delParam.id = id;
-            this.delshow = false;
+        specDelete:function(initBreedlist){
+            this.deleteParam = initBreedlist;
         },
         modifyBreed: function(id) {
             this.reviseParam.id = id;

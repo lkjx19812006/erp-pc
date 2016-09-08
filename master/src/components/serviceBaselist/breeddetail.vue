@@ -3,16 +3,16 @@
     <updatebreed-model :param="breedlistParam" v-if="breedlistParam.show"></updatebreed-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <div class="breed_detail">
-        <div class="client-section clearfix" v-cloak>
-            <div @click="close()" class="top-title">
-                <span class="glyphicon glyphicon-remove-circle"></span>
-            </div>
-            <div class="col-md-8 client-detail">
-                <h4 class="section_title">药材相关</h4>
-                <div class="panel-group">
-                    <div class="panel panel-default">
-                        <div class="panel-heading clearfix" @click="specsToggle(initBreedDetail.specs)">
-                            <h4 class="panel-title clearfix">
+    <div class="client-section clearfix" v-cloak>
+        <div @click="close()" class="top-title">
+            <span class="glyphicon glyphicon-remove-circle"></span>
+        </div>
+        <div class="col-md-8 client-detail">
+            <h4 class="section_title">药材相关</h4>
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix" @click="specsToggle(initBreedDetail.specs)">
+                        <h4 class="panel-title clearfix">
                                 <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
                                 <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
                                     规格({{initBreedDetail.specs.arr.length}})
@@ -28,19 +28,19 @@
                                      key:'specs'
                                      })">新建</button>
                             </h4>
-                        </div>
-                        <div class="panel-collapse" v-show="initBreedDetail.specs.show">
-                            <div class="panel-body panel-set">
-                                <ul class="clearfix" v-for="item in initBreedDetail.specs.arr">
-                                    <li class="panel-name">
-                                        <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
-                                        <label>规格名称：{{item.name}}</label>
-                                    </li>
-                                    <li @click="clickShow($index)">
-                                        <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                        <div class="breed_action" v-show="item.show" transition="expand">
-                                            <dl>
-                                                <dt @click="updateSpec({
+                    </div>
+                    <div class="panel-collapse" v-show="initBreedDetail.specs.show">
+                        <div class="panel-body panel-set">
+                            <ul class="clearfix" v-for="item in initBreedDetail.specs.arr">
+                                <li class="panel-name">
+                                    <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
+                                    <label>规格名称：{{item.name}}</label>
+                                </li>
+                                <li @click="clickShow($index)">
+                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                    <div class="breed_action" v-show="item.show" transition="expand">
+                                        <dl>
+                                            <dt @click="updateSpec({
                                                     sub:$index,
                                                     id:item.id,
                                                     show:true,
@@ -52,26 +52,26 @@
                                                     key:'specs',
                                                     breedId:item.breedId
                                                     },item.show=false)">编辑</dt>
-                                                <dt @click="specDelete({
+                                            <dt @click="specDelete({
                                                     id:item.id,
                                                     show:true,
                                                     name:item.name,
                                                     title:'规格',
                                                     link:specDel,
-                                                    url:'/spec/',
+                                                    url:'/breed/spec/',
                                                     key:'specs'
                                                     },item.show=false)">删除</dt>
-                                            </dl>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <!--  <p class="contact-view">查看全部</p> -->
-                            </div>
+                                        </dl>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!--  <p class="contact-view">查看全部</p> -->
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading clearfix" @click="localToggle(initBreedDetail.locals)">
-                            <h4 class="panel-title clearfix">
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix" @click="localToggle(initBreedDetail.locals)">
+                        <h4 class="panel-title clearfix">
                                 <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
                                 <a data-toggle="collapse" data-parent="#accordion"  href="#collapseOne" class="panel-title-set">
                                     产地({{initBreedDetail.locals.arr.length}})
@@ -86,8 +86,9 @@
                                      url:'/local/',
                                      key:'locals'
                                      })">新建</button>
-                            </h4>
-                        </div>
+                        </h4>
+                    </div>
+
                         <div class="panel-collapse" v-show="!initBreedDetail.locals.show">
                             <div class="panel-body panel-set">
                                 <ul class="clearfix" v-for="item in initBreedDetail.locals.arr" v-cloak>
@@ -117,7 +118,7 @@
                                                     name:item.name,
                                                     title:'产地',
                                                     link:specDel,
-                                                    url:'/local/',
+                                                    url:'/breed/local/',
                                                     key:'locals'
                                                     },item.show=false)">删除</dt>
                                             </dl>
@@ -175,7 +176,7 @@
                                                     name:item.alias,
                                                     title:'别名',
                                                     link:specDel,
-                                                    url:'/alias/',
+                                                    url:'/breed/alias/',
                                                     key:'alias'
                                                     },item.show=false)">删除</dt>
                                             </dl>
@@ -235,7 +236,7 @@
                                                     name:item.name,
                                                     title:'单位',
                                                     link:specDel,
-                                                    url:'/unit/',
+                                                    url:'/breed/unit/',
                                                     key:'units'
                                                     },item.show=false)">删除</dt>
                                             </dl>

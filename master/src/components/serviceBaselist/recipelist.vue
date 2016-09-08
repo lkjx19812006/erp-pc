@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initConponentlist"  @click="clickRecipe(item.id)">
+                    <tr v-for="item in initConponentlist"  @click="clickRecipe(item.name,item.id)">
                         <td>{{item.code}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.breedName}}</td>
@@ -86,7 +86,8 @@ export default {
             },
             changeParam: {
                 show: false,
-                id: ''
+                name: '',
+                id:''
             }
         }
     },
@@ -94,8 +95,9 @@ export default {
         this.getComponentData(this.loadParam, this.loadParam.all)
     },
     methods: {
-        clickRecipe:function(id){
+        clickRecipe:function(name,id){
             this.changeParam.show = true;
+            this.changeParam.name = name;
             this.changeParam.id = id;
             this.getRecipeDetail(this.changeParam);
         }

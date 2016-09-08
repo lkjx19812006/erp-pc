@@ -1,6 +1,6 @@
 <template>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con" v-show="param.show">
+    <div class="container del_modal_con" v-show="param.show">
         <div class="model-header">
             <h4>删除{{param.title}}</h4>
             <p class="model-tips">是否确定删除此{{param.title}}的信息？</p>
@@ -54,33 +54,5 @@ export default {
     font-size: 30px;
     color: #fff;
 }
-.model-header {
-    background-color: #fff;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    text-align: center;
-}
-.model-header h4{
-    padding: 16px;
-    margin: 0;
-    border-bottom: 2px solid #ddd;
-}
-.model-tips{
-    padding: 10px;
-    font-size: 16px;
-    border-bottom: 2px solid #ddd;
-    margin-bottom: 0;
-}
-.model-footer{
-     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
-     padding:10px;
-     text-align: right;
-}
-.btn-close{
-    color: #fa6705;
-    background-color:#fff;
-    border: 1px solid #ddd;
-}
+
 </style>

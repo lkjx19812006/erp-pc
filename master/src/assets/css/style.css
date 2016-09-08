@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-09-07 17:17:42
+* @Last Modified time: 2016-09-08 16:31:31
 */
 * {
 	padding: 0;
@@ -144,7 +144,6 @@ body{
 .order_table {
     margin-top: 20px;
     position: relative;
-    margin-right: 30px;
     border-top: 1px solid #ddd;
     background: #fff;
     text-align: center;
@@ -379,7 +378,15 @@ body{
     padding-left: 0;
 }
 /* --  删除弹框 --- */
-.modal_con{
+.model-header {
+    background-color: #fff;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    text-align: center;
+}
+.del_modal_con{
     position: fixed;
     width: 426px;
     right: 0;
@@ -405,6 +412,20 @@ body{
 .btn-orange{
     background-color: #fa6705;
     color: #fff;
+}
+.btn-orange:hover{
+    background-color: #fa6705;
+    color: #333;
+}
+.model-footer{
+     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16);
+     padding:10px;
+     text-align: right;
+}
+.btn-close{
+    color: #fa6705;
+    background-color:#fff;
+    border: 1px solid #ddd;
 }
 
 

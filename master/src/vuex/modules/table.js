@@ -1,7 +1,6 @@
 import {
    ORDER_TABLE,
    CHANGE_SHOW_STATUE,
-   CLIENT_INFO,
    SYSTEM_DATA,
    PROVINCE_DATA,
    SERVICE_ENTERPRISE,
@@ -23,7 +22,10 @@ import {
    ADD_CONTACT_DATA,
    UPDATE_SPEC_DATA,
    DELETE_CONTACT_DATA,
-   UPDATE_CONTACT_DATA
+   UPDATE_CONTACT_DATA,
+   DRUG_DETAIL_DATA,
+   CUSTOMER_DATA,
+   CUSTOMER_DETAIL_DATA
 } from '../mutation-types'
 
 const state = {
@@ -33,11 +35,6 @@ const state = {
   	  {"orderId":2,"orderName":"未完成","orderModule":"代理商","orderNum":"1234567890","orderUnit":"金融科技","orderTel":"13162875213","orderPerson":"大大","orderTime":"2016-09-28","orderLogstatus":"运输完成","show":true},
   	  {"orderId":3,"orderName":"已完成","orderModule":"代理商","orderNum":"1234567890","orderUnit":"金融科技","orderTel":"13162875213","orderPerson":"规格","orderTime":"2016-09-18","orderLogstatus":"运输中","show":true}
   	],
-    clientList:[
-        {"clientId":0,"clientName":"孙慧","clientJob":"代理商","clientTel":"13162875213","clientEmail":"sunhuili@163.com"},
-        {"clientId":1,"clientName":"小熊","clientJob":"代理商","clientTel":"15738855555","clientEmail":"sunhuili@163.com"},
-        {"clientId":2,"clientName":"杨宁","clientJob":"代理商","clientTel":"15698522632","clientEmail":"yangning@163.com"}
-    ],
     systemBaseList:{
        enumlist:[
             {"id":0,"code":"022112","type":"1","desc":"123456789011","status":"0"},
@@ -72,9 +69,17 @@ const state = {
           categoryList:[
               {"code":"0","name":"全草类","show":"true"},
               {"code":"0","name":"花类","show":"true"}
-          ]
+          ],
+          drugList:[
+            {"id": 176311,"number": "国药准字Z20093164","name": "麝香祛痛搽剂","nameEn": "","product": "","agentType": "搽剂", "spec": "每瓶装60ml","company": "远大医药黄石飞云制药有限公司","address": "湖北省黄石市鄂黄路52号","drugType": "中药","numberOld": "","approveDate": "2014-03-03 00:00","code": "86901890001064", "linkDb": "药品广告 中药保护品种库","ctime": "2016-09-02 16:52","show":"true"},
+            {"id": 176312,"number": "国药准字Z20093165","name": "麝香祛痛搽剂","nameEn": "","product": "","agentType": "搽剂", "spec": "每瓶装60ml","company": "浙江景岳堂药业有限公司","address": "湖北省黄石市鄂黄路52号","drugType": "中药","numberOld": "","approveDate": "2014-03-03 00:00","code": "86901890001064", "linkDb": "药品广告 中药保护品种库","ctime": "2016-09-02 16:52","show":"true"}
+         ],
+         customerList:[
+            {"id":0,"type":0,"name":"ddd","category":"14555","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":true},
+            {"id":1,"type":0,"name":"ddf","category":"14frff555","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":false},
+            {"id":2,"type":1,"name":"ggg","category":"gvgg","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":false}
+         ]
     },
-  
     breedDetail:{
           "code": "232去",
           "icon": "http://p.ayxbk.com/images/thumb/4/4f/Bkg32.jpg/220px-Bkg32.jpg",
@@ -128,15 +133,52 @@ const state = {
             ],
             show:true
        }
+    },
+    clientDetail:{
+        "type": "0",
+        "name":"sunny",
+        "category":22,
+        "principal":"sunny",
+        "id": 1001,
+        "biz_scope":"好好好好哈哈",
+        "tel":"13162875213",
+        "email":"165256@163.com",
+        "province":"上海",
+        "city":"虹口",
+        "address":"上海空口区",
+        "credit_level":"AAA",
+        "employee_id": 11,
+        "show":true,
+        "contact": {
+            arr:[],
+            show:false
+          },
+        "chance": {
+            arr:[],
+            show:false
+         },
+        "orders":{
+          arr:[],
+          show:true      
+            },        
+        "contract": {arr:[],show:false}, 
+        "files":{ 
+          arr:[
+                {"id": 1,"breedId": 1001,"name": "云南","show":"true"},
+                {"id": 2,"breedId": 1001,"name": "广东","show":"true"}
+            ],
+           show:false
+         },
+         "track": {arr:[],show:false},
+         "remark": {arr:[],show:false},
+         "addr": {arr:[],show:false},
+         "label": {arr:[],show:false}
     }
 }
 
 const mutations = {
 	  [ORDER_TABLE](state, data) {
         state.list = data.results;
-    },
-    [CLIENT_INFO](state,data){
-        state.clientList = data.results;
     },
     [SYSTEM_DATA](state,data){ //枚举类型
          state.systemBaseList.enumlist = data;
@@ -166,8 +208,7 @@ const mutations = {
        state.systemBaseList.enumlist[data.sub].desc=data.desc;
        state.systemBaseList.enumlist[data.sub].status=data.status;
     },
-   
-   
+
     [SERVICE_COMPONENT](state,data){  //成分
          state.basicBaseList.componentList = data;
     },
@@ -222,8 +263,8 @@ const mutations = {
     },
 
     [DELETE_SPECS_DATA](state,data){ //删除药材相关信息
-        /*state.breedDetail[data.key].arr.splice(data.id,1);*/
         state.breedDetail[data.key].arr.$remove(data.id);
+       /* state.breedDetail[data.key].arr.length-1;*/
     },
 
     [CATEGORY_DATA](state,data){  //品种显示
@@ -244,7 +285,7 @@ const mutations = {
         state.breedDetail[data.key].arr[data.sub].id=data.id;
     },
 
-    [ADDSPEC_DATA](state,data){  // 获取breedDetail常用规格
+    [ADDSPEC_DATA](state,data){  // 添加药材相关信息
         state.breedDetail[data.key].arr.push({
           "name":data.name,
           "breedId":data.id,
@@ -252,10 +293,47 @@ const mutations = {
           "alias":data.name
         })
     },
-    [SERVICE_ENTERPRISE_DETAIL](state,data){
+    [SERVICE_ENTERPRISE_DETAIL](state,data){  //企业详情
       state.companyDetail = data;
-    }
+    },
 
+    [DRUG_DETAIL_DATA](state,data){   //成分详情
+      state.basicBaseList.drugList = data;
+    },
+    [CUSTOMER_DATA](state, data) {  //客户列表
+         state.basicBaseList.customerList = data;
+    },
+    [CUSTOMER_DETAIL_DATA](state,data){ //客户详情
+        state.clientDetail = data;
+    },
+
+    [CUSTOMER_DATA](state,data){ //新增客户
+        state.basicBaseList.customerList.unshift({
+           "name":data.name,
+            "type":data.type,
+            "tel":data.tel,
+            "category":data.category,
+            "email":data.email,
+            "principal":data.principal,
+            "biz_scope":data.biz_scope,
+            "province":data.province,
+            "city":data.city,
+            "address":data.address,
+            "employee_id":data.employee_id,
+            "credit_level":data.credit_level,
+            "show":false
+        })
+    },
+    [CUSTOMER_DATA](state,data){ //删除客户信息
+        state.basicBaseList[data.key].$remove(data.id);
+    },
+    [CUSTOMER_DATA](state,data){  //修改客户列表信息
+      console.log(state.basicBaseList[data.key])
+        state.basicBaseList[data.key].breedId=data.breedId;
+        state.basicBaseList[data.key].name=data.name;
+        state.basicBaseList[data.key].alias=data.name;
+        state.basicBaseList[data.key].id=data.id;
+    }
 }
 
 export default {

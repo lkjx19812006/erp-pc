@@ -42,9 +42,6 @@ export const initOrderlist = (state) => {
     return parseJson(state.table.list);
 }
 
-export const initClientlist = (state) => {
-    return parseJson(state.table.clientList);
-}
 /*--系统基础数据--*/
 export const initSystemlist = (state) => {
     return JSON.parse(JSON.stringify(state.table.systemBaseList.enumlist)); 
@@ -75,5 +72,16 @@ export const initBreedDetail = (state) => {
 
 export const initCategorylist = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.categoryList)); 
+}
+
+export const initDruglist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.drugList));
+}
+/*---客户信息---*/
+export const initCustomerlist = (state) => {
+    return parseJson(state.table.basicBaseList.customerList);
+}
+export const initClientDetail = (state) => {
+    return JSON.parse(JSON.stringify(state.table.clientDetail));  
 }
 
