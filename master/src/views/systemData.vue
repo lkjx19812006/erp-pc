@@ -7,9 +7,29 @@
             <div class="clear">
                 <div class="my_order col-xs-2">枚举类型</div>
                 <div class="col-xs-8 my_order_search">
-                    <div class="name_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" class="search_input" v-model="loadParam1.type" placeholder="按类型搜索" v-on:keyup="typeSearch(loadParam1.type)">
+                    <div class="name_search">
+                        <select class="form-control" v-model="sel" @change="searchname(sel)">
+                            <option selected>请选择种类名称搜索</option>
+                            <option  value="TRACE">跟进类型</option>
+                            <option  value="ST">规格类型</option>
+                            <option  value="BANK">银行</option>
+                            <option  value="OSTAT">订单状态</option>
+                            <option  value="OT">包装方式</option>
+                            <option  value="MU">计量单位</option>
+                            <option  value="PAY">付款方式</option>
+                            <option  value="CL">客户信用等级</option>
+                            <option  value="IS">意向状态</option>
+                            <option  value="HT">药材品类</option>
+                            <option  value="ES">员工状态</option>
+                            <option  value="ET">企业类型</option>
+                            <option  value="CS">客户来源</option>
+                            <option  value="CT">证书类型</option>
+                            <option  value="AS">审核状态</option>
+                            <option  value="DEV">快递公司</option>
+                            <option  value="POS">职位</option>
+                            <option  value="LBL">常见标签</option>
+                            <option  value="ON">客户信用等级</option>
+                        </select>
                     </div>
                 </div>
                 <div class="right col-xs-2">
@@ -121,6 +141,7 @@ import filter from '../filters/filters'
 import {
     getList,
     initSystemlist,
+    initSearchlist,
     initProvincelist
 } from '../vuex/getters'
 import {
@@ -170,7 +191,8 @@ export default {
             show:true,
             model:true,
             editmodel:true,
-            delmodel:true
+            delmodel:true,
+            sel:''
         }
     },
     events: {
@@ -189,7 +211,8 @@ export default {
         getters: {
             getList,
             initSystemlist,
-            initProvincelist
+            initProvincelist,
+            initSearchlist
         },
         actions: {
             getSystemData,
@@ -206,8 +229,8 @@ export default {
         }
     },
     methods: {
-        typeSearch: function(type) {
-            this.getSystemSearch(this.loadParam1,this.loadParam1.all);
+        searchname: function(sel) {
+            this.getSystemSearch(sel);
         },
         editData: function(id) {
             if(this.$store.state.table.systemBaseList.enumlist[id].show == true){
@@ -267,47 +290,22 @@ export default {
     font-size: 20px;
     padding: 0;
 }
-.my_order_search{
-    
-}
-.name_search,
-.ordertel_search,
-.tel_search {
+.name_search{
     position: relative;
-    border: 1px solid #ccc;
+    border:none;
     display: inline-block;
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     background: #fff;
-    height: 30px;
-    line-height: 28px;
+    height: 34px;
+    line-height: 32px;
      margin-right: 7%; 
 }
 .tel_search {
     margin-right: 0;
 }
-
-.name_search>img,
-.ordertel_search>img,
-.tel_search>img {
-    float: left;
-    margin-top: 2px;
-    margin-left: 1px;
-}
-
-.search_input {
-    color: #666;
-    font-size: 14px;
-    float: left;
-    text-indent: 5px;
-}
-
-.search_input:focus {
-    outline: 0;
-}
-
 .new_btn {
     float: right;
     border: 1px solid #ccc;

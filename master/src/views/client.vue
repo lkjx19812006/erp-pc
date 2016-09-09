@@ -25,7 +25,7 @@
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped" v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
                     <tr>
                         <th></th>
@@ -179,6 +179,7 @@ export default {
     methods: {
         clickOn: function(id) {
             this.changeParam.show = true;
+            this.changeParam.id = id;
             this.getClientDetail(this.changeParam);
         },
         createCustomer:function(value){

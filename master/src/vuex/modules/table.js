@@ -25,7 +25,10 @@ import {
    UPDATE_CONTACT_DATA,
    DRUG_DETAIL_DATA,
    CUSTOMER_DATA,
-   CUSTOMER_DETAIL_DATA
+   CUSTOMER_ADD_DATA,
+   CUSTOMER_DETAIL_DATA,
+   UPDATE_CUSTOMER_DETAIL,
+   CUSTOMER_UPDATE_DATA,
 } from '../mutation-types'
 
 const state = {
@@ -79,6 +82,7 @@ const state = {
             {"id":1,"type":0,"name":"ddf","category":"14frff555","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":false},
             {"id":2,"type":1,"name":"ggg","category":"gvgg","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":false}
          ]
+         
     },
     breedDetail:{
           "code": "232去",
@@ -105,7 +109,7 @@ const state = {
                   {"id": 2,"breedId": 1001,"name": "广东","show":"true"}
               ],
             show:false
-          },
+          }
     },
     companyDetail:{
         "id": "11",
@@ -150,7 +154,9 @@ const state = {
         "employee_id": 11,
         "show":true,
         "contact": {
-            arr:[],
+            arr:[
+               {"id":1,"customer_id":1,"name":"sunny","position":"业务员","department":"业务部","phone":"13162875213","tel":"0215555555","email":"54621641655@163.com","main":0,"wechart":"1564642663","qq":"154851192"}
+            ],
             show:false
           },
         "chance": {
@@ -158,10 +164,16 @@ const state = {
             show:false
          },
         "orders":{
-          arr:[],
-          show:true      
-            },        
-        "contract": {arr:[],show:false}, 
+            arr:[],
+            show:false      
+          },        
+        "contract": {
+            arr:[],
+            show:false
+        }, 
+        "intent":{arr:[],show:false},
+        "quality":{arr:[],show:false},
+        "produce":{arr:[],show:false},
         "files":{ 
           arr:[
                 {"id": 1,"breedId": 1001,"name": "云南","show":"true"},
@@ -171,8 +183,16 @@ const state = {
          },
          "track": {arr:[],show:false},
          "remark": {arr:[],show:false},
-         "addr": {arr:[],show:false},
-         "label": {arr:[],show:false}
+         "addr": {
+            arr:[
+                {"id":1,"name":"djhdj","show":"true"}
+            ],
+            show:false
+          },
+         "label": {
+            arr:[],
+            show:false
+          }
     }
 }
 
@@ -246,7 +266,7 @@ const mutations = {
             "show":false
         })
     },
-    [UPDATE_CONTACT_DATA](state,data){
+    [UPDATE_CONTACT_DATA](state,data){  //修改企业相关内容
         state.companyDetail[data.key].arr[data.sub].cid=data.cid;
         state.companyDetail[data.key].arr[data.sub].name=data.name;
         state.companyDetail[data.key].arr[data.sub].phone=data.phone;
@@ -257,13 +277,11 @@ const mutations = {
     [DELETE_CONTACT_DATA](state,id){ //删除企业联系人
         state.companyDetail.companyContacts.arr.splice(id,1);
     },
-
-    [DELETE_BREED_DATA](state,id){ //删除药材信息
-         state.basicBaseList.breedList.splice(id,1);
+    [DELETE_BREED_DATA](state,data){ //删除客户信息
+        state.basicBaseList[data.key].$remove(data.id);
     },
-
-    [DELETE_SPECS_DATA](state,data){ //删除药材相关信息
-        state.breedDetail[data.key].arr.$remove(data.id);
+    [DELETE_SPECS_DATA](state,data){ //删除相关信息
+        state[data.headline][data.key].arr.$remove(data.id);
        /* state.breedDetail[data.key].arr.length-1;*/
     },
 
@@ -307,7 +325,7 @@ const mutations = {
         state.clientDetail = data;
     },
 
-    [CUSTOMER_DATA](state,data){ //新增客户
+    [CUSTOMER_ADD_DATA](state,data){ //新增客户
         state.basicBaseList.customerList.unshift({
            "name":data.name,
             "type":data.type,
@@ -324,15 +342,38 @@ const mutations = {
             "show":false
         })
     },
-    [CUSTOMER_DATA](state,data){ //删除客户信息
-        state.basicBaseList[data.key].$remove(data.id);
-    },
-    [CUSTOMER_DATA](state,data){  //修改客户列表信息
+
+    [CUSTOMER_UPDATE_DATA](state,data){  //修改客户列表信息
       console.log(state.basicBaseList[data.key])
         state.basicBaseList[data.key].breedId=data.breedId;
         state.basicBaseList[data.key].name=data.name;
         state.basicBaseList[data.key].alias=data.name;
         state.basicBaseList[data.key].id=data.id;
+    },
+    [UPDATE_CUSTOMER_DETAIL](state,data){  //修改客户相关
+        state[data.headline][data.key].arr[data.sub].name=data.name;
+        state[data.headline][data.key].arr[data.sub].position=data.position;
+        state[data.headline][data.key].arr[data.sub].department=data.department;
+        state[data.headline][data.key].arr[data.sub].phone=data.phone;
+        state[data.headline][data.key].arr[data.sub].tel=data.tel;
+        state[data.headline][data.key].arr[data.sub].email=data.email;
+        state[data.headline][data.key].arr[data.sub].qq=data.qq;
+        state[data.headline][data.key].arr[data.sub].wechart=data.wechart;
+        state[data.headline][data.key].arr[data.sub].main=data.main;
+    },
+    [CUSTOMER_DETAIL_DATA](state,data){  // 新增客户相关信息
+        state.clientDetail[data.key].arr.unshift({
+          "name":data.name,
+          "position":param.position,
+          "department":param.department,
+          "phone":param.phone,
+          "tel":param.tel,
+          "email":param.email,
+          "qq":param.qq,
+          "wechart":param.wechart,
+          "main":param.main,
+          "show":false
+        })
     }
 }
 

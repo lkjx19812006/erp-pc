@@ -1,4 +1,7 @@
 <template>
+	<createcust-model :param="custParam" v-if="custParam.show"></createcust-model>
+	<updatecontact-model :param="updateParam" v-if="updateParam.show"></updatecontact-model>
+	<deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <div class="client_body">
     	<div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -28,66 +31,191 @@
             </nav>
         </div>
         <section>
-            <div class="client-section clearfix">
-                <div class="col-md-8">
+            <div class="client-section clearfix" >
+                <div class="col-md-8 client-detail">
                     <h4 class="section_title">相关</h4>
                     <article>
                         <div class="panel-group">
                             <div class="panel panel-default">
-                                <div class="panel-heading clearfix">
-                                    <h4 class="panel-title clearfix">
+                                <div class="panel-heading" >
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+						            	link:initClientDetail.contact,
+						            	crete:'contact'
+						            	})">
 										<img class="pull-left" src="/static/images/contact.png" height="32" width="27"/>
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											联系人（8）
+											联系人（{{initClientDetail.contact.arr.length}}）
 										</a>
-										<button type="button" class="btn btn-base pull-right">新建</button>
+										<button type="button" class="btn btn-base pull-right"     @click.stop="createFormt({
+		                                     id:param.id,
+		                                     title:'联系人',
+		                                     show:true,
+		                                     name:'',
+		                                     position:'',
+		                                     department:'',
+		                                     phone:'',
+		                                     tel:'',
+		                                     email:'',
+		                                     qq:'',
+		                                     wechart:'',
+		                                     main:'',
+		                                     namelist:'客户名称',
+		                                     job:'联系人职位',
+		                                     parten:'联系人部门',
+		                                     phonelist:'手机',
+		                                     tellist:'电话',
+		                                     emaillist:'邮箱',
+		                                     QQ:'qq',
+		                                     webchart:'微信',
+		                                     remark:'备注',
+		                                     link:createCustomer,
+		                                     url:'/customer/contact',
+		                                     key:'contact'
+		                                     })">新建</button>
 									</h4>
                                 </div>
-                                <div class="panel-collapse collapse in">
+                                <div class="panel-collapse" v-show="!initClientDetail.contact.show">
                                     <div class="panel-body panel-set">
-                                        <table class="table contactSet">
+                                        <table class="table  contactSet">
+                                        	<thead>
+                                        		<th>客户名称</th>
+                                        		<th>联系人职位</th>
+                                        		<th>联系人部门</th>
+                                        		<th>手机</th>
+                                        		<th>电话</th>
+                                        		<th>邮箱</th>
+                                        		<th>qq</th>
+                                        		<th>微信</th>
+                                        		<th>备注</th>
+                                        	</thead>
 		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail">
-		                                            <td>
-		                                                <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
-		                                                药品名称：{{item.name}}
+		                                        <tr v-for="item in initClientDetail.contact.arr">
+		                                            <td>{{item.name}}</td>
+		                                            <td>{{item.position}}</td>
+		                                            <td>{{item.department}}</td>
+		                                            <td>{{item.phone}}</td>
+		                                            <td>{{item.tel}}</td>
+		                                            <td>{{item.email}}</td>
+		                                            <td>{{item.qq}}</td>
+		                                            <td>{{item.wechart}}</td>
+		                                            <td>{{item.main}}</td>
+		                                            <td  @click="clickShow($index,{
+		                                            	concrete:'contact'
+		                                            	})">
+		                                            	<img src="/static/images/default_arrow.png" height="24" width="24" />
+				                                        <div class="breed_action" v-show="item.show" >
+				                                            <dl>
+				                                               <dt @click="updateSpec({
+				                                                   sub:$index,
+				                                                   id:item.id,
+				                                                   show:true,
+				                                                   title:'联系人',
+				                                                   namelist:'客户名称',
+								                                   job:'联系人职位',
+								                                   parten:'联系人部门',
+								                                   phonelist:'手机',
+								                                   tellist:'电话',
+								                                   emaillist:'邮箱',
+								                                   QQ:'qq',
+								                                   webchart:'微信',
+								                                   remark:'备注',
+				                                                   name:item.name,
+				                                                   position:item.position,
+				                                                   department:item.department,
+				                                                   phone:item.phone,
+				                                                   tel:item.tel,
+				                                                   email:item.email,
+				                                                   qq:item.qq,
+				                                                   wechart:item.wechart,
+				                                                   main:item.main,
+				                                                   link:updateContact,
+				                                                   url:'/customer/contact',
+				                                                   key:'contact',
+				                                                   headline:'clientDetail'
+				                                                   },item.show=false)">编辑</dt>
+				                                               <dt @click="specDelete({
+				                                                   id:item.id,
+				                                                   show:true,
+				                                                   name:item.name,
+				                                                   title:'联系人',
+				                                                   link:specDel,
+				                                                   url:'/customer/contact/',
+				                                                   key:'contact',
+				                                                   headline:'clientDetail'
+				                                                   },item.show=false)">删除</dt>
+				                                           </dl>
+				                                        </div>
 		                                            </td>
-		                                            <td>药品编号：{{item.number}}</td>
-		                                            <td>药品类型：{{item.drugType}}</td>
-		                                            <td>所属公司：{{item.company}}</td>
-		                                            <td>公司地址：{{item.address}}</td>
-		                                            <td>说明：{{item.spec}}</td>
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
-                                        <p class="contact-view">查看全部</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
-                                <div class="panel-heading clearfix">
-                                    <h4 class="panel-title clearfix">
+                                <div class="panel-heading" >
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+						            	link:initClientDetail.chance,
+						            	crete:'chance'
+						            	})">
 										<img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											业务机会（0）
+											业务机会（{{initClientDetail.chance.arr.length}}）
 										</a>
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse collapse">
+                                <div  class="panel-collapse" v-show="initClientDetail.chance.show">
                                     <div class="panel-body panel-set">
                                         <table class="table contactSet">
+                                        	<thead>
+                                        		<th>类型</th>
+                                        		<th>特殊的</th>
+                                        		<th>品种名称</th>
+                                        		<th>资格资质</th>
+                                        		<th>规格</th>
+                                        		<th>单位</th>
+                                        		<th>交收地址</th>
+                                        		<th>预付比例</th>
+                                        		<th>发票</th>
+                                        		<th>上门看货</th>
+                                        		<th>包装</th>
+                                        		<th>是否国际</th>
+                                        		<th>提供样品</th>
+                                        		<th>样品数量</th>
+                                        		<th>样品单位</th>
+                                        		<th>样品总价</th>
+                                        		<th>报价总数</th>
+                                        		<th>报价均价</th>
+                                        		<th>报价供货总数</th>
+                                        		<th>状态</th>
+                                        	</thead>
 		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail">
-		                                            <td>
-		                                                <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
-		                                                药品名称：{{item.name}}
-		                                            </td>
-		                                            <td>药品编号：{{item.number}}</td>
-		                                            <td>药品类型：{{item.drugType}}</td>
-		                                            <td>所属公司：{{item.company}}</td>
-		                                            <td>公司地址：{{item.address}}</td>
-		                                            <td>说明：{{item.spec}}</td>
+		                                        <tr v-for="item in initClientDetail.chance.arr">
+		                                            <td>{{item.type}}</td>
+		                                            <td>{{item.especial}}</td>
+		                                            <td>{{item.breed_name}}</td>
+		                                            <td>{{item.qualification}}</td>
+		                                            <td>{{item.address}}</td>
+		                                            <td>{{item.quality}}</td>
+		                                            <td>{{item.location}}</td>
+		                                            <td>{{item.spec}}</td>
+		                                            <td>{{item.price}}</td>
+		                                            <td>{{item.unit}}</td>
+		                                            <td>{{item.address}}</td>
+		                                            <td>{{item.advance}}</td>
+		                                            <td>{{item.invoic}}</td>
+		                                            <td>{{item.visit}}</td>
+		                                            <td>{{item.pack}}</td>
+		                                            <td>{{item.intl}}</td>
+		                                            <td>{{item.sampling}}</td>
+		                                            <td>{{item.sample_number}}</td>
+		                                            <td>{{item.sample_unit}}</td>
+		                                            <td>{{item.sample_amount}}</td>
+		                                            <td>{{item.offer}}</td>
+		                                            <td>{{item.offer_vprice}}</td>
+		                                            <td>{{item.offer_total}}</td>
+		                                            <td>{{item.status}}</td>
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
@@ -95,30 +223,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title clearfix">
+                             <div class="panel panel-default">
+                                <div class="panel-heading" >
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+						            	link:initClientDetail.intent,
+						            	crete:'intent'
+						            	})">
 										<img class="pull-left" src="/static/images/order.png" height="30" width="30"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											订单（8）
+											意向（{{initClientDetail.intent.arr.length}}）
 										</a>
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse collapse">
+                                <div  class="panel-collapse" v-show="initClientDetail.intent.show">
                                     <div class="panel-body panel-set">
-                                        <table class="table contactSet">
+                                         <table class="table contactSet">
+                                        	<thead>
+                                        		<th>药品名称</th>
+                                        		<th>药品编号</th>
+                                        		<th>药品类型</th>
+                                        		<th>所属公司</th>
+                                        		<th>公司地址</th>
+                                        		<th>说明</th>
+                                        	</thead>
 		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail">
-		                                            <td>
-		                                                <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
-		                                                药品名称：{{item.name}}
-		                                            </td>
-		                                            <td>药品编号：{{item.number}}</td>
-		                                            <td>药品类型：{{item.drugType}}</td>
-		                                            <td>所属公司：{{item.company}}</td>
-		                                            <td>公司地址：{{item.address}}</td>
-		                                            <td>说明：{{item.spec}}</td>
+		                                         <tr v-for="item in initClientDetail">
+		                                            <td>{{item.name}}</td>
+		                                            <td>{{item.number}}</td>
+		                                            <td>{{item.drugType}}</td>
+		                                            <td>{{item.company}}</td>
+		                                            <td>{{item.address}}</td>
+		                                            <td>{{item.spec}}</td>
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
@@ -128,28 +264,75 @@
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title clearfix">
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+						            	link:initClientDetail.orders,
+						            	crete:'orders'
+						            	})">
+										<img class="pull-left" src="/static/images/order.png" height="30" width="30"  />
+										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+											订单（{{initClientDetail.orders.arr.length}}）
+										</a>
+										<button type="button" class="btn btn-base pull-right">新建</button>
+									</h4>
+                                </div>
+                                <div  class="panel-collapse" v-show="initClientDetail.orders.show">
+                                    <div class="panel-body panel-set">
+                                         <table class="table contactSet">
+                                        	<thead>
+                                        		<th>药品名称</th>
+                                        		<th>药品编号</th>
+                                        		<th>药品类型</th>
+                                        		<th>所属公司</th>
+                                        		<th>公司地址</th>
+                                        		<th>说明</th>
+                                        	</thead>
+		                                    <tbody>
+		                                         <tr v-for="item in initClientDetail.orders">
+		                                            <td>{{item.name}}</td>
+		                                            <td>{{item.number}}</td>
+		                                            <td>{{item.drugType}}</td>
+		                                            <td>{{item.company}}</td>
+		                                            <td>{{item.address}}</td>
+		                                            <td>{{item.spec}}</td>
+		                                        </tr>
+		                                    </tbody>
+		                                </table>
+                                        <!-- <p class="contact-view">查看全部</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+						            	link:initClientDetail.contract,
+						            	crete:'contract'
+						            	})">
 										<img class="pull-left" src="/static/images/compact.png" height="32" width="27"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											合同（0）
+											合同（{{initClientDetail.contract.arr.length}}）
 										</a>
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse collapse">
+                                <div  class="panel-collapse" v-show="initClientDetail.contract.show">
                                     <div class="panel-body panel-set">
-                                        <table class="table contactSet">
+                                         <table class="table contactSet">
+                                        	<thead>
+                                        		<th>药品名称</th>
+                                        		<th>药品编号</th>
+                                        		<th>药品类型</th>
+                                        		<th>所属公司</th>
+                                        		<th>公司地址</th>
+                                        		<th>说明</th>
+                                        	</thead>
 		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail">
-		                                            <td>
-		                                                <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
-		                                                药品名称：{{item.name}}
-		                                            </td>
-		                                            <td>药品编号：{{item.number}}</td>
-		                                            <td>药品类型：{{item.drugType}}</td>
-		                                            <td>所属公司：{{item.company}}</td>
-		                                            <td>公司地址：{{item.address}}</td>
-		                                            <td>说明：{{item.spec}}</td>
+		                                         <tr v-for="item in initClientDetail">
+		                                            <td>{{item.name}}</td>
+		                                            <td>{{item.number}}</td>
+		                                            <td>{{item.drugType}}</td>
+		                                            <td>{{item.company}}</td>
+		                                            <td>{{item.address}}</td>
+		                                            <td>{{item.spec}}</td>
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
@@ -158,29 +341,37 @@
                                 </div>
                             </div>
                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title clearfix">
+                                <div class="panel-heading"  >
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+						            	link:initClientDetail.files,
+						            	crete:'files'
+						            	})">
 										<img class="pull-left" src="/static/images/file.png" height="34" width="26"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											文件（2）
+											文件（{{initClientDetail.files.arr.length}}）
 										</a>
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse collapse">
+                                <div  class="panel-collapse" v-show="initClientDetail.files.show">
                                    <div class="panel-body panel-set">
-                                        <table class="table contactSet">
+                                         <table class="table contactSet">
+                                        	<thead>
+                                        		<th>药品名称</th>
+                                        		<th>药品编号</th>
+                                        		<th>药品类型</th>
+                                        		<th>所属公司</th>
+                                        		<th>公司地址</th>
+                                        		<th>说明</th>
+                                        	</thead>
 		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail">
-		                                            <td>
-		                                                <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
-		                                                药品名称：{{item.name}}
-		                                            </td>
-		                                            <td>药品编号：{{item.number}}</td>
-		                                            <td>药品类型：{{item.drugType}}</td>
-		                                            <td>所属公司：{{item.company}}</td>
-		                                            <td>公司地址：{{item.address}}</td>
-		                                            <td>说明：{{item.spec}}</td>
+		                                         <tr v-for="item in initClientDetail.files">
+		                                            <td>{{item.name}}</td>
+		                                            <td>{{item.number}}</td>
+		                                            <td>{{item.drugType}}</td>
+		                                            <td>{{item.company}}</td>
+		                                            <td>{{item.address}}</td>
+		                                            <td>{{item.spec}}</td>
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
@@ -190,23 +381,178 @@
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title clearfix">
+                                    <h4 class="panel-title clearfix"  @click="enfoldment({
+						            	link:initClientDetail.track,
+						            	crete:'track'
+						            	})">
 										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											跟进（0）
+											跟进（{{initClientDetail.track.arr.length}}）
 										</a>
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse collapse">
+                                <div  class="panel-collapse" v-show="initClientDetail.track.show">
+                                   <div class="panel-body panel-set">
+	                                    <table class="table contactSet">
+                                        	<thead>
+                                        		<th>药品名称</th>
+                                        		<th>药品编号</th>
+                                        		<th>药品类型</th>
+                                        		<th>所属公司</th>
+                                        		<th>公司地址</th>
+                                        		<th>说明</th>
+                                        	</thead>
+		                                    <tbody>
+		                                         <tr v-for="item in initClientDetail">
+		                                            <td>{{item.name}}</td>
+		                                            <td>{{item.number}}</td>
+		                                            <td>{{item.drugType}}</td>
+		                                            <td>{{item.company}}</td>
+		                                            <td>{{item.address}}</td>
+		                                            <td>{{item.spec}}</td>
+		                                        </tr>
+		                                    </tbody>
+		                                </table>
+                                        <p class="contact-view">查看全部</p>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="panel panel-default">
+                                <div class="panel-heading" >
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+						            	link:initClientDetail.remark,
+						            	crete:'remark'
+						            	})">
+										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
+										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+											备注（{{initClientDetail.remark.arr.length}}）
+										</a>
+										<button type="button" class="btn btn-base pull-right">新建</button>
+									</h4>
+                                </div>
+                                <div  class="panel-collapse" v-show="initClientDetail.remark.show">
+                                   <div class="panel-body panel-set">
+                                        <table class="table contactSet">
+                                        	<thead>
+                                        		<th>药品名称</th>
+                                        		<th>药品编号</th>
+                                        		<th>药品类型</th>
+                                        		<th>所属公司</th>
+                                        		<th>公司地址</th>
+                                        		<th>说明</th>
+                                        	</thead>
+		                                    <tbody>
+		                                         <tr v-for="item in initClientDetail">
+		                                            <td>{{item.name}}</td>
+		                                            <td>{{item.number}}</td>
+		                                            <td>{{item.drugType}}</td>
+		                                            <td>{{item.company}}</td>
+		                                            <td>{{item.address}}</td>
+		                                            <td>{{item.spec}}</td>
+		                                        </tr>
+		                                    </tbody>
+		                                </table>
+                                        <p class="contact-view">查看全部</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+						            	link:initClientDetail.addr,
+						            	crete:'addr'
+						            	})">
+										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
+										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+											收货地址（{{initClientDetail.addr.arr.length}}）
+										</a>
+										<button type="button" class="btn btn-base pull-right">新建</button>
+									</h4>
+                                </div>
+                                <div  class="panel-collapse" v-show="initClientDetail.addr.show">
+                                   <div class="panel-body panel-set">
+                                        <table class="table contactSet">
+                                        	<thead>
+                                        		<th>类型</th>
+                                        		<th>联系人姓名</th>
+                                        		<th>联系人电话</th>
+                                        		<th>性别</th>
+                                        		<th>邮政编码</th>
+                                        		<th>国家</th>
+                                        		<th>省</th>
+                                        		<th>市</th>
+                                        		<th>详细地址</th>
+                                        		<th>状态</th>
+                                        	</thead>
+		                                    <tbody>
+		                                        <tr v-for="item in initClientDetail.addr.arr">
+		                                            <td>{{item.type}}</td>
+		                                            <td>{{item.contact_name}}</td>
+		                                            <td>{{item.contact_phone}}</td>
+		                                            <td>{{item.sex}}</td>
+		                                            <td>{{item.zip_code}}</td>
+		                                            <td>{{item.country}}</td>
+		                                            <td>{{item.province}}</td>
+		                                            <td>{{item.country}}</td>
+		                                            <td>{{item.detail_addr}}</td>
+		                                            <td>{{item.status}}</td>
+		                                            <td>
+		                                            	<img src="/static/images/default_arrow.png" height="24" width="24" />
+				                                        <div class="breed_action" v-show="item.show" >
+				                                           <!--  <dl>
+				                                               <dt @click="updateSpec({
+				                                                    sub:$index,
+				                                                   id:item.id,
+				                                                   show:true,
+				                                                   title:'产地',
+				                                                   namelist:'产地名称',
+				                                                   name:item.name,
+				                                                   link:alterSpec,
+				                                                   url:'/local/',
+				                                                   key:'locals',
+				                                                   breedId:item.breedId
+				                                                   },item.show=false)">编辑</dt>
+				                                               <dt @click="specDelete({
+				                                                   id:item.id,
+				                                                   show:true,
+				                                                   name:item.name,
+				                                                   title:'产地',
+				                                                   link:specDel,
+				                                                   url:'/breed/local/',
+				                                                   key:'locals'
+				                                                   },item.show=false)">删除</dt>
+				                                           </dl> -->
+				                                        </div>
+		                                            </td>
+		                                        </tr>
+		                                    </tbody>
+		                                </table>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+						            	link:initClientDetail.label,
+						            	crete:'label'
+						            	})">
+										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
+										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+											标签（{{initClientDetail.label.arr.length}}）
+										</a>
+										<button type="button" class="btn btn-base pull-right">新建</button>
+									</h4>
+                                </div>
+                                <div  class="panel-collapse"  v-show="initClientDetail.label.show">
                                    <div class="panel-body panel-set">
                                         <table class="table contactSet">
 		                                    <tbody>
 		                                        <tr v-for="item in initClientDetail">
-		                                            <td>
-		                                                <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
-		                                                药品名称：{{item.name}}
-		                                            </td>
+		                                        	<td>
+		                                        		<img src="/static/images/contactname.png" height="21" width="18" />
+		                                        	</td>
+		                                            <td>药品名称：{{item.name}}</td>
 		                                            <td>药品编号：{{item.number}}</td>
 		                                            <td>药品类型：{{item.drugType}}</td>
 		                                            <td>所属公司：{{item.company}}</td>
@@ -221,28 +567,36 @@
                             </div>
                              <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title clearfix">
-										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+						            	link:initClientDetail.quality,
+						            	crete:'quality'
+						            	})">
+										<img class="pull-left" src="/static/images/order.png" height="30" width="30"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											备注（0）
+											资质证书（{{initClientDetail.quality.arr.length}}）
 										</a>
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse collapse">
-                                   <div class="panel-body panel-set">
-                                        <table class="table contactSet">
+                                <div  class="panel-collapse"  v-show="initClientDetail.quality.show">
+                                    <div class="panel-body panel-set">
+                                         <table class="table contactSet">
+                                        	<thead>
+                                        		<th>药品名称</th>
+                                        		<th>药品编号</th>
+                                        		<th>药品类型</th>
+                                        		<th>所属公司</th>
+                                        		<th>公司地址</th>
+                                        		<th>说明</th>
+                                        	</thead>
 		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail">
-		                                            <td>
-		                                                <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
-		                                                药品名称：{{item.name}}
-		                                            </td>
-		                                            <td>药品编号：{{item.number}}</td>
-		                                            <td>药品类型：{{item.drugType}}</td>
-		                                            <td>所属公司：{{item.company}}</td>
-		                                            <td>公司地址：{{item.address}}</td>
-		                                            <td>说明：{{item.spec}}</td>
+		                                         <tr v-for="item in initClientDetail">
+		                                            <td>{{item.name}}</td>
+		                                            <td>{{item.number}}</td>
+		                                            <td>{{item.drugType}}</td>
+		                                            <td>{{item.company}}</td>
+		                                            <td>{{item.address}}</td>
+		                                            <td>{{item.spec}}</td>
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
@@ -250,61 +604,38 @@
                                     </div>
                                 </div>
                             </div>
-                             <div class="panel panel-default">
+                            <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title clearfix">
-										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+						            	link:initClientDetail.produce,
+						            	crete:'produce'
+						            	})">
+										<img class="pull-left" src="/static/images/order.png" height="30" width="30"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											收货地址（0）
+											产品（{{initClientDetail.produce.arr.length}}）
 										</a>
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse collapse">
-                                   <div class="panel-body panel-set">
-                                        <table class="table contactSet">
+                                <div  class="panel-collapse" v-show="initClientDetail.produce.show">
+                                    <div class="panel-body panel-set">
+                                         <table class="table contactSet">
+                                        	<thead>
+                                        		<th>药品名称</th>
+                                        		<th>药品编号</th>
+                                        		<th>药品类型</th>
+                                        		<th>所属公司</th>
+                                        		<th>公司地址</th>
+                                        		<th>说明</th>
+                                        	</thead>
 		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail">
-		                                            <td>
-		                                                <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
-		                                                药品名称：{{item.name}}
-		                                            </td>
-		                                            <td>药品编号：{{item.number}}</td>
-		                                            <td>药品类型：{{item.drugType}}</td>
-		                                            <td>所属公司：{{item.company}}</td>
-		                                            <td>公司地址：{{item.address}}</td>
-		                                            <td>说明：{{item.spec}}</td>
-		                                        </tr>
-		                                    </tbody>
-		                                </table>
-                                        <p class="contact-view">查看全部</p>
-                                    </div>
-                                </div>
-                            </div>
-                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title clearfix">
-										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
-										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											标签（0）
-										</a>
-										<button type="button" class="btn btn-base pull-right">新建</button>
-									</h4>
-                                </div>
-                                <div  class="panel-collapse collapse">
-                                   <div class="panel-body panel-set">
-                                        <table class="table contactSet">
-		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail">
-		                                            <td>
-		                                                <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
-		                                                药品名称：{{item.name}}
-		                                            </td>
-		                                            <td>药品编号：{{item.number}}</td>
-		                                            <td>药品类型：{{item.drugType}}</td>
-		                                            <td>所属公司：{{item.company}}</td>
-		                                            <td>公司地址：{{item.address}}</td>
-		                                            <td>说明：{{item.spec}}</td>
+		                                         <tr v-for="item in initClientDetail">
+		                                            <td>{{item.name}}</td>
+		                                            <td>{{item.number}}</td>
+		                                            <td>{{item.drugType}}</td>
+		                                            <td>{{item.company}}</td>
+		                                            <td>{{item.address}}</td>
+		                                            <td>{{item.spec}}</td>
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
@@ -315,7 +646,7 @@
                         </div>
                     </article>
                 </div>
-                <div class="col-md-4 client-detail">
+                <div class="col-md-4">
                     <h4 class="section_title">详情</h4>
                     <article>
                         <div class="edit-detail">
@@ -394,24 +725,76 @@
 </template>
 <script>
 import pressImage from '../../components/imagePress'
+import createcustModel  from '../clientRelate/createClientDetail'
+import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
+import updatecontactModel  from '../clientRelate/updateContactInfo'
 import {
 	initClientDetail
 } from '../../vuex/getters'
 import {
-	getClientDetail
+	getClientDetail,
+	createCustomer,
+	specDel,
+	updateContact
 } from '../../vuex/actions'
 export default {
     components: {
-        pressImage
+        pressImage,
+        createcustModel,
+        deletebreedModel,
+        updatecontactModel
     },
     props:['param'],
+    data(){
+    	return {
+    		custParam:{
+    			show:false,
+    			id:''
+    		},
+    		deleteParam:{
+    			show:false
+    		},
+    		updateParam:{
+    			show:false
+    		}
+    	}
+    },
     vuex:{
     	getters:{
 			initClientDetail
     	},
     	actions:{
-    		getClientDetail
+    		getClientDetail,
+    		createCustomer,
+    		specDel,
+    		updateContact
     	}
+    },
+    methods:{
+    	enfoldment:function(param){
+    		if(this.$store.state.table.clientDetail[param.crete].arr.length==0){
+                this.$store.state.table.clientDetail[param.crete].show=true
+            }
+            this.$store.state.table.clientDetail[param.crete].show = !this.$store.state.table.clientDetail[param.crete].show;
+            console.log(this.$store.state.table.clientDetail[param.crete].show)
+    	},
+    	clickShow: function(id,param) {
+            if (this.$store.state.table.clientDetail[param.concrete].arr[id].show) {
+                this.$store.state.table.clientDetail[param.concrete].arr[id].show = !this.$store.state.table.clientDetail[param.concrete].arr[id].show
+            } else {
+                this.$store.state.table.clientDetail[param.concrete].arr[id].show = true
+            }
+            console.log(this.$store.state.table.clientDetail[param.concrete].arr[id])
+        },
+    	createFormt: function(initClientDetail){
+            this.custParam=initClientDetail;
+        },
+        specDelete:function(initBreedDetail){
+            this.deleteParam = initBreedDetail;
+        },
+        updateSpec:function(initBreedDetail){
+        	this.updateParam = initBreedDetail;
+        }
     }
 }
 </script>
@@ -449,7 +832,12 @@ export default {
 section {
     background-color: #fff;
 }
-
+.breed_action dl dt{
+    display: block;
+    padding: 3px;
+    font-size: 14px;
+    cursor: pointer;
+}
 section article {
     margin-top: 30px;
 }
@@ -467,66 +855,15 @@ section article {
     padding: 15px 0;
     margin: 0;
 }
-
+.contactSet thead{
+	color:#fa6705;
+}
 .panel-title-set {
     margin-top: 6px;
     margin-left: 26px;
     display: inline-block;
     font-size: 20px;
     color: #333;
-}
-
-.panel-set {
-    overflow: hidden;
-    overflow-x: auto;
-}
-
-.panel-body ul {
-    white-space: nowrap;
-}
-
-.panel-body ul li {
-    display: inline-block;
-    margin-right: 5%;
-    /* overflow: hidden; */
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.panel-name {
-    width: 140px;
-}
-
-.panel-job {
-    width: 140px;
-}
-
-.panel-phone {
-    width: 158px
-}
-
-.panel-email {
-    width: 240px;
-}
-
-.panel-body ul li:last-of-type {
-    margin-right: 0;
-    width: 35px;
-    text-align: center;
-}
-
-.panel-body ul li:last-of-type img {
-    margin: auto;
-}
-
-.panel-body ul li:first-of-type img {
-    margin-right: 5px;
-}
-
-.panel-body ul li label {
-    font-size: 16px;
-    color: #333;
-    font-weight: 100;
 }
 
 .contact-view {
@@ -538,7 +875,9 @@ section article {
 .client-detail {
     border-left: 1px solid #ddd;
 }
-
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+	text-align: left;
+}
 .edit-detail {
     border: 1px solid #ddd;
     border-radius: 3px;
@@ -556,7 +895,10 @@ section article {
 .client-detailInfo img {
     margin-right: 8px;
 }
-
+.breed_action{
+	top: 10px;
+	right: 30px;
+}
 .client-detailInfo label {
     display: block;
     color: #333;
@@ -573,7 +915,6 @@ section article {
     text-align: right;
     margin-top: 15px;
 }
-
 .client-image {
     display: inline-block;
 }

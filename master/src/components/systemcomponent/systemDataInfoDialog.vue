@@ -20,7 +20,28 @@
                                 <div class="editpage-input">
                                     <label class="editlabel" for="systemtype">类型
                                         <span class="system_danger" v-if="$validation.systemtype.required">请输入类型</span> </label>
-                                    <input type="text" class="form-control  edit-input" id="systemtype" v-validate:systemtype="['required']" v-model="systemData.type" />
+                                        <select class="form-control" id="systemtype" v-validate:systemtype="['required']" v-model="systemData.type" style="width:90%;"> 
+                                            <option  value="TRACE">跟进类型</option>
+                                            <option  value="ST">规格类型</option>
+                                            <option  value="BANK">银行</option>
+                                            <option  value="OSTAT">订单状态</option>
+                                            <option  value="OT">包装方式</option>
+                                            <option  value="MU">计量单位</option>
+                                            <option  value="PAY">付款方式</option>
+                                            <option  value="CL">客户信用等级</option>
+                                            <option  value="IS">意向状态</option>
+                                            <option  value="HT">药材品类</option>
+                                            <option  value="ES">员工状态</option>
+                                            <option  value="ET">企业类型</option>
+                                            <option  value="CS">客户来源</option>
+                                            <option  value="CT">证书类型</option>
+                                            <option  value="AS">审核状态</option>
+                                            <option  value="DEV">快递公司</option>
+                                            <option  value="POS">职位</option>
+                                            <option  value="LBL">常见标签</option>
+                                            <option  value="ON">客户信用等级</option>
+                                        </select>
+                                    <!-- <input type="text" class="form-control  edit-input"  /> -->
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel" for="systemstatus">状态

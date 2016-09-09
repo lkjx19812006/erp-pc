@@ -84,21 +84,13 @@ import {
     initSystemlist
 } from '../../vuex/getters'
 import {
-    getparam,
-    updateDataInfo
+    getparam
 } from '../../vuex/actions'
 export default {
     props: ['param'],
     data() {
         return {
-           /* param: {
-                id: this.initSystemlist[this.param.id].id,
-                name: this.initSystemlist[this.param.id].name,
-                code: this.initSystemlist[this.param.id].code,
-                type: this.initSystemlist[this.param.id].type,
-                desc: this.initSystemlist[this.param.id].desc,
-                status: this.initSystemlist[this.param.id].status
-            }*/
+        
         }
     },
     vuex: {
@@ -106,8 +98,7 @@ export default {
             initSystemlist
         },
         actions: {
-            getparam,
-            updateDataInfo
+            getparam
         }
     },
     route: {
@@ -121,14 +112,14 @@ export default {
         }
     },
     events: {
-        'getParam' () {
+        /*'getParam' () {
             this.$set('param.name', this.initSystemlist[this.param.id].name);
             this.$set('param.code', this.initSystemlist[this.param.id].code);
             this.$set('param.type', this.initSystemlist[this.param.id].type);
             this.$set('param.status', this.initSystemlist[this.param.id].status);
             this.$set('param.desc', this.initSystemlist[this.param.id].desc);
             this.$set('param.id', this.initSystemlist[this.param.id].id);
-        }
+        }*/
     }
 }
 </script>

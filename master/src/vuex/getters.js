@@ -46,6 +46,9 @@ export const initOrderlist = (state) => {
 export const initSystemlist = (state) => {
     return JSON.parse(JSON.stringify(state.table.systemBaseList.enumlist)); 
 } 
+export const initSearchlist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.searchList)); 
+}
 export const initProvincelist = (state) => {
     return JSON.parse(JSON.stringify(state.table.systemBaseList.locationlist));  
 }
@@ -81,6 +84,7 @@ export const initDruglist = (state) => {
 export const initCustomerlist = (state) => {
     return parseJson(state.table.basicBaseList.customerList);
 }
+
 export const initClientDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.clientDetail));  
 }

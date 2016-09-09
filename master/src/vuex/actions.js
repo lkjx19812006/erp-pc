@@ -82,25 +82,18 @@ export const getSystemData = ({ dispatch }, param) => { //枚举类型
     });
 }
 export const getSystemSearch = ({ dispatch }, param) => { //搜索枚举类型
-    param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.dataBaseList + '/query?type=' + param.type + '&page=' + param.cur + '&pageSize=15',
+        url: apiUrl.clientList + '/sys/enum/query/?type=' + param,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
-        var obj1 = res.json().result.list;
-        for (var i in obj1) {
-            obj1[i].show = false;
-        }
-        dispatch(types.SYSTEM_DATA, obj1);
-        param.all = res.json().result.pages;
-        param.loading = false;
+        var obj1 = res.json().result;
+        dispatch(types.SYSTEM_SEARCH, obj1);
     }, (res) => {
         console.log('fail');
-        param.loading = false;
     });
 }
 export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
@@ -204,7 +197,7 @@ export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
     param.loading = true;
     Vue.http({
         method: "GET",
-        url: apiUrl.enterpriseList + 'query/?type&name=公司&page=' + param.cur + '&pageSize=15',
+        url: apiUrl.clientList + '/company/query/?type=&name=&&category=&province=&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -646,7 +639,7 @@ export const alterAlias = ({ dispatch }, param) => { //修改药材别名
     })
 }
 
-export const deleteBreedstatus = ({ dispatch }, param) => { //删除药材信息
+/*export const deleteBreedstatus = ({ dispatch }, param) => { //删除药材信息
     Vue.http({
         method: 'DELETE',
         url: apiUrl.breedList + '/' + param,
@@ -662,7 +655,7 @@ export const deleteBreedstatus = ({ dispatch }, param) => { //删除药材信息
     }, (res) => {
         console.log('fail');
     });
-}
+}*/
 export const specDel = ({ dispatch }, param) => { //删除药材相关信息
     console.log(param)
     Vue.http({
@@ -692,9 +685,8 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表
             "X-Requested-With": "XMLHttpRequest"
         }
         }).then((res) => {
-            dispatch(types.CUSTOMER_DATA, res.data);
+            dispatch(types.CUSTOMER_DATA, param);
             param.loading = false;
-            console.log(res.data)
         }, (res) => {
             console.log('fail');
             param.loading = false;
@@ -732,7 +724,7 @@ export const saveCreate = ({ dispatch }, data) => { //新增客户列表
         console.log('fail');
     })
 }
-export const deleteInfo = ({ dispatch }, param) => { //删除客户信息
+export const deleteInfo = ({ dispatch }, param) => { //删除客户、药材信息
     console.log(param)
     Vue.http({
         method: 'DELETE',
@@ -745,7 +737,7 @@ export const deleteInfo = ({ dispatch }, param) => { //删除客户信息
         }
     }).then((res) => {
         console.log('删除成功')
-        dispatch(types.CUSTOMER_DATA, param);
+        dispatch(types.DELETE_BREED_DATA, param);
     }, (res) => {
         console.log('fail');
     });
@@ -779,12 +771,41 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         }
     }).then((res) => {
         console.log('修改成功')
-        dispatch(types.CUSTOMER_DATA, param);
+        dispatch(types.CUSTOMER_UPDATE_DATA, param);
     }, (res) => {
         console.log('fail');
     })
 }
-
+export const updateContact = ({ dispatch }, param) => { //修改客户联系人
+    const updatedata = {
+        name:param.name,
+        position:param.position,
+        department:param.department,
+        phone:param.phone,
+        tel:param.tel,
+        email:param.email,
+        qq:param.qq,
+        wechart:param.wechart,
+        main:param.main
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: false,
+        params: param.id,
+        body: updatedata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.UPDATE_CUSTOMER_DETAIL, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
     Vue.http({
         method: 'GET',
@@ -795,40 +816,124 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         }
     }).then((res) => {
         var con = res.json().result;
-        /*var arr = con.specs;
-        con.specs = {
+        var arr = con.contact;
+        con.contact = {
+            arr: arr,show: true
+        };
+        for (var i in con.contact.arr) {
+            con.contact.arr[i].show = false;
+        };
+        var arr = con.chance;
+        con.chance = {
+            arr: arr,show: true
+        };
+        for (var j in con.chance.arr) {
+            con.chance.arr[j].show = false;
+        };
+        var arr = con.addr;
+        con.addr = {
+            arr: arr,show: true
+        };
+        for (var j in con.addr.arr) {
+            con.addr.arr[j].show = false;
+        };
+        var arr = con.intent;
+        con.intent = {
             arr: arr,
             show: true
         };
-        for (var i in con.specs.arr) {
-            con.specs.arr[i].show = false;
+        for (var j in con.intent.arr) {
+            con.intent.arr[j].show = false;
         }
-        var arr = con.locals;
-        con.locals = {
+        var arr = con.orders;
+        con.orders = {
             arr: arr,
             show: true
         };
-        for (var j in con.locals.arr) {
-            con.locals.arr[j].show = false;
+        for (var j in con.orders.arr) {
+            con.orders.arr[j].show = false;
         }
-        var arr = con.alias;
-        con.alias = {
+        var arr = con.contract;
+        con.contract = {
             arr: arr,
             show: true
         };
-        for (var j in con.alias.arr) {
-            con.alias.arr[j].show = false;
+        for (var j in con.contract.arr) {
+            con.contract.arr[j].show = false;
         }
-        var arr = con.units;
-        con.units = {
+        var arr = con.files;
+        con.files = {
             arr: arr,
             show: true
         };
-        for (var j in con.units.arr) {
-            con.units.arr[j].show = false;
-        }*/
+        for (var j in con.files.arr) {
+            con.files.arr[j].show = false;
+        }
+        var arr = con.track;
+        con.track = {
+            arr: arr,
+            show: true
+        };
+        for (var j in con.track.arr) {
+            con.track.arr[j].show = false;
+        }
+        var arr = con.remark;
+        con.remark = {
+            arr: arr,
+            show: true
+        };
+        for (var j in con.remark.arr) {
+            con.remark.arr[j].show = false;
+        }
+        var arr = con.quality;
+        con.quality = {
+            arr: arr,
+            show: true
+        };
+        for (var j in con.quality.arr) {
+            con.quality.arr[j].show = false;
+        };  
+        var arr = con.produce;
+        con.produce = {
+            arr: arr,
+            show: true
+        };
+        for (var j in con.produce.arr) {
+            con.produce.arr[j].show = false;
+        };       
         dispatch(types.CUSTOMER_DETAIL_DATA, con);
     }, (res) => {
         console.log('fail');
-    });
+    })
 }
+
+export const createCustomer = ({ dispatch }, param) => { //新增药材相关
+        console.log(param.url)
+        const data1 = {
+             "name":param.name,
+             "position":param.position,
+             "department":param.department,
+             "phone":param.phone,
+             "tel":param.tel,
+             "email":param.email,
+             "qq":param.qq,
+             "wechart":param.wechart,
+             'main':param.main
+        }
+        Vue.http({
+            method: "POST",
+            url: apiUrl.clientList + param.url,
+            emulateHTTP: true,
+            body: data1,
+            emulateJSON: false,
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        }).then((res) => {
+            console.log('添加成功')
+            dispatch(types.CUSTOMER_DATA, param);
+        }, (res) => {
+            console.log('fail');
+        })
+    }

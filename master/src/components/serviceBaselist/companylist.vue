@@ -24,6 +24,9 @@
                     <input type="text" class="search_input" placeholder="按分类码搜索">
                 </div>
             </div>
+            <div class="right col-xs-2">
+                <button class="new_btn transfer">查询</button>
+            </div>
         </div>
         <div class="order_table" v-cloak>
             <table class="table table-hover table_color table-striped">

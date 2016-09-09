@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建企业联系人</h3>
+            <h3>编辑{{param.title}}</h3>
         </div>
         <validator name="validation">
             <form novalidate>
@@ -14,30 +14,42 @@
                         <div class="editpage" v-cloak>
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel">联系人</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="contactData.name" v-validate:name="['required']" />
-                                </div>
-                                 <div class="editpage-input">
-                                    <label class="editlabel">邮箱</label>
-                                    <input type="text" class="form-control edit-input"  id="email" v-model="contactData.email" v-validate:email="['required']" />
+                                    <label class="editlabel">{{param.namelist}}</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.name" value="{{param.name}}" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">微信</label>
-                                    <input type="text" class="form-control edit-input"  id="wechart" v-model="contactData.wechart" v-validate:wechart="['required']" />
+                                    <label class="editlabel">{{param.parten}}</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.department" value="{{param.department}}" />
+                                </div>
+                                 <div class="editpage-input">
+                                    <label class="editlabel">{{param.tellist}}</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.tel" value="{{param.tel}}" />
+                                </div>
+                                 <div class="editpage-input">
+                                    <label class="editlabel">{{param.QQ}}</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.qq" value="{{param.qq}}" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">{{param.remark}}</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.main" value="{{param.main}}" />
                                 </div>
                             </div>
-                            <div class="editpageright">
+                             <div class="editpageright">
                                 <div class="editpage-input">
-                                    <label class="editlabel">手机号</label>
-                                    <input type="text" class="form-control edit-input"  id="phone" v-model="contactData.phone" v-validate:phone="['required']" />
+                                    <label class="editlabel">{{param.job}}</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.position" value="{{param.position}}" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">{{param.phonelist}}</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.phone" value="{{param.phone}}" />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel">电话</label>
-                                    <input type="text" class="form-control edit-input"  id="tel" v-model="contactData.tel" />
+                                    <label class="editlabel">{{param.emaillist}}</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.email" value="{{param.email}}" />
                                 </div>
-                                 <div class="editpage-input">
-                                    <label class="editlabel">QQ</label>
-                                    <input type="text" class="form-control edit-input"  id="qq" v-model="contactData.qq" v-validate:qq="['required']" />
+                                <div class="editpage-input">
+                                    <label class="editlabel">{{param.webchart}}</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.wechart" value="{{param.wechart}}" />
                                 </div>
                             </div>
                         </div>
@@ -45,16 +57,13 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm"  @click="createContact(contactData,param.id,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">保存</button>
                 </div>
             </form>
         </validator>
     </div>
 </template>
 <script>
-import {
-    createContact
-} from '../../../vuex/actions'
 export default {
     components: {
 
@@ -62,19 +71,6 @@ export default {
     props: ['param'],
     data() {
         return {
-            contactData: {
-                name: '',
-                tel:'',
-                phone:'',
-                wechart:'',
-                email:'',
-                qq:''
-            }
-        }
-    },
-    vuex: {
-        actions: {
-            createContact
         }
     },
     route: {
@@ -105,7 +101,7 @@ export default {
     right: 0;
     max-width: 630px;
     min-width: 200px;
-    max-height:450px;
+    max-height: 600px;
     bottom: 50px;
     padding: 0;
     background-color: #fff;

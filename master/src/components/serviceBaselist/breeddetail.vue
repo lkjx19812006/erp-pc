@@ -59,7 +59,8 @@
                                                     title:'规格',
                                                     link:specDel,
                                                     url:'/breed/spec/',
-                                                    key:'specs'
+                                                    key:'specs',
+                                                    headline:'breedDetail'
                                                     },item.show=false)">删除</dt>
                                         </dl>
                                     </div>
@@ -119,7 +120,8 @@
                                                     title:'产地',
                                                     link:specDel,
                                                     url:'/breed/local/',
-                                                    key:'locals'
+                                                    key:'locals',
+                                                     headline:'breedDetail'
                                                     },item.show=false)">删除</dt>
                                             </dl>
                                         </div>
@@ -177,7 +179,8 @@
                                                     title:'别名',
                                                     link:specDel,
                                                     url:'/breed/alias/',
-                                                    key:'alias'
+                                                    key:'alias',
+                                                     headline:'breedDetail'
                                                     },item.show=false)">删除</dt>
                                             </dl>
                                         </div>
@@ -237,7 +240,8 @@
                                                     title:'单位',
                                                     link:specDel,
                                                     url:'/breed/unit/',
-                                                    key:'units'
+                                                    key:'units',
+                                                     headline:'breedDetail'
                                                     },item.show=false)">删除</dt>
                                             </dl>
                                         </div>
