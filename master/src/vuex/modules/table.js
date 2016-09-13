@@ -31,7 +31,8 @@ import {
    CUSTOMER_UPDATE_DATA,
    UPDATE_ADDR_DETAIL,
    ADD_ADDR_DETAIL,
-   LABEL_DATA
+   LABEL_DATA,
+   CUSTOMER_CONTACT_DATA
 } from '../mutation-types'
 
 const state = {
@@ -155,7 +156,7 @@ const state = {
         "credit_level":"AAA",
         "employee_id": 11,
         "show":true,
-        "contact": {
+        "contacts": {
             arr:[
                {"id":1,"customer_id":1,"name":"sunny","position":"业务员","department":"业务部","phone":"13162875213","tel":"0215555555","email":"54621641655@163.com","main":0,"wechart":"1564642663","qq":"154851192","show":"true"}
             ],
@@ -174,8 +175,7 @@ const state = {
             show:false
         }, 
         "intent":{arr:[],show:false},
-        "license":{arr:[],show:false},
-        "produce":{arr:[],show:false},
+        "products":{arr:[],show:false},
         "files":{ 
           arr:[
                 {"id": 1,"breedId": 1001,"name": "云南","show":"true"},
@@ -184,14 +184,14 @@ const state = {
            show:false
          },
          "track": {arr:[],show:false},
-         "remark": {arr:[],show:false},
-         "addr": {
+         "remarks": {arr:[],show:false},
+         "addresses": {
             arr:[
                 {"id":1,"type":"0","customer_id":"11","contact_name":"定金","contact_phone":"13162875213","sex":"女","country":"中国","province":"上海","city":"上海","detail_addr":"很多基地及","address":"上海市空口区158号","show":"true"}
             ],
             show:false
           },
-          "label":{
+          "labels":{
             arr:[
                 {"id":"1","customer_id":10,"label":"dfhidfhi","status":0,"show":true}
             ],
@@ -385,8 +385,8 @@ const mutations = {
         state[data.headline][data.key].arr[data.sub].street=data.street;
     },
 
-    [CUSTOMER_DETAIL_DATA](state,data){  // 新增客户相关信息
-        state.clientDetail[data.key].arr.unshift({
+    [CUSTOMER_CONTACT_DATA](state,data){  // 新增客户联系人信息
+        state.clientDetail[data.key].arr.push({
           "name":data.name,
           "position":data.position,
           "department":data.department,

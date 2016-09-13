@@ -860,51 +860,21 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         }
     }).then((res) => {
         var con = res.json().result;
-        var arr = con.contact;
-        con.contact = {
-            arr: arr,show: true
-        };
-        for (var i in con.contact.arr) {
-            con.contact.arr[i].show = false;
-        };
-        var arr = con.chance;
-        con.chance = {
-            arr: arr,show: true
-        };
-        for (var j in con.chance.arr) {
-            con.chance.arr[j].show = false;
-        };
-        var arr = con.addr;
-        con.addr = {
-            arr: arr,show: true
-        };
-        for (var j in con.addr.arr) {
-            con.addr.arr[j].show = false;
-        };
-        var arr = con.intent;
-        con.intent = {
+        var arr = con.contacts;
+        con.contacts = {
             arr: arr,
             show: true
         };
-        for (var j in con.intent.arr) {
-            con.intent.arr[j].show = false;
-        }
-        var arr = con.orders;
-        con.orders = {
-            arr: arr,
-            show: true
+        for (var i in con.contacts.arr) {
+            con.contacts.arr[i].show = false;
         };
-        for (var j in con.orders.arr) {
-            con.orders.arr[j].show = false;
-        }
-        var arr = con.contract;
-        con.contract = {
-            arr: arr,
-            show: true
+        var arr = con.addresses;
+        con.addresses = {
+            arr: arr,show: true
         };
-        for (var j in con.contract.arr) {
-            con.contract.arr[j].show = false;
-        }
+        for (var j in con.addresses.arr) {
+            con.addresses.arr[j].show = false;
+        };
         var arr = con.files;
         con.files = {
             arr: arr,
@@ -913,45 +883,37 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var j in con.files.arr) {
             con.files.arr[j].show = false;
         }
-        var arr = con.track;
-        con.track = {
+        var arr = con.labels;
+        con.labels = {
             arr: arr,
             show: true
         };
-        for (var j in con.track.arr) {
-            con.track.arr[j].show = false;
+        for (var j in con.labels.arr) {
+            con.labels.arr[j].show = false;
         }
-        var arr = con.remark;
-        con.remark = {
+        var arr = con.products;
+        con.products = {
             arr: arr,
             show: true
         };
-        for (var j in con.remark.arr) {
-            con.remark.arr[j].show = false;
+        for (var j in con.products.arr) {
+            con.products.arr[j].show = false;
         }
-        var arr = con.license;
-        con.license = {
+        var arr = con.remarks;
+        con.remarks = {
             arr: arr,
             show: true
         };
-        for (var j in con.license.arr) {
-            con.license.arr[j].show = false;
-        };  
-        var arr = con.produce;
-        con.produce = {
-            arr: arr,
-            show: true
-        };
-        for (var j in con.produce.arr) {
-            con.produce.arr[j].show = false;
-        };       
+        for (var j in con.remarks.arr) {
+            con.remarks.arr[j].show = false;
+        }    
         dispatch(types.CUSTOMER_DETAIL_DATA, con);
     }, (res) => {
         console.log('fail');
     })
 }
 
-export const createCustomer = ({ dispatch }, param) => { //新增药材相关联系人
+export const createCustomer = ({ dispatch }, param) => { //新增客户相关联系人
     console.log(param.url)
     const data1 = {
          "name":param.name,
@@ -962,7 +924,9 @@ export const createCustomer = ({ dispatch }, param) => { //新增药材相关联
          "email":param.email,
          "qq":param.qq,
          "wechart":param.wechart,
-         'main':param.main
+         'main':param.main,
+         "id":param.id,
+         "customerId":param.id
     }
     Vue.http({
         method: "POST",
@@ -976,13 +940,13 @@ export const createCustomer = ({ dispatch }, param) => { //新增药材相关联
         }
     }).then((res) => {
         console.log('添加成功')
-        dispatch(types.CUSTOMER_DETAIL_DATA, param);
+        dispatch(types.CUSTOMER_CONTACT_DATA, param);
     }, (res) => {
         console.log('fail');
     })
 }
 
-export const createAddress = ({ dispatch }, param) => { //新增药材相关地址
+export const createAddress = ({ dispatch }, param) => { //新增客户地址
     console.log(param.url)
     const data1 = {
         "type":param.type,
@@ -996,7 +960,8 @@ export const createAddress = ({ dispatch }, param) => { //新增药材相关地�
         "street":param.street,
         'detail_addr':param.detail_addr,
         "address":param.address,
-        "customer_id":param.customer_id
+        "customerId":param.id,
+        "id":param.id
     }
     Vue.http({
         method: "POST",

@@ -41,15 +41,16 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
-						            	link:initClientDetail.contact,
-						            	crete:'contact'
+						            	link:initClientDetail.contacts,
+						            	crete:'contacts'
 						            	})">
 										<img class="pull-left" src="/static/images/contact.png" height="32" width="27"/>
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											联系人（{{initClientDetail.contact.arr.length}}）
+											联系人（{{initClientDetail.contacts.arr.length}}）
 										</a>
-										<button type="button" class="btn btn-base pull-right"     @click.stop="createFormt({
+										<button type="button" class="btn btn-base pull-right"  @click.stop="createFormt({
 		                                     id:param.id,
+		                                     customerId:param.id,
 		                                     title:'联系人',
 		                                     show:true,
 		                                     name:'',
@@ -72,11 +73,11 @@
 		                                     remark:'备注',
 		                                     link:createCustomer,
 		                                     url:'/customer/contact',
-		                                     key:'contact'
+		                                     key:'contacts'
 		                                     })">新建</button>
 									</h4>
                                 </div>
-                                <div class="panel-collapse" v-show="!initClientDetail.contact.show">
+                                <div class="panel-collapse" v-show="!initClientDetail.contacts.show">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                         	<thead>
@@ -91,7 +92,7 @@
                                         		<th>备注</th>
                                         	</thead>
 		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail.contact.arr">
+		                                        <tr v-for="item in initClientDetail.contacts.arr">
 		                                            <td>{{item.name}}</td>
 		                                            <td>{{item.position}}</td>
 		                                            <td>{{item.department}}</td>
@@ -102,7 +103,7 @@
 		                                            <td>{{item.wechart}}</td>
 		                                            <td>{{item.main}}</td>
 		                                            <td  @click="clickShow($index,{
-		                                            	concrete:'contact'
+		                                            	concrete:'contacts'
 		                                            	})">
 		                                            	<img src="/static/images/default_arrow.png" height="24" width="24" />
 				                                        <div class="breed_action" v-show="item.show">
@@ -132,7 +133,7 @@
 				                                                   main:item.main,
 				                                                   link:updateContact,
 				                                                   url:'/customer/contact',
-				                                                   key:'contact',
+				                                                   key:'contacts',
 				                                                   headline:'clientDetail'
 				                                                   },item.show=false)">编辑</dt>
 				                                               <dt @click="specDelete({
@@ -142,7 +143,7 @@
 				                                                   title:'联系人',
 				                                                   link:specDel,
 				                                                   url:'/customer/contact/',
-				                                                   key:'contact',
+				                                                   key:'contacts',
 				                                                   headline:'clientDetail'
 				                                                   },item.show=false)">删除</dt>
 				                                           </dl>
@@ -355,7 +356,7 @@
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse" v-show="initClientDetail.files.show">
+                                <div  class="panel-collapse" v-show="!initClientDetail.files.show">
                                    <div class="panel-body panel-set">
                                          <table class="table contactSet">
                                         	<thead>
@@ -462,16 +463,16 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title clearfix" @click="enfoldment({
-						            	link:initClientDetail.addr,
-						            	crete:'addr'
+						            	link:initClientDetail.addresses,
+						            	crete:'addresses'
 						            	})">
 										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											收货地址（{{initClientDetail.addr.arr.length}}）
+											收货地址（{{initClientDetail.addresses.arr.length}}）
 										</a>
 										<button type="button" class="btn btn-base pull-right" @click.stop="createAddr({
-		                                     customer_id:param.customer_id,
-		                                     title:'联系人',
+		                                     customerId:param.id,
+		                                     id:param.id,
 		                                     show:true,
 		                                     title:'收货地址',
                                              typelist:'类型',
@@ -498,11 +499,11 @@
                                              address:'',
 		                                     link:createAddress,
 		                                     url:'/customer/insertAddress',
-		                                     key:'addr'
+		                                     key:'addresses'
 		                                     })">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse" v-show="initClientDetail.addr.show">
+                                <div  class="panel-collapse" v-show="!initClientDetail.addresses.show">
                                    <div class="panel-body panel-set">
                                         <table class="table contactSet">
                                         	<thead>
@@ -519,7 +520,7 @@
                                         		<th>详细地址</th>
                                         	</thead>
 		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail.addr.arr">
+		                                        <tr v-for="item in initClientDetail.addresses.arr">
 		                                            <td>{{item.type}}</td>
 		                                            <td>{{item.contact_name}}</td>
 		                                            <td>{{item.contact_phone}}</td>
@@ -532,7 +533,7 @@
 		                                            <td>{{item.detail_addr}}</td>
 		                                            <td>{{item.address}}</td>
 		                                            <td  @click="clickShow($index,{
-		                                            	concrete:'addr'
+		                                            	concrete:'addresses'
 		                                            	})">
 		                                            	<img src="/static/images/default_arrow.png" height="24" width="24" />
 				                                        <div class="breed_action" v-show="item.show" >
@@ -567,7 +568,7 @@
 				                                                   address:item.address,
 				                                                   link:addrInfo,
 				                                                   url:'/customer/updateAddress',
-				                                                   key:'addr',
+				                                                   key:'addresses',
 				                                                   headline:'clientDetail'
 				                                                   },item.show=false)">编辑</dt>
 				                                               <dt @click="specDelete({
@@ -576,7 +577,7 @@
 				                                                   title:'收货地址',
 				                                                   link:specDel,
 				                                                   url:'/customer/deleteAddress/',
-				                                                   key:'addr',
+				                                                   key:'addresses',
 				                                                   headline:'clientDetail'
 				                                                   },item.show=false)">删除</dt>
 				                                           </dl> 
@@ -591,17 +592,17 @@
                              <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title clearfix" @click="enfoldment({
-						            	link:initClientDetail.label,
-						            	crete:'label'
+						            	link:initClientDetail.labels,
+						            	crete:'labels'
 						            	})">
 										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											标签（{{initClientDetail.label.arr.length}}）
+											标签（{{initClientDetail.labels.arr.length}}）
 										</a>
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse" v-show="initClientDetail.label.show">
+                                <div  class="panel-collapse" v-show="!initClientDetail.labels.show">
                                    <div class="panel-body panel-set">
                                         <table class="table contactSet">
                                         	<thead>
@@ -611,12 +612,12 @@
                                         		<th></th>
                                         	</thead>
 		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail.label.arr">
+		                                        <tr v-for="item in initClientDetail.labels.arr">
 		                                            <td>{{item.customer_id}}</td>
 		                                            <td>{{item.label}}</td>
 		                                            <td>{{item.status}}</td>
 		                                            <td  @click="clickShow($index,{
-		                                            	concrete:'label'
+		                                            	concrete:'labels'
 		                                            	})">
 		                                            	<img src="/static/images/default_arrow.png" height="24" width="24" />
 				                                        <div class="breed_action" v-show="item.show" >
@@ -626,10 +627,9 @@
 				                                                   id:item.id,
 				                                                   customerId:item.customer_id,
 				                                                   show:true,
-				                                                   
 				                                                   link:addrInfo,
 				                                                   url:'/customer/updateAddress',
-				                                                   key:'label',
+				                                                   key:'labels',
 				                                                   headline:'clientDetail'
 				                                                   },item.show=false)">编辑</dt>
 				                                               <dt @click="specDelete({
@@ -638,7 +638,7 @@
 				                                                   title:'标签',
 				                                                   link:specDel,
 				                                                   url:'/customer/deleteAddress/',
-				                                                   key:'label',
+				                                                   key:'labels',
 				                                                   headline:'clientDetail'
 				                                                   },item.show=false)">删除</dt>
 				                                           </dl> 
@@ -650,59 +650,20 @@
                                     </div>
                                 </div>
                             </div>
-                             <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-						            	link:initClientDetail.license,
-						            	crete:'license'
-						            	})">
-										<img class="pull-left" src="/static/images/order.png" height="30" width="30"  />
-										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											资质证书（{{initClientDetail.license.arr.length}}）
-										</a>
-										<button type="button" class="btn btn-base pull-right">新建</button>
-									</h4>
-                                </div>
-                                <div  class="panel-collapse"  v-show="initClientDetail.license.show">
-                                    <div class="panel-body panel-set">
-                                         <table class="table contactSet">
-                                        	<thead>
-                                        		<th>药品名称</th>
-                                        		<th>药品编号</th>
-                                        		<th>药品类型</th>
-                                        		<th>所属公司</th>
-                                        		<th>公司地址</th>
-                                        		<th>说明</th>
-                                        	</thead>
-		                                    <tbody>
-		                                         <tr v-for="item in initClientDetail">
-		                                            <td>{{item.name}}</td>
-		                                            <td>{{item.number}}</td>
-		                                            <td>{{item.drugType}}</td>
-		                                            <td>{{item.company}}</td>
-		                                            <td>{{item.address}}</td>
-		                                            <td>{{item.spec}}</td>
-		                                        </tr>
-		                                    </tbody>
-		                                </table>
-                                        <p class="contact-view">查看全部</p>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title clearfix" @click="enfoldment({
-						            	link:initClientDetail.produce,
-						            	crete:'produce'
+						            	link:initClientDetail.products,
+						            	crete:'products'
 						            	})">
 										<img class="pull-left" src="/static/images/order.png" height="30" width="30"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											产品（{{initClientDetail.produce.arr.length}}）
+											产品（{{initClientDetail.products.arr.length}}）
 										</a>
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse" v-show="initClientDetail.produce.show">
+                                <div  class="panel-collapse" v-show="initClientDetail.products.show">
                                     <div class="panel-body panel-set">
                                          <table class="table contactSet">
                                         	<thead>
@@ -870,10 +831,9 @@ export default {
     methods:{
     	enfoldment:function(param){
     		if(this.$store.state.table.clientDetail[param.crete].arr.length==0){
-                this.$store.state.table.clientDetail[param.crete].show=true
+                this.$store.state.table.clientDetail[param.crete].show=false
             }
             this.$store.state.table.clientDetail[param.crete].show = !this.$store.state.table.clientDetail[param.crete].show;
-            console.log(this.$store.state.table.clientDetail[param.crete].show)
     	},
     	clickShow: function(id,param) {
             if (this.$store.state.table.clientDetail[param.concrete].arr[id].show) {
@@ -881,7 +841,6 @@ export default {
             } else {
                 this.$store.state.table.clientDetail[param.concrete].arr[id].show = true
             }
-            console.log(this.$store.state.table.clientDetail[param.concrete].arr[id])
         },
     	createFormt: function(initClientDetail){
             this.custParam=initClientDetail;

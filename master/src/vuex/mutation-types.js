@@ -39,3 +39,5 @@ export const UPDATE_CUSTOMER_DETAIL = 'UPDATE_CUSTOMER_DETAIL' //修改客户详
 export const UPDATE_ADDR_DETAIL = 'UPDATE_ADDR_DETAIL' //修改客户地址
 export const ADD_ADDR_DETAIL = 'ADD_ADDR_DETAIL' //新增客户地址
 export const LABEL_DATA = 'LABEL_DATA' // 获取标签
+export const CUSTOMER_CONTACT_DATA = 'CUSTOMER_CONTACT_DATA' // 新增客户联系人
+
