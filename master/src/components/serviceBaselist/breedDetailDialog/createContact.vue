@@ -105,7 +105,6 @@ export default {
     right: 0;
     max-width: 630px;
     min-width: 200px;
-    max-height:450px;
     bottom: 50px;
     padding: 0;
     background-color: #fff;

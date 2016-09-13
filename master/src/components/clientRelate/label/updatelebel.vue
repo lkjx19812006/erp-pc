@@ -5,54 +5,24 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建{{param.title}}</h3>
+            <h3>编辑{{param.title}}</h3>
         </div>
         <validator name="validation">
             <form novalidate>
                 <div class="edit-model">
-                    <section class="editsection">
-                        <div class="editpage" v-cloak>
-                            <div class="editpageleft">
-                                <div class="editpage-input">
-                                    <label class="editlabel">{{param.namelist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.name" v-validate:name="['required']" />
-                                </div>
-                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.job}}</label>
-                                    <input type="text" class="form-control edit-input"  id="position" v-model="param.position" v-validate:position="['required']" />
-                                </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">{{param.phonelist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="phone" v-model="param.phone" v-validate:phone="['required']" />
-                                </div>
-                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.webchart}}</label>
-                                    <input type="text" class="form-control edit-input"  id="wechart" v-model="param.wechart" v-validate:wechart="['required']" />
-                                </div>
-                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.remark}}</label>
-                                    <input type="number" class="form-control edit-input"  id="main" v-model="param.main" />
-                                </div>
-                            </div>
-                            <div class="editpageright">
-                                <div class="editpage-input">
-                                    <label class="editlabel">{{param.parten}}</label>
-                                    <input type="text" class="form-control edit-input"  id="department" v-model="param.department" v-validate:department="['required']" />
-                                </div>
-                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.tellist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="tel" v-model="param.tel" />
-                                </div>
-                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.emaillist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="email" v-model="param.email" v-validate:email="['required']" />
-                                </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">{{param.QQ}}</label>
-                                    <input type="text" class="form-control edit-input"  id="qq" v-model="param.qq" v-validate:qq="['required']" />
-                                </div>
-                            </div>
+                    <section class="editsection" v-cloak>
+                        <div class="editpage-input">
+                            <label class="editlabel">{{param.labelist}}</label>
+                            <input type="text" class="form-control edit-input"  id="label" v-model="param.label" v-validate:label="['required']" value="{{param.label}}"/>
                         </div>
+                         <div class="editpage-input">
+                            <label class="editlabel">{{param.statuslist}}</label>
+                            <select  class="form-control" v-model="param.status" style="width:90%;">
+                                <option>{{param.status}}</option>
+                                <option value="0">无效</option>
+                                <option value="1">可用</option>
+                            </select>
+                        </div>   
                     </section>
                 </div>
                 <div class="edit_footer">
@@ -163,14 +133,6 @@ export default {
     box-orient: horizontal;
 }
 
-.editpageleft,
-.editpageright {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-    width: 50%;
-}
 
 .editpage-input {
     margin-top: 15px;

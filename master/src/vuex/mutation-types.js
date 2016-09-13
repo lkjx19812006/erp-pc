@@ -35,9 +35,11 @@ export const CUSTOMER_DATA = 'CUSTOMER_DATA' //客户
 export const CUSTOMER_ADD_DATA = 'CUSTOMER_ADD_DATA' //新增客户
 export const CUSTOMER_UPDATE_DATA = 'CUSTOMER_UPDATE_DATA' // 修改客户列表
 export const CUSTOMER_DETAIL_DATA = 'CUSTOMER_DETAIL_DATA' //获取客户详情
-export const UPDATE_CUSTOMER_DETAIL = 'UPDATE_CUSTOMER_DETAIL' //修改客户详情
+export const UPDATE_CUSTOMER_DETAIL = 'UPDATE_CUSTOMER_DETAIL' //修改客户联系人
 export const UPDATE_ADDR_DETAIL = 'UPDATE_ADDR_DETAIL' //修改客户地址
 export const ADD_ADDR_DETAIL = 'ADD_ADDR_DETAIL' //新增客户地址
 export const LABEL_DATA = 'LABEL_DATA' // 获取标签
 export const CUSTOMER_CONTACT_DATA = 'CUSTOMER_CONTACT_DATA' // 新增客户联系人
+export const ADD_LABEL_DATA = 'ADD_LABEL_DATA' // 新增标签
+export const UPDATE_LABEL_DETAIL = 'UPDATE_LABEL_DETAIL' // 修改标签
 

@@ -19,15 +19,19 @@
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">{{param.namelist}}</label>
-                                    <input type="text" class="form-control edit-input"  v-model="param.contact_name" value="{{param.contact_name}}" />
+                                    <input type="text" class="form-control edit-input"  v-model="param.contactName" value="{{param.contactName}}" />
                                 </div>
                                  <div class="editpage-input">
                                     <label class="editlabel">{{param.phonelist}}</label>
-                                    <input type="text" class="form-control edit-input"   v-model="param.contact_phone" value="{{param.contact_phone}}" />
+                                    <input type="text" class="form-control edit-input"   v-model="param.contactPhone" value="{{param.contactPhone}}" />
                                 </div>
                                  <div class="editpage-input">
                                     <label class="editlabel">{{param.sexlist}}</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.sex" value="{{param.sex}}" />
+                                     <select  class="form-control" v-model="param.sex" style="width:90%;">
+                                        <option>{{param.sex}}</option>
+                                        <option value="1">女</option>
+                                        <option value="0">男</option>
+                                    </select>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">{{param.addr}}</label>
@@ -49,7 +53,7 @@
                                 </div>
                                  <div class="editpage-input">
                                     <label class="editlabel">{{param.addr_detail}}</label>
-                                    <input type="text" class="form-control edit-input"   v-model="param.detail_addr" value="{{param.detail_addr}}" />
+                                    <input type="text" class="form-control edit-input"   v-model="param.detailAddr" value="{{param.detailAddr}}" />
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">{{param.distlist}}</label>

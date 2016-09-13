@@ -659,8 +659,6 @@ export const alterAlias = ({ dispatch }, param) => { //修改药材别名
     })
 }
 export const specDel = ({ dispatch }, param) => { //删除药材相关信息
-    console.log(param)
-    console.log(param.id)
     Vue.http({
         method: 'DELETE',
         url: apiUrl.clientList + param.url + param.id,
@@ -817,25 +815,24 @@ export const updateContact = ({ dispatch }, param) => { //修改客户联系人
     })
 }
 export const addrInfo = ({ dispatch }, param) => { //修改客户地址
-    console.log(param)
     const updatedata = {
         type:param.type,
-        contact_name:param.contact_name,
-        contact_phone:param.contact_phone,
+        contactName:param.contactName,
+        contactPhone:param.contactPhone,
         sex:param.sex,
         country:param.country,
         province:param.province,
         city:param.city,
         district:param.district,
         street:param.street,
-        detail_addr:param.detail_addr,
+        detailAddr:param.detailAddr,
         address:param.address,
         id: param.id,
-        customerId:param.customer_id,
+        customerId:param.customerId,
     }
     Vue.http({
-        method: 'PUT',
-        url: apiUrl.clientList + param.url+'/'+param.id,
+        method: 'POST',
+        url: apiUrl.clientList + param.url+'/',
         emulateHTTP: false,
         body: updatedata,
         emulateJSON: false,
@@ -850,6 +847,32 @@ export const addrInfo = ({ dispatch }, param) => { //修改客户地址
         console.log('fail');
     })
 }
+export const alterRemark = ({ dispatch }, param) => { //修改客户备注
+    console.log(param)
+    const updatedata = {
+        reamrk:param.label,
+        status:param.status,
+        id:param.id,
+        customerId:param.customerId,
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: false,
+        body: updatedata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.UPDATE_LABEL_DETAIL,param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
     Vue.http({
         method: 'GET',
@@ -950,17 +973,17 @@ export const createAddress = ({ dispatch }, param) => { //新增客户地址
     console.log(param.url)
     const data1 = {
         "type":param.type,
-        "contact_name":param.contact_name,
-        "contact_phone":param.contact_phone,
+        "contactName":param.contactName,
+        "contactPhone":param.contactPhone,
         "sex":param.sex,
         "country":param.country,
         "province":param.province,
         "city":param.city,
         "district":param.district,
         "street":param.street,
-        'detail_addr':param.detail_addr,
+        'detailAddr':param.detailAddr,
         "address":param.address,
-        "customerId":param.id,
+        "customerId":param.customerId,
         "id":param.id
     }
     Vue.http({
@@ -979,4 +1002,72 @@ export const createAddress = ({ dispatch }, param) => { //新增客户地址
     }, (res) => {
         console.log('fail');
     })
+}
+export const createLabel = ({ dispatch }, param) => { //新增客户标签
+    console.log(param)
+    const data1 = {
+        "label":param.label,
+        "status":param.status,
+        "customerId":param.customerId,
+        "id":param.id
+    }
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: true,
+        body: data1,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('添加成功')
+        dispatch(types.ADD_LABEL_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+export const createRemark = ({ dispatch }, param) => { //新增客户备注
+    console.log(param)
+    const data1 = {
+        "remark":param.label,
+        "status":param.status,
+        "customerId":param.customerId,
+        "id":param.id
+    }
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: true,
+        body: data1,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('添加成功')
+        dispatch(types.ADD_LABEL_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const addrDel = ({ dispatch }, param) => { //删除客户收货地址
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.clientList + param.url + param.id,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('删除成功')
+        dispatch(types.DELETE_SPECS_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    });
 }

@@ -81,12 +81,11 @@ export default {
     top: 91px;
     margin: auto;
     left: 0;
+    width: 45%;
     right: 0;
-    max-width: 630px;
-    min-width: 200px;
-    max-height: 300px;
     bottom: 50px;
     padding: 0;
+    max-height: 600px;
     background-color: #fff;
     border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -167,7 +166,6 @@ export default {
 .edit-input {
     height: 36px;
     line-height: 36px;
-    width: 90%;
     border: 1px solid #ddd;
     border-radius: 5px;
     -webkit-border-radius: 5px;

@@ -1,9 +1,12 @@
 <template>
 	<createcust-model :param="custParam" v-if="custParam.show"></createcust-model>
 	<createaddr-model :param="addressParam" v-if="addressParam.show"></createaddr-model>
+	<createlabel-model :param="labelParam" v-if="labelParam.show"></createlabel-model>
 	<updatecontact-model :param="updateParam" v-if="updateParam.show"></updatecontact-model>
 	<updateaddr-model :param="addrParam" v-if="addrParam.show"></updateaddr-model>
+	<updatelabel-model :param="updlabelParam" v-if="updlabelParam.show"></updatelabel-model>
 	<deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
+	<createfiles-model :param="cfilesParam" v-if="cfilesParam.show"></createfiles-model>
     <div class="client_body">
     	<div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -226,20 +229,17 @@
                                     </div>
                                 </div>
                             </div>
-                             <div class="panel panel-default">
+                             <div class="panel panel-default collapse" >
                                 <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-						            	link:initClientDetail.intent,
-						            	crete:'intent'
-						            	})">
+                                    <h4 class="panel-title clearfix" >
 										<img class="pull-left" src="/static/images/order.png" height="30" width="30"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											意向（{{initClientDetail.intent.arr.length}}）
+											意向（）
 										</a>
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse" v-show="initClientDetail.intent.show">
+                                <div  class="panel-collapse">
                                     <div class="panel-body panel-set">
                                          <table class="table contactSet">
                                         	<thead>
@@ -344,7 +344,7 @@
                                 </div>
                             </div>
                             <div class="panel panel-default">
-                                <div class="panel-heading"  >
+                                <div class="panel-heading" v-cloak>
                                     <h4 class="panel-title clearfix" @click="enfoldment({
 						            	link:initClientDetail.files,
 						            	crete:'files'
@@ -353,49 +353,49 @@
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
 											文件（{{initClientDetail.files.arr.length}}）
 										</a>
-										<button type="button" class="btn btn-base pull-right">新建</button>
+										<button type="button" class="btn btn-base pull-right" @click.stop="createfiles('files')">新建</button>
 									</h4>
                                 </div>
                                 <div  class="panel-collapse" v-show="!initClientDetail.files.show">
                                    <div class="panel-body panel-set">
                                          <table class="table contactSet">
                                         	<thead>
-                                        		<th>药品名称</th>
-                                        		<th>药品编号</th>
-                                        		<th>药品类型</th>
-                                        		<th>所属公司</th>
-                                        		<th>公司地址</th>
+                                        		<th>文件路径</th>
+                                        		<th>文件类型</th>
+                                        		<th>文件分类</th>
                                         		<th>说明</th>
                                         	</thead>
 		                                    <tbody>
-		                                         <tr v-for="item in initClientDetail.files">
-		                                            <td>{{item.name}}</td>
-		                                            <td>{{item.number}}</td>
-		                                            <td>{{item.drugType}}</td>
-		                                            <td>{{item.company}}</td>
-		                                            <td>{{item.address}}</td>
-		                                            <td>{{item.spec}}</td>
+		                                         <tr v-for="item in initClientDetail.files.arr">
+		                                            <td>{{item.path}}</td>
+		                                            <td>{{item.type}}</td>
+		                                            <td>{{item.catagory}}</td>
+		                                            <td @click="specDelete({
+		                                                   id:item.id,
+		                                                   show:true,
+		                                                   title:'文件',
+		                                                   link:specDel,
+		                                                   url:'/customer/file/',
+		                                                   key:'files',
+		                                                   headline:'clientDetail'
+		                                                   })">删除</td>
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
-                                        <p class="contact-view">查看全部</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title clearfix"  @click="enfoldment({
-						            	link:initClientDetail.track,
-						            	crete:'track'
-						            	})">
+                                    <h4 class="panel-title clearfix" >
 										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											跟进（{{initClientDetail.track.arr.length}}）
+											跟进（）
 										</a>
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse" v-show="initClientDetail.track.show">
+                                <div  class="panel-collapse" v-show="!initClientDetail.files.show">
                                    <div class="panel-body panel-set">
 	                                    <table class="table contactSet">
                                         	<thead>
@@ -421,42 +421,79 @@
                                     </div>
                                 </div>
                             </div>
-                             <div class="panel panel-default">
+                             <div class="panel panel-default" collapse>
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
-						            	link:initClientDetail.remark,
-						            	crete:'remark'
+						            	link:initClientDetail.remarks,
+						            	crete:'remarks'
 						            	})">
 										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											备注（{{initClientDetail.remark.arr.length}}）
+											备注（{{initClientDetail.remarks.arr.length}}）
 										</a>
-										<button type="button" class="btn btn-base pull-right">新建</button>
+										<button type="button" class="btn btn-base pull-right" @click.stop="newlabel({
+		                                     customerId:param.id,
+		                                     id:param.id,
+		                                     show:true,
+		                                     title:'备注',
+                                             labelist:'备注',
+                                             statuslist:'状态',
+                                             remark:'',
+                                             status:'',
+		                                     link:createRemark,
+		                                     url:'/customer/remark',
+		                                     key:'remarks'
+		                                     })">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse" v-show="initClientDetail.remark.show">
+                                <div  class="panel-collapse" v-show="!initClientDetail.remarks.show">
                                    <div class="panel-body panel-set">
                                         <table class="table contactSet">
                                         	<thead>
-                                        		<th>药品名称</th>
-                                        		<th>药品编号</th>
-                                        		<th>药品类型</th>
-                                        		<th>所属公司</th>
-                                        		<th>公司地址</th>
-                                        		<th>说明</th>
+                                        		<th>备注</th>
+                                        		<th>状态</th>
+                                        		<th></th>
                                         	</thead>
 		                                    <tbody>
-		                                         <tr v-for="item in initClientDetail">
-		                                            <td>{{item.name}}</td>
-		                                            <td>{{item.number}}</td>
-		                                            <td>{{item.drugType}}</td>
-		                                            <td>{{item.company}}</td>
-		                                            <td>{{item.address}}</td>
-		                                            <td>{{item.spec}}</td>
+		                                         <tr v-for="item in initClientDetail.remarks.arr">
+		                                            <td>{{item.remark}}</td>
+		                                            <td>{{item.status}}</td>
+		                                            <td  @click="clickShow($index,{
+		                                            	concrete:'remarks'
+		                                            	})">
+		                                            	<img  src="/static/images/default_arrow.png" height="24" width="24"  style="margin-right:0" />
+				                                        <div class="label_action" v-show="item.show" >
+				                                           <dl>
+				                                               <dt @click="updatelabel({
+				                                                   sub:$index,
+				                                                   id:item.id,
+				                                                   customerId:item.customerId,
+				                                                   show:true,
+				                                                   title:'备注',
+					                                               labelist:'备注',
+					                                               statuslist:'状态',
+					                                               label:item.remark,
+					                                               status:item.status,
+				                                                   link:alterRemark,
+				                                                   url:'/customer/remark',
+				                                                   key:'remarks',
+				                                                   headline:'clientDetail'
+				                                                   },item.show=false)">编辑</dt>
+				                                               <dt @click="specDelete({
+				                                                   id:item.id,
+				                                                   show:true,
+				                                                   title:'备注',
+				                                                   link:specDel,
+				                                                   url:'/customer/remark/',
+				                                                   key:'remarks',
+				                                                   headline:'clientDetail'
+				                                                   },item.show=false)">删除</dt>
+				                                           </dl> 
+				                                        </div>
+		                                            </td>
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
-                                        <p class="contact-view">查看全部</p>
                                     </div>
                                 </div>
                             </div>
@@ -487,15 +524,15 @@
 		                                     streetlist:'所在街道',
 		                                     addr:'详细地址',
                                              type:'',
-                                             contact_name:'',
-                                             contact_phone:'',
+                                             contactName:'',
+                                             contactPhone:'',
                                              sex:'',
                                              country:'',
                                              province:'',
                                              city:'',
                                              district:'',
                                              street:'',
-                                             detail_addr:'',
+                                             detailAddr:'',
                                              address:'',
 		                                     link:createAddress,
 		                                     url:'/customer/insertAddress',
@@ -522,15 +559,15 @@
 		                                    <tbody>
 		                                        <tr v-for="item in initClientDetail.addresses.arr">
 		                                            <td>{{item.type}}</td>
-		                                            <td>{{item.contact_name}}</td>
-		                                            <td>{{item.contact_phone}}</td>
+		                                            <td>{{item.contactName}}</td>
+		                                            <td>{{item.contactPhone}}</td>
 		                                            <td>{{item.sex}}</td>
 		                                            <td>{{item.country}}</td>
 		                                            <td>{{item.province}}</td>
 		                                            <td>{{item.city}}</td>
 		                                            <td>{{item.district}}</td>
 		                                            <td>{{item.street}}</td>
-		                                            <td>{{item.detail_addr}}</td>
+		                                            <td>{{item.detailAddr}}</td>
 		                                            <td>{{item.address}}</td>
 		                                            <td  @click="clickShow($index,{
 		                                            	concrete:'addresses'
@@ -541,7 +578,7 @@
 				                                               <dt @click="updateAddr({
 				                                                   sub:$index,
 				                                                   id:item.id,
-				                                                   customerId:item.customer_id,
+				                                                   customerId:item.customerId,
 				                                                   show:true,
 				                                                   title:'收货地址',
 				                                                   typelist:'类型',
@@ -556,15 +593,15 @@
 								                                   streetlist:'所在街道',
 								                                   addr:'详细地址',
 				                                                   type:item.type,
-				                                                   contact_name:item.contact_name,
-				                                                   contact_phone:item.contact_phone,
+				                                                   contactName:item.contactName,
+				                                                   contactPhone:item.contactPhone,
 				                                                   sex:item.sex,
 				                                                   country:item.country,
 				                                                   province:item.province,
 				                                                   city:item.city,
 				                                                   district:item.district,
 				                                                   street:item.street,
-				                                                   detail_addr:item.detail_addr,
+				                                                   detailAddr:item.detailAddr,
 				                                                   address:item.address,
 				                                                   link:addrInfo,
 				                                                   url:'/customer/updateAddress',
@@ -575,7 +612,7 @@
 				                                                   id:item.id,
 				                                                   show:true,
 				                                                   title:'收货地址',
-				                                                   link:specDel,
+				                                                   link:addrDel,
 				                                                   url:'/customer/deleteAddress/',
 				                                                   key:'addresses',
 				                                                   headline:'clientDetail'
@@ -599,36 +636,51 @@
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
 											标签（{{initClientDetail.labels.arr.length}}）
 										</a>
-										<button type="button" class="btn btn-base pull-right">新建</button>
+										<button type="button" class="btn btn-base pull-right" @click.stop="newlabel({
+		                                     customerId:param.id,
+		                                     id:param.id,
+		                                     show:true,
+		                                     title:'标签',
+                                             labelist:'标签',
+                                             statuslist:'类型',
+                                             label:'',
+                                             status:'',
+		                                     link:createLabel,
+		                                     url:'/customer/insertLabel',
+		                                     key:'labels'
+		                                     })">新建</button>
 									</h4>
                                 </div>
                                 <div  class="panel-collapse" v-show="!initClientDetail.labels.show">
                                    <div class="panel-body panel-set">
                                         <table class="table contactSet">
                                         	<thead>
-                                        		<th>客户ID</th>
                                         		<th>标签</th>
                                         		<th>状态</th>
                                         		<th></th>
                                         	</thead>
 		                                    <tbody>
 		                                        <tr v-for="item in initClientDetail.labels.arr">
-		                                            <td>{{item.customer_id}}</td>
 		                                            <td>{{item.label}}</td>
 		                                            <td>{{item.status}}</td>
 		                                            <td  @click="clickShow($index,{
 		                                            	concrete:'labels'
 		                                            	})">
-		                                            	<img src="/static/images/default_arrow.png" height="24" width="24" />
-				                                        <div class="breed_action" v-show="item.show" >
+		                                            	<img src="/static/images/default_arrow.png" height="24" width="24" style="margin-right:0" />
+				                                        <div class="label_action" v-show="item.show" >
 				                                           <dl>
-				                                               <dt @click="updateAddr({
+				                                               <dt @click="updatelabel({
 				                                                   sub:$index,
 				                                                   id:item.id,
-				                                                   customerId:item.customer_id,
+				                                                   customerId:item.customerId,
 				                                                   show:true,
-				                                                   link:addrInfo,
-				                                                   url:'/customer/updateAddress',
+				                                                   title:'标签',
+					                                               labelist:'标签',
+					                                               statuslist:'类型',
+					                                               label:item.label,
+					                                               status:item.status,
+				                                                   link:alterLabel,
+				                                                   url:'/customer/updateLabel',
 				                                                   key:'labels',
 				                                                   headline:'clientDetail'
 				                                                   },item.show=false)">编辑</dt>
@@ -636,8 +688,8 @@
 				                                                   id:item.id,
 				                                                   show:true,
 				                                                   title:'标签',
-				                                                   link:specDel,
-				                                                   url:'/customer/deleteAddress/',
+				                                                   link:addrDel,
+				                                                   url:'/customer/deleteLable/',
 				                                                   key:'labels',
 				                                                   headline:'clientDetail'
 				                                                   },item.show=false)">删除</dt>
@@ -650,7 +702,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" v-cloak>
                                 <div class="panel-heading">
                                     <h4 class="panel-title clearfix" @click="enfoldment({
 						            	link:initClientDetail.products,
@@ -663,29 +715,91 @@
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse" v-show="initClientDetail.products.show">
+                                <div  class="panel-collapse" v-show="!initClientDetail.products.show">
                                     <div class="panel-body panel-set">
                                          <table class="table contactSet">
                                         	<thead>
-                                        		<th>药品名称</th>
-                                        		<th>药品编号</th>
-                                        		<th>药品类型</th>
-                                        		<th>所属公司</th>
-                                        		<th>公司地址</th>
-                                        		<th>说明</th>
+                                        		<th>类型</th>
+                                        		<th>名称</th>
+                                        		<th>品种ID</th>
+                                        		<th>质量</th>
+                                        		<th>产地</th>
+                                        		<th>规格</th>
+                                        		<th>数量</th>
+                                        		<th>价格</th>
+                                        		<th>单位</th>
+                                        		<th>价格过期时间</th>
+                                        		<th>检测报告</th>
+                                        		<th></th>
                                         	</thead>
 		                                    <tbody>
-		                                         <tr v-for="item in initClientDetail">
+		                                         <tr v-for="item in initClientDetail.products.arr">
+		                                            <td>{{item.type}}</td>
 		                                            <td>{{item.name}}</td>
-		                                            <td>{{item.number}}</td>
-		                                            <td>{{item.drugType}}</td>
-		                                            <td>{{item.company}}</td>
-		                                            <td>{{item.address}}</td>
+		                                            <td>{{item.breed_id}}</td>
+		                                            <td>{{item.quality}}</td>
+		                                            <td>{{item.location}}</td>
 		                                            <td>{{item.spec}}</td>
+		                                            <td>{{item.number}}</td>
+		                                            <td>{{item.price}}</td>
+		                                            <td>{{item.unit}}</td>
+		                                            <td>{{item.duedate}}</td>
+		                                            <td>{{item.coa}}</td>
+		                                            <td  @click="clickShow($index,{
+		                                            	concrete:'products'
+		                                            	})">
+		                                            	<img src="/static/images/default_arrow.png" height="24" width="24" />
+				                                        <div class="breed_action" v-show="item.show" >
+				                                           <dl>
+				                                               <dt @click="updateAddr({
+				                                                   sub:$index,
+				                                                   id:item.id,
+				                                                   customerId:item.customerId,
+				                                                   show:true,
+				                                                   title:'收货地址',
+				                                                   typelist:'类型',
+				                                                   namelist:'联系人姓名',
+								                                   phonelist:'联系人电话',
+								                                   sexlist:'性别',
+								                                   countylist:'国家',
+								                                   provicelist:'所在省',
+								                                   citylist:'所在市',
+								                                   addr_detail:'地址',
+								                                   distlist:'所在区域',
+								                                   streetlist:'所在街道',
+								                                   addr:'详细地址',
+				                                                   type:item.type,
+				                                                   contactName:item.contactName,
+				                                                   contactPhone:item.contactPhone,
+				                                                   sex:item.sex,
+				                                                   country:item.country,
+				                                                   province:item.province,
+				                                                   city:item.city,
+				                                                   district:item.district,
+				                                                   street:item.street,
+				                                                   detailAddr:item.detailAddr,
+				                                                   address:item.address,
+				                                                   link:addrInfo,
+				                                                   url:'/customer/updateAddress',
+				                                                   key:'products',
+				                                                   headline:'clientDetail'
+				                                                   },item.show=false)">编辑</dt>
+				                                               <dt @click="specDelete({
+				                                                   id:item.id,
+				                                                   show:true,
+				                                                   title:'收货地址',
+				                                                   link:addrDel,
+				                                                   url:'/customer/deleteAddress/',
+				                                                   key:'products',
+				                                                   headline:'clientDetail'
+				                                                   },item.show=false)">删除</dt>
+				                                           </dl> 
+				                                        </div>
+		                                            </td>
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
-                                        <p class="contact-view">查看全部</p>
+                                        <!-- <p class="contact-view">查看全部</p> -->
                                     </div>
                                 </div>
                             </div>
@@ -748,7 +862,7 @@
                             </div>
                             <div class="client-detailInfo">
                                 <label>经营范围</label>
-                                <input type="text" class="form-control" v-model="initClientDetail.biz_scope" value="{{initClientDetail.biz_scope}}"/>
+                                <input type="text" class="form-control" v-model="initClientDetail.bizScope" value="{{initClientDetail.bizScope}}"/>
                             </div>
                             <div class="client-detailInfo">
                                 <img class="left" src="/static/images/blackselect.png" height="28" width="28" />
@@ -768,9 +882,12 @@
 import pressImage from '../../components/imagePress'
 import createcustModel  from '../clientRelate/createClientDetail'
 import createaddrModel from '../clientRelate/createAddrInfo'
+import createlabelModel from '../clientRelate/label/createLabel'
+import updatelabelModel from '../clientRelate/label/updatelebel'
 import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import updatecontactModel  from '../clientRelate/updateContactInfo'
 import updateaddrModel from '../clientRelate/updataAddrInfo'
+import createfilesModel  from  '../clientRelate/createFiles'
 import {
 	initClientDetail
 } from '../../vuex/getters'
@@ -781,7 +898,12 @@ import {
 	updateContact,
 	addrInfo,
 	createAddress,
-	alterInfo
+	alterInfo,
+	addrDel,
+	createLabel,
+	alterLabel,
+	createRemark,
+	alterRemark
 } from '../../vuex/actions'
 export default {
     components: {
@@ -790,7 +912,10 @@ export default {
         deletebreedModel,
         updatecontactModel,
         updateaddrModel,
-        createaddrModel
+        createaddrModel,
+        createlabelModel,
+        updatelabelModel,
+        createfilesModel
     },
     props:['param'],
     data(){
@@ -811,6 +936,16 @@ export default {
     		addressParam:{
     			show:false
     		},
+    		labelParam:{
+    			show:false
+    		},
+    		updlabelParam:{
+    			show:false
+    		},
+    		cfilesParam:{
+    			show:false,
+    			name:''
+    		},
     		show:true
     	}
     },
@@ -825,7 +960,12 @@ export default {
     		updateContact,
     		addrInfo,
     		createAddress,
-    		alterInfo
+    		alterInfo,
+    		addrDel,
+    		createLabel,
+    		alterLabel,
+    		createRemark,
+    		alterRemark
     	}
     },
     methods:{
@@ -842,11 +982,14 @@ export default {
                 this.$store.state.table.clientDetail[param.concrete].arr[id].show = true
             }
         },
-    	createFormt: function(initClientDetail){
-            this.custParam=initClientDetail;
+        createFormt:function(initBreedDetail){
+        	this.custParam = initBreedDetail;
         },
         createAddr:function(initBreedDetail){
         	this.addressParam = initBreedDetail;
+        },
+        newlabel:function(initBreedDetail){
+        	this.labelParam = initBreedDetail;
         },
         specDelete:function(initBreedDetail){
             this.deleteParam = initBreedDetail;
@@ -856,7 +999,15 @@ export default {
         },
         updateAddr:function(initBreedDetail){
         	this.addrParam = initBreedDetail;
+        },
+        updatelabel:function(initBreedDetail){
+        	this.updlabelParam = initBreedDetail;
+        },
+        createfiles:function(value){
+        	this.cfilesParam.show = true;
+        	this.cfilesParam.name= value;
         }
+
     }
 }
 </script>
@@ -954,10 +1105,6 @@ section article {
 .client-detailInfo img {
     margin-right: 8px;
 }
-.breed_action{
-	top: 10px;
-	right: 30px;
-}
 .client-detailInfo label {
     display: block;
     color: #333;
@@ -969,7 +1116,19 @@ section article {
     color: #fff;
     font-size: 18px;
 }
-
+.label_action{
+	position: absolute;
+	top:13px;
+	right: 32px;
+	border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    z-index: 1000;
+    min-width: 90px;
+    cursor: pointer;
+    padding: 5px 10px;
+    max-width: 200px;
+}
 .client-editbtn {
     text-align: right;
     margin-top: 15px;

@@ -32,7 +32,9 @@ import {
    UPDATE_ADDR_DETAIL,
    ADD_ADDR_DETAIL,
    LABEL_DATA,
-   CUSTOMER_CONTACT_DATA
+   CUSTOMER_CONTACT_DATA,
+   ADD_LABEL_DATA,
+   UPDATE_LABEL_DETAIL
 } from '../mutation-types'
 
 const state = {
@@ -184,16 +186,18 @@ const state = {
            show:false
          },
          "track": {arr:[],show:false},
-         "remarks": {arr:[],show:false},
+         "remarks": {arr:[
+               {"id":0,"customerId":10,"remark":"dfhidfhi","status":0,"show":true}
+          ],show:false},
          "addresses": {
             arr:[
-                {"id":1,"type":"0","customer_id":"11","contact_name":"定金","contact_phone":"13162875213","sex":"女","country":"中国","province":"上海","city":"上海","detail_addr":"很多基地及","address":"上海市空口区158号","show":"true"}
+                {"id":1,"type":"0","customerId":"11","contactNme":"定金","contactPhone":"13162875213","sex":"女","country":"中国","province":"上海","city":"上海","detail_addr":"很多基地及","address":"上海市空口区158号","show":"true"}
             ],
             show:false
           },
           "labels":{
             arr:[
-                {"id":"1","customer_id":10,"label":"dfhidfhi","status":0,"show":true}
+                {"id":1,"customerId":10,"label":"dfhidfhi","status":0,"show":true}
             ],
             show:false
           }
@@ -371,22 +375,28 @@ const mutations = {
     },
     [UPDATE_ADDR_DETAIL](state,data){  //修改客户地址
         state[data.headline][data.key].arr[data.sub].id=data.id;
-        state[data.headline][data.sub].customerId=data.id;
+        state[data.headline][data.key].arr[data.sub].customerId=data.customerId;
         state[data.headline][data.key].arr[data.sub].type=data.type;
-        state[data.headline][data.key].arr[data.sub].contact_name=data.contact_name;
-        state[data.headline][data.key].arr[data.sub].contact_phone=data.contact_phone;
+        state[data.headline][data.key].arr[data.sub].contactName=data.contactName;
+        state[data.headline][data.key].arr[data.sub].contactPhone=data.contactPhone;
         state[data.headline][data.key].arr[data.sub].sex=data.sex;
         state[data.headline][data.key].arr[data.sub].address=data.address;
         state[data.headline][data.key].arr[data.sub].country=data.country;
         state[data.headline][data.key].arr[data.sub].province=data.province;
         state[data.headline][data.key].arr[data.sub].city=data.city;
-        state[data.headline][data.key].arr[data.sub].detail_addr=data.detail_addr;
+        state[data.headline][data.key].arr[data.sub].detailAddr=data.detailAddr;
         state[data.headline][data.key].arr[data.sub].district=data.district;
         state[data.headline][data.key].arr[data.sub].street=data.street;
     },
-
+    [UPDATE_LABEL_DETAIL](state,data){ //修改客户标签
+        state[data.headline][data.key].arr[data.sub].id=data.id;
+        state[data.headline][data.key].arr[data.sub].customerId=data.customerId;
+        state[data.headline][data.key].arr[data.sub].label=data.label;
+        state[data.headline][data.key].arr[data.sub].remark=data.remark;
+        state[data.headline][data.key].arr[data.sub].status=data.status;
+    },
     [CUSTOMER_CONTACT_DATA](state,data){  // 新增客户联系人信息
-        state.clientDetail[data.key].arr.push({
+        state.clientDetail[data.key].arr.unshift({
           "name":data.name,
           "position":data.position,
           "department":data.department,
@@ -402,19 +412,29 @@ const mutations = {
     [ADD_ADDR_DETAIL](state,data){  // 新增客户地址
         state.clientDetail[data.key].arr.unshift({
              "type":data.type,
-            "contact_name":data.contact_name,
-            "contact_phone":data.contact_phone,
+            "contactName":data.contactName,
+            "contactPhone":data.contactPhone,
             "sex":data.sex,
             "country":data.country,
             "province":data.province,
             "city":data.city,
             "district":data.district,
             "street":data.street,
-            'detail_addr':data.detail_addr,
+            'detailAddr':data.detailAddr,
             "address":data.address,
-            "customer_id":data.customer_id
+            "customerId":data.customerId,
+            "show":false
         })
     },
+    [ADD_LABEL_DATA](state,data){  // 新增客户标签
+        state.clientDetail[data.key].arr.unshift({
+             "label":data.label,
+             "remark":data.label,
+            "status":data.status,
+            "customerId":data.customerId,
+            "show":false
+        })
+    }
 }
 
 export default {
