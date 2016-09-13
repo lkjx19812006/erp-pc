@@ -7,10 +7,6 @@
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">药材列表</div>
             <div class="col-xs-8 my_order_search">
-                <div class="name_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按品种类别搜索">
-                </div>
                 <div class="ordertel_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
                     <input type="text" class="search_input" v-model="loadParam.name" placeholder="按品种名称搜索" v-on:keyup="categoryNameSearch(loadParam.name)">

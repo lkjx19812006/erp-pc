@@ -1,6 +1,8 @@
 <template>
 	<createcust-model :param="custParam" v-if="custParam.show"></createcust-model>
+	<createaddr-model :param="addressParam" v-if="addressParam.show"></createaddr-model>
 	<updatecontact-model :param="updateParam" v-if="updateParam.show"></updatecontact-model>
+	<updateaddr-model :param="addrParam" v-if="addrParam.show"></updateaddr-model>
 	<deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <div class="client_body">
     	<div @click="param.show=false" class="top-title">
@@ -103,7 +105,7 @@
 		                                            	concrete:'contact'
 		                                            	})">
 		                                            	<img src="/static/images/default_arrow.png" height="24" width="24" />
-				                                        <div class="breed_action" v-show="item.show" >
+				                                        <div class="breed_action" v-show="item.show">
 				                                            <dl>
 				                                               <dt @click="updateSpec({
 				                                                   sub:$index,
@@ -467,7 +469,37 @@
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
 											收货地址（{{initClientDetail.addr.arr.length}}）
 										</a>
-										<button type="button" class="btn btn-base pull-right">新建</button>
+										<button type="button" class="btn btn-base pull-right" @click.stop="createAddr({
+		                                     customer_id:param.customer_id,
+		                                     title:'联系人',
+		                                     show:true,
+		                                     title:'收货地址',
+                                             typelist:'类型',
+                                             namelist:'联系人姓名',
+		                                     phonelist:'联系人电话',
+		                                     sexlist:'性别',
+		                                     countylist:'国家',
+		                                     provicelist:'所在省',
+		                                     citylist:'所在市',
+		                                     addr_detail:'地址',
+		                                     distlist:'所在区域',
+		                                     streetlist:'所在街道',
+		                                     addr:'详细地址',
+                                             type:'',
+                                             contact_name:'',
+                                             contact_phone:'',
+                                             sex:'',
+                                             country:'',
+                                             province:'',
+                                             city:'',
+                                             district:'',
+                                             street:'',
+                                             detail_addr:'',
+                                             address:'',
+		                                     link:createAddress,
+		                                     url:'/customer/insertAddress',
+		                                     key:'addr'
+		                                     })">新建</button>
 									</h4>
                                 </div>
                                 <div  class="panel-collapse" v-show="initClientDetail.addr.show">
@@ -476,14 +508,15 @@
                                         	<thead>
                                         		<th>类型</th>
                                         		<th>联系人姓名</th>
-                                        		<th>联系人电话</th>
+                                        		<th>联系人手机</th>
                                         		<th>性别</th>
-                                        		<th>邮政编码</th>
                                         		<th>国家</th>
-                                        		<th>省</th>
-                                        		<th>市</th>
+                                        		<th>所在省</th>
+                                        		<th>所在市</th>
+                                        		<th>所在区域</th>
+                                        		<th>所在街道</th>
+                                        		<th>地址</th>
                                         		<th>详细地址</th>
-                                        		<th>状态</th>
                                         	</thead>
 		                                    <tbody>
 		                                        <tr v-for="item in initClientDetail.addr.arr">
@@ -491,38 +524,62 @@
 		                                            <td>{{item.contact_name}}</td>
 		                                            <td>{{item.contact_phone}}</td>
 		                                            <td>{{item.sex}}</td>
-		                                            <td>{{item.zip_code}}</td>
 		                                            <td>{{item.country}}</td>
 		                                            <td>{{item.province}}</td>
-		                                            <td>{{item.country}}</td>
+		                                            <td>{{item.city}}</td>
+		                                            <td>{{item.district}}</td>
+		                                            <td>{{item.street}}</td>
 		                                            <td>{{item.detail_addr}}</td>
-		                                            <td>{{item.status}}</td>
-		                                            <td>
+		                                            <td>{{item.address}}</td>
+		                                            <td  @click="clickShow($index,{
+		                                            	concrete:'addr'
+		                                            	})">
 		                                            	<img src="/static/images/default_arrow.png" height="24" width="24" />
 				                                        <div class="breed_action" v-show="item.show" >
-				                                           <!--  <dl>
-				                                               <dt @click="updateSpec({
-				                                                    sub:$index,
+				                                           <dl>
+				                                               <dt @click="updateAddr({
+				                                                   sub:$index,
 				                                                   id:item.id,
+				                                                   customerId:item.customer_id,
 				                                                   show:true,
-				                                                   title:'产地',
-				                                                   namelist:'产地名称',
-				                                                   name:item.name,
-				                                                   link:alterSpec,
-				                                                   url:'/local/',
-				                                                   key:'locals',
-				                                                   breedId:item.breedId
+				                                                   title:'收货地址',
+				                                                   typelist:'类型',
+				                                                   namelist:'联系人姓名',
+								                                   phonelist:'联系人电话',
+								                                   sexlist:'性别',
+								                                   countylist:'国家',
+								                                   provicelist:'所在省',
+								                                   citylist:'所在市',
+								                                   addr_detail:'地址',
+								                                   distlist:'所在区域',
+								                                   streetlist:'所在街道',
+								                                   addr:'详细地址',
+				                                                   type:item.type,
+				                                                   contact_name:item.contact_name,
+				                                                   contact_phone:item.contact_phone,
+				                                                   sex:item.sex,
+				                                                   country:item.country,
+				                                                   province:item.province,
+				                                                   city:item.city,
+				                                                   district:item.district,
+				                                                   street:item.street,
+				                                                   detail_addr:item.detail_addr,
+				                                                   address:item.address,
+				                                                   link:addrInfo,
+				                                                   url:'/customer/updateAddress',
+				                                                   key:'addr',
+				                                                   headline:'clientDetail'
 				                                                   },item.show=false)">编辑</dt>
 				                                               <dt @click="specDelete({
 				                                                   id:item.id,
 				                                                   show:true,
-				                                                   name:item.name,
-				                                                   title:'产地',
+				                                                   title:'收货地址',
 				                                                   link:specDel,
-				                                                   url:'/breed/local/',
-				                                                   key:'locals'
+				                                                   url:'/customer/deleteAddress/',
+				                                                   key:'addr',
+				                                                   headline:'clientDetail'
 				                                                   },item.show=false)">删除</dt>
-				                                           </dl> -->
+				                                           </dl> 
 				                                        </div>
 		                                            </td>
 		                                        </tr>
@@ -544,41 +601,69 @@
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse"  v-show="initClientDetail.label.show">
+                                <div  class="panel-collapse" v-show="initClientDetail.label.show">
                                    <div class="panel-body panel-set">
                                         <table class="table contactSet">
+                                        	<thead>
+                                        		<th>客户ID</th>
+                                        		<th>标签</th>
+                                        		<th>状态</th>
+                                        		<th></th>
+                                        	</thead>
 		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail">
-		                                        	<td>
-		                                        		<img src="/static/images/contactname.png" height="21" width="18" />
-		                                        	</td>
-		                                            <td>药品名称：{{item.name}}</td>
-		                                            <td>药品编号：{{item.number}}</td>
-		                                            <td>药品类型：{{item.drugType}}</td>
-		                                            <td>所属公司：{{item.company}}</td>
-		                                            <td>公司地址：{{item.address}}</td>
-		                                            <td>说明：{{item.spec}}</td>
+		                                        <tr v-for="item in initClientDetail.label.arr">
+		                                            <td>{{item.customer_id}}</td>
+		                                            <td>{{item.label}}</td>
+		                                            <td>{{item.status}}</td>
+		                                            <td  @click="clickShow($index,{
+		                                            	concrete:'label'
+		                                            	})">
+		                                            	<img src="/static/images/default_arrow.png" height="24" width="24" />
+				                                        <div class="breed_action" v-show="item.show" >
+				                                           <dl>
+				                                               <dt @click="updateAddr({
+				                                                   sub:$index,
+				                                                   id:item.id,
+				                                                   customerId:item.customer_id,
+				                                                   show:true,
+				                                                   
+				                                                   link:addrInfo,
+				                                                   url:'/customer/updateAddress',
+				                                                   key:'label',
+				                                                   headline:'clientDetail'
+				                                                   },item.show=false)">编辑</dt>
+				                                               <dt @click="specDelete({
+				                                                   id:item.id,
+				                                                   show:true,
+				                                                   title:'标签',
+				                                                   link:specDel,
+				                                                   url:'/customer/deleteAddress/',
+				                                                   key:'label',
+				                                                   headline:'clientDetail'
+				                                                   },item.show=false)">删除</dt>
+				                                           </dl> 
+				                                        </div>
+		                                            </td>
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
-                                        <p class="contact-view">查看全部</p>
                                     </div>
                                 </div>
                             </div>
                              <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title clearfix" @click="enfoldment({
-						            	link:initClientDetail.quality,
-						            	crete:'quality'
+						            	link:initClientDetail.license,
+						            	crete:'license'
 						            	})">
 										<img class="pull-left" src="/static/images/order.png" height="30" width="30"  />
 										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											资质证书（{{initClientDetail.quality.arr.length}}）
+											资质证书（{{initClientDetail.license.arr.length}}）
 										</a>
 										<button type="button" class="btn btn-base pull-right">新建</button>
 									</h4>
                                 </div>
-                                <div  class="panel-collapse"  v-show="initClientDetail.quality.show">
+                                <div  class="panel-collapse"  v-show="initClientDetail.license.show">
                                     <div class="panel-body panel-set">
                                          <table class="table contactSet">
                                         	<thead>
@@ -692,29 +777,24 @@
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>业务员ID</label>
-                                    <input type="text" class="form-control" v-model="initClientDetail.employee_id" value="{{initClientDetail.employee_id}}" />
+                                    <label>备注</label>
+                                    <input type="text" class="form-control" v-model="initClientDetail.comments" value="{{initClientDetail.comments}}" />
                                 </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>信用等级</label>
-                                    <input type="text" class="form-control" v-model="initClientDetail.credit_level" value="{{initClientDetail.credit_level}}"/>
-                                </div>
+                                <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
+	                                <label>注册地址</label>
+	                                <input type="text" class="form-control" v-model='initClientDetail.address' value="{{initClientDetail.address}}"/>
+	                            </div> 
                             </div>
                             <div class="client-detailInfo">
                                 <label>经营范围</label>
                                 <input type="text" class="form-control" v-model="initClientDetail.biz_scope" value="{{initClientDetail.biz_scope}}"/>
                             </div>
                             <div class="client-detailInfo">
-                                <label>注册地址</label>
-                                <input type="text" class="form-control" v-model='initClientDetail.address' value="{{initClientDetail.address}}"/>
-                            </div> 
-                   
-                            <div class="client-detailInfo">
                                 <img class="left" src="/static/images/blackselect.png" height="28" width="28" />
                                 <label>加入黑名单</label>
                             </div>
                             <div class="client-editbtn">
-                                <button type="button" class="btn btn-orange">编辑</button>
+                                <button type="button" class="btn btn-orange" @click="alterInfo(initClientDetail,initClientDetail.id,{key:'customerList'})">编辑</button>
                             </div>
                         </div>
                     </article>
@@ -726,8 +806,10 @@
 <script>
 import pressImage from '../../components/imagePress'
 import createcustModel  from '../clientRelate/createClientDetail'
+import createaddrModel from '../clientRelate/createAddrInfo'
 import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import updatecontactModel  from '../clientRelate/updateContactInfo'
+import updateaddrModel from '../clientRelate/updataAddrInfo'
 import {
 	initClientDetail
 } from '../../vuex/getters'
@@ -735,14 +817,19 @@ import {
 	getClientDetail,
 	createCustomer,
 	specDel,
-	updateContact
+	updateContact,
+	addrInfo,
+	createAddress,
+	alterInfo
 } from '../../vuex/actions'
 export default {
     components: {
         pressImage,
         createcustModel,
         deletebreedModel,
-        updatecontactModel
+        updatecontactModel,
+        updateaddrModel,
+        createaddrModel
     },
     props:['param'],
     data(){
@@ -756,7 +843,14 @@ export default {
     		},
     		updateParam:{
     			show:false
-    		}
+    		},
+    		addrParam:{
+    			show:false
+    		},
+    		addressParam:{
+    			show:false
+    		},
+    		show:true
     	}
     },
     vuex:{
@@ -767,7 +861,10 @@ export default {
     		getClientDetail,
     		createCustomer,
     		specDel,
-    		updateContact
+    		updateContact,
+    		addrInfo,
+    		createAddress,
+    		alterInfo
     	}
     },
     methods:{
@@ -789,11 +886,17 @@ export default {
     	createFormt: function(initClientDetail){
             this.custParam=initClientDetail;
         },
+        createAddr:function(initBreedDetail){
+        	this.addressParam = initBreedDetail;
+        },
         specDelete:function(initBreedDetail){
             this.deleteParam = initBreedDetail;
         },
         updateSpec:function(initBreedDetail){
         	this.updateParam = initBreedDetail;
+        },
+        updateAddr:function(initBreedDetail){
+        	this.addrParam = initBreedDetail;
         }
     }
 }
@@ -872,9 +975,6 @@ section article {
     cursor: pointer;
 }
 
-.client-detail {
-    border-left: 1px solid #ddd;
-}
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
 	text-align: left;
 }

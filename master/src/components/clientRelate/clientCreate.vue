@@ -53,26 +53,21 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>业务员</label>
-                                <input type="text" class="form-control" v-model="customerData.employee_id" />
-                            </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>信用等级</label>
-                                <input type="text" class="form-control" v-model="customerData.credit_level"  />
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>经营范围</label>
-                                <input type="text" class="form-control" v-model="customerData.biz_scope" />
+                                <label>备注</label>
+                                <input type="text" class="form-control" v-model="customerData.comments" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label>注册地址</label>
                                 <input type="text" class="form-control" v-model="customerData.address" />
                             </div>
                         </div>
+                        <div class="clearfix">
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label>经营范围</label>
+                                <input type="text" class="form-control" v-model="customerData.bizScope" />
+                            </div>
+                        </div>
                     </section>
-                    <pre>{{$data | json}}</pre>
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
@@ -155,8 +150,6 @@ export default {
     overflow: hidden;
     overflow-y: auto;
 }
-
-
 .edit-content {
     padding: 19px 10px;
     text-align: center;

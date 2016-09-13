@@ -4,28 +4,29 @@
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
     </div>
     <div v-show="!companyParam.show">
+    <form>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">企业</div>
             <div class="col-xs-8 my_order_search">
                 <div class="name_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按企业名称搜索">
+                    <input type="text" class="search_input" placeholder="按企业名称搜索" v-model="loadParam.conName" >
                 </div>
                 <div class="name_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按生产范围搜索">
+                    <input type="text" class="search_input" placeholder="按企业类型搜索" v-model="loadParam.conType" >
                 </div>
                 <div class="name_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按所在省搜索">
+                    <input type="text" class="search_input" placeholder="按所在省搜索" v-model="loadParam.conProvince">
                 </div>
                 <div class="name_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按分类码搜索">
+                    <input type="text" class="search_input" placeholder="按分类码搜索" >
                 </div>
             </div>
-            <div class="right col-xs-2">
-                <button class="new_btn transfer">查询</button>
+            <div class=" col-xs-2">
+                <a class="new_btn transfer" @click="multiSearch(loadParam.conName,loadParam.conType,loadParam.conProvince)">查询</a>
             </div>
         </div>
         <div class="order_table" v-cloak>
@@ -33,6 +34,7 @@
                 <thead>
                     <tr>
                         <th>分类码</th>
+                        <th>类型</th>
                         <th>企业名称</th>
                         <th>电 话</th>
                         <th>企业代表人</th>
@@ -52,11 +54,13 @@
                         <th></th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in initEnterpriselist" @click="companyDetail(item.id)"  >
                         <td>{{item.category | categorystate}}</td>
+                        <td>{{item.type}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.tel | telstate}}</td>
                         <td>{{item.principal}}</td>
@@ -82,7 +86,8 @@ import {
 } from '../../vuex/getters'
 import {
     getEnterpriseData,
-    getCompanyDetail
+    getCompanyDetail,
+    getCompanyData
 } from '../../vuex/actions'
 export default {
     components: {
@@ -96,7 +101,8 @@ export default {
         },
         actions: {
             getEnterpriseData,
-            getCompanyDetail
+            getCompanyDetail,
+            getCompanyData
         }
     },
     data() {
@@ -122,6 +128,9 @@ export default {
             this.companyParam.show = true;
             this.companyParam.id = id;
             this.getCompanyDetail(this.companyParam);
+        },
+        multiSearch:function(conName,conType,conProvince){
+            this.getCompanyData(this.loadParam, this.loadParam.all);
         }
     },
     events: {

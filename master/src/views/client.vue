@@ -1,8 +1,9 @@
 <template>
     <create-model :param="createParam" v-if="createParam.show"></create-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
-    <alterInfo-model :param="alterParam" v-if="alterParam.show"></alterInfo-model>
+    <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
+    <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">客户</div>
@@ -13,11 +14,11 @@
                 </div>
                 <div class="ordertel_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索" v-on:keyup="categoryNameSearch(loadParam.name)">
+                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索">
                 </div>
             </div>
             <div class="right col-xs-2">
-                <button class="new_btn transfer">划转</button>
+                <button class="new_btn transfer" @click="clientTransfer('transfer')">划转</button>
                 <button class="new_btn" @click="createCustomer('create')">新建</button>
             </div>
         </div>
@@ -39,36 +40,32 @@
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>注册地址</th>
-                        <th>业务员ID</th>
-                        <th>信用等级</th>
+                        <th>备注</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>
-                            <input type="checkbox" id="checkbox_a1" class="chk"/> 
-                            <label for="checkbox_a1" class="checkbox" @click="checkedAll()"></label> 
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" @click="checkedAll()" ></label>
                         </td>
                         <td>全选</td>
                     </tr>
-                    <tr v-for="item in initCustomerlist" @click="clickOn(item.id)">
+                    <tr v-for="item in initCustomerlist"  @click="clickOn(item.id)">
                         <td  @click.stop="">
-                            <input type="checkbox" id="checkbox+'{{item.id}}'" class="chk" /> 
-                            <label for="checkbox+'{{item.id}}'" class="checkbox"></label> 
+                            <label  class="checkbox_unselect"v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)" ></label>
                         </td>
                         <td>{{item.type}}</td>
-                        <th>{{item.name}}</th>
+                        <td>{{item.name}}</td>
                         <td>{{item.category}}</td>
                         <td>{{item.principal}}</td>
-                        <td>{{item.biz_scope}}</td>
+                        <td>{{item.bizScope}}</td>
                         <td>{{item.tel}}</td>
                         <td>{{item.email}}</td>
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.address}}</td>
-                        <td>{{item.employee_id}}</td>
-                        <td>{{item.credit_level}}</td>
+                        <td>{{item.comments}}</td>
                         <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="component_action" v-show="item.show">
@@ -80,14 +77,13 @@
                                                 type:item.type,
                                                 category:item.category,
                                                 principal:item.principal,
-                                                biz_scope:item.biz_scope,
+                                                bizScope:item.bizScope,
                                                 tel:item.tel,
                                                 email:item.email,
                                                 province:item.province,
                                                 city:item.city,
                                                 address:item.address,
-                                                employee_id:item.employee_id,
-                                                credit_level:item.credit_level,
+                                                comments:item.comments,
                                                 link:alterInfo,
                                                 url:'/customer/',
                                                 key:'customerList'
@@ -115,11 +111,11 @@
 </template>
 <script>
 import pagination from '../components/pagination'
-import pressImage from '../components/imagePress'
 import detailModel from '../components/clientRelate/clientDetail'
 import createModel from '../components/clientRelate/clientCreate'
 import deletebreedModel from '../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import alterinfoModel  from '../components/clientRelate/clientUpdate'
+import transferModel  from '../components/clientRelate/clienttransfer'
 import {
     initCustomerlist
 } from '../vuex/getters'
@@ -133,11 +129,11 @@ import {
 export default {
     components: {   
         pagination,
-        pressImage,
         detailModel,
         createModel,
         deletebreedModel,
-        alterinfoModel
+        alterinfoModel,
+        transferModel
     },
     vuex: {
         getters: {
@@ -167,13 +163,18 @@ export default {
                 show: false,
                 name:''
             },
+            transferParam:{
+                show:false,
+                name:''
+            },
             deleteParam:{
                 show:false
             },
             alterParam:{
                 show:false,
                 id:''
-            }
+            },
+            checked:false
         }
     },
     methods: {
@@ -198,24 +199,30 @@ export default {
         },
         modifyClient:function(initCustomerlist){
             this.alterParam =initCustomerlist;
+        },
+        clientTransfer:function(value){
+            this.transferParam.show=true;
+            this.transferParam.name=value;
+        },
+        checkedAll: function() {
+           this.checked=!this.checked;
+           if(this.checked){
+                 this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+                    item.checked=true;
+             })
+           }else{
+                this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+                    item.checked=false;
+             })
+           }
+        },
+        onlyselected:function(id){
+            this.$store.state.table.basicBaseList.customerList[id].checked=!this.$store.state.table.basicBaseList.customerList[id].checked;
         }
-        /*checkedAll: function() {
-            var _this = this;
-            console.log(_this.checkboxModel);
-            if (this.checked) {//实现反选
-              _this.checkboxModel = [];
-            }else{//实现全选
-              _this.checkboxModel = [];
-              _this.checkboxData.forEach(function(item) {
-                _this.checkboxModel.push(item.id);
-              });
-            }
-          }*/
     },
     created() {
         this.getClientList(this.loadParam, this.loadParam.all);
     }
-
 }
 </script>
 <style scoped>
@@ -226,51 +233,26 @@ export default {
 .transfer{
     margin-left: 18px;
 }
-.chk{
-    display: none;
+.checkbox_unselect{
+    background-image: url(../../static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
 }
-.checkbox, .radio{
-    margin: 0;
+.checkbox_select{
+    background-image: url(../../static/images/selected.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
 }
-.chk + .checkbox { 
-    background-color: #FFF; 
-    border: 1px solid #C1CACA;   
-    border-radius: 3px; 
-    -webkit-border-radius: 3px; 
-    -moz-border-radius: 3px; 
-    -ms-border-radius: 3px; 
-    display: inline-block; 
-    position: relative; 
-    width: 18px;
-    height: 18px;
-} 
-
-.chk + .checkbox:active { 
-    border-color: #fa6705;
-    border: 1px solid #C1CACA;
-} 
- 
-.chk:checked + .checkbox { 
-    border: 1px solid #fa6705; 
-    color: #243441; 
-} 
- 
-.chk:checked + .checkbox:after { 
-    content: '\2714';
-    position: absolute; 
-    top: 0px; 
-    left: -1px; 
-    color: #fa6705;
-    border-radius: 3px; 
-    -webkit-border-radius: 3px; 
-    -moz-border-radius: 3px; 
-    -ms-border-radius: 3px;  
-    width: 100%; 
-    text-align: center; 
-    font-size: 12px; 
-    padding: 0px 0 0 0; 
-    vertical-align: text-top; 
-     width: 18px;
-    height: 18px;
-} 
 </style>

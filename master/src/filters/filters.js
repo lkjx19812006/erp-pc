@@ -103,3 +103,21 @@ Vue.filter('catestate', function(val){
 		return val;
 	}
 })
+
+Vue.filter('employeestate', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else{
+		return val;
+	}
+})
+
+Vue.filter('levelstate', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else{
+		return val;
+	}
+})

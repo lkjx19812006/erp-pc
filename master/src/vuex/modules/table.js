@@ -29,6 +29,9 @@ import {
    CUSTOMER_DETAIL_DATA,
    UPDATE_CUSTOMER_DETAIL,
    CUSTOMER_UPDATE_DATA,
+   UPDATE_ADDR_DETAIL,
+   ADD_ADDR_DETAIL,
+   LABEL_DATA
 } from '../mutation-types'
 
 const state = {
@@ -78,11 +81,10 @@ const state = {
             {"id": 176312,"number": "国药准字Z20093165","name": "麝香祛痛搽剂","nameEn": "","product": "","agentType": "搽剂", "spec": "每瓶装60ml","company": "浙江景岳堂药业有限公司","address": "湖北省黄石市鄂黄路52号","drugType": "中药","numberOld": "","approveDate": "2014-03-03 00:00","code": "86901890001064", "linkDb": "药品广告 中药保护品种库","ctime": "2016-09-02 16:52","show":"true"}
          ],
          customerList:[
-            {"id":0,"type":0,"name":"ddd","category":"14555","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":true},
-            {"id":1,"type":0,"name":"ddf","category":"14frff555","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":false},
-            {"id":2,"type":1,"name":"ggg","category":"gvgg","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":false}
+            {"id":0,"type":0,"name":"ddd","category":"14555","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":true,"checked":false},
+            {"id":1,"type":0,"name":"ddf","category":"14frff555","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":false, "checked":false},
+            {"id":2,"type":1,"name":"ggg","category":"gvgg","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":false, "checked":false}
          ]
-         
     },
     breedDetail:{
           "code": "232去",
@@ -155,7 +157,7 @@ const state = {
         "show":true,
         "contact": {
             arr:[
-               {"id":1,"customer_id":1,"name":"sunny","position":"业务员","department":"业务部","phone":"13162875213","tel":"0215555555","email":"54621641655@163.com","main":0,"wechart":"1564642663","qq":"154851192"}
+               {"id":1,"customer_id":1,"name":"sunny","position":"业务员","department":"业务部","phone":"13162875213","tel":"0215555555","email":"54621641655@163.com","main":0,"wechart":"1564642663","qq":"154851192","show":"true"}
             ],
             show:false
           },
@@ -172,7 +174,7 @@ const state = {
             show:false
         }, 
         "intent":{arr:[],show:false},
-        "quality":{arr:[],show:false},
+        "license":{arr:[],show:false},
         "produce":{arr:[],show:false},
         "files":{ 
           arr:[
@@ -185,12 +187,14 @@ const state = {
          "remark": {arr:[],show:false},
          "addr": {
             arr:[
-                {"id":1,"name":"djhdj","show":"true"}
+                {"id":1,"type":"0","customer_id":"11","contact_name":"定金","contact_phone":"13162875213","sex":"女","country":"中国","province":"上海","city":"上海","detail_addr":"很多基地及","address":"上海市空口区158号","show":"true"}
             ],
             show:false
           },
-         "label": {
-            arr:[],
+          "label":{
+            arr:[
+                {"id":"1","customer_id":10,"label":"dfhidfhi","status":0,"show":true}
+            ],
             show:false
           }
     }
@@ -282,7 +286,6 @@ const mutations = {
     },
     [DELETE_SPECS_DATA](state,data){ //删除相关信息
         state[data.headline][data.key].arr.$remove(data.id);
-       /* state.breedDetail[data.key].arr.length-1;*/
     },
 
     [CATEGORY_DATA](state,data){  //品种显示
@@ -324,7 +327,6 @@ const mutations = {
     [CUSTOMER_DETAIL_DATA](state,data){ //客户详情
         state.clientDetail = data;
     },
-
     [CUSTOMER_ADD_DATA](state,data){ //新增客户
         state.basicBaseList.customerList.unshift({
            "name":data.name,
@@ -333,22 +335,28 @@ const mutations = {
             "category":data.category,
             "email":data.email,
             "principal":data.principal,
-            "biz_scope":data.biz_scope,
+            "bizScope":data.bizScope,
             "province":data.province,
             "city":data.city,
             "address":data.address,
-            "employee_id":data.employee_id,
-            "credit_level":data.credit_level,
+            "comments":data.comments,
             "show":false
         })
     },
 
     [CUSTOMER_UPDATE_DATA](state,data){  //修改客户列表信息
-      console.log(state.basicBaseList[data.key])
-        state.basicBaseList[data.key].breedId=data.breedId;
+        state.basicBaseList[data.key].category=data.category;
         state.basicBaseList[data.key].name=data.name;
-        state.basicBaseList[data.key].alias=data.name;
+        state.basicBaseList[data.key].type=data.type;
+        state.basicBaseList[data.key].principal=data.principal;
+        state.basicBaseList[data.key].bizScope=data.bizScope;
         state.basicBaseList[data.key].id=data.id;
+        state.basicBaseList[data.key].tel=data.tel;
+        state.basicBaseList[data.key].email=data.email;
+        state.basicBaseList[data.key].province=data.province;
+        state.basicBaseList[data.key].address=data.address;
+        state.basicBaseList[data.key].city=data.city;
+        state.basicBaseList[data.key].comments=data.comments;
     },
     [UPDATE_CUSTOMER_DETAIL](state,data){  //修改客户相关
         state[data.headline][data.key].arr[data.sub].name=data.name;
@@ -361,20 +369,52 @@ const mutations = {
         state[data.headline][data.key].arr[data.sub].wechart=data.wechart;
         state[data.headline][data.key].arr[data.sub].main=data.main;
     },
+    [UPDATE_ADDR_DETAIL](state,data){  //修改客户地址
+        state[data.headline][data.key].arr[data.sub].id=data.id;
+        state[data.headline][data.sub].customerId=data.id;
+        state[data.headline][data.key].arr[data.sub].type=data.type;
+        state[data.headline][data.key].arr[data.sub].contact_name=data.contact_name;
+        state[data.headline][data.key].arr[data.sub].contact_phone=data.contact_phone;
+        state[data.headline][data.key].arr[data.sub].sex=data.sex;
+        state[data.headline][data.key].arr[data.sub].address=data.address;
+        state[data.headline][data.key].arr[data.sub].country=data.country;
+        state[data.headline][data.key].arr[data.sub].province=data.province;
+        state[data.headline][data.key].arr[data.sub].city=data.city;
+        state[data.headline][data.key].arr[data.sub].detail_addr=data.detail_addr;
+        state[data.headline][data.key].arr[data.sub].district=data.district;
+        state[data.headline][data.key].arr[data.sub].street=data.street;
+    },
+
     [CUSTOMER_DETAIL_DATA](state,data){  // 新增客户相关信息
         state.clientDetail[data.key].arr.unshift({
           "name":data.name,
-          "position":param.position,
-          "department":param.department,
-          "phone":param.phone,
-          "tel":param.tel,
-          "email":param.email,
-          "qq":param.qq,
-          "wechart":param.wechart,
-          "main":param.main,
+          "position":data.position,
+          "department":data.department,
+          "phone":data.phone,
+          "tel":data.tel,
+          "email":data.email,
+          "qq":data.qq,
+          "wechart":data.wechart,
+          "main":data.main,
           "show":false
         })
-    }
+    },
+    [ADD_ADDR_DETAIL](state,data){  // 新增客户地址
+        state.clientDetail[data.key].arr.unshift({
+             "type":data.type,
+            "contact_name":data.contact_name,
+            "contact_phone":data.contact_phone,
+            "sex":data.sex,
+            "country":data.country,
+            "province":data.province,
+            "city":data.city,
+            "district":data.district,
+            "street":data.street,
+            'detail_addr':data.detail_addr,
+            "address":data.address,
+            "customer_id":data.customer_id
+        })
+    },
 }
 
 export default {

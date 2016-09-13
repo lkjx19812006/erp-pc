@@ -24,23 +24,18 @@
                             <div class="editpage-input">
                                 <label class="editlabel">分类码</label>
                                  <input type="text" v-model='param.category' class="form-control edit-input" value="{{param.category}}" />
-                               <!--  <select class="form-control" v-model="param.status"  style="width:90%;">
-                                  <option>{{param.status}}</option>
-                                  <option>0</option>
-                                  <option>1</option>
-                                                              </select> -->
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">所在省</label>
                                 <input type="text" v-model='param.province' class="form-control edit-input" value="{{param.province}}" />
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">业务员</label>
-                                <input type="text" v-model='param.employee_id' class="form-control edit-input" value="{{param.employee_id}}" />
+                                <label class="editlabel">备注</label>
+                                <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">经营范围</label>
-                                <input type="text" v-model='param.biz_scope' class="form-control edit-input" value="{{param.biz_scope}}" />
+                                <input type="text" v-model='param.bizScope' class="form-control edit-input" value="{{param.bizScope}}" />
                             </div>
                         </div>
                         <div class="editpageright">
@@ -61,10 +56,6 @@
                                 <input type="text" v-model='param.city' class="form-control edit-input" value="{{param.city}}" />
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">信用等级</label>
-                                <input type="text" v-model='param.credit_level' class="form-control edit-input" value="{{param.credit_level}}" />
-                            </div>
-                            <div class="editpage-input">
                                 <label class="editlabel">注册地址</label>
                                 <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
                             </div>
@@ -80,12 +71,6 @@
     </div>
 </template>
 <script>
-import {
-    initSystemlist
-} from '../../vuex/getters'
-import {
-    getparam
-} from '../../vuex/actions'
 export default {
     props: ['param'],
     data() {
@@ -94,12 +79,7 @@ export default {
         }
     },
     vuex: {
-        getters: {
-            initSystemlist
-        },
-        actions: {
-            getparam
-        }
+
     },
     route: {
         activate: function(transition) {
@@ -110,16 +90,6 @@ export default {
             console.log('hook-example deactivated!')
             transition.next()
         }
-    },
-    events: {
-        /*'getParam' () {
-            this.$set('param.name', this.initSystemlist[this.param.id].name);
-            this.$set('param.code', this.initSystemlist[this.param.id].code);
-            this.$set('param.type', this.initSystemlist[this.param.id].type);
-            this.$set('param.status', this.initSystemlist[this.param.id].status);
-            this.$set('param.desc', this.initSystemlist[this.param.id].desc);
-            this.$set('param.id', this.initSystemlist[this.param.id].id);
-        }*/
     }
 }
 </script>
