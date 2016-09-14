@@ -42,4 +42,6 @@ export const LABEL_DATA = 'LABEL_DATA' // 获取标签
 export const CUSTOMER_CONTACT_DATA = 'CUSTOMER_CONTACT_DATA' // 新增客户联系人
 export const ADD_LABEL_DATA = 'ADD_LABEL_DATA' // 新增标签
 export const UPDATE_LABEL_DETAIL = 'UPDATE_LABEL_DETAIL' // 修改标签
+export const USER_DATA = 'USER_DATA'   //会员列表
+export const UPDATE_USER_DATA = 'UPDATE_USER_DATA'   //修改会员信息
 

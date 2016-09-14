@@ -9,6 +9,7 @@ const _listUrl={
 	piechart:local+'piechart.json',
 	orderTable:local+'order.json',
 	clientList:ctx,
+	userList:ctx,
 	dataBaseList:ctx+'/sys/enum',
 	provinceList:ctx+'/sys/location',
 	enterpriseList:ctx+'/company/',

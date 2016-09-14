@@ -34,7 +34,9 @@ import {
    LABEL_DATA,
    CUSTOMER_CONTACT_DATA,
    ADD_LABEL_DATA,
-   UPDATE_LABEL_DETAIL
+   UPDATE_LABEL_DETAIL,
+   USER_DATA,
+   UPDATE_USER_DATA
 } from '../mutation-types'
 
 const state = {
@@ -87,7 +89,15 @@ const state = {
             {"id":0,"type":0,"name":"ddd","category":"14555","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":true,"checked":false},
             {"id":1,"type":0,"name":"ddf","category":"14frff555","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":false, "checked":false},
             {"id":2,"type":1,"name":"ggg","category":"gvgg","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":false, "checked":false}
-         ]
+         ],
+         userList:[
+            {"id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"name": null,"password": "56bf5523459ce2dfc6720798d852d6e6","gender": null,"nickname": "卖蘑菇的小姑凉","fullname": "沈威峰",
+            "idnumber": null,"signature": null,"phone": "13851379713","email": "857714234@qq.com","qq": "857714234","tel": null,"openId": null,"avatar": null,"url": null,"signin": null,"company": "个体种植户",
+            "address": null,"employee": null,"employeeId": null,"score": 300,"utype": 0,"ctype": 0,"addrShip": null,"addrReceive": null,"busiType": null,"province": null,"city": null,"source": 1,
+            "lastLoginIp": null,"lastLoginTime": "2016-06-02 11:44","status": 0,"updater": null,"utime": null,"creater": null,"ctime": null,"startCtime": null,"endCtime": null,
+            "userIds": null,"customerId": null,"main": null,"show":true
+            }      
+        ]
     },
     breedDetail:{
           "code": "232去",
@@ -434,7 +444,18 @@ const mutations = {
             "customerId":data.customerId,
             "show":false
         })
+    },
+    
+    [USER_DATA](state,data){  // 会员列表
+        state.basicBaseList.userList = data;
+    },
+
+    [UPDATE_USER_DATA](state,data){  // 会员列表
+        state.basicBaseList[data.key][data.index].fullname=data.fullname;
+        
+
     }
+
 }
 
 export default {

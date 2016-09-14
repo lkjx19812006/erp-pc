@@ -1071,3 +1071,56 @@ export const addrDel = ({ dispatch }, param) => { //删除客户收货地址
         console.log('fail');
     });
 }
+
+
+//会员信息列表
+export const getUserList = ({ dispatch }, param) => {  //会员信息列表
+    param.loading = true;
+    Vue.http({
+        method:'GET',
+        url:apiUrl.userList+'/user/?'+'&page=' + param.cur + '&pageSize=15',
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        }).then((res) => {
+           var user = res.json().result.list;
+           for (var i in user){
+                user[i].checked = false;
+                user[i].show =false;
+           }
+            dispatch(types.USER_DATA, user);
+            param.all = res.json().result.pages;
+            param.loading = false;
+        }, (res) => {
+            console.log('fail');
+            param.loading = false;
+        })
+}
+
+
+export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信息
+    console.log(param);
+    const updatedata = {
+        id: param.id,
+        fullname: param.fullname,
+    }
+    console.log(updatedata);
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.userList + '/user/',
+        emulateHTTP: false,
+        //params: param.id,
+        body: updatedata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With":"XMLHttpRequest",
+            'Content-Type':'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.UPDATE_USER_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}

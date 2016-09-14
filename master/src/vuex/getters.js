@@ -88,4 +88,7 @@ export const initCustomerlist = (state) => {
 export const initClientDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.clientDetail));  
 }
-
+/*---会员信息---*/
+export const initUserList = (state) => {
+    return parseJson(state.table.basicBaseList.userList);
+}
