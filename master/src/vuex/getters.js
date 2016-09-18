@@ -92,3 +92,15 @@ export const initClientDetail = (state) => {
 export const initUserList = (state) => {
     return parseJson(state.table.basicBaseList.userList);
 }
+
+/*---业务员信息---*/
+export const initEmployeeList = (state) => {
+    return parseJson(state.table.basicBaseList.employeeList);
+}
+
+/*---部门信息---*/
+export const initOrgList = (state) => {
+    console.log('gettersqqq');
+    console.log(state.table.basicBaseList.orgList);
+    return parseJson(state.table.basicBaseList.orgList);
+}

@@ -36,7 +36,9 @@ import {
    ADD_LABEL_DATA,
    UPDATE_LABEL_DETAIL,
    USER_DATA,
-   UPDATE_USER_DATA
+   UPDATE_USER_DATA,
+   EMPLOYEE_DATA,
+   ORG_DATA
 } from '../mutation-types'
 
 const state = {
@@ -97,7 +99,12 @@ const state = {
             "lastLoginIp": null,"lastLoginTime": "2016-06-02 11:44","status": 0,"updater": null,"utime": null,"creater": null,"ctime": null,"startCtime": null,"endCtime": null,
             "userIds": null,"customerId": null,"main": null,"show":true
             }      
-        ]
+        ],
+        employeeList:[{"id":6,"name":"lm","no":"001","orgName":"冕冠电子商务有限公司","orgId":1,"orgCode":"","level":"1",
+                       "entryDate":null,"leaveDate":null,"mobile":null,"extNo":"123456","qq":"38917306","wechat":"38917306@qq.com",
+                       "email":"38917306@qq.com","position":"软件工程师","isManager":1,"status":1,"updater":null,"utime":null,"creater":null,"ctime":null,"ename":"john"}
+                       ],
+        orgList:[{"id":1,"name":"冕冠电子商务有限公司","level":null,"pid":0,"status":1,"utime":null,"ctime":null,"creater":null,"updater":null,"code":"0001"}],           
     },
     breedDetail:{
           "code": "232去",
@@ -450,11 +457,18 @@ const mutations = {
         state.basicBaseList.userList = data;
     },
 
-    [UPDATE_USER_DATA](state,data){  // 会员列表
+    [UPDATE_USER_DATA](state,data){  // 会员更新
         state.basicBaseList[data.key][data.index].fullname=data.fullname;
-        
+    },
 
-    }
+    [EMPLOYEE_DATA](state,data){  // 业务员列表
+        state.basicBaseList.employeeList = data;
+    },
+
+    [ORG_DATA](state,data){  // 部门列表
+        state.basicBaseList.orgList = data;
+    },
+    
 
 }
 

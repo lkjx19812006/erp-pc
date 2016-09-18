@@ -42,6 +42,7 @@
                         <th>会员类型</th>
                         <th>最后登录时间</th>
                         <th></th>
+                        <th></th>
                         
                     </tr>
                 </thead>
@@ -63,9 +64,31 @@
                         <td>{{item.qq}}</td>
                         <td>{{item.company}}</td>
                         <td>{{item.score}}</td>
-                        <td>{{item.status}}</td>
+                        <td>
+                            <div v-if="item.status==0">普通会员</div>
+                            <div v-if="item.status==1">客户</div>
+                            <div v-if="item.status==2">拉黑</div>
+                        </td>
                         <td>{{item.lastLoginTime}}</td>
-                                                <td @click.stop="eventClick($index)">
+                        <td><button v-if="item.status==0" type="button" class="btn btn-default btn-close" @click="userToClient({
+                                                id:item.id,
+                                                main:item.main,
+                                                phone:item.phone,
+                                                tel:item.tel,
+                                                email:item.email,
+                                                qq:item.qq,
+                                                type:item.type,
+                                                fullname:item.fullname,
+                                                employeeId:item.employeeId,
+                                                customerId:item.customerId,  
+                                                status:item.status,                          
+                                                show:true,
+                                                link:deleteInfo,
+                                                url:'/user/',
+                                                key:'userList'
+                                                },item.show=false)">划转</button></td>
+                        
+                        <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="component_action" v-show="item.show">
                                 <ul>
@@ -97,6 +120,8 @@
                                                 type:item.type,
                                                 fullname:item.fullname,
                                                 employeeId:item.employeeId,
+                                                customerId:item.customerId,  
+                                                status:item.status,                          
                                                 show:true,
                                                 link:deleteInfo,
                                                 url:'/user/',
@@ -127,8 +152,7 @@ import {
     initUserList
 } from '../vuex/getters'
 import {
-    getUserList,
-    
+    getUserList  
 } from '../vuex/actions'
 
 
@@ -166,10 +190,11 @@ export default {
         getters: {
             // note that you're passing the function itself, and not the value 'getCount()'
             counterValue: getCount,
-            initUserList
+            initUserList           
         },
         actions: {
-            getUserList
+            getUserList,
+           
         }
     },
     events: {
@@ -185,18 +210,24 @@ export default {
                 this.$store.state.table.basicBaseList.userList[id].show=true;
             }   
         },
+    clientTransfer:function(value){
+        this.transferParam.show=true;
+        this.transferParam.name=value;
+    },
     modifyUser:function(item){
         this.alterParam = item;
     },
     userToClient:function(item){
         this.transferParam = item;
+        
+        
     }
 
   },
-  created() {
-
+  created() { 
         this.getUserList(this.loadParam, this.loadParam.all);
-    }
+        console.log(this.initUserList);
+  }
  
   
 }
