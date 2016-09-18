@@ -2,7 +2,7 @@
 	"results":[
 	{"categoryid":0,"category":"主页","img":"/static/images/icon_main.png","path":"/home/main","subcategory":[]},
     {"categoryid":1,"category":"业务机会","img":"/static/images/icon_change.png","path":"/home/change?id=0","subcategory":[{"subcategoryId":1,"subcategory":"个人业务机会","img":"/static/images/icon_order.png","path":"/home/change?id=0"},{"subcategoryId":2,"subcategory":"部门业务机会","img":"/static/images/icon_order.png","path":"/home/change?id=1"}]},
-    {"categoryid":2,"category":"潜在客户","img":"/static/images/icon_unuser.png","path":"/home/unclient","subcategory":[]},
+    {"categoryid":2,"category":"会员","img":"/static/images/icon_unuser.png","path":"/home/unclient","subcategory":[]},
     {"categoryid":3,"category":"客户","img":"/static/images/icon_user.png","path":"/home/client","subcategory":[]},
     {"categoryid":4,"category":"意向","img":"/static/images/order_intent.png","path":"/home/order_intent","subcategory":[]},
     {"categoryid":5,"category":"订单","img":"/static/images/icon_order.png","path":"/home/order","subcategory":[{"subcategoryId":1,"subcategory":"我的订单","img":"/static/images/icon_order.png","path":"/home/order?id=0"},{"subcategoryId":2,"subcategory":"客户订单","img":"/static/images/icon_order.png","path":"/home/order?id=1"}]},

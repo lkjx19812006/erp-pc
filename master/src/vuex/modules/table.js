@@ -39,7 +39,9 @@ import {
    UPDATE_PRODUCT_DATA,
    EMPLOYEE_DATA,
    ORG_LIST_DATA,
-   CHANCE_LIST_DATA
+   CHANCE_LIST_DATA,
+   USER_DATA,
+   UPDATE_USER_DATA
 } from '../mutation-types'
 
 const state = {
@@ -101,7 +103,15 @@ const state = {
          ],
          chanceList:[
             {"id": "14732390725891000", "userId": "b11741af0efc49ed815545c0d88ddc98", "type": 1, "especial": 1,"breedId": 1085, "breedName": "天仙子","qualification": "","quality": "工城 霜天地","location": "东北","spec": "统","number": 213,"price": 12,"unit": "公斤","address": "北京市,北京市,东城区 The", "duedate": "2016-09-14 00:00","advance": 1,"invoic": 1,"visit": 0, "pack": "瓦楞纸箱","intl": 0,"sampling": 1,"sampleNumber": 1,"sampleUnit": "公斤","sampleAmount": 100,"show":true}
-         ]
+         ],
+         userList:[
+            {"id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"name": null,"password": "56bf5523459ce2dfc6720798d852d6e6","gender": null,"nickname": "卖蘑菇的小姑凉","fullname": "沈威峰",
+            "idnumber": null,"signature": null,"phone": "13851379713","email": "857714234@qq.com","qq": "857714234","tel": null,"openId": null,"avatar": null,"url": null,"signin": null,"company": "个体种植户",
+            "address": null,"employee": null,"employeeId": null,"score": 300,"utype": 0,"ctype": 0,"addrShip": null,"addrReceive": null,"busiType": null,"province": null,"city": null,"source": 1,
+            "lastLoginIp": null,"lastLoginTime": "2016-06-02 11:44","status": 0,"updater": null,"utime": null,"creater": null,"ctime": null,"startCtime": null,"endCtime": null,
+            "userIds": null,"customerId": null,"main": null,"show":true
+            }      
+        ]
     },
     breedDetail:{
           "code": "232去",
@@ -486,7 +496,16 @@ const mutations = {
     },
     [CHANCE_LIST_DATA](state,data){ //业务机会列表
          state.basicBaseList.chanceList = data;
+    },
+    [USER_DATA](state,data){     // 会员列表
+        state.basicBaseList.userList = data;
+    },
+
+    [UPDATE_USER_DATA](state,data){  // 会员列表
+        state.basicBaseList[data.key][data.index].fullname=data.fullname;
+        
     }
+
 }
 
 export default {

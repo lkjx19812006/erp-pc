@@ -9,6 +9,7 @@ const _listUrl={
 	piechart:local+'piechart.json',
 	orderTable:local+'order.json',
 	clientList:ctx,
+	userList:ctx,
 	dataBaseList:ctx+'/sys/enum',
 	provinceList:ctx+'/sys/location',
 	enterpriseList:ctx+'/company/',
@@ -16,7 +17,8 @@ const _listUrl={
 	drawList:ctx+'/extractive',
 	breedList:ctx+'/breed',
 	categoryList:ctx+'/category/',
-	drugList:ctx+'/drug/'
+	drugList:ctx+'/drug/',
+	file:ctx+'/file/'
 };
 
 export default _listUrl;

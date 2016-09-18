@@ -100,3 +100,7 @@ export const initChanceList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.chanceList));  
 }
 
+/*---会员信息---*/
+export const initUserList = (state) => {
+    return parseJson(state.table.basicBaseList.userList);
+}

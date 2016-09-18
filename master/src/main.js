@@ -9,6 +9,7 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 
 
+
 require('./assets/css/style.css') 
 
 Vue.component('PulseLoader',PulseLoader);
