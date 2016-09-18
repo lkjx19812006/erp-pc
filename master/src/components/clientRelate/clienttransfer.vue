@@ -13,41 +13,54 @@
 	    				<a class="tabs" v-bind:class="{ 'tabs_active': !isA, 'tab1': isA }"  @click="salesman()">业务员</a>
 	    			</div>
 	    		</div>
-	    		<div class="con_trans">
+	    		<div class="con_trans"  v-cloak>
 	    			<div class="trans_parten" v-show="currentView">
-	    				<table class="table table-hover table_head table-striped " v-cloak>
+		    			<div class="cover_loading">
+			                <pulse-loader :loading="loadParam1.loading" :color="color" :size="size"></pulse-loader>
+			            </div>
+	    				<table class="table table-hover table_head table-striped">
 			                <thead>
 			                    <tr>
 			                        <th></th>
-			                        <th>姓名</th>
 			                        <th>部门</th>
 			                    </tr>
 			                </thead>
 			                <tbody>
-			                    <tr>
+			                    <tr v-for="item in initOrgList">
 			                       <td  @click.stop="">
-			                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="Partselected()" ></label>
+			                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="Partselected($index,item.id)" ></label>
 			                        </td>
-			                        <td>fffff</td>
-			                        <td>fdff</td>
+			                        <td>{{item.name}}</td>
 			                    </tr>
 			                </tbody>
 			            </table>
+			            <div class="edit_footer">
+				    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
+				    		<input  type="button" class="btn btn-orange" @click="transferInfo(param,param.show=false)" value="确定"/>
+				    	</div>
 	    			</div>
 	    			<div class="trans_service clearfix" v-show="!currentView">
-	    				<div class="col-xs-8">
+		    			<div class="cover_loading">
+			                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+			            </div>
+	    				<div class="col-xs-12">
 			                <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">
-			                    <input type="text" class="search_input" placeholder="请输入业务员名字">
-			                </div>
-			                <div class="name_search clearfix">
-			                    <img src="/static/images/search.png" height="24" width="24">
-			                    <input type="text" class="search_input" v-model="" placeholder="请输入业务员名字" v-on:keyup="categoryNameSearch()">
+			                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" v-on:keyup="employNameSearch(loadParam.name)">
 			                </div>
 			                 <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">
-			                    <input type="text" class="search_input" v-model="" placeholder="请输入业务员名字" v-on:keyup="categoryNameSearch()">
+			                    <input type="text" class="search_input" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  v-on:keyup="employPhoneSearch(loadParam.mobile)">
 			                </div>
+			                 <div class="name_search clearfix" style="border:none">
+			                    <!-- <img src="/static/images/search.png" height="24" width="24"> -->
+			                   <!--  <input type="text" class="search_input" v-model="loadParam.orgId" placeholder="请输入业务员部门" v-on:keyup="employNameSearch(loadParam.orgId)">  -->
+			                   <select  class="form-control" v-model="loadParam.orgId" @change="employorgSearch(loadParam.orgId)">
+			                        <option selected>请选择业务员部门</option>
+			                  	   <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
+			                  </select> 
+			                </div>
+			               
 			            </div>
 			            <table class="table table-hover table_head table-striped " v-cloak>
 			                <thead>
@@ -55,53 +68,85 @@
 			                        <th></th>
 			                        <th>姓名</th>
 			                        <th>部门</th>
+			                        <th>手机号</th>
 			                    </tr>
 			                </thead>
 			                <tbody>
-			                    <tr v-for="item in initCustomerlist">
+			                    <tr v-for="item in initEmployeeList">
 			                       <td  @click.stop="">
-			                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index)" ></label>
+			                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.orgId)" ></label>
 			                        </td>
 			                        <td>{{item.name}}</td>
-			                        <td>{{item.employee_id}}</td>
+			                        <td>{{item.orgName}}</td>
+			                        <td>{{item.mobile}}</td>
 			                    </tr>
 			                </tbody>
 			            </table>
+			             <div class="base_pagination">
+				            <pagination :combination="loadParam"></pagination>
+				        </div>
+				        <div class="edit_footer">
+				    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
+				    		<input  type="button" class="btn btn-orange" @click="transferEmploy(param,param.show=false)" value="确定"/>
+				    	</div>
 	    			</div>
 	    		</div>
-	    	</div>
-	    	<div class="edit_footer">
-	    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-	    		<button type="button" class="btn btn-orange" @click="deleteCompanyStatus(param.id,param.show=false)">确定</button>
 	    	</div>
 	    </div>
 	</div>
 </template>
 <script>
+import pagination from '../pagination'
 import {
-    initCustomerlist
+    initEmployeeList,
+    initOrgList
 } from '../../vuex/getters'
 import {
-    getClientList
+    getEmployeeList,
+    transferEmploy,
+    getEmployNameSearch,
+    getEmployOrgSearch,
+	getEmployphoneSearch,
+    transferInfo,
+    getOrgList
 } from '../../vuex/actions'
 export default{
 	props:['param'],
 	data(){
 		return {
+			loadParam: {
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7
+            },
+            loadParam1:{
+            	loading: true,
+                color: '#5dc596',
+                size: '15px'
+            },
 			currentView:true,
 			isA:true,
 			checked:false
 		}
 	},
 	components:{
-		
+		pagination
 	},
 	vuex:{
 		getters:{
-			initCustomerlist
+			initEmployeeList,
+			initOrgList
 		},
 		actions:{
-			getClientList
+			getEmployeeList,
+			transferEmploy,
+			getEmployNameSearch,
+			getEmployOrgSearch,
+			getEmployphoneSearch,
+			transferInfo,
+			getOrgList
 		}
 	},
 	methods:{
@@ -113,21 +158,35 @@ export default{
 			this.currentView=false;
 			this.isA=!this.isA;
 		},
-		Partselected:function(){
-			this.checked=!this.checked;
-           if(this.checked){
-                 this.$store.state.table.basicBaseList.customerList.forEach(function(item){
-                    item.checked=true;
-             })
-           }else{
-                this.$store.state.table.basicBaseList.customerList.forEach(function(item){
-                    item.checked=false;
-             })
-           }
+		Partselected:function(sub,id){
+          this.$store.state.table.basicBaseList.orgList[sub].checked=!this.$store.state.table.basicBaseList.orgList[sub].checked;
+           this.param.orgId=id;
+           console.log(id)
 		},
-		serviceselected:function(id){
-			this.$store.state.table.basicBaseList.customerList[id].checked=!this.$store.state.table.basicBaseList.customerList[id].checked;
-		}
+		serviceselected:function(sub,id,orgId){
+			this.$store.state.table.basicBaseList.employeeList[sub].checked=!this.$store.state.table.basicBaseList.employeeList[sub].checked;
+			this.param.employeeId=id;
+			this.param.orgId=orgId;
+		},
+		employNameSearch: function(name) {
+            this.getEmployNameSearch(this.loadParam, this.loadParam.all);
+        },
+        employorgSearch:function(orgId){
+        	this.getEmployOrgSearch(this.loadParam, this.loadParam.all);
+        },
+        employPhoneSearch:function(mobile){
+        	this.getEmployphoneSearch(this.loadParam, this.loadParam.all);
+        }
+	},
+    events: {
+	    fresh: function(input) {
+	        this.loadParam.cur = input;
+	        this.getEmployeeList(this.loadParam);
+	    }
+    },
+	created(){
+		this.getEmployeeList(this.loadParam,this.loadParam.all)
+		this.getOrgList(this.loadParam1)
 	}
 }
 </script>
@@ -159,6 +218,7 @@ export default{
 }
 .con_list{
 	position: relative;
+	margin-bottom: 50px;
 }
 .change_trans{
 	margin-top: 20px;
@@ -212,12 +272,31 @@ export default{
     text-align: center;
     background-position: 5px;
 }
-.trans_service .col-xs-8{
+.trans_service .col-xs-12{
 	margin-bottom: 20px;
+}
+.table{
+	margin-bottom: 5px;
 }
 .table_head>thead>tr{
 	background-color: #f5f5f5;
 	color: #333;
 	font-size: 18px;
+}
+.base_pagination{
+	margin-top: 0;
+}
+.edit_footer {
+    border-top: 1px solid #ddd;
+    text-align: right;
+    padding: 10px 20px;
+    margin-top: 50px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 50px;
+    width: 48%;
+    background: #fff;
+    margin: auto;
 }
 </style>

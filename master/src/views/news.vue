@@ -2,10 +2,7 @@
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
 
-    <div>
-        <h3>Count is {{ counterValue }}</h3>
-    </div>
-
+    
      <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">会员</div>
@@ -140,7 +137,7 @@
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>
-    <pagination :combination="list"></pagination>
+    
 </template>
 
 <script>

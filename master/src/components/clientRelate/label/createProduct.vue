@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建客户信息</h3>
+            <h3>{{param.title}}</h3>
         </div>
         <validator name="validation">
             <form novalidate>
@@ -13,74 +13,71 @@
                     <section class="editsection"  v-cloak>   
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>名称</label>
-                                <input type="text" id="username" class="form-control" v-model="customerData.name" v-validate:username="['required']"/>
+                                <label class="editlabel">名称 <span class="system_danger" v-if="$validation.username.required">请输入名称</span></label>
+                                <input type="text" id="username" class="form-control" v-model="param.name" v-validate:username="['required']" value="{{param.name}}"/>
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>类型</label>
-                                <input type="text" id="usertype" class="form-control" v-model="customerData.type" v-validate:usertype="['required']" />
+                                <label class="editlabel">类型 <span class="system_danger" v-if="$validation.usertype.required">请输入类型</span></label>
+                                <input type="text" id="usertype" class="form-control" v-model="param.type" v-validate:usertype="['required']" value="{{param.type}}"/>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>分类码</label>
-                                <input type="text" id="category" class="form-control" v-model="customerData.category" v-validate:category="['required']" />
+                                <label class="editlabel">品种ID <span class="system_danger" v-if="$validation.usertype.required">请输入品种ID</span></label>
+                                <input type="text" id="breedId" class="form-control" v-model="param.breedId" v-validate:breedId="['required']" value="{{param.breedId}}"/>
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>负责人</label>
-                                <input type="text" class="form-control" v-model="customerData.principal" id="userown" v-validate:userown="['required']" />
+                                <label class="editlabel">质量</label>
+                                <input type="text" class="form-control" v-model="param.quality" value="{{param.quality}}"/>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>电话</label>
-                                <input type="text" class="form-control" maxlength="11" v-model="customerData.tel" />
+                                <label class="editlabel">产地 <span class="system_danger" v-if="$validation.location.required">请输入产地</span></label>
+                                <input type="text" class="form-control"  v-model="param.location" id="location" v-validate:location="['required']" value="{{param.location}}"/>
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>邮箱</label>
-                                <input type="email" class="form-control" v-model="customerData.email"  />
+                                <label class="editlabel">规格 <span class="system_danger" v-if="$validation.spec.required">请输入规格</span></label>
+                                <input type="text" class="form-control" v-model="param.spec"  id="spec" v-validate:spec="['required']" value="{{param.spec}}"/>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>所在省</label>
-                                <input type="text" class="form-control" v-model="customerData.province" />
+                                <label class="editlabel">数量 <span class="system_danger" v-if="$validation.number.required">请输入数量</span></label>
+                                <input type="text" class="form-control" v-model="param.number" id="number" v-validate:number="['required']" value="{{param.number}}" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>所在市</label>
-                                <input type="text" class="form-control" v-model="customerData.city"  />
+                                <label class="editlabel">价格 <span class="system_danger" v-if="$validation.price.required">请输入价格</span></label>
+                                <input type="text" class="form-control" v-model="param.price"  id="price" v-validate:price="['required']" value="{{param.price}}"/>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>备注</label>
-                                <input type="text" class="form-control" v-model="customerData.comments" />
+                                <label class="editlabel">单位 <span class="system_danger" v-if="$validation.unit.required">请输入价格</span></label>
+                                <input type="text" class="form-control" v-model="param.unit" id="unit" v-validate:unit="['required']" value="{{param.unit}}"/>
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>注册地址</label>
-                                <input type="text" class="form-control" v-model="customerData.address" />
+                                <label class="editlabel">价格过期时间</label>
+                                <input type="text" class="form-control" v-model="param.duedate" value="{{param.duedate}}"/>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>经营范围</label>
-                                <input type="text" class="form-control" v-model="customerData.bizScope" />
+                                <label class="editlabel">检测报告</label>
+                                <input type="text" class="form-control" v-model="param.coa" value="{{param.coa}}"/>
                             </div>
                         </div>
                     </section>
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="saveCreate(customerData,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">保存</button>
                 </div>
             </form>
         </validator>
     </div>
 </template>
 <script>
-import {
-    saveCreate
-} from '../../vuex/actions'
 export default {
     components: {
 
@@ -88,24 +85,11 @@ export default {
     props: ['param'],
     data() {
         return {
-            customerData:{
-                name:'',
-                type:'',
-                category:'',
-                principal:'',
-                bizScope:'',
-                tel:'',
-                email:'',
-                province:'',
-                city:'',
-                address:''
-            }
+           
         }
     },
      vuex: {
-        actions: {
-            saveCreate
-        }
+        
     },
     route: {
         activate: function(transition) {

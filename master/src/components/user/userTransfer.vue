@@ -181,7 +181,6 @@ export default{
            }
 		},
 		selectCustomer:function(id){
-			console.log('selectCustomer');
 			if(this.$store.state.table.basicBaseList.customerList[id].checked == false){
 				this.customerFlag++;
 			}else{
@@ -200,7 +199,6 @@ export default{
 			
 		},
 		selectEmployee:function(id){
-			console.log('selectEmployee');
 			if(this.$store.state.table.basicBaseList.employeeList[id].checked == false){
 				this.employeeFlag++;
 			}else{
@@ -219,7 +217,6 @@ export default{
 			
 		},
 		selectDepartment:function(id){
-			console.log('selectDepartment');
 			if(this.$store.state.table.basicBaseList.orgList[id].checked == false){
 				this.orgFlag++;
 			}else{

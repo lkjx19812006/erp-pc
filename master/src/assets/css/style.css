@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-09-13 16:35:32
+* @Last Modified time: 2016-09-18 13:54:11
 */
 * {
 	padding: 0;
@@ -220,7 +220,12 @@ body{
 .breed_action dl,.label_action dl{
     margin-bottom: 0;
 }
-
+.breed_action dl dt{
+    display: block;
+    padding: 3px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
 .component_action ul,
 .breed_action ul{
     margin-bottom: 0;
@@ -385,7 +390,13 @@ body{
     display: inline-block;
     padding-left: 0;
 }
-/* --  删除弹框 --- */
+.system_danger{
+    color: red;
+    margin-bottom: 0;
+    font-weight: 100;
+    font-size: 12px;
+}
+/* --  提示,删除弹框 --- */
 .model-header {
     background-color: #fff;
     border-radius: 5px;

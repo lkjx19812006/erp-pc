@@ -35,9 +35,13 @@ import {
    CUSTOMER_CONTACT_DATA,
    ADD_LABEL_DATA,
    UPDATE_LABEL_DETAIL,
+   ADD_PRODUCT_DATA,
+   UPDATE_PRODUCT_DATA,
+   EMPLOYEE_DATA,
+   ORG_LIST_DATA,
+   CHANCE_LIST_DATA,
    USER_DATA,
    UPDATE_USER_DATA,
-   EMPLOYEE_DATA,
    ORG_DATA
 } from '../mutation-types'
 
@@ -91,6 +95,15 @@ const state = {
             {"id":0,"type":0,"name":"ddd","category":"14555","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":true,"checked":false},
             {"id":1,"type":0,"name":"ddf","category":"14frff555","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":false, "checked":false},
             {"id":2,"type":1,"name":"ggg","category":"gvgg","principal":"suny","biz_scope":"djkdfd","tel":"13162875213","email":"大大","province":"上海市","city":"虹口","address":"上海市虹口区","employee_id":"AAA","credit_level":"AAA","show":false, "checked":false}
+         ],
+         employeeList:[
+            {"id": 1,"name": "lm","no": "001","orgId": 1, "level": "1","qq": null,"wechat": null,"email": null,"isManager": 1,"position": null,"mobile": null,"show":"true"}
+         ],
+         orgList:[
+            {"id":1,"name":"交易部门","show":true}
+         ],
+         chanceList:[
+            {"id": "14732390725891000", "userId": "b11741af0efc49ed815545c0d88ddc98", "type": 1, "especial": 1,"breedId": 1085, "breedName": "天仙子","qualification": "","quality": "工城 霜天地","location": "东北","spec": "统","number": 213,"price": 12,"unit": "公斤","address": "北京市,北京市,东城区 The", "duedate": "2016-09-14 00:00","advance": 1,"invoic": 1,"visit": 0, "pack": "瓦楞纸箱","intl": 0,"sampling": 1,"sampleNumber": 1,"sampleUnit": "公斤","sampleAmount": 100,"show":true}
          ],
          userList:[
             {"id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"name": null,"password": "56bf5523459ce2dfc6720798d852d6e6","gender": null,"nickname": "卖蘑菇的小姑凉","fullname": "沈威峰",
@@ -185,14 +198,6 @@ const state = {
             arr:[],
             show:false
          },
-        "orders":{
-            arr:[],
-            show:false      
-          },        
-        "contract": {
-            arr:[],
-            show:false
-        }, 
         "intent":{arr:[],show:false},
         "products":{arr:[],show:false},
         "files":{ 
@@ -231,8 +236,8 @@ const mutations = {
     [PROVINCE_DATA](state,data){   //省市区
          state.systemBaseList.locationlist = data;
     },
-    [DELETE_SHOW_STATUE](state,id){   //删除枚举
-         state.systemBaseList.enumlist.splice(id,1);
+    [DELETE_SHOW_STATUE](state,sub){   //删除枚举
+         state.systemBaseList.enumlist.splice(sub,1);
     },
     [ADD_DATA](state,data){ // 新增枚举
         state.systemBaseList.enumlist.unshift({
@@ -241,10 +246,10 @@ const mutations = {
           "type":data.type,
           "desc":data.desc,
           "status":data.status,
+          "id":data.id,
           "show":false
         });
     },
-
     [UPDATE_DATA](state,data){   //枚举修改
        state.systemBaseList.enumlist[data.sub].id=data.id;
        state.systemBaseList.enumlist[data.sub].name=data.name;
@@ -253,7 +258,6 @@ const mutations = {
        state.systemBaseList.enumlist[data.sub].desc=data.desc;
        state.systemBaseList.enumlist[data.sub].status=data.status;
     },
-
     [SERVICE_COMPONENT](state,data){  //成分
          state.basicBaseList.componentList = data;
     },
@@ -267,7 +271,7 @@ const mutations = {
        state.basicBaseList.breedList = data;
     },
 
-    [BREED_DETAIL_DATA](state,data){
+    [BREED_DETAIL_DATA](state,data){  //药材列表
         state.breedDetail=data;
     },
 
@@ -276,6 +280,7 @@ const mutations = {
           "code":data.code,
           "name":data.name,
           "categoryId":data.selected,
+          "id":data.id,
           "show":false
        })
     }, 
@@ -288,7 +293,8 @@ const mutations = {
             "wechart":data.wechart,
             "email":data.email,
             "qq":data.qq,
-            "show":false
+            "show":false,
+            "id":data.id
         })
     },
     [UPDATE_CONTACT_DATA](state,data){  //修改企业相关内容
@@ -299,14 +305,14 @@ const mutations = {
         state.companyDetail[data.key].arr[data.sub].wechart=data.wechart;
     },
 
-    [DELETE_CONTACT_DATA](state,id){ //删除企业联系人
+   /* [DELETE_CONTACT_DATA](state,id){ //删除企业联系人 待定
         state.companyDetail.companyContacts.arr.splice(id,1);
-    },
+    },*/
     [DELETE_BREED_DATA](state,data){ //删除客户信息
-        state.basicBaseList[data.key].$remove(data.id);
+        state.basicBaseList[data.key].splice(data.sub,1);
     },
     [DELETE_SPECS_DATA](state,data){ //删除相关信息
-        state[data.headline][data.key].arr.$remove(data.id);
+        state[data.headline][data.key].arr.splice(data.sub,1);
     },
 
     [CATEGORY_DATA](state,data){  //品种显示
@@ -332,7 +338,8 @@ const mutations = {
           "name":data.name,
           "breedId":data.id,
           "show":false,
-          "alias":data.name
+          "alias":data.name,
+          "id":data.id
         })
     },
     [SERVICE_ENTERPRISE_DETAIL](state,data){  //企业详情
@@ -361,23 +368,23 @@ const mutations = {
             "city":data.city,
             "address":data.address,
             "comments":data.comments,
+            "id":data.id,
             "show":false
         })
     },
-
     [CUSTOMER_UPDATE_DATA](state,data){  //修改客户列表信息
-        state.basicBaseList[data.key].category=data.category;
-        state.basicBaseList[data.key].name=data.name;
-        state.basicBaseList[data.key].type=data.type;
-        state.basicBaseList[data.key].principal=data.principal;
-        state.basicBaseList[data.key].bizScope=data.bizScope;
-        state.basicBaseList[data.key].id=data.id;
-        state.basicBaseList[data.key].tel=data.tel;
-        state.basicBaseList[data.key].email=data.email;
-        state.basicBaseList[data.key].province=data.province;
-        state.basicBaseList[data.key].address=data.address;
-        state.basicBaseList[data.key].city=data.city;
-        state.basicBaseList[data.key].comments=data.comments;
+        state.basicBaseList[data.key][data.sub].category=data.category;
+        state.basicBaseList[data.key][data.sub].name=data.name;
+        state.basicBaseList[data.key][data.sub].type=data.type;
+        state.basicBaseList[data.key][data.sub].principal=data.principal;
+        state.basicBaseList[data.key][data.sub].bizScope=data.bizScope;
+        state.basicBaseList[data.key][data.sub].id=data.id;
+        state.basicBaseList[data.key][data.sub].tel=data.tel;
+        state.basicBaseList[data.key][data.sub].email=data.email;
+        state.basicBaseList[data.key][data.sub].province=data.province;
+        state.basicBaseList[data.key][data.sub].address=data.address;
+        state.basicBaseList[data.key][data.sub].city=data.city;
+        state.basicBaseList[data.key][data.sub].comments=data.comments;
     },
     [UPDATE_CUSTOMER_DETAIL](state,data){  //修改客户相关
         state[data.headline][data.key].arr[data.sub].name=data.name;
@@ -390,7 +397,7 @@ const mutations = {
         state[data.headline][data.key].arr[data.sub].wechart=data.wechart;
         state[data.headline][data.key].arr[data.sub].main=data.main;
     },
-    [UPDATE_ADDR_DETAIL](state,data){  //修改客户地址
+    [UPDATE_ADDR_DETAIL](state,data){    //修改客户地址
         state[data.headline][data.key].arr[data.sub].id=data.id;
         state[data.headline][data.key].arr[data.sub].customerId=data.customerId;
         state[data.headline][data.key].arr[data.sub].type=data.type;
@@ -405,12 +412,27 @@ const mutations = {
         state[data.headline][data.key].arr[data.sub].district=data.district;
         state[data.headline][data.key].arr[data.sub].street=data.street;
     },
-    [UPDATE_LABEL_DETAIL](state,data){ //修改客户标签
+    [UPDATE_LABEL_DETAIL](state,data){   //修改客户标签
         state[data.headline][data.key].arr[data.sub].id=data.id;
         state[data.headline][data.key].arr[data.sub].customerId=data.customerId;
         state[data.headline][data.key].arr[data.sub].label=data.label;
-        state[data.headline][data.key].arr[data.sub].remark=data.remark;
+        state[data.headline][data.key].arr[data.sub].remark=data.label;
         state[data.headline][data.key].arr[data.sub].status=data.status;
+    },
+    [UPDATE_PRODUCT_DATA](state,data){  //修改客户产品
+        state[data.headline][data.key].arr[data.sub].id=data.id;
+        state[data.headline][data.key].arr[data.sub].cid=data.cid;
+        state[data.headline][data.key].arr[data.sub].type=data.type;
+        state[data.headline][data.key].arr[data.sub].name=data.name;
+        state[data.headline][data.key].arr[data.sub].breedId=data.breedId;
+        state[data.headline][data.key].arr[data.sub].quality=data.quality;
+        state[data.headline][data.key].arr[data.sub].location=data.location;
+        state[data.headline][data.key].arr[data.sub].spec=data.spec;
+        state[data.headline][data.key].arr[data.sub].number=data.number;
+        state[data.headline][data.key].arr[data.sub].price=data.price;
+        state[data.headline][data.key].arr[data.sub].unit=data.unit;
+        state[data.headline][data.key].arr[data.sub].duedate=data.duedate;
+        state[data.headline][data.key].arr[data.sub].coa=data.coa;
     },
     [CUSTOMER_CONTACT_DATA](state,data){  // 新增客户联系人信息
         state.clientDetail[data.key].arr.unshift({
@@ -422,6 +444,7 @@ const mutations = {
           "email":data.email,
           "qq":data.qq,
           "wechart":data.wechart,
+          "id":data.id,
           "main":data.main,
           "show":false
         })
@@ -440,20 +463,47 @@ const mutations = {
             'detailAddr':data.detailAddr,
             "address":data.address,
             "customerId":data.customerId,
+            "id":data.id,
             "show":false
         })
     },
     [ADD_LABEL_DATA](state,data){  // 新增客户标签
         state.clientDetail[data.key].arr.unshift({
-             "label":data.label,
-             "remark":data.label,
+            "label":data.label,
+            "remark":data.label,
             "status":data.status,
-            "customerId":data.customerId,
+            "customerId":data.id,
+            "id":data.id,
             "show":false
         })
     },
-    
-    [USER_DATA](state,data){  // 会员列表
+    [ADD_PRODUCT_DATA](state,data){ //新增客户产品
+       state.clientDetail[data.key].arr.unshift({
+           "type":data.type,
+          "name":data.name,
+          "breedId":data.breedId,
+          "quality":data.quality,
+          "location":data.location,
+          "spec":data.spec,
+          "number":data.number,
+          "price":data.price,
+          "unit":data.unit,
+          "duedate":data.duedate,
+          "coa":data.coa,
+          "cid":data.cid,
+          "id":data.id
+        })
+    },
+    [EMPLOYEE_DATA](state,data){   //员工列表
+        state.basicBaseList.employeeList = data;
+    },
+    [ORG_LIST_DATA](state,data){  //部门列表
+       state.basicBaseList.orgList = data;
+    },
+    [CHANCE_LIST_DATA](state,data){ //业务机会列表
+         state.basicBaseList.chanceList = data;
+    },
+    [USER_DATA](state,data){     // 会员列表
         state.basicBaseList.userList = data;
     },
 
@@ -469,6 +519,7 @@ const mutations = {
         state.basicBaseList.orgList = data;
     },
     
+
 
 }
 

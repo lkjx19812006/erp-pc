@@ -9,7 +9,6 @@
         </div>
         <div class="edit-model">
             <section class="editsection" v-cloak>
-                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                 <div class="editpage">
                     <div class="editpageleft">
                         <div class="editpage-input">
@@ -108,7 +107,6 @@ export default {
     right: 0;
     max-width: 630px;
     min-width: 380px;
-    max-height: 500px;
     bottom: 50px;
     padding: 0;
     background-color: #fff;

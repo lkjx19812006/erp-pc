@@ -64,7 +64,7 @@
                                                                url:'contract',
                                                                key:'companyContacts'
                                                                },item.show=false)">编辑</dt>
-                                                       <dt @click="contactDel(item.id,item.show=false)">删除</dt>
+                                                      <!--  <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt> -->
                                                    </dl>
                                                </div>
                                             </td>
