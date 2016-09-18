@@ -89,3 +89,14 @@ export const initClientDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.clientDetail));  
 }
 
+export const initEmployeeList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.employeeList));  
+}
+
+export const initOrgList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.orgList));  
+}
+export const initChanceList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.chanceList));  
+}
+

@@ -4,6 +4,7 @@
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">客户</div>
@@ -18,7 +19,13 @@
                 </div>
             </div>
             <div class="right col-xs-2">
-                <button class="new_btn transfer" @click="clientTransfer('transfer')">划转</button>
+                <button class="new_btn transfer" @click="clientTransfer({
+                    arr:[],
+                    name:'test',
+                    employeeId:'',
+                    orgId:'',
+                    show:true
+                    })">划转</button>
                 <button class="new_btn" @click="createCustomer('create')">新建</button>
             </div>
         </div>
@@ -47,13 +54,20 @@
                 <tbody>
                     <tr>
                         <td>
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" @click="checkedAll()" ></label>
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
                         </td>
                         <td>全选</td>
                     </tr>
-                    <tr v-for="item in initCustomerlist"  @click="clickOn(item.id)">
+                    <tr v-for="item in initCustomerlist"  @click="clickOn({
+                                id:item.id,
+                                sub:$index,
+                                show:true,
+                                link:alterInfo,
+                                url:'/customer/',
+                                key:'customerList'
+                                                })">
                         <td  @click.stop="">
-                            <label  class="checkbox_unselect"v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)" ></label>
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
                         <td>{{item.type}}</td>
                         <td>{{item.name}}</td>
@@ -72,6 +86,7 @@
                                 <ul>
                                     <li @click="modifyClient({
                                                 id:item.id,
+                                                sub:$index,
                                                 show:true,
                                                 name:item.name,
                                                 type:item.type,
@@ -87,16 +102,17 @@
                                                 link:alterInfo,
                                                 url:'/customer/',
                                                 key:'customerList'
-                                                },item.show=false)">编辑</li>
+                                                })">编辑</li>
                                     <li @click="specDelete({
                                                 id:item.id,
+                                                sub:$index,
                                                 show:true,
                                                 name:item.name,
                                                 title:'客户',
                                                 link:deleteInfo,
                                                 url:'/customer/',
                                                 key:'customerList'
-                                                },item.show=false)">删除</li>
+                                                })">删除</li>
                                 </ul>
                             </div>
                         </td>
@@ -113,9 +129,10 @@
 import pagination from '../components/pagination'
 import detailModel from '../components/clientRelate/clientDetail'
 import createModel from '../components/clientRelate/clientCreate'
-import deletebreedModel from '../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
+import deletebreedModel  from '../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import alterinfoModel  from '../components/clientRelate/clientUpdate'
-import transferModel  from '../components/clientRelate/clienttransfer'
+import transferModel   from '../components/clientRelate/clienttransfer'
+import tipsdialogModel  from '../components/tipsDialog'
 import {
     initCustomerlist
 } from '../vuex/getters'
@@ -133,7 +150,8 @@ export default {
         createModel,
         deletebreedModel,
         alterinfoModel,
-        transferModel
+        transferModel,
+        tipsdialogModel
     },
     vuex: {
         getters: {
@@ -156,8 +174,7 @@ export default {
                 all: 7
             },
             changeParam: {
-                show: false,
-                id: ''
+                show: false
             },
             createParam:{
                 show: false,
@@ -165,7 +182,8 @@ export default {
             },
             transferParam:{
                 show:false,
-                name:''
+                name:'',
+                arr:[]
             },
             deleteParam:{
                 show:false
@@ -174,13 +192,16 @@ export default {
                 show:false,
                 id:''
             },
+            tipsParam:{
+                show:false,
+                name:'请先选择客户'
+            },
             checked:false
         }
     },
     methods: {
-        clickOn: function(id) {
-            this.changeParam.show = true;
-            this.changeParam.id = id;
+        clickOn: function(initCustomerlist) {
+            this.changeParam = initCustomerlist;
             this.getClientDetail(this.changeParam);
         },
         createCustomer:function(value){
@@ -200,9 +221,21 @@ export default {
         modifyClient:function(initCustomerlist){
             this.alterParam =initCustomerlist;
         },
-        clientTransfer:function(value){
-            this.transferParam.show=true;
-            this.transferParam.name=value;
+        clientTransfer:function(Customerlist){
+            console.log(this.transferParam.arr)
+            console.log(this.transferParam.arr.length)
+          /*  if(this.transferParam.arr.length==0){
+                this.tipsParam.show= true;
+                this.tipsParam.name= '请先选择客户';
+            }else if(this.transferParam.arr.length>0){*/
+                this.transferParam = Customerlist;
+                for(var i in this.initCustomerlist){
+                    if(this.initCustomerlist[i].checked){
+                        this.transferParam.arr.push(this.initCustomerlist[i].id);
+                    }
+                }
+            /*}*/
+            
         },
         checkedAll: function() {
            this.checked=!this.checked;
@@ -216,8 +249,15 @@ export default {
              })
            }
         },
-        onlyselected:function(id){
-            this.$store.state.table.basicBaseList.customerList[id].checked=!this.$store.state.table.basicBaseList.customerList[id].checked;
+        onlyselected:function(sub,id){
+            this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
+            this.id = id;
+        }
+    },
+    events: {
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getClientList(this.loadParam);
         }
     },
     created() {

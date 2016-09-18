@@ -42,4 +42,8 @@ export const LABEL_DATA = 'LABEL_DATA' // 获取标签
 export const CUSTOMER_CONTACT_DATA = 'CUSTOMER_CONTACT_DATA' // 新增客户联系人
 export const ADD_LABEL_DATA = 'ADD_LABEL_DATA' // 新增标签
 export const UPDATE_LABEL_DETAIL = 'UPDATE_LABEL_DETAIL' // 修改标签
-
+export const ADD_PRODUCT_DATA = 'ADD_PRODUCT_DATA' // 新增客户产品
+export const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA' // 修改客户产品
+export const EMPLOYEE_DATA ='EMPLOYEE_DATA'  //员工列表数据
+export const ORG_LIST_DATA ='ORG_LIST_DATA'  //部门列表数据
+export const CHANCE_LIST_DATA ='CHANCE_LIST_DATA'  //业务机会数据列表

@@ -65,7 +65,6 @@ export default {
                     ndata = canvas.toDataURL(img.src.split(';')[0].split(':')[1], 165399 / ndata.length);
                 }
                 canvas.width = canvas.height = 0;
-
                 return ndata;
             },
             delImage:function(e){

@@ -25,7 +25,7 @@ export default (router) => router.map({
             '/change': {
                 name: 'change',
                 component: function(resolve) {
-                    require(['./views/partchance'], resolve)
+                    require(['./views/chance'], resolve)
                 }
             },
             '/unclient': {

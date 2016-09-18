@@ -39,13 +39,6 @@ export default {
 }
 </script>
 <style scoped>
-/* body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
- }  */
-
 #app {
     color: #2c3e50;
     max-width: 100%;
