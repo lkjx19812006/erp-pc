@@ -17,7 +17,8 @@ const _listUrl={
 	drawList:ctx+'/extractive',
 	breedList:ctx+'/breed',
 	categoryList:ctx+'/category/',
-	drugList:ctx+'/drug/'
+	drugList:ctx+'/drug/',
+	file:ctx+'/file/'
 };
 
 export default _listUrl;

@@ -1,9 +1,14 @@
 <template>
     <div class="img_div">
         <form>
-            <input type="file" @change="previewImg" class="input_image" >
-                 <img v-bind:src="image" class="image_show" >
-                <img src="../../static/images/close.png" v-show="close" @click="delImage" class="close_image">
+            <input type="file" @change="previewImg" class="input_image" name="photo">
+            <img v-bind:src="image" class="image_show" v-if="imageShow">
+            <img src="../../static/images/close.png" v-show="close" @click="delImage" class="close_image">
+            <div v-show="!imageShow">
+                <div>{{fileName}}</div>
+                <input type="button" value="重新选择文件" class="btn btn-default select_button">
+            </div>
+
         </form>
     </div>
 </template>
@@ -12,31 +17,57 @@ export default {
     data() {
             return {
                 image: "../../static/images/default_image.png",
-                close:false
+                close:false,
+                imageShow:true,
+                fileName:''
             }
         },
+        props: ['param'],
         methods: {
             previewImg: function(e) {
                 let _self = this;
                 let input = e.target;
+               console.log(_self.param);
                 if (input.files && input.files[0]) {
-                    let reader = new FileReader(),
-                        img = new Image();
+                    let file = input.files[0];
+                  
+                    console.log(file)
+                    _self.fileName=file.name;
+                    if(file.type.split('/')[0]=='image'){
+                         
+                         let reader = new FileReader();
+                      let  img = new Image();
                     reader.onload = function(e) {
                         if (input.files[0].size > 204800) { //图片大于200kb则压缩
                             img.src = e.target.result;
                             img.onload = function() {
                                 _self.image = _self.compress(img);
-                                _self.$dispatch("getImageData", _self.image);
-                                _self.close=true;
                             }
                         } else {
+
                             _self.image = e.target.result;
-                            _self.$dispatch("getImageData", _self.image);
-                            _self.close=true;
+                            _self.imageShow=true;
                         }
+                        
+                              let param ={};
+                                param.mFile=_self.image;
+                                param.qiniu=_self.param.qiniu;
+                                _self.close=true;
+                                _self.upload(param,'base64');
+                                
                     }
                     reader.readAsDataURL(input.files[0]);
+                    }else{
+                    _self.imageShow=false;
+                    _self.close=false;
+                    let param =new FormData();
+                    param.append("qiniu", _self.param.qiniu);
+                    param.append("mFile", file);
+                    _self.upload(param,'');
+
+
+                }
+                   
                     return 1;
                 }
             },
@@ -69,11 +100,27 @@ export default {
                 return ndata;
             },
             delImage:function(e){
-                console.log(e.target.parentElement);
                 e.target.parentElement.reset();
                 this.close=false;
                 this.image="../../static/images/default_image.png";
                 this.$dispatch("getImageData", this.image);
+
+            },
+            upload:function(data,url){
+                var _self=this;
+                   this.$http({
+                        method: 'POST',  
+                        url: _self.param.url+url,
+                        emulateJSON: false,
+                        emulateHTTP: false,
+                        body: data
+                        }).then((res) => {
+                       console.log(res);
+                        _self.$dispatch("getImageData", res.json());
+                        }, (res) => {
+                        console.log(res);
+                        });
+
 
             }
         }
@@ -104,5 +151,9 @@ h1 {
     top: -16px;
     right: -14px;
     width: 30px;
+}
+
+.select_button{
+
 }
 </style>

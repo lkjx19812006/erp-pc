@@ -5,9 +5,11 @@
             Welcome to your Vue.js appssss!
         </p>
     </div>
-    <div class="image_demo"><press-image></press-image></div>
+    <div class="image_demo">
+    <press-image :param="test"></press-image>
+    </div>
     <div>
-        <show-model :param="modelParam"></show-model>
+        <show-model :param="test"></show-model>
         <button v-on:click="btnClick('hello')">hello</button>
         <button v-on:click="btnClick('test')">hello</button>
     </div>
@@ -27,6 +29,10 @@ export default {
             modelParam: {
                 show: false,
                 name: 'hello'
+            },
+            test:{
+                url:'/crm/api/v1/file/',
+                qiniu:false
             }
         }
     },
@@ -78,7 +84,7 @@ export default {
 }
 
 .image_demo{
-    width: 100px;
-    height:100px
+    width: 200px;
+    height:200px
 }
 </style>
