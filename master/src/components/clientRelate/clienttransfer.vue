@@ -165,6 +165,15 @@ export default{
 		},
 		serviceselected:function(sub,id,orgId){
 			this.$store.state.table.basicBaseList.employeeList[sub].checked=!this.$store.state.table.basicBaseList.employeeList[sub].checked;
+			/*console.log(this.employeeList)
+			for(var key in this.$store.state.table.basicBaseList.employeeList){
+				if(key!=id){
+					if(this.$store.state.table.basicBaseList.employeeList[key].checked==true){
+						this.$store.state.table.basicBaseList.employeeList[key].checked=false;
+					}
+					
+				}
+			}*/
 			this.param.employeeId=id;
 			this.param.orgId=orgId;
 		},

@@ -1393,28 +1393,80 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
         console.log('fail');
     })
 }
-export const uploadFiles = ({ dispatch }, param) => { //客户业务员划转信息
-    console.log(param)
-    const data = {
-        catagory:param.catagory,
-        type:param.type,
-        path:param.path,
-        customerId:param.id
-    }
+
+// export const uploadFiles = ({ dispatch }, param) => { //客户业务员划转信息
+//     console.log(param)
+//     const data = {
+//         catagory:param.catagory,
+//         type:param.type,
+//         path:param.path,
+//         customerId:param.id
+//     }
+//     Vue.http({
+//         method: 'POST',
+//         url: apiUrl.clientList + param.url,
+//         emulateHTTP: false,
+//         body: data,
+//         emulateJSON: false,
+//         headers: {
+//             "X-Requested-With": "XMLHttpRequest",
+//             'Content-Type': 'application/json;charset=UTF-8'
+//         }
+//     }).then((res) => {
+//         console.log('文件添加成功')
+//         dispatch(types.EMPLOYEE_DATA, param);
+//     }, (res) => {
+//         console.log('fail');
+//     });
+// }
+
+
+/*export const getEmployeeList = ({ dispatch }, param) => {  //业务员信息列表
+    param.loading = true;
     Vue.http({
-        method: 'POST',
-        url: apiUrl.clientList + param.url,
-        emulateHTTP: false,
-        body: data,
-        emulateJSON: false,
+        method:'GET',
+        url:apiUrl.employeeList+'/employee/',
+        emulateJSON: true,
         headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            'Content-Type': 'application/json;charset=UTF-8'
+            "X-Requested-With": "XMLHttpRequest"
         }
-    }).then((res) => {
-        console.log('文件添加成功')
-        dispatch(types.EMPLOYEE_DATA, param);
-    }, (res) => {
-        console.log('fail');
-    });
-}
+        }).then((res) => {
+           var employee = res.json().result.list;
+           for (var i in employee){
+                employee[i].checked = false;
+                employee[i].show =false;
+           }
+            dispatch(types.EMPLOYEE_DATA, employee);
+            param.all = res.json().result.pages;
+            param.loading = false;
+        }, (res) => {
+            console.log('fail');
+            param.loading = false;
+        })
+}*/
+
+/*export const getOrgList = ({ dispatch }, param) => {  //部门列表
+    param.loading = true;
+    Vue.http({
+        method:'GET',
+        url:apiUrl.orgList+'/org/',
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        }).then((res) => {
+            console.log(res.json());
+           var org = res.json().result;
+           for (var i in org){
+                org[i].checked = false;
+                org[i].show =false;
+           }
+
+            dispatch(types.ORG_DATA, org);
+            param.all = res.json().result.pages;
+            param.loading = false;
+        }, (res) => {
+            console.log('fail');
+            param.loading = false;
+        })
+}*/

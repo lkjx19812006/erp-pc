@@ -42,6 +42,7 @@ import {
     CHANCE_LIST_DATA,
     USER_DATA,
     UPDATE_USER_DATA,
+    ORG_DATA,
     FILE_DATA
 } from '../mutation-types'
 
@@ -66,6 +67,7 @@ const state = {
             { "twoNumber": 2, "cname": "河南1", "level": "222", "icon": "1111", "iso": "22222" }
         ],
     },
+
     basicBaseList: {
         enterpriseList: [
             { "id": 0, "number": "00", "category": "0ww", "name": "上海ee冕冠", "tel": "13162875213", "legal_person": "卡卡", "principal": "来啦", "biz_scope": "包括很多、很多、、、", "province": "上海虹口区", "city": "虹口区", "address": "上海虹口江湾镇", "release_date": "2015-07-07", "due_date": "2018-07-07", "show": "true" },
@@ -105,6 +107,11 @@ const state = {
         chanceList: [
             { "id": "14732390725891000", "userId": "b11741af0efc49ed815545c0d88ddc98", "type": 1, "especial": 1, "breedId": 1085, "breedName": "天仙子", "qualification": "", "quality": "工城 霜天地", "location": "东北", "spec": "统", "number": 213, "price": 12, "unit": "公斤", "address": "北京市,北京市,东城区 The", "duedate": "2016-09-14 00:00", "advance": 1, "invoic": 1, "visit": 0, "pack": "瓦楞纸箱", "intl": 0, "sampling": 1, "sampleNumber": 1, "sampleUnit": "公斤", "sampleAmount": 100, "show": true }
         ],
+         employeeList:[{"id":6,"name":"lm","no":"001","orgName":"冕冠电子商务有限公司","orgId":1,"orgCode":"","level":"1",
+                       "entryDate":null,"leaveDate":null,"mobile":null,"extNo":"123456","qq":"38917306","wechat":"38917306@qq.com",
+                       "email":"38917306@qq.com","position":"软件工程师","isManager":1,"status":1,"updater":null,"utime":null,"creater":null,"ctime":null,"ename":"john"}
+                       ],
+        orgList:[{"id":1,"name":"冕冠电子商务有限公司","level":null,"pid":0,"status":1,"utime":null,"ctime":null,"creater":null,"updater":null,"code":"0001"}],           
         userList: [{
             "id": "0008fcc6c2d549888afb2e950e6343c1",
             "type": 0,
@@ -552,10 +559,19 @@ const mutations = {
         state.basicBaseList.userList = data;
     },
 
-    [UPDATE_USER_DATA](state, data) { // 会员列表
-        state.basicBaseList[data.key][data.index].fullname = data.fullname;
+    [UPDATE_USER_DATA](state,data){  // 会员更新
+        state.basicBaseList[data.key][data.index].fullname=data.fullname;
+    },
 
-    }
+    [EMPLOYEE_DATA](state,data){  // 业务员列表
+        state.basicBaseList.employeeList = data;
+    },
+
+    [ORG_DATA](state,data){  // 部门列表
+        state.basicBaseList.orgList = data;
+    },
+    
+
 
 }
 
