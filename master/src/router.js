@@ -19,7 +19,7 @@ export default (router) => router.map({
             },
             '/main': {
                 component: function(resolve) {
-                    require(['./views/message'], resolve)
+                    require(['./views/main'], resolve)
                 }
             },
             '/change': {

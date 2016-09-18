@@ -11,14 +11,14 @@
             <section class="editsection">
                 <div class="editpage-input">
                     <label class="editlabel">文件类型</label>
-                    <select class="form-control">
+                    <select class="form-control"  v-model="param.type">
                         <option>图片</option>
                         <option>pdf文件</option>
                     </select>
                 </div>
                 <div class="editpage-input">
                     <label class="editlabel">文件分类</label>
-                    <select class="form-control">
+                    <select class="form-control"  v-model="param.catagory">
                         <option>资质证书</option>
                         <option>产品图片</option>
                     </select>
@@ -26,14 +26,14 @@
                 <div class="editpage-input">
                     <label class="editlabel">新建文件</label>
                     <div class="editpage_img clearfix">
-                        <div class="editpage-image col-md-4">
-                            <press-image></press-image> 
+                         <div class="editpage-image col-md-4">
+                            <press-image :param="file1"></press-image> 
                          </div>
                          <div class="editpage-image col-md-4">
-                            <press-image></press-image>
+                            <press-image :param="file2"></press-image>
                          </div>
                          <div class="editpage-image col-md-4">
-                            <press-image></press-image>
+                            <press-image :param="file3"></press-image>
                          </div>
                     </div>
                 </div>
@@ -41,14 +41,14 @@
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" >保存</button>
+            <button type="button" class="btn btn-confirm" @click="param.link(param)">保存</button>
         </div>
     </div>
 </template>
 <script>
 import pressImage from '../imagePress'
 import {
-    createFiles
+    uploadFiles
 } from '../../vuex/actions'
 export default {
     components: {
@@ -57,12 +57,24 @@ export default {
     props: ['param'],
     data() {
         return {
-            
+            file1:{
+                url:'/crm/api/v1/file/',
+                qiniu:false
+            },
+            file2:{
+                url:'/crm/api/v1/file/',
+                qiniu:false
+            },
+            file3:{
+                url:'/crm/api/v1/file/',
+                qiniu:false
+            }
+
         } 
     },
     vuex: {
         actions: {
-            createFiles
+            uploadFiles
         }
     },
     route: {

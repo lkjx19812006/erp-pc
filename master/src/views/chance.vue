@@ -2,16 +2,16 @@
 	 <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">业务机会</div>
-            <div class="col-xs-8 my_order_search">
-                <div class="name_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按品种类别搜索">
-                </div>
-                <div class="ordertel_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索">
-                </div>
-            </div>
+           <!--  <div class="col-xs-8 my_order_search">
+               <div class="name_search clearfix">
+                   <img src="/static/images/search.png" height="24" width="24">
+                   <input type="text" class="search_input" placeholder="按品种类别搜索">
+               </div>
+               <div class="ordertel_search clearfix">
+                   <img src="/static/images/search.png" height="24" width="24">
+                   <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索">
+               </div>
+           </div> -->
             <div class="right col-xs-2">
                <!--  <button class="new_btn transfer" @click="clientTransfer({
                    arr:[],
@@ -20,7 +20,7 @@
                    orgId:'',
                    show:true
                    })">划转</button> -->
-                <button class="new_btn" @click="createCustomer('create')">新建</button>
+               <!--  <button class="new_btn" @click="createCustomer('create')">新建</button> -->
             </div>
         </div>
         <div class="order_table">
@@ -79,7 +79,7 @@
                         <td>{{item.offer}}</td>
                         <td>{{item.offerVprice}}</td>
                         <td>{{item.status}}</td>
-                        <td @click.stop="eventClick($index)">
+                        <!-- <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="component_action" v-show="item.show">
                                 <ul>
@@ -114,7 +114,7 @@
                                                 })">删除</li>
                                 </ul>
                             </div>
-                        </td>
+                        </td> -->
                     </tr>
                 </tbody>
             </table>

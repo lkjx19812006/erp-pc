@@ -1393,3 +1393,28 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
         console.log('fail');
     })
 }
+export const uploadFiles = ({ dispatch }, param) => { //客户业务员划转信息
+    console.log(param)
+    const data = {
+        catagory:param.catagory,
+        type:param.type,
+        path:param.path,
+        customerId:param.id
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('文件添加成功')
+        dispatch(types.EMPLOYEE_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    });
+}
