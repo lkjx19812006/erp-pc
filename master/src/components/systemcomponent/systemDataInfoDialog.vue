@@ -1,6 +1,6 @@
 <template>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container edit_modal_con" v-show="param.show">
+    <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -107,44 +107,9 @@ export default {
 }
 </script>
 <style scoped>
-.modal {
-    opacity: 0.5;
-    background-color: #000;
-    display: block;
-}
-
-.edit_modal_con {
-    display: block;
-    position: fixed;
-    top: 91px;
-    margin: auto;
-    left: 0;
-    right: 0;
-    max-width: 630px;
-    min-width: 380px;
-    max-height: 445px;
-    bottom: 50px;
-    padding: 0;
-    background-color: #fff;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    z-index: 1080;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
 .big-font {
     font-size: 36px;
 }
-
-.top-title {
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
 .top-title span {
     font-size: 28px;
 }
@@ -225,39 +190,9 @@ export default {
     margin-top: 5px;
 }
 
-.edit_footer {
-    border-top: 1px solid #ddd;
-    text-align: right;
-    padding: 10px 20px;
-    margin-top: 50px;
-}
-
 .edit_footer button {
     margin-left: 15px;
 }
-
-.btn-confirm {
-    background-color: #fa6705;
-    color: #fff;
-}
-
-.btn-close {
-    color: #fa6705;
-}
-
-.editpage_img {
-    width: 90%;
-}
-
-.editpage_img img {
-    display: inline-block;
-    background: #ccc;
-}
-
-.editpage-image {
-    display: inline-block;
-}
-
 .system_danger {
     color: red;
     margin-bottom: 0;

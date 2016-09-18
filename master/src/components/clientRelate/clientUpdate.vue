@@ -110,13 +110,11 @@ export default {
     color: #fa6705;
     margin: 0;
 }
-
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
     padding: 10px 30px 30px 30px;
 }
-
 .editsection {
     width: 100%;
     box-sizing: border-box;
@@ -174,27 +172,6 @@ export default {
     margin-left: 10px;
     margin-top: 5px;
 }
-
-.edit_footer {
-    border-top: 1px solid #ddd;
-    text-align: right;
-    padding: 10px 20px;
-    margin-top: 50px;
-}
-
-.edit_footer button {
-    margin-left: 15px;
-}
-
-.btn-confirm {
-    background-color: #fa6705;
-    color: #fff;
-}
-
-.btn-close {
-    color: #fa6705;
-}
-
 .editpage_img {
     width: 90%;
 }

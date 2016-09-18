@@ -232,58 +232,58 @@
                                    </div>
                                </div>
                            </div> -->
-                           <!--  <div class="panel panel-default">
-                               <div class="panel-heading" v-cloak>
-                                   <h4 class="panel-title clearfix" @click="enfoldment({
-                           						            	link:initClientDetail.files,
-                           						            	crete:'files'
-                           						            	})">
-                           										<img class="pull-left" src="/static/images/file.png" height="34" width="26"  />
-                           										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                           											文件（{{initClientDetail.files.arr.length}}）
-                           										</a>
-                           										<button type="button" class="btn btn-base pull-right" @click.stop="createfiles({
-                           											 customerId:param.id,
-                           		                                     show:true,
-                                            type:'',
-                                            path:'',
-                                            catagory:'',
-                           		                                     link:uploadFiles,
-                           		                                     url:'/customer/file',
-                           		                                     key:'files'
-                           											})">新建</button>
-                           									</h4>
-                               </div>
-                               <div  class="panel-collapse" v-show="!initClientDetail.files.show">
-                                  <div class="panel-body panel-set">
-                                        <table class="table contactSet">
-                                       	<thead>
-                                       		<th>文件路径</th>
-                                       		<th>文件类型</th>
-                                       		<th>文件分类</th>
-                                       		<th>说明</th>
-                                       	</thead>
-                           		                                    <tbody>
-                           		                                         <tr v-for="item in initClientDetail.files.arr">
-                           		                                            <td>{{item.path}}</td>
-                           		                                            <td>{{item.type}}</td>
-                           		                                            <td>{{item.catagory}}</td>
-                           		                                            <td @click="specDelete({
-                           		                                                   id:item.id,
-                           		                                                   sub:$index,
-                           		                                                   show:true,
-                           		                                                   title:'文件',
-                           		                                                   link:specDel,
-                           		                                                   url:'/customer/file/',
-                           		                                                   key:'files',
-                           		                                                   headline:'clientDetail'
-                           		                                                   })">删除</td>
-                           		                                        </tr>
-                           		                                    </tbody>
-                           		                                </table>
-                                   </div>
-                               </div>
-                           </div> -->
+                           <div class="panel panel-default">
+                              <div class="panel-heading" v-cloak>
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                          						            	link:initClientDetail.files,
+                          						            	crete:'files'
+                          						            	})">
+                          										<img class="pull-left" src="/static/images/file.png" height="34" width="26"  />
+                          										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                          											文件（{{initClientDetail.files.arr.length}}）
+                          										</a>
+                          										<button type="button" class="btn btn-base pull-right" @click.stop="createfiles({
+                          											 customerId:param.id,
+                          		                                     show:true,
+                                           type:'',
+                                           path:'',
+                                           catagory:'',
+                          		                                     link:uploadFiles,
+                          		                                     url:'/customer/file',
+                          		                                     key:'files'
+                          											})">新建</button>
+                          									</h4>
+                              </div>
+                              <div  class="panel-collapse" v-show="!initClientDetail.files.show">
+                                 <div class="panel-body panel-set">
+                                       <table class="table contactSet">
+                                      	<thead>
+                                      		<th>文件路径</th>
+                                      		<th>文件类型</th>
+                                      		<th>文件分类</th>
+                                      		<th>说明</th>
+                                      	</thead>
+                          		                                    <tbody>
+                          		                                         <tr v-for="item in initClientDetail.files.arr">
+                          		                                            <td>{{item.path}}</td>
+                          		                                            <td>{{item.type}}</td>
+                          		                                            <td>{{item.catagory}}</td>
+                          		                                            <td @click="specDelete({
+                          		                                                   id:item.id,
+                          		                                                   sub:$index,
+                          		                                                   show:true,
+                          		                                                   title:'文件',
+                          		                                                   link:specDel,
+                          		                                                   url:'/customer/file/',
+                          		                                                   key:'files',
+                          		                                                   headline:'clientDetail'
+                          		                                                   })">删除</td>
+                          		                                        </tr>
+                          		                                    </tbody>
+                          		                                </table>
+                                  </div>
+                              </div>
+                          </div>
                            <!--  <div class="panel panel-default">
                                <div class="panel-heading">
                                    <h4 class="panel-title clearfix" >

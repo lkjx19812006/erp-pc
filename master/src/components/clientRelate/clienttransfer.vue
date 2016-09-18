@@ -200,35 +200,6 @@ export default{
 }
 </script>
 <style scoped>
-.modal {
-    opacity: 0.5;
-    background-color: #000;
-    display: block;
-}
-.modal_con {
-    display: block;
-    position: fixed;
-    top: 91px;
-    margin: auto;
-    width: 48%;
-    left: 0;
-    right: 0;
-    min-width: 300px;
-    bottom: 50px;
-    padding: 0;
-    background-color: #fff;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    z-index: 1080;
-    overflow: hidden;
-    overflow-y: auto;
-}
-.con_list{
-	position: relative;
-	margin-bottom: 50px;
-}
 .change_trans{
 	margin-top: 20px;
 }
@@ -294,18 +265,5 @@ export default{
 }
 .base_pagination{
 	margin-top: 0;
-}
-.edit_footer {
-    border-top: 1px solid #ddd;
-    text-align: right;
-    padding: 10px 20px;
-    margin-top: 50px;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 50px;
-    width: 48%;
-    background: #fff;
-    margin: auto;
 }
 </style>

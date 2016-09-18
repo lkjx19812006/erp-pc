@@ -31,7 +31,7 @@ export default {
         }
     },
     created() {
-        if (this.$route.query.id > this.getList[4].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
+        if (this.$route.query.id > this.getList[10].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
             this.$route.query.id = 0;
         }
     },
