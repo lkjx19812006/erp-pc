@@ -10,7 +10,8 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
 
 
-require('./assets/css/style.css') 
+require('./assets/css/style.css')
+require('./components/calendar/vue.datepicker.css')
 
 Vue.component('PulseLoader',PulseLoader);
 
@@ -20,6 +21,7 @@ Vue.use(VueValidator)
 Vue.use(VueAnimatedList)
 Vue.use(VueRouter)
 Vue.use(VueResource)
+
 
 Vue.http.options.root = '/src/assets/data'
 Vue.http.options.emulateJSON = true
