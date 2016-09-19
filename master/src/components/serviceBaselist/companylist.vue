@@ -6,8 +6,8 @@
     <div v-show="!companyParam.show">
     <form>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">企业</div>
-            <div class="col-xs-8 my_order_search">
+            <div class="my_enterprise col-xs-1">企业</div>
+            <div class="col-xs-9 my_order_search">
                 <div class="name_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
                     <input type="text" class="search_input" placeholder="按企业名称搜索" v-model="loadParam.conName" >

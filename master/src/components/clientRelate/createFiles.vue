@@ -27,7 +27,7 @@
                     <label class="editlabel">新建文件</label>
                     <div class="editpage_img clearfix">
                          <div class="editpage-image col-md-4">
-                            <press-image :param="file1"></press-image> 
+                            <press-image :param="file1" v-model="param.path"></press-image> 
                          </div>
                          <div class="editpage-image col-md-4">
                             <press-image :param="file2"></press-image>
@@ -47,9 +47,6 @@
 </template>
 <script>
 import pressImage from '../imagePress'
-import {
-    uploadFiles
-} from '../../vuex/actions'
 export default {
     components: {
         pressImage
@@ -74,7 +71,7 @@ export default {
     },
     vuex: {
         actions: {
-            uploadFiles
+           
         }
     },
     route: {
@@ -85,6 +82,13 @@ export default {
         deactivate: function(transition) {
             console.log('hook-example deactivated!')
             transition.next()
+        }
+    },
+    events: {
+        getImageData: function(imageData) {
+            console.log(imageData);
+            console.log(imageData.result.path);
+            var paths = new Array();
         }
     }
 }

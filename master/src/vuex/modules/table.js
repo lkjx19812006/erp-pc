@@ -38,7 +38,6 @@ import {
     ADD_PRODUCT_DATA,
     UPDATE_PRODUCT_DATA,
     EMPLOYEE_DATA,
-    ORG_LIST_DATA,
     CHANCE_LIST_DATA,
     USER_DATA,
     UPDATE_USER_DATA,
@@ -98,20 +97,14 @@ const state = {
             { "id": 1, "type": 0, "name": "ddf", "category": "14frff555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false },
             { "id": 2, "type": 1, "name": "ggg", "category": "gvgg", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false }
         ],
-        employeeList: [
-            { "id": 1, "name": "lm", "no": "001", "orgId": 1, "level": "1", "qq": null, "wechat": null, "email": null, "isManager": 1, "position": null, "mobile": null, "show": "true" }
-        ],
-        orgList: [
-            { "id": 1, "name": "交易部门", "show": true }
-        ],
         chanceList: [
             { "id": "14732390725891000", "userId": "b11741af0efc49ed815545c0d88ddc98", "type": 1, "especial": 1, "breedId": 1085, "breedName": "天仙子", "qualification": "", "quality": "工城 霜天地", "location": "东北", "spec": "统", "number": 213, "price": 12, "unit": "公斤", "address": "北京市,北京市,东城区 The", "duedate": "2016-09-14 00:00", "advance": 1, "invoic": 1, "visit": 0, "pack": "瓦楞纸箱", "intl": 0, "sampling": 1, "sampleNumber": 1, "sampleUnit": "公斤", "sampleAmount": 100, "show": true }
         ],
-         employeeList:[{"id":6,"name":"lm","no":"001","orgName":"冕冠电子商务有限公司","orgId":1,"orgCode":"","level":"1",
+        employeeList:[{"id":6,"name":"lm","no":"001","orgName":"冕冠电子商务有限公司","orgId":1,"orgCode":"","level":"1",
                        "entryDate":null,"leaveDate":null,"mobile":null,"extNo":"123456","qq":"38917306","wechat":"38917306@qq.com",
-                       "email":"38917306@qq.com","position":"软件工程师","isManager":1,"status":1,"updater":null,"utime":null,"creater":null,"ctime":null,"ename":"john"}
+                       "email":"38917306@qq.com","position":"软件工程师","isManager":1,"status":1,"updater":null,"utime":null,"creater":null,"ctime":null,"ename":"john","show":true}
                        ],
-        orgList:[{"id":1,"name":"冕冠电子商务有限公司","level":null,"pid":0,"status":1,"utime":null,"ctime":null,"creater":null,"updater":null,"code":"0001"}],           
+        orgList:[{"id":1,"name":"冕冠电子商务有限公司","level":null,"pid":0,"status":1,"utime":null,"ctime":null,"creater":null,"updater":null,"code":"0001","show":true}],           
         userList: [{
             "id": "0008fcc6c2d549888afb2e950e6343c1",
             "type": 0,
@@ -242,8 +235,7 @@ const state = {
         "products": { arr: [], show: false },
         "files": {
             arr: [
-                { "id": 1, "breedId": 1001, "name": "云南", "show": "true" },
-                { "id": 2, "breedId": 1001, "name": "广东", "show": "true" }
+                { "id": 1, "breedId": 1001, "name": "云南", "show": "true" }
             ],
             show: false
         },
@@ -538,6 +530,7 @@ const mutations = {
         })
     },
     [FILE_DATA](state, data) { //新增客户文件
+        console.log(state.clientDetail[data.key].arr)
         state.clientDetail[data.key].arr.unshift({
             "catagory": data.catagory,
             "type": data.type,
@@ -548,9 +541,6 @@ const mutations = {
     },
     [EMPLOYEE_DATA](state, data) { //员工列表
         state.basicBaseList.employeeList = data;
-    },
-    [ORG_LIST_DATA](state, data) { //部门列表
-        state.basicBaseList.orgList = data;
     },
     [CHANCE_LIST_DATA](state, data) { //业务机会列表
         state.basicBaseList.chanceList = data;

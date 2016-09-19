@@ -55,6 +55,7 @@ export default (router) => router.map({
                 }
             },
             '/person': {
+                name:'person',
                 component: function(resolve) {
                     require(['./views/employee'], resolve)
                 }

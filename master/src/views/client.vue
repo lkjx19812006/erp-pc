@@ -261,8 +261,6 @@ export default {
         }
     },
     created() {
-        console.log(this.loadParam);
-        console.log(this.loadParam.all);
         this.getClientList(this.loadParam, this.loadParam.all);
     }
 }

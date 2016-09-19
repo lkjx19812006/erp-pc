@@ -31,6 +31,7 @@ export const ADD_CONTACT_DATA = 'ADD_CONTACT_DATA' //新增企业联系人
 export const DELETE_CONTACT_DATA = 'DELETE_CONTACT_DATA' //删除企业联系人
 export const UPDATE_CONTACT_DATA = 'UPDATE_CONTACT_DATA' //修改企业联系人
 export const DRUG_DETAIL_DATA = 'DRUG_DETAIL_DATA' //成分详细数据
+
 export const CUSTOMER_DATA = 'CUSTOMER_DATA' //客户
 export const CUSTOMER_ADD_DATA = 'CUSTOMER_ADD_DATA' //新增客户
 export const CUSTOMER_UPDATE_DATA = 'CUSTOMER_UPDATE_DATA' // 修改客户列表
@@ -45,9 +46,7 @@ export const UPDATE_LABEL_DETAIL = 'UPDATE_LABEL_DETAIL' // 修改标签
 export const ADD_PRODUCT_DATA = 'ADD_PRODUCT_DATA' // 新增客户产品
 export const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA' // 修改客户产品
 export const EMPLOYEE_DATA ='EMPLOYEE_DATA'  //员工（业务员）列表数据
-export const ORG_LIST_DATA ='ORG_LIST_DATA'  //部门列表数据
 export const CHANCE_LIST_DATA ='CHANCE_LIST_DATA'  //业务机会数据列表
-
 export const FILE_DATA ='FILE_DATA'  // 新增客户文件
 
 export const USER_DATA = 'USER_DATA'   //会员列表
