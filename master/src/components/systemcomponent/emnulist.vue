@@ -243,7 +243,6 @@ export default {
 .order_table {
     margin-top: 20px;
     position: relative;
-    margin-right: 30px;
 }
 
 .order_table .table {

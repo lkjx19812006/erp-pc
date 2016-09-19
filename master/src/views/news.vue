@@ -196,10 +196,11 @@ export default {
         }
     },
     events: {
-    fresh: function(input) {
-     console.log(input);
-    }
-  },
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getUserList(this.loadParam);
+        }
+      },
   methods: {
     eventClick:function(id){
             if(this.$store.state.table.basicBaseList.userList[id].show){

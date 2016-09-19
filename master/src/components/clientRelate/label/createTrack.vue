@@ -66,34 +66,6 @@ export default {
 }
 </script>
 <style scoped>
-.modal {
-    opacity: 0.5;
-    background-color: #000;
-    display: block;
-}
-
-.modal_con {
-    display: block;
-    position: fixed;
-    top: 91px;
-    margin: auto;
-    left: 0;
-    right: 0;
-    max-width: 630px;
-    min-width: 200px;
-    max-height:600px;
-    bottom: 50px;
-    padding: 0;
-    background-color: #fff;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    z-index: 1080;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
 .big-font {
     font-size: 36px;
 }
@@ -175,27 +147,9 @@ export default {
     margin-left: 10px;
     margin-top: 5px;
 }
-
-.edit_footer {
-    border-top: 1px solid #ddd;
-    text-align: right;
-    padding: 10px 20px;
-    margin-top: 50px;
-}
-
 .edit_footer button {
     margin-left: 15px;
 }
-
-.btn-confirm {
-    background-color: #fa6705;
-    color: #fff;
-}
-
-.btn-close {
-    color: #fa6705;
-}
-
 .editpage_img {
     width: 90%;
 }

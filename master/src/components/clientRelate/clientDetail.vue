@@ -162,168 +162,176 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-						            	link:initClientDetail.chance,
-						            	crete:'chance'
-						            	})">
-										<img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											业务机会（{{initClientDetail.chance.arr.length}}）
-										</a>
-										<button type="button" class="btn btn-base pull-right">新建</button>
-									</h4>
-                                </div>
-                                <div  class="panel-collapse" v-show="!initClientDetail.chance.show">
-                                    <div class="panel-body panel-set">
-                                        <table class="table contactSet">
-                                        	<thead>
-                                        		<th>类型</th>
-                                        		<th>特殊的</th>
-                                        		<th>品种名称</th>
-                                        		<th>资格资质</th>
-                                        		<th>规格</th>
-                                        		<th>单位</th>
-                                        		<th>交收地址</th>
-                                        		<th>预付比例</th>
-                                        		<th>发票</th>
-                                        		<th>上门看货</th>
-                                        		<th>包装</th>
-                                        		<th>是否国际</th>
-                                        		<th>提供样品</th>
-                                        		<th>样品数量</th>
-                                        		<th>样品单位</th>
-                                        		<th>样品总价</th>
-                                        		<th>报价总数</th>
-                                        		<th>报价均价</th>
-                                        		<th>报价供货总数</th>
-                                        		<th>状态</th>
-                                        	</thead>
-		                                    <tbody>
-		                                        <tr v-for="item in initClientDetail.chance.arr">
-		                                            <td>{{item.type}}</td>
-		                                            <td>{{item.especial}}</td>
-		                                            <td>{{item.breed_name}}</td>
-		                                            <td>{{item.qualification}}</td>
-		                                            <td>{{item.address}}</td>
-		                                            <td>{{item.quality}}</td>
-		                                            <td>{{item.location}}</td>
-		                                            <td>{{item.spec}}</td>
-		                                            <td>{{item.price}}</td>
-		                                            <td>{{item.unit}}</td>
-		                                            <td>{{item.address}}</td>
-		                                            <td>{{item.advance}}</td>
-		                                            <td>{{item.invoic}}</td>
-		                                            <td>{{item.visit}}</td>
-		                                            <td>{{item.pack}}</td>
-		                                            <td>{{item.intl}}</td>
-		                                            <td>{{item.sampling}}</td>
-		                                            <td>{{item.sample_number}}</td>
-		                                            <td>{{item.sample_unit}}</td>
-		                                            <td>{{item.sample_amount}}</td>
-		                                            <td>{{item.offer}}</td>
-		                                            <td>{{item.offer_vprice}}</td>
-		                                            <td>{{item.offer_total}}</td>
-		                                            <td>{{item.status}}</td>
-		                                        </tr>
-		                                    </tbody>
-		                                </table>
-                                       <!--  <p class="contact-view">查看全部</p> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" v-cloak>
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-						            	link:initClientDetail.files,
-						            	crete:'files'
-						            	})">
-										<img class="pull-left" src="/static/images/file.png" height="34" width="26"  />
-										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											文件（{{initClientDetail.files.arr.length}}）
-										</a>
-										<button type="button" class="btn btn-base pull-right" @click.stop="createfiles('files')">新建</button>
-									</h4>
-                                </div>
-                                <div  class="panel-collapse" v-show="!initClientDetail.files.show">
+                           <!--  <div class="panel panel-default">
+                               <div class="panel-heading" >
+                                   <h4 class="panel-title clearfix" @click="enfoldment({
+                           						            	link:initClientDetail.chance,
+                           						            	crete:'chance'
+                           						            	})">
+                           										<img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                           										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                           											业务机会（{{initClientDetail.chance.arr.length}}）
+                           										</a>
+                           										<button type="button" class="btn btn-base pull-right">新建</button>
+                           									</h4>
+                               </div>
+                               <div  class="panel-collapse" v-show="!initClientDetail.chance.show">
                                    <div class="panel-body panel-set">
-                                         <table class="table contactSet">
-                                        	<thead>
-                                        		<th>文件路径</th>
-                                        		<th>文件类型</th>
-                                        		<th>文件分类</th>
-                                        		<th>说明</th>
-                                        	</thead>
-		                                    <tbody>
-		                                         <tr v-for="item in initClientDetail.files.arr">
-		                                            <td>{{item.path}}</td>
-		                                            <td>{{item.type}}</td>
-		                                            <td>{{item.catagory}}</td>
-		                                            <td @click="specDelete({
-		                                                   id:item.id,
-		                                                   sub:$index,
-		                                                   show:true,
-		                                                   title:'文件',
-		                                                   link:specDel,
-		                                                   url:'/customer/file/',
-		                                                   key:'files',
-		                                                   headline:'clientDetail'
-		                                                   })">删除</td>
-		                                        </tr>
-		                                    </tbody>
-		                                </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title clearfix" >
-										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
-										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-											跟进（）
-										</a>
-										<button type="button" class="btn btn-base pull-right" @click.stop="createtrack({
-											 customerId:param.id,
-		                                     id:param.id,
-		                                     contactId:param.id,
-		                                     bizId:param.id,
-		                                     show:true, 
-                                             type:'',
-                                             trackingWay:'',
-                                             comments:'',
-		                                     link:createTrack,
-		                                     url:'/customer/insertTracking',
-		                                     key:'tracks'
-											})">新建</button>
-									</h4>
-                                </div>
-                                <div  class="panel-collapse" v-show="!initClientDetail.files.show">
-                                   <div class="panel-body panel-set">
-	                                    <table class="table contactSet">
-                                        	<thead>
-                                        		<th>药品名称</th>
-                                        		<th>药品编号</th>
-                                        		<th>药品类型</th>
-                                        		<th>所属公司</th>
-                                        		<th>公司地址</th>
-                                        		<th>说明</th>
-                                        	</thead>
-		                                    <tbody>
-		                                         <tr v-for="item in initClientDetail">
-		                                            <td>{{item.name}}</td>
-		                                            <td>{{item.number}}</td>
-		                                            <td>{{item.drugType}}</td>
-		                                            <td>{{item.company}}</td>
-		                                            <td>{{item.address}}</td>
-		                                            <td>{{item.spec}}</td>
-		                                        </tr>
-		                                    </tbody>
-		                                </table>
-                                        <p class="contact-view">查看全部</p>
-                                    </div>
-                                </div>
-                            </div>
+                                       <table class="table contactSet">
+                                       	<thead>
+                                       		<th>类型</th>
+                                       		<th>特殊的</th>
+                                       		<th>品种名称</th>
+                                       		<th>资格资质</th>
+                                       		<th>规格</th>
+                                       		<th>单位</th>
+                                       		<th>交收地址</th>
+                                       		<th>预付比例</th>
+                                       		<th>发票</th>
+                                       		<th>上门看货</th>
+                                       		<th>包装</th>
+                                       		<th>是否国际</th>
+                                       		<th>提供样品</th>
+                                       		<th>样品数量</th>
+                                       		<th>样品单位</th>
+                                       		<th>样品总价</th>
+                                       		<th>报价总数</th>
+                                       		<th>报价均价</th>
+                                       		<th>报价供货总数</th>
+                                       		<th>状态</th>
+                                       	</thead>
+                           		                                    <tbody>
+                           		                                        <tr v-for="item in initClientDetail.chance.arr">
+                           		                                            <td>{{item.type}}</td>
+                           		                                            <td>{{item.especial}}</td>
+                           		                                            <td>{{item.breed_name}}</td>
+                           		                                            <td>{{item.qualification}}</td>
+                           		                                            <td>{{item.address}}</td>
+                           		                                            <td>{{item.quality}}</td>
+                           		                                            <td>{{item.location}}</td>
+                           		                                            <td>{{item.spec}}</td>
+                           		                                            <td>{{item.price}}</td>
+                           		                                            <td>{{item.unit}}</td>
+                           		                                            <td>{{item.address}}</td>
+                           		                                            <td>{{item.advance}}</td>
+                           		                                            <td>{{item.invoic}}</td>
+                           		                                            <td>{{item.visit}}</td>
+                           		                                            <td>{{item.pack}}</td>
+                           		                                            <td>{{item.intl}}</td>
+                           		                                            <td>{{item.sampling}}</td>
+                           		                                            <td>{{item.sample_number}}</td>
+                           		                                            <td>{{item.sample_unit}}</td>
+                           		                                            <td>{{item.sample_amount}}</td>
+                           		                                            <td>{{item.offer}}</td>
+                           		                                            <td>{{item.offer_vprice}}</td>
+                           		                                            <td>{{item.offer_total}}</td>
+                           		                                            <td>{{item.status}}</td>
+                           		                                        </tr>
+                           		                                    </tbody>
+                           		                                </table>
+                                   </div>
+                               </div>
+                           </div> -->
+                           <div class="panel panel-default">
+                              <div class="panel-heading" v-cloak>
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                          						            	link:initClientDetail.files,
+                          						            	crete:'files'
+                          						            	})">
+                          										<img class="pull-left" src="/static/images/file.png" height="34" width="26"  />
+                          										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                          											文件（{{initClientDetail.files.arr.length}}）
+                          										</a>
+                          										<button type="button" class="btn btn-base pull-right" @click.stop="createfiles({
+                          											 customerId:param.id,
+                          		                                     show:true,
+                                           type:'',
+                                           path:'',
+                                           catagory:'',
+                          		                                     link:uploadFiles,
+                          		                                     url:'/customer/file',
+                          		                                     key:'files'
+                          											})">新建</button>
+                          									</h4>
+                              </div>
+                              <div  class="panel-collapse" v-show="!initClientDetail.files.show">
+                                 <div class="panel-body panel-set">
+                                       <table class="table contactSet">
+                                      	<thead>
+                                      		<th>文件路径</th>
+                                      		<th>文件类型</th>
+                                      		<th>文件分类</th>
+                                      		<th>说明</th>
+                                      	</thead>
+                          		                                    <tbody>
+                          		                                         <tr v-for="item in initClientDetail.files.arr">
+                          		                                            <td>{{item.path}}</td>
+                          		                                            <td>{{item.type}}</td>
+                          		                                            <td>{{item.catagory}}</td>
+                          		                                            <td @click="specDelete({
+                          		                                                   id:item.id,
+                          		                                                   sub:$index,
+                          		                                                   show:true,
+                          		                                                   title:'文件',
+                          		                                                   link:specDel,
+                          		                                                   url:'/customer/file/',
+                          		                                                   key:'files',
+                          		                                                   headline:'clientDetail'
+                          		                                                   })">删除</td>
+                          		                                        </tr>
+                          		                                    </tbody>
+                          		                                </table>
+                                  </div>
+                              </div>
+                          </div>
+                           <!--  <div class="panel panel-default">
+                               <div class="panel-heading">
+                                   <h4 class="panel-title clearfix" >
+                           										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
+                           										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                           											跟进（）
+                           										</a>
+                           										<button type="button" class="btn btn-base pull-right" @click.stop="createtrack({
+                           											 customerId:param.id,
+                           		                                     id:param.id,
+                           		                                     contactId:param.id,
+                           		                                     bizId:param.id,
+                           		                                     show:true, 
+                                            type:'',
+                                            trackingWay:'',
+                                            comments:'',
+                           		                                     link:createTrack,
+                           		                                     url:'/customer/insertTracking',
+                           		                                     key:'tracks'
+                           											})">新建</button>
+                           									</h4>
+                               </div>
+                               <div  class="panel-collapse" v-show="!initClientDetail.files.show">
+                                  <div class="panel-body panel-set">
+                           	                                    <table class="table contactSet">
+                                       	<thead>
+                                       		<th>药品名称</th>
+                                       		<th>药品编号</th>
+                                       		<th>药品类型</th>
+                                       		<th>所属公司</th>
+                                       		<th>公司地址</th>
+                                       		<th>说明</th>
+                                       	</thead>
+                           		                                    <tbody>
+                           		                                         <tr v-for="item in initClientDetail">
+                           		                                            <td>{{item.name}}</td>
+                           		                                            <td>{{item.number}}</td>
+                           		                                            <td>{{item.drugType}}</td>
+                           		                                            <td>{{item.company}}</td>
+                           		                                            <td>{{item.address}}</td>
+                           		                                            <td>{{item.spec}}</td>
+                           		                                        </tr>
+                           		                                    </tbody>
+                           		                                </table>
+                                       <p class="contact-view">查看全部</p>
+                                   </div>
+                               </div>
+                           </div> -->
                              <div class="panel panel-default" collapse>
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -697,7 +705,7 @@
 				                                                   key:'products',
 				                                                   headline:'clientDetail'
 				                                                   })">编辑</dt>
-				                                               <dt @click="specDelete({
+				                                               <!-- <dt @click="specDelete({
 				                                                   id:item.id,
 				                                                   sub:$index,
 				                                                   show:true,
@@ -706,7 +714,7 @@
 				                                                   url:'/customer/deleteAddress/',
 				                                                   key:'products',
 				                                                   headline:'clientDetail'
-				                                                   })">删除</dt>
+				                                                   })">删除</dt> -->
 				                                           </dl> 
 				                                        </div>
 		                                            </td>
@@ -778,13 +786,13 @@
                                 <label>经营范围</label>
                                 <input type="text" class="form-control" v-model="initClientDetail.bizScope" value="{{initClientDetail.bizScope}}"/>
                             </div>
-                            <div class="client-detailInfo">
+                            <!-- <div class="client-detailInfo">
                                 <img class="left" src="/static/images/blackselect.png" height="28" width="28" />
                                 <label>加入黑名单</label>
                             </div>
                             <div class="client-editbtn">
                                 <button type="button" class="btn btn-orange" @click="param.link(initClientDetail)">编辑</button>
-                            </div>
+                            </div> -->
                         </div>
                     </article>
                 </div>
@@ -823,7 +831,8 @@ import {
 	alterRemark,
 	createTrack,
 	createProduct,
-	alterProduct
+	alterProduct,
+	uploadFiles
 } from '../../vuex/actions'
 export default {
     components: {
@@ -866,8 +875,7 @@ export default {
     			show:false
     		},
     		cfilesParam:{
-    			show:false,
-    			name:''
+    			show:false
     		},
     		ctrackParam:{
     			show:false,
@@ -901,7 +909,8 @@ export default {
     		alterRemark,
     		createTrack,
     		createProduct,
-    		alterProduct
+    		alterProduct,
+    		uploadFiles
     	}
     },
     methods:{
@@ -939,9 +948,8 @@ export default {
         updatelabel:function(initBreedDetail){
         	this.updlabelParam = initBreedDetail;
         },
-        createfiles:function(value){
-        	this.cfilesParam.show = true;
-        	this.cfilesParam.name= value;
+        createfiles:function(initBreedDetail){
+        	this.cfilesParam=initBreedDetail;
         },
         createtrack:function(value){
         	this.ctrackParam.show = true;

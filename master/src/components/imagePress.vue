@@ -29,8 +29,7 @@ export default {
                 let input = e.target;
                console.log(_self.param);
                 if (input.files && input.files[0]) {
-                    let file = input.files[0];
-                  
+                    let file = input.files[0]; 
                     console.log(file)
                     _self.fileName=file.name;
                     if(file.type.split('/')[0]=='image'){
@@ -48,13 +47,11 @@ export default {
                             _self.image = e.target.result;
                             _self.imageShow=true;
                         }
-                        
-                              let param ={};
-                                param.mFile=_self.image;
-                                param.qiniu=_self.param.qiniu;
-                                _self.close=true;
-                                _self.upload(param,'base64');
-                                
+                          let param ={};
+                            param.mFile=_self.image;
+                            param.qiniu=_self.param.qiniu;
+                            _self.close=true;
+                            _self.upload(param,'base64');         
                     }
                     reader.readAsDataURL(input.files[0]);
                     }else{
@@ -64,10 +61,7 @@ export default {
                     param.append("qiniu", _self.param.qiniu);
                     param.append("mFile", file);
                     _self.upload(param,'');
-
-
                 }
-                   
                     return 1;
                 }
             },

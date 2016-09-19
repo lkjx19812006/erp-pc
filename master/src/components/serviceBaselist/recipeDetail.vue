@@ -110,6 +110,11 @@ export default {
 }
 </script>
 <style scoped>
+.top-title{
+    width: 100%;
+    right: 0;
+    top:130px;
+}
 .breed_detail {
     position: absolute;
     left: 0;

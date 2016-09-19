@@ -180,7 +180,12 @@ export default {
     filter: (filter, {})
 }
 </script>
-<style>
+<style scoped>
+.top-title{
+    width: 100%;
+    right: 0;
+    top:130px;
+}
 .client-detailInfo img {
     width: 100px;
 }

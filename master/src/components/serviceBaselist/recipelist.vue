@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initConponentlist"  @click="clickRecipe(item.name,item.id)">
-                        <td>{{item.code}}</td>
+                        <td>{{item.code | codestate}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.breedName}}</td>
                         <td>{{item.companyName | companyname}}</td>
