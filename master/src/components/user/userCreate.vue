@@ -5,84 +5,70 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>划转{{param.fullname}}</h3>
+            <h3>添加用户</h3>
         </div>
-       <div class="edit-model">
+        <div class="edit-model">
            <section class="editsection" v-cloak>
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpage">
                    <div class="editpageleft">
                        <div class="editpage-input">
                            <label class="editlabel">姓名</label>
-                           <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{param.fullname}}" disabled="true" />
+                           <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{param.fullname}}" />
                        </div>
                        <div class="editpage-input">
-                                <label class="editlabel">绑定客户</label>
-                                <button type="button" class="btn btn-default btn-close" @click="">绑定客户</button>
-                                <!-- <select class="form-control" v-model="param.customerId" v-on:change="chg()" style="width:90%;" >
-                                    <option v-for="x in initCustomerlist" value="{{x.id}}">{{x.name}}</option>
-                                </select> -->
-
-                                <!-- <input type="text" v-model='systemData.type' class="form-control edit-input" value="{{systemData.type}}" /> -->
+                           <label class="editlabel">昵称</label>
+                           <input type="text" v-model='param.nickname' class="form-control edit-input" value="{{param.nickname}}" />
                        </div>
-
-                   </div>
-                   <div class="editpageright">
-                       
-  
                        <div class="editpage-input">
                            <label class="editlabel">电话</label>
-                           <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.phone}}" disabled="true" />
+                            <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
+                       </div>
+                       
+                   </div>
+                   <div class="editpageright">
+                       <div class="editpage-input">
+                           <label class="editlabel">邮箱</label>
+                           <input type="text" v-model='param.email' class="form-control edit-input" value="{{param.email}}" />
                        </div>
                        <div class="editpage-input">
-                           <label class="editlabel">选择部门</label>
-                           <button type="button" class="btn btn-default btn-close" @click="">选择部门</button>
-                           <!-- <input type="text" v-model="param.employeeId" class="form-control edit-input" value="{{param.employeeId}}"/> -->
-
-                      
+                           <label class="editlabel">qq</label>
+                           <input type="text" v-model="param.qq" class="form-control edit-input" value="{{param.qq}}" />
                        </div>
-                     
+                       <div class="editpage-input">
+                           <label class="editlabel">公司</label>
+                           <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                       </div>
+                      
                    </div>
                </div>
            </section>
-       </div> 
+        </div>  
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="userTransfer()">确定</button>
+            <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.show = false)">确定</button>
         </div>
     </div>
 </template>
 <script>
 import {
-    initCustomerlist
+    
 } from '../../vuex/getters'
 import {   
-    updateUserInfo,
-    getClientList   
+    updateUserInfo   
 } from '../../vuex/actions'
 export default {
     props: ['param'],
     data() {
         return {
-          customerList:[{
-            id:'',
-            name:''
-          }],
-          loadParam: {
-                  loading: true,
-                  color: '#5dc596',
-                  size: '15px',
-                  cur: 1,
-                  all: 7
-              }
+        
         }
     },
     vuex: {
        getters: {
-            initCustomerlist
+            
         },
         actions: {
-            getClientList,
             updateUserInfo 
         } 
     },
@@ -96,64 +82,17 @@ export default {
             transition.next()
         }
     },
-    methods: {
-      userTransfer:function(param){
-        console.log(this.param);
-        console.log(this.param.customerId);
-      },
-      chg:function(){
-        this.param.employeeId = Math.random();
+    /*methods: {
+      alertInfo:function(param){
+        updateUserInfo(param)
       }
-
-    },
-  created() {
-
-      this.getClientList(this.loadParam, this.loadParam.all);
-     
-    }
-
+    }*/
 }
 </script>
 <style scoped>
-.modal {
-    opacity: 0.5;
-    background-color: #000;
-    display: block;
-}
-
-.modal_con {
-    display: block;
-    position: fixed;
-    top: 217px;
-    margin: auto;
-    width: 44%;
-    left: 0;
-    right: 0;
-    max-width: 630px;
-    min-width: 380px;
-    max-height: 500px;
-    bottom: 50px;
-    padding: 0;
-    background-color: #fff;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    z-index: 1080;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
 .big-font {
     font-size: 36px;
 }
-
-.top-title {
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
 .top-title span {
     font-size: 28px;
 }
@@ -232,13 +171,6 @@ export default {
     display: inline-block;
     margin-left: 10px;
     margin-top: 5px;
-}
-
-.edit_footer {
-    border-top: 1px solid #ddd;
-    text-align: right;
-    padding: 10px 20px;
-    margin-top: 50px;
 }
 
 .edit_footer button {

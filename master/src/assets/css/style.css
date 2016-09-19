@@ -522,3 +522,12 @@ body{
 [v-cloak] {
   display: none;
 }
+
+.underline{
+    cursor: pointer;
+    color: #0090ff;
+}
+.underline:hover{
+    text-decoration: underline;
+    color: #fa6705;
+}

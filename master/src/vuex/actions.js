@@ -1346,9 +1346,22 @@ export const getChanceList = ({ dispatch }, param) => {  //业务机会信息列
 
 export const getUserList = ({ dispatch }, param) => {  //会员信息列表
     param.loading = true;
+    var url = apiUrl.userList+'/user/?'+'&page=' + param.cur + '&pageSize=15';
+    for(var key in param){
+        if(key=='phone'&&param[key]!=''){
+             url += '&phone='+param[key];
+        }
+        if(key=='fullname'&&param[key]!=''){
+             url += '&fullname='+param[key];
+        }
+        if(key=='status'&&param[key]!=''){
+             url += '&status='+param[key];
+        }
+
+    }
     Vue.http({
         method:'GET',
-        url:apiUrl.userList+'/user/?'+'&page=' + param.cur + '&pageSize=15',
+        url:url ,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
