@@ -250,7 +250,6 @@ export default{
 
 	},
 	created() {
-
       this.getClientList(this.loadParam, this.loadParam.all);
       this.getEmployeeList(this.loadParam, this.loadParam.all);
       this.getOrgList(this.loadParam, this.loadParam.all);
@@ -259,17 +258,12 @@ export default{
 }
 </script>
 <style scoped>
-.modal {
-    opacity: 0.5;
-    background-color: #000;
-    display: block;
-}
 .modal_con {
     display: block;
     position: fixed;
     top: 91px;
     margin: auto;
-    width: 48%;
+    width: 44%;
     left: 0;
     right: 0;
     min-width: 300px;
