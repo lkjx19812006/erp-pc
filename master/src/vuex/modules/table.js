@@ -38,7 +38,6 @@ import {
    ADD_PRODUCT_DATA,
    UPDATE_PRODUCT_DATA,
    EMPLOYEE_DATA,
-   ORG_LIST_DATA,
    CHANCE_LIST_DATA,
    USER_DATA,
    UPDATE_USER_DATA,
@@ -496,9 +495,6 @@ const mutations = {
     },
     [EMPLOYEE_DATA](state,data){   //员工列表
         state.basicBaseList.employeeList = data;
-    },
-    [ORG_LIST_DATA](state,data){  //部门列表
-       state.basicBaseList.orgList = data;
     },
     [CHANCE_LIST_DATA](state,data){ //业务机会列表
          state.basicBaseList.chanceList = data;

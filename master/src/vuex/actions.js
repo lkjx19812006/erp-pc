@@ -797,7 +797,7 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
                 org[i].checked =false;
            }
            console.log(res.json())
-            dispatch(types.ORG_LIST_DATA, org);
+            dispatch(types.ORG_DATA, org);
             param.loading = false;
         }, (res) => {
             console.log('fail');
@@ -1389,6 +1389,44 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
     }).then((res) => {
         console.log('修改成功')
         dispatch(types.UPDATE_USER_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const userTransferCustomer = ({ dispatch }, param) => { //会员转客户
+    console.log('========');
+    console.log(param);
+    console.log('========');
+    const data = {
+        id: param.id,
+        main:param.main,
+        phone:param.phone,
+        tel:param.tel,
+        email:param.email,
+        qq:param.qq,
+        type:param.type,
+        fullname:param.fullname,
+        employeeId:param.employeeId,
+        orgId:param.orgId,
+        customerId:param.customerId,
+        status:1
+    }
+    console.log(data);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.userList + '/user/transformCustomer',
+        emulateHTTP: false,
+        //params: param.id,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With":"XMLHttpRequest",
+            'Content-Type':'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('划转成功')
+        //dispatch(types.UPDATE_USER_DATA, param);
     }, (res) => {
         console.log('fail');
     })

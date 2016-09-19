@@ -78,6 +78,7 @@
                                                 fullname:item.fullname,
                                                 employeeId:item.employeeId,
                                                 customerId:item.customerId,  
+                                                orgId:'',
                                                 status:item.status,                          
                                                 show:true,
                                                 link:deleteInfo,
