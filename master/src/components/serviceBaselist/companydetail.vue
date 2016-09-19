@@ -64,7 +64,7 @@
                                                                url:'contract',
                                                                key:'companyContacts'
                                                                },item.show=false)">编辑</dt>
-                                                       <dt @click="contactDel(item.id,item.show=false)">删除</dt>
+                                                      <!--  <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt> -->
                                                    </dl>
                                                </div>
                                             </td>
@@ -180,7 +180,12 @@ export default {
     filter: (filter, {})
 }
 </script>
-<style>
+<style scoped>
+.top-title{
+    width: 100%;
+    right: 0;
+    top:130px;
+}
 .client-detailInfo img {
     width: 100px;
 }

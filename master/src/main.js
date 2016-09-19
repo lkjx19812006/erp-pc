@@ -28,7 +28,7 @@ Vue.http.options.emulateJSON = true
 Vue.http.options.emulateHTTP = true
 const router = new VueRouter({
   hashbang: true,
-  history: true,
+  history: false,
   saveScrollPosition: true,
   suppressTransitionError: true
 })

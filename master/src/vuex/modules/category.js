@@ -41,7 +41,8 @@ const mutations = {
         state.count--
     },
 
-    [INIT_LIST](state, data) {
+    [INIT_LIST](state,data) {
+        console.log(data)
         state.list = data.results;
     },
     [MENU_BAR](state) {

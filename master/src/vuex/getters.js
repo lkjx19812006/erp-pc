@@ -88,6 +88,18 @@ export const initCustomerlist = (state) => {
 export const initClientDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.clientDetail));  
 }
+
+export const initEmployeeList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.employeeList));  
+}
+
+export const initOrgList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.orgList));  
+}
+export const initChanceList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.chanceList));  
+}
+
 /*---会员信息---*/
 export const initUserList = (state) => {
     return parseJson(state.table.basicBaseList.userList);

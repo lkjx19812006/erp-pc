@@ -5,7 +5,7 @@
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
             <div class="col-md-8">
-                <h4 class="section_title">成分相关</h4>
+                <h4 class="section_title">成分相关{{param.code}}</h4>
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix" @click="drugToggle(initDruglist)">
@@ -19,17 +19,26 @@
                         <div class="panel-collapse"   v-show="!initDruglist.show"> 
                             <div class="panel-body panel-set">
                                 <table class="table contactSet">
+                                    <thead>
+                                        <tr>
+                                            <th>药品名称</th>
+                                            <th>药品编号</th>
+                                            <th>药品类型</th>
+                                            <th>所属公司</th>
+                                            <th>公司地址</th>
+                                            <th>说明</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <tr v-for="item in initDruglist">
                                             <td>
-                                                <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
-                                                药品名称：{{item.name}}
+                                                {{item.name}}
                                             </td>
-                                            <td>药品编号：{{item.number}}</td>
-                                            <td>药品类型：{{item.drugType}}</td>
-                                            <td>所属公司：{{item.company}}</td>
-                                            <td>公司地址：{{item.address}}</td>
-                                            <td>说明：{{item.spec}}</td>
+                                            <td>{{item.number}}</td>
+                                            <td>{{item.drugType}}</td>
+                                            <td>{{item.company}}</td>
+                                            <td>{{item.address}}</td>
+                                            <td>{{item.spec}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -43,23 +52,27 @@
                 <div class="edit-detail clearfix">
                     <div class="client-detailInfo col-xs-12">
                         <label>编号</label>
-                        <input type="text" class="form-control" value="{{initDruglist[param.id].code}}" />
+                        <input type="text" class="form-control" value="{{param.code}}" disabled="disabled" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>药品名称</label>
-                        <input type="text" class="form-control" value="{{initDruglist[param.id].name}}" />
+                        <input type="text" class="form-control" value="{{param.name}}" disabled="disabled" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
-                        <label>成分类型</label>
-                        <input type="text" class="form-control" value="{{initDruglist[param.id].drugType}}"  />
+                        <label>品种名称</label>
+                        <input type="text" class="form-control" value="{{param.breedName}}" disabled="disabled" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>公司名称</label>
-                        <input type="text" class="form-control" value="{{initDruglist[param.id].company}}"  />
+                        <input type="text" class="form-control" value="{{param.companyName}}" disabled="disabled" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>含量</label>
-                        <input type="text" class="form-control" value="{{initDruglist[param.id].spec}}"  />
+                        <input type="text" class="form-control" value="{{param.quantity}}" disabled="disabled" />
+                    </div>
+                    <div class="client-detailInfo  col-xs-12">
+                        <label>单位</label>
+                        <input type="text" class="form-control" value="{{param.unit}}"  disabled="disabled"/>
                     </div>
                 </div>
             </div>
@@ -98,10 +111,9 @@ export default {
     methods: {
         drugToggle: function(param) {
             if(this.$store.state.table.basicBaseList.drugList.length==0){
-                this.$store.state.table.basicBaseList.drugList.show=false
+                this.$store.state.table.basicBaseList.drugList.show=true
             }
             this.$store.state.table.basicBaseList.drugList.show = !this.$store.state.table.basicBaseList.drugList.show;
-            console.log( this.$store.state.table.basicBaseList.drugList)
         },
         close: function() {
             this.param.show = false;
@@ -110,6 +122,14 @@ export default {
 }
 </script>
 <style scoped>
+.contactSet thead{
+    color: #fa6705;
+    }
+.top-title{
+    width: 100%;
+    right: 0;
+    top:130px;
+}
 .breed_detail {
     position: absolute;
     left: 0;

@@ -1,130 +1,272 @@
 <template>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
-    <div class="container modal_con" v-show="param.show">
-        <div @click="param.show=false" class="top-title">
+	 <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+	 <div class="container modal_con" v-show="param.show">
+       <div @click="param.show = false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
-        <div class="edit-content">
-            <h3>编辑{{param.fullname}}的信息</h3>
-        </div>
-       <div class="edit-model">
-           <section class="editsection" v-cloak>
-               <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-               <div class="editpage">
-                   <div class="editpageleft">
-                       <div class="editpage-input">
-                           <label class="editlabel">姓名</label>
-                           <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{param.fullname}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">昵称</label>
-                           <input type="text" v-model='param.nickname' class="form-control edit-input" value="{{param.nickname}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">电话</label>
-                            <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
-                       </div>
-                       <!-- <div class="editpage-input">
-                           <label class="editlabel">邮箱</label>
-                           <input type="text" v-model='param.province' class="form-control edit-input" value="{{param.province}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">备注</label>
-                           <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">经营范围</label>
-                           <input type="text" v-model='param.bizScope' class="form-control edit-input" value="{{param.bizScope}}" />
-                       </div> -->
-                   </div>
-                   <div class="editpageright">
-                       <div class="editpage-input">
-                           <label class="editlabel">邮箱</label>
-                           <input type="text" v-model='param.email' class="form-control edit-input" value="{{param.email}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">qq</label>
-                           <input type="text" v-model="param.qq" class="form-control edit-input" value="{{param.qq}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">公司</label>
-                           <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
-                       </div>
-                      <!--  <div class="editpage-input">
-                          <label class="editlabel">所在市</label>
-                          <input type="text" v-model='param.city' class="form-control edit-input" value="{{param.city}}" />
-                      </div>
-                      <div class="editpage-input">
-                          <label class="editlabel">注册地址</label>
-                          <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
-                      </div> -->
-                   </div>
-               </div>
-           </section>
-       </div> 
-        <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.show = false)">确定</button>
-        </div>
-    </div>
+	    <div class="model-header">
+	    	<h4>划转</h4>
+	    	<div class="con_list">
+	    		<div class="change_trans">
+	    			<div class="tans_tab clearfix">
+	    				<a class="tabs" v-bind:class="{ 'tabs_active': isA&&isB, 'tab1': !isA }" @click="bindCustomer()">绑定客户</a>
+	    				<a class="tabs" v-bind:class="{ 'tabs_active': isA&&!isB, 'tab1': isA }"  @click="employee()">业务员</a>
+	    				<a class="tabs" v-bind:class="{ 'tabs_active': !isA&&isB, 'tab1': isA }"  @click="department()">部门</a> 
+	    			</div>
+	    		</div>
+	    		<div class="con_trans">
+	    			<div class="trans_parten" v-show="currentView==1">
+	    				<table v-if="employeeFlag==0&&orgFlag==0" class="table table-hover table_head table-striped " v-cloak>
+			                <thead>
+			                    <tr>
+			                        <th></th>
+			                        <th>客户名称</th>
+			                        
+			                    </tr>
+			                </thead>
+			                <tbody>
+			                    <tr v-for="item in initCustomerlist">
+			                       <td  @click.stop="">
+			                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectCustomer($index)" ></label>
+			                        </td>
+			                        <td>{{item.name}}</td>
+			                        
+			                    </tr>
+			                </tbody>
+			            </table>
+			            <h3>客户、部门、业务员三者只能选其一</h3>
+	    			</div>
+	    			<div class="trans_service clearfix" v-show="currentView==2">
+	    				<div class="col-xs-8">
+			                <div class="name_search clearfix">
+			                    <img src="/static/images/search.png" height="24" width="24">
+			                    <input type="text" class="search_input" placeholder="请输入业务员名字">
+			                </div>
+			                <div class="name_search clearfix">
+			                    <img src="/static/images/search.png" height="24" width="24">
+			                    <input type="text" class="search_input" v-model="" placeholder="请输入业务员名字" v-on:keyup="categoryNameSearch()">
+			                </div>
+			                 <div class="name_search clearfix">
+			                    <img src="/static/images/search.png" height="24" width="24">
+			                    <input type="text" class="search_input" v-model="" placeholder="请输入业务员名字" v-on:keyup="categoryNameSearch()">
+			                </div>
+			            </div>
+			            <table v-if="customerFlag==0&&orgFlag==0" class="table table-hover table_head table-striped " v-cloak>
+			                <thead>
+			                    <tr>
+			                        <th></th>
+			                        <th>姓名</th>
+			                        <th>部门</th>
+			                    </tr>
+			                </thead>
+			                <tbody>
+			                    <tr v-for="item in initEmployeeList">
+			                       <td  @click.stop="">
+			                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectEmployee($index)" ></label>
+			                        </td>
+			                        <td>{{item.name}}</td>
+			                        <td>{{item.orgName}}</td>
+			                    </tr>
+
+			                </tbody>
+			            </table>
+			            <h3>客户、部门、业务员三者只能选其一</h3>
+	    			</div>
+	    			<div class="con_trans">
+	    			<div class="trans_parten" v-show="currentView==3">
+	    				<table v-if="employeeFlag==0&&customerFlag==0" class="table table-hover table_head table-striped " v-cloak>
+			                <thead>
+			                    <tr>
+			                        <th></th>
+			                        <th>部门名称</th>
+			                        
+			                    </tr>
+			                </thead>
+			                <tbody>
+			                    <tr v-for="item in initOrgList">
+			                       <td  @click.stop="">
+			                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectDepartment($index)" ></label>
+			                        </td>
+			                        <td>{{item.name}}</td>
+			                        
+			                    </tr>
+			                </tbody>
+			            </table>
+			            <h3>客户、部门、业务员三者只能选其一</h3>
+	    			</div>
+	    		</div>
+	    	</div>
+	    	<div class="edit_footer">
+	    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
+	    		<button type="button" class="btn btn-orange" @click="confirm()">确定</button>
+	    	</div>
+	    </div>
+	</div>
 </template>
 <script>
 import {
-    
+    initCustomerlist,
+    initEmployeeList,
+    initOrgList
 } from '../../vuex/getters'
-import {   
-    updateUserInfo   
+import {
+    getClientList,
+    getEmployeeList,
+    getOrgList
 } from '../../vuex/actions'
-export default {
-    props: ['param'],
-    data() {
-        return {
-        
-        }
-    },
-    vuex: {
-       getters: {
-            
-        },
-        actions: {
-            updateUserInfo 
-        } 
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
-    },
-    /*methods: {
-      alertInfo:function(param){
-        updateUserInfo(param)
-      }
-    }*/
+export default{
+	props:['param'],
+	data(){
+		return {
+			currentView:1,
+			isA:true,
+			isB:true,
+			checked:false,
+			customerFlag:0,
+			employeeFlag:0,
+			orgFlag:0,
+			loadParam: {
+                  loading: true,
+                  color: '#5dc596',
+                  size: '15px',
+                  cur: 1,
+                  all: 7
+              }
+		}
+	},
+	components:{
+		
+	},
+	vuex:{
+		getters:{
+			initCustomerlist,
+			initEmployeeList,
+			initOrgList
+		},
+		actions:{
+			getClientList,
+			getEmployeeList,
+			getOrgList
+		}
+	},
+	methods:{
+		bindCustomer:function(){
+			this.currentView=1;
+			//this.isA=!this.isA;
+			this.isA=true;
+			this.isB=true;
+		},
+		employee:function(){
+			this.currentView=2;
+			//this.isA=!this.isA;
+			this.isA=true;
+			this.isB=false;
+		},
+		department:function(){
+			this.currentView=3;
+			//this.isA=!this.isA;
+			this.isA=false;
+			this.isB=true;
+		},
+		Partselected:function(){
+			this.checked=!this.checked;
+           if(this.checked){
+                 this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+                    item.checked=true;
+             })
+           }else{
+                this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+                    item.checked=false;
+             })
+           }
+		},
+		selectCustomer:function(id){
+			if(this.$store.state.table.basicBaseList.customerList[id].checked == false){
+				this.customerFlag++;
+			}else{
+				this.customerFlag--;
+			}
+			this.$store.state.table.basicBaseList.customerList[id].checked=!this.$store.state.table.basicBaseList.customerList[id].checked;
+			for(var key in this.initCustomerlist){
+				if(key!=id){
+					if(this.$store.state.table.basicBaseList.customerList[key].checked==true){
+						this.customerFlag--;
+						this.$store.state.table.basicBaseList.customerList[key].checked=false;
+					}
+					
+				}
+			}
+			
+		},
+		selectEmployee:function(id){
+			if(this.$store.state.table.basicBaseList.employeeList[id].checked == false){
+				this.employeeFlag++;
+			}else{
+				this.employeeFlag--;
+			}
+			this.$store.state.table.basicBaseList.employeeList[id].checked=!this.$store.state.table.basicBaseList.employeeList[id].checked;
+			for(var key in this.initEmployeeList){
+				if(key!=id){
+					if(this.$store.state.table.basicBaseList.employeeList[key].checked==true){
+						this.employeeFlag--;	
+						this.$store.state.table.basicBaseList.employeeList[key].checked=false;	
+					}
+					
+				}
+			}
+			
+		},
+		selectDepartment:function(id){
+			if(this.$store.state.table.basicBaseList.orgList[id].checked == false){
+				this.orgFlag++;
+			}else{
+				this.orgFlag--;
+			}
+			this.$store.state.table.basicBaseList.orgList[id].checked=!this.$store.state.table.basicBaseList.orgList[id].checked;
+			for(var key in this.initOrgList){
+				if(key!=id){
+					if(this.$store.state.table.basicBaseList.orgList[key].checked==true){
+						this.orgFlag--;	
+						this.$store.state.table.basicBaseList.orgList[key].checked=false;	
+					}
+					
+				}
+			}
+			
+		},
+		confirm:function(){
+			for(var key in this.initCustomerlist){
+				if(this.$store.state.table.basicBaseList.customerList[key].checked == true){
+					this.param.customerId = this.$store.state.table.basicBaseList.customerList[key].id;
+				}
+			}
+			for(var key in this.initEmployeeList){
+				if(this.$store.state.table.basicBaseList.employeeList[key].checked == true){
+					this.param.employeeId = this.$store.state.table.basicBaseList.employeeList[key].id;
+				}
+			}
+			console.log(this.param);	
+		}
+
+	},
+	created() {
+      this.getClientList(this.loadParam, this.loadParam.all);
+      this.getEmployeeList(this.loadParam, this.loadParam.all);
+      this.getOrgList(this.loadParam, this.loadParam.all);
+     
+    }
 }
 </script>
 <style scoped>
-.modal {
-    opacity: 0.5;
-    background-color: #000;
-    display: block;
-}
-
 .modal_con {
     display: block;
     position: fixed;
-    top: 217px;
+    top: 91px;
     margin: auto;
     width: 44%;
     left: 0;
     right: 0;
-    max-width: 630px;
-    min-width: 380px;
-    max-height: 500px;
+    min-width: 300px;
     bottom: 50px;
     padding: 0;
     background-color: #fff;
@@ -136,127 +278,73 @@ export default {
     overflow: hidden;
     overflow-y: auto;
 }
-
-.big-font {
-    font-size: 36px;
+.con_list{
+	position: relative;
 }
-
-.top-title {
-    position: absolute;
-    right: 0;
-    top: 0;
+.change_trans{
+	margin-top: 20px;
 }
-
-.top-title span {
-    font-size: 28px;
+.con_trans{
+	margin-top: 40px;
 }
-
-.edit-content {
-    padding: 19px 10px;
+.tans_tab{
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid #fa6705;
+	text-align: left;
+}
+.tans_tab > .tabs{
+	width: 100px;
+	display: inline-block;
+	font-size:16px;
+	text-align: center;
+	background-color: #f5f5f5;
+	color: #333;
+	float: left;
+	height: 40px;
+	border-bottom: 1px solid #fa6705;
+	cursor: pointer;
+}
+.tans_tab .tabs_active{
+	background-color: #fff;
+	color: #fa6705;
+	border: 1px solid #fa6705;
+	border-bottom: 0;
+}
+.tans_tab .tabs_active_1{
+	background-color: #fff;
+	color: #fa6705;
+	border: 1px solid #fa6705;
+	border-bottom: 0;
+}
+.checkbox_unselect{
+    background-image: url(/static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
     text-align: center;
-    border-bottom: 1px solid #ddd;
+    background-position: 5px;
 }
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
-}
-
-.editsection {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.editpage {
-    display: -webkit-flex;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -ms-box-orient: horizontal;
-    box-orient: horizontal;
-}
-
-.editpageleft,
-.editpageright {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-    width: 50%;
-}
-
-.editpage-input {
-    margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
-}
-
-.edit-input {
-    height: 36px;
-    line-height: 36px;
-    width: 90%;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-}
-
-.edit-input:focus {
-    border-color: #fa6705;
-}
-
-.addblack span {
-    color: #333;
-    font-size: 14px;
+.checkbox_select{
+    background-image: url(/static/images/selected.png);
     display: inline-block;
-    margin-left: 10px;
-    margin-top: 5px;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
 }
-
-.edit_footer {
-    border-top: 1px solid #ddd;
-    text-align: right;
-    padding: 10px 20px;
-    margin-top: 50px;
+.trans_service .col-xs-8{
+	margin-bottom: 20px;
 }
-
-.edit_footer button {
-    margin-left: 15px;
-}
-
-.btn-confirm {
-    background-color: #fa6705;
-    color: #fff;
-}
-
-.btn-close {
-    color: #fa6705;
-}
-
-.editpage_img {
-    width: 90%;
-}
-
-.editpage_img img {
-    display: inline-block;
-    background: #ccc;
-}
-
-.editpage-image {
-    display: inline-block;
+.table_head>thead>tr{
+	background-color: #f5f5f5;
+	color: #333;
+	font-size: 18px;
 }
 </style>

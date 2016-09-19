@@ -5,25 +5,38 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>编辑{{param.title}}</h3>
+            <h3>新建跟进</h3>
         </div>
         <validator name="validation">
             <form novalidate>
                 <div class="edit-model">
-                    <section class="editsection">
-                        <div class="editpage" v-cloak>
-                            <div class="editpageleft">
-                                <div class="editpage-input">
-                                    <label class="editlabel">{{param.namelist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.name" value="{{param.name}}" />
-                                </div>
-                            </div>
+                    <section class="editsection" v-cloak>
+                        <div class="editpage-input">
+                            <label class="editlabel">类型<span class="system_danger" v-if="$validation.type.required">请选择类型</span></label>
+                            <select class="form-control edit-input" id="type" v-model="param.type" v-validate:type="['required']"  style="width:90%;">
+                                <option value="0">客户</option>
+                                <option value="1">意向</option>
+                                <option value="2">订单</option>
+                            </select>
+                        </div>
+                         <div class="editpage-input">
+                            <label class="editlabel">跟进方式</label>
+                            <select  class="form-control" v-model="param.trackingWay" style="width:90%;">
+                               <option>电话</option>
+                               <option>微信</option>
+                               <option>qq</option>
+                               <option>邮件</option>
+                            </select>
+                        </div>   
+                         <div class="editpage-input">
+                            <label class="editlabel">备注</label>
+                            <input type="text" class="form-control edit-input"  id="type" v-model="param.comments" v-validate:type="['required']" />
                         </div>
                     </section>
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid"  @click="param.link(param,param.show = false)">保存</button>
                 </div>
             </form>
         </validator>
@@ -37,6 +50,7 @@ export default {
     props: ['param'],
     data() {
         return {
+          
         }
     },
     route: {
@@ -54,6 +68,12 @@ export default {
 <style scoped>
 .big-font {
     font-size: 36px;
+}
+
+.top-title {
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .top-title span {
@@ -94,14 +114,6 @@ export default {
     box-orient: horizontal;
 }
 
-.editpageleft,
-.editpageright {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-    width: 50%;
-}
 
 .editpage-input {
     margin-top: 15px;
@@ -135,8 +147,19 @@ export default {
     margin-left: 10px;
     margin-top: 5px;
 }
-
 .edit_footer button {
     margin-left: 15px;
+}
+.editpage_img {
+    width: 90%;
+}
+
+.editpage_img img {
+    display: inline-block;
+    background: #ccc;
+}
+
+.editpage-image {
+    display: inline-block;
 }
 </style>
