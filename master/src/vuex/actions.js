@@ -1358,10 +1358,10 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
              url += '&audit='+param[key];
         }
         if(key=='startCtime'&&param[key]!=''){
-             url += '&startCtime="'+param[key]+'"';
+             url += '&startCtime='+param[key];
         }
         if(key=='endCtime'&&param[key]!=''){
-             url += '&endCtime="'+param[key]+'"';
+             url += '&endCtime='+param[key];
         }
 
     }
@@ -1400,6 +1400,29 @@ export const getUserDetail = ({ dispatch }, param) => {  //会员详情
     }).then((res)=>{
         console.log(res.json().result);
         var userDetail = res.json().result;
+        userDetail.chance ={};
+        userDetail.chance.show = false;
+        userDetail.chance.arr = [{"id":"14732390725891000","userId":"00012792255a4e22bf1b70eb6eb89b33","type":1,"especial":1,"breedId":1085,
+                                    "breedName":"天仙子","qualification":"","quality":"工城 霜天地","location":"东北","spec":"统","number":213,"price":12.000000,"unit":"公斤",
+                                    "address":"北京市,北京市,东城区 The","pubdate":null,"duedate":"2016-09-14 00:00","advance":1.000000,"invoic":1,"visit":0,"pack":"瓦楞纸箱",
+                                    "intl":0,"sampling":1,"sampleNumber":1,"sampleUnit":"公斤","sampleAmount":100.000000,"offer":null,"offerFalse":null,"offerNumber":null,
+                                    "offerVprice":null,"offerTotal":null,"status":1,"description":null,"updater":null,"utime":null,"creater":"System","ctime":"2016-09-07 17:04",
+                                    "show":false       
+                                },
+                                    {"id":"14732390725891000","userId":"00012792255a4e22bf1b70eb6eb89b33","type":1,"especial":1,"breedId":1085,
+                                    "breedName":"天仙子","qualification":"","quality":"工城 霜天地","location":"东北","spec":"统","number":213,"price":12.000000,"unit":"公斤",
+                                    "address":"北京市,北京市,东城区 The","pubdate":null,"duedate":"2016-09-14 00:00","advance":1.000000,"invoic":1,"visit":0,"pack":"瓦楞纸箱",
+                                    "intl":0,"sampling":1,"sampleNumber":1,"sampleUnit":"公斤","sampleAmount":100.000000,"offer":null,"offerFalse":null,"offerNumber":null,
+                                    "offerVprice":null,"offerTotal":null,"status":1,"description":null,"updater":null,"utime":null,"creater":"System","ctime":"2016-09-07 17:04",
+                                    "show":false
+                                }
+                                    ];   
+        console.log(userDetail);
+        userDetail.follow ={};
+        userDetail.follow.show = false;                            
+        userDetail.follow.arr = [{
+            "id":"20160805158800","userId":"00012792255a4e22bf1b70eb6eb89b33","customerId":null,"chanceId":"14732390725891000","orderId":"1125","orderNo":"201609094786464","comment":"缺货",show:false
+        }];                            
         dispatch(types.USER_DETAIL_DATA, userDetail);
         
         param.loading = false;
@@ -1412,10 +1435,28 @@ export const getUserDetail = ({ dispatch }, param) => {  //会员详情
 export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信息
     console.log(param);
     const updatedata = {
-        id: param.id,
-        fullname: param.fullname,
-
+        id: param.id
+        
     }
+    if(param.qq){
+        updatedata.qq = param.qq;
+    }
+    if(param.fullname){
+        updatedata.fullname = param.fullname;
+    }
+    if(param.email){
+        updatedata.email = param.email;
+    }
+    if(param.phone){
+        updatedata.phone = param.phone;
+    }
+    if(param.nickname){
+        updatedata.nickname = param.nickname;
+    }
+    if(param.company){
+        updatedata.company = param.company;
+    }
+    console.log('=======');
     console.log(updatedata);
     Vue.http({
         method: 'PUT',
@@ -1429,8 +1470,11 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
             'Content-Type':'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('修改成功')
-        dispatch(types.UPDATE_USER_DATA, param);
+        console.log('修改成功');
+
+        updatedata.index = param.index;
+        console.log(updatedata);
+        dispatch(types.UPDATE_USER_DATA, updatedata);
     }, (res) => {
         console.log('fail');
     })

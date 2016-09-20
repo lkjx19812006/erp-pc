@@ -24,14 +24,14 @@
                 <div class="name_search clearfix"> 
                     <img src="/static/images/search.png" height="24" width="24" >
                     <div class="search_input">
-                        <mz-datepicker :time.sync="loadParam.startCtime" format="yyyy-MM-dd HH:mm:ss">
+                        <mz-datepicker :time.sync="loadParam.startCtime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                 </div> 
                 <div class="name_search clearfix"> 
                     <img src="/static/images/search.png" height="24" width="24" >
                     <div class="search_input">
-                        <mz-datepicker :time.sync="loadParam.endCtime" format="yyyy-MM-dd HH:mm:ss">
+                        <mz-datepicker :time.sync="loadParam.endCtime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                 </div> 
@@ -62,6 +62,7 @@
                         <th>来源</th>
                         <th>客户类型</th>
                         <th>审核状态</th>
+                        <th>备注</th>
                         <th></th>
                         
                     </tr>
@@ -83,19 +84,10 @@
                         <td>{{item.qq}}</td>
                         <td>{{item.company}}</td>
                         <td>{{item.score}}</td>
-                        <!-- <td>
-                            <div v-if="item.status==0">普通会员</div>
-                            <div v-if="item.status==1">客户</div>
-                            <div v-if="item.status==2">拉黑</div>
-                        </td> -->
-                        <!-- <td><div v-if="item.source==0">PC</div>
-                            <div v-if="item.source==1">安卓</div>
-                            <div v-if="item.source==2">微信</div>
-                            <div v-if="item.source==3">IOS</div>
-                        </td> -->
                         <td>{{item.sourceType}}</td>
-                        <td>{{item.utype}}</td>
+                        <td>{{item.type}}</td>
                         <td>{{item.auditResult}}</td>
+                        <td>暂无备注</td>
                         
                         <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
@@ -161,7 +153,8 @@ import detailModel from '../components/user/userDetail'
 import pagination from '../components/pagination'
 import {
     getCount,
-    initUserList
+    initUserList,
+    initUserDetail
 } from '../vuex/getters'
 import {
     getUserList,
@@ -220,7 +213,8 @@ export default {
         getters: {
             // note that you're passing the function itself, and not the value 'getCount()'
             counterValue: getCount,
-            initUserList           
+            initUserList,
+            initUserDetail         
         },
         actions: {
             getUserList,
@@ -235,9 +229,11 @@ export default {
       },
   methods: {
     clickOn: function(item) {
-
+            
             this.changeParam = item;
             this.getUserDetail(this.changeParam);
+
+
         },
     eventClick:function(id){
             if(this.$store.state.table.basicBaseList.userList[id].show){

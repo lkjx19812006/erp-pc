@@ -921,6 +921,7 @@ export default {
             this.$store.state.table.clientDetail[param.crete].show = !this.$store.state.table.clientDetail[param.crete].show;
     	},
     	clickShow: function(id,param) {
+       
             if (this.$store.state.table.clientDetail[param.concrete].arr[id].show) {
                 this.$store.state.table.clientDetail[param.concrete].arr[id].show = !this.$store.state.table.clientDetail[param.concrete].arr[id].show
             } else {

@@ -9,47 +9,40 @@
 	    	<div class="con_list">
 	    		<div class="change_trans">
 	    			<div class="tans_tab clearfix">
-	    				<a class="tabs" v-bind:class="{ 'tabs_active': isA&&isB, 'tab1': !isA }" @click="bindCustomer()">绑定客户</a>
-	    				<a class="tabs" v-bind:class="{ 'tabs_active': isA&&!isB, 'tab1': isA }"  @click="employee()">业务员</a>
-	    				<a class="tabs" v-bind:class="{ 'tabs_active': !isA&&isB, 'tab1': isA }"  @click="department()">部门</a> 
+	    				<!-- <a class="tabs" v-bind:class="{ 'tabs_active': isA&&isB, 'tab1': !isA }" @click="bindCustomer()">绑定客户</a> -->
+	    				<a class="tabs" v-bind:class="{ 'tabs_active': isA, 'tab1': isA }"  @click="employee()">业务员</a>
+	    				<a class="tabs" v-bind:class="{ 'tabs_active': !isA, 'tab1': isA }"  @click="department()">部门</a> 
 	    			</div>
 	    		</div>
-	    		<div class="con_trans">
+	    		<!-- <div class="con_trans">
 	    			<div class="trans_parten" v-show="currentView==1">
 	    				<table v-if="employeeFlag==0&&orgFlag==0" class="table table-hover table_head table-striped " v-cloak>
-			                <thead>
-			                    <tr>
-			                        <th></th>
-			                        <th>客户名称</th>
-			                        
-			                    </tr>
-			                </thead>
-			                <tbody>
-			                    <tr v-for="item in initCustomerlist">
-			                       <td  @click.stop="">
-			                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectCustomer($index)" ></label>
-			                        </td>
-			                        <td>{{item.name}}</td>
-			                        
-			                    </tr>
-			                </tbody>
-			            </table>
-			            <h3>客户、部门、业务员三者只能选其一</h3>
-	    			</div>
-	    			<div class="trans_service clearfix" v-show="currentView==2">
+	    					                <thead>
+	    					                    <tr>
+	    					                        <th></th>
+	    					                        <th>客户名称</th>
+	    					                        
+	    					                    </tr>
+	    					                </thead>
+	    					                <tbody>
+	    					                    <tr v-for="item in initCustomerlist">
+	    					                       <td  @click.stop="">
+	    					                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectCustomer($index)" ></label>
+	    					                        </td>
+	    					                        <td>{{item.name}}</td>
+	    					                        
+	    					                    </tr>
+	    					                </tbody>
+	    					            </table>
+	    					            
+	    			</div> -->
+	    			<div class="trans_service clearfix" v-show="currentView==1">
 	    				<div class="col-xs-8">
 			                <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">
 			                    <input type="text" class="search_input" placeholder="请输入业务员名字">
 			                </div>
-			                <div class="name_search clearfix">
-			                    <img src="/static/images/search.png" height="24" width="24">
-			                    <input type="text" class="search_input" v-model="" placeholder="请输入业务员名字" v-on:keyup="categoryNameSearch()">
-			                </div>
-			                 <div class="name_search clearfix">
-			                    <img src="/static/images/search.png" height="24" width="24">
-			                    <input type="text" class="search_input" v-model="" placeholder="请输入业务员名字" v-on:keyup="categoryNameSearch()">
-			                </div>
+			               
 			            </div>
 			            <table v-if="customerFlag==0&&orgFlag==0" class="table table-hover table_head table-striped " v-cloak>
 			                <thead>
@@ -70,10 +63,10 @@
 
 			                </tbody>
 			            </table>
-			            <h3>客户、部门、业务员三者只能选其一</h3>
+			            
 	    			</div>
 	    			<div class="con_trans">
-	    			<div class="trans_parten" v-show="currentView==3">
+	    			<div class="trans_parten" v-show="currentView==2">
 	    				<table v-if="employeeFlag==0&&customerFlag==0" class="table table-hover table_head table-striped " v-cloak>
 			                <thead>
 			                    <tr>
@@ -92,7 +85,7 @@
 			                    </tr>
 			                </tbody>
 			            </table>
-			            <h3>客户、部门、业务员三者只能选其一</h3>
+			            
 	    			</div>
 	    		</div>
 	    	</div>
@@ -121,7 +114,7 @@ export default{
 		return {
 			currentView:1,
 			isA:true,
-			isB:true,
+			//isB:true,
 			checked:false,
 			customerFlag:0,
 			employeeFlag:0,
@@ -152,23 +145,21 @@ export default{
 		}
 	},
 	methods:{
-		bindCustomer:function(){
+		/*bindCustomer:function(){
 			this.currentView=1;
 			//this.isA=!this.isA;
 			this.isA=true;
 			this.isB=true;
-		},
+		},*/
 		employee:function(){
-			this.currentView=2;
+			this.currentView=1;
 			//this.isA=!this.isA;
 			this.isA=true;
-			this.isB=false;
 		},
 		department:function(){
-			this.currentView=3;
+			this.currentView=2;
 			//this.isA=!this.isA;
 			this.isA=false;
-			this.isB=true;
 		},
 		Partselected:function(){
 			this.checked=!this.checked;

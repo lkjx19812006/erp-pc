@@ -22,7 +22,11 @@
                        </div>
                        <div class="editpage-input">
                            <label class="editlabel">电话</label>
-                            <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
+                            <input type="text" v-model='param.phone' class="form-control edit-input" value="{{param.phone}}" />
+                       </div>
+                       <div class="editpage-input">
+                           <label class="editlabel">备注</label>
+                           <input type="text" v-model='' class="form-control edit-input" value="" />
                        </div>
                        <!-- <div class="editpage-input">
                            <label class="editlabel">邮箱</label>

@@ -107,7 +107,8 @@ export const initUserList = (state) => {
 
 /*---会员详情---*/
 export const initUserDetail = (state) => {
-    console.log('getters');
-    console.log(state.table.userDetail);
+    
+
     return parseJson(state.table.userDetail);
 }
+ 

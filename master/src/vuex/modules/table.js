@@ -568,14 +568,30 @@ const mutations = {
     },
 
     [UPDATE_USER_DATA](state,data){  // 会员更新
-        state.basicBaseList[data.key][data.index].fullname=data.fullname;
+      
+        if(data.index!=undefined){    //列表页面修改
+          state.basicBaseList.userList[data.index].fullname=data.fullname;
+          state.basicBaseList.userList[data.index].qq=data.qq;
+          state.basicBaseList.userList[data.index].email=data.email;
+          state.basicBaseList.userList[data.index].company=data.company;
+          state.basicBaseList.userList[data.index].nickname=data.nickname;
+          state.basicBaseList.userList[data.index].phone=data.phone;
+
+        }else{   //详情页面修改
+          state.userDetail.fullname=data.fullname;
+          state.userDetail.qq=data.qq;
+          state.userDetail.email=data.email;
+          state.userDetail.company=data.company;
+          state.userDetail.nickname=data.nickname;
+          state.userDetail.phone=data.phone;  
+        }
+        
     },
 
     [USER_DETAIL_DATA](state,data){  // 会员详情
-      console.log('table');
-      console.log(state.userDetail.fullname);
+    
       state.userDetail = data;
-      console.log(state.userDetail.fullname);
+      
     },
 
     [EMPLOYEE_DATA](state,data){  // 业务员列表
