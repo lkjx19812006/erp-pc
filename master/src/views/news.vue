@@ -7,41 +7,46 @@
     
      <div  v-show="!changeParam.show">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">会员</div>
-            <div class="col-xs-8 my_order_search">
+            <div class="my_enterprise col-xs-1">会员</div>
+            
+            <div class="col-xs-6 my_order_search">
                 <div class="name_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="24"  @click="loadByName()">
-                    <input type="text" class="search_input" v-model="loadParam.fullname" @keyup.enter="loadByName()" placeholder="按名字搜索">
+                    <img src="/static/images/search.png" height="24" width="20">
+                    <input type="text" class="search_input" v-model="loadParam.fullname" @keyup.enter="loadByCondition()" placeholder="按名字搜索">
                 </div>
                 <div class="ordertel_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="24" @click="loadByPhone()">
-                    <input type="text" class="search_input" v-model="loadParam.phone" @keyup.enter="loadByPhone()" placeholder="按手机号搜索">
+                    <img src="/static/images/search.png" height="24" width="20">
+                    <input type="text" class="search_input" v-model="loadParam.phone" @keyup.enter="loadByCondition()" placeholder="按手机号搜索">
                 </div>
                 <div class="name_search clearfix"> 
-                    <img src="/static/images/search.png" height="24" width="24" @click="loadByAudit()">
-                    <input type="text" class="search_input" v-model="loadParam.audit" @keyup.enter="loadByAudit()" placeholder="按状态搜索">
+                    <img src="/static/images/search.png" height="24" width="20">
+                    <input type="text" class="search_input" v-model="loadParam.audit" @keyup.enter="loadByCondition()" placeholder="按状态搜索">
                 </div>
                 <div class="name_search clearfix"> 
-                    <img src="/static/images/search.png" height="24" width="24" >
-                    <div class="search_input">
+                    <div>
+                        开始时间:
                         <mz-datepicker :time.sync="loadParam.startCtime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                 </div> 
                 <div class="name_search clearfix"> 
-                    <img src="/static/images/search.png" height="24" width="24" >
-                    <div class="search_input">
+                    
+                    <div>
+                    结束时间:
                         <mz-datepicker :time.sync="loadParam.endCtime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                 </div> 
-                
+                 
+            </div>
+            <div class="right col-xs-1">
+                <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空时间</button>
+                <button type="button" class="btn btn-default" height="24" width="24" @click="loadByCondition()">查询</button>
+            </div>
+            <div class="right col-xs-1">
                 
             </div>
-            <div class="right col-xs-2">
-                <!-- <button class="new_btn transfer" @click="clientTransfer('transfer')">划转</button> -->
-                 <!-- <button class="new_btn" @click="createUser('create')">新建</button>  -->
-            </div>
+            
         </div>
         <div class="order_table">
             <div class="cover_loading">
@@ -128,6 +133,8 @@
                                                 key:'userList'
                                                 },item.show=false)">划转</li>
                                     <li @click="changce(item.show=false)">机会</li>
+                                    <li @click="personalAuth(item.show=false)">个人认证</li>
+                                    <li @click="companyAuth(item.show=false)">企业认证</li>
                                 </ul>
                             </div>
                         </td>
@@ -242,7 +249,7 @@ export default {
                 this.$store.state.table.basicBaseList.userList[id].show=true;
             }   
         },
-    loadByName(){
+    /*loadByName(){
         console.log('name');
             this.loadParam.phone = '';
             this.loadParam.audit = '';
@@ -261,8 +268,14 @@ export default {
             this.loadParam.phone = '';
             this.loadParam.fullname = '';
             this.getUserList(this.loadParam);
+    },*/
+    resetTime(){
+        this.loadParam.startCtime = '';
+        this.loadParam.endCtime = '';
     },
-    
+    loadByCondition(){
+        this.getUserList(this.loadParam);
+    },
     createUser:function(value){
         console.log('createUser');
             this.createParam.show=true;
@@ -281,8 +294,13 @@ export default {
     },
     changce:function(){
 
-    }
+    },
+    personalAuth(){
 
+    },
+    companyAuth(){
+
+    }
 
   },
   created() { 

@@ -25,9 +25,7 @@
                         <li>
                             <button type="button" class="btn btn-base">新建跟进</button>
                         </li>
-                        <li>
-                            <button type="button" class="btn btn-base">删除</button>
-                        </li>
+                        
                         <li>
                             <button type="button" class="btn btn-base" @click="modifyUser({
                                                id:initUserDetail.id,
@@ -45,9 +43,7 @@
                                                key:'userList'
                                                })">编辑</button>
                         </li>
-                        <li>
-                            <button type="button" class="btn btn-base">新建</button>
-                        </li>
+                        
                     </ul>
                 </div>
             </nav>

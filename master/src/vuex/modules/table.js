@@ -570,20 +570,32 @@ const mutations = {
     [UPDATE_USER_DATA](state,data){  // 会员更新
       
         if(data.index!=undefined){    //列表页面修改
-          state.basicBaseList.userList[data.index].fullname=data.fullname;
+          if(data){
+            for(var key in data){
+              state.basicBaseList.userList[data.index][key]=data[key];
+            }
+          }
+          console.log(state.basicBaseList.userList[data.index]);
+          /*state.basicBaseList.userList[data.index].fullname=data.fullname;
           state.basicBaseList.userList[data.index].qq=data.qq;
           state.basicBaseList.userList[data.index].email=data.email;
           state.basicBaseList.userList[data.index].company=data.company;
           state.basicBaseList.userList[data.index].nickname=data.nickname;
           state.basicBaseList.userList[data.index].phone=data.phone;
-
+*/
         }else{   //详情页面修改
-          state.userDetail.fullname=data.fullname;
+              //列表页面修改
+          if(data){
+            for(var key in data){
+              state.userDetail[key]=data[key];
+            }
+          }
+          /*state.userDetail.fullname=data.fullname;
           state.userDetail.qq=data.qq;
           state.userDetail.email=data.email;
           state.userDetail.company=data.company;
           state.userDetail.nickname=data.nickname;
-          state.userDetail.phone=data.phone;  
+          state.userDetail.phone=data.phone;  */
         }
         
     },
