@@ -33,7 +33,6 @@
                         <div class="panel-body panel-set">
                             <ul class="clearfix" v-for="item in initBreedDetail.specs.arr">
                                 <li class="panel-name">
-                                    <img class="pull-left" src="/static/images/contactname.png" height="21" width="18" />
                                     <label>规格名称：{{item.name}}</label>
                                 </li>
                                 <li @click="clickShow($index)">
@@ -94,7 +93,6 @@
                             <div class="panel-body panel-set">
                                 <ul class="clearfix" v-for="item in initBreedDetail.locals.arr" v-cloak>
                                     <li class="panel-name">
-                                        <img class="pull-left" src="/static/images/chance.png" height="21" width="18" />
                                         <label>产地名称：{{item.name}}</label>
                                     </li>
                                     <li @click="clickLocal($index)">
@@ -153,7 +151,6 @@
                             <div class="panel-body panel-set">
                                 <ul class="clearfix" v-for="item in initBreedDetail.alias.arr" v-cloak>
                                     <li class="panel-name">
-                                        <img class="pull-left" src="/static/images/chance.png" height="21" width="18" />
                                         <label>别名：{{item.alias}}</label>
                                     </li>
                                     <li @click="clickAlias($index)">
@@ -212,7 +209,6 @@
                             <div class="panel-body panel-set">
                                 <ul class="clearfix" v-for="item in initBreedDetail.units.arr" v-cloak>
                                     <li class="panel-name">
-                                        <img class="pull-left" src="/static/images/chance.png" height="21" width="18" />
                                         <label>单位名称：{{item.name}}</label>
                                     </li>
                             
@@ -257,15 +253,15 @@
                 <div class="edit-detail clearfix">
                     <div class="client-detailInfo col-xs-12">
                         <label>编号</label>
-                        <input type="text" class="form-control" v-model='initBreedDetail.code' value="{{initBreedDetail.code}}" />
+                        <input type="text" class="form-control"  value="{{initBreedDetail.code}}" disabled="disabled" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>品种名称</label>
-                        <input type="text" class="form-control" value="{{initBreedDetail.name}}" v-model='initBreedDetail.name' />
+                        <input type="text" class="form-control" value="{{initBreedDetail.name}}" disabled="disabled" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>品种分类选择</label>
-                        <select class="form-control" v-model="initBreedDetail.categoryId">
+                        <select class="form-control" v-model="initBreedDetail.categoryId" disabled="disabled">
                             <option v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                         </select>
                     </div>
@@ -276,9 +272,6 @@
                                 <img :src="initBreedDetail.icon" />
                             </div>
                         </div>
-                    </div>
-                    <div class="client-editbtn col-xs-12">
-                        <button type="button" class="btn btn-orange" @click="updateBreedInfo(initBreedDetail,initBreedDetail.sub=initBreedDetail.id)">保存</button>
                     </div>
                 </div>
             </div>
@@ -446,7 +439,9 @@ export default {
     float: right;
     position: relative;
 }
-
+.panel-body ul li{
+    padding: 10px;
+}
 .breed_action {
     top: 0px;
     right: 30px;

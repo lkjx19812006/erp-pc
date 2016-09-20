@@ -10,7 +10,10 @@
                 <h4 class="section_title">企业相关</h4>
                 <div class="panel-group">
                     <div class="panel panel-default">
-                        <div class="panel-heading clearfix" @click="companytoggle(initCompanyDetail.companyContacts)">
+                        <div class="panel-heading clearfix" @click="companytoggle({
+                                link:initCompanyDetail.companyContacts,
+                                crete:'companyContacts'
+                                })">
                             <h4 class="panel-title clearfix">
                             <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
                             <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
@@ -22,24 +25,23 @@
                         <div class="panel-collapse"  v-show="initCompanyDetail.companyContacts.show">
                             <div class="panel-body panel-set">
                                 <table class="table contactSet">
+                                    <thead>
+                                        <tr>
+                                            <th>名称</th>
+                                            <th>手机</th>
+                                            <th>电话</th>
+                                            <th>邮箱</th>
+                                            <th>微信</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <tr v-for="item in initCompanyDetail.companyContacts.arr">
-                                            <td>
-                                                <img class="pull-left contact_img" src="/static/images/contactname.png" height="21" width="18" />
-                                                名称：{{item.name}}
-                                            </td>
-                                            <td>
-                                                手机：{{item.phone}}
-                                            </td>
-                                            <td>
-                                                电话：{{item.tel}}
-                                            </td>
-                                            <td>
-                                                邮箱：{{item.email}}
-                                            </td>
-                                            <td>
-                                                 微信：{{item.wechart}}
-                                            </td>
+                                            <td>{{item.name}}</td>
+                                            <td>{{item.phone}}</td>
+                                            <td>{{item.tel}}</td>
+                                            <td>{{item.email}}</td>
+                                            <td>{{item.wechart}}</td>
                                             <td @click="contactShow($index)">
                                                 <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show" transition="expand">
@@ -73,6 +75,140 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                     <div class="panel panel-default">
+                        <div class="panel-heading clearfix" @click="companytoggle({
+                                link:initCompanyDetail.companyProducts,
+                                crete:'companyProducts'
+                                })">
+                            <h4 class="panel-title clearfix">
+                            <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
+                            <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
+                                产品({{initCompanyDetail.companyProducts.arr.length}})
+                            </a>
+                            <button type="button" class="btn btn-base pull-right" @click.stop="createContact(param.id)">新建</button>
+                        </h4>
+                        </div>
+                        <div class="panel-collapse"  v-show="!initCompanyDetail.companyProducts.show">
+                            <div class="panel-body panel-set">
+                                <table class="table contactSet">
+                                    <thead>
+                                        <tr>
+                                            <th>名称</th>
+                                            <th>手机</th>
+                                            <th>电话</th>
+                                            <th>邮箱</th>
+                                            <th>微信</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="item in initCompanyDetail.companyProducts.arr">
+                                            <td>{{item.name}}</td>
+                                            <td>{{item.phone}}</td>
+                                            <td>{{item.tel}}</td>
+                                            <td>{{item.email}}</td>
+                                            <td>{{item.wechart}}</td>
+                                            <td @click="contactShow($index)">
+                                                <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                <div class="breed_action" v-show="item.show" transition="expand">
+                                                   <dl>
+                                                       <dt @click="updateCompany({
+                                                               sub:$index,
+                                                               id:item.id,
+                                                               show:true,
+                                                               cid:item.cid,
+                                                               title:'联系人',
+                                                               namelist:'联系人名称',
+                                                               phonelist:'手机号',
+                                                               emaillist:'邮箱',
+                                                               tellist:'电话',
+                                                               weblist:'微信',
+                                                               name:item.name,
+                                                               phone:item.phone,
+                                                               tel:item.tel,
+                                                               email:item.email,
+                                                               wechart:item.wechart,
+                                                               link:alterCompany,
+                                                               url:'contract',
+                                                               key:'companyProducts'
+                                                               },item.show=false)">编辑</dt>
+                                                      <!--  <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt> -->
+                                                   </dl>
+                                               </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  <div class="panel panel-default">
+                       <div class="panel-heading clearfix" @click="companytoggle({
+                               link:initCompanyDetail.companyLicenses,
+                               crete:'companyLicenses'
+                               })">
+                           <h4 class="panel-title clearfix">
+                           <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
+                           <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
+                               证书({{initCompanyDetail.companyLicenses.arr.length}})
+                           </a>
+                           <button type="button" class="btn btn-base pull-right" @click.stop="createContact(param.id)">新建</button>
+                       </h4>
+                       </div>
+                       <div class="panel-collapse"  v-show="!initCompanyDetail.companyLicenses.show">
+                           <div class="panel-body panel-set">
+                               <table class="table contactSet">
+                                   <thead>
+                                       <tr>
+                                           <th>名称</th>
+                                           <th>手机</th>
+                                           <th>电话</th>
+                                           <th>邮箱</th>
+                                           <th>微信</th>
+                                           <th></th>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       <tr v-for="item in initCompanyDetail.companyLicenses.arr">
+                                           <td>{{item.name}}</td>
+                                           <td>{{item.phone}}</td>
+                                           <td>{{item.tel}}</td>
+                                           <td>{{item.email}}</td>
+                                           <td>{{item.wechart}}</td>
+                                           <td @click="contactShow($index)">
+                                               <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                               <div class="breed_action" v-show="item.show" transition="expand">
+                                                  <dl>
+                                                      <dt @click="updateCompany({
+                                                              sub:$index,
+                                                              id:item.id,
+                                                              show:true,
+                                                              cid:item.cid,
+                                                              title:'联系人',
+                                                              namelist:'联系人名称',
+                                                              phonelist:'手机号',
+                                                              emaillist:'邮箱',
+                                                              tellist:'电话',
+                                                              weblist:'微信',
+                                                              name:item.name,
+                                                              phone:item.phone,
+                                                              tel:item.tel,
+                                                              email:item.email,
+                                                              wechart:item.wechart,
+                                                              link:alterCompany,
+                                                              url:'contract',
+                                                              key:'companyLicenses'
+                                                              },item.show=false)">编辑</dt>
+                                                     <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt>
+                                                  </dl>
+                                              </div>
+                                           </td>
+                                       </tr>
+                                   </tbody>
+                               </table>
+                           </div>
+                       </div> -->
                     </div>
                 </div>
             </div>
@@ -157,10 +293,10 @@ export default {
     },
     methods: {
         companytoggle: function(param) {
-            if(this.$store.state.table.companyDetail.companyContacts.arr.length==0){
-                this.$store.state.table.companyDetail.companyContacts.show=false
+            if(this.$store.state.table.companyDetail[param.crete].arr.length==0){
+                this.$store.state.table.companyDetail[param.crete].show=false
             }
-            this.$store.state.table.companyDetail.companyContacts.show = !this.$store.state.table.companyDetail.companyContacts.show;
+            this.$store.state.table.companyDetail[param.crete].show = !this.$store.state.table.companyDetail[param.crete].show;
         },
         contactShow:function(id){
             if(this.$store.state.table.companyDetail.companyContacts.arr[id].show){
@@ -206,7 +342,7 @@ export default {
     border-radius: 10px;
 }
 .breed_action {
-    top: 0px;
+    top: 33px;
     right: 30px;
 }
 
@@ -224,10 +360,11 @@ export default {
     font-size: 14px;
     cursor: pointer;
 }
-.contactSet{
-    margin-bottom: 0;
+
+.contactSet>thead{
+    color: #fa6705;
 }
-.contactSet>tbody>tr>td{
+.contactSet>tbody>tr>td,.contactSet>thead>tr>th{
     border-bottom: none;
     border-top: none;
     text-align: left;

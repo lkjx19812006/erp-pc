@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-09-19 12:05:51
+* @Last Modified time: 2016-09-19 17:43:19
 */
 
 * {
@@ -291,11 +291,6 @@ body {
 .base_pagination {
     margin: auto;
     text-align: center;
-    margin-top: 70px;
-}
-
-.panel-set ul {
-    margin-bottom: 30px;
 }
 
 .cover_loading {
@@ -352,7 +347,6 @@ body {
 .panel-body ul li {
     display: inline-block;
     margin-right: 3%;
-    /* overflow: hidden; */
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -594,4 +588,13 @@ fieldset[disabled] .form-control {
 
 [v-cloak] {
     display: none;
+}
+
+.underline{
+    cursor: pointer;
+    color: #0090ff;
+}
+.underline:hover{
+    text-decoration: underline;
+    color: #fa6705;
 }

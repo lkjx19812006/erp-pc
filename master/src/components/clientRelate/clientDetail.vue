@@ -19,7 +19,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <a class="navbar-brand navbar-name" href="#">杨欢</a>
+                        <a class="navbar-brand navbar-name" href="#">{{param.name}}</a>
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                         <li>
@@ -68,7 +68,7 @@
       		                                     qq:'',
       		                                     wechart:'',
       		                                     main:'',
-      		                                     namelist:'客户名称',
+      		                                     namelist:'联系人姓名',
       		                                     job:'联系人职位',
       		                                     parten:'联系人部门',
       		                                     phonelist:'手机',
@@ -76,7 +76,6 @@
       		                                     emaillist:'邮箱',
       		                                     QQ:'qq',
       		                                     webchart:'微信',
-      		                                     remark:'备注',
       		                                     link:createCustomer,
       		                                     url:'/customer/contact',
       		                                     key:'contacts'
@@ -87,7 +86,7 @@
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                         	<thead>
-                                        		<th>客户名称</th>
+                                        		<th>联系人姓名</th>
                                         		<th>联系人职位</th>
                                         		<th>联系人部门</th>
                                         		<th>手机</th>
@@ -95,7 +94,6 @@
                                         		<th>邮箱</th>
                                         		<th>qq</th>
                                         		<th>微信</th>
-                                        		<th>备注</th>
                                         	</thead>
 		                                    <tbody>
 		                                        <tr v-for="item in initClientDetail.contacts.arr">
@@ -107,7 +105,6 @@
 		                                            <td>{{item.email}}</td>
 		                                            <td>{{item.qq}}</td>
 		                                            <td>{{item.wechart}}</td>
-		                                            <td>{{item.main}}</td>
 		                                            <td  @click="clickShow($index,{
 		                                            	concrete:'contacts'
 		                                            	})">
@@ -119,7 +116,7 @@
 				                                                   id:item.id,
 				                                                   show:true,
 				                                                   title:'联系人',
-				                                                   namelist:'客户名称',
+				                                                   namelist:'联系人姓名',
         								                                   job:'联系人职位',
         								                                   parten:'联系人部门',
         								                                   phonelist:'手机',
@@ -127,7 +124,6 @@
         								                                   emaillist:'邮箱',
         								                                   QQ:'qq',
         								                                   webchart:'微信',
-        								                                   remark:'备注',
 				                                                   name:item.name,
 				                                                   position:item.position,
 				                                                   department:item.department,
@@ -136,7 +132,6 @@
 				                                                   email:item.email,
 				                                                   qq:item.qq,
 				                                                   wechart:item.wechart,
-				                                                   main:item.main,
 				                                                   link:updateContact,
 				                                                   url:'/customer/contact',
 				                                                   key:'contacts',
@@ -244,6 +239,7 @@
                     										</a>
                     										<button type="button" class="btn btn-base pull-right" @click.stop="createfiles({
                       											 customerId:param.id,
+                                             id:param.id,
     		                                     show:true,
                                              type:'',
                                              path:'',
@@ -265,7 +261,7 @@
                                       	</thead>
 		                                    <tbody>
 		                                         <tr v-for="item in initClientDetail.files.arr">
-		                                            <td>{{item.path}}</td>
+		                                            <td><img :src="item.path" /></td>
 		                                            <td>{{item.type}}</td>
 		                                            <td>{{item.catagory}}</td>
                                                 <td  @click="clickShow($index,{
@@ -960,6 +956,7 @@ export default {
         createfiles:function(initBreedDetail){
         	 this.cfilesParam = initBreedDetail;
            console.log(this.cfilesParam.path)
+           this.$broadcast('getImageData');
         },
         createtrack:function(value){
           	this.ctrackParam.show = true;

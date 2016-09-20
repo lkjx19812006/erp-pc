@@ -1,3 +1,5 @@
+
+
 <template>
     <div id="app">
         <hello></hello>
@@ -13,16 +15,27 @@
         <button v-on:click="btnClick('hello')">hello</button>
         <button v-on:click="btnClick('test')">hello</button>
     </div>
+    <div>
+   
+  
+<mz-datepicker :time.sync="dateText" format="yyyy-MM-dd HH:mm"></mz-datepicker>
+    </div>
+ 
+
 </template>
 <script>
 import Hello from '../components/Hello'
 import pressImage from '../components/imagePress'
 import showModel from './showmodel'
+import calendar from '../components/calendar/vue.datepicker'
+
+
 export default {
     components: {
         Hello,
         showModel,
-        pressImage
+        pressImage,
+        calendar
     },
     data() {
         return {
@@ -33,14 +46,35 @@ export default {
             test:{
                 url:'/crm/api/v1/file/',
                 qiniu:false
-            }
+            },
+            dateText:'',
+            show:false
+
+     
         }
     },
+    watch: {
+            show(value) {
+                if (value) {
+                    this.$els.input.disabled = true
+                } else {
+                    this.$els.input.disabled = false
+                }
+            }
+        },
     methods: {
         btnClick: function(value) {
             this.modelParam.name = value;
             this.modelParam.show = true;
-        }
+        },
+        createDateText() {
+                let date = new Date()
+                let year = date.getFullYear()
+                let month = date.getMonth() + 1
+                let day = date.getDate()
+                let str = `${year}/${month}/${day}`
+                this.dateText = str.replace(/\b(\w)\b/g, "0$1")
+            }
     },
     route: {
         activate: function(transition) {
@@ -55,7 +89,10 @@ export default {
         getImageData: function(imageData) {
             console.log(imageData);
         }
-    }
+    },
+    ready() {
+            this.createDateText()
+        }
 }
 </script>
 <style scoped>

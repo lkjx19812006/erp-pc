@@ -21,7 +21,6 @@ import {
     SERVICE_ENTERPRISE_DETAIL,
     ADD_CONTACT_DATA,
     UPDATE_SPEC_DATA,
-    DELETE_CONTACT_DATA,
     UPDATE_CONTACT_DATA,
     DRUG_DETAIL_DATA,
     CUSTOMER_DATA,
@@ -197,7 +196,10 @@ const state = {
         "utime": "2016-08-26 18:43",
         "ctime": "2016-08-26 18:43",
         "companyLicenses": null,
-        "companyProducts": [],
+        "companyProducts": {
+            arr:[],
+            show:true
+        },
         "companyContacts": {
             arr: [
                 { "id": 1, "cid": 11, "name": "dnjdj", "tel": "13162878512", "show": "true" },
@@ -271,9 +273,7 @@ const mutations = {
     [PROVINCE_DATA](state, data) { //省市区
         state.systemBaseList.locationlist = data;
     },
-    [DELETE_SHOW_STATUE](state, sub) { //删除枚举
-        state.systemBaseList.enumlist.splice(sub, 1);
-    },
+
     [ADD_DATA](state, data) { // 新增枚举
         state.systemBaseList.enumlist.unshift({
             "name": data.name,
@@ -340,14 +340,14 @@ const mutations = {
         state.companyDetail[data.key].arr[data.sub].wechart = data.wechart;
     },
 
-    /* [DELETE_CONTACT_DATA](state,id){ //删除企业联系人 待定
-         state.companyDetail.companyContacts.arr.splice(id,1);
-     },*/
     [DELETE_BREED_DATA](state, data) { //删除客户信息
         state.basicBaseList[data.key].splice(data.sub, 1);
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
         state[data.headline][data.key].arr.splice(data.sub, 1);
+    },
+    [DELETE_SHOW_STATUE](state, data) { //删除枚举
+        state.systemBaseList.enumlist.splice(data.sub, 1);
     },
 
     [CATEGORY_DATA](state, data) { //品种显示
@@ -530,13 +530,13 @@ const mutations = {
         })
     },
     [FILE_DATA](state, data) { //新增客户文件
-        console.log(state.clientDetail[data.key].arr)
         state.clientDetail[data.key].arr.unshift({
             "catagory": data.catagory,
             "type": data.type,
             "path": data.path,
-            "customerId": data.id,
-            "show": false
+            "customerId": data.customerId,
+            "show": false,
+            "id":data.id
         })
     },
     [EMPLOYEE_DATA](state, data) { //员工列表
@@ -551,10 +551,6 @@ const mutations = {
 
     [UPDATE_USER_DATA](state,data){  // 会员更新
         state.basicBaseList[data.key][data.index].fullname=data.fullname;
-    },
-
-    [EMPLOYEE_DATA](state,data){  // 业务员列表
-        state.basicBaseList.employeeList = data;
     },
 
     [ORG_DATA](state,data){  // 部门列表

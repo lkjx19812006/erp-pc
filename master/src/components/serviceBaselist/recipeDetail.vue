@@ -50,10 +50,6 @@
             <div class="col-md-4" style="border-left:1px solid #ddd">
                 <h4 class="section_title">详情</h4>
                 <div class="edit-detail clearfix">
-                    <div class="client-detailInfo col-xs-12">
-                        <label>编号</label>
-                        <input type="text" class="form-control" value="{{param.code}}" disabled="disabled" />
-                    </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>药品名称</label>
                         <input type="text" class="form-control" value="{{param.name}}" disabled="disabled" />
@@ -64,7 +60,7 @@
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>公司名称</label>
-                        <input type="text" class="form-control" value="{{param.companyName}}" disabled="disabled" />
+                        <input type="text" class="form-control" value="{{param.companyName | companyname}}" disabled="disabled" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>含量</label>
@@ -80,6 +76,7 @@
     </div>
 </template>
 <script>
+import filter from '../../filters/filters'
 import {
     initDruglist
 } from '../../vuex/getters'
@@ -118,7 +115,8 @@ export default {
         close: function() {
             this.param.show = false;
         }
-    }
+    },
+    filter: (filter, {})
 }
 </script>
 <style scoped>

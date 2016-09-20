@@ -22,11 +22,11 @@
                 </div>
                 <div class="name_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按分类码搜索" >
+                    <input type="text" class="search_input" placeholder="按分类码搜索"v-model="loadParam.category"/>
                 </div>
             </div>
             <div class=" col-xs-2">
-                <a class="new_btn transfer" @click="multiSearch(loadParam.conName,loadParam.conType,loadParam.conProvince)">查询</a>
+                <a class="new_btn transfer" @click="multiSearch(loadParam.conName,loadParam.conType,loadParam.conProvince,loadParam.category)">查询</a>
             </div>
         </div>
         <div class="order_table" v-cloak>
@@ -58,10 +58,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initEnterpriselist" @click="companyDetail(item.id)"  >
+                    <tr v-for="item in initEnterpriselist">
                         <td>{{item.category | categorystate}}</td>
                         <td>{{item.type}}</td>
-                        <td>{{item.name}}</td>
+                        <td  class="underline"  @click="companyDetail(item.id)">{{item.name}}</td>
                         <td>{{item.tel | telstate}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
@@ -112,7 +112,11 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
-                all: 8
+                all: 8,
+                conName:'',
+                conType:'',
+                conProvince:'',
+                category:''
             },
             companyParam:{
                 id:'',
@@ -129,7 +133,7 @@ export default {
             this.companyParam.id = id;
             this.getCompanyDetail(this.companyParam);
         },
-        multiSearch:function(conName,conType,conProvince){
+        multiSearch:function(conName,conType,conProvince,category){
             this.getCompanyData(this.loadParam, this.loadParam.all);
         }
     },

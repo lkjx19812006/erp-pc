@@ -11,11 +11,15 @@
             <div class="col-xs-8 my_order_search">
                 <div class="name_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按品种类别搜索">
+                    <input type="text" class="search_input" placeholder="按客户类型搜索" v-model="loadParam.type" @keyup.enter="clientTypeSearch(loadParam.type)">
                 </div>
                 <div class="ordertel_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索">
+                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索" @keyup.enter="clientNameSearch(loadParam.name)">
+                </div>
+                 <div class="name_search clearfix">
+                    <img src="/static/images/search.png" height="24" width="24">
+                    <input type="text" class="search_input" placeholder="按客户分类搜索" v-model="loadParam.classify" @keyup.enter="clientTypeSearch(loadParam.classify)">
                 </div>
             </div>
             <div class="right col-xs-2">
@@ -38,6 +42,8 @@
                     <tr>
                         <th></th>
                         <th>类型</th>
+                        <th>分类</th>
+                        <th>客户来源</th>
                         <th>名称</th>
                         <th>分类码</th>
                         <th>负责人</th>
@@ -58,19 +64,22 @@
                         </td>
                         <td>全选</td>
                     </tr>
-                    <tr v-for="item in initCustomerlist"  @click="clickOn({
-                                id:item.id,
-                                sub:$index,
-                                show:true,
-                                link:alterInfo,
-                                url:'/customer/',
-                                key:'customerList'
-                                                })">
+                    <tr v-for="item in initCustomerlist">
                         <td  @click.stop="">
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
                         <td>{{item.type}}</td>
-                        <td>{{item.name}}</td>
+                        <td>{{item.classify}}</td>
+                        <td>{{item.source}}</td>
+                        <td class="underline"  @click="clickOn({
+                                id:item.id,
+                                sub:$index,
+                                show:true,
+                                name:item.name,
+                                link:alterInfo,
+                                url:'/customer/',
+                                key:'customerList'
+                                })">{{item.name}}</td>
                         <td>{{item.category}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
@@ -171,7 +180,10 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
-                all: 7
+                all: 7,
+                name:'',
+                classify:'',
+                type:''
             },
             changeParam: {
                 show: false
@@ -221,14 +233,14 @@ export default {
         modifyClient:function(initCustomerlist){
             this.alterParam =initCustomerlist;
         },
-        clientTransfer:function(Customerlist){
+        clientTransfer:function(initCustomerlist){
             console.log(this.transferParam.arr)
             console.log(this.transferParam.arr.length)
           /*  if(this.transferParam.arr.length==0){
                 this.tipsParam.show= true;
                 this.tipsParam.name= '请先选择客户';
             }else if(this.transferParam.arr.length>0){*/
-                this.transferParam = Customerlist;
+                this.transferParam = initCustomerlist;
                 for(var i in this.initCustomerlist){
                     if(this.initCustomerlist[i].checked){
                         this.transferParam.arr.push(this.initCustomerlist[i].id);
@@ -252,6 +264,12 @@ export default {
         onlyselected:function(sub,id){
             this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
             this.id = id;
+        },
+        clientNameSearch:function(name){
+             this.getClientList(this.loadParam);
+        },
+        clientTypeSearch:function(type,classify){
+            this.getClientList(this.loadParam);
         }
     },
     events: {
@@ -261,7 +279,7 @@ export default {
         }
     },
     created() {
-        this.getClientList(this.loadParam, this.loadParam.all);
+        this.getClientList(this.loadParam);
     }
 }
 </script>

@@ -9,7 +9,7 @@
             <div class="col-xs-8 my_order_search">
                 <div class="ordertel_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按品种名称搜索" v-on:keyup="categoryNameSearch(loadParam.name)">
+                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按品种名称搜索" @keyup.enter="categoryNameSearch(loadParam.name)">
                 </div>
             </div>
             <div class="right col-xs-2">
@@ -24,8 +24,8 @@
                 <thead>
                     <tr>
                         <th>编码</th>
-                        <th>品种类别</th>
                         <th>品种名称</th>
+                        <th>品种类别</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -38,24 +38,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initBreedlist" @click="editBreed(item.id)">
+                    <tr v-for="item in initBreedlist">
                         <td>{{item.code | breedcode}}</td>
-                        <th>{{item.categoryId}}</th>
-                        <td>{{item.name}}</td>
+                        <td  class="underline"  @click="editBreed(item.id)">{{item.name}}</td>
+                        <td>{{item.categoryId}}</td>
                         <td @click.stop="breedClick($index)">
                             <img height="24" width="24" src="../../../static/images/default_arrow.png" />
                             <div class="breed_action" v-show="item.show">
                                 <ul>
                                     <li @click="modifyBreed($index,item)">编辑</li>
                                     <li @click="specDelete({
-                                                    id:item.id,
-                                                    show:true,
-                                                    name:item.name,
-                                                    title:'药材',
-                                                    link:deleteInfo,
-                                                    url:'/breed/',
-                                                    key:'breedList'
-                                                    },item.show=false)">删除</li>
+                                        id:item.id,
+                                        show:true,
+                                        name:item.name,
+                                        title:'药材',
+                                        link:deleteInfo,
+                                        url:'/breed/',
+                                        key:'breedList'
+                                        },item.show=false)">删除</li>
                                 </ul>
                             </div>
                         </td>

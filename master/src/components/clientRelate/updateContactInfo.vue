@@ -29,10 +29,6 @@
                                     <label class="editlabel">{{param.QQ}}</label>
                                     <input type="text" class="form-control edit-input"  id="name" v-model="param.qq" value="{{param.qq}}" />
                                 </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">{{param.remark}}</label>
-                                    <input type="number" class="form-control edit-input"  id="name" v-model="param.main" value="{{param.main}}" />
-                                </div>
                             </div>
                              <div class="editpageright">
                                 <div class="editpage-input">

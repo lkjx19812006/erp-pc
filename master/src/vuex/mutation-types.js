@@ -28,7 +28,6 @@ export const ADD_UNIT_DATA = 'ADD_UNIT_DATA' // 新增药材单位
 export const BREED_DETAIL_DATA = 'BREED_DETAIL_DATA' //breed详细数据
 export const SERVICE_ENTERPRISE_DETAIL = 'SERVICE_ENTERPRISE_DETAIL' //企业详细数据
 export const ADD_CONTACT_DATA = 'ADD_CONTACT_DATA' //新增企业联系人
-export const DELETE_CONTACT_DATA = 'DELETE_CONTACT_DATA' //删除企业联系人
 export const UPDATE_CONTACT_DATA = 'UPDATE_CONTACT_DATA' //修改企业联系人
 export const DRUG_DETAIL_DATA = 'DRUG_DETAIL_DATA' //成分详细数据
 

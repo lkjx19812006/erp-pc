@@ -27,18 +27,10 @@
                      <th>职位</th>
                      <th>手机号</th>
                      <th>分机号</th>
+                     <th>入职时间</th>
                      <th></th>
                   </tr>
-                </thead>
-                <!-- <thead class="space">
-                    <tr>
-                                                <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead> -->
+                </thead> 
                 <tbody>
                   <tr v-for="item in initEmployeeList">  
                     <td>{{item.name}}</td>
@@ -48,7 +40,10 @@
                     <td>{{item.position}}</td>
                     <td>{{item.mobile}}</td>
                     <td>{{item.extNo}}</td>
-                    <td  @click="editData($index)">
+                    <td>{{item.entryDate | entryDate}}</td>
+                    <td  @click="editData($index,{
+                            concrete:'employeeList'
+                            })">
                       <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
                        <div class="component_action" v-show='item.show' transition="expand">
                           <ul>
@@ -68,6 +63,7 @@
 </template>
 <script>
 import  pagination from '../components/pagination'
+import filter from '../filters/filters'
 import {
    getList,
    initEmployeeList
@@ -87,6 +83,15 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7
+            }
+        }
+    },
+    methods:{
+        editData:function(sub,param){
+            if(this.$store.state.table.basicBaseList[param.concrete][sub].show){
+                this.$store.state.table.basicBaseList[param.concrete][sub].show= !this.$store.state.table.basicBaseList[param.concrete][sub].show;
+            }else{
+                this.$store.state.table.basicBaseList[param.concrete][sub].show = true;
             }
         }
     },
@@ -111,7 +116,8 @@ export default {
         }
         /*his.freshLinecharts();*/
          this.getEmployeeList(this.loadParam,this.loadParam.all);
-    }
+    },
+    filter:(filter,{})
 }
 </script>
 <style scoped>
