@@ -23,9 +23,6 @@
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                         <li>
-                            <button type="button" class="btn btn-base">新建跟进</button>
-                        </li>
-                        <li>
                             <button type="button" class="btn btn-base">删除</button>
                         </li>
                         <li>
@@ -132,6 +129,7 @@
 				                                                   email:item.email,
 				                                                   qq:item.qq,
 				                                                   wechart:item.wechart,
+                                                           main:item.main,
 				                                                   link:updateContact,
 				                                                   url:'/customer/contact',
 				                                                   key:'contacts',
@@ -795,9 +793,7 @@
                                 <img class="left" src="/static/images/blackselect.png" height="28" width="28" />
                                 <label>加入黑名单</label>
                             </div>
-                            <div class="client-editbtn">
-                                <button type="button" class="btn btn-orange" @click="param.link(initClientDetail)">编辑</button>
-                            </div> -->
+                           -->
                         </div>
                     </article>
                 </div>

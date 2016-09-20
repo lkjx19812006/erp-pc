@@ -22,7 +22,7 @@
                 </div>
                 <div class="name_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按分类码搜索"v-model="loadParam.category"/>
+                    <input type="text" class="search_input" placeholder="按分类码搜索" v-model="loadParam.category"/>
                 </div>
             </div>
             <div class=" col-xs-2">
@@ -125,7 +125,7 @@ export default {
         }
     },
     created() {
-        this.getEnterpriseData(this.loadParam, this.loadParam.all)
+        this.getEnterpriseData(this.loadParam)
     },
     methods: {
         companyDetail:function(id){
@@ -134,7 +134,7 @@ export default {
             this.getCompanyDetail(this.companyParam);
         },
         multiSearch:function(conName,conType,conProvince,category){
-            this.getCompanyData(this.loadParam, this.loadParam.all);
+            this.getCompanyData(this.loadParam);
         }
     },
     events: {

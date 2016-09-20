@@ -5,24 +5,12 @@
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+    <search-model  :param="searchParam" v-if="searchParam.show"></search-model>
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">客户</div>
-            <div class="col-xs-8 my_order_search">
-                <div class="name_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按客户类型搜索" v-model="loadParam.type" @keyup.enter="clientTypeSearch(loadParam.type)">
-                </div>
-                <div class="ordertel_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索" @keyup.enter="clientNameSearch(loadParam.name)">
-                </div>
-                 <div class="name_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按客户分类搜索" v-model="loadParam.classify" @keyup.enter="clientTypeSearch(loadParam.classify)">
-                </div>
-            </div>
-            <div class="right col-xs-2">
+            <div class="right col-xs-3">
+                <button class="new_btn transfer" @click="createSearch()">查询</button>
                 <button class="new_btn transfer" @click="clientTransfer({
                     arr:[],
                     name:'test',
@@ -50,6 +38,7 @@
                         <th>经营范围</th>
                         <th>电话</th>
                         <th>邮箱</th>
+                        <th>国家</th>
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>注册地址</th>
@@ -85,6 +74,7 @@
                         <td>{{item.bizScope}}</td>
                         <td>{{item.tel}}</td>
                         <td>{{item.email}}</td>
+                        <td>{{item.country}}</td>
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.address}}</td>
@@ -142,6 +132,7 @@ import deletebreedModel  from '../components/serviceBaselist/breedDetailDialog/d
 import alterinfoModel  from '../components/clientRelate/clientUpdate'
 import transferModel   from '../components/clientRelate/clienttransfer'
 import tipsdialogModel  from '../components/tipsDialog'
+import searchModel  from  '../components/clientRelate/searchModel'
 import {
     initCustomerlist
 } from '../vuex/getters'
@@ -160,7 +151,8 @@ export default {
         deletebreedModel,
         alterinfoModel,
         transferModel,
-        tipsdialogModel
+        tipsdialogModel,
+        searchModel
     },
     vuex: {
         getters: {
@@ -192,6 +184,9 @@ export default {
                 show: false,
                 name:''
             },
+            searchParam:{
+                show:false
+            },
             transferParam:{
                 show:false,
                 name:'',
@@ -219,6 +214,9 @@ export default {
         createCustomer:function(value){
             this.createParam.show=true;
             this.createParam.name=value;
+        },
+        createSearch:function(){
+            this.searchParam.show=true;
         },
         eventClick:function(id){
             if(this.$store.state.table.basicBaseList.customerList[id].show){
@@ -264,12 +262,6 @@ export default {
         onlyselected:function(sub,id){
             this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
             this.id = id;
-        },
-        clientNameSearch:function(name){
-             this.getClientList(this.loadParam);
-        },
-        clientTypeSearch:function(type,classify){
-            this.getClientList(this.loadParam);
         }
     },
     events: {

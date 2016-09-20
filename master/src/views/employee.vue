@@ -1,4 +1,5 @@
 <template>
+<createemp-model :param="createParam" v-if="createParam.show"></createemp-model>
     <div  class="myemploy">
         <div class="order_search">
             <div class="clear">
@@ -9,7 +10,40 @@
                     </div>
                 </div>
                 <div class="right col-xs-2">
-                    <button class="new_btn" @click="newData('data')" data-toggle="modal" data-target="#myModal">新建</button>
+                    <button class="new_btn" @click="newData({ 
+                         title:'新建员工',
+                         show:true,
+                         name:'',
+                         orgId:'',
+                         orgCode:'',
+                         status:'',
+                         ename:'',
+                         no:'',
+                         orgName:'',
+                         position:'',
+                         mobile:'',
+                         extNo:'',
+                         level:'',
+                         role:[{'id':1,'type':'管理员','checked':false},{'id':2,'type':'部门经理','checked':false}],
+                         entryDate:'',
+                         leaveDate:'',
+                         namelist:'姓名',
+                         englist:'英文名',
+                         job:'工号',
+                         parten:'部门',
+                         code:'部门编码',
+                         orgid:'部门编号',
+                         statuslist:'状态',
+                         positionlist:'职位',
+                         phonelist:'手机',
+                         nolist:'分机号',
+                         entry:'入职时间',
+                         leave:'离职时间',
+                         levellist:'职级',
+                         link:Employ,
+                         url:'/employee/',
+                         key:'employeeList'
+                         })">新建</button>
                 </div>
             </div>
         </div>  
@@ -28,27 +62,66 @@
                      <th>手机号</th>
                      <th>分机号</th>
                      <th>入职时间</th>
+                     <th>离职时间</th>
+                     <th>职级</th>
                      <th></th>
                   </tr>
                 </thead> 
                 <tbody>
                   <tr v-for="item in initEmployeeList">  
                     <td>{{item.name}}</td>
-                    <td>{{item.eName}}</td>
+                    <td>{{item.ename}}</td>
                     <td>{{item.no}}</td>
                     <td>{{item.orgName}}</td>
                     <td>{{item.position}}</td>
                     <td>{{item.mobile}}</td>
                     <td>{{item.extNo}}</td>
                     <td>{{item.entryDate | entryDate}}</td>
+                    <td>{{item.leaveDate}}</td>
+                    <td>{{item.level | levelstate}}</td>
                     <td  @click="editData($index,{
                             concrete:'employeeList'
                             })">
                       <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
                        <div class="component_action" v-show='item.show' transition="expand">
                           <ul>
-                              <li @click="modify($index)">编辑</li>
-                              <li @click="del($index,item.id)">删除</li>
+                              <li @click="modify({
+                                 title:'编辑员工',
+                                 sub:$index,
+                                 id:item.id,
+                                 show:true,
+                                 name:item.name,
+                                 ename:item.ename,
+                                 no:item.no,
+                                 role:item.role,
+                                 orgId:item.orgId,
+                                 orgCode:item.orgCode,
+                                 status:item.status,
+                                 orgName:item.orgName,
+                                 position:item.position,
+                                 mobile:item.mobile,
+                                 extNo:item.extNo,
+                                 level:item.level,
+                                 entryDate:item.entryDate,
+                                 leaveDate:item.leaveDate,
+                                 namelist:'姓名',
+                                 englist:'英文名',
+                                 job:'工号',
+                                 parten:'部门',
+                                 positionlist:'职位',
+                                 phonelist:'手机',
+                                 nolist:'分机号',
+                                 code:'部门编码',
+                                 orgid:'部门编号',
+                                 statuslist:'状态',
+                                 entry:'入职时间',
+                                 leave:'离职时间',
+                                 levellist:'职级',
+                                 link:updateEmploy,
+                                 url:'/employee/',
+                                 key:'employeeList'
+                                })">编辑</li>
+                             <!--  <li>删除</li> -->
                           </ul>
                         </div>
                     </td>
@@ -62,18 +135,21 @@
     </div>
 </template>
 <script>
-import  pagination from '../components/pagination'
+import createempModel  from '../components/emloyee/createEmploy'
+import pagination from '../components/pagination'
 import filter from '../filters/filters'
 import {
    getList,
    initEmployeeList
 } from '../vuex/getters'
 import {
-    getEmployeeList
+    getEmployeeList,
+    updateEmploy
 } from '../vuex/actions'
 export default {
     components:{
-        pagination
+        pagination,
+        createempModel
     },
     data() {
         return {
@@ -83,6 +159,9 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7
+            },
+            createParam:{
+                show:false
             }
         }
     },
@@ -93,6 +172,13 @@ export default {
             }else{
                 this.$store.state.table.basicBaseList[param.concrete][sub].show = true;
             }
+        },
+        newData:function(initEmployeeList){
+            this.createParam=initEmployeeList;
+            console.log(this.createParam.arr)
+        },
+        modify:function(initEmployeeList){
+            this.createParam=initEmployeeList;
         }
     },
     vuex: {
@@ -101,7 +187,8 @@ export default {
            initEmployeeList
         },
         actions: {
-            getEmployeeList
+            getEmployeeList,
+            updateEmploy
         },
     },
     events: {
@@ -114,8 +201,7 @@ export default {
         if (this.$route.query.id > this.getList[7].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
             this.$route.query.id = 0;
         }
-        /*his.freshLinecharts();*/
-         this.getEmployeeList(this.loadParam,this.loadParam.all);
+        this.getEmployeeList(this.loadParam,this.loadParam.all);
     },
     filter:(filter,{})
 }

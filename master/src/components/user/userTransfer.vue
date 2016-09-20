@@ -112,7 +112,8 @@ import {
 import {
     getClientList,
     getEmployeeList,
-    getOrgList
+    getOrgList,
+    userTransferCustomer
 } from '../../vuex/actions'
 export default{
 	props:['param'],
@@ -146,7 +147,8 @@ export default{
 		actions:{
 			getClientList,
 			getEmployeeList,
-			getOrgList
+			getOrgList,
+			userTransferCustomer
 		}
 	},
 	methods:{
@@ -235,6 +237,7 @@ export default{
 			
 		},
 		confirm:function(){
+			console.log(this.param);
 			for(var key in this.initCustomerlist){
 				if(this.$store.state.table.basicBaseList.customerList[key].checked == true){
 					this.param.customerId = this.$store.state.table.basicBaseList.customerList[key].id;
@@ -245,7 +248,15 @@ export default{
 					this.param.employeeId = this.$store.state.table.basicBaseList.employeeList[key].id;
 				}
 			}
-			console.log(this.param);	
+			for(var key in this.initOrgList){
+				if(this.$store.state.table.basicBaseList.orgList[key].checked == true){
+					this.param.orgId = this.$store.state.table.basicBaseList.orgList[key].id;
+				}
+			}
+
+			console.log(this.param);
+			userTransferCustomer(this.param,this.param,this.param.show = false);
+
 		}
 
 	},

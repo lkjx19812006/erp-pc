@@ -49,11 +49,20 @@
                                 </div>
                             </div>
                         </div>
+                         <div class="editpage-input clearfix">
+                            <label>是否主要</label>
+                            <div  class="clerafix ">
+                                <div class="pull-left role clerafix">
+                                     <input type="radio" class="checkbox_unselect" id="client_ids" v-model="param.main"  value="1" />
+                                     <label  for="client_ids">主要</label>
+                                </div>
+                            </div>
+                        </div>
                     </section>
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" @click="param.link(param,param.show = false)">保存</button>
                 </div>
             </form>
         </validator>
@@ -166,5 +175,21 @@ export default {
 }
 .edit_footer button {
     margin-left: 15px;
+}
+.checkbox_unselect{
+    background-image: url(/static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: 60%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+    float: left;
+    margin-right: 10px;
+}
+.role{
+    margin-right: 10px;
 }
 </style>

@@ -22,7 +22,7 @@
                             <button type="button" class="btn btn-base pull-right" @click.stop="createContact(param.id)">新建</button>
                         </h4>
                         </div>
-                        <div class="panel-collapse"  v-show="initCompanyDetail.companyContacts.show">
+                        <div class="panel-collapse"  v-show="!initCompanyDetail.companyContacts.show">
                             <div class="panel-body panel-set">
                                 <table class="table contactSet">
                                     <thead>
@@ -82,12 +82,12 @@
                                 crete:'companyProducts'
                                 })">
                             <h4 class="panel-title clearfix">
-                            <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
-                            <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
-                                产品({{initCompanyDetail.companyProducts.arr.length}})
-                            </a>
-                            <button type="button" class="btn btn-base pull-right" @click.stop="createContact(param.id)">新建</button>
-                        </h4>
+                                <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
+                                <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
+                                    产品({{initCompanyDetail.companyProducts.arr.length}})
+                                </a>
+                                <button type="button" class="btn btn-base pull-right" @click.stop="createContact(param.id)">新建</button>
+                            </h4>
                         </div>
                         <div class="panel-collapse"  v-show="!initCompanyDetail.companyProducts.show">
                             <div class="panel-body panel-set">
@@ -211,7 +211,6 @@
                        </div> -->
                     </div>
                 </div>
-            </div>
             <div class="col-md-4" style="border-left:1px solid #ddd">
                 <h4 class="section_title">详情</h4>
                 <div class="edit-detail clearfix">

@@ -43,6 +43,12 @@
 		    			<div class="cover_loading">
 			                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 			            </div>
+			            <div class="name_search clearfix" style="border:none">
+		                   <select  class="form-control" v-model="loadParam.orgId" @change="employorgSearch(loadParam.orgId)">
+		                        <option selected value="">请选择业务员部门</option>
+		                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
+		                  </select> 
+		                </div>
 	    				<div class="col-xs-12">
 			                <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">
@@ -52,13 +58,6 @@
 			                    <img src="/static/images/search.png" height="24" width="24">
 			                    <input type="text" class="search_input" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @change="employPhoneSearch(loadParam.mobile)">
 			                </div>
-			                 <div class="name_search clearfix" style="border:none">
-			                   <select  class="form-control" v-model="loadParam.orgId" @change="employorgSearch(loadParam.orgId)">
-			                        <option selected value="">请选择业务员部门</option>
-			                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-			                  </select> 
-			                </div>
-			               
 			            </div>
 			            <table class="table table-hover table_head table-striped " v-cloak>
 			                <thead>

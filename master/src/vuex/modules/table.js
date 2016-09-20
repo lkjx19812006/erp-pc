@@ -1,47 +1,51 @@
 import {
-    ORDER_TABLE,
-    CHANGE_SHOW_STATUE,
-    SYSTEM_DATA,
-    PROVINCE_DATA,
-    SERVICE_ENTERPRISE,
-    SERVICE_COMPONENT,
-    SERVICE_DRAW,
-    DELETE_SHOW_STATUE,
-    ADD_DATA,
-    UPDATE_DATA,
-    UPDATE_ENTER_DATA,
-    BREED_DATA,
-    ADD_BREED_DATA,
-    DELETE_BREED_DATA,
-    DELETE_SPECS_DATA,
-    CATEGORY_DATA,
-    UPDATE_BREED_DATA,
-    ADDSPEC_DATA,
-    BREED_DETAIL_DATA,
-    SERVICE_ENTERPRISE_DETAIL,
-    ADD_CONTACT_DATA,
-    UPDATE_SPEC_DATA,
-    UPDATE_CONTACT_DATA,
-    DRUG_DETAIL_DATA,
-    CUSTOMER_DATA,
-    CUSTOMER_ADD_DATA,
-    CUSTOMER_DETAIL_DATA,
-    UPDATE_CUSTOMER_DETAIL,
-    CUSTOMER_UPDATE_DATA,
-    UPDATE_ADDR_DETAIL,
-    ADD_ADDR_DETAIL,
-    LABEL_DATA,
-    CUSTOMER_CONTACT_DATA,
-    ADD_LABEL_DATA,
-    UPDATE_LABEL_DETAIL,
-    ADD_PRODUCT_DATA,
-    UPDATE_PRODUCT_DATA,
-    EMPLOYEE_DATA,
-    CHANCE_LIST_DATA,
-    USER_DATA,
-    UPDATE_USER_DATA,
-    ORG_DATA,
-    FILE_DATA
+   ORDER_TABLE,
+   CHANGE_SHOW_STATUE,
+   SYSTEM_DATA,
+   PROVINCE_DATA,
+   SERVICE_ENTERPRISE,
+   SERVICE_COMPONENT,
+   SERVICE_DRAW,
+   DELETE_SHOW_STATUE,
+   ADD_DATA,
+   UPDATE_DATA,
+   UPDATE_ENTER_DATA,
+   BREED_DATA,
+   ADD_BREED_DATA,
+   DELETE_BREED_DATA,
+   DELETE_SPECS_DATA,
+   CATEGORY_DATA,
+   UPDATE_BREED_DATA,
+   ADDSPEC_DATA,
+   BREED_DETAIL_DATA,
+   SERVICE_ENTERPRISE_DETAIL,
+   ADD_CONTACT_DATA,
+   UPDATE_SPEC_DATA,
+   DELETE_CONTACT_DATA,
+   UPDATE_CONTACT_DATA,
+   DRUG_DETAIL_DATA,
+   CUSTOMER_DATA,
+   CUSTOMER_ADD_DATA,
+   CUSTOMER_DETAIL_DATA,
+   UPDATE_CUSTOMER_DETAIL,
+   CUSTOMER_UPDATE_DATA,
+   UPDATE_ADDR_DETAIL,
+   ADD_ADDR_DETAIL,
+   LABEL_DATA,
+   CUSTOMER_CONTACT_DATA,
+   ADD_LABEL_DATA,
+   UPDATE_LABEL_DETAIL,
+   ADD_PRODUCT_DATA,
+   UPDATE_PRODUCT_DATA,
+   EMPLOYEE_DATA,
+   CHANCE_LIST_DATA,
+   USER_DATA,
+   UPDATE_USER_DATA,
+   ORG_DATA,
+   FILE_DATA,
+   USER_DETAIL_DATA,
+   ADD_EMPLOYEE_DATA,
+   UPDATE_EMPLOY_DATA
 } from '../mutation-types'
 
 const state = {
@@ -99,55 +103,21 @@ const state = {
         chanceList: [
             { "id": "14732390725891000", "userId": "b11741af0efc49ed815545c0d88ddc98", "type": 1, "especial": 1, "breedId": 1085, "breedName": "天仙子", "qualification": "", "quality": "工城 霜天地", "location": "东北", "spec": "统", "number": 213, "price": 12, "unit": "公斤", "address": "北京市,北京市,东城区 The", "duedate": "2016-09-14 00:00", "advance": 1, "invoic": 1, "visit": 0, "pack": "瓦楞纸箱", "intl": 0, "sampling": 1, "sampleNumber": 1, "sampleUnit": "公斤", "sampleAmount": 100, "show": true }
         ],
-        employeeList:[{"id":6,"name":"lm","no":"001","orgName":"冕冠电子商务有限公司","orgId":1,"orgCode":"","level":"1",
+        employeeList:[{"id":6,"name":"lm","no":"001","orgName":"冕冠电子商务有限公司","orgId":1,"orgCode":"1","level":"1",
                        "entryDate":null,"leaveDate":null,"mobile":null,"extNo":"123456","qq":"38917306","wechat":"38917306@qq.com",
-                       "email":"38917306@qq.com","position":"软件工程师","isManager":1,"status":1,"updater":null,"utime":null,"creater":null,"ctime":null,"ename":"john","show":true}
+                       "email":"38917306@qq.com","position":"软件工程师","isManager":1,"status":1,"ename":"john","role":"管理员","show":true}
                        ],
         orgList:[{"id":1,"name":"冕冠电子商务有限公司","level":null,"pid":0,"status":1,"utime":null,"ctime":null,"creater":null,"updater":null,"code":"0001","show":true}],           
         userList: [{
-            "id": "0008fcc6c2d549888afb2e950e6343c1",
-            "type": 0,
-            "name": null,
-            "password": "56bf5523459ce2dfc6720798d852d6e6",
-            "gender": null,
-            "nickname": "卖蘑菇的小姑凉",
-            "fullname": "沈威峰",
-            "idnumber": null,
-            "signature": null,
-            "phone": "13851379713",
-            "email": "857714234@qq.com",
-            "qq": "857714234",
-            "tel": null,
-            "openId": null,
-            "avatar": null,
-            "url": null,
-            "signin": null,
-            "company": "个体种植户",
-            "address": null,
-            "employee": null,
-            "employeeId": null,
-            "score": 300,
-            "utype": 0,
-            "ctype": 0,
-            "addrShip": null,
-            "addrReceive": null,
-            "busiType": null,
-            "province": null,
-            "city": null,
-            "source": 1,
-            "lastLoginIp": null,
-            "lastLoginTime": "2016-06-02 11:44",
-            "status": 0,
-            "updater": null,
-            "utime": null,
-            "creater": null,
-            "ctime": null,
-            "startCtime": null,
-            "endCtime": null,
-            "userIds": null,
-            "customerId": null,
-            "main": null,
-            "show": true
+            "id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"name": null,"password": "56bf5523459ce2dfc6720798d852d6e6","gender": null,
+            "nickname": "卖蘑菇的小姑凉","fullname": "沈威峰","idnumber": null,"signature": null,"phone": "13851379713",
+            "email": "857714234@qq.com","qq": "857714234","tel": null,
+            "openId": null,"avatar": null,"url": null,"signin": null,
+            "company": "个体种植户","address": null,"employee": null, "employeeId": null,"score": 300,
+            "utype": 0,"ctype": 0,"addrShip": null,"addrReceive": null,
+            "busiType": null, "province": null,
+            "city": null, "source": 1,"lastLoginIp": null, "lastLoginTime": "2016-06-02 11:44","status": 0,
+            "updater": null, "utime": null,"creater": null,"ctime": null, "startCtime": null,"endCtime": null,"userIds": null, "customerId": null,"main": null,"show": true
         }]
     },
     breedDetail: {
@@ -260,7 +230,15 @@ const state = {
             ],
             show: false
         }
-    }
+    },
+    userDetail: {"id":"00012792255a4e22bf1b70eb6eb89b33","type":0,"name":null,"password":"45ed3749b1633c0ee7c64b99cba11eba",
+    "gender":null,"nickname":null,"fullname":"测试","idnumber":null,"signature":null,"phone":"15301546841","email":null,
+    "qq":null,"tel":null,"openId":null,"avatar":null,"url":null,"signin":null,"company":"上海大汉三通通信股份有限公司",
+    "address":null,"employee":"wei","orgId":null,"employeeId":null,"score":300,"utype":1,"ctype":0,"addrShip":null,
+    "addrReceive":null,"busiType":null,"province":null,"city":null,"source":1,"lastLoginIp":null,"lastLoginTime":null,
+    "status":null,"updater":null,"utime":null,"creater":null,"ctime":null,"startCtime":null,"endCtime":null,"userIds":null,
+    "customerId":null,"main":null,"audit":0,"bizMain":null,"userType":0,"auditResult":null,"sourceType":null
+  },
 }
 
 const mutations = {
@@ -539,7 +517,7 @@ const mutations = {
             "id":data.id
         })
     },
-    [EMPLOYEE_DATA](state, data) { //员工列表
+    [EMPLOYEE_DATA](state, data) { //员工业务员列表
         state.basicBaseList.employeeList = data;
     },
     [CHANCE_LIST_DATA](state, data) { //业务机会列表
@@ -553,12 +531,51 @@ const mutations = {
         state.basicBaseList[data.key][data.index].fullname=data.fullname;
     },
 
+    [USER_DETAIL_DATA](state,data){  // 会员详情
+      console.log('table');
+      console.log(state.userDetail.fullname);
+      state.userDetail = data;
+      console.log(state.userDetail.fullname);
+    },
     [ORG_DATA](state,data){  // 部门列表
         state.basicBaseList.orgList = data;
     },
+    [ADD_EMPLOYEE_DATA](state,data){  //新增员工信息
+       state.basicBaseList[data.key].push({
+            "name": data.name,
+            "ename": data.ename,
+            "show": false,
+            "no": data.no,
+            "orgName": data.orgName,
+            "position":data.position,
+            "mobile":data.mobile,
+            "extNo":data.extNo,
+            "level":data.level,
+            "entryDate":data.entryDate,
+            "leaveDate":data.leaveDate,
+            "orgId":data.orgId,
+            "orgCode":data.orgCode,
+            "status":data.status,
+            "role":param.role
+        })
+    },
+    [UPDATE_EMPLOY_DATA](state,data){ //修改员工信息
+        state.basicBaseList[data.key][data.sub].name = data.name;
+        state.basicBaseList[data.key][data.sub].ename = data.ename;
+        state.basicBaseList[data.key][data.sub].no = data.no;
+        state.basicBaseList[data.key][data.sub].orgId = data.orgId;
+        state.basicBaseList[data.key][data.sub].orgCode = data.orgCode;
+        state.basicBaseList[data.key][data.sub].status = data.status;
+        state.basicBaseList[data.key][data.sub].orgName = data.orgName;
+        state.basicBaseList[data.key][data.sub].position = data.position;
+        state.basicBaseList[data.key][data.sub].mobile = data.mobile;
+        state.basicBaseList[data.key][data.sub].extNo = data.extNo;
+        state.basicBaseList[data.key][data.sub].level = data.level;
+        state.basicBaseList[data.key][data.sub].entryDate = data.entryDate;
+        state.basicBaseList[data.key][data.sub].leaveDate = data.leaveDate;
+        state.basicBaseList[data.key][data.sub].role = data.role;
+    }
     
-
-
 }
 
 export default {
