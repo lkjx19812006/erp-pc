@@ -18,9 +18,9 @@
     <div>
    
   
-<mz-datepicker :time.sync="dateText" format="yyyy-MM-dd HH:mm"></mz-datepicker>
+<mz-datepicker :time.sync="dateText" format="yyyy/MM/dd HH:mm"></mz-datepicker>
     </div>
- 
+ <region-select></region-select>
 
 </template>
 <script>
@@ -28,17 +28,26 @@ import Hello from '../components/Hello'
 import pressImage from '../components/imagePress'
 import showModel from './showmodel'
 import calendar from '../components/calendar/vue.datepicker'
-
+import regionSelect from '../components/tools/regionSelect'
 
 export default {
     components: {
         Hello,
         showModel,
         pressImage,
-        calendar
+        regionSelect
     },
     data() {
         return {
+            select: {
+            active: true,
+            data: [
+                { active: true, value: 0, text: 'A'},
+                { active: true, value: 1, text: 'B'},
+                { active: true, value: 2, text: 'C'},
+                { active: true, value: 3, text: 'D'},
+            ]
+        },
             modelParam: {
                 show: false,
                 name: 'hello'
@@ -76,15 +85,7 @@ export default {
                 this.dateText = str.replace(/\b(\w)\b/g, "0$1")
             }
     },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            transition.next()
-        }
-    },
+   
     events: {
         getImageData: function(imageData) {
             console.log(imageData);
