@@ -1354,11 +1354,18 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
         if(key=='fullname'&&param[key]!=''){
              url += '&fullname='+param[key];
         }
-        if(key=='status'&&param[key]!=''){
-             url += '&status='+param[key];
+        if(key=='audit'&&param[key]!=''){
+             url += '&audit='+param[key];
+        }
+        if(key=='startCtime'&&param[key]!=''){
+             url += '&startCtime="'+param[key]+'"';
+        }
+        if(key=='endCtime'&&param[key]!=''){
+             url += '&endCtime="'+param[key]+'"';
         }
 
     }
+    console.log(url);
     Vue.http({
         method:'GET',
         url:url ,
@@ -1381,11 +1388,33 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
     })
 }
 
+export const getUserDetail = ({ dispatch }, param) => {  //会员详情
+    param.loading = true;
+    Vue.http({
+        method:'GET',
+        url:apiUrl.userList+'/user/'+param.id ,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+        console.log(res.json().result);
+        var userDetail = res.json().result;
+        dispatch(types.USER_DETAIL_DATA, userDetail);
+        
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信息
     console.log(param);
     const updatedata = {
         id: param.id,
         fullname: param.fullname,
+
     }
     console.log(updatedata);
     Vue.http({
@@ -1445,6 +1474,9 @@ export const userTransferCustomer = ({ dispatch }, param) => { //会员转客户
         console.log('fail');
     })
 }
+
+
+
 
 // export const uploadFiles = ({ dispatch }, param) => { //客户业务员划转信息
 //     console.log(param)

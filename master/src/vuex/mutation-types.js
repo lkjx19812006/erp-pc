@@ -51,5 +51,7 @@ export const FILE_DATA ='FILE_DATA'  // 新增客户文件
 
 export const USER_DATA = 'USER_DATA'   //会员列表
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA'   //修改会员信息
+export const USER_DETAIL_DATA = 'USER_DETAIL_DATA'   //会员详情
+
 export const ORG_DATA = 'ORG_DATA'    //部门列表
 

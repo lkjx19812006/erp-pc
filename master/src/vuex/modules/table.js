@@ -42,7 +42,8 @@ import {
    USER_DATA,
    UPDATE_USER_DATA,
    ORG_DATA,
-   FILE_DATA
+   FILE_DATA,
+   USER_DETAIL_DATA
 
 } from '../mutation-types'
 
@@ -266,7 +267,15 @@ const state = {
             ],
             show: false
         }
-    }
+    },
+    userDetail: {"id":"00012792255a4e22bf1b70eb6eb89b33","type":0,"name":null,"password":"45ed3749b1633c0ee7c64b99cba11eba",
+    "gender":null,"nickname":null,"fullname":"测试","idnumber":null,"signature":null,"phone":"15301546841","email":null,
+    "qq":null,"tel":null,"openId":null,"avatar":null,"url":null,"signin":null,"company":"上海大汉三通通信股份有限公司",
+    "address":null,"employee":"wei","orgId":null,"employeeId":null,"score":300,"utype":1,"ctype":0,"addrShip":null,
+    "addrReceive":null,"busiType":null,"province":null,"city":null,"source":1,"lastLoginIp":null,"lastLoginTime":null,
+    "status":null,"updater":null,"utime":null,"creater":null,"ctime":null,"startCtime":null,"endCtime":null,"userIds":null,
+    "customerId":null,"main":null,"audit":0,"bizMain":null,"userType":0,"auditResult":null,"sourceType":null
+  }
 }
 
 const mutations = {
@@ -562,6 +571,13 @@ const mutations = {
         state.basicBaseList[data.key][data.index].fullname=data.fullname;
     },
 
+    [USER_DETAIL_DATA](state,data){  // 会员详情
+      console.log('table');
+      console.log(state.userDetail.fullname);
+      state.userDetail = data;
+      console.log(state.userDetail.fullname);
+    },
+
     [EMPLOYEE_DATA](state,data){  // 业务员列表
         state.basicBaseList.employeeList = data;
     },
@@ -569,6 +585,8 @@ const mutations = {
     [ORG_DATA](state,data){  // 部门列表
         state.basicBaseList.orgList = data;
     },
+    
+
     
 
 

@@ -10,7 +10,7 @@
   <createtrack-model :param="ctrackParam" v-if="ctrackParam.show"></createtrack-model>
   <createproduct-model :param="cproductParam" v-if="cproductParam.show"></createproduct-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <div class="client_body">
+<!--     <div class="client_body">
       <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -162,7 +162,7 @@
                                     </div>
                                 </div>
                             </div>
-                           <!--  <div class="panel panel-default">
+                           <div class="panel panel-default">
                                <div class="panel-heading" >
                                    <h4 class="panel-title clearfix" @click="enfoldment({
                                                     link:initClientDetail.chance,
@@ -231,7 +231,7 @@
                                                               </table>
                                    </div>
                                </div>
-                           </div> -->
+                           </div>
                            <div class="panel panel-default">
                               <div class="panel-heading" v-cloak>
                                   <h4 class="panel-title clearfix" @click="enfoldment({
@@ -284,7 +284,7 @@
                                   </div>
                               </div>
                           </div>
-                           <!--  <div class="panel panel-default">
+                           <div class="panel panel-default">
                                <div class="panel-heading">
                                    <h4 class="panel-title clearfix" >
                                               <img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
@@ -331,7 +331,7 @@
                                        <p class="contact-view">查看全部</p>
                                    </div>
                                </div>
-                           </div> -->
+                           </div>
                              <div class="panel panel-default" collapse>
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -705,7 +705,7 @@
                                                            key:'products',
                                                            headline:'clientDetail'
                                                            })">编辑</dt>
-                                                       <!-- <dt @click="specDelete({
+                                                       <dt @click="specDelete({
                                                            id:item.id,
                                                            sub:$index,
                                                            show:true,
@@ -714,14 +714,14 @@
                                                            url:'/customer/deleteAddress/',
                                                            key:'products',
                                                            headline:'clientDetail'
-                                                           })">删除</dt> -->
+                                                           })">删除</dt>
                                                    </dl> 
                                                 </div>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                        <!-- <p class="contact-view">查看全部</p> -->
+                                        <p class="contact-view">查看全部</p>
                                     </div>
                                 </div>
                             </div>
@@ -786,6 +786,78 @@
                                 <label>经营范围</label>
                                 <input type="text" class="form-control" v-model="initClientDetail.bizScope" value="{{initClientDetail.bizScope}}"/>
                             </div>
+                            <div class="client-detailInfo">
+                                <img class="left" src="/static/images/blackselect.png" height="28" width="28" />
+                                <label>加入黑名单</label>
+                            </div>
+                            <div class="client-editbtn">
+                                <button type="button" class="btn btn-orange" @click="param.link(initClientDetail)">编辑</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+     -->    </div>
+
+     <div class="col-md-4">
+                    <h4 class="section_title">详情</h4>
+                    <article>
+                        <div class="edit-detail">
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>姓名</label>
+                                    <input type="text" class="form-control" v-model="initUserDetail.fullname" value="{{initUserDetail.fullname}}"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>昵称</label>
+                                    <input type="text" class="form-control" v-model="initUserDetail.nickname" value="{{initUserDetail.nickname}}" />
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>电话</label>
+                                    <input type="text" class="form-control"  v-model="initClientDetail.category" value="{{initClientDetail.category}}"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>邮箱</label>
+                                    <input type="text" class="form-control" v-model="initClientDetail.tel" value="{{initClientDetail.tel}}"/>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>qq</label>
+                                    <input type="text" class="form-control" v-model="initClientDetail.principal" value="{{initClientDetail.principal}}" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>公司</label>
+                                    <input type="text" class="form-control" v-model="initClientDetail.city" value="{{initClientDetail.city}}"/>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label></label>
+                                    <input type="text" class="form-control" v-model="initClientDetail.email" value="{{initClientDetail.email}}"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label></label>
+                                    <input type="text" class="form-control" v-model="initClientDetail.province" value="{{initClientDetail.province}}"/>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label></label>
+                                    <input type="text" class="form-control" v-model="initClientDetail.comments" value="{{initClientDetail.comments}}" />
+                                </div>
+                                <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
+                                  <label></label>
+                                  <input type="text" class="form-control" v-model='initClientDetail.address' value="{{initClientDetail.address}}"/>
+                              </div> 
+                            </div>
+                            <div class="client-detailInfo">
+                                <label></label>
+                                <input type="text" class="form-control" v-model="initClientDetail.bizScope" value="{{initClientDetail.bizScope}}"/>
+                            </div>
                             <!-- <div class="client-detailInfo">
                                 <img class="left" src="/static/images/blackselect.png" height="28" width="28" />
                                 <label>加入黑名单</label>
@@ -796,9 +868,6 @@
                         </div>
                     </article>
                 </div>
-            </div>
-        </section>
-    </div>
 </template>
 <script>
 import pressImage from '../../components/imagePress'
@@ -814,7 +883,9 @@ import createfilesModel from  '../clientRelate/createFiles'
 import createtrackModel from '../clientRelate/label/createTrack'
 import createproductModel from  '../clientRelate/label/createProduct'
 import {
-  initClientDetail
+  initClientDetail,
+
+  initUserDetail
 } from '../../vuex/getters'
 import {
   getClientDetail,
@@ -832,7 +903,9 @@ import {
   createTrack,
   createProduct,
   alterProduct,
-  uploadFiles
+  uploadFiles,
+
+ getUserDetail 
 } from '../../vuex/actions'
 export default {
     components: {
@@ -892,7 +965,9 @@ export default {
     },
     vuex:{
       getters:{
-      initClientDetail
+      initClientDetail,
+
+      initUserDetail
       },
       actions:{
         getClientDetail,
@@ -910,7 +985,9 @@ export default {
         createTrack,
         createProduct,
         alterProduct,
-        uploadFiles
+        uploadFiles,
+
+        getUserDetail
       }
     },
     methods:{

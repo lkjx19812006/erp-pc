@@ -3,6 +3,7 @@
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
+
     
      <div  v-show="!changeParam.show">
         <div class="service-nav clearfix">
@@ -17,9 +18,25 @@
                     <input type="text" class="search_input" v-model="loadParam.phone" @keyup.enter="loadByPhone()" placeholder="按手机号搜索">
                 </div>
                 <div class="name_search clearfix"> 
-                    <img src="/static/images/search.png" height="24" width="24" @click="loadByStatus()">
-                    <input type="text" class="search_input" v-model="loadParam.status" @keyup.enter="loadByStatus()" placeholder="按状态搜索">
+                    <img src="/static/images/search.png" height="24" width="24" @click="loadByAudit()">
+                    <input type="text" class="search_input" v-model="loadParam.audit" @keyup.enter="loadByAudit()" placeholder="按状态搜索">
                 </div>
+                <div class="name_search clearfix"> 
+                    <img src="/static/images/search.png" height="24" width="24" >
+                    <div class="search_input">
+                        <mz-datepicker :time.sync="loadParam.startCtime" format="yyyy-MM-dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </div> 
+                <div class="name_search clearfix"> 
+                    <img src="/static/images/search.png" height="24" width="24" >
+                    <div class="search_input">
+                        <mz-datepicker :time.sync="loadParam.endCtime" format="yyyy-MM-dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </div> 
+                
+                
             </div>
             <div class="right col-xs-2">
                 <!-- <button class="new_btn transfer" @click="clientTransfer('transfer')">划转</button> -->
@@ -41,7 +58,7 @@
                         <th>qq</th>
                         <th>公司</th>
                         <th>积分</th>
-                        <th>会员状态</th>
+                        <!-- <th>会员状态</th> -->
                         <th>来源</th>
                         <th>客户类型</th>
                         <th>审核状态</th>
@@ -58,10 +75,7 @@
                         <td class="underline" @click="clickOn({
                                 id:item.id,
                                 sub:$index,
-                                show:true,
-                                link:alterInfo,
-                                url:'/customer/',
-                                key:'customerList'
+                                show:true
                                                 })">{{item.fullname}}</td>
                         <td>{{item.nickname}}</td>
                         <td>{{item.phone}}</td>
@@ -69,18 +83,19 @@
                         <td>{{item.qq}}</td>
                         <td>{{item.company}}</td>
                         <td>{{item.score}}</td>
-                        <td>
+                        <!-- <td>
                             <div v-if="item.status==0">普通会员</div>
                             <div v-if="item.status==1">客户</div>
                             <div v-if="item.status==2">拉黑</div>
-                        </td>
-                        <td><div v-if="item.source==0">PC</div>
+                        </td> -->
+                        <!-- <td><div v-if="item.source==0">PC</div>
                             <div v-if="item.source==1">安卓</div>
                             <div v-if="item.source==2">微信</div>
                             <div v-if="item.source==3">IOS</div>
-                        </td>
+                        </td> -->
+                        <td>{{item.sourceType}}</td>
                         <td>{{item.utype}}</td>
-                        <td>暂无字段</td>
+                        <td>{{item.auditResult}}</td>
                         
                         <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
@@ -138,6 +153,7 @@
 </template>
 
 <script>
+import calendar from '../components/calendar/vue.datepicker'
 import createModel  from '../components/user/userCreate'
 import alterinfoModel  from '../components/user/userUpdate'
 import transferModel  from '../components/user/userTransfer'
@@ -148,7 +164,8 @@ import {
     initUserList
 } from '../vuex/getters'
 import {
-    getUserList  
+    getUserList,
+    getUserDetail  
 } from '../vuex/actions'
 
 
@@ -156,10 +173,12 @@ export default {
     props: ['param'],
     components: {   
         pagination,
+        calendar,
         createModel,
         alterinfoModel,
         transferModel,
         detailModel,
+
 
        
     },
@@ -171,6 +190,8 @@ export default {
                 fullname: '',
                 phone: '',
                 status: '',
+                startCtime: '',
+                endCtime: '',
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
@@ -203,7 +224,7 @@ export default {
         },
         actions: {
             getUserList,
-           
+            getUserDetail
         }
     },
     events: {
@@ -214,9 +235,9 @@ export default {
       },
   methods: {
     clickOn: function(item) {
-        console.log('jdakljd');
+
             this.changeParam = item;
-            //this.userDetail(this.changeParam);
+            this.getUserDetail(this.changeParam);
         },
     eventClick:function(id){
             if(this.$store.state.table.basicBaseList.userList[id].show){
@@ -228,23 +249,24 @@ export default {
     loadByName(){
         console.log('name');
             this.loadParam.phone = '';
-            this.loadParam.status = '';
+            this.loadParam.audit = '';
             this.getUserList(this.loadParam);
     },
     loadByPhone(){
-        console.log('phone');
+            console.log('phone');
             this.loadParam.fullname = '';
-            this.loadParam.status = '';
+            this.loadParam.audit = '';
             console.log(this.loadParam);
             this.getUserList(this.loadParam);
     },
-    loadByStatus(){
-        console.log('status');
+    loadByAudit(){
+            console.log('audit');
+            console.log(this.loadParam);
             this.loadParam.phone = '';
             this.loadParam.fullname = '';
             this.getUserList(this.loadParam);
     },
-
+    
     createUser:function(value){
         console.log('createUser');
             this.createParam.show=true;
