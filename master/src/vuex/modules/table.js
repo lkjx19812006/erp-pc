@@ -45,7 +45,8 @@ import {
    FILE_DATA,
    USER_DETAIL_DATA,
    ADD_EMPLOYEE_DATA,
-   UPDATE_EMPLOY_DATA
+   UPDATE_EMPLOY_DATA,
+   INTENTION_DATA
 } from '../mutation-types'
 
 const state = {
@@ -92,8 +93,8 @@ const state = {
             { "code": "0", "name": "花类", "show": "true" }
         ],
         drugList: [
-            { "id": 176311, "number": "国药准字Z20093164", "name": "麝香祛痛搽剂", "nameEn": "", "product": "", "agentType": "搽剂", "spec": "每瓶装60ml", "company": "远大医药黄石飞云制药有限公司", "address": "湖北省黄石市鄂黄路52号", "drugType": "中药", "numberOld": "", "approveDate": "2014-03-03 00:00", "code": "86901890001064", "linkDb": "药品广告 中药保护品种库", "ctime": "2016-09-02 16:52", "show": "true" },
-            { "id": 176312, "number": "国药准字Z20093165", "name": "麝香祛痛搽剂", "nameEn": "", "product": "", "agentType": "搽剂", "spec": "每瓶装60ml", "company": "浙江景岳堂药业有限公司", "address": "湖北省黄石市鄂黄路52号", "drugType": "中药", "numberOld": "", "approveDate": "2014-03-03 00:00", "code": "86901890001064", "linkDb": "药品广告 中药保护品种库", "ctime": "2016-09-02 16:52", "show": "true" }
+            { "id": 176311, "number": "国药准字Z20093164", "name": "麝香祛痛搽剂", "nameEn": "", "product": "", "agentType": "搽剂", "spec": "每瓶装60ml", "company": "远大医药黄石飞云制药有限公司", "address": "湖北省黄石市鄂黄路52号", "drugType": "中药", "numberOld": "", "approveDate": "2014-03-03 00:00", "code": "86901890001064", "linkDb": "药品广告 中药保护品种库", "ctime": "2016-09-02 16:52", "show": true },
+            { "id": 176312, "number": "国药准字Z20093165", "name": "麝香祛痛搽剂", "nameEn": "", "product": "", "agentType": "搽剂", "spec": "每瓶装60ml", "company": "浙江景岳堂药业有限公司", "address": "湖北省黄石市鄂黄路52号", "drugType": "中药", "numberOld": "", "approveDate": "2014-03-03 00:00", "code": "86901890001064", "linkDb": "药品广告 中药保护品种库", "ctime": "2016-09-02 16:52", "show": false }
         ],
         customerList: [
             { "id": 0, "type": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false },
@@ -319,7 +320,7 @@ const mutations = {
     },
 
     [DELETE_BREED_DATA](state, data) { //删除客户信息
-        state.basicBaseList[data.key].splice(data.sub, 1);
+        state.basicBaseList[data.key].splice(data.sub,1);
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
         state[data.headline][data.key].arr.splice(data.sub, 1);
@@ -560,10 +561,8 @@ const mutations = {
         
     },
 
-    [USER_DETAIL_DATA](state,data){  // 会员详情
-    
+    [USER_DETAIL_DATA](state,data){  // 会员详情 
       state.userDetail = data;
-      
     },
     [ORG_DATA](state,data){  // 部门列表
         state.basicBaseList.orgList = data;
@@ -602,6 +601,25 @@ const mutations = {
         state.basicBaseList[data.key][data.sub].entryDate = data.entryDate;
         state.basicBaseList[data.key][data.sub].leaveDate = data.leaveDate;
         state.basicBaseList[data.key][data.sub].role = data.role;
+    },
+    [INTENTION_DATA](state,data){  //机会划转意向，新增意向
+        state.basicBaseList.chanceList.unshift({
+            "name": data.name,
+            "ename": data.ename,
+            "show": false,
+            "no": data.no,
+            "orgName": data.orgName,
+            "position":data.position,
+            "mobile":data.mobile,
+            "extNo":data.extNo,
+            "level":data.level,
+            "entryDate":data.entryDate,
+            "leaveDate":data.leaveDate,
+            "orgId":data.orgId,
+            "orgCode":data.orgCode,
+            "status":data.status,
+            "role":param.role
+        })
     }
     
 }

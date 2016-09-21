@@ -117,14 +117,6 @@ Vue.filter('employeestate', function(val){
 	}
 })
 
-Vue.filter('levelstate', function(val){
-	var val = val;
-	if(val==null){
-		 return '无';
-	}else{
-		return val;
-	}
-})
 Vue.filter('qualify', function(val){
 	var val = val;
 	if(val==null){
@@ -154,14 +146,86 @@ Vue.filter('entryDate', function(val){
 	}else{
 		return val;
 	}
-})
-Vue.filter('levelstate', function(val){
+	
+}) 
+Vue.filter('levelstate', function(val){ //等级
 	var val = val;
 	if(val==null){
 		 return '无';
 	}else if(val==""){
 		return '无';
 	}else{
+		return val;
+	}
+})
+Vue.filter('chanceType', function(val){ //机会类型
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else if(val==1){
+		return '供应';
+	}else if(val==0){
+		return '求购';
+	}
+})
+Vue.filter('chanceEspec', function(val){ //机会类型
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else if(val==0){
+		return '普通';
+	}else if(val==1){
+		return '特殊';
+	}
+})
+Vue.filter('intlstata', function(val){ //是否国际
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else if(val==0){
+		return '国内';
+	}else if(val==1){
+		return '国际';
+	}
+})
+Vue.filter('visitstate', function(val){ //是否上门看货
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else if(val==0){
+		return '不会';
+	}else if(val==1){
+		return '会';
+	}
+})
+Vue.filter('invoicstate', function(val){ //发票
+	var val = val;
+	if(val==null){
+		 return '无发票';
+	}else if(val==0){
+		return '无发票';
+	}else if(val==1){
+		return '普通发票';
+	}
+	else if(val==2){
+		return '增值发票';
+	}
+})
+Vue.filter('status', function(val){ //业务机会状态
+	var val = val;
+	if(val==null){
+		 return '不确定';
+	}else if(val==0){
+		return '待审';
+	}else if(val==1){
+		return '通过';
+	}
+})
+Vue.filter('country', function(val){ //国家
+	var val = val;
+	if(val==null){
+		 return '暂无';
+	}else {
 		return val;
 	}
 })

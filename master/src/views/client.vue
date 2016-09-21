@@ -9,8 +9,7 @@
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">客户</div>
-            <div class="right col-xs-3">
-                <button class="new_btn transfer" @click="createSearch()">查询</button>
+            <div class="right col-xs-5">
                 <button class="new_btn transfer" @click="clientTransfer({
                     arr:[],
                     name:'test',
@@ -18,7 +17,8 @@
                     orgId:'',
                     show:true
                     })">划转</button>
-                <button class="new_btn" @click="createCustomer('create')">新建</button>
+                <button class="new_btn transfer" @click="createCustomer('create')">新建</button>
+                <button class="new_btn transfer" @click="createSearch()">查询</button>
             </div>
         </div>
         <div class="order_table">
@@ -59,7 +59,7 @@
                         </td>
                         <td>{{item.type}}</td>
                         <td>{{item.classify}}</td>
-                        <td>{{item.source}}</td>
+                        <td>{{item.sourceType}}</td>
                         <td class="underline"  @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -74,7 +74,7 @@
                         <td>{{item.bizScope}}</td>
                         <td>{{item.tel}}</td>
                         <td>{{item.email}}</td>
-                        <td>{{item.country}}</td>
+                        <td>{{item.country | country}}</td>
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.address}}</td>
@@ -125,6 +125,7 @@
     </div>
 </template>
 <script>
+import filter from '../filters/filters'
 import pagination from '../components/pagination'
 import detailModel from '../components/clientRelate/clientDetail'
 import createModel from '../components/clientRelate/clientCreate'
@@ -242,6 +243,7 @@ export default {
                 for(var i in this.initCustomerlist){
                     if(this.initCustomerlist[i].checked){
                         this.transferParam.arr.push(this.initCustomerlist[i].id);
+                        console.log(this.transferParam.orgId)
                     }
                 }
             /*}*/
@@ -272,7 +274,8 @@ export default {
     },
     created() {
         this.getClientList(this.loadParam);
-    }
+    },
+    filter:(filter,{})
 }
 </script>
 <style scoped>

@@ -82,7 +82,7 @@
                                 crete:'companyProducts'
                                 })">
                             <h4 class="panel-title clearfix">
-                                <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
+                                <img class="pull-left" src="/static/images/product.png" height="27" width="27" />
                                 <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
                                     产品({{initCompanyDetail.companyProducts.arr.length}})
                                 </a>

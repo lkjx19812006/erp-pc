@@ -10,7 +10,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix" @click="drugToggle(initDruglist)">
                             <h4 class="panel-title clearfix">
-                                <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
+                                <img class="pull-left" src="/static/images/company.png" height="30" width="26" />
                                 <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
                                     企业({{initDruglist.length}})
                                 </a>
@@ -108,9 +108,10 @@ export default {
     methods: {
         drugToggle: function(param) {
             if(this.$store.state.table.basicBaseList.drugList.length==0){
-                this.$store.state.table.basicBaseList.drugList.show=true
+                this.$store.state.table.basicBaseList.drugList.show=false
             }
-            this.$store.state.table.basicBaseList.drugList.show = !this.$store.state.table.basicBaseList.drugList.show;
+            this.$store.state.table.basicBaseList.drugList.show =!this.$store.state.table.basicBaseList.drugList.show;
+            console.log(this.$store.state.table.basicBaseList.drugList.show)
         },
         close: function() {
             this.param.show = false;

@@ -11,9 +11,12 @@
             <h4 class="section_title">药材相关</h4>
             <div class="panel-group">
                 <div class="panel panel-default">
-                    <div class="panel-heading clearfix" @click="specsToggle(initBreedDetail.specs)">
+                    <div class="panel-heading clearfix" @click="specsToggle({
+                            link:initBreedDetail.specs,
+                            crete:'specs'
+                            })">
                         <h4 class="panel-title clearfix">
-                                <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
+                                <img class="pull-left" src="/static/images/spec.png" height="26" width="26" />
                                 <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
                                     规格({{initBreedDetail.specs.arr.length}})
                                 </a>
@@ -35,7 +38,9 @@
                                 <li class="panel-name">
                                     <label>规格名称：{{item.name}}</label>
                                 </li>
-                                <li @click="clickShow($index)">
+                                <li @click="clickShow($index,{
+                                        concrete:'specs'
+                                        })">
                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
                                     <div class="breed_action" v-show="item.show" transition="expand">
                                         <dl>
@@ -65,15 +70,17 @@
                                     </div>
                                 </li>
                             </ul>
-                            <!--  <p class="contact-view">查看全部</p> -->
                         </div>
                     </div>
                 </div>
                 <div class="panel panel-default">
-                    <div class="panel-heading clearfix" @click="localToggle(initBreedDetail.locals)">
+                    <div class="panel-heading clearfix" @click="specsToggle({
+                            link:initBreedDetail.locals,
+                            crete:'locals'
+                            })">
                         <h4 class="panel-title clearfix">
-                                <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                <a data-toggle="collapse" data-parent="#accordion"  href="#collapseOne" class="panel-title-set">
+                                <img class="pull-left" src="/static/images/product.png" height="27" width="27" style="margin-top:4px;" />
+                                <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
                                     产地({{initBreedDetail.locals.arr.length}})
                                 </a>
                                 <button type="button" class="btn btn-base pull-right" @click.stop="createFormt({
@@ -95,7 +102,9 @@
                                     <li class="panel-name">
                                         <label>产地名称：{{item.name}}</label>
                                     </li>
-                                    <li @click="clickLocal($index)">
+                                    <li @click="clickLocal($index,{
+                                        concrete:'locals'
+                                        })">
                                         <img src="/static/images/default_arrow.png" height="24" width="24" />
                                         <div class="breed_action" v-show="item.show" transition="expand">
                                             <dl>
@@ -130,9 +139,12 @@
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title clearfix" @click="aliasToggle(initBreedDetail.alias)">
-                                <img class="pull-left" src="/static/images/order.png" height="30" width="30"  />
-                                <a data-toggle="collapse" data-parent="#accordion"  href="#collapseOne" class="panel-title-set">
+                            <h4 class="panel-title clearfix" @click="specsToggle({
+                                link:initBreedDetail.alias,
+                                crete:'alias'
+                                })">
+                                <img class="pull-left" src="/static/images/alias.png" height="30" width="26"  />
+                                <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
                                     别名({{initBreedDetail.alias.arr.length}})
                                 </a>
                                 <button type="button" class="btn btn-base pull-right" @click.stop="createFormt({
@@ -153,7 +165,9 @@
                                     <li class="panel-name">
                                         <label>别名：{{item.alias}}</label>
                                     </li>
-                                    <li @click="clickAlias($index)">
+                                    <li @click="clickAlias($index,{
+                                        concrete:'alias'
+                                        })">
                                         <img src="/static/images/default_arrow.png" height="24" width="24" />
                                         <div class="breed_action" v-show="item.show" transition="expand">
                                             <dl>
@@ -188,9 +202,12 @@
                     </div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4 class="panel-title clearfix" @click="unitsToggle(initBreedDetail.units)">
-                                <img class="pull-left" src="/static/images/file.png" height="34" width="26"  />
-                                <a data-toggle="collapse" data-parent="#accordion"  href="#collapseOne" class="panel-title-set">
+                            <h4 class="panel-title clearfix" @click="specsToggle({
+                                link:initBreedDetail.units,
+                                crete:'units'
+                                })">
+                                <img class="pull-left" src="/static/images/unit.png" height="31" width="26"  />
+                                <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
                                     单位({{initBreedDetail.units.arr.length}})
                                 </a>
                                 <button type="button" class="btn btn-base pull-right" @click.stop="createFormt({
@@ -212,7 +229,9 @@
                                         <label>单位名称：{{item.name}}</label>
                                     </li>
                             
-                                    <li @click="unitclick($index)">
+                                    <li @click="unitclick($index,{
+                                        concrete:'units'
+                                        })">
                                         <img src="/static/images/default_arrow.png" height="24" width="24" />
                                         <div class="breed_action" v-show="item.show" transition="expand">
                                             <dl>
@@ -348,29 +367,11 @@ export default {
     },
     methods: {
         specsToggle: function(param) {
-            if(this.$store.state.table.breedDetail.specs.arr.length==0){
-                this.$store.state.table.breedDetail.specs.show=false
+            if(this.$store.state.table.breedDetail[param.crete].arr.length==0){
+                this.$store.state.table.breedDetail[param.crete].show=false
             }
-            this.$store.state.table.breedDetail.specs.show = !this.$store.state.table.breedDetail.specs.show;
-        },
-        localToggle: function(param) {
-            if(this.$store.state.table.breedDetail.locals.arr.length==0){
-                this.$store.state.table.breedDetail.locals.show=false
-            }
-            this.$store.state.table.breedDetail.locals.show = !this.$store.state.table.breedDetail.locals.show;
-        },
-        aliasToggle:function(param){
-            if(this.$store.state.table.breedDetail.alias.arr.length==0){
-                this.$store.state.table.breedDetail.alias.show=false
-            }
-            this.$store.state.table.breedDetail.alias.show = !this.$store.state.table.breedDetail.alias.show;
-        },    
-        unitsToggle:function(param){
-            if(this.$store.state.table.breedDetail.units.arr.length==0){
-                this.$store.state.table.breedDetail.units.show=false
-            }
-            this.$store.state.table.breedDetail.units.show = !this.$store.state.table.breedDetail.units.show;
-        },                           
+            this.$store.state.table.breedDetail[param.crete].show = !this.$store.state.table.breedDetail[param.crete].show;
+        },             
         close: function() {
             this.param.show = false;
         },
@@ -383,32 +384,11 @@ export default {
         updateSpec:function(initBreedDetail){
             this.breedlistParam=initBreedDetail;
         },
-        clickShow: function(id) {
-            if (this.$store.state.table.breedDetail.specs.arr[id].show) {
-                this.$store.state.table.breedDetail.specs.arr[id].show = !this.$store.state.table.breedDetail.specs.arr[id].show
+        clickShow: function(id,param) {
+            if (this.$store.state.table.breedDetail[param.concrete].arr[id].show) {
+                this.$store.state.table.breedDetail[param.concrete].arr[id].show = !this.$store.state.table.breedDetail[param.concrete].arr[id].show
             } else {
-                this.$store.state.table.breedDetail.specs.arr[id].show = true
-            }
-        },
-        clickLocal:function(id){
-             if (this.$store.state.table.breedDetail.locals.arr[id].show) {
-                this.$store.state.table.breedDetail.locals.arr[id].show = !this.$store.state.table.breedDetail.locals.arr[id].show
-            } else {
-                this.$store.state.table.breedDetail.locals.arr[id].show = true
-            }
-        },
-        clickAlias:function(id){
-             if (this.$store.state.table.breedDetail.alias.arr[id].show) {
-                this.$store.state.table.breedDetail.alias.arr[id].show = !this.$store.state.table.breedDetail.alias.arr[id].show
-            } else {
-                this.$store.state.table.breedDetail.alias.arr[id].show = true
-            }
-        },
-        unitclick:function(id){
-             if (this.$store.state.table.breedDetail.units.arr[id].show) {
-                this.$store.state.table.breedDetail.units.arr[id].show = !this.$store.state.table.breedDetail.units.arr[id].show
-            } else {
-                this.$store.state.table.breedDetail.units.arr[id].show = true
+                this.$store.state.table.breedDetail[param.concrete].arr[id].show = true
             }
         }
     },

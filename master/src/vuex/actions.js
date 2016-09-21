@@ -382,9 +382,6 @@ export const getRecipeDetail = ({ dispatch }, param) => { //获取成分详情
         }
     }).then((res) => {
         var obj = res.json().result.list;
-        res.json().result.list = {
-            show: true
-        };
         for (var i in obj) {
             obj[i].show = false;
         }
@@ -750,8 +747,8 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
 }
 export const getEmployeeList = ({ dispatch }, param) => {  //员工列表以及搜索
     param.loading = true;
-    /*var apiurl = apiUrl.clientList+'/employee/?'+'&page=' + param.cur + '&pageSize=14';*/
-    var apiurl = apiUrl.employeeList+'/?'+'&page=' + param.cur + '&pageSize=14';
+    var apiurl = apiUrl.clientList+'/employee/?'+'&page=' + param.cur + '&pageSize=14';
+    /*var apiurl = apiUrl.employeeList+'/?'+'&page=' + param.cur + '&pageSize=14';*/
     for(var seach in param){
         if(seach=='name'&&param[seach]!==''){
             apiurl += '&name='+param.name
@@ -1120,7 +1117,7 @@ export const createCustomer = ({ dispatch }, param) => { //新增客户相关联
          "email":param.email,
          "qq":param.qq,
          "wechart":param.wechart,
-         'main':param.main,
+         'main':Number(param.main),
          "id":param.id,
          "customerId":param.id
     }
@@ -1564,7 +1561,7 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
     }
     Vue.http({
         method: "POST",
-        url: apiUrl.clientList + param.url,
+        url: apiUrl.employeeList,
         emulateHTTP: true,
         body: data1,
         emulateJSON: false,
@@ -1615,3 +1612,44 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
         console.log('fail');
     })
 }
+export const createIntention = ({ dispatch }, param) => { //新增意向以及划转
+    console.log(param)
+    const data1 = {
+         "type":param.type,
+         "especial":param.especial,
+         "breedName":param.breedName,
+         "qualification":param.qualification,
+         "spec":param.spec,
+         "address":param.address,
+         "advance":param.advance,
+         "invoic":param.invoic,
+         'visit':param.visit,
+         "id":param.id,
+         "intl":param.intl,
+         "unit":param.unit,
+         "pack":param.pack,
+         "sampling":param.sampling,
+         "sampleNumber":param.sampleNumber,
+         "sampleUnit":param.sampleUnit,
+         "sampleAmount":param.sampleAmount,
+         "offer":param.offer,
+         "status":param.status
+    }
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + '/intention/',
+        emulateHTTP: true,
+        body: data1,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('添加成功')
+        dispatch(types.INTENTION_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+createIntention

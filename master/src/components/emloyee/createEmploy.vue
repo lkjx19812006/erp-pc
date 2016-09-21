@@ -174,15 +174,15 @@ export default {
             let str = `${year}/${month}/${day}`
             this.dateText = str.replace(/\b(\w)\b/g, "0$1")
         },
-        Employ:function(initOrgList){
-            console.log("1111")
-            console.log(this.initOrgList)
-            for(var i in this.initOrgList){
-                 if(this.initOrgList[i].checked){
-                        this.param.role.push(this.initOrgList[i].role);
-                    }
-            }
-            this.createEmploy(initOrgList)
+        Employ:function(param){
+            var temp = [];
+            param.role.forEach(function(item){
+                if(item.checked){
+                    temp.push(item);
+                }         
+            })
+            param.role = temp;
+            this.createEmploy(param)
         },
         checked:function(item){
             if(item.checked){

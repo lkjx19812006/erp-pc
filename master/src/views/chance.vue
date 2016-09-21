@@ -1,5 +1,7 @@
 <template>
-	 <div>
+     <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
+     <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
+	 <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">业务机会</div>
            <!--  <div class="col-xs-8 my_order_search">
@@ -13,14 +15,12 @@
                </div>
            </div> -->
             <div class="right col-xs-2">
-               <!--  <button class="new_btn transfer" @click="clientTransfer({
-                   arr:[],
-                   name:'test',
-                   employeeId:'',
-                   orgId:'',
-                   show:true
-                   })">划转</button> -->
-               <!--  <button class="new_btn" @click="createCustomer('create')">新建</button> -->
+                <button class="new_btn transfer" @click="clientTransfer({
+                  name:'意向',
+                  id:'',
+                  show:true
+                  })">划转为意向</button> 
+               <button class="new_btn" @click="createSearch()">搜索</button>
             </div>
         </div>
         <div class="order_table">
@@ -29,7 +29,8 @@
             </div>
             <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
-                    <tr>
+                    <tr>  
+                        <th></th>
                         <th>类型</th>
 	            		<th>特殊的</th>
 	            		<th>品种名称</th>
@@ -49,36 +50,63 @@
 	            		<th>报价总数</th>
 	            		<th>报价均价</th>
 	            		<th>状态</th>
-	            		<th></th>
                     </tr>
                 </thead>
                 <tbody>
-                   <!--  <tr>
-                       <td>
-                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
-                       </td>
-                       <td>全选</td>
-                   </tr> -->
+                  <!--  <tr>
+                      <td>
+                          <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
+                      </td>
+                      <td>全选</td>
+                  </tr> -->
                     <tr v-for="item in initChanceList">
-                        <td>{{item.type}}</td>
-                        <td>{{item.especial}}</td>
-                        <td>{{item.breedName}}</td>
+                         <td  @click.stop="">
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
+                        </td>
+                        <td>{{item.type | chanceType}}</td>
+                        <td>{{item.especial | chanceEspec}}</td>
+                        <td class="underline" @click="chanceClick({id:item.id,
+                                sub:$index,
+                                show:true,
+                                breedName:item.breedName,
+                                type:item.type,
+                                especial:item.especial,
+                                qualification:item.qualification,
+                                spec:item.spec,
+                                unit:item.unit,
+                                address:item.address,
+                                advance:item.advance,
+                                invoic:item.invoic,
+                                visit:item.visit,
+                                pack:item.pack,
+                                intl:item.intl,
+                                visit:item.visit,
+                                sampling:item.sampling,
+                                sampleNumber:item.sampleNumber,
+                                sampleUnit:item.sampleUnit,
+                                sampleAmount:item.sampleAmount,
+                                offer:item.offer,
+                                status:item.status,
+                                offerVprice:item.offerVprice,
+                                url:'/chance/',
+                                key:'chanceList'
+                                })">{{item.breedName}}</td>
                         <td>{{item.qualification | qualify}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.unit}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.advance}}</td>
-                        <td>{{item.invoic}}</td>
-                        <td>{{item.visit}}</td>
+                        <td>{{item.invoic | invoicstate}}</td>
+                        <td>{{item.visit | visitstate}}</td>
                         <td>{{item.pack}}</td>
-                        <td>{{item.intl}}</td>
+                        <td>{{item.intl | intlstata}}</td>
                         <td>{{item.sampling}}</td>
                         <td>{{item.sampleNumber}}</td>
                         <td>{{item.sampleUnit}}</td>
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offer}}</td>
                         <td>{{item.offerVprice}}</td>
-                        <td>{{item.status}}</td>
+                        <td>{{item.status | status}}</td>
                         <!-- <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="component_action" v-show="item.show">
@@ -127,6 +155,8 @@
 <script>
 import pagination from '../components/pagination'
 import filter from '../filters/filters'
+import chancedetailModel from '../components/Servicechance/chanceDetail'
+import transferintentModel from '../components/Servicechance/transferIntent'
 import {
 	initChanceList
 } from '../vuex/getters'
@@ -135,7 +165,9 @@ import {
 } from '../vuex/actions'
 export default {
     components: {   
-        pagination
+        pagination,
+        chancedetailModel,
+        transferintentModel
     },
     vuex: {
         getters: {
@@ -153,6 +185,14 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7
+            },
+            chanceParam:{
+                show:false
+            },
+            intentionParam:{
+                show:false,
+                id:'',
+                name:'意向'
             }
         }
     },
@@ -162,8 +202,34 @@ export default {
                 this.$store.state.table.basicBaseList.chanceList[sub].show = !this.$store.state.table.basicBaseList.chanceList[sub].show;
             }else{
                 this.$store.state.table.basicBaseList.chanceList[sub].show=true;
-            }   
+            }
         },
+        chanceClick:function(initChanceList){
+            this.chanceParam = initChanceList;
+           /* this.getClientDetail(this.chanceParam);*/
+        },
+        onlyselected:function(sub,id){
+            this.$store.state.table.basicBaseList.chanceList[sub].checked=!this.$store.state.table.basicBaseList.chanceList[sub].checked;
+            for(var key in this.initChanceList){
+                if(key!=sub){
+                    if(this.$store.state.table.basicBaseList.chanceList[key].checked==true){
+                        this.$store.state.table.basicBaseList.chanceList[key].checked=false;
+                    }
+                }
+             }
+            this.id = id;
+        },
+        clientTransfer:function(initChanceList){
+            this.intentionParam = initChanceList;
+            for(var i in this.initChanceList){
+                if(this.initChanceList[i].checked){
+                    this.intentionParam.id=this.initChanceList[i].id;
+                    this.intentionParam = this.initChanceList[i];
+                    console.log(this.intentionParam)
+                }
+            }
+            this.intentionParam.show=true;
+        }
     },
     events: {
         fresh: function(input) {
