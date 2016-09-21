@@ -18,8 +18,15 @@
     <div>
    
   
-<mz-datepicker :time.sync="dateText" format="yyyy-MM-dd HH:mm"></mz-datepicker>
+<mz-datepicker :time.sync="dateText" format="yyyy/MM/dd HH:mm"></mz-datepicker>
     </div>
+    <v-select :debounce="250"
+  :value.sync="city.value"
+  :on-search="districtGetOptions"
+  :options="city.arr"
+  placeholder="省/市"
+  label="category"
+  ></v-select>
  
 
 </template>
@@ -28,17 +35,26 @@ import Hello from '../components/Hello'
 import pressImage from '../components/imagePress'
 import showModel from './showmodel'
 import calendar from '../components/calendar/vue.datepicker'
-
+import vSelect from '../components/tools/vueSelect/components/Select'
 
 export default {
     components: {
         Hello,
         showModel,
         pressImage,
-        calendar
+        vSelect
     },
     data() {
         return {
+            select: {
+            active: true,
+            data: [
+                { active: true, value: 0, text: 'A'},
+                { active: true, value: 1, text: 'B'},
+                { active: true, value: 2, text: 'C'},
+                { active: true, value: 3, text: 'D'},
+            ]
+        },
             modelParam: {
                 show: false,
                 name: 'hello'
@@ -48,9 +64,11 @@ export default {
                 qiniu:false
             },
             dateText:'',
-            show:false
-
-     
+            show:false,
+            city:{
+          value:'',
+          arr:[]
+         },
         }
     },
     watch: {
@@ -67,6 +85,16 @@ export default {
             this.modelParam.name = value;
             this.modelParam.show = true;
         },
+        districtGetOptions:function(search, loading) {
+    loading(true)
+    this.$http.get('/static/data/list.json', {
+       q: search
+    }).then(resp => {
+      console.log(resp);
+       this.city.arr = resp.data.results
+       loading(false)
+    })
+  },
         createDateText() {
                 let date = new Date()
                 let year = date.getFullYear()
@@ -76,15 +104,7 @@ export default {
                 this.dateText = str.replace(/\b(\w)\b/g, "0$1")
             }
     },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            transition.next()
-        }
-    },
+   
     events: {
         getImageData: function(imageData) {
             console.log(imageData);
