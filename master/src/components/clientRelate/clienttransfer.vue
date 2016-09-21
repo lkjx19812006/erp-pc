@@ -43,24 +43,21 @@
 		    			<div class="cover_loading">
 			                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 			            </div>
+			            <div class="name_search clearfix" style="border:none">
+		                   <select  class="form-control" v-model="loadParam.orgId" @change="employorgSearch(loadParam.orgId)">
+		                        <option selected value="">请选择业务员部门</option>
+		                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
+		                  </select> 
+		                </div>
 	    				<div class="col-xs-12">
 			                <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">
-			                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" v-on:keyup="employNameSearch(loadParam.name)">
+			                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" @change="employNameSearch(loadParam.name)">
 			                </div>
 			                 <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">
-			                    <input type="text" class="search_input" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  v-on:keyup="employPhoneSearch(loadParam.mobile)">
+			                    <input type="text" class="search_input" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @change="employPhoneSearch(loadParam.mobile)">
 			                </div>
-			                 <div class="name_search clearfix" style="border:none">
-			                    <!-- <img src="/static/images/search.png" height="24" width="24"> -->
-			                   <!--  <input type="text" class="search_input" v-model="loadParam.orgId" placeholder="请输入业务员部门" v-on:keyup="employNameSearch(loadParam.orgId)">  -->
-			                   <select  class="form-control" v-model="loadParam.orgId" @change="employorgSearch(loadParam.orgId)">
-			                        <option selected>请选择业务员部门</option>
-			                  	   <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-			                  </select> 
-			                </div>
-			               
 			            </div>
 			            <table class="table table-hover table_head table-striped " v-cloak>
 			                <thead>
@@ -104,9 +101,6 @@ import {
 import {
     getEmployeeList,
     transferEmploy,
-    getEmployNameSearch,
-    getEmployOrgSearch,
-	getEmployphoneSearch,
     transferInfo,
     getOrgList
 } from '../../vuex/actions'
@@ -119,7 +113,10 @@ export default{
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
-                all: 7
+                all: 7,
+                name:'',
+                mobile:'',
+                orgId:''
             },
             loadParam1:{
             	loading: true,
@@ -142,9 +139,6 @@ export default{
 		actions:{
 			getEmployeeList,
 			transferEmploy,
-			getEmployNameSearch,
-			getEmployOrgSearch,
-			getEmployphoneSearch,
 			transferInfo,
 			getOrgList
 		}
@@ -159,32 +153,37 @@ export default{
 			this.isA=!this.isA;
 		},
 		Partselected:function(sub,id){
-          this.$store.state.table.basicBaseList.orgList[sub].checked=!this.$store.state.table.basicBaseList.orgList[sub].checked;
-           this.param.orgId=id;
-           console.log(id)
+	          this.$store.state.table.basicBaseList.orgList[sub].checked=!this.$store.state.table.basicBaseList.orgList[sub].checked;
+	          for(var key in this.initOrgList){
+				if(key!=sub){
+					if(this.$store.state.table.basicBaseList.orgList[key].checked==true){
+						this.$store.state.table.basicBaseList.orgList[key].checked=false;
+					}
+				}
+			 }
+	          this.param.orgId=id;
 		},
 		serviceselected:function(sub,id,orgId){
 			this.$store.state.table.basicBaseList.employeeList[sub].checked=!this.$store.state.table.basicBaseList.employeeList[sub].checked;
-			/*console.log(this.employeeList)
-			for(var key in this.$store.state.table.basicBaseList.employeeList){
-				if(key!=id){
+			for(var key in this.initEmployeeList){
+				if(key!=sub){
 					if(this.$store.state.table.basicBaseList.employeeList[key].checked==true){
 						this.$store.state.table.basicBaseList.employeeList[key].checked=false;
 					}
-					
 				}
-			}*/
+			}
 			this.param.employeeId=id;
 			this.param.orgId=orgId;
 		},
 		employNameSearch: function(name) {
-            this.getEmployNameSearch(this.loadParam, this.loadParam.all);
+            this.getEmployeeList(this.loadParam);
         },
         employorgSearch:function(orgId){
-        	this.getEmployOrgSearch(this.loadParam, this.loadParam.all);
+        	/*this.getEmployOrgSearch(this.loadParam);*/
+        	this.getEmployeeList(this.loadParam);
         },
         employPhoneSearch:function(mobile){
-        	this.getEmployphoneSearch(this.loadParam, this.loadParam.all);
+        	this.getEmployeeList(this.loadParam);
         }
 	},
     events: {
@@ -194,7 +193,7 @@ export default{
 	    }
     },
 	created(){
-		this.getEmployeeList(this.loadParam,this.loadParam.all)
+		this.getEmployeeList(this.loadParam);
 		this.getOrgList(this.loadParam1)
 	}
 }

@@ -91,6 +91,10 @@ export const getSystemSearch = ({ dispatch }, param) => { //搜索枚举类型
         }
     }).then((res) => {
         var obj1 = res.json().result.list;
+        for (var i in obj1) {
+            obj1[i].show = false;
+            obj1[i].delInfo = false;
+        }
         dispatch(types.SYSTEM_DATA, obj1);
     }, (res) => {
         console.log('fail');
@@ -214,10 +218,33 @@ export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
     });
 }
 export const getCompanyData = ({ dispatch }, param) => { //企业搜索
-     param.loading = true;
+    param.loading = true;
+    var url = apiUrl.clientList + '/company/query/?page=' + param.cur + '&pageSize=15'
+    for(var key in param){
+        if(key=='conType'&&param[key]!==''){
+            url +='&type='+ param.conType
+        }else if(key=='conType'){
+            url +='&type='
+        }
+        if(key=='conName'&&param[key]!==''){
+            url +='&name='+ param.conName
+        }else if(key=='conName'){
+            url +='&name='
+        }
+        if(key=='category'&&param[key]!==''){
+            url +='&category='+ param.category
+        }else if(key=='category'){
+            url +='&category='
+        }
+        if(key=='conProvince'&&param[key]!==''){
+            url +='&province='+ param.conProvince
+        }else if(key=='conProvince'){
+            url +='&province='
+        }
+    }
     Vue.http({
         method: 'GET',
-        url: apiUrl.clientList + '/company/query/?type='+ param.conType+'&name='+param.conName+'&&category=&province='+param.conProvince+'&page=' + param.cur + '&pageSize=15',
+        url: url,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -251,29 +278,27 @@ export const getCompanyDetail = ({ dispatch }, param) => { //获取企业详情
         for (var i in obj.companyContacts.arr) {
             obj.companyContacts.arr[i].show = false;
         }
-        console.log(res.json().result.companyContacts)
+        var arr = obj.companyProducts;
+        obj.companyProducts = {
+            arr: arr,
+            show: true
+        };
+        for (var i in obj.companyProducts.arr) {
+            obj.companyProducts.arr[i].show = false;
+        }
+        var arr = obj.companyLicenses;
+        obj.companyLicenses = {
+            arr: arr,
+            show: true
+        };
+        for (var i in obj.companyLicenses.arr) {
+            obj.companyLicenses.arr[i].show = false;
+        }
         dispatch(types.SERVICE_ENTERPRISE_DETAIL, obj);
     }, (res) => {
         console.log('fail');
     });
 }
-/*export const contactDel = ({ dispatch }, sub,id) => { //删除企业联系人待定
-    Vue.http({
-        method: 'DELETE',
-        url: apiUrl.enterpriseList + id,
-        emulateHTTP: false,
-        emulateJSON: false,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            'Content-Type': 'application/json;charset=UTF-8'
-        }
-    }).then((res) => {
-        console.log('删除成功')
-        dispatch(types.DELETE_CONTACT_DATA, sub);
-    }, (res) => {
-        console.log('fail');
-    });
-}*/
 export const alterCompany = ({ dispatch }, param) => { //修改企业联系人
     const alterdata = {
         name: param.name,
@@ -369,11 +394,17 @@ export const getRecipeDetail = ({ dispatch }, param) => { //获取成分详情
     });
 }
 
-export const getDrawData = ({ dispatch }, param) => { //提取物
+export const getDrawData = ({ dispatch }, param) => { //提取物以及搜索
     param.loading = true;
+    var url = apiUrl.drawList + '/' + 'query?page=' + param.cur + '&pageSize=15';
+    for(var ext in param){
+        if(ext=='name'&&param[ext]!==''){
+            url+='&name='+param.name
+        }
+    }
     Vue.http({
         method: 'GET',
-        url: apiUrl.drawList + '/' + 'query?page=' + param.cur + '&pageSize=15',
+        url: url,
         emulateJSON: true
     }).then((res) => {
         console.log(res.json())
@@ -673,11 +704,32 @@ export const specDel = ({ dispatch }, param) => { //删除药材相关信息
     });
 }
 
-export const getClientList = ({ dispatch }, param) => {  //客户信息列表
+export const getClientList = ({ dispatch }, param) => {  //客户信息列表与搜索
     param.loading = true;
+    var clienturl = apiUrl.clientList+'/customer/?'+'&page=' + param.cur + '&pageSize=15';
+    for(var search in param){
+        if(search=='name'&&param[search]!==''){
+            clienturl += '&name='+param.name
+        }
+        if(search=='type'&&param[search]!==''){
+            clienturl += '&type='+param.type
+        }
+        if(search=='classify'&&param[search]!==''){
+            clienturl += '&classify='+param.classify
+        }
+        if(search=='status'&&param[search]!==''){
+            clienturl += '&status='+param.status
+        }
+        if(search=='tel'&&param[search]!==''){
+            clienturl += '&tel='+param.tel
+        }
+        if(search=='employeeId'&&param[search]!==''){
+            clienturl += '&employeeId='+param.employeeId
+        }
+    }
     Vue.http({
         method:'GET',
-        url:apiUrl.clientList+'/customer/?'+'&page=' + param.cur + '&pageSize=15',
+        url:clienturl,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -696,11 +748,24 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表
             param.loading = false;
         })
 }
-export const getEmployeeList = ({ dispatch }, param) => {  //员工列表
+export const getEmployeeList = ({ dispatch }, param) => {  //员工列表以及搜索
     param.loading = true;
+    /*var apiurl = apiUrl.clientList+'/employee/?'+'&page=' + param.cur + '&pageSize=14';*/
+    var apiurl = apiUrl.employeeList+'/?'+'&page=' + param.cur + '&pageSize=14';
+    for(var seach in param){
+        if(seach=='name'&&param[seach]!==''){
+            apiurl += '&name='+param.name
+        }
+        if(seach=='mobile'&&param[seach]!==''){
+            apiurl += '&phone='+param.mobile
+        }
+        if(seach=='orgId'&&param[seach]!==''){
+            apiurl += '&org='+param.orgId
+        }
+    }
     Vue.http({
         method:'GET',
-        url:apiUrl.clientList+'/employee/?'+'&page=' + param.cur + '&pageSize=8',
+        url:apiurl,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -711,67 +776,6 @@ export const getEmployeeList = ({ dispatch }, param) => {  //员工列表
                 employ[i].show =false;
                 employ[i].checked =false;
            }
-            dispatch(types.EMPLOYEE_DATA, employ);
-            param.all = res.json().result.pages;
-            param.loading = false;
-        }, (res) => {
-            console.log('fail');
-            param.loading = false;
-        })
-}
-export const getEmployNameSearch = ({ dispatch }, param) => {  //员工搜索
-    param.loading = true;
-    Vue.http({
-        method:'GET',
-        url:apiUrl.clientList+'/employee/?name='+param.name,
-        emulateJSON: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-        }).then((res) => {
-           var employ = res.json().result.list;
-           for (var i in employ){
-                employ[i].show =false;
-                employ[i].checked =false;
-           }
-            dispatch(types.EMPLOYEE_DATA, employ);
-            param.all = res.json().result.pages;
-            param.loading = false;
-        }, (res) => {
-            console.log('fail');
-            param.loading = false;
-        })
-}
-export const getEmployphoneSearch = ({ dispatch }, param) => {  //员工手机号搜索
-    param.loading = true;
-    Vue.http({
-        method:'GET',
-        url:apiUrl.clientList+'/employee/?phone='+param.mobile,
-        emulateJSON: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-        }).then((res) => {
-           var employ = res.json().result.list;
-            dispatch(types.EMPLOYEE_DATA, employ);
-            param.all = res.json().result.pages;
-            param.loading = false;
-        }, (res) => {
-            console.log('fail');
-            param.loading = false;
-        })
-}
-export const getEmployOrgSearch = ({ dispatch }, param) => {  //员工部门搜索
-    param.loading = true;
-    Vue.http({
-        method:'GET',
-        url:apiUrl.clientList+'/employee/?org='+param.orgId,
-        emulateJSON: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-        }).then((res) => {
-           var employ = res.json().result.list;
             dispatch(types.EMPLOYEE_DATA, employ);
             param.all = res.json().result.pages;
             param.loading = false;
@@ -797,7 +801,7 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
                 org[i].checked =false;
            }
            console.log(res.json())
-            dispatch(types.ORG_LIST_DATA, org);
+            dispatch(types.ORG_DATA, org);
             param.loading = false;
         }, (res) => {
             console.log('fail');
@@ -888,6 +892,7 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
     })
 }
 export const updateContact = ({ dispatch }, param) => { //修改客户联系人
+    console.log(param.main)
     const updatedata = {
         name:param.name,
         position:param.position,
@@ -1105,7 +1110,7 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
     })
 }
 export const createCustomer = ({ dispatch }, param) => { //新增客户相关联系人
-    console.log(param.url)
+    console.log(param.main)
     const data1 = {
          "name":param.name,
          "position":param.position,
@@ -1346,9 +1351,29 @@ export const getChanceList = ({ dispatch }, param) => {  //业务机会信息列
 
 export const getUserList = ({ dispatch }, param) => {  //会员信息列表
     param.loading = true;
+    var url = apiUrl.userList+'/user/?'+'&page=' + param.cur + '&pageSize=15';
+    for(var key in param){
+        if(key=='phone'&&param[key]!=''){
+             url += '&phone='+param[key];
+        }
+        if(key=='fullname'&&param[key]!=''){
+             url += '&fullname='+param[key];
+        }
+        if(key=='audit'&&param[key]!=''){
+             url += '&audit='+param[key];
+        }
+        if(key=='startCtime'&&param[key]!=''){
+             url += '&startCtime='+param[key];
+        }
+        if(key=='endCtime'&&param[key]!=''){
+             url += '&endCtime='+param[key];
+        }
+
+    }
+    console.log(url);
     Vue.http({
         method:'GET',
-        url:apiUrl.userList+'/user/?'+'&page=' + param.cur + '&pageSize=15',
+        url:url ,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -1368,18 +1393,79 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
     })
 }
 
+export const getUserDetail = ({ dispatch }, param) => {  //会员详情
+    param.loading = true;
+    Vue.http({
+        method:'GET',
+        url:apiUrl.userList+'/user/'+param.id ,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+        console.log(res.json().result);
+        var userDetail = res.json().result;
+        userDetail.chance ={};
+        userDetail.chance.show = false;
+        userDetail.chance.arr = [{"id":"14732390725891000","userId":"00012792255a4e22bf1b70eb6eb89b33","type":1,"especial":1,"breedId":1085,
+                                    "breedName":"天仙子","qualification":"","quality":"工城 霜天地","location":"东北","spec":"统","number":213,"price":12.000000,"unit":"公斤",
+                                    "address":"北京市,北京市,东城区 The","pubdate":null,"duedate":"2016-09-14 00:00","advance":1.000000,"invoic":1,"visit":0,"pack":"瓦楞纸箱",
+                                    "intl":0,"sampling":1,"sampleNumber":1,"sampleUnit":"公斤","sampleAmount":100.000000,"offer":null,"offerFalse":null,"offerNumber":null,
+                                    "offerVprice":null,"offerTotal":null,"status":1,"description":null,"updater":null,"utime":null,"creater":"System","ctime":"2016-09-07 17:04",
+                                    "show":false       
+                                },
+                                    {"id":"14732390725891000","userId":"00012792255a4e22bf1b70eb6eb89b33","type":1,"especial":1,"breedId":1085,
+                                    "breedName":"天仙子","qualification":"","quality":"工城 霜天地","location":"东北","spec":"统","number":213,"price":12.000000,"unit":"公斤",
+                                    "address":"北京市,北京市,东城区 The","pubdate":null,"duedate":"2016-09-14 00:00","advance":1.000000,"invoic":1,"visit":0,"pack":"瓦楞纸箱",
+                                    "intl":0,"sampling":1,"sampleNumber":1,"sampleUnit":"公斤","sampleAmount":100.000000,"offer":null,"offerFalse":null,"offerNumber":null,
+                                    "offerVprice":null,"offerTotal":null,"status":1,"description":null,"updater":null,"utime":null,"creater":"System","ctime":"2016-09-07 17:04",
+                                    "show":false
+                                }
+                                    ];   
+        console.log(userDetail);
+        userDetail.follow ={};
+        userDetail.follow.show = false;                            
+        userDetail.follow.arr = [{
+            "id":"20160805158800","userId":"00012792255a4e22bf1b70eb6eb89b33","customerId":null,"chanceId":"14732390725891000","orderId":"1125","orderNo":"201609094786464","comment":"缺货",show:false
+        }];                            
+        dispatch(types.USER_DETAIL_DATA, userDetail);
+        
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信息
     console.log(param);
     const updatedata = {
-        id: param.id,
-        fullname: param.fullname,
+        id: param.id    
     }
-    console.log(updatedata);
+    if(param.qq){
+        updatedata.qq = param.qq;
+    }
+    if(param.fullname){
+        updatedata.fullname = param.fullname;
+
+    }
+    if(param.email){
+        updatedata.email = param.email;
+    }
+    if(param.phone){
+        updatedata.phone = param.phone;
+    }
+    if(param.nickname){
+        updatedata.nickname = param.nickname;
+    }
+    if(param.company){
+        updatedata.company = param.company;
+    }
+    
     Vue.http({
         method: 'PUT',
         url: apiUrl.userList + '/user/',
         emulateHTTP: false,
-        //params: param.id,
         body: updatedata,
         emulateJSON: false,
         headers: {
@@ -1387,86 +1473,145 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
             'Content-Type':'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('修改成功')
-        dispatch(types.UPDATE_USER_DATA, param);
+        updatedata.index = param.index;
+        console.log(updatedata);
+        dispatch(types.UPDATE_USER_DATA, updatedata);
     }, (res) => {
         console.log('fail');
     })
 }
 
-// export const uploadFiles = ({ dispatch }, param) => { //客户业务员划转信息
-//     console.log(param)
-//     const data = {
-//         catagory:param.catagory,
-//         type:param.type,
-//         path:param.path,
-//         customerId:param.id
-//     }
-//     Vue.http({
-//         method: 'POST',
-//         url: apiUrl.clientList + param.url,
-//         emulateHTTP: false,
-//         body: data,
-//         emulateJSON: false,
-//         headers: {
-//             "X-Requested-With": "XMLHttpRequest",
-//             'Content-Type': 'application/json;charset=UTF-8'
-//         }
-//     }).then((res) => {
-//         console.log('文件添加成功')
-//         dispatch(types.EMPLOYEE_DATA, param);
-//     }, (res) => {
-//         console.log('fail');
-//     });
-// }
 
-
-/*export const getEmployeeList = ({ dispatch }, param) => {  //业务员信息列表
-    param.loading = true;
+export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
+    const data11 = {
+        catagory:param.catagory,
+        type:param.type,
+        path:param.path,
+        customerId:param.customerId,
+        id:param.id
+    }
     Vue.http({
-        method:'GET',
-        url:apiUrl.employeeList+'/employee/',
-        emulateJSON: true,
+        method: 'POST',
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
         headers: {
-            "X-Requested-With": "XMLHttpRequest"
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
         }
-        }).then((res) => {
-           var employee = res.json().result.list;
-           for (var i in employee){
-                employee[i].checked = false;
-                employee[i].show =false;
-           }
-            dispatch(types.EMPLOYEE_DATA, employee);
-            param.all = res.json().result.pages;
-            param.loading = false;
-        }, (res) => {
-            console.log('fail');
-            param.loading = false;
-        })
-}*/
+    }).then((res) => {
+        console.log('文件添加成功')
+        dispatch(types.EMPLOYEE_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    });
+}
 
-/*export const getOrgList = ({ dispatch }, param) => {  //部门列表
-    param.loading = true;
+export const userTransferCustomer = ({ dispatch }, param) => { //会员转客户
+   
+    const data = {
+        id: param.id,
+        main:param.main,
+        phone:param.phone,
+        tel:param.tel,
+        email:param.email,
+        qq:param.qq,
+        type:param.type,
+        fullname:param.fullname,
+        employeeId:param.employeeId,
+        orgId:param.orgId,
+        customerId:param.customerId,
+        status:1
+    }
+    console.log(data);
     Vue.http({
-        method:'GET',
-        url:apiUrl.orgList+'/org/',
-        emulateJSON: true,
+        method: 'POST',
+        url: apiUrl.userList + '/user/transformCustomer',
+        emulateHTTP: false,
+        //params: param.id,
+        body: data,
+        emulateJSON: false,
         headers: {
-            "X-Requested-With": "XMLHttpRequest"
+            "X-Requested-With":"XMLHttpRequest",
+            'Content-Type':'application/json;charset=UTF-8'
         }
-        }).then((res) => {
-            console.log(res.json());
-           var org = res.json().result;
-           for (var i in org){
-                org[i].checked = false;
-                org[i].show =false;
-           }
+    }).then((res) => {
+        console.log('划转成功')
+        //dispatch(types.UPDATE_USER_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 
-            dispatch(types.ORG_DATA, org);
-            param.all = res.json().result.pages;
-            param.loading = false;
-        }, (res) => {
-            console.log('fail');
-            param.loading = false;
-        })
-}*/
+export const createEmploy = ({ dispatch }, param) => { //新增员工信息
+    console.log(param)
+    const data1 = {
+        "name":param.name,
+        "ename":param.ename,
+        "no":param.no,
+        "orgName":param.orgName,
+        "position":param.position,
+        "mobile":param.mobile,
+        "extNo":param.extNo,
+        "level":param.level,
+        "entryDate":param.entryDate,
+        "leaveDate":param.leaveDate,
+        "orgId":param.orgId,
+        "orgCode":param.orgCode,
+        "status":param.status,
+        "role":param.role
+    }
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: true,
+        body: data1,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('添加成功')
+        dispatch(types.ADD_EMPLOYEE_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
+    console.log(param)
+    const updatedata = {
+        name:param.name,
+        ename:param.ename,
+        no:param.no,
+        orgName:param.orgName,
+        position:param.position,
+        mobile:param.mobile,
+        extNo:param.extNo,
+        level:param.level,
+        entryDate:param.entryDate,
+        leaveDate:param.leaveDate,
+        orgId:param.orgId,
+        orgCode:param.orgCode,
+        status:param.status,
+        role:param.role
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: false,
+        body: updatedata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.UPDATE_EMPLOY_DATA,param);
+    }, (res) => {
+        console.log('fail');
+    })
+}

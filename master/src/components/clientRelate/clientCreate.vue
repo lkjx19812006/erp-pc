@@ -5,73 +5,129 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建客户信息</h3>
+            <h3>新建</h3>
         </div>
         <validator name="validation">
             <form novalidate>
                 <div class="edit-model">
-                    <section class="editsection"  v-cloak>   
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>名称</label>
-                                <input type="text" id="username" class="form-control" v-model="customerData.name" v-validate:username="['required']"/>
+                    <section class="editsection"  v-cloak>
+                        <div class="editpageleft">
+                            <h4>客户信息</h4>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>名称</label>
+                                    <input type="text" id="username" class="form-control" v-model="customerData.name" v-validate:username="['required']"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>类型</label>
+                                    <input type="text" id="usertype" class="form-control" v-model="customerData.type" v-validate:usertype="['required']" />
+                                </div>
                             </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>类型</label>
-                                <input type="text" id="usertype" class="form-control" v-model="customerData.type" v-validate:usertype="['required']" />
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>分类码</label>
+                                    <input type="text" id="category" class="form-control" v-model="customerData.category" v-validate:category="['required']" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>负责人</label>
+                                    <input type="text" class="form-control" v-model="customerData.principal" id="userown" v-validate:userown="['required']" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>分类码</label>
-                                <input type="text" id="category" class="form-control" v-model="customerData.category" v-validate:category="['required']" />
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>电话</label>
+                                    <input type="text" class="form-control" maxlength="11" v-model="customerData.tel" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>邮箱</label>
+                                    <input type="email" class="form-control" v-model="customerData.email"  />
+                                </div>
                             </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>负责人</label>
-                                <input type="text" class="form-control" v-model="customerData.principal" id="userown" v-validate:userown="['required']" />
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>所在省</label>
+                                    <input type="text" class="form-control" v-model="customerData.province" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>所在市</label>
+                                    <input type="text" class="form-control" v-model="customerData.city"  />
+                                </div>
                             </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>电话</label>
-                                <input type="text" class="form-control" maxlength="11" v-model="customerData.tel" />
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>备注</label>
+                                    <input type="text" class="form-control" v-model="customerData.comments" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>注册地址</label>
+                                    <input type="text" class="form-control" v-model="customerData.address" />
+                                </div>
                             </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>邮箱</label>
-                                <input type="email" class="form-control" v-model="customerData.email"  />
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>经营范围</label>
+                                    <input type="text" class="form-control" v-model="customerData.bizScope" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>所在省</label>
-                                <input type="text" class="form-control" v-model="customerData.province" />
+                        </div>  
+                        <div class="editpageright">
+                            <h4>联系人</h4>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>名称</label>
+                                    <input type="text" id="username" class="form-control" v-model="customerData.name" v-validate:username="['required']"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>类型</label>
+                                    <input type="text" id="usertype" class="form-control" v-model="customerData.type" v-validate:usertype="['required']" />
+                                </div>
                             </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>所在市</label>
-                                <input type="text" class="form-control" v-model="customerData.city"  />
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>分类码</label>
+                                    <input type="text" id="category" class="form-control" v-model="customerData.category" v-validate:category="['required']" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>负责人</label>
+                                    <input type="text" class="form-control" v-model="customerData.principal" id="userown" v-validate:userown="['required']" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>备注</label>
-                                <input type="text" class="form-control" v-model="customerData.comments" />
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>电话</label>
+                                    <input type="text" class="form-control" maxlength="11" v-model="customerData.tel" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>邮箱</label>
+                                    <input type="email" class="form-control" v-model="customerData.email"  />
+                                </div>
                             </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>注册地址</label>
-                                <input type="text" class="form-control" v-model="customerData.address" />
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>所在省</label>
+                                    <input type="text" class="form-control" v-model="customerData.province" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>所在市</label>
+                                    <input type="text" class="form-control" v-model="customerData.city"  />
+                                </div>
                             </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>经营范围</label>
-                                <input type="text" class="form-control" v-model="customerData.bizScope" />
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>备注</label>
+                                    <input type="text" class="form-control" v-model="customerData.comments" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>注册地址</label>
+                                    <input type="text" class="form-control" v-model="customerData.address" />
+                                </div>
                             </div>
                         </div>
                     </section>
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="saveCreate(customerData,param.show = false)">保存</button>
+                    <input type="button" class="btn  btn-confirm"  @click="saveCreate(customerData,param.show = false)" value="保存" />
                 </div>
             </form>
         </validator>
@@ -120,6 +176,12 @@ export default {
 }
 </script>
 <style scoped>
+.modal_con{
+    width: 840px;
+}
+.top-title{
+    width: 840px;
+}
 .edit-content {
     padding: 19px 10px;
     text-align: center;
@@ -127,7 +189,7 @@ export default {
 }
 
 .edit-content h3 {
-    font-size: 20px;
+    font-size: 18px;
     color: #fa6705;
     margin: 0;
 }
@@ -155,8 +217,15 @@ export default {
     -ms-flex: auto;
     flex: auto;
     width: 50%;
+    float: left;
 }
-
+.editpageleft{
+    border-right:1px solid #ddd; 
+}
+.editpageleft h4,
+.editpageright h4{
+    text-indent: 16px;
+}
 .editpage-input {
     margin-top: 15px;
 }
@@ -191,10 +260,7 @@ export default {
 }
 
 .edit_footer {
-    border-top: 1px solid #ddd;
-    text-align: right;
-    padding: 10px 20px;
-    margin-top: 10px;
+    width: 840px;
 }
 
 .edit_footer button {

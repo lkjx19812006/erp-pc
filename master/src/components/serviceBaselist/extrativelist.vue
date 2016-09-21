@@ -6,7 +6,7 @@
         <div class="my_enterprise col-xs-2">提取物</div>
         <div class="name_search clearfix">
             <img src="/static/images/search.png" height="24" width="24">
-            <input type="text" class="search_input" placeholder="按名称搜索">
+            <input type="text" class="search_input" placeholder="按名称搜索" v-model="loadParam.name"@keyup.enter="categoryNameSearch(loadParam.name)">
         </div>
     </div>
     <div class="order_table">
@@ -79,7 +79,8 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
-                all: 7
+                all: 7,
+                name:''
             },
         }
     },
@@ -102,6 +103,11 @@ export default {
             transition.next()
         }
     },
-    filter: (filter, {})
+    filter: (filter, {}),
+    methods:{
+        categoryNameSearch:function(name){
+            this.getDrawData(this.loadParam);
+        }
+    }
 }
 </script>

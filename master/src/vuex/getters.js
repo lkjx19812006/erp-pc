@@ -104,3 +104,11 @@ export const initChanceList = (state) => {
 export const initUserList = (state) => {
     return parseJson(state.table.basicBaseList.userList);
 }
+
+/*---会员详情---*/
+export const initUserDetail = (state) => {
+    
+
+    return parseJson(state.table.userDetail);
+}
+ 

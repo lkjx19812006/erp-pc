@@ -57,44 +57,23 @@ export default {
 }
 </script>
 <style scoped>
-.modal {
-    opacity: 0.5;
-    background-color: #000;
-    display: block;
-}
-
 .modal_con {
     display: block;
     position: fixed;
     top: 91px;
     margin: auto;
-    left: 0;
-    right: 0;
-    max-width: 630px;
-    min-width: 200px;
-    max-height:600px;
+    max-height:500px;
     bottom: 50px;
-    padding: 0;
-    background-color: #fff;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    z-index: 1080;
-    overflow: hidden;
-    overflow-y: auto;
 }
 
 .big-font {
     font-size: 36px;
 }
-
-.top-title {
+.top-title{
     position: absolute;
-    right: 0;
+    width: 100%;
     top: 0;
 }
-
 .top-title span {
     font-size: 28px;
 }
@@ -172,6 +151,9 @@ export default {
     text-align: right;
     padding: 10px 20px;
     margin-top: 50px;
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
 }
 
 .edit_footer button {

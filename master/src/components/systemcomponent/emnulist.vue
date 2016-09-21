@@ -8,7 +8,7 @@
             <div class="col-xs-8 my_order_search">
                 <div class="name_search">
                     <select class="form-control" v-model="sel" @change="searchname(sel)">
-                        <option selected>请选择种类名称搜索</option>
+                        <option selected value="">请选择种类名称搜索</option>
                         <option  value="TRACE">跟进类型</option>
                         <option  value="ST">规格类型</option>
                         <option  value="BANK">银行</option>

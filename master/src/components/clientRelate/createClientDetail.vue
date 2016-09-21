@@ -29,10 +29,6 @@
                                     <label class="editlabel">{{param.webchart}}</label>
                                     <input type="text" class="form-control edit-input"  id="wechart" v-model="param.wechart" v-validate:wechart="['required']" />
                                 </div>
-                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.remark}}</label>
-                                    <input type="number" class="form-control edit-input" v-model="param.main" />
-                                </div>
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input">
@@ -53,11 +49,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="editpage-input clearfix">
+                            <label>是否主要</label>
+                            <div  class="clerafix ">
+                                <div class="pull-left role clerafix">
+                                     <input type="checkbox" class="checkbox_unselect" id="client_ids" v-model="param.main"  value="1" />
+                                     <label  for="client_ids">主要</label>
+                                </div>
+                            </div>
+                        </div>
                     </section>
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid"  @click="param.link(param,param.show = false)">保存</button>
+                    <input type="button" class="btn  btn-confirm"   @click="param.link(param,param.show = false)" value="保存"/>
                 </div>
             </form>
         </validator>
@@ -87,10 +92,22 @@ export default {
 }
 </script>
 <style scoped>
+.modal_con{
+    max-height: 600px;
+}
+.edit_footer{
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+}
 .big-font {
     font-size: 36px;
 }
-
+.top-title{
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
 .top-title span {
     font-size: 28px;
 }
@@ -178,8 +195,23 @@ export default {
     display: inline-block;
     background: #ccc;
 }
-
 .editpage-image {
     display: inline-block;
+}
+.checkbox_unselect{
+    background-image: url(/static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: 60%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+    float: left;
+    margin-right: 10px;
+}
+.role{
+    margin-right: 10px;
 }
 </style>
