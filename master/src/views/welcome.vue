@@ -20,7 +20,14 @@
   
 <mz-datepicker :time.sync="dateText" format="yyyy/MM/dd HH:mm"></mz-datepicker>
     </div>
- <region-select></region-select>
+    <v-select :debounce="250"
+  :value.sync="city.value"
+  :on-search="districtGetOptions"
+  :options="city.arr"
+  placeholder="省/市"
+  label="category"
+  ></v-select>
+ 
 
 </template>
 <script>
@@ -28,14 +35,14 @@ import Hello from '../components/Hello'
 import pressImage from '../components/imagePress'
 import showModel from './showmodel'
 import calendar from '../components/calendar/vue.datepicker'
-import regionSelect from '../components/tools/regionSelect'
+import vSelect from '../components/tools/vueSelect/components/Select'
 
 export default {
     components: {
         Hello,
         showModel,
         pressImage,
-        regionSelect
+        vSelect
     },
     data() {
         return {
@@ -57,9 +64,11 @@ export default {
                 qiniu:false
             },
             dateText:'',
-            show:false
-
-     
+            show:false,
+            city:{
+          value:'',
+          arr:[]
+         },
         }
     },
     watch: {
@@ -76,6 +85,16 @@ export default {
             this.modelParam.name = value;
             this.modelParam.show = true;
         },
+        districtGetOptions:function(search, loading) {
+    loading(true)
+    this.$http.get('/static/data/list.json', {
+       q: search
+    }).then(resp => {
+      console.log(resp);
+       this.city.arr = resp.data.results
+       loading(false)
+    })
+  },
         createDateText() {
                 let date = new Date()
                 let year = date.getFullYear()
