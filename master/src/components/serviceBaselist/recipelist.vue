@@ -32,19 +32,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initConponentlist"  @click="clickRecipe({
-                        id:item.id,
-                        code:item.code,
-                        name:item.name,
-                        breedName:item.breedName,
-                        companyName:item.companyName,
-                        quantity:item.quantity,
-                        unit:item.unit,
-                        status:item.status,
-                        show:true
-                        })">
+                    <tr v-for="item in initConponentlist">
                         <td>{{item.code | codestate}}</td>
-                        <td>{{item.name}}</td>
+                        <td class="underline" @click="clickRecipe({
+                            id:item.id,
+                            code:item.code,
+                            name:item.name,
+                            breedName:item.breedName,
+                            companyName:item.companyName,
+                            quantity:item.quantity,
+                            unit:item.unit,
+                            status:item.status,
+                            show:true
+                            })">{{item.name}}</td>
                         <td>{{item.breedName}}</td>
                         <td>{{item.companyName | companyname}}</td>
                         <td>{{item.quantity}}</td>

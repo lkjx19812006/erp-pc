@@ -26,7 +26,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid"  @click="param.link(param,param.show = false)">保存</button>
+                    <input type="button" class="btn  btn-confirm"  @click="param.link(param,param.show = false)" value="保存" />
                 </div>
             </form>
         </validator>
@@ -56,8 +56,22 @@ export default {
 }
 </script>
 <style scoped>
+.modal_con{
+    max-height: 400px;
+    width: 32%;
+}
+.edit_footer{
+    position: absolute;
+    width: 100%;
+    bottom: 10px;
+}
 .big-font {
     font-size: 36px;
+}
+.top-title{
+    position: absolute;
+    width: 100%;
+    top: 0;
 }
 .top-title span {
     font-size: 28px;

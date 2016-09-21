@@ -58,7 +58,8 @@
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">价格过期时间</label>
-                                <input type="text" class="form-control" v-model="param.duedate" value="{{param.duedate}}"/>
+                               <!--  <input type="text" class="form-control" v-model="param.duedate" value="{{param.duedate}}"/> -->
+                                <mz-datepicker :time.sync="dateText" v-model="param.duedate" format="yyyy-MM-dd HH:mm">{{param.duedate}}</mz-datepicker>
                             </div>
                         </div>
                         <div class="clearfix">
@@ -71,25 +72,23 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">保存</button>
+                    <input type="button" class="btn btn-confirm"  @click="param.link(param,param.show = false)" value="保存" />
                 </div>
             </form>
         </validator>
     </div>
 </template>
 <script>
+import calendar from '../../calendar/vue.datepicker'
 export default {
     components: {
-
+        calendar
     },
     props: ['param'],
     data() {
         return {
-           
+           dateText:'',
         }
-    },
-     vuex: {
-        
     },
     route: {
         activate: function(transition) {
@@ -100,6 +99,19 @@ export default {
             console.log('hook-example deactivated!')
             transition.next()
         }
+    },
+    methods:{
+        createDateText() {
+            let date = new Date()
+            let year = date.getFullYear()
+            let month = date.getMonth() + 1
+            let day = date.getDate()
+            let str = `${year}/${month}/${day}`
+            this.dateText = str.replace(/\b(\w)\b/g, "0$1")
+        }
+    },
+    ready() {
+        this.createDateText()
     }
 }
 </script>

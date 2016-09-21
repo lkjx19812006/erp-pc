@@ -29,10 +29,6 @@
                                     <label class="editlabel">{{param.QQ}}</label>
                                     <input type="text" class="form-control edit-input"  id="name" v-model="param.qq" value="{{param.qq}}" />
                                 </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">{{param.remark}}</label>
-                                    <input type="number" class="form-control edit-input"  id="name" v-model="param.main" value="{{param.main}}" />
-                                </div>
                             </div>
                              <div class="editpageright">
                                 <div class="editpage-input">
@@ -53,11 +49,20 @@
                                 </div>
                             </div>
                         </div>
+                         <div class="editpage-input clearfix">
+                            <label>是否主要</label>
+                            <div  class="clerafix ">
+                                <div class="pull-left role clerafix">
+                                     <input type="radio" class="checkbox_unselect" id="client_ids" v-model="param.main"  value="1" />
+                                     <label  for="client_ids">主要</label>
+                                </div>
+                            </div>
+                        </div>
                     </section>
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" @click="param.link(param,param.show = false)">保存</button>
                 </div>
             </form>
         </validator>
@@ -86,44 +91,9 @@ export default {
 }
 </script>
 <style scoped>
-.modal {
-    opacity: 0.5;
-    background-color: #000;
-    display: block;
-}
-
-.modal_con {
-    display: block;
-    position: fixed;
-    top: 91px;
-    margin: auto;
-    left: 0;
-    right: 0;
-    max-width: 630px;
-    min-width: 200px;
-    max-height: 600px;
-    bottom: 50px;
-    padding: 0;
-    background-color: #fff;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    z-index: 1080;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
 .big-font {
     font-size: 36px;
 }
-
-.top-title {
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
 .top-title span {
     font-size: 28px;
 }
@@ -203,37 +173,23 @@ export default {
     margin-left: 10px;
     margin-top: 5px;
 }
-
-.edit_footer {
-    border-top: 1px solid #ddd;
-    text-align: right;
-    padding: 10px 20px;
-    margin-top: 50px;
-}
-
 .edit_footer button {
     margin-left: 15px;
 }
-
-.btn-confirm {
-    background-color: #fa6705;
-    color: #fff;
-}
-
-.btn-close {
-    color: #fa6705;
-}
-
-.editpage_img {
-    width: 90%;
-}
-
-.editpage_img img {
+.checkbox_unselect{
+    background-image: url(/static/images/unselect.png);
     display: inline-block;
-    background: #ccc;
+    background-repeat: no-repeat;
+    width: 20px;
+    height: 20px;
+    background-size: 60%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+    float: left;
+    margin-right: 10px;
 }
-
-.editpage-image {
-    display: inline-block;
+.role{
+    margin-right: 10px;
 }
 </style>

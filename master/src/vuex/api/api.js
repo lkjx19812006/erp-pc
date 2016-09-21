@@ -10,7 +10,7 @@ const _listUrl={
 	orderTable:local+'order.json',
 	clientList:ctx,
 	userList:ctx,
-	employeeList:ctx,
+	employeeList:local+'employee.json',
 	orgList:ctx,
 	dataBaseList:ctx+'/sys/enum',
 	provinceList:ctx+'/sys/location',

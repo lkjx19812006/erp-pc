@@ -43,8 +43,9 @@ import {
    UPDATE_USER_DATA,
    ORG_DATA,
    FILE_DATA,
-   USER_DETAIL_DATA
-
+   USER_DETAIL_DATA,
+   ADD_EMPLOYEE_DATA,
+   UPDATE_EMPLOY_DATA
 } from '../mutation-types'
 
 const state = {
@@ -99,64 +100,24 @@ const state = {
             { "id": 1, "type": 0, "name": "ddf", "category": "14frff555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false },
             { "id": 2, "type": 1, "name": "ggg", "category": "gvgg", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false }
         ],
-        employeeList: [
-            { "id": 1, "name": "lm", "no": "001", "orgId": 1, "level": "1", "qq": null, "wechat": null, "email": null, "isManager": 1, "position": null, "mobile": null, "show": "true" }
-        ],
-        orgList: [
-            { "id": 1, "name": "交易部门", "show": true }
-        ],
         chanceList: [
             { "id": "14732390725891000", "userId": "b11741af0efc49ed815545c0d88ddc98", "type": 1, "especial": 1, "breedId": 1085, "breedName": "天仙子", "qualification": "", "quality": "工城 霜天地", "location": "东北", "spec": "统", "number": 213, "price": 12, "unit": "公斤", "address": "北京市,北京市,东城区 The", "duedate": "2016-09-14 00:00", "advance": 1, "invoic": 1, "visit": 0, "pack": "瓦楞纸箱", "intl": 0, "sampling": 1, "sampleNumber": 1, "sampleUnit": "公斤", "sampleAmount": 100, "show": true }
         ],
-         employeeList:[{"id":6,"name":"lm","no":"001","orgName":"冕冠电子商务有限公司","orgId":1,"orgCode":"","level":"1",
+        employeeList:[{"id":6,"name":"lm","no":"001","orgName":"冕冠电子商务有限公司","orgId":1,"orgCode":"1","level":"1",
                        "entryDate":null,"leaveDate":null,"mobile":null,"extNo":"123456","qq":"38917306","wechat":"38917306@qq.com",
-                       "email":"38917306@qq.com","position":"软件工程师","isManager":1,"status":1,"updater":null,"utime":null,"creater":null,"ctime":null,"ename":"john"}
+                       "email":"38917306@qq.com","position":"软件工程师","isManager":1,"status":1,"ename":"john","role":"管理员","show":true}
                        ],
-        orgList:[{"id":1,"name":"冕冠电子商务有限公司","level":null,"pid":0,"status":1,"utime":null,"ctime":null,"creater":null,"updater":null,"code":"0001"}],           
+        orgList:[{"id":1,"name":"冕冠电子商务有限公司","level":null,"pid":0,"status":1,"utime":null,"ctime":null,"creater":null,"updater":null,"code":"0001","show":true}],           
         userList: [{
-            "id": "0008fcc6c2d549888afb2e950e6343c1",
-            "type": 0,
-            "name": null,
-            "password": "56bf5523459ce2dfc6720798d852d6e6",
-            "gender": null,
-            "nickname": "卖蘑菇的小姑凉",
-            "fullname": "沈威峰",
-            "idnumber": null,
-            "signature": null,
-            "phone": "13851379713",
-            "email": "857714234@qq.com",
-            "qq": "857714234",
-            "tel": null,
-            "openId": null,
-            "avatar": null,
-            "url": null,
-            "signin": null,
-            "company": "个体种植户",
-            "address": null,
-            "employee": null,
-            "employeeId": null,
-            "score": 300,
-            "utype": 0,
-            "ctype": 0,
-            "addrShip": null,
-            "addrReceive": null,
-            "busiType": null,
-            "province": null,
-            "city": null,
-            "source": 1,
-            "lastLoginIp": null,
-            "lastLoginTime": "2016-06-02 11:44",
-            "status": 0,
-            "updater": null,
-            "utime": null,
-            "creater": null,
-            "ctime": null,
-            "startCtime": null,
-            "endCtime": null,
-            "userIds": null,
-            "customerId": null,
-            "main": null,
-            "show": true
+            "id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"name": null,"password": "56bf5523459ce2dfc6720798d852d6e6","gender": null,
+            "nickname": "卖蘑菇的小姑凉","fullname": "沈威峰","idnumber": null,"signature": null,"phone": "13851379713",
+            "email": "857714234@qq.com","qq": "857714234","tel": null,
+            "openId": null,"avatar": null,"url": null,"signin": null,
+            "company": "个体种植户","address": null,"employee": null, "employeeId": null,"score": 300,
+            "utype": 0,"ctype": 0,"addrShip": null,"addrReceive": null,
+            "busiType": null, "province": null,
+            "city": null, "source": 1,"lastLoginIp": null, "lastLoginTime": "2016-06-02 11:44","status": 0,
+            "updater": null, "utime": null,"creater": null,"ctime": null, "startCtime": null,"endCtime": null,"userIds": null, "customerId": null,"main": null,"show": true
         }]
     },
     breedDetail: {
@@ -205,7 +166,10 @@ const state = {
         "utime": "2016-08-26 18:43",
         "ctime": "2016-08-26 18:43",
         "companyLicenses": null,
-        "companyProducts": [],
+        "companyProducts": {
+            arr:[],
+            show:true
+        },
         "companyContacts": {
             arr: [
                 { "id": 1, "cid": 11, "name": "dnjdj", "tel": "13162878512", "show": "true" },
@@ -243,8 +207,7 @@ const state = {
         "products": { arr: [], show: false },
         "files": {
             arr: [
-                { "id": 1, "breedId": 1001, "name": "云南", "show": "true" },
-                { "id": 2, "breedId": 1001, "name": "广东", "show": "true" }
+                { "id": 1, "breedId": 1001, "name": "云南", "show": "true" }
             ],
             show: false
         },
@@ -275,7 +238,7 @@ const state = {
     "addrReceive":null,"busiType":null,"province":null,"city":null,"source":1,"lastLoginIp":null,"lastLoginTime":null,
     "status":null,"updater":null,"utime":null,"creater":null,"ctime":null,"startCtime":null,"endCtime":null,"userIds":null,
     "customerId":null,"main":null,"audit":0,"bizMain":null,"userType":0,"auditResult":null,"sourceType":null
-  }
+  },
 }
 
 const mutations = {
@@ -288,9 +251,7 @@ const mutations = {
     [PROVINCE_DATA](state, data) { //省市区
         state.systemBaseList.locationlist = data;
     },
-    [DELETE_SHOW_STATUE](state, sub) { //删除枚举
-        state.systemBaseList.enumlist.splice(sub, 1);
-    },
+
     [ADD_DATA](state, data) { // 新增枚举
         state.systemBaseList.enumlist.unshift({
             "name": data.name,
@@ -357,14 +318,14 @@ const mutations = {
         state.companyDetail[data.key].arr[data.sub].wechart = data.wechart;
     },
 
-    /* [DELETE_CONTACT_DATA](state,id){ //删除企业联系人 待定
-         state.companyDetail.companyContacts.arr.splice(id,1);
-     },*/
     [DELETE_BREED_DATA](state, data) { //删除客户信息
         state.basicBaseList[data.key].splice(data.sub, 1);
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
         state[data.headline][data.key].arr.splice(data.sub, 1);
+    },
+    [DELETE_SHOW_STATUE](state, data) { //删除枚举
+        state.systemBaseList.enumlist.splice(data.sub, 1);
     },
 
     [CATEGORY_DATA](state, data) { //品种显示
@@ -551,17 +512,16 @@ const mutations = {
             "catagory": data.catagory,
             "type": data.type,
             "path": data.path,
-            "customerId": data.id,
-            "show": false
+            "customerId": data.customerId,
+            "show": false,
+            "id":data.id
         })
     },
-    [EMPLOYEE_DATA](state, data) { //员工列表
+    [EMPLOYEE_DATA](state, data) { //员工业务员列表
         state.basicBaseList.employeeList = data;
     },
-
-    [CHANCE_LIST_DATA](state,data){ //业务机会列表
-         state.basicBaseList.chanceList = data;
-
+    [CHANCE_LIST_DATA](state, data) { //业务机会列表
+        state.basicBaseList.chanceList = data;
     },
     [USER_DATA](state, data) { // 会员列表
         state.basicBaseList.userList = data;
@@ -605,19 +565,45 @@ const mutations = {
       state.userDetail = data;
       
     },
-
-    [EMPLOYEE_DATA](state,data){  // 业务员列表
-        state.basicBaseList.employeeList = data;
-    },
-
     [ORG_DATA](state,data){  // 部门列表
         state.basicBaseList.orgList = data;
     },
+    [ADD_EMPLOYEE_DATA](state,data){  //新增员工信息
+       state.basicBaseList[data.key].push({
+            "name": data.name,
+            "ename": data.ename,
+            "show": false,
+            "no": data.no,
+            "orgName": data.orgName,
+            "position":data.position,
+            "mobile":data.mobile,
+            "extNo":data.extNo,
+            "level":data.level,
+            "entryDate":data.entryDate,
+            "leaveDate":data.leaveDate,
+            "orgId":data.orgId,
+            "orgCode":data.orgCode,
+            "status":data.status,
+            "role":param.role
+        })
+    },
+    [UPDATE_EMPLOY_DATA](state,data){ //修改员工信息
+        state.basicBaseList[data.key][data.sub].name = data.name;
+        state.basicBaseList[data.key][data.sub].ename = data.ename;
+        state.basicBaseList[data.key][data.sub].no = data.no;
+        state.basicBaseList[data.key][data.sub].orgId = data.orgId;
+        state.basicBaseList[data.key][data.sub].orgCode = data.orgCode;
+        state.basicBaseList[data.key][data.sub].status = data.status;
+        state.basicBaseList[data.key][data.sub].orgName = data.orgName;
+        state.basicBaseList[data.key][data.sub].position = data.position;
+        state.basicBaseList[data.key][data.sub].mobile = data.mobile;
+        state.basicBaseList[data.key][data.sub].extNo = data.extNo;
+        state.basicBaseList[data.key][data.sub].level = data.level;
+        state.basicBaseList[data.key][data.sub].entryDate = data.entryDate;
+        state.basicBaseList[data.key][data.sub].leaveDate = data.leaveDate;
+        state.basicBaseList[data.key][data.sub].role = data.role;
+    }
     
-
-    
-
-
 }
 
 export default {

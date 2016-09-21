@@ -26,30 +26,27 @@
                 <div class="editpage-input">
                     <label class="editlabel">新建文件</label>
                     <div class="editpage_img clearfix">
-                         <div class="editpage-image col-md-4">
-                            <press-image :param="file1"></press-image> 
+                         <div class="editpage-image">
+                            <press-image :param.sync="file1"></press-image> 
                          </div>
-                         <div class="editpage-image col-md-4">
-                            <press-image :param="file2"></press-image>
-                         </div>
-                         <div class="editpage-image col-md-4">
-                            <press-image :param="file3"></press-image>
-                         </div>
+                        <!--  <div class="editpage-image col-md-4">
+                           <press-image :param.sync="file2"></press-image>
+                        </div>
+                        <div class="editpage-image col-md-4">
+                           <press-image :param.sync="file3"></press-image>
+                        </div> -->
                     </div>
                 </div>
             </section>
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn btn-confirm" @click="param.link(param)">保存</button>
+            <input type="button" class="btn btn-confirm" @click="param.link(param,param.show = false)" value="保存" />
         </div>
     </div>
 </template>
 <script>
 import pressImage from '../imagePress'
-import {
-    uploadFiles
-} from '../../vuex/actions'
 export default {
     components: {
         pressImage
@@ -74,7 +71,7 @@ export default {
     },
     vuex: {
         actions: {
-            uploadFiles
+           
         }
     },
     route: {
@@ -85,6 +82,13 @@ export default {
         deactivate: function(transition) {
             console.log('hook-example deactivated!')
             transition.next()
+        }
+    },
+    events: {
+        getImageData: function(imageData) {
+            console.log(imageData);
+            var paths = new Array();
+            this.param.path=imageData.result.path;
         }
     }
 }
@@ -154,5 +158,7 @@ export default {
 .btn-close {
     color: #fa6705;
 }
-
+.editpage-image{
+    width: 150px;
+}
 </style>
