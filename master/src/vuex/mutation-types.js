@@ -46,8 +46,9 @@ export const ADD_PRODUCT_DATA = 'ADD_PRODUCT_DATA' // 新增客户产品
 export const FILE_DATA ='FILE_DATA'  // 新增客户文件
 export const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA' // 修改客户产品
 
-export const CHANCE_LIST_DATA ='CHANCE_LIST_DATA'  //业务机会数据列表
+export const INTENTION_LIST_DATA ='INTENTION_LIST_DATA'  //意向数据列表
 export const INTENTION_DATA = 'INTENTION_DATA'  // 新增意向以及机会划转为意向
+export const UPDATA_INTENTION_DATA = 'UPDATA_INTENTION_DATA' //修改意向
 
 export const USER_DATA = 'USER_DATA'   //会员列表
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA'   //修改会员信息

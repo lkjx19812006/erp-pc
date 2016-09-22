@@ -8,8 +8,8 @@
     <search-model  :param="searchParam" v-if="searchParam.show"></search-model>
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">客户</div>
-            <div class="filter_search clearfix col-xs-5" >
+            <div class="my_enterprise col-xs-1">客户</div>
+            <div class="filter_search clearfix col-xs-7" >
                 <dl class="clearfix">
                     <dt>类型：</dt>
                     <dd>
@@ -31,8 +31,18 @@
                         </select>
                     </dd>
                 </dl>
+                <dl class="clearfix">
+                    <dt>状态：</dt>
+                    <dd>
+                        <select  v-model="loadParam.status" @change="searchClient()">
+                            <option value="">请选择状态</option>
+                            <option value="0">无效</option>
+                            <option value="1">有效</option>
+                        </select>
+                    </dd>
+                </dl>
             </div>
-            <div class="right col-xs-5">
+            <div class="right col-xs-4">
                 <button class="new_btn transfer" @click="clientTransfer({
                     arr:[],
                     name:'test',
@@ -66,6 +76,7 @@
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>注册地址</th>
+                        <th>状态</th>
                         <th>备注</th>
                         <th></th>
                     </tr>
@@ -103,6 +114,7 @@
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.address}}</td>
+                        <td>{{item.status}}</td>
                         <td>{{item.comments}}</td>
                         <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
@@ -202,7 +214,8 @@ export default {
                 all: 7,
                 name:'',
                 classify:'',
-                type:''
+                type:'',
+                status:''
             },
             changeParam: {
                 show: false

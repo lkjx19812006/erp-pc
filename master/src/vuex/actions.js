@@ -1326,9 +1326,9 @@ export const transferInfo = ({ dispatch }, param) => { //客户部门划转信�
     });
 }
 
-export const getChanceList = ({ dispatch }, param) => {  //业务机会信息列表以及搜索
+export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表以及搜索
     param.loading = true;
-    var url = apiUrl.clientList+'/chance/?'+'&page=' + param.cur + '&pageSize=15';
+    var url = apiUrl.clientList+'/intention/?'+'&page=' + param.cur + '&pageSize=15';
      for(var search in param){
         if(search=='type'&&param[search]!==''){
             url += '&type='+param.type
@@ -1374,13 +1374,12 @@ export const getChanceList = ({ dispatch }, param) => {  //业务机会信息列
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res)=>{
-         console.log(res.json().result)
-           var chance = res.json().result.list;
-           for (var i in chance){
-                chance[i].checked = false;
-                chance[i].show =false;
+           var intent = res.json().result.list;
+           for (var i in intent){
+                intent[i].checked = false;
+                intent[i].show =false;
            }
-            dispatch(types.CHANCE_LIST_DATA, chance);
+            dispatch(types.INTENTION_LIST_DATA, intent);
             param.all = res.json().result.pages;
             param.loading = false;
     }, (res) => {
@@ -1655,6 +1654,57 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
         console.log('fail');
     })
 }
+
+export const editintentInfo = ({ dispatch }, param) => { //修改意向
+    console.log(param)
+    const data1 = {
+         "type":param.type,
+         "especial":param.especial,
+          "customerName":param.customerName,
+          "customerPhone":param.customerPhone,
+         "breedName":param.breedName,
+         "qualification":param.qualification,
+         "spec":param.spec,
+         "address":param.address,
+         "advance":param.advance,
+         "invoic":param.invoic,
+         'visit':param.visit,
+         "id":param.id,
+         "intl":param.intl,
+         "unit":param.unit,
+         "pack":param.pack,
+         "sampling":param.sampling,
+         "sampleNumber":param.sampleNumber,
+         "sampleUnit":param.sampleUnit,
+         "sampleAmount":param.sampleAmount,
+         "breedId":param.breedId,
+         "country":param.country,
+         "quality":param.quality,
+         "price":param.price,
+         "province":param.province,
+         "city":param.city,
+         "district":param.district,
+         "location":param.location,
+         "number":param.number
+    }
+    Vue.http({
+        method: "PUT",
+        url: apiUrl.clientList + '/intention/',
+        emulateHTTP: false,
+        body: data1,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.UPDATA_INTENTION_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 export const createIntention = ({ dispatch }, param) => { //新增意向以及划转
     console.log(param)
     const data1 = {
@@ -1702,4 +1752,3 @@ export const createIntention = ({ dispatch }, param) => { //新增意向以及�
         console.log('fail');
     })
 }
-createIntention

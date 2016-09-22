@@ -19,8 +19,11 @@
                                     <input type="text" id="username" class="form-control" v-model="customerData.name" v-validate:username="['required']"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>类型</label>
-                                    <input type="text" id="usertype" class="form-control" v-model="customerData.type" v-validate:usertype="['required']" />
+                                   <label class="editlabel">类型</label>
+                                    <select class="form-control edit-input"  v-model='param.type'>
+                                         <option value="0">个人</option>
+                                         <option value="1">企业</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="clearfix">
@@ -67,6 +70,14 @@
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>经营范围</label>
                                     <input type="text" class="form-control" v-model="customerData.bizScope" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>分类</label>
+                                    <select class="form-control edit-input"  v-model='param.classify'>
+                                         <option value="0">买</option>
+                                         <option value="1">卖</option>
+                                         <option value="2">买卖</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>  

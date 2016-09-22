@@ -1,52 +1,53 @@
 import {
-   ORDER_TABLE,
-   CHANGE_SHOW_STATUE,
-   SYSTEM_DATA,
-   PROVINCE_DATA,
-   SERVICE_ENTERPRISE,
-   SERVICE_COMPONENT,
-   SERVICE_DRAW,
-   DELETE_SHOW_STATUE,
-   ADD_DATA,
-   UPDATE_DATA,
-   UPDATE_ENTER_DATA,
-   BREED_DATA,
-   ADD_BREED_DATA,
-   DELETE_BREED_DATA,
-   DELETE_SPECS_DATA,
-   CATEGORY_DATA,
-   UPDATE_BREED_DATA,
-   ADDSPEC_DATA,
-   BREED_DETAIL_DATA,
-   SERVICE_ENTERPRISE_DETAIL,
-   ADD_CONTACT_DATA,
-   UPDATE_SPEC_DATA,
-   DELETE_CONTACT_DATA,
-   UPDATE_CONTACT_DATA,
-   DRUG_DETAIL_DATA,
-   CUSTOMER_DATA,
-   CUSTOMER_ADD_DATA,
-   CUSTOMER_DETAIL_DATA,
-   UPDATE_CUSTOMER_DETAIL,
-   CUSTOMER_UPDATE_DATA,
-   UPDATE_ADDR_DETAIL,
-   ADD_ADDR_DETAIL,
-   LABEL_DATA,
-   CUSTOMER_CONTACT_DATA,
-   ADD_LABEL_DATA,
-   UPDATE_LABEL_DETAIL,
-   ADD_PRODUCT_DATA,
-   UPDATE_PRODUCT_DATA,
-   EMPLOYEE_DATA,
-   CHANCE_LIST_DATA,
-   USER_DATA,
-   UPDATE_USER_DATA,
-   ORG_DATA,
-   FILE_DATA,
-   USER_DETAIL_DATA,
-   ADD_EMPLOYEE_DATA,
-   UPDATE_EMPLOY_DATA,
-   INTENTION_DATA
+    ORDER_TABLE,
+    CHANGE_SHOW_STATUE,
+    SYSTEM_DATA,
+    PROVINCE_DATA,
+    SERVICE_ENTERPRISE,
+    SERVICE_COMPONENT,
+    SERVICE_DRAW,
+    DELETE_SHOW_STATUE,
+    ADD_DATA,
+    UPDATE_DATA,
+    UPDATE_ENTER_DATA,
+    BREED_DATA,
+    ADD_BREED_DATA,
+    DELETE_BREED_DATA,
+    DELETE_SPECS_DATA,
+    CATEGORY_DATA,
+    UPDATE_BREED_DATA,
+    ADDSPEC_DATA,
+    BREED_DETAIL_DATA,
+    SERVICE_ENTERPRISE_DETAIL,
+    ADD_CONTACT_DATA,
+    UPDATE_SPEC_DATA,
+    DELETE_CONTACT_DATA,
+    UPDATE_CONTACT_DATA,
+    DRUG_DETAIL_DATA,
+    CUSTOMER_DATA,
+    CUSTOMER_ADD_DATA,
+    CUSTOMER_DETAIL_DATA,
+    UPDATE_CUSTOMER_DETAIL,
+    CUSTOMER_UPDATE_DATA,
+    UPDATE_ADDR_DETAIL,
+    ADD_ADDR_DETAIL,
+    LABEL_DATA,
+    CUSTOMER_CONTACT_DATA,
+    ADD_LABEL_DATA,
+    UPDATE_LABEL_DETAIL,
+    ADD_PRODUCT_DATA,
+    UPDATE_PRODUCT_DATA,
+    EMPLOYEE_DATA,
+    INTENTION_LIST_DATA,
+    USER_DATA,
+    UPDATE_USER_DATA,
+    ORG_DATA,
+    FILE_DATA,
+    USER_DETAIL_DATA,
+    ADD_EMPLOYEE_DATA,
+    UPDATE_EMPLOY_DATA,
+    INTENTION_DATA,
+    UPDATA_INTENTION_DATA
 } from '../mutation-types'
 
 const state = {
@@ -101,24 +102,33 @@ const state = {
             { "id": 1, "type": 0, "name": "ddf", "category": "14frff555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false },
             { "id": 2, "type": 1, "name": "ggg", "category": "gvgg", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false }
         ],
-        chanceList: [
-            { "id": "14732390725891000", "userId": "b11741af0efc49ed815545c0d88ddc98", "type": 1, "especial": 1, "breedId": 1085, "breedName": "天仙子", "qualification": "", "quality": "工城 霜天地", "location": "东北", "spec": "统", "number": 213, "price": 12, "unit": "公斤", "address": "北京市,北京市,东城区 The", "duedate": "2016-09-14 00:00", "advance": 1, "invoic": 1, "visit": 0, "pack": "瓦楞纸箱", "intl": 0, "sampling": 1, "sampleNumber": 1, "sampleUnit": "公斤", "sampleAmount": 100, "show": true }
+        intentionList: [
+            { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
         ],
-        employeeList:[{"id":6,"name":"lm","no":"001","orgName":"冕冠电子商务有限公司","orgId":1,"orgCode":"1","level":"1",
-                       "entryDate":null,"leaveDate":null,"mobile":null,"extNo":"123456","qq":"38917306","wechat":"38917306@qq.com",
-                       "email":"38917306@qq.com","position":"软件工程师","isManager":1,"status":1,"ename":"john","role":"管理员","show":true}
-                       ],
-        orgList:[{"id":1,"name":"冕冠电子商务有限公司","level":null,"pid":0,"status":1,"utime":null,"ctime":null,"creater":null,"updater":null,"code":"0001","show":true}],           
+        employeeList: [{
+            "id": 6,
+            "name": "lm",
+            "no": "001",
+            "orgName": "冕冠电子商务有限公司",
+            "orgId": 1,
+            "orgCode": "1",
+            "level": "1",
+            "extNo": "123456",
+            "qq": "38917306",
+            "wechat": "38917306@qq.com",
+            "email": "38917306@qq.com",
+            "position": "软件工程师",
+            "isManager": 1,
+            "status": 1,
+            "ename": "john",
+            "role": "管理员",
+            "show": true
+        }],
+        orgList: [{ "id": 1, "name": "冕冠电子商务有限公司", "level": null, "pid": 0, "status": 1, "utime": null, "ctime": null, "creater": null, "updater": null, "code": "0001", "show": true }],
         userList: [{
-            "id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"name": null,"password": "56bf5523459ce2dfc6720798d852d6e6","gender": null,
-            "nickname": "卖蘑菇的小姑凉","fullname": "沈威峰","idnumber": null,"signature": null,"phone": "13851379713",
-            "email": "857714234@qq.com","qq": "857714234","tel": null,
-            "openId": null,"avatar": null,"url": null,"signin": null,
-            "company": "个体种植户","address": null,"employee": null, "employeeId": null,"score": 300,
-            "utype": 0,"ctype": 0,"addrShip": null,"addrReceive": null,
-            "busiType": null, "province": null,
-            "city": null, "source": 1,"lastLoginIp": null, "lastLoginTime": "2016-06-02 11:44","status": 0,
-            "updater": null, "utime": null,"creater": null,"ctime": null, "startCtime": null,"endCtime": null,"userIds": null, "customerId": null,"main": null,"show": true
+            "id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"password": "56bf5523459ce2dfc6720798d852d6e6",
+            "nickname": "卖蘑菇的小姑凉", "fullname": "沈威峰","phone": "13851379713","email": "857714234@qq.com","qq": "857714234",
+            "company": "个体种植户","score": 300,"source": 1,"status": 0,"userIds": null,"customerId": null,"main": null,"show": true
         }]
     },
     breedDetail: {
@@ -164,12 +174,13 @@ const state = {
         "province": "安徽省",
         "city": "芜湖市",
         "address": "安徽省芜湖市芜湖县陶辛镇保沙三官村(芜湖凯鑫新型材料有限公司内)",
-        "utime": "2016-08-26 18:43",
-        "ctime": "2016-08-26 18:43",
-        "companyLicenses": null,
+        "companyLicenses": {
+            arr: [],
+            show: true
+        },
         "companyProducts": {
-            arr:[],
-            show:true
+            arr: [],
+            show: true
         },
         "companyContacts": {
             arr: [
@@ -232,14 +243,13 @@ const state = {
             show: false
         }
     },
-    userDetail: {"id":"00012792255a4e22bf1b70eb6eb89b33","type":0,"name":null,"password":"45ed3749b1633c0ee7c64b99cba11eba",
-    "gender":null,"nickname":null,"fullname":"测试","idnumber":null,"signature":null,"phone":"15301546841","email":null,
-    "qq":null,"tel":null,"openId":null,"avatar":null,"url":null,"signin":null,"company":"上海大汉三通通信股份有限公司",
-    "address":null,"employee":"wei","orgId":null,"employeeId":null,"score":300,"utype":1,"ctype":0,"addrShip":null,
-    "addrReceive":null,"busiType":null,"province":null,"city":null,"source":1,"lastLoginIp":null,"lastLoginTime":null,
-    "status":null,"updater":null,"utime":null,"creater":null,"ctime":null,"startCtime":null,"endCtime":null,"userIds":null,
-    "customerId":null,"main":null,"audit":0,"bizMain":null,"userType":0,"auditResult":null,"sourceType":null
-  },
+    userDetail: {
+        "id": "00012792255a4e22bf1b70eb6eb89b33","type": 0,"name": null,"password": "45ed3749b1633c0ee7c64b99cba11eba",
+        "gender": null,"nickname": null,"fullname": "测试","idnumber": null,"signature": null,
+        "phone": "15301546841","email": null,"qq": null,"tel": null,"openId": null,"avatar": null,"url": null,"signin": null,"company": "上海大汉三通通信股份有限公司",
+        "address": null,"employee": "wei","orgId": null,"employeeId": null,"score": 300,"utype": 1,"ctype": 0,"addrShip": null,"addrReceive": null,"busiType": null,
+        "province": null, "city": null, "source": 1,"status": null,"customerId": null,"main": null,"sourceType": null
+    },
 }
 
 const mutations = {
@@ -265,12 +275,9 @@ const mutations = {
         });
     },
     [UPDATE_DATA](state, data) { //枚举修改
-        state.systemBaseList.enumlist[data.sub].id = data.id;
-        state.systemBaseList.enumlist[data.sub].name = data.name;
-        state.systemBaseList.enumlist[data.sub].code = data.code;
-        state.systemBaseList.enumlist[data.sub].type = data.type;
-        state.systemBaseList.enumlist[data.sub].desc = data.desc;
-        state.systemBaseList.enumlist[data.sub].status = data.status;
+        for (var key in data) {
+            state.systemBaseList.enumlist[data.sub][key] = data[key];
+        }
     },
     [SERVICE_COMPONENT](state, data) { //成分
         state.basicBaseList.componentList = data;
@@ -312,15 +319,14 @@ const mutations = {
         })
     },
     [UPDATE_CONTACT_DATA](state, data) { //修改企业相关内容
-        state.companyDetail[data.key].arr[data.sub].cid = data.cid;
-        state.companyDetail[data.key].arr[data.sub].name = data.name;
-        state.companyDetail[data.key].arr[data.sub].phone = data.phone;
-        state.companyDetail[data.key].arr[data.sub].email = data.email;
-        state.companyDetail[data.key].arr[data.sub].wechart = data.wechart;
+        for (var key in data) {
+            state.companyDetail[data.key].arr[data.sub][key] = data[key];
+        }
+        console.log(state.companyDetail[data.key].arr[data.sub])
     },
 
     [DELETE_BREED_DATA](state, data) { //删除客户信息
-        state.basicBaseList[data.key].splice(data.sub,1);
+        state.basicBaseList[data.key].splice(data.sub, 1);
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
         state[data.headline][data.key].arr.splice(data.sub, 1);
@@ -334,17 +340,16 @@ const mutations = {
     },
 
     [UPDATE_BREED_DATA](state, data) { //修改药材
-        state.basicBaseList.breedList[data.sub].code = data.code;
-        state.basicBaseList.breedList[data.sub].categoryId = data.categoryId;
-        state.basicBaseList.breedList[data.sub].name = data.name;
-        state.basicBaseList.breedList[data.sub].id = data.id;
+        for (var key in data) {
+            state.basicBaseList.breedList[data.sub][key] = data[key];
+        }
+        console.log(state.basicBaseList.breedList[data.sub])
     },
 
     [UPDATE_SPEC_DATA](state, data) { //修改药材相关信息
-        state.breedDetail[data.key].arr[data.sub].breedId = data.breedId;
-        state.breedDetail[data.key].arr[data.sub].name = data.name;
-        state.breedDetail[data.key].arr[data.sub].alias = data.name;
-        state.breedDetail[data.key].arr[data.sub].id = data.id;
+        for (var key in data) {
+            state.breedDetail[data.key].arr[data.sub][key] = data[key];
+        }
     },
 
     [ADDSPEC_DATA](state, data) { // 添加药材相关信息
@@ -387,66 +392,30 @@ const mutations = {
         })
     },
     [CUSTOMER_UPDATE_DATA](state, data) { //修改客户列表信息
-        state.basicBaseList[data.key][data.sub].category = data.category;
-        state.basicBaseList[data.key][data.sub].name = data.name;
-        state.basicBaseList[data.key][data.sub].type = data.type;
-        state.basicBaseList[data.key][data.sub].principal = data.principal;
-        state.basicBaseList[data.key][data.sub].bizScope = data.bizScope;
-        state.basicBaseList[data.key][data.sub].id = data.id;
-        state.basicBaseList[data.key][data.sub].tel = data.tel;
-        state.basicBaseList[data.key][data.sub].email = data.email;
-        state.basicBaseList[data.key][data.sub].province = data.province;
-        state.basicBaseList[data.key][data.sub].address = data.address;
-        state.basicBaseList[data.key][data.sub].city = data.city;
-        state.basicBaseList[data.key][data.sub].comments = data.comments;
+        for (var key in data) {
+            state.basicBaseList[data.key][data.sub][key] = data[key];
+        }
     },
     [UPDATE_CUSTOMER_DETAIL](state, data) { //修改客户相关
-        state[data.headline][data.key].arr[data.sub].name = data.name;
-        state[data.headline][data.key].arr[data.sub].position = data.position;
-        state[data.headline][data.key].arr[data.sub].department = data.department;
-        state[data.headline][data.key].arr[data.sub].phone = data.phone;
-        state[data.headline][data.key].arr[data.sub].tel = data.tel;
-        state[data.headline][data.key].arr[data.sub].email = data.email;
-        state[data.headline][data.key].arr[data.sub].qq = data.qq;
-        state[data.headline][data.key].arr[data.sub].wechart = data.wechart;
-        state[data.headline][data.key].arr[data.sub].main = data.main;
+        for (var key in data) {
+            state[data.headline][data.key].arr[data.sub][key] = data[key];
+        }
     },
     [UPDATE_ADDR_DETAIL](state, data) { //修改客户地址
-        state[data.headline][data.key].arr[data.sub].id = data.id;
-        state[data.headline][data.key].arr[data.sub].customerId = data.customerId;
-        state[data.headline][data.key].arr[data.sub].type = data.type;
-        state[data.headline][data.key].arr[data.sub].contactName = data.contactName;
-        state[data.headline][data.key].arr[data.sub].contactPhone = data.contactPhone;
-        state[data.headline][data.key].arr[data.sub].sex = data.sex;
-        state[data.headline][data.key].arr[data.sub].address = data.address;
-        state[data.headline][data.key].arr[data.sub].country = data.country;
-        state[data.headline][data.key].arr[data.sub].province = data.province;
-        state[data.headline][data.key].arr[data.sub].city = data.city;
-        state[data.headline][data.key].arr[data.sub].detailAddr = data.detailAddr;
-        state[data.headline][data.key].arr[data.sub].district = data.district;
-        state[data.headline][data.key].arr[data.sub].street = data.street;
+        for (var key in data) {
+            state[data.headline][data.key].arr[data.sub][key] = data[key];
+        }
     },
     [UPDATE_LABEL_DETAIL](state, data) { //修改客户标签
-        state[data.headline][data.key].arr[data.sub].id = data.id;
-        state[data.headline][data.key].arr[data.sub].customerId = data.customerId;
-        state[data.headline][data.key].arr[data.sub].label = data.label;
+        for (var key in data) {
+            state[data.headline][data.key].arr[data.sub][key] = data[key];
+        }
         state[data.headline][data.key].arr[data.sub].remark = data.label;
-        state[data.headline][data.key].arr[data.sub].status = data.status;
     },
     [UPDATE_PRODUCT_DATA](state, data) { //修改客户产品
-        state[data.headline][data.key].arr[data.sub].id = data.id;
-        state[data.headline][data.key].arr[data.sub].cid = data.cid;
-        state[data.headline][data.key].arr[data.sub].type = data.type;
-        state[data.headline][data.key].arr[data.sub].name = data.name;
-        state[data.headline][data.key].arr[data.sub].breedId = data.breedId;
-        state[data.headline][data.key].arr[data.sub].quality = data.quality;
-        state[data.headline][data.key].arr[data.sub].location = data.location;
-        state[data.headline][data.key].arr[data.sub].spec = data.spec;
-        state[data.headline][data.key].arr[data.sub].number = data.number;
-        state[data.headline][data.key].arr[data.sub].price = data.price;
-        state[data.headline][data.key].arr[data.sub].unit = data.unit;
-        state[data.headline][data.key].arr[data.sub].duedate = data.duedate;
-        state[data.headline][data.key].arr[data.sub].coa = data.coa;
+        for (var key in data) {
+            state[data.headline][data.key].arr[data.sub][key] = data[key];
+        }
     },
     [CUSTOMER_CONTACT_DATA](state, data) { // 新增客户联系人信息
         state.clientDetail[data.key].arr.unshift({
@@ -515,124 +484,131 @@ const mutations = {
             "path": data.path,
             "customerId": data.customerId,
             "show": false,
-            "id":data.id
+            "id": data.id
         })
     },
     [EMPLOYEE_DATA](state, data) { //员工业务员列表
         state.basicBaseList.employeeList = data;
     },
-    [CHANCE_LIST_DATA](state, data) { //业务机会列表
-        state.basicBaseList.chanceList = data;
+    [INTENTION_LIST_DATA](state, data) { //意向列表
+        state.basicBaseList.intentionList = data;
     },
     [USER_DATA](state, data) { // 会员列表
         state.basicBaseList.userList = data;
     },
 
-    [UPDATE_USER_DATA](state,data){  // 会员更新
-      
-        if(data.index!=undefined){    //列表页面修改
-          if(data){
-            for(var key in data){
-              state.basicBaseList.userList[data.index][key]=data[key];
+    [UPDATE_USER_DATA](state, data) { // 会员更新
+
+        if (data.index != undefined) { //列表页面修改
+            if (data) {
+                for (var key in data) {
+                    state.basicBaseList.userList[data.index][key] = data[key];
+                }
             }
-          }
-          console.log(state.basicBaseList.userList[data.index]);
-          /*state.basicBaseList.userList[data.index].fullname=data.fullname;
+            console.log(state.basicBaseList.userList[data.index]);
+            /*state.basicBaseList.userList[data.index].fullname=data.fullname;
           state.basicBaseList.userList[data.index].qq=data.qq;
           state.basicBaseList.userList[data.index].email=data.email;
           state.basicBaseList.userList[data.index].company=data.company;
           state.basicBaseList.userList[data.index].nickname=data.nickname;
-          state.basicBaseList.userList[data.index].phone=data.phone;
-*/
-        }else{   //详情页面修改
-              //列表页面修改
-          if(data){
-            for(var key in data){
-              state.userDetail[key]=data[key];
+          state.basicBaseList.userList[data.index].phone=data.phone;*/
+        } else { //详情页面修改
+            if (data) {
+                for (var key in data) {
+                    state.userDetail[key] = data[key];
+                }
             }
-          }
-          /*state.userDetail.fullname=data.fullname;
-          state.userDetail.qq=data.qq;
-          state.userDetail.email=data.email;
-          state.userDetail.company=data.company;
-          state.userDetail.nickname=data.nickname;
-          state.userDetail.phone=data.phone;  */
+            /*state.userDetail.fullname=data.fullname;
+            state.userDetail.qq=data.qq;
+            state.userDetail.email=data.email;
+            state.userDetail.company=data.company;
+            state.userDetail.nickname=data.nickname;
+            state.userDetail.phone=data.phone;  */
         }
-        
+
     },
 
-    [USER_DETAIL_DATA](state,data){  // 会员详情 
-      state.userDetail = data;
+    [USER_DETAIL_DATA](state, data) { // 会员详情 
+        state.userDetail = data;
     },
-    [ORG_DATA](state,data){  // 部门列表
+    [ORG_DATA](state, data) { // 部门列表
         state.basicBaseList.orgList = data;
     },
-    [ADD_EMPLOYEE_DATA](state,data){  //新增员工信息
-       state.basicBaseList[data.key].push({
+    [ADD_EMPLOYEE_DATA](state, data) { //新增员工信息
+        state.basicBaseList[data.key].push({
             "name": data.name,
             "ename": data.ename,
             "show": false,
             "no": data.no,
             "orgName": data.orgName,
-            "position":data.position,
-            "mobile":data.mobile,
-            "extNo":data.extNo,
-            "level":data.level,
-            "entryDate":data.entryDate,
-            "leaveDate":data.leaveDate,
-            "orgId":data.orgId,
-            "orgCode":data.orgCode,
-            "status":data.status,
-            "role":param.role
+            "position": data.position,
+            "mobile": data.mobile,
+            "extNo": data.extNo,
+            "level": data.level,
+            "entryDate": data.entryDate,
+            "leaveDate": data.leaveDate,
+            "orgId": data.orgId,
+            "orgCode": data.orgCode,
+            "status": data.status,
+            "role": param.role
         })
     },
-    [UPDATE_EMPLOY_DATA](state,data){ //修改员工信息
-        state.basicBaseList[data.key][data.sub].name = data.name;
-        state.basicBaseList[data.key][data.sub].ename = data.ename;
-        state.basicBaseList[data.key][data.sub].no = data.no;
-        state.basicBaseList[data.key][data.sub].orgId = data.orgId;
-        state.basicBaseList[data.key][data.sub].orgCode = data.orgCode;
-        state.basicBaseList[data.key][data.sub].status = data.status;
-        state.basicBaseList[data.key][data.sub].orgName = data.orgName;
-        state.basicBaseList[data.key][data.sub].position = data.position;
-        state.basicBaseList[data.key][data.sub].mobile = data.mobile;
-        state.basicBaseList[data.key][data.sub].extNo = data.extNo;
-        state.basicBaseList[data.key][data.sub].level = data.level;
-        state.basicBaseList[data.key][data.sub].entryDate = data.entryDate;
-        state.basicBaseList[data.key][data.sub].leaveDate = data.leaveDate;
-        state.basicBaseList[data.key][data.sub].role = data.role;
+    [UPDATE_EMPLOY_DATA](state, data) { //修改员工信息
+        for (var key in data) {
+            state.basicBaseList[data.key][data.sub][key] = data[key];
+        }
+        /* state.basicBaseList[data.key][data.sub].name = data.name;
+         state.basicBaseList[data.key][data.sub].ename = data.ename;
+         state.basicBaseList[data.key][data.sub].no = data.no;
+         state.basicBaseList[data.key][data.sub].orgId = data.orgId;
+         state.basicBaseList[data.key][data.sub].orgCode = data.orgCode;
+         state.basicBaseList[data.key][data.sub].status = data.status;
+         state.basicBaseList[data.key][data.sub].orgName = data.orgName;
+         state.basicBaseList[data.key][data.sub].position = data.position;
+         state.basicBaseList[data.key][data.sub].mobile = data.mobile;
+         state.basicBaseList[data.key][data.sub].extNo = data.extNo;
+         state.basicBaseList[data.key][data.sub].level = data.level;
+         state.basicBaseList[data.key][data.sub].entryDate = data.entryDate;
+         state.basicBaseList[data.key][data.sub].leaveDate = data.leaveDate;
+         state.basicBaseList[data.key][data.sub].role = data.role;*/
     },
-    [INTENTION_DATA](state,data){  //机会划转意向，新增意向
-        state.basicBaseList.chanceList.unshift({
-            "type":data.type,
-             "especial":data.especial,
-             "breedName":data.breedName,
-             "qualification":data.qualification,
-             "spec":data.spec,
-             "address":data.address,
-             "advance":data.advance,
-             "invoic":data.invoic,
-             'visit':data.visit,
-             "id":data.id,
-             "intl":data.intl,
-             "unit":data.unit,
-             "pack":data.pack,
-             "sampling":data.sampling,
-             "sampleNumber":data.sampleNumber,
-             "sampleUnit":data.sampleUnit,
-             "sampleAmount":data.sampleAmount,
-             "breedId":data.breedId,
-             "country":data.country,
-             "quality":data.quality,
-             "price":data.price,
-             "province":data.province,
-             "city":data.city,
-             "district":data.district,
-             "location":data.location,
-             "number":data.number
+    [UPDATA_INTENTION_DATA](state,data){ //修改意向
+        for (var key in data) {
+            state.basicBaseList[data.key][data.sub][key] = data[key];
+            console.log(state.basicBaseList[data.key][data.sub])
+        }
+    },
+    [INTENTION_DATA](state, data) { //机会划转意向，新增意向
+        state.basicBaseList.intentionList.unshift({
+            "type": data.type,
+            "especial": data.especial,
+            "breedName": data.breedName,
+            "qualification": data.qualification,
+            "spec": data.spec,
+            "address": data.address,
+            "advance": data.advance,
+            "invoic": data.invoic,
+            'visit': data.visit,
+            "id": data.id,
+            "intl": data.intl,
+            "unit": data.unit,
+            "pack": data.pack,
+            "sampling": data.sampling,
+            "sampleNumber": data.sampleNumber,
+            "sampleUnit": data.sampleUnit,
+            "sampleAmount": data.sampleAmount,
+            "breedId": data.breedId,
+            "country": data.country,
+            "quality": data.quality,
+            "price": data.price,
+            "province": data.province,
+            "city": data.city,
+            "district": data.district,
+            "location": data.location,
+            "number": data.number
         })
     }
-    
+
 }
 
 export default {
