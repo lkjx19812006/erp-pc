@@ -69,7 +69,15 @@
                 </thead> 
                 <tbody>
                   <tr v-for="item in initEmployeeList">  
-                    <td>{{item.name}}</td>
+                    <td class="underline"  @click="clickOn({
+                                id:item.id,
+                                sub:$index,
+                                show:true,
+                                name:item.name,
+                                link:alterInfo,
+                                url:'/employee/',
+                                key:'employeeList'
+                                })">{{item.name}}</td>
                     <td>{{item.ename}}</td>
                     <td>{{item.no}}</td>
                     <td>{{item.orgName}}</td>
@@ -162,6 +170,9 @@ export default {
             },
             createParam:{
                 show:false
+            },
+            changeParam:{
+                show:false
             }
         }
     },
@@ -179,7 +190,11 @@ export default {
         },
         modify:function(initEmployeeList){
             this.createParam=initEmployeeList;
-        }
+        },
+        clickOn: function(initEmployeeList) {
+            this.changeParam = initEmployeeList;
+            this.getEmployeeList(this.changeParam);
+        },
     },
     vuex: {
         getters: {

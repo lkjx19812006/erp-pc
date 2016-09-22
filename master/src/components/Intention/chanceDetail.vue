@@ -317,7 +317,7 @@
 </template>
 <script>
 import filter from '../../filters/filters'
-import transferintentModel from '../Servicechance/transferIntent'
+import transferintentModel from '../Intention/transferIntent'
 export default {
     components: {
         filter,

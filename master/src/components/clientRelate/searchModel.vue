@@ -1,4 +1,5 @@
 <template>
+    <searchemp-model :param="empNameParam" v-if="empNameParam.show"></searchemp-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -17,35 +18,32 @@
                         <label>姓名：</label>
                         <input type="text"  class="form-control" v-model="loadParam.name"  placeholder="按客户姓名搜索"/>
                     </div>
-                    <div class="client-detailInfo  col-xs-12">
-                        <label>状态：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.status"  placeholder="按客户状态搜索"/>
-                    </div>
                     <div class="client-detailInfo col-xs-12">
                         <label>电话：</label>
                         <input type="text"  class="form-control" v-model="loadParam.tel"  placeholder="按客户电话搜索"/>
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>业务员ID：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.employeeId"  placeholder="按业务员ID搜索" disabled="disabled" />
-                        <div class="empSearch"><img src="/static/images/search.png" height="24" width="24"></div>
+                        <input type="text"  class="form-control" v-model="loadParam.employeeId"  placeholder="按业务员ID搜索" disabled="disabled" @click="employee(loadParam.employeeId)"/>
+                        <div class="empSearch" @click="employee(loadParam.employeeId)"><img src="/static/images/search.png" height="24" width="24"></div>
                     </div>
                 </div>      
             </section>
         </div>
         <div class="edit_footer">
              <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <input type="button" class="btn  btn-confirm"  @click="clientSearch(loadParam.name,loadParam.employeeId,loadParam.tel,loadParam.status,param.show = false)" value="确定">
+            <input type="button" class="btn  btn-confirm"  @click="clientSearch(loadParam.name,loadParam.employeeId,loadParam.tel,param.show = false)" value="确定">
         </div>
     </div>
 </template>
 <script>
+import searchempModel from '../../components/clientRelate/searchEmpInfo'
 import {
     getClientList
 } from '../../vuex/actions'
 export default {
     components: {
-
+        searchempModel
     },
     props: ['param'],
     data() {
@@ -58,8 +56,11 @@ export default {
                 all: 7,
                 name:'',
                 tel:'',
-                employeeId:'',
-                status:''
+                employeeId:''
+            },
+            empNameParam:{
+                show:false,
+                employeeId:''
             }
         }
     },
@@ -68,9 +69,18 @@ export default {
             getClientList
         }
     },
+    events:{
+        a:function(qq){
+            this.loadParam.employeeId = qq.employeeId;
+        }
+    },
     methods:{
-        clientSearch:function(name,tel,employeeId,status){
+        clientSearch:function(name,tel,employeeId){
              this.getClientList(this.loadParam);
+        },
+        employee:function(employeeId){
+            this.empNameParam.show=true;
+            this.loadParam.employeeId = this.empNameParam.employeeId;
         }
     },
     route: {

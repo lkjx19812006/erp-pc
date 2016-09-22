@@ -96,8 +96,9 @@ export const initEmployeeList = (state) => {
 export const initOrgList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.orgList));  
 }
-export const initChanceList = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.chanceList));  
+/*--意向信息--*/
+export const initIntentionList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionList));  
 }
 
 /*---会员信息---*/
@@ -107,8 +108,6 @@ export const initUserList = (state) => {
 
 /*---会员详情---*/
 export const initUserDetail = (state) => {
-    
-
     return parseJson(state.table.userDetail);
 }
  

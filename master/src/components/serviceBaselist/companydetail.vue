@@ -76,7 +76,7 @@
                             </div>
                         </div>
                     </div>
-                     <div class="panel panel-default">
+                    <div class="panel panel-default">
                         <div class="panel-heading clearfix" @click="companytoggle({
                                 link:initCompanyDetail.companyProducts,
                                 crete:'companyProducts'
@@ -93,123 +93,70 @@
                                 <table class="table contactSet">
                                     <thead>
                                         <tr>
+                                            <th>企业名称</th>
+                                            <th>类型</th>
                                             <th>名称</th>
-                                            <th>手机</th>
-                                            <th>电话</th>
-                                            <th>邮箱</th>
-                                            <th>微信</th>
-                                            <th></th>
+                                            <th>状态</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="item in initCompanyDetail.companyProducts.arr">
+                                            <td>{{item.companyName}}</td>
+                                            <td>{{item.type}}</td>
                                             <td>{{item.name}}</td>
-                                            <td>{{item.phone}}</td>
-                                            <td>{{item.tel}}</td>
-                                            <td>{{item.email}}</td>
-                                            <td>{{item.wechart}}</td>
-                                           <!--  <td @click="contactShow($index)">
-                                               <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                               <div class="breed_action" v-show="item.show" transition="expand">
-                                                  <dl>
-                                                      <dt @click="updateCompany({
-                                                              sub:$index,
-                                                              id:item.id,
-                                                              show:true,
-                                                              cid:item.cid,
-                                                              title:'联系人',
-                                                              namelist:'联系人名称',
-                                                              phonelist:'手机号',
-                                                              emaillist:'邮箱',
-                                                              tellist:'电话',
-                                                              weblist:'微信',
-                                                              name:item.name,
-                                                              phone:item.phone,
-                                                              tel:item.tel,
-                                                              email:item.email,
-                                                              wechart:item.wechart,
-                                                              link:alterCompany,
-                                                              url:'contract',
-                                                              key:'companyProducts'
-                                                              },item.show=false)">编辑</dt>
-                                                     <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt>
-                                                  </dl>
-                                              </div>
-                                           </td> -->
+                                            <td>{{item.status}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <!--  <div class="panel panel-default">
+                    <div class="panel panel-default">
                        <div class="panel-heading clearfix" @click="companytoggle({
                                link:initCompanyDetail.companyLicenses,
                                crete:'companyLicenses'
                                })">
-                           <h4 class="panel-title clearfix">
-                           <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
-                           <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
-                               证书({{initCompanyDetail.companyLicenses.arr.length}})
-                           </a>
-                           <button type="button" class="btn btn-base pull-right" @click.stop="createContact(param.id)">新建</button>
-                       </h4>
+                             <h4 class="panel-title clearfix">
+                                 <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
+                                 <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
+                                     证书({{initCompanyDetail.companyLicenses.arr.length}})
+                                 </a>
+                                
+                             </h4>
                        </div>
                        <div class="panel-collapse"  v-show="!initCompanyDetail.companyLicenses.show">
                            <div class="panel-body panel-set">
                                <table class="table contactSet">
                                    <thead>
                                        <tr>
-                                           <th>名称</th>
-                                           <th>手机</th>
-                                           <th>电话</th>
-                                           <th>邮箱</th>
-                                           <th>微信</th>
-                                           <th></th>
+                                           <th>证书类型</th>
+                                           <th>产品名称</th>
+                                           <th>资质名称</th>
+                                           <th>发证机构</th>
+                                           <th>证书编号</th>
+                                           <th>发证日期</th>
+                                           <th>过期日期</th>
+                                           <th>状态</th>
                                        </tr>
                                    </thead>
                                    <tbody>
                                        <tr v-for="item in initCompanyDetail.companyLicenses.arr">
+                                           <td>{{item.type}}</td>
+                                           <td>{{item.productName}}</td>
                                            <td>{{item.name}}</td>
-                                           <td>{{item.phone}}</td>
-                                           <td>{{item.tel}}</td>
-                                           <td>{{item.email}}</td>
-                                           <td>{{item.wechart}}</td>
-                                           <td @click="contactShow($index)">
-                                               <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                               <div class="breed_action" v-show="item.show" transition="expand">
-                                                  <dl>
-                                                      <dt @click="updateCompany({
-                                                              sub:$index,
-                                                              id:item.id,
-                                                              show:true,
-                                                              cid:item.cid,
-                                                              title:'联系人',
-                                                              namelist:'联系人名称',
-                                                              phonelist:'手机号',
-                                                              emaillist:'邮箱',
-                                                              tellist:'电话',
-                                                              weblist:'微信',
-                                                              name:item.name,
-                                                              phone:item.phone,
-                                                              tel:item.tel,
-                                                              email:item.email,
-                                                              wechart:item.wechart,
-                                                              link:alterCompany,
-                                                              url:'contract',
-                                                              key:'companyLicenses'
-                                                              },item.show=false)">编辑</dt>
-                                                     <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt>
-                                                  </dl>
-                                              </div>
-                                           </td>
+                                           <td>{{item.organization}}</td>
+                                           <td>{{item.number}}</td>
+                                           <td>{{item.release_date}}</td>
+                                           <td>{{item.due_date}}</td>
+                                           <td>{{item.status}}</td>
                                        </tr>
                                    </tbody>
                                </table>
                            </div>
-                       </div> -->
+                       </div>
                     </div>
                 </div>
+            </div>
             <div class="col-md-4" style="border-left:1px solid #ddd">
                 <h4 class="section_title">详情</h4>
                 <div class="edit-detail clearfix">
