@@ -17,11 +17,15 @@
                         </div>
                         <div class="editpage-input">
                             <label class="editlabel">类型</label>
-                            <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" />
+                            <select class="form-control edit-input"  v-model='param.type'>
+                                 <option value="0">个人</option>
+                                 <option value="1">企业</option>
+                            </select>
+                            <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
                         </div>
                         <div class="editpage-input">
                             <label class="editlabel">分类码</label>
-                             <input type="text" v-model='param.category' class="form-control edit-input" value="{{param.category}}" />
+                            <input type="text" v-model='param.category' class="form-control edit-input" value="{{param.category}}" /> 
                         </div>
                         <div class="editpage-input">
                             <label class="editlabel">所在省</label>
@@ -37,6 +41,14 @@
                         </div>
                     </div>
                     <div class="editpageright">
+                        <div class="editpage-input">
+                            <label class="editlabel">分类</label>
+                            <select class="form-control edit-input"  v-model='param.classify'>
+                                 <option value="0">买</option>
+                                 <option value="1">卖</option>
+                                 <option value="2">买卖</option>
+                            </select>
+                        </div>
                         <div class="editpage-input">
                             <label class="editlabel">负责人</label>
                             <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />

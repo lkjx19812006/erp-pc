@@ -10,13 +10,23 @@
         <validator name="validation">
                 <div class="edit-model">
                     <section class="editsection" v-cloak>
-                         <div class="clearfix">
+                        <div class="clearfix">
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">客户名称 <span class="system_danger" v-if="$validation.customer.required">请输入客户名称</span></label>
+                                 <input type="text" class="form-control edit-input"  id="customer" v-model="param.customerId" value="{{param.customerId}}" v-validate:customer="['required']" />
+                            </div>
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">类型</label>
                                 <select  class="form-control edit-input"  v-model="param.type">
                                         <option value="0">求购</option>
                                         <option value="1">供应</option>
                                 </select>
+                            </div>
+                        </div>
+                         <div class="clearfix">
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">品种名称  <span class="system_danger" v-if="$validation.name.required">请选择品种名称</span></label>
+                                <input type="text" class="form-control edit-input"  id="name" v-model="param.breedName" value="{{param.breedName}}" v-validate:name="['required']" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">是否特殊</label>
@@ -28,8 +38,8 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">品种名称  <span class="system_danger" v-if="$validation.name.required">请选择品种名称</span></label>
-                                <input type="text" class="form-control edit-input"  id="name" v-model="param.breedName" value="{{param.breedName}}" v-validate:name="['required']" />
+                                <label class="editlabel">产地</label>
+                                <input type="text" class="form-control edit-input"  v-model="param.location" value="{{param.location}}"  />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">资质证书</label>
@@ -108,8 +118,8 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">报价总数</label>
-                                <input type="text" class="form-control edit-input" v-model="param.offer" value="{{param.offer}}"  />
+                                <label class="editlabel">单价</label>
+                                <input type="text" class="form-control edit-input" v-model="param.price" value="{{param.price}}"  />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">状态</label>

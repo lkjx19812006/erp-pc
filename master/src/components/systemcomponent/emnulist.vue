@@ -7,7 +7,7 @@
             <div class="my_order col-xs-2">枚举类型</div>
             <div class="col-xs-8 my_order_search">
                 <div class="name_search">
-                    <select class="form-control" v-model="sel" @change="searchname(sel)">
+                    <select class="form-control" v-model="loadParam.sel" @change="searchname(loadParam.sel)">
                         <option selected value="">请选择种类名称搜索</option>
                         <option  value="TRACE">跟进类型</option>
                         <option  value="ST">规格类型</option>
@@ -117,7 +117,8 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 all:10,
-                cur:1
+                cur:1,
+                sel:''
             },
             dialogParam:{
                  show: false,
@@ -159,8 +160,8 @@ export default {
         this.getSystemData(this.loadParam,this.loadParam.all);
     },
     methods: {
-        searchname: function(sel) {
-            this.getSystemSearch(this.sel);   
+        searchname: function() {
+            this.getSystemSearch(this.loadParam);   
         },
         editData: function(id) {
             if(this.$store.state.table.systemBaseList.enumlist[id].show == true){

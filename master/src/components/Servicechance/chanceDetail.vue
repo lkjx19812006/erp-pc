@@ -1,4 +1,5 @@
 <template>
+    <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
     <div class="breed_detail">
         <div class="client-section clearfix" v-cloak>
             <div @click="param.show=false" class="top-title">
@@ -210,7 +211,14 @@
                  </div>
              </div>  -->
             <!-- <div class="col-md-4" style="border-left:1px solid #ddd"> -->
-                <h4 class="section_title">详情</h4>
+                <div  class="section_title clearfix">
+                    <span >详情</span>
+                    <button class="new_btn transfer" @click="clientTransfer({
+                      name:'意向',
+                      id:param.id,
+                      show:true
+                      })">划转为意向</button> 
+                </div>
                 <div class="edit-detail">
                     <div class="clearfix">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
@@ -294,8 +302,8 @@
                     </div>    
                     <div class="clearfix">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label>报价总数</label>
-                            <input type="text" class="form-control" value="{{param.offer}}" disabled="disabled"  />
+                            <label>单价</label>
+                            <input type="text" class="form-control" value="{{param.price}}" disabled="disabled"  />
                         </div>
                         <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                             <label>状态</label>
@@ -309,9 +317,11 @@
 </template>
 <script>
 import filter from '../../filters/filters'
+import transferintentModel from '../Servicechance/transferIntent'
 export default {
     components: {
-        filter
+        filter,
+        transferintentModel
     },
     data() {
         return {
@@ -328,39 +338,25 @@ export default {
             companylistParam:{
                 show:false,
                 id:''
+            },
+            intentionParam:{
+                show:false,
+                id:'',
+                name:'意向'
             }
         }
     },
     props:['param'],
     vuex: {
-        /*getters: {
-            initCompanyDetail
-        },
-        actions: {
-            alterCompany
-        }*/
+       
     },
     methods: {
-       /* companytoggle: function(param) {
-            if(this.$store.state.table.companyDetail[param.crete].arr.length==0){
-                this.$store.state.table.companyDetail[param.crete].show=false
-            }
-            this.$store.state.table.companyDetail[param.crete].show = !this.$store.state.table.companyDetail[param.crete].show;
-        },
-        contactShow:function(id){
-            if(this.$store.state.table.companyDetail.companyContacts.arr[id].show){
-                this.$store.state.table.companyDetail.companyContacts.arr[id].show=!this.$store.state.table.companyDetail.companyContacts.arr[id].show
-            }else{
-                this.$store.state.table.companyDetail.companyContacts.arr[id].show=true;
-            }
-        },
-        createContact:function(id){
-            this.contactParam.id=id;
-            this.contactParam.show=true;
-        },
-        updateCompany:function(initCompanyDetail){
-            this.companylistParam = initCompanyDetail;
-        }*/
+        clientTransfer:function(param){
+            this.intentionParam = param;
+            this.intentionParam.id=this.param.id;
+            this.intentionParam = this.param;
+            this.intentionParam.show=true;
+        }
     },
     filter: (filter, {})
 }

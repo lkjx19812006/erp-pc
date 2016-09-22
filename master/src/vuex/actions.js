@@ -82,9 +82,11 @@ export const getSystemData = ({ dispatch }, param) => { //枚举类型
     });
 }
 export const getSystemSearch = ({ dispatch }, param) => { //搜索枚举类型
+    console.log(param)
+    param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.clientList + '/sys/enum/query/?type=' + param,
+        url: apiUrl.clientList + '/sys/enum/query/?type=' + param.sel,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -96,8 +98,11 @@ export const getSystemSearch = ({ dispatch }, param) => { //搜索枚举类型
             obj1[i].delInfo = false;
         }
         dispatch(types.SYSTEM_DATA, obj1);
+        param.all = res.json().result.pages;
+        param.loading = false;
     }, (res) => {
         console.log('fail');
+        param.loading = false;
     });
 }
 export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
@@ -1321,11 +1326,49 @@ export const transferInfo = ({ dispatch }, param) => { //客户部门划转信�
     });
 }
 
-export const getChanceList = ({ dispatch }, param) => {  //业务机会信息列表
+export const getChanceList = ({ dispatch }, param) => {  //业务机会信息列表以及搜索
     param.loading = true;
+    var url = apiUrl.clientList+'/chance/?'+'&page=' + param.cur + '&pageSize=15';
+     for(var search in param){
+        if(search=='type'&&param[search]!==''){
+            url += '&type='+param.type
+        }else if(search=='type'){
+            url +='&type='
+        }
+        if(search=='invoic'&&param[search]!==''){
+            url += '&invoic='+param.invoic
+        }else if(search=='invoic'){
+            url +='&invoic='
+        }
+        if(search=='status'&&param[search]!==''){
+            url += '&status='+param.status
+        }else if(search=='status'){
+            url +='&status='
+        }
+        if(search=='intl'&&param[search]!==''){
+            url += '&intl='+param.intl
+        }else if(search=='intl'){
+            url +='&intl='
+        }
+        if(search=='sampling'&&param[search]!==''){
+            url += '&sampling='+param.sampling
+        }else if(search=='sampling'){
+            url +='&sampling='
+        }
+        if(search=='visit'&&param[search]!==''){
+            url += '&visit='+param.visit
+        }else if(search=='visit'){
+            url +='&visit='
+        }
+        if(search=='advance'&&param[search]!==''){
+            url += '&advance='+param.advance
+        }else if(search=='advance'){
+            url +='&advance='
+        }
+    }
     Vue.http({
         method:'GET',
-        url:apiUrl.clientList+'/chance/?'+'&page=' + param.cur + '&pageSize=15',
+        url:url,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -1632,8 +1675,15 @@ export const createIntention = ({ dispatch }, param) => { //新增意向以及�
          "sampleNumber":param.sampleNumber,
          "sampleUnit":param.sampleUnit,
          "sampleAmount":param.sampleAmount,
-         "offer":param.offer,
-         "status":param.status
+         "breedId":param.breedId,
+         "country":param.country,
+         "quality":param.quality,
+         "price":param.price,
+         "province":param.province,
+         "city":param.city,
+         "district":param.district,
+         "location":param.location,
+         "number":param.number
     }
     Vue.http({
         method: "POST",

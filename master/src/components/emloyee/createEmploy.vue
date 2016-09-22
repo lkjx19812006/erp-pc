@@ -191,16 +191,6 @@ export default {
                 item.checked=true;
             }
             console.log(item.checked);
-           /* this.show=!this.show;
-           if(this.show){
-                 this.$store.state.table.basicBaseList.orgList.forEach(function(item){
-                    item.show=true;
-             })
-           }else{
-                this.$store.state.table.basicBaseList.orgList.forEach(function(item){
-                    item.show=false;
-             })
-           }*/
         }
     },
     created(){
