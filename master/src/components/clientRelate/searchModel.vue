@@ -12,22 +12,10 @@
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
             <section class="editsection" v-cloak>
-                <!-- <div class="editpage-input">
-                    <label class="editlabel">{{param.namelist}}</label>
-                    <input type="text" class="form-control edit-input"  id="name" v-model="param.name" v-validate:name="['required']" />
-                </div> -->
                 <div class="clearfix">
-                    <div class="client-detailInfo  col-xs-12">
-                        <label>类型：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.type"  placeholder="按客户类型搜索"/>
-                    </div>
                      <div class="client-detailInfo  col-xs-12">
                         <label>姓名：</label>
                         <input type="text"  class="form-control" v-model="loadParam.name"  placeholder="按客户姓名搜索"/>
-                    </div>
-                    <div class="client-detailInfo col-xs-12">
-                        <label>分类：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.classfiy"  placeholder="按客户分类搜索"/>
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>状态：</label>
@@ -47,7 +35,7 @@
         </div>
         <div class="edit_footer">
              <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <input type="button" class="btn  btn-confirm"  @click="clientSearch(loadParam.type,loadParam.name,loadParam.classify,loadParam.employeeId,loadParam.tel,loadParam.status,param.show = false)" value="确定">
+            <input type="button" class="btn  btn-confirm"  @click="clientSearch(loadParam.name,loadParam.employeeId,loadParam.tel,loadParam.status,param.show = false)" value="确定">
         </div>
     </div>
 </template>
@@ -69,8 +57,6 @@ export default {
                 cur: 1,
                 all: 7,
                 name:'',
-                classify:'',
-                type:'',
                 tel:'',
                 employeeId:'',
                 status:''
@@ -83,7 +69,7 @@ export default {
         }
     },
     methods:{
-        clientSearch:function(name,type,classfiy,tel,employeeId,status){
+        clientSearch:function(name,tel,employeeId,status){
              this.getClientList(this.loadParam);
         }
     },

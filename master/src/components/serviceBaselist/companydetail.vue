@@ -82,11 +82,10 @@
                                 crete:'companyProducts'
                                 })">
                             <h4 class="panel-title clearfix">
-                                <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
+                                <img class="pull-left" src="/static/images/product.png" height="27" width="27" />
                                 <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
                                     产品({{initCompanyDetail.companyProducts.arr.length}})
                                 </a>
-                                <button type="button" class="btn btn-base pull-right" @click.stop="createContact(param.id)">新建</button>
                             </h4>
                         </div>
                         <div class="panel-collapse"  v-show="!initCompanyDetail.companyProducts.show">
@@ -109,34 +108,34 @@
                                             <td>{{item.tel}}</td>
                                             <td>{{item.email}}</td>
                                             <td>{{item.wechart}}</td>
-                                            <td @click="contactShow($index)">
-                                                <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                <div class="breed_action" v-show="item.show" transition="expand">
-                                                   <dl>
-                                                       <dt @click="updateCompany({
-                                                               sub:$index,
-                                                               id:item.id,
-                                                               show:true,
-                                                               cid:item.cid,
-                                                               title:'联系人',
-                                                               namelist:'联系人名称',
-                                                               phonelist:'手机号',
-                                                               emaillist:'邮箱',
-                                                               tellist:'电话',
-                                                               weblist:'微信',
-                                                               name:item.name,
-                                                               phone:item.phone,
-                                                               tel:item.tel,
-                                                               email:item.email,
-                                                               wechart:item.wechart,
-                                                               link:alterCompany,
-                                                               url:'contract',
-                                                               key:'companyProducts'
-                                                               },item.show=false)">编辑</dt>
-                                                      <!--  <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt> -->
-                                                   </dl>
-                                               </div>
-                                            </td>
+                                           <!--  <td @click="contactShow($index)">
+                                               <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                               <div class="breed_action" v-show="item.show" transition="expand">
+                                                  <dl>
+                                                      <dt @click="updateCompany({
+                                                              sub:$index,
+                                                              id:item.id,
+                                                              show:true,
+                                                              cid:item.cid,
+                                                              title:'联系人',
+                                                              namelist:'联系人名称',
+                                                              phonelist:'手机号',
+                                                              emaillist:'邮箱',
+                                                              tellist:'电话',
+                                                              weblist:'微信',
+                                                              name:item.name,
+                                                              phone:item.phone,
+                                                              tel:item.tel,
+                                                              email:item.email,
+                                                              wechart:item.wechart,
+                                                              link:alterCompany,
+                                                              url:'contract',
+                                                              key:'companyProducts'
+                                                              },item.show=false)">编辑</dt>
+                                                     <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt>
+                                                  </dl>
+                                              </div>
+                                           </td> -->
                                         </tr>
                                     </tbody>
                                 </table>

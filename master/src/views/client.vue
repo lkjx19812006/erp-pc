@@ -9,8 +9,30 @@
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">客户</div>
-            <div class="right col-xs-3">
-                <button class="new_btn transfer" @click="createSearch()">查询</button>
+            <div class="filter_search clearfix col-xs-5" >
+                <dl class="clearfix">
+                    <dt>类型：</dt>
+                    <dd>
+                        <select  v-model="loadParam.type" @change="searchClient()">
+                            <option value="">请选择类型</option>
+                            <option value="0">个人</option>
+                            <option value="1">企业</option>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>分类：</dt>
+                    <dd>
+                        <select  v-model="loadParam.classify" @change="searchClient()">
+                            <option value="">请选择分类</option>
+                            <option value="0">买</option>
+                            <option value="1">卖</option>
+                            <option value="2">买卖</option>
+                        </select>
+                    </dd>
+                </dl>
+            </div>
+            <div class="right col-xs-5">
                 <button class="new_btn transfer" @click="clientTransfer({
                     arr:[],
                     name:'test',
@@ -18,7 +40,8 @@
                     orgId:'',
                     show:true
                     })">划转</button>
-                <button class="new_btn" @click="createCustomer('create')">新建</button>
+                <button class="new_btn transfer" @click="createCustomer('create')">新建</button>
+                <button class="new_btn transfer" @click="createSearch()">查询</button>
             </div>
         </div>
         <div class="order_table">
@@ -34,6 +57,7 @@
                         <th>客户来源</th>
                         <th>名称</th>
                         <th>分类码</th>
+                        <th>所属分类</th>
                         <th>负责人</th>
                         <th>经营范围</th>
                         <th>电话</th>
@@ -59,7 +83,7 @@
                         </td>
                         <td>{{item.type}}</td>
                         <td>{{item.classify}}</td>
-                        <td>{{item.source}}</td>
+                        <td>{{item.sourceType}}</td>
                         <td class="underline"  @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -70,11 +94,12 @@
                                 key:'customerList'
                                 })">{{item.name}}</td>
                         <td>{{item.category}}</td>
+                        <td>{{item.classify | classify}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
                         <td>{{item.tel}}</td>
                         <td>{{item.email}}</td>
-                        <td>{{item.country}}</td>
+                        <td>{{item.country | country}}</td>
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.address}}</td>
@@ -89,6 +114,7 @@
                                                 show:true,
                                                 name:item.name,
                                                 type:item.type,
+                                                classify:item.classify,
                                                 category:item.category,
                                                 principal:item.principal,
                                                 bizScope:item.bizScope,
@@ -125,6 +151,7 @@
     </div>
 </template>
 <script>
+import filter from '../filters/filters'
 import pagination from '../components/pagination'
 import detailModel from '../components/clientRelate/clientDetail'
 import createModel from '../components/clientRelate/clientCreate'
@@ -232,20 +259,17 @@ export default {
             this.alterParam =initCustomerlist;
         },
         clientTransfer:function(initCustomerlist){
-            console.log(this.transferParam.arr)
-            console.log(this.transferParam.arr.length)
-          /*  if(this.transferParam.arr.length==0){
-                this.tipsParam.show= true;
-                this.tipsParam.name= '请先选择客户';
-            }else if(this.transferParam.arr.length>0){*/
-                this.transferParam = initCustomerlist;
-                for(var i in this.initCustomerlist){
-                    if(this.initCustomerlist[i].checked){
-                        this.transferParam.arr.push(this.initCustomerlist[i].id);
-                    }
+            this.transferParam = initCustomerlist;
+            for(var i in this.initCustomerlist){
+                if(this.initCustomerlist[i].checked){
+                    this.transferParam.arr.push(this.initCustomerlist[i].id);
+                    console.log(this.transferParam.orgId)
+                }else if(this.transferParam.arr.length==0){
+                    this.tipsParam.show= true;
+                    this.tipsParam.name= '请先选择客户';
+                    this.transferParam.show=false;
                 }
-            /*}*/
-            
+            }
         },
         checkedAll: function() {
            this.checked=!this.checked;
@@ -262,6 +286,9 @@ export default {
         onlyselected:function(sub,id){
             this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
             this.id = id;
+        },
+        searchClient:function(){
+            this.getClientList(this.loadParam)
         }
     },
     events: {
@@ -272,7 +299,8 @@ export default {
     },
     created() {
         this.getClientList(this.loadParam);
-    }
+    },
+    filter:(filter,{})
 }
 </script>
 <style scoped>
@@ -282,6 +310,10 @@ export default {
 }
 .transfer{
     margin-left: 18px;
+}
+.table>tbody>tr>td{
+    max-width: 300px;
+    white-space: normal;
 }
 .checkbox_unselect{
     background-image: url(../../static/images/unselect.png);

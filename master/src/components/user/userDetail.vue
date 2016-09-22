@@ -59,6 +59,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
+<<<<<<< HEAD
                           link:initUserDetail.chance,
                           crete:'chance'
                           })">
@@ -68,6 +69,43 @@
                     </a>
                     <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button>
                   </h4>
+=======
+                                            link:initClientDetail.contacts,
+                                            crete:'chance'
+                                            })">
+                                      <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                        业务机会（{{initUserDetail.chance.arr.length}}）
+                                      </a>
+                                      <button type="button" class="btn btn-base pull-right"  @click.stop="createFormt({
+                                                           id:param.id,
+                                                           customerId:param.id,
+                                                           title:'联系人',
+                                                           show:true,
+                                                           name:'',
+                                                           position:'',
+                                                           department:'',
+                                                           phone:'',
+                                                           tel:'',
+                                                           email:'',
+                                                           qq:'',
+                                                           wechart:'',
+                                                           main:'',
+                                                           namelist:'客户名称',
+                                                           job:'联系人职位',
+                                                           parten:'联系人部门',
+                                                           phonelist:'手机',
+                                                           tellist:'电话',
+                                                           emaillist:'邮箱',
+                                                           QQ:'qq',
+                                                           webchart:'微信',
+                                                           remark:'备注',
+                                                           link:createCustomer,
+                                                           url:'/customer/contact',
+                                                           key:'contacts'
+                                                           })">新建</button>
+                                    </h4>
+>>>>>>> 5e3a85e92202f6f7bc2090fc28d408ed47fefc57
                                 </div>
                                 <div class="panel-collapse" v-show="initUserDetail.chance.show">
                                     <div class="panel-body panel-set">
@@ -105,6 +143,7 @@
                                     </div>
                                 </div>
                             </div>
+<<<<<<< HEAD
                           
                            
                 
@@ -198,6 +237,50 @@
                         show:false
                       })">新建</button>
                   </h4>
+=======
+                           <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                            link:initClientDetail.addresses,
+                                            crete:'follow'
+                                            })">
+                                      <img class="pull-left" src="/static/images/follow.png" height="28" width="26"  />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                        跟进（{{initUserDetail.follow.arr.length}}）
+                                      </a>
+                                      <button type="button" class="btn btn-base pull-right" @click.stop="createAddr({
+                                                           customerId:param.id,
+                                                           id:param.id,
+                                                           show:true,
+                                                           title:'收货地址',
+                                                               typelist:'类型',
+                                                               namelist:'联系人姓名',
+                                                           phonelist:'联系人电话',
+                                                           sexlist:'性别',
+                                                           countylist:'国家',
+                                                           provicelist:'所在省',
+                                                           citylist:'所在市',
+                                                           addr_detail:'地址',
+                                                           distlist:'所在区域',
+                                                           streetlist:'所在街道',
+                                                           addr:'详细地址',
+                                                               type:'',
+                                                               contactName:'',
+                                                               contactPhone:'',
+                                                               sex:'',
+                                                               country:'',
+                                                               province:'',
+                                                               city:'',
+                                                               district:'',
+                                                               street:'',
+                                                               detailAddr:'',
+                                                               address:'',
+                                                           link:createAddress,
+                                                           url:'/customer/insertAddress',
+                                                           key:'addresses'
+                                                           })">新建</button>
+                                    </h4>
+>>>>>>> 5e3a85e92202f6f7bc2090fc28d408ed47fefc57
                                 </div>
                                 <div  class="panel-collapse" v-show="initUserDetail.tracking.show">
                                    <div class="panel-body panel-set">
@@ -226,8 +309,55 @@
                                                   <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show" >
                                                    <dl>
+<<<<<<< HEAD
                                                        <dt @click="updateTracking(item,$index)">编辑</dt>
                                                        
+=======
+                                                       <dt @click="updateAddr({
+                                                           sub:$index,
+                                                           id:item.id,
+                                                           customerId:item.customerId,
+                                                           show:true,
+                                                           title:'收货地址',
+                                                           typelist:'类型',
+                                                           namelist:'联系人姓名',
+                                                           phonelist:'联系人电话',
+                                                           sexlist:'性别',
+                                                           countylist:'国家',
+                                                           provicelist:'所在省',
+                                                           citylist:'所在市',
+                                                           addr_detail:'地址',
+                                                           distlist:'所在区域',
+                                                           streetlist:'所在街道',
+                                                           addr:'详细地址',
+                                                           type:item.type,
+                                                           contactName:item.contactName,
+                                                           contactPhone:item.contactPhone,
+                                                           sex:item.sex,
+                                                           country:item.country,
+                                                           province:item.province,
+                                                           city:item.city,
+                                                           district:item.district,
+                                                           street:item.street,
+                                                           detailAddr:item.detailAddr,
+                                                           address:item.address,
+                                                           link:addrInfo,
+                                                           url:'/customer/updateAddress',
+                                                           key:'addresses',
+                                                           headline:'clientDetail'
+                                                           })">编辑</dt>
+                                                       <dt @click="specDelete({
+                                                           id:item.id,
+                                                           sub:$index,
+                                                           show:true,
+                                                           title:'收货地址',
+                                                           link:addrDel,
+                                                           url:'/customer/deleteAddress/',
+                                                           key:'addresses',
+                                                           headline:'clientDetail'
+                                                           })">删除</dt>
+                                                   </dl> 
+>>>>>>> 5e3a85e92202f6f7bc2090fc28d408ed47fefc57
                                                 </div>
                                                 </td>
                                             </tr>
@@ -237,7 +367,6 @@
                                 </div>
                             </div>
                           
-                            
                         </div>
                     </article>
                 </div>
@@ -488,7 +617,10 @@ section article {
     margin-top: 30px;
 }
 .top-title{
-  z-index: 100
+  z-index: 100;
+    width: 100%;
+  right: 0;
+  top: 130px;
 }
 .client-section {
     padding: 10px 5px 40px 5px;

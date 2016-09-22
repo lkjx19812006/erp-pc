@@ -43,13 +43,15 @@
 		    			<div class="cover_loading">
 			                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 			            </div>
-			            <div class="name_search clearfix" style="border:none">
-		                   <select  class="form-control" v-model="loadParam.orgId" @change="employorgSearch(loadParam.orgId)">
-		                        <option selected value="">请选择业务员部门</option>
-		                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-		                  </select> 
-		                </div>
-	    				<div class="col-xs-12">
+			            <div class="col-xs-4">
+				            <div class="name_search clearfix" style="border:none">
+			                   <select  class="form-control" v-model="loadParam.orgId" @change="employorgSearch(loadParam.orgId)">
+			                        <option selected value="">请选择业务员部门</option>
+			                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
+			                  </select> 
+			                </div>
+			            </div>
+	    				<div class="col-xs-8">
 			                <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">
 			                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" @change="employNameSearch(loadParam.name)">
@@ -251,7 +253,7 @@ export default{
     text-align: center;
     background-position: 5px;
 }
-.trans_service .col-xs-12{
+.trans_service .col-xs-8{
 	margin-bottom: 20px;
 }
 .table{

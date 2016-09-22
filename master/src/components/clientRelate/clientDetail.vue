@@ -9,7 +9,7 @@
 	<createfiles-model :param="cfilesParam" v-if="cfilesParam.show"></createfiles-model>
 	<createtrack-model :param="ctrackParam" v-if="ctrackParam.show"></createtrack-model>
 	<createproduct-model :param="cproductParam" v-if="cproductParam.show"></createproduct-model>
-    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+  <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div class="client_body">
     	<div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -22,14 +22,35 @@
                         <a class="navbar-brand navbar-name" href="#">{{param.name}}</a>
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
-                        <li>
-                            <button type="button" class="btn btn-base">删除</button>
+                         <li>
+                            <button type="button" class="btn btn-base" @click="specDelete({
+                                                id:param.id,
+                                                sub:param.sub,
+                                                show:true,
+                                                name:param.name,
+                                                title:param.name,
+                                                link:deleteInfo,
+                                                url:'/customer/',
+                                                key:'customerList'
+                                                })">删除客户信息</button>
+                        </li>
+                         <li>
+                            <button type="button" class="btn btn-base">新建跟进</button>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-base">编辑</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-base">新建</button>
+                            <button type="button" class="btn btn-base"  @click="newlabel({
+                                             customerId:param.id,
+                                             id:param.id,
+                                             show:true,
+                                             title:'标签',
+                                             labelist:'标签',
+                                             statuslist:'类型',
+                                             label:'',
+                                             status:'',
+                                             link:createLabel,
+                                             url:'/customer/insertLabel',
+                                             key:'labels'
+                                             })">新建标签</button>
                         </li>
                     </ul>
                 </div>
@@ -64,7 +85,7 @@
       		                                     email:'',
       		                                     qq:'',
       		                                     wechart:'',
-      		                                     main:'',
+      		                                     main:0,
       		                                     namelist:'联系人姓名',
       		                                     job:'联系人职位',
       		                                     parten:'联系人部门',
@@ -231,7 +252,7 @@
                     						            	link:initClientDetail.files,
                     						            	crete:'files'
                     						            	})">
-                    										<img class="pull-left" src="/static/images/file.png" height="34" width="26"  />
+                    										<img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
                     										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                     											文件（{{initClientDetail.files.arr.length}}）
                     										</a>
@@ -341,7 +362,7 @@
                   						            	link:initClientDetail.remarks,
                   						            	crete:'remarks'
                   						            	})">
-                  										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
+                  										<img class="pull-left" src="/static/images/remark.png" height="30" width="27"  />
                   										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                   											备注（{{initClientDetail.remarks.arr.length}}）
                   										</a>
@@ -417,7 +438,7 @@
               						            	link:initClientDetail.addresses,
               						            	crete:'addresses'
               						            	})">
-                    										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
+                    										<img class="pull-left" src="/static/images/addr.png" height="30" width="26"  />
                     										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                     											收货地址（{{initClientDetail.addresses.arr.length}}）
                     										</a>
@@ -547,7 +568,7 @@
                   						            	link:initClientDetail.labels,
                   						            	crete:'labels'
                   						            	})">
-                  										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
+                  										<img class="pull-left" src="/static/images/label.png" height="30" width="26"  />
                   										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                   											标签（{{initClientDetail.labels.arr.length}}）
                   										</a>
@@ -624,7 +645,7 @@
                   						            	link:initClientDetail.products,
                   						            	crete:'products'
                   						            	})">
-                  										<img class="pull-left" src="/static/images/order.png" height="30" width="30"  />
+                  										<img class="pull-left" src="/static/images/product.png" height="27" width="27"  />
                   										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                   											产品（{{initClientDetail.products.arr.length}}）
                   										</a>
@@ -833,7 +854,8 @@ import {
 	createTrack,
 	createProduct,
 	alterProduct,
-	uploadFiles
+	uploadFiles,
+  deleteInfo
 } from '../../vuex/actions'
 export default {
     components: {
@@ -911,7 +933,8 @@ export default {
     		createTrack,
     		createProduct,
     		alterProduct,
-    		uploadFiles
+    		uploadFiles,
+        deleteInfo
     	}
     },
     methods:{
@@ -922,7 +945,6 @@ export default {
             this.$store.state.table.clientDetail[param.crete].show = !this.$store.state.table.clientDetail[param.crete].show;
     	},
     	clickShow: function(id,param) {
-       
             if (this.$store.state.table.clientDetail[param.concrete].arr[id].show) {
                 this.$store.state.table.clientDetail[param.concrete].arr[id].show = !this.$store.state.table.clientDetail[param.concrete].arr[id].show
             } else {

@@ -53,7 +53,7 @@
                             <label>是否主要</label>
                             <div  class="clerafix ">
                                 <div class="pull-left role clerafix">
-                                     <input type="checkbox" class="checkbox_unselect" id="client_ids" v-model="param.main"  value="1" />
+                                     <input type="checkbox" class="checkbox_unselect" id="client_ids"   v-model="param.main" />
                                      <label  for="client_ids">主要</label>
                                 </div>
                             </div>
@@ -78,6 +78,9 @@ export default {
         return {
           
         }
+    },
+    methods:{
+
     },
     route: {
         activate: function(transition) {

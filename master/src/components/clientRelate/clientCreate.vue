@@ -74,27 +74,27 @@
                             <h4>联系人</h4>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>名称</label>
+                                    <label>联系人名称</label>
                                     <input type="text" id="username" class="form-control" v-model="customerData.name" v-validate:username="['required']"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>类型</label>
+                                    <label>联系人部门</label>
                                     <input type="text" id="usertype" class="form-control" v-model="customerData.type" v-validate:usertype="['required']" />
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>分类码</label>
+                                    <label>联系人职位</label>
                                     <input type="text" id="category" class="form-control" v-model="customerData.category" v-validate:category="['required']" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>负责人</label>
+                                    <label>电话</label>
                                     <input type="text" class="form-control" v-model="customerData.principal" id="userown" v-validate:userown="['required']" />
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>电话</label>
+                                    <label>手机</label>
                                     <input type="text" class="form-control" maxlength="11" v-model="customerData.tel" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
@@ -104,22 +104,12 @@
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>所在省</label>
+                                    <label>微信</label>
                                     <input type="text" class="form-control" v-model="customerData.province" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>所在市</label>
+                                    <label>qq</label>
                                     <input type="text" class="form-control" v-model="customerData.city"  />
-                                </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>备注</label>
-                                    <input type="text" class="form-control" v-model="customerData.comments" />
-                                </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>注册地址</label>
-                                    <input type="text" class="form-control" v-model="customerData.address" />
                                 </div>
                             </div>
                         </div>
