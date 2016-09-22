@@ -2,7 +2,6 @@
     <create-model :param="createParam" v-if="createParam.show"></create-model>
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
-    <chancelist-model :param="chanceListParam" v-if="chanceListParam.show"></chancelist-model>
     <chance-model :param="chanceParam" v-if="chanceParam.show"></chance-model>
     <personalauth-model :param="personalParam" v-if="personalParam.show"></personalauth-model>
     <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
@@ -163,7 +162,6 @@ import createModel  from '../components/user/userCreate'
 import alterinfoModel  from '../components/user/userUpdate'
 import transferModel  from '../components/user/userTransfer'
 import detailModel from '../components/user/userDetail'
-import chancelistModel from '../components/user/userChanceList'
 import chanceModel from  '../components/user/userChance'
 import personalauthModel from '../components/user/personalAuth'
 import companyauthModel from '../components/user/companyAuth'
@@ -190,7 +188,6 @@ export default {
         alterinfoModel,
         transferModel,
         detailModel,
-        chancelistModel,
         chanceModel,
         personalauthModel,
         companyauthModel,
@@ -230,9 +227,6 @@ export default {
             },
             chanceParam:{
                 show:false        
-            },
-            chanceListParam:{
-                show:false
             },
             personalParam:{
 

@@ -296,7 +296,7 @@
 <script>
 
 import trackingModel from  '../user/userTracking'
-import chanceModel from  '../user/userchance'
+import chanceModel from  '../user/userChance'
 
 import {
   initClientDetail,
