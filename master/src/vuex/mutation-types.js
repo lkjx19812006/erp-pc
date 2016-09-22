@@ -55,3 +55,10 @@ export const USER_DETAIL_DATA = 'USER_DETAIL_DATA'   //会员详情
 export const ORG_DATA = 'ORG_DATA'    //部门列表
 export const ADD_EMPLOYEE_DATA = 'ADD_EMPLOYEE_DATA'  //新增员工信息
 export const UPDATE_EMPLOY_DATA ='UPDATE_EMPLOY_DATA' //修改员工信息
+
+export const IDENTIFY_DATA ='IDENTIFY_DATA' //认证信息
+
+export const UPDATE_TRACKING_DATA ='UPDATE_TRACKING_DATA' //跟新跟进信息
+
+
+

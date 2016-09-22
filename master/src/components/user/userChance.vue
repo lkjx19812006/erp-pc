@@ -5,70 +5,48 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>编辑{{param.fullname}}的信息</h3>
+            <h3>新增业务机会</h3>
         </div>
-       <div class="edit-model">
+        <div class="edit-model">
            <section class="editsection" v-cloak>
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpage">
                    <div class="editpageleft">
                        <div class="editpage-input">
-                           <label class="editlabel">姓名</label>
-                           <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{param.fullname}}" />
+                           <label class="editlabel">品种</label>
+                           <input type="text" v-model='param.breedName' class="form-control edit-input" value="{{param.breedName}}" />
                        </div>
                        <div class="editpage-input">
-                           <label class="editlabel">昵称</label>
-                           <input type="text" v-model='param.nickname' class="form-control edit-input" value="{{param.nickname}}" />
+                           <label class="editlabel">产地</label>
+                           <input type="text" v-model='param.location' class="form-control edit-input" value="{{param.location}}" />
                        </div>
                        <div class="editpage-input">
-                           <label class="editlabel">电话</label>
-                            <input type="text" v-model='param.phone' class="form-control edit-input" value="{{param.phone}}" />
+                           <label class="editlabel">规格</label>
+                            <input type="text" v-model='param.spec' class="form-control edit-input" value="{{param.spec}}" />
                        </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">备注</label>
-                           <input type="text" v-model='param.comment' class="form-control edit-input" value="{{param.comment}}" />
-                       </div>
-                       <!-- <div class="editpage-input">
-                           <label class="editlabel">邮箱</label>
-                           <input type="text" v-model='param.province' class="form-control edit-input" value="{{param.province}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">备注</label>
-                           <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">经营范围</label>
-                           <input type="text" v-model='param.bizScope' class="form-control edit-input" value="{{param.bizScope}}" />
-                       </div> -->
+                       
                    </div>
                    <div class="editpageright">
                        <div class="editpage-input">
-                           <label class="editlabel">邮箱</label>
-                           <input type="text" v-model='param.email' class="form-control edit-input" value="{{param.email}}" />
+                           <label class="editlabel">数量</label>
+                           <input type="text" v-model='param.number' class="form-control edit-input" value="{{param.number}}" />
                        </div>
                        <div class="editpage-input">
-                           <label class="editlabel">qq</label>
-                           <input type="text" v-model="param.qq" class="form-control edit-input" value="{{param.qq}}" />
+                           <label class="editlabel">价格</label>
+                           <input type="text" v-model="param.price" class="form-control edit-input" value="{{param.price}}" />
                        </div>
                        <div class="editpage-input">
-                           <label class="editlabel">公司</label>
-                           <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                           <label class="editlabel">单位</label>
+                           <input type="text" v-model="param.unit" class="form-control edit-input" value="{{param.unit}}" />
                        </div>
-                      <!--  <div class="editpage-input">
-                          <label class="editlabel">所在市</label>
-                          <input type="text" v-model='param.city' class="form-control edit-input" value="{{param.city}}" />
-                      </div>
-                      <div class="editpage-input">
-                          <label class="editlabel">注册地址</label>
-                          <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
-                      </div> -->
+                      
                    </div>
                </div>
            </section>
-       </div> 
+        </div>  
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.show = false)">确定</button>
+            <button type="button" class="btn  btn-confirm" @click="(param,param.show = false)">确定</button>
         </div>
     </div>
 </template>

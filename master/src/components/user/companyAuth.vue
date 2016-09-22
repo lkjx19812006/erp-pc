@@ -5,13 +5,39 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>编辑{{param.fullname}}的信息</h3>
+            <h3>企业认证</h3>
         </div>
-       <div class="edit-model">
+        <div class="edit-model">
            <section class="editsection" v-cloak>
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpage">
-                   <div class="editpageleft">
+               <div class="editpageleft">
+                    <div class="editpage-input">
+                           <label class="editlabel">备注</label>
+                           <input type="text" v-model='param.ccomment' class="form-control edit-input" value="{{param.ccomment}}" />
+                       </div>
+
+                       <div class="editpage-input">
+                           <table class="table  contactSet">
+                                          <thead>
+                                            <th>文件类型</th>
+                                            <th>路径</th>
+                                            <th>描述<th>
+                                          </thead>
+                                        <tbody>
+                                            <tr v-for="item in initIdentify.files">
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.path}}</td>
+                                                <td>{{item.description}}</td>
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                       </div>
+                </div>
+
+               
+                   <!-- <div class="editpageleft">
                        <div class="editpage-input">
                            <label class="editlabel">姓名</label>
                            <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{param.fullname}}" />
@@ -22,24 +48,9 @@
                        </div>
                        <div class="editpage-input">
                            <label class="editlabel">电话</label>
-                            <input type="text" v-model='param.phone' class="form-control edit-input" value="{{param.phone}}" />
+                            <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
                        </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">备注</label>
-                           <input type="text" v-model='param.comment' class="form-control edit-input" value="{{param.comment}}" />
-                       </div>
-                       <!-- <div class="editpage-input">
-                           <label class="editlabel">邮箱</label>
-                           <input type="text" v-model='param.province' class="form-control edit-input" value="{{param.province}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">备注</label>
-                           <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">经营范围</label>
-                           <input type="text" v-model='param.bizScope' class="form-control edit-input" value="{{param.bizScope}}" />
-                       </div> -->
+                       
                    </div>
                    <div class="editpageright">
                        <div class="editpage-input">
@@ -54,30 +65,25 @@
                            <label class="editlabel">公司</label>
                            <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
                        </div>
-                      <!--  <div class="editpage-input">
-                          <label class="editlabel">所在市</label>
-                          <input type="text" v-model='param.city' class="form-control edit-input" value="{{param.city}}" />
-                      </div>
-                      <div class="editpage-input">
-                          <label class="editlabel">注册地址</label>
-                          <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
-                      </div> -->
-                   </div>
+                      
+                   </div> -->
                </div>
            </section>
-       </div> 
+        </div>  
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.show = false)">确定</button>
+            <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.ctype=2,param.show = false)">通过</button>
+            <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.ctype=3,param.show = false)">不通过</button>
         </div>
     </div>
 </template>
 <script>
 import {
-    
+    initIdentify
 } from '../../vuex/getters'
 import {   
-    updateUserInfo   
+    updateUserInfo,
+    getAuthInfo  
 } from '../../vuex/actions'
 export default {
     props: ['param'],
@@ -88,10 +94,11 @@ export default {
     },
     vuex: {
        getters: {
-            
+            initIdentify
         },
         actions: {
-            updateUserInfo 
+            updateUserInfo,
+            getAuthInfo
         } 
     },
     route: {
@@ -109,6 +116,9 @@ export default {
         updateUserInfo(param)
       }
     }*/
+    created() { 
+        this.getAuthInfo(this.param);
+  }
 }
 </script>
 <style scoped>

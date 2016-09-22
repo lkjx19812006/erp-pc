@@ -45,7 +45,10 @@ import {
    FILE_DATA,
    USER_DETAIL_DATA,
    ADD_EMPLOYEE_DATA,
-   UPDATE_EMPLOY_DATA
+   UPDATE_EMPLOY_DATA,
+   IDENTIFY_DATA,
+   UPDATE_TRACKING_DATA,
+   ADD_TRACKING_DATA
 } from '../mutation-types'
 
 const state = {
@@ -237,8 +240,12 @@ const state = {
     "address":null,"employee":"wei","orgId":null,"employeeId":null,"score":300,"utype":1,"ctype":0,"addrShip":null,
     "addrReceive":null,"busiType":null,"province":null,"city":null,"source":1,"lastLoginIp":null,"lastLoginTime":null,
     "status":null,"updater":null,"utime":null,"creater":null,"ctime":null,"startCtime":null,"endCtime":null,"userIds":null,
-    "customerId":null,"main":null,"audit":0,"bizMain":null,"userType":0,"auditResult":null,"sourceType":null
+    "customerId":null,"main":null,"audit":0,"bizMain":null,"userType":0,"auditResult":null,"sourceType":null,
+    "chance":{"show":false,"arr":[]},"tracking":{"show":false,"arr":[]},"personalAuthShow":false,"companyAuthShow":false
   },
+  identify:{},
+  trackingDetail:{}
+
 }
 
 const mutations = {
@@ -602,7 +609,41 @@ const mutations = {
         state.basicBaseList[data.key][data.sub].entryDate = data.entryDate;
         state.basicBaseList[data.key][data.sub].leaveDate = data.leaveDate;
         state.basicBaseList[data.key][data.sub].role = data.role;
-    }
+    },
+
+    [IDENTIFY_DATA](state,data){     //认证信息
+      
+        
+        state.identify = data;
+
+    },
+
+    [UPDATE_TRACKING_DATA](state,data){     //认证信息
+        
+        state.userDetail.tracking.arr[data.index].trackingWay = data.trackingWay;
+        state.userDetail.tracking.arr[data.index].comments = data.comments;
+        state.userDetail.tracking.arr[data.index].contactNo = data.contactNo;
+        state.userDetail.tracking.arr[data.index].type = data.type;
+
+    },
+
+    [ADD_TRACKING_DATA](state,data){     //认证信息
+        const temp = {};
+        temp.trackingWay = data.trackingWay;
+        temp.comments = data.comments;
+        temp.contactNo = data.contactNo;
+        temp.type = data.type;
+        temp.objId = data.objId;
+        temp.bizId = data.bizId;
+        temp.bizType = data.bizType;
+        state.userDetail.tracking.arr.push(temp);
+        /*state.userDetail.tracking.arr[data.index].trackingWay = data.trackingWay;
+        state.userDetail.tracking.arr[data.index].comments = data.comments;
+        state.userDetail.tracking.arr[data.index].contactNo = data.contactNo;
+        state.userDetail.tracking.arr[data.index].type = data.type;*/
+
+    },
+
     
 }
 

@@ -112,3 +112,15 @@ export const initUserDetail = (state) => {
     return parseJson(state.table.userDetail);
 }
  
+
+ /*---认证信息---*/
+export const initIdentify = (state) => {
+
+    return parseJson(state.table.identify);
+}
+
+ /*---修改跟进---*/
+/*export const initTrackingDetail = (state) => {
+    console.log('getter');
+    return parseJson(state.table.trackingDetail);
+}*/
