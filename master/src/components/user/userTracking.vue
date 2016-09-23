@@ -25,6 +25,13 @@
                        <div class="editpage-input">
                            <label class="editlabel">跟进主体类型</label>
                            <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" />
+                           <select type="text" class="form-control edit-input" v-model="param.type">
+                                <option value="">请选择跟进主体类型</option>
+                                <option value="0">客户</option>
+                                <option value="1">会员</option>
+                                <option value="2">企业</option>
+                            </select>
+
                        </div>
                        <div class="editpage-input">
                            <label class="editlabel">跟进方式</label>
@@ -37,6 +44,12 @@
                       <div v-if="param.flag==0" class="editpage-input">
                            <label class="editlabel">业务类型</label>
                             <input type="text" v-model='param.bizType' class="form-control edit-input" value="{{param.bizType}}" />
+                            <select type="text" class="form-control edit-input" v-model="param.bizType">
+                                <option value="">请选择业务类型</option>
+                                <option value="0">客户</option>
+                                <option value="1">意向</option>
+                                <option value="2">订单</option>
+                            </select>
                       </div>
                       <div class="editpage-input">
                            <label class="editlabel">联系账号</label>
@@ -106,9 +119,9 @@ export default {
         }else{
            this.createTrackingInfo(param); 
         }
-        
-       
-      }
+         
+      },
+      
     }
 }
 </script>

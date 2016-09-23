@@ -185,6 +185,7 @@ export default{
 		},
 		employSearch:function(){
         	/*this.getEmployOrgSearch(this.loadParam);*/
+        	this.employeeFlag = 0;
         	this.getEmployeeList(this.employeeParam);
         },
 		Partselected:function(){

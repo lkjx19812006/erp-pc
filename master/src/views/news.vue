@@ -24,7 +24,7 @@
                 </div>
                 <div class="name_search clearfix"> 
                     <img src="/static/images/search.png" height="24" width="20">
-                    <input type="text" class="search_input" v-model="loadParam.audit" @keyup.enter="loadByCondition()" placeholder="按状态搜索">
+                    <input type="text" class="search_input" v-model="loadParam.audit" @keyup.enter="loadByCondition()" placeholder="按审核状态搜索">
                 </div>
                 <div class="name_search clearfix"> 
                     <div>
@@ -94,7 +94,7 @@
                         <td>{{item.company}}</td>
                         <td>{{item.score}}</td>
                         <td>{{item.sourceType}}</td>
-                        <td>{{item.type}}</td>
+                        <td>{{item.bizTypeName}}</td>
                         <td>{{item.auditResult}}</td>
                         <td>{{item.comment}}</td>
                         
@@ -138,8 +138,8 @@
                                                 key:'userList'
                                                 },item.show=false)">划转</li>
                                     <li @click="createChance(item.show=false)">机会</li>
-                                    <li v-if="item.utype==1" @click="personalAuth({id:item.id,ucomment:item.ucomment,utype:1},item.show=false)">个人认证</li>
-                                    <li v-if="item.ctype==1" @click="companyAuth({id:item.id,ccomment:item.ccomment,ctype:1},item.show=false)">企业认证</li>
+                                    <li v-if="item.utype==2" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">个人认证</li>
+                                    <li v-if="item.ctype==2" @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)">企业认证</li>
                                 </ul>
                             </div>
                         </td>
@@ -326,6 +326,7 @@ export default {
         
         this.personalParam.show = true;
         this.personalParam.id = item.id;
+        this.personalParam.index = item.index;
         this.personalParam.ucomment = item.ucomment;
         this.personalParam.utype = item.utype;
     
@@ -333,6 +334,7 @@ export default {
     companyAuth:function(item){
         this.companyParam.show = true;
         this.companyParam.id = item.id;
+        this.companyParam.index = item.index;
         this.companyParam.ccomment = item.ccomment;
         this.companyParam.ctype = item.ctype;
     }

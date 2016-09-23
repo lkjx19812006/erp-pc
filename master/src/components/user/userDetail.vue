@@ -398,7 +398,8 @@ export default {
       },
 
       clickShow: function(index,param) {
-            
+            console.log('clickShow');
+            console.log(this.$store.state.table.userDetail[param.concrete].arr[index]);
             if (this.$store.state.table.userDetail[param.concrete].arr[index].show) {
                 this.$store.state.table.userDetail[param.concrete].arr[index].show = false;
             } else {
@@ -488,7 +489,10 @@ section article {
     margin-top: 30px;
 }
 .top-title{
-  z-index: 100
+  z-index: 100;
+  width: 100%;
+  right: 0;
+  top: 130px;
 }
 .client-section {
     padding: 10px 5px 40px 5px;

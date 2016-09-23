@@ -54,56 +54,6 @@ import {
    INTENTION_DATA,
    UPDATA_INTENTION_DATA
 
-    /*ORDER_TABLE,
-    CHANGE_SHOW_STATUE,
-    SYSTEM_DATA,
-    PROVINCE_DATA,
-    SERVICE_ENTERPRISE,
-    SERVICE_COMPONENT,
-    SERVICE_DRAW,
-    DELETE_SHOW_STATUE,
-    ADD_DATA,
-    UPDATE_DATA,
-    UPDATE_ENTER_DATA,
-    BREED_DATA,
-    ADD_BREED_DATA,
-    DELETE_BREED_DATA,
-    DELETE_SPECS_DATA,
-    CATEGORY_DATA,
-    UPDATE_BREED_DATA,
-    ADDSPEC_DATA,
-    BREED_DETAIL_DATA,
-    SERVICE_ENTERPRISE_DETAIL,
-    ADD_CONTACT_DATA,
-    UPDATE_SPEC_DATA,
-    DELETE_CONTACT_DATA,
-    UPDATE_CONTACT_DATA,
-    DRUG_DETAIL_DATA,
-    CUSTOMER_DATA,
-    CUSTOMER_ADD_DATA,
-    CUSTOMER_DETAIL_DATA,
-    UPDATE_CUSTOMER_DETAIL,
-    CUSTOMER_UPDATE_DATA,
-    UPDATE_ADDR_DETAIL,
-    ADD_ADDR_DETAIL,
-    LABEL_DATA,
-    CUSTOMER_CONTACT_DATA,
-    ADD_LABEL_DATA,
-    UPDATE_LABEL_DETAIL,
-    ADD_PRODUCT_DATA,
-    UPDATE_PRODUCT_DATA,
-    EMPLOYEE_DATA,
-    INTENTION_LIST_DATA,
-    USER_DATA,
-    UPDATE_USER_DATA,
-    ORG_DATA,
-    FILE_DATA,
-    USER_DETAIL_DATA,
-    ADD_EMPLOYEE_DATA,
-    UPDATE_EMPLOY_DATA,
-    INTENTION_DATA,
-    UPDATA_INTENTION_DATA*/
-
 } from '../mutation-types'
 
 const state = {
@@ -568,6 +518,7 @@ const mutations = {
                     state.basicBaseList.userList[data.index][key] = data[key];
                 }
             }
+            console.log('列表页面修改');
             console.log(state.basicBaseList.userList[data.index]);
             /*state.basicBaseList.userList[data.index].fullname=data.fullname;
           state.basicBaseList.userList[data.index].qq=data.qq;
