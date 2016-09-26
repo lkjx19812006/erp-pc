@@ -103,6 +103,20 @@ export default {
 }
 </script>
 <style scoped>
+.modal_con{
+    max-height: 400px;
+    width: 600px;
+} 
+.top-title{
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+.edit_footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 .empSearch{
     position: absolute;
     right: 15px;

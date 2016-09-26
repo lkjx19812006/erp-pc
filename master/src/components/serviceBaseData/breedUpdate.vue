@@ -8,29 +8,29 @@
             <h3>编辑药材</h3>
         </div>
         <div class="edit-model">
-            <form name="editOrderinfo" action="javascript:void(0)">
+            <validator name="validation">
                 <section class="editsection" v-cloak>
-                        <input type="hidden"  class="form-control edit-input" value="{{categoryData.id}}" />
-                    <div class="editpage">
-                        <div class="editpageleft">
-                            <div class="editpage-input">
-                                <label class="editlabel">编码</label>
-                                <input type="text" v-model='categoryData.code' class="form-control edit-input" value="{{categoryData.code | breedcode}}" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">品种名称</label>
-                                <input type="text" v-model='categoryData.name' class="form-control edit-input" value="{{categoryData.name}}" />
-                            </div>
-                           <div class="editpage-input">
-                              <label class="editlabel">品种分类选择</label>
-                              <select class="form-control" v-model="categoryData.selected" style="width:90%;">
-                                <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
-                              </select>
-                          </div> 
+                    <input type="hidden"  class="form-control edit-input" value="{{categoryData.id}}" />
+                    <div class="clearfix">
+                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <label class="editlabel">编码 <span class="system_danger" v-if="$validation.code.required">请输入编码</span></label>
+                            <input type="text" v-model='categoryData.code' class="form-control edit-input" value="{{categoryData.code | breedcode}}" id="code" v-validate:code="['required']" />
+                        </div>
+                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <label class="editlabel">品种名称 <span class="system_danger" v-if="$validation.code.required">请输入品种名称</span></label>
+                            <input type="text" v-model='categoryData.name' class="form-control edit-input" value="{{categoryData.name}}"  id="name" v-validate:name="['required']"/>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <label class="editlabel">品种分类选择 <span class="system_danger" v-if="$validation.code.required">请选择品种分类</span></label>
+                            <select class="form-control" v-model="categoryData.selected" style="width:90%;">
+                               <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
+                             </select>
                         </div>
                     </div>
                 </section>
-            </form>
+            </validator>
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
@@ -100,17 +100,17 @@ export default {
 }
 </script>
 <style scoped>
-
-.big-font {
-    font-size: 36px;
-}
 .modal_con{
-    max-height: 500px;
+    max-height: 400px;
+    max-width: 600px;
 }
 .top-title {
     position: absolute;
     top: 0;
     width: 100%;
+}
+.big-font {
+    font-size: 36px;
 }
 .top-title span {
     font-size: 28px;

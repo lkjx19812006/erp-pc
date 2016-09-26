@@ -362,7 +362,7 @@ export const getComponentData = ({ dispatch }, param) => { //成分
     param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.componentList + '/' + 'query/?page=' + param.cur + '&pageSize=15',
+        url: apiUrl.clientList + '/recipe/' + 'query/?page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -380,7 +380,7 @@ export const getComponentData = ({ dispatch }, param) => { //成分
 export const getRecipeDetail = ({ dispatch }, param) => { //获取成分详情
     Vue.http({
         method: 'GET',
-        url: apiUrl.componentList + '/company/' + param.id,
+        url: apiUrl.clientList + '/recipe/company/' + param.id,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -390,6 +390,7 @@ export const getRecipeDetail = ({ dispatch }, param) => { //获取成分详情
         for (var i in obj) {
             obj[i].show = false;
         }
+        console.log(obj)
         dispatch(types.DRUG_DETAIL_DATA, obj);
     }, (res) => {
         console.log('fail');
@@ -409,7 +410,6 @@ export const getDrawData = ({ dispatch }, param) => { //提取物以及搜索
         url: url,
         emulateJSON: true
     }).then((res) => {
-        console.log(res.json())
         var dd = res.json().result.list;
         dispatch(types.SERVICE_DRAW, dd);
         param.all = res.json().result.pages;
@@ -433,6 +433,7 @@ export const getBreedData = ({ dispatch }, param) => { //药材
         var breed = res.json().result.list;
         for (var i in breed) {
             breed[i].show = false;
+            breed[i].checked = false;
         }
         dispatch(types.BREED_DATA, breed);
         param.all = res.json().result.pages;
@@ -510,6 +511,7 @@ export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情
 
 export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
     param.loading = true;
+    console.log(param)
     Vue.http({
         method: 'GET',
         url: apiUrl.breedList + '/' + '?breedName=' + param.name + '&page=' + param.cur + '&pageSize=15',
@@ -1327,7 +1329,6 @@ export const transferInfo = ({ dispatch }, param) => { //客户部门划转信�
 }
 
 export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表以及搜索
-    console.log("wowowo");
     param.loading = true;
     var url = apiUrl.clientList+'/intention/?'+'&page=' + param.cur + '&pageSize=15';
      for(var search in param){
@@ -1376,8 +1377,6 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
         }
     }).then((res)=>{
            var intent = res.json().result.list;
-           console.log('意向');
-           console.log(intent);
            for (var i in intent){
                 intent[i].checked = false;
                 intent[i].show =false;
@@ -1399,8 +1398,11 @@ export const getOffersdetail = ({ dispatch }, param) => {  //意向报价详情
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res)=>{
-/*           var intent = res.json().result.list;*/
-            dispatch(types.INTENTION_OFFER_DETAIL, param);
+            var offer = res.json().result.list;
+            for(var i in offer){
+                offer[i].show=true;
+            }
+            dispatch(types.INTENTION_OFFER_DETAIL, offer);
     }, (res) => {
         console.log('fail');
     })
@@ -1699,8 +1701,8 @@ export const editintentInfo = ({ dispatch }, param) => { //修改意向
     const data1 = {
          "type":param.type,
          "especial":param.especial,
-          "customerName":param.customerName,
-          "customerPhone":param.customerPhone,
+        "customerName":param.customerName,
+        "customerPhone":param.customerPhone,
          "breedName":param.breedName,
          "qualification":param.qualification,
          "spec":param.spec,
@@ -1749,8 +1751,9 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
     const data1 = {
          "type":param.type,
          "especial":param.especial,
-          "customerName":param.customerName,
-          "customerPhone":param.customerPhone,
+        "customerName":param.customerName,
+        "customerId":param.customerId,
+        "customerPhone":param.customerPhone,
          "breedName":param.breedName,
          "qualification":param.qualification,
          "spec":param.spec,
@@ -1773,7 +1776,8 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
          "city":param.city,
          "district":param.district,
          "location":param.location,
-         "number":param.number
+         "number":param.number,
+         "quality":param.quality
     }
     Vue.http({
         method: "POST",
@@ -1835,30 +1839,30 @@ export const updateTrackingInfo = ({ dispatch }, param) => { //修改跟进信�
 }
 
 export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信息
-    console.log(param.flag);
+    console.log(param);
    
     const data = {
          
     }
-    if(param.type){
+    if(param.type!==""){
         data.type = param.type;
     }
-    if(param.trackingWay){
+    if(param.trackingWay!==""){
         data.trackingWay = param.trackingWay;
     }
-    if(param.contactNo){
+    if(param.contactNo!==""){
         data.contactNo = param.contactNo;
     }
-    if(param.comments){
+    if(param.comments!==""){
         data.comments = param.comments;
     }
-    if(param.objId){
+    if(param.objId!==""){
         data.objId = param.objId;
     }
-    if(param.bizId){
+    if(param.bizId!==""){
         data.bizId = param.bizId;
     }
-    if(param.bizType){
+    if(param.bizType!==""){
         data.bizType = param.bizType;
     }
   
@@ -1878,6 +1882,7 @@ export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信�
         dispatch(types.ADD_TRACKING_DATA,param);
     }, (res) => {
         console.log('fail');
+        console.log(param)
     })
 }
 

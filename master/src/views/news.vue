@@ -86,7 +86,7 @@
                                 id:item.id,
                                 sub:$index,
                                 show:true
-                                                })">{{item.fullname}}</td>
+                                })">{{item.fullname}}</td>
                         <td>{{item.nickname}}</td>
                         <td>{{item.phone}}</td>
                         <td>{{item.email}}</td>
@@ -262,12 +262,9 @@ export default {
       },
   methods: {
     clickOn: function(item) {
-            
-            this.changeParam = item;
-            this.getUserDetail(this.changeParam);
-
-
-        },
+        this.changeParam = item;
+        this.getUserDetail(this.changeParam);
+    },
     eventClick:function(id){
             if(this.$store.state.table.basicBaseList.userList[id].show){
                 this.$store.state.table.basicBaseList.userList[id].show = !this.$store.state.table.basicBaseList.userList[id].show;
@@ -296,11 +293,11 @@ export default {
             this.loadParam.fullname = '';
             this.getUserList(this.loadParam);
     },*/
-    resetTime(){
+    resetTime:function(){
         this.loadParam.startCtime = '';
         this.loadParam.endCtime = '';
     },
-    loadByCondition(){
+    loadByCondition:function(){
         this.getUserList(this.loadParam);
     },
     createUser:function(value){

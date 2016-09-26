@@ -7,7 +7,8 @@
             <div class="my_order col-xs-2">枚举类型</div>
             <div class="col-xs-8 my_order_search">
                 <div class="name_search">
-                    <select class="form-control" v-model="loadParam.sel" @change="searchname(loadParam.sel)">
+                    <select class="form-control" v-model="loadParam.sel" @change="searchname(
+                    )">
                         <option selected value="">请选择种类名称搜索</option>
                         <option  value="TRACE">跟进类型</option>
                         <option  value="ST">规格类型</option>
@@ -47,13 +48,11 @@
                  <th>名称</th>
                  <th>类型</th>
                  <th>描述</th>
-                 <th>状态</th>
                  <th></th>
               </tr>
             </thead>
             <thead class="space">
                 <tr>
-                    <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -67,7 +66,6 @@
                 <td>{{item.name}}</td>
                 <td>{{item.type | systemtype}}</td>
                 <td>{{item.desc | systemdesc}}</td>
-                <td>{{item.status}}</td>
                 <td  @click="editData($index)">
                   <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
                    <div class="component_action" v-show='item.show' transition="expand">

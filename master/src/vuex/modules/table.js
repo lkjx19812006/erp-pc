@@ -39,7 +39,6 @@ import {
    ADD_PRODUCT_DATA,
    UPDATE_PRODUCT_DATA,
    EMPLOYEE_DATA,
-   INTENTION_LIST_DATA,
    CHANCE_LIST_DATA,
    USER_DATA,
    UPDATE_USER_DATA,
@@ -103,8 +102,8 @@ const state = {
             { "code": "0", "name": "花类", "show": "true" }
         ],
         drugList: [
-            { "id": 176311, "number": "国药准字Z20093164", "name": "麝香祛痛搽剂", "nameEn": "", "product": "", "agentType": "搽剂", "spec": "每瓶装60ml", "company": "远大医药黄石飞云制药有限公司", "address": "湖北省黄石市鄂黄路52号", "drugType": "中药", "numberOld": "", "approveDate": "2014-03-03 00:00", "code": "86901890001064", "linkDb": "药品广告 中药保护品种库", "ctime": "2016-09-02 16:52", "show": "true" },
-            { "id": 176312, "number": "国药准字Z20093165", "name": "麝香祛痛搽剂", "nameEn": "", "product": "", "agentType": "搽剂", "spec": "每瓶装60ml", "company": "浙江景岳堂药业有限公司", "address": "湖北省黄石市鄂黄路52号", "drugType": "中药", "numberOld": "", "approveDate": "2014-03-03 00:00", "code": "86901890001064", "linkDb": "药品广告 中药保护品种库", "ctime": "2016-09-02 16:52", "show": "true" }
+            { "id": 176311, "number": "国药准字Z20093164", "name": "麝香祛痛搽剂", "nameEn": "", "product": "", "agentType": "搽剂", "spec": "每瓶装60ml", "company": "远大医药黄石飞云制药有限公司", "address": "湖北省黄石市鄂黄路52号", "drugType": "中药", "numberOld": "", "approveDate": "2014-03-03 00:00", "code": "86901890001064", "linkDb": "药品广告 中药保护品种库", "ctime": "2016-09-02 16:52", "show": true },
+            { "id": 176312, "number": "国药准字Z20093165", "name": "麝香祛痛搽剂", "nameEn": "", "product": "", "agentType": "搽剂", "spec": "每瓶装60ml", "company": "浙江景岳堂药业有限公司", "address": "湖北省黄石市鄂黄路52号", "drugType": "中药", "numberOld": "", "approveDate": "2014-03-03 00:00", "code": "86901890001064", "linkDb": "药品广告 中药保护品种库", "ctime": "2016-09-02 16:52", "show": true }
         ],
         customerList: [
             { "id": 0, "type": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false },
@@ -296,9 +295,7 @@ const mutations = {
             state.systemBaseList.enumlist[data.sub][key] = data[key];
         }
     },
-    [SERVICE_COMPONENT](state, data) { //成分
-        state.basicBaseList.componentList = data;
-    },
+
     [SERVICE_ENTERPRISE](state, data) { //企业
         state.basicBaseList.enterpriseList = data;
     },
@@ -342,7 +339,7 @@ const mutations = {
         console.log(state.companyDetail[data.key].arr[data.sub])
     },
 
-    [DELETE_BREED_DATA](state, data) { //删除客户信息
+    [DELETE_BREED_DATA](state,data) { //删除客户信息
         state.basicBaseList[data.key].splice(data.sub, 1);
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
@@ -381,7 +378,9 @@ const mutations = {
     [SERVICE_ENTERPRISE_DETAIL](state, data) { //企业详情
         state.companyDetail = data;
     },
-
+    [SERVICE_COMPONENT](state, data) { //成分
+        state.basicBaseList.componentList = data;
+    },
     [DRUG_DETAIL_DATA](state, data) { //成分详情
         state.basicBaseList.drugList = data;
     },
@@ -491,7 +490,8 @@ const mutations = {
             "duedate": data.duedate,
             "coa": data.coa,
             "cid": data.cid,
-            "id": data.id
+            "id": data.id,
+            "show": false,
         })
     },
     [FILE_DATA](state, data) { //新增客户文件
@@ -595,12 +595,8 @@ const mutations = {
         temp.objId = data.objId;
         temp.bizId = data.bizId;
         temp.bizType = data.bizType;
+        temp.show = false;
         state.userDetail.tracking.arr.push(temp);
-        /*state.userDetail.tracking.arr[data.index].trackingWay = data.trackingWay;
-        state.userDetail.tracking.arr[data.index].comments = data.comments;
-        state.userDetail.tracking.arr[data.index].contactNo = data.contactNo;
-        state.userDetail.tracking.arr[data.index].type = data.type;*/
-
     },
 
     
@@ -609,21 +605,6 @@ const mutations = {
         for (var key in data) {
             state.basicBaseList[data.key][data.sub][key] = data[key];
         }
-        console.log(state.basicBaseList[data.key][data.sub])
-        /* state.basicBaseList[data.key][data.sub].name = data.name;
-         state.basicBaseList[data.key][data.sub].ename = data.ename;
-         state.basicBaseList[data.key][data.sub].no = data.no;
-         state.basicBaseList[data.key][data.sub].orgId = data.orgId;
-         state.basicBaseList[data.key][data.sub].orgCode = data.orgCode;
-         state.basicBaseList[data.key][data.sub].status = data.status;
-         state.basicBaseList[data.key][data.sub].orgName = data.orgName;
-         state.basicBaseList[data.key][data.sub].position = data.position;
-         state.basicBaseList[data.key][data.sub].mobile = data.mobile;
-         state.basicBaseList[data.key][data.sub].extNo = data.extNo;
-         state.basicBaseList[data.key][data.sub].level = data.level;
-         state.basicBaseList[data.key][data.sub].entryDate = data.entryDate;
-         state.basicBaseList[data.key][data.sub].leaveDate = data.leaveDate;
-         state.basicBaseList[data.key][data.sub].role = data.role;*/
     },
     [UPDATA_INTENTION_DATA](state,data){ //修改意向
         for (var key in data) {
@@ -635,6 +616,7 @@ const mutations = {
              "type":data.type,
              "especial":data.especial,
              "customerName":data.customerName,
+             "customerId":data.customerId,
              "customerPhone":data.customerPhone,
              "breedName":data.breedName,
              "qualification":data.qualification,
@@ -658,7 +640,8 @@ const mutations = {
              "city":data.city,
              "district":data.district,
              "location":data.location,
-             "number":data.number
+             "number":data.number,
+             "quality":data.quality
         })
     },
     [INTENTION_OFFER_DETAIL](state,data){

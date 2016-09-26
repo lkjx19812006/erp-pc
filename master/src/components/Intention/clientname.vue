@@ -5,53 +5,52 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 	    <div class="model-header">
-	    	<h4>业务员信息</h4>
+	    	<h4>客户信息</h4>
 			<div class="trans_service clearfix">
     			<div class="cover_loading">
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 	            </div>
 	            <div class="col-xs-4">
 		            <div class="name_search clearfix" style="border:none">
-	                   <select  class="form-control" v-model="loadParam.orgId" @change="employNameSearch()">
-	                        <option selected value="">请选择业务员部门</option>
-	                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
+	                   <select  class="form-control" v-model="loadParam.type" @change="employNameSearch()">
+	                        <option selected value="">请选择客户类型</option>
+	                  	    <option value="0">个人</option>
+	                  	    <option value="1">企业</option>
 	                  </select> 
 	                </div>
 	            </div>
 				<div class="col-xs-8">
 	                <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" @change="employNameSearch()">
+	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入客户名字" @keyup.enter="employNameSearch()">
 	                </div>
 	                 <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @change="employNameSearch()">
+	                    <input type="text" class="search_input" v-model="loadParam.tel" placeholder="请输入客户手机号"  @keyup.enter="employNameSearch()">
 	                </div>
 	            </div>
 	            <table class="table table-hover table_head table-striped " v-cloak>
 	                <thead>
 	                    <tr>
-	                        <th></th>
-	                        <th>姓名</th>
-	                        <th>部门</th>
-	                        <th>手机号</th>
+	                    	<th></th>
+	                        <th>类型</th>
+	                        <th>名称</th>
+	                        <th>电话</th>
+	                        <th>分类</th>
 	                    </tr>
 	                </thead>
 	                <tbody>
-	                    <tr v-for="item in initEmployeeList">
-	                       <td  @click.stop="">
-	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.name)" ></label>
+	                    <tr v-for="item in initCustomerlist">
+	                    	<td  @click.stop="">
+	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.name,item.tel)" ></label>
 	                        </td>
+	                        <td>{{item.type}}</td>
 	                        <td>{{item.name}}</td>
-	                        <td>{{item.orgName}}</td>
-	                        <td>{{item.mobile}}</td>
+	                        <td>{{item.tel}}</td>
+	                        <td>{{item.classify}}</td>
 	                    </tr>
 	                </tbody>
 	            </table>
-		        <!-- <div class="edit_footer">
-		    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-		    		<input  type="button" class="btn btn-orange" @click="selected(param,param.show=false)" value="确定"/>
-		    	</div> -->
 			</div>
 			<div class="base_pagination">
 	            <pagination :combination="loadParam"></pagination>
@@ -62,13 +61,10 @@
 <script>
 import pagination from '../pagination'
 import {
-    initEmployeeList,
-    initOrgList
+    initCustomerlist
 } from '../../vuex/getters'
 import {
-    getEmployeeList,
-    transferInfo,
-    getOrgList
+    getClientList
 } from '../../vuex/actions'
 export default{
 	props:['param'],
@@ -81,8 +77,8 @@ export default{
                 cur: 1,
                 all: 7,
                 name:'',
-                mobile:'',
-                orgId:''
+                tel:'',
+                type:''
             },
 			checked:false,
 			show:true
@@ -93,43 +89,40 @@ export default{
 	},
 	vuex:{
 		getters:{
-			initEmployeeList,
-			initOrgList
+			initCustomerlist
 		},
 		actions:{
-			getEmployeeList,
-			transferInfo,
-			getOrgList
+			getClientList
 		}
 	},
 	methods:{
-		serviceselected:function(sub,id,name){
-			this.$store.state.table.basicBaseList.employeeList[sub].checked=!this.$store.state.table.basicBaseList.employeeList[sub].checked;
-			for(var key in this.initEmployeeList){
+		serviceselected:function(sub,id,name,tel){
+			this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
+			for(var key in this.initCustomerlist){
 				if(key!=sub){
-					if(this.$store.state.table.basicBaseList.employeeList[key].checked==true){
-						this.$store.state.table.basicBaseList.employeeList[key].checked=false;
+					if(this.$store.state.table.basicBaseList.customerList[key].checked==true){
+						this.$store.state.table.basicBaseList.customerList[key].checked=false;
 					}
 				}
 			}
-			this.param.employeeId = id;
-			this.param.employeeName = name;
+			this.param.customerId= id;
+			this.param.customerName = name;
+			this.param.customerPhone = tel;
 			this.param.show=false;
-			this.$dispatch('a',this.param);
+			this.$dispatch('customer',this.param);
 		},
 		employNameSearch: function() {
-            this.getEmployeeList(this.loadParam);
+            this.getClientList(this.loadParam);
         }
 	},
     events: {
 	    fresh: function(input) {
 	        this.loadParam.cur = input;
-	        this.getEmployeeList(this.loadParam);
+	        this.getClientList(this.loadParam);
 	    }
     },
 	created(){
-		this.getEmployeeList(this.loadParam);
-		this.getOrgList(this.loadParam);
+		this.getClientList(this.loadParam);
 	}
 }
 </script>

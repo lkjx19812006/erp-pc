@@ -5,7 +5,7 @@
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
             <div class="col-md-8">
-                <h4 class="section_title">成分相关{{param.code}}</h4>
+                <h4 class="section_title">成分相关</h4>
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix" @click="drugToggle(initDruglist)">
@@ -94,7 +94,8 @@ export default {
                 loading: true,
                 color: '#5dc596',
                 size: '15px'
-            }
+            },
+            show:false
         }
     },
     vuex: {
@@ -107,8 +108,10 @@ export default {
     },
     methods: {
         drugToggle: function(param) {
+            console.log(this.$store.state.table.basicBaseList.drugList)
             if(this.$store.state.table.basicBaseList.drugList.length==0){
                 this.$store.state.table.basicBaseList.drugList.show=false
+                console.log(this.$store.state.table.basicBaseList.drugList.show)
             }
             this.$store.state.table.basicBaseList.drugList.show =!this.$store.state.table.basicBaseList.drugList.show;
             console.log(this.$store.state.table.basicBaseList.drugList.show)

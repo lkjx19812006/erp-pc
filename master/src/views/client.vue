@@ -51,7 +51,7 @@
                     show:true
                     })">划转</button>
                 <button class="new_btn transfer" @click="createCustomer('create')">新建</button>
-                <button class="new_btn transfer" @click="createSearch()">查询</button>
+                <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
         <div class="order_table">
@@ -76,7 +76,6 @@
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>注册地址</th>
-                        <th>状态</th>
                         <th>备注</th>
                         <th></th>
                     </tr>
@@ -114,7 +113,6 @@
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.address}}</td>
-                        <td>{{item.status}}</td>
                         <td>{{item.comments}}</td>
                         <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />

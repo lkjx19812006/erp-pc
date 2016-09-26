@@ -1,11 +1,13 @@
 <template>
+    <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
+    <searchbreed-model :param="breedNameParam" v-if="breedNameParam.show"></searchbreed-model>
     <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新增意向</h3>
+            <h3>修改意向</h3>
         </div>
         <validator name="validation">
                 <div class="edit-model">
@@ -13,7 +15,7 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">客户名称 <span class="system_danger" v-if="$validation.customer.required">请输入客户名称</span></label>
-                                 <input type="text" class="form-control edit-input"  id="customer" v-model="param.customerName" value="{{param.customerName}}" v-validate:customer="['required']" />
+                                 <input type="text" class="form-control edit-input"  id="customer" v-model="param.customerName" value="{{param.customerName}}"  onlyready="true"  v-validate:customer="['required']"  @click="searchCustomer(param.customerName,param.customerId,param.customerPhone)"/>
                             </div>
                             <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">类型</label>
@@ -26,7 +28,7 @@
                          <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种名称  <span class="system_danger" v-if="$validation.name.required">请选择品种名称</span></label>
-                                <input type="text" class="form-control edit-input"  id="name" v-model="param.breedName" value="{{param.breedName}}" v-validate:name="['required']" />
+                                <input type="text" class="form-control edit-input"  id="name" v-model="param.breedName" value="{{param.breedName}}" v-validate:name="['required']" @click="searchBreed(param.breedName,param.breedId)" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">是否特殊</label>
@@ -146,7 +148,7 @@
                                 <input type="text" class="form-control edit-input" v-model="param.sampleUnit" value="{{param.sampleUnit}}"  />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">样品总价</label>
+                                <label class="editlabel">样品价格</label>
                                 <input type="text" class="form-control edit-input" v-model="param.sampleAmount" value="{{param.sampleAmount}}"  />
                             </div>
                         </div>
@@ -174,14 +176,27 @@
 </template>
 <script>
 import filter from '../../filters/filters'
+import searchcustomerModel  from '../Intention/clientname'
+import searchbreedModel  from '../Intention/breedsearch'
 export default {
     components: {
-
+        searchcustomerModel,
+        searchbreedModel
     },
     props: ['param'],
     data() {
         return {
-          
+           empNameParam:{
+                show:false,
+                customerId:'',
+                customerName:'',
+                customerPhone:''
+          },
+          breedNameParam:{
+                show:false,
+                breedName:'',
+                breedId:''
+          }
         }
     },
     vuex:{
@@ -190,7 +205,17 @@ export default {
         }
     },
     methods:{
-
+         searchCustomer:function(customerName,customerId,customerPhone){
+            this.empNameParam.show=true;
+            this.param.customerName = this.empNameParam.customerName;
+            this.param.customerId = this.empNameParam.customerId;
+            this.param.customerPhone = this.empNameParam.customerPhone;
+        },
+        searchBreed:function(breedName,breedId){
+            this.breedNameParam.show=true;
+            this.param.breedName = this.breedNameParam.breedName;
+            this.param.breedId = this.breedNameParam.breedId;
+        }
     },
     route: {
         activate: function(transition) {
@@ -200,6 +225,17 @@ export default {
         deactivate: function(transition) {
             console.log('hook-example deactivated!')
             transition.next()
+        }
+    },
+    events:{
+        customer:function(qq){
+            this.param.customerName = qq.customerName;
+            this.param.customerId = qq.customerId;
+            this.param.customerPhone = qq.customerPhone;
+        },
+        breed:function(qq){
+            this.param.breedName = qq.breedName;
+            this.param.breedId = qq.breedId;
         }
     },
     filter:(filter,{})

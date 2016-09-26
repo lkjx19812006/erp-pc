@@ -17,12 +17,10 @@
                         <th>公司名称</th>
                         <th>含 量</th>
                         <th>单 位</th>
-                        <th>状态</th>
                     </tr>
                 </thead>
                 <thead class="space">
                     <tr>
-                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -49,7 +47,6 @@
                         <td>{{item.companyName | companyname}}</td>
                         <td>{{item.quantity}}</td>
                         <td>{{item.unit}}</td>
-                        <td>{{item.status}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -16,15 +16,15 @@
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                         <li>
                             <button type="button" class="btn btn-base" @click="createTracking({
-                        objId:initUserDetail.id,
-                        bizId:'',
-                        type:0,
-                        trackingWay:'',
-                        bizType:'',
-                        contactNo:'',
-                        comments:'',
-                        show:false
-                      })">新建跟进</button>
+                                    objId:initUserDetail.id,
+                                    bizId:'',
+                                    type:0,
+                                    trackingWay:'',
+                                    bizType:'',
+                                    contactNo:'',
+                                    comments:'',
+                                    show:false
+                                  })">新建跟进</button>
                         </li>
                         
                         <li>
@@ -52,20 +52,20 @@
             <div class="client-section clearfix" >
                 <div class="col-md-8 client-detail">
                     <h4 class="section_title">相关</h4>
-                    <article>
-                        <div class="panel-group">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-                          link:initUserDetail.chance,
-                          crete:'chance'
-                          })">
-                    <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                    <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                      会员意向（{{initUserDetail.chance.arr.length}}）
-                    </a>
-                    <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button>
-                  </h4>
+                      <article>
+                          <div class="panel-group">
+                              <div class="panel panel-default">
+                                  <div class="panel-heading" >
+                                      <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:initUserDetail.chance,
+                                              crete:'chance'
+                                              })">
+                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          会员意向（{{initUserDetail.chance.arr.length}}）
+                                        </a>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button>
+                                      </h4>
                                 </div>
                                 <div class="panel-collapse" v-show="initUserDetail.chance.show">
                                     <div class="panel-body panel-set">
@@ -104,18 +104,17 @@
                                 </div>
                             </div>
                           
-                           
                 
-              <div class="panel panel-default">
+                          <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="personalEnfoldment({id:initUserDetail.id})">
-                    <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                    <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                      个人认证
-                    </a>
-                    <button v-if="initUserDetail.utype==1" type="button" class="btn btn-base pull-right"  @click.stop="personalAuth({id:initUserDetail.id,ucomment:initUserDetail.ucomment,utype:initUserDetail.utype})">点击认证</button>
-                    <button v-if="initUserDetail.utype!=1" type="button" class="btn btn-base pull-right"  @click.stop="">无需认证</button>
-                  </h4>
+                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          个人认证
+                                        </a>
+                                        <button v-if="initUserDetail.utype==1" type="button" class="btn btn-base pull-right"  @click.stop="personalAuth({id:initUserDetail.id,ucomment:initUserDetail.ucomment,utype:initUserDetail.utype})">点击认证</button>
+                                        <button v-if="initUserDetail.utype!=1" type="button" class="btn btn-base pull-right"  @click.stop="">无需认证</button>
+                                    </h4>
                                 </div>
                                 <div class="panel-collapse" v-show="initUserDetail.personalAuthShow&&initUserDetail.utype==1">
                                     <div class="panel-body panel-set">
@@ -142,14 +141,14 @@
 
                       <div class="panel panel-default">
                                 <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="companyEnfoldment({id:initUserDetail.id})">
-                    <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                    <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                      企业认证
-                    </a>
-                    <button v-if="initUserDetail.ctype==1" type="button" class="btn btn-base pull-right"  @click.stop="companyAuth({id:initUserDetail.id,ccomment:initUserDetail.ccomment,ctype:initUserDetail.ctype})">点击认证</button>
-                    <button v-if="initUserDetail.ctype!=1" type="button" class="btn btn-base pull-right"  @click.stop="">无需认证</button>
-                  </h4>
+                                     <h4 class="panel-title clearfix" @click="companyEnfoldment({id:initUserDetail.id})">
+                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          企业认证
+                                        </a>
+                                        <button v-if="initUserDetail.ctype==1" type="button" class="btn btn-base pull-right"  @click.stop="companyAuth({id:initUserDetail.id,ccomment:initUserDetail.ccomment,ctype:initUserDetail.ctype})">点击认证</button>
+                                        <button v-if="initUserDetail.ctype!=1" type="button" class="btn btn-base pull-right"  @click.stop="">无需认证</button>
+                                    </h4>
                                 </div>
                                 <div class="panel-collapse" v-show="initUserDetail.companyAuthShow&&initUserDetail.ctype==1">
                                     <div class="panel-body panel-set">
@@ -159,43 +158,39 @@
                                             <th>路径</th>
                                             <th>描述<th>
                                           </thead>
-                                        <tbody>
-                                            <tr v-for="item in initIdentify.files">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.path}}</td>
-                                                <td>{{item.description}}</td>
-                                                
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                          <tbody>
+                                              <tr v-for="item in initIdentify.files">
+                                                  <td>{{item.fileType}}</td>
+                                                  <td>{{item.path}}</td>
+                                                  <td>{{item.description}}</td>
+                                                  
+                                              </tr>
+                                          </tbody>
+                                      </table>
                                     </div>
                                 </div>
-                            </div>
-
-
-
-                            
-                <div class="panel panel-default">
+                            </div>   
+                            <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title clearfix" @click="enfoldment({
-                          link:initUserDetail.tracking,
-                          crete:'tracking'
-                          })">
-                    <img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
-                    <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                      跟进（{{initUserDetail.tracking.arr.length}}）
-                    </a>
-                    <button type="button" class="btn btn-base pull-right" @click.stop="createTracking({
-                        objId:initUserDetail.id,
-                        bizId:'',
-                        type:0,
-                        trackingWay:'',
-                        bizType:'',
-                        contactNo:'',
-                        comments:'',
-                        show:false
-                      })">新建</button>
-                  </h4>
+                                              link:initUserDetail.tracking,
+                                              crete:'tracking'
+                                              })">
+                                        <img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          跟进（{{initUserDetail.tracking.arr.length}}）
+                                        </a>
+                                        <button type="button" class="btn btn-base pull-right" @click.stop="createTracking({
+                                            objId:initUserDetail.id,
+                                            bizId:'',
+                                            type:0,
+                                            trackingWay:'',
+                                            bizType:'',
+                                            contactNo:'',
+                                            comments:'',
+                                            show:false
+                                          })">新建</button>
+                                      </h4>
                                 </div>
                                 <div  class="panel-collapse" v-show="initUserDetail.tracking.show">
                                    <div class="panel-body panel-set">
