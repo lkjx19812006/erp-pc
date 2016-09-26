@@ -51,8 +51,11 @@ import {
    IDENTIFY_DATA,
    UPDATE_TRACKING_DATA,
    ADD_TRACKING_DATA,
+   UPDATA_INTENTION_DATA,
+   INTENTION_LIST_DATA,
    INTENTION_DATA,
-   UPDATA_INTENTION_DATA
+   INTENTION_OFFER_DETAIL
+
 
 } from '../mutation-types'
 
@@ -110,6 +113,9 @@ const state = {
         ],
         intentionList: [
             { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
+        ],
+        intentionDetail: [
+            { "id": "1201608221917540470","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","pack": "机压包","country": "中国","status": 1, "show": true }
         ],
         employeeList: [{
             "id": 6,
@@ -261,8 +267,6 @@ const state = {
   },
   identify:{},
   trackingDetail:{}
-
-
 }
 
 const mutations = {
@@ -552,7 +556,7 @@ const mutations = {
         state.basicBaseList.orgList = data;
     },
     [ADD_EMPLOYEE_DATA](state, data) { //新增员工信息
-        state.basicBaseList[data.key].push({
+        state.basicBaseList[data.key].unshift({
             "name": data.name,
             "ename": data.ename,
             "show": false,
@@ -560,49 +564,26 @@ const mutations = {
             "orgName": data.orgName,
             "position": data.position,
             "mobile": data.mobile,
-            "extNo": data.extNo,
+            "extno": data.extno,
             "level": data.level,
-            "entryDate": data.entryDate,
-            "leaveDate": data.leaveDate,
-            "orgId": data.orgId,
-            "orgCode": data.orgCode,
-            "status": data.status,
-            "role": param.role
+            "entrydate": data.entrydate,
+            "leavedate": data.leavedate,
+            "orgid": data.orgid,
+            "orgcode": data.orgcode,
+            "status": data.status
+           /* "role": param.role*/
         })
     },
 
-
-    /*[UPDATE_EMPLOY_DATA](state,data){ //修改员工信息
-        state.basicBaseList[data.key][data.sub].name = data.name;
-        state.basicBaseList[data.key][data.sub].ename = data.ename;
-        state.basicBaseList[data.key][data.sub].no = data.no;
-        state.basicBaseList[data.key][data.sub].orgId = data.orgId;
-        state.basicBaseList[data.key][data.sub].orgCode = data.orgCode;
-        state.basicBaseList[data.key][data.sub].status = data.status;
-        state.basicBaseList[data.key][data.sub].orgName = data.orgName;
-        state.basicBaseList[data.key][data.sub].position = data.position;
-        state.basicBaseList[data.key][data.sub].mobile = data.mobile;
-        state.basicBaseList[data.key][data.sub].extNo = data.extNo;
-        state.basicBaseList[data.key][data.sub].level = data.level;
-        state.basicBaseList[data.key][data.sub].entryDate = data.entryDate;
-        state.basicBaseList[data.key][data.sub].leaveDate = data.leaveDate;
-        state.basicBaseList[data.key][data.sub].role = data.role;
-    },*/
-
     [IDENTIFY_DATA](state,data){     //认证信息
-      
-        
         state.identify = data;
-
     },
 
     [UPDATE_TRACKING_DATA](state,data){     //更新跟进
-        
         state.userDetail.tracking.arr[data.index].trackingWay = data.trackingWay;
         state.userDetail.tracking.arr[data.index].comments = data.comments;
         state.userDetail.tracking.arr[data.index].contactNo = data.contactNo;
         state.userDetail.tracking.arr[data.index].type = data.type;
-
     },
 
     [ADD_TRACKING_DATA](state,data){     //增加跟进
@@ -628,6 +609,7 @@ const mutations = {
         for (var key in data) {
             state.basicBaseList[data.key][data.sub][key] = data[key];
         }
+        console.log(state.basicBaseList[data.key][data.sub])
         /* state.basicBaseList[data.key][data.sub].name = data.name;
          state.basicBaseList[data.key][data.sub].ename = data.ename;
          state.basicBaseList[data.key][data.sub].no = data.no;
@@ -646,38 +628,41 @@ const mutations = {
     [UPDATA_INTENTION_DATA](state,data){ //修改意向
         for (var key in data) {
             state.basicBaseList[data.key][data.sub][key] = data[key];
-            console.log(state.basicBaseList[data.key][data.sub])
         }
     },
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
         state.basicBaseList.intentionList.unshift({
-            "type": data.type,
-            "especial": data.especial,
-            "breedName": data.breedName,
-            "qualification": data.qualification,
-            "spec": data.spec,
-            "address": data.address,
-            "advance": data.advance,
-            "invoic": data.invoic,
-            'visit': data.visit,
-            "id": data.id,
-            "intl": data.intl,
-            "unit": data.unit,
-            "pack": data.pack,
-            "sampling": data.sampling,
-            "sampleNumber": data.sampleNumber,
-            "sampleUnit": data.sampleUnit,
-            "sampleAmount": data.sampleAmount,
-            "breedId": data.breedId,
-            "country": data.country,
-            "quality": data.quality,
-            "price": data.price,
-            "province": data.province,
-            "city": data.city,
-            "district": data.district,
-            "location": data.location,
-            "number": data.number
+             "type":data.type,
+             "especial":data.especial,
+             "customerName":data.customerName,
+             "customerPhone":data.customerPhone,
+             "breedName":data.breedName,
+             "qualification":data.qualification,
+             "spec":data.spec,
+             "address":data.address,
+             "advance":data.advance,
+             "invoic":data.invoic,
+             'visit':data.visit,
+             "intl":data.intl,
+             "unit":data.unit,
+             "pack":data.pack,
+             "sampling":data.sampling,
+             "sampleNumber":data.sampleNumber,
+             "sampleUnit":data.sampleUnit,
+             "sampleAmount":data.sampleAmount,
+             "breedId":data.breedId,
+             "country":data.country,
+             "quality":data.quality,
+             "price":data.price,
+             "province":data.province,
+             "city":data.city,
+             "district":data.district,
+             "location":data.location,
+             "number":data.number
         })
+    },
+    [INTENTION_OFFER_DETAIL](state,data){
+        state.basicBaseList.intentionDetail = data;
     }
 
 

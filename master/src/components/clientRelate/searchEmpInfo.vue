@@ -40,7 +40,7 @@
 	                <tbody>
 	                    <tr v-for="item in initEmployeeList">
 	                       <td  @click.stop="">
-	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id)" ></label>
+	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.name)" ></label>
 	                        </td>
 	                        <td>{{item.name}}</td>
 	                        <td>{{item.orgName}}</td>
@@ -103,7 +103,7 @@ export default{
 		}
 	},
 	methods:{
-		serviceselected:function(sub,id){
+		serviceselected:function(sub,id,name){
 			this.$store.state.table.basicBaseList.employeeList[sub].checked=!this.$store.state.table.basicBaseList.employeeList[sub].checked;
 			for(var key in this.initEmployeeList){
 				if(key!=sub){
@@ -113,6 +113,7 @@ export default{
 				}
 			}
 			this.param.employeeId = id;
+			this.param.employeeName = name;
 			this.param.show=false;
 			this.$dispatch('a',this.param);
 		},

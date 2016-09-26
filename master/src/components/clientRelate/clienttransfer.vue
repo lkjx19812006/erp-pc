@@ -54,11 +54,11 @@
 	    				<div class="col-xs-8">
 			                <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">
-			                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" @change="employNameSearch()">
+			                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" @keyup.enter="employNameSearch()">
 			                </div>
 			                 <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">
-			                    <input type="text" class="search_input" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @change="employNameSearch()">
+			                    <input type="text" class="search_input" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @keyup.enter="employNameSearch()">
 			                </div>
 			            </div>
 			            <table class="table table-hover table_head table-striped " v-cloak>

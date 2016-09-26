@@ -1,4 +1,5 @@
 <template>
+    <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
     <div class="myOrder">
         <div class="order_search">
             <div class="clear">
@@ -6,68 +7,74 @@
                 <div class="col-xs-8 my_order_search">
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" class="search_input" v-model="orderName" placeholder="按名字搜索">
+                        <input type="text" class="search_input" v-model="loadParam.orderName" placeholder="按名字搜索"  @keyup.enter="orderSearch()">
                     </div>
                     <div class="ordertel_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" class="search_input" v-model="orderNum" placeholder="按订单号搜索">
+                        <input type="text" class="search_input" v-model="loadParam.orderNum" placeholder="按订单号搜索"  @keyup.enter="orderSearch()">
                     </div>
                     <div class="tel_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" maxlength="11" class="search_input" v-model="orderTel" placeholder="按电话搜索">
+                        <input type="text" maxlength="11" class="search_input" v-model="loadParam.orderTel" placeholder="按电话搜索" @keyup.enter="orderSearch()">
                     </div>
                 </div>
                 <div class="right col-xs-2">
-                    <dialog-model :param="dialogParam"></dialog-model>
                     <button class="new_btn" @click="newOrder('new')" data-toggle="modal" data-target="#myModal">新建</button>
                 </div>
             </div>
         </div>  
         <div class="order_table">
-           <div class="table">
-              <ul class="clear">
-                  <li><a>名称</a></li>
-                  <li><a>交易模式</a></li>
-                  <li><a>订单号</a></li>
-                  <li><a>购货单位</a></li>
-                  <li><a>联系电话</a></li>
-                  <li><a>交易人</a></li>
-                  <li><a>订单时间</a></li>
-                  <li><a>物流状态</a></li>
-                  <li></li>
-              </ul>
-          </div>
-          <div class="table table_hover">
-              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-              <ul class="clear" v-for="item in initOrderlist | filterBy searchText  in 'orderName' 'orderNum' 'orderTel'"  v-cloak >
-                  <li>{{item.orderName}}</li>
-                  <li>{{item.orderModule}}</li>
-                  <li>{{item.orderNum}}</li>
-                  <li>{{item.orderUnit}}</li>
-                  <li>{{item.orderTel}}</li>
-                  <li>{{item.orderPerson}}</li>
-                  <li>{{item.orderTime}}</li>
-                  <li>{{item.orderLogstatus}}{{item.show}}</li>
-                  <li @click="edit($index)">
-                     <img height="24" width="24" src="/static/images/default_arrow.png" />
-                  </li>
-                  <div class="order_action"  v-show='item.show' transition="expand">
-                      <ul>
-                          <li><a>编辑</a></li>
-                          <li><a>修改</a></li>
-                      </ul>
-                  </div>
-              </ul>
-          </div> 
+            <table class="table table-hover table_color table-striped " v-cloak>
+                <thead>
+                    <tr>  
+                        <th></th>
+                        <th>名称</th>
+                        <th>交易模式</th>
+                        <th>订单号</th>
+                        <th>购货单位</th>
+                        <th>联系电话</th>
+                        <th>交易人</th>
+                        <th>订单时间</th>
+                        <th>物流状态</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in initOrderlist"  v-cloak >
+                      <td></td>
+                      <!--  <td  @click.stop="">
+                         <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
+                       </td> -->
+                      <td>{{item.orderName}}</td>
+                      <td>{{item.orderModule}}</td>
+                      <td>{{item.orderNum}}</td>
+                      <td>{{item.orderUnit}}</td>
+                      <td>{{item.orderTel}}</td>
+                      <td>{{item.orderPerson}}</td>
+                      <td>{{item.orderTime}}</td>
+                      <td>{{item.orderLogstatus}}</td>
+                      <td @click="editClick($index)">
+                          <img height="24" width="24" src="/static/images/default_arrow.png" />
+                          <div class="component_action" v-show="item.show">
+                               <ul>
+                                   <li>编辑</li>
+                                   <li>删除</li>
+                               </ul>
+                           </div>
+                      </td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
         </div>
     </div>
     <div class="order_pagination">
-        <pagination :combination="list"></pagination>
+        <pagination :combination="loadParam"></pagination>
     </div>
 </template>
 <script>
 import pagination from '../components/pagination'
-import dialogModel from '../components/orderInformationDialog'
+import editorderModel from '../components/order/orderInformationDialog'
 import {
     getList,
     initOrderlist
@@ -79,7 +86,7 @@ import {
 
 export default {
     components: {
-        dialogModel,
+        editorderModel,
         pagination
     },
     data() {
@@ -87,16 +94,18 @@ export default {
             loadParam: {
                 loading: true,
                 color: '#5dc596',
-                size: '15px'
+                size: '15px',
+                cur: 1,
+                all: 7,
+                orderName:'',
+                orderNum:'',
+                orderTel:''
             },
             dialogParam:{
                  show: false,
                  name: 'new'
             },
-            show:true,
-            list: {all:8,cur:1},
-            searchText:'',
-            orderName:''
+            show:true
         }
     },
     vuex: {
@@ -112,22 +121,25 @@ export default {
     created() {
         this.getOrderList(this.loadParam);
        /* this.changeShowStatue();*/
-        if (this.$route.query.id > this.getList[1].subcategory.length || isNaN(this.$route.query.id)) {
+        if (this.$route.query.id > this.getList[6].subcategory.length || isNaN(this.$route.query.id)) {
             this.$route.query.id = 0;
         }
     },
     methods: {
-        edit: function(id) {
-            if(this.$store.state.table.list[id].show){
-                this.$store.state.table.list[id].show=!this.$store.state.table.list[id].show;
+        editClick: function(sub) {
+            if(this.$store.state.table.list[sub].show){
+                this.$store.state.table.list[sub].show=!this.$store.state.table.list[sub].show;
             }else{
-                 this.$store.state.table.list[id].show=true;
+                 this.$store.state.table.list[sub].show=true;
             }
-            console.log(this.$store.state.table)       
+            console.log(this.$store.state.table.list[sub].show)       
         },
         newOrder:function(value){
              this.dialogParam.name=value;
              this.dialogParam.show=true;
+        },
+        orderSearch:function(){
+          
         }
     },
      route: {
@@ -139,6 +151,12 @@ export default {
           console.log('hook-example deactivated!')
           transition.next()
       }
+    },
+    events: {
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getOrderList(this.loadParam);
+        }
     }
 }
 </script>
@@ -175,7 +193,6 @@ export default {
 .order_table {
     margin-top: 20px;
     position: relative;
-    margin-right: 30px;
 }
 
 .order_table .table {

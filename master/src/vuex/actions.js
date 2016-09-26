@@ -1390,6 +1390,21 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
         param.loading = false;
     })
 }
+export const getOffersdetail = ({ dispatch }, param) => {  //意向报价详情
+    Vue.http({
+        method:'GET',
+        url:apiUrl.clientList+'/intention/offers/?intentionId='+param.id,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+/*           var intent = res.json().result.list;*/
+            dispatch(types.INTENTION_OFFER_DETAIL, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 
 export const getUserList = ({ dispatch }, param) => {  //会员信息列表
     param.loading = true;
@@ -1613,20 +1628,20 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
         "ename":param.ename,
         "no":param.no,
         "orgName":param.orgName,
-        "position":param.position,
+        'position':param.position,
         "mobile":param.mobile,
-        "extNo":param.extNo,
+        "extno":param.extno,
         "level":param.level,
-        "entryDate":param.entryDate,
-        "leaveDate":param.leaveDate,
-        "orgId":param.orgId,
-        "orgCode":param.orgCode,
-        "status":param.status,
-        "role":param.role
+        'entrydate':param.entrydate,
+        "leavedate":param.leavedate,
+        "orgid":param.orgid,
+        "orgcode":param.orgcode,
+        'status':param.status
+        /*"role":param.role*/
     }
     Vue.http({
         method: "POST",
-        url: apiUrl.employeeList,
+        url:  apiUrl.clientList + param.url,
         emulateHTTP: true,
         body: data1,
         emulateJSON: false,
@@ -1645,18 +1660,19 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
 export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
     console.log(param)
     const updatedata = {
+        id:param.id,
         name:param.name,
         ename:param.ename,
         no:param.no,
         orgName:param.orgName,
         position:param.position,
         mobile:param.mobile,
-        extNo:param.extNo,
+        extno:param.extno,
         level:param.level,
-        entryDate:param.entryDate,
-        leaveDate:param.leaveDate,
-        orgId:param.orgId,
-        orgCode:param.orgCode,
+        entrydate:param.entrydate,
+        leavedate:param.leavedate,
+        orgid:param.orgid,
+        orgcode:param.orgcode,
         status:param.status,
         role:param.role
     }
@@ -1728,11 +1744,13 @@ export const editintentInfo = ({ dispatch }, param) => { //修改意向
     })
 }
 
-export const createIntention = ({ dispatch }, param) => { //新增意向以及划转
+export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
     console.log(param)
     const data1 = {
          "type":param.type,
          "especial":param.especial,
+          "customerName":param.customerName,
+          "customerPhone":param.customerPhone,
          "breedName":param.breedName,
          "qualification":param.qualification,
          "spec":param.spec,
@@ -1740,7 +1758,6 @@ export const createIntention = ({ dispatch }, param) => { //新增意向以及�
          "advance":param.advance,
          "invoic":param.invoic,
          'visit':param.visit,
-         "id":param.id,
          "intl":param.intl,
          "unit":param.unit,
          "pack":param.pack,
@@ -1760,7 +1777,7 @@ export const createIntention = ({ dispatch }, param) => { //新增意向以及�
     }
     Vue.http({
         method: "POST",
-        url: apiUrl.clientList + '/intention/',
+        url: apiUrl.clientList + param.url,
         emulateHTTP: true,
         body: data1,
         emulateJSON: false,

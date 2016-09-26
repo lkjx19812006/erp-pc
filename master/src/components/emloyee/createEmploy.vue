@@ -49,12 +49,12 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label>{{param.nolist}}</label>
-                                <input type="text" class="form-control" v-model="param.extNo" />
+                                <input type="text" class="form-control" v-model="param.extno" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label>{{param.entry}}</label>
                                 <div class="search_input">
-                                    <mz-datepicker :time.sync="param.entryDate" format="yyyy-MM-dd HH:mm:ss">
+                                    <mz-datepicker :time.sync="param.entrydate" format="yyyy-MM-dd HH:mm:ss">
                                     </mz-datepicker>
                                 </div>
                             </div>
@@ -67,21 +67,21 @@
                             <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                                 <label>{{param.leave}}</label>
                                  <div class="search_input">
-                                    <mz-datepicker :time.sync="param.leaveDate" format="yyyy-MM-dd HH:mm:ss">
+                                    <mz-datepicker :time.sync="param.leavedate"  format="yyyy-MM-dd HH:mm:ss">
                                     </mz-datepicker>
                                 </div>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>{{param.orgid}}</label>
-                                <select class="form-control" v-model="param.orgId" id="userown" v-validate:userown="['required']">
+                                <label>{{param.orgiid}}</label>
+                                <select class="form-control" v-model="param.orgid" id="userown" v-validate:userown="['required']">
                                     <option v-for="item in initOrgList">{{item.id}}</option>
                                 </select>
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label>{{param.code}}</label>
-                                <select class="form-control" v-model="param.orgCode" id="userown" v-validate:userown="['required']">
+                                <select class="form-control" v-model="param.orgcode" id="userown" v-validate:userown="['required']">
                                     <option v-for="item in initOrgList">{{item.code}}</option>
                                 </select>
                             </div>
@@ -90,7 +90,7 @@
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label>{{param.statuslist}}</label>
                                  <select class="form-control"  v-model="param.status">
-                                     <option value="1">可用</option>
+                                     <option value="1" selected>可用</option>
                                      <option value="0">无效</option>
                                  </select>
                             </div>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <input type="button" class="btn  btn-confirm"  @click="Employ(param,param.show = false)" value="保存" />
+                    <input type="button" class="btn  btn-confirm"  @click="param.link(param,param.show = false)" value="保存" />
                 </div>
             </form>
         </validator>
@@ -175,13 +175,13 @@ export default {
             this.dateText = str.replace(/\b(\w)\b/g, "0$1")
         },
         Employ:function(param){
-            var temp = [];
+            /*var temp = [];
             param.role.forEach(function(item){
                 if(item.checked){
                     temp.push(item);
                 }         
             })
-            param.role = temp;
+            param.role = temp;*/
             this.createEmploy(param)
         },
         checked:function(item){
