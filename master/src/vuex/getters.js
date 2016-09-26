@@ -96,8 +96,13 @@ export const initEmployeeList = (state) => {
 export const initOrgList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.orgList));  
 }
-export const initChanceList = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.chanceList));  
+/*--意向信息--*/
+export const initIntentionList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionList));  
+}
+
+export const initOfferList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionDetail));  
 }
 
 /*---会员信息---*/
@@ -107,8 +112,18 @@ export const initUserList = (state) => {
 
 /*---会员详情---*/
 export const initUserDetail = (state) => {
-    
-
     return parseJson(state.table.userDetail);
 }
  
+
+ /*---认证信息---*/
+export const initIdentify = (state) => {
+
+    return parseJson(state.table.identify);
+}
+
+ /*---修改跟进---*/
+/*export const initTrackingDetail = (state) => {
+    console.log('getter');
+    return parseJson(state.table.trackingDetail);
+}*/

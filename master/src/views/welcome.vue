@@ -17,8 +17,7 @@
     </div>
     <div>
    
-  
-<mz-datepicker :time.sync="dateText" format="yyyy/MM/dd HH:mm"></mz-datepicker>
+    <mz-datepicker :time.sync="dateText" format="yyyy/MM/dd HH:mm"></mz-datepicker>
     </div>
     <v-select 
   :debounce="250"
@@ -27,7 +26,18 @@
   :options="city.arr"
   placeholder="省/市"
   label="category"
+<<<<<<< HEAD
   ></v-select> 
+=======
+  ></v-select>
+ <v-select :debounce="250"
+  :value.sync="city.value"
+  :on-search="secondLevel"
+  :options="city.arr"
+  placeholder="二级目录"
+  label="category"
+  ></v-select>
+>>>>>>> 357a26143334885c5d9fb63442b7d73ee2f70126
 
 </template>
 <script>
@@ -86,15 +96,25 @@ export default {
             this.modelParam.show = true;
         },
         districtGetOptions:function(search, loading) {
-    loading(true)
-    this.$http.get('/static/data/list.json', {
-       q: search
-    }).then(resp => {
-      console.log(resp);
-       this.city.arr = resp.data.results
-       loading(false)
-    })
-  },
+            loading(true)
+            this.$http.get('/static/data/list.json', {
+               q: search
+            }).then(resp => {
+              console.log(resp);
+               this.city.arr = resp.data.results
+               loading(false)
+            })
+        },
+        secondLevel:function(search,loading){
+            loading(true)
+            this.$http.get('/static/data/list.json', {
+               q: search
+            }).then(resp => {
+              console.log(resp);
+               this.city.arr = resp.data.results
+               loading(false)
+            })
+        },
         createDateText() {
                 let date = new Date()
                 let year = date.getFullYear()

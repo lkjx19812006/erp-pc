@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>编辑洋洋</h3>
+            <h3>新建订单</h3>
         </div>
         <div class="edit-model">
             <form name="editOrderinfo" action="javascript:void(0)">
@@ -78,7 +78,7 @@
                             <div class="editpage-input">
                                 <label class="editlabel">黑名单</label>
                                 <p class="addblack">
-                                    <img class="left" src="../../static/images/addblack.png" height="28" width="28" />
+                                    <img class="left" src="/static/images/addblack.png" height="28" width="28" />
                                     <span>加入黑名单</span>
                                 </p>
                             </div>
@@ -94,7 +94,7 @@
     </div>
 </template>
 <script>
-import pressImage from '../components/imagePress'
+import pressImage from '../../components/imagePress'
 export default {
     components: {
         pressImage
@@ -111,43 +111,8 @@ export default {
 }
 </script>
 <style scoped>
-.modal {
-    opacity: 0.5;
-    background-color: #000;
-    display: block;
-}
-
-.modal_con {
-    display: block;
-    position: fixed;
-    top: 91px;
-    margin: auto;
-    left: 0;
-    right: 0;
-    max-width: 840px;
-    min-width: 480px;
-    max-height: 710px;
-    bottom: 50px;
-    padding: 0;
-    background-color: #fff;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    /*层数高度不够增加层数*/
-    z-index: 1080;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
 .big-font {
     font-size: 36px;
-}
-
-.top-title {
-    position: absolute;
-    right: 0;
-    top: 0;
 }
 
 .top-title span {

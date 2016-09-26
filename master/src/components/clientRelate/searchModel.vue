@@ -1,4 +1,5 @@
 <template>
+    <searchemp-model :param="empNameParam" v-if="empNameParam.show"></searchemp-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -12,26 +13,10 @@
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
             <section class="editsection" v-cloak>
-                <!-- <div class="editpage-input">
-                    <label class="editlabel">{{param.namelist}}</label>
-                    <input type="text" class="form-control edit-input"  id="name" v-model="param.name" v-validate:name="['required']" />
-                </div> -->
                 <div class="clearfix">
-                    <div class="client-detailInfo  col-xs-12">
-                        <label>类型：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.type"  placeholder="按客户类型搜索"/>
-                    </div>
                      <div class="client-detailInfo  col-xs-12">
                         <label>姓名：</label>
                         <input type="text"  class="form-control" v-model="loadParam.name"  placeholder="按客户姓名搜索"/>
-                    </div>
-                    <div class="client-detailInfo col-xs-12">
-                        <label>分类：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.classfiy"  placeholder="按客户分类搜索"/>
-                    </div>
-                    <div class="client-detailInfo  col-xs-12">
-                        <label>状态：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.status"  placeholder="按客户状态搜索"/>
                     </div>
                     <div class="client-detailInfo col-xs-12">
                         <label>电话：</label>
@@ -39,25 +24,26 @@
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>业务员ID：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.employeeId"  placeholder="按业务员ID搜索" disabled="disabled" />
-                        <div class="empSearch"><img src="/static/images/search.png" height="24" width="24"></div>
+                        <input type="text"  class="form-control" v-model="loadParam.employeeName"  placeholder="按业务员ID搜索" disabled="disabled" @click="employee(loadParam.employeeId,loadParam.employeeName)"/>
+                        <div class="empSearch" @click="employee(loadParam.employeeId,loadParam.employeeName)"><img src="/static/images/search.png" height="24" width="24"></div>
                     </div>
                 </div>      
             </section>
         </div>
         <div class="edit_footer">
              <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <input type="button" class="btn  btn-confirm"  @click="clientSearch(loadParam.type,loadParam.name,loadParam.classify,loadParam.employeeId,loadParam.tel,loadParam.status,param.show = false)" value="确定">
+            <input type="button" class="btn  btn-confirm"  @click="clientSearch(loadParam.name,loadParam.employeeId,loadParam.tel,param.show = false)" value="确定">
         </div>
     </div>
 </template>
 <script>
+import searchempModel from '../../components/clientRelate/searchEmpInfo'
 import {
     getClientList
 } from '../../vuex/actions'
 export default {
     components: {
-
+        searchempModel
     },
     props: ['param'],
     data() {
@@ -69,11 +55,14 @@ export default {
                 cur: 1,
                 all: 7,
                 name:'',
-                classify:'',
-                type:'',
                 tel:'',
                 employeeId:'',
-                status:''
+                employeeName:''
+            },
+            empNameParam:{
+                show:false,
+                employeeId:'',
+                employeeName:''
             }
         }
     },
@@ -82,9 +71,20 @@ export default {
             getClientList
         }
     },
+    events:{
+        a:function(qq){
+            this.loadParam.employeeId = qq.employeeId;
+            this.loadParam.employeeName = qq.employeeName;
+        }
+    },
     methods:{
-        clientSearch:function(name,type,classfiy,tel,employeeId,status){
+        clientSearch:function(name,tel,employeeId){
              this.getClientList(this.loadParam);
+        },
+        employee:function(employeeId,employeeName){
+            this.empNameParam.show=true;
+            this.loadParam.employeeId = this.empNameParam.employeeId;
+            this.loadParam.employeeName = this.empNameParam.employeeName;
         }
     },
     route: {

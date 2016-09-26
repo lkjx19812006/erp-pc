@@ -2,7 +2,11 @@
     <create-model :param="createParam" v-if="createParam.show"></create-model>
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
+    <chance-model :param="chanceParam" v-if="chanceParam.show"></chance-model>
+    <personalauth-model :param="personalParam" v-if="personalParam.show"></personalauth-model>
+    <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
+
 
     
      <div  v-show="!changeParam.show">
@@ -20,7 +24,7 @@
                 </div>
                 <div class="name_search clearfix"> 
                     <img src="/static/images/search.png" height="24" width="20">
-                    <input type="text" class="search_input" v-model="loadParam.audit" @keyup.enter="loadByCondition()" placeholder="按状态搜索">
+                    <input type="text" class="search_input" v-model="loadParam.audit" @keyup.enter="loadByCondition()" placeholder="按审核状态搜索">
                 </div>
                 <div class="name_search clearfix"> 
                     <div>
@@ -90,9 +94,9 @@
                         <td>{{item.company}}</td>
                         <td>{{item.score}}</td>
                         <td>{{item.sourceType}}</td>
-                        <td>{{item.type}}</td>
+                        <td>{{item.bizTypeName}}</td>
                         <td>{{item.auditResult}}</td>
-                        <td>暂无备注</td>
+                        <td>{{item.comment}}</td>
                         
                         <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
@@ -110,6 +114,7 @@
                                                 qq:item.qq,
                                                 index:$index,
                                                 company:item.company,
+                                                comment:item.comment,
                                                 link:alertInfo,
                                                 url:'/user/',
                                                 key:'userList'
@@ -132,9 +137,9 @@
                                                 url:'/user/',
                                                 key:'userList'
                                                 },item.show=false)">划转</li>
-                                    <li @click="changce(item.show=false)">机会</li>
-                                    <li @click="personalAuth(item.show=false)">个人认证</li>
-                                    <li @click="companyAuth(item.show=false)">企业认证</li>
+                                    <li @click="createChance(item.show=false)">机会</li>
+                                    <li v-if="item.utype==1" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">个人认证</li>
+                                    <li v-if="item.ctype==1" @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)">企业认证</li>
                                 </ul>
                             </div>
                         </td>
@@ -157,20 +162,25 @@ import createModel  from '../components/user/userCreate'
 import alterinfoModel  from '../components/user/userUpdate'
 import transferModel  from '../components/user/userTransfer'
 import detailModel from '../components/user/userDetail'
+import chanceModel from  '../components/user/userChance'
+import personalauthModel from '../components/user/personalAuth'
+import companyauthModel from '../components/user/companyAuth'
 import pagination from '../components/pagination'
 import {
     getCount,
     initUserList,
-    initUserDetail
+    initUserDetail,
+   
 } from '../vuex/getters'
 import {
     getUserList,
-    getUserDetail  
+    getUserDetail,
+  
 } from '../vuex/actions'
 
 
 export default {
-    props: ['param'],
+    //props: ['param'],
     components: {   
         pagination,
         calendar,
@@ -178,7 +188,9 @@ export default {
         alterinfoModel,
         transferModel,
         detailModel,
-
+        chanceModel,
+        personalauthModel,
+        companyauthModel,
 
        
     },
@@ -212,8 +224,20 @@ export default {
             },
             changeParam:{
                 show:false
-            }
+            },
+            chanceParam:{
+                show:false        
+            },
+            personalParam:{
 
+                show:false,
+                utype:1
+            },
+            companyParam:{
+                show:false,
+                ctype:1
+            },
+        
         }
     },
     vuex: {
@@ -221,11 +245,13 @@ export default {
             // note that you're passing the function itself, and not the value 'getCount()'
             counterValue: getCount,
             initUserList,
-            initUserDetail         
+            initUserDetail,
+                
         },
         actions: {
             getUserList,
-            getUserDetail
+            getUserDetail,
+            
         }
     },
     events: {
@@ -249,6 +275,7 @@ export default {
                 this.$store.state.table.basicBaseList.userList[id].show=true;
             }   
         },
+
     /*loadByName(){
         console.log('name');
             this.loadParam.phone = '';
@@ -292,14 +319,24 @@ export default {
     userToClient:function(item){
         this.transferParam = item;
     },
-    changce:function(){
-
+    createChance:function(){
+        this.chanceParam.show = true;
     },
-    personalAuth(){
-
+    personalAuth:function(item){
+        
+        this.personalParam.show = true;
+        this.personalParam.id = item.id;
+        this.personalParam.index = item.index;
+        this.personalParam.ucomment = item.ucomment;
+        this.personalParam.utype = item.utype;
+    
     },
-    companyAuth(){
-
+    companyAuth:function(item){
+        this.companyParam.show = true;
+        this.companyParam.id = item.id;
+        this.companyParam.index = item.index;
+        this.companyParam.ccomment = item.ccomment;
+        this.companyParam.ctype = item.ctype;
     }
 
   },

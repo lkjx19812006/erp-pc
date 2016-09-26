@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-09-20 10:18:27
+* @Last Modified time: 2016-09-21 17:00:18
 */
 
 * {
@@ -404,7 +404,8 @@ fieldset[disabled] .form-control {
     margin-top: 20px;
 }
 
-.client-detail {
+/* 中间的数竖线 */
+.client-detail {     
     border-right: 1px solid #ddd;
 }
 
@@ -598,4 +599,19 @@ fieldset[disabled] .form-control {
     text-decoration: underline;
     color: #fa6705;
 }
-
+/* --搜索-- */
+.filter_search dl{
+    float: left;
+    margin-right: 30px;
+    margin-bottom:10px;
+}
+.filter_search dl:last-of-type{
+    margin-right: 0;
+}
+.filter_search dl dt{
+    font-weight: 100;
+}
+.filter_search dl dt,
+.filter_search dl dd{
+    float: left;
+}

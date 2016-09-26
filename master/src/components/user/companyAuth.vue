@@ -5,14 +5,39 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>编辑{{param.fullname}}的信息</h3>
+            <h3>企业认证</h3>
         </div>
-       <div class="edit-model">
+        <div class="edit-model">
            <section class="editsection" v-cloak>
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpage">
+               <div class="editpageleft">
+                    <div class="editpage-input">
+                           <label class="editlabel">备注</label>
+                           <input type="text" v-model='param.ccomment' class="form-control edit-input" value="{{param.ccomment}}" />
+                       </div>
 
-                   <div class="editpageleft">
+                       <div class="editpage-input">
+                           <table class="table  contactSet">
+                                          <thead>
+                                            <th>文件类型</th>
+                                            <th>路径</th>
+                                            <th>描述<th>
+                                          </thead>
+                                        <tbody>
+                                            <tr v-for="item in initIdentify.files">
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.path}}</td>
+                                                <td>{{item.description}}</td>
+                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                       </div>
+                </div>
+
+               
+                   <!-- <div class="editpageleft">
                        <div class="editpage-input">
                            <label class="editlabel">姓名</label>
                            <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{param.fullname}}" />
@@ -22,40 +47,12 @@
                            <input type="text" v-model='param.nickname' class="form-control edit-input" value="{{param.nickname}}" />
                        </div>
                        <div class="editpage-input">
-                           <label class="editlabel">qq</label>
-                           <input type="text" v-model="param.qq" class="form-control edit-input" value="{{param.qq}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">邮箱</label>
-                           <input type="text" v-model='param.email' class="form-control edit-input" value="{{param.email}}" />
-                       </div>
-                       <div class="editpage-input">
                            <label class="editlabel">电话</label>
-                            <input type="text" v-model='param.phone' class="form-control edit-input" value="{{param.phone}}" />
+                            <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
                        </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">公司</label>
-                           <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">备注</label>
-                           <input type="text" v-model='param.comment' class="form-control edit-input" value="{{param.comment}}" />
-                       </div>
-
-                       <!-- <div class="editpage-input">
-                           <label class="editlabel">邮箱</label>
-                           <input type="text" v-model='param.province' class="form-control edit-input" value="{{param.province}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">备注</label>
-                           <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">经营范围</label>
-                           <input type="text" v-model='param.bizScope' class="form-control edit-input" value="{{param.bizScope}}" />
-                       </div> -->
+                       
                    </div>
-                   <!-- <div class="editpageright">
+                   <div class="editpageright">
                        <div class="editpage-input">
                            <label class="editlabel">邮箱</label>
                            <input type="text" v-model='param.email' class="form-control edit-input" value="{{param.email}}" />
@@ -68,30 +65,25 @@
                            <label class="editlabel">公司</label>
                            <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
                        </div>
-                      <div class="editpage-input">
-                          <label class="editlabel">所在市</label>
-                          <input type="text" v-model='param.city' class="form-control edit-input" value="{{param.city}}" />
-                      </div>
-                      <div class="editpage-input">
-                          <label class="editlabel">注册地址</label>
-                          <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
-                      </div>
+                      
                    </div> -->
                </div>
            </section>
-       </div> 
+        </div>  
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.show = false)">确定</button>
+            <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.ctype=2,param.show = false)">通过</button>
+            <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.ctype=3,param.show = false)">不通过</button>
         </div>
     </div>
 </template>
 <script>
 import {
-    
+    initIdentify
 } from '../../vuex/getters'
 import {   
-    updateUserInfo   
+    updateUserInfo,
+    getAuthInfo  
 } from '../../vuex/actions'
 export default {
     props: ['param'],
@@ -102,10 +94,11 @@ export default {
     },
     vuex: {
        getters: {
-            
+            initIdentify
         },
         actions: {
-            updateUserInfo 
+            updateUserInfo,
+            getAuthInfo
         } 
     },
     route: {
@@ -123,45 +116,15 @@ export default {
         updateUserInfo(param)
       }
     }*/
+    created() { 
+        this.getAuthInfo(this.param);
+  }
 }
 </script>
 <style scoped>
-
-/* 整个弹框的样式 */
-.modal_con {
-    top: 120px;
-    width: 620px;
-    left: 0;
-    right: 0;
-    bottom: 80px;
-    padding: 0;
-    background-color: #fff;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    z-index: 1080;
-    overflow: hidden;
-    overflow-y: auto;
-}
-
-
-
 .big-font {
     font-size: 36px;
 }
-
-/* 圈×的位置 */
-.top-title {
-    position: fixed;
-    top: 120px;
-    width: 620px;
-    left: 0;
-    margin: auto;
-    text-align: right;
-    margin-top: 0;
-}
-
 .top-title span {
     font-size: 28px;
 }
@@ -181,7 +144,7 @@ export default {
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
-    padding: 30px 30px 30px 30px;
+    padding: 10px 30px 30px 30px;
 }
 
 .editsection {
@@ -189,7 +152,6 @@ export default {
     box-sizing: border-box;
 }
 
-/* 包含变量的div */
 .editpage {
     display: -webkit-flex;
     display: -webkit-box;
@@ -201,7 +163,6 @@ export default {
     box-orient: horizontal;
 }
 
-/* 包含左,右边内容的div */
 .editpageleft,
 .editpageright {
     -webkit-box-flex: 1;
@@ -211,26 +172,20 @@ export default {
     width: 50%;
 }
 
-/* 包含文本和输入框的div样式 */
 .editpage-input {
-    margin-top: 20px;
-    margin-left:120px;
-    margin-right:120px;
-
+    margin-top: 15px;
 }
 
-/* 文本的样式 */
-.editlabel {   
+.editlabel {
     color: #333;
     font-size: 14px;
     display: block;
 }
 
-/* 输入框的样式 */
 .edit-input {
     height: 36px;
     line-height: 36px;
-    
+    width: 90%;
     border: 1px solid #ddd;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -250,27 +205,8 @@ export default {
     margin-top: 5px;
 }
 
-
-
-/* 弹框下面的div样式 */
 .edit_footer button {
     margin-left: 15px;
-}
-
-.edit_footer {
-    border-top: 1px solid #ddd;
-    text-align: right;
-    padding: 10px 20px;
-    margin-top: 50px;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 80px;
-    width: 620px;
-    background: #fff;
-    margin: auto;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
 }
 
 .btn-confirm {

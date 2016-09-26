@@ -37,19 +37,32 @@
 	    					            
 	    			</div> -->
 	    			<div class="trans_service clearfix" v-show="currentView==1">
+						<div class="col-xs-4">
+							<select  class="form-control" v-model="employeeParam.orgId" @change="employSearch()">
+		                        <option selected value="">请选择业务员部门</option>
+		                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
+		                  	</select>
+						</div>			               
+
 	    				<div class="col-xs-8">
 			                <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">
-			                    <input type="text" class="search_input" placeholder="请输入业务员名字">
+			                    <input type="text" class="search_input" v-model="employeeParam.name" placeholder="请输入业务员名字" @keyup.enter="employSearch()">
 			                </div>
-			               
+			                <div class="name_search clearfix">
+			                    <img src="/static/images/search.png" height="24" width="24">
+			                    <input type="text" class="search_input" v-model="employeeParam.mobile" placeholder="请输入业务员手机号"  @keyup.enter="employSearch()">
+			                </div>
+
+			                
 			            </div>
-			            <table v-if="customerFlag==0&&orgFlag==0" class="table table-hover table_head table-striped " v-cloak>
+			            <table v-if="orgFlag==0" class="table table-hover table_head table-striped " v-cloak>
 			                <thead>
 			                    <tr>
 			                        <th></th>
 			                        <th>姓名</th>
 			                        <th>部门</th>
+			                        <th>手机<th>
 			                    </tr>
 			                </thead>
 			                <tbody>
@@ -59,6 +72,7 @@
 			                        </td>
 			                        <td>{{item.name}}</td>
 			                        <td>{{item.orgName}}</td>
+			                        <td>{{item.mobile}}</td>
 			                    </tr>
 
 			                </tbody>
@@ -67,7 +81,7 @@
 	    			</div>
 	    			<div class="con_trans">
 	    			<div class="trans_parten" v-show="currentView==2">
-	    				<table v-if="employeeFlag==0&&customerFlag==0" class="table table-hover table_head table-striped " v-cloak>
+	    				<table v-if="employeeFlag==0" class="table table-hover table_head table-striped " v-cloak>
 			                <thead>
 			                    <tr>
 			                        <th></th>
@@ -125,7 +139,18 @@ export default{
                   size: '15px',
                   cur: 1,
                   all: 7
-              }
+              },
+              employeeParam: {
+                  loading: true,
+                  color: '#5dc596',
+                  size: '15px',
+                  name:'',
+                  mobile:'',
+                  orgId:'',
+                  cur: 1,
+                  all: 7
+              },
+
 		}
 	},
 	components:{
@@ -161,6 +186,11 @@ export default{
 			//this.isA=!this.isA;
 			this.isA=false;
 		},
+		employSearch:function(){
+        	/*this.getEmployOrgSearch(this.loadParam);*/
+        	this.employeeFlag = 0;
+        	this.getEmployeeList(this.employeeParam);
+        },
 		Partselected:function(){
 			this.checked=!this.checked;
            if(this.checked){
@@ -252,8 +282,8 @@ export default{
 
 	},
 	created() {
-      this.getClientList(this.loadParam, this.loadParam.all);
-      this.getEmployeeList(this.loadParam, this.loadParam.all);
+      //this.getClientList(this.loadParam, this.loadParam.all);
+      this.getEmployeeList(this.employeeParam, this.employeeParam.all);
       this.getOrgList(this.loadParam, this.loadParam.all);
      
     }

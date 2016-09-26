@@ -1,38 +1,53 @@
 <template>
-<createemp-model :param="createParam" v-if="createParam.show"></createemp-model>
-    <div  class="myemploy">
+   <createemp-model :param="createParam" v-if="createParam.show"></createemp-model>
+   <detailemp-model :param.sync="changeParam" v-if="changeParam.show"></detailemp-model>
+   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
+    <div  class="myemploy" v-show="!changeParam.show">
         <div class="order_search">
             <div class="clear">
                 <div class="my_order col-xs-2">员工列表</div>
-                <div class="col-xs-8 my_order_search">
-                    <div class="name_search">
-
+                <div class="col-xs-6 my_order_search">
+                    <div class="name_search clearfix">
+                        <img src="/static/images/search.png" height="24" width="20">
+                        <input type="text" class="search_input" v-model="loadParam.name" @keyup.enter="loadByCondition()" placeholder="按员工名字搜索">
+                    </div>
+                    <div class="name_search clearfix">
+                        <img src="/static/images/search.png" height="24" width="20">
+                        <input type="text" class="search_input" v-model="loadParam.mobile" @keyup.enter="loadByCondition()" placeholder="按员工电话搜索">
                     </div>
                 </div>
-                <div class="right col-xs-2">
+                 <div class="col-xs-3">
+                    <div class="name_search clearfix" style="border:none">
+                       <select  class="form-control" v-model="loadParam.orgId" @change="loadByCondition()">
+                            <option selected value="">请选择业务员部门</option>
+                            <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
+                      </select> 
+                    </div>
+                </div>
+                <div class="right col-xs-1">
                     <button class="new_btn" @click="newData({ 
                          title:'新建员工',
                          show:true,
                          name:'',
-                         orgId:'',
-                         orgCode:'',
+                         orgid:'',
+                         orgcode:'',
                          status:'',
                          ename:'',
                          no:'',
                          orgName:'',
                          position:'',
                          mobile:'',
-                         extNo:'',
+                         extno:'',
                          level:'',
                          role:[{'id':1,'type':'管理员','checked':false},{'id':2,'type':'部门经理','checked':false}],
-                         entryDate:'',
-                         leaveDate:'',
+                         entrydate:'',
+                         leavedate:'',
                          namelist:'姓名',
                          englist:'英文名',
                          job:'工号',
                          parten:'部门',
                          code:'部门编码',
-                         orgid:'部门编号',
+                         orgiid:'部门编号',
                          statuslist:'状态',
                          positionlist:'职位',
                          phonelist:'手机',
@@ -40,7 +55,7 @@
                          entry:'入职时间',
                          leave:'离职时间',
                          levellist:'职级',
-                         link:Employ,
+                         link:createEmploy,
                          url:'/employee/',
                          key:'employeeList'
                          })">新建</button>
@@ -69,15 +84,36 @@
                 </thead> 
                 <tbody>
                   <tr v-for="item in initEmployeeList">  
-                    <td>{{item.name}}</td>
+                    <td class="underline"  @click="clickOn({
+                                 sub:$index,
+                                 id:item.id,
+                                 show:true,
+                                 name:item.name,
+                                 ename:item.ename,
+                                 no:item.no,
+                                 role:item.role,
+                                 orgid:item.orgid,
+                                 orgcode:item.orgcode,
+                                 status:item.status,
+                                 orgName:item.orgName,
+                                 position:item.position,
+                                 mobile:item.mobile,
+                                 extno:item.extno,
+                                 level:item.level,
+                                 entrydate:item.entrydate,
+                                 leavedate:item.leavedate,
+                                link:updateEmploy,
+                                url:'/employee/',
+                                key:'employeeList'
+                                })">{{item.name}}</td>
                     <td>{{item.ename}}</td>
                     <td>{{item.no}}</td>
                     <td>{{item.orgName}}</td>
                     <td>{{item.position}}</td>
                     <td>{{item.mobile}}</td>
-                    <td>{{item.extNo}}</td>
-                    <td>{{item.entryDate | entryDate}}</td>
-                    <td>{{item.leaveDate}}</td>
+                    <td>{{item.extno}}</td>
+                    <td>{{item.entrydate | entry}}</td>
+                    <td>{{item.leavedate}}</td>
                     <td>{{item.level | levelstate}}</td>
                     <td  @click="editData($index,{
                             concrete:'employeeList'
@@ -94,16 +130,16 @@
                                  ename:item.ename,
                                  no:item.no,
                                  role:item.role,
-                                 orgId:item.orgId,
-                                 orgCode:item.orgCode,
+                                 orgid:item.orgid,
+                                 orgcode:item.orgcode,
                                  status:item.status,
                                  orgName:item.orgName,
                                  position:item.position,
                                  mobile:item.mobile,
-                                 extNo:item.extNo,
+                                 extno:item.extno,
                                  level:item.level,
-                                 entryDate:item.entryDate,
-                                 leaveDate:item.leaveDate,
+                                 entrydate:item.entrydate,
+                                 leavedate:item.leavedate,
                                  namelist:'姓名',
                                  englist:'英文名',
                                  job:'工号',
@@ -112,7 +148,7 @@
                                  phonelist:'手机',
                                  nolist:'分机号',
                                  code:'部门编码',
-                                 orgid:'部门编号',
+                                 orgiid:'部门编号',
                                  statuslist:'状态',
                                  entry:'入职时间',
                                  leave:'离职时间',
@@ -121,7 +157,16 @@
                                  url:'/employee/',
                                  key:'employeeList'
                                 })">编辑</li>
-                             <!--  <li>删除</li> -->
+                             <li @click="specDelete({
+                                    id:item.id,
+                                    sub:$index,
+                                    show:true,
+                                    name:item.name,
+                                    title:'员工',
+                                    link:deleteInfo,
+                                    url:'/employee/',
+                                    key:'employeeList'
+                                    })">删除</li>
                           </ul>
                         </div>
                     </td>
@@ -138,18 +183,26 @@
 import createempModel  from '../components/emloyee/createEmploy'
 import pagination from '../components/pagination'
 import filter from '../filters/filters'
+import detailempModel  from '../components/emloyee/employDetail'
+import deletebreedModel  from '../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import {
    getList,
-   initEmployeeList
+   initEmployeeList,
+   initOrgList
 } from '../vuex/getters'
 import {
     getEmployeeList,
-    updateEmploy
+    updateEmploy,
+    createEmploy,
+    deleteInfo,
+    getOrgList
 } from '../vuex/actions'
 export default {
     components:{
         pagination,
-        createempModel
+        createempModel,
+        detailempModel,
+        deletebreedModel
     },
     data() {
         return {
@@ -158,9 +211,18 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
-                all: 7
+                all: 7,
+                name:'',
+                mobile:'',
+                orgId:''
             },
             createParam:{
+                show:false
+            },
+            changeParam:{
+                show:false
+            },
+            deleteParam:{
                 show:false
             }
         }
@@ -179,16 +241,29 @@ export default {
         },
         modify:function(initEmployeeList){
             this.createParam=initEmployeeList;
+        },
+        clickOn: function(initEmployeeList) {
+            this.changeParam = initEmployeeList;
+        },
+        specDelete:function(initEmployeeList){
+            this.deleteParam = initEmployeeList;
+        },
+        loadByCondition:function(){
+            this.getEmployeeList(this.loadParam);
         }
     },
     vuex: {
         getters: {
            getList,
-           initEmployeeList
+           initEmployeeList,
+           initOrgList
         },
         actions: {
             getEmployeeList,
-            updateEmploy
+            updateEmploy,
+            createEmploy,
+            deleteInfo,
+            getOrgList
         },
     },
     events: {
@@ -202,6 +277,7 @@ export default {
             this.$route.query.id = 0;
         }
         this.getEmployeeList(this.loadParam,this.loadParam.all);
+        this.getOrgList(this.loadParam,this.loadParam.all);
     },
     filter:(filter,{})
 }

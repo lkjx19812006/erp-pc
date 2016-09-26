@@ -14,15 +14,15 @@
                 </div>
                 <div class="name_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按企业类型搜索" v-model="loadParam.conType" >
-                </div>
-                <div class="name_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="24">
                     <input type="text" class="search_input" placeholder="按所在省搜索" v-model="loadParam.conProvince">
                 </div>
                 <div class="name_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
                     <input type="text" class="search_input" placeholder="按分类码搜索" v-model="loadParam.category"/>
+                </div>
+                 <div class="name_search clearfix">
+                     <img src="/static/images/search.png" height="24" width="24">
+                     <input type="text" class="search_input" placeholder="按类型搜索" v-model="loadParam.conType"/>
                 </div>
             </div>
             <div class=" col-xs-2">
@@ -42,10 +42,12 @@
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>注册地址</th>
+                        <th>状态</th>
                     </tr>
                 </thead>
                 <thead class="space">
                     <tr>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -68,6 +70,7 @@
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.address}}</td>
+                        <td>{{item.status}}</td>
                     </tr>
                 </tbody>
             </table>
