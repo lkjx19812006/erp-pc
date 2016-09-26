@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新增业务机会</h3>
+            <h3>新增会员意向</h3>
         </div>
         <div class="edit-model">
            <section class="editsection" v-cloak>

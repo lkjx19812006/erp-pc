@@ -18,7 +18,7 @@
                             <button type="button" class="btn btn-base" @click="createTracking({
                         objId:initUserDetail.id,
                         bizId:'',
-                        type:'',
+                        type:0,
                         trackingWay:'',
                         bizType:'',
                         contactNo:'',
@@ -40,9 +40,7 @@
                                                qq:initUserDetail.qq,
                                                company:initUserDetail.company,
                                                comment:initUserDetail.comment,
-                                               link:alertInfo,
-                                               url:'/user/',
-                                               key:'userList'
+                                            
                                                })">编辑</button>
                         </li>
                         
@@ -64,7 +62,7 @@
                           })">
                     <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
                     <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                      业务机会（{{initUserDetail.chance.arr.length}}）
+                      会员意向（{{initUserDetail.chance.arr.length}}）
                     </a>
                     <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button>
                   </h4>
@@ -190,7 +188,7 @@
                     <button type="button" class="btn btn-base pull-right" @click.stop="createTracking({
                         objId:initUserDetail.id,
                         bizId:'',
-                        type:'',
+                        type:0,
                         trackingWay:'',
                         bizType:'',
                         contactNo:'',
@@ -249,37 +247,37 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>姓名</label>
-                                    <input type="text" class="form-control" v-model="initUserDetail.fullname" value="{{initUserDetail.fullname}}"/>
+                                    <input type="text" class="form-control" v-model="initUserDetail.fullname" value="{{initUserDetail.fullname}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>昵称</label>
-                                    <input type="text" class="form-control" v-model="initUserDetail.nickname" value="{{initUserDetail.nickname}}" />
+                                    <input type="text" class="form-control" v-model="initUserDetail.nickname" value="{{initUserDetail.nickname}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>电话</label>
-                                    <input type="text" class="form-control"  v-model="initUserDetail.phone" value="{{initUserDetail.phone}}"/>
+                                    <input type="text" class="form-control"  v-model="initUserDetail.phone" value="{{initUserDetail.phone}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>邮箱</label>
-                                    <input type="text" class="form-control" v-model="initUserDetail.email" value="{{initUserDetail.email}}"/>
+                                    <input type="text" class="form-control" v-model="initUserDetail.email" value="{{initUserDetail.email}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>qq</label>
-                                    <input type="text" class="form-control" v-model="initUserDetail.qq" value="{{initUserDetail.qq}}" />
+                                    <input type="text" class="form-control" v-model="initUserDetail.qq" value="{{initUserDetail.qq}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>公司</label>
-                                    <input type="text" class="form-control" v-model="initUserDetail.company" value="{{initUserDetail.company}}"/>
+                                    <input type="text" class="form-control" v-model="initUserDetail.company" value="{{initUserDetail.company}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-12 col-xs-12">
                                     <label>备注</label>
-                                    <input type="text" class="form-control" v-model="initUserDetail.comment" value="{{initUserDetail.comment}}" />
+                                    <input type="text" class="form-control" v-model="initUserDetail.comment" value="{{initUserDetail.comment}}" disabled="disabled"/>
                                 </div>
                               
                             </div>
@@ -535,7 +533,7 @@ section article {
     padding: 10px;
 }
 
-.client-detailInfo {
+/* .client-detailInfo {
     padding: 0 15px 14px 15px;
 }
 
@@ -546,7 +544,7 @@ section article {
     display: block;
     color: #333;
     font-size: 16px;
-}
+} */
 
 .btn-orange {
     background-color: #fa6705;

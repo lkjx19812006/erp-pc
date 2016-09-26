@@ -1,4 +1,5 @@
 <template>
+    <biz-model :param="bizParam" v-if="bizParam.show"></biz-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -14,50 +15,53 @@
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpage">
                    <div class="editpageleft">
-                      <div v-if="param.flag==0" class="editpage-input">
-                           <label class="editlabel">跟进对象ID</label>
-                           <input type="text" v-model='param.objId' class="form-control edit-input" value="{{param.objId}}" disabled="disabled" />
-                       </div>
-                       <div v-if="param.flag==0" class="editpage-input">
-                           <label class="editlabel">业务ID</label>
-                           <input type="text" v-model='param.bizId' class="form-control edit-input" value="{{param.bizId}}" />
-                       </div>
-                       <div class="editpage-input">
+                   <div v-if="param.flag==0" class="editpage-input">
                            <label class="editlabel">跟进主体类型</label>
-                           <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" />
-                           <select type="text" class="form-control edit-input" v-model="param.type">
-                                <option value="">请选择跟进主体类型</option>
-                                <option value="0">客户</option>
-                                <option value="1">会员</option>
+                           <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
+                           <select type="text" class="form-control edit-input" v-model="param.type" disabled="disabled">
+                                <!-- <option value="">请选择跟进主体类型</option> -->
+                                <option value="0">会员</option>
+                                <option value="1">客户</option>
                                 <option value="2">企业</option>
                             </select>
 
                        </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">跟进方式</label>
-                           <input type="text" v-model='param.trackingWay' class="form-control edit-input" value="{{param.trackingWay}}" />
-                       </div>
                       
                        
-                   </div>
-                   <div class="editpageright">
-                      <div v-if="param.flag==0" class="editpage-input">
+                       <div v-if="param.flag==0" class="editpage-input">
                            <label class="editlabel">业务类型</label>
-                            <input type="text" v-model='param.bizType' class="form-control edit-input" value="{{param.bizType}}" />
-                            <select type="text" class="form-control edit-input" v-model="param.bizType">
+                            <!-- <input type="text" v-model='param.bizType' class="form-control edit-input" value="{{param.bizType}}" /> -->
+                            <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType">
                                 <option value="">请选择业务类型</option>
                                 <option value="0">客户</option>
                                 <option value="1">意向</option>
                                 <option value="2">订单</option>
                             </select>
                       </div>
-                      <div class="editpage-input">
-                           <label class="editlabel">联系账号</label>
-                            <input type="text" v-model='param.contactNo' class="form-control edit-input" value="{{param.contactNo}}" />
+                       
+                       <div class="editpage-input">
+                           <label class="editlabel">跟进方式</label>
+                           <input type="text" v-model='param.trackingWay' class="form-control edit-input" value="{{param.trackingWay}}" />
                        </div>
+                      
                        <div class="editpage-input">
                            <label class="editlabel">备注</label>
                            <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.coments}}" />
+                       </div>
+                       
+                   </div>
+                   <div class="editpageright">
+                      <div v-if="param.flag==0" class="editpage-input">
+                           <label class="editlabel">跟进对象ID</label>
+                           <input type="text" v-model='param.objId' class="form-control edit-input" value="{{param.objId}}" disabled="disabled" />
+                       </div>
+                      <div v-if="param.flag==0" class="editpage-input">
+                           <label class="editlabel">业务ID</label>
+                           <input type="text" v-model='param.bizId' class="form-control edit-input" value="{{param.bizId}}" />
+                       </div>
+                       <div class="editpage-input">
+                           <label class="editlabel">联系账号</label>
+                            <input type="text" v-model='param.contactNo' class="form-control edit-input" value="{{param.contactNo}}" />
                        </div>
                       
                       
@@ -72,6 +76,7 @@
     </div>
 </template>
 <script>
+import bizModel from './selectBizId'
 import {
     initUserDetail,
     
@@ -83,9 +88,16 @@ import {
 } from '../../vuex/actions'
 export default {
     props: ['param'],
+    components: {   
+        bizModel  
+    },
     data() {
         return {
-        
+          bizParam:{
+            show:false,
+            bizType:'',
+            userId:this.param.objId
+          }
         }
     },
     vuex: {
@@ -121,13 +133,54 @@ export default {
         }
          
       },
+      selectBizId:function(){
+        this.bizParam.show = true;
+        this.bizParam.bizType = this.param.bizType;
+        console.log(this.param.bizType);
+      },
       
+    },
+    events:{
+      'getBizId':function(bizId){
+        console.log('业务ID');
+            console.log(bizId);
+            this.param.bizId = bizId;
+      }
     }
 }
 </script>
 <style scoped>
+/* 整个弹框的样式 */
+.modal_con {
+    top: 120px;
+    width: 620px;
+    left: 0;
+    right: 0;
+    bottom: 200px;
+    padding: 0;
+    background-color: #fff;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    z-index: 1080;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
 .big-font {
     font-size: 36px;
+}
+
+/* 圈×的位置 */
+.top-title {
+    position: fixed;
+    top: 120px;
+    width: 620px;
+    left: 0;
+    margin: auto;
+    text-align: right;
+    margin-top: 0;
 }
 .top-title span {
     font-size: 28px;
@@ -211,6 +264,22 @@ export default {
 
 .edit_footer button {
     margin-left: 15px;
+}
+
+.edit_footer {
+    border-top: 1px solid #ddd;
+    text-align: right;
+    padding: 10px 20px;
+    margin-top: 50px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 200px;
+    width: 620px;
+    background: #fff;
+    margin: auto;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .btn-confirm {

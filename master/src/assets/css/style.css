@@ -404,7 +404,8 @@ fieldset[disabled] .form-control {
     margin-top: 20px;
 }
 
-.client-detail {
+/* 中间的数竖线 */
+.client-detail {     
     border-right: 1px solid #ddd;
 }
 

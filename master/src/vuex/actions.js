@@ -1327,6 +1327,7 @@ export const transferInfo = ({ dispatch }, param) => { //客户部门划转信�
 }
 
 export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表以及搜索
+    console.log("wowowo");
     param.loading = true;
     var url = apiUrl.clientList+'/intention/?'+'&page=' + param.cur + '&pageSize=15';
      for(var search in param){
@@ -1375,6 +1376,8 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
         }
     }).then((res)=>{
            var intent = res.json().result.list;
+           console.log('意向');
+           console.log(intent);
            for (var i in intent){
                 intent[i].checked = false;
                 intent[i].show =false;

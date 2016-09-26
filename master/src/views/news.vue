@@ -138,8 +138,8 @@
                                                 key:'userList'
                                                 },item.show=false)">划转</li>
                                     <li @click="createChance(item.show=false)">机会</li>
-                                    <li v-if="item.utype==2" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">个人认证</li>
-                                    <li v-if="item.ctype==2" @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)">企业认证</li>
+                                    <li v-if="item.utype==1" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">个人认证</li>
+                                    <li v-if="item.ctype==1" @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)">企业认证</li>
                                 </ul>
                             </div>
                         </td>

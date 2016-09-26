@@ -37,6 +37,13 @@
 	    					            
 	    			</div> -->
 	    			<div class="trans_service clearfix" v-show="currentView==1">
+						<div class="col-xs-4">
+							<select  class="form-control" v-model="employeeParam.orgId" @change="employSearch()">
+		                        <option selected value="">请选择业务员部门</option>
+		                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
+		                  	</select>
+						</div>			               
+
 	    				<div class="col-xs-8">
 			                <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">
@@ -47,11 +54,7 @@
 			                    <input type="text" class="search_input" v-model="employeeParam.mobile" placeholder="请输入业务员手机号"  @keyup.enter="employSearch()">
 			                </div>
 
-			                <select  class="form-control" v-model="employeeParam.orgId" @change="employSearch()">
-		                        <option selected value="">请选择业务员部门</option>
-		                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-		                  </select>
-			               
+			                
 			            </div>
 			            <table v-if="orgFlag==0" class="table table-hover table_head table-striped " v-cloak>
 			                <thead>
