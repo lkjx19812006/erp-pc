@@ -101,6 +101,10 @@ export const initIntentionList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionList));  
 }
 
+export const initOfferList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionDetail));  
+}
+
 /*---会员信息---*/
 export const initUserList = (state) => {
     return parseJson(state.table.basicBaseList.userList);

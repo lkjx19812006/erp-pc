@@ -4,13 +4,15 @@
      <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
      <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
      <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
+     <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
+     <offerinfo-model :param="offerParam" v-if="offerParam.show"></offerinfo-model>
 	 <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">意向</div>
             <div class="col-xs-5 my_order_search">
                <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" placeholder="按品种类别搜索" @keyup="">
+                   <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchChance()">
                </div>
               <!--  <div class="ordertel_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
@@ -18,11 +20,47 @@
                </div>-->
            </div> 
             <div class="right col-xs-3">
-                <button class="new_btn transfer" @click="clientTransfer({
-                  name:'意向',
-                  id:'',
-                  show:true
-                  })">划转为意向</button> 
+              <!--   <button class="new_btn transfer" @click="clientTransfer({
+                name:'意向',
+                id:'',
+                show:true
+                })">划转为意向</button>  -->
+                <button class="new_btn transfer" @click="createIntention({
+                       show:true,
+                       title:'新建',
+                       customerName:'',
+                       customerId:'',
+                       customerPhone:'',
+                       breedName:'',
+                       breedId:'',
+                       type:'',
+                       especial:'',
+                       qualification:'',
+                       spec:'',
+                       number:'',
+                       unit:'',
+                       price:'',
+                       address:'',
+                       location:'',
+                       advance:'',
+                       invoic:'',
+                       visit:'',
+                       pack:'',
+                       intl:'',
+                       visit:'',
+                       sampling:'',
+                       sampleNumber:'',
+                       sampleUnit:'',
+                       sampleAmount:'',
+                       status:'',
+                       country:'',
+                       province:'',
+                       city:'',
+                       district:'',
+                       address:'',
+                       link:createIntentionInfo,
+                       url:'/intention/'
+                       })">新建</button> 
             </div>
         </div>
         <div class="service-nav clearfix">
@@ -120,13 +158,13 @@
                     <tr>  
                         <th></th>
                         <th>类型</th>
-	            		<th>特殊的</th>
-	            		<th>客户名称</th>
-	            		<th>客户手机号</th>
-	            		<th>品种名称</th>
-	            		<th>资格资质</th>
-	            		<th>规格</th>
-	            		<th>单位</th>
+      	            		<th>特殊的</th>
+      	            		<th>客户名称</th>
+      	            		<th>客户手机号</th>
+      	            		<th>品种名称</th>
+      	            		<th>资格资质</th>
+      	            		<th>规格</th>
+      	            		<th>单位</th>
                         <th>单价</th>
                         <th>产地</th>
                         <th>数量</th>
@@ -134,20 +172,19 @@
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>所在区</th>
-	            		<th>交收地址</th>
-	            		<th>预付比例</th>
-	            		<th>发票</th>
-	            		<th>上门看货</th>
-	            		<th>包装</th>
-	            		<th>是否国际</th>
-	            		<th>提供样品</th>
-	            		<th>样品数量</th>
-	            		<th>样品单位</th>
-	            		<th>样品总价</th>
-	            		<th>报价总数</th>
-	            		<th>报价均价</th>
-	            		<th>状态</th>
-	            		<th></th>
+	            		     <th>交收地址</th>
+      	            		<th>预付比例</th>
+      	            		<th>发票</th>
+      	            		<th>上门看货</th>
+      	            		<th>包装</th>
+      	            		<th>是否国际</th>
+      	            		<th>提供样品</th>
+      	            		<th>样品数量</th>
+      	            		<th>样品单位</th>
+      	            		<th>样品总价</th>
+      	            		<th>报价人数</th>
+      	            		<th>状态</th>
+      	            		<th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -169,14 +206,18 @@
                                 id:item.id,
                                 sub:$index,
                                 show:true,
+                                customerName:item.customerName,
+                                customerPhone:item.customerPhone,
                                 breedName:item.breedName,
                                 type:item.type,
                                 especial:item.especial,
                                 qualification:item.qualification,
                                 spec:item.spec,
+                                number:item.number,
                                 unit:item.unit,
                                 price:item.price,
                                 address:item.address,
+                                location:item.location,
                                 advance:item.advance,
                                 invoic:item.invoic,
                                 visit:item.visit,
@@ -189,7 +230,12 @@
                                 sampleAmount:item.sampleAmount,
                                 offer:item.offer,
                                 status:item.status,
-                                offerVprice:item.offerVprice,
+                                country:item.country,
+                                province:item.province,
+                                city:item.city,
+                                district:item.district,
+                                address:item.address,
+                                link:editintentInfo,
                                 url:'/intention/',
                                 key:'intentionList'
                                 })">{{item.breedName}}</td>
@@ -213,8 +259,7 @@
                         <td>{{item.sampleNumber}}</td>
                         <td>{{item.sampleUnit}}</td>
                         <td>{{item.sampleAmount}}</td>
-                        <td>{{item.offer}}</td>
-                        <td>{{item.offerVprice}}</td>
+                        <td class="underline" @click="offerDetail(item.id)">{{item.offerNumber}}</td>
                         <td>{{item.status | status}}</td>
                         <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
@@ -288,13 +333,17 @@ import transferintentModel from '../components/Intention/transferIntent'
 import tipsdialogModel  from '../components/tipsDialog'
 import deletebreedModel from '../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import editintentModel  from  '../components/Intention/Editintention'
+import createintentModel from '../components/Intention/createIntention'
+import offerinfoModel from '../components/Intention/offerInfo'
 import {
 	initIntentionList
 } from '../vuex/getters'
 import {
 	getIntentionList,
 	deleteInfo,
-	editintentInfo
+	editintentInfo,
+	createIntentionInfo,
+	getOffersdetail
 } from '../vuex/actions'
 export default {
     components: {   
@@ -303,7 +352,9 @@ export default {
         transferintentModel,
         tipsdialogModel,
         deletebreedModel,
-        editintentModel
+        editintentModel,
+        createintentModel,
+        offerinfoModel
     },
     vuex: {
         getters: {
@@ -312,7 +363,9 @@ export default {
         actions: {
             getIntentionList,
             deleteInfo,
-            editintentInfo
+            editintentInfo,
+            createIntentionInfo,
+            getOffersdetail
         }
     },
     data() {
@@ -329,7 +382,8 @@ export default {
                 intl:'',
                 sampling:'',
                 status:'',
-                advance:''
+                advance:'',
+                customerName:''
             },
             chanceParam:{
                 show:false
@@ -348,6 +402,13 @@ export default {
             },
             editParam:{
             	show:false
+            },
+            createParam:{
+            	show:false
+            },
+            offerParam:{
+            	show:false,
+            	id:''
             }
         }
     },
@@ -361,7 +422,6 @@ export default {
         },
         chanceClick:function(initIntentionList){
             this.chanceParam = initIntentionList;
-           /* this.getClientDetail(this.chanceParam);*/
         },
         onlyselected:function(sub,id){
             this.$store.state.table.basicBaseList.intentionList[sub].checked=!this.$store.state.table.basicBaseList.intentionList[sub].checked;
@@ -399,6 +459,14 @@ export default {
         },
         modifyClient:function(initIntentionList){
         	this.editParam = initIntentionList;
+        },
+        createIntention:function(initIntentionList){
+        	this.createParam = initIntentionList;
+        },
+        offerDetail:function(id){
+        	this.offerParam.show=true;
+        	this.offerParam.id=id;
+        	this.getOffersdetail(this.offerParam);
         }
     },
     events: {

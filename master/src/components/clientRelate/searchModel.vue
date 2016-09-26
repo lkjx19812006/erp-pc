@@ -24,8 +24,8 @@
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>业务员ID：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.employeeId"  placeholder="按业务员ID搜索" disabled="disabled" @click="employee(loadParam.employeeId)"/>
-                        <div class="empSearch" @click="employee(loadParam.employeeId)"><img src="/static/images/search.png" height="24" width="24"></div>
+                        <input type="text"  class="form-control" v-model="loadParam.employeeName"  placeholder="按业务员ID搜索" disabled="disabled" @click="employee(loadParam.employeeId,loadParam.employeeName)"/>
+                        <div class="empSearch" @click="employee(loadParam.employeeId,loadParam.employeeName)"><img src="/static/images/search.png" height="24" width="24"></div>
                     </div>
                 </div>      
             </section>
@@ -56,11 +56,13 @@ export default {
                 all: 7,
                 name:'',
                 tel:'',
-                employeeId:''
+                employeeId:'',
+                employeeName:''
             },
             empNameParam:{
                 show:false,
-                employeeId:''
+                employeeId:'',
+                employeeName:''
             }
         }
     },
@@ -72,15 +74,17 @@ export default {
     events:{
         a:function(qq){
             this.loadParam.employeeId = qq.employeeId;
+            this.loadParam.employeeName = qq.employeeName;
         }
     },
     methods:{
         clientSearch:function(name,tel,employeeId){
              this.getClientList(this.loadParam);
         },
-        employee:function(employeeId){
+        employee:function(employeeId,employeeName){
             this.empNameParam.show=true;
             this.loadParam.employeeId = this.empNameParam.employeeId;
+            this.loadParam.employeeName = this.empNameParam.employeeName;
         }
     },
     route: {

@@ -137,7 +137,7 @@ Vue.filter('codestate', function(val){
 		return val;
 	}
 })
-Vue.filter('entryDate', function(val){
+Vue.filter('entry', function(val){
 	var val = val;
 	if(val==null){
 		 return '无';

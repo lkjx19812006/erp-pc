@@ -1,327 +1,180 @@
 <template>
-    <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div class="breed_detail">
         <div class="client-section clearfix" v-cloak>
             <div @click="param.show=false" class="top-title">
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
-          <!--   <div class="col-md-8">
-              <h4 class="section_title">业务机会相关</h4>
-              <div class="panel-group">
-                 <div class="panel panel-default">
-                     <div class="panel-heading clearfix" @click="companytoggle({
-                             link:initCompanyDetail.companyContacts,
-                             crete:'companyContacts'
-                             })">
-                         <h4 class="panel-title clearfix">
-                         <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
-                         <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
-                             联系人({{initCompanyDetail.companyContacts.arr.length}})
-                         </a>
-                         <button type="button" class="btn btn-base pull-right" @click.stop="createContact(param.id)">新建</button>
-                     </h4>
-                     </div>
-                     <div class="panel-collapse"  v-show="!initCompanyDetail.companyContacts.show">
-                         <div class="panel-body panel-set">
-                             <table class="table contactSet">
-                                 <thead>
-                                     <tr>
-                                         <th>名称</th>
-                                         <th>手机</th>
-                                         <th>电话</th>
-                                         <th>邮箱</th>
-                                         <th>微信</th>
-                                         <th></th>
-                                     </tr>
-                                 </thead>
-                                 <tbody>
-                                     <tr v-for="item in initCompanyDetail.companyContacts.arr">
-                                         <td>{{item.name}}</td>
-                                         <td>{{item.phone}}</td>
-                                         <td>{{item.tel}}</td>
-                                         <td>{{item.email}}</td>
-                                         <td>{{item.wechart}}</td>
-                                         <td @click="contactShow($index)">
-                                             <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                             <div class="breed_action" v-show="item.show" transition="expand">
-                                                <dl>
-                                                    <dt @click="updateCompany({
-                                                            sub:$index,
-                                                            id:item.id,
-                                                            show:true,
-                                                            cid:item.cid,
-                                                            title:'联系人',
-                                                            namelist:'联系人名称',
-                                                            phonelist:'手机号',
-                                                            emaillist:'邮箱',
-                                                            tellist:'电话',
-                                                            weblist:'微信',
-                                                            name:item.name,
-                                                            phone:item.phone,
-                                                            tel:item.tel,
-                                                            email:item.email,
-                                                            wechart:item.wechart,
-                                                            link:alterCompany,
-                                                            url:'contract',
-                                                            key:'companyContacts'
-                                                            },item.show=false)">编辑</dt>
-                                                   <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt>
-                                                </dl>
-                                            </div>
-                                         </td>
-                                     </tr>
-                                 </tbody>
-                             </table>
-                         </div>
-                     </div>
-                 </div>
-                  <div class="panel panel-default">
-                     <div class="panel-heading clearfix" @click="companytoggle({
-                             link:initCompanyDetail.companyProducts,
-                             crete:'companyProducts'
-                             })">
-                         <h4 class="panel-title clearfix">
-                             <img class="pull-left" src="/static/images/product.png" height="27" width="27" />
-                             <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
-                                 产品({{initCompanyDetail.companyProducts.arr.length}})
-                             </a>
-                             <button type="button" class="btn btn-base pull-right" @click.stop="createContact(param.id)">新建</button>
-                         </h4>
-                     </div>
-                     <div class="panel-collapse"  v-show="!initCompanyDetail.companyProducts.show">
-                         <div class="panel-body panel-set">
-                             <table class="table contactSet">
-                                 <thead>
-                                     <tr>
-                                         <th>名称</th>
-                                         <th>手机</th>
-                                         <th>电话</th>
-                                         <th>邮箱</th>
-                                         <th>微信</th>
-                                         <th></th>
-                                     </tr>
-                                 </thead>
-                                 <tbody>
-                                     <tr v-for="item in initCompanyDetail.companyProducts.arr">
-                                         <td>{{item.name}}</td>
-                                         <td>{{item.phone}}</td>
-                                         <td>{{item.tel}}</td>
-                                         <td>{{item.email}}</td>
-                                         <td>{{item.wechart}}</td>
-                                         <td @click="contactShow($index)">
-                                             <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                             <div class="breed_action" v-show="item.show" transition="expand">
-                                                <dl>
-                                                    <dt @click="updateCompany({
-                                                            sub:$index,
-                                                            id:item.id,
-                                                            show:true,
-                                                            cid:item.cid,
-                                                            title:'联系人',
-                                                            namelist:'联系人名称',
-                                                            phonelist:'手机号',
-                                                            emaillist:'邮箱',
-                                                            tellist:'电话',
-                                                            weblist:'微信',
-                                                            name:item.name,
-                                                            phone:item.phone,
-                                                            tel:item.tel,
-                                                            email:item.email,
-                                                            wechart:item.wechart,
-                                                            link:alterCompany,
-                                                            url:'contract',
-                                                            key:'companyProducts'
-                                                            },item.show=false)">编辑</dt>
-                                                   <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt>
-                                                </dl>
-                                            </div>
-                                         </td>
-                                     </tr>
-                                 </tbody>
-                             </table>
-                         </div>
-                     </div>
-                 </div>
-                 <div class="panel panel-default">
-                    <div class="panel-heading clearfix" @click="companytoggle({
-                            link:initCompanyDetail.companyLicenses,
-                            crete:'companyLicenses'
-                            })">
-                        <h4 class="panel-title clearfix">
-                        <img class="pull-left" src="/static/images/contact.png" height="32" width="27" />
-                        <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
-                            证书({{initCompanyDetail.companyLicenses.arr.length}})
-                        </a>
-                        <button type="button" class="btn btn-base pull-right" @click.stop="createContact(param.id)">新建</button>
-                    </h4>
-                    </div>
-                    <div class="panel-collapse"  v-show="!initCompanyDetail.companyLicenses.show">
-                        <div class="panel-body panel-set">
-                            <table class="table contactSet">
-                                <thead>
-                                    <tr>
-                                        <th>名称</th>
-                                        <th>手机</th>
-                                        <th>电话</th>
-                                        <th>邮箱</th>
-                                        <th>微信</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="item in initCompanyDetail.companyLicenses.arr">
-                                        <td>{{item.name}}</td>
-                                        <td>{{item.phone}}</td>
-                                        <td>{{item.tel}}</td>
-                                        <td>{{item.email}}</td>
-                                        <td>{{item.wechart}}</td>
-                                        <td @click="contactShow($index)">
-                                            <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                            <div class="breed_action" v-show="item.show" transition="expand">
-                                               <dl>
-                                                   <dt @click="updateCompany({
-                                                           sub:$index,
-                                                           id:item.id,
-                                                           show:true,
-                                                           cid:item.cid,
-                                                           title:'联系人',
-                                                           namelist:'联系人名称',
-                                                           phonelist:'手机号',
-                                                           emaillist:'邮箱',
-                                                           tellist:'电话',
-                                                           weblist:'微信',
-                                                           name:item.name,
-                                                           phone:item.phone,
-                                                           tel:item.tel,
-                                                           email:item.email,
-                                                           wechart:item.wechart,
-                                                           link:alterCompany,
-                                                           url:'contract',
-                                                           key:'companyLicenses'
-                                                           },item.show=false)">编辑</dt>
-                                                  <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt>
-                                               </dl>
-                                           </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                 </div>
-             </div>  -->
-            <!-- <div class="col-md-4" style="border-left:1px solid #ddd"> -->
-                <div  class="section_title clearfix">
-                    <span >详情</span>
-                    <button class="new_btn transfer" @click="clientTransfer({
-                      name:'意向',
-                      id:param.id,
-                      show:true
-                      })">划转为意向</button> 
+            <div  class="section_title clearfix">
+                <span>客户{{param.customerName}}的信息</span>
+                <button class="new_btn transfer" @click="saveSucc(param)">保存</button> 
+            </div>
+            <div class="edit-detail">
+                <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">客户名称</label>
+                     <input type="text" class="form-control edit-input"  v-model="param.customerName" value="{{param.customerName}}" />
                 </div>
-                <div class="edit-detail">
-                    <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label>类型:</label>
-                            <input type="text" class="form-control" value="{{param.type | chanceType}}" disabled="disabled"  />
-                        </div>
-                        <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                            <label>是否特殊</label>
-                            <input type="text" class="form-control" value="{{param.especial | chanceEspec}}" disabled="disabled" />
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label>品种名称</label>
-                            <input type="text" class="form-control" value="{{param.breedName}}" disabled="disabled"  />
-                        </div>
-                        <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                            <label>资质证书</label>
-                            <input type="text" class="form-control" value="{{param.qualification | qualify}}" disabled="disabled" />
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label>规格</label>
-                            <input type="text" class="form-control" value="{{param.spec}}" disabled="disabled"  />
-                        </div>
-                        <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                            <label>交收地址</label>
-                            <input type="text" class="form-control" value="{{param.address}}" disabled="disabled" />
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label>预付比例</label>
-                            <input type="text" class="form-control" value="{{param.advance}}" disabled="disabled"  />
-                        </div>
-                        <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                            <label>发票</label>
-                            <input type="text" class="form-control" value="{{param.invoic | invoicstate}}" disabled="disabled" />
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label>上门看货</label>
-                            <input type="text" class="form-control" value="{{param.visit | visitstate}}" disabled="disabled"  />
-                        </div>
-                        <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                            <label>是否国际</label>
-                            <input type="text" class="form-control" value="{{param.intl | intlstata}}" disabled="disabled" />
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label>单位</label>
-                            <input type="text" class="form-control" value="{{param.unit}}" disabled="disabled"  />
-                        </div>
-                        <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                            <label>包装</label>
-                            <input type="text" class="form-control" value="{{param.pack}}" disabled="disabled" />
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label>提供样品</label>
-                            <input type="text" class="form-control" value="{{param.sampling}}" disabled="disabled"  />
-                        </div>
-                        <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                            <label>样品数量</label>
-                            <input type="text" class="form-control" value="{{param.sampleNumber}}" disabled="disabled" />
-                        </div>
-                    </div>      
-                    <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label>样品单位</label>
-                            <input type="text" class="form-control" value="{{param.sampleUnit}}" disabled="disabled"  />
-                        </div>
-                        <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                            <label>样品总价</label>
-                            <input type="text" class="form-control" value="{{param.sampleAmount}}" disabled="disabled" />
-                        </div>
-                    </div>    
-                    <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label>单价</label>
-                            <input type="text" class="form-control" value="{{param.price}}" disabled="disabled"  />
-                        </div>
-                        <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                            <label>状态</label>
-                            <input type="text" class="form-control" value="{{param.status | status}}" disabled="disabled" />
-                        </div>
-                    </div>  
+                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">类型</label>
+                    <select  class="form-control edit-input"  v-model="param.type">
+                            <option value="0">求购</option>
+                            <option value="1">供应</option>
+                    </select>
                 </div>
             </div>
-       <!--  </div> -->
+             <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">品种名称</label>
+                    <input type="text" class="form-control edit-input"   v-model="param.breedName" value="{{param.breedName}}" />
+                </div>
+                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">是否特殊</label>
+                    <select  class="form-control edit-input"  v-model="param.especial" >
+                            <option value="0">普通</option>
+                            <option value="1">特殊</option>
+                    </select>
+                </div>
+            </div>
+             <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">客户手机号</label>
+                     <input type="text" class="form-control edit-input"  v-model="param.customerPhone" value="{{param.customerPhone}}" />
+                </div>
+                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">国家</label>
+                    <input type="text" class="form-control edit-input"  v-model="param.country" value="{{param.country}}" />
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">所在省</label>
+                     <input type="text" class="form-control edit-input"   v-model="param.province" value="{{param.province}}"/>
+                </div>
+                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">所在市</label>
+                    <input type="text" class="form-control edit-input"  v-model="param.city" value="{{param.city}}"/>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">所在区</label>
+                     <input type="text" class="form-control edit-input"  v-model="param.district" value="{{param.district}}" />
+                </div>
+                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">数量</label>
+                    <input type="text" class="form-control edit-input"  v-model="param.number" value="{{param.number}}" />
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">产地</label>
+                    <input type="text" class="form-control edit-input"  v-model="param.location" value="{{param.location}}"  />
+                </div>
+                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">资质证书</label>
+                    <input type="text" class="form-control edit-input"   v-model="param.qualification" value="{{param.qualification}}" />
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">规格 </label>
+                    <input type="text" class="form-control edit-input"   v-model="param.spec" value="{{param.spec}}"  />
+                </div>
+                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">单位</label>
+                    <input type="text" class="form-control edit-input"   v-model="param.unit" value="{{param.unit}}" />
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">交收地址</label>
+                    <input type="text" class="form-control edit-input"  v-model="param.address" value="{{param.address}}" />
+                </div>
+                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">预付比例 </label>
+                    <input type="text" class="form-control edit-input"  v-model="param.advance" value="{{param.advance}}"/>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">发票</label>
+                   <select  class="form-control edit-input"  v-model="param.invoic" >
+                        <option value="0">无发票</option>
+                        <option value="1">普通发票</option>
+                        <option value="2">增值发票</option>
+                    </select>
+                </div>
+                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">上门看货</label>
+                    <select  class="form-control edit-input"  v-model="param.visit" >
+                        <option value="0">不看</option>
+                        <option value="1">会</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">包装</label>
+                    <input type="text" class="form-control edit-input" v-model="param.pack" value="{{param.pack}}"  />
+                </div>
+                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">是否国际</label>
+                    <select  class="form-control edit-input"  v-model="param.intl" >
+                        <option value="0">国内</option>
+                        <option value="1">国际</option>
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">提供样品</label>
+                    <select  class="form-control edit-input"  v-model="param.sampling" >
+                        <option value="0">无</option>
+                        <option value="1">有</option>
+                    </select>
+                </div>
+                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">样品数量</label>
+                    <input type="text" class="form-control edit-input" v-model="param.sampleNumber" value="{{param.sampleNumber}}"  />
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">样品单位</label>
+                    <input type="text" class="form-control edit-input" v-model="param.sampleUnit" value="{{param.sampleUnit}}"  />
+                </div>
+                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">样品总价</label>
+                    <input type="text" class="form-control edit-input" v-model="param.sampleAmount" value="{{param.sampleAmount}}"  />
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">单价</label>
+                    <input type="text" class="form-control edit-input" v-model="param.price" value="{{param.price}}"  />
+                </div>
+                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                    <label class="editlabel">状态</label>
+                    <select  class="form-control edit-input"  v-model="param.status" >
+                        <option value="0">待审</option>
+                        <option value="1">通过</option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
 import filter from '../../filters/filters'
-import transferintentModel from '../Intention/transferIntent'
+import tipsdialogModel  from '../tipsDialog'
+import {
+    editintentInfo
+} from '../../vuex/actions'
 export default {
     components: {
         filter,
-        transferintentModel
+        tipsdialogModel
     },
     data() {
         return {
@@ -331,31 +184,22 @@ export default {
                 color: '#5dc596',
                 size: '15px'
             },
-            contactParam:{
+            tipsParam:{
                 show:false,
-                id:''
+                name:'修改成功'
             },
-            companylistParam:{
-                show:false,
-                id:''
-            },
-            intentionParam:{
-                show:false,
-                id:'',
-                name:'意向'
-            }
         }
     },
     props:['param'],
     vuex: {
-       
+       actions:{
+           editintentInfo
+       }
     },
     methods: {
-        clientTransfer:function(param){
-            this.intentionParam = param;
-            this.intentionParam.id=this.param.id;
-            this.intentionParam = this.param;
-            this.intentionParam.show=true;
+        saveSucc:function(param){
+           this.tipsParam.show= true;
+           this.editintentInfo(param) 
         }
     },
     filter: (filter, {})
