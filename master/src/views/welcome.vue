@@ -20,14 +20,14 @@
   
 <mz-datepicker :time.sync="dateText" format="yyyy/MM/dd HH:mm"></mz-datepicker>
     </div>
-    <v-select :debounce="250"
+    <v-select 
+  :debounce="250"
   :value.sync="city.value"
   :on-search="districtGetOptions"
   :options="city.arr"
   placeholder="省/市"
   label="category"
-  ></v-select>
- 
+  ></v-select> 
 
 </template>
 <script>
