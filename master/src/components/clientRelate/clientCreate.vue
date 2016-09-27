@@ -49,7 +49,9 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>所在省</label>
-                                    <input type="text" class="form-control" v-model="customerData.province" />
+                                    <select class="form-control" v-model="customerData.province" @change="multiSearch()">
+                                         <option v-for="item in initProvince">{{item.cname}}</option>
+                                     </select>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>所在市</label>
@@ -136,7 +138,11 @@
 </template>
 <script>
 import {
-    saveCreate
+    initProvince
+} from '../../vuex/getters'
+import {
+    saveCreate,
+    getProvinceList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -160,8 +166,12 @@ export default {
         }
     },
      vuex: {
+        getters:{
+            initProvince
+        },
         actions: {
-            saveCreate
+            saveCreate,
+            getProvinceList
         }
     },
     route: {

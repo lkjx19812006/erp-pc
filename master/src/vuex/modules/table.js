@@ -396,6 +396,8 @@ const mutations = {
     },
 
     [UPDATE_SPEC_DATA](state, data) { //修改药材相关信息
+        
+        state.breedDetail.alias.arr[data.sub].alias = data.name;
         for (var key in data) {
             state.breedDetail[data.key].arr[data.sub][key] = data[key];
         }
