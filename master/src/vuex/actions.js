@@ -48,15 +48,65 @@ export const freshPiecharts = ({ dispatch }, getPiechart) => {
 
 export const getOrderList = ({ dispatch }, param) => {
     param.loading = true;
-    Vue.http.get(apiUrl.orderTable)
-        .then((res) => {
-            dispatch(types.ORDER_TABLE, res.data);
+    var url = apiUrl.orderList+'/order/?'+'page=' + param.cur + '&pageSize=15';
+    console.log('param===>');
+    console.log(param);
+    for(var key in param){
+        if(key=='orderNum'&&param[key]!=''){
+             url += '&orderNum='+param[key];
+        }
+    }
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+           var orderList = res.json().result.list;
+           console.log('订单列表!!!');
+           console.log(orderList);
+           for (var i in orderList){
+                orderList[i].checked = false;
+                orderList[i].show =false;
+
+           }
+            dispatch(types.ORDER_TABLE, orderList);
+            param.all = res.json().result.pages;
             param.loading = false;
-        }, (res) => {
-            console.log('fail');
-            param.loading = false;
-        });
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+
+
 };
+
+export const getOrderDetail = ({ dispatch }, param) => { //获取客户详情
+    console.log('param===');
+    console.log(param);
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.orderList + '/order/' + param.id,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var orderDetail = res.json().result;
+        var goods = orderDetail.goods;
+        orderDetail.goods={};
+        orderDetail.goods.arr = goods;
+        orderDetail.goods.show = true;
+        console.log(orderDetail);
+         
+        dispatch(types.ORDER_DETAIL_DATA, orderDetail);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 export const getSystemData = ({ dispatch }, param) => { //枚举类型
     param.loading = true;
     Vue.http({
@@ -1439,21 +1489,29 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
     param.loading = true;
     var url = apiUrl.userList+'/user/?'+'&page=' + param.cur + '&pageSize=15';
     for(var key in param){
-        if(key=='phone'&&param[key]!=''){
+        if(key=='phone'&&param[key]!==''){
              url += '&phone='+param[key];
         }
-        if(key=='fullname'&&param[key]!=''){
+        if(key=='fullname'&&param[key]!==''){
              url += '&fullname='+param[key];
         }
-        if(key=='audit'&&param[key]!=''){
+        if(key=='source'&&param[key]!==''){
+             url += '&source='+param[key];
+        }
+        if(key=='busiType'&&param[key]!==''){
+             url += '&busiType='+param[key];
+        }
+        if(key=='audit'&&param[key]!==''){
              url += '&audit='+param[key];
         }
-        if(key=='startCtime'&&param[key]!=''){
+        if(key=='startCtime'&&param[key]!==''){
              url += '&startCtime='+param[key];
         }
-        if(key=='endCtime'&&param[key]!=''){
+        if(key=='endCtime'&&param[key]!==''){
              url += '&endCtime='+param[key];
         }
+
+
 
     }
     console.log(url);
@@ -1489,10 +1547,11 @@ export const getUserDetail = ({ dispatch }, param) => {  //会员详情
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res)=>{
-        
+        console.log("user详情====>");
         var userDetail = res.json().result;
-        if(userDetail.chance.length>0){
-            userDetail.chance.forEach(function(item){
+        console.log(userDetail);
+        if(userDetail.intention.length>0){
+            userDetail.intention.forEach(function(item){
                 item.show = false;
             })
         }
@@ -1503,10 +1562,10 @@ export const getUserDetail = ({ dispatch }, param) => {  //会员详情
             })
         }
 
-        var chance = userDetail.chance;
-        userDetail.chance ={};
-        userDetail.chance.show = false;
-        userDetail.chance.arr = chance;
+        var intention = userDetail.intention;
+        userDetail.intention ={};
+        userDetail.intention.show = false;
+        userDetail.intention.arr = intention;
 
         var tracking = userDetail.tracking;
         userDetail.tracking ={};
@@ -1866,33 +1925,34 @@ export const updateTrackingInfo = ({ dispatch }, param) => { //修改跟进信�
 }
 
 export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信息
-    console.log(param);
-   
+
+    console.log(param.flag);
+
     const data = {
          
     }
-    if(param.type!==""){
+    if(param.type!==''){
         data.type = param.type;
     }
-    if(param.trackingWay!==""){
+    if(param.trackingWay!==''){
         data.trackingWay = param.trackingWay;
     }
-    if(param.contactNo!==""){
+    if(param.contactNo!==''){
         data.contactNo = param.contactNo;
     }
-    if(param.comments!==""){
+    if(param.comments!==''){
         data.comments = param.comments;
     }
-    if(param.objId!==""){
+    if(param.objId!==''){
         data.objId = param.objId;
     }
-    if(param.bizId!==""){
+    if(param.bizId!==''){
         data.bizId = param.bizId;
     }
-    if(param.bizType!==""){
-        data.bizType = param.bizType;
+    if(param.bizType!==''){
+
     }
-  
+  console.log(data);
     
     Vue.http({
         method: 'POST',

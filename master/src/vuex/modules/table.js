@@ -1,6 +1,7 @@
 import {
 
    ORDER_TABLE,
+   ORDER_DETAIL_DATA,
    CHANGE_SHOW_STATUE,
    SYSTEM_DATA,
    PROVINCE_DATA,
@@ -59,12 +60,15 @@ import {
 } from '../mutation-types'
 
 const state = {
-    list: [
-        { "orderId": 0, "orderName": "药材", "orderModule": "代理商", "orderNum": "1234567890", "orderUnit": "金融科技", "orderTel": "13162875213", "orderPerson": "大大", "orderTime": "2016-09-18", "orderLogstatus": "运输中", "show": true },
-        { "orderId": 1, "orderName": "人参", "orderModule": "代理商", "orderNum": "1234567890", "orderUnit": "金融科技", "orderTel": "13162875213", "orderPerson": "达达", "orderTime": "2016-09-18", "orderLogstatus": "运输中", "show": true },
-        { "orderId": 2, "orderName": "未完成", "orderModule": "代理商", "orderNum": "1234567890", "orderUnit": "金融科技", "orderTel": "13162875213", "orderPerson": "大大", "orderTime": "2016-09-28", "orderLogstatus": "运输完成", "show": true },
-        { "orderId": 3, "orderName": "已完成", "orderModule": "代理商", "orderNum": "1234567890", "orderUnit": "金融科技", "orderTel": "13162875213", "orderPerson": "规格", "orderTime": "2016-09-18", "orderLogstatus": "运输中", "show": true }
-    ],
+    orderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
+                "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
+                "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
+                "lcompanyName":null,"logisticsNo":null,"consignee":"测试","consigneePhone":"18505565316","zipCode":"000000",
+                "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
+                "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
+                "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
+                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
+                "payPics":null,"sendPics":null}],
     systemBaseList: {
         enumlist: [
             { "id": 0, "code": "022112", "type": "1", "desc": "123456789011", "status": "0" },
@@ -146,11 +150,29 @@ const state = {
         }]
     },
 
+    orderDetail: {"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
+                  "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
+                  "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
+                  "lcompanyName":null,"logisticsNo":null,"consignee":"韦军军","consigneePhone":"18505565316","zipCode":"000000",
+                  "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
+                  "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
+                  "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":null,"ftime":null,"updater":null,
+                  "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48",
+                  "goods":[{"id":"5726ea3bf22125bcdcff7821","orderId":"5726ea3bf22125bcdcff7820","sourceType":1,"sourceId":"23",
+                  "title":null,"breedId":1007,"brredName":null,"quality":null,"location":"上海","spec":"干货","price":100.000000,
+                  "unit":"公斤","address":null,"pubdate":null,"duedate":null,"advance":1.000000,"invoic":null,"visit":0,"pack":null,
+                  "image":"/productPic/20160502/q5c6xa7.jpg","description":null,"number":2,"amount":200.000000,"updater":null,
+                  "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48"}],"payPics":null,"sendPics":null},
+                  
+    
+
+
     locationList:{
         provinceList: [
             {"id": 248,"pid": 7, "path": ",1,7,248,","level": 3,"cname": "天津", "nameEn": "Tianjin","namePy": null, "code": "12","twoNumber": null,"number": null,"iso": null,"sortnum": 248, "show": true }
         ]
     },
+
 
     breedDetail: {
         "code": "232去",
@@ -272,7 +294,7 @@ const state = {
     "addrReceive":null,"busiType":null,"province":null,"city":null,"source":1,"lastLoginIp":null,"lastLoginTime":null,
     "status":null,"updater":null,"utime":null,"creater":null,"ctime":null,"startCtime":null,"endCtime":null,"userIds":null,
     "customerId":null,"main":null,"audit":0,"bizMain":null,"userType":0,"auditResult":null,"sourceType":null,
-    "chance":{"show":false,"arr":[]},"tracking":{"show":false,"arr":[]},"personalAuthShow":false,"companyAuthShow":false
+    "intention":{"show":false,"arr":[]},"tracking":{"show":false,"arr":[]},"personalAuthShow":false,"companyAuthShow":false
   },
   identify:{},
   trackingDetail:{}
@@ -280,7 +302,11 @@ const state = {
 
 const mutations = {
     [ORDER_TABLE](state, data) {
-        state.list = data.results;
+        state.orderList = data;
+    },
+    [ORDER_DETAIL_DATA](state, data) {
+        console.log(data);
+        state.orderDetail = data;
     },
     [SYSTEM_DATA](state, data) { //枚举类型
         state.systemBaseList.enumlist = data;

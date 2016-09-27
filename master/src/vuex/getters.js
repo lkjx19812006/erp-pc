@@ -39,8 +39,16 @@ export const getPiechart = (state) => {
 }
 
 export const initOrderlist = (state) => {
-    return parseJson(state.table.list);
+    return parseJson(state.table.orderList);
 }
+
+export const initOrderDetail = (state) => {
+    console.log('getters');
+    console.log(state.table.orderDetail);
+    //return parseJson(state.table.orderDetail);
+    return JSON.parse(JSON.stringify(state.table.orderDetail)); 
+}
+
 
 /*--系统基础数据--*/
 export const initSystemlist = (state) => {

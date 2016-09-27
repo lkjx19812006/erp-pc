@@ -1,109 +1,116 @@
 <template>
   <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
-  <chance-model :param="chanceParam" v-if="chanceParam.show"></chance-model>
+  <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
 
   <div class="client_body">
       <div @click="param.show=false" class="top-title">
-          <span class="glyphicon glyphicon-remove-circle"></span>
+            <span class="glyphicon glyphicon-remove-circle"></span>
       </div>
-      <div class="client_nav">
-          <nav class="navbar navbar-client" role="navigation">
-              <div class="container-fluid">
-                  <div class="navbar-header">
-                      <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                      <a class="navbar-brand navbar-name" href="#">{{initUserDetail.fullname}}</a>
-                  </div>
-                  <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
-                      <li>
-                          <button type="button" class="btn btn-base" @click="createTracking({
-                                  objId:initUserDetail.id,
-                                  bizId:'',
-                                  type:0,
-                                  trackingWay:'',
-                                  bizType:'',
-                                  contactNo:'',
-                                  comments:'',
-                                  show:false
-                                })">新建跟进</button>
-                      </li>
-                      
-                      <li>
-                          <button type="button" class="btn btn-base" @click="modifyUser({
-                                             id:initUserDetail.id,
-                                             show:true,
-                                             name:initUserDetail.name,
-                                             nickname:initUserDetail.nickname,
-                                             fullname:initUserDetail.fullname,
-                                             type:initUserDetail.type,
-                                             phone:initUserDetail.phone,
-                                             email:initUserDetail.email,
-                                             qq:initUserDetail.qq,
-                                             company:initUserDetail.company,
-                                             comment:initUserDetail.comment,
-                                          
-                                             })">编辑</button>
-                      </li>
-                      
-                  </ul>
-              </div>
-          </nav>
-      </div>
-      <section>
-          <div class="client-section clearfix" >
-              <div class="col-md-8 client-detail">
-                  <h4 class="section_title">相关</h4>
-                    <article>
-                        <div class="panel-group">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-                                            link:initUserDetail.chance,
-                                            crete:'chance'
-                                            })">
-                                      <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                        会员意向（{{initUserDetail.chance.arr.length}}）
-                                      </a>
-                                      <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button>
-                                    </h4>
+        <div class="client_nav">
+            <nav class="navbar navbar-client" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
+                        <a class="navbar-brand navbar-name" href="#">{{initUserDetail.fullname}}</a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
+                        <li>
+                            <button type="button" class="btn btn-base" @click="createTracking({
+                                    objId:initUserDetail.id,
+                                    bizId:'',
+                                    type:0,
+                                    trackingWay:'',
+                                    bizType:'',
+                                    contactNo:'',
+                                    comments:'',
+                                    show:false
+                                  })">新建跟进</button>
+                        </li>
+                        
+                        <li>
+                            <button type="button" class="btn btn-base" @click="modifyUser({
+                                               id:initUserDetail.id,
+                                               show:true,
+                                               name:initUserDetail.name,
+                                               nickname:initUserDetail.nickname,
+                                               fullname:initUserDetail.fullname,
+                                               type:initUserDetail.type,
+                                               phone:initUserDetail.phone,
+                                               email:initUserDetail.email,
+                                               qq:initUserDetail.qq,
+                                               company:initUserDetail.company,
+                                               comment:initUserDetail.comment,
+                                            
+                                               })">编辑</button>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <section>
+            <div class="client-section clearfix" >
+                <div class="col-md-8 client-detail">
+                    <h4 class="section_title">相关</h4>
+
+                      <article>
+                          <div class="panel-group">
+                              <div class="panel panel-default">
+                                  <div class="panel-heading" >
+                                      <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:initUserDetail.intention,
+                                              crete:'intention'
+                                              })">
+                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          会员意向（{{initUserDetail.intention.arr.length}}）
+                                        </a>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createIntention()">新建</button>
+                                      </h4>
+
                                 </div>
-                                <div class="panel-collapse" v-show="initUserDetail.chance.show">
+                                <div class="panel-collapse" v-show="initUserDetail.intention.show">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
-                                            <thead>
-                                              <th>品种</th>
-                                              <th>产地</th>
-                                              <th>规格</th>
-                                              <th>数量</th>
-                                              <th>价格</th>
-                                              <th>单位</th>
-                                            </thead>
-                                            <tbody>
-                                              <tr v-for="item in initUserDetail.chance.arr">
-                                                  <td>{{item.breedName}}</td>
-                                                  <td>{{item.location}}</td>
-                                                  <td>{{item.spec}}</td>
-                                                  <td>{{item.number}}</td>
-                                                  <td>{{item.price}}元</td>
-                                                  <td>{{item.unit}}</td>
-                                                  <td  @click="clickShow($index,{
-                                                    concrete:'chance'
-                                                    })">
-                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="breed_action" v-show="item.show">
-                                                        <dl>
-                                                           <dt @click="createChance()">编辑</dt>
-                                                           <!-- <dt @click="specDelete()">删除</dt> -->
-                                                       </dl>
-                                                    </div>
-                                                  </td>
-                                              </tr>
-                                            </tbody>
-                                        </table>
+
+                                          <thead>
+                                            <th>品种</th>
+                                            <th>产地</th>
+                                            <th>规格</th>
+                                            <th>数量</th>
+                                            <th>价格</th>
+                                            <th>单位</th>
+                                          </thead>
+                                        <tbody>
+                                            <tr v-for="item in initUserDetail.intention.arr">
+                                                <td>{{item.breedName}}</td>
+                                                <td>{{item.location}}</td>
+                                                <td>{{item.spec}}</td>
+                                                <td>{{item.number}}</td>
+                                                <td>{{item.price}}元</td>
+                                                <td>{{item.unit}}</td>
+                                                <td  @click="clickShow($index,{
+                                                  concrete:'intention'
+                                                  })">
+                                                  <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                <div class="breed_action" v-show="item.show">
+                                                    <dl>
+                                                       <dt @click="createIntention()">编辑</dt>
+                                                       <!-- <dt @click="specDelete()">删除</dt> -->
+                                                   </dl>
+                                                </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel panel-default">
+
+                          
+                
+                          <div class="panel panel-default">
+
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="personalEnfoldment({id:initUserDetail.id})">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
@@ -135,6 +142,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
 
                             <div class="panel panel-default">
@@ -287,7 +295,7 @@
 <script>
 
 import trackingModel from  '../user/userTracking'
-import chanceModel from  '../user/userChance'
+import intentionModel from  '../user/userIntention'
 
 import {
   initClientDetail,
@@ -307,7 +315,7 @@ export default {
     components: {
 
         trackingModel,
-        chanceModel
+        intentionModel
     },
     props:['param'],
     data(){
@@ -316,8 +324,14 @@ export default {
         trackingParam:{
           show:false
         },
-        chanceParam:{
-          show:false
+        intentionParam:{
+          show:false,
+          fullname:this.initUserDetail.fullname,
+          id:this.initUserDetail.id,
+          phone:this.initUserDetail.phone,
+          url:'/intention/'
+
+
         },
         personalParam:{
           show:false
@@ -413,9 +427,10 @@ export default {
           this.trackingParam.show = true;
 
         },
-        createChance:function(){
+        createIntention:function(){
           
-          this.chanceParam.show = true;
+          this.intentionParam.show = true;
+          
         },
 
         getUserDetail:function(){
