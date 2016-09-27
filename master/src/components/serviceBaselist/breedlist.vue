@@ -5,7 +5,7 @@
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">药材列表</div>
+            <div class="my_enterprise col-xs-2">品种</div>
             <div class="col-xs-8 my_order_search">
                 <div class="ordertel_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
@@ -13,7 +13,8 @@
                 </div>
             </div>
             <div class="right col-xs-2">
-                <button class="new_btn" @click="createBreed('create')">新建</button>
+                <button class="new_btn transfer" @click="createBreed('create')">新建</button>
+                <button class="new_btn" @click="categoryNameSearch()">搜索</button>
             </div>
         </div>
         <div class="order_table">
@@ -49,6 +50,7 @@
                                     <li @click="modifyBreed($index,item)">编辑</li>
                                     <li @click="specDelete({
                                         id:item.id,
+                                        sub:$index,
                                         show:true,
                                         name:item.name,
                                         title:'药材',
@@ -138,7 +140,7 @@ export default {
         this.getBreedData(this.loadParam, this.loadParam.all);
     },
     methods: {
-        categoryNameSearch: function(name) {
+        categoryNameSearch: function() {
             this.getBreedNameSearch(this.loadParam, this.loadParam.all);
         },
         createBreed: function(value) {
@@ -185,5 +187,8 @@ export default {
 .breed_action {
     top: 33px;
     right: 106px;
+}
+.transfer{
+    margin-left: 18px;
 }
 </style>

@@ -6,7 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>客户搜索</h3>
+            <h3>会员搜索</h3>
         </div>
         <div class="edit-model">
              <div class="cover_loading">
@@ -15,35 +15,71 @@
             <section class="editsection" v-cloak>
                 <div class="clearfix">
                      <div class="client-detailInfo  col-xs-12">
-                        <label>姓名：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.name"  placeholder="按客户姓名搜索"/>
+                        <label>名称：</label>
+                        <input type="text"  class="form-control" v-model="param.fullname"  placeholder="按会员名称搜索"/>
                     </div>
                     <div class="client-detailInfo col-xs-12">
-                        <label>电话：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.tel"  placeholder="按客户电话搜索"/>
+                        <label>来源：</label>
+                        <select type="text" class="form-control" v-model="param.source">
+                                <option value="">请选择来源</option>
+                                <option value="0">PC</option>
+                                <option value="1">安卓</option>
+                                <option value="2">微信</option>
+                                <option value="3">IOS</option>
+                        </select>
                     </div>
                     <div class="client-detailInfo  col-xs-12">
-                        <label>业务员ID：</label>
+                        <label>经营品种：</label>
+                        <input type="text"  class="form-control" v-model="param.busiType"  placeholder="按经营品种(主营业务)搜索"/>
+                    </div>
+                    <div class="client-detailInfo  col-xs-12">
+                        <label>手机：</label>
+                        <input type="text"  class="form-control" v-model="param.phone"  placeholder="按手机搜索"/>
+                    </div>
+                    <div class="client-detailInfo col-xs-5">
+                        <label>注册时间起始：</label>
+                        <mz-datepicker :time.sync="param.startCtime" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                    <div class="client-detailInfo col-xs-7">
+                        <label>注册时间结束：</label>                        
+                        <mz-datepicker :time.sync="param.endCtime" format="yyyy/MM/dd HH:mm:ss" class="a">
+                        </mz-datepicker>
+                        <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空</button>
+                    </div>
+                    
+                    <div class="client-detailInfo col-xs-12">
+                        <label>审核状态：</label>
+                        <select type="text" class="form-control" v-model="param.audit">
+                                <option value="">请选择审核状态</option>
+                                <option value="0">待审核</option>
+                                <option value="1">已审核</option>
+                                <option value="2">审核不通过</option>                           
+                        </select>
+                    </div>
+                    <!-- <div class="client-detailInfo  col-xs-12">
+                        <label>手机归属地：</label>
                         <input type="text"  class="form-control" v-model="loadParam.employeeName"  placeholder="按业务员ID搜索" disabled="disabled" @click="employee(loadParam.employeeId,loadParam.employeeName)"/>
                         <div class="empSearch" @click="employee(loadParam.employeeId,loadParam.employeeName)"><img src="/static/images/search.png" height="24" width="24"></div>
-                    </div>
+                    </div> -->
                 </div>      
             </section>
         </div>
         <div class="edit_footer">
              <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <input type="button" class="btn  btn-confirm"  @click="clientSearch(loadParam.name,loadParam.employeeId,loadParam.tel,param.show = false)" value="确定">
+            <input type="button" class="btn  btn-confirm"  @click="userSearch(param,param.show = false)" value="确定">
         </div>
     </div>
 </template>
 <script>
-import searchempModel from '../../components/clientRelate/searchEmpInfo'
+
+import calendar from '../calendar/vue.datepicker'
 import {
-    getClientList
+    getUserList
 } from '../../vuex/actions'
 export default {
     components: {
-        searchempModel
+        
     },
     props: ['param'],
     data() {
@@ -68,7 +104,7 @@ export default {
     },
     vuex: {
         actions: {
-            getClientList
+            getUserList
         }
     },
     events:{
@@ -78,8 +114,12 @@ export default {
         }
     },
     methods:{
-        clientSearch:function(name,tel,employeeId){
-             this.getClientList(this.loadParam);
+        userSearch:function(param){
+             this.getUserList(this.param);
+        },
+        resetTime:function(){
+        	this.param.startCtime = "";
+        	this.param.endCtime = "";
         },
         employee:function(employeeId,employeeName){
             this.empNameParam.show=true;
@@ -98,13 +138,13 @@ export default {
         }
     },
     created() {
-        this.getClientList(this.loadParam);
+        this.getUserList(this.loadParam);
     }
 }
 </script>
 <style scoped>
 .modal_con{
-    max-height: 400px;
+    max-height: 650px;
     width: 600px;
 } 
 .top-title{

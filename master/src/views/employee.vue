@@ -5,7 +5,7 @@
     <div  class="myemploy" v-show="!changeParam.show">
         <div class="order_search">
             <div class="clear">
-                <div class="my_order col-xs-2">员工列表</div>
+                <div class="my_order col-xs-1">员工列表</div>
                 <div class="col-xs-6 my_order_search">
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="20">
@@ -24,7 +24,8 @@
                       </select> 
                     </div>
                 </div>
-                <div class="right col-xs-1">
+                <div class="right col-xs-2">
+                   <button class="new_btn transfer" @click="loadByCondition()">搜索</button>
                     <button class="new_btn" @click="newData({ 
                          title:'新建员工',
                          show:true,
@@ -102,9 +103,9 @@
                                  level:item.level,
                                  entrydate:item.entrydate,
                                  leavedate:item.leavedate,
-                                link:updateEmploy,
-                                url:'/employee/',
-                                key:'employeeList'
+                                 link:updateEmploy,
+                                 url:'/employee/',
+                                 key:'employeeList'
                                 })">{{item.name}}</td>
                     <td>{{item.ename}}</td>
                     <td>{{item.no}}</td>
@@ -290,7 +291,9 @@ export default {
 .order_search {
     padding: 25px 30px 0 40px;
 }
-
+.transfer{
+    margin-left: 18px;
+}
 .my_order {
     float: left;
     color: #fa6705;

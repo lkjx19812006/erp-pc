@@ -19,13 +19,9 @@
                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索">
                </div>-->
            </div> 
-            <div class="right col-xs-3">
-              <!--   <button class="new_btn transfer" @click="clientTransfer({
-                name:'意向',
-                id:'',
-                show:true
-                })">划转为意向</button>  -->
-                <button class="new_btn transfer" @click="createIntention({
+            <div class="right col-xs-2">
+              <button class="new_btn transfer" @click="searchChance()">搜索</button>
+                <button class="new_btn" @click="createIntention({
                        show:true,
                        title:'新建',
                        customerName:'',
@@ -36,6 +32,7 @@
                        type:'',
                        especial:'',
                        qualification:'',
+                       quality:'',
                        spec:'',
                        number:'',
                        unit:'',
@@ -172,7 +169,7 @@
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>所在区</th>
-	            		     <th>交收地址</th>
+	            		      <th>交收地址</th>
       	            		<th>预付比例</th>
       	            		<th>发票</th>
       	            		<th>上门看货</th>
@@ -181,9 +178,9 @@
       	            		<th>提供样品</th>
       	            		<th>样品数量</th>
       	            		<th>样品单位</th>
-      	            		<th>样品总价</th>
+      	            		<th>样品价格</th>
       	            		<th>报价人数</th>
-      	            		<th>状态</th>
+      	            		<th>审核状态</th>
       	            		<th></th>
                     </tr>
                 </thead>
@@ -273,27 +270,27 @@
                                                customerName:item.customerName,
                                                customerPhone:item.customerPhone,
                                                breedName:item.breedName,
-				                                type:item.type,
-				                                especial:item.especial,
-				                                qualification:item.qualification,
-				                                spec:item.spec,
-				                                number:item.number,
-				                                unit:item.unit,
-				                                price:item.price,
-				                                address:item.address,
-				                                location:item.location,
-				                                advance:item.advance,
-				                                invoic:item.invoic,
-				                                visit:item.visit,
-				                                pack:item.pack,
-				                                intl:item.intl,
-				                                visit:item.visit,
-				                                sampling:item.sampling,
-				                                sampleNumber:item.sampleNumber,
-				                                sampleUnit:item.sampleUnit,
-				                                sampleAmount:item.sampleAmount,
-				                                offer:item.offer,
-				                                status:item.status,
+      				                                type:item.type,
+      				                                especial:item.especial,
+      				                                qualification:item.qualification,
+      				                                spec:item.spec,
+      				                                number:item.number,
+      				                                unit:item.unit,
+      				                                price:item.price,
+      				                                address:item.address,
+      				                                location:item.location,
+      				                                advance:item.advance,
+      				                                invoic:item.invoic,
+      				                                visit:item.visit,
+      				                                pack:item.pack,
+      				                                intl:item.intl,
+      				                                visit:item.visit,
+      				                                sampling:item.sampling,
+      				                                sampleNumber:item.sampleNumber,
+      				                                sampleUnit:item.sampleUnit,
+      				                                sampleAmount:item.sampleAmount,
+      				                                offer:item.offer,
+      				                                status:item.status,
                                                country:item.country,
                                                province:item.province,
                                                city:item.city,
@@ -461,7 +458,7 @@ export default {
         	this.editParam = initIntentionList;
         },
         createIntention:function(initIntentionList){
-        	this.createParam = initIntentionList;
+        	   this.createParam = initIntentionList;
         },
         offerDetail:function(id){
         	this.offerParam.show=true;

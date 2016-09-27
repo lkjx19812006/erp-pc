@@ -43,7 +43,7 @@ export default {
         }
     },
     created() {
-        if (this.$route.query.id > this.getList[11].subcategory.length || isNaN(this.$route.query.id) || !this.$route.query.id) {
+        if (this.$route.query.id > this.getList[9].subcategory.length || isNaN(this.$route.query.id) || !this.$route.query.id) {
             this.$route.query.id = 0;
         }
 

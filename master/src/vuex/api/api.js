@@ -17,7 +17,6 @@ const _listUrl={
 	dataBaseList:ctx+'/sys/enum',
 	provinceList:ctx+'/sys/location',
 	enterpriseList:ctx+'/company/',
-	componentList:ctx+'/recipe',
 	drawList:ctx+'/extractive',
 	breedList:ctx+'/breed',
 	categoryList:ctx+'/category/',

@@ -27,26 +27,26 @@
                   </tr>
                 </thead> 
                 <tbody>
-                  <tr>  
-                    <td class="underline">{{initOfferList.customerName}}</td>
-                    <td>{{initOfferList.customerPhone}}</td>
-                    <td>{{initOfferList.breedName}}</td>
-                    <td>{{initOfferList.orgName}}</td>
-                    <td>{{initOfferList.qualification}}</td>
-                    <td>{{initOfferList.spec}}</td>
-                    <td>{{initOfferList.price}}</td>
-                    <td>{{initOfferList.unit}}</td>
-                    <td>{{initOfferList.number}}</td>
-                    <td>{{initOfferList.location}}</td>
-                    <td>{{initOfferList.sampling}}</td>
-                    <td>{{initOfferList.sampleNumber}}</td>
-                    <td>{{initOfferList.sampleUnit}}</td>
-                    <td >
+                  <tr v-for="item in initOfferList">  
+                    <td>{{item.customerName}}</td>
+                    <td>{{item.customerPhone}}</td>
+                    <td>{{item.breedName}}</td>
+                    <td>{{item.orgName}}</td>
+                    <td>{{item.qualification}}</td>
+                    <td>{{item.spec}}</td>
+                    <td>{{item.price}}</td>
+                    <td>{{item.unit}}</td>
+                    <td>{{item.number}}</td>
+                    <td>{{item.location}}</td>
+                    <td>{{item.sampling}}</td>
+                    <td>{{item.sampleNumber}}</td>
+                    <td>{{item.sampleUnit}}</td>
+                    <td @click="clickShow($index)">
                       <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
-                      <!--  <div class="component_action" v-show='item.show' transition="expand">
+                       <div class="component_action" v-show='item.show' transition="expand">
                          <ul>
                              <li @click="modify({
-                                title:'编辑员工',
+                                title:'新建订单',
                                 sub:$index,
                                 id:item.id,
                                 show:true,
@@ -80,8 +80,8 @@
                                 link:updateEmploy,
                                 url:'/employee/',
                                 key:'employeeList'
-                               })">编辑</li>
-                            <li @click="specDelete({
+                               })">我要采纳</li>
+                            <!-- <li @click="specDelete({
                                    id:item.id,
                                    sub:$index,
                                    show:true,
@@ -90,9 +90,9 @@
                                    link:deleteInfo,
                                    url:'/employee/',
                                    key:'employeeList'
-                                   })">删除</li>
+                                   })">删除</li>-->
                          </ul>
-                       </div> -->
+                       </div> 
                     </td>
                   </tr>
                 </tbody>
@@ -119,7 +119,13 @@ export default {
         }
     },
     methods:{
-
+        clickShow:function(sub){
+            if(this.$store.state.table.basicBaseList.intentionDetail[sub].show){
+                this.$store.state.table.basicBaseList.intentionDetail[sub].show = !this.$store.state.table.basicBaseList.intentionDetail[sub].show;
+            }else{
+                this.$store.state.table.basicBaseList.intentionDetail[sub].show=true;
+            }
+        },
     },
     vuex: {
         getters: {

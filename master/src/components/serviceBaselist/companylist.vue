@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class=" col-xs-2">
-                <a class="new_btn transfer" @click="multiSearch(loadParam.conName,loadParam.conType,loadParam.conProvince,loadParam.category)">查询</a>
+                <a class="new_btn transfer" @click="multiSearch()">查询</a>
             </div>
         </div>
         <div class="order_table" v-cloak>
@@ -42,12 +42,10 @@
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>注册地址</th>
-                        <th>状态</th>
                     </tr>
                 </thead>
                 <thead class="space">
                     <tr>
-                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -70,7 +68,6 @@
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.address}}</td>
-                        <td>{{item.status}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -136,7 +133,7 @@ export default {
             this.companyParam.id = id;
             this.getCompanyDetail(this.companyParam);
         },
-        multiSearch:function(conName,conType,conProvince,category){
+        multiSearch:function(){
             this.getCompanyData(this.loadParam);
         }
     },
@@ -144,6 +141,7 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getEnterpriseData(this.loadParam);
+            this.getCompanyData(this.loadParam);
         }
     },
     route: {
