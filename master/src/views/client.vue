@@ -68,6 +68,7 @@
                         <th>名称</th>
                         <th>分类码</th>
                         <th>所属分类</th>
+                        <th>所属业务员</th>
                         <th>负责人</th>
                         <th>经营范围</th>
                         <th>电话</th>
@@ -105,6 +106,7 @@
                                 })">{{item.name}}</td>
                         <td>{{item.category}}</td>
                         <td>{{item.classify | classify}}</td>
+                        <td>{{item.employeeId}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
                         <td>{{item.tel}}</td>

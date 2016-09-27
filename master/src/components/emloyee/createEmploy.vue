@@ -72,25 +72,6 @@
                             </div>
                         </div>
                         <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>{{param.orgiid}}</label>
-                                <input type="text" class="form-control" disabled="true" v-model="param.orgid" />
-                            </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>{{param.code}}</label>
-                                 <input type="text" class="form-control" disabled="true" v-model="param.orgcode" />
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>{{param.statuslist}}</label>
-                                 <select class="form-control"  v-model="param.status">
-                                     <option value="1" selected>可用</option>
-                                     <option value="0">无效</option>
-                                 </select>
-                            </div>
-                        </div>
-                        <div class="clearfix">
                             <div class="client-detailInfo col-xs-12">
                                 <label>角色</label>
                                 <div  class="clerafix">

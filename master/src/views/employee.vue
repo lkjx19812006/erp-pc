@@ -6,7 +6,13 @@
         <div class="order_search">
             <div class="clear">
                 <div class="my_order col-xs-1">员工列表</div>
-                <div class="col-xs-6 my_order_search">
+                <div class="col-xs-9 my_order_search">
+                    <div class="name_search clearfix" style="border:none">
+                       <select  class="form-control" v-model="loadParam.orgId" @change="loadByCondition()">
+                            <option selected value="">请选择业务员部门</option>
+                            <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
+                      </select> 
+                    </div>
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="20">
                         <input type="text" class="search_input" v-model="loadParam.name" @keyup.enter="loadByCondition()" placeholder="按员工名字搜索">
@@ -15,18 +21,12 @@
                         <img src="/static/images/search.png" height="24" width="20">
                         <input type="text" class="search_input" v-model="loadParam.mobile" @keyup.enter="loadByCondition()" placeholder="按员工电话搜索">
                     </div>
-                </div>
-                 <div class="col-xs-3">
-                    <div class="name_search clearfix" style="border:none">
-                       <select  class="form-control" v-model="loadParam.orgId" @change="loadByCondition()">
-                            <option selected value="">请选择业务员部门</option>
-                            <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-                      </select> 
+                    <div class="name_search clearfix">
+                        <button class="new_btn" style="padding:0px 10px;" @click="loadByCondition()">搜索</button>
                     </div>
                 </div>
-                <div class="right col-xs-2">
-                   <button class="new_btn transfer" @click="loadByCondition()">搜索</button>
-                    <button class="new_btn" @click="newData({ 
+                <div class="right col-xs-2"> 
+                    <button class="new_btn transfer" @click="newData({ 
                          title:'新建员工',
                          show:true,
                          name:'',
@@ -320,7 +320,7 @@ export default {
     float: right;
     border: 1px solid #ccc;
     color: #003077;
-    padding: 4px 10px;
+    padding:4px 10px;
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;

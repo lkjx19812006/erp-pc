@@ -8,7 +8,7 @@ export const CHANGE_PIECHARTS = 'CHANGE_PIECHARTS' //饼状图
 export const ORDER_TABLE = 'ORDER_TABLE' //订单 
 export const ORDER_DETAIL_DATA = 'ORDER_DETAIL_DATA' //订单详情
 export const SYSTEM_DATA = 'SYSTEM_DATA' //系统数据
-export const PROVINCE_DATA = 'PROVINCE_DATA' //省市区数据
+export const PROVINCE_DATA = 'PROVINCE_DATA' //省市区列表数据
 export const SERVICE_ENTERPRISE = 'SERVICE_ENTERPRISE' //业务企业数据
 export const SERVICE_COMPONENT = 'SERVICE_COMPONENT' //业务成分数据
 export const SERVICE_DRAW = 'SERVICE_DRAW' //业务提取物数据
@@ -67,5 +67,6 @@ export const IDENTIFY_DATA ='IDENTIFY_DATA' //认证信息
 
 export const UPDATE_TRACKING_DATA ='UPDATE_TRACKING_DATA' //跟新跟进信息
 
+export const PROVINCE_LIST ='PROVINCE_LIST' //获取国家中的省数据
 
 

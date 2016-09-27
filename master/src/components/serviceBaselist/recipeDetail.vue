@@ -59,10 +59,6 @@
                         <input type="text" class="form-control" value="{{param.breedName}}" disabled="disabled" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
-                        <label>公司名称</label>
-                        <input type="text" class="form-control" value="{{param.companyName | companyname}}" disabled="disabled" />
-                    </div>
-                    <div class="client-detailInfo  col-xs-12">
                         <label>含量</label>
                         <input type="text" class="form-control" value="{{param.quantity}}" disabled="disabled" />
                     </div>

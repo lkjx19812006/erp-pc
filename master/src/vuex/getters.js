@@ -135,3 +135,7 @@ export const initIdentify = (state) => {
     console.log('getter');
     return parseJson(state.table.trackingDetail);
 }*/
+/*---获取省市区---*/
+export const initProvince = (state) => {
+    return JSON.parse(JSON.stringify(state.table.locationList.provinceList));  
+}
