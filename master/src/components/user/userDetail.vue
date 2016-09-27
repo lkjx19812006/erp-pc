@@ -152,8 +152,12 @@
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                         企业认证
                                       </a>
+                                      <button v-if="initUserDetail.ctype==0" type="button" class="btn btn-base pull-right"  @click.stop="" disabled="disabled">未申请认证</button>
                                       <button v-if="initUserDetail.ctype==1" type="button" class="btn btn-base pull-right"  @click.stop="companyAuth({id:initUserDetail.id,ccomment:initUserDetail.ccomment,ctype:initUserDetail.ctype})">点击认证</button>
-                                      <button v-if="initUserDetail.ctype!=1" type="button" class="btn btn-base pull-right"  @click.stop="">无需认证</button>
+                                      <button v-if="initUserDetail.ctype==2" type="button" class="btn btn-base pull-right"  @click.stop="" disabled="disabled">已通过认证</button>
+                                      <button v-if="initUserDetail.ctype==3" type="button" class="btn btn-base pull-right"  @click.stop="" disabled="disabled">认证未通过</button>
+                                      
+
                                   </h4>
                               </div>
                               <div class="panel-collapse" v-show="initUserDetail.companyAuthShow&&initUserDetail.ctype==1">
