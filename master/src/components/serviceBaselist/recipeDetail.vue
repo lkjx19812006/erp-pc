@@ -12,11 +12,11 @@
                             <h4 class="panel-title clearfix">
                                 <img class="pull-left" src="/static/images/company.png" height="30" width="26" />
                                 <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
-                                    企业({{initDruglist.length}})
+                                    企业({{initDruglist.list.arr.length}})
                                 </a>
                             </h4>
                         </div>
-                        <div class="panel-collapse"   v-show="!initDruglist.show"> 
+                        <div class="panel-collapse"   v-show="!initDruglist.list.show"> 
                             <div class="panel-body panel-set">
                                 <table class="table contactSet">
                                     <thead>
@@ -30,7 +30,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="item in initDruglist">
+                                        <tr v-for="item in initDruglist.list.arr">
                                             <td>
                                                 {{item.name}}
                                             </td>

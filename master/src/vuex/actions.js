@@ -406,12 +406,16 @@ export const getRecipeDetail = ({ dispatch }, param) => { //获取成分详情
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
-        var obj = res.json().result.list;
-        for (var i in obj) {
-            obj[i].show = false;
-        }
+        var obj = res.json().result;
+        var arr = obj.list;
+        obj.list = {};
+        obj.list.show=false;
+        obj.list.arr = arr;
+       /* for (var i in obj.list) {
+            obj.list[i].show = false;
+        }*/
         console.log(obj)
-        dispatch(types.DRUG_DETAIL_DATA, obj);
+        dispatch(types.DRUG_DETAIL_DATA, obj.list);
     }, (res) => {
         console.log('fail');
     });
