@@ -195,7 +195,7 @@
                       <td>全选</td>
                   </tr> -->
                     <tr v-for="item in initIntentionList">
-                         <td  @click.stop="">
+                         <td  >
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
                         <td>{{item.type | chanceType}}</td>

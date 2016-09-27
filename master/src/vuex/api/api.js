@@ -3,6 +3,7 @@ const local='/static/data/';
 
 
 const _listUrl={
+	base:ctx,
 	list:local+'list.json',
 	charList:local+'chart.json',
 	linechart:local+'linechart.json',

@@ -18,6 +18,11 @@ body {
     padding: 0;
     margin: 0;
     overflow: auto;
+    -moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;
 }
 
 ul,
@@ -614,4 +619,30 @@ fieldset[disabled] .form-control {
 .filter_search dl dt,
 .filter_search dl dd{
     float: left;
+}
+
+.checkbox_unselect_base{
+    background-image: url(/static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: 8px;
+    text-align: center;
+    background-position: 5px;
+   float: left;
+   clear: both;
+}
+.checkbox_select_base{
+    background-image: url(/static/images/selected.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: 8px;
+    text-align: center;
+    background-position: 5px;
+   
 }

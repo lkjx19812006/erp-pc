@@ -122,6 +122,14 @@ export const initIdentify = (state) => {
     return parseJson(state.table.identify);
 }
 
+// /*---获取数据---*/
+// export const getData = (state,param) => {
+//     console.log(param);
+//     console.log(state);
+//     console.log("sdfsdf");
+//     return parseJson(state[param.name]);
+// }
+
  /*---修改跟进---*/
 /*export const initTrackingDetail = (state) => {
     console.log('getter');

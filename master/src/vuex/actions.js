@@ -1915,3 +1915,107 @@ export const getAuthInfo = ({ dispatch }, param) => { //查询认证信息
         console.log('fail');
     })
 }
+
+
+export const baseGetData = ({ dispatch }, param) => { //查询认证信息
+ 
+    
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.base + param.url+'?&page=' + param.cur,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+         param.loading=false;
+         console.log(param);
+        console.log('查询成功')
+        console.log(res.json());
+        const json = {
+            list:res.json(),
+            name:param.keyName
+        };
+       
+        if(json.list.result&&Object.prototype.toString.call(json.list.result) === '[object Array]'){
+             for(let i in json.list.result){
+                json.list.result[i].show=false;
+             }   
+        }else if(json.list.result.list&&Object.prototype.toString.call(json.list.result.list) === '[object Array]'){
+            for(let i in json.list.result.list){
+                json.list.result.list[i].show=false;
+             }  
+        }
+        param.all=json.list.result.pages;
+        console.log(json);
+        dispatch(types.ABSTRACT_GET_DATA,json);
+    }, (res) => {
+        param.loading=false;
+        console.log('fail');
+    })
+}
+
+export const baseAddData = ({ dispatch }, param) => { //查询认证信息
+ 
+ function CurentTime()
+    { 
+        var now = new Date();
+       
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();            //日
+       
+        var hh = now.getHours();            //时
+        var mm = now.getMinutes();          //分
+       
+        var clock = year + "-";
+       
+        if(month < 10)
+            clock += "0";
+       
+        clock += month + "-";
+       
+        if(day < 10)
+            clock += "0";
+           
+        clock += day + " ";
+       
+        if(hh < 10)
+            clock += "0";
+           
+        clock += hh + ":";
+        if (mm < 10) clock += '0'; 
+        clock += mm; 
+        return(clock); 
+    } 
+    
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.base + param.url,
+        body: param.body,
+        emulateHTTP: true,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('新增成功')
+        console.log(res.json());
+        if(res.json().result.id)param.body.id=res.json().result.id;
+        param.body.utime = CurentTime();
+        let json = {
+            name:param.keyName,
+            body:param.body
+        }
+        param.loading=false;
+        param.show=false;
+        dispatch(types.ABSTRACT_ADD_DATA,json);
+    }, (res) => {
+        param.loading=false;
+        console.log('fail');
+    })
+}
+
