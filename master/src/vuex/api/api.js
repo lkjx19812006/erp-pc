@@ -8,6 +8,7 @@ const _listUrl={
 	linechart:local+'linechart.json',
 	piechart:local+'piechart.json',
 	orderTable:local+'order.json',
+	orderList:ctx,
 	clientList:ctx,
 	userList:ctx,
 	tracking:ctx,
