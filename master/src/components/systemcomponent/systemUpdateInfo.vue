@@ -120,6 +120,7 @@ export default {
 <style scoped>
 .modal_con{
     max-height: 400px;
+    width: 600px;
 } 
 .top-title{
     position: absolute;

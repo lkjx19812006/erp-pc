@@ -198,7 +198,27 @@ export const getProvinceData = ({ dispatch }, param) => { //省市区列表
         console.log('fail');
         param.loading = false;
     });
-};
+}
+export const getProvinceList = ({ dispatch }, param) => { //获取国中省的列表
+    param.loading = true;
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList + '/sys/location/province/?page=' + param.cur + '&pageSize=15',
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj = res.json().result;
+        console.log(res.json().result)
+        dispatch(types.PROVINCE_LIST, obj);
+        param.loading = false;
+        param.all = res.json().result.pages;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+}
 
 export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
     param.loading = true;
@@ -330,15 +350,15 @@ export const alterCompany = ({ dispatch }, param) => { //修改企业联系人
         console.log('fail');
     })
 }
-export const createContact = ({ dispatch }, param, id) => { //新增企业联系人
+export const createContact = ({ dispatch }, param) => { //新增企业联系人
+    console.log(param)
     const data1 = {
         "name": param.name,
-        "cid": id,
+        "cid": param.cid,
         "tel": param.tel,
         "phone": param.phone,
         "wechart": param.wechart,
-        "email": param.email,
-        "qq": param.qq
+        "email": param.email
     }
     Vue.http({
         method: "POST",
@@ -403,6 +423,9 @@ export const getDrawData = ({ dispatch }, param) => { //提取物以及搜索
     for(var ext in param){
         if(ext=='name'&&param[ext]!==''){
             url+='&name='+param.name
+        }
+        if(ext=='company'&&param[ext]!==''){
+            url+='&company='+param.company
         }
     }
     Vue.http({
@@ -814,6 +837,7 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
 }
 
 export const saveCreate = ({ dispatch }, data) => { //新增客户列表
+    console.log(data)
     const Cdata = {
         "name":data.name,
         "type":data.type,
@@ -1281,7 +1305,6 @@ export const addrDel = ({ dispatch }, param) => { //删除客户收货地址
 }
 
 export const transferEmploy = ({ dispatch }, param) => { //客户业务员划转信息
-    console.log(param)
     const transferdata = {
         employeeId:param.employeeId,
         orgId:param.orgId,

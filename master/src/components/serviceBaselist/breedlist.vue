@@ -6,15 +6,15 @@
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">品种</div>
-            <div class="col-xs-8 my_order_search">
+            <div class="col-xs-4 my_order_search">
                 <div class="ordertel_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
                     <input type="text" class="search_input" v-model="loadParam.name" placeholder="按品种名称搜索" @keyup.enter="categoryNameSearch(loadParam.name)">
                 </div>
-            </div>
-            <div class="right col-xs-2">
-                <button class="new_btn transfer" @click="createBreed('create')">新建</button>
                 <button class="new_btn" @click="categoryNameSearch()">搜索</button>
+            </div>
+            <div class="right col-xs-1">
+                <button class="new_btn" @click="createBreed('create')">新建</button>
             </div>
         </div>
         <div class="order_table">
@@ -27,11 +27,17 @@
                         <th>编码</th>
                         <th>品种名称</th>
                         <th>品种类别</th>
+                        <th>拼音</th>
+                        <th>英文</th>
+                        <th>拉丁文</th>
                         <th></th>
                     </tr>
                 </thead>
                 <thead class="space">
                     <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -42,9 +48,12 @@
                     <tr v-for="item in initBreedlist">
                         <td>{{item.code | breedcode}}</td>
                         <td  class="underline"  @click="editBreed(item.id)">{{item.name}}</td>
-                        <td>{{item.categoryId}}</td>
+                        <td>{{item.categoryName}}</td>
+                        <td>{{item.categoryName}}</td>
+                        <td>{{item.categoryName}}</td>
+                        <td>{{item.categoryName}}</td>
                         <td @click.stop="breedClick($index)">
-                            <img height="24" width="24" src="../../../static/images/default_arrow.png" />
+                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="breed_action" v-show="item.show">
                                 <ul>
                                     <li @click="modifyBreed($index,item)">编辑</li>
@@ -186,7 +195,7 @@ export default {
 <style scoped>
 .breed_action {
     top: 33px;
-    right: 106px;
+    right:50px;
 }
 .transfer{
     margin-left: 18px;

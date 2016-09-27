@@ -1,13 +1,28 @@
 <template>
-    <contact-model :param="contactParam" v-if="contactParam.show"></contact-model>
     <updatecompany-model :param="companylistParam" v-if="companylistParam.show"></updatecompany-model>
+    <create-model :param="createParam" v-if="createParam.show"></create-model>
     <div class="breed_detail">
         <div class="client-section clearfix" v-cloak>
             <div @click="param.show=false" class="top-title">
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
             <div class="col-md-8">
-                <h4 class="section_title">企业相关</h4>
+                <h4 class="section_title">企业相关 <button class="new_btn transfer" @click="createCustomer({
+                          sub:$index,
+                          show:true,
+                          id:initCompanyDetail.id,
+                          category:initCompanyDetail.category,
+                          type:initCompanyDetail.type,
+                          name:initCompanyDetail.name,
+                          tel:initCompanyDetail.tel,
+                          principal:initCompanyDetail.principal,
+                          bizScope:initCompanyDetail.bizScope,
+                          province:initCompanyDetail.province,
+                          city:initCompanyDetail.city,
+                          address:initCompanyDetail.address,
+                          link:saveCreate                           
+                          })">划转到客户</button>
+                </h4>
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix" @click="companytoggle({
@@ -19,7 +34,24 @@
                             <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
                                 联系人({{initCompanyDetail.companyContacts.arr.length}})
                             </a>
-                            <button type="button" class="btn btn-base pull-right" @click.stop="createContact(param.id)">新建</button>
+                            <button type="button" class="btn btn-base pull-right" @click.stop="createCompany({
+                               cid:param.id,
+                               show:true,
+                               title:'新建联系人',
+                               namelist:'联系人名称',
+                               phonelist:'手机号',
+                               emaillist:'邮箱',
+                               tellist:'电话',
+                               weblist:'微信',
+                               name:'',
+                               phone:'',
+                               tel:'',
+                               email:'',
+                               wechart:'',
+                               link:createContact,
+                               url:'contract',
+                               key:'companyContacts'
+                              })">新建</button>
                         </h4>
                         </div>
                         <div class="panel-collapse"  v-show="!initCompanyDetail.companyContacts.show">
@@ -51,7 +83,7 @@
                                                                id:item.id,
                                                                show:true,
                                                                cid:item.cid,
-                                                               title:'联系人',
+                                                               title:'编辑联系人',
                                                                namelist:'联系人名称',
                                                                phonelist:'手机号',
                                                                emaillist:'邮箱',
@@ -164,12 +196,16 @@
                             <label>分类码:</label>
                             <input type="text" class="form-control" value="{{initCompanyDetail.category | catestate}}" disabled=""  />
                         </div>
+                        <div class="client-detailInfo col-xs-12">
+                            <label>类别:</label>
+                            <input type="text" class="form-control" value="{{initCompanyDetail.type}}" disabled=""  />
+                        </div>
                         <div class="client-detailInfo  col-xs-12">
                             <label>企业名称</label>
                             <input type="text" class="form-control" value="{{initCompanyDetail.name}}" disabled=""  />
                         </div>
                         <div class="client-detailInfo  col-xs-12">
-                            <label>生产范围</label>
+                            <label>经营范围</label>
                              <input type="text" class="form-control" value="{{initCompanyDetail.bizScope}}" disabled=""  />
                         </div>
                          <div class="client-detailInfo  col-xs-12 ">
@@ -194,20 +230,22 @@
     </div>
 </template>
 <script>
-import contactModel from '../serviceBaselist/breedDetailDialog/createContact'
-import updatecompanyModel from '../serviceBaselist/breedDetailDialog/updateCompany'
+import updatecompanyModel from '../serviceBaselist/breedDetailDialog/createContact'
 import filter from '../../filters/filters'
+import createModel from '../serviceBaselist/breedDetailDialog/compTransfer'
 import {
     initCompanyDetail
 } from '../../vuex/getters'
 import {
-    alterCompany
+    alterCompany,
+    createContact,
+    saveCreate
 } from '../../vuex/actions'
 export default {
     components: {
-        contactModel,
         updatecompanyModel,
-        filter
+        filter,
+        createModel
     },
     data() {
         return {
@@ -218,12 +256,13 @@ export default {
                 size: '15px'
             },
             contactParam:{
-                show:false,
-                id:''
+                show:false
             },
             companylistParam:{
-                show:false,
-                    id:''
+                show:false
+            },
+            createParam:{
+                show: false
             }
         }
     },
@@ -233,7 +272,9 @@ export default {
             initCompanyDetail
         },
         actions: {
-            alterCompany
+            alterCompany,
+            createContact,
+            saveCreate
         }
     },
     methods: {
@@ -250,9 +291,11 @@ export default {
                 this.$store.state.table.companyDetail.companyContacts.arr[id].show=true;
             }
         },
-        createContact:function(id){
-            this.contactParam.id=id;
-            this.contactParam.show=true;
+        createCustomer:function(param){
+            this.createParam=param;
+        },
+        createCompany:function(initCompanyDetail){
+            this.companylistParam = initCompanyDetail;
         },
         updateCompany:function(initCompanyDetail){
             this.companylistParam = initCompanyDetail;

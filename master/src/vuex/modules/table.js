@@ -53,8 +53,8 @@ import {
    UPDATA_INTENTION_DATA,
    INTENTION_LIST_DATA,
    INTENTION_DATA,
-   INTENTION_OFFER_DETAIL
-
+   INTENTION_OFFER_DETAIL,
+   PROVINCE_LIST
 
 } from '../mutation-types'
 
@@ -142,6 +142,13 @@ const state = {
             "company": "个体种植户","score": 300,"source": 1,"status": 0,"userIds": null,"customerId": null,"main": null,"show": true
         }]
     },
+
+    locationList:{
+        provinceList: [
+            {"id": 248,"pid": 7, "path": ",1,7,248,","level": 3,"cname": "天津", "nameEn": "Tianjin","namePy": null, "code": "12","twoNumber": null,"number": null,"iso": null,"sortnum": 248, "show": true }
+        ]
+    },
+
     breedDetail: {
         "code": "232去",
         "icon": "http://p.ayxbk.com/images/thumb/4/4f/Bkg32.jpg/220px-Bkg32.jpg",
@@ -327,7 +334,6 @@ const mutations = {
             "phone": data.phone,
             "wechart": data.wechart,
             "email": data.email,
-            "qq": data.qq,
             "show": false,
             "id": data.id
         })
@@ -646,8 +652,10 @@ const mutations = {
     },
     [INTENTION_OFFER_DETAIL](state,data){
         state.basicBaseList.intentionDetail = data;
+    },
+    [PROVINCE_LIST](state,data){
+        state.locationList.provinceList = data;
     }
-
 
 }
 

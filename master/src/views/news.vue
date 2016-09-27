@@ -7,8 +7,6 @@
     <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
 
-
-    
      <div  v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">会员</div>

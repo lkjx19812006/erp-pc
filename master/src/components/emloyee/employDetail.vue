@@ -6,7 +6,7 @@
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
             <div  class="section_title clearfix">
-                <span>员工{{param.name}}的信息</span>
+                <span>{{param.name}}的信息</span>
                 <button class="new_btn transfer" @click="saveSucc(param)">保存</button> 
             </div>
             <div class="edit-detail">
@@ -57,7 +57,6 @@
                         <mz-datepicker :time.sync="param.entrydate" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
-                    <!--  <input type="text" class="form-control edit-input"  v-model="param.entrydate" value="{{param.entrydate}}" /> -->
                 </div>
                 <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                     <label class="editlabel">离职时间</label>
@@ -65,10 +64,17 @@
                         <mz-datepicker :time.sync="param.leavedate" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
-                   <!--  <input type="text" class="form-control edit-input"  v-model="param.leavedate" value="{{param.leavedate}}" />
-                                   </div> -->
+                </div> 
             </div>
-        </div>
+            <div class="clearfix">
+                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    <label class="editlabel">角色</label>
+                    <div class="pull-left role clerafix">
+                         <input type="checkbox" class="checkbox_unselect" id="client_ids"  value="部门经理" />
+                         <label  for="client_ids">部门经理</label>
+                    </div>
+                </div>
+            </div>
     </div>
 </template>
 <script>
@@ -180,5 +186,18 @@ export default {
 }
 .contact_img{
     margin-right: 6px !important;
+}
+.checkbox_unselect{
+    background-image: url(/static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+    float: left;
+    margin-right: 10px;
 }
 </style>

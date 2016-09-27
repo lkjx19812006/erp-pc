@@ -14,7 +14,7 @@
                         <div class="editpage" v-cloak>
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.namelist}}</label>
+                                <label class="editlabel">{{param.namelist}} <span class="system_danger" v-if="$validation.name.required">请输入{{param.namelist}}</span></label>
                                     <input type="text" class="form-control edit-input"  id="name" v-model="param.name" v-validate:name="['required']" />
                                 </div>
                             </div>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.id,param.breedId,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm"  @click="param.link(param,param.id,param.breedId,param.show = false)">保存</button>
                 </div>
             </form>
         </validator>
@@ -53,37 +53,45 @@ export default {
 }
 </script>
 <style scoped>
+.modal_con{
+    max-height: 350px;
+    width: 400px;
+} 
+.top-title{
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+.edit_footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 .big-font {
     font-size: 36px;
 }
-
 .top-title span {
     font-size: 28px;
 }
-
 .edit-content {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
-
 .edit-content h3 {
     font-size: 20px;
     color: #fa6705;
     margin: 0;
 }
-
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
     padding: 10px 30px 30px 30px;
 }
-
 .editsection {
     width: 100%;
     box-sizing: border-box;
 }
-
 .editpage {
     display: -webkit-flex;
     display: -webkit-box;
@@ -94,7 +102,6 @@ export default {
     -ms-box-orient: horizontal;
     box-orient: horizontal;
 }
-
 .editpageleft,
 .editpageright {
     -webkit-box-flex: 1;
@@ -103,17 +110,14 @@ export default {
     flex: auto;
     width: 50%;
 }
-
 .editpage-input {
     margin-top: 15px;
 }
-
 .editlabel {
     color: #333;
     font-size: 14px;
     display: block;
 }
-
 .edit-input {
     height: 36px;
     line-height: 36px;
@@ -124,11 +128,9 @@ export default {
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
 }
-
 .edit-input:focus {
     border-color: #fa6705;
 }
-
 .addblack span {
     color: #333;
     font-size: 14px;
@@ -139,26 +141,17 @@ export default {
 .edit_footer button {
     margin-left: 15px;
 }
-
 .btn-confirm {
     background-color: #fa6705;
     color: #fff;
 }
-
 .btn-close {
     color: #fa6705;
 }
-
-.editpage_img {
-    width: 90%;
-}
-
-.editpage_img img {
-    display: inline-block;
-    background: #ccc;
-}
-
-.editpage-image {
-    display: inline-block;
+.system_danger {
+    color: red;
+    margin-bottom: 0;
+    font-weight: 100;
+    font-size: 12px;
 }
 </style>

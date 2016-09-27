@@ -28,6 +28,20 @@
                                <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                              </select>
                         </div>
+                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <label class="editlabel">品种名称拼音</label>
+                            <input type="text" v-model='categoryData.name' class="form-control edit-input"  />
+                        </div>
+                    </div>
+                     <div class="clearfix">
+                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <label class="editlabel">品种名称英文</label>
+                            <input type="text" v-model='categoryData.code' class="form-control edit-input" />
+                        </div>
+                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <label class="editlabel">品种名称拉丁文</label>
+                            <input type="text" v-model='categoryData.name' class="form-control edit-input"  />
+                        </div>
                     </div>
                 </section>
             </validator>
