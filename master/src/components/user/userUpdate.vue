@@ -1,4 +1,5 @@
 <template>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -51,11 +52,12 @@
        </div> 
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.show = false)">确定</button>
+            <button type="button" class="btn  btn-confirm" @click="alertInfo()">确定</button>
         </div>
     </div>
 </template>
 <script>
+import tipsdialogModel  from '../tipsDialog'
 import {
     
 } from '../../vuex/getters'
@@ -63,10 +65,17 @@ import {
     updateUserInfo   
 } from '../../vuex/actions'
 export default {
+  components: {
+    tipsdialogModel
+  },
     props: ['param'],
     data() {
         return {
-        
+          tipsParam:{
+            show:false,
+            name:"确认修改信息?",
+            
+          }
         }
     },
     vuex: {
@@ -87,11 +96,12 @@ export default {
             transition.next()
         }
     },
-    /*methods: {
-      alertInfo:function(param){
-        updateUserInfo(param)
+    methods: {
+      alertInfo:function(){
+        this.param.show = false
+        this.updateUserInfo(this.param);
       }
-    }*/
+    }
 }
 </script>
 <style scoped>

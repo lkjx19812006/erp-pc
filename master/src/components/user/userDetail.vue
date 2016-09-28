@@ -18,6 +18,7 @@
                             <button type="button" class="btn btn-base" @click="createTracking({
                                     objId:initUserDetail.id,
                                     bizId:'',
+                                    bizName:'',
                                     type:0,
                                     trackingWay:'',
                                     bizType:'',
@@ -196,6 +197,7 @@
                                       <button type="button" class="btn btn-base pull-right" @click.stop="createTracking({
                                           objId:initUserDetail.id,
                                           bizId:'',
+                                          bizName:'',
                                           type:0,
                                           trackingWay:'',
                                           bizType:'',
@@ -264,13 +266,14 @@
                           </div>
                           <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                  <label>电话</label>
+                                  <label>手机</label>
                                   <input type="text" class="form-control"  v-model="initUserDetail.phone" value="{{initUserDetail.phone}}" disabled="disabled"/>
                               </div>
-                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                  <label>邮箱</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.email" value="{{initUserDetail.email}}" disabled="disabled"/>
+                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                  <label>归属地</label>
+                                  <input type="text" class="form-control" v-model="initUserDetail.qq" value="{{initUserDetail.qq}}" disabled="disabled"/>
                               </div>
+                              
                           </div>
                           <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
@@ -280,6 +283,36 @@
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>公司</label>
                                   <input type="text" class="form-control" v-model="initUserDetail.company" value="{{initUserDetail.company}}" disabled="disabled"/>
+                              </div>
+                          </div>
+                          <div class="clearfix">
+                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                  <label>邮箱</label>
+                                  <input type="text" class="form-control" v-model="initUserDetail.email" value="{{initUserDetail.email}}" disabled="disabled"/>
+                              </div>
+                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                  <label>主营业务</label>
+                                  <input type="text" class="form-control" v-model="initUserDetail.busiType" value="{{initUserDetail.busiType}}" disabled="disabled"/>
+                              </div>
+                          </div>
+                          <div class="clearfix">
+                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                  <label>来源</label>
+                                  <input type="text" class="form-control" v-model="initUserDetail.source" value="{{initUserDetail.source}}" disabled="disabled"/>
+                              </div>
+                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                  <label>客户类型</label>
+                                  <input type="text" class="form-control" v-model="initUserDetail.bizTypeName" value="{{initUserDetail.bizTypeName}}" disabled="disabled"/>
+                              </div>
+                          </div>
+                          <div class="clearfix">
+                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                  <label>审核状态</label>
+                                  <input type="text" class="form-control" v-model="initUserDetail.audit" value="{{initUserDetail.audit}}" disabled="disabled"/>
+                              </div>
+                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                  <label>划转状态</label>
+                                  <input type="text" class="form-control" v-model="initUserDetail.audit" value="{{initUserDetail.audit}}" disabled="disabled"/>
                               </div>
                           </div>
                           <div class="clearfix">

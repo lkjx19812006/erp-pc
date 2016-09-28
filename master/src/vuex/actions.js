@@ -272,14 +272,18 @@ export const getProvinceList = ({ dispatch }, param) => { //获取国中省的�
 
 export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
     param.loading = true;
+    console.log('url==>');
+    console.log(apiUrl.clientList + '/company/?type=&name=&&category=&province=&page=' + param.cur + '&pageSize=15');
     Vue.http({
         method: "GET",
-        url: apiUrl.clientList + '/company/query/?type=&name=&&category=&province=&page=' + param.cur + '&pageSize=15',
+        url: apiUrl.clientList + '/company/?type=&name=&&category=&province=&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
+        console.log('---------------->');
+        console.log(res.json());
         var obj = res.json().result.list;
         for (var i in obj) {
             obj[i].show = false;
@@ -432,7 +436,7 @@ export const getComponentData = ({ dispatch }, param) => { //成分
     param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.clientList + '/recipe/' + 'query/?page=' + param.cur + '&pageSize=15',
+        url: apiUrl.clientList + '/recipe/' + '?page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -473,7 +477,7 @@ export const getRecipeDetail = ({ dispatch }, param) => { //获取成分详情
 
 export const getDrawData = ({ dispatch }, param) => { //提取物以及搜索
     param.loading = true;
-    var url = apiUrl.drawList + '/' + 'query?page=' + param.cur + '&pageSize=15';
+    var url = apiUrl.drawList + '/' + '?page=' + param.cur + '&pageSize=15';
     for(var ext in param){
         if(ext=='name'&&param[ext]!==''){
             url+='&name='+param.name
