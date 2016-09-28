@@ -136,7 +136,7 @@ export const getSystemSearch = ({ dispatch }, param) => { //搜索枚举类型
     param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.clientList + '/sys/enum/query/?type=' + param.sel,
+        url: apiUrl.clientList + '/sys/enum/query/?type=' + param.sel+'&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -2010,11 +2010,10 @@ export const getAuthInfo = ({ dispatch }, param) => { //查询认证信息
 
 
 export const baseGetData = ({ dispatch }, param) => { //查询认证信息
- 
-    
+
     Vue.http({
         method: 'GET',
-        url: apiUrl.base + param.url+'?&page=' + param.cur,
+        url: apiUrl.base + param.url+'?page=' + param.cur,
         emulateHTTP: false,
         emulateJSON: false,
         headers: {
@@ -2028,7 +2027,8 @@ export const baseGetData = ({ dispatch }, param) => { //查询认证信息
         console.log(res.json());
         const json = {
             list:res.json(),
-            name:param.keyName
+            name:param.keyName,
+            callback:param.getDataInit
         };
        
         if(json.list.result&&Object.prototype.toString.call(json.list.result) === '[object Array]'){
@@ -2050,38 +2050,6 @@ export const baseGetData = ({ dispatch }, param) => { //查询认证信息
 }
 
 export const baseAddData = ({ dispatch }, param) => { //查询认证信息
- 
- function CurentTime()
-    { 
-        var now = new Date();
-       
-        var year = now.getFullYear();       //年
-        var month = now.getMonth() + 1;     //月
-        var day = now.getDate();            //日
-       
-        var hh = now.getHours();            //时
-        var mm = now.getMinutes();          //分
-       
-        var clock = year + "-";
-       
-        if(month < 10)
-            clock += "0";
-       
-        clock += month + "-";
-       
-        if(day < 10)
-            clock += "0";
-           
-        clock += day + " ";
-       
-        if(hh < 10)
-            clock += "0";
-           
-        clock += hh + ":";
-        if (mm < 10) clock += '0'; 
-        clock += mm; 
-        return(clock); 
-    } 
     
     Vue.http({
         method: 'POST',
@@ -2097,7 +2065,7 @@ export const baseAddData = ({ dispatch }, param) => { //查询认证信息
         console.log('新增成功')
         console.log(res.json());
         if(res.json().result.id)param.body.id=res.json().result.id;
-        param.body.utime = CurentTime();
+        param.body.utime = param.utime;
         let json = {
             name:param.keyName,
             body:param.body
@@ -2105,6 +2073,60 @@ export const baseAddData = ({ dispatch }, param) => { //查询认证信息
         param.loading=false;
         param.show=false;
         dispatch(types.ABSTRACT_ADD_DATA,json);
+    }, (res) => {
+        param.loading=false;
+        console.log('fail');
+    })
+}
+
+export const baseUpdateData = ({ dispatch }, param) => { //查询认证信息
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.base + param.url,
+        body: param.body,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        console.log(res.json());
+       param.body.utime = param.utime;
+        let json = {
+            name:param.keyName,
+            body:param.body,
+            index:param.index
+        }
+        param.loading=false;
+        param.show=false;
+        dispatch(types.ABSTRACT_UPDATE_DATA,json);
+    }, (res) => {
+        param.loading=false;
+        console.log('fail');
+    })
+}
+
+export const baseDelData = ({ dispatch }, param) => { //查询认证信息
+    Vue.http({
+        method: 'DELETE',
+        url: apiUrl.base + param.url+param.id,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('删除成功')
+        console.log(res.json());
+        let json = {
+            name:param.keyName,
+            index:param.index
+        }
+        param.loading=false;
+        dispatch(types.ABSTRACT_DELETE_DATA,json);
     }, (res) => {
         param.loading=false;
         console.log('fail');

@@ -1,6 +1,6 @@
-	
 	<template>	
 	<create-model :param.sync="createParam" v-if="createParam.show"></create-model>
+	<tip-model :param.sync="tipParam" v-if="tipParam.show"></tip-model>
 		 <div  class="myemploy" >
         <div class="order_search">
             <div class="clear">
@@ -38,8 +38,8 @@
                       <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
                        <div class="component_action" v-show='item.show' transition="expand">
                           <ul>
-                              <li @click="editData(item)">编辑</li>
-                             <li @click="specDelete()">删除</li>
+                              <li @click="editData(item,$index)">编辑</li>
+                             <li @click="showConfirm(item,$index)">删除</li>
                           </ul>
                         </div>
                     </td>
@@ -56,18 +56,19 @@
 	<script>
 import createModel  from '../components/role/createRole'
 import pagination from '../components/pagination'
-import deletebreedModel  from '../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
+import tipModel  from '../components/tips/tipDialog'
 import {
   
 } from '../vuex/getters'
 import {
- baseGetData
+ baseGetData,
+ baseDelData
 } from '../vuex/actions'
 export default {
     components:{
         pagination,
         createModel,
-        deletebreedModel
+        tipModel
     },
     data() {
         return {
@@ -85,21 +86,28 @@ export default {
             createParam:{
                 show:false,
                 item:{},
-                loading:true
-            }, 
-            deleteParam:{
-                show:false
+                loading:true,
+                cname:'',
+                remark:''
+            },
+            tipParam:{
+            	show:false,
+            	name:'',
+            	alert:false,
+            	confirm:false,
+            	callback:''
             }
         }
     },
     methods:{
-        editData:function(item){
+        editData:function(item,index){
            this.createParam.show=true;
            this.createParam.title='修改角色';
            this.createParam.cname=item.cname;
            this.createParam.remark=item.remark;
            this.createParam.id=item.id;
-           console.log(item);
+           this.createParam.menus=item.menus;
+           this.createParam.index=index;
             
         },
         newData:function(){
@@ -108,17 +116,30 @@ export default {
            this.createParam.cname='';
            this.createParam.remark='';
            this.createParam.id='';
+           this.createParam.menus='';
         },
-        specDelete:function(){
-           
+        showConfirm:function(item,index){
+        	this.loadParam.index=index;
+        	this.loadParam.id=item.id;
+        	this.tipParam.show=true;
+        	this.tipParam.name='确定删除'+item.cname+'吗？';
+        	this.tipParam.confirm=true;
+        	this.tipParam.alert=false;
+        	this.tipParam.callback=this.delData;
+        },
+        delData:function(){
+        	this.loadParam.loading=true;
+        	this.baseDelData(this.loadParam);
         }
+
     },
     vuex: {
         getters: {
           list:state => state.tablelist.power.list
         },
         actions: {
-          baseGetData
+          baseGetData,
+          baseDelData
         },
     },
     events: {

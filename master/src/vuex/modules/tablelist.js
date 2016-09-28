@@ -196,10 +196,20 @@ const mutations = {
             }
         }
         state[data.name].list = data.list;
+        if(data.callback)data.callback();
     },
 
     [ABSTRACT_UPDATE_DATA](state,data){
-    	state[data.name].list.result.list[data.index]=data.body;
+        console.log(data);
+    	// state[data.name].list.result.list[data.index]=data.body;
+        
+        for(let i in state[data.name].list.result.list[data.index]){
+            for(let m in data.body){
+                if(i==m){
+                  state[data.name].list.result.list[data.index][i]=data.body[m];  
+                }
+            }
+        }
     },
 
      [ABSTRACT_DELETE_DATA](state,data){

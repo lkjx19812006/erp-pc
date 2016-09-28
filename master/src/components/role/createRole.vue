@@ -1,5 +1,6 @@
 <template>
-    <div class="container modal_con"  >
+<div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container  modal_con  "  >
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -16,11 +17,11 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label>名称</label>
-                                <input type="text" id="cname" class="form-control" maxlength="11" v-model="param.cname" v-validate:cname="['required']"/>
+                                <input type="text" id="cname" value="{{param.cname}}" class="form-control" maxlength="11" v-model="param.cname" v-validate:cname="['required']" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label>备注</label>
-                                <input type="email" class="form-control" v-model="param.remark"  />
+                                <input type="text" class="form-control" value="{{param.remark}}" v-model="param.remark"  />
                             </div>
                         </div>
                         <div class="clearfix" >
@@ -111,7 +112,8 @@ import {
 } from '../../vuex/getters'
 import {
    baseGetData,
-   baseAddData
+   baseAddData,
+   baseUpdateData
 } from '../../vuex/actions'
 export default {
     components: {
@@ -131,7 +133,8 @@ export default {
         },
         actions: {
            baseGetData,
-           baseAddData
+           baseAddData,
+           baseUpdateData
         }
     },
     methods:{
@@ -159,6 +162,28 @@ export default {
         }
      },
      save:function(){
+        function CurentTime()
+    { 
+        var now = new Date();
+        var year = now.getFullYear();       //年
+        var month = now.getMonth() + 1;     //月
+        var day = now.getDate();            //日
+        var hh = now.getHours();            //时
+        var mm = now.getMinutes();          //分
+        var clock = year + "-";
+        if(month < 10)
+            clock += "0";
+        clock += month + "-";
+        if(day < 10)
+            clock += "0";
+        clock += day + " ";
+        if(hh < 10)
+            clock += "0";
+        clock += hh + ":";
+        if (mm < 10) clock += '0'; 
+        clock += mm; 
+        return(clock); 
+    } 
         let idArr=[];
         for(let i in this.list.result){
             if(this.list.result[i].show){
@@ -181,14 +206,40 @@ export default {
             this.param.url='/sys/role/';
             this.param.keyName='power';
             this.param.loading=true;
-            this.baseAddData(this.param);
+            this.param.utime=CurentTime();
+            if(this.param.id){
+              this.param.body.id=this.param.id;
+              this.baseUpdateData(this.param);
+            }else{
+              this.baseAddData(this.param);  
+            }
      
-     }
+     },
+     getDataInit:function(){
+       if(this.param.menus){
+        let idArr=this.param.menus.split(',');
+        for(let item in idArr){
+            for(let m in this.list.result){
+                if(this.list.result[m].id==idArr[item]){
+
+                    this.list.result[m].show=true;
+                }
+                for(let n in this.list.result[m].subcategory){
+                        if(this.list.result[m].subcategory[n].id==idArr[item]){
+                            this.list.result[m].subcategory[n].show=true;
+                        }
+                    }
+            }
+        }
+       }
+     } 
     },
     created(){
         this.param.keyName='menu';
         this.param.url='/sys/menu/';
         this.param.cur=1;
+        this.param.getDataInit=this.getDataInit;
+        console.log(this.param);
         this.baseGetData(this.param);
     }
 }

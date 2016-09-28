@@ -140,7 +140,7 @@ export default {
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getSystemData(this.loadParam);
+            this.getSystemSearch(this.loadParam);
         }
     },
     vuex: {
