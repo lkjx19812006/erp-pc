@@ -2,7 +2,14 @@
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">成分</div>
+            <div class="my_enterprise col-xs-1">成分</div>
+            <div class="col-xs-4 my_order_search">
+                <div class="name_search clearfix">
+                    <img src="/static/images/search.png" height="24" width="24">
+                    <input type="text" class="search_input" placeholder="按药品名称搜索" v-model="loadParam.name" >
+                </div>
+                 <a class="new_btn transfer"  @click="multiSearch()">查询</a>
+            </div>
         </div>
         <div class="order_table">
             <div class="cover_loading">
@@ -14,16 +21,12 @@
                         <th>编 码</th>
                         <th>药品名称</th>
                         <th>品种名称</th>
-                        <th>公司名称</th>
                         <th>含 量</th>
                         <th>单 位</th>
-                        <th>状态</th>
                     </tr>
                 </thead>
                 <thead class="space">
                     <tr>
-                        <th></th>
-                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -46,10 +49,8 @@
                             show:true
                             })">{{item.name}}</td>
                         <td>{{item.breedName}}</td>
-                        <td>{{item.companyName | companyname}}</td>
                         <td>{{item.quantity}}</td>
                         <td>{{item.unit}}</td>
-                        <td>{{item.status}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -92,7 +93,8 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
-                all: 7
+                all: 7,
+                name:''
             },
             changeParam: {
                 show: false
@@ -106,6 +108,9 @@ export default {
         clickRecipe:function(initConponentlist){
             this.changeParam=initConponentlist;
             this.getRecipeDetail(this.changeParam);
+        },
+        multiSearch:function(){
+            this.getComponentData(this.loadParam)
         }
     },
     events: {
@@ -128,4 +133,7 @@ export default {
 }
 </script>
 <style scoped>
+.name_search{
+    margin-right:0%;
+}
 </style>

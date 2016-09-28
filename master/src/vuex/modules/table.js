@@ -1,6 +1,7 @@
 import {
 
    ORDER_TABLE,
+   ORDER_DETAIL_DATA,
    CHANGE_SHOW_STATUE,
    SYSTEM_DATA,
    PROVINCE_DATA,
@@ -39,7 +40,6 @@ import {
    ADD_PRODUCT_DATA,
    UPDATE_PRODUCT_DATA,
    EMPLOYEE_DATA,
-   INTENTION_LIST_DATA,
    CHANCE_LIST_DATA,
    USER_DATA,
    UPDATE_USER_DATA,
@@ -53,18 +53,21 @@ import {
    ADD_TRACKING_DATA,
    UPDATA_INTENTION_DATA,
    INTENTION_DATA,
-   INTENTION_OFFER_DETAIL
-
+   INTENTION_OFFER_DETAIL,
+   PROVINCE_LIST
 
 } from '../mutation-types'
 
 const state = {
-    list: [
-        { "orderId": 0, "orderName": "药材", "orderModule": "代理商", "orderNum": "1234567890", "orderUnit": "金融科技", "orderTel": "13162875213", "orderPerson": "大大", "orderTime": "2016-09-18", "orderLogstatus": "运输中", "show": true },
-        { "orderId": 1, "orderName": "人参", "orderModule": "代理商", "orderNum": "1234567890", "orderUnit": "金融科技", "orderTel": "13162875213", "orderPerson": "达达", "orderTime": "2016-09-18", "orderLogstatus": "运输中", "show": true },
-        { "orderId": 2, "orderName": "未完成", "orderModule": "代理商", "orderNum": "1234567890", "orderUnit": "金融科技", "orderTel": "13162875213", "orderPerson": "大大", "orderTime": "2016-09-28", "orderLogstatus": "运输完成", "show": true },
-        { "orderId": 3, "orderName": "已完成", "orderModule": "代理商", "orderNum": "1234567890", "orderUnit": "金融科技", "orderTel": "13162875213", "orderPerson": "规格", "orderTime": "2016-09-18", "orderLogstatus": "运输中", "show": true }
-    ],
+    orderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
+                "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
+                "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
+                "lcompanyName":null,"logisticsNo":null,"consignee":"测试","consigneePhone":"18505565316","zipCode":"000000",
+                "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
+                "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
+                "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
+                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
+                "payPics":null,"sendPics":null}],
     systemBaseList: {
         enumlist: [
             { "id": 0, "code": "022112", "type": "1", "desc": "123456789011", "status": "0" },
@@ -101,10 +104,13 @@ const state = {
             { "code": "0", "name": "全草类", "show": "true" },
             { "code": "0", "name": "花类", "show": "true" }
         ],
-        drugList: [
-            { "id": 176311, "number": "国药准字Z20093164", "name": "麝香祛痛搽剂", "nameEn": "", "product": "", "agentType": "搽剂", "spec": "每瓶装60ml", "company": "远大医药黄石飞云制药有限公司", "address": "湖北省黄石市鄂黄路52号", "drugType": "中药", "numberOld": "", "approveDate": "2014-03-03 00:00", "code": "86901890001064", "linkDb": "药品广告 中药保护品种库", "ctime": "2016-09-02 16:52", "show": "true" },
-            { "id": 176312, "number": "国药准字Z20093165", "name": "麝香祛痛搽剂", "nameEn": "", "product": "", "agentType": "搽剂", "spec": "每瓶装60ml", "company": "浙江景岳堂药业有限公司", "address": "湖北省黄石市鄂黄路52号", "drugType": "中药", "numberOld": "", "approveDate": "2014-03-03 00:00", "code": "86901890001064", "linkDb": "药品广告 中药保护品种库", "ctime": "2016-09-02 16:52", "show": "true" }
-        ],
+        drugList:{
+            arr:[
+                { "id": 176311, "number": "国药准字Z20093164", "name": "麝香祛痛搽剂", "nameEn": "", "product": "", "agentType": "搽剂", "spec": "每瓶装60ml", "company": "远大医药黄石飞云制药有限公司", "address": "湖北省黄石市鄂黄路52号", "drugType": "中药", "numberOld": "", "approveDate": "2014-03-03 00:00", "code": "86901890001064", "linkDb": "药品广告 中药保护品种库", "ctime": "2016-09-02 16:52", "show": true },
+                { "id": 176312, "number": "国药准字Z20093165", "name": "麝香祛痛搽剂", "nameEn": "", "product": "", "agentType": "搽剂", "spec": "每瓶装60ml", "company": "浙江景岳堂药业有限公司", "address": "湖北省黄石市鄂黄路52号", "drugType": "中药", "numberOld": "", "approveDate": "2014-03-03 00:00", "code": "86901890001064", "linkDb": "药品广告 中药保护品种库", "ctime": "2016-09-02 16:52", "show": true }
+            ],
+            show: true
+        },
         customerList: [
             { "id": 0, "type": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false },
             { "id": 1, "type": 0, "name": "ddf", "category": "14frff555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false },
@@ -142,6 +148,31 @@ const state = {
             "company": "个体种植户","score": 300,"source": 1,"status": 0,"userIds": null,"customerId": null,"main": null,"show": true
         }]
     },
+
+    orderDetail: {"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
+                  "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
+                  "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
+                  "lcompanyName":null,"logisticsNo":null,"consignee":"韦军军","consigneePhone":"18505565316","zipCode":"000000",
+                  "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
+                  "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
+                  "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":null,"ftime":null,"updater":null,
+                  "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48",
+                  "goods":[{"id":"5726ea3bf22125bcdcff7821","orderId":"5726ea3bf22125bcdcff7820","sourceType":1,"sourceId":"23",
+                  "title":null,"breedId":1007,"brredName":null,"quality":null,"location":"上海","spec":"干货","price":100.000000,
+                  "unit":"公斤","address":null,"pubdate":null,"duedate":null,"advance":1.000000,"invoic":null,"visit":0,"pack":null,
+                  "image":"/productPic/20160502/q5c6xa7.jpg","description":null,"number":2,"amount":200.000000,"updater":null,
+                  "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48"}],"payPics":null,"sendPics":null},
+                  
+    
+
+
+    locationList:{
+        provinceList: [
+            {"id": 248,"pid": 7, "path": ",1,7,248,","level": 3,"cname": "天津", "nameEn": "Tianjin","namePy": null, "code": "12","twoNumber": null,"number": null,"iso": null,"sortnum": 248, "show": true }
+        ]
+    },
+
+
     breedDetail: {
         "code": "232去",
         "icon": "http://p.ayxbk.com/images/thumb/4/4f/Bkg32.jpg/220px-Bkg32.jpg",
@@ -262,7 +293,7 @@ const state = {
     "addrReceive":null,"busiType":null,"province":null,"city":null,"source":1,"lastLoginIp":null,"lastLoginTime":null,
     "status":null,"updater":null,"utime":null,"creater":null,"ctime":null,"startCtime":null,"endCtime":null,"userIds":null,
     "customerId":null,"main":null,"audit":0,"bizMain":null,"userType":0,"auditResult":null,"sourceType":null,
-    "chance":{"show":false,"arr":[]},"tracking":{"show":false,"arr":[]},"personalAuthShow":false,"companyAuthShow":false
+    "intention":{"show":false,"arr":[]},"tracking":{"show":false,"arr":[]},"personalAuthShow":false,"companyAuthShow":false
   },
   identify:{},
   trackingDetail:{}
@@ -270,7 +301,11 @@ const state = {
 
 const mutations = {
     [ORDER_TABLE](state, data) {
-        state.list = data.results;
+        state.orderList = data;
+    },
+    [ORDER_DETAIL_DATA](state, data) {
+        console.log(data);
+        state.orderDetail = data;
     },
     [SYSTEM_DATA](state, data) { //枚举类型
         state.systemBaseList.enumlist = data;
@@ -295,9 +330,7 @@ const mutations = {
             state.systemBaseList.enumlist[data.sub][key] = data[key];
         }
     },
-    [SERVICE_COMPONENT](state, data) { //成分
-        state.basicBaseList.componentList = data;
-    },
+
     [SERVICE_ENTERPRISE](state, data) { //企业
         state.basicBaseList.enterpriseList = data;
     },
@@ -329,7 +362,6 @@ const mutations = {
             "phone": data.phone,
             "wechart": data.wechart,
             "email": data.email,
-            "qq": data.qq,
             "show": false,
             "id": data.id
         })
@@ -341,7 +373,7 @@ const mutations = {
         console.log(state.companyDetail[data.key].arr[data.sub])
     },
 
-    [DELETE_BREED_DATA](state, data) { //删除客户信息
+    [DELETE_BREED_DATA](state,data) { //删除客户信息
         state.basicBaseList[data.key].splice(data.sub, 1);
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
@@ -363,6 +395,8 @@ const mutations = {
     },
 
     [UPDATE_SPEC_DATA](state, data) { //修改药材相关信息
+        
+        state.breedDetail.alias.arr[data.sub].alias = data.name;
         for (var key in data) {
             state.breedDetail[data.key].arr[data.sub][key] = data[key];
         }
@@ -380,7 +414,9 @@ const mutations = {
     [SERVICE_ENTERPRISE_DETAIL](state, data) { //企业详情
         state.companyDetail = data;
     },
-
+    [SERVICE_COMPONENT](state, data) { //成分
+        state.basicBaseList.componentList = data;
+    },
     [DRUG_DETAIL_DATA](state, data) { //成分详情
         state.basicBaseList.drugList = data;
     },
@@ -490,7 +526,8 @@ const mutations = {
             "duedate": data.duedate,
             "coa": data.coa,
             "cid": data.cid,
-            "id": data.id
+            "id": data.id,
+            "show": false,
         })
     },
     [FILE_DATA](state, data) { //新增客户文件
@@ -594,12 +631,8 @@ const mutations = {
         temp.objId = data.objId;
         temp.bizId = data.bizId;
         temp.bizType = data.bizType;
+        temp.show = false;
         state.userDetail.tracking.arr.push(temp);
-        /*state.userDetail.tracking.arr[data.index].trackingWay = data.trackingWay;
-        state.userDetail.tracking.arr[data.index].comments = data.comments;
-        state.userDetail.tracking.arr[data.index].contactNo = data.contactNo;
-        state.userDetail.tracking.arr[data.index].type = data.type;*/
-
     },
 
     
@@ -608,21 +641,6 @@ const mutations = {
         for (var key in data) {
             state.basicBaseList[data.key][data.sub][key] = data[key];
         }
-        console.log(state.basicBaseList[data.key][data.sub])
-        /* state.basicBaseList[data.key][data.sub].name = data.name;
-         state.basicBaseList[data.key][data.sub].ename = data.ename;
-         state.basicBaseList[data.key][data.sub].no = data.no;
-         state.basicBaseList[data.key][data.sub].orgId = data.orgId;
-         state.basicBaseList[data.key][data.sub].orgCode = data.orgCode;
-         state.basicBaseList[data.key][data.sub].status = data.status;
-         state.basicBaseList[data.key][data.sub].orgName = data.orgName;
-         state.basicBaseList[data.key][data.sub].position = data.position;
-         state.basicBaseList[data.key][data.sub].mobile = data.mobile;
-         state.basicBaseList[data.key][data.sub].extNo = data.extNo;
-         state.basicBaseList[data.key][data.sub].level = data.level;
-         state.basicBaseList[data.key][data.sub].entryDate = data.entryDate;
-         state.basicBaseList[data.key][data.sub].leaveDate = data.leaveDate;
-         state.basicBaseList[data.key][data.sub].role = data.role;*/
     },
     [UPDATA_INTENTION_DATA](state,data){ //修改意向
         for (var key in data) {
@@ -634,6 +652,7 @@ const mutations = {
              "type":data.type,
              "especial":data.especial,
              "customerName":data.customerName,
+             "customerId":data.customerId,
              "customerPhone":data.customerPhone,
              "breedName":data.breedName,
              "qualification":data.qualification,
@@ -657,13 +676,16 @@ const mutations = {
              "city":data.city,
              "district":data.district,
              "location":data.location,
-             "number":data.number
+             "number":data.number,
+             "quality":data.quality
         })
     },
     [INTENTION_OFFER_DETAIL](state,data){
         state.basicBaseList.intentionDetail = data;
+    },
+    [PROVINCE_LIST](state,data){
+        state.locationList.provinceList = data;
     }
-
 
 }
 

@@ -5,8 +5,14 @@
     <div  class="myemploy" v-show="!changeParam.show">
         <div class="order_search">
             <div class="clear">
-                <div class="my_order col-xs-2">员工列表</div>
-                <div class="col-xs-6 my_order_search">
+                <div class="my_order col-xs-1">员工列表</div>
+                <div class="col-xs-9 my_order_search">
+                    <div class="name_search clearfix" style="border:none">
+                       <select  class="form-control" v-model="loadParam.orgId" @change="loadByCondition()">
+                            <option selected value="">请选择业务员部门</option>
+                            <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
+                      </select> 
+                    </div>
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="20">
                         <input type="text" class="search_input" v-model="loadParam.name" @keyup.enter="loadByCondition()" placeholder="按员工名字搜索">
@@ -15,17 +21,12 @@
                         <img src="/static/images/search.png" height="24" width="20">
                         <input type="text" class="search_input" v-model="loadParam.mobile" @keyup.enter="loadByCondition()" placeholder="按员工电话搜索">
                     </div>
-                </div>
-                 <div class="col-xs-3">
-                    <div class="name_search clearfix" style="border:none">
-                       <select  class="form-control" v-model="loadParam.orgId" @change="loadByCondition()">
-                            <option selected value="">请选择业务员部门</option>
-                            <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-                      </select> 
+                    <div class="name_search clearfix">
+                        <button class="new_btn" style="padding:0px 10px;" @click="loadByCondition()">搜索</button>
                     </div>
                 </div>
-                <div class="right col-xs-1">
-                    <button class="new_btn" @click="newData({ 
+                <div class="right col-xs-2"> 
+                    <button class="new_btn transfer" @click="newData({ 
                          title:'新建员工',
                          show:true,
                          name:'',
@@ -102,9 +103,9 @@
                                  level:item.level,
                                  entrydate:item.entrydate,
                                  leavedate:item.leavedate,
-                                link:updateEmploy,
-                                url:'/employee/',
-                                key:'employeeList'
+                                 link:updateEmploy,
+                                 url:'/employee/',
+                                 key:'employeeList'
                                 })">{{item.name}}</td>
                     <td>{{item.ename}}</td>
                     <td>{{item.no}}</td>
@@ -290,7 +291,9 @@ export default {
 .order_search {
     padding: 25px 30px 0 40px;
 }
-
+.transfer{
+    margin-left: 18px;
+}
 .my_order {
     float: left;
     color: #fa6705;
@@ -317,7 +320,7 @@ export default {
     float: right;
     border: 1px solid #ccc;
     color: #003077;
-    padding: 4px 10px;
+    padding:4px 10px;
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;

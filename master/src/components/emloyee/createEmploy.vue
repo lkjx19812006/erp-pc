@@ -1,4 +1,5 @@
 <template>
+    <orgsearch-model :param="orgNameParam" v-if="orgNameParam.show"></orgsearch-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -11,12 +12,9 @@
             <form novalidate>
                 <div class="edit-model">
                     <section class="editsection" v-cloak>
-                     <div class="cover_loading">
-                        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-                     </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>{{param.namelist}}</label>
+                                <label>{{param.namelist}}  <span class="system_danger" v-if="$validation.username.required">请输入员工姓名</span></label>
                                 <input type="text" id="username" class="form-control" v-model="param.name" v-validate:username="['required']"/>
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
@@ -26,24 +24,25 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>{{param.job}}</label>
-                                <input type="text" id="category" class="form-control" v-model="param.no" v-validate:category="['required']" />
+                                <label>{{param.job}}  <span class="system_danger" v-if="$validation.no.required">请输入员工工号</span></label>
+                                <input type="text" id="no" class="form-control" v-model="param.no" v-validate:no="['required']" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>{{param.parten}}</label>
-                                <select class="form-control" v-model="param.orgName" id="userown" v-validate:userown="['required']">
-                                    <option v-for="item in initOrgList">{{item.name}}</option>
-                                </select>
+                                <label>{{param.parten}}  <span class="system_danger" v-if="$validation.org.required">请输入具体部门</span></label>
+                                 <input type="text" id="org" class="form-control" v-model="param.orgName" v-validate:org="['required']" @click="selectorg()"/>
+                               <!--  <select class="form-control" v-model="param.orgName" id="userown" v-validate:userown="['required']">
+                                   <option v-for="item in initOrgList">{{item.name}}</option>
+                               </select> -->
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>{{param.positionlist}}</label>
-                                <input type="text" class="form-control" maxlength="11" v-model="param.position" />
+                                <label>{{param.positionlist}} <span class="system_danger" v-if="$validation.position.required">请输入职位</span></label>
+                                <input type="text" class="form-control" maxlength="11" v-model="param.position" id="position" v-validate:position="['required']" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>{{param.phonelist}}</label>
-                                <input type="email" class="form-control" v-model="param.mobile"  />
+                                <label>{{param.phonelist}} <span class="system_danger" v-if="$validation.phone.required">请输入联系方式</span></label>
+                                <input type="email" class="form-control" v-model="param.mobile"  id="phone" v-validate:phone="['required']"/>
                             </div>
                         </div>
                         <div class="clearfix">
@@ -70,29 +69,6 @@
                                     <mz-datepicker :time.sync="param.leavedate"  format="yyyy-MM-dd HH:mm:ss">
                                     </mz-datepicker>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>{{param.orgiid}}</label>
-                                <select class="form-control" v-model="param.orgid" id="userown" v-validate:userown="['required']">
-                                    <option v-for="item in initOrgList">{{item.id}}</option>
-                                </select>
-                            </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>{{param.code}}</label>
-                                <select class="form-control" v-model="param.orgcode" id="userown" v-validate:userown="['required']">
-                                    <option v-for="item in initOrgList">{{item.code}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>{{param.statuslist}}</label>
-                                 <select class="form-control"  v-model="param.status">
-                                     <option value="1" selected>可用</option>
-                                     <option value="0">无效</option>
-                                 </select>
                             </div>
                         </div>
                         <div class="clearfix">
@@ -123,16 +99,14 @@
 </template>
 <script>
 import calendar from '../calendar/vue.datepicker'
+import orgsearchModel from '../emloyee/searchorg'
 import {
-    initOrgList
-} from '../../vuex/getters'
-import {
-    getOrgList,
     createEmploy
 } from '../../vuex/actions'
 export default {
     components: {
-        calendar
+        calendar,
+        orgsearchModel
     },
     props: ['param'],
     data() {
@@ -143,15 +117,20 @@ export default {
                 size: '15px'
             },
             dateText:'',
-            show:true
+            show:true,
+            orgNameParam:{
+                show:false,
+                orgName:'',
+                orgid:'',
+                orgcode:''
+            },
         }
     },
      vuex: {
         getters:{
-            initOrgList
+            
         },
         actions: {
-            getOrgList,
             createEmploy
         }
     },
@@ -191,10 +170,23 @@ export default {
                 item.checked=true;
             }
             console.log(item.checked);
+        },
+        selectorg:function(){
+            this.orgNameParam.show=true;
+            this.param.orgName = this.orgNameParam.orgName;
+            this.param.orgid = this.orgNameParam.orgid;
+            this.param.orgcode = this.orgNameParam.orgcode;
+        }
+    },
+    events:{
+        org:function(qq){
+            this.param.orgName = qq.orgName;
+            this.param.orgid = qq.orgid;
+            this.param.orgcode = qq.orgcode;
         }
     },
     created(){
-        this.getOrgList(this.loadParam);
+        
     },
     ready() {
         this.createDateText()

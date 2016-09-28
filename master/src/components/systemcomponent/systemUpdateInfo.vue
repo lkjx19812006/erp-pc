@@ -43,14 +43,6 @@
                                 </select>
                                 <!-- <input type="text" v-model='systemData.type' class="form-control edit-input" value="{{systemData.type}}" /> -->
                             </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">状态</label>
-                                <select class="form-control" v-model="systemData.status"  style="width:90%;">
-                                   <option>{{systemData.status}}</option>
-                                   <option>0</option>
-                                   <option>1</option>
-                               </select>
-                            </div>
                         </div>
                         <div class="editpageright">
                             <div class="editpage-input">
@@ -126,6 +118,20 @@ export default {
 }
 </script>
 <style scoped>
+.modal_con{
+    max-height: 400px;
+    width: 600px;
+} 
+.top-title{
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+.edit_footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 .big-font {
     font-size: 36px;
 }

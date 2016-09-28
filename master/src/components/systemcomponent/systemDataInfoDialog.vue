@@ -41,16 +41,7 @@
                                             <option  value="POS">职位</option>
                                             <option  value="LBL">常见标签</option>
                                             <option  value="ON">客户信用等级</option>
-                                        </select>
-                                    <!-- <input type="text" class="form-control  edit-input"  /> -->
-                                </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel" for="systemstatus">状态
-                                        <span class="system_danger" v-if="$validation.systemstatus.required">请选择状态</span></label>
-                                        <select class="form-control" v-model="systemData.status" id="systemstatus" v-validate:systemstatus="['required']" style="width:90%;">
-                                           <option>0</option>
-                                           <option>1</option>
-                                       </select>
+                                        </select> 
                                 </div>
                             </div>
                             <div class="editpageright">
@@ -69,8 +60,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation1.valid"
-                     @click="saveDataInfo(systemData,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" @click="saveDataInfo(systemData,param.show = false)">保存</button>
                 </div>
             </form>
         </validator>
@@ -107,6 +97,20 @@ export default {
 }
 </script>
 <style scoped>
+.modal_con{
+    max-height: 400px;
+    width: 600px;
+} 
+.top-title{
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+.edit_footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 .big-font {
     font-size: 36px;
 }

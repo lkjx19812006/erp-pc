@@ -102,7 +102,7 @@
                                     <li class="panel-name">
                                         <label>产地名称：{{item.name}}</label>
                                     </li>
-                                    <li @click="clickLocal($index,{
+                                    <li @click="clickShow($index,{
                                         concrete:'locals'
                                         })">
                                         <img src="/static/images/default_arrow.png" height="24" width="24" />
@@ -165,7 +165,7 @@
                                     <li class="panel-name">
                                         <label>别名：{{item.alias}}</label>
                                     </li>
-                                    <li @click="clickAlias($index,{
+                                    <li @click="clickShow($index,{
                                         concrete:'alias'
                                         })">
                                         <img src="/static/images/default_arrow.png" height="24" width="24" />
@@ -229,7 +229,7 @@
                                         <label>单位名称：{{item.name}}</label>
                                     </li>
                             
-                                    <li @click="unitclick($index,{
+                                    <li @click="clickShow($index,{
                                         concrete:'units'
                                         })">
                                         <img src="/static/images/default_arrow.png" height="24" width="24" />
@@ -423,7 +423,7 @@ export default {
     padding: 10px;
 }
 .breed_action {
-    top: 0px;
+    top:7px;
     right: 30px;
 }
 
@@ -437,7 +437,7 @@ export default {
 
 .breed_action dl dt {
     display: block;
-    padding: 3px;
+    padding:0px 3px;
     font-size: 14px;
     cursor: pointer;
 }

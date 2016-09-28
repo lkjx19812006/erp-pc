@@ -1,6 +1,7 @@
 <template>
+    <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
+    <searchbreed-model :param="breedNameParam" v-if="breedNameParam.show"></searchbreed-model>
     <div v-show="param.show" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <searchCustomer-model :param="empNameParam"></searchCustomer-model>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -14,7 +15,7 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">客户名称 <span class="system_danger" v-if="$validation.customer.required">请输入客户名称</span></label>
-                                 <input type="text" class="form-control edit-input"  id="customer" v-model="param.customerName"  disabled="true" v-validate:customer="['required']" @click="searchCustomer(param.customerName,param.customerId)"/>
+                                 <input type="text" class="form-control edit-input"  id="customer" v-model="param.customerName"  onlyready="true" v-validate:customer="['required']" @click="searchCustomer(param.customerName,param.customerId,param.customerPhone)"/>
                             </div>
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">类型</label>
@@ -27,7 +28,8 @@
                          <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种名称  <span class="system_danger" v-if="$validation.name.required">请选择品种名称</span></label>
-                                <input type="text" class="form-control edit-input"  id="name" v-model="param.breedName"  v-validate:name="['required']" />
+                                <input type="text" class="form-control edit-input"  id="name" v-model="param.breedName"  v-validate:name="['required']"
+                                @click="searchBreed(param.breedName,param.breedId)" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">是否特殊</label>
@@ -94,7 +96,7 @@
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">预付比例 <span class="system_danger" v-if="$validation.address.required">请输入预付比例</span></label>
-                                <input type="text" class="form-control edit-input"  v-model="param.advance"  id="advance"  v-validate:advance="['required']"/>
+                                <input type="text" class="form-control edit-input"  v-model="param.advance"  id="advance"  v-validate:advance="['required']" />
                             </div>
                         </div>
                         <div class="clearfix">
@@ -160,10 +162,16 @@
                                 <input type="text" class="form-control edit-input" v-model="param.sampleUnit" value="{{param.sampleUnit}}"  />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12" v-show="sample">
-                                <label class="editlabel">样品总价</label>
+                                <label class="editlabel">样品价格</label>
                                 <input type="text" class="form-control edit-input" v-model="param.sampleAmount"  />
                             </div>
                         </div>
+                         <div class="clearfix">
+                            <div class="client-detailInfo  col-xs-12">
+                                <label class="editlabel">质量描述 <span class="system_danger" v-if="$validation.quality.required">必填项</span></label>
+                                <textarea v-model="param.quality" rows="5" class="textarea" id="quality"  v-validate:quality="['required']"></textarea>
+                            </div>
+                         </div>
                     </section>
                 </div>
                 <div class="edit_footer">
@@ -175,9 +183,12 @@
 </template>
 <script>
 import filter from '../../filters/filters'
+import searchcustomerModel  from '../Intention/clientname'
+import searchbreedModel  from '../Intention/breedsearch'
 export default {
     components: {
-
+        searchcustomerModel,
+        searchbreedModel
     },
     props: ['param'],
     data() {
@@ -186,7 +197,13 @@ export default {
           empNameParam:{
             show:false,
             customerId:'',
-            customerName:''
+            customerName:'',
+            customerPhone:''
+          },
+          breedNameParam:{
+            show:false,
+            breedName:'',
+            breedId:''
           }
         }
     },
@@ -203,10 +220,16 @@ export default {
         sample_1:function(){
              this.sample=true;
         },
-        searchCustomer:function(customerName,customerId){
+        searchCustomer:function(customerName,customerId,customerPhone){
             this.empNameParam.show=true;
             this.param.customerName = this.empNameParam.customerName;
             this.param.customerId = this.empNameParam.customerId;
+            this.param.customerPhone = this.empNameParam.customerPhone;
+        },
+        searchBreed:function(breedName,breedId){
+            this.breedNameParam.show=true;
+            this.param.breedName = this.breedNameParam.breedName;
+            this.param.breedId = this.breedNameParam.breedId;
         }
     },
     route: {
@@ -217,6 +240,17 @@ export default {
         deactivate: function(transition) {
             console.log('hook-example deactivated!')
             transition.next()
+        }
+    },
+    events:{
+        customer:function(qq){
+            this.param.customerName = qq.customerName;
+            this.param.customerId = qq.customerId;
+            this.param.customerPhone = qq.customerPhone;
+        },
+        breed:function(qq){
+            this.param.breedName = qq.breedName;
+            this.param.breedId = qq.breedId;
         }
     },
     filter:(filter,{})
@@ -247,7 +281,12 @@ export default {
     overflow-y: auto;
     padding: 10px 30px 50px 30px;
 }
-
+.textarea{
+    width: 100%;
+    resize: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
 .editsection {
     width: 100%;
     box-sizing: border-box;

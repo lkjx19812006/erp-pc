@@ -5,53 +5,35 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 	    <div class="model-header">
-	    	<h4>业务员信息</h4>
+	    	<h4>品种信息</h4>
 			<div class="trans_service clearfix">
     			<div class="cover_loading">
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 	            </div>
-	            <div class="col-xs-4">
-		            <div class="name_search clearfix" style="border:none">
-	                   <select  class="form-control" v-model="loadParam.orgId" @change="employNameSearch()">
-	                        <option selected value="">请选择业务员部门</option>
-	                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-	                  </select> 
-	                </div>
-	            </div>
 				<div class="col-xs-8">
 	                <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" @change="employNameSearch()">
-	                </div>
-	                 <div class="name_search clearfix">
-	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @change="employNameSearch()">
+	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入品种名称" @keyup.enter="employNameSearch()">
 	                </div>
 	            </div>
 	            <table class="table table-hover table_head table-striped " v-cloak>
 	                <thead>
 	                    <tr>
-	                        <th></th>
-	                        <th>姓名</th>
-	                        <th>部门</th>
-	                        <th>手机号</th>
+	                    	<th></th>
+	                        <th>类别</th>
+	                        <th>品种名称</th>
 	                    </tr>
 	                </thead>
 	                <tbody>
-	                    <tr v-for="item in initEmployeeList">
-	                       <td  @click.stop="">
+	                    <tr v-for="item in initBreedlist">
+	                    	<td  @click.stop="">
 	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.name)" ></label>
 	                        </td>
+	                        <td>{{item.categoryId}}</td>
 	                        <td>{{item.name}}</td>
-	                        <td>{{item.orgName}}</td>
-	                        <td>{{item.mobile}}</td>
 	                    </tr>
 	                </tbody>
 	            </table>
-		        <!-- <div class="edit_footer">
-		    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-		    		<input  type="button" class="btn btn-orange" @click="selected(param,param.show=false)" value="确定"/>
-		    	</div> -->
 			</div>
 			<div class="base_pagination">
 	            <pagination :combination="loadParam"></pagination>
@@ -62,13 +44,11 @@
 <script>
 import pagination from '../pagination'
 import {
-    initEmployeeList,
-    initOrgList
+    initBreedlist
 } from '../../vuex/getters'
 import {
-    getEmployeeList,
-    transferInfo,
-    getOrgList
+    getBreedData,
+    getBreedNameSearch
 } from '../../vuex/actions'
 export default{
 	props:['param'],
@@ -80,9 +60,7 @@ export default{
                 size: '15px',
                 cur: 1,
                 all: 7,
-                name:'',
-                mobile:'',
-                orgId:''
+                name:''
             },
 			checked:false,
 			show:true
@@ -93,43 +71,41 @@ export default{
 	},
 	vuex:{
 		getters:{
-			initEmployeeList,
-			initOrgList
+			initBreedlist
 		},
 		actions:{
-			getEmployeeList,
-			transferInfo,
-			getOrgList
+			getBreedData,
+			getBreedNameSearch
 		}
 	},
 	methods:{
 		serviceselected:function(sub,id,name){
-			this.$store.state.table.basicBaseList.employeeList[sub].checked=!this.$store.state.table.basicBaseList.employeeList[sub].checked;
-			for(var key in this.initEmployeeList){
+			this.$store.state.table.basicBaseList.breedList[sub].checked=!this.$store.state.table.basicBaseList.breedList[sub].checked;
+			for(var key in this.initBreedlist){
 				if(key!=sub){
-					if(this.$store.state.table.basicBaseList.employeeList[key].checked==true){
-						this.$store.state.table.basicBaseList.employeeList[key].checked=false;
+					if(this.$store.state.table.basicBaseList.breedList[key].checked==true){
+						this.$store.state.table.basicBaseList.breedList[key].checked=false;
 					}
 				}
 			}
-			this.param.employeeId = id;
-			this.param.employeeName = name;
+			this.param.breedId= id;
+			this.param.breedName = name;
+			console.log(this.param.breedName)
 			this.param.show=false;
-			this.$dispatch('a',this.param);
+			this.$dispatch('breed',this.param);
 		},
 		employNameSearch: function() {
-            this.getEmployeeList(this.loadParam);
+            this.getBreedNameSearch(this.loadParam);
         }
 	},
     events: {
 	    fresh: function(input) {
 	        this.loadParam.cur = input;
-	        this.getEmployeeList(this.loadParam);
+	        this.getBreedData(this.loadParam);
 	    }
     },
 	created(){
-		this.getEmployeeList(this.loadParam);
-		this.getOrgList(this.loadParam);
+		this.getBreedData(this.loadParam);
 	}
 }
 </script>

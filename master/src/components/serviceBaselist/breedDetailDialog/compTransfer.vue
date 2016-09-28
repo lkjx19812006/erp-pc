@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建</h3>
+            <h3>新建客户</h3>
         </div>
         <validator name="validation">
             <form novalidate>
@@ -16,11 +16,11 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>名称</label>
-                                    <input type="text" id="username" class="form-control" v-model="customerData.name" v-validate:username="['required']"/>
+                                    <input type="text" id="username" class="form-control" v-model="param.name" v-validate:username="['required']"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                    <label class="editlabel">类型</label>
-                                    <select class="form-control edit-input"  v-model="customerData.type">
+                                    <select class="form-control edit-input"  v-model="param.type">
                                          <option value="0">个人</option>
                                          <option value="1">企业</option>
                                     </select>
@@ -29,49 +29,47 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>分类码</label>
-                                    <input type="text" id="category" class="form-control" v-model="customerData.category" v-validate:category="['required']" />
+                                    <input type="text" id="category" class="form-control" v-model="param.category" v-validate:category="['required']" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>负责人</label>
-                                    <input type="text" class="form-control" v-model="customerData.principal" id="userown" v-validate:userown="['required']" />
+                                    <input type="text" class="form-control" v-model="param.principal" id="userown" v-validate:userown="['required']" />
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>电话</label>
-                                    <input type="text" class="form-control" maxlength="11" v-model="customerData.tel" />
+                                    <input type="text" class="form-control" maxlength="11" v-model="param.tel" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>邮箱</label>
-                                    <input type="email" class="form-control" v-model="customerData.email"  />
+                                    <input type="email" class="form-control" v-model="param.email"  />
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>所在省</label>
-                                    <select class="form-control" v-model="customerData.province" @change="multiSearch()">
-                                         <option v-for="item in initProvince">{{item.cname}}</option>
-                                     </select>
+                                    <input type="text" class="form-control" v-model="param.province" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>所在市</label>
-                                    <input type="text" class="form-control" v-model="customerData.city"  />
+                                    <input type="text" class="form-control" v-model="param.city"  />
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>备注</label>
-                                    <input type="text" class="form-control" v-model="customerData.comments" />
+                                    <input type="text" class="form-control" v-model="param.comments" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>注册地址</label>
-                                    <input type="text" class="form-control" v-model="customerData.address" />
+                                    <input type="text" class="form-control" v-model="param.address" />
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>经营范围</label>
-                                    <input type="text" class="form-control" v-model="customerData.bizScope" />
+                                    <input type="text" class="form-control" v-model="param.bizScope" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>分类</label>
@@ -130,20 +128,13 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <input type="button" class="btn  btn-confirm"  @click="saveCreate(customerData,param.show = false)" value="保存" />
+                    <input type="button" class="btn  btn-confirm"  @click="param.link(param,param.show = false)" value="保存" />
                 </div>
             </form>
         </validator>
     </div>
 </template>
 <script>
-import {
-    initProvince
-} from '../../vuex/getters'
-import {
-    saveCreate,
-    getProvinceList
-} from '../../vuex/actions'
 export default {
     components: {
 
@@ -151,27 +142,12 @@ export default {
     props: ['param'],
     data() {
         return {
-            customerData:{
-                name:'',
-                type:'',
-                category:'',
-                principal:'',
-                bizScope:'',
-                tel:'',
-                email:'',
-                province:'',
-                city:'',
-                address:''
-            }
+
         }
     },
      vuex: {
-        getters:{
-            initProvince
-        },
         actions: {
-            saveCreate,
-            getProvinceList
+            
         }
     },
     route: {

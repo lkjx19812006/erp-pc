@@ -51,7 +51,7 @@
                     show:true
                     })">划转</button>
                 <button class="new_btn transfer" @click="createCustomer('create')">新建</button>
-                <button class="new_btn transfer" @click="createSearch()">查询</button>
+                <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
         <div class="order_table">
@@ -68,6 +68,7 @@
                         <th>名称</th>
                         <th>分类码</th>
                         <th>所属分类</th>
+                        <th>所属业务员</th>
                         <th>负责人</th>
                         <th>经营范围</th>
                         <th>电话</th>
@@ -76,7 +77,6 @@
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>注册地址</th>
-                        <th>状态</th>
                         <th>备注</th>
                         <th></th>
                     </tr>
@@ -106,6 +106,7 @@
                                 })">{{item.name}}</td>
                         <td>{{item.category}}</td>
                         <td>{{item.classify | classify}}</td>
+                        <td>{{item.employeeId}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
                         <td>{{item.tel}}</td>
@@ -114,7 +115,6 @@
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.address}}</td>
-                        <td>{{item.status}}</td>
                         <td>{{item.comments}}</td>
                         <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />

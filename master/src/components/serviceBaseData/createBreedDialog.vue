@@ -10,24 +10,29 @@
         <validator name="validation">
             <form novalidate>
                 <div class="edit-model">
-                    <section class="editsection">
-                        <div class="editpage" v-cloak>
-                            <div class="editpageleft">
-                                <div class="editpage-input">
-                                    <label class="editlabel">编码</label>
-                                    <input type="text" class="form-control edit-input"  id="code" v-model="breedData.code" v-validate:code="['required']" />
-                                </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">品种名称</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="breedData.name" v-validate:category="['required']" />
-                                </div>
-                                <div class="editpage-input">
-                                   <label class="editlabel">品种类别</label>
-                                   <select class="form-control" v-model="breedData.selected" style="width:90%;">
-                                       <option   v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
-                                   </select>
-                               </div>
-                               <!--  <div class="editpage-input">
+                    <section class="editsection" v-cloak>
+                        <div class="clearfix">
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">编码 <span class="system_danger" v-if="$validation.code.required">请输入编码</span></label>
+                                <input type="text" v-model='breedData.code' class="form-control edit-input"  id="code" v-validate:code="['required']" />
+                            </div>
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">品种名称 <span class="system_danger" v-if="$validation.name.required">请输入品种名称</span></label>
+                                <input type="text" v-model='breedData.name' class="form-control edit-input"  id="name" v-validate:name="['required']"/>
+                            </div>
+                        </div>
+                         <div class="clearfix">
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">品种分类选择 <span class="system_danger" v-if="$validation.category.required">请选择品种分类</span></label>
+                                <select class="form-control" id="category" v-validate:category="['required']" v-model="breedData.selected" style="width:90%;">
+                                   <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
+                                 </select>
+                             </div>
+                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">品种名称拼音 <span class="system_danger" v-if="$validation.spell.required">请输入品种名称拼音</span></label>
+                                <input type="text" v-model='breedData.name' class="form-control edit-input"  id="spell" v-validate:spell="['required']"/>
+                            </div> 
+                            <!--  <div class="editpage-input">
                                    <label class="editlabel">上传图标</label>
                                    <div class="editpage_img clearfix">
                                        <div class="editpage-image col-md-4">
@@ -35,13 +40,22 @@
                                        </div>
                                    </div>
                                </div> -->
+                        </div>
+                        <div class="clearfix">
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">品种名称英文</label>
+                                <input type="text" v-model='breedData.code' class="form-control edit-input" />
+                            </div>
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">品种名称拉丁文</label>
+                                <input type="text" v-model='breedData.name' class="form-control edit-input"  />
                             </div>
                         </div>
                     </section>
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="saveBreed(breedData,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm"  @click="saveBreed(breedData,param.show = false)">保存</button>
                 </div>
             </form>
         </validator>
@@ -96,6 +110,20 @@ export default {
 }
 </script>
 <style scoped>
+.modal_con{
+    max-height: 400px;
+    max-width: 600px;
+} 
+.top-title{
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+.edit_footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
 .big-font {
     font-size: 36px;
 }

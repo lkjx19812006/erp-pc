@@ -2,53 +2,52 @@
     <create-model :param="createParam" v-if="createParam.show"></create-model>
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
-    <chance-model :param="chanceParam" v-if="chanceParam.show"></chance-model>
+    <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
     <personalauth-model :param="personalParam" v-if="personalParam.show"></personalauth-model>
     <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
+    <search-model :param.sync="searchParam" v-if="searchParam.show"></search-model>
 
-
-    
      <div  v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">会员</div>
             
-            <div class="col-xs-6 my_order_search">
-                <div class="name_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="20">
-                    <input type="text" class="search_input" v-model="loadParam.fullname" @keyup.enter="loadByCondition()" placeholder="按名字搜索">
-                </div>
-                <div class="ordertel_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="20">
-                    <input type="text" class="search_input" v-model="loadParam.phone" @keyup.enter="loadByCondition()" placeholder="按手机号搜索">
-                </div>
-                <div class="name_search clearfix"> 
-                    <img src="/static/images/search.png" height="24" width="20">
-                    <input type="text" class="search_input" v-model="loadParam.audit" @keyup.enter="loadByCondition()" placeholder="按审核状态搜索">
-                </div>
-                <div class="name_search clearfix"> 
-                    <div>
-                        开始时间:
-                        <mz-datepicker :time.sync="loadParam.startCtime" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </div> 
-                <div class="name_search clearfix"> 
-                    
-                    <div>
-                    结束时间:
-                        <mz-datepicker :time.sync="loadParam.endCtime" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </div> 
-                 
-            </div>
-            <div class="right col-xs-1">
-                <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空时间</button>
-                <button type="button" class="btn btn-default" height="24" width="24" @click="loadByCondition()">查询</button>
-            </div>
-            <div class="right col-xs-1">
+           <!--  <div class="col-xs-6 my_order_search">
+               <div class="name_search clearfix">
+                   <img src="/static/images/search.png" height="24" width="20">
+                   <input type="text" class="search_input" v-model="loadParam.fullname" @keyup.enter="loadByCondition()" placeholder="按名字搜索">
+               </div>
+               <div class="ordertel_search clearfix">
+                   <img src="/static/images/search.png" height="24" width="20">
+                   <input type="text" class="search_input" v-model="loadParam.phone" @keyup.enter="loadByCondition()" placeholder="按手机号搜索">
+               </div>
+               <div class="name_search clearfix"> 
+                   <img src="/static/images/search.png" height="24" width="20">
+                   <input type="text" class="search_input" v-model="loadParam.audit" @keyup.enter="loadByCondition()" placeholder="按审核状态搜索">
+               </div>
+               <div class="name_search clearfix"> 
+                   <div>
+                       开始时间:
+                       <mz-datepicker :time.sync="loadParam.startCtime" format="yyyy/MM/dd HH:mm:ss">
+                       </mz-datepicker>
+                   </div>
+               </div> 
+               <div class="name_search clearfix"> 
+                   
+                   <div>
+                   结束时间:
+                       <mz-datepicker :time.sync="loadParam.endCtime" format="yyyy/MM/dd HH:mm:ss">
+                       </mz-datepicker>
+                   </div>
+               </div> 
                 
+           </div>
+           <div class="right col-xs-1">
+               <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空时间</button>
+               <button type="button" class="btn btn-default" height="24" width="24" @click="loadByCondition()">查询</button>
+           </div> -->
+            <div class="right col-xs-1">
+                <button type="button" class="btn btn-default" height="24" width="24" @click="search()">查询</button>
             </div>
             
         </div>
@@ -62,15 +61,17 @@
                         <th></th>
                         <th>姓名</th>
                         <th>昵称</th>
-                        <th>电话</th>
+                        <th>手机</th>
+                        <th>归属地</th>
                         <th>邮箱</th>
                         <th>qq</th>
                         <th>公司</th>
-                        <th>积分</th>
+                        <th>主营业务</th>
                         <!-- <th>会员状态</th> -->
                         <th>来源</th>
                         <th>客户类型</th>
                         <th>审核状态</th>
+                        <th>划转状态</th>
                         <th>备注</th>
                         <th></th>
                         
@@ -86,16 +87,21 @@
                                 id:item.id,
                                 sub:$index,
                                 show:true
-                                                })">{{item.fullname}}</td>
+                                })">{{item.fullname}}</td>
                         <td>{{item.nickname}}</td>
                         <td>{{item.phone}}</td>
+                        <td>暂无</td>
                         <td>{{item.email}}</td>
                         <td>{{item.qq}}</td>
                         <td>{{item.company}}</td>
-                        <td>{{item.score}}</td>
-                        <td>{{item.sourceType}}</td>
+                        <td>{{item.busiType}}</td>
+                        <td v-if="item.source==0" style="color:red">{{item.sourceType}}</td>
+                        <td v-if="item.source==1" style="color:green">{{item.sourceType}}</td>
+                        <td v-if="item.source==2" style="color:blue">{{item.sourceType}}</td>
+                        <td v-if="item.source==3" style="color:#444444 ">{{item.sourceType}}</td>
                         <td>{{item.bizTypeName}}</td>
                         <td>{{item.auditResult}}</td>
+                        <td>暂无</td>
                         <td>{{item.comment}}</td>
                         
                         <td @click.stop="eventClick($index)">
@@ -137,7 +143,7 @@
                                                 url:'/user/',
                                                 key:'userList'
                                                 },item.show=false)">划转</li>
-                                    <li @click="createChance(item.show=false)">机会</li>
+                                    <li @click="createIntention(item.show=false)">意向</li>
                                     <li v-if="item.utype==1" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">个人认证</li>
                                     <li v-if="item.ctype==1" @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)">企业认证</li>
                                 </ul>
@@ -162,7 +168,8 @@ import createModel  from '../components/user/userCreate'
 import alterinfoModel  from '../components/user/userUpdate'
 import transferModel  from '../components/user/userTransfer'
 import detailModel from '../components/user/userDetail'
-import chanceModel from  '../components/user/userChance'
+import searchModel from '../components/user/userSearch'
+import intentionModel from  '../components/user/userIntention'
 import personalauthModel from '../components/user/personalAuth'
 import companyauthModel from '../components/user/companyAuth'
 import pagination from '../components/pagination'
@@ -188,7 +195,8 @@ export default {
         alterinfoModel,
         transferModel,
         detailModel,
-        chanceModel,
+        searchModel,
+        intentionModel,
         personalauthModel,
         companyauthModel,
 
@@ -225,9 +233,30 @@ export default {
             changeParam:{
                 show:false
             },
-            chanceParam:{
-                show:false        
+            searchParam:{
+                show:false,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7,
+                fullname:'',
+                source:'',
+                busiType:'',
+                phone:'',
+                startCtime:'',
+                endCtime:'',
+                audit:'',
+
             },
+         intentionParam:{
+            show:false,
+            fullname:this.initUserDetail.fullname,
+            id:this.initUserDetail.id,
+            phone:this.initUserDetail.phone,
+            url:'/intention/'
+
+
+        },
             personalParam:{
 
                 show:false,
@@ -262,12 +291,9 @@ export default {
       },
   methods: {
     clickOn: function(item) {
-            
-            this.changeParam = item;
-            this.getUserDetail(this.changeParam);
-
-
-        },
+        this.changeParam = item;
+        this.getUserDetail(this.changeParam);
+    },
     eventClick:function(id){
             if(this.$store.state.table.basicBaseList.userList[id].show){
                 this.$store.state.table.basicBaseList.userList[id].show = !this.$store.state.table.basicBaseList.userList[id].show;
@@ -296,12 +322,15 @@ export default {
             this.loadParam.fullname = '';
             this.getUserList(this.loadParam);
     },*/
-    resetTime(){
+    resetTime:function(){
         this.loadParam.startCtime = '';
         this.loadParam.endCtime = '';
     },
-    loadByCondition(){
+    loadByCondition:function(){
         this.getUserList(this.loadParam);
+    },
+    search:function(){
+        this.searchParam.show = true;
     },
     createUser:function(value){
         console.log('createUser');
@@ -319,8 +348,8 @@ export default {
     userToClient:function(item){
         this.transferParam = item;
     },
-    createChance:function(){
-        this.chanceParam.show = true;
+    createIntention:function(){
+        this.intentionParam.show = true;
     },
     personalAuth:function(item){
         

@@ -52,6 +52,21 @@ export default {
 }
 </script>
 <style scoped>
+.modal_con{
+    max-height: 350px;
+    width: 400px;
+} 
+.top-title{
+    position: absolute;
+    width: 100%;
+    top: 0;
+}
+.edit_footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
 .big-font {
     font-size: 36px;
 }

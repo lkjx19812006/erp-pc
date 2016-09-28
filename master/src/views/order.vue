@@ -1,93 +1,103 @@
 <template>
     <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
-    <div class="myOrder">
-        <div class="order_search">
-            <div class="clear">
-                <div class="my_order col-xs-2">我的订单</div>
-                <div class="col-xs-8 my_order_search">
-                    <div class="name_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" class="search_input" v-model="loadParam.orderName" placeholder="按名字搜索"  @keyup.enter="orderSearch()">
+    <update-model :param="updateParam" v-if="updateParam.show"></update-model>
+    <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
+
+    <div v-show="!detailParam.show">
+        <div class="myOrder">
+            <div class="order_search">
+                <div class="clear">
+                    <div class="my_order col-xs-2">我的订单</div>
+                    <div class="col-xs-8 my_order_search">
+                        <div class="name_search clearfix">
+                            <img src="/static/images/search.png" height="24" width="24">
+                            <input type="text" class="search_input" v-model="loadParam.orderName" placeholder="按名字搜索"  @keyup.enter="orderSearch()">
+                        </div>
+                        <div class="ordertel_search clearfix">
+                            <img src="/static/images/search.png" height="24" width="24">
+                            <input type="text" class="search_input" v-model="loadParam.orderNum" placeholder="按订单号搜索"  @keyup.enter="orderSearch()">
+                        </div>
+                        <div class="tel_search clearfix">
+                            <img src="/static/images/search.png" height="24" width="24">
+                            <input type="text" maxlength="11" class="search_input" v-model="loadParam.orderTel" placeholder="按电话搜索" @keyup.enter="orderSearch()">
+                        </div>
                     </div>
-                    <div class="ordertel_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" class="search_input" v-model="loadParam.orderNum" placeholder="按订单号搜索"  @keyup.enter="orderSearch()">
+                    <div class="right col-xs-2">
+                        <button class="new_btn" @click="newOrder('new')" data-toggle="modal" data-target="#myModal">新建</button>
                     </div>
-                    <div class="tel_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" maxlength="11" class="search_input" v-model="loadParam.orderTel" placeholder="按电话搜索" @keyup.enter="orderSearch()">
-                    </div>
-                </div>
-                <div class="right col-xs-2">
-                    <button class="new_btn" @click="newOrder('new')" data-toggle="modal" data-target="#myModal">新建</button>
                 </div>
             </div>
-        </div>  
-        <div class="order_table">
-            <table class="table table-hover table_color table-striped " v-cloak>
-                <thead>
-                    <tr>  
-                        <th></th>
-                        <th>名称</th>
-                        <th>交易模式</th>
-                        <th>订单号</th>
-                        <th>购货单位</th>
-                        <th>联系电话</th>
-                        <th>交易人</th>
-                        <th>订单时间</th>
-                        <th>物流状态</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in initOrderlist"  v-cloak >
-                      <td></td>
-                      <!--  <td  @click.stop="">
-                         <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
-                       </td> -->
-                      <td>{{item.orderName}}</td>
-                      <td>{{item.orderModule}}</td>
-                      <td>{{item.orderNum}}</td>
-                      <td>{{item.orderUnit}}</td>
-                      <td>{{item.orderTel}}</td>
-                      <td>{{item.orderPerson}}</td>
-                      <td>{{item.orderTime}}</td>
-                      <td>{{item.orderLogstatus}}</td>
-                      <td @click="editClick($index)">
-                          <img height="24" width="24" src="/static/images/default_arrow.png" />
-                          <div class="component_action" v-show="item.show">
-                               <ul>
-                                   <li>编辑</li>
-                                   <li>删除</li>
-                               </ul>
-                           </div>
-                      </td>
-                    </tr>
-                </tbody>
-              </table>
+
+            <div class="order_table">
+                <table class="table table-hover table_color table-striped " v-cloak>
+                    <thead>
+                        <tr>  
+                            <th></th>
+                            <th>订单号</th>
+                            <th>收货人</th>
+                            <th>收货人电话</th>
+                            <th>收货人地址</th>
+                            <th>备注</th>
+                            
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in initOrderlist"  v-cloak >
+                          <td></td>
+                          <!--  <td  @click.stop="">
+                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
+                           </td> -->
+                          <td><a @click="clickOn({
+                                                    show:true,
+                                                    id:item.id
+                                                })">{{item.no }}</a></td>
+                          <td>{{item.consignee}}</td>
+                          <td>{{item.consigneePhone}}</td>
+                          <td>{{item.consigneeAddr}}</td>
+                          <td>{{item.comments}}</td>
+                         
+                          <td @click="editClick($index)">
+                              <img height="24" width="24" src="/static/images/default_arrow.png" />
+                              <div class="component_action" v-show="item.show">
+                                   <ul>
+                                       <li @click="editor()">编辑</li>
+                                       <li>删除</li>
+                                   </ul>
+                               </div>
+                          </td>
+                        </tr>
+                    </tbody>
+                  </table>
+               
             </div>
         </div>
-    </div>
-    <div class="order_pagination">
-        <pagination :combination="loadParam"></pagination>
-    </div>
+        <div class="order_pagination">
+            <pagination :combination="loadParam"></pagination>
+        </div>
+    </div>   
 </template>
 <script>
 import pagination from '../components/pagination'
 import editorderModel from '../components/order/orderInformationDialog'
+import updateModel from '../components/order/orderUpdate'
+import detailModel from '../components/order/orderDetail'
+
 import {
     getList,
     initOrderlist
 } from '../vuex/getters'
 import {
     getOrderList,
-    changeShowStatue
+    //changeShowStatue
 } from '../vuex/actions'
 
 export default {
     components: {
         editorderModel,
-        pagination
+        pagination,
+        updateModel,
+        detailModel
     },
     data() {
         return {
@@ -105,6 +115,13 @@ export default {
                  show: false,
                  name: 'new'
             },
+            updateParam: {
+                 show:false,   
+            },
+            detailParam: {
+                 show:false, 
+
+            },
             show:true
         }
     },
@@ -115,7 +132,7 @@ export default {
         },
         actions: {
             getOrderList,
-            changeShowStatue
+            //changeShowStatue
         }
     },
     created() {
@@ -127,20 +144,29 @@ export default {
     },
     methods: {
         editClick: function(sub) {
-            if(this.$store.state.table.list[sub].show){
-                this.$store.state.table.list[sub].show=!this.$store.state.table.list[sub].show;
+            if(this.$store.state.table.orderList[sub].show){
+                this.$store.state.table.orderList[sub].show=!this.$store.state.table.orderList[sub].show;
             }else{
-                 this.$store.state.table.list[sub].show=true;
+                 this.$store.state.table.orderList[sub].show=true;
             }
-            console.log(this.$store.state.table.list[sub].show)       
+            //console.log(this.$store.state.table.orderList[sub].show)       
         },
         newOrder:function(value){
              this.dialogParam.name=value;
              this.dialogParam.show=true;
         },
         orderSearch:function(){
-          
-        }
+          this.getOrderList(this.loadParam);
+        },
+        clickOn:function(item){
+            console.log(item);
+            this.detailParam=item;
+        },
+        editor:function(){
+            console.log("editor");
+            this.updateParam.show=true;
+        },
+
     },
      route: {
         activate: function (transition) {

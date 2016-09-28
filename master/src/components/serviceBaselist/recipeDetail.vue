@@ -5,18 +5,18 @@
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
             <div class="col-md-8">
-                <h4 class="section_title">成分相关{{param.code}}</h4>
+                <h4 class="section_title">成分相关</h4>
                 <div class="panel-group">
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix" @click="drugToggle(initDruglist)">
                             <h4 class="panel-title clearfix">
                                 <img class="pull-left" src="/static/images/company.png" height="30" width="26" />
                                 <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
-                                    企业({{initDruglist.length}})
+                                    企业({{initDruglist.list.arr.length}})
                                 </a>
                             </h4>
                         </div>
-                        <div class="panel-collapse"   v-show="!initDruglist.show"> 
+                        <div class="panel-collapse"   v-show="!initDruglist.list.show"> 
                             <div class="panel-body panel-set">
                                 <table class="table contactSet">
                                     <thead>
@@ -30,7 +30,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="item in initDruglist">
+                                        <tr v-for="item in initDruglist.list.arr">
                                             <td>
                                                 {{item.name}}
                                             </td>
@@ -57,10 +57,6 @@
                     <div class="client-detailInfo  col-xs-12">
                         <label>品种名称</label>
                         <input type="text" class="form-control" value="{{param.breedName}}" disabled="disabled" />
-                    </div>
-                    <div class="client-detailInfo  col-xs-12">
-                        <label>公司名称</label>
-                        <input type="text" class="form-control" value="{{param.companyName | companyname}}" disabled="disabled" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>含量</label>
@@ -94,7 +90,8 @@ export default {
                 loading: true,
                 color: '#5dc596',
                 size: '15px'
-            }
+            },
+            show:false
         }
     },
     vuex: {
@@ -107,8 +104,10 @@ export default {
     },
     methods: {
         drugToggle: function(param) {
+            console.log(this.$store.state.table.basicBaseList.drugList)
             if(this.$store.state.table.basicBaseList.drugList.length==0){
                 this.$store.state.table.basicBaseList.drugList.show=false
+                console.log(this.$store.state.table.basicBaseList.drugList.show)
             }
             this.$store.state.table.basicBaseList.drugList.show =!this.$store.state.table.basicBaseList.drugList.show;
             console.log(this.$store.state.table.basicBaseList.drugList.show)

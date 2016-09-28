@@ -3,11 +3,18 @@
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
     </div>
     <div class="service-nav clearfix">
-        <div class="my_enterprise col-xs-2">提取物</div>
-        <div class="name_search clearfix">
-            <img src="/static/images/search.png" height="24" width="24">
-            <input type="text" class="search_input" placeholder="按名称搜索" v-model="loadParam.name"@keyup.enter="categoryNameSearch(loadParam.name)">
-        </div>
+        <div class="my_enterprise col-xs-1">提取物</div>
+        <div class="col-xs-6">
+            <div class="name_search clearfix">
+                <img src="/static/images/search.png" height="24" width="24">
+                <input type="text" class="search_input" placeholder="按名称搜索" v-model="loadParam.name" @keyup.enter="categoryNameSearch()">
+            </div>
+            <div class="name_search clearfix">
+                <img src="/static/images/search.png" height="24" width="24">
+                <input type="text" class="search_input" placeholder="按公司名称搜索" v-model="loadParam.company" @keyup.enter="categoryNameSearch()">
+            </div>
+           <button class="new_btn transfer" @click="categoryNameSearch()">搜索</button>
+       </div>
     </div>
     <div class="order_table">
         <table class="table table-hover table_color table-striped" v-cloak>
@@ -17,14 +24,12 @@
                     <th>联系人</th>
                     <th>联系方式</th>
                     <th>公司名称</th>
-                    <th>主要成分</th>
                     <th>email</th>
-                    <th>创建时间</th>
+                    <th>主要成分</th>
                 </tr>
             </thead>
             <thead class="space">
                 <tr>
-                    <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -39,9 +44,8 @@
                     <td>{{item.contactsName}}</td>
                     <td>{{item.contactsPhone}}</td>
                     <td>{{item.company}}</td>
-                    <td>{{item.mainProducts}}</td>
                     <td>{{item.email}}</td>
-                    <td>{{item.ctime}}</td>
+                    <td>{{item.mainProducts}}</td>
                 </tr>
             </tbody>
         </table>
@@ -80,7 +84,8 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                name:''
+                name:'',
+                company:''
             },
         }
     },
@@ -105,9 +110,14 @@ export default {
     },
     filter: (filter, {}),
     methods:{
-        categoryNameSearch:function(name){
+        categoryNameSearch:function(){
             this.getDrawData(this.loadParam);
         }
     }
 }
 </script>
+<style scoped>
+.name_search{
+    margin-right: 3%;
+}
+</style>
