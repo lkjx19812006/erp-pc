@@ -1,4 +1,5 @@
 <template>
+	 <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
 	 <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
 	 <div class="container modal_con" v-show="param.show">
        <div @click="param.show = false" class="top-title">
@@ -104,13 +105,14 @@
 	    		</div>
 	    	</div>
 	    	<div class="edit_footer">
-	    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
+	    		<button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
 	    		<button type="button" class="btn btn-orange" @click="confirm()">确定</button>
 	    	</div>
 	    </div>
 	</div>
 </template>
 <script>
+import tipsdialogModel  from '../tipsDialog'
 import {
     initCustomerlist,
     initEmployeeList,
@@ -123,6 +125,9 @@ import {
     userTransferCustomer
 } from '../../vuex/actions'
 export default{
+	components:{
+		tipsdialogModel
+	},
 	props:['param'],
 	data(){
 		return {
@@ -150,12 +155,14 @@ export default{
                   cur: 1,
                   all: 7
               },
+              tipsParam: {
+              	show:false,
+              	name:"修改成功"	
+              }
 
 		}
 	},
-	components:{
-		
-	},
+
 	vuex:{
 		getters:{
 			initCustomerlist,

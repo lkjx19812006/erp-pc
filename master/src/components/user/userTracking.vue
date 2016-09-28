@@ -16,14 +16,13 @@
                <div class="editpage">
                    <div class="editpageleft">
                    <div v-if="param.flag==0" class="editpage-input">
-                           <label class="editlabel">跟进主体类型</label>
-                           <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
+                           <!-- <label class="editlabel">跟进主体类型</label>
+                           <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" />
                            <select type="text" class="form-control edit-input" v-model="param.type" disabled="disabled">
-                                <!-- <option value="">请选择跟进主体类型</option> -->
                                 <option value="0">会员</option>
                                 <option value="1">客户</option>
                                 <option value="2">企业</option>
-                            </select>
+                            </select> -->
 
                        </div>
                       
@@ -33,7 +32,6 @@
                             <!-- <input type="text" v-model='param.bizType' class="form-control edit-input" value="{{param.bizType}}" /> -->
                             <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType">
                                 <option value="">请选择业务类型</option>
-                                <option value="0">客户</option>
                                 <option value="1">意向</option>
                                 <option value="2">订单</option>
                             </select>
@@ -51,13 +49,15 @@
                        
                    </div>
                    <div class="editpageright">
-                      <div v-if="param.flag==0" class="editpage-input">
+                      <!-- <div v-if="param.flag==0" class="editpage-input">
                            <label class="editlabel">跟进对象ID</label>
                            <input type="text" v-model='param.objId' class="form-control edit-input" value="{{param.objId}}" disabled="disabled" />
-                       </div>
+                       </div> -->
                       <div v-if="param.flag==0" class="editpage-input">
-                           <label class="editlabel">业务ID</label>
-                           <input type="text" v-model='param.bizId' class="form-control edit-input" value="{{param.bizId}}" />
+                           <label v-if="param.bizType==''" class="editlabel">业务相关信息</label>
+                           <label v-if="param.bizType==1" class="editlabel">药品名称</label>
+                           <label v-if="param.bizType==2" class="editlabel">订单流水号</label>
+                           <input type="text" v-model='param.bizName' class="form-control edit-input" value="{{param.bizName}}" disabled="disabled" />
                        </div>
                        <div class="editpage-input">
                            <label class="editlabel">联系账号</label>
@@ -134,17 +134,22 @@ export default {
          
       },
       selectBizId:function(){
-        this.bizParam.show = true;
-        this.bizParam.bizType = this.param.bizType;
-        console.log(this.param.bizType);
+        if(this.param.bizType!==''){
+          this.bizParam.show = true;
+          this.bizParam.bizType = this.param.bizType;
+          console.log(this.param.bizType);
+        }
+        this.param.bizId = '';
+        
       },
       
     },
     events:{
-      'getBizId':function(bizId){
-        console.log('业务ID');
-            console.log(bizId);
-            this.param.bizId = bizId;
+      'getBiz':function(biz){
+            console.log(biz);
+            console.log(biz.breedName);
+            this.param.bizId = biz.id;
+            this.param.bizName = biz.breedName;
       }
     }
 }

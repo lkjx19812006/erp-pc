@@ -202,16 +202,16 @@ export default {
       selectCustomer:function(index){
         console.log(index);
           this.$store.state.table.basicBaseList.customerList[index].checked=!this.$store.state.table.basicBaseList.customerList[index].checked;
-          this.$dispatch('getBizId',this.initCustomerlist[index].id);
+          this.$dispatch('getBiz',this.initCustomerlist[index]);
           this.param.show=false;
           console.log(this.initCustomerlist[index].id);
       },
       selectIntention:function(index){
           
           this.$store.state.table.basicBaseList.intentionList[index].checked=!this.$store.state.table.basicBaseList.intentionList[index].checked;
-          this.$dispatch('getBizId',this.initIntentionList[index].id);
+          this.$dispatch('getBiz',this.initIntentionList[index]);
           this.param.show=false;
-          console.log(this.initIntentionList[index].id);
+          console.log(this.initIntentionList[index]);
       },
       selectOrder:function(){
 

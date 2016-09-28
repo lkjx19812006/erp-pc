@@ -47,6 +47,7 @@
                <button type="button" class="btn btn-default" height="24" width="24" @click="loadByCondition()">查询</button>
            </div> -->
             <div class="right col-xs-1">
+                <button type="button" class="btn btn-default" height="24" width="24" @click="">审核</button>
                 <button type="button" class="btn btn-default" height="24" width="24" @click="search()">查询</button>
             </div>
             
@@ -81,7 +82,7 @@
                     
                     <tr v-for="item in initUserList"  >
                         <td  @click.stop="">
-                            <label  class="checkbox_unselect"v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)" ></label>
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)" ></label>
                         </td>
                         <td class="underline" @click="clickOn({
                                 id:item.id,
@@ -377,3 +378,29 @@ export default {
 }
 
 </script>
+
+<style scoped>
+
+.checkbox_unselect{
+    background-image: url(../../static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+}
+.checkbox_select{
+    background-image: url(../../static/images/selected.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+}
+</style>
