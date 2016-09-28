@@ -94,7 +94,7 @@
                         <td>{{item.email}}</td>
                         <td>{{item.qq}}</td>
                         <td>{{item.company}}</td>
-                        <td>{{item.employee}}</td>
+                        <td>{{item.busiType}}</td>
                         <td v-if="item.source==0" style="color:red">{{item.sourceType}}</td>
                         <td v-if="item.source==1" style="color:green">{{item.sourceType}}</td>
                         <td v-if="item.source==2" style="color:blue">{{item.sourceType}}</td>

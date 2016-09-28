@@ -117,8 +117,11 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           个人认证
                                         </a>
-                                        <button v-if="initUserDetail.utype==1" type="button" class="btn btn-base pull-right"  @click.stop="personalAuth({id:initUserDetail.id,ucomment:initUserDetail.ucomment,utype:initUserDetail.utype})">点击认证</button>
-                                        <button v-if="initUserDetail.utype!=1" type="button" class="btn btn-base pull-right"  @click.stop="">无需认证</button>
+                                        <button v-if="initUserDetail.utype==0" type="button" class="btn btn-base pull-right"  @click.stop="" disabled="disabled">未申请认证</button>
+                                        <button v-if="initUserDetail.utype==1" type="button" class="btn btn-primary pull-right"  @click.stop="personalAuth({id:initUserDetail.id,ucomment:initUserDetail.ucomment,utype:initUserDetail.utype})">点击认证</button>
+                                        <button v-if="initUserDetail.utype==2" type="button" class="btn btn-success pull-right"  @click.stop="" disabled="disabled">已通过认证</button>
+                                        <button v-if="initUserDetail.utype==3" type="button" class="btn btn-warning pull-right"  @click.stop="" disabled="disabled">认证未通过</button>
+                                        
                                     </h4>
                                 </div>
                                 <div class="panel-collapse" v-show="initUserDetail.personalAuthShow&&initUserDetail.utype==1">
@@ -153,9 +156,9 @@
                                         企业认证
                                       </a>
                                       <button v-if="initUserDetail.ctype==0" type="button" class="btn btn-base pull-right"  @click.stop="" disabled="disabled">未申请认证</button>
-                                      <button v-if="initUserDetail.ctype==1" type="button" class="btn btn-base pull-right"  @click.stop="companyAuth({id:initUserDetail.id,ccomment:initUserDetail.ccomment,ctype:initUserDetail.ctype})">点击认证</button>
-                                      <button v-if="initUserDetail.ctype==2" type="button" class="btn btn-base pull-right"  @click.stop="" disabled="disabled">已通过认证</button>
-                                      <button v-if="initUserDetail.ctype==3" type="button" class="btn btn-base pull-right"  @click.stop="" disabled="disabled">认证未通过</button>
+                                      <button v-if="initUserDetail.ctype==1" type="button" class="btn btn-primary pull-right"  @click.stop="companyAuth({id:initUserDetail.id,ccomment:initUserDetail.ccomment,ctype:initUserDetail.ctype})">点击认证</button>
+                                      <button v-if="initUserDetail.ctype==2" type="button" class="btn btn-success pull-right"  @click.stop="" disabled="disabled">已通过认证</button>
+                                      <button v-if="initUserDetail.ctype==3" type="button" class="btn btn-warning pull-right"  @click.stop="" disabled="disabled">认证未通过</button>
                                       
 
                                   </h4>
