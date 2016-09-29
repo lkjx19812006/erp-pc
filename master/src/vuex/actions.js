@@ -100,7 +100,7 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取客户详情
         orderDetail.goods.arr = goods;
         orderDetail.goods.show = true;
         console.log(orderDetail);
-         
+
         dispatch(types.ORDER_DETAIL_DATA, orderDetail);
     }, (res) => {
         console.log('fail');
@@ -675,7 +675,7 @@ export const createSpec = ({ dispatch }, param, id) => { //新增药材相关
             console.log('fail');
         })
     }
-   
+
 export const saveAlias = ({ dispatch }, param, id) => { //新增药材别名
     const data1 = {
         alias: param.name,
@@ -1189,7 +1189,7 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         };
         for (var j in con.chance.arr) {
             con.chance.arr[j].show = false;
-        }      
+        }
         dispatch(types.CUSTOMER_DETAIL_DATA, con);
     }, (res) => {
         console.log('fail');
@@ -1573,14 +1573,14 @@ export const getUserDetail = ({ dispatch }, param) => {  //会员详情
 
         var tracking = userDetail.tracking;
         userDetail.tracking ={};
-        userDetail.tracking.show = false;                            
-        userDetail.tracking.arr = tracking; 
+        userDetail.tracking.show = false;
+        userDetail.tracking.arr = tracking;
 
         userDetail.personalAuthShow = false;
         userDetail.companyAuthShow = false;
 
         dispatch(types.USER_DETAIL_DATA, userDetail);
-        
+
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -1589,17 +1589,17 @@ export const getUserDetail = ({ dispatch }, param) => {  //会员详情
 }
 
 export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信息
-    
+
     console.log(param);
     const updatedata = {
-        id: param.id    
+        id: param.id
     }
     if(param.qq){
         updatedata.qq = param.qq;
     }
     if(param.fullname){
         updatedata.fullname = param.fullname;
- 
+
     }
     if(param.email){
         updatedata.email = param.email;
@@ -1628,9 +1628,9 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
     if(param.ccomment){
         updatedata.ccomment = param.ccomment;
     }
- 
+
     console.log(updatedata);
- 
+
     Vue.http({
         method: 'PUT',
         url: apiUrl.userList + '/user/',
@@ -1678,7 +1678,7 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
 }
 
 export const userTransferCustomer = ({ dispatch }, param) => { //会员转客户
-   
+
     const data = {
         id: param.id,
         main:param.main,
@@ -1890,10 +1890,10 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
 
 export const updateTrackingInfo = ({ dispatch }, param) => { //修改跟进信息
     console.log(param);
- 
+
     const updatedata = {
         id: param.id,
-        objId:param.objId   
+        objId:param.objId
     }
     if(param.type){
         updatedata.type = param.type;
@@ -1907,8 +1907,8 @@ export const updateTrackingInfo = ({ dispatch }, param) => { //修改跟进信�
     if(param.comments){
         updatedata.comments = param.comments;
     }
-  
-    
+
+
     Vue.http({
         method: 'PUT',
         url: apiUrl.tracking + "/tracking/",
@@ -1933,7 +1933,7 @@ export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信�
     console.log(param.flag);
 
     const data = {
-         
+
     }
     if(param.type!==''){
         data.type = param.type;
@@ -1957,7 +1957,7 @@ export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信�
 
     }
   console.log(data);
-    
+
     Vue.http({
         method: 'POST',
         url: apiUrl.tracking + "/tracking/",
@@ -1982,16 +1982,16 @@ export const getAuthInfo = ({ dispatch }, param) => { //查询认证信息
     console.log(param);
     const data = {
         id: param.id,
- 
+
     }
     if(param.utype){
         data.utype = param.utype;
     }
- 
+
     if(param.ctype){
         data.ctype = param.ctype;
     }
-    
+
     Vue.http({
         method: 'POST',
         url: apiUrl.userList + "/user/identification",
@@ -2034,15 +2034,15 @@ export const baseGetData = ({ dispatch }, param) => { //查询认证信息
             name:param.keyName,
             callback:param.getDataInit
         };
-       
+
         if(json.list.result&&Object.prototype.toString.call(json.list.result) === '[object Array]'){
              for(let i in json.list.result){
                 json.list.result[i].show=false;
-             }   
+             }
         }else if(json.list.result.list&&Object.prototype.toString.call(json.list.result.list) === '[object Array]'){
             for(let i in json.list.result.list){
                 json.list.result.list[i].show=false;
-             }  
+             }
         }
         param.all=json.list.result.pages;
         console.log(json);
@@ -2054,7 +2054,7 @@ export const baseGetData = ({ dispatch }, param) => { //查询认证信息
 }
 
 export const baseAddData = ({ dispatch }, param) => { //查询认证信息
-    
+
     Vue.http({
         method: 'POST',
         url: apiUrl.base + param.url,
@@ -2070,6 +2070,7 @@ export const baseAddData = ({ dispatch }, param) => { //查询认证信息
         console.log(res.json());
         if(res.json().result.id)param.body.id=res.json().result.id;
         param.body.utime = param.utime;
+        param.body.show=false;
         let json = {
             name:param.keyName,
             body:param.body
