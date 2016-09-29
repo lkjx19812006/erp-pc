@@ -1,4 +1,4 @@
-	<template>	
+	<template>
 	<create-model :param.sync="createParam" v-if="createParam.show"></create-model>
 	<tip-model :param.sync="tipParam" v-if="tipParam.show"></tip-model>
 		 <div  class="myemploy" >
@@ -7,15 +7,14 @@
                 <div class="my_order col-xs-2">角色列表</div>
                 <div class="col-xs-6 my_order_search">
                     <div class="name_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="20">
-                        <input type="text" class="search_input" v-model="loadParam.name" @keyup.enter="loadByCondition()" placeholder="按角色名称搜索">
+
                     </div>
                 </div>
                 <div class="right col-xs-1">
                     <button class="new_btn" @click="newData()">新建</button>
                 </div>
             </div>
-        </div>  
+        </div>
         <div class="order_table">
           <div class="cover_loading">
               <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -28,9 +27,9 @@
                      <th>更新时间</th>
                      <th></th>
                   </tr>
-                </thead> 
+                </thead>
                 <tbody>
-                  <tr v-for="item in list.result.list">  
+                  <tr v-for="item in list.result.list">
                     <td>{{item.cname}}</td>
                     <td>{{item.remark}}</td>
                     <td>{{item.utime}}</td>
@@ -58,7 +57,7 @@ import createModel  from '../components/role/createRole'
 import pagination from '../components/pagination'
 import tipModel  from '../components/tips/tipDialog'
 import {
-  
+
 } from '../vuex/getters'
 import {
  baseGetData,
@@ -108,7 +107,7 @@ export default {
            this.createParam.id=item.id;
            this.createParam.menus=item.menus;
            this.createParam.index=index;
-            
+
         },
         newData:function(){
            this.createParam.show=true;
@@ -149,7 +148,7 @@ export default {
         }
     },
     created() {
-       
+
     this.baseGetData(this.loadParam);
     }
 }
@@ -180,7 +179,7 @@ export default {
     background: #fff;
     height: 34px;
     line-height: 32px;
-     margin-right: 7%; 
+     margin-right: 7%;
 }
 .tel_search {
     margin-right: 0;
