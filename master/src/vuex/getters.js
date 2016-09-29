@@ -43,9 +43,6 @@ export const initOrderlist = (state) => {
 }
 
 export const initOrderDetail = (state) => {
-    console.log('getters');
-    console.log(state.table.orderDetail);
-    //return parseJson(state.table.orderDetail);
     return JSON.parse(JSON.stringify(state.table.orderDetail)); 
 }
 
@@ -57,8 +54,17 @@ export const initSystemlist = (state) => {
 export const initSearchlist = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.searchList)); 
 }
+export const initCountrylist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.systemBaseList.countryList));  
+}
 export const initProvincelist = (state) => {
     return JSON.parse(JSON.stringify(state.table.systemBaseList.locationlist));  
+}
+export const initCitylist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.systemBaseList.cityList));  
+}
+export const initDistrictlist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.systemBaseList.districtList));  
 }
 /*--业务基础数据--*/
 export const initEnterpriselist = (state) => {

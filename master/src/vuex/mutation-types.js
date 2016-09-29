@@ -67,8 +67,10 @@ export const IDENTIFY_DATA ='IDENTIFY_DATA' //认证信息
 
 export const UPDATE_TRACKING_DATA ='UPDATE_TRACKING_DATA' //跟新跟进信息
 
+export const COUNTRY_LIST ='COUNTRY_LIST' //获取国家列表
 export const PROVINCE_LIST ='PROVINCE_LIST' //获取国家中的省数据
-
+export const CITY_LIST ='CITY_LIST' //获取市列表
+export const DISTRICT_LIST ='DISTRICT_LIST' //获取区列表
 
 
 export const ABSTRACT_GET_DATA = 'ABSTRACT_GET_DATA' //获取数据并赋值

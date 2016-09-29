@@ -249,7 +249,28 @@ export const getProvinceData = ({ dispatch }, param) => { //省市区列表
         param.loading = false;
     });
 }
-export const getProvinceList = ({ dispatch }, param) => { //获取国中省的列表
+
+export const getCountryList = ({ dispatch }, param) => { //获取国家列表
+    param.loading = true;
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList + '/sys/location/country/?page=' + param.cur + '&pageSize=15',
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj = res.json().result;
+        dispatch(types.COUNTRY_LIST, obj);
+        param.loading = false;
+        param.all = res.json().result.pages;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+}
+
+export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
     param.loading = true;
     Vue.http({
         method: 'GET',
@@ -260,8 +281,49 @@ export const getProvinceList = ({ dispatch }, param) => { //获取国中省的�
         }
     }).then((res) => {
         var obj = res.json().result;
-        console.log(res.json().result)
         dispatch(types.PROVINCE_LIST, obj);
+        param.loading = false;
+        param.all = res.json().result.pages;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+}
+
+export const getCityList = ({ dispatch }, param) => { //获取市的列表
+    param.loading = true;
+
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList + '/sys/location/city/?page=' + param.cur + '&pageSize=15&province='+param.province,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj = res.json().result;
+        dispatch(types.CITY_LIST, obj);
+        param.loading = false;
+        param.all = res.json().result.pages;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+}
+
+export const getDistrictList = ({ dispatch }, param) => { //获取区的列表
+    param.loading = true;
+
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList + '/sys/location/district/?page=' + param.cur + '&pageSize=15&province='+param.city,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj = res.json().result;
+        dispatch(types.DISTRICT_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
     }, (res) => {

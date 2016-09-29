@@ -55,7 +55,10 @@ import {
    UPDATA_INTENTION_DATA,
    INTENTION_DATA,
    INTENTION_OFFER_DETAIL,
-   PROVINCE_LIST
+   PROVINCE_LIST,
+   COUNTRY_LIST,
+   CITY_LIST,
+   DISTRICT_LIST
 
 } from '../mutation-types'
 
@@ -77,6 +80,9 @@ const state = {
             { "id": 3, "code": "45555", "type": "2", "desc": "1234567890", "status": "1" },
             { "id": 4, "code": "4fff5", "type": "5", "desc": "1234567890", "status": "1" }
         ],
+        countryList: [],
+        cityList:[],
+        districtList:[],
         locationlist: [
             { "twoNumber": 0, "cname": "中国1", "level": "2122", "icon": "1111", "iso": "22222" },
             { "twoNumber": 1, "cname": "上海1", "level": "222", "icon": "1111", "iso": "22222" },
@@ -686,7 +692,17 @@ const mutations = {
     },
     [PROVINCE_LIST](state,data){
         state.locationList.provinceList = data;
-    }
+    },
+    [COUNTRY_LIST](state,data){
+        state.systemBaseList.countryList = data;
+    },
+    [CITY_LIST](state,data){
+        state.systemBaseList.cityList = data;
+    },
+    [DISTRICT_LIST](state,data){
+        state.systemBaseList.districtList = data;
+    },
+
 
 }
 
