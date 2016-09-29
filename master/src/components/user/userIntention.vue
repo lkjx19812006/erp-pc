@@ -9,8 +9,12 @@
             <h3>新增会员意向</h3>
         </div>
         <div class="edit-model">
-           <section class="editsection" v-cloak>
+           <section class="editsection" v-cloak> 
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
+               <div class="input-group">
+                <img src="/static/images/breedinfo.png" class="glyphicon"/>
+                <h4>药材信息</h4>
+               </div>
                <div class="editpage">
                    <div class="editpageleft">
                        <div class="editpage-input">

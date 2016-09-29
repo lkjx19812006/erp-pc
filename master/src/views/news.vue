@@ -313,12 +313,15 @@ export default {
         this.$store.state.table.basicBaseList.userList[index].checked=!this.$store.state.table.basicBaseList.userList[index].checked;
     },
     audit: function(){
+        var _this = this;
         this.initUserList.forEach(function(item){
+            console.log(item.checked);
             if(item.checked){
-                this.auditParam.ids.push(item.id);
+                _this.auditParam.ids.push(item.id);
             }
         })
         this.auditParam.show = true;
+        console.log(this.auditParam.ids);
     },
 
     resetTime:function(){
