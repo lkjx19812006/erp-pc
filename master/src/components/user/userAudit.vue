@@ -1,83 +1,44 @@
 <template>
-    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>编辑{{param.fullname}}的信息</h3>
+            <h3>会员审核</h3>
         </div>
-       <div class="edit-model">
+        <div class="edit-model">
            <section class="editsection" v-cloak>
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpage">
-
-                   <div class="editpageleft">
-                       <div class="editpage-input">
-                           <label class="editlabel">姓名</label>
-                           <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{param.fullname}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">昵称</label>
-                           <input type="text" v-model='param.nickname' class="form-control edit-input" value="{{param.nickname}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">qq</label>
-                           <input type="text" v-model="param.qq" class="form-control edit-input" value="{{param.qq}}" />
-                       </div>
-                       
-                       <div class="editpage-input">
+               <div class="editpageleft">
+                    <div class="editpage-input">
                            <label class="editlabel">备注</label>
                            <input type="text" v-model='param.comment' class="form-control edit-input" value="{{param.comment}}" />
                        </div>
-                   </div>
-                   <div class="editpageright">
-                       <div class="editpage-input">
-                           <label class="editlabel">邮箱</label>
-                           <input type="text" v-model='param.email' class="form-control edit-input" value="{{param.email}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">电话</label>
-                            <input type="text" v-model='param.phone' class="form-control edit-input" value="{{param.phone}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">公司</label>
-                           <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
-                       </div>
-
-                   </div> 
+                   
                </div>
            </section>
-       </div> 
+        </div>  
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true">确定</button>
+            <button type="button" class="btn  btn-confirm" @click="">通过</button>
+            <button type="button" class="btn  btn-confirm" @click="">不通过</button>
         </div>
     </div>
 </template>
 <script>
-import tipsdialogModel  from '../tips/tipDialog'
 import {
     
 } from '../../vuex/getters'
 import {   
-    updateUserInfo   
+    
 } from '../../vuex/actions'
 export default {
-  components: {
-    tipsdialogModel
-  },
     props: ['param'],
     data() {
         return {
-          tipsParam:{
-            show:false,
-            confirm:true,
-            name:"确认修改信息?",
-            callback:this.alertInfo
-            
-          }
+        
         }
     },
     vuex: {
@@ -85,7 +46,7 @@ export default {
             
         },
         actions: {
-            updateUserInfo 
+            
         } 
     },
     route: {
@@ -98,19 +59,14 @@ export default {
             transition.next()
         }
     },
-    methods: {
-      alertInfo:function(){
-        this.param.show = false;
-        this.updateUserInfo(this.param);
-      }
-    }
+    
+    
 }
 </script>
 <style scoped>
 .big-font {
     font-size: 36px;
 }
-
 .top-title span {
     font-size: 28px;
 }
@@ -126,11 +82,13 @@ export default {
     color: #fa6705;
     margin: 0;
 }
+
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
     padding: 10px 30px 30px 30px;
 }
+
 .editsection {
     width: 100%;
     box-sizing: border-box;
@@ -188,6 +146,20 @@ export default {
     margin-left: 10px;
     margin-top: 5px;
 }
+
+.edit_footer button {
+    margin-left: 15px;
+}
+
+.btn-confirm {
+    background-color: #fa6705;
+    color: #fff;
+}
+
+.btn-close {
+    color: #fa6705;
+}
+
 .editpage_img {
     width: 90%;
 }

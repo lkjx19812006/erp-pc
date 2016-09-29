@@ -106,13 +106,13 @@
 	    	</div>
 	    	<div class="edit_footer">
 	    		<button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
-	    		<button type="button" class="btn btn-orange" @click="confirm()">确定</button>
+	    		<button type="button" class="btn btn-orange" @click="tipsParam.show=true">确定</button>
 	    	</div>
 	    </div>
 	</div>
 </template>
 <script>
-import tipsdialogModel  from '../tipsDialog'
+import tipsdialogModel  from '../tips/tipDialog'
 import {
     initCustomerlist,
     initEmployeeList,
@@ -157,7 +157,9 @@ export default{
               },
               tipsParam: {
               	show:false,
-              	name:"修改成功"	
+              	confirm:true,
+              	name:"确认划转吗?",
+              	callback:this.confirm
               }
 
 		}

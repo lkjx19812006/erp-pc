@@ -20,10 +20,16 @@
 <script>
 export default {
     props: ['param']
+    
 }
 </script>
 <style scoped>
+
+.del_modal_con{
+    z-index:1082;
+}
 .modal {
+    z-index:1081;
     opacity: 0.5;
     background-color: #000;
     display: block;

@@ -2,6 +2,7 @@
     <create-model :param="createParam" v-if="createParam.show"></create-model>
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
+    <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
     <personalauth-model :param="personalParam" v-if="personalParam.show"></personalauth-model>
     <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
@@ -47,7 +48,7 @@
                <button type="button" class="btn btn-default" height="24" width="24" @click="loadByCondition()">查询</button>
            </div> -->
             <div class="right col-xs-1">
-                <button type="button" class="btn btn-default" height="24" width="24" @click="">审核</button>
+                <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
                 <button type="button" class="btn btn-default" height="24" width="24" @click="search()">查询</button>
             </div>
             
@@ -168,6 +169,7 @@ import calendar from '../components/calendar/vue.datepicker'
 import createModel  from '../components/user/userCreate'
 import alterinfoModel  from '../components/user/userUpdate'
 import transferModel  from '../components/user/userTransfer'
+import auditModel  from '../components/user/userAudit'
 import detailModel from '../components/user/userDetail'
 import searchModel from '../components/user/userSearch'
 import intentionModel from  '../components/user/userIntention'
@@ -200,7 +202,7 @@ export default {
         intentionModel,
         personalauthModel,
         companyauthModel,
-
+        auditModel
        
     },
 	 data() {
@@ -225,6 +227,10 @@ export default {
                 show:false,
                 id:'',
                 name:''
+            },
+            auditParam:{
+                show:false,
+                ids:[]
             },
             transferParam:{
                 show:false,
@@ -303,26 +309,18 @@ export default {
             }   
         },
 
-    /*loadByName(){
-        console.log('name');
-            this.loadParam.phone = '';
-            this.loadParam.audit = '';
-            this.getUserList(this.loadParam);
+    onlyselected: function(index){     
+        this.$store.state.table.basicBaseList.userList[index].checked=!this.$store.state.table.basicBaseList.userList[index].checked;
     },
-    loadByPhone(){
-            console.log('phone');
-            this.loadParam.fullname = '';
-            this.loadParam.audit = '';
-            console.log(this.loadParam);
-            this.getUserList(this.loadParam);
+    audit: function(){
+        this.initUserList.forEach(function(item){
+            if(item.checked){
+                this.auditParam.ids.push(item.id);
+            }
+        })
+        this.auditParam.show = true;
     },
-    loadByAudit(){
-            console.log('audit');
-            console.log(this.loadParam);
-            this.loadParam.phone = '';
-            this.loadParam.fullname = '';
-            this.getUserList(this.loadParam);
-    },*/
+
     resetTime:function(){
         this.loadParam.startCtime = '';
         this.loadParam.endCtime = '';
