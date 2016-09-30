@@ -6,14 +6,15 @@ import VueRouter from 'vue-router'
 import configRouter from './router'
 import VueAnimatedList from 'vue-animated-list'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
-
-
+import treeview from './components/tree/tree.vue'
 
 
 require('./assets/css/style.css')
 require('./components/calendar/vue.datepicker.css')
 
+
 Vue.component('PulseLoader',PulseLoader);
+Vue.component('treeview',treeview);
 
 Vue.directive('echarts', require('./directives/echarts'));
 

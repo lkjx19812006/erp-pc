@@ -16,10 +16,10 @@
         <button v-on:click="btnClick('test')">hello</button>
     </div>
     <div>
-   
+
     <mz-datepicker :time.sync="dateText" format="yyyy/MM/dd HH:mm"></mz-datepicker>
     </div>
-    <v-select 
+    <v-select
   :debounce="250"
   :value.sync="city.value"
   :on-search="districtGetOptions"
@@ -35,6 +35,16 @@
   placeholder="二级目录"
   label="category"
   ></v-select>
+  asdfsdfsdfsd
+  <treeview :value.sync="id"
+            :model="users"
+            class="form-control"
+            labelname="label"
+            valuename="value"
+            children="arr"
+  ></treeview>
+
+
 </template>
 <script>
 import Hello from '../components/Hello'
@@ -42,7 +52,6 @@ import pressImage from '../components/imagePress'
 import showModel from './showmodel'
 import calendar from '../components/calendar/vue.datepicker'
 import vSelect from '../components/tools/vueSelect/components/Select'
-
 export default {
     components: {
         Hello,
@@ -75,6 +84,51 @@ export default {
           value:'',
           arr:[]
          },
+          id: undefined, // Binded to component.
+          users: [
+        {
+          label: 'Root',
+          value: 1,
+          arr: [
+            {
+              label: 'Parent #1',
+              value: 2,
+              arr: [
+                {
+                  label: 'Child 1 from #1',
+                  value: 3
+                },
+                {
+                  label: 'Child 2 from #1',
+                  value: 13
+                }
+              ]
+            },
+            {
+              label: 'Parent #2',
+              value: 4,
+              arr: [
+                {
+                  label: 'Child 1 from #2',
+                  value: 5
+                },
+              ]
+            },
+            {
+              label: 'Child #1 from root',
+              value: 6
+            },
+            {
+              label: 'Child #2 from root',
+              value: 7
+            },
+            {
+              label: 'Child #3 from root',
+              value: 8
+            }
+          ],
+        }
+      ],
         }
     },
     watch: {
@@ -120,11 +174,14 @@ export default {
                 this.dateText = str.replace(/\b(\w)\b/g, "0$1")
             }
     },
-   
+
     events: {
         getImageData: function(imageData) {
             console.log(imageData);
-        }
+        },
+      treeview_click:function(param){
+            console.log(param);
+      }
     },
     ready() {
             this.createDateText()
