@@ -254,7 +254,7 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
     if(param.loading!==undefined){
         param.loading = true;
     }
-    
+
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/sys/location/country/?page=' + param.cur + '&pageSize=15',
@@ -275,6 +275,9 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
 
 export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
     param.loading = true;
+  if(!param.id){
+    param.id='';
+  }
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/sys/location/province/?page=' + param.cur + '&pageSize=15&country='+param.id,
@@ -338,10 +341,10 @@ export const getDistrictList = ({ dispatch }, param) => { //获取区的列表
 export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
     param.loading = true;
     console.log('url==>');
-    console.log(apiUrl.clientList + '/company/?type=&name=&&category=&province=&page=' + param.cur + '&pageSize=15');
+    console.log(apiUrl.clientList + '/company/query?type=&name=&category=&province=&transform=&page=' + param.cur + '&pageSize=15');
     Vue.http({
         method: "GET",
-        url: apiUrl.clientList + '/company/?type=&name=&&category=&province=&page=' + param.cur + '&pageSize=15',
+        url: apiUrl.clientList + '/company/query?type=&name=&category=&province=&transform=&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -363,16 +366,18 @@ export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
 }
 export const getCompanyData = ({ dispatch }, param) => { //企业搜索
     param.loading = true;
-    var url = apiUrl.clientList + '/company/query/?page=' + param.cur + '&pageSize=15'
+    var url = apiUrl.clientList + '/company/query?page=' + param.cur + '&pageSize=15';
+  console.log(url);
+  console.log(param);
     for(var key in param){
-        if(key=='type'&&param[key]!==''){
+        if(key=='conType'&&param[key]!==''){
             url +='&type='+ param.type
-        }else if(key=='type'){
+        }else if(key=='conType'){
             url +='&type='
         }
-        if(key=='name'&&param[key]!==''){
+        if(key=='conName'&&param[key]!==''){
             url +='&name='+ param.name
-        }else if(key=='name'){
+        }else if(key=='conName'){
             url +='&name='
         }
         if(key=='category'&&param[key]!==''){
@@ -380,9 +385,9 @@ export const getCompanyData = ({ dispatch }, param) => { //企业搜索
         }else if(key=='category'){
             url +='&category='
         }
-        if(key=='province'&&param[key]!==''){
+        if(key=='conProvince'&&param[key]!==''){
             url +='&province='+ param.province
-        }else if(key=='province'){
+        }else if(key=='conProvince'){
             url +='&province='
         }
         if(key=='transform'&&param[key]!==''){
@@ -456,7 +461,8 @@ export const alterCompany = ({ dispatch }, param) => { //修改企业联系人
         phone: param.phone,
         tel: param.tel,
         email: param.email,
-        wechart: param.wechart
+        wechart: param.wechart,
+        main:param.main
     }
     Vue.http({
         method: 'PUT',
@@ -483,7 +489,8 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
         "tel": param.tel,
         "phone": param.phone,
         "wechart": param.wechart,
-        "email": param.email
+        "email": param.email,
+        "main":param.main
     }
     Vue.http({
         method: "POST",
@@ -505,9 +512,13 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
 
 export const getComponentData = ({ dispatch }, param) => { //成分
     param.loading = true;
+    if(!param.name){
+      param.name='';
+    }
+
     Vue.http({
         method: 'GET',
-        url: apiUrl.clientList + '/recipe/' + '?page=' + param.cur + '&pageSize=15',
+        url: apiUrl.clientList + '/recipe/' + '?page=' + param.cur + '&pageSize=15&recipeName='+param.name,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -664,9 +675,15 @@ export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情
 export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
     param.loading = true;
     console.log(param)
+  if(!param.categoryId){
+    param.categoryId='';
+  }
+  if(!param.name){
+    param.name='';
+  }
     Vue.http({
         method: 'GET',
-        url: apiUrl.breedList + '/' + '?breedName=' + param.name + '&page=' + param.cur + '&pageSize=15',
+        url: apiUrl.breedList + '/' + '?category='+param.categoryId+'&breedName=' + param.name + '&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"

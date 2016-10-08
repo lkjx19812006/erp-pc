@@ -1,5 +1,4 @@
 <template>
-    <searchemp-model :param="empNameParam" v-if="empNameParam.show"></searchemp-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -9,18 +8,18 @@
             <h3>企业查询</h3>
         </div>
         <div class="edit-model">
-             <div class="cover_loading">
-                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-            </div>
             <section class="editsection" v-cloak>
                 <div class="clearfix">
                      <div class="client-detailInfo  col-xs-12">
                         <label>省：</label>
-                        <input type="text"  class="form-control" v-model="param.province"  placeholder="按省查询"/>
+                       <select class="form-control" v-model="param.conProvince">
+                         <option value="" selected>按省查询</option>
+                         <option v-for="item in initProvince" value="{{item.cname}}">{{item.cname}}</option>
+                       </select>
                     </div>
                     <div class="client-detailInfo col-xs-12">
                         <label>类别：</label>
-                        <select class="form-control" v-model="param.type">
+                        <select class="form-control" v-model="param.conType">
 	                        <option value="" selected>按类别搜索</option>
 	                        <option value="MF">药厂</option>
 	                        <option value="CF">化妆品厂</option>
@@ -32,23 +31,24 @@
                         <label>是否划转：</label>
                         <select class="form-control" v-model="param.transform">
 	                        <option value="" selected>根据客户划转</option>
-	                        <option value="">已划转</option>
-	                        <option value="">未划转</option>
+	                        <option value=1>已划转</option>
+	                        <option value=0>未划转</option>
                      </select>
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>企业名称：</label>
-                        <input type="text"  class="form-control" v-model="param.name"  placeholder="按企业名查询"/>
+                        <input type="text"  class="form-control" v-model="param.conName"  placeholder="按企业名查询"/>
                     </div>
-                    
+
                     <div class="client-detailInfo  col-xs-12">
                         <label>分类码：</label>
                         <input type="text"  class="form-control" v-model="param.category"  placeholder="按分类码查询"/>
                     </div>
-                   
-                    
-                </div>      
+
+
+                </div>
             </section>
+          <p class="orange">分类码释义：<br>1) 产品类型代码：H：化学药；Z：中成药；S：生物制品；T:按药品管理的体外诊断试剂；Y：中药饮片；Q：医用气体；F:药用辅料；J：空心胶囊；C：特殊药品；X：其他（如中药配方颗粒等）。<br>2）药品类型属性代码：a：原料药；b：制剂；e：有国家标准的提取物。</p>
         </div>
         <div class="edit_footer">
              <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
@@ -57,70 +57,53 @@
     </div>
 </template>
 <script>
-
-import calendar from '../calendar/vue.datepicker'
+  import {
+    initProvince
+  } from '../../vuex/getters'
 import {
     getCompanyData
 } from '../../vuex/actions'
 export default {
     components: {
-        
+
     },
     props: ['param'],
     data() {
         return {
-          loadParam: {
-                show:false,
-                color: '#5dc596',
-                size: '15px',
-                cur: 1,
-                all: 7,
-                province:'',
-                type:'',
-                transform:'',
-                name:'',
-                category:''
-            },
-            
+
         }
     },
     vuex: {
+      getters: {
+        initProvince
+      },
         actions: {
             getCompanyData
         }
     },
-    events:{
-        a:function(qq){
-            this.loadParam.employeeId = qq.employeeId;
-            this.loadParam.employeeName = qq.employeeName;
-        }
-    },
+
     methods:{
         companySearch:function(param){
              this.getCompanyData(this.param);
         }
-        
+
     },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
-    },
+
     created() {
         //this.getCompanyData(this.loadParam);
     }
 }
 </script>
 <style scoped>
+  .orange{
+    color: #fa6705;
+    margin-left: 40px;
+    white-space: normal;
+  }
 .modal_con{
     max-height: 650px;
     width: 600px;
-} 
+}
 .top-title{
     position: absolute;
     width: 100%;
