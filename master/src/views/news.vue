@@ -1,4 +1,5 @@
 <template>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <create-model :param="createParam" v-if="createParam.show"></create-model>
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
@@ -7,7 +8,7 @@
     <personalauth-model :param="personalParam" v-if="personalParam.show"></personalauth-model>
     <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
-    <search-model :param.sync="searchParam" v-if="searchParam.show"></search-model>
+    <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
 
      <div  v-show="!changeParam.show">
         <div class="service-nav clearfix">
@@ -48,7 +49,9 @@
                     
                     <tr v-for="item in initUserList" >
                         <td  @click.stop="">
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
+                            <!-- <label v-if="item.audit!=1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
+                            <label v-if="item.audit==1" class="checkbox_unselect"></label> -->
+                            <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                         </td>
                         <td class="underline" @click="clickOn({
                                 id:item.id,
@@ -68,7 +71,8 @@
                         <td v-if="item.source==3" style="color:#444444 ">{{item.sourceType}}</td>
                         <td>{{item.bizTypeName}}</td>
                         <td>{{item.auditResult}}</td>
-                        <td>未划转</td>
+                        <td v-if="item.transStatus==1">已划转</td>
+                        <td v-else>未划转</td>
                         <td>{{item.comment}}</td>
                         
                         <td @click.stop="eventClick($index)">
@@ -92,7 +96,7 @@
                                                 url:'/user/',
                                                 key:'userList'
                                                 },item.show=false)">编辑</li>
-                                    <li @click="userToClient({
+                                    <li v-if="item.transStatus==0" @click="userToClient({
                                                 id:item.id,
                                                 main:item.main,
                                                 phone:item.phone,
@@ -130,6 +134,7 @@
 </template>
 
 <script>
+import tipsdialogModel  from '../components/tips/tipDialog'
 import calendar from '../components/calendar/vue.datepicker'
 import createModel  from '../components/user/userCreate'
 import alterinfoModel  from '../components/user/userUpdate'
@@ -150,13 +155,15 @@ import {
 import {
     getUserList,
     getUserDetail,
+    
   
 } from '../vuex/actions'
 
 
 export default {
     //props: ['param'],
-    components: {   
+    components: { 
+        tipsdialogModel,  
         pagination,
         calendar,
         createModel,
@@ -175,15 +182,24 @@ export default {
             list: {all:8,cur:1},
             loadParam: {
                 loading: true,
-                fullname: '',
-                phone: '',
-                status: '',
-                startCtime: '',
-                endCtime: '',
+                show:false,
+                fullname:'',
+                source:'',
+                busiType:'',
+                phone:'',
+                startCtime:'',
+                endCtime:'',
+                audit:'',
+
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
-                all: 7
+                all: 7,
+            },
+            tipsParam:{
+                show:false,
+                alert:true,
+                name:"请选择会员"
             },
             createParam:{
                 show:false
@@ -195,7 +211,10 @@ export default {
             },
             auditParam:{
                 show:false,
-                ids:[]
+                indexs:[],
+                userIds:[],
+                auditComment:'',
+                audit:''
             },
             transferParam:{
                 show:false,
@@ -299,19 +318,26 @@ export default {
             }   
         },
 
-    onlyselected: function(index){     
+    onlyselected: function(index){   
         this.$store.state.table.basicBaseList.userList[index].checked=!this.$store.state.table.basicBaseList.userList[index].checked;
     },
     audit: function(){
         var _this = this;
-        this.initUserList.forEach(function(item){
-            console.log(item.checked);
-            if(item.checked){
-                _this.auditParam.ids.push(item.id);
+        _this.auditParam.userIds = [];
+        _this.auditParam.indexs = [];
+        for(var i=0;i<this.initUserList.length;i++){
+            if(this.$store.state.table.basicBaseList.userList[i].checked){
+                _this.auditParam.userIds.push(this.$store.state.table.basicBaseList.userList[i].id);
+                _this.auditParam.indexs.push(i);
             }
-        })
-        this.auditParam.show = true;
-        console.log(this.auditParam.ids);
+        }
+        if(this.auditParam.userIds.length>0){
+            this.auditParam.show = true;
+        }else{
+            this.tipsParam.show = true;
+        }
+        
+        
     },
 
     resetTime:function(){
@@ -322,7 +348,7 @@ export default {
         this.getUserList(this.loadParam);
     },
     search:function(){
-        this.searchParam.show = true;
+        this.loadParam.show = true;
     },
     createUser:function(value){
         console.log('createUser');

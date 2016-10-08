@@ -246,23 +246,21 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>业务ID</th>
                                           <th>业务类型</th>
-                                          <th>跟进对象ID</th>
                                           <th>跟进方式</th>
                                           <th>联系账号</th>
                                           <th>备注</th>
-                                          
+                                          <th style="text-align:center">操作</th>
                                         </thead>
                                       <tbody>
                                           <tr v-for="item in initUserDetail.tracking.arr">
-                                              <td>{{item.bizId}}</td>
-                                              <td>{{item.bizType}}</td>
-                                              <td>{{item.objId}}</td>
+                                              <td v-if="item.bizType==0">客户</td>
+                                              <td v-if="item.bizType==1">意向</td>
+                                              <td v-if="item.bizType==2">订单</td>
+                                              <td v-if="item.bizType!=0&&item.bizType!=1&&item.bizType!=2"></td>
                                               <td>{{item.trackingWay}}</td>
                                               <td>{{item.contactNo}}</td>
                                               <td>{{item.comments}}</td>
-                                              
                                               <td  @click="clickShow($index,{
                                                 concrete:'tracking'
                                                 })">

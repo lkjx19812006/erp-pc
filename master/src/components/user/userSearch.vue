@@ -115,7 +115,8 @@ export default {
     },
     methods:{
         userSearch:function(param){
-             this.getUserList(this.param);
+            this.param.cur = 1;
+            this.getUserList(this.param);
         },
         resetTime:function(){
         	this.param.startCtime = "";
@@ -138,7 +139,7 @@ export default {
         }
     },
     created() {
-        this.getUserList(this.loadParam);
+        //this.getUserList(this.loadParam);
     }
 }
 </script>

@@ -125,6 +125,11 @@ export const initUserList = (state) => {
     return parseJson(state.table.basicBaseList.userList);
 }
 
+/*审核标签*/
+export const initAuditLabel = (state) => {
+    return parseJson(state.table.label.auditLabel);
+}
+
 /*---会员详情---*/
 export const initUserDetail = (state) => {
     return parseJson(state.table.userDetail);

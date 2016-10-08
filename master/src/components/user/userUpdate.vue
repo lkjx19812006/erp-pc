@@ -65,9 +65,9 @@ import {
     updateUserInfo   
 } from '../../vuex/actions'
 export default {
-  components: {
-    tipsdialogModel
-  },
+    components: {
+      tipsdialogModel
+    },
     props: ['param'],
     data() {
         return {
