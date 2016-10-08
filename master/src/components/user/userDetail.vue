@@ -303,7 +303,7 @@
                               </div>
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                   <label>归属地</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.qq" value="{{initUserDetail.qq}}" disabled="disabled"/>
+                                  <input type="text" class="form-control" v-model="initUserDetail.province" value="{{initUserDetail.province}}" disabled="disabled"/>
                               </div>
 
                           </div>
@@ -330,7 +330,7 @@
                           <div class="clearfix">
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>来源</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.source" value="{{initUserDetail.source}}" disabled="disabled"/>
+                                  <input type="text" class="form-control" v-model="initUserDetail.sourceType" value="{{initUserDetail.sourceType}}" disabled="disabled"/>
                               </div>
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>客户类型</label>
@@ -340,11 +340,12 @@
                           <div class="clearfix">
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>审核状态</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.audit" value="{{initUserDetail.audit}}" disabled="disabled"/>
+                                  <input type="text" class="form-control" v-model="initUserDetail.auditResult" value="{{initUserDetail.auditResult}}" disabled="disabled"/>
                               </div>
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>划转状态</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.audit" value="{{initUserDetail.audit}}" disabled="disabled"/>
+                                  <input v-if="initUserDetail.transStatus==1" type="text" class="form-control" value="已划转" disabled="disabled"/>
+                                  <input v-else type="text" class="form-control" value="未划转" disabled="disabled"/>
                               </div>
                           </div>
                           <div class="clearfix">

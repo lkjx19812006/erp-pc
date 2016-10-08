@@ -85,7 +85,7 @@ export default {
     data() {
         return {
           loadParam: {
-                loading: true,
+                loading: false,
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
@@ -104,7 +104,7 @@ export default {
     },
     vuex: {
         actions: {
-            getUserList
+             getUserList
         }
     },
     events:{

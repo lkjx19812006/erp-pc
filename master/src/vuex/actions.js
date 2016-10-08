@@ -1955,7 +1955,6 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
 
 export const editintentInfo = ({ dispatch }, param) => { //修改意向
     console.log(param)
-    //return;
     const data1 = {
          "type":param.type,
          "especial":param.especial,
@@ -1997,7 +1996,7 @@ export const editintentInfo = ({ dispatch }, param) => { //修改意向
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('修改成功')
+        console.log('修改成功!!!!')
         dispatch(types.UPDATA_INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -2042,6 +2041,7 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
          "number":param.number,
          "quality":param.quality
     }
+    console.log(data1);
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,
