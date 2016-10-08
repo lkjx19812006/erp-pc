@@ -79,7 +79,7 @@ export default{
 	methods:{
 		selectCity:function(index,id,cname){
 			this.$store.state.table.systemBaseList.cityList[index].checked=!this.$store.state.table.systemBaseList.cityList[index].checked;
-			for(var key in this.initCountrylist){
+			for(var key in this.initCitylist){
 				if(key!=index){
 					if(this.$store.state.table.systemBaseList.cityList[index].checked==true){
 						this.$store.state.table.systemBaseList.cityList[index].checked=false;

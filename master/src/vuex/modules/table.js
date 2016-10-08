@@ -43,7 +43,9 @@ import {
    CHANCE_LIST_DATA,
    USER_DATA,
    UPDATE_USER_DATA,
+   BATCH_UPDATE_USER_DATA,
    ORG_DATA,
+   QUICK_EDIT,
    FILE_DATA,
    USER_DETAIL_DATA,
    ADD_EMPLOYEE_DATA,
@@ -89,6 +91,12 @@ const state = {
             { "twoNumber": 2, "cname": "河南1", "level": "222", "icon": "1111", "iso": "22222" }
         ],
     },
+
+    label:{
+        auditLabel: [
+            {"text":"文本1"}
+        ]
+    } , 
 
     basicBaseList: {
         enterpriseList: [
@@ -560,6 +568,10 @@ const mutations = {
         state.basicBaseList.userList = data;
     },
 
+    [QUICK_EDIT](state,data){   //审核时可选择标签
+        state.label.auditLabel = data;
+    },
+
     [UPDATE_USER_DATA](state, data) { // 会员更新
 
         if (data.index != undefined) { //列表页面修改
@@ -592,6 +604,22 @@ const mutations = {
 
     },
 
+    [BATCH_UPDATE_USER_DATA](state, data) { // 会员更新
+        for(var i=0;i<data.indexs.length;i++){
+           var k = data.indexs[i];
+           state.basicBaseList.userList[k].checked = false;   
+           for (var key in data) {
+                    if(key=="audit"&&data[key]==1){
+                        state.basicBaseList.userList[k].auditResult = "已审核";
+                    }else if(key=="audit"&&data[key]==2){
+                        state.basicBaseList.userList[k].auditResult = "审核不通过";
+                    }
+                    state.basicBaseList.userList[k][key] = data[key];
+                }
+        }    
+                
+
+    },
 
     [USER_DETAIL_DATA](state, data) { // 会员详情 
         state.userDetail = data;

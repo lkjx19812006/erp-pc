@@ -9,6 +9,7 @@ const _listUrl={
 	linechart:local+'linechart.json',
 	piechart:local+'piechart.json',
 	orderTable:local+'order.json',
+	auditQuickEdit:local+'auditQuickEdit.json',
 	orderList:ctx,
 	clientList:ctx,
 	userList:ctx,

@@ -1,4 +1,5 @@
 <template>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -14,44 +15,59 @@
                <div class="editpageleft">
                     <div style="color:red">
                         快速编辑：
-                        <label>123</label>
+                        <span v-for="item in initAuditLabel.arr">
+                            <label style="cursor:pointer" class="quick_edit" @click="addText(item.text)">{{item.text}}&nbsp;&nbsp;</label>
+                        </span>
                     </div>
                     <div class="editpage-input">
                            <label class="editlabel">备注</label>
-                           <!-- <input type="textarea" v-model='param.comment' class="form-control edit-input" value="{{param.comment}}" /> -->
-                           <textarea v-model='param.comment' class="form-control edit-input" value="{{param.comment}}"></textarea>
-                       </div>
+                           <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
+                           <textarea v-model='param.auditComment' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5" value="{{param.auditComment}}"></textarea>
+                    </div>
+
                    
                </div>
            </section>
         </div>  
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="">通过</button>
-            <button type="button" class="btn  btn-confirm" @click="">不通过</button>
+            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=pass,tipsParam.name='确认审核通过?'">通过</button>
+            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=reject,tipsParam.name='确认审核不通过?'">不通过</button>
         </div>
     </div>
 </template>
 <script>
+import tipsdialogModel  from '../tips/tipDialog'
 import {
-    
+    initAuditLabel
 } from '../../vuex/getters'
 import {   
-    
+    auditQuickEdit,
+    batchUpdateUserInfo
 } from '../../vuex/actions'
 export default {
+    components: {
+        tipsdialogModel
+    },
     props: ['param'],
     data() {
         return {
-        
+            tipsParam:{
+                show:false,
+                confirm:true,
+                name:"",
+                callback:''
+            
+          }
         }
     },
     vuex: {
        getters: {
-            
+            initAuditLabel
         },
         actions: {
-            
+            auditQuickEdit,
+            batchUpdateUserInfo
         } 
     },
     route: {
@@ -64,7 +80,28 @@ export default {
             transition.next()
         }
     },
-    
+    methods: {
+        addText: function(text){
+            this.param.auditComment += text + ',';
+        },
+        pass: function(){
+            this.param.audit = 1;        
+            console.log(this.param.userIds);
+            console.log(this.param.auditComment);
+            this.batchUpdateUserInfo(this.param);
+        },
+        reject: function(){
+            this.param.audit = 2;  
+            console.log(this.param.userIds);
+            console.log(this.param.auditComment);
+            console.log(this.param.indexs);
+            this.batchUpdateUserInfo(this.param);
+
+        },
+    },
+    created() { 
+        this.auditQuickEdit();
+   }
     
 }
 </script>

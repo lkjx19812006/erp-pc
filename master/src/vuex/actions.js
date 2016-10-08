@@ -1611,6 +1611,8 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
             user[i].checked = false;
             user[i].show =false;
        }
+        console.log('页数==');
+        console.log(res.json().result.pages);
         dispatch(types.USER_DATA, user);
         param.all = res.json().result.pages;
         param.loading = false;
@@ -1619,6 +1621,16 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
         param.loading = false;
     })
 }
+
+//会员审核快速编辑标签
+export const auditQuickEdit = ({ dispatch }) => {
+    Vue.http.get(apiUrl.auditQuickEdit)
+        .then((res) => {
+            dispatch(types.QUICK_EDIT, res.data.results);
+        }, (res) => {
+            console.log('fail');
+        });
+};
 
 export const getUserDetail = ({ dispatch }, param) => {  //会员详情
     param.loading = true;
@@ -1728,6 +1740,39 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
         console.log('fail');
     })
 }
+
+export const batchUpdateUserInfo = ({ dispatch }, param) => { //批量修改用户信息
+    const updatedata = {
+        userIds: param.userIds,
+    }
+    if(param.auditComment){
+        updatedata.auditComment = param.auditComment;
+    }
+    if(param.audit){
+        updatedata.audit = param.audit;
+    }
+    
+    console.log(updatedata);
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.userList + '/user/batchUpdate',
+        emulateHTTP: false,
+        body: updatedata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With":"XMLHttpRequest",
+            'Content-Type':'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.show=false;
+        param.auditComment="";
+        updatedata.indexs = param.indexs;
+        dispatch(types.BATCH_UPDATE_USER_DATA, updatedata);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 
 
 export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
