@@ -19,6 +19,7 @@
 
     <mz-datepicker :time.sync="dateText" format="yyyy/MM/dd HH:mm"></mz-datepicker>
     </div>
+
     <v-select
   :debounce="250"
   :value.sync="city.value"
@@ -150,7 +151,7 @@ export default {
             this.$http.get('/static/data/list.json', {
                q: search
             }).then(resp => {
-              console.log(resp);
+              console.log(resp.data.results);
                this.city.arr = resp.data.results
                loading(false)
             })

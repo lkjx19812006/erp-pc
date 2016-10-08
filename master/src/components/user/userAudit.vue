@@ -3,18 +3,23 @@
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
-        </div>
+        </div>  
         <div class="edit-content">
             <h3>会员审核</h3>
         </div>
         <div class="edit-model">
            <section class="editsection" v-cloak>
-               <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpage">
+               <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpageleft">
+                    <div style="color:red">
+                        快速编辑：
+                        <label>123</label>
+                    </div>
                     <div class="editpage-input">
                            <label class="editlabel">备注</label>
-                           <input type="text" v-model='param.comment' class="form-control edit-input" value="{{param.comment}}" />
+                           <!-- <input type="textarea" v-model='param.comment' class="form-control edit-input" value="{{param.comment}}" /> -->
+                           <textarea v-model='param.comment' class="form-control edit-input" value="{{param.comment}}"></textarea>
                        </div>
                    
                </div>

@@ -1,4 +1,5 @@
 <template>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -75,16 +76,27 @@
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="param.link(param,param.show = false)">确定</button>
+            <!-- <button type="button" class="btn  btn-confirm" @click="param.link(param,param.show = false)">确定</button> -->
+            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true">确定</button> 
         </div>
     </div>
 </template>
 <script>
+import tipsdialogModel  from '../tips/tipDialog'
 export default {
+    components: {
+        tipsdialogModel
+    },
     props: ['param'],
     data() {
         return {
-        
+            tipsParam:{
+                show:false,
+                confirm:true,
+                name:"确认修改信息?",
+                callback:this.alertInfo
+                
+              }
         }
     },
     vuex: {
@@ -98,6 +110,12 @@ export default {
         deactivate: function(transition) {
             console.log('hook-example deactivated!')
             transition.next()
+        }
+    },
+    methods: {
+        alertInfo: function(){
+            this.param.show = false;
+            this.param.link(this.param);
         }
     }
 }

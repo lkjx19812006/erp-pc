@@ -58,6 +58,7 @@ export const initCountrylist = (state) => {
     return JSON.parse(JSON.stringify(state.table.systemBaseList.countryList));  
 }
 export const initProvincelist = (state) => {
+    console.log('getter');
     return JSON.parse(JSON.stringify(state.table.systemBaseList.locationlist));  
 }
 export const initCitylist = (state) => {
@@ -151,5 +152,6 @@ export const initIdentify = (state) => {
 }*/
 /*---获取省市区---*/
 export const initProvince = (state) => {
+    console.log('getter');
     return JSON.parse(JSON.stringify(state.table.locationList.provinceList));  
 }

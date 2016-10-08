@@ -6,11 +6,19 @@
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">品种</div>
-            <div class="col-xs-4 my_order_search">
-                <div class="ordertel_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按品种名称搜索" @keyup.enter="categoryNameSearch(loadParam.name)">
-                </div>
+            <div class="col-xs-9 my_order_search">
+
+               <div class="ordertel_search clearfix" style="border:none" >
+                <select class="form-control" v-model="loadParam.categoryId" @change="categoryNameSearch()">
+                  <option value="" selected>按品种分类搜索</option>
+                  <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
+
+                </select>
+              </div>
+              <div class="ordertel_search clearfix">
+                <img src="/static/images/search.png" height="24" width="24">
+                <input type="text" class="search_input" v-model="loadParam.name" placeholder="按品种名称搜索" @keyup.enter="categoryNameSearch()">
+              </div>
                 <button class="new_btn" @click="categoryNameSearch()">搜索</button>
             </div>
             <div class="right col-xs-1">
@@ -48,10 +56,10 @@
                     <tr v-for="item in initBreedlist">
                         <td>{{item.code | breedcode}}</td>
                         <td  class="underline"  @click="editBreed(item.id)">{{item.name}}</td>
-                        <td>{{item.categoryName}}</td>
-                        <td>{{item.categoryName}}</td>
-                        <td>{{item.categoryName}}</td>
-                        <td>{{item.categoryName}}</td>
+                        <td>{{item.categoryId}}</td>
+                        <td>{{item.pinyin}}</td>
+                        <td>{{item.eName}}</td>
+                        <td>{{item.lName}}</td>
                         <td @click.stop="breedClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="breed_action" v-show="item.show">
@@ -89,12 +97,14 @@ import breedreviseModel from '../../components/serviceBaseData/breedUpdate'
 import detailModel from '../../components/serviceBaselist/breeddetail'
 import {
     initBreedlist,
+  initCategorylist
 } from '../../vuex/getters'
 import {
     getBreedData,
     getBreedNameSearch,
     getBreedDetail,
-    deleteInfo
+    deleteInfo,
+    getCategoryData
 } from '../../vuex/actions'
 export default {
     components: {
@@ -113,7 +123,9 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
-                all: 7
+                all: 7,
+              categoryId:'',
+              name:''
             },
             breedParam: {
                 show: false,
@@ -136,17 +148,20 @@ export default {
     },
     vuex: {
         getters: {
-            initBreedlist
+            initBreedlist,
+          initCategorylist
         },
         actions: {
             getBreedData,
             getBreedNameSearch,
             getBreedDetail,
-            deleteInfo
+            deleteInfo,
+          getCategoryData
         }
     },
     created() {
         this.getBreedData(this.loadParam, this.loadParam.all);
+        this.getCategoryData();
     },
     methods: {
         categoryNameSearch: function() {
@@ -199,5 +214,8 @@ export default {
 }
 .transfer{
     margin-left: 18px;
+}
+.ordertel_search{
+  margin-right:3%;
 }
 </style>

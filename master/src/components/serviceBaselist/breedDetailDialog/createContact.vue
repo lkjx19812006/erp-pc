@@ -35,6 +35,13 @@
                                      <label class="editlabel">{{param.tellist}}</label>
                                     <input type="text" class="form-control edit-input"  id="tel" v-model="param.tel" value="{{param.tel}}" />
                                 </div>
+                                <div class="editpage-input">
+                                <label class="editlabel">{{param.mainlist}}</label>
+                                  <select class="form-control" style="width:90%" v-model="param.main" >-->
+                                    <option value=0 >否</option>
+                                    <option value=1>是</option>
+                                    </select>
+                                </div>
 <!--                                  <div class="editpage-input">
    <label class="editlabel">QQ</label>
    <input type="text" class="form-control edit-input"  id="qq" v-model="contactData.qq" v-validate:qq="['required']" />
@@ -59,12 +66,12 @@ export default {
     props: ['param'],
     data() {
         return {
-           
+
             }
     },
     vuex: {
         actions: {
-          
+
         }
     },
     route: {
@@ -83,7 +90,7 @@ export default {
 .modal_con{
     max-height: 400px;
     width: 600px;
-} 
+}
 .top-title{
     position: absolute;
     width: 100%;

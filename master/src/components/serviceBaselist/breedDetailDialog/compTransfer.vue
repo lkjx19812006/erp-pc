@@ -22,7 +22,7 @@
                                    <label class="editlabel">类型</label>
                                     <select class="form-control edit-input"  v-model="param.type">
                                          <option value="0">个人</option>
-                                         <option value="1">企业</option>
+                                         <option value="1" >企业</option>
                                     </select>
                                 </div>
                             </div>
@@ -73,14 +73,14 @@
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>分类</label>
-                                    <select class="form-control edit-input"  v-model='param.classify'>
-                                         <option value="0">买</option>
+                                    <select class="form-control edit-input"  v-model="param.classify">
+                                         <option value="0" >买</option>
                                          <option value="1">卖</option>
                                          <option value="2">买卖</option>
                                     </select>
                                 </div>
                             </div>
-                        </div>  
+                        </div>
                         <div class="editpageright">
                             <h4>联系人</h4>
                             <div class="clearfix">
@@ -147,19 +147,12 @@ export default {
     },
      vuex: {
         actions: {
-            
+
         }
     },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
-    }
+  created(){
+    console.log(this.param);
+  }
 }
 </script>
 <style scoped>
@@ -207,7 +200,7 @@ export default {
     float: left;
 }
 .editpageleft{
-    border-right:1px solid #ddd; 
+    border-right:1px solid #ddd;
 }
 .editpageleft h4,
 .editpageright h4{

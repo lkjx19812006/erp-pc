@@ -1,6 +1,7 @@
 <template>
     <create-model :param="createParam" v-if="createParam.show"></create-model>
     <detail-model  :param="companyParam" v-if="companyParam.show"></detail-model>
+    <search-model  :param="loadParam" ></search-model>
     <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
     </div>
@@ -8,47 +9,48 @@
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">企业</div>
             <div class="col-xs-10 my_order_search">
-                <div class="name_search clearfix" style="border:none">
-                    <select class="form-control" v-model="loadParam.conProvince" @change="multiSearch()">
-                         <option value="" selected>按省条件搜索</option>
-                         <option v-for="item in initProvince">{{item.cname}}</option>
-                     </select>
-                </div>
-                <div class="name_search clearfix" style="border:none">
-                     <!-- <img src="/static/images/search.png" height="24" width="24"> -->
-                     <!-- <input type="text" class="search_input" placeholder="按类别搜索" v-model="loadParam.conType"/> -->
-                     <select class="form-control" v-model="loadParam.conType" @change="multiSearch()">
-                         <option value="" selected>按类别搜索</option>
-                         <option value="MF">药厂</option>
-                         <option value="CF">化妆品厂</option>
-                         <option value="FF">食品厂</option>
-                         <option value="HF">保健品厂</option>
-                     </select>
-                </div>
-                <div class="name_search clearfix" style="border:none">
-                    <!-- <img src="/static/images/search.png" height="24" width="24">
-                      <input type="text" class="search_input" placeholder="按客户是否划转搜索" v-model="loadParam"/> -->
-                     <select class="form-control" v-model="loadParam.conType" @change="multiSearch()">
-                         <option value="" selected>根据客户划转</option>
-                         <option value="">已划转</option>
-                         <option value="">未划转</option>
-                     </select>
-                </div>
-                 <div class="name_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按企业名称搜索" v-model="loadParam.conName" >
-                </div>
-                 <div class="name_search clearfix">
-                    <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按分类码搜索" v-model="loadParam.category"/>
-                </div>
-                <a class="new_btn transfer"  @click="multiSearch()">查询</a>
+                <!--<div class="name_search clearfix" style="border:none">-->
+                    <!--<select class="form-control" v-model="loadParam.conProvince" @change="multiSearch()">-->
+                         <!--<option value="" selected>按省条件搜索</option>-->
+                         <!--<option v-for="item in initProvince">{{item.cname}}</option>-->
+                     <!--</select>-->
+                <!--</div>-->
+                <!--<div class="name_search clearfix" style="border:none">-->
+                     <!--&lt;!&ndash; <img src="/static/images/search.png" height="24" width="24"> &ndash;&gt;-->
+                     <!--&lt;!&ndash; <input type="text" class="search_input" placeholder="按类别搜索" v-model="loadParam.conType"/> &ndash;&gt;-->
+                     <!--<select class="form-control" v-model="loadParam.conType" @change="multiSearch()">-->
+                         <!--<option value="" selected>按类别搜索</option>-->
+                         <!--<option value="MF">药厂</option>-->
+                         <!--<option value="CF">化妆品厂</option>-->
+                         <!--<option value="FF">食品厂</option>-->
+                         <!--<option value="HF">保健品厂</option>-->
+                     <!--</select>-->
+                <!--</div>-->
+                <!--<div class="name_search clearfix" style="border:none">-->
+                    <!--&lt;!&ndash; <img src="/static/images/search.png" height="24" width="24">-->
+                      <!--<input type="text" class="search_input" placeholder="按客户是否划转搜索" v-model="loadParam"/> &ndash;&gt;-->
+                     <!--<select class="form-control" v-model="loadParam.transform" @change="multiSearch()">-->
+                         <!--<option value="" selected>根据客户划转</option>-->
+                         <!--<option value="">已划转</option>-->
+                         <!--<option value="">未划转</option>-->
+                     <!--</select>-->
+                <!--</div>-->
+                 <!--<div class="name_search clearfix">-->
+                    <!--<img src="/static/images/search.png" height="24" width="24">-->
+                    <!--<input type="text" class="search_input" placeholder="按企业名称搜索" v-model="loadParam.conName" >-->
+                <!--</div>-->
+                 <!--<div class="name_search clearfix">-->
+                    <!--<img src="/static/images/search.png" height="24" width="24">-->
+                    <!--<input type="text" class="search_input" placeholder="按分类码搜索" v-model="loadParam.category"/>-->
+                <!--</div>-->
+                <!-- <a class="new_btn transfer"  @click="multiSearch()">查询</a> -->
+                <a class="new_btn transfer" style="float:right"  @click="loadParam.show=true">查询</a>
             </div>
            <!--  <div class=" col-xs-1">
                <a class="new_btn transfer" @click="multiSearch()">查询</a>
            </div> -->
         </div>
-        <p class="orange">分类码释义：<br>1) 产品类型代码：H：化学药；Z：中成药；S：生物制品；T:按药品管理的体外诊断试剂；Y：中药饮片；Q：医用气体；F:药用辅料；J：空心胶囊；C：特殊药品；X：其他（如中药配方颗粒等）。<br>2）药品类型属性代码：a：原料药；b：制剂；e：有国家标准的提取物。</p>
+
         <div class="order_table" v-cloak>
             <table class="table table-hover table_color table-striped">
                 <thead>
@@ -111,7 +113,7 @@
                                         city:item.city,
                                         address:item.address,
                                         link:saveCreate,
-                                        url:'/company/transform/'                            
+                                        url:'/company/transform/'
                                         })">划转</li>
                                 </ul>
                             </div>
@@ -130,6 +132,8 @@ import pagination from '../../components/pagination'
 import filter from '../../filters/filters'
 import detailModel  from '../serviceBaselist/companydetail'
 import createModel from '../serviceBaselist/breedDetailDialog/compTransfer'
+import searchModel from './companySearch'
+
 import {
     initEnterpriselist,
     initProvince
@@ -146,7 +150,8 @@ export default {
         pagination,
         filter,
         detailModel,
-        createModel
+        createModel,
+        searchModel
     },
     vuex: {
         getters: {
@@ -164,6 +169,7 @@ export default {
     data() {
         return {
             loadParam: {
+                show:false,
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
@@ -172,7 +178,8 @@ export default {
                 conName:'',
                 conType:'',
                 conProvince:'',
-                category:''
+                category:'',
+                transform:''
             },
             companyParam:{
                 id:'',
@@ -228,10 +235,7 @@ export default {
 }
 </script>
 <style scoped>
-.orange{
-    color: #fa6705;
-    margin-left: 40px;
-}
+
 .name_search{
     margin-right:3%;
 }

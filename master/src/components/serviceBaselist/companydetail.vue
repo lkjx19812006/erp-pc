@@ -7,12 +7,12 @@
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
             <div class="col-md-8">
-                <h4 class="section_title">企业相关 <button class="new_btn transfer" @click="createCustomer({
+                <h4 class="section_title">企业相关 <button v-if="!initCompanyDetail.customerId" class="new_btn transfer" @click="createCustomer({
                           sub:$index,
                           show:true,
                           id:initCompanyDetail.id,
                           category:initCompanyDetail.category,
-                          type:initCompanyDetail.type,
+                          type:1,
                           name:initCompanyDetail.name,
                           tel:initCompanyDetail.tel,
                           principal:initCompanyDetail.principal,
@@ -20,7 +20,8 @@
                           province:initCompanyDetail.province,
                           city:initCompanyDetail.city,
                           address:initCompanyDetail.address,
-                          link:saveCreate                           
+                          classify:0,
+                          link:saveCreate
                           })">划转到客户</button>
                 </h4>
                 <div class="panel-group">
@@ -43,11 +44,13 @@
                                emaillist:'邮箱',
                                tellist:'电话',
                                weblist:'微信',
+                               mainlist:'主要联系人',
                                name:'',
                                phone:'',
                                tel:'',
                                email:'',
                                wechart:'',
+                               main:0,
                                link:createContact,
                                url:'contract',
                                key:'companyContacts'
@@ -64,6 +67,7 @@
                                             <th>电话</th>
                                             <th>邮箱</th>
                                             <th>微信</th>
+                                            <th>主要联系人</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -74,6 +78,8 @@
                                             <td>{{item.tel}}</td>
                                             <td>{{item.email}}</td>
                                             <td>{{item.wechart}}</td>
+                                            <td v-if="item.main==0">否</td>
+                                            <td v-if="item.main==1">是</td>
                                             <td @click="contactShow($index)">
                                                 <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show" transition="expand">
@@ -89,6 +95,7 @@
                                                                emaillist:'邮箱',
                                                                tellist:'电话',
                                                                weblist:'微信',
+                                                               mainlist:'主要联系人',
                                                                name:item.name,
                                                                phone:item.phone,
                                                                tel:item.tel,
@@ -96,7 +103,8 @@
                                                                wechart:item.wechart,
                                                                link:alterCompany,
                                                                url:'contract',
-                                                               key:'companyContacts'
+                                                               key:'companyContacts',
+                                                               main:item.main
                                                                },item.show=false)">编辑</dt>
                                                       <!--  <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt> -->
                                                    </dl>
@@ -153,7 +161,7 @@
                                  <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
                                      证书({{initCompanyDetail.companyLicenses.arr.length}})
                                  </a>
-                                
+
                              </h4>
                        </div>
                        <div class="panel-collapse"  v-show="!initCompanyDetail.companyLicenses.show">

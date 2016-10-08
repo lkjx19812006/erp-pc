@@ -13,40 +13,6 @@
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">会员</div>
             
-           <!--  <div class="col-xs-6 my_order_search">
-               <div class="name_search clearfix">
-                   <img src="/static/images/search.png" height="24" width="20">
-                   <input type="text" class="search_input" v-model="loadParam.fullname" @keyup.enter="loadByCondition()" placeholder="按名字搜索">
-               </div>
-               <div class="ordertel_search clearfix">
-                   <img src="/static/images/search.png" height="24" width="20">
-                   <input type="text" class="search_input" v-model="loadParam.phone" @keyup.enter="loadByCondition()" placeholder="按手机号搜索">
-               </div>
-               <div class="name_search clearfix"> 
-                   <img src="/static/images/search.png" height="24" width="20">
-                   <input type="text" class="search_input" v-model="loadParam.audit" @keyup.enter="loadByCondition()" placeholder="按审核状态搜索">
-               </div>
-               <div class="name_search clearfix"> 
-                   <div>
-                       开始时间:
-                       <mz-datepicker :time.sync="loadParam.startCtime" format="yyyy/MM/dd HH:mm:ss">
-                       </mz-datepicker>
-                   </div>
-               </div> 
-               <div class="name_search clearfix"> 
-                   
-                   <div>
-                   结束时间:
-                       <mz-datepicker :time.sync="loadParam.endCtime" format="yyyy/MM/dd HH:mm:ss">
-                       </mz-datepicker>
-                   </div>
-               </div> 
-                
-           </div>
-           <div class="right col-xs-1">
-               <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空时间</button>
-               <button type="button" class="btn btn-default" height="24" width="24" @click="loadByCondition()">查询</button>
-           </div> -->
             <div class="right col-xs-1">
                 <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
                 <button type="button" class="btn btn-default" height="24" width="24" @click="search()">查询</button>
@@ -69,7 +35,6 @@
                         <th>qq</th>
                         <th>公司</th>
                         <th>主营业务</th>
-                        <!-- <th>会员状态</th> -->
                         <th>来源</th>
                         <th>客户类型</th>
                         <th>审核状态</th>
@@ -81,9 +46,9 @@
                 </thead>
                 <tbody>
                     
-                    <tr v-for="item in initUserList"  >
+                    <tr v-for="item in initUserList" >
                         <td  @click.stop="">
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)" ></label>
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                         </td>
                         <td class="underline" @click="clickOn({
                                 id:item.id,
@@ -103,7 +68,7 @@
                         <td v-if="item.source==3" style="color:#444444 ">{{item.sourceType}}</td>
                         <td>{{item.bizTypeName}}</td>
                         <td>{{item.auditResult}}</td>
-                        <td>暂无</td>
+                        <td>未划转</td>
                         <td>{{item.comment}}</td>
                         
                         <td @click.stop="eventClick($index)">
@@ -257,9 +222,34 @@ export default {
             },
          intentionParam:{
             show:false,
-            fullname:this.initUserDetail.fullname,
-            id:this.initUserDetail.id,
-            phone:this.initUserDetail.phone,
+            flag:0,
+            userId:this.initUserDetail.id,
+            //fullname:this.initUserDetail.fullname,
+            customerName:this.initUserDetail.fullname,
+            //phone:this.initUserDetail.phone,
+            customerPhone:this.initUserDetail.phone,
+            breedName:'',
+            price:'',
+            unit:'',
+            especial:'',
+            quality:'',
+            spec:'',
+            number:'',
+            location:'',
+            type:'',
+            country:'',
+            province:'',
+            city:'',
+            district:'',
+            address:'',
+            invoic:'',
+            sampling:'',
+            sampleUnit:'',
+            advance:'',
+            intl:'',
+            sampleNumber:'',
+            sampleAmount:'',
+            qualification:'',
             url:'/intention/'
 
 

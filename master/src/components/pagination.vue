@@ -22,7 +22,12 @@
     computed: {
       indexs: function(){
         var left = 1;
+
+        if(this.combination.all==0){
+          this.combination.all=1;
+        }
         var right = this.combination.all;
+
         var ar = [];
         if(this.combination.all>= 7){
           if(this.combination.cur > 5 && this.combination.cur < this.combination.all-4){
@@ -55,7 +60,7 @@
         //   this.combination = data;
         //});
         console.log('现在在'+this.combination.cur+'页');
-       
+
       },
       pageClick: function () {
         console.log('现在在'+this.combination.cur+'页');

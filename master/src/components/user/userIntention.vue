@@ -10,7 +10,8 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新增会员意向</h3>
+            <h3 v-if="param.flag==0">新增会员意向</h3>
+            <h3 v-if="param.flag==1">修改会员意向</h3>
         </div>
         <div class="edit-model">
            <section class="editsection" v-cloak> 
@@ -89,20 +90,45 @@
                    <div class="editpageleft">
                        <div class="editpage-input">
                            <label class="editlabel">省</label>
-                           <input type="text" v-if="!param.country" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
-                           <input type="text" v-if="param.country" v-model='param.province' class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
-                           <input type="text" v-if="param.country" v-model='param.province' class="form-control edit-input" @click="selectProvince()" />
+                           <input type="text" v-if="!country" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                           <v-select v-if="country"
+                              :debounce="250" 
+                              :value.sync="province" 
+                              :on-search="selectCity()" 
+                              :options="initProvince" 
+                              placeholder="省" 
+                              label="cname">
+
+                            </v-select>
                        </div>
 
                        <div class="editpage-input">
                            <label class="editlabel">区</label>
-                            <input type="text" v-if="!param.city" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
-                            <input type="text" v-if="param.city" v-model='param.district' class="form-control edit-input" value="{{param.district}}" @click="selectDistrict()" />
+                            <input type="text" v-if="!city" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
+                            <v-select v-if="city"
+                              :debounce="250" 
+                              :value.sync="district" 
+                              :on-search="" 
+                              :options="initDistrictlist" 
+                              placeholder="区" 
+                              label="cname">
+
+                            </v-select>
+
                        </div>
 
                         <div class="editpage-input">
-                           <label class="editlabel">国家</label>
-                            <input type="text" v-model='param.country' class="form-control edit-input" value="{{param.country}}" @click="selectCountry()" />
+                            <label class="editlabel">国家</label>
+                            <div type="text" class="edit-input">
+                              <v-select 
+                                :debounce="250" 
+                                :value.sync="country" 
+                                :on-search="selectProvince()" 
+                                :options="initCountrylist" 
+                                placeholder="国家" 
+                                label="cname">
+                              </v-select>
+                            </div>
                        </div>
 
                        <div class="editpage-input">
@@ -133,8 +159,16 @@
                    <div class="editpageright">
                        <div class="editpage-input">
                            <label class="editlabel">市</label>
-                           <input type="text" v-if="!param.province" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                           <input type="text" v-if="param.province" v-model='param.city' class="form-control edit-input" value="{{param.city}}" @click="selectCity()"/>
+                           <input type="text" v-if="!province" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                           <v-select v-if="province"
+                              :debounce="250" 
+                              :value.sync="city" 
+                              :on-search="selectDistrict()" 
+                              :options="initCitylist" 
+                              placeholder="市" 
+                              label="cname">
+
+                            </v-select>
                        </div>
 
                        <div class="editpage-input">
@@ -185,7 +219,7 @@
         </div>  
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="createIntentionInfo(param,param.show = false)">确定</button>
+            <button type="button" class="btn  btn-confirm" @click="createOrUpdateIntention(param,param.show = false)">确定</button>
         </div>
     </div>
 </template>
@@ -195,21 +229,30 @@ import countryModel  from '../address/countryList'
 import provinceModel  from '../address/provinceList'
 import cityModel  from '../address/cityList'
 import districtModel  from '../address/districtList'
+import vSelect from '../tools/vueSelect/components/Select'
 import {
-    initCountrylist
+    initCountrylist,
+    initProvince,
+    initCitylist,
+    initDistrictlist
 } from '../../vuex/getters'
 import {   
     createIntentionInfo,
-    getCountryList 
+    editintentInfo,
+    getCountryList,
+    getProvinceList,
+    getCityList,
+    getDistrictList
 } from '../../vuex/actions'
 export default {
     components: {
-
         searchbreedModel,
+        vSelect,
         countryModel,
         provinceModel,
         cityModel,
-        districtModel
+        districtModel,
+
     },
     props: ['param'],
     data() {
@@ -219,6 +262,10 @@ export default {
               breedName:'',
               breedId:''
             },
+            country:'',
+            province:'',
+            city:'',
+            district:'',
             countryParam:{
               loading:true,
               show:false,
@@ -260,11 +307,18 @@ export default {
     },
     vuex: {
        getters: {
-            initCountrylist
+          initCountrylist,
+          initProvince,
+          initCitylist,
+          initDistrictlist
         },
         actions: {
-            createIntentionInfo,
-            getCountryList
+          createIntentionInfo,
+          editintentInfo,
+          getCountryList,
+          getProvinceList,
+          getCityList,
+          getDistrictList
         } 
     },
     route: {
@@ -284,18 +338,56 @@ export default {
             /*this.param.breedName = this.breedParam.breedName;
             this.param.breedId = this.breedParam.breedId;*/
         },
-      selectCountry:function(){
-          this.countryParam.show=true;
+      createOrUpdateIntention:function(){
+        if(this.param.flag==0){
+          console.log('新增会员意向');    
+          this.param.country = this.country.cname;
+          this.param.province = this.province.cname;
+          this.param.city = this.city.cname;
+          this.param.district = this.district.cname;
+          this.param.show=false;
+          this.createIntentionInfo(this.param);
+        }
+        if(this.param.flag==1){
+          console.log('修改会员意向');
+
+          this.param.country = this.country.cname;
+          this.param.province = this.province.cname;
+          this.param.city = this.city.cname;
+          this.param.district = this.district.cname;
+          this.param.show=false;
+          this.editintentInfo(this.param);
+        }
+
+          
       },
+      /*selectCountry:function(){
+          this.countryParam.show=true;
+      },*/
       selectProvince:function(){
-        this.provinceParam.show=true;
+        console.log('selectProvince');
+        this.province = '';
+        this.city = '';
+        this.district = '';
+        if(this.country!=''&&this.country!=null){
+          this.getProvinceList(this.country);
+        }
+        
       },
       selectCity:function(){
-        this.cityParam.show=true;
+        this.city = '';
+        this.district = '';
+        if(this.province!=''&&this.province!=null){
+          this.getCityList(this.province);
+        }
+        
       },
       selectDistrict:function(){
-        console.log(this.districtParam);
-        this.districtParam.show=true;
+        this.district = '';
+        if(this.city!=''&&this.city!=null){
+          this.getDistrictList(this.city);
+        }
+        
       }
         
     },
@@ -304,7 +396,8 @@ export default {
             this.param.breedName = breed.breedName;
             this.param.breedId = breed.breedId;
         },
-        country:function(country){
+        /*country:function(country){
+          console.log('country');
             this.param.countryName = country.cname;
             this.param.country = country.id;
             this.provinceParam.country = country.id;
@@ -330,10 +423,11 @@ export default {
         district:function(district){
             this.param.districtName = district.cname;
             this.param.district = district.id;
-        }
+        }*/
 
     },
     created(){
+      
       this.getCountryList(this.countryParam);
     }
 }
