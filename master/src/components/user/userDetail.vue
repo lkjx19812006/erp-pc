@@ -96,8 +96,34 @@
                                                   <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show">
                                                     <dl>
-                                                       <dt @click="createIntention()">编辑</dt>
-                                                       <!-- <dt @click="specDelete()">删除</dt> -->
+                                                       <dt @click="updateIntention(
+                                                            intentionParam.sub=$index,
+                                                            intentionParam.id=item.id,
+                                                            intentionParam.breedName=item.breedName,
+                                                            intentionParam.price=item.price,
+                                                            intentionParam.unit=item.unit,
+                                                            intentionParam.especial=item.especial,
+                                                            intentionParam.quality=item.quality,
+                                                            intentionParam.spec=item.spec,
+                                                            intentionParam.number=item.number,
+                                                            intentionParam.location=item.location,
+                                                            intentionParam.type=item.type,
+                                                            intentionParam.country=item.country,
+                                                            intentionParam.province=item.province,
+                                                            intentionParam.city=item.city,
+                                                            intentionParam.district=item.district,
+                                                            intentionParam.address=item.address,
+                                                            intentionParam.invoic=item.invoic,
+                                                            intentionParam.sampling=item.sampling,
+                                                            intentionParam.sampleUnit=item.sampleUnit,
+                                                            intentionParam.advance=item.advance,
+                                                            intentionParam.intl=item.intl,
+                                                            intentionParam.sampleNumber=item.sampleNumber,
+                                                            intentionParam.sampleAmount=item.sampleAmount,
+                                                            intentionParam.qualification=item.qualification
+                                                            
+                                                        )">编辑</dt>
+                                                       
                                                    </dl>
                                                 </div>
                                                 </td>
@@ -125,23 +151,27 @@
                                         
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-show="initUserDetail.personalAuthShow&&initUserDetail.utype==1">
+                                <!-- <div class="panel-collapse" v-show="initUserDetail.personalAuthShow&&initUserDetail.utype==1"> -->
+                                <div class="panel-collapse" v-show="initUserDetail.personalAuthShow&&initIdentify.files.length>0">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
-                                          <thead>
-                                            <th>文件类型</th>
-                                            <th>路径</th>
-                                            <th>描述<th>
-                                           
-                                          </thead>
+                                        <thead>
+                                          <!-- <th>文件类型</th>
+                                          <th>路径</th>
+                                          <th>描述<th> -->
+                                        </thead>
                                         <tbody>
                                             <tr v-for="item in initIdentify.files">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.path}}</td>
-                                                <td>{{item.description}}</td>
+                                                <!-- <td>{{item.fileType}}</td> -->
+                                                <td>
+                                                  <div class="thumbnail col-md-3 col-sm-4 col-xs-6">
+                                                    <img src="{{item.path}}">
+                                                  </div>
+                                                </td>
+                                               <!--  <td>{{item.description}}</td> -->
                                                 
                                             </tr>
-                                        </tbody> 
+                                        </tbody>
                                     </table>
                                     </div>
                                 </div>
@@ -164,19 +194,24 @@
 
                                   </h4>
                               </div>
-                              <div class="panel-collapse" v-show="initUserDetail.companyAuthShow&&initUserDetail.ctype==1">
+                              <!-- <div class="panel-collapse" v-show="initUserDetail.companyAuthShow&&initUserDetail.ctype==1"> -->
+                              <div class="panel-collapse" v-show="initUserDetail.companyAuthShow&&initIdentify.files.length>0">
                                   <div class="panel-body panel-set">
                                       <table class="table  contactSet">
                                         <thead>
-                                          <th>文件类型</th>
+                                          <!-- <th>文件类型</th>
                                           <th>路径</th>
-                                          <th>描述<th>
+                                          <th>描述<th> -->
                                         </thead>
                                         <tbody>
                                             <tr v-for="item in initIdentify.files">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.path}}</td>
-                                                <td>{{item.description}}</td>
+                                                <!-- <td>{{item.fileType}}</td> -->
+                                                <td>
+                                                  <div class="thumbnail col-md-3 col-sm-4 col-xs-6">
+                                                    <img src="{{item.path}}">
+                                                  </div>
+                                                </td>
+                                               <!--  <td>{{item.description}}</td> -->
                                                 
                                             </tr>
                                         </tbody>
@@ -366,9 +401,37 @@ export default {
         },
         intentionParam:{
           show:false,
-          fullname:this.initUserDetail.fullname,
-          id:this.initUserDetail.id,
-          phone:this.initUserDetail.phone,
+          flag:0,   //0表示创建，1表示修改
+          sub:'',
+          userId:this.initUserDetail.id,
+          //fullname:this.initUserDetail.fullname,
+          customerName:this.initUserDetail.fullname,
+          //phone:this.initUserDetail.phone,
+          customerPhone:this.initUserDetail.phone,
+          id:'',
+          breedId:'',
+          breedName:'',
+          price:'',
+          unit:'',
+          especial:'',
+          quality:'',
+          spec:'',
+          number:'',
+          location:'',
+          type:'',
+          country:'',
+          province:'',
+          city:'',
+          district:'',
+          address:'',
+          invoic:'',
+          sampling:'',
+          sampleUnit:'',
+          advance:'',
+          intl:'',
+          sampleNumber:'',
+          sampleAmount:'',
+          qualification:'',
           url:'/intention/'
 
 
@@ -471,6 +534,10 @@ export default {
           
           this.intentionParam.show = true;
           
+        },
+        updateIntention:function(){
+          this.intentionParam.flag = 1;
+          this.intentionParam.show = true;
         },
 
         getUserDetail:function(){

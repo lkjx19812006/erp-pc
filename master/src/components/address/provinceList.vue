@@ -79,7 +79,7 @@ export default{
 	methods:{
 		selectProvince:function(index,id,cname){
 			this.$store.state.table.locationList.provinceList[index].checked=!this.$store.state.table.locationList.provinceList[index].checked;
-			for(var key in this.initCountrylist){
+			for(var key in this.initProvincelist){
 				if(key!=index){
 					if(this.$store.state.table.locationList.provinceList[index].checked==true){
 						this.$store.state.table.locationList.provinceList[index].checked=false;

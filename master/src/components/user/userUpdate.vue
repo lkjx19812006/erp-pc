@@ -38,7 +38,7 @@
                            <input type="text" v-model='param.email' class="form-control edit-input" value="{{param.email}}" />
                        </div>
                        <div class="editpage-input">
-                           <label class="editlabel">电话</label>
+                           <label class="editlabel">手机</label>
                             <input type="text" v-model='param.phone' class="form-control edit-input" value="{{param.phone}}" />
                        </div>
                        <div class="editpage-input">

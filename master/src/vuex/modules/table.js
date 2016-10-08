@@ -357,6 +357,9 @@ const mutations = {
             "code": data.code,
             "name": data.name,
             "categoryId": data.selected,
+            "pinyin": data.pinyin,
+            "eName": data.eName,
+            "lName": data.lName,
             "id": data.id,
             "show": false
         })
@@ -650,7 +653,9 @@ const mutations = {
         }
     },
     [UPDATA_INTENTION_DATA](state,data){ //修改意向
+      console.log(data);
         for (var key in data) {
+          console.log(data.sub);
             state.basicBaseList[data.key][data.sub][key] = data[key];
         }
     },
@@ -691,6 +696,7 @@ const mutations = {
         state.basicBaseList.intentionDetail = data;
     },
     [PROVINCE_LIST](state,data){
+      console.log('table');
         state.locationList.provinceList = data;
     },
     [COUNTRY_LIST](state,data){

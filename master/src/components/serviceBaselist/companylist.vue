@@ -1,6 +1,7 @@
 <template>
     <create-model :param="createParam" v-if="createParam.show"></create-model>
     <detail-model  :param="companyParam" v-if="companyParam.show"></detail-model>
+    <search-model  :param="searchParam" v-if="searchParam.show"></search-model>
     <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
     </div>
@@ -42,7 +43,8 @@
                     <img src="/static/images/search.png" height="24" width="24">
                     <input type="text" class="search_input" placeholder="按分类码搜索" v-model="loadParam.category"/>
                 </div>
-                <a class="new_btn transfer"  @click="multiSearch()">查询</a>
+                <!-- <a class="new_btn transfer"  @click="multiSearch()">查询</a> -->
+                <a class="new_btn transfer"  @click="searchParam.show=true">查询</a>
             </div>
            <!--  <div class=" col-xs-1">
                <a class="new_btn transfer" @click="multiSearch()">查询</a>
@@ -130,6 +132,8 @@ import pagination from '../../components/pagination'
 import filter from '../../filters/filters'
 import detailModel  from '../serviceBaselist/companydetail'
 import createModel from '../serviceBaselist/breedDetailDialog/compTransfer'
+import searchModel from './companySearch'
+
 import {
     initEnterpriselist,
     initProvince
@@ -146,7 +150,8 @@ export default {
         pagination,
         filter,
         detailModel,
-        createModel
+        createModel,
+        searchModel
     },
     vuex: {
         getters: {
@@ -180,6 +185,19 @@ export default {
             },
             createParam:{
                 show: false
+            },
+            searchParam:{
+                show:false,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7,
+                province:'',
+                type:'',
+                transform:'',
+                name:'',
+                category:''
+
             }
         }
     },

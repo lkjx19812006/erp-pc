@@ -1,4 +1,5 @@
 <template>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -30,17 +31,17 @@
                         </div>
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                             <label class="editlabel">品种名称拼音</label>
-                            <input type="text" v-model='categoryData.name' class="form-control edit-input"  />
+                            <input type="text" v-model='categoryData.pinyin' class="form-control edit-input"  />
                         </div>
                     </div>
                      <div class="clearfix">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                             <label class="editlabel">品种名称英文</label>
-                            <input type="text" v-model='categoryData.code' class="form-control edit-input" />
+                            <input type="text" v-model='categoryData.eName' class="form-control edit-input" />
                         </div>
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                             <label class="editlabel">品种名称拉丁文</label>
-                            <input type="text" v-model='categoryData.name' class="form-control edit-input"  />
+                            <input type="text" v-model='categoryData.lName' class="form-control edit-input"  />
                         </div>
                     </div>
                 </section>
@@ -48,11 +49,13 @@
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="updateBreedInfo(categoryData,categoryData.sub=param.id,param.show = false)">确定</button>
+            <!-- <button type="button" class="btn  btn-confirm" @click="updateBreedInfo(categoryData,categoryData.sub=param.id,param.show = false)">确定</button> -->
+            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true">确定</button>
         </div>
     </div>
 </template>
 <script>
+import tipsdialogModel  from '../tips/tipDialog'
 import filter from '../../filters/filters'
 import {
     initBreedlist,
@@ -66,7 +69,8 @@ import {
 export default {
     props: ['param'],
     components:{
-        filter
+        filter,
+        tipsdialogModel
     },
     data() {
         return {
@@ -74,7 +78,16 @@ export default {
                 id: this.initBreedlist[this.param.id].id,
                 code: this.initBreedlist[this.param.id].code,
                 name: this.initBreedlist[this.param.id].name,
-                selected: this.initBreedlist[this.param.id].categoryId
+                selected: this.initBreedlist[this.param.id].categoryId,
+                pinyin: this.initBreedlist[this.param.id].pinyin,
+                eName: this.initBreedlist[this.param.id].eName,
+                lName: this.initBreedlist[this.param.id].lName,
+            },
+            tipsParam: {
+                show:false,
+                confirm:true,
+                name:"确认修改信息?",
+                callback:this.confirm
             }
         }
     },
@@ -106,6 +119,13 @@ export default {
             this.$set('categoryData.selected', this.initBreedlist[this.param.id].categoryId);
             this.$set('categoryData.id', this.initBreedlist[this.param.id].id);
         }
+    },
+    methods: {
+      confirm:function(){
+        this.param.show = false;
+        this.categoryData.sub=this.param.id;
+        this.updateBreedInfo(this.categoryData);
+      }
     },
     filter:(filter,{}),
     created() {

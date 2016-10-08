@@ -48,10 +48,10 @@
                     <tr v-for="item in initBreedlist">
                         <td>{{item.code | breedcode}}</td>
                         <td  class="underline"  @click="editBreed(item.id)">{{item.name}}</td>
-                        <td>{{item.categoryName}}</td>
-                        <td>{{item.categoryName}}</td>
-                        <td>{{item.categoryName}}</td>
-                        <td>{{item.categoryName}}</td>
+                        <td>{{item.categoryId}}</td>
+                        <td>{{item.pinyin}}</td>
+                        <td>{{item.eName}}</td>
+                        <td>{{item.lName}}</td>
                         <td @click.stop="breedClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="breed_action" v-show="item.show">

@@ -1,5 +1,6 @@
 <template>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -30,7 +31,7 @@
                              </div>
                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种名称拼音 <span class="system_danger" v-if="$validation.spell.required">请输入品种名称拼音</span></label>
-                                <input type="text" v-model='breedData.name' class="form-control edit-input"  id="spell" v-validate:spell="['required']"/>
+                                <input type="text" v-model='breedData.pinyin' class="form-control edit-input"  id="spell" v-validate:spell="['required']"/>
                             </div> 
                             <!--  <div class="editpage-input">
                                    <label class="editlabel">上传图标</label>
@@ -44,18 +45,19 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种名称英文</label>
-                                <input type="text" v-model='breedData.code' class="form-control edit-input" />
+                                <input type="text" v-model='breedData.eName' class="form-control edit-input" />
                             </div>
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种名称拉丁文</label>
-                                <input type="text" v-model='breedData.name' class="form-control edit-input"  />
+                                <input type="text" v-model='breedData.lName' class="form-control edit-input"  />
                             </div>
                         </div>
                     </section>
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm"  @click="saveBreed(breedData,param.show = false)">保存</button>
+                    <!-- <button type="button" class="btn  btn-confirm"  @click="saveBreed(breedData,param.show = false)">保存</button> -->
+                    <button type="button" class="btn  btn-confirm"  @click="tipsParam.show=true">保存</button>
                 </div>
             </form>
         </validator>
@@ -63,6 +65,7 @@
 </template>
 <script>
 import pressImage from '../../components/imagePress'
+import tipsdialogModel  from '../tips/tipDialog'
 import {
     initCategorylist
 } from  '../../vuex/getters'
@@ -72,7 +75,8 @@ import {
 } from '../../vuex/actions'
 export default {
     components: {
-        pressImage
+        pressImage,
+        tipsdialogModel
     },
     props: ['param'],
     data() {
@@ -82,6 +86,12 @@ export default {
                 name: '',
                 selected:'',
                 show:false
+            },
+            tipsParam: {
+                show:false,
+                confirm:true,
+                name:"确认修改信息?",
+                callback:this.confirm
             }
         }
     },
@@ -103,6 +113,12 @@ export default {
             console.log('hook-example deactivated!')
             transition.next()
         }
+    },
+    methods: {
+      confirm:function(){
+        this.param.show = false;
+        this.saveBreed(this.breedData);
+      }
     },
     created() {
         this.getCategoryData();

@@ -78,8 +78,8 @@ export default{
 	},
 	methods:{
 		selectDistrict:function(index,id,cname){
-			this.$store.state.table.systemBaseList.districtList[index].checked=!this.this.$store.state.table.systemBaseList.districtList[index].checked;
-			for(var key in this.initCountrylist){
+			this.$store.state.table.systemBaseList.districtList[index].checked=!this.$store.state.table.systemBaseList.districtList[index].checked;
+			for(var key in this.initDistrictlist){
 				if(key!=index){
 					if(this.$store.state.table.systemBaseList.districtList[index].checked==true){
 						this.$store.state.table.systemBaseList.districtList[index].checked=false;
@@ -103,7 +103,7 @@ export default{
     },
 	created(){
 		console.log(this.param);
-		this.getCityList(this.param);
+		this.getDistrictList(this.param);
 	}
 }
 </script>
