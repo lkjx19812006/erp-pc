@@ -27,7 +27,7 @@
                                     show:false
                                   })">新建跟进</button>
                         </li>
-                        
+
                         <li>
                             <button type="button" class="btn btn-base" @click="modifyUser({
                                                id:initUserDetail.id,
@@ -41,10 +41,10 @@
                                                qq:initUserDetail.qq,
                                                company:initUserDetail.company,
                                                comment:initUserDetail.comment,
-                                            
+
                                                })">编辑</button>
                         </li>
-                        
+
                     </ul>
                 </div>
             </nav>
@@ -121,9 +121,9 @@
                                                             intentionParam.sampleNumber=item.sampleNumber,
                                                             intentionParam.sampleAmount=item.sampleAmount,
                                                             intentionParam.qualification=item.qualification
-                                                            
+
                                                         )">编辑</dt>
-                                                       
+
                                                    </dl>
                                                 </div>
                                                 </td>
@@ -134,8 +134,8 @@
                                 </div>
                             </div>
 
-                          
-                
+
+
                           <div class="panel panel-default">
 
                                 <div class="panel-heading" >
@@ -148,7 +148,7 @@
                                         <button v-if="initUserDetail.utype==1" type="button" class="btn btn-primary pull-right"  @click.stop="personalAuth({id:initUserDetail.id,ucomment:initUserDetail.ucomment,utype:initUserDetail.utype})">点击认证</button>
                                         <button v-if="initUserDetail.utype==2" type="button" class="btn btn-success pull-right"  @click.stop="" disabled="disabled">已通过认证</button>
                                         <button v-if="initUserDetail.utype==3" type="button" class="btn btn-warning pull-right"  @click.stop="" disabled="disabled">认证未通过</button>
-                                        
+
                                     </h4>
                                 </div>
                                 <!-- <div class="panel-collapse" v-show="initUserDetail.personalAuthShow&&initUserDetail.utype==1"> -->
@@ -169,7 +169,7 @@
                                                   </div>
                                                 </td>
                                                <!--  <td>{{item.description}}</td> -->
-                                                
+
                                             </tr>
                                         </tbody>
                                     </table>
@@ -190,7 +190,7 @@
                                       <button v-if="initUserDetail.ctype==1" type="button" class="btn btn-primary pull-right"  @click.stop="companyAuth({id:initUserDetail.id,ccomment:initUserDetail.ccomment,ctype:initUserDetail.ctype})">点击认证</button>
                                       <button v-if="initUserDetail.ctype==2" type="button" class="btn btn-success pull-right"  @click.stop="" disabled="disabled">已通过认证</button>
                                       <button v-if="initUserDetail.ctype==3" type="button" class="btn btn-warning pull-right"  @click.stop="" disabled="disabled">认证未通过</button>
-                                      
+
 
                                   </h4>
                               </div>
@@ -212,13 +212,13 @@
                                                   </div>
                                                 </td>
                                                <!--  <td>{{item.description}}</td> -->
-                                                
+
                                             </tr>
                                         </tbody>
                                     </table>
                                   </div>
                               </div>
-                          </div>   
+                          </div>
                           <div class="panel panel-default">
                               <div class="panel-heading">
                                   <h4 class="panel-title clearfix" @click="enfoldment({
@@ -266,9 +266,8 @@
                                                 })">
                                                 <img src="/static/images/default_arrow.png" height="24" width="24" />
                                               <div class="breed_action" v-show="item.show" >
-                                                 <dl>
+
                                                      <dt @click="updateTracking(item,$index)">编辑</dt>
-                                                     
                                               </div>
                                               </td>
                                           </tr>
@@ -277,8 +276,8 @@
                                   </div>
                               </div>
                           </div>
-                        
-                          
+
+
                       </div>
                   </article>
               </div>
@@ -306,7 +305,7 @@
                                   <label>归属地</label>
                                   <input type="text" class="form-control" v-model="initUserDetail.qq" value="{{initUserDetail.qq}}" disabled="disabled"/>
                               </div>
-                              
+
                           </div>
                           <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
@@ -353,9 +352,9 @@
                                   <label>备注</label>
                                   <input type="text" class="form-control" v-model="initUserDetail.comment" value="{{initUserDetail.comment}}" disabled="disabled"/>
                               </div>
-                            
+
                           </div>
-                         
+
                       </div>
                   </article>
               </div>
@@ -381,7 +380,7 @@ import {
 
  getUserDetail,
  getAuthInfo,
- 
+
 
 } from '../../vuex/actions'
 export default {
@@ -393,7 +392,7 @@ export default {
     props:['param'],
     data(){
       return {
-        
+
         trackingParam:{
           show:false
         },
@@ -455,12 +454,12 @@ export default {
       },
       actions:{
         getClientDetail,
-       
+
         getUserDetail,
         getAuthInfo
       }
     },
-    
+
     methods:{
       modifyUser:function(item){
         this.$parent.modifyUser(item);
@@ -473,7 +472,7 @@ export default {
             this.$store.state.table.userDetail[param.crete].show = !this.$store.state.table.userDetail[param.crete].show;
       },
       personalEnfoldment:function(item){
-        
+
         this.$store.state.table.userDetail.personalAuthShow=!this.$store.state.table.userDetail.personalAuthShow;
         if(this.$store.state.table.userDetail.personalAuthShow){
           item.utype = 1;
@@ -481,7 +480,7 @@ export default {
           this.getAuthInfo(item);
 
         }
-        
+
       },
       companyEnfoldment:function(item){
         this.$store.state.table.userDetail.companyAuthShow=!this.$store.state.table.userDetail.companyAuthShow;
@@ -490,7 +489,7 @@ export default {
           console.log(item);
           this.getAuthInfo(item);
         }
-        
+
       },
       personalAuth:function(item){
           console.log('个人认证');
@@ -511,7 +510,7 @@ export default {
             } else {
                 this.$store.state.table.userDetail[param.concrete].arr[index].show = true
             }
-         
+
         },
         createTracking:function(item){
           item.show=!item.show;
@@ -529,9 +528,9 @@ export default {
 
         },
         createIntention:function(){
-          
+
           this.intentionParam.show = true;
-          
+
         },
         updateIntention:function(){
           this.intentionParam.flag = 1;
@@ -543,13 +542,13 @@ export default {
           detailParam.id = initUserDetail.id;
           this.getUserDetail(detailParam);
 
-        }  
-       
+        }
+
     },
 
-   
 
-    
+
+
 }
 </script>
 <style scoped>

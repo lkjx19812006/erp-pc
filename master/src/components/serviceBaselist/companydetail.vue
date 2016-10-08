@@ -1,6 +1,7 @@
 <template>
     <updatecompany-model :param="companylistParam" v-if="companylistParam.show"></updatecompany-model>
     <create-model :param="createParam" v-if="createParam.show"></create-model>
+    <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <div class="breed_detail">
         <div class="client-section clearfix" v-cloak>
             <div @click="param.show=false" class="top-title">
@@ -106,7 +107,7 @@
                                                                key:'companyContacts',
                                                                main:item.main
                                                                },item.show=false)">编辑</dt>
-                                                      <!--  <dt  @click="contactDel($index,item.id,item.show=false)">删除</dt> -->
+                                                        <dt  @click="contactDel({name:item.name,id:item.id,url:'contract',index:$index},item.show=false)">删除</dt>
                                                    </dl>
                                                </div>
                                             </td>
@@ -241,19 +242,22 @@
 import updatecompanyModel from '../serviceBaselist/breedDetailDialog/createContact'
 import filter from '../../filters/filters'
 import createModel from '../serviceBaselist/breedDetailDialog/compTransfer'
+import deletebreedModel  from './breedDetailDialog/deleteBreedDetail'
 import {
     initCompanyDetail
 } from '../../vuex/getters'
 import {
     alterCompany,
     createContact,
-    saveCreate
+    saveCreate,
+    deleteCompanyContact
 } from '../../vuex/actions'
 export default {
     components: {
         updatecompanyModel,
         filter,
-        createModel
+        createModel,
+        deletebreedModel
     },
     data() {
         return {
@@ -271,7 +275,10 @@ export default {
             },
             createParam:{
                 show: false
-            }
+            },
+          deleteParam:{
+            show:false
+          }
         }
     },
     props:['param'],
@@ -282,7 +289,8 @@ export default {
         actions: {
             alterCompany,
             createContact,
-            saveCreate
+            saveCreate,
+            deleteCompanyContact
         }
     },
     methods: {
@@ -307,6 +315,14 @@ export default {
         },
         updateCompany:function(initCompanyDetail){
             this.companylistParam = initCompanyDetail;
+        },
+        contactDel:function(param){
+              this.deleteParam.show=true;
+              this.deleteParam.link= this.deleteCompanyContact;
+              this.deleteParam.title=param.name;
+              this.deleteParam.url=param.url;
+              this.deleteParam.index=param.index;
+              this.deleteParam.id=param.id;
         }
     },
     filter: (filter, {})

@@ -11,22 +11,22 @@
                        <select  class="form-control" v-model="loadParam.orgId" @change="loadByCondition()">
                             <option selected value="">请选择业务员部门</option>
                             <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-                      </select> 
+                      </select>
                     </div>
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="20">
-                        <input type="text" class="search_input" v-model="loadParam.name" @keyup.enter="loadByCondition()" placeholder="按员工名字搜索">
+                        <input type="text" class="search_input" v-model="loadParam.name"  placeholder="按员工名字搜索">
                     </div>
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="20">
-                        <input type="text" class="search_input" v-model="loadParam.mobile" @keyup.enter="loadByCondition()" placeholder="按员工电话搜索">
+                        <input type="text" class="search_input" v-model="loadParam.mobile"  placeholder="按员工电话搜索">
                     </div>
                     <div class="name_search clearfix">
-                        <button class="new_btn" style="padding:0px 10px;" @click="loadByCondition()">搜索</button>
+                        <button class="new_btn " style="line-height:20px" @click="loadByCondition()">搜索</button>
                     </div>
                 </div>
-                <div class="right col-xs-2"> 
-                    <button class="new_btn transfer" @click="newData({ 
+                <div class="right col-xs-2">
+                    <button class="new_btn transfer" @click="newData({
                          title:'新建员工',
                          show:true,
                          name:'',
@@ -62,7 +62,7 @@
                          })">新建</button>
                 </div>
             </div>
-        </div>  
+        </div>
         <div class="order_table">
           <div class="cover_loading">
               <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -82,9 +82,9 @@
                      <th>职级</th>
                      <th></th>
                   </tr>
-                </thead> 
+                </thead>
                 <tbody>
-                  <tr v-for="item in initEmployeeList">  
+                  <tr v-for="item in initEmployeeList">
                     <td class="underline"  @click="clickOn({
                                  sub:$index,
                                  id:item.id,
@@ -308,10 +308,9 @@ export default {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
-    background: #fff;
     height: 34px;
     line-height: 32px;
-     margin-right: 7%; 
+    margin-right: 7%;
 }
 .tel_search {
     margin-right: 0;

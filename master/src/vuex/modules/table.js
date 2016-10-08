@@ -96,7 +96,7 @@ const state = {
         auditLabel: [
             {"text":"文本1"}
         ]
-    } , 
+    } ,
 
     basicBaseList: {
         enterpriseList: [
@@ -177,8 +177,8 @@ const state = {
                   "unit":"公斤","address":null,"pubdate":null,"duedate":null,"advance":1.000000,"invoic":null,"visit":0,"pack":null,
                   "image":"/productPic/20160502/q5c6xa7.jpg","description":null,"number":2,"amount":200.000000,"updater":null,
                   "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48"}],"payPics":null,"sendPics":null},
-                  
-    
+
+
 
 
     locationList:{
@@ -381,9 +381,15 @@ const mutations = {
             "wechart": data.wechart,
             "email": data.email,
             "show": false,
-            "id": data.id
+            "id": data.id,
+            "main":data.main
         })
     },
+
+    [DELETE_CONTACT_DATA](state,data){
+      state.companyDetail.companyContacts.arr.splice(data.index,1);
+    },
+
     [UPDATE_CONTACT_DATA](state, data) { //修改企业相关内容
         for (var key in data) {
             state.companyDetail[data.key].arr[data.sub][key] = data[key];
@@ -413,7 +419,7 @@ const mutations = {
     },
 
     [UPDATE_SPEC_DATA](state, data) { //修改药材相关信息
-        
+
         state.breedDetail.alias.arr[data.sub].alias = data.name;
         for (var key in data) {
             state.breedDetail[data.key].arr[data.sub][key] = data[key];
@@ -607,7 +613,7 @@ const mutations = {
     [BATCH_UPDATE_USER_DATA](state, data) { // 会员更新
         for(var i=0;i<data.indexs.length;i++){
            var k = data.indexs[i];
-           state.basicBaseList.userList[k].checked = false;   
+           state.basicBaseList.userList[k].checked = false;
            for (var key in data) {
                     if(key=="audit"&&data[key]==1){
                         state.basicBaseList.userList[k].auditResult = "已审核";
@@ -616,12 +622,12 @@ const mutations = {
                     }
                     state.basicBaseList.userList[k][key] = data[key];
                 }
-        }    
-                
+        }
+
 
     },
 
-    [USER_DETAIL_DATA](state, data) { // 会员详情 
+    [USER_DETAIL_DATA](state, data) { // 会员详情
         state.userDetail = data;
 
     },
@@ -673,7 +679,7 @@ const mutations = {
         state.userDetail.tracking.arr.push(temp);
     },
 
-    
+
 
     [UPDATE_EMPLOY_DATA](state, data) { //修改员工信息
         for (var key in data) {

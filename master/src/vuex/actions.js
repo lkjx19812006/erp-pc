@@ -371,12 +371,12 @@ export const getCompanyData = ({ dispatch }, param) => { //企业搜索
   console.log(param);
     for(var key in param){
         if(key=='conType'&&param[key]!==''){
-            url +='&type='+ param.type
+            url +='&type='+ param.conType
         }else if(key=='conType'){
             url +='&type='
         }
         if(key=='conName'&&param[key]!==''){
-            url +='&name='+ param.name
+            url +='&name='+ param.conName
         }else if(key=='conName'){
             url +='&name='
         }
@@ -386,7 +386,7 @@ export const getCompanyData = ({ dispatch }, param) => { //企业搜索
             url +='&category='
         }
         if(key=='conProvince'&&param[key]!==''){
-            url +='&province='+ param.province
+            url +='&province='+ param.conProvince
         }else if(key=='conProvince'){
             url +='&province='
         }
@@ -462,7 +462,8 @@ export const alterCompany = ({ dispatch }, param) => { //修改企业联系人
         tel: param.tel,
         email: param.email,
         wechart: param.wechart,
-        main:param.main
+        main:param.main,
+        id:param.id
     }
     Vue.http({
         method: 'PUT',
@@ -481,6 +482,30 @@ export const alterCompany = ({ dispatch }, param) => { //修改企业联系人
         console.log('fail');
     })
 }
+
+export const deleteCompanyContact = ({ dispatch }, param) => { //修改企业联系人
+  const alterdata = {
+    status:0,
+    id:param.id
+  }
+  Vue.http({
+    method: 'PUT',
+    url: apiUrl.enterpriseList + param.url,
+    emulateHTTP: false,
+    body: alterdata,
+    emulateJSON: false,
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  }).then((res) => {
+    console.log('删除成功')
+    dispatch(types.DELETE_CONTACT_DATA, param);
+  }, (res) => {
+    console.log('fail');
+  })
+}
+
 export const createContact = ({ dispatch }, param) => { //新增企业联系人
     console.log(param)
     const data1 = {
@@ -504,6 +529,7 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
         }
     }).then((res) => {
         console.log('联系人添加成功')
+      console.log(res);
         dispatch(types.ADD_CONTACT_DATA, param)
     }, (res) => {
         console.log('fail');
@@ -1768,7 +1794,7 @@ export const batchUpdateUserInfo = ({ dispatch }, param) => { //批量修改用�
     if(param.audit){
         updatedata.audit = param.audit;
     }
-    
+
     console.log(updatedata);
     Vue.http({
         method: 'PUT',

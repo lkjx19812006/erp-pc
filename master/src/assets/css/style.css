@@ -126,7 +126,7 @@ body {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
-    background: #fff;
+   
     height: 30px;
     line-height: 28px;
     margin-right: 7%;
@@ -410,7 +410,7 @@ fieldset[disabled] .form-control {
 }
 
 /* 中间的数竖线 */
-.client-detail {     
+.client-detail {
     border-right: 1px solid #ddd;
 }
 
@@ -644,5 +644,5 @@ fieldset[disabled] .form-control {
     margin: 8px;
     text-align: center;
     background-position: 5px;
-   
+
 }

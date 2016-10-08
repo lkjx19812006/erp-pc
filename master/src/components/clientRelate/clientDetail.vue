@@ -35,7 +35,13 @@
                                                 })">删除客户信息</button>
                         </li>
                          <li>
-                            <button type="button" class="btn btn-base">新建跟进</button>
+                            <button type="button" class="btn btn-base"  @click="newTracking({
+
+                                             status:'',
+                                             link:createLabel,
+                                             url:'/customer/insertLabel',
+                                             key:'labels'
+                                             })">新建跟进</button>
                         </li>
                         <li>
                             <button type="button" class="btn btn-base"  @click="newlabel({
@@ -321,7 +327,7 @@
          		                                     id:param.id,
          		                                     contactId:param.id,
          		                                     bizId:param.id,
-         		                                     show:true, 
+         		                                     show:true,
                                                   type:'',
                                                   trackingWay:'',
                                                   comments:'',
@@ -424,7 +430,7 @@
 				                                                   key:'remarks',
 				                                                   headline:'clientDetail'
 				                                                   })">删除</dt>
-				                                           </dl> 
+				                                           </dl>
 				                                        </div>
 		                                            </td>
 		                                        </tr>
@@ -554,7 +560,7 @@
 				                                                   key:'addresses',
 				                                                   headline:'clientDetail'
 				                                                   })">删除</dt>
-				                                           </dl> 
+				                                           </dl>
 				                                        </div>
 		                                            </td>
 		                                        </tr>
@@ -631,7 +637,7 @@
 				                                                   key:'labels',
 				                                                   headline:'clientDetail'
 				                                                   })">删除</dt>
-				                                           </dl> 
+				                                           </dl>
 				                                        </div>
 		                                            </td>
 		                                        </tr>
@@ -740,7 +746,7 @@
 				                                                   key:'products',
 				                                                   headline:'clientDetail'
 				                                                   })">删除</dt> -->
-				                                           </dl> 
+				                                           </dl>
 				                                        </div>
 		                                            </td>
 		                                        </tr>
@@ -805,7 +811,7 @@
                                 <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
 	                                <label>注册地址</label>
 	                                <input type="text" class="form-control" v-model='initClientDetail.address' value="{{initClientDetail.address}}" disabled="disabled" />
-	                            </div> 
+	                            </div>
                             </div>
                             <div class="client-detailInfo">
                                 <label>经营范围</label>
@@ -945,6 +951,9 @@ export default {
             }
             this.$store.state.table.clientDetail[param.crete].show = !this.$store.state.table.clientDetail[param.crete].show;
     	},
+      newTracking:function(param){
+
+      },
     	clickShow: function(id,param) {
             if (this.$store.state.table.clientDetail[param.concrete].arr[id].show) {
                 this.$store.state.table.clientDetail[param.concrete].arr[id].show = !this.$store.state.table.clientDetail[param.concrete].arr[id].show

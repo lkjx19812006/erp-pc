@@ -13,7 +13,7 @@
                 <dl class="clearfix">
                     <dt>类型：</dt>
                     <dd>
-                        <select  v-model="loadParam.type" @change="searchClient()">
+                        <select class="form-control" v-model="loadParam.type" @change="searchClient()">
                             <option value="">请选择类型</option>
                             <option value="0">个人</option>
                             <option value="1">企业</option>
@@ -23,7 +23,7 @@
                 <dl class="clearfix">
                     <dt>分类：</dt>
                     <dd>
-                        <select  v-model="loadParam.classify" @change="searchClient()">
+                        <select class="form-control"  v-model="loadParam.classify" @change="searchClient()">
                             <option value="">请选择分类</option>
                             <option value="0">买</option>
                             <option value="1">卖</option>
@@ -34,7 +34,7 @@
                 <dl class="clearfix">
                     <dt>状态：</dt>
                     <dd>
-                        <select  v-model="loadParam.status" @change="searchClient()">
+                        <select class="form-control" v-model="loadParam.status" @change="searchClient()">
                             <option value="">请选择状态</option>
                             <option value="0">无效</option>
                             <option value="1">有效</option>
@@ -183,7 +183,7 @@ import {
 } from '../vuex/actions'
 
 export default {
-    components: {   
+    components: {
         pagination,
         detailModel,
         createModel,
@@ -263,7 +263,7 @@ export default {
                 this.$store.state.table.basicBaseList.customerList[id].show = !this.$store.state.table.basicBaseList.customerList[id].show;
             }else{
                 this.$store.state.table.basicBaseList.customerList[id].show=true;
-            }   
+            }
         },
         specDelete:function(initCustomerlist){
             this.deleteParam = initCustomerlist;
