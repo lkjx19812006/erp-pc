@@ -1,4 +1,5 @@
 <template>
+    <select-model :param="selectParam" v-if="selectParam.show"></select-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -12,7 +13,10 @@
                 <div class="edit-model">
                     <section class="editsection"  v-cloak>
                         
-                            <h4>客户信息</h4>
+                            <div style="margin-top:20px;margin-left:30px;margin-bottom:15px;">
+                                <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
+                                <h4 style="display:inline">客户信息</h4>           
+                            </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>名称</label>
@@ -32,8 +36,9 @@
                                     <input type="text" id="category" class="form-control" v-model="param.category" v-validate:category="['required']" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>负责人</label>
-                                    <input type="text" class="form-control" v-model="param.principal" id="userown" v-validate:userown="['required']" />
+                                    <label>业务员/部门</label>
+                                    <input v-if="!param.orgId" type="text" class="form-control" readonly="readonly" v-model="param.employeeName" @click="selectParam.show=true"  />
+                                    <input v-if="param.orgId" type="text" class="form-control" readonly="readonly" v-model="param.orgName" @click="selectParam.show=true"  />
                                 </div>
                             </div>
                             <div class="clearfix">
@@ -81,27 +86,34 @@
                                 </div>
                             </div>
                         
-                        <!-- <div class="editpageright">
-                            <h4>联系人</h4>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>联系人名称</label>
-                                    <input type="text" id="username" class="form-control" v-model="" v-validate:username="['required']"/>
-                                </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>联系人部门</label>
-                                    <input type="text" id="usertype" class="form-control" v-model="" v-validate:usertype="['required']" />
-                                </div>
+                            <div style="margin-top:25px;margin-left:30px;margin-bottom:15px;">
+                                <img src="/static/images/contact@2x.png" style="display:inline"/>
+                                <h4 style="display:inline">联系人</h4>           
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>联系人名称</label>
+                                    <input type="text" class="form-control" v-model="" />
+                                </div>
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>是否主联系人</label>
+                                    <select class="form-control edit-input"  v-model='param.main'>
+                                         <option value="0" selected="selected">是</option>
+                                         <option value="1">否</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
+                                    <label>联系人部门</label>
+                                    <input type="text" class="form-control" v-model="" />
+                                </div>
+                                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                                     <label>联系人职位</label>
-                                    <input type="text" id="category" class="form-control" v-model="" v-validate:category="['required']" />
+                                    <input type="text"  class="form-control" v-model="" />
                                 </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>电话</label>
-                                    <input type="text" class="form-control" v-model="" id="userown" v-validate:userown="['required']" />
-                                </div>
+                                
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
@@ -109,21 +121,28 @@
                                     <input type="text" class="form-control" maxlength="11" v-model="" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>电话</label>
+                                    <input type="text" class="form-control" v-model="" />
+                                </div> 
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>邮箱</label>
                                     <input type="email" class="form-control" v-model=""  />
                                 </div>
-                            </div>
-                            <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>微信</label>
                                     <input type="text" class="form-control" v-model="" />
                                 </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
                                     <label>qq</label>
                                     <input type="text" class="form-control" v-model=""  />
-                                </div>
+                                </div>   
                             </div>
-                        </div> -->
+                        
                     </section>
                 </div>
                 <div class="edit_footer">
@@ -135,14 +154,21 @@
     </div>
 </template>
 <script>
+import selectModel  from './employeeOrOrg.vue'
 export default {
-    components: {
-
+    components: { 
+        selectModel,  
     },
     props: ['param'],
     data() {
         return {
-
+            selectParam:{
+                show:false,
+                employeeId:'',
+                employeeName:'',
+                orgId:'',
+                orgName:''    
+            }
         }
     },
      vuex: {
@@ -159,6 +185,21 @@ export default {
             console.log('hook-example deactivated!')
             transition.next()
         }
+    },
+    methods:{
+
+    },
+    events:{
+        'selectEmpOrOrg':function(param){
+            this.param.employeeId = param.employeeId;
+            this.param.employeeName = param.employeeName;
+            this.param.orgId = param.orgId;
+            this.param.orgName = param.orgName;   
+
+        }
+    },
+    created(){
+        
     }
 }
 </script>
@@ -169,6 +210,7 @@ export default {
 .top-title{
     width: 840px;
 }
+
 .edit-content {
     padding: 19px 10px;
     text-align: center;
@@ -247,7 +289,19 @@ export default {
 }
 
 .edit_footer {
+    border-top: 1px solid #ddd;
+    text-align: right;
+    padding: 10px 20px;
+    margin-top: 50px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 10px;
     width: 840px;
+    background: #fff;
+    margin: auto;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .edit_footer button {
@@ -277,7 +331,10 @@ export default {
 }
 
 .form-control {
-    
     width:360px;
+}
+.client-detailInfo {
+    padding:0px 30px 20px 30px;
+
 }
 </style>

@@ -1,5 +1,4 @@
 <template>
-	 <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
 	 <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
 	 <div class="container modal_con" v-show="param.show">
        <div @click="param.show = false" class="top-title">
@@ -106,13 +105,12 @@
 	    	</div>
 	    	<div class="edit_footer">
 	    		<button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
-	    		<button type="button" class="btn btn-orange" @click="tipsParam.show=true">确定</button>
+	    		<button type="button" class="btn btn-orange" @click="confirm()">确定</button>
 	    	</div>
 	    </div>
 	</div>
 </template>
 <script>
-import tipsdialogModel  from '../tips/tipDialog'
 import {
     initCustomerlist,
     initEmployeeList,
@@ -122,11 +120,11 @@ import {
     getClientList,
     getEmployeeList,
     getOrgList,
-    userTransferCustomer
+    
 } from '../../vuex/actions'
 export default{
 	components:{
-		tipsdialogModel
+		
 	},
 	props:['param'],
 	data(){
@@ -155,12 +153,7 @@ export default{
                   cur: 1,
                   all: 7
               },
-              tipsParam: {
-              	show:false,
-              	confirm:true,
-              	name:"确认划转吗?",
-              	callback:this.confirm
-              }
+              
 
 		}
 	},
@@ -175,7 +168,7 @@ export default{
 			getClientList,
 			getEmployeeList,
 			getOrgList,
-			userTransferCustomer
+			
 		}
 	},
 	methods:{
@@ -212,24 +205,7 @@ export default{
              })
            }
 		},
-		selectCustomer:function(id){
-			if(this.$store.state.table.basicBaseList.customerList[id].checked == false){
-				this.customerFlag++;
-			}else{
-				this.customerFlag--;
-			}
-			this.$store.state.table.basicBaseList.customerList[id].checked=!this.$store.state.table.basicBaseList.customerList[id].checked;
-			for(var key in this.initCustomerlist){
-				if(key!=id){
-					if(this.$store.state.table.basicBaseList.customerList[key].checked==true){
-						this.customerFlag--;
-						this.$store.state.table.basicBaseList.customerList[key].checked=false;
-					}
-					
-				}
-			}
-			
-		},
+		
 		selectEmployee:function(id){
 			if(this.$store.state.table.basicBaseList.employeeList[id].checked == false){
 				this.employeeFlag++;
@@ -267,25 +243,26 @@ export default{
 			
 		},
 		confirm:function(){
-			console.log(this.param);
-			for(var key in this.initCustomerlist){
-				if(this.$store.state.table.basicBaseList.customerList[key].checked == true){
-					this.param.customerId = this.$store.state.table.basicBaseList.customerList[key].id;
-				}
-			}
+			this.param.employeeId = '';
+			this.param.employeeName = '';
+			this.param.orgId = '';
+			this.param.orgName = '';
+
 			for(var key in this.initEmployeeList){
 				if(this.$store.state.table.basicBaseList.employeeList[key].checked == true){
 					this.param.employeeId = this.$store.state.table.basicBaseList.employeeList[key].id;
+					this.param.employeeName = this.$store.state.table.basicBaseList.employeeList[key].name;
 				}
 			}
 			for(var key in this.initOrgList){
 				if(this.$store.state.table.basicBaseList.orgList[key].checked == true){
 					this.param.orgId = this.$store.state.table.basicBaseList.orgList[key].id;
+					this.param.orgName = this.$store.state.table.basicBaseList.orgList[key].name;
 				}
 			}
-
 			console.log(this.param);
-			userTransferCustomer(this.param,this.param,this.param.show = false);
+			this.$dispatch('selectEmpOrOrg', this.param);
+			this.param.show = false;
 
 		}
 
@@ -299,6 +276,9 @@ export default{
 }
 </script>
 <style scoped>
+.modal {
+	z-index:1081;
+}
 .modal_con {
     display: block;
     position: fixed;
@@ -315,7 +295,7 @@ export default{
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
-    z-index: 1080;
+    z-index: 1082;
     overflow: hidden;
     overflow-y: auto;
 }
@@ -387,5 +367,8 @@ export default{
 	background-color: #f5f5f5;
 	color: #333;
 	font-size: 18px;
+}
+.edit_footer{
+	width:44%;
 }
 </style>

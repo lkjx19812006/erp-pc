@@ -219,7 +219,13 @@ export default {
             transferParam:{
                 show:false,
                 id:'',
-                name:''
+                name:'',
+                employeeId:'',
+                employeeName:'',
+                orgId:'',
+                orgName:'',
+                province:'',
+                city:''
             },
             changeParam:{
                 show:false
@@ -348,12 +354,13 @@ export default {
         this.getUserList(this.loadParam);
     },
     search:function(){
+        this.loadParam.loading = false;
         this.loadParam.show = true;
+        
     },
     createUser:function(value){
-        console.log('createUser');
-            this.createParam.show=true;
-            //this.createParam.name=value;
+        this.createParam.show=true;
+        //this.createParam.name=value;
         },
 
     clientTransfer:function(value){

@@ -681,14 +681,16 @@ const mutations = {
         }
     },
     [UPDATA_INTENTION_DATA](state,data){ //修改意向
+      console.log('gengxibn');
       console.log(data);
         for (var key in data) {
-          console.log(data.sub);
+            console.log(data.sub);
             state.basicBaseList[data.key][data.sub][key] = data[key];
         }
     },
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
-        state.basicBaseList.intentionList.unshift({
+        if(state.basicBaseList.intentionList!=='undefined'){
+            state.basicBaseList.intentionList.unshift({
              "type":data.type,
              "especial":data.especial,
              "customerName":data.customerName,
@@ -718,7 +720,19 @@ const mutations = {
              "location":data.location,
              "number":data.number,
              "quality":data.quality
-        })
+          })
+        }
+        if(state.userDetail.tracking.intention!=='undefined'){
+          var temp = {};
+          temp.breedName = data.breedName;
+          temp.location = data.location;
+          temp.spec = data.spec;
+          temp.number = data.number;
+          temp.price = data.price;
+          temp.unit = data.unit;
+          state.userDetail.intention.arr.push(temp);
+        }
+        
     },
     [INTENTION_OFFER_DETAIL](state,data){
         state.basicBaseList.intentionDetail = data;
