@@ -645,25 +645,8 @@ export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
+        param.loading=false;
         var breed = res.json().result;
-        /* var object;
-         if (breed.specs) {
-             object = breed.specs;
-         } else if(breed.locals) {
-             object = breed.locals;
-         }else if(breed.alias){
-             object = breed.alias;
-         }else if(breed.units){
-             object = breed.units;
-         }
-         object={
-             arr:object,
-             show:true
-         };
-
-         for(var i in object.arr){
-            object.arr[i].show=false;
-         }*/
         var arr = breed.specs;
         breed.specs = {
             arr: arr,
@@ -696,6 +679,7 @@ export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情
         for (var j in breed.units.arr) {
             breed.units.arr[j].show = false;
         }
+        console.log(breed);
         dispatch(types.BREED_DETAIL_DATA, breed);
     }, (res) => {
         console.log('fail');
@@ -1655,11 +1639,17 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
         if(key=='endCtime'&&param[key]!==''){
              url += '&endCtime='+param[key];
         }
-
-
-
+        if(key=='transform'&&param[key]!==''){
+             url += '&transStatus='+param[key];
+        }
+        if(key=='city'&&param[key]!==''){
+             url += '&city='+param[key];
+        }
+        if(key=='province'&&param[key]!==''){
+             url += '&province='+param[key];
+        }
     }
-    console.log(url);
+
     Vue.http({
         method:'GET',
         url:url ,

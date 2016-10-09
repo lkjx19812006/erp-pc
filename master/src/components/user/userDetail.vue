@@ -95,7 +95,6 @@
                                                   })">
                                                   <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show">
-                                                    <dl>
                                                        <dt @click="updateIntention(
                                                             intentionParam.sub=$index,
                                                             intentionParam.id=item.id,
@@ -123,8 +122,6 @@
                                                             intentionParam.qualification=item.qualification
 
                                                         )">编辑</dt>
-
-                                                   </dl>
                                                 </div>
                                                 </td>
                                             </tr>
@@ -165,7 +162,7 @@
                                                 <!-- <td>{{item.fileType}}</td> -->
                                                 <td>
                                                   <div class="thumbnail col-md-3 col-sm-4 col-xs-6">
-                                                    <img src="{{item.path}}">
+                                                    <img v-bind:src="{{item.path}}">
                                                   </div>
                                                 </td>
                                                <!--  <td>{{item.description}}</td> -->
@@ -208,7 +205,7 @@
                                                 <!-- <td>{{item.fileType}}</td> -->
                                                 <td>
                                                   <div class="thumbnail col-md-3 col-sm-4 col-xs-6">
-                                                    <img src="{{item.path}}">
+                                                    <img v-bind:src="{{item.path}}">
                                                   </div>
                                                 </td>
                                                <!--  <td>{{item.description}}</td> -->
