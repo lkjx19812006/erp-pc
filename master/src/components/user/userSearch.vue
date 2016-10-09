@@ -1,5 +1,4 @@
 <template>
-    <searchemp-model :param="empNameParam" v-if="empNameParam.show"></searchemp-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -32,9 +31,17 @@
                         <label>经营品种：</label>
                         <input type="text"  class="form-control" v-model="param.busiType"  placeholder="按经营品种(主营业务)搜索"/>
                     </div>
+                  <div class="client-detailInfo  col-xs-6">
+                    <label>手机省：</label>
+                    <input type="text"  class="form-control" v-model="param.province"  placeholder="按手机省搜索"/>
+                  </div>
+                  <div class="client-detailInfo  col-xs-6">
+                    <label>手机市：</label>
+                    <input type="text"  class="form-control" v-model="param.city"  placeholder="按手机市搜索"/>
+                  </div>
                     <div class="client-detailInfo  col-xs-12">
-                        <label>手机：</label>
-                        <input type="text"  class="form-control" v-model="param.phone"  placeholder="按手机搜索"/>
+                        <label>手机号：</label>
+                        <input type="text"  class="form-control" v-model="param.phone"  placeholder="按手机号搜索"/>
                     </div>
                     <div class="client-detailInfo col-xs-5">
                         <label>注册时间起始：</label>
@@ -42,34 +49,45 @@
                         </mz-datepicker>
                     </div>
                     <div class="client-detailInfo col-xs-7">
-                        <label>注册时间结束：</label>                        
+                        <label>注册时间结束：</label>
                         <mz-datepicker :time.sync="param.endCtime" format="yyyy/MM/dd HH:mm:ss" class="a">
                         </mz-datepicker>
                         <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空</button>
                     </div>
-                    
+
                     <div class="client-detailInfo col-xs-12">
                         <label>审核状态：</label>
                         <select type="text" class="form-control" v-model="param.audit">
                                 <option value="">请选择审核状态</option>
                                 <option value="0">待审核</option>
                                 <option value="1">已审核</option>
-                                <option value="2">审核不通过</option>                           
+                                <option value="2">审核不通过</option>
                         </select>
                     </div>
-                    <!-- <div class="client-detailInfo  col-xs-12">
-                        <label>手机归属地：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.employeeName"  placeholder="按业务员ID搜索" disabled="disabled" @click="employee(loadParam.employeeId,loadParam.employeeName)"/>
-                        <div class="empSearch" @click="employee(loadParam.employeeId,loadParam.employeeName)"><img src="/static/images/search.png" height="24" width="24"></div>
-                    </div> -->
-                </div>      
+
+                    <div class="client-detailInfo col-xs-12">
+                    <label>划转状态：</label>
+                    <select type="text" class="form-control" v-model="param.transform">
+                      <option value="">请选择划转状态</option>
+                      <option value="0">待划转</option>
+                      <option value="1">已划转</option>
+                      <option value="2">转黑</option>
+                    </select>
+                    </div>
+                </div>
             </section>
+
         </div>
-        <div class="edit_footer">
-             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <input type="button" class="btn  btn-confirm"  @click="userSearch(param,param.show = false)" value="确定">
-        </div>
+      <!--<div class="edit_footer">-->
+        <!--<button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>-->
+        <!--<input type="button" class="btn  btn-confirm"  @click="userSearch(param,param.show = false)" value="确定">-->
+      <!--</div>-->
+
     </div>
+  <div class="edit_footer">
+    <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+    <input type="button" class="btn  btn-confirm"  @click="userSearch(param,param.show = false)" value="确定">
+  </div>
 </template>
 <script>
 
@@ -79,7 +97,7 @@ import {
 } from '../../vuex/actions'
 export default {
     components: {
-        
+
     },
     props: ['param'],
     data() {
@@ -128,16 +146,6 @@ export default {
             this.loadParam.employeeName = this.empNameParam.employeeName;
         }
     },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
-    },
     created() {
         //this.getUserList(this.loadParam);
     }
@@ -145,18 +153,21 @@ export default {
 </script>
 <style scoped>
 .modal_con{
-    max-height: 650px;
+
     width: 600px;
-} 
+}
 .top-title{
     position: absolute;
     width: 100%;
     top: 0;
 }
 .edit_footer{
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    bottom: 50px;
     width: 100%;
+  z-index: 1080;
+  width: 600px;
+
 }
 .empSearch{
     position: absolute;
@@ -195,7 +206,7 @@ export default {
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
-    padding: 10px 30px 30px 30px;
+    padding: 10px 30px 60px 30px;
 }
 
 .editsection {

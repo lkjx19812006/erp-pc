@@ -13,12 +13,12 @@
      <div  v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">会员</div>
-            
+
             <div class="right col-xs-1">
                 <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
                 <button type="button" class="btn btn-default" height="24" width="24" @click="search()">查询</button>
             </div>
-            
+
         </div>
         <div class="order_table">
             <div class="cover_loading">
@@ -27,7 +27,7 @@
             <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
                     <tr>
-                        <th></th>
+                        <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
                         <th>姓名</th>
                         <th>昵称</th>
                         <th>手机</th>
@@ -39,19 +39,21 @@
                         <th>来源</th>
                         <th>客户类型</th>
                         <th>审核状态</th>
+                        <th>个人认证</th>
+                        <th>企业认证</th>
                         <th>划转状态</th>
                         <th>备注</th>
                         <th></th>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                     <tr v-for="item in initUserList" >
                         <td  @click.stop="">
                             <!-- <label v-if="item.audit!=1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                             <label v-if="item.audit==1" class="checkbox_unselect"></label> -->
-                            <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
+                            <label v-if="item.audit==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                         </td>
                         <td class="underline" @click="clickOn({
                                 id:item.id,
@@ -60,7 +62,7 @@
                                 })">{{item.fullname}}</td>
                         <td>{{item.nickname}}</td>
                         <td>{{item.phone}}</td>
-                        <td>暂无</td>
+                        <td>{{item.province+item.city}}</td>
                         <td>{{item.email}}</td>
                         <td>{{item.qq}}</td>
                         <td>{{item.company}}</td>
@@ -71,10 +73,12 @@
                         <td v-if="item.source==3" style="color:#444444 ">{{item.sourceType}}</td>
                         <td>{{item.bizTypeName}}</td>
                         <td>{{item.auditResult}}</td>
+                        <td>{{item.utype}}</td>
+                        <td>{{item.ctype}}</td>
                         <td v-if="item.transStatus==1">已划转</td>
                         <td v-else>未划转</td>
                         <td>{{item.comment}}</td>
-                        
+
                         <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="component_action" v-show="item.show">
@@ -106,9 +110,9 @@
                                                 type:item.type,
                                                 fullname:item.fullname,
                                                 employeeId:item.employeeId,
-                                                customerId:item.customerId,  
+                                                customerId:item.customerId,
                                                 orgId:'',
-                                                status:item.status,                          
+                                                status:item.status,
                                                 show:true,
                                                 link:deleteInfo,
                                                 url:'/user/',
@@ -120,8 +124,6 @@
                                 </ul>
                             </div>
                         </td>
-
-                        
                     </tr>
                 </tbody>
             </table>
@@ -130,7 +132,7 @@
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>
-    
+
 </template>
 
 <script>
@@ -150,20 +152,20 @@ import {
     getCount,
     initUserList,
     initUserDetail,
-   
+
 } from '../vuex/getters'
 import {
     getUserList,
     getUserDetail,
-    
-  
+
+
 } from '../vuex/actions'
 
 
 export default {
     //props: ['param'],
-    components: { 
-        tipsdialogModel,  
+    components: {
+        tipsdialogModel,
         pagination,
         calendar,
         createModel,
@@ -175,7 +177,7 @@ export default {
         personalauthModel,
         companyauthModel,
         auditModel
-       
+
     },
 	 data() {
         return {
@@ -190,11 +192,13 @@ export default {
                 startCtime:'',
                 endCtime:'',
                 audit:'',
-
+                transform:'',
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
                 all: 7,
+                city:'',
+                province:''
             },
             tipsParam:{
                 show:false,
@@ -230,21 +234,6 @@ export default {
             changeParam:{
                 show:false
             },
-            searchParam:{
-                show:false,
-                color: '#5dc596',
-                size: '15px',
-                cur: 1,
-                all: 7,
-                fullname:'',
-                source:'',
-                busiType:'',
-                phone:'',
-                startCtime:'',
-                endCtime:'',
-                audit:'',
-
-            },
          intentionParam:{
             show:false,
             flag:0,
@@ -276,11 +265,8 @@ export default {
             sampleAmount:'',
             qualification:'',
             url:'/intention/'
-
-
         },
             personalParam:{
-
                 show:false,
                 utype:1
             },
@@ -288,7 +274,8 @@ export default {
                 show:false,
                 ctype:1
             },
-        
+          checked:false
+
         }
     },
     vuex: {
@@ -297,18 +284,20 @@ export default {
             counterValue: getCount,
             initUserList,
             initUserDetail,
-                
+
         },
         actions: {
             getUserList,
             getUserDetail,
-            
+
         }
     },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getUserList(this.loadParam);
+          this.checked=false;
+
         }
       },
   methods: {
@@ -321,16 +310,36 @@ export default {
                 this.$store.state.table.basicBaseList.userList[id].show = !this.$store.state.table.basicBaseList.userList[id].show;
             }else{
                 this.$store.state.table.basicBaseList.userList[id].show=true;
-            }   
+            }
         },
 
-    onlyselected: function(index){   
+    onlyselected: function(index){
+      const _self=this;
         this.$store.state.table.basicBaseList.userList[index].checked=!this.$store.state.table.basicBaseList.userList[index].checked;
+        if(_self.checked){
+          _self.checked=false;
+        }else {
+          _self.checked=true;
+          this.$store.state.table.basicBaseList.userList.forEach(function (item) {
+            if(!item.checked){
+              if(item.audit==0) _self.checked=item.checked;
+            }
+          })
+        }
+    },
+    select:function(){
+      this.checked=!this.checked;
+      const checked=this.checked;
+      this.$store.state.table.basicBaseList.userList.forEach(function(item){
+        if(item.audit==0)item.checked=checked;
+      })
+
     },
     audit: function(){
         var _this = this;
         _this.auditParam.userIds = [];
         _this.auditParam.indexs = [];
+      _this.checked=false;
         for(var i=0;i<this.initUserList.length;i++){
             if(this.$store.state.table.basicBaseList.userList[i].checked){
                 _this.auditParam.userIds.push(this.$store.state.table.basicBaseList.userList[i].id);
@@ -342,8 +351,8 @@ export default {
         }else{
             this.tipsParam.show = true;
         }
-        
-        
+
+
     },
 
     resetTime:function(){
@@ -356,7 +365,7 @@ export default {
     search:function(){
         this.loadParam.loading = false;
         this.loadParam.show = true;
-        
+
     },
     createUser:function(value){
         this.createParam.show=true;
@@ -377,13 +386,13 @@ export default {
         this.intentionParam.show = true;
     },
     personalAuth:function(item){
-        
+
         this.personalParam.show = true;
         this.personalParam.id = item.id;
         this.personalParam.index = item.index;
         this.personalParam.ucomment = item.ucomment;
         this.personalParam.utype = item.utype;
-    
+
     },
     companyAuth:function(item){
         this.companyParam.show = true;
@@ -394,11 +403,11 @@ export default {
     }
 
   },
-  created() { 
+  created() {
         this.getUserList(this.loadParam);
   }
- 
-  
+
+
 }
 
 </script>

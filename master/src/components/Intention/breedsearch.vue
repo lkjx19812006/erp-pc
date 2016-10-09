@@ -13,8 +13,16 @@
 				<div class="col-xs-8">
 	                <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入品种名称" @keyup.enter="employNameSearch()">
+	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入品种名称">
+
 	                </div>
+          <div class="name_search clearfix" style="border:none"> <input type="button" class="search_input btn btn-default"   height="24" width="24" value="查询" @click="employNameSearch()"></div>
+
+
+
+
+
+
 	            </div>
 	            <table class="table table-hover table_head table-striped " v-cloak>
 	                <thead>
@@ -29,7 +37,7 @@
 	                    	<td  @click.stop="">
 	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.name)" ></label>
 	                        </td>
-	                        <td>{{item.categoryId}}</td>
+	                        <td>{{item.categoryName}}</td>
 	                        <td>{{item.name}}</td>
 	                    </tr>
 	                </tbody>
