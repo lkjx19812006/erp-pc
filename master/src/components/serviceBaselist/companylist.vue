@@ -204,6 +204,8 @@ export default {
             this.getCompanyData(this.loadParam);
         },
         companyClick:function(sub){
+            console.log(sub);
+            console.log(this.$store.state.table.basicBaseList.enterpriseList[sub].show);
             if(this.$store.state.table.basicBaseList.enterpriseList[sub].show) {
                 this.$store.state.table.basicBaseList.enterpriseList[sub].show = !this.$store.state.table.basicBaseList.enterpriseList[sub].show;
             } else {

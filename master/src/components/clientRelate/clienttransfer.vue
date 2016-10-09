@@ -73,7 +73,7 @@
 			                <tbody>
 			                    <tr v-for="item in initEmployeeList">
 			                       <td  @click.stop="">
-			                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.orgId)" ></label>
+			                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.orgid)" ></label>
 			                        </td>
 			                        <td>{{item.name}}</td>
 			                        <td>{{item.orgName}}</td>

@@ -83,7 +83,7 @@ export const getOrderList = ({ dispatch }, param) => {
 
 };
 
-export const getOrderDetail = ({ dispatch }, param) => { //获取客户详情
+export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
     console.log('param===');
     console.log(param);
     Vue.http({
@@ -356,6 +356,7 @@ export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
         for (var i in obj) {
             obj[i].show = false;
         }
+
         dispatch(types.SERVICE_ENTERPRISE, obj);
         param.all = res.json().result.pages;
         param.loading = false;
@@ -407,6 +408,9 @@ export const getCompanyData = ({ dispatch }, param) => { //企业搜索
     }).then((res) => {
         var obj = res.json().result.list;
         console.log(obj)
+        for (var i in obj) {
+            obj[i].show = false;
+        }
         dispatch(types.SERVICE_ENTERPRISE, obj);
          param.all = res.json().result.pages;
         param.loading = false;
@@ -716,6 +720,10 @@ export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
         }
     }).then((res) => {
         var breed = res.json().result.list;
+        for (var i in breed) {
+            breed[i].show = false;
+            breed[i].checked = false;
+        }
         dispatch(types.BREED_DATA, breed);
         param.all = res.json().result.pages;
         param.loading = false;
@@ -1100,8 +1108,10 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
     })
 }
 export const updateContact = ({ dispatch }, param) => { //修改客户联系人
-    console.log(param.main)
+    console.log(param);
+    
     const updatedata = {
+        id:param.id,
         name:param.name,
         position:param.position,
         department:param.department,
@@ -1414,7 +1424,7 @@ export const createRemark = ({ dispatch }, param) => { //新增客户备注
         "remark":param.label,
         "status":param.status,
         "customerId":param.customerId,
-        "id":param.id
+        //"id":param.id
     }
     Vue.http({
         method: "POST",
@@ -1428,13 +1438,14 @@ export const createRemark = ({ dispatch }, param) => { //新增客户备注
         }
     }).then((res) => {
         console.log('添加成功')
+        console.log(res.json());
         dispatch(types.ADD_LABEL_DATA, param);
     }, (res) => {
         console.log('fail');
     })
 }
 export const createProduct = ({ dispatch }, param) => { //新增客户产品
-    const data1 = {
+    const data = {
         "type":param.type,
         "name":param.name,
         "breedId":param.breedId,
@@ -1447,13 +1458,16 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
         "duedate":param.duedate,
         "coa":param.coa,
         "cid":param.cid,
-        "id":param.id
+        //"id":param.id
     }
+    console.log(param);
+    console.log(data);
+   
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,
         emulateHTTP: true,
-        body: data1,
+        body: data,
         emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -1508,11 +1522,16 @@ export const transferEmploy = ({ dispatch }, param) => { //客户业务员划转
     });
 }
 export const transferInfo = ({ dispatch }, param) => { //客户部门划转信息
-    console.log(param)
+    console.log('param===>');
+    console.log(param.arr);
+    console.log(param);
+    //return ;
     const transferdata = {
         orgId:param.orgId,
         customerIds:param.arr
     }
+    console.log(transferdata);
+    console.log(apiUrl.clientList + '/customer/customersTransferEmployee');
     Vue.http({
         method: 'POST',
         url: apiUrl.clientList + '/customer/customersTransferEmployee',
@@ -1819,7 +1838,7 @@ export const batchUpdateUserInfo = ({ dispatch }, param) => { //批量修改用�
 
 
 export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
-    const data11 = {
+    const data = {
         catagory:param.catagory,
         type:param.type,
         path:param.path,
@@ -1838,7 +1857,7 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
         }
     }).then((res) => {
         console.log('文件添加成功')
-        dispatch(types.EMPLOYEE_DATA, param);
+        dispatch(types.ADD_FILES_DATA, param);
     }, (res) => {
         console.log('fail');
     });

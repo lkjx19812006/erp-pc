@@ -59,7 +59,7 @@
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">价格过期时间</label>
                                <!--  <input type="text" class="form-control" v-model="param.duedate" value="{{param.duedate}}"/> -->
-                                <mz-datepicker :time.sync="dateText" v-model="param.duedate" format="yyyy-MM-dd HH:mm">{{param.duedate}}</mz-datepicker>
+                                <mz-datepicker :time.sync="param.duedate" format="yyyy/MM/dd HH:mm:ss"></mz-datepicker>
                             </div>
                         </div>
                         <div class="clearfix">

@@ -35,13 +35,12 @@
                                                 })">删除客户信息</button>
                         </li>
                          <li>
-                            <button type="button" class="btn btn-base"  @click="newTracking({
-
+                            <button type="button" class="btn btn-base"  @click="createTrack({
                                              status:'',
                                              link:createLabel,
                                              url:'/customer/insertLabel',
                                              key:'labels'
-                                             })">新建跟进</button>
+                                             })">新建跟进</button>                 
                         </li>
                         <li>
                             <button type="button" class="btn btn-base"  @click="newlabel({
@@ -106,7 +105,7 @@
       		                                     })">新建</button>
                   									</h4>
                                 </div>
-                                <div class="panel-collapse" v-show="!initClientDetail.contacts.show">
+                                <div class="panel-collapse" v-show="!initClientDetail.contacts.show&&initClientDetail.contacts.arr.length>0">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                         	<thead>
@@ -275,7 +274,7 @@
                       											})">新建</button>
                           				</h4>
                               </div>
-                              <div  class="panel-collapse" v-show="!initClientDetail.files.show">
+                              <div  class="panel-collapse" v-show="!initClientDetail.files.show&&initClientDetail.files.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                       	<thead>
@@ -388,7 +387,7 @@
     		                                     })">新建</button>
                   									</h4>
                                 </div>
-                                <div  class="panel-collapse" v-show="!initClientDetail.remarks.show">
+                                <div  class="panel-collapse" v-show="!initClientDetail.remarks.show&&initClientDetail.remarks.arr.length>0">
                                    <div class="panel-body panel-set">
                                         <table class="table contactSet">
                                         	<thead>
@@ -482,7 +481,7 @@
       		                                     })">新建</button>
 								                	   </h4>
                                 </div>
-                                <div  class="panel-collapse" v-show="!initClientDetail.addresses.show">
+                                <div  class="panel-collapse" v-show="!initClientDetail.addresses.show&&initClientDetail.addresses.arr.length>0">
                                    <div class="panel-body panel-set">
                                         <table class="table contactSet">
                                         	<thead>
@@ -594,7 +593,7 @@
     		                                     })">新建</button>
                   									</h4>
                                 </div>
-                                <div  class="panel-collapse" v-show="!initClientDetail.labels.show">
+                                <div  class="panel-collapse" v-show="!initClientDetail.labels.show&&initClientDetail.labels.arr.length>0">
                                    <div class="panel-body panel-set">
                                         <table class="table contactSet">
                                         	<thead>
@@ -678,7 +677,7 @@
     		                                     })">新建</button>
                   									</h4>
                                 </div>
-                                <div  class="panel-collapse" v-show="!initClientDetail.products.show">
+                                <div  class="panel-collapse" v-show="!initClientDetail.products.show&&initClientDetail.products.arr.length>0">
                                     <div class="panel-body panel-set">
                                          <table class="table contactSet">
                                         	<thead>
@@ -858,7 +857,6 @@ import {
 	alterLabel,
 	createRemark,
 	alterRemark,
-	createTrack,
 	createProduct,
 	alterProduct,
 	uploadFiles,
@@ -937,7 +935,6 @@ export default {
     		alterLabel,
     		createRemark,
     		alterRemark,
-    		createTrack,
     		createProduct,
     		alterProduct,
     		uploadFiles,
@@ -987,7 +984,8 @@ export default {
            console.log(this.cfilesParam.path)
            this.$broadcast('getImageData');
         },
-        createtrack:function(value){
+        createTrack:function(value){
+          console.log('fsfsfs');
           	this.ctrackParam.show = true;
           	this.ctrackParam.name= value;
         },
