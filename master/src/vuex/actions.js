@@ -2029,7 +2029,8 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
          "district":param.district,
          "location":param.location,
          "number":param.number,
-         "quality":param.quality
+         "quality":param.quality,
+          "show":false
     }
     console.log(data1);
     Vue.http({

@@ -725,7 +725,8 @@ const mutations = {
              "district":data.district,
              "location":data.location,
              "number":data.number,
-             "quality":data.quality
+             "quality":data.quality,
+              "show":false
           })
         }
         if(state.userDetail.tracking.intention!=='undefined'){
@@ -738,7 +739,7 @@ const mutations = {
           temp.unit = data.unit;
           state.userDetail.intention.arr.push(temp);
         }
-        
+
     },
     [INTENTION_OFFER_DETAIL](state,data){
         state.basicBaseList.intentionDetail = data;
