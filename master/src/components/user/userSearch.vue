@@ -84,10 +84,10 @@
       <!--</div>-->
 
     </div>
-  <div class="edit_footer">
-    <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-    <input type="button" class="btn  btn-confirm"  @click="userSearch(param,param.show = false)" value="确定">
-  </div>
+    <div class="edit_footer">
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+        <input type="button" class="btn  btn-confirm"  @click="userSearch(param,param.show = false)" value="确定">
+    </div>
 </template>
 <script>
 

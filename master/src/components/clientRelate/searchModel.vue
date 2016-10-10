@@ -15,12 +15,24 @@
             <section class="editsection" v-cloak>
                 <div class="clearfix">
                      <div class="client-detailInfo  col-xs-12">
-                        <label>姓名：</label>
-                        <input type="text"  class="form-control" v-model="param.name"  placeholder="按客户姓名搜索"/>
+                        <label>名称：</label>
+                        <input type="text"  class="form-control" v-model="param.name"  placeholder="按客户名称搜索"/>
                     </div>
                     <div class="client-detailInfo col-xs-12">
-                        <label>电话：</label>
-                        <input type="text"  class="form-control" v-model="param.tel"  placeholder="按客户电话搜索"/>
+                        <label>经营品种：</label>
+                        <input type="text"  class="form-control" v-model="param.breed"  placeholder="按客户经营的品种搜索"/>
+                    </div>
+                    <div class="client-detailInfo  col-xs-6">
+                        <label>手机省：</label>
+                        <input type="text"  class="form-control" v-model="param.province"  placeholder="按手机省搜索"/>
+                    </div>
+                    <div class="client-detailInfo  col-xs-6">
+                        <label>手机市：</label>
+                        <input type="text"  class="form-control" v-model="param.city"  placeholder="按手机市搜索"/>
+                    </div>
+                    <div class="client-detailInfo col-xs-12">
+                        <label>手机：</label>
+                        <input type="text"  class="form-control" v-model="param.tel"  placeholder="按客户手机搜索"/>
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>业务员ID：</label>
@@ -36,7 +48,7 @@
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-12">
-                        <label>分类：</label>
+                        <label>客户买卖意向：</label>
                         <select class="form-control"  v-model="param.classify">
                             <option value="">请选择分类</option>
                             <option value="0">买</option>
@@ -44,6 +56,16 @@
                             <option value="2">买卖</option>
                         </select>
                     </div>
+                    <!-- <div class="client-detailInfo col-xs-12">
+                        <label>标签：</label>
+                        <select class="form-control" v-model="param.status">
+                            <option value="">请选择标签类型</option>
+                            <option value="0">优秀客户</option>
+                            <option value="1">普通客户</option>
+                            <option value="2">难揍客户</option>
+                            <option value="3">黑名单</option>
+                        </select>
+                    </div> -->
                     <div class="client-detailInfo col-xs-12">
                         <label>状态：</label>
                         <select class="form-control" v-model="param.status">
@@ -51,16 +73,15 @@
                             <option value="0">无效</option>
                             <option value="1">有效</option>
                         </select>
-                    </div>
-                    
-                </div>      
+                    </div>    
+                </div>     
             </section>
         </div>
         <div class="edit_footer">
-             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <input type="button" class="btn  btn-confirm"  @click="clientSearch(param.show = false)" value="确定">
         </div>
-    </div>
+    </div> 
 </template>
 <script>
 import searchempModel from '../../components/clientRelate/searchEmpInfo'
@@ -134,7 +155,7 @@ export default {
 </script>
 <style scoped>
 .modal_con{
-    max-height: 600px;
+    /*max-height: 720px;*/
     width: 600px;
 } 
 .top-title{
@@ -143,9 +164,9 @@ export default {
     top: 0;
 }
 .edit_footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    position: fixed;
+    bottom: 20px;
+    width: 600px;
 }
 .empSearch{
     position: absolute;
@@ -188,6 +209,7 @@ export default {
 }
 
 .editsection {
+    position:relative;
     width: 100%;
     box-sizing: border-box;
 }
