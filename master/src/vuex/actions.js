@@ -228,7 +228,10 @@ export const deleteShowStatue = ({ dispatch }, sub,id) => { //删除枚举
 };
 
 export const getProvinceData = ({ dispatch }, param) => { //省市区列表
-    param.loading = true;
+
+  console.log(param);
+
+  if(param.loading)param.loading = true;
   if(!param.cur){
     param.cur='';
   }
@@ -247,6 +250,7 @@ export const getProvinceData = ({ dispatch }, param) => { //省市区列表
         dispatch(types.PROVINCE_DATA, obj);
         param.loading = false;
         param.all = res.json().result.pages;
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -273,6 +277,21 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
         dispatch(types.COUNTRY_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
+       if(param.country){
+         for(var i in res.json().result){
+           if(res.json().result[i].cname==param.country){
+             const object={
+               id:res.json().result[i].id,
+               province:param.province,
+               city:param.city,
+               loading:false
+             }
+             console.log(object);
+             return getProvinceList({ dispatch },object);
+           }
+         }
+       }
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -280,7 +299,7 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
 }
 
 export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
-    param.loading = true;
+  if(param.loading) param.loading = true;
   if(!param.id){
     param.id='';
   }
@@ -299,6 +318,19 @@ export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
         dispatch(types.PROVINCE_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
+
+      if(param.province){
+        for(var i in res.json().result){
+          if(res.json().result[i].cname==param.province){
+            const object={
+              id:res.json().result[i].id,
+              city:param.city,
+              loading:false
+            }
+            return getCityList({ dispatch },object);
+          }
+        }
+      }
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -306,7 +338,7 @@ export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
 }
 
 export const getCityList = ({ dispatch }, param) => { //获取市的列表
-    param.loading = true;
+  if(param.loading)param.loading = true;
     if(!param.cur){
       param.cur='';
     }
@@ -322,6 +354,17 @@ export const getCityList = ({ dispatch }, param) => { //获取市的列表
         dispatch(types.CITY_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
+      if(param.city){
+        for(var i in res.json().result){
+          if(res.json().result[i].cname==param.city){
+            const object={
+              id:res.json().result[i].id,
+              loading:false
+            }
+            return getDistrictList({ dispatch },object);
+          }
+        }
+      }
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -329,7 +372,7 @@ export const getCityList = ({ dispatch }, param) => { //获取市的列表
 }
 
 export const getDistrictList = ({ dispatch }, param) => { //获取区的列表
-    param.loading = true;
+  if(param.loading) param.loading = true;
   if(!param.cur){
     param.cur='';
   }
@@ -2030,11 +2073,9 @@ export const editintentInfo = ({ dispatch }, param) => { //修改意向
 }
 
 export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
-    console.log(param.country);
-    console.log(param.province);
-    console.log(param.city);
-    console.log(param.district);
-
+      if(param.image_f){param.images+=param.image_f+','}
+      if(param.image_s){param.images+=param.image_s+','}
+      if(param.image_t){param.images+=param.image_t}
     const data1 = {
         "userId":param.userId,
          "type":param.type,

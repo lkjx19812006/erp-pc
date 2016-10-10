@@ -16,7 +16,7 @@
 export default {
     data() {
             return {
-
+                image: "../../static/images/default_image.png",
                 close:false,
                 imageShow:true,
                 fileName:''
@@ -26,7 +26,7 @@ export default {
           param:{
             default: null
           },
-          image: "../../static/images/default_image.png",
+          value:'',
           type:'*'
         },
         methods: {
@@ -103,7 +103,7 @@ export default {
                 this.close=false;
                 this.image="../../static/images/default_image.png";
                 this.$dispatch("getImageData", this.image);
-
+                this.value='';
             },
             upload:function(data,url){
                 var _self=this;
