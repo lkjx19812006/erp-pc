@@ -5,11 +5,11 @@
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <search-model  :param="searchParam" v-if="searchParam.show"></search-model>
+    <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">客户</div>
-            <div class="filter_search clearfix col-xs-7" >
+            <!-- <div class="filter_search clearfix col-xs-7" >
                 <dl class="clearfix">
                     <dt>类型：</dt>
                     <dd>
@@ -41,7 +41,7 @@
                         </select>
                     </dd>
                 </dl>
-            </div>
+            </div> -->
             <div class="right col-xs-4">
                 <button class="new_btn transfer" @click="clientTransfer({
                     arr:[],
@@ -208,13 +208,17 @@ export default {
         return {
             loadParam: {
                 loading: true,
+                show:false,
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
                 all: 7,
                 name:'',
-                classify:'',
+                tel:'',
+                employeeId:'',
+                employeeName:'',
                 type:'',
+                classify:'',
                 status:''
             },
             changeParam: {
@@ -256,7 +260,7 @@ export default {
             this.createParam.name=value;
         },
         createSearch:function(){
-            this.searchParam.show=true;
+            this.loadParam.show=true;
         },
         eventClick:function(id){
             if(this.$store.state.table.basicBaseList.customerList[id].show){
@@ -272,17 +276,33 @@ export default {
             this.alterParam =initCustomerlist;
         },
         clientTransfer:function(initCustomerlist){
-            this.transferParam = initCustomerlist;
+            this.transferParam.arr = [];
             for(var i in this.initCustomerlist){
                 if(this.initCustomerlist[i].checked){
                     this.transferParam.arr.push(this.initCustomerlist[i].id);
-                    console.log(this.transferParam.orgId)
-                }else if(this.transferParam.arr.length==0){
-                    this.tipsParam.show= true;
-                    this.tipsParam.name= '请先选择客户';
-                    this.transferParam.show=false;
                 }
             }
+
+            if(this.transferParam.arr.length>0){
+                this.transferParam.show=true;
+            }else{
+                this.tipsParam.show=true;
+            }
+            //
+            /*var _this = this;
+            _this.auditParam.userIds = [];
+            _this.auditParam.indexs = [];
+            for(var i=0;i<this.initUserList.length;i++){
+                if(this.$store.state.table.basicBaseList.userList[i].checked){
+                    _this.auditParam.userIds.push(this.$store.state.table.basicBaseList.userList[i].id);
+                    _this.auditParam.indexs.push(i);
+                }
+            }
+            if(this.auditParam.userIds.length>0){
+                this.auditParam.show = true;
+            }else{
+                this.tipsParam.show = true;
+            }*/
         },
         checkedAll: function() {
            this.checked=!this.checked;

@@ -82,4 +82,7 @@ export const ABSTRACT_DELETE_DATA = 'ABSTRACT_DELETE_DATA' //删除数据
 export const ABSTRACT_ADD_DATA = 'ABSTRACT_ADD_DATA' //新增数据
 
 
+export const ADD_FILES_DATA = 'ADD_FILES_DATA' //新增上传文件
+
+
 

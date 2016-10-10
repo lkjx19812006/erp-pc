@@ -9,30 +9,56 @@
             <h3>客户搜索</h3>
         </div>
         <div class="edit-model">
-             <div class="cover_loading">
+             <!-- <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-            </div>
+                         </div> -->
             <section class="editsection" v-cloak>
                 <div class="clearfix">
                      <div class="client-detailInfo  col-xs-12">
                         <label>姓名：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.name"  placeholder="按客户姓名搜索"/>
+                        <input type="text"  class="form-control" v-model="param.name"  placeholder="按客户姓名搜索"/>
                     </div>
                     <div class="client-detailInfo col-xs-12">
                         <label>电话：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.tel"  placeholder="按客户电话搜索"/>
+                        <input type="text"  class="form-control" v-model="param.tel"  placeholder="按客户电话搜索"/>
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>业务员ID：</label>
-                        <input type="text"  class="form-control" v-model="loadParam.employeeName"  placeholder="按业务员ID搜索" disabled="disabled" @click="employee(loadParam.employeeId,loadParam.employeeName)"/>
-                        <div class="empSearch" @click="employee(loadParam.employeeId,loadParam.employeeName)"><img src="/static/images/search.png" height="24" width="24"></div>
+                        <input type="text"  class="form-control" v-model="param.employeeName"  placeholder="按业务员ID搜索" disabled="disabled" @click="employee(param.employeeId,param.employeeName)"/>
+                        <div class="empSearch" @click="employee(param.employeeId,param.employeeName)"><img src="/static/images/search.png" height="24" width="24"></div>
                     </div>
+                    <div class="client-detailInfo col-xs-12">
+                        <label>客户类型：</label>
+                        <select class="form-control" v-model="param.type">
+                            <option value="">请选择类型</option>
+                            <option value="0">个人</option>
+                            <option value="1">企业</option>
+                        </select>
+                    </div>
+                    <div class="client-detailInfo col-xs-12">
+                        <label>分类：</label>
+                        <select class="form-control"  v-model="param.classify">
+                            <option value="">请选择分类</option>
+                            <option value="0">买</option>
+                            <option value="1">卖</option>
+                            <option value="2">买卖</option>
+                        </select>
+                    </div>
+                    <div class="client-detailInfo col-xs-12">
+                        <label>状态：</label>
+                        <select class="form-control" v-model="param.status">
+                            <option value="">请选择状态</option>
+                            <option value="0">无效</option>
+                            <option value="1">有效</option>
+                        </select>
+                    </div>
+                    
                 </div>      
             </section>
         </div>
         <div class="edit_footer">
              <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <input type="button" class="btn  btn-confirm"  @click="clientSearch(loadParam.name,loadParam.employeeId,loadParam.tel,param.show = false)" value="确定">
+            <input type="button" class="btn  btn-confirm"  @click="clientSearch(param.show = false)" value="确定">
         </div>
     </div>
 </template>
@@ -57,7 +83,11 @@ export default {
                 name:'',
                 tel:'',
                 employeeId:'',
-                employeeName:''
+                employeeName:'',
+                type:'',
+                classify:'',
+                status:''
+
             },
             empNameParam:{
                 show:false,
@@ -73,18 +103,18 @@ export default {
     },
     events:{
         a:function(qq){
-            this.loadParam.employeeId = qq.employeeId;
-            this.loadParam.employeeName = qq.employeeName;
+            this.param.employeeId = qq.employeeId;
+            this.param.employeeName = qq.employeeName;
         }
     },
     methods:{
-        clientSearch:function(name,tel,employeeId){
-             this.getClientList(this.loadParam);
+        clientSearch:function(){
+             this.getClientList(this.param);
         },
         employee:function(employeeId,employeeName){
             this.empNameParam.show=true;
-            this.loadParam.employeeId = this.empNameParam.employeeId;
-            this.loadParam.employeeName = this.empNameParam.employeeName;
+            this.param.employeeId = this.empNameParam.employeeId;
+            this.param.employeeName = this.empNameParam.employeeName;
         }
     },
     route: {
@@ -98,13 +128,13 @@ export default {
         }
     },
     created() {
-        this.getClientList(this.loadParam);
+        //this.getClientList(this.loadParam);
     }
 }
 </script>
 <style scoped>
 .modal_con{
-    max-height: 400px;
+    max-height: 600px;
     width: 600px;
 } 
 .top-title{

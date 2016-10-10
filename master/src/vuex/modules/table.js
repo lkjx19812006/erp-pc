@@ -60,7 +60,8 @@ import {
    PROVINCE_LIST,
    COUNTRY_LIST,
    CITY_LIST,
-   DISTRICT_LIST
+   DISTRICT_LIST,
+   ADD_FILES_DATA
 
 } from '../mutation-types'
 
@@ -415,7 +416,7 @@ const mutations = {
         for (var key in data) {
             state.basicBaseList.breedList[data.sub][key] = data[key];
         }
-        console.log(state.basicBaseList.breedList[data.sub])
+        console.log(state.basicBaseList.breedList[data.sub]);
     },
 
     [UPDATE_SPEC_DATA](state, data) { //修改药材相关信息
@@ -758,6 +759,16 @@ const mutations = {
         state.systemBaseList.districtList = data;
     },
 
+    [ADD_FILES_DATA](state,data){
+        state.clientDetail.files.arr.unshift({
+            "path": data.path,
+            "type": data.type,
+            "catagory": data.catagory,
+            "customerId":data.customerId,
+            "show":false
+          
+        })
+    }
 
 }
 
