@@ -229,6 +229,9 @@ export const deleteShowStatue = ({ dispatch }, sub,id) => { //删除枚举
 
 export const getProvinceData = ({ dispatch }, param) => { //省市区列表
     param.loading = true;
+  if(!param.cur){
+    param.cur='';
+  }
     Vue.http({
         method: 'GET',
         url: apiUrl.provinceList + '/?page=' + param.cur + '&pageSize=15',
@@ -254,6 +257,9 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
     if(param.loading!==undefined){
         param.loading = true;
     }
+  if(!param.cur){
+    param.cur='';
+  }
 
     Vue.http({
         method: 'GET',
@@ -278,6 +284,9 @@ export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
   if(!param.id){
     param.id='';
   }
+  if(!param.cur){
+    param.cur='';
+  }
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/sys/location/province/?page=' + param.cur + '&pageSize=15&country='+param.id,
@@ -298,7 +307,9 @@ export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
 
 export const getCityList = ({ dispatch }, param) => { //获取市的列表
     param.loading = true;
-
+    if(!param.cur){
+      param.cur='';
+    }
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/sys/location/city/?page=' + param.cur + '&pageSize=15&province='+param.id,
@@ -319,6 +330,9 @@ export const getCityList = ({ dispatch }, param) => { //获取市的列表
 
 export const getDistrictList = ({ dispatch }, param) => { //获取区的列表
     param.loading = true;
+  if(!param.cur){
+    param.cur='';
+  }
 
     Vue.http({
         method: 'GET',
@@ -367,6 +381,9 @@ export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
 }
 export const getCompanyData = ({ dispatch }, param) => { //企业搜索
     param.loading = true;
+  if(!param.cur){
+    param.cur='';
+  }
     var url = apiUrl.clientList + '/company/query?page=' + param.cur + '&pageSize=15';
   console.log(url);
   console.log(param);
@@ -1093,7 +1110,7 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
 }
 export const updateContact = ({ dispatch }, param) => { //修改客户联系人
     console.log(param);
-    
+
     const updatedata = {
         id:param.id,
         name:param.name,
@@ -1446,7 +1463,7 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
     }
     console.log(param);
     console.log(data);
-   
+
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,
@@ -2048,7 +2065,9 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
          "district":param.district,
          "location":param.location,
          "number":param.number,
-         "quality":param.quality
+         "quality":param.quality,
+         "duedate":param.duedate,
+         "images":param.images
     }
     console.log(data1);
     Vue.http({
@@ -2063,6 +2082,7 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
         }
     }).then((res) => {
         console.log('添加成功')
+        param.id=res.json().result.intentionId;
         dispatch(types.INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');

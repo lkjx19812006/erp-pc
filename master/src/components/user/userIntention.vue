@@ -21,7 +21,25 @@
                   <h4 style="display:inline">药材信息</h4>
                </div>
 
+             <div class="editpage">
+             <div class="editpage-input" style="width:100%">
+               <label class="editlabel">药材图片</label>
+               <press-image  :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+               <press-image :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+               <press-image :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+             </div>
+               </div>
+
                <div class="editpage">
+
+
+
+
+
+
+
+
+
                    <div class="editpageleft">
 
                        <div class="editpage-input">
@@ -29,22 +47,25 @@
                             <input type="text" v-model='param.breedName' class="form-control edit-input" value="{{param.breedName}}" @click="searchBreed(param.breedName,param.breedId)" />
                        </div>
 
-                       <div class="editpage-input">
+                       <div class="editpage-input" style="width:80%">
                            <label class="editlabel">单价</label>
 
-                            <input type="text" v-model='param.price' class="form-control edit-input" value="{{param.price}}" />
+                            <input type="text" v-model='param.price' class="form-control edit-input" value="{{param.price}}" /><span v-show="param.unit">/{{param.unit}}</span>
                        </div>
 
                        <div class="editpage-input">
                            <label class="editlabel">单位</label>
                          <input type="text" v-if="!breedParam.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                         <select type="text" v-if="breedParam.id" class="form-control edit-input" v-model="param.unit">
-                           <option selected value="">请选择单位</option>
-                           <option v-for="item in initBreedDetail.units.arr" value="{{item.name}}">{{item.name}}</option>
-                         </select>
-
+                         <div type="text" class="edit-input" v-if="breedParam.id">
+                           <input-select
+                             :value.sync="param.unit"
+                             :options="initBreedDetail.units.arr"
+                             placeholder="单位"
+                             label="name"
+                           >
+                           </input-select>
+                         </div>
                        </div>
-
                        <div class="editpage-input">
                            <label class="editlabel">是否特殊</label>
                            <select type="text" class="form-control edit-input" v-model="param.especial">
@@ -58,16 +79,36 @@
                            <input type="text" v-model="param.quality" class="form-control edit-input" value="{{param.quality}}" />
                        </div>
 
+                     <div class="editpage-input">
+                       <label class="editlabel">包装</label>
+                       <div type="text" class="edit-input" >
+                         <input-select
+                           :value.sync="param.pack"
+                           :options="tag"
+                           placeholder="包装"
+                         >
+                         </input-select>
+                       </div>
+                     </div>
+
+
                    </div>
+
+
                    <div class="editpageright">
 
                        <div class="editpage-input">
                            <label class="editlabel">规格</label>
                          <input type="text" v-if="!breedParam.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                         <select type="text" v-if="breedParam.id" class="form-control edit-input" v-model="param.spec">
-                           <option selected value="">请选择规格</option>
-                           <option v-for="item in initBreedDetail.specs.arr" value="{{item.name}}">{{item.name}}</option>
-                         </select>
+                         <div type="text" class="edit-input" v-if="breedParam.id">
+                           <input-select
+                             :value.sync="param.spec"
+                             :options="initBreedDetail.specs.arr"
+                             placeholder="规格"
+                             label="name"
+                           >
+                           </input-select>
+                         </div>
                        </div>
 
                        <div class="editpage-input">
@@ -78,10 +119,17 @@
                        <div class="editpage-input">
                            <label class="editlabel">产地</label>
                          <input type="text" v-if="!breedParam.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                         <select type="text" v-if="breedParam.id" class="form-control edit-input" v-model="param.location">
-                           <option selected value="">请选择产地</option>
-                           <option v-for="item in initBreedDetail.locals.arr" value="{{item.name}}">{{item.name}}</option>
-                         </select>
+
+                         <div type="text" class="edit-input" v-if="breedParam.id">
+                           <input-select
+                             :value.sync="param.location"
+                             :options="initBreedDetail.locals.arr"
+                             placeholder="产地"
+                             label="name"
+                           >
+                           </input-select>
+                         </div>
+
                        </div>
 
                        <div class="editpage-input">
@@ -91,6 +139,14 @@
                                 <option value="1">供应</option>
                            </select>
                        </div>
+
+                     <div class="editpage-input">
+                       <label class="editlabel">上门看货</label>
+                       <select type="text" class="form-control edit-input" v-model="param.visit">
+                         <option value="0">是</option>
+                         <option value="1">否</option>
+                       </select>
+                     </div>
 
                    </div>
                </div>
@@ -113,7 +169,8 @@
                            :on-change="selectProvince"
                            :options="initCountrylist"
                            placeholder="国家"
-                           label="cname">
+                           label="cname"
+                          >
                          </v-select>
                        </div>
                      </div>
@@ -128,7 +185,9 @@
                               :on-change="selectCity"
                               :options="initProvince"
                               placeholder="省"
-                              label="cname">
+                              label="cname"
+
+                         >
 
                             </v-select>
                            </div>
@@ -144,7 +203,9 @@
                                  :on-change="selectDistrict"
                                  :options="initCitylist"
                                  placeholder="市"
-                                 label="cname">
+                                 label="cname"
+
+                       >
 
                        </v-select>
                          </div>
@@ -159,7 +220,9 @@
                               :value.sync="district"
                               :options="initDistrictlist"
                               placeholder="区"
-                              label="cname">
+                              label="cname"
+
+                         >
 
                             </v-select>
                            </div>
@@ -173,7 +236,7 @@
 
                      <div class="editpage-input">
                        <label class="editlabel">过期时间</label>
-                       <mz-datepicker :time.sync="param.duedate" format="yyyy/MM/dd HH:mm:ss" class="a">
+                       <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">
                        </mz-datepicker>
                        <button type="button" class="btn btn-default" height="24" width="24" @click="param.duedate=''">清空</button>
                      </div>
@@ -229,11 +292,16 @@
 
                      <div class="editpage-input" v-show="param.sampling==1">
                        <label class="editlabel">样品单位</label>
-                       <input type="text" v-if="!breedParam.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                       <select type="text" v-if="breedParam.id" class="form-control edit-input" v-model="param.sampleUnit">
-                         <option selected value="">请选择样品单位</option>
-                         <option v-for="item in initBreedDetail.units.arr" value="{{item.name}}">{{item.name}}</option>
-                       </select>
+
+                       <div type="text" class="edit-input">
+                         <input-select
+                           :value.sync="param.sampleUnit"
+                           :options="initBreedDetail.units.arr"
+                           placeholder="样品单位"
+                           label="name"
+                         >
+                         </input-select>
+                       </div>
                      </div>
 
 
@@ -279,6 +347,8 @@
 <script>
 import searchbreedModel  from '../Intention/breedsearch'
 import vSelect from '../tools/vueSelect/components/Select'
+import inputSelect from '../tools/vueSelect/components/inputselect'
+import pressImage from '../imagePress'
 import {
     initCountrylist,
     initProvince,
@@ -298,7 +368,9 @@ import {
 export default {
     components: {
         searchbreedModel,
-        vSelect
+        vSelect,
+        inputSelect,
+        pressImage
     },
     props: ['param'],
     data() {
@@ -310,6 +382,7 @@ export default {
               loading:false,
               id:''
             },
+          tag:['真空包装','瓦楞纸箱','编织袋','积压包'],
             country:'',
             province:'',
             city:'',
@@ -348,7 +421,12 @@ export default {
               cur: 1,
               all: 7,
               city:''
-            }
+            },
+          imageParam:{
+            url:'/crm/api/v1/file/',
+            qiniu:false
+          },
+          type:"image/*"
 
 
         }
@@ -401,9 +479,7 @@ export default {
 
 
       },
-      /*selectCountry:function(){
-          this.countryParam.show=true;
-      },*/
+
       selectProvince:function(){
         console.log('selectProvince');
         this.province = '';
@@ -488,6 +564,7 @@ export default {
     -moz-box-orient: horizontal;
     -ms-box-orient: horizontal;
     box-orient: horizontal;
+
 }
 
 .editpageleft,
@@ -498,6 +575,15 @@ export default {
     flex: auto;
     width: 50%;
 }
+
+.editpagecenter{
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+  -ms-flex: auto;
+  flex: auto;
+  width: 100%;
+}
+
 
 .editpage-input {
     margin-top: 15px;
