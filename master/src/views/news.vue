@@ -261,8 +261,8 @@ export default {
             sampleUnit:'',
             advance:'',
             intl:'',
-            sampleNumber:'',
-            sampleAmount:'',
+            sampleNumber:0,
+            sampleAmount:0,
             qualification:'',
             url:'/intention/'
         },

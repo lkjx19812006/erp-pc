@@ -424,12 +424,10 @@ export default {
           sampleUnit:'',
           advance:'',
           intl:'',
-          sampleNumber:'',
-          sampleAmount:'',
+          sampleNumber:0,
+          sampleAmount:0,
           qualification:'',
           url:'/intention/'
-
-
         },
         personalParam:{
           show:false
@@ -526,7 +524,41 @@ export default {
 
         },
         createIntention:function(){
-
+          this.intentionParam={
+            show:false,
+              flag:0,   //0表示创建，1表示修改
+              sub:'',
+              userId:this.initUserDetail.id,
+              //fullname:this.initUserDetail.fullname,
+              customerName:this.initUserDetail.fullname,
+              //phone:this.initUserDetail.phone,
+              customerPhone:this.initUserDetail.phone,
+              id:'',
+              breedId:'',
+              breedName:'',
+              price:'',
+              unit:'',
+              especial:'',
+              quality:'',
+              spec:'',
+              number:'',
+              location:'',
+              type:'',
+              country:'',
+              province:'',
+              city:'',
+              district:'',
+              address:'',
+              invoic:'',
+              sampling:'',
+              sampleUnit:'',
+              advance:'',
+              intl:'',
+              sampleNumber:0,
+              sampleAmount:0,
+              qualification:'',
+              url:'/intention/'
+          };
           this.intentionParam.show = true;
 
         },

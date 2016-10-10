@@ -727,7 +727,9 @@ const mutations = {
              "location":data.location,
              "number":data.number,
              "quality":data.quality,
-              "show":false
+              "show":false,
+              "duedate":data.duedate,
+              "images":data.images
           })
         }
         if(state.userDetail.tracking.intention!=='undefined'){
@@ -766,7 +768,7 @@ const mutations = {
             "catagory": data.catagory,
             "customerId":data.customerId,
             "show":false
-          
+
         })
     }
 
