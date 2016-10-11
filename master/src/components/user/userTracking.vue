@@ -25,28 +25,35 @@
                             </select> -->
 
                        </div>
-                      
-                       
+
+
                        <div v-if="param.flag==0" class="editpage-input">
                            <label class="editlabel">业务类型</label>
-                            <!-- <input type="text" v-model='param.bizType' class="form-control edit-input" value="{{param.bizType}}" /> -->
                             <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType">
                                 <option value="">请选择业务类型</option>
                                 <option value="1">意向</option>
                                 <option value="2">订单</option>
                             </select>
                       </div>
-                       
+
                        <div class="editpage-input">
                            <label class="editlabel">跟进方式</label>
-                           <input type="text" v-model='param.trackingWay' class="form-control edit-input" value="{{param.trackingWay}}" />
+                         <select type="text" class="form-control edit-input"  v-model='param.trackingWay'>
+                           <option value="">请选择跟进方式</option>
+                           <option value="电话">电话</option>
+                           <option value="qq">qq</option>
+                           <option value="微信">微信</option>
+                           <option value="邮件">邮件</option>
+                           <option value="其它">其它</option>
+                         </select>
+
                        </div>
-                      
+
                        <div class="editpage-input">
                            <label class="editlabel">备注</label>
-                           <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.coments}}" />
+                           <textarea type="text" v-model='param.comments' class="form-control edit-input" style="height:100px;line-height:20px" value="{{param.coments}}" ></textarea>
                        </div>
-                       
+
                    </div>
                    <div class="editpageright">
                       <!-- <div v-if="param.flag==0" class="editpage-input">
@@ -63,12 +70,12 @@
                            <label class="editlabel">联系账号</label>
                             <input type="text" v-model='param.contactNo' class="form-control edit-input" value="{{param.contactNo}}" />
                        </div>
-                      
-                      
+
+
                    </div>
                </div>
            </section>
-        </div>  
+        </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <button type="button" class="btn  btn-confirm" @click="updateOrAddTrackingInfo(param,param.show = false)">确定</button>
@@ -79,17 +86,17 @@
 import bizModel from './selectBizId'
 import {
     initUserDetail,
-    
+
 } from '../../vuex/getters'
-import {   
+import {
     updateTrackingInfo,
     createTrackingInfo,
     getUserDetail
 } from '../../vuex/actions'
 export default {
     props: ['param'],
-    components: {   
-        bizModel  
+    components: {
+        bizModel
     },
     data() {
         return {
@@ -103,13 +110,13 @@ export default {
     vuex: {
        getters: {
             initUserDetail,
-            
+
         },
         actions: {
             updateTrackingInfo,
             createTrackingInfo,
             getUserDetail
-        } 
+        }
     },
     route: {
         activate: function(transition) {
@@ -126,12 +133,12 @@ export default {
       updateOrAddTrackingInfo:function(param){
         console.log(param);
         if(param.flag == 1){
-            this.updateTrackingInfo(param); 
+            this.updateTrackingInfo(param);
 
         }else{
-           this.createTrackingInfo(param); 
+           this.createTrackingInfo(param);
         }
-         
+
       },
       selectBizId:function(){
         if(this.param.bizType!==''){
@@ -140,9 +147,9 @@ export default {
           console.log(this.param.bizType);
         }
         this.param.bizId = '';
-        
+
       },
-      
+
     },
     events:{
       'getBiz':function(biz){

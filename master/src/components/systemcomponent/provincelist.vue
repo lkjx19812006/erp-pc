@@ -1,20 +1,20 @@
 <template>
 	<div class="cover_loading">
-            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader> 
+            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
         </div>
         <div class="order_search">
             <div class="clear">
                 <div class="my_order col-xs-2">省市区</div>
             </div>
-        </div>  
+        </div>
         <div class="order_table" v-cloak>
-              <table class="table table-hover table_color">
+              <table class="table table-hover table_color  table-striped" v-cloak>
                 <thead>
                       <tr>
                           <th>编号</th>
                           <th>名称</th>
                           <th>英文名称</th>
-                          <th>级别</th> 
+                          <th>级别</th>
                           <th>ISO编码</th>
                       </tr>
                   </thead>
@@ -88,7 +88,7 @@ export default {
         this.getProvinceData(this.loadParam,this.loadParam.all);
     },
     methods: {
-       
+
     },
      route: {
         activate: function (transition) {
@@ -126,7 +126,7 @@ export default {
     background: #fff;
     height: 34px;
     line-height: 32px;
-     margin-right: 7%; 
+     margin-right: 7%;
 }
 .tel_search {
     margin-right: 0;

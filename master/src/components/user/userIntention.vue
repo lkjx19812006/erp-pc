@@ -259,7 +259,7 @@
                        <div class="editpage-input">
                            <label class="editlabel">预付比例</label>
                          <select type="text" class="form-control edit-input" v-model="param.advance">
-                           <option value="0">0</option>
+                           <option value=0>0</option>
                            <option value=0.1>10%</option>
                            <option value=0.2>20%</option>
                            <option value=0.3>30%</option>
