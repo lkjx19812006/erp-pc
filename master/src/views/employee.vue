@@ -113,8 +113,8 @@
                     <td>{{item.position}}</td>
                     <td>{{item.mobile}}</td>
                     <td>{{item.extno}}</td>
-                    <td>{{item.entrydate | entry}}</td>
-                    <td>{{item.leavedate}}</td>
+                    <td>{{item.entrydate | dateFormat}}</td>
+                    <td>{{item.leavedate | dateFormat}}</td>
                     <td>{{item.level | levelstate}}</td>
                     <td  @click="editData($index,{
                             concrete:'employeeList'
@@ -228,6 +228,7 @@ export default {
             }
         }
     },
+    
     methods:{
         editData:function(sub,param){
             if(this.$store.state.table.basicBaseList[param.concrete][sub].show){

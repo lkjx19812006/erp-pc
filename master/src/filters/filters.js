@@ -232,3 +232,12 @@ Vue.filter('classify', function(val){ //国家
 		return val;
 	}
 })
+Vue.filter('dateFormat', function(val){ //将时间格式化yyyy-MM-DD
+	var val = val;
+	if(!val){
+		return "";
+	}
+	//return val;
+	return val.split(' ')[0];
+})
+

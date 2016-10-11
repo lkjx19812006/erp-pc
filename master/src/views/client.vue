@@ -72,6 +72,8 @@
                         <th>负责人</th>
                         <th>经营范围</th>
                         <th>电话</th>
+                        <th>电话</th>
+                        <th>电话</th>
                         <th>邮箱</th>
                         <th>国家</th>
                         <th>所在省</th>
@@ -110,10 +112,12 @@
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
                         <td>{{item.tel}}</td>
+                        <td>空</td>
+                        <td>空</td>
                         <td>{{item.email}}</td>
-                        <td>{{item.country | country}}</td>
-                        <td>{{item.province}}</td>
-                        <td>{{item.city}}</td>
+                        <td>{{item.countryName | country}}</td>
+                        <td>{{item.provinceName}}</td>
+                        <td>{{item.cityName}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.comments}}</td>
                         <td @click.stop="eventClick($index)">
