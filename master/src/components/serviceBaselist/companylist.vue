@@ -114,8 +114,13 @@
                                         province:item.province,
                                         city:item.city,
                                         address:item.address,
-                                        link:companyTransfer,
-                                        url:'/company/transform/'
+                                        employeeId:'',
+                                        employeeName:'',
+                                        orgId:'',
+                                        orgName:'',
+                                        province:'',
+                                        city:'',
+                                        link:saveCreate,
                                         })">划转</li>
                                 </ul>
                             </div>
@@ -196,14 +201,7 @@ export default {
             },
             transferParam:{
                 show:false,
-                id:'',
-                name:'',
-                employeeId:'',
-                employeeName:'',
-                orgId:'',
-                orgName:'',
-                province:'',
-                city:''
+                
             },
         }
     },
@@ -231,6 +229,7 @@ export default {
         },
         createCustomer:function(initEnterpriselist){
             this.transferParam=initEnterpriselist;
+            console.log(this.transferParam);
         }
     },
     events: {

@@ -201,9 +201,8 @@ export default {
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            console.log('查询条件==》');
             console.log(this.loadParam);
-            this.getBreedData(this.loadParam);
+            this.getBreedNameSearch(this.loadParam, this.loadParam.all);
         }
     },
     filter: (filter, {})

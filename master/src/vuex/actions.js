@@ -601,8 +601,8 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
 }
 
 export const companyTransfer = ({ dispatch }, param) => { //企业转客户
+    console.log('企业转客户');
     console.log(param);
-    return ;
     const data = {
         id:param.id
     }
@@ -1097,6 +1097,7 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
 }
 
 export const saveCreate = ({ dispatch }, data) => { //新增客户列表
+    console.log('新增客户');
     console.log(data);
     const Cdata = {
         "name":data.name,
@@ -1332,6 +1333,7 @@ export const alterProduct = ({ dispatch }, param) => { //修改客户产品
     })
 }
 export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
+
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/customer/' + param.id,
@@ -1341,7 +1343,9 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         }
     }).then((res) => {
         var con = res.json().result;
+
         var arr = con.contacts;
+        con.contacts = null;
         con.contacts = {
             arr: arr,
             show: true
@@ -1349,14 +1353,19 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var i in con.contacts.arr) {
             con.contacts.arr[i].show = false;
         };
+
         var arr = con.addresses;
+        con.addresses = null;
         con.addresses = {
-            arr: arr,show: true
+            arr: arr,
+            show: true
         };
         for (var j in con.addresses.arr) {
             con.addresses.arr[j].show = false;
         };
+
         var arr = con.files;
+        con.files = null;
         con.files = {
             arr: arr,
             show: true
@@ -1364,7 +1373,9 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var j in con.files.arr) {
             con.files.arr[j].show = false;
         }
+
         var arr = con.labels;
+        con.labels = null;
         con.labels = {
             arr: arr,
             show: true
@@ -1372,7 +1383,9 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var j in con.labels.arr) {
             con.labels.arr[j].show = false;
         }
+
         var arr = con.products;
+        con.products = null;
         con.products = {
             arr: arr,
             show: true
@@ -1380,7 +1393,9 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var j in con.products.arr) {
             con.products.arr[j].show = false;
         }
+
         var arr = con.remarks;
+        con.remarks = null;
         con.remarks = {
             arr: arr,
             show: true
@@ -1388,7 +1403,9 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var j in con.remarks.arr) {
             con.remarks.arr[j].show = false;
         }
+
         var arr = con.chance;
+        con.chance = null;
         con.chance = {
             arr: arr,
             show: true
@@ -1396,7 +1413,35 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var j in con.chance.arr) {
             con.chance.arr[j].show = false;
         }
-        dispatch(types.CUSTOMER_DETAIL_DATA, con);
+
+        //var arr = con.intention;
+        var arr = [];
+        con.intention = null;
+        con.intention = {
+            arr: arr,
+            show: true
+        };
+        for (var j in con.intention.arr) {
+            con.intention.arr[j].show = false;
+        }
+
+        //var arr = con.orders;
+        var arr = [];
+        con.orders = null;
+        con.orders = {
+            arr: arr,
+            show: true
+        };
+        for (var j in con.orders.arr) {
+            con.orders.arr[j].show = false;
+        }
+
+        console.log(con.orders);
+        console.log(con.addresses);
+        if(con.orders.show&&con.intention.show){
+            dispatch(types.CUSTOMER_DETAIL_DATA, con);
+        }
+        //dispatch(types.CUSTOMER_DETAIL_DATA, con);
     }, (res) => {
         console.log('fail');
     })
@@ -1598,10 +1643,12 @@ export const transferEmploy = ({ dispatch }, param) => { //客户业务员划转
 export const transferInfo = ({ dispatch }, param) => { //客户部门划转信息
     console.log('param===>');
     console.log(param.arr);
+    console.log(param.employeeId);
     console.log(param);
     //return ;
     const transferdata = {
         orgId:param.orgId,
+        employeeId:param.employeeId,
         customerIds:param.arr
     }
     console.log(transferdata);
@@ -2142,7 +2189,6 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
          "images":param.images
     }
     console.log(data1);
-
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,

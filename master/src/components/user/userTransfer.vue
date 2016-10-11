@@ -93,11 +93,11 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>联系人名称</label>
-                                    <input type="text" class="form-control" v-model="" />
+                                    <input type="text" class="form-control" v-model="param.contacts[0].name" />
                                 </div>
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>是否主联系人</label>
-                                    <select class="form-control edit-input"  v-model='param.main'>
+                                    <select class="form-control edit-input"  v-model='param.contacts[0].main'>
                                          <option value="0" selected="selected">是</option>
                                          <option value="1">否</option>
                                     </select>
@@ -107,39 +107,39 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
                                     <label>联系人部门</label>
-                                    <input type="text" class="form-control" v-model="" />
+                                    <input type="text" class="form-control" v-model="param.contacts[0].department" />
                                 </div>
                                 <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                                     <label>联系人职位</label>
-                                    <input type="text"  class="form-control" v-model="" />
+                                    <input type="text"  class="form-control" v-model="param.contacts[0].position" />
                                 </div>
                                 
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>手机</label>
-                                    <input type="text" class="form-control" maxlength="11" v-model="" />
+                                    <input type="text" class="form-control" maxlength="11" v-model="param.contacts[0].phone" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>电话</label>
-                                    <input type="text" class="form-control" v-model="" />
+                                    <input type="text" class="form-control" v-model="param.contacts[0].tel" />
                                 </div> 
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>邮箱</label>
-                                    <input type="email" class="form-control" v-model=""  />
+                                    <input type="email" class="form-control" v-model="param.contacts[0].email"  />
                                 </div>
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>微信</label>
-                                    <input type="text" class="form-control" v-model="" />
+                                    <input type="text" class="form-control" v-model="param.contacts[0].wechart" />
                                 </div>
                                 
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
                                     <label>qq</label>
-                                    <input type="text" class="form-control" v-model=""  />
+                                    <input type="text" class="form-control" v-model="param.contacts[0].qq"  />
                                 </div>   
                             </div>
                         

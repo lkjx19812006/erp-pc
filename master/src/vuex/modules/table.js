@@ -299,7 +299,15 @@ const state = {
                 { "id": 1, "customerId": 10, "label": "dfhidfhi", "status": 0, "show": true }
             ],
             show: false
-        }
+        },
+        "intention":{
+          arr:[],
+          show:false,
+        },
+        "orders":{
+          arr:[],
+          show:false,
+        },
     },
 
     userDetail: {"id":"00012792255a4e22bf1b70eb6eb89b33","type":0,"name":null,"password":"45ed3749b1633c0ee7c64b99cba11eba",

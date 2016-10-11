@@ -50,7 +50,39 @@
                     orgId:'',
                     show:true
                     })">划转</button>
-                <button class="new_btn transfer" @click="createCustomer('create')">新建</button>
+                <button class="new_btn transfer" @click="createCustomer({
+                                        show:true,
+                                        id:'',
+                                        category:'',
+                                        type:'',
+                                        name:'',
+                                        tel:'',
+                                        principal:'',
+                                        bizScope:'',
+                                        province:'',
+                                        city:'',
+                                        address:'',
+                                        employeeId:'',
+                                        employeeName:'',
+                                        orgId:'',
+                                        orgName:'',
+                                        province:'',
+                                        city:'',
+                                        contacts:[
+                                            {
+                                                name:'',
+                                                position:'',
+                                                department:'',
+                                                phone:'',
+                                                tel:'',
+                                                email:'',
+                                                qq:'',
+                                                wechart:'',
+                                                main:'',
+                                            }
+                                        ],
+                                        link:saveCreate,
+                                        })">新建</button>
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
@@ -61,7 +93,8 @@
             <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
                         <th>类型</th>
                         <th>分类</th>
                         <th>客户来源</th>
@@ -85,10 +118,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
-                        </td>
-                        <td>全选</td>
+                        
                     </tr>
                     <tr v-for="item in initCustomerlist">
                         <td  @click.stop="">
@@ -170,7 +200,8 @@
 import filter from '../filters/filters'
 import pagination from '../components/pagination'
 import detailModel from '../components/clientRelate/clientDetail'
-import createModel from '../components/clientRelate/clientCreate'
+//import createModel from '../components/clientRelate/clientCreate'
+import createModel  from '../components/user/userTransfer'
 import deletebreedModel  from '../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import alterinfoModel  from '../components/clientRelate/clientUpdate'
 import transferModel   from '../components/clientRelate/clienttransfer'
@@ -183,7 +214,8 @@ import {
     getClientList,
     deleteInfo,
     alterInfo,
-    getClientDetail
+    getClientDetail,
+    saveCreate
 } from '../vuex/actions'
 
 export default {
@@ -205,7 +237,8 @@ export default {
             getClientList,
             deleteInfo,
             alterInfo,
-            getClientDetail
+            getClientDetail,
+            saveCreate
         }
     },
     data() {
@@ -259,9 +292,9 @@ export default {
             this.changeParam = initCustomerlist;
             this.getClientDetail(this.changeParam);
         },
-        createCustomer:function(value){
-            this.createParam.show=true;
-            this.createParam.name=value;
+        createCustomer:function(info){
+            this.createParam = info;
+            //this.createParam.name=value;
         },
         createSearch:function(){
             this.loadParam.show=true;
@@ -292,6 +325,8 @@ export default {
             }else{
                 this.tipsParam.show=true;
             }
+            console.log(this.transferParam);
+            console.log(this.transferParam.arr);
             //
             /*var _this = this;
             _this.auditParam.userIds = [];
@@ -321,8 +356,21 @@ export default {
            }
         },
         onlyselected:function(sub,id){
+            
+            //this.id = id;
+
+            const _this=this;
             this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
-            this.id = id;
+            if(!this.$store.state.table.basicBaseList.customerList[sub].checked){
+              _this.checked=false;
+            }else {
+              _this.checked=true;
+              this.$store.state.table.basicBaseList.customerList.forEach(function (item) {
+                if(!item.checked){
+                  _this.checked=false;
+                }
+              })
+            }
         },
         searchClient:function(){
             this.getClientList(this.loadParam)
