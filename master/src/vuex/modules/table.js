@@ -696,58 +696,58 @@ const mutations = {
         }
     },
     [UPDATA_INTENTION_DATA](state,data){ //修改意向
-      console.log('gengxibn');
-      console.log(data);
-        for (var key in data) {
-            console.log(data.sub);
-            state.basicBaseList[data.key][data.sub][key] = data[key];
+      if(data.key=='user'){
+        for (var i in state.userDetail.intention.arr[data.sub]) {
+          state.userDetail.intention.arr[data.sub][i] = data[i];
         }
+      }else{
+        for (var i in state.basicBaseList.intentionList[data.sub]) {
+          state.basicBaseList.intentionList[data.sub][i] = data[i];
+        }
+      }
+
     },
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
+      var temp = {
+        "type":data.type,
+        "especial":data.especial,
+        "customerName":data.customerName,
+        "customerId":data.customerId,
+        "customerPhone":data.customerPhone,
+        "breedName":data.breedName,
+        "qualification":data.qualification,
+        "spec":data.spec,
+        "address":data.address,
+        "advance":data.advance,
+        "invoic":data.invoic,
+        'visit':data.visit,
+        "intl":data.intl,
+        "unit":data.unit,
+        "pack":data.pack,
+        "sampling":data.sampling,
+        "sampleNumber":data.sampleNumber,
+        "sampleUnit":data.sampleUnit,
+        "sampleAmount":data.sampleAmount,
+        "breedId":data.breedId,
+        "country":data.country,
+        "quality":data.quality,
+        "price":data.price,
+        "province":data.province,
+        "city":data.city,
+        "district":data.district,
+        "location":data.location,
+        "number":data.number,
+        "quality":data.quality,
+        "show":false,
+        "duedate":data.duedate,
+        "images":data.images
+      };
+
         if(state.basicBaseList.intentionList!=='undefined'){
-            state.basicBaseList.intentionList.unshift({
-             "type":data.type,
-             "especial":data.especial,
-             "customerName":data.customerName,
-             "customerId":data.customerId,
-             "customerPhone":data.customerPhone,
-             "breedName":data.breedName,
-             "qualification":data.qualification,
-             "spec":data.spec,
-             "address":data.address,
-             "advance":data.advance,
-             "invoic":data.invoic,
-             'visit':data.visit,
-             "intl":data.intl,
-             "unit":data.unit,
-             "pack":data.pack,
-             "sampling":data.sampling,
-             "sampleNumber":data.sampleNumber,
-             "sampleUnit":data.sampleUnit,
-             "sampleAmount":data.sampleAmount,
-             "breedId":data.breedId,
-             "country":data.country,
-             "quality":data.quality,
-             "price":data.price,
-             "province":data.province,
-             "city":data.city,
-             "district":data.district,
-             "location":data.location,
-             "number":data.number,
-             "quality":data.quality,
-              "show":false,
-              "duedate":data.duedate,
-              "images":data.images
-          })
+            state.basicBaseList.intentionList.unshift(temp)
         }
-        if(state.userDetail.tracking.intention!=='undefined'){
-          var temp = {};
-          temp.breedName = data.breedName;
-          temp.location = data.location;
-          temp.spec = data.spec;
-          temp.number = data.number;
-          temp.price = data.price;
-          temp.unit = data.unit;
+        if(state.userDetail.intention!=='undefined'){
+         
           state.userDetail.intention.arr.push(temp);
         }
 

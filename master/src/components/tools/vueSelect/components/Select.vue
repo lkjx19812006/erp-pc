@@ -636,7 +636,8 @@
 			valueAsArray() {
 				if (this.multiple) {
 					return this.value
-				} else if (this.value) {
+				} else if (this.value[this.label]) {
+          console.log(this.value[this.label]);
 					return [this.value]
 				}
 

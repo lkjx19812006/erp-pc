@@ -124,7 +124,8 @@
                                                             intentionParam.pack=item.pack,
                                                             intentionParam.visit=item.visit,
                                                             intentionParam.duedate=item.duedate,
-                                                            intentionParam.breedId=item.breedId
+                                                            intentionParam.breedId=item.breedId,
+                                                            intentionParam.key='user'
                                                         )">编辑</dt>
                                                 </div>
                                                 </td>
