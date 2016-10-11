@@ -84,17 +84,17 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>联系人名称</label>
-                                    <input type="text" id="username" class="form-control" v-model="" v-validate:username="['required']"/>
+                                    <input type="text" id="username" class="form-control" v-model="customerData.contacts[0].name" v-validate:username="['required']"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>联系人部门</label>
-                                    <input type="text" id="usertype" class="form-control" v-model="" v-validate:usertype="['required']" />
+                                    <input type="text" id="usertype" class="form-control" v-model="customerData.contacts[0].department" v-validate:usertype="['required']" />
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>联系人职位</label>
-                                    <input type="text" id="category" class="form-control" v-model="" v-validate:category="['required']" />
+                                    <input type="text" id="category" class="form-control" v-model="customerData.contacts[0].position" v-validate:category="['required']" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>是否主要联系人</label>
@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>手机</label>
-                                    <input type="text" class="form-control" maxlength="11" v-model="" />
+                                    <input type="text" class="form-control" maxlength="11" v-model="customerData.contacts[0].phone" />
                                 </div>
                             </div>
                             <div class="clearfix">
@@ -121,14 +121,15 @@
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>邮箱</label>
-                                    <input type="email" class="form-control" v-model=""  />
+                                    <input type="email" class="form-control" v-model="customerData.contacts[0].email"  />
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>微信</label>
-                                    <input type="text" class="form-control" v-model="" />
+                                    <input type="text" class="form-control" v-model="customerData.contacts[0].wechart" />
                                 </div>
+
                             </div>
                         </div>
                     </section>
@@ -166,7 +167,19 @@ export default {
                 email:'',
                 province:'',
                 city:'',
-                address:''
+                address:'',
+                contacts:[
+                    {
+                        name:'',
+                        position:'',
+                        department:'',
+                        phone:'',
+                        tel:'',
+                        email:'',
+                        qq:'',
+                        wechart:''
+                    }
+                ],
             }
         }
     },

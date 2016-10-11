@@ -194,6 +194,7 @@
         class="form-control"
         :placeholder="searchPlaceholder"
         :style="{ width: isValueEmpty ? '100%' : 'auto' }"
+        value="{{prevalue}}"
       >
 
       <i v-el:open-indicator role="presentation" class="open-indicator"></i>
@@ -238,6 +239,8 @@
       value: {
         default: null
       },
+
+      prevalue:'',
 
       /**
        * An array of strings or objects to be used as dropdown choices.

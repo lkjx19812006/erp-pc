@@ -9,6 +9,7 @@
 	<createfiles-model :param="cfilesParam" v-if="cfilesParam.show"></createfiles-model>
 	<createtrack-model :param="ctrackParam" v-if="ctrackParam.show"></createtrack-model>
 	<createproduct-model :param="cproductParam" v-if="cproductParam.show"></createproduct-model>
+  <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div class="client_body">
     	<div @click="param.show=false" class="top-title">
@@ -311,6 +312,133 @@
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="panel panel-default">
+                              <div class="panel-heading" v-cloak>
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:initClientDetail.intention,
+                                              crete:'intention'
+                                              })">
+                                        <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          意向（{{initClientDetail.intention.arr.length}}）
+                                        </a>
+                                        <button type="button" class="btn btn-base pull-right" @click.stop="createIntention()">新建</button>
+                                  </h4>
+                              </div>
+                              <div  class="panel-collapse" v-show="!initClientDetail.intention.show&&initClientDetail.intention.arr.length>0">
+                                 <div class="panel-body panel-set">
+                                      <table class="table contactSet">
+                                        <thead>
+                                            <th>品种</th>
+                                            <th>产地</th>
+                                            <th>规格</th>
+                                            <th>数量</th>
+                                            <th>价格</th>
+                                            <th>单位</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="item in initClientDetail.intention.arr">
+                                                <td>{{item.breedName}}</td>
+                                                <td>{{item.location}}</td>
+                                                <td>{{item.spec}}</td>
+                                                <td>{{item.number}}</td>
+                                                <td>{{item.price}}元</td>
+                                                <td>{{item.unit}}</td>
+                                                <td  @click="clickShow($index,{
+                                                  concrete:'intention'
+                                                  })">
+                                                  <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                <div class="breed_action" v-show="item.show">
+                                                       <dt @click="updateIntention(
+                                                            intentionParam.sub=$index,
+                                                            intentionParam.id=item.id,
+                                                            intentionParam.breedName=item.breedName,
+                                                            intentionParam.price=item.price,
+                                                            intentionParam.unit=item.unit,
+                                                            intentionParam.especial=item.especial,
+                                                            intentionParam.quality=item.quality,
+                                                            intentionParam.spec=item.spec,
+                                                            intentionParam.number=item.number,
+                                                            intentionParam.location=item.location,
+                                                            intentionParam.type=item.type,
+                                                            intentionParam.country=item.country,
+                                                            intentionParam.province=item.province,
+                                                            intentionParam.city=item.city,
+                                                            intentionParam.district=item.district,
+                                                            intentionParam.address=item.address,
+                                                            intentionParam.invoic=item.invoic,
+                                                            intentionParam.sampling=item.sampling,
+                                                            intentionParam.sampleUnit=item.sampleUnit,
+                                                            intentionParam.advance=item.advance,
+                                                            intentionParam.intl=item.intl,
+                                                            intentionParam.sampleNumber=item.sampleNumber,
+                                                            intentionParam.sampleAmount=item.sampleAmount,
+                                                            intentionParam.qualification=item.qualification,
+                                                            intentionParam.breedId=item.intentionParam,
+                                                            intentionParam.pack=item.pack,
+                                                            intentionParam.visit=item.visit,
+                                                            intentionParam.duedate=item.duedate,
+                                                            intentionParam.breedId=item.breedId
+                                                        )">编辑</dt>
+                                                </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div class="panel panel-default">
+                              <div class="panel-heading" v-cloak>
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:initClientDetail.orders,
+                                              crete:'orders'
+                                              })">
+                                        <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          订单（{{initClientDetail.orders.arr.length}}）
+                                        </a>
+                                        <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button>
+                                  </h4>
+                              </div>
+                              <div  class="panel-collapse" v-show="!initClientDetail.orders.show&&initClientDetail.orders.arr.length>0">
+                                 <div class="panel-body panel-set">
+                                      <table class="table contactSet">
+                                        <thead>
+                                          <th>订单流水号</th>
+                                          <th></th>
+                                        </thead>
+                                        <tbody>
+                                             <tr v-for="item in initClientDetail.orders.arr">
+                                                <!-- <td><img :src="item.path" /></td> -->
+                                                <td>20160819</td>
+                                                <td  @click="clickShow($index,{
+                                                    concrete:'files'
+                                                    })">
+                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                    <div class="files_action" v-show="item.show" >
+                                                        <dl>
+                                                            <dt @click="specDelete({
+                                                                 id:item.id,
+                                                                 sub:$index,
+                                                                 show:true,
+                                                                 title:'文件',
+                                                                 link:specDel,
+                                                                 url:'/customer/file/',
+                                                                 key:'files',
+                                                                 headline:'clientDetail'
+                                                                 })">删除</dt>
+                                                        </dl>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                   </div>
                               </div>
                           </div>
@@ -841,6 +969,7 @@ import updateaddrModel from '../clientRelate/updataAddrInfo'
 import createfilesModel from  '../clientRelate/createFiles'
 import createtrackModel from '../clientRelate/label/createTrack'
 import createproductModel from  '../clientRelate/label/createProduct'
+import intentionModel from  '../user/userIntention'
 import {
 	initClientDetail
 } from '../../vuex/getters'
@@ -875,6 +1004,7 @@ export default {
         createfilesModel,
         createtrackModel,
         createproductModel,
+        intentionModel,
         tipsdialogModel
     },
     props:['param'],
@@ -905,6 +1035,9 @@ export default {
     		cfilesParam:{
     			show:false
     		},
+        intentionParam:{
+          show:false
+        },
     		ctrackParam:{
     			show:false,
     			name:''
@@ -991,7 +1124,50 @@ export default {
         },
         newproduct:function(initBreedDetail){
         	 this.cproductParam = initBreedDetail;
-        }
+        },
+        createIntention:function(){
+          this.intentionParam={
+            show:false,
+              flag:0,   //0表示创建，1表示修改
+              sub:'',
+              customerId:this.initClientDetail.id,
+              //fullname:this.initUserDetail.fullname,
+              customerName:this.initClientDetail.name,
+              //phone:this.initUserDetail.phone,
+              customerPhone:this.initClientDetail.tel,
+              id:'',
+              breedId:'',
+              breedName:'',
+              price:'',
+              unit:'',
+              especial:'',
+              quality:'',
+              spec:'',
+              number:'',
+              location:'',
+              type:'',
+              country:'',
+              province:'',
+              city:'',
+              district:'',
+              address:'',
+              invoic:'',
+              sampling:'',
+              sampleUnit:'',
+              advance:'',
+              intl:'',
+              sampleNumber:0,
+              sampleAmount:0,
+              qualification:'',
+              url:'/intention/',
+              image_f:'',
+              image_s:'',
+              image_t:'',
+              images:''
+          };
+          this.intentionParam.show = true;
+
+        },
     }
 }
 </script>

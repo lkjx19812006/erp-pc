@@ -228,7 +228,10 @@ export const deleteShowStatue = ({ dispatch }, sub,id) => { //删除枚举
 };
 
 export const getProvinceData = ({ dispatch }, param) => { //省市区列表
-    param.loading = true;
+
+  console.log(param);
+
+  if(param.loading)param.loading = true;
   if(!param.cur){
     param.cur='';
   }
@@ -247,6 +250,7 @@ export const getProvinceData = ({ dispatch }, param) => { //省市区列表
         dispatch(types.PROVINCE_DATA, obj);
         param.loading = false;
         param.all = res.json().result.pages;
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -273,6 +277,21 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
         dispatch(types.COUNTRY_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
+       if(param.country){
+         for(var i in res.json().result){
+           if(res.json().result[i].cname==param.country){
+             const object={
+               id:res.json().result[i].id,
+               province:param.province,
+               city:param.city,
+               loading:false
+             }
+             console.log(object);
+             return getProvinceList({ dispatch },object);
+           }
+         }
+       }
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -280,7 +299,7 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
 }
 
 export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
-    param.loading = true;
+  if(param.loading) param.loading = true;
   if(!param.id){
     param.id='';
   }
@@ -299,6 +318,19 @@ export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
         dispatch(types.PROVINCE_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
+
+      if(param.province){
+        for(var i in res.json().result){
+          if(res.json().result[i].cname==param.province){
+            const object={
+              id:res.json().result[i].id,
+              city:param.city,
+              loading:false
+            }
+            return getCityList({ dispatch },object);
+          }
+        }
+      }
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -306,7 +338,7 @@ export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
 }
 
 export const getCityList = ({ dispatch }, param) => { //获取市的列表
-    param.loading = true;
+  if(param.loading)param.loading = true;
     if(!param.cur){
       param.cur='';
     }
@@ -322,6 +354,17 @@ export const getCityList = ({ dispatch }, param) => { //获取市的列表
         dispatch(types.CITY_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
+      if(param.city){
+        for(var i in res.json().result){
+          if(res.json().result[i].cname==param.city){
+            const object={
+              id:res.json().result[i].id,
+              loading:false
+            }
+            return getDistrictList({ dispatch },object);
+          }
+        }
+      }
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -329,7 +372,7 @@ export const getCityList = ({ dispatch }, param) => { //获取市的列表
 }
 
 export const getDistrictList = ({ dispatch }, param) => { //获取区的列表
-    param.loading = true;
+  if(param.loading) param.loading = true;
   if(!param.cur){
     param.cur='';
   }
@@ -557,6 +600,32 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
     });
 }
 
+export const companyTransfer = ({ dispatch }, param) => { //企业转客户
+    console.log('企业转客户');
+    console.log(param);
+    const data = {
+        id:param.id
+    }
+    Vue.http({
+        method: "POST",
+        url: apiUrl.enterpriseList + 'transform/' + data.id,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('企业划转成功')
+      console.log(res);
+        //dispatch(types.ADD_CONTACT_DATA, param)
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+
 export const getComponentData = ({ dispatch }, param) => { //成分
     param.loading = true;
     if(!param.name){
@@ -583,7 +652,7 @@ export const getComponentData = ({ dispatch }, param) => { //成分
 export const getRecipeDetail = ({ dispatch }, param) => { //获取成分详情
     Vue.http({
         method: 'GET',
-        url: apiUrl.clientList + '/recipe/company/' + param.id,
+        url: apiUrl.clientList + '/recipe/company/?id=' + param.id,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -609,10 +678,10 @@ export const getDrawData = ({ dispatch }, param) => { //提取物以及搜索
     var url = apiUrl.drawList + '/' + '?page=' + param.cur + '&pageSize=15';
     for(var ext in param){
         if(ext=='name'&&param[ext]!==''){
-            url+='&name='+param.name
+            url+='&extractiveName='+param.name
         }
         if(ext=='company'&&param[ext]!==''){
-            url+='&company='+param.company
+            url+='&companyName='+param.company
         }
     }
     Vue.http({
@@ -756,8 +825,10 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
         code: data.code,
         pinyin: data.pinyin,
         eName: data.eName,
-        lName:data.lName
+        lName:data.lName,
+        icon: data.path
     }
+    
     Vue.http({
         method: "POST",
         url: apiUrl.breedList + '/',
@@ -1026,7 +1097,8 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
 }
 
 export const saveCreate = ({ dispatch }, data) => { //新增客户列表
-    console.log(data)
+    console.log('新增客户');
+    console.log(data);
     const Cdata = {
         "name":data.name,
         "type":data.type,
@@ -1039,8 +1111,10 @@ export const saveCreate = ({ dispatch }, data) => { //新增客户列表
         "city":data.city,
         "address":data.address,
         "comments":data.comments,
-        "id": data.id
+        "id": data.id,
+        "contacts": data.contacts
     }
+    console.log(Cdata);
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + '/customer/',
@@ -1259,6 +1333,7 @@ export const alterProduct = ({ dispatch }, param) => { //修改客户产品
     })
 }
 export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
+
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/customer/' + param.id,
@@ -1268,7 +1343,9 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         }
     }).then((res) => {
         var con = res.json().result;
+
         var arr = con.contacts;
+        con.contacts = null;
         con.contacts = {
             arr: arr,
             show: true
@@ -1276,14 +1353,19 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var i in con.contacts.arr) {
             con.contacts.arr[i].show = false;
         };
+
         var arr = con.addresses;
+        con.addresses = null;
         con.addresses = {
-            arr: arr,show: true
+            arr: arr,
+            show: true
         };
         for (var j in con.addresses.arr) {
             con.addresses.arr[j].show = false;
         };
+
         var arr = con.files;
+        con.files = null;
         con.files = {
             arr: arr,
             show: true
@@ -1291,7 +1373,9 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var j in con.files.arr) {
             con.files.arr[j].show = false;
         }
+
         var arr = con.labels;
+        con.labels = null;
         con.labels = {
             arr: arr,
             show: true
@@ -1299,7 +1383,9 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var j in con.labels.arr) {
             con.labels.arr[j].show = false;
         }
+
         var arr = con.products;
+        con.products = null;
         con.products = {
             arr: arr,
             show: true
@@ -1307,7 +1393,9 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var j in con.products.arr) {
             con.products.arr[j].show = false;
         }
+
         var arr = con.remarks;
+        con.remarks = null;
         con.remarks = {
             arr: arr,
             show: true
@@ -1315,7 +1403,9 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var j in con.remarks.arr) {
             con.remarks.arr[j].show = false;
         }
+
         var arr = con.chance;
+        con.chance = null;
         con.chance = {
             arr: arr,
             show: true
@@ -1323,7 +1413,35 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
         for (var j in con.chance.arr) {
             con.chance.arr[j].show = false;
         }
-        dispatch(types.CUSTOMER_DETAIL_DATA, con);
+
+        //var arr = con.intention;
+        var arr = [];
+        con.intention = null;
+        con.intention = {
+            arr: arr,
+            show: true
+        };
+        for (var j in con.intention.arr) {
+            con.intention.arr[j].show = false;
+        }
+
+        //var arr = con.orders;
+        var arr = [];
+        con.orders = null;
+        con.orders = {
+            arr: arr,
+            show: true
+        };
+        for (var j in con.orders.arr) {
+            con.orders.arr[j].show = false;
+        }
+
+        console.log(con.orders);
+        console.log(con.addresses);
+        if(con.orders.show&&con.intention.show){
+            dispatch(types.CUSTOMER_DETAIL_DATA, con);
+        }
+        //dispatch(types.CUSTOMER_DETAIL_DATA, con);
     }, (res) => {
         console.log('fail');
     })
@@ -1525,10 +1643,12 @@ export const transferEmploy = ({ dispatch }, param) => { //客户业务员划转
 export const transferInfo = ({ dispatch }, param) => { //客户部门划转信息
     console.log('param===>');
     console.log(param.arr);
+    console.log(param.employeeId);
     console.log(param);
     //return ;
     const transferdata = {
         orgId:param.orgId,
+        employeeId:param.employeeId,
         customerIds:param.arr
     }
     console.log(transferdata);
@@ -1845,6 +1965,7 @@ export const batchUpdateUserInfo = ({ dispatch }, param) => { //批量修改用�
 
 
 export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
+    console.log('文件上传');
     const data = {
         catagory:param.catagory,
         type:param.type,
@@ -2030,11 +2151,9 @@ export const editintentInfo = ({ dispatch }, param) => { //修改意向
 }
 
 export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
-    console.log(param.country);
-    console.log(param.province);
-    console.log(param.city);
-    console.log(param.district);
-
+      if(param.image_f){param.images+=param.image_f+','}
+      if(param.image_s){param.images+=param.image_s+','}
+      if(param.image_t){param.images+=param.image_t}
     const data1 = {
         "userId":param.userId,
          "type":param.type,

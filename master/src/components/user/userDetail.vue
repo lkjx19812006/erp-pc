@@ -119,8 +119,13 @@
                                                             intentionParam.intl=item.intl,
                                                             intentionParam.sampleNumber=item.sampleNumber,
                                                             intentionParam.sampleAmount=item.sampleAmount,
-                                                            intentionParam.qualification=item.qualification
-
+                                                            intentionParam.qualification=item.qualification,
+                                                            intentionParam.breedId=item.intentionParam,
+                                                            intentionParam.pack=item.pack,
+                                                            intentionParam.visit=item.visit,
+                                                            intentionParam.duedate=item.duedate,
+                                                            intentionParam.breedId=item.breedId,
+                                                            intentionParam.key='user'
                                                         )">编辑</dt>
                                                 </div>
                                                 </td>
@@ -557,7 +562,11 @@ export default {
               sampleNumber:0,
               sampleAmount:0,
               qualification:'',
-              url:'/intention/'
+              url:'/intention/',
+              image_f:'',
+              image_s:'',
+              image_t:'',
+              images:''
           };
           this.intentionParam.show = true;
 

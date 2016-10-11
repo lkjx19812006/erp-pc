@@ -2,7 +2,8 @@
     <div class="img_div">
         <form>
             <input type="file" @change="previewImg" class="input_image" name="photo" accept="{{type}}">
-            <img v-bind:src="image" class="image_show" v-if="imageShow">
+            <img v-bind:src="image" class="image_show" v-if="imageShow&&!value">
+            <img v-bind:src="value" class="image_show" v-if="imageShow&&value">
             <img src="../../static/images/close.png" v-show="close" @click="delImage" class="close_image">
             <div v-show="!imageShow">
                 <div>{{fileName}}</div>
@@ -16,7 +17,7 @@
 export default {
     data() {
             return {
-
+                image: "../../static/images/default_image.png",
                 close:false,
                 imageShow:true,
                 fileName:''
@@ -26,7 +27,7 @@ export default {
           param:{
             default: null
           },
-          image: "../../static/images/default_image.png",
+          value:'',
           type:'*'
         },
         methods: {
@@ -103,7 +104,7 @@ export default {
                 this.close=false;
                 this.image="../../static/images/default_image.png";
                 this.$dispatch("getImageData", this.image);
-
+                this.value='';
             },
             upload:function(data,url){
                 var _self=this;

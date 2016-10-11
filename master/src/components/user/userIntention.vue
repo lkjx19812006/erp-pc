@@ -24,21 +24,13 @@
              <div class="editpage">
              <div class="editpage-input" style="width:100%">
                <label class="editlabel">药材图片</label>
-               <press-image  :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-               <press-image :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-               <press-image :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+               <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+               <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+               <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
              </div>
                </div>
 
                <div class="editpage">
-
-
-
-
-
-
-
-
 
                    <div class="editpageleft">
 
@@ -50,7 +42,7 @@
                        <div class="editpage-input" style="width:80%">
                            <label class="editlabel">单价</label>
 
-                            <input type="text" v-model='param.price' class="form-control edit-input" value="{{param.price}}" /><span v-show="param.unit">/{{param.unit}}</span>
+                            <input type="text" v-model='param.price' class="form-control edit-input" value="{{param.price}}"  style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
                        </div>
 
                        <div class="editpage-input">
@@ -59,6 +51,7 @@
                          <div type="text" class="edit-input" v-if="breedParam.id">
                            <input-select
                              :value.sync="param.unit"
+                             :prevalue="param.unit"
                              :options="initBreedDetail.units.arr"
                              placeholder="单位"
                              label="name"
@@ -83,6 +76,7 @@
                        <label class="editlabel">包装</label>
                        <div type="text" class="edit-input" >
                          <input-select
+                           :prevalue="param.pack"
                            :value.sync="param.pack"
                            :options="tag"
                            placeholder="包装"
@@ -103,6 +97,7 @@
                          <div type="text" class="edit-input" v-if="breedParam.id">
                            <input-select
                              :value.sync="param.spec"
+                             :prevalue="param.spec"
                              :options="initBreedDetail.specs.arr"
                              placeholder="规格"
                              label="name"
@@ -122,6 +117,7 @@
 
                          <div type="text" class="edit-input" v-if="breedParam.id">
                            <input-select
+                             :prevalue="param.location"
                              :value.sync="param.location"
                              :options="initBreedDetail.locals.arr"
                              placeholder="产地"
@@ -177,8 +173,8 @@
 
                        <div class="editpage-input">
                            <label class="editlabel">省</label>
-                           <input type="text" v-if="!country" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
-                         <div v-if="country" type="text" class="edit-input">
+                           <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                         <div v-if="country.cname" type="text" class="edit-input">
                          <v-select
                               :debounce="250"
                               :value.sync="province"
@@ -195,8 +191,8 @@
 
                      <div class="editpage-input">
                        <label class="editlabel">市</label>
-                       <input type="text" v-if="!province" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                       <div v-if="province" type="text" class="edit-input">
+                       <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                       <div v-if="province.cname" type="text" class="edit-input">
                        <v-select
                                  :debounce="250"
                                  :value.sync="city"
@@ -213,17 +209,15 @@
 
                        <div class="editpage-input">
                            <label class="editlabel">区</label>
-                            <input type="text" v-if="!city" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
-                         <div v-if="city" type="text" class="edit-input">
+                            <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
+                         <div v-if="city.cname" type="text" class="edit-input">
                          <v-select
                               :debounce="250"
                               :value.sync="district"
                               :options="initDistrictlist"
                               placeholder="区"
                               label="cname"
-
                          >
-
                             </v-select>
                            </div>
 
@@ -295,6 +289,7 @@
 
                        <div type="text" class="edit-input">
                          <input-select
+                           :prevalue="param.sampleUnit"
                            :value.sync="param.sampleUnit"
                            :options="initBreedDetail.units.arr"
                            placeholder="样品单位"
@@ -383,10 +378,18 @@ export default {
               id:''
             },
           tag:['真空包装','瓦楞纸箱','编织袋','积压包'],
-            country:'',
-            province:'',
-            city:'',
-            district:'',
+            country:{
+              cname:''
+            },
+            province:{
+              cname:''
+            },
+            city:{
+              cname:''
+            },
+            district:{
+              cname:''
+            },
             countryParam:{
               loading:true,
               show:false,
@@ -518,8 +521,23 @@ export default {
         }
     },
     created(){
-
+      if(this.param.breedId){
+        this.breedParam.breedName = this.param.breedName;
+        this.breedParam.id = this.param.breedId;
+        this.getBreedDetail(this.breedParam);
+      }
+      if(this.param.country){
+        this.countryParam.country=this.param.country;
+        this.countryParam.province=this.param.province;
+        this.countryParam.city=this.param.city;
+        this.countryParam.district=this.param.district;
+        this.country.cname=this.param.country;
+        this.province.cname=this.param.province;
+        this.city.cname=this.param.city;
+        this.district.cname=this.param.district;
+      }
       this.getCountryList(this.countryParam);
+
     }
 }
 </script>

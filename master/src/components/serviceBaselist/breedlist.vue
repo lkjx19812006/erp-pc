@@ -7,8 +7,8 @@
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">品种</div>
             <div class="col-xs-9 my_order_search">
+               <div class="ordertel_search clearfix" style="border:none; float:left;width:180px" >
 
-               <div class="ordertel_search clearfix" style="border:none; float:left;" >
                 <select class="form-control" v-model="loadParam.categoryId" @change="categoryNameSearch()">
                   <option value="" selected>按品种分类搜索</option>
                   <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
@@ -55,7 +55,7 @@
                     <tr v-for="item in initBreedlist">
                         <td>{{item.code | breedcode}}</td>
                         <td  class="underline"  @click="editBreed(item.id)">{{item.name}}</td>
-                        <td>{{item.categoryId}}</td>
+                        <td>{{item.categoryName}}</td>
                         <td>{{item.pinyin}}</td>
                         <td>{{item.eName}}</td>
                         <td>{{item.lName}}</td>
@@ -200,7 +200,8 @@ export default {
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getBreedData(this.loadParam);
+            console.log(this.loadParam);
+            this.getBreedNameSearch(this.loadParam, this.loadParam.all);
         }
     },
     filter: (filter, {})
@@ -216,5 +217,12 @@ export default {
 }
 .ordertel_search{
   margin-right:3%;
+}
+.form-control{
+    height:29px;
+    line-height:10px;
+    position:absolute;
+    padding:3px 14px;
+    margin-top:0px;
 }
 </style>

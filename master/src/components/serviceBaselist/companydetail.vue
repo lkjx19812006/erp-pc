@@ -1,6 +1,7 @@
 <template>
     <updatecompany-model :param="companylistParam" v-if="companylistParam.show"></updatecompany-model>
     <create-model :param="createParam" v-if="createParam.show"></create-model>
+    <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <div class="breed_detail">
         <div class="client-section clearfix" v-cloak>
@@ -22,8 +23,8 @@
                           city:initCompanyDetail.city,
                           address:initCompanyDetail.address,
                           classify:0,
-                          link:saveCreate
-                          })">划转到客户</button>
+                          link:companyTransfer
+                          })">提取为客户</button>
                 </h4>
                 <div class="panel-group">
                     <div class="panel panel-default">
@@ -242,6 +243,7 @@
 import updatecompanyModel from '../serviceBaselist/breedDetailDialog/createContact'
 import filter from '../../filters/filters'
 import createModel from '../serviceBaselist/breedDetailDialog/compTransfer'
+import transferModel  from '../user/userTransfer'
 import deletebreedModel  from './breedDetailDialog/deleteBreedDetail'
 import {
     initCompanyDetail
@@ -250,14 +252,16 @@ import {
     alterCompany,
     createContact,
     saveCreate,
-    deleteCompanyContact
+    companyTransfer,
+    deleteCompanyContact,
 } from '../../vuex/actions'
 export default {
     components: {
         updatecompanyModel,
         filter,
         createModel,
-        deletebreedModel
+        deletebreedModel,
+        transferModel
     },
     data() {
         return {
@@ -276,6 +280,17 @@ export default {
             createParam:{
                 show: false
             },
+            transferParam:{
+                show:false,
+                id:'',
+                name:'',
+                employeeId:'',
+                employeeName:'',
+                orgId:'',
+                orgName:'',
+                province:'',
+                city:''
+            },
           deleteParam:{
             show:false
           }
@@ -290,6 +305,7 @@ export default {
             alterCompany,
             createContact,
             saveCreate,
+            companyTransfer,
             deleteCompanyContact
         }
     },
@@ -308,7 +324,7 @@ export default {
             }
         },
         createCustomer:function(param){
-            this.createParam=param;
+            this.transferParam=param;
         },
         createCompany:function(initCompanyDetail){
             this.companylistParam = initCompanyDetail;
