@@ -18,7 +18,7 @@
                 <img src="/static/images/search.png" height="24" width="24">
                 <input type="text" style='float:left;' class="search_input" v-model="loadParam.name" placeholder="按品种名称搜索" @keyup.enter="categoryNameSearch()">
               </div>
-              <div style='float:right;'>
+              <div class="ordertel_search clearfix" style='border:0;'>
                   <button class="new_btn" @click="categoryNameSearch()">搜索</button>
               </div>   
             </div>

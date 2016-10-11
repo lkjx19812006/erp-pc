@@ -175,8 +175,7 @@ export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('添加成功');
-        data.id=res.json().result.id;
+        console.log('添加成功')
         dispatch(types.ADD_DATA, data);
     }, (res) => {
         console.log('fail');
@@ -593,9 +592,8 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-       console.log('联系人添加成功')
-       console.log(res);
-       param.id=res.json().result.id;
+        console.log('联系人添加成功')
+      console.log(res);
         dispatch(types.ADD_CONTACT_DATA, param)
     }, (res) => {
         console.log('fail');
@@ -821,10 +819,8 @@ export const getCategoryData = ({ dispatch }, param) => { // 获取品种信息
 }
 
 export const saveBreed = ({ dispatch }, data) => { //新增药材信息
-
-  console.log(data);
     const data1 = {
-        categoryId: data.selected.split(',')[1],
+        categoryId: data.selected,
         name: data.name,
         code: data.code,
         pinyin: data.pinyin,
@@ -845,10 +841,6 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
         }
     }).then((res) => {
         console.log('添加成功')
-      data.id=res.json().result.id;
-      data.categoryId=data.selected.split(',')[1];
-      data.categoryName=data.selected.split(',')[0];
-      data.selected=null;
         dispatch(types.ADD_BREED_DATA, data);
         console.log(data)
     }, (res) => {
@@ -1026,15 +1018,6 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         if(search=='employeeId'&&param[search]!==''){
             clienturl += '&employeeId='+param.employeeId
         }
-        if(search=='bizScope'&&param[search]!==''){
-            clienturl += '&bizScope='+param.bizScope
-        }
-        if(search=='province'&&param[search]!==''){
-            clienturl += '&province='+param.province
-        }
-        if(search=='city'&&param[search]!==''){
-            clienturl += '&city='+param.city
-        }
     }
     Vue.http({
         method:'GET',
@@ -1118,7 +1101,7 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
         })
 }
 
-export const saveCreate = ({ dispatch }, data) => { //新增客户列表
+export const  saveCreate = ({ dispatch }, data) => { //新增客户列表
     console.log('新增客户');
     console.log(data);
     const Cdata = {
@@ -1273,7 +1256,7 @@ export const addrInfo = ({ dispatch }, param) => { //修改客户地址
 export const alterRemark = ({ dispatch }, param) => { //修改客户备注
     console.log(param)
     const updatedata = {
-        remark:param.remark,
+        remark:param.label,
         status:param.status,
         id:param.id,
         customerId:param.customerId,
@@ -1480,6 +1463,7 @@ export const createCustomer = ({ dispatch }, param) => { //新增客户相关联
          "qq":param.qq,
          "wechart":param.wechart,
          'main':Number(param.main),
+         "id":param.id,
          "customerId":param.id
     }
     Vue.http({
@@ -1500,7 +1484,7 @@ export const createCustomer = ({ dispatch }, param) => { //新增客户相关联
     })
 }
 export const createAddress = ({ dispatch }, param) => { //新增客户地址
-    console.log(param.url);
+    console.log(param.url)
     const data1 = {
         "type":param.type,
         "contactName":param.contactName,
@@ -1513,7 +1497,8 @@ export const createAddress = ({ dispatch }, param) => { //新增客户地址
         "street":param.street,
         'detailAddr':param.detailAddr,
         "address":param.address,
-        "customerId":param.customerId
+        "customerId":param.customerId,
+        "id":param.id
     }
     Vue.http({
         method: "POST",
@@ -1527,8 +1512,6 @@ export const createAddress = ({ dispatch }, param) => { //新增客户地址
         }
     }).then((res) => {
         console.log('添加成功')
-        console.log(res.json().result);
-        param.id = res.json().result.id;
         dispatch(types.ADD_ADDR_DETAIL, param);
     }, (res) => {
         console.log('fail');
@@ -1538,31 +1521,9 @@ export const createLabel = ({ dispatch }, param) => { //新增客户标签
     console.log(param)
     const data1 = {
         "label":param.label,
-        "customerId":param.customerId
-    }
-    Vue.http({
-        method: "POST",
-        url: apiUrl.clientList + param.url,
-        emulateHTTP: true,
-        body: data1,
-        emulateJSON: false,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            'Content-Type': 'application/json;charset=UTF-8'
-        }
-    }).then((res) => {
-        param.id = res.json().result.id;
-        dispatch(types.ADD_LABEL_DATA, param);
-    }, (res) => {
-        console.log('fail');
-    })
-}
-export const createRemark = ({ dispatch }, param) => { //新增客户备注
-    console.log(param)
-    const data1 = {
-        "remark":param.remark,
         "status":param.status,
         "customerId":param.customerId,
+        "id":param.id
     }
     Vue.http({
         method: "POST",
@@ -1576,8 +1537,32 @@ export const createRemark = ({ dispatch }, param) => { //新增客户备注
         }
     }).then((res) => {
         console.log('添加成功')
-        console.log(res.json().result);
-        param.id = res.json().result.id;
+        dispatch(types.ADD_LABEL_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+export const createRemark = ({ dispatch }, param) => { //新增客户备注
+    console.log(param)
+    const data1 = {
+        "remark":param.label,
+        "status":param.status,
+        "customerId":param.customerId,
+        //"id":param.id
+    }
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: true,
+        body: data1,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('添加成功')
+        console.log(res.json());
         dispatch(types.ADD_LABEL_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -1614,7 +1599,6 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
         }
     }).then((res) => {
         console.log('添加成功')
-        param.id = res.json().result.id;
         dispatch(types.ADD_PRODUCT_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -1664,9 +1648,12 @@ export const transferEmploy = ({ dispatch }, param) => { //客户业务员划转
 export const transferInfo = ({ dispatch }, param) => { //客户部门划转信息
     console.log('param===>');
     console.log(param.arr);
+    console.log(param.employeeId);
+    console.log(param);
+    //return ;
     const transferdata = {
         orgId:param.orgId,
-        employeeId:null,
+        employeeId:param.employeeId,
         customerIds:param.arr
     }
     console.log(transferdata);
@@ -1728,21 +1715,6 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
         }else if(search=='advance'){
             url +='&advance='
         }
-       if(search=='userId'&&param[search]!==''){
-         url += '&userId='+param.userId
-       }else if(search=='userId'){
-         url +='&userId='
-       }
-       if(search=='customerId'&&param[search]!==''){
-         url += '&customerId='+param.customerId
-       }else if(search=='customerId'){
-         url +='&customerId='
-       }
-       if(search=='employeeId'&&param[search]!==''){
-         url += '&employeeId='+param.employeeId
-       }else if(search=='employeeId'){
-         url +='&employeeId='
-       }
     }
     Vue.http({
         method:'GET',
@@ -2003,7 +1975,8 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
         catagory:param.catagory,
         type:param.type,
         path:param.path,
-        customerId:param.customerId
+        customerId:param.customerId,
+        id:param.id
     }
     Vue.http({
         method: 'POST',
@@ -2017,9 +1990,6 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
         }
     }).then((res) => {
         console.log('文件添加成功')
-        console.log(res.json().result);
-        param.id = res.json().result.id;
-        console.log(param.id);
         dispatch(types.ADD_FILES_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -2326,7 +2296,6 @@ export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信�
         }
     }).then((res) => {
         console.log('添加成功')
-      param.id=res.json().result.id;
         dispatch(types.ADD_TRACKING_DATA,param);
     }, (res) => {
         console.log('fail');
