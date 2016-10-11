@@ -20,11 +20,22 @@
                     </div>
                     <div class="client-detailInfo col-xs-12">
                         <label>经营品种：</label>
-                        <input type="text"  class="form-control" v-model="param.breed"  placeholder="按客户经营的品种搜索"/>
+                        <input type="text"  class="form-control" v-model="param.bizScope"  placeholder="按客户经营的品种搜索"/>
                     </div>
                     <div class="client-detailInfo  col-xs-6">
                         <label>手机省：</label>
                         <input type="text"  class="form-control" v-model="param.province"  placeholder="按手机省搜索"/>
+                        <v-select
+                              :debounce="250"
+                              :value.sync="province"
+                              :on-change="selectCity"
+                              :options="initProvince"
+                              placeholder="省"
+                              label="cname"
+
+                         >
+
+                            </v-select>
                     </div>
                     <div class="client-detailInfo  col-xs-6">
                         <label>手机市：</label>
@@ -51,9 +62,9 @@
                         <label>客户买卖意向：</label>
                         <select class="form-control"  v-model="param.classify">
                             <option value="">请选择分类</option>
-                            <option value="0">买</option>
-                            <option value="1">卖</option>
-                            <option value="2">买卖</option>
+                            <option value="1">买</option>
+                            <option value="2">卖</option>
+                            <option value="3">买卖</option>
                         </select>
                     </div>
                     <!-- <div class="client-detailInfo col-xs-12">
@@ -85,12 +96,18 @@
 </template>
 <script>
 import searchempModel from '../../components/clientRelate/searchEmpInfo'
+import vSelect from '../tools/vueSelect/components/Select'
 import {
+    initProvince,
+} from '../../vuex/getters'
+import {
+    getProvinceList,
     getClientList
 } from '../../vuex/actions'
 export default {
     components: {
-        searchempModel
+        searchempModel,
+        vSelect
     },
     props: ['param'],
     data() {
@@ -114,11 +131,24 @@ export default {
                 show:false,
                 employeeId:'',
                 employeeName:''
-            }
+            },
+            provinceParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7,
+              country:''
+            },
         }
     },
     vuex: {
+        getters: {
+            initProvince,
+        },
         actions: {
+            getProvinceList,
             getClientList
         }
     },
@@ -136,6 +166,9 @@ export default {
             this.empNameParam.show=true;
             this.param.employeeId = this.empNameParam.employeeId;
             this.param.employeeName = this.empNameParam.employeeName;
+        },
+        selectCity:function(){
+            console.log('asdfg');
         }
     },
     route: {
@@ -150,6 +183,7 @@ export default {
     },
     created() {
         //this.getClientList(this.loadParam);
+        this.getProvinceList(this.provinceParam);
     }
 }
 </script>

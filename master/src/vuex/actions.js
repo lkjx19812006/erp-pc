@@ -1013,6 +1013,15 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         if(search=='employeeId'&&param[search]!==''){
             clienturl += '&employeeId='+param.employeeId
         }
+        if(search=='bizScope'&&param[search]!==''){
+            clienturl += '&bizScope='+param.bizScope
+        }
+        if(search=='province'&&param[search]!==''){
+            clienturl += '&province='+param.province
+        }
+        if(search=='city'&&param[search]!==''){
+            clienturl += '&city='+param.city
+        }
     }
     Vue.http({
         method:'GET',
@@ -1643,12 +1652,9 @@ export const transferEmploy = ({ dispatch }, param) => { //客户业务员划转
 export const transferInfo = ({ dispatch }, param) => { //客户部门划转信息
     console.log('param===>');
     console.log(param.arr);
-    console.log(param.employeeId);
-    console.log(param);
-    //return ;
     const transferdata = {
         orgId:param.orgId,
-        employeeId:param.employeeId,
+        employeeId:null,
         customerIds:param.arr
     }
     console.log(transferdata);

@@ -176,6 +176,7 @@ export default{
 			}
 
 			this.param.employeeId=id;
+			
 			this.param.orgId=orgId;
 		},
 		employNameSearch: function(name) {
