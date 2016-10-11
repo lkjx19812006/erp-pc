@@ -288,6 +288,7 @@
                         <label>图标</label>
                         <div class="clearfix">
                             <div class="client-image col-md-4">
+                                <span>{{initBreedDetail.icon}}</span>
                                 <img :src="initBreedDetail.icon" />
                             </div>
                         </div>

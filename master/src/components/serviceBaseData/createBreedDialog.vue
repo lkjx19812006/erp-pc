@@ -33,14 +33,7 @@
                                 <label class="editlabel">品种名称拼音 <span class="system_danger" v-if="$validation.spell.required">请输入品种名称拼音</span></label>
                                 <input type="text" v-model='breedData.pinyin' class="form-control edit-input"  id="spell" v-validate:spell="['required']"/>
                             </div> 
-                            <!--  <div class="editpage-input">
-                                   <label class="editlabel">上传图标</label>
-                                   <div class="editpage_img clearfix">
-                                       <div class="editpage-image col-md-4">
-                                           <press-image></press-image>
-                                       </div>
-                                   </div>
-                               </div> -->
+                          　
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
@@ -51,6 +44,16 @@
                                 <label class="editlabel">品种名称拉丁文</label>
                                 <input type="text" v-model='breedData.lName' class="form-control edit-input"  />
                             </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="editpage-input">
+                               　<label class="editlabel">上传图标</label>
+                               　<div class="editpage_img clearfix">
+                                   <div class="editpage-image col-md-4">
+                                       <press-image :param.sync="file"></press-image> 
+                                   </div>
+                               　</div>
+                           　</div> 
                         </div>
                     </section>
                 </div>
@@ -85,14 +88,19 @@ export default {
                 code: '',
                 name: '',
                 selected:'',
+                path:'',
                 show:false
             },
             tipsParam: {
                 show:false,
                 confirm:true,
-                name:"确认修改信息?",
+                name:"确认保存?",
                 callback:this.confirm
-            }
+            },
+            file:{
+                url:'/crm/api/v1/file/',
+                qiniu:false
+            },
         }
     },
     vuex: {
@@ -120,6 +128,12 @@ export default {
         this.saveBreed(this.breedData);
       }
     },
+    events: {
+        getImageData: function(imageData) {
+            var paths = new Array();
+            this.breedData.path=imageData.result.path;
+        }
+    },
     created() {
         this.getCategoryData();
     }
@@ -127,7 +141,7 @@ export default {
 </script>
 <style scoped>
 .modal_con{
-    max-height: 400px;
+    max-height: 600px;
     max-width: 600px;
 } 
 .top-title{
@@ -192,7 +206,7 @@ export default {
 }
 
 .editpage-input {
-    margin-top: 15px;
+    margin-top: 0px;
 }
 
 .editlabel {

@@ -86,6 +86,7 @@ export default {
     },
     events: {
         getImageData: function(imageData) {
+            console.log('返回信息');
             console.log(imageData);
             var paths = new Array();
             this.param.path=imageData.result.path;

@@ -600,6 +600,32 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
     });
 }
 
+export const companyTransfer = ({ dispatch }, param) => { //企业转客户
+    console.log(param);
+    return ;
+    const data = {
+        id:param.id
+    }
+    Vue.http({
+        method: "POST",
+        url: apiUrl.enterpriseList + 'transform/' + data.id,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('企业划转成功')
+      console.log(res);
+        //dispatch(types.ADD_CONTACT_DATA, param)
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+
 export const getComponentData = ({ dispatch }, param) => { //成分
     param.loading = true;
     if(!param.name){
@@ -626,7 +652,7 @@ export const getComponentData = ({ dispatch }, param) => { //成分
 export const getRecipeDetail = ({ dispatch }, param) => { //获取成分详情
     Vue.http({
         method: 'GET',
-        url: apiUrl.clientList + '/recipe/company/' + param.id,
+        url: apiUrl.clientList + '/recipe/company/?id=' + param.id,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -652,10 +678,10 @@ export const getDrawData = ({ dispatch }, param) => { //提取物以及搜索
     var url = apiUrl.drawList + '/' + '?page=' + param.cur + '&pageSize=15';
     for(var ext in param){
         if(ext=='name'&&param[ext]!==''){
-            url+='&name='+param.name
+            url+='&extractiveName='+param.name
         }
         if(ext=='company'&&param[ext]!==''){
-            url+='&company='+param.company
+            url+='&companyName='+param.company
         }
     }
     Vue.http({
@@ -799,8 +825,10 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
         code: data.code,
         pinyin: data.pinyin,
         eName: data.eName,
-        lName:data.lName
+        lName:data.lName,
+        icon: data.path
     }
+    
     Vue.http({
         method: "POST",
         url: apiUrl.breedList + '/',
@@ -1069,7 +1097,7 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
 }
 
 export const saveCreate = ({ dispatch }, data) => { //新增客户列表
-    console.log(data)
+    console.log(data);
     const Cdata = {
         "name":data.name,
         "type":data.type,
@@ -1082,8 +1110,10 @@ export const saveCreate = ({ dispatch }, data) => { //新增客户列表
         "city":data.city,
         "address":data.address,
         "comments":data.comments,
-        "id": data.id
+        "id": data.id,
+        "contacts": data.contacts
     }
+    console.log(Cdata);
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + '/customer/',
@@ -1888,6 +1918,7 @@ export const batchUpdateUserInfo = ({ dispatch }, param) => { //批量修改用�
 
 
 export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
+    console.log('文件上传');
     const data = {
         catagory:param.catagory,
         type:param.type,
@@ -2111,6 +2142,7 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
          "images":param.images
     }
     console.log(data1);
+
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,

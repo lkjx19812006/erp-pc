@@ -1,5 +1,7 @@
 <template>
+    <!-- create-model暂时不用 -->
     <create-model :param="createParam" v-if="createParam.show"></create-model>
+    <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <detail-model  :param="companyParam" v-if="companyParam.show"></detail-model>
     <search-model  :param="loadParam" ></search-model>
     <div class="cover_loading">
@@ -112,7 +114,7 @@
                                         province:item.province,
                                         city:item.city,
                                         address:item.address,
-                                        link:saveCreate,
+                                        link:companyTransfer,
                                         url:'/company/transform/'
                                         })">划转</li>
                                 </ul>
@@ -131,7 +133,8 @@
 import pagination from '../../components/pagination'
 import filter from '../../filters/filters'
 import detailModel  from '../serviceBaselist/companydetail'
-import createModel from '../serviceBaselist/breedDetailDialog/compTransfer'
+import createModel from '../serviceBaselist/breedDetailDialog/compTransfer'   //暂时不用
+import transferModel  from '../user/userTransfer'
 import searchModel from './companySearch'
 
 import {
@@ -143,6 +146,7 @@ import {
     getCompanyDetail,
     getCompanyData,
     saveCreate,
+    companyTransfer,
     getProvinceList
 } from '../../vuex/actions'
 export default {
@@ -150,7 +154,8 @@ export default {
         pagination,
         filter,
         detailModel,
-        createModel,
+        createModel,   //暂时不用
+        transferModel,
         searchModel
     },
     vuex: {
@@ -163,6 +168,7 @@ export default {
             getCompanyDetail,
             getCompanyData,
             saveCreate,
+            companyTransfer,
             getProvinceList
         }
     },
@@ -187,7 +193,18 @@ export default {
             },
             createParam:{
                 show: false
-            }
+            },
+            transferParam:{
+                show:false,
+                id:'',
+                name:'',
+                employeeId:'',
+                employeeName:'',
+                orgId:'',
+                orgName:'',
+                province:'',
+                city:''
+            },
         }
     },
     created() {
@@ -213,7 +230,7 @@ export default {
             }
         },
         createCustomer:function(initEnterpriselist){
-            this.createParam=initEnterpriselist;
+            this.transferParam=initEnterpriselist;
         }
     },
     events: {

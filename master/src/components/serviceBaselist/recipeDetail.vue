@@ -12,33 +12,33 @@
                             <h4 class="panel-title clearfix">
                                 <img class="pull-left" src="/static/images/company.png" height="30" width="26" />
                                 <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
-                                    企业({{initDruglist.list.arr.length}})
+                                    企业({{initDruglist.arr.length}})
                                 </a>
                             </h4>
                         </div>
-                        <div class="panel-collapse"   v-show="!initDruglist.list.show"> 
+                        <div class="panel-collapse"   v-show="!initDruglist.show"> 
                             <div class="panel-body panel-set">
                                 <table class="table contactSet">
                                     <thead>
                                         <tr>
-                                            <th>药品名称</th>
-                                            <th>药品编号</th>
-                                            <th>药品类型</th>
-                                            <th>所属公司</th>
+                                            <th>企业名称</th>
+                                            <th>企业编号</th>
+                                            <th>法人代表</th>
+                                            <th>负责人</th>
                                             <th>公司地址</th>
-                                            <th>说明</th>
+                                            <th>主营业务</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="item in initDruglist.list.arr">
+                                        <tr v-for="item in initDruglist.arr">
                                             <td>
                                                 {{item.name}}
                                             </td>
                                             <td>{{item.number}}</td>
-                                            <td>{{item.drugType}}</td>
-                                            <td>{{item.company}}</td>
+                                            <td>{{item.legalPerson}}</td>
+                                            <td>{{item.principal}}</td>
                                             <td>{{item.address}}</td>
-                                            <td>{{item.spec}}</td>
+                                            <td>{{item.bizScope}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
