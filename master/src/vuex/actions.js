@@ -875,6 +875,7 @@ export const createSpec = ({ dispatch }, param, id) => { //新增药材相关
         }).then((res) => {
             console.log('添加成功')
           param.id=res.json().result.id;
+          param.breedId=id;
             dispatch(types.ADDSPEC_DATA, param);
             name = '';
         }, (res) => {
@@ -900,6 +901,7 @@ export const saveAlias = ({ dispatch }, param, id) => { //新增药材别名
     }).then((res) => {
         console.log('别名添加成功')
       param.id=res.json().result.id;
+      param.breedId=id;
         dispatch(types.ADDSPEC_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -938,7 +940,8 @@ export const updateBreedInfo = ({ dispatch }, param) => { //修改药材信息
     })
 }
 export const alterSpec = ({ dispatch }, param) => { //修改药材相关
-    const alterdata = {
+   console.log(param);
+  const alterdata = {
         name: param.name,
         id: param.id,
         breedId: param.breedId

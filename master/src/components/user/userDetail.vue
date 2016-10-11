@@ -41,6 +41,7 @@
                                                phone:initUserDetail.phone,
                                                email:initUserDetail.email,
                                                qq:initUserDetail.qq,
+                                               index:param.sub,
                                                company:initUserDetail.company,
                                                comment:initUserDetail.comment,
 
@@ -378,7 +379,6 @@ import companyauthModel from './companyAuth'
 
 import {
   initClientDetail,
-
   initUserDetail,
   initIdentify
 } from '../../vuex/getters'
@@ -462,7 +462,6 @@ export default {
       },
       actions:{
         getClientDetail,
-
         getUserDetail,
         getAuthInfo
       }

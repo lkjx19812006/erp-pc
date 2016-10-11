@@ -371,6 +371,38 @@ export default {
         this.transferParam = item;
     },
     createIntention:function(){
+      this.intentionParam={
+        show:false,
+          flag:0,
+          userId:this.initUserDetail.id,
+          //fullname:this.initUserDetail.fullname,
+          customerName:this.initUserDetail.fullname,
+          //phone:this.initUserDetail.phone,
+          customerPhone:this.initUserDetail.phone,
+          breedName:'',
+          price:'',
+          unit:'',
+          especial:'',
+          quality:'',
+          spec:'',
+          number:'',
+          location:'',
+          type:'',
+          country:'',
+          province:'',
+          city:'',
+          district:'',
+          address:'',
+          invoic:'',
+          sampling:'',
+          sampleUnit:'',
+          advance:'',
+          intl:'',
+          sampleNumber:0,
+          sampleAmount:0,
+          qualification:'',
+          url:'/intention/'
+      };
         this.intentionParam.show = true;
     }
 

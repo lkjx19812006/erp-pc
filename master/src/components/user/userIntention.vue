@@ -1,5 +1,5 @@
 <template>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
+    <div  id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">

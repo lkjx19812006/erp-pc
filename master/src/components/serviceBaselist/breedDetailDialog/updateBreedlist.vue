@@ -38,16 +38,6 @@ export default {
     data() {
         return {
         }
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
     }
 }
 </script>
@@ -55,7 +45,7 @@ export default {
 .modal_con{
     max-height: 350px;
     width: 400px;
-} 
+}
 .top-title{
     position: absolute;
     width: 100%;
