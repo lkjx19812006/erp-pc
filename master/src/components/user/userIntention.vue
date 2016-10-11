@@ -162,7 +162,6 @@
                          <v-select
                            :debounce="250"
                            :value.sync="country"
-
                            :on-change="selectProvince"
                            :options="initCountrylist"
                            placeholder="国家"
@@ -174,8 +173,8 @@
 
                        <div class="editpage-input">
                            <label class="editlabel">省</label>
-                           <input type="text" v-if="!country" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
-                         <div v-if="country" type="text" class="edit-input">
+                           <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                         <div v-if="country.cname" type="text" class="edit-input">
                          <v-select
                               :debounce="250"
                               :value.sync="province"
@@ -192,8 +191,8 @@
 
                      <div class="editpage-input">
                        <label class="editlabel">市</label>
-                       <input type="text" v-if="!province" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                       <div v-if="province" type="text" class="edit-input">
+                       <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                       <div v-if="province.cname" type="text" class="edit-input">
                        <v-select
                                  :debounce="250"
                                  :value.sync="city"
@@ -210,8 +209,8 @@
 
                        <div class="editpage-input">
                            <label class="editlabel">区</label>
-                            <input type="text" v-if="!city" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
-                         <div v-if="city" type="text" class="edit-input">
+                            <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
+                         <div v-if="city.cname" type="text" class="edit-input">
                          <v-select
                               :debounce="250"
                               :value.sync="district"
@@ -379,10 +378,18 @@ export default {
               id:''
             },
           tag:['真空包装','瓦楞纸箱','编织袋','积压包'],
-            country:{},
-            province:{},
-            city:{},
-            district:{},
+            country:{
+              cname:''
+            },
+            province:{
+              cname:''
+            },
+            city:{
+              cname:''
+            },
+            district:{
+              cname:''
+            },
             countryParam:{
               loading:true,
               show:false,
