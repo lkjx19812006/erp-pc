@@ -373,7 +373,8 @@ const mutations = {
         state.basicBaseList.breedList.unshift({
             "code": data.code,
             "name": data.name,
-            "categoryId": data.selected,
+            "categoryId": data.categoryId,
+            "categoryName":data.categoryName,
             "pinyin": data.pinyin,
             "eName": data.eName,
             "lName": data.lName,
@@ -686,6 +687,7 @@ const mutations = {
         temp.bizId = data.bizId;
         temp.bizType = data.bizType;
         temp.show = false;
+        temp.id=data.id;
         state.userDetail.tracking.arr.push(temp);
     },
 

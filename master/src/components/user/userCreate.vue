@@ -24,7 +24,31 @@
                            <label class="editlabel">电话</label>
                             <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
                        </div>
-                       
+                     <div class="editpage-input">
+                       <label class="editlabel">性别</label>
+                       <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">身份证号码</label>
+                       <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">会员等级</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">经营类型</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">业务类型</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                     <label class="editlabel">会员类型</label>
+                     <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                   </div>
+
                    </div>
                    <div class="editpageright">
                        <div class="editpage-input">
@@ -39,11 +63,43 @@
                            <label class="editlabel">公司</label>
                            <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
                        </div>
-                      
+                     <div class="editpage-input">
+                       <label class="editlabel">邮箱</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">专属业务员</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">地址</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">主经营品种</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">重要级别</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">备注</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">审核状态</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">状态</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+
                    </div>
                </div>
            </section>
-        </div>  
+        </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.show = false)">确定</button>
@@ -52,41 +108,26 @@
 </template>
 <script>
 import {
-    
+
 } from '../../vuex/getters'
-import {   
-    updateUserInfo   
+import {
+    updateUserInfo
 } from '../../vuex/actions'
 export default {
     props: ['param'],
     data() {
         return {
-        
+
         }
     },
     vuex: {
        getters: {
-            
+
         },
         actions: {
-            updateUserInfo 
-        } 
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
+            updateUserInfo
         }
-    },
-    /*methods: {
-      alertInfo:function(param){
-        updateUserInfo(param)
-      }
-    }*/
+    }
 }
 </script>
 <style scoped>

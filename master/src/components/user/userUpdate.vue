@@ -22,15 +22,41 @@
                            <label class="editlabel">昵称</label>
                            <input type="text" v-model='param.nickname' class="form-control edit-input" value="{{param.nickname}}" />
                        </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">qq</label>
-                           <input type="text" v-model="param.qq" class="form-control edit-input" value="{{param.qq}}" />
-                       </div>
-                       
-                       <div class="editpage-input">
-                           <label class="editlabel">备注</label>
-                           <input type="text" v-model='param.comment' class="form-control edit-input" value="{{param.comment}}" />
-                       </div>
+
+                     <div class="editpage-input">
+                       <label class="editlabel">电话</label>
+                       <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">性别</label>
+                       <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">身份证号码</label>
+                       <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">会员等级</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">经营类型</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">业务类型</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">会员类型</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">备注</label>
+                       <input type="text" v-model='param.comment' class="form-control edit-input" value="{{param.comment}}" />
+                     </div>
+
+
                    </div>
                    <div class="editpageright">
                        <div class="editpage-input">
@@ -46,10 +72,41 @@
                            <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
                        </div>
 
-                   </div> 
+                     <div class="editpage-input">
+                       <label class="editlabel">qq</label>
+                       <input type="text" v-model="param.qq" class="form-control edit-input" value="{{param.qq}}" />
+                     </div>
+
+                     <div class="editpage-input">
+                       <label class="editlabel">专属业务员</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">地址</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">主经营品种</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">重要级别</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+
+                     <div class="editpage-input">
+                       <label class="editlabel">审核状态</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+                     <div class="editpage-input">
+                       <label class="editlabel">状态</label>
+                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                     </div>
+
+                   </div>
                </div>
            </section>
-       </div> 
+       </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true">确定</button>
@@ -59,10 +116,10 @@
 <script>
 import tipsdialogModel  from '../tips/tipDialog'
 import {
-    
+
 } from '../../vuex/getters'
-import {   
-    updateUserInfo   
+import {
+    updateUserInfo
 } from '../../vuex/actions'
 export default {
     components: {
@@ -76,26 +133,16 @@ export default {
             confirm:true,
             name:"确认修改信息?",
             callback:this.alertInfo
-            
+
           }
         }
     },
     vuex: {
        getters: {
-            
+
         },
         actions: {
-            updateUserInfo 
-        } 
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
+            updateUserInfo
         }
     },
     methods: {
@@ -130,6 +177,7 @@ export default {
     overflow: hidden;
     overflow-y: auto;
     padding: 10px 30px 30px 30px;
+    margin-bottom:60px;
 }
 .editsection {
     width: 100%;
