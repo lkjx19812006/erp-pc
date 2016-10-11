@@ -197,6 +197,7 @@
 							@blur="open = false"
 							@focus="open = true"
 							type="search"
+              value="{{prevalue}}"
 							class="form-control"
 							:placeholder="searchPlaceholder"
 							:style="{ width: isValueEmpty ? '100%' : 'auto' }"
@@ -244,6 +245,7 @@
 			value: {
 				default: null
 			},
+      prevalue:'',
 
 			/**
 			 * An array of strings or objects to be used as dropdown choices.

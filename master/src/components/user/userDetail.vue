@@ -119,8 +119,12 @@
                                                             intentionParam.intl=item.intl,
                                                             intentionParam.sampleNumber=item.sampleNumber,
                                                             intentionParam.sampleAmount=item.sampleAmount,
-                                                            intentionParam.qualification=item.qualification
-
+                                                            intentionParam.qualification=item.qualification,
+                                                            intentionParam.breedId=item.intentionParam,
+                                                            intentionParam.pack=item.pack,
+                                                            intentionParam.visit=item.visit,
+                                                            intentionParam.duedate=item.duedate,
+                                                            intentionParam.breedId=item.breedId
                                                         )">编辑</dt>
                                                 </div>
                                                 </td>
@@ -424,12 +428,10 @@ export default {
           sampleUnit:'',
           advance:'',
           intl:'',
-          sampleNumber:'',
-          sampleAmount:'',
+          sampleNumber:0,
+          sampleAmount:0,
           qualification:'',
           url:'/intention/'
-
-
         },
         personalParam:{
           show:false
@@ -526,7 +528,45 @@ export default {
 
         },
         createIntention:function(){
-
+          this.intentionParam={
+            show:false,
+              flag:0,   //0表示创建，1表示修改
+              sub:'',
+              userId:this.initUserDetail.id,
+              //fullname:this.initUserDetail.fullname,
+              customerName:this.initUserDetail.fullname,
+              //phone:this.initUserDetail.phone,
+              customerPhone:this.initUserDetail.phone,
+              id:'',
+              breedId:'',
+              breedName:'',
+              price:'',
+              unit:'',
+              especial:'',
+              quality:'',
+              spec:'',
+              number:'',
+              location:'',
+              type:'',
+              country:'',
+              province:'',
+              city:'',
+              district:'',
+              address:'',
+              invoic:'',
+              sampling:'',
+              sampleUnit:'',
+              advance:'',
+              intl:'',
+              sampleNumber:0,
+              sampleAmount:0,
+              qualification:'',
+              url:'/intention/',
+              image_f:'',
+              image_s:'',
+              image_t:'',
+              images:''
+          };
           this.intentionParam.show = true;
 
         },

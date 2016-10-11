@@ -1,7 +1,7 @@
 <template>
     <div class="img_div">
         <form>
-            <input type="file" @change="previewImg" class="input_image" name="photo">
+            <input type="file" @change="previewImg" class="input_image" name="photo" accept="{{type}}">
             <img v-bind:src="image" class="image_show" v-if="imageShow">
             <img src="../../static/images/close.png" v-show="close" @click="delImage" class="close_image">
             <div v-show="!imageShow">
@@ -22,18 +22,24 @@ export default {
                 fileName:''
             }
         },
-        props: ['param'],
+        props: {
+          param:{
+            default: null
+          },
+          value:'',
+          type:'*'
+        },
         methods: {
             previewImg: function(e) {
                 let _self = this;
                 let input = e.target;
                console.log(_self.param);
                 if (input.files && input.files[0]) {
-                    let file = input.files[0]; 
+                    let file = input.files[0];
                     console.log(file)
                     _self.fileName=file.name;
                     if(file.type.split('/')[0]=='image'){
-                         
+
                          let reader = new FileReader();
                       let  img = new Image();
                     reader.onload = function(e) {
@@ -51,7 +57,7 @@ export default {
                             param.mFile=_self.image;
                             param.qiniu=_self.param.qiniu;
                             _self.close=true;
-                            _self.upload(param,'base64');         
+                            _self.upload(param,'base64');
                     }
                     reader.readAsDataURL(input.files[0]);
                     }else{
@@ -97,22 +103,24 @@ export default {
                 this.close=false;
                 this.image="../../static/images/default_image.png";
                 this.$dispatch("getImageData", this.image);
-
+                this.value='';
             },
             upload:function(data,url){
                 var _self=this;
                    this.$http({
-                        method: 'POST',  
+                        method: 'POST',
                         url: _self.param.url+url,
                         emulateJSON: false,
                         emulateHTTP: false,
                         body: data
                         }).then((res) => {
-                       console.log(res);
+                          console.log(res);
                         _self.$dispatch("getImageData", res.json());
+                        _self.value=res.json().result.path;
+              console.log(res.json());
                         }, (res) => {
-                        console.log(res);
-                        });
+                      console.log('fail');
+                    })
 
 
             }

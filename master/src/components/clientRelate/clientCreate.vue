@@ -60,16 +60,6 @@
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>备注</label>
-                                    <input type="text" class="form-control" v-model="customerData.comments" />
-                                </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>注册地址</label>
-                                    <input type="text" class="form-control" v-model="customerData.address" />
-                                </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>经营范围</label>
                                     <input type="text" class="form-control" v-model="customerData.bizScope" />
                                 </div>
@@ -80,6 +70,12 @@
                                          <option value="1">卖</option>
                                          <option value="2">买卖</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
+                                    <label>注册地址</label>
+                                    <input type="text" class="form-control" v-model="customerData.address" />
                                 </div>
                             </div>
                         </div>  
