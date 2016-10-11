@@ -1,7 +1,7 @@
 <template>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
-        <div @click="param.show=false" class="top-title">
+        <div @click="param.show=false,cancel()" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
@@ -11,7 +11,7 @@
         </div>
 
         <div class="trans_service clearfix" v-show="param.bizType==0">
-                               
+
 
               <div class="col-xs-8">
                       <div class="name_search clearfix">
@@ -22,8 +22,6 @@
                           <img src="/static/images/search.png" height="24" width="24">
                           <input type="text" class="search_input" v-model="customerParam.tel" placeholder="请输入客户手机号"  @keyup.enter="customerSearch()">
                       </div>
-
-                      
                   </div>
                   <table class="table table-hover table_head table-striped " v-cloak>
                       <thead>
@@ -46,20 +44,23 @@
 
                       </tbody>
                   </table>
-                  
+
             </div>
 
         <div class="trans_service clearfix" v-show="param.bizType==1">
             <div class="col-xs-4">
-              
-            </div>                     
+
+            </div>
 
               <div class="col-xs-8">
-                      
 
-                      
+
+
                   </div>
-                  <table class="table table-hover table_head table-striped " v-cloak>
+          <div class="cover_loading">
+            <pulse-loader :loading="intentionParam.loading" :color="color" :size="size"></pulse-loader>
+          </div>
+                  <table class="table table-hover table_head table-striped "  v-cloak>
                       <thead>
                           <tr>
                               <th></th>
@@ -82,7 +83,10 @@
 
                       </tbody>
                   </table>
-                  
+          <div class="order_pagination" style="margin-bottom:60px">
+            <pagination :combination="intentionParam"></pagination>
+          </div>
+
             </div>
 
 <!--         <div class="trans_service clearfix" v-show="param.bizType==2">
@@ -91,7 +95,7 @@
                     <option selected value="">请选择业务员部门</option>
                     <option v-for="item in initOrgList" value=""></option>
                 </select>
-    </div>                     
+    </div>
 
       <div class="col-xs-8">
               <div class="name_search clearfix">
@@ -103,7 +107,7 @@
                   <input type="text" class="search_input" v-model="customerParam.tel" placeholder="请输入客户手机号"  @keyup.enter="customerSearch()">
               </div>
 
-              
+
           </div>
           <table class="table table-hover table_head table-striped " v-cloak>
               <thead>
@@ -126,13 +130,15 @@
 
               </tbody>
           </table>
-          
+
     </div>
 
  -->
 
+
+
         <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false,cancel()">取消</button>
             <!-- <button type="button" class="btn  btn-confirm" @click="">确定</button> -->
         </div>
     </div>
@@ -140,14 +146,18 @@
 <script>
 import {
   initCustomerlist,
-  initIntentionList  
-    
+  initIntentionList
+
 } from '../../vuex/getters'
-import {   
+import {
      getClientList,
      getIntentionList
 } from '../../vuex/actions'
+import pagination from '../pagination'
 export default {
+  components: {
+    pagination
+  },
     props: ['param'],
     data() {
         return {
@@ -164,7 +174,7 @@ export default {
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
-                //userId: this.param.userId,
+                userId: this.param.userId,
                 cur: 1,
                 all: 7
           }
@@ -173,22 +183,12 @@ export default {
     vuex: {
        getters: {
           initCustomerlist,
-          initIntentionList  
-            
+          initIntentionList
+
         },
         actions: {
             getClientList,
             getIntentionList
-        } 
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
         }
     },
 
@@ -207,7 +207,7 @@ export default {
           console.log(this.initCustomerlist[index].id);
       },
       selectIntention:function(index){
-          
+
           this.$store.state.table.basicBaseList.intentionList[index].checked=!this.$store.state.table.basicBaseList.intentionList[index].checked;
           this.$dispatch('getBiz',this.initIntentionList[index]);
           this.param.show=false;
@@ -215,9 +215,18 @@ export default {
       },
       selectOrder:function(){
 
+      },
+      cancel:function(){
+        this.$dispatch('cancel');
       }
-      
+
     },
+    events: {
+    fresh: function(input) {
+      this.intentionParam.cur = input;
+      this.getIntentionList(this.intentionParam);
+    }
+  },
     created(){
       this.getClientList(this.customerParam);
       this.getIntentionList(this.intentionParam);
@@ -236,6 +245,11 @@ export default {
 }
 .top-title span {
     font-size: 28px;
+}
+
+.order_pagination{
+  margin: 0 auto;
+  text-align: center;
 }
 
 .edit-content {

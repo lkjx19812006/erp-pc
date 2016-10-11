@@ -1,6 +1,6 @@
 <template>
     <div class="myOrder" v-show="$route.path.split('=')[1]==0">
-         <enum></enum>
+         <enumlist></enumlist>
     </div>
     <!-- begin省市区 -->
      <div class="myOrder" v-show="$route.path.split('=')[1]==1">
@@ -8,7 +8,7 @@
     </div>
 </template>
 <script>
-import enum from '../components/systemcomponent/emnulist'
+import enumlist from '../components/systemcomponent/emnulist'
 import province from '../components/systemcomponent/provincelist'
 import {
     getList
@@ -16,12 +16,12 @@ import {
 
 export default {
     components: {
-        enum,
+      enumlist,
         province
     },
     data() {
         return {
-            
+
         }
     },
 
@@ -34,16 +34,6 @@ export default {
         if (this.$route.query.id > this.getList[8].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
             this.$route.query.id = 0;
         }
-    },
-    route: {
-        activate: function (transition) {
-          console.log('hook-example activated!')
-          transition.next()
-        },
-        deactivate: function (transition) {
-          console.log('hook-example deactivated!')
-          transition.next()
-      }
     }
 }
 </script>

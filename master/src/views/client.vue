@@ -105,8 +105,8 @@
                         <th>负责人</th>
                         <th>经营范围</th>
                         <th>电话</th>
-                        <th>电话</th>
-                        <th>电话</th>
+                        <th>手机省</th>
+                        <th>手机市</th>
                         <th>邮箱</th>
                         <th>国家</th>
                         <th>所在省</th>
@@ -257,7 +257,12 @@ export default {
                 employeeName:'',
                 type:'',
                 classify:'',
-                status:''
+                status:'',
+                bizScope:'',
+                provinceName:'',
+                province:'',
+                city:'',
+                cityName:''
             },
             changeParam: {
                 show: false
@@ -267,7 +272,9 @@ export default {
                 name:''
             },
             searchParam:{
-                show:false
+                show:false,
+
+
             },
             transferParam:{
                 show:false,

@@ -228,7 +228,7 @@
                                     <li class="panel-name">
                                         <label>单位名称：{{item.name}}</label>
                                     </li>
-                            
+
                                     <li @click="clickShow($index,{
                                         concrete:'units'
                                         })">
@@ -288,7 +288,7 @@
                         <label>图标</label>
                         <div class="clearfix">
                             <div class="client-image col-md-4">
-                                <span>{{initBreedDetail.icon}}</span>
+                                <!--<span>{{initBreedDetail.icon}}</span>-->
                                 <img :src="initBreedDetail.icon" />
                             </div>
                         </div>
@@ -372,7 +372,7 @@ export default {
                 this.$store.state.table.breedDetail[param.crete].show=false
             }
             this.$store.state.table.breedDetail[param.crete].show = !this.$store.state.table.breedDetail[param.crete].show;
-        },             
+        },
         close: function() {
             this.param.show = false;
         },

@@ -20,7 +20,7 @@
                             <div class="editpage-input">
                                 <label class="editlabel">类型</label>
                                 <select class="form-control" v-model="systemData.type" style="width:90%;">
-                                    <option>{{systemData.type}}</option>
+
                                     <option  value="TRACE">跟进类型</option>
                                     <option  value="ST">规格类型</option>
                                     <option  value="BANK">银行</option>
@@ -121,7 +121,7 @@ export default {
 .modal_con{
     max-height: 400px;
     width: 600px;
-} 
+}
 .top-title{
     position: absolute;
     width: 100%;

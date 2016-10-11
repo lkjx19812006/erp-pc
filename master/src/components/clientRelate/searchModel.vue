@@ -20,15 +20,38 @@
                     </div>
                     <div class="client-detailInfo col-xs-12">
                         <label>经营品种：</label>
-                        <input type="text"  class="form-control" v-model="param.breed"  placeholder="按客户经营的品种搜索"/>
+                        <input type="text"  class="form-control" v-model="param.bizScope"  placeholder="按客户经营的品种搜索"/>
                     </div>
                     <div class="client-detailInfo  col-xs-6">
                         <label>手机省：</label>
-                        <input type="text"  class="form-control" v-model="param.province"  placeholder="按手机省搜索"/>
+                        <!-- <input type="text"  class="form-control" v-model="param.provinceName"  placeholder="按手机省搜索"/> -->
+                        <v-select
+                              :debounce="250"
+                              :value.sync="province"
+                              :on-change="selectProvince"
+                              :options="initProvince"
+                              placeholder="省"
+                              label="cname"
+
+                         >
+
+                            </v-select>
                     </div>
                     <div class="client-detailInfo  col-xs-6">
                         <label>手机市：</label>
-                        <input type="text"  class="form-control" v-model="param.city"  placeholder="按手机市搜索"/>
+                        <input type="text" v-if="!province.cname" class="form-control" disabled="disabled" v-model="param.cityName"  placeholder="请先选择一个省"/>
+                        <div v-if="province.cname" >
+                            <v-select
+                                     :debounce="250"
+                                     :value.sync="city"
+                                     :on-change="selectCity"
+                                     :options="initCitylist"
+                                     placeholder="市"
+                                     label="cname"
+
+                           >
+                           </v-select>
+                       </div>
                     </div>
                     <div class="client-detailInfo col-xs-12">
                         <label>手机：</label>
@@ -51,9 +74,9 @@
                         <label>客户买卖意向：</label>
                         <select class="form-control"  v-model="param.classify">
                             <option value="">请选择分类</option>
-                            <option value="0">买</option>
-                            <option value="1">卖</option>
-                            <option value="2">买卖</option>
+                            <option value="1">买</option>
+                            <option value="2">卖</option>
+                            <option value="3">买卖</option>
                         </select>
                     </div>
                     <!-- <div class="client-detailInfo col-xs-12">
@@ -85,12 +108,20 @@
 </template>
 <script>
 import searchempModel from '../../components/clientRelate/searchEmpInfo'
+import vSelect from '../tools/vueSelect/components/Select'
 import {
+    initProvince,
+    initCitylist
+} from '../../vuex/getters'
+import {
+    getProvinceList,
+    getCityList,
     getClientList
 } from '../../vuex/actions'
 export default {
     components: {
-        searchempModel
+        searchempModel,
+        vSelect
     },
     props: ['param'],
     data() {
@@ -114,11 +145,32 @@ export default {
                 show:false,
                 employeeId:'',
                 employeeName:''
-            }
+            },
+            province:{
+              cname:''
+            },
+            city:{
+              cname:''
+            },
+            provinceParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7,
+              country:''
+            },
         }
     },
     vuex: {
+        getters: {
+            initProvince,
+            initCitylist
+        },
         actions: {
+            getProvinceList,
+            getCityList,
             getClientList
         }
     },
@@ -136,6 +188,22 @@ export default {
             this.empNameParam.show=true;
             this.param.employeeId = this.empNameParam.employeeId;
             this.param.employeeName = this.empNameParam.employeeName;
+        },
+        selectProvince:function(){
+            this.city = '';
+            this.param.city = '';
+            this.param.cityName = '';
+            this.param.province = this.province.id;
+            this.param.provinceName = this.province.cname;
+            if(this.province.cname){
+                this.getCityList(this.province);
+            }
+            
+            
+        },
+        selectCity:function(){
+            this.param.city = this.city.id;
+            this.param.cityName = this.city.cname;
         }
     },
     route: {
@@ -150,6 +218,7 @@ export default {
     },
     created() {
         //this.getClientList(this.loadParam);
+        this.getProvinceList(this.provinceParam);
     }
 }
 </script>

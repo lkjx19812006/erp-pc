@@ -11,15 +11,15 @@
             <form novalidate>
                 <div class="edit-model">
                     <section class="editsection" v-cloak>
-                        <div class="editpage-input">
+                        <div v-if="param.remark!==undefined" class="editpage-input">
                             <label class="editlabel">{{param.labelist}}</label>
-                            <input type="text" class="form-control edit-input"  id="label" v-model="param.label" v-validate:label="['required']" />
+                            <input type="text" class="form-control edit-input"  id="label" v-model="param.remark" v-validate:label="['required']" />
                         </div>
-                         <div class="editpage-input">
-                            <label class="editlabel">{{param.statuslist}}</label>
-                           <select  class="form-control" v-model="param.status" style="width:90%;">
-                               <option value="0">无效</option>
-                               <option value="1">可用</option>
+                         <div v-if="param.label!==undefined" class="editpage-input">
+                            <label class="editlabel">{{param.labelist}}</label>
+                           <select  class="form-control" v-model="param.label" style="width:90%;">
+                               <option value="新手">新手</option>
+                               <option value="老司机">老司机</option>
                            </select>
                         </div>   
                     </section>

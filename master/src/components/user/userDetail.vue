@@ -1,6 +1,8 @@
 <template>
   <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
   <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
+  <personalauth-model :param="personalParam" v-if="personalParam.show"></personalauth-model>
+  <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
 
   <div class="client_body">
       <div @click="param.show=false" class="top-title">
@@ -369,8 +371,10 @@
 </template>
 <script>
 
-import trackingModel from  '../user/userTracking'
-import intentionModel from  '../user/userIntention'
+import trackingModel from  './userTracking'
+import intentionModel from  './userIntention'
+import personalauthModel from './personalAuth'
+import companyauthModel from './companyAuth'
 
 import {
   initClientDetail,
@@ -388,9 +392,10 @@ import {
 } from '../../vuex/actions'
 export default {
     components: {
-
+        personalauthModel,
         trackingModel,
-        intentionModel
+        intentionModel,
+        companyauthModel
     },
     props:['param'],
     data(){
@@ -434,16 +439,18 @@ export default {
           qualification:'',
           url:'/intention/'
         },
-        personalParam:{
-          show:false
-        },
-        companyParam:{
-          show:false
-        },
         detailParam:{
           show:false
         },
-        show:true
+        show:true,
+        personalParam:{
+          show:false,
+          utype:1
+        },
+        companyParam:{
+          show:false,
+          ctype:1
+        }
 
       }
     },
@@ -493,14 +500,19 @@ export default {
 
       },
       personalAuth:function(item){
-          console.log('个人认证');
-          console.log(item);
-          this.$parent.personalAuth(item);
+          this.personalParam.show = true;
+          this.personalParam.id = item.id;
+          this.personalParam.index = item.index;
+          this.personalParam.ucomment = item.ucomment;
+          this.personalParam.utype = item.utype;
       },
       companyAuth:function(item){
-          console.log('企业认证');
-          console.log(item);
-          this.$parent.companyAuth(item);
+
+          this.companyParam.show = true;
+          this.companyParam.id = item.id;
+          this.companyParam.index = item.index;
+          this.companyParam.ccomment = item.ccomment;
+          this.companyParam.ctype = item.ctype;
       },
 
       clickShow: function(index,param) {
@@ -515,6 +527,7 @@ export default {
         },
         createTracking:function(item){
           item.show=!item.show;
+          item.userId=this.initUserDetail.id;
           this.trackingParam = item;
           this.trackingParam.show = true;
           this.trackingParam.flag = 0;   //0表示添加

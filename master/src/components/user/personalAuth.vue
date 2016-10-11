@@ -1,6 +1,6 @@
 <template>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
-    <div class="container modal_con" v-show="param.show">
+    <div  class="modal modal-main fade account-modal" role="dialog"></div>
+    <div class="container modal_con" >
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -25,19 +25,19 @@
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initIdentify.files">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.path}}</td>
+                                                <td>{{item.fileType}}aasdasdasa</td>
+                                                <td><img v-bind:src="item.path" ></td>
                                                 <td>{{item.description}}</td>
-                                                
+
                                             </tr>
                                         </tbody>
                                     </table>
                        </div>
 
-                       
+
                </div>
 
-               
+
 
                    <!-- <div class="editpageleft">
                        <div class="editpage-input">
@@ -52,7 +52,7 @@
                            <label class="editlabel">电话</label>
                             <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
                        </div>
-                       
+
                    </div>
                    <div class="editpageright">
                        <div class="editpage-input">
@@ -67,14 +67,14 @@
                            <label class="editlabel">公司</label>
                            <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
                        </div>
-                      
+
                    </div> -->
 
 
 
                </div>
            </section>
-        </div>  
+        </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <button type="button" class="btn  btn-confirm" @click="updateUserInfo(param,param.utype=2,param.show = false)">通过</button>
@@ -86,15 +86,15 @@
 import {
     initIdentify
 } from '../../vuex/getters'
-import {   
+import {
     updateUserInfo,
-    getAuthInfo 
+    getAuthInfo
 } from '../../vuex/actions'
 export default {
     props: ['param'],
     data() {
         return {
-        
+
         }
     },
     vuex: {
@@ -104,24 +104,9 @@ export default {
         actions: {
             updateUserInfo,
             getAuthInfo
-        } 
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
         }
     },
-    /*methods: {
-      alertInfo:function(param){
-        updateUserInfo(param)
-      }
-    }*/
-    created() { 
+    created() {
         this.getAuthInfo(this.param);
   }
 }

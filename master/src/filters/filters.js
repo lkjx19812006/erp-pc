@@ -222,11 +222,11 @@ Vue.filter('country', function(val){ //国家
 })
 Vue.filter('classify', function(val){ //国家
 	var val = val;
-	if(val==0){
+	if(val==1){
 		 return '买';
-	}else if(val==1){
-		 return '卖';
 	}else if(val==2){
+		 return '卖';
+	}else if(val==3){
 		return '买卖';
 	}else{
 		return val;

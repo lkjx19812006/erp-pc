@@ -26,13 +26,14 @@
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种分类选择 <span class="system_danger" v-if="$validation.category.required">请选择品种分类</span></label>
                                 <select class="form-control" id="category" v-validate:category="['required']" v-model="breedData.selected" style="width:90%;">
-                                   <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
+                                   <option  v-for="item in initCategorylist" value="{{item.name+','+item.id}}">{{item.name}}</option>
                                  </select>
                              </div>
+                           {{breedData.selected.name}}
                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种名称拼音 <span class="system_danger" v-if="$validation.spell.required">请输入品种名称拼音</span></label>
                                 <input type="text" v-model='breedData.pinyin' class="form-control edit-input"  id="spell" v-validate:spell="['required']"/>
-                            </div> 
+                            </div>
                           　
                         </div>
                         <div class="clearfix">
@@ -50,10 +51,10 @@
                                　<label class="editlabel">上传图标</label>
                                　<div class="editpage_img clearfix">
                                    <div class="editpage-image col-md-4">
-                                       <press-image :param.sync="file"></press-image> 
+                                       <press-image :param.sync="file"></press-image>
                                    </div>
                                　</div>
-                           　</div> 
+                           　</div>
                         </div>
                     </section>
                 </div>
@@ -87,7 +88,7 @@ export default {
             breedData: {
                 code: '',
                 name: '',
-                selected:'',
+              selected:'',
                 path:'',
                 show:false
             },
@@ -143,7 +144,7 @@ export default {
 .modal_con{
     max-height: 600px;
     max-width: 600px;
-} 
+}
 .top-title{
     position: absolute;
     width: 100%;

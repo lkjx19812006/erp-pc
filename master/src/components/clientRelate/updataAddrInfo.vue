@@ -217,10 +217,12 @@ export default {
 }
 
 .edit_footer {
+    position:absolute;
     border-top: 1px solid #ddd;
     text-align: right;
+    width:630px;
     padding: 10px 20px;
-    margin-top: 50px;
+    margin-bottom: -50px;
 }
 
 .edit_footer button {

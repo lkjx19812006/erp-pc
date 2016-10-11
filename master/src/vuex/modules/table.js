@@ -373,7 +373,8 @@ const mutations = {
         state.basicBaseList.breedList.unshift({
             "code": data.code,
             "name": data.name,
-            "categoryId": data.selected,
+            "categoryId": data.categoryId,
+            "categoryName":data.categoryName,
             "pinyin": data.pinyin,
             "eName": data.eName,
             "lName": data.lName,
@@ -492,10 +493,11 @@ const mutations = {
         }
     },
     [UPDATE_LABEL_DETAIL](state, data) { //修改客户标签
+        console.log(data);
         for (var key in data) {
             state[data.headline][data.key].arr[data.sub][key] = data[key];
         }
-        state[data.headline][data.key].arr[data.sub].remark = data.label;
+        state[data.headline][data.key].arr[data.sub].remark = data.remark;
     },
     [UPDATE_PRODUCT_DATA](state, data) { //修改客户产品
         for (var key in data) {
@@ -538,8 +540,8 @@ const mutations = {
     [ADD_LABEL_DATA](state, data) { // 新增客户标签
         state.clientDetail[data.key].arr.unshift({
             "label": data.label,
-            "remark": data.label,
-            "status": data.status,
+            "remark": data.remark,
+            "status": 1,
             "customerId": data.id,
             "id": data.id,
             "show": false
@@ -685,6 +687,7 @@ const mutations = {
         temp.bizId = data.bizId;
         temp.bizType = data.bizType;
         temp.show = false;
+        temp.id=data.id;
         state.userDetail.tracking.arr.push(temp);
     },
 
@@ -747,7 +750,7 @@ const mutations = {
             state.basicBaseList.intentionList.unshift(temp)
         }
         if(state.userDetail.intention!=='undefined'){
-         
+
           state.userDetail.intention.arr.push(temp);
         }
 
@@ -771,6 +774,7 @@ const mutations = {
 
     [ADD_FILES_DATA](state,data){
         state.clientDetail.files.arr.unshift({
+            "id":data.id,
             "path": data.path,
             "type": data.type,
             "catagory": data.catagory,
