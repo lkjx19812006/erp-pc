@@ -1,6 +1,6 @@
 <template>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con" v-show="param.show">
+    <div  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con" >
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -19,9 +19,9 @@
                                 </div>
                                 <div class="editpage-input">
                                         <label class="editlabel" for="systemtype">类型
-                                            <span class="system_danger" v-if="$validation.systemtype.required">请选择类型</span> 
+                                            <span class="system_danger" v-if="$validation.systemtype.required">请选择类型</span>
                                         </label>
-                                        <select class="form-control" id="systemtype" v-validate:systemtype="['required']" v-model="systemData.type" style="width:90%;"> 
+                                        <select class="form-control"   id="systemtype" v-validate:systemtype="['required']" v-model="systemData.type" style="width:90%;">
                                             <option  value="TRACE">跟进类型</option>
                                             <option  value="ST">规格类型</option>
                                             <option  value="BANK">银行</option>
@@ -41,7 +41,7 @@
                                             <option  value="POS">职位</option>
                                             <option  value="LBL">常见标签</option>
                                             <option  value="ON">客户信用等级</option>
-                                        </select> 
+                                        </select>
                                 </div>
                             </div>
                             <div class="editpageright">
@@ -90,7 +90,7 @@ export default {
     },
     vuex: {
         actions: {
-            getSystemData,
+            // getSystemData,
             saveDataInfo
         }
     }
@@ -100,7 +100,7 @@ export default {
 .modal_con{
     max-height: 400px;
     width: 600px;
-} 
+}
 .top-title{
     position: absolute;
     width: 100%;

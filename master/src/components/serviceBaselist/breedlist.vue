@@ -7,12 +7,11 @@
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">品种</div>
             <div class="col-xs-9 my_order_search">
+               <div class="ordertel_search clearfix" style="border:none; float:left;width:180px" >
 
-               <div class="ordertel_search clearfix" style="border:none;width:180px" >
                 <select class="form-control" v-model="loadParam.categoryId" @change="categoryNameSearch()">
                   <option value="" selected>按品种分类搜索</option>
                   <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
-
                 </select>
               </div>
               <div class="ordertel_search clearfix">

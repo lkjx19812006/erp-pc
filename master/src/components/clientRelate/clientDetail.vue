@@ -286,8 +286,8 @@
                                       	</thead>
 		                                    <tbody>
 		                                         <tr v-for="item in initClientDetail.files.arr">
-		                                            <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.path}}</td>
+		                                            <!-- <td><img v-bind:src="item.path" /></td> -->
+                                                <td><img v-bind:src="item.path" /></td>
 		                                            <td>{{item.type}}</td>
 		                                            <td>{{item.catagory}}</td>
                                                 <td  @click="clickShow($index,{

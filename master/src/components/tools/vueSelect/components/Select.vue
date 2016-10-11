@@ -547,7 +547,7 @@
 			 */
 			maybeDeleteValue() {
 				if (!this.$els.search.value.length && this.value) {
-					return this.multiple ? this.value.pop() : this.$set('value', null)
+					return this.multiple ? this.value.pop() : this.$set('value', {})
 				}
 			},
 
@@ -637,7 +637,7 @@
 				if (this.multiple) {
 					return this.value
 				} else if (this.value[this.label]) {
-          console.log(this.value[this.label]);
+
 					return [this.value]
 				}
 

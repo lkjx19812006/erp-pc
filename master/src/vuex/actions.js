@@ -175,7 +175,8 @@ export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('添加成功')
+        console.log('添加成功');
+        data.id=res.json().result.id;
         dispatch(types.ADD_DATA, data);
     }, (res) => {
         console.log('fail');
@@ -594,6 +595,7 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
     }).then((res) => {
         console.log('联系人添加成功')
       console.log(res);
+      param.id=res.json().result.id;
         dispatch(types.ADD_CONTACT_DATA, param)
     }, (res) => {
         console.log('fail');
@@ -828,7 +830,7 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
         lName:data.lName,
         icon: data.path
     }
-    
+
     Vue.http({
         method: "POST",
         url: apiUrl.breedList + '/',
@@ -841,6 +843,7 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
         }
     }).then((res) => {
         console.log('添加成功')
+      data.id=res.json().result.id;
         dispatch(types.ADD_BREED_DATA, data);
         console.log(data)
     }, (res) => {
@@ -866,6 +869,7 @@ export const createSpec = ({ dispatch }, param, id) => { //新增药材相关
             }
         }).then((res) => {
             console.log('添加成功')
+          param.id=res.json().result.id;
             dispatch(types.ADDSPEC_DATA, param);
             name = '';
         }, (res) => {
@@ -890,6 +894,7 @@ export const saveAlias = ({ dispatch }, param, id) => { //新增药材别名
         }
     }).then((res) => {
         console.log('别名添加成功')
+      param.id=res.json().result.id;
         dispatch(types.ADDSPEC_DATA, param);
     }, (res) => {
         console.log('fail');

@@ -97,14 +97,27 @@
                                     <input type="text" id="category" class="form-control" v-model="customerData.contacts[0].position" v-validate:category="['required']" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>电话</label>
-                                    <input type="text" class="form-control" v-model="customerData.contacts[0].tel" id="userown" v-validate:userown="['required']" />
+                                    <label>是否主要联系人</label>
+                                    <select class="form-control edit-input"  v-model=''>
+                                         <option value="0">是</option>
+                                         <option value="1">否</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="clearfix">
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>电话</label>
+                                    <input type="text" class="form-control" v-model="" id="userown" v-validate:userown="['required']" />
+                                </div>
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>手机</label>
                                     <input type="text" class="form-control" maxlength="11" v-model="customerData.contacts[0].phone" />
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>qq</label>
+                                    <input type="text" class="form-control" v-model=""  />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>邮箱</label>
@@ -116,10 +129,7 @@
                                     <label>微信</label>
                                     <input type="text" class="form-control" v-model="customerData.contacts[0].wechart" />
                                 </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>qq</label>
-                                    <input type="text" class="form-control" v-model="customerData.contacts[0].qq" />
-                                </div>
+
                             </div>
                         </div>
                     </section>

@@ -747,7 +747,7 @@ const mutations = {
             state.basicBaseList.intentionList.unshift(temp)
         }
         if(state.userDetail.intention!=='undefined'){
-         
+
           state.userDetail.intention.arr.push(temp);
         }
 

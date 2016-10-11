@@ -1,13 +1,13 @@
 <template>
 	<delete-model :param="delParam" v-if="!delmodel"></delete-model>
     <modify-model :param="modifyParam" v-if="!model"></modify-model>
-    <system-model :param="dialogParam" v-if="!editmodel"></system-model>
+    <system-model :param="dialogParam" v-if="dialogParam.show"></system-model>
 	<div class="order_search">
         <div class="clear">
             <div class="my_order col-xs-2">枚举类型</div>
             <div class="col-xs-8 my_order_search">
                 <div class="name_search">
-                    <select class="form-control" v-model="loadParam.sel" @change="searchname(
+                    <select class="form-control"  v-model="loadParam.sel" @change="searchname(
                     )">
                         <option selected value="">请选择种类名称搜索</option>
                         <option  value="TRACE">跟进类型</option>
@@ -36,7 +36,7 @@
                 <button class="new_btn" @click="newData('data')" data-toggle="modal" data-target="#myModal">新建</button>
             </div>
         </div>
-    </div>  
+    </div>
     <div class="order_table">
       <div class="cover_loading">
           <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -61,7 +61,7 @@
                 </tr>
             </thead>
             <tbody>
-              <tr v-for="item in initSystemlist">  
+              <tr v-for="item in initSystemlist">
                 <td>{{item.code | systemcode}}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.type | systemtype}}</td>
@@ -120,7 +120,7 @@ export default {
             },
             dialogParam:{
                  show: false,
-                 name: 'data'   
+                 name: 'data'
             },
             modifyParam:{
             	id:'',
@@ -159,17 +159,18 @@ export default {
     },
     methods: {
         searchname: function() {
-            this.getSystemSearch(this.loadParam);   
+            this.getSystemSearch(this.loadParam);
         },
         editData: function(id) {
             if(this.$store.state.table.systemBaseList.enumlist[id].show == true){
                 this.$store.state.table.systemBaseList.enumlist[id].show=!this.$store.state.table.systemBaseList.enumlist[id].show;
             }else{
                  this.$store.state.table.systemBaseList.enumlist[id].show=true;
-            }       
+            }
         },
         newData:function(value){
              this.dialogParam.name=value;
+
              this.dialogParam.show=true;
              this.editmodel = false;
         },
@@ -186,18 +187,10 @@ export default {
             this.delParam.show=true;
         }
     },
-     route: {
-        activate: function (transition) {
-          console.log('hook-example activated!')
-          transition.next()
-        },
-        deactivate: function (transition) {
-          console.log('hook-example deactivated!')
-          transition.next()
-      }
-    },
+
     filter:(filter,{
     })
+
 }
 </script>
 <style scoped>
@@ -222,7 +215,7 @@ export default {
     background: #fff;
     height: 34px;
     line-height: 32px;
-     margin-right: 7%; 
+     margin-right: 7%;
 }
 .tel_search {
     margin-right: 0;
