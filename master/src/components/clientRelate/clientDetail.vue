@@ -541,7 +541,7 @@
 				                                                   title:'备注',
   					                                               labelist:'备注',
   					                                               statuslist:'状态',
-  					                                               label:item.remark,
+  					                                               remark:item.remark,
   					                                               status:item.status,
 				                                                   link:alterRemark,
 				                                                   url:'/customer/remark',
@@ -726,13 +726,11 @@
                                         <table class="table contactSet">
                                         	<thead>
                                         		<th>标签</th>
-                                        		<th>状态</th>
                                         		<th></th>
                                         	</thead>
 		                                    <tbody>
 		                                        <tr v-for="item in initClientDetail.labels.arr">
 		                                            <td>{{item.label}}</td>
-		                                            <td>{{item.status}}</td>
 		                                            <td  @click="clickShow($index,{
 		                                            	concrete:'labels'
 		                                            	})">

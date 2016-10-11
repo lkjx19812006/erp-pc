@@ -256,7 +256,12 @@ export default {
                 employeeName:'',
                 type:'',
                 classify:'',
-                status:''
+                status:'',
+                bizScope:'',
+                provinceName:'',
+                province:'',
+                city:'',
+                cityName:''
             },
             changeParam: {
                 show: false
@@ -266,7 +271,9 @@ export default {
                 name:''
             },
             searchParam:{
-                show:false
+                show:false,
+
+
             },
             transferParam:{
                 show:false,

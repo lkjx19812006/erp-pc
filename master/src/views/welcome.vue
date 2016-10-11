@@ -174,6 +174,7 @@ export default {
                 let str = `${year}/${month}/${day}`
                 this.dateText = str.replace(/\b(\w)\b/g, "0$1")
             }
+
     },
 
     events: {
@@ -182,6 +183,9 @@ export default {
         },
       treeview_click:function(param){
             console.log(param);
+            if(param.children===undefined){
+                console.log('标签'+param.label+'是叶子节点了');
+            }
       }
     },
     ready() {
