@@ -5,8 +5,6 @@
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
-    <personalauth-model :param="personalParam" v-if="personalParam.show"></personalauth-model>
-    <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
 
@@ -145,8 +143,7 @@ import auditModel  from '../components/user/userAudit'
 import detailModel from '../components/user/userDetail'
 import searchModel from '../components/user/userSearch'
 import intentionModel from  '../components/user/userIntention'
-import personalauthModel from '../components/user/personalAuth'
-import companyauthModel from '../components/user/companyAuth'
+
 import pagination from '../components/pagination'
 import {
     getCount,
@@ -174,8 +171,7 @@ export default {
         detailModel,
         searchModel,
         intentionModel,
-        personalauthModel,
-        companyauthModel,
+
         auditModel
 
     },
@@ -266,14 +262,6 @@ export default {
             qualification:'',
             url:'/intention/'
         },
-            personalParam:{
-                show:false,
-                utype:1
-            },
-            companyParam:{
-                show:false,
-                ctype:1
-            },
           checked:false
 
         }
@@ -384,23 +372,8 @@ export default {
     },
     createIntention:function(){
         this.intentionParam.show = true;
-    },
-    personalAuth:function(item){
-
-        this.personalParam.show = true;
-        this.personalParam.id = item.id;
-        this.personalParam.index = item.index;
-        this.personalParam.ucomment = item.ucomment;
-        this.personalParam.utype = item.utype;
-
-    },
-    companyAuth:function(item){
-        this.companyParam.show = true;
-        this.companyParam.id = item.id;
-        this.companyParam.index = item.index;
-        this.companyParam.ccomment = item.ccomment;
-        this.companyParam.ctype = item.ctype;
     }
+
 
   },
   created() {

@@ -821,8 +821,10 @@ export const getCategoryData = ({ dispatch }, param) => { // 获取品种信息
 }
 
 export const saveBreed = ({ dispatch }, data) => { //新增药材信息
+
+  console.log(data);
     const data1 = {
-        categoryId: data.selected,
+        categoryId: data.selected.split(',')[1],
         name: data.name,
         code: data.code,
         pinyin: data.pinyin,
@@ -844,6 +846,9 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
     }).then((res) => {
         console.log('添加成功')
       data.id=res.json().result.id;
+      data.categoryId=data.selected.split(',')[1];
+      data.categoryName=data.selected.split(',')[0];
+      data.selected=null;
         dispatch(types.ADD_BREED_DATA, data);
         console.log(data)
     }, (res) => {
@@ -1715,6 +1720,21 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
         }else if(search=='advance'){
             url +='&advance='
         }
+       if(search=='userId'&&param[search]!==''){
+         url += '&userId='+param.userId
+       }else if(search=='userId'){
+         url +='&userId='
+       }
+       if(search=='customerId'&&param[search]!==''){
+         url += '&customerId='+param.customerId
+       }else if(search=='customerId'){
+         url +='&customerId='
+       }
+       if(search=='employeeId'&&param[search]!==''){
+         url += '&employeeId='+param.employeeId
+       }else if(search=='employeeId'){
+         url +='&employeeId='
+       }
     }
     Vue.http({
         method:'GET',
@@ -2296,6 +2316,7 @@ export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信�
         }
     }).then((res) => {
         console.log('添加成功')
+      param.id=res.json().result.id;
         dispatch(types.ADD_TRACKING_DATA,param);
     }, (res) => {
         console.log('fail');

@@ -200,9 +200,7 @@
                                  :options="initCitylist"
                                  placeholder="市"
                                  label="cname"
-
                        >
-
                        </v-select>
                          </div>
                      </div>
@@ -220,7 +218,6 @@
                          >
                             </v-select>
                            </div>
-
                        </div>
 
                      <div class="editpage-input">
