@@ -135,7 +135,8 @@
                                 link:alterInfo,
                                 url:'/customer/',
                                 key:'customerList'
-                                })">{{item.name}}</td>
+                                })"><img src="" style='float:left;' />{{item.name}}</td> 
+                                    <!-- 上面这个img显示新客户图标 -->
                         <td>{{item.category}}</td>
                         <td>{{item.classify | classify}}</td>
                         <td>{{item.employeeId}}</td>
