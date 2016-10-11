@@ -1,7 +1,7 @@
 <template>
 	<delete-model :param="delParam" v-if="!delmodel"></delete-model>
     <modify-model :param="modifyParam" v-if="!model"></modify-model>
-    <system-model :param="dialogParam" v-if="!editmodel"></system-model>
+    <system-model :param="dialogParam" v-if="dialogParam.show"></system-model>
 	<div class="order_search">
         <div class="clear">
             <div class="my_order col-xs-2">枚举类型</div>
@@ -170,6 +170,7 @@ export default {
         },
         newData:function(value){
              this.dialogParam.name=value;
+
              this.dialogParam.show=true;
              this.editmodel = false;
         },

@@ -7,7 +7,7 @@
             <div class="clear">
                 <div class="my_order col-xs-1">员工列表</div>
                 <div class="col-xs-9 my_order_search">
-                    <div class="name_search clearfix" style="border:none">
+                    <div class="name_search clearfix" style="border:none; float:left;">
                        <select  class="form-control" v-model="loadParam.orgId" @change="loadByCondition()">
                             <option selected value="">请选择业务员部门</option>
                             <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>

@@ -1,6 +1,6 @@
 <template>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con" v-show="param.show">
+    <div  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con" >
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -90,7 +90,7 @@ export default {
     },
     vuex: {
         actions: {
-            getSystemData,
+            // getSystemData,
             saveDataInfo
         }
     }

@@ -56,8 +56,8 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <!-- <button type="button" class="btn  btn-confirm"  @click="saveBreed(breedData,param.show = false)">保存</button> -->
-                    <button type="button" class="btn  btn-confirm"  @click="tipsParam.show=true">保存</button>
+                    <button type="button" class="btn  btn-confirm"  @click="saveBreed(breedData,param.show = false)">保存</button>
+                    <!-- <button type="button" class="btn  btn-confirm">保存</button> -->
                 </div>
             </form>
         </validator>
@@ -90,7 +90,7 @@ export default {
             tipsParam: {
                 show:false,
                 confirm:true,
-                name:"确认修改信息?",
+                name:"确认保存药品信息?",
                 callback:this.confirm
             }
         }
