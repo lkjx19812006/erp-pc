@@ -1,6 +1,5 @@
 <template>
-    <!-- create-model暂时不用 -->
-    <create-model :param="createParam" v-if="createParam.show"></create-model>
+
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <detail-model  :param="companyParam" v-if="companyParam.show"></detail-model>
     <search-model  :param="loadParam" ></search-model>
@@ -104,7 +103,7 @@
                                     <li @click="createCustomer({
                                         sub:$index,
                                         show:true,
-                                        id:item.id,
+                                        companyId:item.id,
                                         category:item.category,
                                         type:item.type,
                                         name:item.name,
@@ -119,8 +118,7 @@
                                         orgId:'',
                                         orgName:'',
                                         province:'',
-                                        city:'',
-                                        link:saveCreate,
+                                        city:''
                                         })">划转</li>
                                 </ul>
                             </div>
@@ -138,7 +136,6 @@
 import pagination from '../../components/pagination'
 import filter from '../../filters/filters'
 import detailModel  from '../serviceBaselist/companydetail'
-import createModel from '../serviceBaselist/breedDetailDialog/compTransfer'   //暂时不用
 import transferModel  from '../user/userTransfer'
 import searchModel from './companySearch'
 
@@ -150,8 +147,6 @@ import {
     getEnterpriseData,
     getCompanyDetail,
     getCompanyData,
-    saveCreate,
-    companyTransfer,
     getProvinceList
 } from '../../vuex/actions'
 export default {
@@ -159,7 +154,6 @@ export default {
         pagination,
         filter,
         detailModel,
-        createModel,   //暂时不用
         transferModel,
         searchModel
     },
@@ -172,8 +166,6 @@ export default {
             getEnterpriseData,
             getCompanyDetail,
             getCompanyData,
-            saveCreate,
-            companyTransfer,
             getProvinceList
         }
     },
@@ -196,12 +188,10 @@ export default {
                 id:'',
                 show:false
             },
-            createParam:{
-                show: false
-            },
+
             transferParam:{
                 show:false,
-                
+
             },
         }
     },
@@ -237,16 +227,6 @@ export default {
             this.loadParam.cur = input;
             this.getEnterpriseData(this.loadParam);
             this.getCompanyData(this.loadParam);
-        }
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
         }
     },
     filter: (filter, {})

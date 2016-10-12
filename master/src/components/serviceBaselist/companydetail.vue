@@ -1,6 +1,5 @@
 <template>
     <updatecompany-model :param="companylistParam" v-if="companylistParam.show"></updatecompany-model>
-    <create-model :param="createParam" v-if="createParam.show"></create-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <div class="breed_detail">
@@ -22,8 +21,7 @@
                           province:initCompanyDetail.province,
                           city:initCompanyDetail.city,
                           address:initCompanyDetail.address,
-                          classify:0,
-                          link:companyTransfer
+                          classify:0
                           })">提取为客户</button>
                 </h4>
                 <div class="panel-group">
@@ -242,7 +240,6 @@
 <script>
 import updatecompanyModel from '../serviceBaselist/breedDetailDialog/createContact'
 import filter from '../../filters/filters'
-import createModel from '../serviceBaselist/breedDetailDialog/compTransfer'
 import transferModel  from '../user/userTransfer'
 import deletebreedModel  from './breedDetailDialog/deleteBreedDetail'
 import {
@@ -251,15 +248,12 @@ import {
 import {
     alterCompany,
     createContact,
-    saveCreate,
-    companyTransfer,
     deleteCompanyContact,
 } from '../../vuex/actions'
 export default {
     components: {
         updatecompanyModel,
         filter,
-        createModel,
         deletebreedModel,
         transferModel
     },
@@ -276,9 +270,6 @@ export default {
             },
             companylistParam:{
                 show:false
-            },
-            createParam:{
-                show: false
             },
             transferParam:{
                 show:false,
@@ -304,8 +295,6 @@ export default {
         actions: {
             alterCompany,
             createContact,
-            saveCreate,
-            companyTransfer,
             deleteCompanyContact
         }
     },

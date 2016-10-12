@@ -600,30 +600,6 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
     });
 }
 
-export const companyTransfer = ({ dispatch }, param) => { //企业转客户
-    console.log('企业转客户');
-    console.log(param);
-    const data = {
-        id:param.id
-    }
-    Vue.http({
-        method: "POST",
-        url: apiUrl.enterpriseList + 'transform/' + data.id,
-        emulateHTTP: true,
-        body: data,
-        emulateJSON: false,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            'Content-Type': 'application/json;charset=UTF-8'
-        }
-    }).then((res) => {
-        console.log('企业划转成功')
-      console.log(res);
-        //dispatch(types.ADD_CONTACT_DATA, param)
-    }, (res) => {
-        console.log('fail');
-    });
-}
 
 
 export const getComponentData = ({ dispatch }, param) => { //成分
@@ -1233,15 +1209,25 @@ export const  saveCreate = ({ dispatch }, data) => { //新增客户列表
         "type":data.type,
         "tel":data.tel,
         "category":data.category,
+        "classify":data.classify,
         "email":data.email,
+        "userId":data.userId,
+        "companyId":data.companyId,
+        "number":data.number,
+        "category":data.category,
         "principal":data.principal,
         "bizScope":data.bizScope,
         "province":data.province,
         "city":data.city,
         "address":data.address,
         "comments":data.comments,
-        "id": data.id,
-        "contacts": data.contacts
+        "contacts": data.contacts,
+        "legalPerson":data.legalPerson,
+        "principal":data.principal,
+        "bizScope":data.bizScope,
+        "website":data.website,
+        "orgId":data.orgId,
+        "employeeId":data.employeeId
     }
     console.log(Cdata);
     Vue.http({
@@ -2148,41 +2134,6 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
     });
 }
 
-export const userTransferCustomer = ({ dispatch }, param) => { //会员转客户
-
-    const data = {
-        id: param.id,
-        main:param.main,
-        phone:param.phone,
-        tel:param.tel,
-        email:param.email,
-        qq:param.qq,
-        type:param.type,
-        fullname:param.fullname,
-        employeeId:param.employeeId,
-        orgId:param.orgId,
-        customerId:param.customerId,
-        status:1
-    }
-    console.log(data);
-    Vue.http({
-        method: 'POST',
-        url: apiUrl.userList + '/user/transformCustomer',
-        emulateHTTP: false,
-        //params: param.id,
-        body: data,
-        emulateJSON: false,
-        headers: {
-            "X-Requested-With":"XMLHttpRequest",
-            'Content-Type':'application/json;charset=UTF-8'
-        }
-    }).then((res) => {
-        console.log('划转成功')
-        //dispatch(types.UPDATE_USER_DATA, param);
-    }, (res) => {
-        console.log('fail');
-    })
-}
 
 export const createEmploy = ({ dispatch }, param) => { //新增员工信息
     console.log(param)

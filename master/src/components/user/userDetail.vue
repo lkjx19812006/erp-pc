@@ -171,19 +171,19 @@
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                         <thead>
-                                          <!-- <th>文件类型</th>
+                                          <th>文件类型</th>
                                           <th>路径</th>
-                                          <th>描述<th> -->
+                                          <th>描述<th>
                                         </thead>
                                         <tbody>
                                             <tr v-for="item in initIdentify.files">
-                                                <!-- <td>{{item.fileType}}</td> -->
+                                                 <td>{{item.fileType}}</td>
                                                 <td>
                                                   <div class="thumbnail col-md-3 col-sm-4 col-xs-6">
-                                                    <img v-bind:src="{{item.path}}">
+                                                    <img v-bind:src="item.path">
                                                   </div>
                                                 </td>
-                                               <!--  <td>{{item.description}}</td> -->
+                                                 <td>{{item.description}}</td>
 
                                             </tr>
                                         </tbody>
@@ -214,19 +214,19 @@
                                   <div class="panel-body panel-set">
                                       <table class="table  contactSet">
                                         <thead>
-                                          <!-- <th>文件类型</th>
+                                           <th>文件类型</th>
                                           <th>路径</th>
-                                          <th>描述<th> -->
+                                          <th>描述<th>
                                         </thead>
                                         <tbody>
                                             <tr v-for="item in initIdentify.files">
-                                                <!-- <td>{{item.fileType}}</td> -->
+                                                 <td>{{item.fileType}}</td>
                                                 <td>
                                                   <div class="thumbnail col-md-3 col-sm-4 col-xs-6">
-                                                    <img v-bind:src="{{item.path}}">
+                                                    <img v-bind:src="item.path">
                                                   </div>
                                                 </td>
-                                               <!--  <td>{{item.description}}</td> -->
+                                                 <td>{{item.description}}</td>
 
                                             </tr>
                                         </tbody>
