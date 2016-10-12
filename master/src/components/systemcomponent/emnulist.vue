@@ -1,6 +1,6 @@
 <template>
 	<delete-model :param="delParam" v-if="!delmodel"></delete-model>
-    <modify-model :param="modifyParam" v-if="!model"></modify-model>
+    <modify-model :param="modifyParam" v-if="modifyParam.show"></modify-model>
     <system-model :param="dialogParam" v-if="dialogParam.show"></system-model>
 	<div class="order_search">
         <div class="clear">
@@ -62,10 +62,10 @@
             </thead>
             <tbody>
               <tr v-for="item in initSystemlist">
-                <td>{{item.code | systemcode}}</td>
+                <td>{{item.code }}</td>
                 <td>{{item.name}}</td>
-                <td>{{item.type | systemtype}}</td>
-                <td>{{item.desc | systemdesc}}</td>
+                <td>{{item.typedesc }}</td>
+                <td>{{item.desc }}</td>
                 <td  @click="editData($index)">
                   <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
                    <div class="component_action" v-show='item.show' transition="expand">
@@ -131,7 +131,6 @@ export default {
                 show:false
             },
             show:true,
-            model:true,
             editmodel:true,
             delmodel:true,
             sel:''
@@ -170,14 +169,12 @@ export default {
         },
         newData:function(value){
              this.dialogParam.name=value;
-
              this.dialogParam.show=true;
              this.editmodel = false;
         },
         modify:function(id){
           	this.modifyParam.id=id;
             this.modifyParam.show=true;
-            this.model=false;
             this.$broadcast('getParam');
         },
          del:function(sub,id){

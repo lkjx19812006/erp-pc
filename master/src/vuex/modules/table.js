@@ -460,21 +460,57 @@ const mutations = {
         state.clientDetail = data;
     },
     [CUSTOMER_ADD_DATA](state, data) { //新增客户
+
+      if(data.employee==data.employeeId||data.org==data.orgId){
+
         state.basicBaseList.customerList.unshift({
-            "name": data.name,
-            "type": data.type,
-            "tel": data.tel,
-            "category": data.category,
-            "email": data.email,
-            "principal": data.principal,
-            "bizScope": data.bizScope,
-            "province": data.province,
-            "city": data.city,
-            "address": data.address,
-            "comments": data.comments,
-            "id": data.id,
-            "show": false
+          address:data.address,
+          bizScope:data.bizScope,
+          category:data.category,
+          city:data.city,
+          cityName:data.cityName,
+          classify:data.classify,
+          classifyDesc:data.classifyDesc,
+          comments:data.comments,
+          country:data.country,
+          countryName:data.countryName,
+          email:data.email,
+          id:data.id,
+          mainBiz:data.mainBiz,
+          mainEmail:data.email,
+          mainPhone:data.phone,
+          name:data.name,
+          number:data.number,
+          orgId:data.orgId,
+          principal:data.principal,
+          province:data.province,
+          provinceName:data.provinceName,
+          source:4,
+          sourceType:'业务录入',
+          tel:data.tel,
+          type:data.type,
+          typeDesc:data.typeDesc,
+          show: false
         })
+
+      }
+
+
+      if(data.sub!='undefined'){
+        state.basicBaseList[data.key][data.sub][data.keyname]=1;
+
+      }
+      if(data.detail){
+        state[data.detail].customerId=data.id;
+      }
+
+
+
+
+
+
+
+
     },
     [CUSTOMER_UPDATE_DATA](state, data) { //修改客户列表信息
         for (var key in data) {

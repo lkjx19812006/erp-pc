@@ -111,7 +111,7 @@ export const getSystemData = ({ dispatch }, param) => { //枚举类型
     param.loading = true;
     Vue.http({
         method: 'GET',
-        url: apiUrl.dataBaseList + '/query?type&page=' + param.cur + '&pageSize=15',
+        url: apiUrl.dataBaseList + '/query?type=&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -1227,7 +1227,8 @@ export const  saveCreate = ({ dispatch }, data) => { //新增客户列表
         "bizScope":data.bizScope,
         "website":data.website,
         "orgId":data.orgId,
-        "employeeId":data.employeeId
+        "employeeId":data.employeeId,
+        "country":data.country
     }
     console.log(Cdata);
     Vue.http({
@@ -1242,6 +1243,7 @@ export const  saveCreate = ({ dispatch }, data) => { //新增客户列表
         }
     }).then((res) => {
         console.log('添加成功')
+        data.id=res.json().result.customerId;
         dispatch(types.CUSTOMER_ADD_DATA, data);
     }, (res) => {
         console.log('fail');

@@ -30,8 +30,7 @@
                                         province:'',
                                         city:'',
                                         address:'',
-                                        employeeId:'',
-                                        employeeName:'',
+                                        employee:100004,
                                         orgId:'',
                                         orgName:'',
                                         province:'',
@@ -86,7 +85,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        
+
                     </tr>
                     <tr v-for="item in initCustomerlist">
                         <td  @click.stop="">
@@ -103,7 +102,7 @@
                                 link:alterInfo,
                                 url:'/customer/',
                                 key:'customerList'
-                                })"><img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>{{item.name}}</td> 
+                                })"><img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>{{item.name}}</td>
                                     <!-- 上面这个img显示新客户图标 -->
                         <td>{{item.category}}</td>
                         <!-- <td>{{item.classify | classify}}</td> -->
@@ -333,7 +332,7 @@ export default {
            }
         },
         onlyselected:function(sub,id){
-            
+
             //this.id = id;
 
             const _this=this;
