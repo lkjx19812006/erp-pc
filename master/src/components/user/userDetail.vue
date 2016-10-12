@@ -3,6 +3,8 @@
   <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
   <personalauth-model :param="personalParam" v-if="personalParam.show"></personalauth-model>
   <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
+  <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
+  <tipsdialog-model :param="tipParam" v-if="tipParam.show"></tipsdialog-model>
 
   <div class="client_body">
       <div @click="param.show=false" class="top-title">
@@ -70,6 +72,7 @@
                                           会员意向（{{initUserDetail.intention.arr.length}}）
                                         </a>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createIntention()">新建</button>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="intentionAudit()">批量审核</button>
                                       </h4>
 
                                 </div>
@@ -78,21 +81,28 @@
                                         <table class="table  contactSet">
 
                                           <thead>
+                                            <th>
+                                              <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!initUserDetail.intention.checked,'checkbox_select':initUserDetail.intention.checked}" id="client_ids"  @click="checkedAll()"></label></th>
                                             <th>品种</th>
                                             <th>产地</th>
                                             <th>规格</th>
                                             <th>数量</th>
                                             <th>价格</th>
                                             <th>单位</th>
+                                            <th>审核状态</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initUserDetail.intention.arr">
+                                                <td  @click.stop="">
+                                                  <label v-if="item.validate!=1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index,item.id)" ></label>
+                                                </td>
                                                 <td>{{item.breedName}}</td>
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
+                                                <td>{{item.validate | audit}}</td>
                                                 <td  @click="clickShow($index,{
                                                   concrete:'intention'
                                                   })">
@@ -371,11 +381,14 @@
 
 </template>
 <script>
-
+import filter from '../../filters/filters'
 import trackingModel from  './userTracking'
 import intentionModel from  './userIntention'
 import personalauthModel from './personalAuth'
 import companyauthModel from './companyAuth'
+import intentionauditModel from'./intentionAudit'
+import tipsdialogModel  from '../tips/tipDialog'
+
 
 import {
   initClientDetail,
@@ -395,7 +408,9 @@ export default {
         personalauthModel,
         trackingModel,
         intentionModel,
-        companyauthModel
+        companyauthModel,
+        intentionauditModel,
+        tipsdialogModel
     },
     props:['param'],
     data(){
@@ -439,6 +454,12 @@ export default {
           qualification:'',
           url:'/intention/'
         },
+        intentionAuditParam:{
+          show:false,
+          arr:[],
+          indexs:[],
+          validate:0
+        },
         detailParam:{
           show:false
         },
@@ -450,6 +471,11 @@ export default {
         companyParam:{
           show:false,
           ctype:1
+        },
+        tipParam:{
+          show:false,
+          alert:true,
+          name:'请先选择意向'
         }
 
       }
@@ -471,6 +497,59 @@ export default {
       modifyUser:function(item){
         this.$parent.modifyUser(item);
       },
+
+      onlyselected:function(index,id){
+        console.log('index='+index+',id='+id);
+        const _this=this;
+        this.$store.state.table.userDetail.intention.arr[index].checked = !this.$store.state.table.userDetail.intention.arr[index].checked;
+        if(!this.$store.state.table.userDetail.intention.arr[index].checked){
+          this.$store.state.table.userDetail.intention.checked = false;
+        }else{
+          this.$store.state.table.userDetail.intention.checked = true;
+          this.$store.state.table.userDetail.intention.arr.forEach(function(item){
+            if(!item.checked&&item.validate!=1){
+              _this.$store.state.table.userDetail.intention.checked = false;
+            }
+          })
+        }
+
+      },
+      checkedAll:function(){
+        this.$store.state.table.userDetail.intention.checked = !this.$store.state.table.userDetail.intention.checked;
+        if(this.$store.state.table.userDetail.intention.checked){
+                this.$store.state.table.userDetail.intention.arr.forEach(function(item){
+                  if(item.validate!=1){
+                    item.checked=true;
+                  }else{
+                    item.checked=false;
+                  }
+
+                    
+             })
+           }else{
+                this.$store.state.table.userDetail.intention.arr.forEach(function(item){
+                    item.checked=false;
+             })
+           }
+      },
+      intentionAudit:function(){
+        const _this = this;
+        this.intentionAuditParam.arr = [];
+        this.intentionAuditParam.indexs = [];
+        for(let i=0;i<this.initUserDetail.intention.arr.length;i++){
+          if(this.initUserDetail.intention.arr[i].checked){
+            this.intentionAuditParam.arr.push(this.initUserDetail.intention.arr[i].id);
+            this.intentionAuditParam.indexs.push(i);
+          }
+        }
+        
+        console.log(this.intentionAuditParam.arr);
+        if(this.intentionAuditParam.arr.length === 0){
+          this.tipParam.show = true;
+        }else{
+          this.intentionAuditParam.show = true;
+        }
+      }, 
       enfoldment:function(param){
 
         if(this.$store.state.table.userDetail[param.crete].arr.length==0){
@@ -589,7 +668,6 @@ export default {
         },
 
         getUserDetail:function(){
-          console.log('papapapa');
           detailParam.id = initUserDetail.id;
           this.getUserDetail(detailParam);
 
@@ -597,7 +675,7 @@ export default {
 
     },
 
-
+  filter:(filter,{})
 
 
 }
@@ -733,5 +811,27 @@ section article {
 }
 .client-image {
     display: inline-block;
+}
+.checkbox_unselect{
+    background-image: url(/static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+}
+.checkbox_select{
+    background-image: url(/static/images/selected.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
 }
 </style>

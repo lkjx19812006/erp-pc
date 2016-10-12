@@ -1966,6 +1966,7 @@ export const getUserDetail = ({ dispatch }, param) => {  //会员详情
         console.log(userDetail);
         if(userDetail.intention.length>0){
             userDetail.intention.forEach(function(item){
+                item.checked = false;
                 item.show = false;
             })
         }
@@ -1979,6 +1980,7 @@ export const getUserDetail = ({ dispatch }, param) => {  //会员详情
         var intention = userDetail.intention;
         userDetail.intention ={};
         userDetail.intention.show = false;
+        userDetail.intention.checked = false;
         userDetail.intention.arr = intention;
 
         var tracking = userDetail.tracking;
@@ -2060,7 +2062,7 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
     })
 }
 
-export const batchUpdateUserInfo = ({ dispatch }, param) => { //批量修改用户信息
+export const batchUpdateUserInfo = ({ dispatch }, param) => { //批量修改会员信息
     const updatedata = {
         userIds: param.userIds,
     }
@@ -2092,7 +2094,32 @@ export const batchUpdateUserInfo = ({ dispatch }, param) => { //批量修改用�
     })
 }
 
+export const batchUserIntentionAudit = ({ dispatch }, param) => { //批量审核会员意向
+    const updatedata = {
+        ids: param.arr,
+        validate: param.validate
+    }
+    
 
+    console.log(updatedata);
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.userList + '/intention/validates',
+        emulateHTTP: false,
+        body: updatedata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With":"XMLHttpRequest",
+            'Content-Type':'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.show=false;
+        console.log('会员意向审核成功');
+        dispatch(types.BATCH_USER_INTENTION_AUDIT, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 
 export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
     console.log('文件上传');

@@ -44,6 +44,7 @@ import {
    USER_DATA,
    UPDATE_USER_DATA,
    BATCH_UPDATE_USER_DATA,
+   BATCH_USER_INTENTION_AUDIT,
    ORG_DATA,
    QUICK_EDIT,
    FILE_DATA,
@@ -619,7 +620,7 @@ const mutations = {
 
     },
 
-    [BATCH_UPDATE_USER_DATA](state, data) { // 会员更新
+    [BATCH_UPDATE_USER_DATA](state, data) { // 批量审核会员
         for(var i=0;i<data.indexs.length;i++){
            var k = data.indexs[i];
            state.basicBaseList.userList[k].checked = false;
@@ -633,6 +634,16 @@ const mutations = {
                 }
         }
 
+
+    },
+
+    [BATCH_USER_INTENTION_AUDIT](state, data) { // 批量审核会员意向
+        console.log(data.indexs);
+        for(let i=0;i<data.indexs.length;i++){
+          let k = data.indexs[i];
+          state.userDetail.intention.arr[k].validate = data.validate;
+          state.userDetail.intention.arr[k].checked = false;
+        }
 
     },
 

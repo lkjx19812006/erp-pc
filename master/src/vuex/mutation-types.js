@@ -58,6 +58,7 @@ export const USER_DATA = 'USER_DATA'   //会员列表
 export const QUICK_EDIT = 'QUICK_EDIT'
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA'   //修改会员信息
 export const BATCH_UPDATE_USER_DATA = 'BATCH_UPDATE_USER_DATA'  //批量修改会员信息
+export const BATCH_USER_INTENTION_AUDIT = 'BATCH_USER_INTENTION_AUDIT'  //批量审核会员意向
 export const USER_DETAIL_DATA = 'USER_DETAIL_DATA'   //会员详情
 
 export const ORG_DATA = 'ORG_DATA'    //部门列表
