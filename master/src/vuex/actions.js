@@ -1003,6 +1003,7 @@ export const specDel = ({ dispatch }, param) => { //删除药材相关信息
 
 export const getClientList = ({ dispatch }, param) => {  //客户信息列表与搜索
     param.loading = true;
+    console.log(param);
     var clienturl = apiUrl.clientList+'/customer/?'+'&page=' + param.cur + '&pageSize=15';
     for(var search in param){
         if(search=='name'&&param[search]!==''){
@@ -1029,7 +1030,7 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         if(search=='province'&&param[search]!==''){
             clienturl += '&province='+param.province
         }
-        if(search=='city'&&param[search]!==''){
+        if(search=='city'&&param[search]!==''&&param[search]!==undefined){
             clienturl += '&city='+param.city
         }
     }

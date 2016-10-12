@@ -100,7 +100,7 @@
                         <th>客户来源</th>
                         <th>名称</th>
                         <th>分类码</th>
-                        <th>所属分类</th>
+                        <!-- <th>所属分类</th> -->
                         <th>所属业务员</th>
                         <th>负责人</th>
                         <th>经营范围</th>
@@ -124,8 +124,8 @@
                         <td  @click.stop="">
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
-                        <td>{{item.type}}</td>
-                        <td>{{item.classify}}</td>
+                        <td>{{item.typeDesc}}</td>
+                        <td>{{item.classifyDesc}}</td>
                         <td>{{item.sourceType}}</td>
                         <td class="underline"  @click="clickOn({
                                 id:item.id,
@@ -137,8 +137,8 @@
                                 key:'customerList'
                                 })">{{item.name}}</td>
                         <td>{{item.category}}</td>
-                        <td>{{item.classify | classify}}</td>
-                        <td>{{item.employeeId}}</td>
+                        <!-- <td>{{item.classify | classify}}</td> -->
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
                         <td>{{item.tel}}</td>

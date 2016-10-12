@@ -217,8 +217,13 @@ export default {
         }
     },
     created() {
+        this.param.province = '';
+        this.param.city = '';
+        this.param.provinceName = '';
+        this.param.cityName = '';
         //this.getClientList(this.loadParam);
         this.getProvinceList(this.provinceParam);
+
     }
 }
 </script>
