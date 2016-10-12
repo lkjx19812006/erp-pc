@@ -1,6 +1,5 @@
 <template>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <create-model :param="createParam" v-if="createParam.show"></create-model>
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
@@ -99,7 +98,7 @@
                                                 key:'userList'
                                                 },item.show=false)">编辑</li>
                                     <li v-if="item.transStatus==0" @click="userToClient({
-                                                id:item.id,
+                                                userId:item.id,
                                                 main:item.main,
                                                 phone:item.phone,
                                                 tel:item.tel,
@@ -112,7 +111,6 @@
                                                 orgId:'',
                                                 status:item.status,
                                                 show:true,
-                                                link:deleteInfo,
                                                 url:'/user/',
                                                 key:'userList'
                                                 },item.show=false)">划转</li>
@@ -136,7 +134,6 @@
 <script>
 import tipsdialogModel  from '../components/tips/tipDialog'
 import calendar from '../components/calendar/vue.datepicker'
-import createModel  from '../components/user/userCreate'
 import alterinfoModel  from '../components/user/userUpdate'
 import transferModel  from '../components/user/userTransfer'
 import auditModel  from '../components/user/userAudit'
@@ -165,7 +162,6 @@ export default {
         tipsdialogModel,
         pagination,
         calendar,
-        createModel,
         alterinfoModel,
         transferModel,
         detailModel,
@@ -200,9 +196,6 @@ export default {
                 show:false,
                 alert:true,
                 name:"请选择会员"
-            },
-            createParam:{
-                show:false
             },
             alterParam:{
                 show:false,
