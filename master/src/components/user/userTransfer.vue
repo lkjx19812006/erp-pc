@@ -405,6 +405,10 @@
         this.getContacts('/crm/api/v1/user/' + this.param.companyId);
       }
       this.getProvinceList({id: 7});
+      if(this.param.loading!==undefined){
+        console.log('无需查询');
+        this.loading = this.param.loading;
+      }
 
     }
   }

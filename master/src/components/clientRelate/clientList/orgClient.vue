@@ -19,6 +19,7 @@
                     })">划转</button>
                 <button class="new_btn transfer" @click="createCustomer({
                                         show:true,
+                                        loading:false,
                                         id:'',
                                         category:'',
                                         type:'',
