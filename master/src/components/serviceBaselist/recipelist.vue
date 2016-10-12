@@ -134,7 +134,7 @@ export default {
 </script>
 <style scoped>
 .name_search{
-    line-height: 10px;
+    line-height: 28px;
     margin-right:0;
 }
 </style>

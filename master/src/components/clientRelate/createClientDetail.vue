@@ -29,6 +29,13 @@
                                     <label class="editlabel">{{param.webchart}}</label>
                                     <input type="text" class="form-control edit-input"  id="wechart" v-model="param.wechart" v-validate:wechart="['required']" />
                                 </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">是否主要</label>
+                                    <select class="form-control edit-input" v-model='param.main'>
+                                         <option value="0">否</option>
+                                         <option value="1">是</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input">
@@ -49,15 +56,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="editpage-input clearfix">
-                            <label>是否主要</label>
-                            <div  class="clerafix ">
-                                <div class="pull-left role clerafix">
-                                     <input type="checkbox" class="checkbox_unselect" id="client_ids"   v-model="param.main" />
-                                     <label  for="client_ids">主要</label>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </section>
                 </div>
                 <div class="edit_footer">

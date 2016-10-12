@@ -7,20 +7,20 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model> -->
     <!-- 我的客户 -->
-    <div class="myOrder" v-show="$route.path.split('=')[1]==0">
+    <div class="myOrder" v-if="$route.path.split('=')[1]==0">
          <my-client></my-client>
     </div>
     <!-- 部门客户 -->
-    <div class="myOrder" v-show="$route.path.split('=')[1]==1">
+    <div class="myOrder" v-if="$route.path.split('=')[1]==1">
         <org-client></org-client>
     </div>
     <!-- 所有客户 -->
-    <div class="myOrder" v-show="$route.path.split('=')[1]==2">
+    <div class="myOrder" v-if="$route.path.split('=')[1]==2">
         <all-client></all-client>
     </div>
 
     <!-- 潜在客户 -->
-    <div class="myOrder" v-show="$route.path.split('=')[1]==3">
+    <div class="myOrder" v-if.0="$route.path.split('=')[1]==3">
         <potential-client></potential-client>
     </div>
 
@@ -419,7 +419,7 @@ export default {
         }
     },
     created() {
-        this.getClientList(this.loadParam);
+        //this.getClientList(this.loadParam);
     },
     //filter:(filter,{})
 }

@@ -8,40 +8,7 @@
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">客户</div>
-            <!-- <div class="filter_search clearfix col-xs-7" >
-                <dl class="clearfix">
-                    <dt>类型：</dt>
-                    <dd>
-                        <select class="form-control" v-model="loadParam.type" @change="searchClient()">
-                            <option value="">请选择类型</option>
-                            <option value="0">个人</option>
-                            <option value="1">企业</option>
-                        </select>
-                    </dd>
-                </dl>
-                <dl class="clearfix">
-                    <dt>分类：</dt>
-                    <dd>
-                        <select class="form-control"  v-model="loadParam.classify" @change="searchClient()">
-                            <option value="">请选择分类</option>
-                            <option value="0">买</option>
-                            <option value="1">卖</option>
-                            <option value="2">买卖</option>
-                        </select>
-                    </dd>
-                </dl>
-                <dl class="clearfix">
-                    <dt>状态：</dt>
-                    <dd>
-                        <select class="form-control" v-model="loadParam.status" @change="searchClient()">
-                            <option value="">请选择状态</option>
-                            <option value="0">无效</option>
-                            <option value="1">有效</option>
-                        </select>
-                    </dd>
-                </dl>
-            </div> -->
+            <div class="my_enterprise col-xs-1">所有客户</div>
             <div class="right col-xs-4">
                 <button class="new_btn transfer" @click="clientTransfer({
                     arr:[],
@@ -251,6 +218,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                link:'/customer/',
                 name:'',
                 phone:'',
                 employeeId:'',

@@ -999,7 +999,7 @@ export const specDel = ({ dispatch }, param) => { //删除药材相关信息
 export const getClientList = ({ dispatch }, param) => {  //客户信息列表与搜索
     param.loading = true;
     console.log(param);
-    var clienturl = apiUrl.clientList+'/customer/?'+'&page=' + param.cur + '&pageSize=15';
+    var clienturl = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
     for(var search in param){
         if(search=='name'&&param[search]!==''){
             clienturl += '&name='+param.name
@@ -1051,6 +1051,119 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
             param.loading = false;
         })
 }
+
+export const getMyClientList = ({ dispatch }, param) => {  //业务员的(我的)客户信息列表与搜索
+    param.loading = true;
+    console.log(param);
+    var clienturl = apiUrl.clientList+'/customer/employeeDistributed?'+'&page=' + param.cur + '&pageSize=15';
+    for(var search in param){
+        if(search=='name'&&param[search]!==''){
+            clienturl += '&name='+param.name
+        }
+        if(search=='type'&&param[search]!==''){
+            clienturl += '&type='+param.type
+        }
+        if(search=='classify'&&param[search]!==''){
+            clienturl += '&classify='+param.classify
+        }
+        if(search=='status'&&param[search]!==''){
+            clienturl += '&status='+param.status
+        }
+        if(search=='phone'&&param[search]!==''){
+            clienturl += '&phone='+param.phone
+        }
+        if(search=='employeeId'&&param[search]!==''){
+            clienturl += '&employeeId='+param.employeeId
+        }
+        if(search=='bizScope'&&param[search]!==''){
+            clienturl += '&bizScope='+param.bizScope
+        }
+        if(search=='province'&&param[search]!==''){
+            clienturl += '&province='+param.province
+        }
+        if(search=='city'&&param[search]!==''&&param[search]!==undefined){
+            clienturl += '&city='+param.city
+        }
+
+    }
+    Vue.http({
+        method:'GET',
+        url:clienturl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        }).then((res) => {
+           var client = res.json().result.list;
+           for (var i in client){
+                client[i].checked = false;
+                client[i].show =false;
+           }
+            dispatch(types.CUSTOMER_DATA, client);
+            param.all = res.json().result.pages;
+            param.loading = false;
+        }, (res) => {
+            console.log('fail');
+            param.loading = false;
+        })
+}
+
+export const getOrgClientList = ({ dispatch }, param) => {  //部门客户信息列表与搜索
+    param.loading = true;
+    console.log(param);
+    var clienturl = apiUrl.clientList+'/customer/orgDistributed?'+'&page=' + param.cur + '&pageSize=15';
+    for(var search in param){
+        if(search=='name'&&param[search]!==''){
+            clienturl += '&name='+param.name
+        }
+        if(search=='type'&&param[search]!==''){
+            clienturl += '&type='+param.type
+        }
+        if(search=='classify'&&param[search]!==''){
+            clienturl += '&classify='+param.classify
+        }
+        if(search=='status'&&param[search]!==''){
+            clienturl += '&status='+param.status
+        }
+        if(search=='phone'&&param[search]!==''){
+            clienturl += '&phone='+param.phone
+        }
+        if(search=='employeeId'&&param[search]!==''){
+            clienturl += '&employeeId='+param.employeeId
+        }
+        if(search=='bizScope'&&param[search]!==''){
+            clienturl += '&bizScope='+param.bizScope
+        }
+        if(search=='province'&&param[search]!==''){
+            clienturl += '&province='+param.province
+        }
+        if(search=='city'&&param[search]!==''&&param[search]!==undefined){
+            clienturl += '&city='+param.city
+        }
+
+    }
+    Vue.http({
+        method:'GET',
+        url:clienturl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        }).then((res) => {
+           var client = res.json().result.list;
+           for (var i in client){
+                client[i].checked = false;
+                client[i].show =false;
+           }
+            dispatch(types.CUSTOMER_DATA, client);
+            param.all = res.json().result.pages;
+            param.loading = false;
+        }, (res) => {
+            console.log('fail');
+            param.loading = false;
+        })
+}
+
 export const getEmployeeList = ({ dispatch }, param) => {  //员工列表以及搜索
     param.loading = true;
     var apiurl = apiUrl.clientList+'/employee/?'+'&page=' + param.cur + '&pageSize=14';
