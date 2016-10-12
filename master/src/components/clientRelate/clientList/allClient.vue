@@ -17,39 +17,6 @@
                     orgId:'',
                     show:true
                     })">划转</button>
-                <button class="new_btn transfer" @click="createCustomer({
-                                        show:true,
-                                        id:'',
-                                        category:'',
-                                        type:'',
-                                        name:'',
-                                        tel:'',
-                                        principal:'',
-                                        bizScope:'',
-                                        province:'',
-                                        city:'',
-                                        address:'',
-                                        employeeId:'',
-                                        employeeName:'',
-                                        orgId:'',
-                                        orgName:'',
-                                        province:'',
-                                        city:'',
-                                        contacts:[
-                                            {
-                                                name:'',
-                                                position:'',
-                                                department:'',
-                                                phone:'',
-                                                tel:'',
-                                                email:'',
-                                                qq:'',
-                                                wechart:'',
-                                                main:'',
-                                            }
-                                        ],
-                                        link:saveCreate,
-                                        })">新建</button>
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
@@ -85,7 +52,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        
+
                     </tr>
                     <tr v-for="item in initCustomerlist">
                         <td  @click.stop="">
@@ -102,7 +69,7 @@
                                 link:alterInfo,
                                 url:'/customer/',
                                 key:'customerList'
-                                })"><img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>{{item.name}}</td> 
+                                })"><img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>{{item.name}}</td>
                                     <!-- 上面这个img显示新客户图标 -->
                         <td>{{item.category}}</td>
                         <!-- <td>{{item.classify | classify}}</td> -->
@@ -332,7 +299,7 @@ export default {
            }
         },
         onlyselected:function(sub,id){
-            
+
             //this.id = id;
 
             const _this=this;

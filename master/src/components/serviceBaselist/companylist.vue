@@ -88,24 +88,28 @@
                     <tr v-for="item in initEnterpriselist">
                         <td>{{item.category | categorystate}}</td>
                         <td>{{item.type}}</td>
-                        <td  class="underline"  @click="companyDetail(item.id)">{{item.name}}</td>
+                        <td  class="underline"  @click="companyDetail(item.id,$index)">{{item.name}}</td>
                         <td>{{item.tel | telstate}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.address}}</td>
-                        <td>{{item.transform}}</td>
-                        <td @click="companyClick($index)">
+                        <td v-if="!item.transform">否</td>
+                        <td v-if="item.transform">是</td>
+                        <td  >
+                          <div v-if="!item.transform" @click="companyClick($index)">
                             <img height="24" width="24" src="../../../static/images/default_arrow.png" />
                             <div class="breed_action" v-show="item.show">
                                 <ul>
                                     <li @click="createCustomer({
+                                        keyname:'transform',
                                         sub:$index,
                                         show:true,
+                                        key:'enterpriseList',
                                         companyId:item.id,
                                         category:item.category,
-                                        type:item.type,
+                                        type:'1,企业',
                                         name:item.name,
                                         tel:item.tel,
                                         principal:item.principal,
@@ -117,10 +121,11 @@
                                         employeeName:'',
                                         orgId:'',
                                         orgName:'',
-                                        province:'',
-                                        city:''
+                                        countryId:7,
+                                        countryName:'中国'
                                         })">划转</li>
                                 </ul>
+                            </div>
                             </div>
                         </td>
                     </tr>
@@ -200,9 +205,10 @@ export default {
         this.getProvinceList(this.loadParam)
     },
     methods: {
-        companyDetail:function(id){
+        companyDetail:function(id,index){
             this.companyParam.show = true;
             this.companyParam.id = id;
+            this.companyParam.sub=index;
             this.getCompanyDetail(this.companyParam);
         },
         multiSearch:function(){
@@ -219,6 +225,7 @@ export default {
         },
         createCustomer:function(initEnterpriselist){
             this.transferParam=initEnterpriselist;
+          this.transferParam.show=true;
             console.log(this.transferParam);
         }
     },

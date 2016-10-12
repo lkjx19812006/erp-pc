@@ -31,13 +31,13 @@
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                 <label class="editlabel">类型</label>
                 <select class="form-control edit-input" v-model="param.type">
-                  <option value="0">个人</option>
-                  <option value="1">企业</option>
+                  <option value='0,个人'>个人</option>
+                  <option value='1,企业'>企业</option>
                 </select>
               </div>
             </div>
 
-            <div class="clearfix" v-if="param.type==1">
+            <div class="clearfix" v-if="param.type=='1,企业'">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                 <label>法人</label>
                 <input type="text" id="legalPerson" class="form-control" v-model="param.legalPerson"
@@ -50,7 +50,7 @@
               </div>
             </div>
 
-            <div class="clearfix" v-if="param.type==1">
+            <div class="clearfix" v-if="param.type=='1,企业'">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                 <label>编码</label>
                 <select class="form-control edit-input" v-model="param.number">
@@ -61,8 +61,10 @@
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                 <label class="editlabel">类型</label>
                 <select class="form-control edit-input" v-model="param.category">
-                  <option value="0">个人</option>
-                  <option value="1">企业</option>
+                  <option value="HF">保健品厂</option>
+                  <option value="MF">药厂</option>
+                  <option value="CF">化妆品厂</option>
+                  <option value="FF">食品厂</option>
                 </select>
               </div>
             </div>
@@ -71,9 +73,9 @@
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                 <label>分类码</label>
                 <select class="form-control edit-input" id="classify" v-model="param.classify" v-validate:classify="['required']">
-                  <option value="1">买</option>
-                  <option value="2">卖</option>
-                  <option value="3">买卖</option>
+                  <option value="1,'买'">买</option>
+                  <option value="2,'卖'">卖</option>
+                  <option value="3,'买卖'">买卖</option>
                 </select>
 
               </div>
@@ -95,16 +97,41 @@
                 <input type="email" class="form-control" v-model="param.email"/>
               </div>
             </div>
+
+            <div class="clearfix"  >
+              <div class="client-detailInfo pull-left col-md-6 col-xs-12" >
+                <label>经营范围</label>
+                <input type="text" class="form-control" v-model="param.bizScope"/>
+              </div>
+              <div class="client-detailInfo pull-right col-md-6 col-xs-12" v-if="!param.countryId">
+                <label>所在国家</label>
+                <v-select
+                  :debounce="250"
+                  :value.sync="country"
+                  :on-change="selectProvince"
+                  :options="countryArr"
+                  placeholder="国家"
+                  label="cname"
+                >
+                </v-select>
+              </div>
+
+            </div>
+
+
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                 <label>所在省</label>
+                <input type="text" v-if="!country.id" class="form-control edit-input" disabled="disabled"
+                       placeholder="请先选择一个国家"/>
                 <v-select
                   :debounce="250"
                   :value.sync="province"
                   :on-change="selectCity"
-                  :options="initProvince"
+                  :options="provinceArr"
                   placeholder="省"
                   label="cname"
+                  v-if="country.id"
                 >
                 </v-select>
               </div>
@@ -116,7 +143,7 @@
                 <v-select
                   :debounce="250"
                   :value.sync="city"
-                  :options="initCitylist"
+                  :options="cityArr"
                   placeholder="市"
                   label="cname"
                   v-if="province.cname"
@@ -136,20 +163,7 @@
               </div>
             </div>
 
-            <div class="clearfix">
-              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>经营范围</label>
-                <input type="text" class="form-control" v-model="param.bizScope"/>
-              </div>
-              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                <label>分类</label>
-                <select class="form-control edit-input" v-model='param.classify'>
-                  <option value="0">买</option>
-                  <option value="1">卖</option>
-                  <option value="2">买卖</option>
-                </select>
-              </div>
-            </div>
+
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                 <label>备注</label>
@@ -161,7 +175,7 @@
               </div>
             </div>
 
-            <div v-if="!contacts[0].name">
+            <div v-if="contactshow">
 
               <div style="margin-top:25px;margin-left:30px;margin-bottom:15px;">
                 <img src="/static/images/contact@2x.png" style="display:inline"/>
@@ -234,15 +248,9 @@
 <script>
   import selectModel  from './employeeOrOrg.vue'
   import vSelect from '../tools/vueSelect/components/Select'
-  import {
 
-    initProvince,
-    initCitylist
-  } from '../../vuex/getters'
   import {
-    saveCreate,
-    getProvinceList,
-    getCityList
+    saveCreate
   } from '../../vuex/actions'
   export default {
     components: {
@@ -274,25 +282,28 @@
           wechart: '',
           main: 1
         }],
-        loading: true,
+        contactshow:true,
+        loading: false,
+        provinceArr:[],
+        cityArr:[],
+        countryArr:[],
         province: {
           cname: ''
         },
         city: {
           cname: ''
-        }
+        },
+        country:{
+          cname: ''
+        },
 
       }
     },
     vuex: {
-      getters: {
-        initProvince,
-        initCitylist
-      },
+
       actions: {
         saveCreate,
-        getProvinceList,
-        getCityList
+
       }
     },
     methods: {
@@ -314,24 +325,42 @@
 
 
       },
-      getProvinces:function(){
+      getCountrys:function(){
         var _self = this;
         this.$http({
           method: 'GET',
-          url: '/crm/api/v1/sys/location/province/?country=7',
+          url: '/crm/api/v1/sys/location/country/',
           emulateJSON: false,
           emulateHTTP: false
         }).then((res) => {
-
-          console.log(res.json());
-
-          _
+          _self.countryArr=res.json().result;
         }, (res) => {
 
           console.log('fail');
         })
+      },
+      getProvinces:function(){
+        var _self = this;
+        console.log(_self.param);
+        this.$http({
+          method: 'GET',
+          url: '/crm/api/v1/sys/location/province/?country='+this.country.id,
+          emulateJSON: false,
+          emulateHTTP: false
+        }).then((res) => {
 
+          _self.provinceArr=res.json().result;
+          _self.provinceArr.forEach(function(item){
+            if(_self.param.province&&_self.param.province.indexOf(item.cname) == 0 ){
+              _self.province=item;
+              return _self.getCities();
+            }
 
+          })
+        }, (res) => {
+
+          console.log('fail');
+        })
       },
       getCities:function(){
 
@@ -343,9 +372,13 @@
           emulateHTTP: false
         }).then((res) => {
 
-          console.log(res.json());
+          _self.cityArr=res.json().result;
+          _self.cityArr.forEach(function(item){
+            if(_self.param.city&&_self.param.city.indexOf(item.cname) == 0 ){
+              return _self.city=item;
+            }
+          })
 
-          _
         }, (res) => {
 
           console.log('fail');
@@ -372,20 +405,40 @@
         }
         if (_self.contacts.length > 1) {
           _self.contacts.splice(0, 1);
+          _self.contactshow=false;
         }
       },
       selectCity: function () {
         this.city = '';
-        this.district = '';
         if (this.province != '' && this.province != null) {
-          this.getCityList(this.province);
+          this.getCities();
+        }
+      },
+      selectProvince:function(){
+        this.province = '';
+        if (this.country != '' && this.country != null) {
+          this.getProvinces();
         }
       },
       save: function () {
-
         this.param.contacts=this.contacts;
         this.param.province=this.province.id;
         this.param.city=this.city.id;
+        this.param.cityName=this.city.cname;
+        this.param.provinceName=this.province.cname;
+        this.param.typeDesc=this.param.type.split(',')[1];
+        this.param.type=this.param.type.split(',')[0];
+        this.param.classifyDesc = this.param.classify.split(',')[1];
+        this.param.classify= this.param.classify.split(',')[0];
+        if(this.param.countryId){
+          this.param.country=this.param.countryId;
+          this.param.countryName=this.param.countryName;
+        }
+        else{
+          this.param.country=this.country.id;
+          this.param.countryName=this.country.cname;
+        }
+        this.saveCreate(this.param);
 
       }
     },
@@ -400,11 +453,30 @@
     },
     created(){
       if (this.param.companyId) {
+        this.loading=true;
         this.getContacts('/crm/api/v1/company/' + this.param.companyId);
-      } else if (this.param.userId) {
-        this.getContacts('/crm/api/v1/user/' + this.param.companyId);
       }
-      this.getProvinceList({id: 7});
+      if(this.param.countryId){
+        this.country.id=this.param.countryId;
+        this.getProvinces();
+      } else {
+        this.getCountrys();
+      }
+
+      if(this.param.contact){
+        this.contacts[0].name= this.param.contact.name;
+        this.contacts[0].position= this.param.contact.position;
+        this.contacts[0].department=this.param.contact.department;
+        this.contacts[0].phone=this.param.contact.phone;
+        this.contacts[0].tel=this.param.contact.tel;
+        this.contacts[0].email=this.param.contact.email;
+        this.contacts[0].qq=this.param.contact.qq;
+        this.contacts[0].wechart=this.param.contact.wechart;
+        this.contacts[0].main=1;
+      }
+
+
+
 
     }
   }
@@ -433,6 +505,7 @@
   .editsection {
     width: 100%;
     box-sizing: border-box;
+    margin-bottom:70px;
   }
 
   .editpage {
@@ -506,7 +579,7 @@
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 10px;
+    bottom: 60px;
     width: 840px;
     background: #fff;
     margin: auto;

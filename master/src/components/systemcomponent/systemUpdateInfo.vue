@@ -95,16 +95,6 @@ export default {
             updateDataInfo
         }
     },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
-    },
     events: {
         'getParam' () {
             this.$set('systemData.name', this.initSystemlist[this.param.id].name);

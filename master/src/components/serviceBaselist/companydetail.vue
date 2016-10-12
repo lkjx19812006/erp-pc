@@ -9,11 +9,14 @@
             </div>
             <div class="col-md-8">
                 <h4 class="section_title">企业相关 <button v-if="!initCompanyDetail.customerId" class="new_btn transfer" @click="createCustomer({
-                          sub:$index,
+                          detail:'companyDetail',
+                          sub:param.sub,
+                          keyname:'transform',
+                          key:'enterpriseList',
                           show:true,
-                          id:initCompanyDetail.id,
+                          companyId:initCompanyDetail.id,
                           category:initCompanyDetail.category,
-                          type:1,
+                          type:'1,企业',
                           name:initCompanyDetail.name,
                           tel:initCompanyDetail.tel,
                           principal:initCompanyDetail.principal,
@@ -21,7 +24,13 @@
                           province:initCompanyDetail.province,
                           city:initCompanyDetail.city,
                           address:initCompanyDetail.address,
-                          classify:0
+                          classify:0,
+                          employeeId:'',
+                          employeeName:'',
+                          orgId:'',
+                          orgName:'',
+                          countryId:7,
+                          countryName:'中国'
                           })">提取为客户</button>
                 </h4>
                 <div class="panel-group">

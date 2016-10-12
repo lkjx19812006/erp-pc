@@ -98,21 +98,36 @@
                                                 key:'userList'
                                                 },item.show=false)">编辑</li>
                                     <li v-if="item.transStatus==0" @click="userToClient({
+                                                name:item.fullname,
+                                                keyname:'transStatus',
+                                                sub:$index,
                                                 userId:item.id,
                                                 main:item.main,
+                                                province:'',
                                                 phone:item.phone,
                                                 tel:item.tel,
                                                 email:item.email,
                                                 qq:item.qq,
-                                                type:item.type,
+                                                type:'',
                                                 fullname:item.fullname,
-                                                employeeId:item.employeeId,
-                                                customerId:item.customerId,
+                                                employeeId:'',
+                                                employeeName:'',
                                                 orgId:'',
-                                                status:item.status,
+                                                orgName:'',
                                                 show:true,
-                                                url:'/user/',
-                                                key:'userList'
+                                                key:'userList',
+                                                countryId:7,
+                                                countryName:'中国',
+                                                contact:{
+                                                 name: item.fullname,
+                                                 position: '',
+                                                 department: '',
+                                                 phone: item.phone,
+                                                 tel: item.tel,
+                                                 email: item.email,
+                                                 qq: item.qq,
+                                                 wechart: ''
+                                                }
                                                 },item.show=false)">划转</li>
                                     <li @click="createIntention(item.show=false)">意向</li>
                                     <li v-if="item.utype==1" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">个人认证</li>
