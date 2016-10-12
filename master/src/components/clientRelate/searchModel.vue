@@ -55,7 +55,7 @@
                     </div>
                     <div class="client-detailInfo col-xs-12">
                         <label>手机：</label>
-                        <input type="text"  class="form-control" v-model="param.tel"  placeholder="按客户手机搜索"/>
+                        <input type="text"  class="form-control" v-model="param.phone"  placeholder="按客户手机搜索"/>
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>业务员ID：</label>
@@ -133,7 +133,7 @@ export default {
                 cur: 1,
                 all: 7,
                 name:'',
-                tel:'',
+                phone:'',
                 employeeId:'',
                 employeeName:'',
                 type:'',
@@ -217,8 +217,13 @@ export default {
         }
     },
     created() {
+        this.param.province = '';
+        this.param.city = '';
+        this.param.provinceName = '';
+        this.param.cityName = '';
         //this.getClientList(this.loadParam);
         this.getProvinceList(this.provinceParam);
+
     }
 }
 </script>

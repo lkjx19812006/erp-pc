@@ -25,10 +25,18 @@
                                     <label class="editlabel">{{param.tellist}}</label>
                                     <input type="text" class="form-control edit-input"  id="name" v-model="param.tel" value="{{param.tel}}" />
                                 </div>
-                                 <div class="editpage-input">
+                                <div class="editpage-input">
                                     <label class="editlabel">{{param.QQ}}</label>
                                     <input type="text" class="form-control edit-input"  id="name" v-model="param.qq" value="{{param.qq}}" />
                                 </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">是否主要</label>
+                                    <select class="form-control edit-input"  v-model='param.main'>
+                                         <option value="0">否</option>
+                                         <option value="1">是</option>
+                                    </select>
+                                </div>
+
                             </div>
                              <div class="editpageright">
                                 <div class="editpage-input">
@@ -46,15 +54,6 @@
                                 <div class="editpage-input">
                                     <label class="editlabel">{{param.webchart}}</label>
                                     <input type="text" class="form-control edit-input"  id="name" v-model="param.wechart" value="{{param.wechart}}" />
-                                </div>
-                            </div>
-                        </div>
-                         <div class="editpage-input clearfix">
-                            <label>是否主要</label>
-                            <div  class="clerafix ">
-                                <div class="pull-left role clerafix">
-                                     <input type="radio" class="checkbox_unselect" id="client_ids" v-model="param.main"  value="1" />
-                                     <label  for="client_ids">主要</label>
                                 </div>
                             </div>
                         </div>

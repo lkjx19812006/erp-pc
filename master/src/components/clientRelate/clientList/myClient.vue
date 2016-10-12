@@ -1,65 +1,14 @@
 <template>
-    <!-- <create-model :param="createParam" v-if="createParam.show"></create-model>
+    <create-model :param="createParam" v-if="createParam.show"></create-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <search-model  :param="loadParam" v-if="loadParam.show"></search-model> -->
-    <!-- 我的客户 -->
-    <div class="myOrder" v-if="$route.path.split('=')[1]==0">
-         <my-client></my-client>
-    </div>
-    <!-- 部门客户 -->
-    <div class="myOrder" v-if="$route.path.split('=')[1]==1">
-        <org-client></org-client>
-    </div>
-    <!-- 所有客户 -->
-    <div class="myOrder" v-if="$route.path.split('=')[1]==2">
-        <all-client></all-client>
-    </div>
-
-    <!-- 潜在客户 -->
-    <div class="myOrder" v-if.0="$route.path.split('=')[1]==3">
-        <potential-client></potential-client>
-    </div>
-
-    <!-- <div v-show="!changeParam.show">
+    <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
+    <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">客户</div>
-            <div class="filter_search clearfix col-xs-7" >
-                <dl class="clearfix">
-                    <dt>类型：</dt>
-                    <dd>
-                        <select class="form-control" v-model="loadParam.type" @change="searchClient()">
-                            <option value="">请选择类型</option>
-                            <option value="0">个人</option>
-                            <option value="1">企业</option>
-                        </select>
-                    </dd>
-                </dl>
-                <dl class="clearfix">
-                    <dt>分类：</dt>
-                    <dd>
-                        <select class="form-control"  v-model="loadParam.classify" @change="searchClient()">
-                            <option value="">请选择分类</option>
-                            <option value="0">买</option>
-                            <option value="1">卖</option>
-                            <option value="2">买卖</option>
-                        </select>
-                    </dd>
-                </dl>
-                <dl class="clearfix">
-                    <dt>状态：</dt>
-                    <dd>
-                        <select class="form-control" v-model="loadParam.status" @change="searchClient()">
-                            <option value="">请选择状态</option>
-                            <option value="0">无效</option>
-                            <option value="1">有效</option>
-                        </select>
-                    </dd>
-                </dl>
-            </div>
+            <div class="my_enterprise col-xs-1">我的客户</div>
             <div class="right col-xs-4">
                 <button class="new_btn transfer" @click="clientTransfer({
                     arr:[],
@@ -118,7 +67,7 @@
                         <th>客户来源</th>
                         <th>名称</th>
                         <th>分类码</th>
-                        <th>所属分类</th>
+                        <!-- <th>所属分类</th> -->
                         <th>所属业务员</th>
                         <th>负责人</th>
                         <th>经营范围</th>
@@ -154,9 +103,9 @@
                                 url:'/customer/',
                                 key:'customerList'
                                 })"><img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>{{item.name}}</td> 
-                                    上面这个img显示新客户图标
+                                    <!-- 上面这个img显示新客户图标 -->
                         <td>{{item.category}}</td>
-                        <td>{{item.classify | classify}}</td>
+                        <!-- <td>{{item.classify | classify}}</td> -->
                         <td>{{item.employeeName}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
@@ -213,57 +162,47 @@
         <div class="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
-    </div> -->
+    </div>
 </template>
 <script>
-import myClient from '../components/clientRelate/clientList/myClient'
-import orgClient from '../components/clientRelate/clientList/orgClient'
-import allClient from '../components/clientRelate/clientList/allClient'
-import potentialClient from '../components/clientRelate/clientList/potentialClient'
-
-/*import filter from '../filters/filters'
-import pagination from '../components/pagination'
-import detailModel from '../components/clientRelate/clientDetail'
+import filter from '../../../filters/filters'
+import pagination from '../../../components/pagination'
+import detailModel from '../../../components/clientRelate/clientDetail'
 //import createModel from '../components/clientRelate/clientCreate'
-import createModel  from '../components/user/userTransfer'
-import deletebreedModel  from '../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
-import alterinfoModel  from '../components/clientRelate/clientUpdate'
-import transferModel   from '../components/clientRelate/clienttransfer'
-import tipsdialogModel  from '../components/tipsDialog'
-import searchModel  from  '../components/clientRelate/searchModel'*/
+import createModel  from '../../../components/user/userTransfer'
+import deletebreedModel  from '../../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
+import alterinfoModel  from '../../../components/clientRelate/clientUpdate'
+import transferModel   from '../../../components/clientRelate/clienttransfer'
+import tipsdialogModel  from '../../../components/tipsDialog'
+import searchModel  from  '../../../components/clientRelate/searchModel'
 import {
     initCustomerlist
-} from '../vuex/getters'
+} from '../../../vuex/getters'
 import {
-    getClientList,
+    getMyClientList,
     deleteInfo,
     alterInfo,
     getClientDetail,
     saveCreate
-} from '../vuex/actions'
+} from '../../../vuex/actions'
 
 export default {
     components: {
-        /*pagination,
+        pagination,
         detailModel,
         createModel,
         deletebreedModel,
         alterinfoModel,
         transferModel,
         tipsdialogModel,
-        searchModel,*/
-        myClient,
-        orgClient,
-        allClient,
-        potentialClient
-
+        searchModel,
     },
     vuex: {
         getters: {
             initCustomerlist
         },
         actions: {
-            getClientList,
+            getMyClientList,
             deleteInfo,
             alterInfo,
             getClientDetail,
@@ -279,6 +218,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                link:'/customer/employeeDistributed',
                 name:'',
                 phone:'',
                 employeeId:'',
@@ -409,23 +349,23 @@ export default {
             }
         },
         searchClient:function(){
-            this.getClientList(this.loadParam)
+            this.getMyClientList(this.loadParam)
         }
     },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getClientList(this.loadParam);
+            this.getMyClientList(this.loadParam);
         }
     },
     created() {
-        //this.getClientList(this.loadParam);
+        this.getMyClientList(this.loadParam);
     },
-    //filter:(filter,{})
+    filter:(filter,{})
 }
 </script>
 <style scoped>
-/* .breed_action {
+.breed_action {
     top: 33px;
     right: 106px;
 }
@@ -437,7 +377,7 @@ export default {
     white-space: normal;
 }
 .checkbox_unselect{
-    background-image: url(../../static/images/unselect.png);
+    background-image: url(/static/images/unselect.png);
     display: inline-block;
     background-repeat: no-repeat;
     width: 24px;
@@ -448,7 +388,7 @@ export default {
     background-position: 5px;
 }
 .checkbox_select{
-    background-image: url(../../static/images/selected.png);
+    background-image: url(/static/images/selected.png);
     display: inline-block;
     background-repeat: no-repeat;
     width: 24px;
@@ -457,5 +397,5 @@ export default {
     margin: auto;
     text-align: center;
     background-position: 5px;
-} */
+}
 </style>

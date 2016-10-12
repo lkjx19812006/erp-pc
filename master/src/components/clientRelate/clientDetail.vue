@@ -550,6 +550,7 @@
 				                                                   })">编辑</dt>
 				                                               <dt @click="specDelete({
 				                                                   id:item.id,
+                                                           sub:$index,
 				                                                   show:true,
 				                                                   title:'备注',
 				                                                   link:specDel,
@@ -895,7 +896,8 @@
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>类型</label>
-                                    <input type="text" class="form-control" v-model="initClientDetail.type" value="{{initClientDetail.type}}" disabled="disabled" />
+                                    <input v-if="initClientDetail.type==0" type="text" class="form-control"  value="个人" disabled="disabled" />
+                                    <input v-if="initClientDetail.type==1" type="text" class="form-control"  value="企业" disabled="disabled" />
                                 </div>
                             </div>
                             <div class="clearfix">
@@ -914,8 +916,8 @@
                                     <input type="text" class="form-control" v-model="initClientDetail.principal" value="{{initClientDetail.principal}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>所在市</label>
-                                    <input type="text" class="form-control" v-model="initClientDetail.city" value="{{initClientDetail.city}}" disabled="disabled" />
+                                    <label>所在省</label>
+                                    <input type="text" class="form-control" v-model="initClientDetail.province" value="{{initClientDetail.province}}" disabled="disabled" />
                                 </div>
                             </div>
                             <div class="clearfix">
@@ -924,8 +926,8 @@
                                     <input type="text" class="form-control" v-model="initClientDetail.email" value="{{initClientDetail.email}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>所在省</label>
-                                    <input type="text" class="form-control" v-model="initClientDetail.province" value="{{initClientDetail.province}}" disabled="disabled" />
+                                    <label>所在市</label>
+                                    <input type="text" class="form-control" v-model="initClientDetail.city" value="{{initClientDetail.city}}" disabled="disabled" />
                                 </div>
                             </div>
                             <div class="clearfix">

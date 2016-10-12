@@ -974,7 +974,8 @@ export const specDel = ({ dispatch }, param) => { //删除药材相关信息
 
 export const getClientList = ({ dispatch }, param) => {  //客户信息列表与搜索
     param.loading = true;
-    var clienturl = apiUrl.clientList+'/customer/?'+'&page=' + param.cur + '&pageSize=15';
+    console.log(param);
+    var clienturl = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
     for(var search in param){
         if(search=='name'&&param[search]!==''){
             clienturl += '&name='+param.name
@@ -988,12 +989,22 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         if(search=='status'&&param[search]!==''){
             clienturl += '&status='+param.status
         }
-        if(search=='tel'&&param[search]!==''){
-            clienturl += '&tel='+param.tel
+        if(search=='phone'&&param[search]!==''){
+            clienturl += '&phone='+param.phone
         }
         if(search=='employeeId'&&param[search]!==''){
             clienturl += '&employeeId='+param.employeeId
         }
+        if(search=='bizScope'&&param[search]!==''){
+            clienturl += '&bizScope='+param.bizScope
+        }
+        if(search=='province'&&param[search]!==''){
+            clienturl += '&province='+param.province
+        }
+        if(search=='city'&&param[search]!==''&&param[search]!==undefined){
+            clienturl += '&city='+param.city
+        }
+
     }
     Vue.http({
         method:'GET',
@@ -1016,6 +1027,119 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
             param.loading = false;
         })
 }
+
+export const getMyClientList = ({ dispatch }, param) => {  //业务员的(我的)客户信息列表与搜索
+    param.loading = true;
+    console.log(param);
+    var clienturl = apiUrl.clientList+'/customer/employeeDistributed?'+'&page=' + param.cur + '&pageSize=15';
+    for(var search in param){
+        if(search=='name'&&param[search]!==''){
+            clienturl += '&name='+param.name
+        }
+        if(search=='type'&&param[search]!==''){
+            clienturl += '&type='+param.type
+        }
+        if(search=='classify'&&param[search]!==''){
+            clienturl += '&classify='+param.classify
+        }
+        if(search=='status'&&param[search]!==''){
+            clienturl += '&status='+param.status
+        }
+        if(search=='phone'&&param[search]!==''){
+            clienturl += '&phone='+param.phone
+        }
+        if(search=='employeeId'&&param[search]!==''){
+            clienturl += '&employeeId='+param.employeeId
+        }
+        if(search=='bizScope'&&param[search]!==''){
+            clienturl += '&bizScope='+param.bizScope
+        }
+        if(search=='province'&&param[search]!==''){
+            clienturl += '&province='+param.province
+        }
+        if(search=='city'&&param[search]!==''&&param[search]!==undefined){
+            clienturl += '&city='+param.city
+        }
+
+    }
+    Vue.http({
+        method:'GET',
+        url:clienturl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        }).then((res) => {
+           var client = res.json().result.list;
+           for (var i in client){
+                client[i].checked = false;
+                client[i].show =false;
+           }
+            dispatch(types.CUSTOMER_DATA, client);
+            param.all = res.json().result.pages;
+            param.loading = false;
+        }, (res) => {
+            console.log('fail');
+            param.loading = false;
+        })
+}
+
+export const getOrgClientList = ({ dispatch }, param) => {  //部门客户信息列表与搜索
+    param.loading = true;
+    console.log(param);
+    var clienturl = apiUrl.clientList+'/customer/orgDistributed?'+'&page=' + param.cur + '&pageSize=15';
+    for(var search in param){
+        if(search=='name'&&param[search]!==''){
+            clienturl += '&name='+param.name
+        }
+        if(search=='type'&&param[search]!==''){
+            clienturl += '&type='+param.type
+        }
+        if(search=='classify'&&param[search]!==''){
+            clienturl += '&classify='+param.classify
+        }
+        if(search=='status'&&param[search]!==''){
+            clienturl += '&status='+param.status
+        }
+        if(search=='phone'&&param[search]!==''){
+            clienturl += '&phone='+param.phone
+        }
+        if(search=='employeeId'&&param[search]!==''){
+            clienturl += '&employeeId='+param.employeeId
+        }
+        if(search=='bizScope'&&param[search]!==''){
+            clienturl += '&bizScope='+param.bizScope
+        }
+        if(search=='province'&&param[search]!==''){
+            clienturl += '&province='+param.province
+        }
+        if(search=='city'&&param[search]!==''&&param[search]!==undefined){
+            clienturl += '&city='+param.city
+        }
+
+    }
+    Vue.http({
+        method:'GET',
+        url:clienturl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        }).then((res) => {
+           var client = res.json().result.list;
+           for (var i in client){
+                client[i].checked = false;
+                client[i].show =false;
+           }
+            dispatch(types.CUSTOMER_DATA, client);
+            param.all = res.json().result.pages;
+            param.loading = false;
+        }, (res) => {
+            console.log('fail');
+            param.loading = false;
+        })
+}
+
 export const getEmployeeList = ({ dispatch }, param) => {  //员工列表以及搜索
     param.loading = true;
     var apiurl = apiUrl.clientList+'/employee/?'+'&page=' + param.cur + '&pageSize=14';
@@ -1449,7 +1573,7 @@ export const createCustomer = ({ dispatch }, param) => { //新增客户相关联
          "qq":param.qq,
          "wechart":param.wechart,
          'main':Number(param.main),
-         "id":param.id,
+         //"id":param.id,
          "customerId":param.id
     }
     Vue.http({
@@ -1464,6 +1588,7 @@ export const createCustomer = ({ dispatch }, param) => { //新增客户相关联
         }
     }).then((res) => {
         console.log('添加成功')
+        param.id = res.json().result.id;
         dispatch(types.CUSTOMER_CONTACT_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -1483,8 +1608,7 @@ export const createAddress = ({ dispatch }, param) => { //新增客户地址
         "street":param.street,
         'detailAddr':param.detailAddr,
         "address":param.address,
-        "customerId":param.customerId,
-        "id":param.id
+        "customerId":param.customerId
     }
     Vue.http({
         method: "POST",
@@ -1498,6 +1622,7 @@ export const createAddress = ({ dispatch }, param) => { //新增客户地址
         }
     }).then((res) => {
         console.log('添加成功')
+        param.id = res.json().result.id;
         dispatch(types.ADD_ADDR_DETAIL, param);
     }, (res) => {
         console.log('fail');
@@ -1508,8 +1633,7 @@ export const createLabel = ({ dispatch }, param) => { //新增客户标签
     const data1 = {
         "label":param.label,
         "status":param.status,
-        "customerId":param.customerId,
-        "id":param.id
+        "customerId":param.customerId
     }
     Vue.http({
         method: "POST",
@@ -1523,6 +1647,7 @@ export const createLabel = ({ dispatch }, param) => { //新增客户标签
         }
     }).then((res) => {
         console.log('添加成功')
+        param.id = res.json().result.id;
         dispatch(types.ADD_LABEL_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -1531,7 +1656,7 @@ export const createLabel = ({ dispatch }, param) => { //新增客户标签
 export const createRemark = ({ dispatch }, param) => { //新增客户备注
     console.log(param)
     const data1 = {
-        "remark":param.label,
+        "remark":param.remark,
         "status":param.status,
         "customerId":param.customerId,
         //"id":param.id
@@ -1548,7 +1673,7 @@ export const createRemark = ({ dispatch }, param) => { //新增客户备注
         }
     }).then((res) => {
         console.log('添加成功')
-        console.log(res.json());
+        param.id = res.json().result.id;
         dispatch(types.ADD_LABEL_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -1567,8 +1692,7 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
         "unit":param.unit,
         "duedate":param.duedate,
         "coa":param.coa,
-        "cid":param.cid,
-        //"id":param.id
+        "cid":param.cid
     }
     console.log(param);
     console.log(data);
@@ -1585,6 +1709,7 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
         }
     }).then((res) => {
         console.log('添加成功')
+        param.id = res.json().result.id;
         dispatch(types.ADD_PRODUCT_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -1962,7 +2087,6 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
         type:param.type,
         path:param.path,
         customerId:param.customerId,
-        id:param.id
     }
     Vue.http({
         method: 'POST',
@@ -1976,6 +2100,7 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
         }
     }).then((res) => {
         console.log('文件添加成功')
+        param.id = res.json().result.id;
         dispatch(types.ADD_FILES_DATA, param);
     }, (res) => {
         console.log('fail');
