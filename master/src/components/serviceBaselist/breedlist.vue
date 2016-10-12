@@ -16,9 +16,11 @@
               </div>
               <div class="ordertel_search clearfix">
                 <img src="/static/images/search.png" height="24" width="24">
-                <input type="text" class="search_input" v-model="loadParam.name" placeholder="按品种名称搜索" @keyup.enter="categoryNameSearch()">
+                <input type="text" style='float:left;' class="search_input" v-model="loadParam.name" placeholder="按品种名称搜索" @keyup.enter="categoryNameSearch()">
               </div>
-                <button class="new_btn" @click="categoryNameSearch()">搜索</button>
+              <div class="ordertel_search clearfix" style='border:0;'>
+                  <button class="new_btn" @click="categoryNameSearch()">搜索</button>
+              </div>   
             </div>
             <div class="right col-xs-1">
                 <button class="new_btn" @click="createBreed('create')">新建</button>

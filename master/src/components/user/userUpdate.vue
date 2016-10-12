@@ -13,47 +13,52 @@
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpage">
 
+                 <div class="cover_loading">
+                   <pulse-loader :loading="detailParam.loading" :color="color" :size="size"></pulse-loader>
+                 </div>
+
                    <div class="editpageleft">
                        <div class="editpage-input">
                            <label class="editlabel">姓名</label>
-                           <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{param.fullname}}" />
+                           <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{initUserDetail.fullname}}" />
                        </div>
                        <div class="editpage-input">
                            <label class="editlabel">昵称</label>
-                           <input type="text" v-model='param.nickname' class="form-control edit-input" value="{{param.nickname}}" />
+                           <input type="text" v-model='param.nickname' class="form-control edit-input" value="{{initUserDetail.nickname}}" />
                        </div>
 
                      <div class="editpage-input">
                        <label class="editlabel">电话</label>
-                       <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
+                       <input type="text" v-model='param.tel' class="form-control edit-input" value="{{initUserDetail.tel}}" />
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">性别</label>
-                       <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
+
+                       <input type="text" v-model='param.gender' class="form-control edit-input" value="{{initUserDetail.gender}}" />
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">身份证号码</label>
-                       <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
+                       <input type="text" v-model='param.idnumber' class="form-control edit-input" value="{{initUserDetail.idnumber}}" />
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">会员等级</label>
-                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                       <input type="text" v-model="param.grade" class="form-control edit-input" value="{{initUserDetail.grade}}" />
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">经营类型</label>
-                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                       <input type="text" v-model="param.busiType" class="form-control edit-input" value="{{initUserDetail.busiType}}" />
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">业务类型</label>
-                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                       <input type="text" v-model="param.bizType" class="form-control edit-input" value="{{initUserDetail.bizType}}" />
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">会员类型</label>
-                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                       <input type="text" v-model="param.userType" class="form-control edit-input" value="{{initUserDetail.userType}}" />
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">备注</label>
-                       <input type="text" v-model='param.comment' class="form-control edit-input" value="{{param.comment}}" />
+                       <input type="text" v-model='param.comment' class="form-control edit-input" value="{{initUserDetail.comment}}" />
                      </div>
 
 
@@ -61,46 +66,37 @@
                    <div class="editpageright">
                        <div class="editpage-input">
                            <label class="editlabel">邮箱</label>
-                           <input type="text" v-model='param.email' class="form-control edit-input" value="{{param.email}}" />
+                           <input type="text" v-model='param.email' class="form-control edit-input" value="{{initUserDetail.email}}" />
                        </div>
                        <div class="editpage-input">
                            <label class="editlabel">手机</label>
-                            <input type="text" v-model='param.phone' class="form-control edit-input" value="{{param.phone}}" />
+                            <input type="text" v-model='param.phone' class="form-control edit-input" value="{{initUserDetail.phone}}" />
                        </div>
                        <div class="editpage-input">
                            <label class="editlabel">公司</label>
-                           <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                           <input type="text" v-model="param.company" class="form-control edit-input" value="{{initUserDetail.company}}" />
                        </div>
 
                      <div class="editpage-input">
                        <label class="editlabel">qq</label>
-                       <input type="text" v-model="param.qq" class="form-control edit-input" value="{{param.qq}}" />
+                       <input type="text" v-model="param.qq" class="form-control edit-input" value="{{initUserDetail.qq}}" />
                      </div>
 
                      <div class="editpage-input">
                        <label class="editlabel">专属业务员</label>
-                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                       <input type="text" v-model="param.employee" class="form-control edit-input" value="{{initUserDetail.employee}}" />
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">地址</label>
-                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                       <input type="text" v-model="param.address" class="form-control edit-input" value="{{initUserDetail.address}}" />
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">主经营品种</label>
-                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                       <input type="text" v-model="param.bizMain" class="form-control edit-input" value="{{initUserDetail.bizMain}}" />
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">重要级别</label>
-                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
-                     </div>
-
-                     <div class="editpage-input">
-                       <label class="editlabel">审核状态</label>
-                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
-                     </div>
-                     <div class="editpage-input">
-                       <label class="editlabel">状态</label>
-                       <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
+                       <input type="text" v-model="param.importance" class="form-control edit-input" value="{{initUserDetail.importance}}" />
                      </div>
 
                    </div>
@@ -116,9 +112,10 @@
 <script>
 import tipsdialogModel  from '../tips/tipDialog'
 import {
-
+  initUserDetail
 } from '../../vuex/getters'
 import {
+    getUserDetail,
     updateUserInfo
 } from '../../vuex/actions'
 export default {
@@ -134,15 +131,20 @@ export default {
             name:"确认修改信息?",
             callback:this.alertInfo
 
+          },
+          detailParam:{
+            show:false,
+            loading:true
           }
         }
     },
     vuex: {
        getters: {
-
+         initUserDetail
         },
         actions: {
-            updateUserInfo
+            updateUserInfo,
+            getUserDetail
         }
     },
     methods: {
@@ -150,6 +152,10 @@ export default {
         this.param.show = false;
         this.updateUserInfo(this.param);
       }
+    },
+    created(){
+      this.detailParam.id = this.param.id;
+      this.getUserDetail(this.detailParam);
     }
 }
 </script>

@@ -57,6 +57,7 @@
                                                     breedId:item.breedId
                                                     },item.show=false)">编辑</dt>
                                             <dt @click="specDelete({
+                                                    sub:$index,
                                                     id:item.id,
                                                     show:true,
                                                     name:item.name,
@@ -121,6 +122,7 @@
                                                     breedId:item.breedId
                                                     },item.show=false)">编辑</dt>
                                                 <dt @click="specDelete({
+                                                    sub:$index,
                                                     id:item.id,
                                                     show:true,
                                                     name:item.name,
@@ -184,6 +186,7 @@
                                                     breedId:item.breedId
                                                     },item.show=false)">编辑</dt>
                                                 <dt @click="specDelete({
+                                                     sub:$index,
                                                      id:item.id,
                                                     show:true,
                                                     name:item.alias,
@@ -249,6 +252,7 @@
                                                     breedId:item.breedId
                                                     },item.show=false)">编辑</dt>
                                                 <dt @click="specDelete({
+                                                    sub:$index,
                                                     id:item.id,
                                                     show:true,
                                                     name:item.name,

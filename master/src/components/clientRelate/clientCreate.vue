@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>是否主要联系人</label>
-                                    <select class="form-control edit-input"  v-model=''>
+                                    <select class="form-control edit-input"  v-model='customerData.contacts[0].main'>
                                          <option value="0">是</option>
                                          <option value="1">否</option>
                                     </select>
@@ -117,7 +117,7 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>qq</label>
-                                    <input type="text" class="form-control" v-model=""  />
+                                    <input type="text" class="form-control" v-model="customerData.contacts[0].qq"  />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>邮箱</label>
@@ -172,6 +172,7 @@ export default {
                     {
                         name:'',
                         position:'',
+                        main:'',
                         department:'',
                         phone:'',
                         tel:'',
