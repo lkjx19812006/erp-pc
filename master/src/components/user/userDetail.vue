@@ -90,11 +90,12 @@
                                             <th>价格</th>
                                             <th>单位</th>
                                             <th>审核状态</th>
+                                            <th>备注</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initUserDetail.intention.arr">
                                                 <td  @click.stop="">
-                                                  <label v-if="item.validate!=1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index,item.id)" ></label>
+                                                  <label v-if="item.validate==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index,item.id)" ></label>
                                                 </td>
                                                 <td>{{item.breedName}}</td>
                                                 <td>{{item.location}}</td>
@@ -103,6 +104,7 @@
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
                                                 <td>{{item.validate | audit}}</td>
+                                                <td>{{item.description}}</td>
                                                 <td  @click="clickShow($index,{
                                                   concrete:'intention'
                                                   })">
@@ -458,7 +460,8 @@ export default {
           show:false,
           arr:[],
           indexs:[],
-          validate:0
+          validate:0,
+          description:''
         },
         detailParam:{
           show:false
@@ -507,7 +510,7 @@ export default {
         }else{
           this.$store.state.table.userDetail.intention.checked = true;
           this.$store.state.table.userDetail.intention.arr.forEach(function(item){
-            if(!item.checked&&item.validate!=1){
+            if(!item.checked&&item.validate==0){
               _this.$store.state.table.userDetail.intention.checked = false;
             }
           })
@@ -518,7 +521,7 @@ export default {
         this.$store.state.table.userDetail.intention.checked = !this.$store.state.table.userDetail.intention.checked;
         if(this.$store.state.table.userDetail.intention.checked){
                 this.$store.state.table.userDetail.intention.arr.forEach(function(item){
-                  if(item.validate!=1){
+                  if(item.validate==0){
                     item.checked=true;
                   }else{
                     item.checked=false;

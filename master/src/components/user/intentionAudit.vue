@@ -13,6 +13,12 @@
                <div class="editpage">
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpageleft">
+
+                    <div class="editpage-input">
+                           <label class="editlabel">备注</label>
+                           <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
+                           <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5" value="{{param.description}}"></textarea>
+                    </div>
                </div>
                  </div>
            </section>
@@ -75,11 +81,13 @@ export default {
 }
 </script>
 <style scoped>
+
 .modal_con {
 
     width:450px;
     height:300px;
 }
+
 .big-font {
     font-size: 36px;
 }
@@ -161,12 +169,6 @@ export default {
     display: inline-block;
     margin-left: 10px;
     margin-top: 5px;
-}
-
-.edit_footer {
-    position:absolute;
-    margin-bottom:-50px;
-    width: 450px;
 }
 
 .edit_footer button {

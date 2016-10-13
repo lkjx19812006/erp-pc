@@ -1872,6 +1872,69 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
         param.loading = false;
     })
 }
+
+export const getOfferList = ({ dispatch }, param) => {  //报价信息列表以及搜索
+    param.loading = true;
+    var url = apiUrl.clientList+'/intention/offers?'+'&page=' + param.cur + '&pageSize=15';
+     for(var search in param){
+        if(search=='type'&&param[search]!==''){
+            url += '&type='+param.type
+        }else if(search=='type'){
+            url +='&type='
+        }
+        if(search=='invoic'&&param[search]!==''){
+            url += '&invoic='+param.invoic
+        }else if(search=='invoic'){
+            url +='&invoic='
+        }
+        if(search=='status'&&param[search]!==''){
+            url += '&status='+param.status
+        }else if(search=='status'){
+            url +='&status='
+        }
+        if(search=='intl'&&param[search]!==''){
+            url += '&intl='+param.intl
+        }else if(search=='intl'){
+            url +='&intl='
+        }
+        if(search=='sampling'&&param[search]!==''){
+            url += '&sampling='+param.sampling
+        }else if(search=='sampling'){
+            url +='&sampling='
+        }
+        if(search=='visit'&&param[search]!==''){
+            url += '&visit='+param.visit
+        }else if(search=='visit'){
+            url +='&visit='
+        }
+        if(search=='advance'&&param[search]!==''){
+            url += '&advance='+param.advance
+        }else if(search=='advance'){
+            url +='&advance='
+        }
+    }
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+           var offer = res.json().result.list;
+           for (var i in offer){
+                offer[i].checked = false;
+                offer[i].show =false;
+           }
+            dispatch(types.OFFER_LIST_DATA, offer);
+            param.all = res.json().result.pages;
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const getOffersdetail = ({ dispatch }, param) => {  //意向报价详情
     Vue.http({
         method:'GET',
@@ -2107,7 +2170,8 @@ export const batchUpdateUserInfo = ({ dispatch }, param) => { //批量修改会�
 export const batchUserIntentionAudit = ({ dispatch }, param) => { //批量审核会员意向
     const updatedata = {
         ids: param.arr,
-        validate: param.validate
+        validate: param.validate,
+        description:param.description
     }
 
 
@@ -2285,7 +2349,7 @@ export const editintentInfo = ({ dispatch }, param) => { //修改意向
 export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
       if(param.image_f){param.images+=param.image_f+','}
       if(param.image_s){param.images+=param.image_s+','}
-      if(param.image_t){param.images+=param.image_t}
+      if(param.image_t){param.images+=param.image_t}  
     const data1 = {
         "userId":param.userId,
          "type":param.type,
