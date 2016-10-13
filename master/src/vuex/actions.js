@@ -986,9 +986,7 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         if(search=='classify'&&param[search]!==''){
             clienturl += '&classify='+param.classify
         }
-        if(search=='status'&&param[search]!==''){
-            clienturl += '&status='+param.status
-        }
+
         if(search=='phone'&&param[search]!==''){
             clienturl += '&phone='+param.phone
         }
@@ -1003,6 +1001,9 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         }
         if(search=='city'&&param[search]!==''&&param[search]!==undefined){
             clienturl += '&city='+param.city
+        }
+        if(search=='blacklist'&&param[search]!==''&&param[search]!==undefined){
+          clienturl += '&blacklist='+param.blacklist
         }
 
     }
@@ -1139,6 +1140,35 @@ export const getOrgClientList = ({ dispatch }, param) => {  //部门客户信息
             param.loading = false;
         })
 }
+
+export const customerTransferBlacklist  = ({ dispatch }, param) => {
+            param.loading = true;
+            const data={
+              blackComments:param.blackComments,
+              customerIds:param.customerIds,
+              blacklist:param.blacklist
+            }
+            Vue.http({
+              method: "POST",
+              url: apiUrl.clientList + '/customer/transferBlacklist',
+              emulateHTTP: true,
+              body: data,
+              emulateJSON: false,
+              headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                'Content-Type': 'application/json;charset=UTF-8'
+                }
+              }).then((res) => {
+              param.loading = false;
+
+              dispatch(types.CUSTOMER_BATCH_DELETE, param);
+              }, (res) => {
+              param.loading = false;
+                console.log('fail');
+            });
+}
+
+
 
 export const getEmployeeList = ({ dispatch }, param) => {  //员工列表以及搜索
     param.loading = true;
@@ -1696,8 +1726,6 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
         "coa":param.coa,
         "cid":param.cid
     }
-    console.log(param);
-    console.log(data);
 
     Vue.http({
         method: "POST",
@@ -1738,7 +1766,6 @@ export const addrDel = ({ dispatch }, param) => { //删除客户收货地址
 export const transferEmploy = ({ dispatch }, param) => { //客户业务员划转信息
     const transferdata = {
         employeeId:param.employeeId,
-        orgId:param.orgId,
         customerIds:param.arr
     }
     Vue.http({
@@ -1759,14 +1786,9 @@ export const transferEmploy = ({ dispatch }, param) => { //客户业务员划转
     });
 }
 export const transferInfo = ({ dispatch }, param) => { //客户部门划转信息
-    console.log('param===>');
-    console.log(param.arr);
-    console.log(param.employeeId);
-    console.log(param);
-    //return ;
+
     const transferdata = {
         orgId:param.orgId,
-        employeeId:param.employeeId,
         customerIds:param.arr
     }
     console.log(transferdata);
@@ -2087,7 +2109,7 @@ export const batchUserIntentionAudit = ({ dispatch }, param) => { //批量审核
         ids: param.arr,
         validate: param.validate
     }
-    
+
 
     console.log(updatedata);
     Vue.http({

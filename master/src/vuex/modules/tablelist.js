@@ -1,17 +1,18 @@
 import {
  ABSTRACT_GET_DATA,
  ABSTRACT_UPDATE_DATA,
- ABSTRACT_DELETE_DATA, 
+ ABSTRACT_DELETE_DATA,
  ABSTRACT_ADD_DATA
 } from '../mutation-types'
 
 const state = {
 
+  //角色模块
 	 power:{
 	 	list:{
-	"code": 200,
-    "msg": "success",
-    "result": {
+      "code": 200,
+      "msg": "success",
+      "result": {
         "pageNum": 1,
         "pageSize": 10,
         "size": 10,
@@ -174,13 +175,14 @@ const state = {
 	 },
 
 
+  //权限模块
      menu:{
         list:{
-            
+
         }
      }
 
-  	
+
 }
 
 
@@ -202,11 +204,11 @@ const mutations = {
     [ABSTRACT_UPDATE_DATA](state,data){
         console.log(data);
     	// state[data.name].list.result.list[data.index]=data.body;
-        
+
         for(let i in state[data.name].list.result.list[data.index]){
             for(let m in data.body){
                 if(i==m){
-                  state[data.name].list.result.list[data.index][i]=data.body[m];  
+                  state[data.name].list.result.list[data.index][i]=data.body[m];
                 }
             }
         }

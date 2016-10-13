@@ -47,6 +47,12 @@ export const UPDATE_LABEL_DETAIL = 'UPDATE_LABEL_DETAIL' // 修改标签
 export const ADD_PRODUCT_DATA = 'ADD_PRODUCT_DATA' // 新增客户产品
 export const FILE_DATA ='FILE_DATA'  // 新增客户文件
 export const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA' // 修改客户产品
+export const CUSTOMER_BATCH_DELETE = 'CUSTOMER_BATCH_DELETE' //客户批量删除
+
+export const  GET_SUPPLY_DATA = 'GET_SUPPLY_DATA' //获取供应商数据
+export const  UPDATE_SUPPLY_DATA = 'UPDATE_SUPPLY_DATA' //修改供应商数据
+export const  DELETE_SUPPLY_DATA = 'DELETE_SUPPLY_DATA' //删除供应商数据
+export const  ADD_SUPPLY_DATA = 'ADD_SUPPLY_DATA' //新增供应商数据
 
 export const INTENTION_LIST_DATA ='INTENTION_LIST_DATA'  //意向数据列表
 export const INTENTION_DATA = 'INTENTION_DATA'  // 新增意向以及机会划转为意向

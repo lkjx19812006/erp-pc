@@ -8,8 +8,8 @@
                 <span class="tips_name">{{param.name}}</span></div>
             <div class="model-footer">
                 <input type="button" class="btn btn-close"  @click="param.show = false"  value="确定"/>
-            </div> 
-        </div> 
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -20,16 +20,6 @@ export default {
     props: ['param'],
     data() {
         return {
-        }
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
         }
     }
 }
