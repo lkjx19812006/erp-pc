@@ -78,8 +78,8 @@
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
                         <td>{{item.tel}}</td>
-                        <td>空</td>
-                        <td>空</td>
+                        <td>{{phoneProvince}}</td>
+                        <td>{{phoneCity}}</td>
                         <td>{{item.email}}</td>
                         <td>{{item.countryName | country}}</td>
                         <td>{{item.provinceName}}</td>

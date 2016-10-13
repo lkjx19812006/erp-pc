@@ -20,7 +20,7 @@
     </div>
 
     <!-- 潜在客户 -->
-    <div class="myOrder" v-if.0="$route.path.split('=')[1]==3">
+    <div class="myOrder" v-if="$route.path.split('=')[1]==3">
         <potential-client></potential-client>
     </div>
 

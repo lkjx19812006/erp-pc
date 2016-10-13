@@ -1,6 +1,7 @@
 <template>
     <div  id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
+    <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -15,6 +16,11 @@
           </div>
            <section class="editsection" v-cloak>
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
+
+               <div v-if="param.selectCustomer" style="margin-top:15px">
+                  <label class="editlabel">选择客户</label>
+                  <input type="text" v-model='param.customerName' class="form-control edit-input" style="width:95%" readonly="readonly" @click="searchCustomer(param.customerName,param.customerId,param.customerPhone)"/>
+               </div>
 
                <div style="margin-top:15px">
                   <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
@@ -337,7 +343,9 @@
     </div>
 </template>
 <script>
+import calendar from '../calendar/vue.datepicker'
 import searchbreedModel  from '../Intention/breedsearch'
+import searchcustomerModel  from '../Intention/clientname'
 import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import pressImage from '../imagePress'
@@ -360,6 +368,7 @@ import {
 export default {
     components: {
         searchbreedModel,
+        searchcustomerModel,
         vSelect,
         inputSelect,
         pressImage
@@ -373,7 +382,14 @@ export default {
               breedId:'',
               loading:false,
               id:''
-            },
+          },
+          empNameParam:{
+            show:false,
+            customerId:'',
+            customerName:'',
+            customerPhone:'',
+            employeeId:''
+          },
           tag:['真空包装','瓦楞纸箱','编织袋','积压包'],
             country:{
               cname:''
@@ -455,7 +471,13 @@ export default {
             this.breedParam.show=true;
             /*this.param.breedName = this.breedParam.breedName;
             this.param.breedId = this.breedParam.breedId;*/
-        },
+      },
+      searchCustomer:function(customerName,customerId,customerPhone){
+            this.empNameParam.show=true;
+            if("employeeId" in this.param){
+                this.empNameParam.employeeId = this.param.employeeId;
+            }
+      },
       createOrUpdateIntention:function(){
         if(this.param.flag==0){
           console.log('新增会员意向');
@@ -515,7 +537,12 @@ export default {
             this.breedParam.id = breed.breedId;
             this.breedParam.loading=true;
             this.getBreedDetail(this.breedParam);
-        }
+        },
+        customer:function(customer){
+            this.param.customerName = customer.customerName;
+            this.param.customerId = customer.customerId;
+            this.param.customerPhone = customer.customerPhone;
+        },
     },
     created(){
       if(this.param.breedId){

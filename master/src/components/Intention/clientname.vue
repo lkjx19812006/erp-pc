@@ -26,7 +26,7 @@
 	                </div>
 	                 <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.tel" placeholder="请输入客户手机号"  @keyup.enter="employNameSearch()">
+	                    <input type="text" class="search_input" v-model="loadParam.phone" placeholder="请输入客户手机号"  @keyup.enter="employNameSearch()">
 	                </div>
 	            </div>
 	            <table class="table table-hover table_head table-striped " v-cloak>
@@ -42,11 +42,11 @@
 	                <tbody>
 	                    <tr v-for="item in initCustomerlist">
 	                    	<td  @click.stop="">
-	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.name,item.tel)" ></label>
+	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.name,item.mainPhone)" ></label>
 	                        </td>
 	                        <td>{{item.type}}</td>
 	                        <td>{{item.name}}</td>
-	                        <td>{{item.tel}}</td>
+	                        <td>{{item.mainPhone}}</td>
 	                        <td>{{item.classify}}</td>
 	                    </tr>
 	                </tbody>
@@ -76,9 +76,11 @@ export default{
                 size: '15px',
                 cur: 1,
                 all: 7,
+                link:'/customer/',
                 name:'',
-                tel:'',
-                type:''
+                phone:'',
+                type:'',
+                employeeId:''
             },
 			checked:false,
 			show:true
@@ -122,6 +124,9 @@ export default{
 	    }
     },
 	created(){
+		if("employeeId" in this.param){
+                this.loadParam.employeeId = this.param.employeeId;
+        }
 		this.getClientList(this.loadParam);
 	}
 }
