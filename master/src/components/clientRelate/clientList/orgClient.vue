@@ -34,6 +34,8 @@
                                         employeeName:'',
                                         org:8,
                                         province:'',
+                                        orgId:'',
+                                        orgName:'',
                                         city:'',
                                         contacts:[
                                             {

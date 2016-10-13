@@ -31,6 +31,8 @@
                                         city:'',
                                         address:'',
                                         employee:100004,
+                                        employeeId:'',
+                                        employeeName:'',
                                         orgId:'',
                                         orgName:'',
                                         province:'',
