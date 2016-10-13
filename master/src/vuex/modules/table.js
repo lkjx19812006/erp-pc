@@ -423,6 +423,7 @@ const mutations = {
     },
 
     [UPDATE_BREED_DATA](state, data) { //修改药材
+
         for (var key in data) {
             state.basicBaseList.breedList[data.sub][key] = data[key];
         }
@@ -430,6 +431,7 @@ const mutations = {
     },
 
     [UPDATE_SPEC_DATA](state, data) { //修改药材相关信息
+        if(data.name)data.alias=data.name;
         for (var key in data) {
             state.breedDetail[data.key].arr[data.sub][key] = data[key];
         }

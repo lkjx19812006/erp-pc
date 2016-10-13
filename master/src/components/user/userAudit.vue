@@ -82,7 +82,9 @@ export default {
     },
     methods: {
         addText: function(text){
+        
             this.param.auditComment += text + ',';
+
         },
         pass: function(){
             this.param.audit = 1;        

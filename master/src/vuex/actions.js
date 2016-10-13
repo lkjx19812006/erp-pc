@@ -910,6 +910,7 @@ export const updateBreedInfo = ({ dispatch }, param) => { //修改药材信息
 export const alterSpec = ({ dispatch }, param) => { //修改药材相关
    console.log(param);
   const alterdata = {
+
         name: param.name,
         id: param.id,
         breedId: param.breedId
@@ -1999,7 +2000,6 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
     }
     if(param.fullname){
         updatedata.fullname = param.fullname;
-
     }
     if(param.email){
         updatedata.email = param.email;

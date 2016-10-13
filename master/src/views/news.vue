@@ -70,8 +70,10 @@
                         <td v-if="item.source==3" style="color:#444444 ">{{item.sourceType}}</td>
                         <td>{{item.bizTypeName}}</td>
                         <td>{{item.auditResult}}</td>
-                        <td>{{item.utype}}</td>
-                        <td>{{item.ctype}}</td>
+                        <td v-if='item.utype==0'>未认证</td>
+                        <td v-else>已认证</td>
+                        <td v-if='item.ctype==0'>未认证</td>
+                        <td v-else>已认证</td>
                         <td v-if="item.transStatus==1">已划转</td>
                         <td v-else>未划转</td>
                         <td>{{item.comment}}</td>

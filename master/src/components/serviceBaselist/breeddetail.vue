@@ -420,6 +420,14 @@ export default {
     width: 100px;
 }
 
+.btn-base {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #003077;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
 .panel-body ul > li:last-of-type {
     float: right;
     position: relative;

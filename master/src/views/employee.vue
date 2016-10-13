@@ -14,7 +14,7 @@
                       </select>
                     </div>
                     <div class="name_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="20">
+                        <img src="/static/images/search.png" height="24" width="20" />
                         <input type="text" class="search_input" v-model="loadParam.name"  placeholder="按员工名字搜索">
                     </div>
                     <div class="name_search clearfix">
@@ -302,6 +302,7 @@ export default {
     padding: 0;
 }
 .name_search{
+    padding-left: 20px;
     position: relative;
     border:none;
     display: inline-block;
@@ -312,6 +313,17 @@ export default {
     height: 34px;
     line-height: 32px;
     margin-right: 7%;
+}
+.my_order_search .name_search .search_input{
+    padding-left: 20px;
+}
+.my_order_search .name_search > img{
+    width:24px;
+    height: 30px;
+    margin: 1px 0 0 1px;
+    background: #eee;
+    position:absolute;
+    left:20px;
 }
 .tel_search {
     margin-right: 0;
