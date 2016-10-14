@@ -2007,6 +2007,9 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
     if(param.phone){
         updatedata.phone = param.phone;
     }
+    if(param.tel){
+        updatedata.tel = param.tel;
+    }
     if(param.nickname){
         updatedata.nickname = param.nickname;
     }
@@ -2028,7 +2031,27 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
     if(param.ccomment){
         updatedata.ccomment = param.ccomment;
     }
-
+    if(param.address){
+        updatedata.address = param.address;
+    }
+    if(param.idnumber){
+        updatedata.idnumber = param.idnumber;
+    }
+    if(param.employee){
+        updatedata.employee = param.employee;
+    }
+    if(param.busiType){
+        updatedata.busiType = param.busiType;
+    }
+    if(param.gender){
+        updatedata.gender = param.gender;
+    }
+    if(param.bizMain){
+        updatedata.bizMain = param.bizMain;
+    }
+    if(param.importance){
+        updatedata.importance = param.importance;
+    }
     console.log(updatedata);
 
     Vue.http({

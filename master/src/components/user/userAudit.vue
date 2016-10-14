@@ -82,8 +82,10 @@ export default {
     },
     methods: {
         addText: function(text){
-        
-            this.param.auditComment += text + ',';
+            
+            if(this.param.auditComment.split(',').indexOf(text) == -1){
+                this.param.auditComment += text + ',';
+            }
 
         },
         pass: function(){

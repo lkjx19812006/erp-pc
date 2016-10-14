@@ -33,8 +33,8 @@
                             <input type="text" v-model='param.province' class="form-control edit-input" value="{{param.province}}" />
                         </div>
                         <div class="editpage-input">
-                            <label class="editlabel">备注</label>
-                            <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
+                            <label class="editlabel">所在市</label>
+                            <input type="text" v-model='param.city' class="form-control edit-input" value="{{param.city}}" />
                         </div>
                         <div class="editpage-input">
                             <label class="editlabel">经营范围</label>
@@ -63,9 +63,9 @@
                             <input type="text" v-model="param.email" class="form-control edit-input" value="{{param.email}}" />
                         </div>
                         <div class="editpage-input">
-                            <label class="editlabel">所在市</label>
-                            <input type="text" v-model='param.city' class="form-control edit-input" value="{{param.city}}" />
-                        </div>
+                            <label class="editlabel">备注</label>
+                            <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
+                        </div>         
                         <div class="editpage-input">
                             <label class="editlabel">注册地址</label>
                             <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
