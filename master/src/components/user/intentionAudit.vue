@@ -82,11 +82,7 @@ export default {
 </script>
 <style scoped>
 
-.modal_con {
 
-    width:450px;
-    height:300px;
-}
 
 .big-font {
     font-size: 36px;

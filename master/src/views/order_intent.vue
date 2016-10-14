@@ -18,10 +18,17 @@
      <div class="myOrder" v-if="$route.path.split('=')[1]==2">
         <my-offer></my-offer>
      </div>
-
-     <!-- 部门客户 -->
+     <!-- 部门报价 -->
      <div class="myOrder" v-if="$route.path.split('=')[1]==3">
         <org-offer></org-offer>
+     </div>
+     <!-- 我的留言 -->
+     <div class="myOrder" v-if="$route.path.split('=')[1]==4">
+        <my-msg></my-msg>
+     </div>
+     <!-- 部门留言 -->
+     <div class="myOrder" v-if="$route.path.split('=')[1]==5">
+        <org-msg></org-msg>
      </div>
 	 <!-- <div v-show="!chanceParam.show">
            <div class="service-nav clearfix">
@@ -354,6 +361,8 @@ import myIntention from '../components/Intention/intentionList/myIntention.vue'
 import orgIntention from '../components/Intention/intentionList/orgIntention.vue'
 import myOffer from '../components/Intention/intentionList/myOffer.vue'
 import orgOffer from '../components/Intention/intentionList/orgOffer.vue'
+import myMsg from '../components/Intention/intentionList/myMsg.vue'
+import orgMsg from '../components/Intention/intentionList/orgMsg.vue'
 
 import {
 	
@@ -374,7 +383,9 @@ export default {
         myIntention,
         orgIntention,
         myOffer,
-        orgOffer
+        orgOffer,
+        myMsg,
+        orgMsg
     },
     /*vuex: {
         getters: {

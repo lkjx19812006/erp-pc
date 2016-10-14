@@ -294,7 +294,7 @@
 		                                    <tbody>
 		                                         <tr v-for="item in initClientDetail.files.arr">
 		                                            <!-- <td><img v-bind:src="item.path" /></td> -->
-                                                <td><img v-bind:src="item.path" /></td>
+                                                <td><img v-bind:src="item.path" v-if="item.type=='图片'" style='float:left; margin-left:15px;' /><img style='float:left; margin-left:15px;' src="/static/images/pdf.png" v-else></td>
 		                                            <td>{{item.type}}</td>
 		                                            <td>{{item.catagory}}</td>
                                                 <td  @click="clickShow($index,{
@@ -326,17 +326,17 @@
                           <div class="panel panel-default">
                               <div class="panel-heading" v-cloak>
                                   <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:initClientDetail.intention,
-                                              crete:'intention'
+                                              link:initClientDetail.intentions,
+                                              crete:'intentions'
                                               })">
                                         <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          意向（{{initClientDetail.intention.arr.length}}）
+                                          意向（{{initClientDetail.intentions.arr.length}}）
                                         </a>
                                         <button type="button" class="btn btn-base pull-right" @click.stop="createIntention()">新建</button>
                                   </h4>
                               </div>
-                              <div  class="panel-collapse" v-show="!initClientDetail.intention.show&&initClientDetail.intention.arr.length>0">
+                              <div  class="panel-collapse" v-show="!initClientDetail.intentions.show&&initClientDetail.intentions.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
@@ -348,7 +348,7 @@
                                             <th>单位</th>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="item in initClientDetail.intention.arr">
+                                            <tr v-for="item in initClientDetail.intentions.arr">
                                                 <td>{{item.breedName}}</td>
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
@@ -356,41 +356,44 @@
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
                                                 <td  @click="clickShow($index,{
-                                                  concrete:'intention'
+                                                  concrete:'intentions'
                                                   })">
                                                   <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show">
-                                                       <dt @click="updateIntention(
-                                                            intentionParam.sub=$index,
-                                                            intentionParam.id=item.id,
-                                                            intentionParam.breedName=item.breedName,
-                                                            intentionParam.price=item.price,
-                                                            intentionParam.unit=item.unit,
-                                                            intentionParam.especial=item.especial,
-                                                            intentionParam.quality=item.quality,
-                                                            intentionParam.spec=item.spec,
-                                                            intentionParam.number=item.number,
-                                                            intentionParam.location=item.location,
-                                                            intentionParam.type=item.type,
-                                                            intentionParam.country=item.country,
-                                                            intentionParam.province=item.province,
-                                                            intentionParam.city=item.city,
-                                                            intentionParam.district=item.district,
-                                                            intentionParam.address=item.address,
-                                                            intentionParam.invoic=item.invoic,
-                                                            intentionParam.sampling=item.sampling,
-                                                            intentionParam.sampleUnit=item.sampleUnit,
-                                                            intentionParam.advance=item.advance,
-                                                            intentionParam.intl=item.intl,
-                                                            intentionParam.sampleNumber=item.sampleNumber,
-                                                            intentionParam.sampleAmount=item.sampleAmount,
-                                                            intentionParam.qualification=item.qualification,
-                                                            intentionParam.breedId=item.intentionParam,
-                                                            intentionParam.pack=item.pack,
-                                                            intentionParam.visit=item.visit,
-                                                            intentionParam.duedate=item.duedate,
-                                                            intentionParam.breedId=item.breedId
-                                                        )">编辑</dt>
+                                                       <dt @click="updateIntention({
+                                                            flag:1,
+                                                            show:true,
+                                                            sub:$index,
+                                                            key:'client',
+                                                            id:item.id,
+                                                            breedName:item.breedName,
+                                                            price:item.price,
+                                                            unit:item.unit,
+                                                            especial:item.especial,
+                                                            quality:item.quality,
+                                                            spec:item.spec,
+                                                            number:item.number,
+                                                            location:item.location,
+                                                            type:item.type,
+                                                            country:item.country,
+                                                            province:item.province,
+                                                            city:item.city,
+                                                            district:item.district,
+                                                            address:item.address,
+                                                            invoic:item.invoic,
+                                                            sampling:item.sampling,
+                                                            sampleUnit:item.sampleUnit,
+                                                            advance:item.advance,
+                                                            intl:item.intl,
+                                                            sampleNumber:item.sampleNumber,
+                                                            sampleAmount:item.sampleAmount,
+                                                            qualification:item.qualification,
+                                                            breedId:item.intentionParam,
+                                                            pack:item.pack,
+                                                            visit:item.visit,
+                                                            duedate:item.duedate,
+                                                            breedId:item.breedId
+                                                        })">编辑</dt>
                                                 </div>
                                                 </td>
                                             </tr>
@@ -425,7 +428,7 @@
                                                 <!-- <td><img :src="item.path" /></td> -->
                                                 <td>20160819</td>
                                                 <td  @click="clickShow($index,{
-                                                    concrete:'files'
+                                                    concrete:'orders'
                                                     })">
                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                     <div class="files_action" v-show="item.show" >
@@ -437,7 +440,7 @@
                                                                  title:'文件',
                                                                  link:specDel,
                                                                  url:'/customer/file/',
-                                                                 key:'files',
+                                                                 key:'orders',
                                                                  headline:'clientDetail'
                                                                  })">删除</dt>
                                                         </dl>
@@ -1103,89 +1106,91 @@ export default {
 
       },
     	clickShow: function(id,param) {
-            if (this.$store.state.table.clientDetail[param.concrete].arr[id].show) {
-                this.$store.state.table.clientDetail[param.concrete].arr[id].show = !this.$store.state.table.clientDetail[param.concrete].arr[id].show
-            } else {
-                this.$store.state.table.clientDetail[param.concrete].arr[id].show = true
-            }
-        },
-        createFormt:function(initBreedDetail){
-        	this.custParam = initBreedDetail;
-        },
-        createAddr:function(initBreedDetail){
-        	this.addressParam = initBreedDetail;
-        },
-        newlabel:function(initBreedDetail){
-        	this.labelParam = initBreedDetail;
-        },
-        specDelete:function(initBreedDetail){
-            this.deleteParam = initBreedDetail;
-        },
-        updateSpec:function(initBreedDetail){
-        	 this.updateParam = initBreedDetail;
-        },
-        updateAddr:function(initBreedDetail){
-        	 this.addrParam = initBreedDetail;
-        },
-        updatelabel:function(initBreedDetail){
-        	 this.updlabelParam = initBreedDetail;
-        },
-        createfiles:function(initBreedDetail){
-        	 this.cfilesParam = initBreedDetail;
-           console.log(this.cfilesParam.path)
-           this.$broadcast('getImageData');
-        },
-        createTrack:function(value){
-          console.log('fsfsfs');
-          	this.ctrackParam.show = true;
-          	this.ctrackParam.name= value;
-        },
-        newproduct:function(initBreedDetail){
-        	 this.cproductParam = initBreedDetail;
-        },
-        createIntention:function(){
-          this.intentionParam={
-            show:false,
-              flag:0,   //0表示创建，1表示修改
-              sub:'',
-              customerId:this.initClientDetail.id,
-              //fullname:this.initUserDetail.fullname,
-              customerName:this.initClientDetail.name,
-              //phone:this.initUserDetail.phone,
-              customerPhone:this.initClientDetail.tel,
-              id:'',
-              breedId:'',
-              breedName:'',
-              price:'',
-              unit:'',
-              especial:'',
-              quality:'',
-              spec:'',
-              number:'',
-              location:'',
-              type:'',
-              country:'',
-              province:'',
-              city:'',
-              district:'',
-              address:'',
-              invoic:'',
-              sampling:'',
-              sampleUnit:'',
-              advance:'',
-              intl:'',
-              sampleNumber:0,
-              sampleAmount:0,
-              qualification:'',
-              url:'/intention/',
-              image_f:'',
-              image_s:'',
-              image_t:'',
-              images:''
-          };
-          this.intentionParam.show = true;
+          this.$store.state.table.clientDetail[param.concrete].arr[id].show = !this.$store.state.table.clientDetail[param.concrete].arr[id].show;
+      
+      },
+      createFormt:function(initBreedDetail){
+      	this.custParam = initBreedDetail;
+      },
+      createAddr:function(initBreedDetail){
+      	this.addressParam = initBreedDetail;
+      },
+      newlabel:function(initBreedDetail){
+      	this.labelParam = initBreedDetail;
+      },
+      specDelete:function(initBreedDetail){
+          this.deleteParam = initBreedDetail;
+      },
+      updateSpec:function(initBreedDetail){
+      	 this.updateParam = initBreedDetail;
+      },
+      updateAddr:function(initBreedDetail){
+      	 this.addrParam = initBreedDetail;
+      },
+      updatelabel:function(initBreedDetail){
+      	 this.updlabelParam = initBreedDetail;
+      },
+      createfiles:function(initBreedDetail){
+      	 this.cfilesParam = initBreedDetail;
+         console.log(this.cfilesParam.path)
+         this.$broadcast('getImageData');
+      },
+      createTrack:function(value){
+        console.log('fsfsfs');
+        	this.ctrackParam.show = true;
+        	this.ctrackParam.name= value;
+      },
+      newproduct:function(initBreedDetail){
+      	 this.cproductParam = initBreedDetail;
+      },
+      createIntention:function(){
+        this.intentionParam={
+          show:false,
+            flag:0,   //0表示创建，1表示修改
+            sub:'',
+            customerId:this.initClientDetail.id,
+            //fullname:this.initUserDetail.fullname,
+            customerName:this.initClientDetail.name,
+            //phone:this.initUserDetail.phone,
+            customerPhone:this.initClientDetail.mainPhone,
+            id:'',
+            breedId:'',
+            breedName:'',
+            price:'',
+            unit:'',
+            especial:'',
+            quality:'',
+            spec:'',
+            number:'',
+            location:'',
+            type:'',
+            country:'',
+            province:'',
+            city:'',
+            district:'',
+            address:'',
+            invoic:'',
+            sampling:'',
+            sampleUnit:'',
+            advance:'',
+            intl:'',
+            sampleNumber:0,
+            sampleAmount:0,
+            qualification:'',
+            url:'/intention/',
+            key:'client',
+            image_f:'',
+            image_s:'',
+            image_t:'',
+            images:''
+        };
+        this.intentionParam.show = true;
 
-        },
+      },
+
+      updateIntention:function(param){
+          this.intentionParam = param;
+      },
       callback:function(){
         this.auditParam.blackComments=this.auditParam.auditComment;
         this.auditParam.customerIds=this.auditParam.arr;

@@ -145,8 +145,8 @@
                      <div class="editpage-input">
                        <label class="editlabel">上门看货</label>
                        <select type="text" class="form-control edit-input" v-model="param.visit">
-                         <option value="0">是</option>
-                         <option value="1">否</option>
+                         <option value="0">否</option>
+                         <option value="1">会</option>
                        </select>
                      </div>
 

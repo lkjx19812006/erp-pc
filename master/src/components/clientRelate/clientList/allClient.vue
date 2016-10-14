@@ -74,7 +74,7 @@
                                 link:alterInfo,
                                 url:'/customer/',
                                 key:'customerList'
-                                })"><img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>{{item.name}}</td>
+                                })"><!-- <img src="/static/images/newClient2.png" style='float:left;' v-if='item.status==0' /> -->{{item.name}}</td>
                                     <!-- 上面这个img显示新客户图标 -->
                         <td>{{item.category}}</td>
                         <!-- <td>{{item.classify | classify}}</td> -->

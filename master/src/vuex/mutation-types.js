@@ -50,7 +50,9 @@ export const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA' // 修改客户产品
 export const CUSTOMER_BATCH_DELETE = 'CUSTOMER_BATCH_DELETE' //客户批量删除
 
 export const INTENTION_LIST_DATA ='INTENTION_LIST_DATA'  //意向数据列表
+export const INTENTION_DETAIL_DATA ='INTENTION_DETAIL_DATA'  //意向详情
 export const OFFER_LIST_DATA ='OFFER_LIST_DATA'  //报价数据列表
+export const MSG_LIST_DATA ='MSG_LIST_DATA'  //留言数据列表
 export const INTENTION_DATA = 'INTENTION_DATA'  // 新增意向以及机会划转为意向
 export const UPDATA_INTENTION_DATA = 'UPDATA_INTENTION_DATA' //修改意向
 export const INTENTION_OFFER_DETAIL = 'INTENTION_OFFER_DETAIL' //意向报价详情

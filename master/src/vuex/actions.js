@@ -910,6 +910,7 @@ export const updateBreedInfo = ({ dispatch }, param) => { //修改药材信息
 export const alterSpec = ({ dispatch }, param) => { //修改药材相关
    console.log(param);
   const alterdata = {
+
         name: param.name,
         id: param.id,
         breedId: param.breedId
@@ -1556,29 +1557,18 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
             con.remarks.arr[j].show = false;
         }
 
-        var arr = con.chance;
-        con.chance = null;
-        con.chance = {
+
+        var arr = con.intentions;
+        con.intentions = null;
+        con.intentions = {
             arr: arr,
             show: true
         };
-        for (var j in con.chance.arr) {
-            con.chance.arr[j].show = false;
+        for (var j in con.intentions.arr) {
+            con.intentions.arr[j].show = false;
         }
 
-        //var arr = con.intention;
-        var arr = [];
-        con.intention = null;
-        con.intention = {
-            arr: arr,
-            show: true
-        };
-        for (var j in con.intention.arr) {
-            con.intention.arr[j].show = false;
-        }
-
-        //var arr = con.orders;
-        var arr = [];
+        var arr = con.orders;
         con.orders = null;
         con.orders = {
             arr: arr,
@@ -1588,12 +1578,10 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
             con.orders.arr[j].show = false;
         }
 
-        console.log(con.orders);
-        console.log(con.addresses);
-        if(con.orders.show&&con.intention.show){
+        /*if(con.orders.show&&con.intention.show){
             dispatch(types.CUSTOMER_DETAIL_DATA, con);
-        }
-        //dispatch(types.CUSTOMER_DETAIL_DATA, con);
+        }*/
+        dispatch(types.CUSTOMER_DETAIL_DATA, con);
     }, (res) => {
         console.log('fail');
     })
@@ -1818,7 +1806,7 @@ export const transferInfo = ({ dispatch }, param) => { //客户部门划转信�
 
 export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表以及搜索
     param.loading = true;
-    var url = apiUrl.clientList+'/intention/?'+'&page=' + param.cur + '&pageSize=15';
+    var url = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
      for(var search in param){
         if(search=='type'&&param[search]!==''){
             url += '&type='+param.type
@@ -1878,45 +1866,41 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
     })
 }
 
+export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
+    param.loading = true;
+    var url = apiUrl.clientList+'/intention/'+param.id;
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+            var result = res.json().result;
+            var arr = result.offers;
+            result.offers = null;
+            result.offers = {
+                arr:arr,
+                show:false
+            };
+            for (var i in result.offers.arr) {
+                result.offers.arr[i].show = false;
+            };
+            dispatch(types.INTENTION_DETAIL_DATA, result);
+            param.all = res.json().result.pages;
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const getOfferList = ({ dispatch }, param) => {  //报价信息列表以及搜索
     param.loading = true;
     var url = apiUrl.clientList+'/intention/offers?'+'&page=' + param.cur + '&pageSize=15';
-     for(var search in param){
-        if(search=='type'&&param[search]!==''){
-            url += '&type='+param.type
-        }else if(search=='type'){
-            url +='&type='
-        }
-        if(search=='invoic'&&param[search]!==''){
-            url += '&invoic='+param.invoic
-        }else if(search=='invoic'){
-            url +='&invoic='
-        }
-        if(search=='status'&&param[search]!==''){
-            url += '&status='+param.status
-        }else if(search=='status'){
-            url +='&status='
-        }
-        if(search=='intl'&&param[search]!==''){
-            url += '&intl='+param.intl
-        }else if(search=='intl'){
-            url +='&intl='
-        }
-        if(search=='sampling'&&param[search]!==''){
-            url += '&sampling='+param.sampling
-        }else if(search=='sampling'){
-            url +='&sampling='
-        }
-        if(search=='visit'&&param[search]!==''){
-            url += '&visit='+param.visit
-        }else if(search=='visit'){
-            url +='&visit='
-        }
-        if(search=='advance'&&param[search]!==''){
-            url += '&advance='+param.advance
-        }else if(search=='advance'){
-            url +='&advance='
-        }
+    if('intentionId' in param&&param.intentionId!==''){
+        url += '&intentionId='+param.intentionId
     }
     Vue.http({
         method:'GET',
@@ -1939,6 +1923,39 @@ export const getOfferList = ({ dispatch }, param) => {  //报价信息列表以�
         param.loading = false;
     })
 }
+
+export const getMsgList = ({ dispatch }, param) => {  //留言信息列表以及搜索
+    param.loading = true;
+    var url = apiUrl.clientList+'/intention/msgs?'+'&page=' + param.cur + '&pageSize=15';
+    if('intentionId' in param&&param.intentionId!==''){
+        url += '&intentionId='+param.intentionId
+    }
+    if('userId' in param&&param.userId!==''){
+        url += '&userId='+param.userId
+    }
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+           var msg = res.json().result.list;
+           for (var i in msg){
+                msg[i].checked = false;
+                msg[i].show =false;
+           }
+            dispatch(types.MSG_LIST_DATA, msg);
+            param.all = res.json().result.pages;
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+
 
 export const getOffersdetail = ({ dispatch }, param) => {  //意向报价详情
     Vue.http({
@@ -2089,13 +2106,15 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
     }
     if(param.fullname){
         updatedata.fullname = param.fullname;
-
     }
     if(param.email){
         updatedata.email = param.email;
     }
     if(param.phone){
         updatedata.phone = param.phone;
+    }
+    if(param.tel){
+        updatedata.tel = param.tel;
     }
     if(param.nickname){
         updatedata.nickname = param.nickname;
@@ -2118,7 +2137,27 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
     if(param.ccomment){
         updatedata.ccomment = param.ccomment;
     }
-
+    if(param.address){
+        updatedata.address = param.address;
+    }
+    if(param.idnumber){
+        updatedata.idnumber = param.idnumber;
+    }
+    if(param.employee){
+        updatedata.employee = param.employee;
+    }
+    if(param.busiType){
+        updatedata.busiType = param.busiType;
+    }
+    if(param.gender){
+        updatedata.gender = param.gender;
+    }
+    if(param.bizMain){
+        updatedata.bizMain = param.bizMain;
+    }
+    if(param.importance){
+        updatedata.importance = param.importance;
+    }
     console.log(updatedata);
 
     Vue.http({
@@ -2354,7 +2393,8 @@ export const editintentInfo = ({ dispatch }, param) => { //修改意向
 export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
       if(param.image_f){param.images+=param.image_f+','}
       if(param.image_s){param.images+=param.image_s+','}
-      if(param.image_t){param.images+=param.image_t}
+      if(param.image_t){param.images+=param.image_t};
+
     const data1 = {
         "userId":param.userId,
          "type":param.type,
