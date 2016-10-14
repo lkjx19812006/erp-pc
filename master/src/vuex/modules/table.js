@@ -29,6 +29,7 @@ import {
    CUSTOMER_DATA,
    CUSTOMER_ADD_DATA,
    CUSTOMER_DETAIL_DATA,
+  CUSTOMER_BATCH_DELETE,
    UPDATE_CUSTOMER_DETAIL,
    CUSTOMER_UPDATE_DATA,
    UPDATE_ADDR_DETAIL,
@@ -63,7 +64,11 @@ import {
    COUNTRY_LIST,
    CITY_LIST,
    DISTRICT_LIST,
-   ADD_FILES_DATA
+   ADD_FILES_DATA,
+   GET_SUPPLY_DATA,
+   UPDATE_SUPPLY_DATA,
+   DELETE_SUPPLY_DATA,
+   ADD_SUPPLY_DATA
 
 } from '../mutation-types'
 
@@ -169,7 +174,11 @@ const state = {
             "id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"password": "56bf5523459ce2dfc6720798d852d6e6",
             "nickname": "卖蘑菇的小姑凉", "fullname": "沈威峰","phone": "13851379713","email": "857714234@qq.com","qq": "857714234",
             "company": "个体种植户","score": 300,"source": 1,"status": 0,"userIds": null,"customerId": null,"main": null,"show": true
-        }]
+        }],
+        supplyList:[
+
+        ]
+
     },
 
     orderDetail: {"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
@@ -327,7 +336,8 @@ const state = {
     "intention":{"show":false,"arr":[]},"tracking":{"show":false,"arr":[]},"personalAuthShow":false,"companyAuthShow":false
   },
   identify:{},
-  trackingDetail:{}
+  trackingDetail:{},
+  supplyDetail:{}
 }
 
 const mutations = {
@@ -465,10 +475,22 @@ const mutations = {
     [CUSTOMER_DETAIL_DATA](state, data) { //客户详情
         state.clientDetail = data;
     },
+    [CUSTOMER_BATCH_DELETE](state, data){
+        data.customerIds.forEach(function(item){
+          for(var i=0;i<state.basicBaseList.customerList.length;i++){
+                if(state.basicBaseList.customerList[i].id == item){
+                  state.basicBaseList.customerList.splice(i,1);
+                }
+          }
+        })
+      if(data.customerIds[0]==state.clientDetail.id){
+        state.clientDetail.blacklist=1-state.clientDetail.blacklist;
+      }
+
+    },
     [CUSTOMER_ADD_DATA](state, data) { //新增客户
 
       if(data.employee==data.employeeId||data.org==data.orgId){
-
         state.basicBaseList.customerList.unshift({
           address:data.address,
           bizScope:data.bizScope,
@@ -498,24 +520,14 @@ const mutations = {
           typeDesc:data.typeDesc,
           show: false
         })
-
       }
-
 
       if(data.sub!='undefined'){
         state.basicBaseList[data.key][data.sub][data.keyname]=1;
-
       }
       if(data.detail){
         state[data.detail].customerId=data.id;
       }
-
-
-
-
-
-
-
 
     },
     [CUSTOMER_UPDATE_DATA](state, data) { //修改客户列表信息
@@ -840,7 +852,22 @@ const mutations = {
             "show":false
 
         })
+    },
+
+    [GET_SUPPLY_DATA](state,data){
+
+    },
+    [UPDATE_SUPPLY_DATA](state,data){
+
+    },
+    [DELETE_SUPPLY_DATA](state,data){
+
+    },
+    [ADD_SUPPLY_DATA](state,data){
+
     }
+
+
 
 }
 

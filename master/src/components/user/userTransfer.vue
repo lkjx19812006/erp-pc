@@ -444,13 +444,10 @@
     },
     events: {
       'selectEmpOrOrg': function (param) {
-        console.log(param);
         this.param.employeeId = param.employeeId;
         this.param.employeeName = param.employeeName;
         this.param.orgId = param.orgId;
         this.param.orgName = param.orgName;
-        console.log(this.param);
-
       }
     },
     created(){

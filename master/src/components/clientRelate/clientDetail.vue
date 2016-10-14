@@ -11,6 +11,7 @@
 	<createproduct-model :param="cproductParam" v-if="cproductParam.show"></createproduct-model>
   <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+  <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <div class="client_body">
     	<div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -41,7 +42,7 @@
                                              link:createLabel,
                                              url:'/customer/insertLabel',
                                              key:'labels'
-                                             })">新建跟进</button>                 
+                                             })">新建跟进</button>
                         </li>
                         <li>
                             <button type="button" class="btn btn-base"  @click="newlabel({
@@ -58,6 +59,12 @@
                                              key:'labels'
                                              })">新建标签</button>
                         </li>
+                      <li v-if="initClientDetail.blacklist==0">
+                        <button type="button" class="btn btn-base"  @click="clientTransferBlack()">加入黑名单</button>
+                      </li>
+                      <li v-if="initClientDetail.blacklist==1">
+                        <button type="button" class="btn btn-base"  @click="clientTransferBlack()">踢出黑名单</button>
+                      </li>
                     </ul>
                 </div>
             </nav>
@@ -970,6 +977,7 @@ import createfilesModel from  '../clientRelate/createFiles'
 import createtrackModel from '../clientRelate/label/createTrack'
 import createproductModel from  '../clientRelate/label/createProduct'
 import intentionModel from  '../user/userIntention'
+import auditDialog from '../tips/auditDialog'
 import {
 	initClientDetail
 } from '../../vuex/getters'
@@ -989,7 +997,8 @@ import {
 	createProduct,
 	alterProduct,
 	uploadFiles,
-  deleteInfo
+  deleteInfo,
+  customerTransferBlacklist
 } from '../../vuex/actions'
 export default {
     components: {
@@ -1005,7 +1014,8 @@ export default {
         createtrackModel,
         createproductModel,
         intentionModel,
-        tipsdialogModel
+        tipsdialogModel,
+      auditDialog
     },
     props:['param'],
     data(){
@@ -1048,6 +1058,12 @@ export default {
     		tipsParam:{
     			show:false
     		},
+        auditParam:{
+          show:false,
+          title:'客户拉入黑名单备注',
+          arr:[],
+          blacklist:1
+        },
     		show:true
     	}
     },
@@ -1071,7 +1087,8 @@ export default {
     		createProduct,
     		alterProduct,
     		uploadFiles,
-        deleteInfo
+        deleteInfo,
+        customerTransferBlacklist
     	}
     },
     methods:{
@@ -1168,6 +1185,30 @@ export default {
           this.intentionParam.show = true;
 
         },
+      callback:function(){
+        this.auditParam.blackComments=this.auditParam.auditComment;
+        this.auditParam.customerIds=this.auditParam.arr;
+        this.auditParam.auditComment='';
+        this.customerTransferBlacklist(this.auditParam);
+      },
+      clientTransferBlack(){
+        this.auditParam.arr=[];
+        this.auditParam.arr.push(this.initClientDetail.id);
+
+        if(this.initClientDetail.blacklist==0){
+          this.auditParam.blacklist=1;
+          this.auditParam.title='加入黑名单备注';
+        }else{
+          this.auditParam.blacklist=0;
+          this.auditParam.title='踢出黑名单备注';
+        }
+        this.auditParam.confirm=true;
+        this.auditParam.callback=this.callback;
+        this.auditParam.show=true;
+
+
+
+      }
     }
 }
 </script>

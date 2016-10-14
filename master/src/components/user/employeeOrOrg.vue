@@ -11,7 +11,7 @@
 	    			<div class="tans_tab clearfix">
 	    				<!-- <a class="tabs" v-bind:class="{ 'tabs_active': isA&&isB, 'tab1': !isA }" @click="bindCustomer()">绑定客户</a> -->
 	    				<a class="tabs" v-bind:class="{ 'tabs_active': isA, 'tab1': isA }"  @click="employee()">业务员</a>
-	    				<a class="tabs" v-bind:class="{ 'tabs_active': !isA, 'tab1': isA }"  @click="department()">部门</a> 
+	    				<a class="tabs" v-bind:class="{ 'tabs_active': !isA, 'tab1': isA }"  @click="department()">部门</a>
 	    			</div>
 	    		</div>
 	    		<!-- <div class="con_trans">
@@ -21,7 +21,7 @@
 	    					                    <tr>
 	    					                        <th></th>
 	    					                        <th>客户名称</th>
-	    					                        
+
 	    					                    </tr>
 	    					                </thead>
 	    					                <tbody>
@@ -30,11 +30,11 @@
 	    					                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectCustomer($index)" ></label>
 	    					                        </td>
 	    					                        <td>{{item.name}}</td>
-	    					                        
+
 	    					                    </tr>
 	    					                </tbody>
 	    					            </table>
-	    					            
+
 	    			</div> -->
 	    			<div class="trans_service clearfix" v-show="currentView==1">
 						<div class="col-xs-4">
@@ -42,7 +42,7 @@
 		                        <option selected value="">请选择业务员部门</option>
 		                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
 		                  	</select>
-						</div>			               
+						</div>
 
 	    				<div class="col-xs-8">
 			                <div class="name_search clearfix">
@@ -54,7 +54,7 @@
 			                    <input type="text" class="search_input" v-model="employeeParam.mobile" placeholder="请输入业务员手机号"  @keyup.enter="employSearch()">
 			                </div>
 
-			                
+
 			            </div>
 			            <table v-if="orgFlag==0" class="table table-hover table_head table-striped " v-cloak>
 			                <thead>
@@ -77,7 +77,7 @@
 
 			                </tbody>
 			            </table>
-			            
+
 	    			</div>
 	    			<div class="con_trans">
 	    			<div class="trans_parten" v-show="currentView==2">
@@ -86,7 +86,7 @@
 			                    <tr>
 			                        <th></th>
 			                        <th>部门名称</th>
-			                        
+
 			                    </tr>
 			                </thead>
 			                <tbody>
@@ -95,11 +95,11 @@
 			                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectDepartment($index)" ></label>
 			                        </td>
 			                        <td>{{item.name}}</td>
-			                        
+
 			                    </tr>
 			                </tbody>
 			            </table>
-			            
+
 	    			</div>
 	    		</div>
 	    	</div>
@@ -120,11 +120,11 @@ import {
     getClientList,
     getEmployeeList,
     getOrgList,
-    
+
 } from '../../vuex/actions'
 export default{
 	components:{
-		
+
 	},
 	props:['param'],
 	data(){
@@ -153,7 +153,7 @@ export default{
                   cur: 1,
                   all: 7
               },
-              
+
 
 		}
 	},
@@ -168,7 +168,7 @@ export default{
 			getClientList,
 			getEmployeeList,
 			getOrgList,
-			
+
 		}
 	},
 	methods:{
@@ -205,7 +205,7 @@ export default{
              })
            }
 		},
-		
+
 		selectEmployee:function(id){
 			if(this.$store.state.table.basicBaseList.employeeList[id].checked == false){
 				this.employeeFlag++;
@@ -216,13 +216,13 @@ export default{
 			for(var key in this.initEmployeeList){
 				if(key!=id){
 					if(this.$store.state.table.basicBaseList.employeeList[key].checked==true){
-						this.employeeFlag--;	
-						this.$store.state.table.basicBaseList.employeeList[key].checked=false;	
+						this.employeeFlag--;
+						this.$store.state.table.basicBaseList.employeeList[key].checked=false;
 					}
-					
+
 				}
 			}
-			
+
 		},
 		selectDepartment:function(id){
 			if(this.$store.state.table.basicBaseList.orgList[id].checked == false){
@@ -234,13 +234,13 @@ export default{
 			for(var key in this.initOrgList){
 				if(key!=id){
 					if(this.$store.state.table.basicBaseList.orgList[key].checked==true){
-						this.orgFlag--;	
-						this.$store.state.table.basicBaseList.orgList[key].checked=false;	
+						this.orgFlag--;
+						this.$store.state.table.basicBaseList.orgList[key].checked=false;
 					}
-					
+
 				}
 			}
-			
+
 		},
 		confirm:function(){
 			this.param.employeeId = '';
@@ -260,7 +260,7 @@ export default{
 					this.param.orgName = this.$store.state.table.basicBaseList.orgList[key].name;
 				}
 			}
-			console.log(this.param);
+
 			this.$dispatch('selectEmpOrOrg', this.param);
 			this.param.show = false;
 
@@ -271,7 +271,7 @@ export default{
       //this.getClientList(this.loadParam, this.loadParam.all);
       this.getEmployeeList(this.employeeParam, this.employeeParam.all);
       this.getOrgList(this.loadParam, this.loadParam.all);
-     
+
     }
 }
 </script>
