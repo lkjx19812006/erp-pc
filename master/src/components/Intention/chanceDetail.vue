@@ -1,175 +1,249 @@
 <template>
-    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <div class="breed_detail">
-        <div class="client-section clearfix" v-cloak>
-            <div @click="param.show=false" class="top-title">
-                <span class="glyphicon glyphicon-remove-circle"></span>
-            </div>
-            <div  class="section_title clearfix">
-                <span>客户{{param.customerName}}的信息</span>
-                <button class="new_btn transfer" @click="saveSucc(param)">保存</button> 
-            </div>
-            <div class="edit-detail">
-                <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">客户名称</label>
-                     <input type="text" class="form-control edit-input"  v-model="param.customerName" value="{{param.customerName}}" />
-                </div>
-                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">类型</label>
-                    <select  class="form-control edit-input"  v-model="param.type">
-                            <option value="0">求购</option>
-                            <option value="1">供应</option>
-                    </select>
-                </div>
-            </div>
-             <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">品种名称</label>
-                    <input type="text" class="form-control edit-input"   v-model="param.breedName" value="{{param.breedName}}" />
-                </div>
-                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">是否特殊</label>
-                    <select  class="form-control edit-input"  v-model="param.especial" >
-                            <option value="0">普通</option>
-                            <option value="1">特殊</option>
-                    </select>
-                </div>
-            </div>
-             <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">客户手机号</label>
-                     <input type="text" class="form-control edit-input"  v-model="param.customerPhone" value="{{param.customerPhone}}" />
-                </div>
-                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">国家</label>
-                    <input type="text" class="form-control edit-input"  v-model="param.country" value="{{param.country}}" />
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">所在省</label>
-                     <input type="text" class="form-control edit-input"   v-model="param.province" value="{{param.province}}"/>
-                </div>
-                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">所在市</label>
-                    <input type="text" class="form-control edit-input"  v-model="param.city" value="{{param.city}}"/>
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">所在区</label>
-                     <input type="text" class="form-control edit-input"  v-model="param.district" value="{{param.district}}" />
-                </div>
-                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">数量</label>
-                    <input type="text" class="form-control edit-input"  v-model="param.number" value="{{param.number}}" />
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">产地</label>
-                    <input type="text" class="form-control edit-input"  v-model="param.location" value="{{param.location}}"  />
-                </div>
-                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">资质证书</label>
-                    <input type="text" class="form-control edit-input"   v-model="param.qualification" value="{{param.qualification}}" />
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">规格 </label>
-                    <input type="text" class="form-control edit-input"   v-model="param.spec" value="{{param.spec}}"  />
-                </div>
-                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">单位</label>
-                    <input type="text" class="form-control edit-input"   v-model="param.unit" value="{{param.unit}}" />
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">交收地址</label>
-                    <input type="text" class="form-control edit-input"  v-model="param.address" value="{{param.address}}" />
-                </div>
-                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">预付比例 </label>
-                    <input type="text" class="form-control edit-input"  v-model="param.advance" value="{{param.advance}}"/>
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">发票</label>
-                   <select  class="form-control edit-input"  v-model="param.invoic" >
-                        <option value="0">无发票</option>
-                        <option value="1">普通发票</option>
-                        <option value="2">增值发票</option>
-                    </select>
-                </div>
-                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">上门看货</label>
-                    <select  class="form-control edit-input"  v-model="param.visit" >
-                        <option value="0">不看</option>
-                        <option value="1">会</option>
-                    </select>
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">包装</label>
-                    <input type="text" class="form-control edit-input" v-model="param.pack" value="{{param.pack}}"  />
-                </div>
-                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">是否国际</label>
-                    <select  class="form-control edit-input"  v-model="param.intl" >
-                        <option value="0">国内</option>
-                        <option value="1">国际</option>
-                    </select>
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">提供样品</label>
-                    <select  class="form-control edit-input"  v-model="param.sampling" >
-                        <option value="0">无</option>
-                        <option value="1">有</option>
-                    </select>
-                </div>
-                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">样品数量</label>
-                    <input type="text" class="form-control edit-input" v-model="param.sampleNumber" value="{{param.sampleNumber}}"  />
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">样品单位</label>
-                    <input type="text" class="form-control edit-input" v-model="param.sampleUnit" value="{{param.sampleUnit}}"  />
-                </div>
-                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">样品总价</label>
-                    <input type="text" class="form-control edit-input" v-model="param.sampleAmount" value="{{param.sampleAmount}}"  />
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">单价</label>
-                    <input type="text" class="form-control edit-input" v-model="param.price" value="{{param.price}}"  />
-                </div>
-                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">状态</label>
-                    <select  class="form-control edit-input"  v-model="param.status" >
-                        <option value="0">待审</option>
-                        <option value="1">通过</option>
-                    </select>
-                </div>
-            </div>
+  <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+    <div class="client_body">
+      <div @click="param.show=false" class="top-title">
+            <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
+        <div class="client_nav">
+            <nav class="navbar navbar-client" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
+                        <a class="navbar-brand navbar-name" href="#">{{param.name}}</a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
+                         <li>
+                            <button type="button" class="btn btn-base"  @click="createOffer()">新建报价</button>
+                        </li>
+                      
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <section>
+            <div class="client-section clearfix" >
+                <div class="col-md-8 client-detail">
+                    <h4 class="section_title">相关</h4>
+                    <article>
+                        <div class="panel-group">
+                            
+                          <div class="panel panel-default">
+                              <div class="panel-heading" v-cloak>
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:initIntentionDetail.offers,
+                                              crete:'offers'
+                                              })">
+                                        <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          报价（{{initIntentionDetail.offers.arr.length}}）
+                                        </a>
+                                        <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button>
+                                  </h4>
+                              </div>
+                              <div  class="panel-collapse" v-show="!initIntentionDetail.offers.show&&initIntentionDetail.offers.arr.length>0">
+                                 <div class="panel-body panel-set">
+                                      <table class="table contactSet">
+                                        <thead>
+                                          <th>订单流水号</th>
+                                          <th></th>
+                                        </thead>
+                                        <tbody>
+                                             <tr v-for="item in initIntentionDetail.offers.arr">
+                                                <!-- <td><img :src="item.path" /></td> -->
+                                                <td>20160819</td>
+                                                <td  @click="clickShow($index,{
+                                                    concrete:'offers'
+                                                    })">
+                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                    <div class="files_action" v-show="item.show" >
+                                                        <dl>
+                                                            <dt @click="specDelete()">删除</dt>
+                                                        </dl>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                  </div>
+                              </div>
+                          </div>
+                
+        
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="section_title">详情</h4>
+                    <article>
+                        <div class="edit-detail">
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">客户名称</label>
+                                     <input type="text" class="form-control edit-input"  v-model="param.customerName" value="{{param.customerName}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">类型</label>
+                                    <select  class="form-control edit-input"  v-model="param.type" disabled="disabled">
+                                            <option value="0">求购</option>
+                                            <option value="1">供应</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">品种名称</label>
+                                    <input type="text" class="form-control edit-input"   v-model="param.breedName" value="{{param.breedName}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">是否特殊</label>
+                                    <select  class="form-control edit-input"  v-model="param.especial" disabled="disabled">
+                                            <option value="0">普通</option>
+                                            <option value="1">特殊</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">客户手机号</label>
+                                     <input type="text" class="form-control edit-input"  v-model="param.customerPhone" value="{{param.customerPhone}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">国家</label>
+                                    <input type="text" class="form-control edit-input"  v-model="param.country" value="{{param.country}}" disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">所在省</label>
+                                     <input type="text" class="form-control edit-input"   v-model="param.province" value="{{param.province}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">所在市</label>
+                                    <input type="text" class="form-control edit-input"  v-model="param.city" value="{{param.city}}" disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">所在区</label>
+                                     <input type="text" class="form-control edit-input"  v-model="param.district" value="{{param.district}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">数量</label>
+                                    <input type="text" class="form-control edit-input"  v-model="param.number" value="{{param.number}}" disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">产地</label>
+                                    <input type="text" class="form-control edit-input"  v-model="param.location" value="{{param.location}}"  disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">资质证书</label>
+                                    <input type="text" class="form-control edit-input"   v-model="param.qualification" value="{{param.qualification}}" disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">规格 </label>
+                                    <input type="text" class="form-control edit-input"   v-model="param.spec" value="{{param.spec}}" disabled="disabled" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">单位</label>
+                                    <input type="text" class="form-control edit-input"   v-model="param.unit" value="{{param.unit}}" disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">交收地址</label>
+                                    <input type="text" class="form-control edit-input"  v-model="param.address" value="{{param.address}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">预付比例 </label>
+                                    <input type="text" class="form-control edit-input"  v-model="param.advance" value="{{param.advance}}" disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">发票</label>
+                                   <select  class="form-control edit-input"  v-model="param.invoic" disabled="disabled">
+                                        <option value="0">无发票</option>
+                                        <option value="1">普通发票</option>
+                                        <option value="2">增值发票</option>
+                                    </select>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">上门看货</label>
+                                    <select  class="form-control edit-input"  v-model="param.visit" disabled="disabled">
+                                        <option value="0">不看</option>
+                                        <option value="1">会</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">包装</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.pack" value="{{param.pack}}"  disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">是否国际</label>
+                                    <select  class="form-control edit-input"  v-model="param.intl" disabled="disabled">
+                                        <option value="0">国内</option>
+                                        <option value="1">国际</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">提供样品</label>
+                                    <select  class="form-control edit-input"  v-model="param.sampling" disabled="disabled">
+                                        <option value="0">无</option>
+                                        <option value="1">有</option>
+                                    </select>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">样品数量</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.sampleNumber" value="{{param.sampleNumber}}" disabled="disabled" />
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">样品单位</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.sampleUnit" value="{{param.sampleUnit}}" disabled="disabled" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">样品总价</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.sampleAmount" value="{{param.sampleAmount}}" disabled="disabled" />
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">单价</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.price" value="{{param.price}}" disabled="disabled" />
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">状态</label>
+                                    <select  class="form-control edit-input"  v-model="param.status" disabled="disabled">
+                                        <option value="0">待审</option>
+                                        <option value="1">通过</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
     </div>
 </template>
 <script>
 import filter from '../../filters/filters'
 import tipsdialogModel  from '../tipsDialog'
+import{
+    initIntentionDetail
+} from '../../vuex/getters'
 import {
-    editintentInfo
+    editintentInfo,
+    getIntentionDetail
 } from '../../vuex/actions'
 export default {
     components: {
@@ -192,73 +266,173 @@ export default {
     },
     props:['param'],
     vuex: {
-       actions:{
-           editintentInfo
-       }
+        getters:{
+            initIntentionDetail
+        },
+        actions:{
+            editintentInfo,
+            getIntentionDetail
+        }
     },
     methods: {
         saveSucc:function(param){
            this.tipsParam.show= true;
-           this.editintentInfo(param) 
+           this.editintentInfo(param); 
         }
+    },
+    created(){
+        console.log(this.param.id);
+        this.getIntentionDetail(this.param);
     },
     filter: (filter, {})
 }
 </script>
 <style scoped>
-.top-title{
-    width: 100%;
-    right: 0;
-    top:130px;
-}
-.client-detailInfo img {
-    width: 100px;
-}
-.panel-body ul li:last-of-type{
-    float: right;
-}
-.panel-body ul > li:last-of-type {
-    float: none;
+.client_body {
     position: relative;
-}
-.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
     background-color: #fff;
-}
-.panel-collapse{
-    background-color: #fff;
-}
-.panel-group .panel{
-    border-radius: 10px;
-}
-.breed_action {
-    top: 33px;
-    right: 30px;
+    padding: 20px;
 }
 
-.breed_action {
-    padding: 5px 0;
-}
-
-.breed_action dl {
+.navbar-client {
     margin-bottom: 0;
+    padding-top: 10px;
+    background-color: #f5f5f5;
 }
 
-.breed_action dl dt {
+.navbar-img {
+    float: left;
+    margin-right: 10px;
+}
+
+.navbar-name {
+    color: #fa6705;
+    font-size: 20px;
+}
+
+.btn-base {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #003077;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+section {
+    background-color: #fff;
+}
+.breed_action{
+  top: 20px;
+  right: 40px;
+}
+.files_action{
+  position: absolute;
+  top: 32px;
+  right: 40px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: #fff;
+  z-index: 1000;
+  min-width: 80px;
+  height: 30px;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+.files_action:hover{
+  color: #fa6705;
+}
+.breed_action dl dt{
     display: block;
     padding: 3px;
     font-size: 14px;
     cursor: pointer;
 }
+section article {
+    margin-top: 30px;
+}
+.top-title{
+  z-index: 100;
+  width: 100%;
+  right: 0;
+  top: 130px;
+}
+.client-section {
+    padding: 10px 5px 40px 5px;
+}
 
-.contactSet>thead{
+.section_title {
+    font-size: 20px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 0;
+    margin: 0;
+}
+.contactSet thead{
+  color:#fa6705;
+}
+.panel-title-set {
+    margin-top: 6px;
+    margin-left: 26px;
+    display: inline-block;
+    font-size: 20px;
+    color: #333;
+}
+
+.contact-view {
     color: #fa6705;
+    margin-bottom: 0;
+    cursor: pointer;
 }
-.contactSet>tbody>tr>td,.contactSet>thead>tr>th{
-    border-bottom: none;
-    border-top: none;
-    text-align: left;
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+  text-align: left;
 }
-.contact_img{
-    margin-right: 6px !important;
+.edit-detail {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    position: relative;
+    padding: 10px;
+}
+
+.client-detailInfo {
+    padding: 0 15px 14px 15px;
+}
+
+.client-detailInfo img {
+    margin-right: 8px;
+}
+.client-detailInfo label {
+    display: block;
+    color: #333;
+    font-size: 16px;
+}
+
+.btn-orange {
+    background-color: #fa6705;
+    color: #fff;
+    font-size: 18px;
+}
+.label_action{
+  position: absolute;
+  top:13px;
+  right: 32px;
+  border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    z-index: 1000;
+    min-width: 90px;
+    cursor: pointer;
+    padding: 5px 10px;
+    max-width: 200px;
+}
+.client-editbtn {
+    text-align: right;
+    margin-top: 15px;
+}
+.client-image {
+    display: inline-block;
 }
 </style>

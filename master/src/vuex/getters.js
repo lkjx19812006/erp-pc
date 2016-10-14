@@ -119,9 +119,14 @@ export const initIntentionList = (state) => {
 export const initOfferList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.offerList));  
 }
-/*export const initOfferList = (state) => {
+/*--留言信息--*/
+export const initMsgList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.msgList));  
+}
+/*--意向详情--*/
+export const initIntentionDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionDetail));  
-}*/
+}
 
 /*---会员信息---*/
 export const initUserList = (state) => {

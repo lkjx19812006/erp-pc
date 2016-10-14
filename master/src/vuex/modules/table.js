@@ -29,7 +29,7 @@ import {
    CUSTOMER_DATA,
    CUSTOMER_ADD_DATA,
    CUSTOMER_DETAIL_DATA,
-  CUSTOMER_BATCH_DELETE,
+   CUSTOMER_BATCH_DELETE,
    UPDATE_CUSTOMER_DETAIL,
    CUSTOMER_UPDATE_DATA,
    UPDATE_ADDR_DETAIL,
@@ -56,7 +56,9 @@ import {
    UPDATE_TRACKING_DATA,
    ADD_TRACKING_DATA,
    INTENTION_LIST_DATA,
+   INTENTION_DETAIL_DATA,
    OFFER_LIST_DATA,
+   MSG_LIST_DATA,
    UPDATA_INTENTION_DATA,
    INTENTION_DATA,
    INTENTION_OFFER_DETAIL,
@@ -147,9 +149,12 @@ const state = {
             {"id":"163","intentionId":"57568d24a2ec516dc1d0f57c","userId":"3ed2a1d7dafe449eb5e631a46f20f713","customerId":null,"number":3000,"unit":"63","price":12.000000,"incidentals":1.000000,"incidentalsDesc":"含运费价格","total":36000.000000,"qualification":null,"quality":null,"location":null,"spec":null,"advance":null,"invoic":null,"visit":null,"pack":null,"sampling":null,"sampleNumber":null,"sampleUnit":null,"sampleAmount":null,"address":null,"comments":null,"otime":"2016-06-07 17:19","clients":null,"status":1,"description":"","updater":null,"utime":"2016-09-27 10:08","creater":null,"ctime":"2016-09-27 10:08"},
             {"id":"184","intentionId":"575d3527a2ec789e03ce62f1","userId":"6496e96c50774ca5a311ab02eb3f873e","customerId":null,"number":200,"unit":"63","price":30.000000,"incidentals":200.000000,"incidentalsDesc":"因为需要运费…","total":6000.000000,"qualification":null,"quality":null,"location":null,"spec":null,"advance":null,"invoic":null,"visit":null,"pack":null,"sampling":null,"sampleNumber":null,"sampleUnit":null,"sampleAmount":null,"address":null,"comments":null,"otime":"2016-06-12 18:20","clients":null,"status":1,"description":"","updater":null,"utime":"2016-09-27 10:08","creater":null,"ctime":"2016-09-27 10:08"}
         ],
-        intentionDetail: [
-            { "id": "1201608221917540470","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","pack": "机压包","country": "中国","status": 1, "show": true }
+        msgList:[
+            {"id":1508,"intentionId":"f0d082de37ba4230880fe5ff06b0f647","userId":"b11741af0efc49ed815545c0d88ddc98","phone":null,"comments":"asdadasdasdadasd","reserve":null,"status":1,"ctime":"2016-09-01 17:53","reply":null,"replier":null,"rtime":null,"updater":null,"utime":null,"creater":null}
         ],
+        intentionDetail: 
+            {"id":"1008","chanceId":"","userId":"","customerId":"36485","customerName":"刘振领","customerPhone":"17756736988","type":1,"especial":1,"breedId":2246,"breedName":"红枣","qualification":null,"quality":"各种规格，保证质量，量大从优","location":"新疆","spec":"选货","number":10000,"numberDesc":"","price":null,"origPrice":null,"priceDesc":"","unit":"63","province":null,"city":null,"district":null,"address":"安徽","pubdate":null,"duedate":null,"advance":0.000000,"invoic":0,"visit":0,"pack":null,"intl":0,"country":"中国","sampling":0,"cFlagsPath":"","sampleNumber":0,"sampleUnit":null,"sampleAmount":null,"onSell":3,"shelveTime":"2016-06-17 17:23","unshelveTime":null,"employee":null,"offer":0,"offerFalse":0,"offerNumber":0,"offerVprice":null,"offerTotal":0.000000,"status":1,"validate":1,"description":"买包子","updater":"100014","utime":"2016-07-12 19:38","creater":"100014","ctime":"2016-06-17 17:22",
+              "pics":[],"ids":null,"images":null,"offers":{arr:[],show:false},"msgs":[]},
         employeeList: [{
             "id": 6,
             "name": "lm",
@@ -289,7 +294,7 @@ const state = {
             arr: [],
             show: false
         },
-        "intent": { arr: [], show: false },
+        "intentions": { arr: [], show: false },
         "products": { arr: [], show: false },
         "files": {
             arr: [
@@ -637,6 +642,9 @@ const mutations = {
     [OFFER_LIST_DATA](state, data) { //报价列表
         state.basicBaseList.offerList = data;
     },
+    [MSG_LIST_DATA](state, data) { //留言列表
+        state.basicBaseList.msgList = data;
+    },
     [USER_DATA](state, data) { // 会员列表
         state.basicBaseList.userList = data;
     },
@@ -771,6 +779,11 @@ const mutations = {
         for (var i in state.userDetail.intention.arr[data.sub]) {
           state.userDetail.intention.arr[data.sub][i] = data[i];
         }
+      }else if(data.key=='client'){   //客户详情页修改意向
+        console.log("客户详情页修改意向");
+        for (var i in state.clientDetail.intentions.arr[data.sub]) {
+          state.clientDetail.intentions.arr[data.sub][i] = data[i];
+        }
       }else{
         console.log("意向列表页修改意向");
         for (var i in state.basicBaseList.intentionList[data.sub]) {
@@ -817,17 +830,24 @@ const mutations = {
 
         if(data.key=="intentionList"){
             console.log("意向列表页添加意向");  
-            state.basicBaseList.intentionList.unshift(temp)
+            state.basicBaseList.intentionList.unshift(temp);
         }
         if(data.key=="user"){
           console.log("会员详情页添加意向");
           state.userDetail.intention.arr.unshift(temp);
         }
+        if(data.key=="client"){
+            console.log("客户详情页添加意向");  
+            state.clientDetail.intentions.arr.unshift(temp);
+        }
 
     },
-    [INTENTION_OFFER_DETAIL](state,data){
+    [INTENTION_DETAIL_DATA](state,data){
         state.basicBaseList.intentionDetail = data;
     },
+    /*[INTENTION_OFFER_DETAIL](state,data){
+        state.basicBaseList.intentionDetail = data;
+    },*/
     [PROVINCE_LIST](state,data){
       console.log('table');
         state.locationList.provinceList = data;

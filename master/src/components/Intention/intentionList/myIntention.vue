@@ -1,6 +1,7 @@
 <template>
      <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
      <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
+     <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
      <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
      <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
      <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
@@ -11,22 +12,23 @@
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">我的意向</div>
             <div class="col-xs-5 my_order_search">
-               <div class="name_search clearfix">
+               <!-- <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchChance()">
+                   <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchIntention()">
                </div>
-              <div class="ordertel_search clearfix">
+                             <div class="ordertel_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索">
-               </div>
+               </div> -->
            </div> 
-            <div class="right col-xs-2">
-              <button class="new_btn transfer" @click="searchChance()">搜索</button>
+            <div class="right col-xs-3">
+                <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
+                <button class="new_btn transfer" @click="intentionAudit()">审核</button>
                 <button class="new_btn" @click="createIntention({
                        show:true,
                        selectCustomer:true,
                        flag:0,
-                       employeeId:'100013',
+                       employeeId:'100014',
                        title:'新建',
                        customerName:'',
                        customerId:'',
@@ -71,7 +73,7 @@
                     <dl class="clearfix">
                         <dt>类型：</dt>
                         <dd>
-                            <select  v-model="loadParam.type" @change="searchChance()">
+                            <select  v-model="loadParam.type" @change="searchIntention()">
                                 <option value="">请选择类型</option>
                                 <option value="0">求购</option>
                                 <option value="1">供应</option>
@@ -81,7 +83,7 @@
                     <dl class="clearfix">
                         <dt>是否提供发票：</dt>
                         <dd>
-                            <select v-model="loadParam.invoic" @change="searchChance()">
+                            <select v-model="loadParam.invoic" @change="searchIntention()">
                                 <option value="">请选择发票</option>
                                 <option value="0">无发票</option>
                                 <option value="1">普通发票</option>
@@ -92,7 +94,7 @@
                     <dl class="clearfix">
                         <dt>是否上门看货：</dt>
                         <dd>
-                            <select v-model="loadParam.visit" @change="searchChance()">
+                            <select v-model="loadParam.visit" @change="searchIntention()">
                                 <option value="">请选择</option>
                                 <option value="0">不看</option>
                                 <option value="1">会看</option>
@@ -102,7 +104,7 @@
                     <dl class="clearfix">
                         <dt>是否提供样品：</dt>
                         <dd>
-                            <select v-model="loadParam.sampling" @change="searchChance()">
+                            <select v-model="loadParam.sampling" @change="searchIntention()">
                                 <option value="">请选择样品</option>
                                 <option value="0">无</option>
                                 <option value="1">有</option>
@@ -112,7 +114,7 @@
                     <dl class="clearfix">
                         <dt>选择状态：</dt>
                         <dd>
-                            <select v-model="loadParam.status" @change="searchChance()">
+                            <select v-model="loadParam.status" @change="searchIntention()">
                                 <option value="">请选择状态</option>
                                 <option value="0">待审</option>
                                 <option value="1">通过</option>
@@ -122,7 +124,7 @@
                     <dl class="clearfix">
                         <dt>预付比例：</dt>
                         <dd>
-                            <select v-model="loadParam.advance" @change="searchChance()">
+                            <select v-model="loadParam.advance" @change="searchIntention()">
                                 <option value="">请选择预付比例</option>
                                 <option value="0">0</option>
                                 <option value="1">100%</option>
@@ -141,7 +143,7 @@
                     <dl class="clearfix">
                         <dt>是否是国际信息：</dt>
                         <dd>
-                            <select v-model="loadParam.intl" @change="searchChance()">
+                            <select v-model="loadParam.intl" @change="searchIntention()">
                                 <option value="">通过国际搜索</option>
                                 <option value="0">国内</option>
                                 <option value="1">国际</option>
@@ -158,7 +160,7 @@
             <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
                     <tr>  
-                        <th></th>
+                        <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
                         <th>类型</th>
       	            		<th>特殊的</th>
       	            		<th>客户名称</th>
@@ -190,12 +192,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                      <td>
-                          <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
-                      </td>
-                      <td>全选</td>
-                  </tr>
+                 
                     <tr v-for="item in initIntentionList">
                          <td  >
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
@@ -262,7 +259,7 @@
                         <td>{{item.sampleUnit}}</td>
                         <td>{{item.sampleAmount}}</td>
                         <td class="underline" @click="offerDetail(item.id)">{{item.offerNumber}}</td>
-                        <td>{{item.status | status}}</td>
+                        <td>{{item.validate | audit}}</td>
                         <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
@@ -336,6 +333,7 @@ import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import chancedetailModel from '../../Intention/chanceDetail'
 import transferintentModel from '../../Intention/transferIntent'
+import intentionauditModel from'../../user/intentionAudit'
 import tipsdialogModel  from '../../tipsDialog'
 import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import editintentModel  from  '../../Intention/Editintention'
@@ -357,6 +355,7 @@ export default {
         pagination,
         chancedetailModel,
         transferintentModel,
+        intentionauditModel,
         tipsdialogModel,
         deletebreedModel,
         editintentModel,
@@ -384,6 +383,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                link:'/intention/employee/list',
                 type:'',
                 invoic:'',
                 visit:'',
@@ -400,6 +400,13 @@ export default {
                 show:false,
                 id:'',
                 name:'意向'
+            },
+            intentionAuditParam:{
+                show:false,
+                arr:[],
+                indexs:[],
+                validate:0,
+                description:''
             },
             tipsParam:{
                 show:false,
@@ -422,7 +429,7 @@ export default {
         }
     },
     methods: {
-         eventClick:function(sub){
+        eventClick:function(sub){
             if(this.$store.state.table.basicBaseList.intentionList[sub].show){
                 this.$store.state.table.basicBaseList.intentionList[sub].show = !this.$store.state.table.basicBaseList.intentionList[sub].show;
             }else{
@@ -433,27 +440,47 @@ export default {
             this.chanceParam = initIntentionList;
         },
         onlyselected:function(sub,id){
+            var _this = this;
             this.$store.state.table.basicBaseList.intentionList[sub].checked=!this.$store.state.table.basicBaseList.intentionList[sub].checked;
-            for(var key in this.initIntentionList){
-                if(key!=sub){
-                    if(this.$store.state.table.basicBaseList.intentionList[key].checked==true){
-                        this.$store.state.table.basicBaseList.intentionList[key].checked=false;
+            if(!this.$store.state.table.basicBaseList.intentionList[sub].checked){
+                this.checked = false;
+            }else{
+                this.checked = true;
+                this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
+                    if(!item.checked){
+                        _this.checked = false;
                     }
-                }
-             }
-            this.id = id;
+                })
+            }
         },
         checkedAll:function(){
-   			this.checked = !this.checked;
-   			if(this.checked){
-   				this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-   					item.checked = true;
-   				})		
-   			}else{
-   				this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-   					item.checked = false;
-   				})
-   			}   	
+       			this.checked = !this.checked;
+       			if(this.checked){
+         				this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
+         					item.checked = true;
+         				})		
+       			}else{
+         				this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
+         					item.checked = false;
+         				})
+       			}   	
+        },
+        intentionAudit:function(){
+            this.intentionAuditParam.arr = []; 
+            this.intentionAuditParam.indexs = []; 
+            for(var i=0;i<this.$store.state.table.basicBaseList.intentionList.length;i++){
+                if(this.$store.state.table.basicBaseList.intentionList[i].checked){
+                    this.intentionAuditParam.arr.push(this.$store.state.table.basicBaseList.intentionList[i].id);
+                    this.intentionAuditParam.indexs.push(i);
+                }
+            }
+            console.log(this.intentionAuditParam.arr);
+            console.log(this.intentionAuditParam.indexs);
+            if(this.intentionAuditParam.arr.length==0){
+                this.tipsParam.show = true;
+            }else{
+                this.intentionAuditParam.show = true;
+            }          
         },
         clientTransfer:function(initIntentionList){
             this.intentionParam = initIntentionList;
@@ -472,8 +499,20 @@ export default {
                 }
             }
         },
-        searchChance:function(){
-            this.getIntentionList(this.loadParam)
+        searchIntention:function(){
+            this.getIntentionList(this.loadParam);
+        },
+        resetCondition:function(){
+            this.loadParam.type='';
+            this.loadParam.invoic='';
+            this.loadParam.visit='';
+            this.loadParam.intl='';
+            this.loadParam.sampling='';
+            this.loadParam.status='';
+            this.loadParam.advance='';
+            this.loadParam.customerName='';
+            this.getIntentionList(this.loadParam);
+            
         },
         specDelete:function(initIntentionList){
         	this.deleteParam = initIntentionList;
