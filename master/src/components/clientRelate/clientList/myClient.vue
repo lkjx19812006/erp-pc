@@ -108,7 +108,8 @@
                                 link:alterInfo,
                                 url:'/customer/',
                                 key:'customerList'
-                                })"><img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>{{item.name}}</td>
+                                })">{{item.name}}</td>
+                                    <!-- <img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div> -->
                                     <!-- 上面这个img显示新客户图标 -->
                         <td>{{item.category}}</td>
                         <!-- <td>{{item.classify | classify}}</td> -->
