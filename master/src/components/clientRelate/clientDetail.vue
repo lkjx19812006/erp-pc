@@ -1059,6 +1059,7 @@ export default {
     			show:false
     		},
         auditParam:{
+          link:'/customer/transferBlacklist',
           show:false,
           title:'客户拉入黑名单备注',
           arr:[],

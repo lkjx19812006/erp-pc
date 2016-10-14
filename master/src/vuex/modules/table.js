@@ -64,11 +64,7 @@ import {
    COUNTRY_LIST,
    CITY_LIST,
    DISTRICT_LIST,
-   ADD_FILES_DATA,
-   GET_SUPPLY_DATA,
-   UPDATE_SUPPLY_DATA,
-   DELETE_SUPPLY_DATA,
-   ADD_SUPPLY_DATA
+   ADD_FILES_DATA
 
 } from '../mutation-types'
 
@@ -141,7 +137,7 @@ const state = {
         ],
         intentionList: [
             { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
-            
+
         ],
         offerList:[
             {"id":"163","intentionId":"57568d24a2ec516dc1d0f57c","userId":"3ed2a1d7dafe449eb5e631a46f20f713","customerId":null,"number":3000,"unit":"63","price":12.000000,"incidentals":1.000000,"incidentalsDesc":"含运费价格","total":36000.000000,"qualification":null,"quality":null,"location":null,"spec":null,"advance":null,"invoic":null,"visit":null,"pack":null,"sampling":null,"sampleNumber":null,"sampleUnit":null,"sampleAmount":null,"address":null,"comments":null,"otime":"2016-06-07 17:19","clients":null,"status":1,"description":"","updater":null,"utime":"2016-09-27 10:08","creater":null,"ctime":"2016-09-27 10:08"},
@@ -174,10 +170,7 @@ const state = {
             "id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"password": "56bf5523459ce2dfc6720798d852d6e6",
             "nickname": "卖蘑菇的小姑凉", "fullname": "沈威峰","phone": "13851379713","email": "857714234@qq.com","qq": "857714234",
             "company": "个体种植户","score": 300,"source": 1,"status": 0,"userIds": null,"customerId": null,"main": null,"show": true
-        }],
-        supplyList:[
-
-        ]
+        }]
 
     },
 
@@ -336,8 +329,7 @@ const state = {
     "intention":{"show":false,"arr":[]},"tracking":{"show":false,"arr":[]},"personalAuthShow":false,"companyAuthShow":false
   },
   identify:{},
-  trackingDetail:{},
-  supplyDetail:{}
+  trackingDetail:{}
 }
 
 const mutations = {
@@ -651,6 +643,7 @@ const mutations = {
             if (data) {
                 for (var key in data) {
                     state.basicBaseList.userList[data.index][key] = data[key];
+
                 }
             }
             console.log('列表页面修改');
@@ -849,21 +842,7 @@ const mutations = {
             "show":false
 
         })
-    },
-
-    [GET_SUPPLY_DATA](state,data){
-
-    },
-    [UPDATE_SUPPLY_DATA](state,data){
-
-    },
-    [DELETE_SUPPLY_DATA](state,data){
-
-    },
-    [ADD_SUPPLY_DATA](state,data){
-
     }
-
 
 
 }

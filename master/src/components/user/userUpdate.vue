@@ -1,7 +1,7 @@
 <template>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
-    <div class="container modal_con" v-show="param.show">
+    <div  id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
+    <div class="container modal_con" >
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>

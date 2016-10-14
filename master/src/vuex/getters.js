@@ -43,53 +43,53 @@ export const initOrderlist = (state) => {
 }
 
 export const initOrderDetail = (state) => {
-    return JSON.parse(JSON.stringify(state.table.orderDetail)); 
+    return JSON.parse(JSON.stringify(state.table.orderDetail));
 }
 
 
 /*--系统基础数据--*/
 export const initSystemlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.systemBaseList.enumlist)); 
-} 
+    return JSON.parse(JSON.stringify(state.table.systemBaseList.enumlist));
+}
 export const initSearchlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.searchList)); 
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.searchList));
 }
 export const initCountrylist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.systemBaseList.countryList));  
+    return JSON.parse(JSON.stringify(state.table.systemBaseList.countryList));
 }
 export const initProvincelist = (state) => {
     console.log('getter');
-    return JSON.parse(JSON.stringify(state.table.systemBaseList.locationlist));  
+    return JSON.parse(JSON.stringify(state.table.systemBaseList.locationlist));
 }
 export const initCitylist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.systemBaseList.cityList));  
+    return JSON.parse(JSON.stringify(state.table.systemBaseList.cityList));
 }
 export const initDistrictlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.systemBaseList.districtList));  
+    return JSON.parse(JSON.stringify(state.table.systemBaseList.districtList));
 }
 /*--业务基础数据--*/
 export const initEnterpriselist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.enterpriseList));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.enterpriseList));
 }
 export const initConponentlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.componentList));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.componentList));
 }
 export const initDrawlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.drawList));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.drawList));
 }
 export const initBreedlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.breedList));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.breedList));
 }
 
 export const initCompanyDetail = (state) => {
-    return JSON.parse(JSON.stringify(state.table.companyDetail)); 
+    return JSON.parse(JSON.stringify(state.table.companyDetail));
 }
 export const initBreedDetail = (state) => {
-    return JSON.parse(JSON.stringify(state.table.breedDetail));  
-} 
+    return JSON.parse(JSON.stringify(state.table.breedDetail));
+}
 
 export const initCategorylist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.categoryList)); 
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.categoryList));
 }
 
 export const initDruglist = (state) => {
@@ -101,26 +101,26 @@ export const initCustomerlist = (state) => {
 }
 
 export const initClientDetail = (state) => {
-    return JSON.parse(JSON.stringify(state.table.clientDetail));  
+    return JSON.parse(JSON.stringify(state.table.clientDetail));
 }
 
 export const initEmployeeList = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.employeeList));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.employeeList));
 }
 
 export const initOrgList = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.orgList));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.orgList));
 }
 /*--意向信息--*/
 export const initIntentionList = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionList));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionList));
 }
 /*--报价信息--*/
 export const initOfferList = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.offerList));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.offerList));
 }
 /*export const initOfferList = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionDetail));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionDetail));
 }*/
 
 /*---会员信息---*/
@@ -137,7 +137,7 @@ export const initAuditLabel = (state) => {
 export const initUserDetail = (state) => {
     return parseJson(state.table.userDetail);
 }
- 
+
 
  /*---认证信息---*/
 export const initIdentify = (state) => {
@@ -160,6 +160,11 @@ export const initIdentify = (state) => {
 }*/
 /*---获取省市区---*/
 export const initProvince = (state) => {
-    console.log('getter');
-    return JSON.parse(JSON.stringify(state.table.locationList.provinceList));  
+
+    return JSON.parse(JSON.stringify(state.table.locationList.provinceList));
+}
+
+export const initSupply = (state) => {
+
+  return JSON.parse(JSON.stringify(state.table.basicBaseList.supplyList));
 }

@@ -19,7 +19,7 @@
                     show:true
                     })">划转</button>
               <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
-
+              <button class="new_btn transfer" @click="clientTransferSupplier()">抽取供应商</button>
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
@@ -237,6 +237,7 @@ export default {
                 name:'请先选择客户'
             },
           auditParam:{
+            link:'/customer/transferBlacklist',
             show:false,
             title:'客户拉入黑名单备注',
             arr:[],
@@ -286,7 +287,30 @@ export default {
             }
 
         },
+      clientTransferSupplier:function(){
+        this.auditParam.title="客户提取为供应商备注";
+        this.auditParam.link='/customer/setSupplier';
+        this.auditParam.arr=[];
+        for(var i in this.initCustomerlist){
+          if(this.initCustomerlist[i].checked){
+            this.auditParam.arr.push(this.initCustomerlist[i].id);
+          }
+        }
+
+        if(this.auditParam.arr.length>0){
+          this.auditParam.show=true;
+          this.auditParam.confirm=true;
+          this.auditParam.callback=this.callback;
+        }else{
+          this.tipsParam.show=true;
+          this.tipsParam.alert=true;
+          this.tipsParam.name='请先选择客户';
+          this.tipsParam.confirm=false;
+
+        }
+      },
       clientTransferBlack:function(){
+        this.auditParam.title="客户踢入黑名单备注";
         this.auditParam.arr=[];
         for(var i in this.initCustomerlist){
           if(this.initCustomerlist[i].checked){

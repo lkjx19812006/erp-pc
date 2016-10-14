@@ -19,9 +19,8 @@
                     show:true
                     })">划转</button>
               <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
-
-
-                <button class="new_btn transfer" @click="createSearch()">搜索</button>
+              <button class="new_btn transfer" @click="clientTransferSupplier()">抽取供应商</button>
+              <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
         <div class="order_table">
@@ -241,6 +240,7 @@ export default {
               show:false,
               title:'客户拉入黑名单备注',
               arr:[],
+              link:'/customer/transferBlacklist',
               blacklist:1
             },
             checked:false
@@ -285,7 +285,9 @@ export default {
                 this.tipsParam.show=true;
             }
         },
-        clientTransferBlack:function(){
+        clientTransferSupplier:function(){
+          this.auditParam.title="客户提取为供应商备注";
+          this.auditParam.link='/customer/setSupplier';
           this.auditParam.arr=[];
           for(var i in this.initCustomerlist){
             if(this.initCustomerlist[i].checked){
@@ -304,7 +306,28 @@ export default {
             this.tipsParam.confirm=false;
 
           }
+        },
+        clientTransferBlack:function(){
+          this.auditParam.title="客户踢入黑名单备注";
+          this.auditParam.link='/customer/transferBlacklist';
+          this.auditParam.arr=[];
+          for(var i in this.initCustomerlist){
+            if(this.initCustomerlist[i].checked){
+              this.auditParam.arr.push(this.initCustomerlist[i].id);
+            }
+          }
 
+          if(this.auditParam.arr.length>0){
+            this.auditParam.show=true;
+            this.auditParam.confirm=true;
+            this.auditParam.callback=this.callback;
+          }else{
+            this.tipsParam.show=true;
+            this.tipsParam.alert=true;
+            this.tipsParam.name='请先选择客户';
+            this.tipsParam.confirm=false;
+
+          }
         },
           callback:function(){
             this.auditParam.blackComments=this.auditParam.auditComment;

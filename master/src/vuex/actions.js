@@ -1143,14 +1143,20 @@ export const getOrgClientList = ({ dispatch }, param) => {  //部门客户信息
 
 export const customerTransferBlacklist  = ({ dispatch }, param) => {
             param.loading = true;
-            const data={
-              blackComments:param.blackComments,
-              customerIds:param.customerIds,
-              blacklist:param.blacklist
+            const data={};
+            if(param.link=='/customer/transferBlacklist'){
+                data.blackComments=param.blackComments;
+                data.customerIds=param.customerIds;
+                data.blacklist=param.blacklist;
+              }
+            else if(param.link=='/customer/setSupplier'){
+              data.customerIds=param.customerIds;
+              data.supplier=1;
+              data.comments=param.blackComments;
             }
             Vue.http({
               method: "POST",
-              url: apiUrl.clientList + '/customer/transferBlacklist',
+              url: apiUrl.clientList + param.link,
               emulateHTTP: true,
               body: data,
               emulateJSON: false,
@@ -1160,8 +1166,7 @@ export const customerTransferBlacklist  = ({ dispatch }, param) => {
                 }
               }).then((res) => {
               param.loading = false;
-
-              dispatch(types.CUSTOMER_BATCH_DELETE, param);
+              if(param.link=='/customer/transferBlacklist'){dispatch(types.CUSTOMER_BATCH_DELETE, param);}
               }, (res) => {
               param.loading = false;
                 console.log('fail');
@@ -2349,7 +2354,7 @@ export const editintentInfo = ({ dispatch }, param) => { //修改意向
 export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
       if(param.image_f){param.images+=param.image_f+','}
       if(param.image_s){param.images+=param.image_s+','}
-      if(param.image_t){param.images+=param.image_t}  
+      if(param.image_t){param.images+=param.image_t}
     const data1 = {
         "userId":param.userId,
          "type":param.type,
@@ -2425,7 +2430,6 @@ export const updateTrackingInfo = ({ dispatch }, param) => { //修改跟进信�
         updatedata.comments = param.comments;
     }
 
-
     Vue.http({
         method: 'PUT',
         url: apiUrl.tracking + "/tracking/",
@@ -2473,7 +2477,6 @@ export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信�
     if(param.bizType!==''){
 
     }
-  console.log(data);
 
     Vue.http({
         method: 'POST',
@@ -2495,11 +2498,9 @@ export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信�
 }
 
 export const getAuthInfo = ({ dispatch }, param) => { //查询认证信息
-   console.log('=================');
-    console.log(param);
-    const data = {
-        id: param.id,
 
+    const data = {
+        id: param.id
     }
     if(param.utype){
         data.utype = param.utype;

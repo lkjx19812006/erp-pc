@@ -159,7 +159,8 @@
           show:false,
           title:'客户踢出黑名单备注',
           arr:[],
-          blacklist:0
+          blacklist:0,
+          link:'/customer/transferBlacklist'
         },
         checked:false
       }

@@ -89,19 +89,10 @@
                                     <li @click="modifyUser({
                                                 id:item.id,
                                                 show:true,
-                                                name:item.name,
-                                                nickname:item.nickname,
-                                                fullname:item.fullname,
-                                                type:item.type,
-                                                phone:item.phone,
-                                                email:item.email,
-                                                qq:item.qq,
-                                                index:$index,
-                                                company:item.company,
-                                                comment:item.comment,
                                                 link:alertInfo,
                                                 url:'/user/',
-                                                key:'userList'
+                                                key:'userList',
+                                                index:$index,
                                                 },item.show=false)">编辑</li>
                                     <li v-if="item.transStatus==0" @click="userToClient({
                                                 name:item.fullname,
@@ -188,9 +179,7 @@ export default {
         detailModel,
         searchModel,
         intentionModel,
-
         auditModel
-
     },
 	 data() {
         return {
