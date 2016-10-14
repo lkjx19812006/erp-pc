@@ -149,7 +149,7 @@
                                     <option value="0" @click="sample_0()" >无</option>
                                     <option value="1" @click="sample_1()">有</option>
                                 </select>
-                               <!--  <input type="text" class="form-control edit-input" v-model="param.sampling" value="{{param.sampling}}"  /> -->
+                               <input type="text" class="form-control edit-input" v-model="param.sampling" value="{{param.sampling}}"  />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12" v-show="sample">
                                 <label class="editlabel">样品数量</label>
@@ -372,3 +372,4 @@ export default {
     margin-right: 10px;
 }
 </style>
+

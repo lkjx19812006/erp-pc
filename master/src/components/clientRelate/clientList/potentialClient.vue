@@ -6,6 +6,7 @@
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
+    <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">潜在客户</div>
@@ -17,6 +18,7 @@
                     orgId:'',
                     show:true
                     })">划转</button>
+              <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
 
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
@@ -33,6 +35,7 @@
                         <th>类型</th>
                         <th>分类</th>
                         <th>客户来源</th>
+                        <th>客户等级</th>
                         <th>名称</th>
                         <th>分类码</th>
                         <!-- <th>所属分类</th> -->
@@ -62,6 +65,7 @@
                         <td>{{item.typeDesc}}</td>
                         <td>{{item.classifyDesc}}</td>
                         <td>{{item.sourceType}}</td>
+                        <td>{{item.creditLevel}}</td>
                         <td class="underline"  @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -78,8 +82,8 @@
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
                         <td>{{item.tel}}</td>
-                        <td>空</td>
-                        <td>空</td>
+                        <td>{{item.phoneProvince}}</td>
+                        <td>{{item.phoneCity}}</td>
                         <td>{{item.email}}</td>
                         <td>{{item.countryName | country}}</td>
                         <td>{{item.provinceName}}</td>
@@ -141,8 +145,9 @@ import createModel  from '../../../components/user/userTransfer'
 import deletebreedModel  from '../../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import alterinfoModel  from '../../../components/clientRelate/clientUpdate'
 import transferModel   from '../../../components/clientRelate/clienttransfer'
-import tipsdialogModel  from '../../../components/tipsDialog'
+import tipsdialogModel  from '../../../components/tips/tipDialog'
 import searchModel  from  '../../../components/clientRelate/searchModel'
+import auditDialog from '../../../components/tips/auditDialog'
 import {
     initCustomerlist
 } from '../../../vuex/getters'
@@ -151,7 +156,8 @@ import {
     deleteInfo,
     alterInfo,
     getClientDetail,
-    saveCreate
+    saveCreate,
+  customerTransferBlacklist
 } from '../../../vuex/actions'
 
 export default {
@@ -164,6 +170,7 @@ export default {
         transferModel,
         tipsdialogModel,
         searchModel,
+      auditDialog
     },
     vuex: {
         getters: {
@@ -174,7 +181,8 @@ export default {
             deleteInfo,
             alterInfo,
             getClientDetail,
-            saveCreate
+            saveCreate,
+          customerTransferBlacklist
         }
     },
     data() {
@@ -228,6 +236,12 @@ export default {
                 show:false,
                 name:'请先选择客户'
             },
+          auditParam:{
+            show:false,
+            title:'客户拉入黑名单备注',
+            arr:[],
+            blacklist:1
+          },
             checked:false
         }
     },
@@ -268,25 +282,37 @@ export default {
                 this.transferParam.show=true;
             }else{
                 this.tipsParam.show=true;
+                this.tipsParam.alert=true;
             }
-            console.log(this.transferParam);
-            console.log(this.transferParam.arr);
-            //
-            /*var _this = this;
-            _this.auditParam.userIds = [];
-            _this.auditParam.indexs = [];
-            for(var i=0;i<this.initUserList.length;i++){
-                if(this.$store.state.table.basicBaseList.userList[i].checked){
-                    _this.auditParam.userIds.push(this.$store.state.table.basicBaseList.userList[i].id);
-                    _this.auditParam.indexs.push(i);
-                }
-            }
-            if(this.auditParam.userIds.length>0){
-                this.auditParam.show = true;
-            }else{
-                this.tipsParam.show = true;
-            }*/
+
         },
+      clientTransferBlack:function(){
+        this.auditParam.arr=[];
+        for(var i in this.initCustomerlist){
+          if(this.initCustomerlist[i].checked){
+            this.auditParam.arr.push(this.initCustomerlist[i].id);
+          }
+        }
+
+        if(this.auditParam.arr.length>0){
+          this.auditParam.show=true;
+          this.auditParam.confirm=true;
+          this.auditParam.callback=this.callback;
+        }else{
+          this.tipsParam.show=true;
+          this.tipsParam.alert=true;
+          this.tipsParam.name='请先选择客户';
+          this.tipsParam.confirm=false;
+
+        }
+
+      },
+      callback:function(){
+        this.auditParam.blackComments=this.auditParam.auditComment;
+        this.auditParam.customerIds=this.auditParam.arr;
+        this.auditParam.auditComment='';
+        this.customerTransferBlacklist(this.auditParam);
+      },
         checkedAll: function() {
            this.checked=!this.checked;
            if(this.checked){

@@ -38,6 +38,11 @@ export default (router) => router.map({
                     require(['./views/client'], resolve)
                 }
             },
+            '/supply': {
+            component: function(resolve) {
+              require(['./views/supply'], resolve)
+            }
+            },
             '/order_intent': {
                 component: function(resolve) {
                     require(['./views/order_intent'], resolve)

@@ -7,20 +7,20 @@
                 <img src="/static/images/bee.png"  class="pull-left" height="158" width="131"/>
                 <div class="tips_name">{{param.name}}</div>
                 </div>
-            <div class="model-footer" v-if="param.alert">
+          <div class="model-footer" v-if="param.alert">
                 <input type="button" class="btn btn-close"  @click="param.show = false"  value="确定"/>
-            </div> 
+            </div>
             <div class="model-footer" v-if="param.confirm">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                 <input type="button" class="btn  btn-confirm"  @click="param.callback(),param.show = false" value="确定" />
-            </div> 
-        </div> 
+            </div>
+        </div>
     </div>
 </template>
 <script>
 export default {
     props: ['param']
-    
+
 }
 </script>
 <style scoped>

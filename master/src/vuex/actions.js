@@ -987,9 +987,7 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         if(search=='classify'&&param[search]!==''){
             clienturl += '&classify='+param.classify
         }
-        if(search=='status'&&param[search]!==''){
-            clienturl += '&status='+param.status
-        }
+
         if(search=='phone'&&param[search]!==''){
             clienturl += '&phone='+param.phone
         }
@@ -1004,6 +1002,9 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         }
         if(search=='city'&&param[search]!==''&&param[search]!==undefined){
             clienturl += '&city='+param.city
+        }
+        if(search=='blacklist'&&param[search]!==''&&param[search]!==undefined){
+          clienturl += '&blacklist='+param.blacklist
         }
 
     }
@@ -1140,6 +1141,35 @@ export const getOrgClientList = ({ dispatch }, param) => {  //部门客户信息
             param.loading = false;
         })
 }
+
+export const customerTransferBlacklist  = ({ dispatch }, param) => {
+            param.loading = true;
+            const data={
+              blackComments:param.blackComments,
+              customerIds:param.customerIds,
+              blacklist:param.blacklist
+            }
+            Vue.http({
+              method: "POST",
+              url: apiUrl.clientList + '/customer/transferBlacklist',
+              emulateHTTP: true,
+              body: data,
+              emulateJSON: false,
+              headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                'Content-Type': 'application/json;charset=UTF-8'
+                }
+              }).then((res) => {
+              param.loading = false;
+
+              dispatch(types.CUSTOMER_BATCH_DELETE, param);
+              }, (res) => {
+              param.loading = false;
+                console.log('fail');
+            });
+}
+
+
 
 export const getEmployeeList = ({ dispatch }, param) => {  //员工列表以及搜索
     param.loading = true;
@@ -1697,8 +1727,6 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
         "coa":param.coa,
         "cid":param.cid
     }
-    console.log(param);
-    console.log(data);
 
     Vue.http({
         method: "POST",
@@ -1739,7 +1767,6 @@ export const addrDel = ({ dispatch }, param) => { //删除客户收货地址
 export const transferEmploy = ({ dispatch }, param) => { //客户业务员划转信息
     const transferdata = {
         employeeId:param.employeeId,
-        orgId:param.orgId,
         customerIds:param.arr
     }
     Vue.http({
@@ -1760,14 +1787,9 @@ export const transferEmploy = ({ dispatch }, param) => { //客户业务员划转
     });
 }
 export const transferInfo = ({ dispatch }, param) => { //客户部门划转信息
-    console.log('param===>');
-    console.log(param.arr);
-    console.log(param.employeeId);
-    console.log(param);
-    //return ;
+
     const transferdata = {
         orgId:param.orgId,
-        employeeId:param.employeeId,
         customerIds:param.arr
     }
     console.log(transferdata);
@@ -1851,6 +1873,69 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
         param.loading = false;
     })
 }
+
+export const getOfferList = ({ dispatch }, param) => {  //报价信息列表以及搜索
+    param.loading = true;
+    var url = apiUrl.clientList+'/intention/offers?'+'&page=' + param.cur + '&pageSize=15';
+     for(var search in param){
+        if(search=='type'&&param[search]!==''){
+            url += '&type='+param.type
+        }else if(search=='type'){
+            url +='&type='
+        }
+        if(search=='invoic'&&param[search]!==''){
+            url += '&invoic='+param.invoic
+        }else if(search=='invoic'){
+            url +='&invoic='
+        }
+        if(search=='status'&&param[search]!==''){
+            url += '&status='+param.status
+        }else if(search=='status'){
+            url +='&status='
+        }
+        if(search=='intl'&&param[search]!==''){
+            url += '&intl='+param.intl
+        }else if(search=='intl'){
+            url +='&intl='
+        }
+        if(search=='sampling'&&param[search]!==''){
+            url += '&sampling='+param.sampling
+        }else if(search=='sampling'){
+            url +='&sampling='
+        }
+        if(search=='visit'&&param[search]!==''){
+            url += '&visit='+param.visit
+        }else if(search=='visit'){
+            url +='&visit='
+        }
+        if(search=='advance'&&param[search]!==''){
+            url += '&advance='+param.advance
+        }else if(search=='advance'){
+            url +='&advance='
+        }
+    }
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+           var offer = res.json().result.list;
+           for (var i in offer){
+                offer[i].checked = false;
+                offer[i].show =false;
+           }
+            dispatch(types.OFFER_LIST_DATA, offer);
+            param.all = res.json().result.pages;
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const getOffersdetail = ({ dispatch }, param) => {  //意向报价详情
     Vue.http({
         method:'GET',
@@ -2108,9 +2193,10 @@ export const batchUpdateUserInfo = ({ dispatch }, param) => { //批量修改会�
 export const batchUserIntentionAudit = ({ dispatch }, param) => { //批量审核会员意向
     const updatedata = {
         ids: param.arr,
-        validate: param.validate
+        validate: param.validate,
+        description:param.description
     }
-    
+
 
     console.log(updatedata);
     Vue.http({
@@ -2286,7 +2372,7 @@ export const editintentInfo = ({ dispatch }, param) => { //修改意向
 export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
       if(param.image_f){param.images+=param.image_f+','}
       if(param.image_s){param.images+=param.image_s+','}
-      if(param.image_t){param.images+=param.image_t}
+      if(param.image_t){param.images+=param.image_t}  
     const data1 = {
         "userId":param.userId,
          "type":param.type,

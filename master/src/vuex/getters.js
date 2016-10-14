@@ -115,10 +115,13 @@ export const initOrgList = (state) => {
 export const initIntentionList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionList));  
 }
-
+/*--报价信息--*/
 export const initOfferList = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionDetail));  
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.offerList));  
 }
+/*export const initOfferList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionDetail));  
+}*/
 
 /*---会员信息---*/
 export const initUserList = (state) => {

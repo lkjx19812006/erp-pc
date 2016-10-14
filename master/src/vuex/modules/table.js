@@ -29,6 +29,7 @@ import {
    CUSTOMER_DATA,
    CUSTOMER_ADD_DATA,
    CUSTOMER_DETAIL_DATA,
+  CUSTOMER_BATCH_DELETE,
    UPDATE_CUSTOMER_DETAIL,
    CUSTOMER_UPDATE_DATA,
    UPDATE_ADDR_DETAIL,
@@ -55,6 +56,7 @@ import {
    UPDATE_TRACKING_DATA,
    ADD_TRACKING_DATA,
    INTENTION_LIST_DATA,
+   OFFER_LIST_DATA,
    UPDATA_INTENTION_DATA,
    INTENTION_DATA,
    INTENTION_OFFER_DETAIL,
@@ -62,7 +64,11 @@ import {
    COUNTRY_LIST,
    CITY_LIST,
    DISTRICT_LIST,
-   ADD_FILES_DATA
+   ADD_FILES_DATA,
+   GET_SUPPLY_DATA,
+   UPDATE_SUPPLY_DATA,
+   DELETE_SUPPLY_DATA,
+   ADD_SUPPLY_DATA
 
 } from '../mutation-types'
 
@@ -135,6 +141,11 @@ const state = {
         ],
         intentionList: [
             { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
+            
+        ],
+        offerList:[
+            {"id":"163","intentionId":"57568d24a2ec516dc1d0f57c","userId":"3ed2a1d7dafe449eb5e631a46f20f713","customerId":null,"number":3000,"unit":"63","price":12.000000,"incidentals":1.000000,"incidentalsDesc":"含运费价格","total":36000.000000,"qualification":null,"quality":null,"location":null,"spec":null,"advance":null,"invoic":null,"visit":null,"pack":null,"sampling":null,"sampleNumber":null,"sampleUnit":null,"sampleAmount":null,"address":null,"comments":null,"otime":"2016-06-07 17:19","clients":null,"status":1,"description":"","updater":null,"utime":"2016-09-27 10:08","creater":null,"ctime":"2016-09-27 10:08"},
+            {"id":"184","intentionId":"575d3527a2ec789e03ce62f1","userId":"6496e96c50774ca5a311ab02eb3f873e","customerId":null,"number":200,"unit":"63","price":30.000000,"incidentals":200.000000,"incidentalsDesc":"因为需要运费…","total":6000.000000,"qualification":null,"quality":null,"location":null,"spec":null,"advance":null,"invoic":null,"visit":null,"pack":null,"sampling":null,"sampleNumber":null,"sampleUnit":null,"sampleAmount":null,"address":null,"comments":null,"otime":"2016-06-12 18:20","clients":null,"status":1,"description":"","updater":null,"utime":"2016-09-27 10:08","creater":null,"ctime":"2016-09-27 10:08"}
         ],
         intentionDetail: [
             { "id": "1201608221917540470","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","pack": "机压包","country": "中国","status": 1, "show": true }
@@ -163,7 +174,11 @@ const state = {
             "id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"password": "56bf5523459ce2dfc6720798d852d6e6",
             "nickname": "卖蘑菇的小姑凉", "fullname": "沈威峰","phone": "13851379713","email": "857714234@qq.com","qq": "857714234",
             "company": "个体种植户","score": 300,"source": 1,"status": 0,"userIds": null,"customerId": null,"main": null,"show": true
-        }]
+        }],
+        supplyList:[
+
+        ]
+
     },
 
     orderDetail: {"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
@@ -321,7 +336,8 @@ const state = {
     "intention":{"show":false,"arr":[]},"tracking":{"show":false,"arr":[]},"personalAuthShow":false,"companyAuthShow":false
   },
   identify:{},
-  trackingDetail:{}
+  trackingDetail:{},
+  supplyDetail:{}
 }
 
 const mutations = {
@@ -461,10 +477,22 @@ const mutations = {
     [CUSTOMER_DETAIL_DATA](state, data) { //客户详情
         state.clientDetail = data;
     },
+    [CUSTOMER_BATCH_DELETE](state, data){
+        data.customerIds.forEach(function(item){
+          for(var i=0;i<state.basicBaseList.customerList.length;i++){
+                if(state.basicBaseList.customerList[i].id == item){
+                  state.basicBaseList.customerList.splice(i,1);
+                }
+          }
+        })
+      if(data.customerIds[0]==state.clientDetail.id){
+        state.clientDetail.blacklist=1-state.clientDetail.blacklist;
+      }
+
+    },
     [CUSTOMER_ADD_DATA](state, data) { //新增客户
 
       if(data.employee==data.employeeId||data.org==data.orgId){
-
         state.basicBaseList.customerList.unshift({
           address:data.address,
           bizScope:data.bizScope,
@@ -494,24 +522,14 @@ const mutations = {
           typeDesc:data.typeDesc,
           show: false
         })
-
       }
-
 
       if(data.sub!='undefined'){
         state.basicBaseList[data.key][data.sub][data.keyname]=1;
-
       }
       if(data.detail){
         state[data.detail].customerId=data.id;
       }
-
-
-
-
-
-
-
 
     },
     [CUSTOMER_UPDATE_DATA](state, data) { //修改客户列表信息
@@ -618,6 +636,9 @@ const mutations = {
     [INTENTION_LIST_DATA](state, data) { //意向列表
         state.basicBaseList.intentionList = data;
     },
+    [OFFER_LIST_DATA](state, data) { //意向列表
+        state.basicBaseList.offerList = data;
+    },
     [USER_DATA](state, data) { // 会员列表
         state.basicBaseList.userList = data;
     },
@@ -680,6 +701,7 @@ const mutations = {
         for(let i=0;i<data.indexs.length;i++){
           let k = data.indexs[i];
           state.userDetail.intention.arr[k].validate = data.validate;
+          state.userDetail.intention.arr[k].description = data.description;
           state.userDetail.intention.arr[k].checked = false;
         }
 
@@ -830,7 +852,24 @@ const mutations = {
 
         })
 
+
+    },
+
+    [GET_SUPPLY_DATA](state,data){
+
+    },
+    [UPDATE_SUPPLY_DATA](state,data){
+
+    },
+    [DELETE_SUPPLY_DATA](state,data){
+
+    },
+    [ADD_SUPPLY_DATA](state,data){
+
+
     }
+
+
 
 }
 

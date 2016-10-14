@@ -4,7 +4,7 @@
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
-        </div>  
+        </div>
         <div class="edit-content">
             <h3>会员意向审核</h3>
         </div>
@@ -13,11 +13,16 @@
                <div class="editpage">
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpageleft">
-                    
-                    
+
+                    <div class="editpage-input">
+                           <label class="editlabel">备注</label>
+                           <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
+                           <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5" value="{{param.description}}"></textarea>
+                    </div>
                </div>
+                 </div>
            </section>
-        </div>  
+        </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=pass,tipsParam.name='确认审核通过?'">通过</button>
@@ -28,10 +33,10 @@
 <script>
 import tipsdialogModel  from '../tips/tipDialog'
 import {
-    
+
 } from '../../vuex/getters'
-import {   
-    
+import {
+
     batchUserIntentionAudit
 } from '../../vuex/actions'
 export default {
@@ -46,51 +51,43 @@ export default {
                 confirm:true,
                 name:"",
                 callback:''
-            
+
           }
         }
     },
     vuex: {
        getters: {
-            
+
         },
         actions: {
             batchUserIntentionAudit
-        } 
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
         }
     },
     methods: {
-        
+
         pass: function(){
-            this.param.validate = 1;        
+            this.param.validate = 1;
             this.batchUserIntentionAudit(this.param);
         },
         reject: function(){
-            this.param.validate = 2; 
+            this.param.validate = 2;
             this.batchUserIntentionAudit(this.param);
         },
     },
-    created() { 
-        
+    created() {
+
    }
-    
+
 }
 </script>
 <style scoped>
+
 .modal_con {
-    
+
     width:450px;
     height:300px;
 }
+
 .big-font {
     font-size: 36px;
 }
@@ -172,12 +169,6 @@ export default {
     display: inline-block;
     margin-left: 10px;
     margin-top: 5px;
-}
-
-.edit_footer {
-    position:absolute;
-    margin-bottom:-50px;
-    width: 450px;
 }
 
 .edit_footer button {
