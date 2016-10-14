@@ -622,7 +622,7 @@ const mutations = {
     [INTENTION_LIST_DATA](state, data) { //意向列表
         state.basicBaseList.intentionList = data;
     },
-    [OFFER_LIST_DATA](state, data) { //意向列表
+    [OFFER_LIST_DATA](state, data) { //报价列表
         state.basicBaseList.offerList = data;
     },
     [USER_DATA](state, data) { // 会员列表
@@ -754,11 +754,13 @@ const mutations = {
         }
     },
     [UPDATA_INTENTION_DATA](state,data){ //修改意向
-      if(data.key=='user'){
+      if(data.key=='user'){   //会员详情页修改意向
+        console.log("用户详情页修改意向");
         for (var i in state.userDetail.intention.arr[data.sub]) {
           state.userDetail.intention.arr[data.sub][i] = data[i];
         }
       }else{
+        console.log("意向列表页修改意向");
         for (var i in state.basicBaseList.intentionList[data.sub]) {
           state.basicBaseList.intentionList[data.sub][i] = data[i];
         }
@@ -801,12 +803,13 @@ const mutations = {
         "images":data.images
       };
 
-        if(state.basicBaseList.intentionList!=='undefined'){
+        if(data.key=="intentionList"){
+            console.log("意向列表页添加意向");  
             state.basicBaseList.intentionList.unshift(temp)
         }
-        if(state.userDetail.intention!=='undefined'){
-
-          state.userDetail.intention.arr.push(temp);
+        if(data.key=="user"){
+          console.log("会员详情页添加意向");
+          state.userDetail.intention.arr.unshift(temp);
         }
 
     },

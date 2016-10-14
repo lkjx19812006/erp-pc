@@ -627,6 +627,7 @@ export default {
             show:false,
               flag:0,   //0表示创建，1表示修改
               sub:'',
+              key:'user',
               userId:this.initUserDetail.id,
               //fullname:this.initUserDetail.fullname,
               customerName:this.initUserDetail.fullname,

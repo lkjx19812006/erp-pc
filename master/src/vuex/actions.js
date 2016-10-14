@@ -2327,7 +2327,8 @@ export const editintentInfo = ({ dispatch }, param) => { //修改意向
 export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
       if(param.image_f){param.images+=param.image_f+','}
       if(param.image_s){param.images+=param.image_s+','}
-      if(param.image_t){param.images+=param.image_t}  
+      if(param.image_t){param.images+=param.image_t} 
+      console.log(param); 
     const data1 = {
         "userId":param.userId,
          "type":param.type,

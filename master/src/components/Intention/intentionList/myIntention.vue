@@ -59,6 +59,7 @@
                        city:'',
                        district:'',
                        address:'',
+                       key:'intentionList',
                        link:createIntentionInfo,
                        url:'/intention/'
                        })">新建</button> 
@@ -266,9 +267,10 @@
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
                                <ul>
-                                   <li @click="modifyClient({
+                                   <li @click="modifyIntention({
                                                id:item.id,
                                                sub:$index,
+                                               selectCustomer:false,
                                                flag:1,
                                                show:true,
                                                title:'编辑',
@@ -476,7 +478,7 @@ export default {
         specDelete:function(initIntentionList){
         	this.deleteParam = initIntentionList;
         },
-        modifyClient:function(initIntentionList){
+        modifyIntention:function(initIntentionList){
         	console.log(initIntentionList.unit);
         	this.createParam = initIntentionList;
         },
