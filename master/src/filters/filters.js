@@ -222,38 +222,14 @@ Vue.filter('country', function(val){ //国家
 })
 Vue.filter('classify', function(val){ //国家
 	var val = val;
-	if(val==1){
+	if(val==0){
 		 return '买';
-	}else if(val==2){
+	}else if(val==1){
 		 return '卖';
-	}else if(val==3){
+	}else if(val==2){
 		return '买卖';
 	}else{
 		return val;
 	}
 })
-Vue.filter('dateFormat', function(val){ //将时间格式化yyyy-MM-DD
-	var val = val;
-	if(!val){
-		return "";
-	}
-	//return val;
-	return val.split(' ')[0];
-})
 
-Vue.filter('audit', function(val){ //审核状态0/1/2/3==>初始/通过/不通过/其他
-	var val = val;
-	if(val == 0){
-		return "初始";
-	}
-	if(val == 1){
-		return "通过";
-	}
-	if(val == 2){
-		return "不通过";
-	}
-
-	return "其他";
-	
-	
-})

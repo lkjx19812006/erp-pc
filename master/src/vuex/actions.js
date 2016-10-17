@@ -1006,7 +1006,9 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         if(search=='blacklist'&&param[search]!==''&&param[search]!==undefined){
           clienturl += '&blacklist='+param.blacklist
         }
-
+        if(search=='status'&&param[search]!==''&&param[search]!==undefined){
+            clienturl += '&status='+param.status
+        }
     }
     Vue.http({
         method:'GET',
@@ -1021,6 +1023,7 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
                 client[i].checked = false;
                 client[i].show =false;
            }
+           /*if(link=="")*/
             dispatch(types.CUSTOMER_DATA, client);
             param.all = res.json().result.pages;
             param.loading = false;
@@ -1452,7 +1455,7 @@ export const alterLabel = ({ dispatch }, param) => { //修改客户标签
     })
 }
 export const alterProduct = ({ dispatch }, param) => { //修改客户产品
-    console.log(param)
+    /*console.log(param)*/
     const updatedata = {
         type:param.type,
         name:param.name,
@@ -1485,6 +1488,42 @@ export const alterProduct = ({ dispatch }, param) => { //修改客户产品
         console.log('fail');
     })
 }
+export const updateProduct = ({ dispatch }, param) => { //修改供应商产品
+    /*console.log(param)*/
+    const updatedata = {
+        type:param.type,
+        name:param.name,
+        breedId:param.breedId,
+        quality:param.quality,
+        location:param.location,
+        spec:param.spec,
+        number:param.number,
+        price:param.price,
+        unit:param.unit,
+        duedate:param.duedate,
+        coa:param.coa,
+        cid:param.cid,
+        id:param.id
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: false,
+        body: updatedata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.ALTER_PRODUCT_DATA,param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+
 export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
 
     Vue.http({
@@ -1738,6 +1777,43 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
         console.log('fail');
     })
 }
+export const newProduct = ({ dispatch }, param) => { //新增供应商产品
+    console.log(param);
+    return ;
+    const data = {
+        "type":param.type,
+        "name":param.name,
+        "breedId":param.breedId,
+        "quality":param.quality,
+        "location":param.location,
+        "spec":param.spec,
+        "number":param.number,
+        "price":param.price,
+        "unit":param.unit,
+        "duedate":param.duedate,
+        "coa":param.coa,
+        "cid":param.cid
+    }
+
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('添加成功')
+        /*param.id = res.json().result.id;*/
+        dispatch(types.SUPPLY_PRODUCT_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 export const addrDel = ({ dispatch }, param) => { //删除客户收货地址
     Vue.http({
         method: 'PUT',

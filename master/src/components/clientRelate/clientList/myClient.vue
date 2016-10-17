@@ -10,7 +10,7 @@
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">我的客户</div>
-            <div class="right col-xs-4">
+            <div class="right col-xs-8">
                 <button class="new_btn transfer" @click="clientTransfer({
                     arr:[],
                     name:'test',

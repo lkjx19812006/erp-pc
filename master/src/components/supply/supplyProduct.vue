@@ -1,22 +1,300 @@
 <template>
-    <div>
-
-        <div>this is template body supplyproduct</div>
-
+  <create-model :param="createParam" v-if="createParam.show"></create-model>
+  <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
+  <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
+  <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
+  <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
+  <div v-show="!changeParam.show">
+    <div class="service-nav clearfix">
+      <div class="my_enterprise col-xs-1">产品列表</div>
+      <div class="right col-xs-2">
+        <button class="new_btn transfer" @click="createCustomer({
+                                             show:true,
+                                             title:'新建产品',
+                                             type:'',
+                                             name:'',
+                                             breedId:'',
+                                             quality:'',
+                                             location:'',
+                                             spec:'',
+                                             number:'',
+                                             price:'',
+                                             unit:'',
+                                             duedate:'',
+                                             coa:'',
+                                             cid:'',
+                                             link:newProduct,
+                                             url:'/customer/product'
+                                        })">新建</button>
+      </div>
     </div>
+     <div class="service-nav clearfix">
+            <div class="my_order_search">
+               <div class="filter_search clearfix">
+                    <dl class="clearfix">
+                        <dt>类型：</dt>
+                        <dd>
+                            <select  v-model="loadParam.type" @change="searchProduct()">
+                                <option value="">请选择类型</option>
+                                <option>药物</option>
+                                <option>提取物</option>
+                                <option>饮片</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>状态：</dt>
+                        <dd>
+                            <select v-model="loadParam.status" @change="searchProduct()">
+                                <option value="">请选择状态</option>
+                                <option value="0">无效</option>
+                                <option value="1">可用</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>名称：</dt>
+                        <dd>
+                            <input type="text"  placeholder="按产品名称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
+                        </dd>
+                    </dl>
+
+               </div>
+           </div>
+        </div>
+    <div class="order_table">
+      <div class="cover_loading">
+        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+      </div>
+      <table class="table table-hover table_color table-striped " v-cloak>
+        <thead>
+            <tr>
+              <th>类型</th>
+              <th>品种ID</th>
+              <th>产品名称</th>
+              <th>产品质量</th>
+              <th>产地</th>
+              <th>规格</th>
+              <th>数量（库存）</th>
+              <th>价格</th>
+              <th>单位</th>
+              <th>检测报告</th>
+              <th>价格过期时间</th>
+              <th>备注</th>
+              <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+
+            </tr>
+        <tr v-for="item in initCustomerlist">
+          <td>{{item.type}}</td>
+          <td>{{item.breedId}}</td>
+          <td>{{item.name}}</td>
+       <!--    <td class="underline"  @click="clickOn({
+                             id:item.id,
+                             sub:$index,
+                             show:true,
+                             name:item.name,
+                             link:alterInfo,
+                             url:'/customer/',
+                             key:'customerList'
+                             })"><img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>{{item.name}}</td> -->
+          <!-- 上面这个img显示新客户图标 -->
+          <td>{{item.quality}}</td>
+          <td>{{item.location}}</td>
+          <td>{{item.spec}}</td>
+          <td>{{item.number}}</td>
+          <td>{{item.price}}</td>
+          <td>{{item.unit}}</td>
+          <td>{{item.coa}}</td>
+          <td>{{item.duedate}}</td>
+          <td>{{item.comments}}</td>
+          <td @click.stop="eventClick($index)">
+            <img height="24" width="24" src="/static/images/default_arrow.png" />
+            <div class="component_action" v-show="item.show">
+              <ul>
+                <li @click="modifySupply({
+                               sub:$index,
+                               id:item.id,
+                               cid:item.cid,
+                               show:true,
+                               title:'编辑产品',
+                               type:item.type,
+                               name:item.name,
+                               breedId:item.breedId,
+                               quality:item.quality,
+                               location:item.location,
+                               spec:item.spec,
+                               number:item.number,
+                               price:item.price,
+                               unit:item.unit,
+                               duedate:item.duedate,
+                               coa:item.coa,
+                               link:updateProduct,
+                               url:'/customer/product',
+                               headline:'customerList'
+                              })">编辑</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="base_pagination">
+      <pagination :combination="loadParam"></pagination>
+    </div>
+  </div>
 </template>
-
 <script>
+  import pagination from '../pagination'
+  import detailModel from '../clientRelate/clientDetail'
+  import createModel  from '../supply/createProduct'
+  import alterinfoModel  from '../supply/createProduct'
+  import searchModel  from  '../clientRelate/searchModel'
+  import {
+    initCustomerlist,
+    initProductlist
+  } from '../../vuex/getters'
+  import {
+    getClientList,
+    updateProduct,
+    getClientDetail,
+    saveCreate,
+    newProduct
+  } from '../../vuex/actions'
 
-    export default{
-        data(){
-            return{
-                msg:'hello vue'
-            }
+  export default {
+    components: {
+      pagination,
+      detailModel,
+      createModel,
+      alterinfoModel,
+      searchModel
+
+    },
+    vuex: {
+      getters: {
+        initCustomerlist,
+        initProductlist
+      },
+      actions: {
+        getClientList,
+        updateProduct,
+        getClientDetail,
+        saveCreate,
+        newProduct
+      }
+    },
+    data() {
+      return {
+        loadParam: {
+          loading: true,
+          show:false,
+          color: '#5dc596',
+          size: '15px',
+          cur: 1,
+          all: 7,
+          link:'/customer/queryproduct',
+          name:'',
+          type:'',
+          status:''/*,
+          bizScope:'',
+          provinceName:'',
+          province:'',
+          city:'',
+          cityName:''*/
+        },
+        changeParam: {
+          show: false
+        },
+        createParam:{
+          show: false
+        },
+        searchParam:{
+          show:false,
+        },
+        deleteParam:{
+          show:false
+        },
+        alterParam:{
+          show:false,
+          id:''
+        },
+        checked:false
+      }
+    },
+    methods: {
+      clickOn: function(initCustomerlist) {
+        this.changeParam = initCustomerlist;
+        this.getClientDetail(this.changeParam);
+      },
+      createCustomer:function(initProductlist){
+        this.createParam = initProductlist;
+        //this.createParam.name=value;
+      },
+      createSearch:function(){
+        this.loadParam.show=true;
+      },
+      eventClick:function(id){
+        if(this.$store.state.table.basicBaseList.customerList[id].show){
+          this.$store.state.table.basicBaseList.customerList[id].show = !this.$store.state.table.basicBaseList.customerList[id].show;
+        }else{
+          this.$store.state.table.basicBaseList.customerList[id].show=true;
         }
+      },
+      modifySupply:function(initCustomerlist){
+        this.alterParam =initCustomerlist;
+      },
+      searchProduct:function(){
+          this.getClientList(this.loadParam);
+      }
+    },
+    events: {
+      fresh: function(input) {
+        this.loadParam.cur = input;
+        this.getClientList(this.loadParam);
+      }
+    },
+    created() {
+      this.getClientList(this.loadParam);
     }
+  }
 </script>
-
-<style>
-
+<style scoped>
+  .breed_action {
+    top: 33px;
+    right: 106px;
+  }
+  .transfer{
+    margin-left: 18px;
+  }
+  .table>tbody>tr>td{
+/*     max-width: 300px; */
+   /*  white-space: normal; */
+  }
+  .checkbox_unselect{
+    background-image: url(/static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+  }
+  .checkbox_select{
+    background-image: url(/static/images/selected.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+  }
 </style>

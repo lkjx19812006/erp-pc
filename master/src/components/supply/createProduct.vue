@@ -1,5 +1,6 @@
 <template>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
+    <searchsupply-model :param="supplyParam" v-if="supplyParam.show"></searchsupply-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -14,7 +15,7 @@
                     <section class="editsection"  v-cloak>   
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">名称 <span class="system_danger" v-if="$validation.username.required">请输入名称</span></label>
+                                <label class="editlabel">名称 <span class="system_danger" v-if="$validation.username.required">请输入产品名称</span></label>
                                 <input type="text" id="username" class="form-control" v-model="param.name" v-validate:username="['required']" value="{{param.name}}" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
@@ -22,20 +23,19 @@
                                  <select  value="{{param.type}}" v-model="param.type" class="form-control">
                                     <option value="1" selected>可用</option>
                                 </select>
-                                <!-- <input type="text" id="usertype" class="form-control" v-model="param.type" v-validate:usertype="['required']" value="{{param.type}}"/> -->
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种类别 <span class="system_danger" v-if="$validation.breed.required">请选择品种类别</span></label>
-                                <select   v-model="param.categoryName" class="form-control" v-validate:breed="['required']" >
-                                    <option v-for="item in initProvince" value="item.breedId">{{item.categoryName}}</option>
+                                <select   v-model="param.breedId" class="form-control" v-validate:breed="['required']" >
+                                    <option v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                                 </select>
                                 <!-- <input type="text" id="breed" class="form-control" v-model="param.breedId" v-validate:breed="['required']" value="{{param.breedId}}" disabled="true"  @click="searchBreed(param.categoryName,param.breedId)"/> -->
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">质量</label>
-                                <input type="text" class="form-control" v-model="param.quality" value="{{param.quality}}"/>
+                                <label class="editlabel">供应商ID</label>
+                                <input type="text" class="form-control" v-model="param.cid" value="{{param.cid}}" @click="selectSupply(param.cid)" />
                             </div>
                         </div>
                         <div class="clearfix">
@@ -46,8 +46,8 @@
                                 </select>
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">规格 <span class="system_danger" v-if="$validation.spec.required">请输入规格</span></label>
-                                <input type="text" class="form-control" v-model="param.spec"  id="spec" v-validate:spec="['required']" value="{{param.spec}}"/>
+                                <label class="editlabel">质量</label>
+                                <input type="text" class="form-control" v-model="param.quality" value="{{param.quality}}"/>
                             </div>
                         </div>
                         <div class="clearfix">
@@ -55,9 +55,9 @@
                                 <label class="editlabel">数量 <span class="system_danger" v-if="$validation.number.required">请输入数量</span></label>
                                 <input type="text" class="form-control" v-model="param.number" id="number" v-validate:number="['required']" value="{{param.number}}" />
                             </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">价格 <span class="system_danger" v-if="$validation.price.required">请输入价格</span></label>
-                                <input type="text" class="form-control" v-model="param.price"  id="price" v-validate:price="['required']" value="{{param.price}}"/>
+                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                <label class="editlabel">规格 <span class="system_danger" v-if="$validation.spec.required">请输入规格</span></label>
+                                <input type="text" class="form-control" v-model="param.spec"  id="spec" v-validate:spec="['required']" value="{{param.spec}}"/>
                             </div>
                         </div>
                         <div class="clearfix">
@@ -65,9 +65,9 @@
                                 <label class="editlabel">单位 <span class="system_danger" v-if="$validation.unit.required">请输入价格</span></label>
                                 <input type="text" class="form-control" v-model="param.unit" id="unit" v-validate:unit="['required']" value="{{param.unit}}"/>
                             </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">价格过期时间</label>
-                                <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss"></mz-datepicker>
+                           <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                <label class="editlabel">价格 <span class="system_danger" v-if="$validation.price.required">请输入价格</span></label>
+                                <input type="text" class="form-control" v-model="param.price"  id="price" v-validate:price="['required']" value="{{param.price}}"/>
                             </div>
                         </div>
                         <div class="clearfix">
@@ -79,30 +79,36 @@
                                 </select>
                                 <!-- <input type="text" class="form-control" v-model="param.coa" value="{{param.coa}}"/> -->
                             </div>
+                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                <label class="editlabel">价格过期时间</label>
+                                <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss"></mz-datepicker>
+                            </div>
                         </div>
                     </section>
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <input type="button" class="btn btn-confirm"  @click="param.link(param,param.show = false)" value="保存" />
+                    <input type="button" class="btn btn-confirm"  @click="param.link(param,param.show=false)" value="保存" />
                 </div>
             </form>
         </validator>
     </div>
 </template>
 <script>
-import calendar from '../../calendar/vue.datepicker'
+import calendar from '../calendar/vue.datepicker'
+import searchsupplyModel from '../supply/selectSupply'
 import {
     initProvince,
-    initBreedlist
-} from '../../../vuex/getters'
+    initCategorylist
+} from '../../vuex/getters'
 import {
     getProvinceList,
-    getBreedData
-} from '../../../vuex/actions'
+    getCategoryData
+} from '../../vuex/actions'
 export default {
     components: {
-        calendar
+        calendar,
+        searchsupplyModel
     },
     props: ['param'],
     data() {
@@ -122,17 +128,21 @@ export default {
                 breedId:'',
                 loading:false,
                 id:''
+            },
+            supplyParam:{
+                show:false,
+                cid:''
             }
         }
     },
     vuex: {
       getters: {
          initProvince,
-         initBreedlist
+        initCategorylist         
       },
       actions: {
          getProvinceList,
-         getBreedData
+         getCategoryData
       }
     },
     route: {
@@ -153,6 +163,18 @@ export default {
             let day = date.getDate()
             let str = `${year}/${month}/${day}`
             this.dateText = str.replace(/\b(\w)\b/g, "0$1")
+        },
+        selectSupply:function(cid){
+            this.supplyParam.show=true;
+            if("id" in this.param){
+                this.supplyParam.cid = this.param.id;
+            }
+            
+        }
+    },
+    events:{
+        supply:function(supply){
+            this.param.cid = supply.cid;
         }
     },
     ready() {
@@ -160,7 +182,7 @@ export default {
     },
     created() {
       this.getProvinceList(this.loadParam);
-      this.getBreedData(this.loadParam);
+      this.getCategoryData(this.loadParam);
     }
 }
 </script>
