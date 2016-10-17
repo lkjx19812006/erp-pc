@@ -288,11 +288,11 @@ export default {
       },
       clickShow: function(index,param) {
             console.log('clickShow');
-            console.log(this.$store.state.table.userDetail[param.concrete].arr[index]);
-            if (this.$store.state.table.userDetail[param.concrete].arr[index].show) {
-                this.$store.state.table.userDetail[param.concrete].arr[index].show = false;
+            console.log(this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index]);
+            if (this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show) {
+                this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = false;
             } else {
-                this.$store.state.table.userDetail[param.concrete].arr[index].show = true
+                this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = true
             }
 
         },
