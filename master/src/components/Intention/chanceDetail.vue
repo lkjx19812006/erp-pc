@@ -278,7 +278,24 @@ export default {
         saveSucc:function(param){
            this.tipsParam.show= true;
            this.editintentInfo(param); 
-        }
+        },
+        enfoldment:function(param){
+
+          if(this.$store.state.table.basicBaseList.intentionDetail[param.crete].arr.length==0){
+                  this.$store.state.table.basicBaseList.intentionDetail[param.crete].show=true;
+              }
+          this.$store.state.table.basicBaseList.intentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intentionDetail[param.crete].show;
+      },
+      clickShow: function(index,param) {
+            console.log('clickShow');
+            console.log(this.$store.state.table.userDetail[param.concrete].arr[index]);
+            if (this.$store.state.table.userDetail[param.concrete].arr[index].show) {
+                this.$store.state.table.userDetail[param.concrete].arr[index].show = false;
+            } else {
+                this.$store.state.table.userDetail[param.concrete].arr[index].show = true
+            }
+
+        },
     },
     created(){
         console.log(this.param.id);
