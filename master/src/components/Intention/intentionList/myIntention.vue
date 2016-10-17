@@ -23,6 +23,12 @@
             <div class="right col-xs-3">
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 <button class="new_btn transfer" @click="intentionAudit()">审核</button>
+                <button class="new_btn transfer" @click="upOrDown({
+                                                                onSell:2  
+                                                              })">下架</button>
+                <button class="new_btn transfer" @click="upOrDown({
+                                                              onSell:1
+                                                            })">上架</button>
                 <button class="new_btn" @click="createIntention({
                        show:true,
                        selectCustomer:true,
@@ -187,6 +193,7 @@
       	            		<th>样品价格</th>
       	            		<th>报价人数</th>
       	            		<th>审核状态</th>
+                        <th>上下架</th>
       	            		<th></th>
                     </tr>
                 </thead>
@@ -200,7 +207,7 @@
                         <td>{{item.especial | chanceEspec}}</td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
-                        <td class="underline" @click="chanceClick({
+                        <td class="underline" @click="detailClick({
                                 id:item.id,
                                 sub:$index,
                                 show:true,
@@ -259,6 +266,11 @@
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offerNumber}}</td>
                         <td>{{item.validate | audit}}</td>
+                        <td>
+                          <div v-if="item.onSell==0">初始</div>
+                          <div v-if="item.onSell==1">上架</div>
+                          <div v-if="item.onSell==2">下架</div>
+                        </td>
                         <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
@@ -343,10 +355,10 @@ import {
 } from '../../../vuex/getters'
 import {
 	getIntentionList,
+  intentionUpAndDown,
 	deleteInfo,
 	editintentInfo,
 	createIntentionInfo,
-	getOffersdetail
 } from '../../../vuex/actions'
 export default {
     components: {   
@@ -365,11 +377,10 @@ export default {
         },
         actions: {
             getIntentionList,
+            intentionUpAndDown,
             deleteInfo,
             editintentInfo,
-            createIntentionInfo,
-            getOffersdetail
-            
+            createIntentionInfo, 
         }
     },
     data() {
@@ -407,7 +418,10 @@ export default {
             },
             tipsParam:{
                 show:false,
-                name:'请先选择意向'
+                name:'',
+                ids:[],
+                index:[],
+                onSell:0
             },
             deleteParam:{
             	show:false
@@ -433,7 +447,7 @@ export default {
                 this.$store.state.table.basicBaseList.intentionList[sub].show=true;
             }
         },
-        chanceClick:function(initIntentionList){
+        detailClick:function(initIntentionList){
             this.chanceParam = initIntentionList;
         },
         onlyselected:function(sub,id){
@@ -471,13 +485,36 @@ export default {
                     this.intentionAuditParam.indexs.push(i);
                 }
             }
-            console.log(this.intentionAuditParam.arr);
-            console.log(this.intentionAuditParam.indexs);
             if(this.intentionAuditParam.arr.length==0){
+                this.tipsParam.name = '请先选择意向';
                 this.tipsParam.show = true;
             }else{
                 this.intentionAuditParam.show = true;
             }          
+        },
+        upOrDown:function(param){
+            this.tipsParam.ids = [];
+            this.tipsParam.indexs = [];
+            this.tipsParam.onSell = param.onSell;
+            if(param.onSell==1){
+                this.tipsParam.name = '意向上架成功';
+            }
+            if(param.onSell==2){
+                this.tipsParam.name = '意向下架成功';
+            }
+            for(var i=0;i<this.initIntentionList.length;i++){
+                if(this.initIntentionList[i].checked){
+                    this.tipsParam.ids.push(this.initIntentionList[i].id);
+                    this.tipsParam.indexs.push(i);
+                }
+            }
+            if(this.tipsParam.ids.length==0){
+                this.tipsParam.name = '请先选择意向';
+                this.tipsParam.show = true;
+            }else{
+                this.intentionUpAndDown(this.tipsParam);
+            }  
+            
         },
         clientTransfer:function(initIntentionList){
             this.intentionParam = initIntentionList;

@@ -61,6 +61,7 @@ import {
    MSG_LIST_DATA,
    UPDATA_INTENTION_DATA,
    INTENTION_DATA,
+   INTENTION_UP_DOWN,
    INTENTION_OFFER_DETAIL,
    PROVINCE_LIST,
    COUNTRY_LIST,
@@ -150,7 +151,7 @@ const state = {
         ],
         intentionDetail:
             {"id":"1008","chanceId":"","userId":"","customerId":"36485","customerName":"刘振领","customerPhone":"17756736988","type":1,"especial":1,"breedId":2246,"breedName":"红枣","qualification":null,"quality":"各种规格，保证质量，量大从优","location":"新疆","spec":"选货","number":10000,"numberDesc":"","price":null,"origPrice":null,"priceDesc":"","unit":"63","province":null,"city":null,"district":null,"address":"安徽","pubdate":null,"duedate":null,"advance":0.000000,"invoic":0,"visit":0,"pack":null,"intl":0,"country":"中国","sampling":0,"cFlagsPath":"","sampleNumber":0,"sampleUnit":null,"sampleAmount":null,"onSell":3,"shelveTime":"2016-06-17 17:23","unshelveTime":null,"employee":null,"offer":0,"offerFalse":0,"offerNumber":0,"offerVprice":null,"offerTotal":0.000000,"status":1,"validate":1,"description":"买包子","updater":"100014","utime":"2016-07-12 19:38","creater":"100014","ctime":"2016-06-17 17:22",
-              "pics":[],"ids":null,"images":null,"offers":{arr:[],show:false},"msgs":[]},
+              "pics":[],"ids":null,"images":null,"offers":{arr:[],show:false},"msgs":{arr:[],show:false}},
         employeeList: [{
             "id": 6,
             "name": "lm",
@@ -698,13 +699,27 @@ const mutations = {
     },
 
     [BATCH_USER_INTENTION_AUDIT](state, data) { // 批量审核会员意向
-        console.log(data.indexs);
-        for(let i=0;i<data.indexs.length;i++){
-          let k = data.indexs[i];
-          state.userDetail.intention.arr[k].validate = data.validate;
-          state.userDetail.intention.arr[k].description = data.description;
-          state.userDetail.intention.arr[k].checked = false;
+        console.log(data);
+        if(state.userDetail.intention.arr.length>0){
+            console.log("会员详情页审核意向");
+            for(let i=0;i<data.indexs.length;i++){
+              let k = data.indexs[i];
+              state.userDetail.intention.arr[k].validate = data.validate;
+              state.userDetail.intention.arr[k].description = data.description;
+              state.userDetail.intention.arr[k].checked = false;
+            }
         }
+        
+        if(state.basicBaseList.intentionList.length>0){
+            console.log("意向列表页审核意向");
+            for(let i=0;i<data.indexs.length;i++){
+              let k = data.indexs[i];
+              state.basicBaseList.intentionList[k].validate = data.validate;
+              state.basicBaseList.intentionList[k].description = data.description;
+              state.basicBaseList.intentionList[k].checked = false;
+            }
+        }
+        
 
     },
 
@@ -836,6 +851,14 @@ const mutations = {
             state.clientDetail.intentions.arr.unshift(temp);
         }
 
+    },
+    [INTENTION_UP_DOWN](state,data){
+        console.log(data.indexs);
+        for(let i=0;i<data.indexs.length;i++){
+          let k = data.indexs[i];
+          state.basicBaseList.intentionList[k].onSell = data.onSell;
+          state.basicBaseList.intentionList[k].checked = false;
+        }
     },
     [INTENTION_DETAIL_DATA](state,data){
         state.basicBaseList.intentionDetail = data;

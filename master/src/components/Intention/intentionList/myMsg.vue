@@ -53,7 +53,6 @@
                            <div class="component_action" v-show="item.show">
                                <ul>
                                    <li @click="">编辑</li>
-                                   <li @click="">删除</li>
                                </ul>
                            </div>
                        </td>
@@ -143,11 +142,7 @@ export default {
    					item.checked = false;
    				})
    			}   	
-        },
-        
-       
-        
-        
+        },    
     },
     events: {
         fresh: function(input) {
