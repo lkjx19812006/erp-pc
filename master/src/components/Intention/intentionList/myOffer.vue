@@ -5,7 +5,7 @@
      <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
      <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
      <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
-     <offerinfo-model :param="offerParam" v-if="offerParam.show"></offerinfo-model>
+   <!--   <offerinfo-model :param="offerParam" v-if="offerParam.show"></offerinfo-model> -->
      
 	 <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
@@ -87,7 +87,7 @@ import tipsdialogModel  from '../../tipsDialog'
 import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import editintentModel  from  '../../Intention/Editintention'
 import createintentModel from '../../Intention/createIntention'
-import offerinfoModel from '../../Intention/offerInfo'
+/*import offerinfoModel from '../../Intention/offerInfo'*/
 
 import {
 	initOfferList
@@ -105,8 +105,7 @@ export default {
         tipsdialogModel,
         deletebreedModel,
         editintentModel,
-        createintentModel,
-        offerinfoModel
+        createintentModel
     },
     vuex: {
         getters: {

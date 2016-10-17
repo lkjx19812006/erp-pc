@@ -6,7 +6,6 @@
      <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
      <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
      <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
-     <offerinfo-model :param="offerParam" v-if="offerParam.show"></offerinfo-model>
      
 	 <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
@@ -258,7 +257,7 @@
                         <td>{{item.sampleNumber}}</td>
                         <td>{{item.sampleUnit}}</td>
                         <td>{{item.sampleAmount}}</td>
-                        <td class="underline" @click="offerDetail(item.id)">{{item.offerNumber}}</td>
+                        <td>{{item.offerNumber}}</td>
                         <td>{{item.validate | audit}}</td>
                         <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
@@ -275,28 +274,28 @@
                                                customerPhone:item.customerPhone,
                                                breedName:item.breedName,
                                                breedId:item.breedId,
-				                                type:item.type,
-				                                especial:item.especial,
-				                                quality:item.quality,
-				                                qualification:item.qualification,
-				                                spec:item.spec,
-				                                number:item.number,
-				                                unit:item.unit,
-				                                price:item.price,
-				                                address:item.address,
-				                                location:item.location,
-				                                advance:item.advance,
-				                                invoic:item.invoic,
-				                                visit:item.visit,
-				                                pack:item.pack,
-				                                intl:item.intl,
-				                                visit:item.visit,
-				                                sampling:item.sampling,
-				                                sampleNumber:item.sampleNumber,
-				                                sampleUnit:item.sampleUnit,
-				                                sampleAmount:item.sampleAmount,
-				                                offer:item.offer,
-				                                status:item.status,
+      				                                type:item.type,
+      				                                especial:item.especial,
+      				                                quality:item.quality,
+      				                                qualification:item.qualification,
+      				                                spec:item.spec,
+      				                                number:item.number,
+      				                                unit:item.unit,
+      				                                price:item.price,
+      				                                address:item.address,
+      				                                location:item.location,
+      				                                advance:item.advance,
+      				                                invoic:item.invoic,
+      				                                visit:item.visit,
+      				                                pack:item.pack,
+      				                                intl:item.intl,
+      				                                visit:item.visit,
+      				                                sampling:item.sampling,
+      				                                sampleNumber:item.sampleNumber,
+      				                                sampleUnit:item.sampleUnit,
+      				                                sampleAmount:item.sampleAmount,
+      				                                offer:item.offer,
+      				                                status:item.status,
                                                country:item.country,
                                                province:item.province,
                                                city:item.city,
@@ -338,7 +337,6 @@ import tipsdialogModel  from '../../tipsDialog'
 import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import editintentModel  from  '../../Intention/Editintention'
 import createintentModel from '../../user/userIntention'
-import offerinfoModel from '../../Intention/offerInfo'
 
 import {
 	initIntentionList
@@ -359,8 +357,7 @@ export default {
         tipsdialogModel,
         deletebreedModel,
         editintentModel,
-        createintentModel,
-        offerinfoModel
+        createintentModel
     },
     vuex: {
         getters: {
@@ -523,11 +520,6 @@ export default {
         },
         createIntention:function(initIntentionList){
         	   this.createParam = initIntentionList;
-        },
-        offerDetail:function(id){
-        	this.offerParam.show=true;
-        	this.offerParam.id=id;
-        	this.getOffersdetail(this.offerParam);
         }
     },
     events: {
