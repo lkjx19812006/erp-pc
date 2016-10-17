@@ -13,7 +13,7 @@
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                          <li>
-                            <button type="button" class="btn btn-base"  @click="createOffer()">新建报价</button>
+                            <!-- <button type="button" class="btn btn-base"  @click="createOffer()">新建报价</button> -->
                         </li>
                       
                     </ul>
@@ -37,27 +37,38 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           报价（{{initIntentionDetail.offers.arr.length}}）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button>
+                                        <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                   </h4>
                               </div>
-                              <div  class="panel-collapse" v-show="!initIntentionDetail.offers.show&&initIntentionDetail.offers.arr.length>0">
+                              <div  class="panel-collapse" v-show="initIntentionDetail.offers.show&&initIntentionDetail.offers.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>订单流水号</th>
+                                          <th>会员</th>
+                                          <th>单价</th>
+                                          <th>数量</th>
+                                          <th>单位</th>
+                                          <th>杂费</th>
+                                          <th></th>
                                           <th></th>
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntentionDetail.offers.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>20160819</td>
+                                                <td>{{item.userId}}</td>
+                                                <td>{{item.price}}</td>
+                                                <td>{{item.number}}</td>
+                                                <td>{{item.unit}}</td>
+                                                <td>{{item.incidentals}}</td>
+                                                <td></td>
+                                                <td></td>
                                                 <td  @click="clickShow($index,{
                                                     concrete:'offers'
                                                     })">
                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                     <div class="files_action" v-show="item.show" >
                                                         <dl>
-                                                            <dt @click="specDelete()">删除</dt>
+                                                            <dt @click="specDelete()">采纳</dt>
                                                         </dl>
                                                     </div>
                                                 </td>
@@ -68,6 +79,57 @@
                               </div>
                           </div>
                 
+                          <div class="panel panel-default">
+                              <div class="panel-heading" v-cloak>
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:initIntentionDetail.msgs,
+                                              crete:'msgs'
+                                              })">
+                                        <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          留言（{{initIntentionDetail.msgs.arr.length}}）
+                                        </a>
+                                        <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                  </h4>
+                              </div>
+                              <div  class="panel-collapse" v-show="initIntentionDetail.msgs.show&&initIntentionDetail.msgs.arr.length>0">
+                                 <div class="panel-body panel-set">
+                                      <table class="table contactSet">
+                                        <thead>
+                                          <th>会员</th>
+                                          <th>备注</th>
+                                          <th>回复</th>
+                                          <th>回复人</th>
+                                          <th></th>
+                                          <th></th>
+                                          <th></th>
+                                        </thead>
+                                        <tbody>
+                                             <tr v-for="item in initIntentionDetail.msgs.arr">
+                                                <!-- <td><img :src="item.path" /></td> -->
+                                                <td>{{item.userId}}</td>
+                                                <td>{{item.comments}}</td>
+                                                <td>{{item.reply}}</td>
+                                                <td>{{item.replier}}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td  @click="clickShow($index,{
+                                                    concrete:'msgs'
+                                                    })">
+                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                    <div class="files_action" v-show="item.show" >
+                                                        <dl>
+                                                            <dt @click="specDelete()">回复</dt>
+                                                        </dl>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                  </div>
+                              </div>
+                          </div>
         
                         </div>
                     </article>
@@ -275,31 +337,22 @@ export default {
         }
     },
     methods: {
-        saveSucc:function(param){
+      saveSucc:function(param){
            this.tipsParam.show= true;
            this.editintentInfo(param); 
-        },
-        enfoldment:function(param){
-
+      },
+      enfoldment:function(param){
           if(this.$store.state.table.basicBaseList.intentionDetail[param.crete].arr.length==0){
                   this.$store.state.table.basicBaseList.intentionDetail[param.crete].show=true;
-              }
+          }
           this.$store.state.table.basicBaseList.intentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intentionDetail[param.crete].show;
       },
-      clickShow: function(index,param) {
-            console.log('clickShow');
-            console.log(this.$store.state.table.userDetail[param.concrete].arr[index]);
-            if (this.$store.state.table.userDetail[param.concrete].arr[index].show) {
-                this.$store.state.table.userDetail[param.concrete].arr[index].show = false;
-            } else {
-                this.$store.state.table.userDetail[param.concrete].arr[index].show = true
-            }
-
-        },
+      clickShow: function(index,param) {  
+          this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = !this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show; 
+      },
     },
     created(){
-        console.log(this.param.id);
-        this.getIntentionDetail(this.param);
+      this.getIntentionDetail(this.param);
     },
     filter: (filter, {})
 }

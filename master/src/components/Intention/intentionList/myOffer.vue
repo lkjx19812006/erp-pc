@@ -17,7 +17,7 @@
                </div>
               <div class="ordertel_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索">
+                   <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索" @keyup.enter="searchOffer()">
                </div>
            </div> 
             <div class="right col-xs-2">
@@ -195,9 +195,6 @@ export default {
    				})
    			}   	
         },
-        
-       
-        
         
     },
     events: {

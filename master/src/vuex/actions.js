@@ -1860,8 +1860,6 @@ export const transferInfo = ({ dispatch }, param) => { //客户部门划转信�
         orgId:param.orgId,
         customerIds:param.arr
     }
-    console.log(transferdata);
-    console.log(apiUrl.clientList + '/customer/customersTransferEmployee');
     Vue.http({
         method: 'POST',
         url: apiUrl.clientList + '/customer/customersTransferEmployee',
@@ -1942,6 +1940,34 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
     })
 }
 
+export const intentionUpAndDown = ({ dispatch }, param) => {  //意向上下架
+    param.loading = true;
+    var url = apiUrl.clientList+'/intention/upAndDowns';
+    const data = {
+        ids:param.ids,
+        onSell:param.onSell
+    }
+    
+    Vue.http({
+        method: 'PUT',
+        url: url,
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With":"XMLHttpRequest",
+            'Content-Type':'application/json;charset=UTF-8'
+        }
+    }).then((res)=>{
+        console.log('上下架成功');
+        dispatch(types.INTENTION_UP_DOWN, param);
+        param.show = true;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
     param.loading = true;
     var url = apiUrl.clientList+'/intention/'+param.id;
@@ -1954,6 +1980,7 @@ export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
         }
     }).then((res)=>{
             var result = res.json().result;
+
             var arr = result.offers;
             result.offers = null;
             result.offers = {
@@ -1963,6 +1990,17 @@ export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
             for (var i in result.offers.arr) {
                 result.offers.arr[i].show = false;
             };
+
+            var arr = result.msgs;
+            result.msgs = null;
+            result.msgs = {
+                arr:arr,
+                show:false
+            }
+            for (var i in result.msgs.arr) {
+                result.msgs.arr[i].show = false;
+            };
+
             dispatch(types.INTENTION_DETAIL_DATA, result);
             param.all = res.json().result.pages;
             param.loading = false;
@@ -1991,9 +2029,10 @@ export const getOfferList = ({ dispatch }, param) => {  //报价信息列表以�
                 offer[i].checked = false;
                 offer[i].show =false;
            }
-            dispatch(types.OFFER_LIST_DATA, offer);
-            param.all = res.json().result.pages;
-            param.loading = false;
+           console.log(offer.length);
+           dispatch(types.OFFER_LIST_DATA, offer);
+           param.all = res.json().result.pages;
+           param.loading = false;
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -2295,8 +2334,6 @@ export const batchUserIntentionAudit = ({ dispatch }, param) => { //批量审核
         description:param.description
     }
 
-
-    console.log(updatedata);
     Vue.http({
         method: 'PUT',
         url: apiUrl.userList + '/intention/validates',
