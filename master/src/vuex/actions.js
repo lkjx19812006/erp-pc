@@ -1957,7 +1957,7 @@ export const getMsgList = ({ dispatch }, param) => {  //留言信息列表以及
 
 
 
-export const getOffersdetail = ({ dispatch }, param) => {  //意向报价详情
+/*export const getOffersdetail = ({ dispatch }, param) => {  //意向报价详情
     Vue.http({
         method:'GET',
         url:apiUrl.clientList+'/intention/offers/?intentionId='+param.id,
@@ -1966,6 +1966,7 @@ export const getOffersdetail = ({ dispatch }, param) => {  //意向报价详情
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res)=>{
+        console.log(res.json().result)
             var offer = res.json().result.list;
             for(var i in offer){
                 offer[i].show=true;
@@ -1974,7 +1975,7 @@ export const getOffersdetail = ({ dispatch }, param) => {  //意向报价详情
     }, (res) => {
         console.log('fail');
     })
-}
+}*/
 
 export const getUserList = ({ dispatch }, param) => {  //会员信息列表
     param.loading = true;
