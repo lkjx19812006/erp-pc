@@ -1,5 +1,6 @@
 <template>
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+  <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
     <div class="client_body">
       <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -68,7 +69,7 @@
                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                     <div class="files_action" v-show="item.show" >
                                                         <dl>
-                                                            <dt @click="specDelete()">采纳</dt>
+                                                            <dt @click="adopt(item)">采纳</dt>
                                                         </dl>
                                                     </div>
                                                 </td>
@@ -300,6 +301,8 @@
 <script>
 import filter from '../../filters/filters'
 import tipsdialogModel  from '../tipsDialog'
+import createorderModel  from './createOrder'
+
 import{
     initIntentionDetail
 } from '../../vuex/getters'
@@ -310,7 +313,8 @@ import {
 export default {
     components: {
         filter,
-        tipsdialogModel
+        tipsdialogModel,
+        createorderModel
     },
     data() {
         return {
@@ -324,6 +328,39 @@ export default {
                 show:false,
                 name:'修改成功'
             },
+            orderParam:{
+                show:false,
+                type:this.initIntentionDetail.type,
+                customer:'',
+                sample:'',
+                intl:0,
+                incidentals:'',
+                incidentalsDesc:'',
+                preferential:'',   //优惠金额
+                preferentialDesc:'',  
+                currency:'',     //货币品种
+                consignee:'',    //收货人姓名
+                consigneePhone:'',
+                zipCode:'',     //邮编
+                country:'',
+                province:'',
+                city:'',
+                district:'',
+                consigneeAddr:'',
+                comments:'', 
+                sourceType:2,     //商品来源类型
+                sourceId:'',     //商品来源ID
+                title:'',     //订单商品标题
+                breedId:this.initIntentionDetail.breedId,   
+                breedName:this.initIntentionDetail.breedName,
+                quality:this.initIntentionDetail.quality,
+                location:this.initIntentionDetail.location,
+                spec:'',
+                price:'',
+                unit:'',
+                number:''
+
+            }
         }
     },
     props:['param'],
@@ -350,6 +387,18 @@ export default {
       clickShow: function(index,param) {  
           this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = !this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show; 
       },
+      adopt:function(item){
+          console.log("创建订单");
+          console.log(item.incidentals);
+          this.orderParam.show = true;
+          this.orderParam.customer = item.customerId;
+          this.orderParam.spec = item.spec;
+          this.orderParam.price = item.price;
+          this.orderParam.unit = item.unit;
+          this.orderParam.number = item.number;
+          this.orderParam.incidentals = item.incidentals;
+          this.orderParam.incidentalsDesc = item.incidentalsDesc;
+      }
     },
     created(){
       this.getIntentionDetail(this.param);

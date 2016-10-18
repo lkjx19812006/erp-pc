@@ -22,7 +22,7 @@
            </div> 
             <div class="right col-xs-3">
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-                <button class="new_btn transfer" @click="intentionAudit()">审核</button>
+                <!-- <button class="new_btn transfer" @click="intentionAudit()">审核</button> -->
                 <button class="new_btn transfer" @click="upOrDown({
                                                                 onSell:2  
                                                               })">下架</button>
@@ -200,7 +200,7 @@
                 <tbody>
                  
                     <tr v-for="item in initIntentionList">
-                         <td  >
+                         <td>
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
                         <td>{{item.type | chanceType}}</td>
@@ -260,7 +260,10 @@
                         <td>{{item.visit | visitstate}}</td>
                         <td>{{item.pack}}</td>
                         <td>{{item.intl | intlstata}}</td>
-                        <td>{{item.sampling}}</td>
+                        <td>
+                            <div v-if="item.sampling==0">否</div>
+                            <div v-if="item.sampling==1">是</div>
+                        </td>
                         <td>{{item.sampleNumber}}</td>
                         <td>{{item.sampleUnit}}</td>
                         <td>{{item.sampleAmount}}</td>
@@ -330,7 +333,9 @@
                                </ul>
                            </div>
                        </td>
+
                     </tr>
+
                 </tbody>
             </table>
         </div>
