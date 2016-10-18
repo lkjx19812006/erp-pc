@@ -302,7 +302,7 @@ const state = {
             ],
             show: false
         },
-        "track": { arr: [], show: false },
+        "trackings": { arr: [], show: false },
         "remarks": {
             arr: [
                 { "id": 0, "customerId": 10, "remark": "dfhidfhi", "status": 0, "show": true }
@@ -568,7 +568,7 @@ const mutations = {
             state.basicBaseList[data.headline][data.sub][i] = data[i];
         }
     },
-    
+
     [CUSTOMER_CONTACT_DATA](state, data) { // 新增客户联系人信息
         state.clientDetail[data.key].arr.unshift({
             "name": data.name,
@@ -744,7 +744,7 @@ const mutations = {
               state.userDetail.intention.arr[k].checked = false;
             }
         }
-        
+
         if(state.basicBaseList.intentionList.length>0){
             console.log("意向列表页审核意向");
             for(let i=0;i<data.indexs.length;i++){
@@ -754,7 +754,7 @@ const mutations = {
               state.basicBaseList.intentionList[k].checked = false;
             }
         }
-        
+
 
     },
 
@@ -839,6 +839,7 @@ const mutations = {
     },
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
       var temp = {
+        "id":data.id,
         "type":data.type,
         "especial":data.especial,
         "customerName":data.customerName,
@@ -870,7 +871,8 @@ const mutations = {
         "quality":data.quality,
         "show":false,
         "duedate":data.duedate,
-        "images":data.images
+        "images":data.images,
+        "audit":data.audit
       };
 
         if(data.key=="intentionList"){

@@ -73,6 +73,7 @@
                                 name:item.name,
                                 link:alterInfo,
                                 url:'/customer/',
+                                loading:true,
                                 key:'customerList'
                                 })"><img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>{{item.name}}</td>
                                     <!-- 上面这个img显示新客户图标 -->
@@ -155,7 +156,6 @@ import {
     getClientList,
     deleteInfo,
     alterInfo,
-    getClientDetail,
     saveCreate,
   customerTransferBlacklist
 } from '../../../vuex/actions'
@@ -180,7 +180,6 @@ export default {
             getClientList,
             deleteInfo,
             alterInfo,
-            getClientDetail,
             saveCreate,
           customerTransferBlacklist
         }
@@ -209,7 +208,8 @@ export default {
                 cityName:''
             },
             changeParam: {
-                show: false
+                show: false,
+                loading:true
             },
             createParam:{
                 show: false,
@@ -249,7 +249,6 @@ export default {
     methods: {
         clickOn: function(initCustomerlist) {
             this.changeParam = initCustomerlist;
-            this.getClientDetail(this.changeParam);
         },
         createCustomer:function(info){
             this.createParam = info;

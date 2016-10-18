@@ -55,6 +55,9 @@ export const getOrderList = ({ dispatch }, param) => {
         if(key=='orderNum'&&param[key]!=''){
              url += '&orderNum='+param[key];
         }
+        if(key=='customerId'&&param[key]!=''){
+          url += '&customerId='+param[key];
+        }
     }
     Vue.http({
         method:'GET',
@@ -1569,6 +1572,7 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
+      param.loading=false;
         var con = res.json().result;
 
         var arr = con.contacts;
@@ -1648,15 +1652,28 @@ export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
             arr: arr,
             show: true
         };
+
         for (var j in con.orders.arr) {
             con.orders.arr[j].show = false;
         }
+
+      var arr = con.trackings;
+      con.trackings = null;
+      con.trackings = {
+        arr: arr,
+        show: true
+      };
+
+      for (var j in con.trackings.arr) {
+        con.trackings.arr[j].show = false;
+      }
 
         /*if(con.orders.show&&con.intention.show){
             dispatch(types.CUSTOMER_DETAIL_DATA, con);
         }*/
         dispatch(types.CUSTOMER_DETAIL_DATA, con);
     }, (res) => {
+      param.loading=false;
         console.log('fail');
     })
 }
@@ -2006,7 +2023,16 @@ export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
                 result.msgs.arr[i].show = false;
             };
             dispatch(types.INTENTION_DETAIL_DATA, result);
-            param.all = res.json().result.pages;
+            if(res.json().result.pics[0]){
+              param.image_f=res.json().result.pics[0].path;
+            }
+            if(res.json().result.pics[1]){
+              param.image_s=res.json().result.pics[1].path;
+            }
+            if(res.json().result.pics[2]){
+              param.image_t=res.json().result.pics[2].path;
+            }
+
             param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -2460,36 +2486,44 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
 }
 
 export const editintentInfo = ({ dispatch }, param) => { //修改意向
-    console.log(param)
+
+  param.images='';
+  if(param.image_f){param.images+=param.image_f+','}
+  if(param.image_s){param.images+=param.image_s+','}
+  if(param.image_t){param.images+=param.image_t};
     const data1 = {
-         "type":param.type,
-         "especial":param.especial,
-        "customerName":param.customerName,
-        "customerPhone":param.customerPhone,
-         "breedName":param.breedName,
-         "qualification":param.qualification,
-         "spec":param.spec,
-         "address":param.address,
-         "advance":param.advance,
-         "invoic":param.invoic,
-         'visit':param.visit,
-         "id":param.id,
-         "intl":param.intl,
-         "unit":param.unit,
-         "pack":param.pack,
-         "sampling":param.sampling,
-         "sampleNumber":param.sampleNumber,
-         "sampleUnit":param.sampleUnit,
-         "sampleAmount":param.sampleAmount,
-         "breedId":param.breedId,
-         "country":param.country,
-         "quality":param.quality,
-         "price":param.price,
-         "province":param.province,
-         "city":param.city,
-         "district":param.district,
-         "location":param.location,
-         "number":param.number
+      "id":param.id,
+      "type":param.type,
+      "especial":param.especial,
+      "customerName":param.customerName,
+      "customerId":param.customerId,
+      "customerPhone":param.customerPhone,
+      "breedName":param.breedName,
+      "qualification":param.qualification,
+      "spec":param.spec,
+      "address":param.address,
+      "advance":param.advance,
+      "invoic":param.invoic,
+      'visit':param.visit,
+      "intl":param.intl,
+      "unit":param.unit,
+      "pack":param.pack,
+      "sampling":param.sampling,
+      "sampleNumber":param.sampleNumber,
+      "sampleUnit":param.sampleUnit,
+      "sampleAmount":param.sampleAmount,
+      "breedId":param.breedId,
+      "country":param.country,
+      "quality":param.quality,
+      "price":param.price,
+      "province":param.province,
+      "city":param.city,
+      "district":param.district,
+      "location":param.location,
+      "number":param.number,
+      "quality":param.quality,
+      "duedate":param.duedate,
+      "images":param.images
     }
     Vue.http({
         method: "PUT",
@@ -2634,7 +2668,7 @@ export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信�
         data.bizId = param.bizId;
     }
     if(param.bizType!==''){
-
+      data.bizType=param.bizType;
     }
 
     Vue.http({

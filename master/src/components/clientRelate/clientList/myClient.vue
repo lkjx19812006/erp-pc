@@ -107,6 +107,7 @@
                                 show:true,
                                 name:item.name,
                                 link:alterInfo,
+                                loading:true,
                                 url:'/customer/',
                                 key:'customerList'
                                 })">{{item.name}}</td>
@@ -191,7 +192,6 @@ import {
     getMyClientList,
     deleteInfo,
     alterInfo,
-    getClientDetail,
     saveCreate,
   customerTransferBlacklist
 } from '../../../vuex/actions'
@@ -216,7 +216,6 @@ export default {
             getMyClientList,
             deleteInfo,
             alterInfo,
-            getClientDetail,
             saveCreate,
           customerTransferBlacklist
         }
@@ -245,7 +244,8 @@ export default {
                 cityName:''
             },
             changeParam: {
-                show: false
+                show: false,
+                loading:true
             },
             createParam:{
                 show: false,
@@ -285,7 +285,6 @@ export default {
     methods: {
         clickOn: function(initCustomerlist) {
             this.changeParam = initCustomerlist;
-            this.getClientDetail(this.changeParam);
         },
         createCustomer:function(info){
             this.createParam = info;
