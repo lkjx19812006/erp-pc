@@ -159,9 +159,6 @@
                </div>
                <div class="editpage">
                    <div class="editpageleft">
-
-
-
                      <div class="editpage-input">
                        <label class="editlabel">国家</label>
                        <div type="text" class="edit-input">
@@ -181,15 +178,13 @@
                            <label class="editlabel">省</label>
                            <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
                          <div v-if="country.cname" type="text" class="edit-input">
-                         <v-select
+                            <v-select
                               :debounce="250"
                               :value.sync="province"
                               :on-change="selectCity"
                               :options="initProvince"
                               placeholder="省"
-                              label="cname"
-
-                         >
+                              label="cname">
 
                             </v-select>
                            </div>
@@ -326,7 +321,7 @@
                    <div class="editpageleft">
                         <div class="editpage-input">
                            <label class="editlabel">资质证书</label>
-                          <select type="text" class="form-control edit-input" v-model="param.qualification">
+                          <select type="text" class="form-control edit-input" v-model="param.qualification" placeholder="请输入资质证书">
                             <option value="GMP">GMP</option>
                             <option value="GSP">GSP</option>
                           </select>

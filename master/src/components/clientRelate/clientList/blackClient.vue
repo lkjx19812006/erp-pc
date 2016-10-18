@@ -66,7 +66,7 @@
           <td>{{item.employeeName}}</td>
           <td>{{item.principal}}</td>
           <td>{{item.bizScope}}</td>
-          <td>{{item.tel}}</td>
+          <td>{{item.mainPhone}}</td>
           <td>{{item.phoneProvince}}</td>
           <td>{{item.phoneCity}}</td>
           <td>{{item.email}}</td>
@@ -247,7 +247,8 @@
     margin-left: 18px;
   }
   .table>tbody>tr>td{
-    max-width: 300px;
+    max-width: 400px;
+   /*  white-space: normal; */
   }
   .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

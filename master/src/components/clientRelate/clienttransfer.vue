@@ -1,4 +1,5 @@
 <template>
+	 <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
 	 <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
 	 <div class="container modal_con" v-show="param.show">
        <div @click="param.show = false" class="top-title">
@@ -36,7 +37,7 @@
 			            </table>
 			            <div class="edit_footer">
 				    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-				    		<input  type="button" class="btn btn-orange" @click="transferInfo(param,param.show=false)" value="确定"/>
+				    		<input  type="button" class="btn btn-orange" @click="orgtransfer(param,param.show=false)" value="确定"/>
 				    	</div>
 	    			</div>
 	    			<div class="trans_service clearfix" v-show="!currentView">
@@ -86,7 +87,7 @@
 				        </div>
 				        <div class="edit_footer">
 				    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-				    		<input  type="button" class="btn btn-orange" @click="transferEmploy(param,param.show=false)" value="确定"/>
+				    		<input  type="button" class="btn btn-orange" @click="transfer(param,param.show=false)" value="确定"/>
 				    	</div>
 	    			</div>
 	    		</div>
@@ -96,6 +97,7 @@
 </template>
 <script>
 import pagination from '../pagination'
+import tipsdialogModel  from '../tipsDialog'
 import {
     initEmployeeList,
     initOrgList
@@ -127,11 +129,16 @@ export default{
             },
 			currentView:true,
 			isA:true,
-			checked:false
+			checked:false,
+			tipsParam:{
+                show:false,
+                name:'划转成功'
+            },
 		}
 	},
 	components:{
-		pagination
+		pagination,
+		tipsdialogModel
 	},
 	vuex:{
 		getters:{
@@ -181,6 +188,14 @@ export default{
 		},
 		employNameSearch: function(name) {
             this.getEmployeeList(this.loadParam);
+        },
+        orgtransfer:function(param){
+           this.tipsParam.show= true;
+           this.transferInfo(param) 
+        },
+        transfer:function(param){
+           this.tipsParam.show= true;
+           this.transferEmploy(param) 
         }
 	},
     events: {

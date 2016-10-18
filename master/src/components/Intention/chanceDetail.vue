@@ -29,16 +29,19 @@
                             
                           <div class="panel panel-default">
                               <div class="panel-heading" v-cloak>
-                                  <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:initIntentionDetail.offers,
-                                              crete:'offers'
-                                              })">
-                                        <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          报价（{{initIntentionDetail.offers.arr.length}}）
-                                        </a>
-                                        <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
-                                  </h4>
+                              <!-- <div class="cover_loading">
+                                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+                              </div> -->
+                                <h4 class="panel-title clearfix" @click="enfoldment({
+                                            link:initIntentionDetail.offers,
+                                            crete:'offers'
+                                            })">
+                                      <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                        报价（{{initIntentionDetail.offers.arr.length}}）
+                                      </a>
+                                      <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                </h4>
                               </div>
                               <div  class="panel-collapse" v-show="initIntentionDetail.offers.show&&initIntentionDetail.offers.arr.length>0">
                                  <div class="panel-body panel-set">
@@ -352,7 +355,7 @@ export default {
       },
     },
     created(){
-      this.getIntentionDetail(this.param);
+       this.getIntentionDetail(this.param,);
     },
     filter: (filter, {})
 }
