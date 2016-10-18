@@ -20,7 +20,7 @@
                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索">
                </div> -->
            </div> 
-            <div class="right col-xs-3">
+            <div class="right">
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 <button class="new_btn transfer" @click="intentionAudit()">审核</button>
                 <button class="new_btn transfer" @click="upOrDown({
@@ -265,7 +265,7 @@
                         <td>{{item.sampleUnit}}</td>
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offerNumber}}</td>
-                        <td>{{item.validate | audit}}</td>
+                        <td>{{item.validate}}</td>
                         <td>
                           <div v-if="item.onSell==0">初始</div>
                           <div v-if="item.onSell==1">上架</div>

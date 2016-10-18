@@ -19,7 +19,7 @@
                     show:true
                     })">划转</button>
               <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
-              <button class="new_btn transfer" @click="clientTransferSupplier()">抽取供应商</button>
+              <button class="new_btn transfer" @click="clientTransferSupplier()">提取供应商</button>
               <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>

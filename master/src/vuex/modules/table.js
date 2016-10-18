@@ -69,7 +69,8 @@ import {
    DISTRICT_LIST,
    ADD_FILES_DATA,
    ALTER_PRODUCT_DATA,
-   SUPPLY_PRODUCT_DATA
+   SUPPLY_PRODUCT_DATA,
+   PRODUCT_DATA
 
 } from '../mutation-types'
 
@@ -628,6 +629,9 @@ const mutations = {
             "id": data.id,
             "show": false,
         })
+    },
+    [PRODUCT_DATA](state, data) { //供应商产品列表
+        state.basicBaseList.productList = data;
     },
     [SUPPLY_PRODUCT_DATA](state, data) { //新增供应商产品
         console.log(data)

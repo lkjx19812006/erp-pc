@@ -50,6 +50,8 @@ export const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA' // 修改客户产品
 export const CUSTOMER_BATCH_DELETE = 'CUSTOMER_BATCH_DELETE' //客户批量删除
 export const ALTER_PRODUCT_DATA = 'ALTER_PRODUCT_DATA' // 修改供应商产品
 export const SUPPLY_PRODUCT_DATA = 'SUPPLY_PRODUCT_DATA' // 新增供应商产品
+export const PRODUCT_DATA = 'PRODUCT_DATA' // 供应商产品列表
+
 
 
 export const INTENTION_LIST_DATA ='INTENTION_LIST_DATA'  //意向数据列表

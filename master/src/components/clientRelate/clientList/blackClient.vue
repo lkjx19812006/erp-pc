@@ -248,7 +248,6 @@
   }
   .table>tbody>tr>td{
     max-width: 300px;
-    white-space: normal;
   }
   .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

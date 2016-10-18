@@ -21,7 +21,9 @@
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">类型</label>
                                  <select  value="{{param.type}}" v-model="param.type" class="form-control">
-                                    <option value="1" selected>可用</option>
+                                    <option>药材</option>
+                                    <option>提取物</option>
+                                    <option>饮片</option>
                                 </select>
                             </div>
                         </div>
@@ -53,7 +55,7 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">数量 <span class="system_danger" v-if="$validation.number.required">请输入数量</span></label>
-                                <input type="text" class="form-control" v-model="param.number" id="number" v-validate:number="['required']" value="{{param.number}}" />
+                                <input type="number" class="form-control" v-model="param.number" id="number" v-validate:number="['required']" value="{{param.number}}" />
                             </div>
                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">规格 <span class="system_danger" v-if="$validation.spec.required">请输入规格</span></label>
@@ -62,12 +64,21 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">单位 <span class="system_danger" v-if="$validation.unit.required">请输入价格</span></label>
-                                <input type="text" class="form-control" v-model="param.unit" id="unit" v-validate:unit="['required']" value="{{param.unit}}"/>
+                                <label class="editlabel">单位 <span class="system_danger" v-if="$validation.unit.required"  v-validate:unit="['required']">请输入单位</span></label>
+                                <div type="text" class="edit-input">
+                                   <input-select
+                                     :value.sync="param.unit"
+                                     :prevalue="param.unit"
+                                     :options="initCategorylist.unit"
+                                     placeholder="单位"
+                                     label="name"
+                                   >
+                                   </input-select>
+                                 </div>
                             </div>
                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">价格 <span class="system_danger" v-if="$validation.price.required">请输入价格</span></label>
-                                <input type="text" class="form-control" v-model="param.price"  id="price" v-validate:price="['required']" value="{{param.price}}"/>
+                                 <input type="number" v-model='param.price' class="form-control edit-input" value="{{param.price}}" v-validate:price="['required']" style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
                             </div>
                         </div>
                         <div class="clearfix">
@@ -97,6 +108,7 @@
 <script>
 import calendar from '../calendar/vue.datepicker'
 import searchsupplyModel from '../supply/selectSupply'
+import inputSelect from '../tools/vueSelect/components/inputselect'
 import {
     initProvince,
     initCategorylist
@@ -108,7 +120,8 @@ import {
 export default {
     components: {
         calendar,
-        searchsupplyModel
+        searchsupplyModel,
+        inputSelect
     },
     props: ['param'],
     data() {
@@ -274,5 +287,8 @@ export default {
 
 .editpage-image {
     display: inline-block;
+}
+.edit-input:focus {
+    border-color: #fa6705;
 }
 </style>

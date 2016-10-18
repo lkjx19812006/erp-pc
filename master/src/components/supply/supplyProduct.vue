@@ -36,7 +36,7 @@
                         <dd>
                             <select  v-model="loadParam.type" @change="searchProduct()">
                                 <option value="">请选择类型</option>
-                                <option>药物</option>
+                                <option>药材</option>
                                 <option>提取物</option>
                                 <option>饮片</option>
                             </select>
@@ -88,7 +88,7 @@
             <tr>
 
             </tr>
-        <tr v-for="item in initCustomerlist">
+        <tr v-for="item in initProductlist">
           <td>{{item.type}}</td>
           <td>{{item.breedId}}</td>
           <td>{{item.name}}</td>
@@ -99,7 +99,7 @@
                              name:item.name,
                              link:alterInfo,
                              url:'/customer/',
-                             key:'customerList'
+                             key:'productList'
                              })"><img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>{{item.name}}</td> -->
           <!-- 上面这个img显示新客户图标 -->
           <td>{{item.quality}}</td>
@@ -134,7 +134,7 @@
                                coa:item.coa,
                                link:updateProduct,
                                url:'/customer/product',
-                               headline:'customerList'
+                               headline:'productList'
                               })">编辑</li>
               </ul>
             </div>
@@ -155,13 +155,12 @@
   import alterinfoModel  from '../supply/createProduct'
   import searchModel  from  '../clientRelate/searchModel'
   import {
-    initCustomerlist,
+    initproductList,
     initProductlist
   } from '../../vuex/getters'
   import {
-    getClientList,
+    getProductList,
     updateProduct,
-    getClientDetail,
     saveCreate,
     newProduct
   } from '../../vuex/actions'
@@ -177,13 +176,12 @@
     },
     vuex: {
       getters: {
-        initCustomerlist,
+        initproductList,
         initProductlist
       },
       actions: {
-        getClientList,
+        getProductList,
         updateProduct,
-        getClientDetail,
         saveCreate,
         newProduct
       }
@@ -227,39 +225,38 @@
       }
     },
     methods: {
-      clickOn: function(initCustomerlist) {
-        this.changeParam = initCustomerlist;
+      clickOn: function(initproductList) {
+        this.changeParam = initproductList;
         this.getClientDetail(this.changeParam);
       },
       createCustomer:function(initProductlist){
         this.createParam = initProductlist;
-        //this.createParam.name=value;
       },
       createSearch:function(){
         this.loadParam.show=true;
       },
       eventClick:function(id){
-        if(this.$store.state.table.basicBaseList.customerList[id].show){
-          this.$store.state.table.basicBaseList.customerList[id].show = !this.$store.state.table.basicBaseList.customerList[id].show;
+        if(this.$store.state.table.basicBaseList.productList[id].show){
+          this.$store.state.table.basicBaseList.productList[id].show = !this.$store.state.table.basicBaseList.productList[id].show;
         }else{
-          this.$store.state.table.basicBaseList.customerList[id].show=true;
+          this.$store.state.table.basicBaseList.productList[id].show=true;
         }
       },
-      modifySupply:function(initCustomerlist){
-        this.alterParam =initCustomerlist;
+      modifySupply:function(initproductList){
+        this.alterParam =initproductList;
       },
       searchProduct:function(){
-          this.getClientList(this.loadParam);
+          this.getProductList(this.loadParam);
       }
     },
     events: {
       fresh: function(input) {
         this.loadParam.cur = input;
-        this.getClientList(this.loadParam);
+        this.getProductList(this.loadParam);
       }
     },
     created() {
-      this.getClientList(this.loadParam);
+      this.getProductList(this.loadParam);
     }
   }
 </script>

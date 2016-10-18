@@ -19,7 +19,7 @@
                     show:true
                     })">划转</button>
               <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
-              <button class="new_btn transfer" @click="clientTransferSupplier()">抽取供应商</button>
+              <button class="new_btn transfer" @click="clientTransferSupplier()">提取供应商</button>
               <button class="new_btn transfer" @click="createCustomer({
                                         show:true,
                                         loading:false,
@@ -386,9 +386,7 @@ export default {
            }
         },
         onlyselected:function(sub,id){
-
             //this.id = id;
-
             const _this=this;
             this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
             if(!this.$store.state.table.basicBaseList.customerList[sub].checked){
@@ -429,6 +427,7 @@ export default {
 .table>tbody>tr>td{
     max-width: 300px;
     white-space: normal;
+    min-width: 100px;
 }
 .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

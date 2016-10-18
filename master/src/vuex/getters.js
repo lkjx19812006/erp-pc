@@ -99,8 +99,9 @@ export const initDruglist = (state) => {
 export const initCustomerlist = (state) => {
     return parseJson(state.table.basicBaseList.customerList);
 }
+/*供应商产品*/
 export const initProductlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.productList));
+    return parseJson(state.table.basicBaseList.productList);
 }
 export const initClientDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.clientDetail));
