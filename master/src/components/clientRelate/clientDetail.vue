@@ -1019,7 +1019,7 @@ export default {
         createproductModel,
         intentionModel,
         tipsdialogModel,
-      auditDialog
+        auditDialog
     },
     props:['param'],
     data(){

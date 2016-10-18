@@ -349,7 +349,7 @@ export default {
       },
       clickShow: function(index,param) {  
           this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = !this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show; 
-      },
+      }
     },
     created(){
       this.getIntentionDetail(this.param);

@@ -162,7 +162,8 @@ export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
         id: data.id,
         name: data.name,
         status: data.status,
-        type: data.type
+        type: data.type,
+        // typedesc : data.typedesc
     }
     Vue.http({
         method: 'POST',
@@ -189,7 +190,8 @@ export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
         id: param.id,
         name: param.name,
         status: param.status,
-        type: param.type
+        type: param.type,
+        // typedesc: param.typedesc
     }
     Vue.http({
         method: 'PUT',
@@ -202,8 +204,9 @@ export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('修改成功')
+        
         dispatch(types.UPDATE_DATA, param);
+        console.log('修改成功')
     }, (res) => {
         console.log('fail');
     });
@@ -1372,6 +1375,7 @@ export const updateContact = ({ dispatch }, param) => { //修改客户联系人
     })
 }
 export const addrInfo = ({ dispatch }, param) => { //修改客户地址
+    
     const updatedata = {
         type:param.type,
         contactName:param.contactName,
@@ -2457,8 +2461,8 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
 export const editintentInfo = ({ dispatch }, param) => { //修改意向
     console.log(param)
     const data1 = {
-         "type":param.type,
-         "especial":param.especial,
+        "type":param.type,
+        "especial":param.especial,
         "customerName":param.customerName,
         "customerPhone":param.customerPhone,
          "breedName":param.breedName,
