@@ -12,6 +12,9 @@
         </div>
         <div class="edit-model">
           <div class="cover_loading">
+            <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+          </div>
+          <div class="cover_loading">
             <pulse-loader :loading="breedParam.loading" :color="color" :size="size"></pulse-loader>
           </div>
            <section class="editsection" v-cloak>
@@ -90,10 +93,7 @@
                          </input-select>
                        </div>
                      </div>
-
-
                    </div>
-
 
                    <div class="editpageright">
 
@@ -159,9 +159,6 @@
                </div>
                <div class="editpage">
                    <div class="editpageleft">
-
-
-
                      <div class="editpage-input">
                        <label class="editlabel">国家</label>
                        <div type="text" class="edit-input">
@@ -181,15 +178,13 @@
                            <label class="editlabel">省</label>
                            <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
                          <div v-if="country.cname" type="text" class="edit-input">
-                         <v-select
+                            <v-select
                               :debounce="250"
                               :value.sync="province"
                               :on-change="selectCity"
                               :options="initProvince"
                               placeholder="省"
-                              label="cname"
-
-                         >
+                              label="cname">
 
                             </v-select>
                            </div>
@@ -326,7 +321,7 @@
                    <div class="editpageleft">
                         <div class="editpage-input">
                            <label class="editlabel">资质证书</label>
-                          <select type="text" class="form-control edit-input" v-model="param.qualification">
+                          <select type="text" class="form-control edit-input" v-model="param.qualification" placeholder="请输入资质证书">
                             <option value="GMP">GMP</option>
                             <option value="GSP">GSP</option>
                           </select>
@@ -354,7 +349,8 @@ import {
     initProvince,
     initCitylist,
     initDistrictlist,
-    initBreedDetail
+    initBreedDetail,
+    initIntentionDetail
 } from '../../vuex/getters'
 import {
     createIntentionInfo,
@@ -363,7 +359,8 @@ import {
     getProvinceList,
     getCityList,
     getDistrictList,
-    getBreedDetail
+    getBreedDetail,
+    getIntentionDetail
 } from '../../vuex/actions'
 export default {
     components: {
@@ -453,7 +450,8 @@ export default {
           initProvince,
           initCitylist,
           initDistrictlist,
-          initBreedDetail
+          initBreedDetail,
+          initIntentionDetail
         },
         actions: {
           createIntentionInfo,
@@ -462,7 +460,8 @@ export default {
           getProvinceList,
           getCityList,
           getDistrictList,
-          getBreedDetail
+          getBreedDetail,
+          getIntentionDetail
         }
     },
     methods: {
@@ -479,8 +478,10 @@ export default {
             }
       },
       createOrUpdateIntention:function(){
+
+
+
         if(this.param.flag==0){
-          console.log('新增会员意向');
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
@@ -489,8 +490,6 @@ export default {
           this.createIntentionInfo(this.param);
         }
         if(this.param.flag==1){
-          console.log('修改会员意向');
-
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
@@ -499,11 +498,9 @@ export default {
           this.editintentInfo(this.param);
         }
 
-
       },
 
       selectProvince:function(){
-        console.log('selectProvince');
         this.province = '';
         this.city = '';
         this.district = '';
@@ -542,13 +539,19 @@ export default {
             this.param.customerName = customer.customerName;
             this.param.customerId = customer.customerId;
             this.param.customerPhone = customer.customerPhone;
-        },
+        }
     },
     created(){
       if(this.param.breedId){
         this.breedParam.breedName = this.param.breedName;
         this.breedParam.id = this.param.breedId;
         this.getBreedDetail(this.breedParam);
+      }
+      if(this.param.id){
+        this.param.loading=true;
+        this.getIntentionDetail(this.param);
+      }else{
+        this.param.loading=false;
       }
       if(this.param.country){
         this.countryParam.country=this.param.country;

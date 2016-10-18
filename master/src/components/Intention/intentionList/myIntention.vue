@@ -213,6 +213,7 @@
                                 id:item.id,
                                 sub:$index,
                                 show:true,
+                                loading:true,
                                 customerName:item.customerName,
                                 customerPhone:item.customerPhone,
                                 breedName:item.breedName,

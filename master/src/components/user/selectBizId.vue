@@ -5,58 +5,13 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3 v-if="param.bizType==0">选择客户</h3>
             <h3 v-if="param.bizType==1">选择意向</h3>
             <h3 v-if="param.bizType==2">选择订单</h3>
         </div>
 
-        <div class="trans_service clearfix" v-show="param.bizType==0">
 
-
-              <div class="col-xs-8">
-                      <div class="name_search clearfix">
-                          <img src="/static/images/search.png" height="24" width="24">
-                          <input type="text" class="search_input" v-model="customerParam.name" placeholder="请输入客户名字" @keyup.enter="customerSearch()">
-                      </div>
-                      <div class="name_search clearfix">
-                          <img src="/static/images/search.png" height="24" width="24">
-                          <input type="text" class="search_input" v-model="customerParam.tel" placeholder="请输入客户手机号"  @keyup.enter="customerSearch()">
-                      </div>
-                  </div>
-                  <table class="table table-hover table_head table-striped " v-cloak>
-                      <thead>
-                          <tr>
-                              <th></th>
-                              <th>姓名</th>
-                              <th>客户ID</th>
-                              <th>手机<th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr v-for="item in initCustomerlist">
-                             <td  @click.stop="">
-                                 <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectCustomer($index)" ></label>
-                              </td>
-                              <td>{{item.name}}</td>
-                              <td>{{item.id}}</td>
-                              <td>{{item.tel}}</td>
-                          </tr>
-
-                      </tbody>
-                  </table>
-
-            </div>
 
         <div class="trans_service clearfix" v-show="param.bizType==1">
-            <div class="col-xs-4">
-
-            </div>
-
-              <div class="col-xs-8">
-
-
-
-                  </div>
           <div class="cover_loading">
             <pulse-loader :loading="intentionParam.loading" :color="color" :size="size"></pulse-loader>
           </div>
@@ -73,7 +28,7 @@
                       <tbody>
                           <tr v-for="item in initIntentionList">
                              <td  @click.stop="">
-                                 <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectIntention($index)" ></label>
+                                 <label  class="checkbox_unselect"  @click="selectIntention($index)" ></label>
                               </td>
                               <td>{{item.breedName}}</td>
                               <td>{{item.spec}}</td>
@@ -86,54 +41,41 @@
           <div class="order_pagination" style="margin-bottom:60px">
             <pagination :combination="intentionParam"></pagination>
           </div>
-
             </div>
 
-<!--         <div class="trans_service clearfix" v-show="param.bizType==2">
-    <div class="col-xs-4">
-      <select  class="form-control" v-model="" @change="employSearch()">
-                    <option selected value="">请选择业务员部门</option>
-                    <option v-for="item in initOrgList" value=""></option>
-                </select>
-    </div>
 
-      <div class="col-xs-8">
-              <div class="name_search clearfix">
-                  <img src="/static/images/search.png" height="24" width="24">
-                  <input type="text" class="search_input" v-model="customerParam.name" placeholder="请输入客户名字" @keyup.enter="customerSearch()">
-              </div>
-              <div class="name_search clearfix">
-                  <img src="/static/images/search.png" height="24" width="24">
-                  <input type="text" class="search_input" v-model="customerParam.tel" placeholder="请输入客户手机号"  @keyup.enter="customerSearch()">
-              </div>
+      <div class="trans_service clearfix" v-show="param.bizType==2">
+        <div class="cover_loading">
+          <pulse-loader :loading="orderParam.loading" :color="color" :size="size"></pulse-loader>
+        </div>
+        <table class="table table-hover table_head table-striped "  v-cloak>
+          <thead>
+          <tr>
+            <th></th>
+            <th>流水号</th>
+            <th>订单金额</th>
+            <th>商品</th>
+            <th>创建时间</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="item in initOrderlist">
+            <td  @click.stop="">
+              <label  class="checkbox_unselect"   @click="selectOrder(item)" ></label>
+            </td>
+            <td>{{item.no}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.goods}}</td>
+            <td>{{item.ctime}}</td>
+          </tr>
 
+          </tbody>
+        </table>
+        <div class="order_pagination" style="margin-bottom:60px">
+          <pagination :combination="orderParam"></pagination>
+        </div>
+      </div>
 
-          </div>
-          <table class="table table-hover table_head table-striped " v-cloak>
-              <thead>
-                  <tr>
-                      <th></th>
-                      <th>姓名</th>
-                      <th>部门</th>
-                      <th>手机<th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr v-for="item in initCustomerlist">
-                     <td  @click.stop="">
-                         <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectOrder($index)" ></label>
-                      </td>
-                      <td>{{item.name}}</td>
-                      <td>{{item.id}}</td>
-                      <td>{{item.tel}}</td>
-                  </tr>
-
-              </tbody>
-          </table>
-
-    </div>
-
- -->
 
 
 
@@ -145,12 +87,12 @@
 </template>
 <script>
 import {
-  initCustomerlist,
+  initOrderlist,
   initIntentionList
 
 } from '../../vuex/getters'
 import {
-     getClientList,
+      getOrderList,
      getIntentionList
 } from '../../vuex/actions'
 import pagination from '../pagination'
@@ -161,12 +103,11 @@ export default {
     props: ['param'],
     data() {
         return {
-          customerParam:{
+          orderParam:{
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
-                name: '',
-                tel: '',
+                customerId: this.param.userId,
                 cur: 1,
                 all: 7
           },
@@ -182,39 +123,33 @@ export default {
     },
     vuex: {
        getters: {
-          initCustomerlist,
+          initOrderlist,
           initIntentionList
 
         },
         actions: {
-            getClientList,
+            getOrderList,
             getIntentionList
         }
     },
 
     methods: {
-      customerSearch:function(){
-        this.getClientList(this.customerParam);
+      orderSearch:function(){
+        this.getOrderList(this.customerParam);
       },
       intentionSearch:function(){
         this.getIntentionList(this.intentionParam);
       },
-      selectCustomer:function(index){
-        console.log(index);
-          this.$store.state.table.basicBaseList.customerList[index].checked=!this.$store.state.table.basicBaseList.customerList[index].checked;
-          this.$dispatch('getBiz',this.initCustomerlist[index]);
+      selectOrder:function(item){
+          this.$dispatch('getBiz',{id:item.id});
           this.param.show=false;
-          console.log(this.initCustomerlist[index].id);
+
       },
       selectIntention:function(index){
-
           this.$store.state.table.basicBaseList.intentionList[index].checked=!this.$store.state.table.basicBaseList.intentionList[index].checked;
           this.$dispatch('getBiz',this.initIntentionList[index]);
           this.param.show=false;
           console.log(this.initIntentionList[index]);
-      },
-      selectOrder:function(){
-
       },
       cancel:function(){
         this.$dispatch('cancel');
@@ -223,13 +158,18 @@ export default {
     },
     events: {
     fresh: function(input) {
-      this.intentionParam.cur = input;
-      this.getIntentionList(this.intentionParam);
+      if(param.bizType==1){
+        this.intentionParam.cur = input;
+      this.getIntentionList(this.intentionParam);}
+      else if(param.bizType==2){
+        this.orderParam.cur = input;
+        this.getOrderList(this.orderParam);
+      }
     }
   },
     created(){
-      this.getClientList(this.customerParam);
-      this.getIntentionList(this.intentionParam);
+      if(this.param.bizType==2)this.getOrderList(this.orderParam);
+      if(this.param.bizType==1){this.getIntentionList(this.intentionParam);}
     }
 }
 </script>

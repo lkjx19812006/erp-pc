@@ -55,6 +55,7 @@
                                 id:item.id,
                                 sub:$index,
                                 show:true,
+                                loading:true,
                                 name:item.name,
                                 link:alterInfo,
                                 url:'/customer/',
@@ -66,7 +67,7 @@
           <td>{{item.employeeName}}</td>
           <td>{{item.principal}}</td>
           <td>{{item.bizScope}}</td>
-          <td>{{item.tel}}</td>
+          <td>{{item.mainPhone}}</td>
           <td>{{item.phoneProvince}}</td>
           <td>{{item.phoneCity}}</td>
           <td>{{item.email}}</td>
@@ -98,7 +99,6 @@
   } from '../../../vuex/getters'
   import {
     getClientList,
-    getClientDetail,
     customerTransferBlacklist
 
   } from '../../../vuex/actions'
@@ -117,7 +117,6 @@
       },
       actions: {
         getClientList,
-        getClientDetail,
         customerTransferBlacklist
       }
     },
@@ -153,7 +152,8 @@
           name:'请先选择客户'
         },
         changeParam: {
-          show: false
+          show: false,
+          loading:true
         },
         auditParam:{
           show:false,
@@ -168,7 +168,6 @@
     methods: {
       clickOn: function(initCustomerlist) {
         this.changeParam = initCustomerlist;
-        this.getClientDetail(this.changeParam);
       },
 
       checkedAll: function() {
@@ -247,7 +246,8 @@
     margin-left: 18px;
   }
   .table>tbody>tr>td{
-    max-width: 300px;
+    max-width: 400px;
+   /*  white-space: normal; */
   }
   .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

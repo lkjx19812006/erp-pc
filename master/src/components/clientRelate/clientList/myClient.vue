@@ -27,7 +27,7 @@
                                         category:'',
                                         type:'',
                                         name:'',
-                                        tel:'',
+                                        mainPhone:'',
                                         principal:'',
                                         bizScope:'',
                                         province:'',
@@ -38,8 +38,6 @@
                                         employeeName:'',
                                         orgId:'',
                                         orgName:'',
-                                        province:'',
-                                        city:'',
                                         contacts:[
                                             {
                                                 name:'',
@@ -107,6 +105,7 @@
                                 show:true,
                                 name:item.name,
                                 link:alterInfo,
+                                loading:true,
                                 url:'/customer/',
                                 key:'customerList'
                                 })">{{item.name}}</td>
@@ -117,7 +116,7 @@
                         <td>{{item.employeeName}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
-                        <td>{{item.tel}}</td>
+                        <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}</td>
                         <td>{{item.phoneCity}}</td>
                         <td>{{item.email}}</td>
@@ -140,10 +139,14 @@
                                                 category:item.category,
                                                 principal:item.principal,
                                                 bizScope:item.bizScope,
-                                                tel:item.tel,
+                                                mainPhone:item.mainPhone,
                                                 email:item.email,
+                                                country:item.country,
+                                                countryName:item.countryName,
                                                 province:item.province,
+                                                provinceName:item.provinceName,
                                                 city:item.city,
+                                                cityName:item.cityName,
                                                 address:item.address,
                                                 comments:item.comments,
                                                 link:alterInfo,
@@ -191,7 +194,6 @@ import {
     getMyClientList,
     deleteInfo,
     alterInfo,
-    getClientDetail,
     saveCreate,
   customerTransferBlacklist
 } from '../../../vuex/actions'
@@ -216,7 +218,6 @@ export default {
             getMyClientList,
             deleteInfo,
             alterInfo,
-            getClientDetail,
             saveCreate,
           customerTransferBlacklist
         }
@@ -245,7 +246,8 @@ export default {
                 cityName:''
             },
             changeParam: {
-                show: false
+                show: false,
+                loading:true
             },
             createParam:{
                 show: false,
@@ -285,7 +287,6 @@ export default {
     methods: {
         clickOn: function(initCustomerlist) {
             this.changeParam = initCustomerlist;
-            this.getClientDetail(this.changeParam);
         },
         createCustomer:function(info){
             this.createParam = info;

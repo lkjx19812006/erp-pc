@@ -71,7 +71,8 @@ import {
    ADD_FILES_DATA,
    ALTER_PRODUCT_DATA,
    SUPPLY_PRODUCT_DATA,
-   PRODUCT_DATA
+   PRODUCT_DATA,
+   FILES_DATA_LIST
 
 } from '../mutation-types'
 
@@ -187,6 +188,9 @@ const state = {
             "id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"password": "56bf5523459ce2dfc6720798d852d6e6",
             "nickname": "卖蘑菇的小姑凉", "fullname": "沈威峰","phone": "13851379713","email": "857714234@qq.com","qq": "857714234",
             "company": "个体种植户","score": 300,"source": 1,"status": 0,"userIds": null,"customerId": null,"main": null,"show": true
+        }],
+        filesList:[{
+            "id": 2617,"fileType": "image","bizType": "customer_license","bizId": "57f8817888e8bb85da01df7b","path": "/photos/order_photos_other/57f8815a88e8bb85da01df7a.jpg","description": null,"status": 1,"category": 0,"show":true
         }]
 
     },
@@ -307,7 +311,7 @@ const state = {
             ],
             show: false
         },
-        "track": { arr: [], show: false },
+        "trackings": { arr: [], show: false },
         "remarks": {
             arr: [
                 { "id": 0, "customerId": 10, "remark": "dfhidfhi", "status": 0, "show": true }
@@ -527,7 +531,7 @@ const mutations = {
           source:4,
           sourceType:'业务录入',
           tel:data.tel,
-          type:data.type,
+          type:data.type, 
           typeDesc:data.typeDesc,
           show: false
         })
@@ -542,6 +546,7 @@ const mutations = {
 
     },
     [CUSTOMER_UPDATE_DATA](state, data) { //修改客户列表信息
+        console.log(data)
         for (var key in data) {
             state.basicBaseList[data.key][data.sub][key] = data[key];
         }
@@ -573,7 +578,7 @@ const mutations = {
             state.basicBaseList[data.headline][data.sub][i] = data[i];
         }
     },
-    
+
     [CUSTOMER_CONTACT_DATA](state, data) { // 新增客户联系人信息
         state.clientDetail[data.key].arr.unshift({
             "name": data.name,
@@ -658,6 +663,10 @@ const mutations = {
             "show": false,
         })
     },
+    [FILES_DATA_LIST](state,data){ //文件列表
+        state.basicBaseList.filesList = data;
+    },
+
     [FILE_DATA](state, data) { //新增客户文件
         state.clientDetail[data.key].arr.unshift({
             "catagory": data.catagory,
@@ -752,7 +761,7 @@ const mutations = {
               state.userDetail.intention.arr[k].checked = false;
             }
         }
-        
+
         if(state.basicBaseList.intentionList.length>0){
             console.log("意向列表页审核意向");
             for(let i=0;i<data.indexs.length;i++){
@@ -762,7 +771,7 @@ const mutations = {
               state.basicBaseList.intentionList[k].checked = false;
             }
         }
-        
+
 
     },
 
@@ -847,6 +856,7 @@ const mutations = {
     },
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
       var temp = {
+        "id":data.id,
         "type":data.type,
         "especial":data.especial,
         "customerName":data.customerName,
@@ -878,7 +888,8 @@ const mutations = {
         "quality":data.quality,
         "show":false,
         "duedate":data.duedate,
-        "images":data.images
+        "images":data.images,
+        "audit":data.audit
       };
 
         if(data.key=="intentionList"){
@@ -924,13 +935,12 @@ const mutations = {
 
     [ADD_FILES_DATA](state,data){
         state.clientDetail.files.arr.unshift({
-            "id":data.id,
             "path": data.path,
-            "type": data.type,
-            "catagory": data.catagory,
-            "customerId":data.customerId,
+            "fileType": data.fileType,
+            "bizType":data.bizType,
+            "bizId":data.bizId,
+            "description":data.description,
             "show":false
-
         })
 
     }
