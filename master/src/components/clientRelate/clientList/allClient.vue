@@ -10,7 +10,7 @@
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">所有客户</div>
-            <div class="right col-xs-4">
+            <div class="right col-xs-6">
                 <button class="new_btn transfer" @click="clientTransfer({
                     arr:[],
                     name:'test',
@@ -19,7 +19,7 @@
                     show:true
                     })">划转</button>
               <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
-              <button class="new_btn transfer" @click="clientTransferSupplier()">抽取供应商</button>
+              <button class="new_btn transfer" @click="clientTransferSupplier()">提取供应商</button>
               <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
@@ -389,7 +389,7 @@ export default {
 }
 .table>tbody>tr>td{
     max-width: 300px;
-    white-space: normal;
+    /* white-space: normal; */
 }
 .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

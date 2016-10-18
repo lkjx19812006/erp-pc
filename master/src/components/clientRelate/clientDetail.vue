@@ -36,14 +36,14 @@
                                                 key:'customerList'
                                                 })">删除客户信息</button>
                         </li>
-                         <li>
-                            <button type="button" class="btn btn-base"  @click="createTrack({
-                                             status:'',
-                                             link:createLabel,
-                                             url:'/customer/insertLabel',
-                                             key:'labels'
-                                             })">新建跟进</button>
-                        </li>
+                        <!--  <li>
+                           <button type="button" class="btn btn-base"  @click="createTrack({
+                                            status:'',
+                                            link:createLabel,
+                                            url:'/customer/insertLabel',
+                                            key:'labels'
+                                            })">新建跟进</button>
+                                                </li> -->
                         <li>
                             <button type="button" class="btn btn-base"  @click="newlabel({
                                              customerId:param.id,
@@ -294,7 +294,8 @@
 		                                    <tbody>
 		                                         <tr v-for="item in initClientDetail.files.arr">
 		                                            <!-- <td><img v-bind:src="item.path" /></td> -->
-                                                <td><img v-bind:src="item.path" v-if="item.type=='图片'" style='float:left; margin-left:15px;' /><img style='float:left; margin-left:15px;' src="/static/images/pdf.png" v-else></td>
+                                                <td><img v-bind:src="item.path" v-if="item.type=='图片'" style='float:left; margin-left:15px;' />
+                                                    <img style='float:left; margin-left:15px;' src="/static/images/pdf.png" v-else></td>
 		                                            <td>{{item.type}}</td>
 		                                            <td>{{item.catagory}}</td>
                                                 <td  @click="clickShow($index,{

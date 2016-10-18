@@ -1006,7 +1006,9 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         if(search=='blacklist'&&param[search]!==''&&param[search]!==undefined){
           clienturl += '&blacklist='+param.blacklist
         }
-
+        if(search=='status'&&param[search]!==''&&param[search]!==undefined){
+            clienturl += '&status='+param.status
+        }
     }
     Vue.http({
         method:'GET',
@@ -1021,7 +1023,43 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
                 client[i].checked = false;
                 client[i].show =false;
            }
-            dispatch(types.CUSTOMER_DATA, client);
+            dispatch(types.CUSTOMER_DATA, client)
+            param.all = res.json().result.pages;
+            param.loading = false;
+        }, (res) => {
+            console.log('fail');
+            param.loading = false;
+        })
+}
+
+export const getProductList = ({ dispatch }, param) => {  //供应商产品列表
+    param.loading = true;
+    console.log(param);
+    var clienturl = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
+    for(var search in param){
+        if(search=='name'&&param[search]!==''){
+            clienturl += '&name='+param.name
+        }
+        if(search=='type'&&param[search]!==''){
+            clienturl += '&type='+param.type
+        }
+        if(search=='status'&&param[search]!==''&&param[search]!==undefined){
+            clienturl += '&status='+param.status
+        }
+    }
+    Vue.http({
+        method:'GET',
+        url:clienturl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        }).then((res) => {
+           var product = res.json().result.list;
+           for (var i in product){
+                product[i].show =false;
+           }
+            dispatch(types.PRODUCT_DATA, product)
             param.all = res.json().result.pages;
             param.loading = false;
         }, (res) => {
@@ -1452,7 +1490,7 @@ export const alterLabel = ({ dispatch }, param) => { //修改客户标签
     })
 }
 export const alterProduct = ({ dispatch }, param) => { //修改客户产品
-    console.log(param)
+    /*console.log(param)*/
     const updatedata = {
         type:param.type,
         name:param.name,
@@ -1485,6 +1523,42 @@ export const alterProduct = ({ dispatch }, param) => { //修改客户产品
         console.log('fail');
     })
 }
+export const updateProduct = ({ dispatch }, param) => { //修改供应商产品
+    /*console.log(param)*/
+    const updatedata = {
+        type:param.type,
+        name:param.name,
+        breedId:param.breedId,
+        quality:param.quality,
+        location:param.location,
+        spec:param.spec,
+        number:param.number,
+        price:param.price,
+        unit:param.unit,
+        duedate:param.duedate,
+        coa:param.coa,
+        cid:param.cid,
+        id:param.id
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: false,
+        body: updatedata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.ALTER_PRODUCT_DATA,param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+
 export const getClientDetail = ({ dispatch }, param) => { //获取客户详情
 
     Vue.http({
@@ -1738,6 +1812,41 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
         console.log('fail');
     })
 }
+export const newProduct = ({ dispatch }, param) => { //新增供应商产品
+    console.log(param);
+    const data = {
+        "type":param.type,
+        "name":param.name,
+        "breedId":param.breedId,
+        "quality":param.quality,
+        "location":param.location,
+        "spec":param.spec,
+        "number":param.number,
+        "price":param.price,
+        "unit":param.unit,
+        "duedate":param.duedate,
+        "coa":param.coa,
+        "cid":param.cid
+    }
+
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('添加成功')
+        dispatch(types.SUPPLY_PRODUCT_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 export const addrDel = ({ dispatch }, param) => { //删除客户收货地址
     Vue.http({
         method: 'PUT',
@@ -1784,6 +1893,8 @@ export const transferInfo = ({ dispatch }, param) => { //客户部门划转信�
         orgId:param.orgId,
         customerIds:param.arr
     }
+    console.log(transferdata);
+    console.log(apiUrl.clientList + '/customer/customersTransferEmployee');
     Vue.http({
         method: 'POST',
         url: apiUrl.clientList + '/customer/customersTransferEmployee',
@@ -1864,34 +1975,6 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
     })
 }
 
-export const intentionUpAndDown = ({ dispatch }, param) => {  //意向上下架
-    param.loading = true;
-    var url = apiUrl.clientList+'/intention/upAndDowns';
-    const data = {
-        ids:param.ids,
-        onSell:param.onSell
-    }
-    
-    Vue.http({
-        method: 'PUT',
-        url: url,
-        emulateHTTP: false,
-        body: data,
-        emulateJSON: false,
-        headers: {
-            "X-Requested-With":"XMLHttpRequest",
-            'Content-Type':'application/json;charset=UTF-8'
-        }
-    }).then((res)=>{
-        console.log('上下架成功');
-        dispatch(types.INTENTION_UP_DOWN, param);
-        param.show = true;
-    }, (res) => {
-        console.log('fail');
-        param.loading = false;
-    })
-}
-
 export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
     param.loading = true;
     var url = apiUrl.clientList+'/intention/'+param.id;
@@ -1904,7 +1987,6 @@ export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
         }
     }).then((res)=>{
             var result = res.json().result;
-
             var arr = result.offers;
             result.offers = null;
             result.offers = {
@@ -1914,17 +1996,15 @@ export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
             for (var i in result.offers.arr) {
                 result.offers.arr[i].show = false;
             };
-
             var arr = result.msgs;
             result.msgs = null;
             result.msgs = {
                 arr:arr,
                 show:false
-            }
+            };
             for (var i in result.msgs.arr) {
                 result.msgs.arr[i].show = false;
             };
-
             dispatch(types.INTENTION_DETAIL_DATA, result);
             param.all = res.json().result.pages;
             param.loading = false;
@@ -1936,7 +2016,7 @@ export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
 
 export const getOfferList = ({ dispatch }, param) => {  //报价信息列表以及搜索
     param.loading = true;
-    var url = apiUrl.clientList+'/intention/offers?'+'&page=' + param.cur + '&pageSize=15';
+    var url = apiUrl.clientList+'/intention/employee/offers?'+'&page=' + param.cur + '&pageSize=15';
     if('intentionId' in param&&param.intentionId!==''){
         url += '&intentionId='+param.intentionId
     }
@@ -1953,10 +2033,9 @@ export const getOfferList = ({ dispatch }, param) => {  //报价信息列表以�
                 offer[i].checked = false;
                 offer[i].show =false;
            }
-           console.log(offer.length);
-           dispatch(types.OFFER_LIST_DATA, offer);
-           param.all = res.json().result.pages;
-           param.loading = false;
+            dispatch(types.OFFER_LIST_DATA, offer);
+            param.all = res.json().result.pages;
+            param.loading = false;
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -2258,6 +2337,8 @@ export const batchUserIntentionAudit = ({ dispatch }, param) => { //批量审核
         description:param.description
     }
 
+
+    console.log(updatedata);
     Vue.http({
         method: 'PUT',
         url: apiUrl.userList + '/intention/validates',

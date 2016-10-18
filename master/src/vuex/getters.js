@@ -99,7 +99,10 @@ export const initDruglist = (state) => {
 export const initCustomerlist = (state) => {
     return parseJson(state.table.basicBaseList.customerList);
 }
-
+/*供应商产品*/
+export const initProductlist = (state) => {
+    return parseJson(state.table.basicBaseList.productList);
+}
 export const initClientDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.clientDetail));
 }
@@ -168,7 +171,6 @@ export const initIdentify = (state) => {
 }*/
 /*---获取省市区---*/
 export const initProvince = (state) => {
-
     return JSON.parse(JSON.stringify(state.table.locationList.provinceList));
 }
 

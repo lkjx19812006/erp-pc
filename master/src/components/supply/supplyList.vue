@@ -15,7 +15,7 @@
                                         category:'',
                                         type:'',
                                         name:'',
-                                        tel:'',
+                                        mainPhone:'',
                                         principal:'',
                                         bizScope:'',
                                         province:'',
@@ -99,7 +99,7 @@
           <td>{{item.employeeName}}</td>
           <td>{{item.principal}}</td>
           <td>{{item.bizScope}}</td>
-          <td>{{item.tel}}</td>
+          <td>{{item.mainPhone}}</td>
           <td>{{item.phoneProvince}}</td>
           <td>{{item.phoneCity}}</td>
           <td>{{item.email}}</td>
@@ -113,34 +113,35 @@
             <div class="component_action" v-show="item.show">
               <ul>
                 <li @click="modifyClient({
-                                                id:item.id,
-                                                sub:$index,
-                                                show:true,
-                                                name:item.name,
-                                                type:item.type,
-                                                classify:item.classify,
-                                                category:item.category,
-                                                principal:item.principal,
-                                                bizScope:item.bizScope,
-                                                tel:item.tel,
-                                                email:item.email,
-                                                province:item.province,
-                                                city:item.city,
-                                                address:item.address,
-                                                comments:item.comments,
-                                                link:alterInfo,
-                                                url:'/customer/',
-                                                key:'customerList'
-                                                })">编辑</li>
-                <li @click="specDelete({        id:item.id,
-                                                sub:$index,
-                                                show:true,
-                                                name:item.name,
-                                                title:'供应商',
-                                                link:deleteInfo,
-                                                url:'/customer/',
-                                                key:'customerList'
-                                                })">删除</li>
+                              id:item.id,
+                              sub:$index,
+                              show:true,
+                              name:item.name,
+                              type:item.type,
+                              classify:item.classify,
+                              category:item.category,
+                              principal:item.principal,
+                              bizScope:item.bizScope,
+                              mainPhone:item.mainPhone,
+                              email:item.email,
+                              province:item.province,
+                              city:item.city,
+                              address:item.address,
+                              comments:item.comments,
+                              link:alterInfo,
+                              url:'/customer/',
+                              key:'customerList'
+                              })">编辑</li>
+                <li @click="specDelete({        
+                            id:item.id,
+                            sub:$index,
+                            show:true,
+                            name:item.name,
+                            title:'供应商',
+                            link:deleteInfo,
+                            url:'/customer/',
+                            key:'customerList'
+                            })">删除</li>
               </ul>
             </div>
           </td>
@@ -285,8 +286,8 @@
     margin-left: 18px;
   }
   .table>tbody>tr>td{
-    max-width: 300px;
-    white-space: normal;
+/*     max-width: 300px; */
+   /*  white-space: normal; */
   }
   .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

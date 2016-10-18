@@ -700,4 +700,5 @@ export default {
 .editpage-image {
     display: inline-block;
 }
+
 </style>

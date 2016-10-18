@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-09-26 16:43:08
+* @Last Modified time: 2016-10-17 10:53:11
 */
 
 * {
@@ -547,7 +547,8 @@ fieldset[disabled] .form-control {
     font-size: 16px;
     border-bottom: 1px solid #ddd;
     margin-bottom: 0;
-    font-size: 20px
+    font-size: 20px;
+    white-space: normal;
 }
 
 .model-header h4 {

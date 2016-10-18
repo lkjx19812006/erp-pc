@@ -2,7 +2,7 @@
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
   <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
     <div class="client_body">
-      <div @click="param.show=false" class="top-title">
+        <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="client_nav">
@@ -50,7 +50,7 @@
                                           <th>数量</th>
                                           <th>单位</th>
                                           <th>杂费</th>
-                                          <th></th>
+                                          <th>杂费说明</th>
                                           <th></th>
                                         </thead>
                                         <tbody>
@@ -61,7 +61,7 @@
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.unit}}</td>
                                                 <td>{{item.incidentals}}</td>
-                                                <td></td>
+                                                <td>{{item.incidentalsDesc}}</td>
                                                 <td></td>
                                                 <td  @click="clickShow($index,{
                                                     concrete:'offers'
