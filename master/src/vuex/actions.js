@@ -1345,15 +1345,17 @@ export const deleteInfo = ({ dispatch}, param) => { //删除客户、药材信�
     });
 }
 export const alterInfo = ({ dispatch }, param) => { //修改客户信息
+    console.log(param)
     const data = {
         name:param.name,
         type:param.type,
         category:param.category,
         principal:param.principal,
         bizScope:param.bizScope,
-        tel:param.tel,
+        mainPhone:param.mainPhone,
         email:param.email,
         province:param.province,
+        country:param.country,
         city:param.city,
         address:param.address,
         comments:param.comments,
@@ -2384,13 +2386,41 @@ export const batchUserIntentionAudit = ({ dispatch }, param) => { //批量审核
     })
 }
 
+export const getFilesList = ({ dispatch }, param) => {  //供应商文件列表
+    param.loading = true;
+    var url = apiUrl.clientList+'/customer/file/?'+'&page=' + param.cur + '&pageSize=15';
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+           var file = res.json().result.list;
+           for (var i in file){
+                file[i].show =false;
+           }
+            dispatch(types.FILES_DATA_LIST, file);
+            param.all = res.json().result.pages;
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
     console.log('文件上传');
+    if(param.image_f){param.path+=param.image_f+','}
+    if(param.image_s){param.path+=param.image_s+','}
+    if(param.image_t){param.path+=param.image_t};
     const data = {
-        catagory:param.catagory,
-        type:param.type,
+        fileType:param.fileType,
+        bizType:param.bizType,
         path:param.path,
-        customerId:param.customerId,
+        description:param.description,
+        bizId:param.bizId
     }
     Vue.http({
         method: 'POST',
@@ -2404,7 +2434,7 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
         }
     }).then((res) => {
         console.log('文件添加成功')
-        param.id = res.json().result.id;
+        /*param.id = res.json().result.id;*/
         dispatch(types.ADD_FILES_DATA, param);
     }, (res) => {
         console.log('fail');

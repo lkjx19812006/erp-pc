@@ -28,13 +28,48 @@
                             <label class="editlabel">分类码</label>
                             <input type="text" v-model='param.category' class="form-control edit-input" value="{{param.category}}" /> 
                         </div>
+                         <div class="editpage-input">
+                            <label  class="editlabel">所在国家</label>
+                             <div type="text">
+                                <v-select
+                                  :debounce="250"
+                                  :value.sync="country"
+                                  :on-change="selectProvince"
+                                  :options="initCountrylist"
+                                  placeholder="国家"
+                                  label="cname"
+                                >
+                                </v-select>
+                            </div>
+                          </div>
                         <div class="editpage-input">
                             <label class="editlabel">所在省</label>
-                            <input type="text" v-model='param.province' class="form-control edit-input" value="{{param.province}}" />
+                            <input type="text" v-if="!country.cname" class="form-control edit-input"  placeholder="请先选择一个国家" disabled="disabled" v-model='param.provinceName' value="{{param.provinceName}}" />
+                                <v-select
+                                  :debounce="250"
+                                  :value.sync="province"
+                                  :on-change="selectCity"
+                                  :options="initProvince"
+                                  placeholder="省"
+                                  label="cname"
+                                  v-if="country.cname"
+                                >
+                                </v-select>
+                            <!-- <input type="text" v-model='param.province' class="form-control edit-input" value="{{param.province}}" /> -->
                         </div>
                         <div class="editpage-input">
                             <label class="editlabel">所在市</label>
-                            <input type="text" v-model='param.city' class="form-control edit-input" value="{{param.city}}" />
+                            <input type="text" v-if="!province.cname" class="form-control edit-input"  placeholder="请先选择一个省"  v-model='param.cityName' value="{{param.cityName}}"/>
+                            <v-select
+                              :debounce="250"
+                              :value.sync="city"
+                              :options="initCitylist"
+                              placeholder="市"
+                              label="cname"
+                              v-if="province.cname"
+                            >
+                            </v-select>
+                            <!-- <input type="text" v-model='param.city' class="form-control edit-input" value="{{param.city}}" /> -->
                         </div>
                         <div class="editpage-input">
                             <label class="editlabel">经营范围</label>
@@ -56,7 +91,7 @@
                         </div>
                         <div class="editpage-input">
                             <label class="editlabel">电话</label>
-                            <input type="text" v-model="param.tel" class="form-control edit-input" value="{{param.tel}}" />
+                            <input type="text" v-model="param.mainPhone" class="form-control edit-input" value="{{param.mainPhone}}" />
                         </div>
                         <div class="editpage-input">
                             <label class="editlabel">邮箱</label>
@@ -77,15 +112,27 @@
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <!-- <button type="button" class="btn  btn-confirm" @click="param.link(param,param.show = false)">确定</button> -->
-            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true">确定</button> 
+            <button type="button" class="btn  btn-confirm" @click="confirm()">确定</button> 
         </div>
     </div>
 </template>
 <script>
 import tipsdialogModel  from '../tips/tipDialog'
+import vSelect from '../tools/vueSelect/components/Select'
+import {
+    initCountrylist,
+    initProvince,
+    initCitylist
+} from '../../vuex/getters'
+import {
+    getCountryList,
+    getProvinceList,
+    getCityList
+} from '../../vuex/actions'
 export default {
     components: {
-        tipsdialogModel
+        tipsdialogModel,
+        vSelect
     },
     props: ['param'],
     data() {
@@ -96,11 +143,55 @@ export default {
                 name:"确认修改信息?",
                 callback:this.alertInfo
                 
-              }
+              },
+                province: {
+                  cname: ''
+                },
+                city: {
+                  cname: ''
+                },
+                country:{
+                  cname: ''
+                },
+                countryParam:{
+                  loading:true,
+                  show:false,
+                  color: '#5dc596',
+                  size: '15px',
+                  cur: 1,
+                  all: 7
+                },
+                provinceParam:{
+                  loading:true,
+                  show:false,
+                  color: '#5dc596',
+                  size: '15px',
+                  cur: 1,
+                  all: 7,
+                  country:''
+                },
+                cityParam:{
+                  loading:true,
+                  show:false,
+                  color: '#5dc596',
+                  size: '15px',
+                  cur: 1,
+                  all: 7,
+                  province:''
+                }
         }
     },
     vuex: {
-
+        getters: {
+          initCountrylist,
+          initProvince,
+          initCitylist
+        },
+        actions: {
+          getCountryList,
+          getProvinceList,
+          getCityList
+        }
     },
     route: {
         activate: function(transition) {
@@ -116,7 +207,45 @@ export default {
         alertInfo: function(){
             this.param.show = false;
             this.param.link(this.param);
+        },
+        selectProvince:function(){
+            this.province = '';
+            this.city = '';
+            
+            this.param.province=this.province.cname;
+            this.param.city=this.city.cname;
+            if(this.country!=''&&this.country!=null){
+              this.getProvinceList(this.country);
+            }
+      },
+      selectCity:function(){
+        this.city = '';
+        
+        this.param.city=this.city.cname;
+        if(this.province!=''&&this.province!=null){
+          this.getCityList(this.province);
         }
+
+      },
+      confirm:function(){
+        this.param.country=this.country.id;
+        this.param.countryName=this.country.cname;
+        this.param.province=this.province.id;
+        this.param.provinceName=this.province.cname;
+        this.param.city=this.city.id;
+        this.param.cityName=this.city.cname;
+        this.tipsParam.show=true
+
+      }
+    },
+    created(){
+      if(this.param.country){
+        this.country.cname=this.param.countryName;
+        this.province.cname=this.param.provinceName;
+        this.city.cname=this.param.cityName;
+      }
+      this.getCountryList(this.countryParam);
+
     }
 }
 </script>
@@ -134,7 +263,9 @@ export default {
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
-
+.v-select{
+    width: 90%;
+}
 .edit-content h3 {
     font-size: 20px;
     color: #fa6705;
@@ -202,16 +333,9 @@ export default {
     margin-left: 10px;
     margin-top: 5px;
 }
-.editpage_img {
-    width: 90%;
-}
 
-.editpage_img img {
-    display: inline-block;
-    background: #ccc;
-}
+.client-detailInfo {
+    padding: 0px 30px 20px 30px;
 
-.editpage-image {
-    display: inline-block;
 }
 </style>

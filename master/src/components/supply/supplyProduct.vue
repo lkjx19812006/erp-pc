@@ -58,7 +58,9 @@
                             <input type="text"  placeholder="按产品名称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
                         </dd>
                     </dl>
-
+                    <dl>
+                       <button class="new_btn"  @click="searchProduct()">搜索</button>
+                    </dl>
                </div>
            </div>
         </div>

@@ -39,14 +39,14 @@
                                                 key:'customerList'
                                                 })">删除客户信息</button>
                         </li>
-                        <!--  <li>
-                           <button type="button" class="btn btn-base"  @click="createTrack({
-                                            status:'',
-                                            link:createLabel,
-                                            url:'/customer/insertLabel',
-                                            key:'labels'
-                                            })">新建跟进</button>
-                                                </li> -->
+                        <li>
+                          <button type="button" class="btn btn-base"  @click="createTrack({
+                                           status:'',
+                                           link:createLabel,
+                                           url:'/customer/insertLabel',
+                                           key:'labels'
+                                           })">新建跟进</button>
+                        </li> 
                         <li>
                             <button type="button" class="btn btn-base"  @click="newlabel({
                                              customerId:param.id,
@@ -273,14 +273,16 @@
                     											文件（{{initClientDetail.files.arr.length}}）
                     										</a>
                     										<button type="button" class="btn btn-base pull-right" @click.stop="createfiles({
-                      											 customerId:param.id,
+                      											 bizId:param.id,
                                              id:param.id,
     		                                     show:true,
-                                             type:'',
+                                             title:'新建文件',
+                                             fileType:'',
+                                             bizType:'',
+                                             description:'',
                                              path:'',
-                                             catagory:'',
-    		                                     link:uploadFiles,
-    		                                     url:'/customer/file',
+                                             link:uploadFiles,
+                                             url:'/customer/file/',
     		                                     key:'files'
                       											})">新建</button>
                           				</h4>
@@ -291,16 +293,18 @@
                                       	<thead>
                                       		<th>文件路径</th>
                                       		<th>文件类型</th>
-                                      		<th>文件分类</th>
+                                      		<th>所属文件</th>
+                                          <th>描述</th>
                                       		<th></th>
                                       	</thead>
 		                                    <tbody>
 		                                         <tr v-for="item in initClientDetail.files.arr">
 		                                            <!-- <td><img v-bind:src="item.path" /></td> -->
-                                                <td><img v-bind:src="item.path" v-if="item.type=='图片'" style='float:left; margin-left:15px;' />
+                                                <td><img v-bind:src="item.path" v-if="item.fileType=='image'" style='float:left; margin-left:15px;' />
                                                     <img style='float:left; margin-left:15px;' src="/static/images/pdf.png" v-else></td>
-		                                            <td>{{item.type}}</td>
-		                                            <td>{{item.catagory}}</td>
+		                                            <td>{{item.fileType}}</td>
+		                                            <td>{{item.bizType}}</td>
+                                                <td>{{item.description}}</td>
                                                 <td  @click="clickShow($index,{
                                                     concrete:'files'
                                                     })">
@@ -888,16 +892,19 @@
 				                                                   key:'products',
 				                                                   headline:'clientDetail'
 				                                                   })">编辑</dt>
-				                                               <!-- <dt @click="specDelete({
-				                                                   id:item.id,
-				                                                   sub:$index,
-				                                                   show:true,
-				                                                   title:'产品',
-				                                                   link:addrDel,
-				                                                   url:'/customer/deleteAddress/',
-				                                                   key:'products',
-				                                                   headline:'clientDetail'
-				                                                   })">删除</dt> -->
+				                                                <dt @click="createfiles({
+                                                             bizId:param.id,
+                                                             id:param.id,
+                                                             show:true,
+                                                             title:'新建产品文件',
+                                                             fileType:'',
+                                                             bizType:'',
+                                                             description:'',
+                                                             path:'',
+                                                             link:uploadFiles,
+                                                             url:'/customer/file/',
+                                                             key:'files'
+                                                           })">上传产品文件</dt> 
 				                                           </dl>
 				                                        </div>
 		                                            </td>
@@ -933,7 +940,7 @@
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>电话</label>
-                                    <input type="text" class="form-control" v-model="initClientDetail.tel" value="{{initClientDetail.tel}}" disabled="disabled"/>
+                                    <input type="text" class="form-control" v-model="initClientDetail.mainPhone" value="{{initClientDetail.mainPhone}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
@@ -1155,7 +1162,6 @@ export default {
       },
       createfiles:function(initBreedDetail){
       	 this.cfilesParam = initBreedDetail;
-         console.log(this.cfilesParam.path)
          this.$broadcast('getImageData');
       },
       createTracking:function(param){

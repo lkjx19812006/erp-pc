@@ -10,7 +10,7 @@
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">部门客户</div>
-            <div class="right col-xs-4">
+            <div class="right">
                 <button class="new_btn transfer" @click="clientTransfer({
                     arr:[],
                     name:'test',
@@ -19,7 +19,7 @@
                     show:true
                     })">划转</button>
               <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
-              <button class="new_btn transfer" @click="clientTransferSupplier()">抽取供应商</button>
+              <button class="new_btn transfer" @click="clientTransferSupplier()">提取供应商</button>
               <button class="new_btn transfer" @click="createCustomer({
                                         show:true,
                                         loading:false,
@@ -27,7 +27,7 @@
                                         category:'',
                                         type:'',
                                         name:'',
-                                        tel:'',
+                                        mainPhone:'',
                                         principal:'',
                                         bizScope:'',
                                         province:'',
@@ -118,7 +118,7 @@
                         <td>{{item.employeeName}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
-                        <td>{{item.tel}}</td>
+                        <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}</td>
                         <td>{{item.phoneCity}}</td>
                         <td>{{item.email}}</td>
@@ -141,10 +141,14 @@
                                                 category:item.category,
                                                 principal:item.principal,
                                                 bizScope:item.bizScope,
-                                                tel:item.tel,
+                                                mainPhone:item.mainPhone,
                                                 email:item.email,
+                                                country:item.country,
+                                                countryName:item.countryName,
                                                 province:item.province,
+                                                provinceName:item.provinceName,
                                                 city:item.city,
+                                                cityName:item.cityName,
                                                 address:item.address,
                                                 comments:item.comments,
                                                 link:alterInfo,

@@ -82,7 +82,7 @@
                         <td>{{item.employeeName}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
-                        <td>{{item.tel}}</td>
+                        <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}</td>
                         <td>{{item.phoneCity}}</td>
                         <td>{{item.email}}</td>
@@ -105,10 +105,14 @@
                                                 category:item.category,
                                                 principal:item.principal,
                                                 bizScope:item.bizScope,
-                                                tel:item.tel,
+                                                mainPhone:item.mainPhone,
                                                 email:item.email,
+                                                country:item.country,
+                                                countryName:item.countryName,
                                                 province:item.province,
+                                                provinceName:item.provinceName,
                                                 city:item.city,
+                                                cityName:item.cityName,
                                                 address:item.address,
                                                 comments:item.comments,
                                                 link:alterInfo,

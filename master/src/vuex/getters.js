@@ -103,6 +103,11 @@ export const initCustomerlist = (state) => {
 export const initProductlist = (state) => {
     return parseJson(state.table.basicBaseList.productList);
 }
+/*供应商文件*/
+export const initFileslist = (state) => {
+    return parseJson(state.table.basicBaseList.filesList);
+}
+/*---end---*/
 export const initClientDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.clientDetail));
 }

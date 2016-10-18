@@ -39,7 +39,7 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>电话</label>
-                                    <input type="text" class="form-control" maxlength="11" v-model="customerData.tel" />
+                                    <input type="text" class="form-control" maxlength="11" v-model="customerData.mainPhone" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>邮箱</label>
