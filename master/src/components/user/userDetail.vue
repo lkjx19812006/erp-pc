@@ -103,7 +103,7 @@
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
-                                                <td>{{item.validate | audit}}</td>
+                                                <td>{{item.validate}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td  @click="clickShow($index,{
                                                   concrete:'intention'

@@ -54,7 +54,11 @@
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">会员类型</label>
-                       <input type="text" v-model="param.userType" class="form-control edit-input" value="{{initUserDetail.userType}}" />
+                       <select class="form-control edit-input"  v-model="param.userType" value="{{initUserDetail.userType}}">
+                           <option value="0">个人账户</option>
+                           <option value="1">企业账户</option>
+                      </select>
+                      <!--  <input type="text" v-model="param.userType" class="form-control edit-input" value="{{initUserDetail.userType}}" /> -->
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">备注</label>

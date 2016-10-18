@@ -209,10 +209,11 @@ export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
     });
 };
 
-export const deleteShowStatue = ({ dispatch }, sub,id) => { //删除枚举
+export const deleteShowStatue = ({ dispatch }, param) => { //删除枚举
+    console.log(param)
     Vue.http({
         method: 'DELETE',
-        url: apiUrl.dataBaseList + '/' + id,
+        url: apiUrl.dataBaseList + '/' + param.id,
         emulateHTTP: false,
         emulateJSON: false,
         headers: {
@@ -221,7 +222,7 @@ export const deleteShowStatue = ({ dispatch }, sub,id) => { //删除枚举
         }
     }).then((res) => {
         console.log('删除成功')
-        dispatch(types.DELETE_SHOW_STATUE, sub);
+        dispatch(types.DELETE_SHOW_STATUE, param);
     }, (res) => {
         console.log('fail');
     });
@@ -547,7 +548,7 @@ export const alterCompany = ({ dispatch }, param) => { //修改企业联系人
     })
 }
 
-export const deleteCompanyContact = ({ dispatch }, param) => { //修改企业联系人
+export const deleteCompanyContact = ({ dispatch }, param) => { //删除企业联系人
   const alterdata = {
     status:0,
     id:param.id
@@ -999,6 +1000,9 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         }
         if(search=='province'&&param[search]!==''){
             clienturl += '&province='+param.province
+        }
+        if(search=='creditLevel'&&param[search]!==''){
+            clienturl += '&creditLevel='+param.creditLevel
         }
         if(search=='city'&&param[search]!==''&&param[search]!==undefined){
             clienturl += '&city='+param.city
