@@ -55,6 +55,7 @@ export const PRODUCT_DATA = 'PRODUCT_DATA' // 供应商产品列表
 
 
 export const INTENTION_LIST_DATA ='INTENTION_LIST_DATA'  //意向数据列表
+export const SUPPLY_DEMAND_DATA ='SUPPLY_DEMAND_DATA'  //意向数据列表
 export const INTENTION_DETAIL_DATA ='INTENTION_DETAIL_DATA'  //意向详情
 export const INTENTION_UP_DOWN ='INTENTION_UP_DOWN'  //意向批量上下架
 export const OFFER_LIST_DATA ='OFFER_LIST_DATA'  //报价数据列表

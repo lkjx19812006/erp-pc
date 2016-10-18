@@ -29,6 +29,14 @@
                                 <input type="text" class="edit-input" v-model="param.unit"/>
                             </div>
                             <div class="editpage-input">
+                                <label class="editlabel">商品来源类型</label>
+                                <input type="text" class="edit-input" v-model="param.sourceType"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">品质</label>
+                                <input type="text" class="edit-input" v-model="param.quality"/>
+                            </div>
+                            <div class="editpage-input">
                                 <label class="editlabel">杂费</label>
                                 <input type="text" class="edit-input" v-model="param.incidentals"/>
                             </div>
@@ -46,12 +54,38 @@
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">国家</label>
-                                <input type="text" class="edit-input" v-model="param.country"/>
+                                <div type="text" class="edit-input">
+                                    <v-select
+                                       :debounce="250"
+                                       :value.sync="country"
+                                       :on-change="selectProvince"
+                                       :options="initCountrylist"
+                                       placeholder="国家"
+                                       label="cname"
+                                      >
+                                     </v-select>
+                               </div>
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">市</label>
-                                <input type="text" class="edit-input" v-model="param.city"/>
+                                <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                                <div v-if="province.cname" type="text" class="edit-input">
+                                    <v-select
+                                         :debounce="250"
+                                         :value.sync="city"
+                                         :on-change="selectDistrict"
+                                         :options="initCitylist"
+                                         placeholder="市"
+                                         label="cname"
+                                    >
+                                    </v-select>
+                                </div>
                             </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">收货人地址</label>
+                                <input type="text" class="edit-input" v-model="param.consigneeAddr"/>
+                            </div>
+
                             
                         </div>
                         <div class="editpageright">
@@ -71,6 +105,14 @@
                                 <input type="text" class="edit-input" v-model="param.spec"/>
                             </div>
                             <div class="editpage-input">
+                                <label class="editlabel">商品来源ID</label>
+                                <input type="text" class="edit-input" v-model="param.sourceId"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">产地</label>
+                                <input type="text" class="edit-input" v-model="param.location"/>
+                            </div>
+                            <div class="editpage-input">
                                 <label class="editlabel">杂费说明</label>
                                 <input type="text" class="edit-input" v-model="param.incidentalsDesc"/>
                             </div>
@@ -88,11 +130,36 @@
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">省</label>
-                                <input type="text" class="edit-input" v-model="param.province"/>
+                                <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                                <div v-if="country.cname" type="text" class="edit-input">
+                                    <v-select
+                                      :debounce="250"
+                                      :value.sync="province"
+                                      :on-change="selectCity"
+                                      :options="initProvince"
+                                      placeholder="省"
+                                      label="cname"
+                                    >
+                                    </v-select>
+                            </div>
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">区</label>
-                                <input type="text" class="edit-input" v-model="param.district"/>
+                                <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
+                                <div v-if="city.cname" type="text" class="edit-input">
+                                    <v-select
+                                          :debounce="250"
+                                          :value.sync="district"
+                                          :options="initDistrictlist"
+                                          placeholder="区"
+                                          label="cname"
+                                    >
+                                    </v-select>
+                                 </div>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">货币类型</label>
+                                <input type="text" class="edit-input" v-model="param.currency"/>
                             </div>
                         </div>
                     </div>
@@ -106,22 +173,107 @@
     </div>
 </template>
 <script>
+import vSelect from '../tools/vueSelect/components/Select'
 import pressImage from '../../components/imagePress'
+import {
+    initCountrylist,
+    initProvince,
+    initCitylist,
+    initDistrictlist, 
+} from '../../vuex/getters'
+import {
+    getCountryList,
+    getProvinceList,
+    getCityList,
+    getDistrictList,
+    createOrder
+} from '../../vuex/actions'
 export default {
     components: {
+        vSelect,
         pressImage
     },
     props: ['param'],
     data() {
-        return {}
+        return {
+            countryParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7
+            },
+            country:{
+              cname:'',
+            },
+            province:{
+              cname:''
+            },
+            city:{
+              cname:''
+            },
+            district:{
+              cname:''
+            },
+        }
+    },
+    vuex: {
+        getters:{
+            initCountrylist,
+            initProvince,
+            initCitylist,
+            initDistrictlist, 
+        },
+        actions:{
+            getCountryList,
+            getProvinceList,
+            getCityList,
+            getDistrictList,
+            createOrder,
+        }
     },
     methods:{
+        
+        selectProvince:function(){
+            console.log('selectProvince');
+            this.province = '';
+            this.city = '';
+            this.district = '';
+            if(this.country!=''&&this.country!=null){
+              this.getProvinceList(this.country);
+            }
+
+        },
+
+        selectCity:function(){
+            this.city = '';
+            this.district = '';
+            if(this.province!=''&&this.province!=null){
+              this.getCityList(this.province);
+            }
+
+        },
+        selectDistrict:function(){
+            this.district = '';
+            if(this.city!=''&&this.city!=null){
+              this.getDistrictList(this.city);
+            }
+
+        },
+        
         confirm:function(){
+            this.param.country = this.country.id;
+            this.param.province = this.province.id;
+            this.param.city = this.city.id;
+            this.param.district = this.district.id;
+            console.log(this.param);
+            this.createOrder(this.param);
 
         }
     },
     created(){
-        console.log('123');
+        this.getCountryList(this.countryParam);
         console.log(this.param);
     }
 }
@@ -190,7 +342,6 @@ export default {
 
 .edit-input {
     height: 36px;
-    line-height: 36px;
     width: 90%;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -215,6 +366,7 @@ export default {
     border-top: 1px solid #ddd;
     text-align: right;
     padding: 10px 20px;
+    bottom:5px;
     margin-top: 50px;
 }
 

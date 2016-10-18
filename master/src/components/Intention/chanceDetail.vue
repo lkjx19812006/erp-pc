@@ -45,7 +45,8 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>会员</th>
+                                          <th>会员名</th>
+                                          <th>联系方式</th>
                                           <th>单价</th>
                                           <th>数量</th>
                                           <th>单位</th>
@@ -56,7 +57,8 @@
                                         <tbody>
                                              <tr v-for="item in initIntentionDetail.offers.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.userId}}</td>
+                                                <td>{{item.userName}}</td>
+                                                <td>{{item.userPhone}}</td>
                                                 <td>{{item.price}}</td>
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.unit}}</td>
@@ -97,7 +99,7 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>会员</th>
+                                          <th>会员名</th>
                                           <th>备注</th>
                                           <th>回复</th>
                                           <th>回复人</th>
@@ -108,7 +110,7 @@
                                         <tbody>
                                              <tr v-for="item in initIntentionDetail.msgs.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.userId}}</td>
+                                                <td>{{item.fullname}}</td>
                                                 <td>{{item.comments}}</td>
                                                 <td>{{item.reply}}</td>
                                                 <td>{{item.replier}}</td>
@@ -331,7 +333,7 @@ export default {
             orderParam:{
                 show:false,
                 type:this.initIntentionDetail.type,
-                customer:'',
+                customer:this.initIntentionDetail.customerId,
                 sample:'',
                 intl:0,
                 incidentals:'',
@@ -353,8 +355,8 @@ export default {
                 title:'',     //订单商品标题
                 breedId:this.initIntentionDetail.breedId,   
                 breedName:this.initIntentionDetail.breedName,
-                quality:this.initIntentionDetail.quality,
-                location:this.initIntentionDetail.location,
+                quality:'',
+                location:'',
                 spec:'',
                 price:'',
                 unit:'',
@@ -391,13 +393,15 @@ export default {
           console.log("创建订单");
           console.log(item.incidentals);
           this.orderParam.show = true;
-          this.orderParam.customer = item.customerId;
+          //this.orderParam.customer = item.customerId;
           this.orderParam.spec = item.spec;
           this.orderParam.price = item.price;
           this.orderParam.unit = item.unit;
           this.orderParam.number = item.number;
           this.orderParam.incidentals = item.incidentals;
           this.orderParam.incidentalsDesc = item.incidentalsDesc;
+          this.orderParam.quality = item.quality;
+          this.orderParam.location = item.location;
       }
     },
     created(){

@@ -392,7 +392,7 @@ export default {
           },
           tag:['真空包装','瓦楞纸箱','编织袋','积压包'],
             country:{
-              cname:''
+              cname:'',
             },
             province:{
               cname:''
