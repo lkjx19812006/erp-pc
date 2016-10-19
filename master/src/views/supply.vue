@@ -12,20 +12,24 @@
   <div  v-if="$route.path.split('=')[1]==2">
     <supply-product></supply-product>
   </div>
-
+  <!-- 产品文件列表 -->
+  <div  v-if="$route.path.split('=')[1]==3">
+    <product-files></product-files>
+  </div>
 
 </template>
 <script>
   import supplyList from '../components/supply/supplyList'
   import supplyCerti from '../components/supply/supplyCerti'
   import supplyProduct from '../components/supply/supplyProduct'
-
+  import productFiles from  '../components/supply/productFiles'
 
   export default {
     components: {
       supplyList,
       supplyCerti,
-      supplyProduct
+      supplyProduct,
+      productFiles
     }
 
   }

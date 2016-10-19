@@ -71,7 +71,7 @@
       <table class="table table-hover table_color table-striped " v-cloak>
         <thead>
             <tr>
-              <th>类型</th>
+              <th>产品类型</th>
               <th>品种ID</th>
               <th>产品名称</th>
               <th>产品质量</th>
@@ -93,17 +93,12 @@
         <tr v-for="item in initProductlist">
           <td>{{item.type}}</td>
           <td>{{item.breedId}}</td>
-          <td>{{item.name}}</td>
-       <!--    <td class="underline"  @click="clickOn({
+          <td class="underline"  @click="clickOn({
                              id:item.id,
                              sub:$index,
                              show:true,
-                             name:item.name,
-                             link:alterInfo,
-                             url:'/customer/',
-                             key:'productList'
-                             })"><img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>{{item.name}}</td> -->
-          <!-- 上面这个img显示新客户图标 -->
+                             name:item.name
+                             })">{{item.name}}</td>
           <td>{{item.quality}}</td>
           <td>{{item.location}}</td>
           <td>{{item.spec}}</td>
@@ -152,12 +147,11 @@
 </template>
 <script>
   import pagination from '../pagination'
-  import detailModel from '../clientRelate/clientDetail'
+  import detailModel from '../supply/productDetail'
   import createModel  from '../supply/createProduct'
   import alterinfoModel  from '../supply/createProduct'
   import searchModel  from  '../clientRelate/searchModel'
   import {
-    initproductList,
     initProductlist
   } from '../../vuex/getters'
   import {
@@ -178,7 +172,6 @@
     },
     vuex: {
       getters: {
-        initproductList,
         initProductlist
       },
       actions: {
@@ -200,12 +193,7 @@
           link:'/customer/queryproduct',
           name:'',
           type:'',
-          status:''/*,
-          bizScope:'',
-          provinceName:'',
-          province:'',
-          city:'',
-          cityName:''*/
+          status:''
         },
         changeParam: {
           show: false
@@ -227,9 +215,9 @@
       }
     },
     methods: {
-      clickOn: function(initproductList) {
-        this.changeParam = initproductList;
-        this.getClientDetail(this.changeParam);
+      clickOn: function(initProductlist) {
+        this.changeParam = initProductlist;
+       /* this.getProductDetail(this.changeParam);*/
       },
       createCustomer:function(initProductlist){
         this.createParam = initProductlist;
@@ -244,8 +232,8 @@
           this.$store.state.table.basicBaseList.productList[id].show=true;
         }
       },
-      modifySupply:function(initproductList){
-        this.alterParam =initproductList;
+      modifySupply:function(initProductlist){
+        this.alterParam =initProductlist;
       },
       searchProduct:function(){
           this.getProductList(this.loadParam);

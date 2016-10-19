@@ -69,7 +69,7 @@
                         <th>分类</th>
                         <th>客户来源</th>
                         <th>客户等级</th>
-                        <th>名称</th>
+                        <th>客户名称</th>
                         <th>分类码</th>
                         <!-- <th>所属分类</th> -->
                         <th>所属业务员</th>
@@ -254,9 +254,7 @@ export default {
                 name:''
             },
             searchParam:{
-                show:false,
-
-
+                show:false
             },
             transferParam:{
                 show:false,
@@ -428,7 +426,11 @@ export default {
 .table>tbody>tr>td{
     max-width: 300px;
     white-space: normal;
-    min-width: 100px;
+    word-wrap: break-word;
+    /* word-break:break-all; */
+}
+.component_action{
+    right: 30px;
 }
 .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

@@ -1,30 +1,35 @@
 <template>
-     <!-- 我的意向 -->
+     <!-- 会员意向 -->
      <div class="myOrder" v-if="$route.path.split('=')[1]==0">
+         <user-intention></user-intention>
+     </div>
+     <!-- 我的意向 -->
+     <div class="myOrder" v-if="$route.path.split('=')[1]==1">
          <my-intention></my-intention>
      </div>
       <!-- 部门意向 -->
-     <div class="myOrder" v-if="$route.path.split('=')[1]==1">
+     <div class="myOrder" v-if="$route.path.split('=')[1]==2">
         <org-intention></org-intention>
      </div>
      <!-- 我的报价 -->
-     <div class="myOrder" v-if="$route.path.split('=')[1]==2">
+     <div class="myOrder" v-if="$route.path.split('=')[1]==3">
         <my-offer></my-offer>
      </div>
      <!-- 部门报价 -->
-     <div class="myOrder" v-if="$route.path.split('=')[1]==3">
+     <div class="myOrder" v-if="$route.path.split('=')[1]==4">
         <org-offer></org-offer>
      </div>
      <!-- 我的留言 -->
-     <div class="myOrder" v-if="$route.path.split('=')[1]==4">
+     <div class="myOrder" v-if="$route.path.split('=')[1]==5">
         <my-msg></my-msg>
      </div>
      <!-- 部门留言 -->
-     <div class="myOrder" v-if="$route.path.split('=')[1]==5">
+     <div class="myOrder" v-if="$route.path.split('=')[1]==6">
         <org-msg></org-msg>
      </div>
 </template>
 <script>
+import userIntention from '../components/Intention/intentionList/userIntention.vue'
 import myIntention from '../components/Intention/intentionList/myIntention.vue'
 import orgIntention from '../components/Intention/intentionList/orgIntention.vue'
 import myOffer from '../components/Intention/intentionList/myOffer.vue'
@@ -39,7 +44,8 @@ import {
 	
 } from '../vuex/actions'
 export default {
-    components: {   
+    components: { 
+        userIntention,  
         myIntention,
         orgIntention,
         myOffer,

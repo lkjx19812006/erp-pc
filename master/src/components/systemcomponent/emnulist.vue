@@ -52,15 +52,6 @@
                  <th></th>
               </tr>
             </thead>
-            <thead class="space">
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
             <tbody>
               <tr v-for="item in initSystemlist">
                 <td>{{item.code }}</td>

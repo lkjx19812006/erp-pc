@@ -45,8 +45,7 @@
                                            id:param.id,
                                            sub:param.sub,
                                            show:true,
-                                           link:customerTransferBlacklist,
-                                           url:'/customer/setSupplier',
+                                           link:'/customer/setSupplier',
                                            title:'客户提取为供应商备注'
                                            })">提取为供应商</button>
                         </li>
@@ -1136,7 +1135,14 @@ export default {
           this.deleteParam = initBreedDetail;
       },
       clientTransferSupplier:function(initBreedDetail){
+        console.log(initBreedDetail)
           this.auditParam=initBreedDetail;
+          this.auditParam.supplier=true;
+          this.auditParam.arr=[];
+          if(initBreedDetail.id){
+            this.auditParam.arr.push(initBreedDetail.id);
+          }
+          this.auditParam.callback=this.callback;
       },
       updateSpec:function(initBreedDetail){
       	 this.updateParam = initBreedDetail;

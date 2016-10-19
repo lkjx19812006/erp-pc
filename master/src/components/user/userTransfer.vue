@@ -17,10 +17,9 @@
       <form novalidate>
         <div class="edit-model">
           <section class="editsection" v-cloak>
-
             <div style="margin-top:20px;margin-left:30px;margin-bottom:15px;">
-              <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
-              <h4 style="display:inline">客户信息</h4>
+               <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
+               <h4 style="display:inline">客户信息</h4>
             </div>
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">

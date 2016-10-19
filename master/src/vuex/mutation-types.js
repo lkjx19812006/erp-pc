@@ -7,6 +7,7 @@ export const CHANGE_LINECHARTS = 'CHANGE_LINECHARTS' //折线图表
 export const CHANGE_PIECHARTS = 'CHANGE_PIECHARTS' //饼状图
 export const ORDER_TABLE = 'ORDER_TABLE' //订单
 export const ORDER_ADD_DATA = 'ORDER_ADD_DATA' //创建订单
+export const ORDER_UPDATE_DATA = 'ORDER_UPDATE_DATA' //修改订单
 export const ORDER_DETAIL_DATA = 'ORDER_DETAIL_DATA' //订单详情
 export const SYSTEM_DATA = 'SYSTEM_DATA' //系统数据
 export const PROVINCE_DATA = 'PROVINCE_DATA' //省市区列表数据
@@ -55,13 +56,13 @@ export const PRODUCT_DATA = 'PRODUCT_DATA' // 供应商产品列表
 export const CUSTOMER_TRANSFER='CUSTOMER_TRANSFER' //客户划转
 
 
-
 export const INTENTION_LIST_DATA ='INTENTION_LIST_DATA'  //意向数据列表
 export const SUPPLY_DEMAND_DATA ='SUPPLY_DEMAND_DATA'  //意向数据列表
 export const INTENTION_DETAIL_DATA ='INTENTION_DETAIL_DATA'  //意向详情
 export const INTENTION_UP_DOWN ='INTENTION_UP_DOWN'  //意向批量上下架
 export const OFFER_LIST_DATA ='OFFER_LIST_DATA'  //报价数据列表
 export const MSG_LIST_DATA ='MSG_LIST_DATA'  //留言数据列表
+export const MSG_UPDATE_DATA ='MSG_UPDATE_DATA'  //修改留言信息
 export const INTENTION_DATA = 'INTENTION_DATA'  // 新增意向以及机会划转为意向
 export const UPDATA_INTENTION_DATA = 'UPDATA_INTENTION_DATA' //修改意向
 export const INTENTION_OFFER_DETAIL = 'INTENTION_OFFER_DETAIL' //意向报价详情

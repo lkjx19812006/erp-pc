@@ -36,7 +36,7 @@
                         <th>分类</th>
                         <th>客户来源</th>
                         <th>客户等级</th>
-                        <th>名称</th>
+                        <th>客户名称</th>
                         <th>分类码</th>
                         <!-- <th>所属分类</th> -->
                         <th>所属业务员</th>
@@ -395,6 +395,8 @@ export default {
 .table>tbody>tr>td{
     max-width: 300px;
     white-space: normal;
+    word-wrap: break-word;
+    /* word-break: inherit; */
 }
 .checkbox_unselect{
     background-image: url(/static/images/unselect.png);
@@ -406,6 +408,9 @@ export default {
     margin: auto;
     text-align: center;
     background-position: 5px;
+}
+.component_action{
+    right: 30px;
 }
 .checkbox_select{
     background-image: url(/static/images/selected.png);
