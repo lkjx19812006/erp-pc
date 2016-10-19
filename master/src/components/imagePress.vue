@@ -4,7 +4,7 @@
             <input type="file" @change="previewImg" class="input_image" name="photo" accept="{{type}}">
             <img v-bind:src="image" class="image_show" v-if="imageShow&&!value">
             <img v-bind:src="value" class="image_show" v-if="imageShow&&value">
-            <img src="../../static/images/close.png" v-show="close" @click="delImage" class="close_image">
+            <img src="../../static/images/close.png" v-show="value" @click="delImage" class="close_image">
             <div v-show="!imageShow">
                 <div>{{fileName}}</div>
                 <input type="button" value="重新选择文件" class="btn btn-default select_button">

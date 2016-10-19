@@ -543,7 +543,7 @@ const mutations = {
           source:4,
           sourceType:'业务录入',
           tel:data.tel,
-          type:data.type, 
+          type:data.type,
           typeDesc:data.typeDesc,
           show: false
         })
@@ -830,10 +830,19 @@ const mutations = {
     },
 
     [UPDATE_TRACKING_DATA](state,data){     //更新跟进
-        state.userDetail.tracking.arr[data.index].trackingWay = data.trackingWay;
-        state.userDetail.tracking.arr[data.index].comments = data.comments;
-        state.userDetail.tracking.arr[data.index].contactNo = data.contactNo;
-        state.userDetail.tracking.arr[data.index].type = data.type;
+        if(state.userDetail.tracking.arr[data.index]){
+          state.userDetail.tracking.arr[data.index].trackingWay = data.trackingWay;
+          state.userDetail.tracking.arr[data.index].comments = data.comments;
+          state.userDetail.tracking.arr[data.index].contactNo = data.contactNo;
+          state.userDetail.tracking.arr[data.index].type = data.type;
+        }
+        if(state.clientDetail.trackings.arr[data.index]){
+          state.clientDetail.trackings.arr[data.index].trackingWay = data.trackingWay;
+          state.clientDetail.trackings.arr[data.index].comments = data.comments;
+          state.clientDetail.trackings.arr[data.index].contactNo = data.contactNo;
+          state.clientDetail.trackings.arr[data.index].type = data.type;
+        }
+
     },
 
     [ADD_TRACKING_DATA](state,data){     //增加跟进
@@ -848,6 +857,7 @@ const mutations = {
         temp.show = false;
         temp.id=data.id;
         state.userDetail.tracking.arr.push(temp);
+        state.clientDetail.trackings.arr.push(temp);
     },
 
 
