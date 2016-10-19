@@ -88,38 +88,41 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
 
     console.log(data);
     
-    /*const body = {
+    const body = {
         type:data.type,
-        customer:data.customer,
+        sourceType:data.sourceType,
         sample:data.sample,
         intl:data.intl,
+        customer:data.customer,
         incidentals:data.incidentals,
         incidentalsDesc:data.incidentalsDesc,
-        preferential:data.preferential,   
-        preferentialDesc:data.preferentialDesc,  
-        currency:data.currency,     
-        consignee:data.consignee,    
+        preferential:data.preferential,
+        preferentialDesc:data.preferentialDesc,
+        currency:data.currency,
+        consignee:data.consignee,
         consigneePhone:data.consigneePhone,
-        zipCode:data.zipCode,     
+        zipCode:data.zipCode,
         country:data.country,
         province:data.province,
         city:data.city,
         district:data.district,
         consigneeAddr:data.consigneeAddr,
-        comments:data.comments, 
-        sourceType:data.sourceType,     
-        sourceId:data.sourceId,     
-        title:data.title,     
-        breedId:data.breedId,   
-        brredName:data.breedName,
-        quality:data.quality,
-        location:data.location,
-        spec:data.spec,
-        price:data.price,
-        unit:data.unit,
-        number:data.number 
-    }*/
-    const body = {
+        comments:data.comments,
+        goods:[{
+            sourceType:data.goods[0].sourceType,
+            sourceId:data.goods[0].sourceId,
+            title:data.goods[0].title,
+            breedId:data.goods[0].breedId,
+            brredName:data.goods[0].breedName,
+            quality:data.goods[0].quality,
+            location:data.goods[0].location,
+            spec:data.goods[0].spec,
+            price:data.goods[0].price,
+            unit:data.goods[0].unit,
+            number:data.goods[0].number
+        }]
+    }
+    /*const body = {
         type:1,
         sourceType:1,
         sample:1,
@@ -152,7 +155,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             unit:'kg',
             number:12
         }]
-    }
+    }*/
     console.log(body);
     Vue.http({
         method: 'POST',
@@ -2240,6 +2243,7 @@ export const updateMsg = ({ dispatch }, param) => {  //修改留言信息
         }
     }).then((res) => {
         console.log('修改成功')
+        dispatch(types.MSG_UPDATE_DATA, param);
         param.show = false;
         
     }, (res) => {

@@ -36,7 +36,8 @@
                         	<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
                         </th>
                         <th>意向ID</th>	
-                        <th>会员</th>
+                        <th>报价会员</th>
+                        <th>发布意向客户</th>
                         <th>单价</th>
                         <th>数量</th>
                         <th>总价</th>
@@ -51,6 +52,7 @@
                         </td>
                         <td>{{item.intentionId}}</td>
                         <td>{{item.userName}}</td>
+                        <td>{{item.customerName}}</td>
                         <td>{{item.price}}</td> 
                         <td>{{item.number}}</td> 
                         <td>{{item.total}}</td> 
@@ -120,9 +122,10 @@ export default {
             },
             orderParam:{
                 show:false,
+                key:'offerList',
                 type:'',
                 customer:'',
-                sample:'',
+                sample:0,
                 intl:0,
                 incidentals:'',
                 incidentalsDesc:'',
@@ -138,17 +141,20 @@ export default {
                 district:'',
                 consigneeAddr:'',
                 comments:'', 
-                sourceType:2,     //商品来源类型
-                sourceId:'',     //商品来源ID
-                title:'',     //订单商品标题
-                breedId:'',   
-                breedName:'',
-                quality:'',
-                location:'',
-                spec:'',
-                price:'',
-                unit:'',
-                number:''
+                sourceType:2,        
+                goods:[{
+                  sourceType:2,   //商品来源类型
+                  sourceId:'',    //商品来源ID
+                  title:'',       //订单商品标题
+                  breedId:'',
+                  brredName:'',
+                  quality:'',
+                  location:'',
+                  spec:'',
+                  price:'',
+                  unit:'',
+                  number:''
+                }]
 
             },
             checked:false

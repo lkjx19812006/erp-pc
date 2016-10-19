@@ -61,6 +61,7 @@ export const INTENTION_DETAIL_DATA ='INTENTION_DETAIL_DATA'  //意向详情
 export const INTENTION_UP_DOWN ='INTENTION_UP_DOWN'  //意向批量上下架
 export const OFFER_LIST_DATA ='OFFER_LIST_DATA'  //报价数据列表
 export const MSG_LIST_DATA ='MSG_LIST_DATA'  //留言数据列表
+export const MSG_UPDATE_DATA ='MSG_UPDATE_DATA'  //修改留言信息
 export const INTENTION_DATA = 'INTENTION_DATA'  // 新增意向以及机会划转为意向
 export const UPDATA_INTENTION_DATA = 'UPDATA_INTENTION_DATA' //修改意向
 export const INTENTION_OFFER_DETAIL = 'INTENTION_OFFER_DETAIL' //意向报价详情

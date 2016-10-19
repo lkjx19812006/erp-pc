@@ -10,6 +10,7 @@
         <div class="edit-model">
             <form name="editOrderinfo" action="javascript:void(0)">
                 <section class="editsection">
+                    <h3>订单信息</h3>
                     <div class="editpage">
                         <div class="editpageleft">
                             <div class="editpage-input">
@@ -20,22 +21,7 @@
                                     <option value="1">是</option>
                                 </select>
                             </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">单价</label>
-                                <input type="text" class="edit-input" v-model="param.price"/>
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">单位</label>
-                                <input type="text" class="edit-input" v-model="param.unit"/>
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">商品来源类型</label>
-                                <input type="text" class="edit-input" v-model="param.sourceType"/>
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">品质</label>
-                                <input type="text" class="edit-input" v-model="param.quality"/>
-                            </div>
+                            
                             <div class="editpage-input">
                                 <label class="editlabel">杂费</label>
                                 <input type="text" class="edit-input" v-model="param.incidentals"/>
@@ -48,10 +34,7 @@
                                 <label class="editlabel">收货人</label>
                                 <input type="text" class="edit-input" v-model="param.consignee"/>
                             </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">标题</label>
-                                <input type="text" class="edit-input" v-model="param.title"/>
-                            </div>
+                            
                             <div class="editpage-input">
                                 <label class="editlabel">国家</label>
                                 <div type="text" class="edit-input">
@@ -85,8 +68,15 @@
                                 <label class="editlabel">收货人地址</label>
                                 <input type="text" class="edit-input" v-model="param.consigneeAddr"/>
                             </div>
-
-                            
+                            <div class="editpage-input">
+                                <label class="editlabel">货币类型</label>
+                                <input type="text" class="edit-input" v-model="param.currency"/>
+                            </div>
+                            <div class="editpage-input">
+                           <label class="editlabel">备注</label>
+                           <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
+                           <textarea v-model='param.comments' class="form-control" style="width:190%;overflow:auto;word-break:break-all" rows="5"></textarea>
+                    </div>
                         </div>
                         <div class="editpageright">
                             <div class="editpage-input">
@@ -95,22 +85,6 @@
                                     <option value="0">否</option>
                                     <option value="1">是</option>
                                 </select>
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">数量</label>
-                                <input type="text" class="edit-input" v-model="param.number"/>
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">规格</label>
-                                <input type="text" class="edit-input" v-model="param.spec"/>
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">商品来源ID</label>
-                                <input type="text" class="edit-input" v-model="param.sourceId"/>
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">产地</label>
-                                <input type="text" class="edit-input" v-model="param.location"/>
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">杂费说明</label>
@@ -123,10 +97,6 @@
                             <div class="editpage-input">
                                 <label class="editlabel">收货人电话</label>
                                 <input type="text" class="edit-input" v-model="param.consigneePhone"/>
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">邮编</label>
-                                <input type="text" class="edit-input" v-model="param.zipCode"/>
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">省</label>
@@ -158,11 +128,57 @@
                                  </div>
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">货币类型</label>
-                                <input type="text" class="edit-input" v-model="param.currency"/>
+                                <label class="editlabel">邮编</label>
+                                <input type="text" class="edit-input" v-model="param.zipCode"/>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                    <h3>商品信息</h3>
+                    <div class="editpage">
+                        <div class="editpageleft">
+                            <div class="editpage-input">
+                                <label class="editlabel">商品来源类型</label>
+                                <input type="text" class="edit-input" v-model="param.goods[0].sourceType"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">商品标题</label>
+                                <input type="text" class="edit-input" v-model="param.goods[0].title"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">产地</label>
+                                <input type="text" class="edit-input" v-model="param.goods[0].location"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">单价</label>
+                                <input type="text" class="edit-input" v-model="param.goods[0].price"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">数量</label>
+                                <input type="text" class="edit-input" v-model="param.goods[0].number"/>
                             </div>
                         </div>
-                    </div>
+                        <div class="editpageright">
+                            <div class="editpage-input">
+                                <label class="editlabel">商品来源ID</label>
+                                <input type="text" class="edit-input" v-model="param.goods[0].sourceId"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">品质</label>
+                                <input type="text" class="edit-input" v-model="param.goods[0].quality"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">规格</label>
+                                <input type="text" class="edit-input" v-model="param.goods[0].spec"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">单位</label>
+                                <input type="text" class="edit-input" v-model="param.goods[0].unit"/>
+                            </div>
+
+                        </div>
+                    </div>        
                 </section>
             </form>
         </div>

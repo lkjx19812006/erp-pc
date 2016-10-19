@@ -1,6 +1,7 @@
 import {
 
    ORDER_TABLE,
+   ORDER_ADD_DATA,
    ORDER_DETAIL_DATA,
    CHANGE_SHOW_STATUE,
    SYSTEM_DATA,
@@ -60,6 +61,7 @@ import {
    INTENTION_DETAIL_DATA,
    OFFER_LIST_DATA,
    MSG_LIST_DATA,
+   MSG_UPDATE_DATA,
    UPDATA_INTENTION_DATA,
    INTENTION_DATA,
    INTENTION_UP_DOWN,
@@ -356,6 +358,11 @@ const state = {
 const mutations = {
     [ORDER_TABLE](state, data) {
         state.orderList = data;
+    },
+    [ORDER_ADD_DATA](state, data) {  //创建订单
+        if(data.key == 'intentionDetail'){
+            console.log('意向详情采纳报价');   
+        }
     },
     [ORDER_DETAIL_DATA](state, data) {
         console.log(data);
@@ -697,6 +704,15 @@ const mutations = {
     },
     [MSG_LIST_DATA](state, data) { //留言列表
         state.basicBaseList.msgList = data;
+    },
+    [MSG_UPDATE_DATA](state, data) { //留言修改
+        if(data.key=='msgList'){
+            console.log('留言列表修改');
+            state.basicBaseList.msgList[data.index].comments = data.comments;
+        }
+        if(data.key=='intentionDetail'){
+            state.basicBaseList.intentionDetail.msgs.arr[data.index].comments = data.comments;
+        }
     },
     [USER_DATA](state, data) { // 会员列表
         state.basicBaseList.userList = data;
