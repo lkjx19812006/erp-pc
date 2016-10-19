@@ -4,6 +4,9 @@
       <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
+        <div class="cover_loading">
+            <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+        </div>
         <div class="client_nav">
             <nav class="navbar navbar-client" role="navigation">
                 <div class="container-fluid">
@@ -15,7 +18,6 @@
                         <li>
                             <button type="button" class="btn btn-base" @click="createTracking()">新建跟进</button>
                         </li>
-                        
                         <li>
                             <button type="button" class="btn btn-base" @click="modifyOrder({
                                                consignee:initOrderDetail.consignee,
@@ -24,7 +26,6 @@
                                                show:true,                                          
                                                })">编辑</button>
                         </li>
-                        
                     </ul>
                 </div>
             </nav>
@@ -32,23 +33,21 @@
         <section>
             <div class="client-section clearfix" >
                 <div class="col-md-8 client-detail">
-                    <h4 class="section_title">相关</h4>
+                    <h4 class="section_title">相关{{initOrderDetail.goods.arr}}</h4>
                     <article>
                         <div class="panel-group">
-                            
-
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
-                          link:'',
-                          crete:'goods'
-                          })">
-                    <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                    <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                      商品列表（{{initOrderDetail.goods.arr.length}}）
-                    </a>
-                    <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
-                  </h4>
+                                              link:'',
+                                              crete:'goods'
+                                              })">
+                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          商品列表（{{initOrderDetail.goods.arr.length}}）
+                                        </a>
+                                        <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
+                                    </h4>
                                 </div>
                                 <div class="panel-collapse" v-show="initOrderDetail.goods.show">
                                     <div class="panel-body panel-set">
@@ -87,16 +86,10 @@
                                     </table>
                                     </div>
                                 </div>
-                            </div>
-                          
-                           
-                
-              
-                            
+                            </div>    
                         </div>
                     </article>
                 </div>
-
                 <div class="col-md-4">
                     <h4 class="section_title">详情</h4>
                     <article>
@@ -145,75 +138,47 @@
             </div>
         </section>
        </div>
-
-
 </template>
 <script>
-
-
-
 import {
   initOrderDetail
 } from '../../vuex/getters'
 import {
- getOrderDetail
-
+  getOrderDetail
 } from '../../vuex/actions'
 export default {
     components: {
-
       
     },
     props:['param'],
     data(){
       return {
-        
         trackingParam:{
           show:false
         },
-       
         show:true
-
       }
     },
     vuex:{
       getters:{
-      
-
-      initOrderDetail
+        initOrderDetail
       },
       actions:{
         getOrderDetail
       }
     },
-    
     methods:{
-      
       enfoldment:function(param){
       	console.log(this.$store.state.table.orderDetail[param.crete].arr.length)
         if(this.$store.state.table.orderDetail[param.crete].arr.length==0){
                 this.$store.state.table.orderDetail[param.crete].show=true;
             }
             this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
-      },
-      
-      
-
-      
-       
-        
-        
-       
+      } 
     },
-
    created(){
-
-   		this.getOrderDetail(this.param);
-
-
+   	  this.getOrderDetail(this.param);
    }
-
-    
 }
 </script>
 <style scoped>

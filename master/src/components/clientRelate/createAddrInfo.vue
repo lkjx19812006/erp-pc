@@ -43,24 +43,67 @@
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.countylist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="country" v-model="param.country" v-validate:country="['required']" />
+                                    <!-- <label class="editlabel">{{param.countylist}}</label>
+                                    <input type="text" class="form-control edit-input"  id="country" v-model="param.country" v-validate:country="['required']" /> -->
+                                    <label class="editlabel">国家</label>
+                                    <div type="text" class="edit-input">
+                                        <v-select
+                                           :debounce="250"
+                                           :value.sync="country"
+                                           :on-change="selectProvince"
+                                           :options="initCountrylist"
+                                           placeholder="国家"
+                                           label="cname"></v-select>
+                                    </div>
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel">{{param.provicelist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="province" v-model="param.province" v-validate:province="['required']"/>
+                                   <!--  <label class="editlabel">{{param.provicelist}}</label>
+                                    <input type="text" class="form-control edit-input"  id="province" v-model="param.province" v-validate:province="['required']"/> -->
+                                    <label class="editlabel">省</label>
+                                    <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                                    <div v-if="country.cname" type="text" class="edit-input">
+                                        <v-select
+                                          :debounce="250"
+                                          :value.sync="province"
+                                          :on-change="selectCity"
+                                          :options="initProvince"
+                                          placeholder="省"
+                                          label="cname"></v-select>
+                                    </div>
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel">{{param.citylist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="city" v-model="param.city" v-validate:city="['required']" />
+                                    <!-- <label class="editlabel">{{param.citylist}}</label>
+                                    <input type="text" class="form-control edit-input"  id="city" v-model="param.city" v-validate:city="['required']" /> -->
+                                    <label class="editlabel">市</label>
+                                    <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                                    <div v-if="province.cname" type="text" class="edit-input">
+                                       <v-select
+                                         :debounce="250"
+                                         :value.sync="city"
+                                         :on-change="selectDistrict"
+                                         :options="initCitylist"
+                                         placeholder="市"
+                                         label="cname"></v-select>
+                                    </div>
+                                </div>
+                                <div class="editpage-input">
+                                    <!-- <label class="editlabel">{{param.distlist}}</label>
+                                    <input type="text" class="form-control edit-input"  id="district" v-model="param.district" v-validate:district="['required']" /> -->
+                                    <label class="editlabel">区</label>
+                                    <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
+                                    <div v-if="city.cname" type="text" class="edit-input">
+                                        <v-select
+                                            :debounce="250"
+                                            :value.sync="district"
+                                            :on-change="sDistrict"
+                                            :options="initDistrictlist"
+                                            placeholder="区"
+                                            label="cname" ></v-select>
+                                    </div>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">{{param.addr_detail}}</label>
                                     <input type="text" class="form-control edit-input"  id="detail_addr" v-model="param.detailAddr" v-validate:detail_addr="['required']" />
-                                </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">{{param.distlist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="district" v-model="param.district" v-validate:district="['required']" />
                                 </div>
                             </div>
                         </div>
@@ -75,14 +118,73 @@
     </div>
 </template>
 <script>
+import vSelect from '../tools/vueSelect/components/Select'
+import {
+    initCountrylist,
+    initProvince,
+    initCitylist,
+    initDistrictlist
+}from '../../vuex/getters'
+import {
+    getCountryList,
+    getProvinceList,
+    getCityList,
+    getDistrictList
+} from '../../vuex/actions'
 export default {
     components: {
-
+        vSelect
     },
     props: ['param'],
     data() {
         return {
-          
+          country:{
+              cname:''
+            },
+            province:{
+              cname:''
+            },
+            city:{
+              cname:''
+            },
+            district:{
+              cname:''
+            },
+            countryParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7
+            },
+            provinceParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7,
+              country:''
+            },
+            cityParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7,
+              province:''
+            },
+            districtParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7,
+              city:''
+            }
         }
     },
     route: {
@@ -94,6 +196,64 @@ export default {
             console.log('hook-example deactivated!')
             transition.next()
         }
+    },
+    vuex : {
+        getters : {
+            initCountrylist,
+            initProvince,
+            initCitylist,
+            initDistrictlist
+        },
+        actions : {
+            getCountryList,
+            getProvinceList,
+            getCityList,
+            getDistrictList
+        }
+    },
+    methods : {
+        selectProvince:function(){
+            this.param.country = this.country.cname;
+            this.province = '';
+            this.city = '';
+            this.district = '';
+            if(this.country!=''&&this.country!=null){
+              this.getProvinceList(this.country);
+            }
+        },
+        selectCity:function(){
+            this.param.province = this.province.cname;
+            this.city = '';
+            this.district = '';
+            if(this.province!=''&&this.province!=null){
+              this.getCityList(this.province);
+            }
+        },
+        selectDistrict:function(){
+            this.param.city = this.city.cname;
+            this.district = '';
+            if(this.city!=''&&this.city!=null){
+              this.getDistrictList(this.city);
+            }
+        },
+        sDistrict : function (){
+            this.param.district = this.district.cname;
+        } 
+        
+    },
+  created() {
+        if(this.param.country){
+            this.countryParam.country=this.param.country;
+            this.countryParam.province=this.param.province;
+            this.countryParam.city=this.param.city;
+            this.countryParam.district=this.param.district;
+            this.country.cname=this.param.country;
+            this.province.cname=this.param.province;
+            this.city.cname=this.param.city;
+            this.district.cname=this.param.district;
+        }
+
+        this.getCountryList(this.countryParam);   
     }
 }
 </script>

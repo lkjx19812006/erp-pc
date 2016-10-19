@@ -34,7 +34,8 @@
                         	<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
                         </th>
                         <th>意向ID</th>	
-                        <th>会员ID</th>
+                        <th>会员名</th>
+                        <th>留言信息</th>
                         <th>备注</th>
                         <th>回复</th>
       	            	<th></th>
@@ -46,7 +47,8 @@
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
                         <td>{{item.intentionId}}</td>
-                        <td>{{item.userId}}</td>
+                        <td>{{item.fullname}}</td>
+                        <td>{{item.content}}</td>
                         <td>{{item.comments}}</td>
                         <td>{{item.reply}}</td>
                         <td @click.stop="clickShow($index)">

@@ -427,7 +427,9 @@ export default {
     margin-right: 5px;
     font-size: 14px;
 }
-
+.panel-body ul{
+    border-top:1px solid #ddd;
+}
 .panel-body ul > li:last-of-type {
     float: right;
     position: relative;
@@ -437,7 +439,7 @@ export default {
 }
 .breed_action {
     top:7px;
-    right: 30px;
+    right: 25px;
 }
 
 .breed_action {

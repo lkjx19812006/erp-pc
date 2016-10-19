@@ -96,10 +96,8 @@ export const getOrderList = ({ dispatch }, param) => { //订单列表以及订�
 };
 
 export const createOrder = ({ dispatch }, data) => { //创建订单
-
     console.log(data);
-    
-    /*const body = {
+    const body = {
         type:data.type,
         customer:data.customer,
         sample:data.sample,
@@ -117,20 +115,24 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         city:data.city,
         district:data.district,
         consigneeAddr:data.consigneeAddr,
-        comments:data.comments, 
-        sourceType:data.sourceType,     
-        sourceId:data.sourceId,     
-        title:data.title,     
-        breedId:data.breedId,   
-        brredName:data.breedName,
+        comments:data.comments,   
         quality:data.quality,
         location:data.location,
-        spec:data.spec,
-        price:data.price,
-        unit:data.unit,
-        number:data.number 
-    }*/
-    const body = {
+        goods:[{
+            sourceType:data.sourceType,
+            sourceId:'12545',
+            title:data.goods[0].title,
+            breedId:data.goods[0].breedId,
+            brredName:data.goods[0].brredName,
+            quality:data.goods[0].quality,
+            location:data.goods[0].location,
+            spec:data.goods[0].spec,
+            price:data.goods[0].price,
+            unit:data.goods[0].unit,
+            number:data.goods[0].number
+        }] 
+    }
+   /* const body = {
         type:1,
         sourceType:1,
         sample:1,
@@ -163,7 +165,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             unit:'kg',
             number:12
         }]
-    }
+    }*/
     console.log(body);
     Vue.http({
         method: 'POST',
@@ -177,15 +179,16 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         }
     }).then((res) => {
         console.log('添加成功')
-        dispatch(types.ADD_DATA, data);
+        dispatch(types.ORDER_ADD_DATA, data);
+        data.show = false;
     }, (res) => {
         console.log('fail');
+        data.show = false;
     });
 };
 
 export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
-    console.log('param===');
-    console.log(param);
+    console.log(param)
     Vue.http({
         method: 'GET',
         url: apiUrl.orderList + '/order/' + param.id,
@@ -199,8 +202,6 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
         orderDetail.goods={};
         orderDetail.goods.arr = goods;
         orderDetail.goods.show = true;
-        console.log(orderDetail);
-
         dispatch(types.ORDER_DETAIL_DATA, orderDetail);
     }, (res) => {
         console.log('fail');
@@ -262,7 +263,7 @@ export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
         id: data.id,
         name: data.name,
         status: data.status,
-        type: data.type,
+        type: data.typedesc,
         typedesc:data.typedesc
     }
     Vue.http({
@@ -291,7 +292,7 @@ export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
         name: param.name,
         status: param.status,
         type: param.type,
-        typedesc:param.typedesc
+        typedesc:param.type
     }
     Vue.http({
         method: 'PUT',
@@ -304,8 +305,9 @@ export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('修改成功')
+        
         dispatch(types.UPDATE_DATA, param);
+        console.log('修改成功')
     }, (res) => {
         console.log('fail');
     });
@@ -1515,6 +1517,7 @@ export const updateContact = ({ dispatch }, param) => { //修改客户联系人
     })
 }
 export const addrInfo = ({ dispatch }, param) => { //修改客户地址
+    
     const updatedata = {
         type:param.type,
         contactName:param.contactName,
@@ -2232,8 +2235,7 @@ export const updateMsg = ({ dispatch }, param) => {  //修改留言信息
     var url = apiUrl.clientList+'/intention/msgs';
     const data = {
         id: param.id,
-        comments: param.comments,
-        status:10
+        comments: param.comments
     }
     console.log(data);
     Vue.http({

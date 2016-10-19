@@ -1,13 +1,6 @@
 <template>
-     <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
-     <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
-     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
-     <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
-     <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
-   <!--   <offerinfo-model :param="offerParam" v-if="offerParam.show"></offerinfo-model> -->
-     
-	 <div v-show="!chanceParam.show">
+     <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
+	 <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">我的报价</div>
             <div class="col-xs-5 my_order_search">
@@ -43,19 +36,21 @@
                         	<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
                         </th>
                         <th>意向ID</th>	
+                        <th>会员</th>
                         <th>单价</th>
                         <th>数量</th>
                         <th>总价</th>
                         <th>杂费</th>
-      	            	  <th></th>
+      	            	<th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in initOfferList">
                          <td  >
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)"></label>
                         </td>
                         <td>{{item.intentionId}}</td>
+                        <td>{{item.userName}}</td>
                         <td>{{item.price}}</td> 
                         <td>{{item.number}}</td> 
                         <td>{{item.total}}</td> 
@@ -64,7 +59,7 @@
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
                                <ul>
-                                   <li @click="">采纳</li>
+                                   <li @click="adopt()">采纳</li>
                                </ul>
                            </div>
                        </td>
@@ -80,14 +75,7 @@
 <script>
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
-import chancedetailModel from '../../Intention/chanceDetail'
-import transferintentModel from '../../Intention/transferIntent'
-import tipsdialogModel  from '../../tipsDialog'
-import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
-import editintentModel  from  '../../Intention/Editintention'
-import createintentModel from '../../Intention/createIntention'
-/*import offerinfoModel from '../../Intention/offerInfo'*/
-
+import createorderModel  from '../createOrder'
 import {
 	initOfferList
 } from '../../../vuex/getters'
@@ -97,12 +85,7 @@ import {
 export default {
     components: {   
         pagination,
-        chancedetailModel,
-        transferintentModel,
-        tipsdialogModel,
-        deletebreedModel,
-        editintentModel,
-        createintentModel
+        createorderModel
     },
     vuex: {
         getters: {
@@ -120,7 +103,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-/*                link:'/intention/employee/list',*/
+                /*link:'/intention/employee/list',*/
                 type:'',
                 invoic:'',
                 visit:'',
@@ -130,30 +113,43 @@ export default {
                 advance:'',
                 customerName:''
             },
-            chanceParam:{
-                show:false
-            },
-            intentionParam:{
-                show:false,
-                id:'',
-                name:'意向'
-            },
-            tipsParam:{
-                show:false,
-                name:'请先选择意向'
-            },
-            deleteParam:{
-            	show:false
-            },
-            editParam:{
-            	show:false
-            },
-            createParam:{
-            	show:false
-            },
+            
             offerParam:{
             	show:false,
             	id:''
+            },
+            orderParam:{
+                show:false,
+                type:'',
+                customer:'',
+                sample:'',
+                intl:0,
+                incidentals:'',
+                incidentalsDesc:'',
+                preferential:'',   //优惠金额
+                preferentialDesc:'',  
+                currency:'',     //货币品种
+                consignee:'',    //收货人姓名
+                consigneePhone:'',
+                zipCode:'',     //邮编
+                country:'',
+                province:'',
+                city:'',
+                district:'',
+                consigneeAddr:'',
+                comments:'', 
+                sourceType:2,     //商品来源类型
+                sourceId:'',     //商品来源ID
+                title:'',     //订单商品标题
+                breedId:'',   
+                breedName:'',
+                quality:'',
+                location:'',
+                spec:'',
+                price:'',
+                unit:'',
+                number:''
+
             },
             checked:false
         }
@@ -175,8 +171,6 @@ export default {
             		}
             	})
             }	
-            
-           
         },
         checkedAll:function(){
    			this.checked = !this.checked;
@@ -190,6 +184,19 @@ export default {
    				})
    			}   	
         },
+        adopt:function(){
+            console.log("创建订单");
+            this.orderParam.show = true;
+            //this.orderParam.customer = item.customerId;
+            /*this.orderParam.spec = item.spec;
+            this.orderParam.price = item.price;
+            this.orderParam.unit = item.unit;
+            this.orderParam.number = item.number;
+            this.orderParam.incidentals = item.incidentals;
+            this.orderParam.incidentalsDesc = item.incidentalsDesc;
+            this.orderParam.quality = item.quality;
+            this.orderParam.location = item.location;*/
+        }
         
     },
     events: {

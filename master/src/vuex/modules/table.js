@@ -72,20 +72,12 @@ import {
    ALTER_PRODUCT_DATA,
    SUPPLY_PRODUCT_DATA,
    PRODUCT_DATA,
-   FILES_DATA_LIST
+   FILES_DATA_LIST,
+   ORDER_ADD_DATA
 
 } from '../mutation-types'
 
 const state = {
-    orderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
-                "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
-                "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
-                "lcompanyName":null,"logisticsNo":null,"consignee":"测试","consigneePhone":"18505565316","zipCode":"000000",
-                "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
-                "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
-                "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
-                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
-                "payPics":null,"sendPics":null}],
     systemBaseList: {
         enumlist: [
             { "id": 0, "code": "022112", "type": "1", "desc": "123456789011", "status": "0" },
@@ -111,6 +103,15 @@ const state = {
     } ,
 
     basicBaseList: {
+         orderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
+                "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
+                "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
+                "lcompanyName":null,"logisticsNo":null,"consignee":"测试","consigneePhone":"18505565316","zipCode":"000000",
+                "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
+                "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
+                "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
+                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
+                "payPics":null,"sendPics":null}],
         enterpriseList: [
             { "id": 0, "number": "00", "category": "0ww", "name": "上海ee冕冠", "tel": "13162875213", "legal_person": "卡卡", "principal": "来啦", "biz_scope": "包括很多、很多、、、", "province": "上海虹口区", "city": "虹口区", "address": "上海虹口江湾镇", "release_date": "2015-07-07", "due_date": "2018-07-07", "show": "true" },
             { "id": 1, "number": "11", "category": "3243", "name": "上海冕冠", "tel": "13162875213", "legal_person": "卡卡", "principal": "来啦", "biz_scope": "包括很多、很多、、、", "province": "上海虹口区", "city": "虹口区", "address": "上海虹口江湾镇", "release_date": "2015-07-07", "due_date": "2018-07-07", "show": "false" }
@@ -354,15 +355,17 @@ const state = {
 }
 
 const mutations = {
-    [ORDER_TABLE](state, data) {
-        state.orderList = data;
+    [ORDER_TABLE](state, data) { //订单列表
+        state.basicBaseList.orderList = data;
     },
-    [ORDER_DETAIL_DATA](state, data) {
+    [ORDER_DETAIL_DATA](state, data) { //订单详情
         console.log(data);
         state.orderDetail = data;
     },
     [SYSTEM_DATA](state, data) { //枚举类型
-        state.systemBaseList.enumlist = data;
+
+      state.systemBaseList.enumlist = data;
+
     },
     [PROVINCE_DATA](state, data) { //省市区
         state.systemBaseList.locationlist = data;
@@ -375,7 +378,7 @@ const mutations = {
             "type": data.type,
             "desc": data.desc,
             "status": data.status,
-            "typedesc":data.typedesc,
+            "typedesc":data.type,
             "id": data.id,
             "show": false
         });
@@ -383,6 +386,7 @@ const mutations = {
     [UPDATE_DATA](state, data) { //枚举修改
         for (var key in data) {
             state.systemBaseList.enumlist[data.sub][key] = data[key];
+
         }
     },
 
@@ -437,8 +441,7 @@ const mutations = {
         }
         console.log(state.companyDetail[data.key].arr[data.sub])
     },
-
-    [DELETE_BREED_DATA](state,data) { //删除客户信息
+    [DELETE_BREED_DATA](state,data) { //删除客户/订单信息
         state.basicBaseList[data.key].splice(data.sub, 1);
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
@@ -532,7 +535,7 @@ const mutations = {
           source:4,
           sourceType:'业务录入',
           tel:data.tel,
-          type:data.type, 
+          type:data.type,
           typeDesc:data.typeDesc,
           show: false
         })
@@ -558,6 +561,7 @@ const mutations = {
         }
     },
     [UPDATE_ADDR_DETAIL](state, data) { //修改客户地址
+       
         for (var key in data) {
             state[data.headline][data.key].arr[data.sub][key] = data[key];
         }
@@ -809,10 +813,19 @@ const mutations = {
     },
 
     [UPDATE_TRACKING_DATA](state,data){     //更新跟进
-        state.userDetail.tracking.arr[data.index].trackingWay = data.trackingWay;
-        state.userDetail.tracking.arr[data.index].comments = data.comments;
-        state.userDetail.tracking.arr[data.index].contactNo = data.contactNo;
-        state.userDetail.tracking.arr[data.index].type = data.type;
+        if(state.userDetail.tracking.arr[data.index]){
+          state.userDetail.tracking.arr[data.index].trackingWay = data.trackingWay;
+          state.userDetail.tracking.arr[data.index].comments = data.comments;
+          state.userDetail.tracking.arr[data.index].contactNo = data.contactNo;
+          state.userDetail.tracking.arr[data.index].type = data.type;
+        }
+        if(state.clientDetail.trackings.arr[data.index]){
+          state.clientDetail.trackings.arr[data.index].trackingWay = data.trackingWay;
+          state.clientDetail.trackings.arr[data.index].comments = data.comments;
+          state.clientDetail.trackings.arr[data.index].contactNo = data.contactNo;
+          state.clientDetail.trackings.arr[data.index].type = data.type;
+        }
+
     },
 
     [ADD_TRACKING_DATA](state,data){     //增加跟进
@@ -827,6 +840,7 @@ const mutations = {
         temp.show = false;
         temp.id=data.id;
         state.userDetail.tracking.arr.push(temp);
+        state.clientDetail.trackings.arr.push(temp);
     },
 
 

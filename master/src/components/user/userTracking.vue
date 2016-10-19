@@ -70,7 +70,8 @@
                       style="height:100px;line-height:20px;width:95%" value="{{param.coments}}"></textarea>
           </div>
           </div>
-          <div class="editpage" v-if="intention.breedName&&param.bizType==1">
+
+          <div class="editpage" v-if="intention.breedName">
           <div class="editpageleft">
 
             <div  class="editpage-input">
@@ -88,8 +89,6 @@
               <div  class="form-control edit-input" >{{intention.location}}</div>
             </div>
           </div>
-
-
 
 
           <div class="editpageright">
@@ -112,6 +111,40 @@
           </div>
 
         </div>
+
+        <div class="editpage" v-if="intention.no">
+          <div class="editpageleft">
+
+            <div  class="editpage-input">
+              <label class="editlabel">订单流水号</label>
+              <div  class="form-control edit-input" >{{intention.no}}</div>
+            </div>
+
+            <div class="editpage-input">
+              <label class="editlabel">订单金额</label>
+              <div  class="form-control edit-input" >{{intention.amount}}</div>
+            </div>
+
+          </div>
+
+
+          <div class="editpageright">
+
+            <div class="editpage-input">
+              <label class="editlabel">商品</label>
+              <div  class="form-control edit-input" >{{intention.goods}}</div>
+            </div>
+
+            <div class="editpage-input">
+              <label class="editlabel">创建时间</label>
+              <div  class="form-control edit-input" >{{intention.ctime}}</div>
+            </div>
+
+
+          </div>
+
+        </div>
+
 
 
 
@@ -198,6 +231,10 @@
       'getBiz': function (biz) {
         this.param.bizTypeCopy=this.param.bizType;
         this.param.bizId = biz.id;
+        this.param.breedName=biz.breedName;
+        this.intention=biz;
+        console.log('sdffsd');
+        console.log(biz);
       },
       'cancel':function(){
         if(this.param.bizTypeCopy){

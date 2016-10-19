@@ -254,9 +254,7 @@ export default {
                 name:''
             },
             searchParam:{
-                show:false,
-
-
+                show:false
             },
             transferParam:{
                 show:false,

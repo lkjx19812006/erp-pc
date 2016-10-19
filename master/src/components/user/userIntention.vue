@@ -478,9 +478,6 @@ export default {
             }
       },
       createOrUpdateIntention:function(){
-
-
-
         if(this.param.flag==0){
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
@@ -564,7 +561,6 @@ export default {
         this.district.cname=this.param.district;
       }
       this.getCountryList(this.countryParam);
-
     }
 }
 </script>
