@@ -391,6 +391,7 @@ export default {
       },
       clickShow: function(index,param) {  
           this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = !this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show; 
+
       },
       adopt:function(item){
           console.log("创建订单");
@@ -405,6 +406,7 @@ export default {
           this.orderParam.incidentalsDesc = item.incidentalsDesc;
           this.orderParam.quality = item.quality;
           this.orderParam.location = item.location;
+
       }
     },
     created(){

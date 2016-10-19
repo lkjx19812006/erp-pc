@@ -64,7 +64,7 @@
               <tr v-for="item in initSystemlist">
                 <td>{{item.code }}</td>
                 <td>{{item.name}}</td>
-                <td>{{item.typedesc }}</td>
+                <td>{{item.type }}</td>
                 <td>{{item.desc }}</td>
                 <td  @click="editData($index)">
                   <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
@@ -134,6 +134,27 @@ export default {
                 id:'',
                 show:false
             },
+            emlistdata : [
+                {"TRACE" : '跟进类型'},
+                {"ST" : '规格类型'},
+                {"BANK" : '银行'},
+                {"OSTAT" : '订单状态'},
+                {"OT" : '包装方式'},
+                {"MU" : '计量单位'},
+                {"PAY" : '付款方式'},
+                {"CL" : '客户信用等级'},
+                {"IS" : '意向状态'},
+                {"HT" : '药材品类'},
+                {"ES" : '员工状态'},
+                {"ET" : '企业类型'},
+                {"CS" : '客户来源'},
+                {"CT" : '证书类型'},
+                {"AS" : '审核状态'},
+                {"DEV" : '快递公司'},
+                {"POS" : '职位'},
+                {"LBL" : '常见标签'},
+                {"ON" : '客户信用等级'}
+            ],
             show:true,
             editmodel:true,
             sel:''

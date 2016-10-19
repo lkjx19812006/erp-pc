@@ -362,7 +362,9 @@ const mutations = {
         state.orderDetail = data;
     },
     [SYSTEM_DATA](state, data) { //枚举类型
-        state.systemBaseList.enumlist = data;
+
+      state.systemBaseList.enumlist = data;
+
     },
     [PROVINCE_DATA](state, data) { //省市区
         state.systemBaseList.locationlist = data;
@@ -376,12 +378,15 @@ const mutations = {
             "desc": data.desc,
             "status": data.status,
             "id": data.id,
-            "show": false
+            "show": false,
+            "typedesc" : data.typedesc
         });
     },
     [UPDATE_DATA](state, data) { //枚举修改
         for (var key in data) {
+
             state.systemBaseList.enumlist[data.sub][key] = data[key];
+
         }
     },
 
@@ -557,6 +562,7 @@ const mutations = {
         }
     },
     [UPDATE_ADDR_DETAIL](state, data) { //修改客户地址
+       
         for (var key in data) {
             state[data.headline][data.key].arr[data.sub][key] = data[key];
         }

@@ -210,6 +210,12 @@ export default {
 }
 </script>
 <style scoped>
+
+.ordertel_search > .new_btn{
+    width:50px;
+    height: 30px;
+    padding:0;
+}
 .breed_action {
     top: 33px;
     right:50px;
