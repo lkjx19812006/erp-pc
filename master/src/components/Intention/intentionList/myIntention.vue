@@ -6,6 +6,7 @@
      <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
      <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
      <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
+     <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
      
 	 <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
@@ -199,7 +200,8 @@
                 </thead>
                 <tbody>
                  
-                    <tr v-for="item in initIntentionList">
+                    <tr v-for="item in initIntentionList" 
+                        @click="match(item)"  style="cursor:pointer">
                          <td>
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
@@ -207,7 +209,7 @@
                         <td>{{item.especial | chanceEspec}}</td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
-                        <td class="underline" @click="detailClick({
+                        <td class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
                                 show:true,
@@ -244,7 +246,8 @@
                                 link:editintentInfo,
                                 url:'/intention/',
                                 key:'intentionList'
-                                })">{{item.breedName}}</td>
+                                })">{{item.breedName}}
+                        </td>
                         <td>{{item.qualification | qualify}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.unit}}</td>
@@ -339,7 +342,78 @@
 
                 </tbody>
             </table>
+            
         </div>
+        <!-- <div v-if="supdemParam.breedId!=''&&initSupplyDemandList.length!=0" style="min-height:30px;max-height:200px;width:87%;overflow-y:auto;position:fixed;bottom:20px;left:250px;z-index:100"> 
+          <table class="table table-hover table_color table-striped " v-cloak >
+            <thead>
+                <tr>  
+                    <th>特殊的</th>
+                    <th>客户名称</th>
+                    <th>客户手机号</th>
+                    <th>规格</th>
+                    <th>单位</th>
+                    <th>单价</th>
+                    <th>产地</th>
+                    <th>数量</th>
+                    <th>国家</th>
+                    <th>所在省</th>
+                    <th>所在市</th>
+                    <th>所在区</th>
+                    <th>交收地址</th>
+                    <th>预付比例</th>
+                    <th>发票</th>
+                    <th>上门看货</th>
+                    <th>包装</th>
+                    <th>是否国际</th>
+                    <th>提供样品</th>
+                    <th>样品数量</th>
+                    <th>样品单位</th>
+                    <th>样品价格</th>
+                    <th>审核状态</th>
+                    <th>上下架</th>
+                </tr>
+            </thead>
+            <tbody>
+                 
+                    <tr v-for="item in initSupplyDemandList">
+                        <td>{{item.especial | chanceEspec}}</td>
+                        <td>{{item.customerName}}</td>
+                        <td>{{item.customerPhone}}</td>
+                        <td>{{item.spec}}</td>
+                        <td>{{item.unit}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.location}}</td>
+                        <td>{{item.number}}</td>
+                        <td>{{item.country}}</td>
+                        <td>{{item.province}}</td>
+                        <td>{{item.city}}</td>
+                        <td>{{item.district}}</td>
+                        <td>{{item.address}}</td>
+                        <td>{{item.advance}}</td>
+                        <td>{{item.invoic | invoicstate}}</td>
+                        <td>{{item.visit | visitstate}}</td>
+                        <td>{{item.pack}}</td>
+                        <td>{{item.intl | intlstata}}</td>
+                        <td>
+                            <div v-if="item.sampling==0">否</div>
+                            <div v-if="item.sampling==1">是</div>
+                        </td>
+                        <td>{{item.sampleNumber}}</td>
+                        <td>{{item.sampleUnit}}</td>
+                        <td>{{item.sampleAmount}}</td>
+                        <td>{{item.validate}}</td>
+                        <td>
+                          <div v-if="item.onSell==0">初始</div>
+                          <div v-if="item.onSell==1">上架</div>
+                          <div v-if="item.onSell==2">下架</div>
+                        </td>
+                    </tr>
+        
+        
+                </tbody>
+          </table>    
+        </div> -->
         <div class="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
@@ -355,12 +429,15 @@ import tipsdialogModel  from '../../tipsDialog'
 import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import editintentModel  from  '../../Intention/Editintention'
 import createintentModel from '../../user/userIntention'
+import supdemModel from '../supplyDemand'
 
 import {
-	initIntentionList
+	initIntentionList,
+  initSupplyDemandList
 } from '../../../vuex/getters'
 import {
 	getIntentionList,
+  getSupplyDemandList,
   intentionUpAndDown,
 	deleteInfo,
 	editintentInfo,
@@ -375,14 +452,17 @@ export default {
         tipsdialogModel,
         deletebreedModel,
         editintentModel,
-        createintentModel
+        createintentModel,
+        supdemModel
     },
     vuex: {
         getters: {
-            initIntentionList
+            initIntentionList,
+            initSupplyDemandList
         },
         actions: {
             getIntentionList,
+            getSupplyDemandList,
             intentionUpAndDown,
             deleteInfo,
             editintentInfo,
@@ -406,6 +486,14 @@ export default {
                 status:'',
                 advance:'',
                 customerName:''
+            },
+            supdemParam:{
+                show:false,
+                id:'',
+                type:'',
+                breedId:'',
+                typeName:'',
+                link:'/intention/'
             },
             chanceParam:{
                 show:false
@@ -446,6 +534,26 @@ export default {
         }
     },
     methods: {
+        match:function(item){
+            this.supdemParam.show = true;
+            this.supdemParam.id = item.id;
+            this.supdemParam.type = 1-item.type
+            if(this.supdemParam.type==0){
+                this.supdemParam.typeName = "求购";
+            }else{
+                this.supdemParam.typeName = "供应";
+            }
+            this.supdemParam.breedId = item.breedId;
+            /*if(item.id==this.supdemParam.id&&this.$store.state.table.basicBaseList.supplyDemandList.length!=0){
+                this.$store.state.table.basicBaseList.supplyDemandList = [];
+            }else{
+              this.supdemParam.id = item.id;
+              this.supdemParam.type = 1-item.type
+              this.supdemParam.breedId = item.breedId; 
+              this.getSupplyDemandList(this.supdemParam);
+            }*/
+            
+        },
         eventClick:function(sub){
             if(this.$store.state.table.basicBaseList.intentionList[sub].show){
                 this.$store.state.table.basicBaseList.intentionList[sub].show = !this.$store.state.table.basicBaseList.intentionList[sub].show;
@@ -518,6 +626,7 @@ export default {
                 this.tipsParam.name = '请先选择意向';
                 this.tipsParam.show = true;
             }else{
+              console.log('上下架');
                 this.intentionUpAndDown(this.tipsParam);
             }  
             
@@ -578,6 +687,9 @@ export default {
 }
 </script>
 <style scoped>
+.base_pagination{
+  margin-bottom:250px;
+}
 .breed_action {
     top: 33px;
     right: 106px;
@@ -607,5 +719,6 @@ export default {
     text-align: center;
     background-position: 5px;
 }
+
 </style>
 

@@ -103,7 +103,9 @@
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
-                                                <td>{{item.validate}}</td>
+                                                <td v-if="item.validate==0">待审核</td>
+                                                <td v-if="item.validate==1">审核通过</td>
+                                                <td v-if="item.validate==-1">审核不通过</td>
                                                 <td>{{item.description}}</td>
                                                 <td  @click="clickShow($index,{
                                                   concrete:'intention'
@@ -111,6 +113,7 @@
                                                   <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show">
                                                        <dt @click="updateIntention(
+                                                            intentionParam.loading=true,
                                                             intentionParam.sub=$index,
                                                             intentionParam.id=item.id,
                                                             intentionParam.breedName=item.breedName,
@@ -135,12 +138,16 @@
                                                             intentionParam.sampleNumber=item.sampleNumber,
                                                             intentionParam.sampleAmount=item.sampleAmount,
                                                             intentionParam.qualification=item.qualification,
-                                                            intentionParam.breedId=item.intentionParam,
                                                             intentionParam.pack=item.pack,
                                                             intentionParam.visit=item.visit,
                                                             intentionParam.duedate=item.duedate,
                                                             intentionParam.breedId=item.breedId,
-                                                            intentionParam.key='user'
+                                                            intentionParam.key='user',
+                                                            intentionParam.validate=item.validate,
+                                                            intentionParam.description=item.description,
+                                                            intentionParam.image_f='',
+                                                            intentionParam.image_s='',
+                                                            intentionParam.image_t=''
                                                         )">编辑</dt>
                                                 </div>
                                                 </td>
@@ -383,7 +390,6 @@
 
 </template>
 <script>
-import filter from '../../filters/filters'
 import trackingModel from  './userTracking'
 import intentionModel from  './userIntention'
 import personalauthModel from './personalAuth'
@@ -399,9 +405,8 @@ import {
 } from '../../vuex/getters'
 import {
   getClientDetail,
-
- getUserDetail,
- getAuthInfo,
+  getUserDetail,
+  getAuthInfo
 
 
 } from '../../vuex/actions'
@@ -422,6 +427,7 @@ export default {
           show:false
         },
         intentionParam:{
+          loading:false,
           show:false,
           flag:0,   //0表示创建，1表示修改
           sub:'',
@@ -454,7 +460,12 @@ export default {
           sampleNumber:0,
           sampleAmount:0,
           qualification:'',
-          url:'/intention/'
+          url:'/intention/',
+          validate:0,
+          image_f:'',
+          image_s:'',
+          image_t:'',
+          description:''
         },
         intentionAuditParam:{
           show:false,
@@ -527,7 +538,7 @@ export default {
                     item.checked=false;
                   }
 
-                    
+
              })
            }else{
                 this.$store.state.table.userDetail.intention.arr.forEach(function(item){
@@ -545,14 +556,12 @@ export default {
             this.intentionAuditParam.indexs.push(i);
           }
         }
-        
-        console.log(this.intentionAuditParam.arr);
         if(this.intentionAuditParam.arr.length === 0){
           this.tipParam.show = true;
         }else{
           this.intentionAuditParam.show = true;
         }
-      }, 
+      },
       enfoldment:function(param){
 
         if(this.$store.state.table.userDetail[param.crete].arr.length==0){
@@ -677,9 +686,7 @@ export default {
 
         }
 
-    },
-
-  filter:(filter,{})
+    }
 
 
 }

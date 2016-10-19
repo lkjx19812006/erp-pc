@@ -55,6 +55,7 @@
                                 id:item.id,
                                 sub:$index,
                                 show:true,
+                                loading:true,
                                 name:item.name,
                                 link:alterInfo,
                                 url:'/customer/',
@@ -98,7 +99,6 @@
   } from '../../../vuex/getters'
   import {
     getClientList,
-    getClientDetail,
     customerTransferBlacklist
 
   } from '../../../vuex/actions'
@@ -117,7 +117,6 @@
       },
       actions: {
         getClientList,
-        getClientDetail,
         customerTransferBlacklist
       }
     },
@@ -153,7 +152,8 @@
           name:'请先选择客户'
         },
         changeParam: {
-          show: false
+          show: false,
+          loading:true
         },
         auditParam:{
           show:false,
@@ -168,7 +168,6 @@
     methods: {
       clickOn: function(initCustomerlist) {
         this.changeParam = initCustomerlist;
-        this.getClientDetail(this.changeParam);
       },
 
       checkedAll: function() {

@@ -12,6 +12,9 @@
         </div>
         <div class="edit-model">
           <div class="cover_loading">
+            <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+          </div>
+          <div class="cover_loading">
             <pulse-loader :loading="breedParam.loading" :color="color" :size="size"></pulse-loader>
           </div>
            <section class="editsection" v-cloak>
@@ -90,10 +93,7 @@
                          </input-select>
                        </div>
                      </div>
-
-
                    </div>
-
 
                    <div class="editpageright">
 
@@ -349,7 +349,8 @@ import {
     initProvince,
     initCitylist,
     initDistrictlist,
-    initBreedDetail
+    initBreedDetail,
+    initIntentionDetail
 } from '../../vuex/getters'
 import {
     createIntentionInfo,
@@ -358,7 +359,8 @@ import {
     getProvinceList,
     getCityList,
     getDistrictList,
-    getBreedDetail
+    getBreedDetail,
+    getIntentionDetail
 } from '../../vuex/actions'
 export default {
     components: {
@@ -387,7 +389,7 @@ export default {
           },
           tag:['真空包装','瓦楞纸箱','编织袋','积压包'],
             country:{
-              cname:''
+              cname:'',
             },
             province:{
               cname:''
@@ -448,7 +450,8 @@ export default {
           initProvince,
           initCitylist,
           initDistrictlist,
-          initBreedDetail
+          initBreedDetail,
+          initIntentionDetail
         },
         actions: {
           createIntentionInfo,
@@ -457,7 +460,8 @@ export default {
           getProvinceList,
           getCityList,
           getDistrictList,
-          getBreedDetail
+          getBreedDetail,
+          getIntentionDetail
         }
     },
     methods: {
@@ -474,8 +478,10 @@ export default {
             }
       },
       createOrUpdateIntention:function(){
+
+
+
         if(this.param.flag==0){
-          console.log('新增会员意向');
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
@@ -484,8 +490,6 @@ export default {
           this.createIntentionInfo(this.param);
         }
         if(this.param.flag==1){
-          console.log('修改会员意向');
-
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
@@ -494,11 +498,9 @@ export default {
           this.editintentInfo(this.param);
         }
 
-
       },
 
       selectProvince:function(){
-        console.log('selectProvince');
         this.province = '';
         this.city = '';
         this.district = '';
@@ -537,13 +539,19 @@ export default {
             this.param.customerName = customer.customerName;
             this.param.customerId = customer.customerId;
             this.param.customerPhone = customer.customerPhone;
-        },
+        }
     },
     created(){
       if(this.param.breedId){
         this.breedParam.breedName = this.param.breedName;
         this.breedParam.id = this.param.breedId;
         this.getBreedDetail(this.breedParam);
+      }
+      if(this.param.id){
+        this.param.loading=true;
+        this.getIntentionDetail(this.param);
+      }else{
+        this.param.loading=false;
       }
       if(this.param.country){
         this.countryParam.country=this.param.country;

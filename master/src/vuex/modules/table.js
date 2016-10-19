@@ -56,6 +56,7 @@ import {
    UPDATE_TRACKING_DATA,
    ADD_TRACKING_DATA,
    INTENTION_LIST_DATA,
+   SUPPLY_DEMAND_DATA,
    INTENTION_DETAIL_DATA,
    OFFER_LIST_DATA,
    MSG_LIST_DATA,
@@ -146,6 +147,10 @@ const state = {
              {"id": "442","cid": 1,"type": "1","name": "1111","breedId": 1111,"quality": "1111","location": "111","spec": "干","number": 1111,"price": 11,"unit": "1111","duedate": "2016-10-23 00:00","coa": 0,"comments": null,"status": 1,"show":true}
         ],
         intentionList: [
+            { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
+
+        ],
+        supplyDemandList: [
             { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
 
         ],
@@ -306,7 +311,7 @@ const state = {
             ],
             show: false
         },
-        "track": { arr: [], show: false },
+        "trackings": { arr: [], show: false },
         "remarks": {
             arr: [
                 { "id": 0, "customerId": 10, "remark": "dfhidfhi", "status": 0, "show": true }
@@ -573,7 +578,7 @@ const mutations = {
             state.basicBaseList[data.headline][data.sub][i] = data[i];
         }
     },
-    
+
     [CUSTOMER_CONTACT_DATA](state, data) { // 新增客户联系人信息
         state.clientDetail[data.key].arr.unshift({
             "name": data.name,
@@ -678,6 +683,9 @@ const mutations = {
     [INTENTION_LIST_DATA](state, data) { //意向列表
         state.basicBaseList.intentionList = data;
     },
+    [SUPPLY_DEMAND_DATA](state, data) { //供求匹配信息列表
+        state.basicBaseList.supplyDemandList = data;
+    },
     [OFFER_LIST_DATA](state, data) { //报价列表
         state.basicBaseList.offerList = data;
     },
@@ -753,7 +761,7 @@ const mutations = {
               state.userDetail.intention.arr[k].checked = false;
             }
         }
-        
+
         if(state.basicBaseList.intentionList.length>0){
             console.log("意向列表页审核意向");
             for(let i=0;i<data.indexs.length;i++){
@@ -763,7 +771,7 @@ const mutations = {
               state.basicBaseList.intentionList[k].checked = false;
             }
         }
-        
+
 
     },
 
@@ -848,6 +856,7 @@ const mutations = {
     },
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
       var temp = {
+        "id":data.id,
         "type":data.type,
         "especial":data.especial,
         "customerName":data.customerName,
@@ -879,7 +888,8 @@ const mutations = {
         "quality":data.quality,
         "show":false,
         "duedate":data.duedate,
-        "images":data.images
+        "images":data.images,
+        "audit":data.audit
       };
 
         if(data.key=="intentionList"){

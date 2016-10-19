@@ -104,8 +104,9 @@
                         <td class="underline"  @click="clickOn({
                                 id:item.id,
                                 sub:$index,
-                                show:true,
+                                loading:true,
                                 name:item.name,
+                                show:true,
                                 link:alterInfo,
                                 url:'/customer/',
                                 key:'customerList'
@@ -195,7 +196,6 @@ import {
     getClientList,
     deleteInfo,
     alterInfo,
-    getClientDetail,
     saveCreate,
   customerTransferBlacklist
 } from '../../../vuex/actions'
@@ -220,7 +220,6 @@ export default {
             getClientList,
             deleteInfo,
             alterInfo,
-            getClientDetail,
             saveCreate,
           customerTransferBlacklist
         }
@@ -249,7 +248,8 @@ export default {
                 cityName:''
             },
             changeParam: {
-                show: false
+                show: false,
+                loading:true
             },
             createParam:{
                 show: false,
@@ -289,7 +289,6 @@ export default {
     methods: {
         clickOn: function(initCustomerlist) {
             this.changeParam = initCustomerlist;
-            this.getClientDetail(this.changeParam);
         },
         createCustomer:function(info){
             this.createParam = info;

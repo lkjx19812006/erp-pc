@@ -124,6 +124,11 @@ export const initIntentionList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionList));
 }
 
+/*--供求意向匹配--*/
+export const initSupplyDemandList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.supplyDemandList));
+}
+
 /*--报价信息--*/
 export const initOfferList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.offerList));
