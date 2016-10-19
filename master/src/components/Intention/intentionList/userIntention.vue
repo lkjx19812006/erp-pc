@@ -24,12 +24,6 @@
             <div class="right">
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 <!-- <button class="new_btn transfer" @click="intentionAudit()">审核</button> -->
-                <button class="new_btn transfer" @click="upOrDown({
-                                                                onSell:2  
-                                                              })">下架</button>
-                <button class="new_btn transfer" @click="upOrDown({
-                                                              onSell:1
-                                                            })">上架</button>
                 <!-- <button class="new_btn" @click="createIntention({
                        show:true,
                        selectCustomer:true,
@@ -516,8 +510,8 @@ export default {
                 name:'',
                 audit:true,
                 title:'意向审核',
-                pass:'pass',
-                reject:'pass'
+                pass:this.pass,
+                reject:this.reject
             },
             deleteParam:{
               show:false
@@ -634,12 +628,13 @@ export default {
             
         },
         audit:function(index,id){
-            console.log(index+'==='+id);
-            this.auditParam.name = "意向审核";
             this.auditParam.show = true;
         },
         pass:function(){
             console.log('审核通过');
+        },
+        reject:function(){
+            console.log('审核不通过');
         },
         clientTransfer:function(initIntentionList){
             this.intentionParam = initIntentionList;

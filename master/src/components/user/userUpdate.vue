@@ -11,25 +11,26 @@
        <div class="edit-model">
            <section class="editsection" v-cloak>
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
+               <validator name="validation">
                <div class="editpage">
 
                  <div class="cover_loading">
                    <pulse-loader :loading="detailParam.loading" :color="color" :size="size"></pulse-loader>
                  </div>
-
                    <div class="editpageleft">
                        <div class="editpage-input">
-                           <label class="editlabel">姓名</label>
-                           <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{initUserDetail.fullname}}" />
+                            <label class="editlabel" for="system">姓名<span class="system_danger" v-if="$validation.fullname.required||$validation.fullname.minlength">请输入姓名且不少于两位数</span></label>
+                           <input type="text" class="form-control  edit-input" v-validate:fullname="{required:true,minlength:2}" v-model='param.fullname' value="{{initUserDetail.fullname}}"/>
+                           <!-- <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{initUserDetail.fullname}}" /> -->
                        </div>
                        <div class="editpage-input">
-                           <label class="editlabel">昵称</label>
-                           <input type="text" v-model='param.nickname' class="form-control edit-input" value="{{initUserDetail.nickname}}" />
+                           <label class="editlabel" for="system">昵称<span class="system_danger" v-if="$validation.nickname.required">昵称不能为空</span></label>
+                           <input type="text" class="form-control  edit-input" v-validate:nickname="{required:true}" v-model='param.nickname' value="{{initUserDetail.nickname}}"/>
                        </div>
 
                      <div class="editpage-input">
-                       <label class="editlabel">电话</label>
-                       <input type="text" v-model='param.tel' class="form-control edit-input" value="{{initUserDetail.tel}}" />
+                          <label class="editlabel" for="system">电话<span class="system_danger" v-if="$validation.system.required">电话不能为空</span></label>
+                          <input type="text" class="form-control  edit-input" id="system" v-validate:system="{required:true}" v-model='param.tel' value="{{initUserDetail.tel}}"/>
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">性别</label>
@@ -64,7 +65,6 @@
                        <label class="editlabel">备注</label>
                        <input type="text" v-model='param.comment' class="form-control edit-input" value="{{initUserDetail.comment}}" />
                      </div>
-
 
                    </div>
                    <div class="editpageright">
@@ -105,6 +105,7 @@
 
                    </div>
                </div>
+               </validator>
            </section>
        </div>
         <div class="edit_footer">
@@ -257,5 +258,11 @@ export default {
 
 .editpage-image {
     display: inline-block;
+}
+.system_danger {
+    color: red;
+    margin-bottom: 0;
+    font-weight: 100;
+    font-size: 12px;
 }
 </style>
