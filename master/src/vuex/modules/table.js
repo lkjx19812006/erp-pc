@@ -72,7 +72,8 @@ import {
    ALTER_PRODUCT_DATA,
    SUPPLY_PRODUCT_DATA,
    PRODUCT_DATA,
-   FILES_DATA_LIST
+   FILES_DATA_LIST,
+   CUSTOMER_TRANSFER
 
 } from '../mutation-types'
 
@@ -208,9 +209,6 @@ const state = {
                   "unit":"公斤","address":null,"pubdate":null,"duedate":null,"advance":1.000000,"invoic":null,"visit":0,"pack":null,
                   "image":"/productPic/20160502/q5c6xa7.jpg","description":null,"number":2,"amount":200.000000,"updater":null,
                   "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48"}],"payPics":null,"sendPics":null},
-
-
-
 
     locationList:{
         provinceList: [
@@ -354,6 +352,7 @@ const state = {
 }
 
 const mutations = {
+
     [ORDER_TABLE](state, data) {
         state.orderList = data;
     },
@@ -495,6 +494,62 @@ const mutations = {
     [CUSTOMER_DETAIL_DATA](state, data) { //客户详情
         state.clientDetail = data;
     },
+    [CUSTOMER_TRANSFER](state,data){
+      console.log(data);
+     switch (data.flag){
+       case 'myClient':
+         data.arr.forEach(function(item){
+           for(var i=0;i<state.basicBaseList.customerList.length;i++){
+             if(state.basicBaseList.customerList[i].id == item){
+               state.basicBaseList.customerList.splice(i,1);
+             }
+           }
+         });
+
+         break;
+       case 'orgClient':
+         data.arr.forEach(function(item){
+           for(var i=0;i<state.basicBaseList.customerList.length;i++){
+             if(state.basicBaseList.customerList[i].id == item){
+               state.basicBaseList.customerList.splice(i,1);
+             }
+           }
+         });
+
+         break;
+       case 'allClient':
+         data.arr.forEach(function(item){
+           for(var i=0;i<state.basicBaseList.customerList.length;i++){
+             if(state.basicBaseList.customerList[i].id == item){
+               state.basicBaseList.customerList[i].employeeId=data.employeeId;
+               state.basicBaseList.customerList[i].employeeName=data.employeeName;
+               state.basicBaseList.customerList[i].orgId=data.orgId;
+             }
+           }
+         });
+         break;
+       case 'potentialClient':
+         data.arr.forEach(function(item){
+           for(var i=0;i<state.basicBaseList.customerList.length;i++){
+             if(state.basicBaseList.customerList[i].id == item){
+               state.basicBaseList.customerList.splice(i,1);
+             }
+           }
+         });
+         break;
+       default:
+         data.arr.forEach(function(item){
+           for(var i=0;i<state.basicBaseList.customerList.length;i++){
+             if(state.basicBaseList.customerList[i].id == item){
+               state.basicBaseList.customerList.splice(i,1);
+             }
+           }
+         });
+         break;
+
+     }
+
+    },
     [CUSTOMER_BATCH_DELETE](state, data){
         data.customerIds.forEach(function(item){
           for(var i=0;i<state.basicBaseList.customerList.length;i++){
@@ -562,7 +617,7 @@ const mutations = {
         }
     },
     [UPDATE_ADDR_DETAIL](state, data) { //修改客户地址
-       
+
         for (var key in data) {
             state[data.headline][data.key].arr[data.sub][key] = data[key];
         }

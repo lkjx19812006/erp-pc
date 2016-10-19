@@ -226,7 +226,8 @@ export default {
             transferParam:{
                 show:false,
                 name:'',
-                arr:[]
+                arr:[],
+                flag:'allClient'
             },
             deleteParam:{
                 show:false

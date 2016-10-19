@@ -87,7 +87,7 @@ export const getOrderList = ({ dispatch }, param) => {
 export const createOrder = ({ dispatch }, data) => { //创建订单
 
     console.log(data);
-    
+
     /*const body = {
         type:data.type,
         customer:data.customer,
@@ -95,29 +95,29 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         intl:data.intl,
         incidentals:data.incidentals,
         incidentalsDesc:data.incidentalsDesc,
-        preferential:data.preferential,   
-        preferentialDesc:data.preferentialDesc,  
-        currency:data.currency,     
-        consignee:data.consignee,    
+        preferential:data.preferential,
+        preferentialDesc:data.preferentialDesc,
+        currency:data.currency,
+        consignee:data.consignee,
         consigneePhone:data.consigneePhone,
-        zipCode:data.zipCode,     
+        zipCode:data.zipCode,
         country:data.country,
         province:data.province,
         city:data.city,
         district:data.district,
         consigneeAddr:data.consigneeAddr,
-        comments:data.comments, 
-        sourceType:data.sourceType,     
-        sourceId:data.sourceId,     
-        title:data.title,     
-        breedId:data.breedId,   
+        comments:data.comments,
+        sourceType:data.sourceType,
+        sourceId:data.sourceId,
+        title:data.title,
+        breedId:data.breedId,
         brredName:data.breedName,
         quality:data.quality,
         location:data.location,
         spec:data.spec,
         price:data.price,
         unit:data.unit,
-        number:data.number 
+        number:data.number
     }*/
     const body = {
         type:1,
@@ -295,7 +295,7 @@ export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        
+
         dispatch(types.UPDATE_DATA, param);
         console.log('修改成功')
     }, (res) => {
@@ -1507,7 +1507,7 @@ export const updateContact = ({ dispatch }, param) => { //修改客户联系人
     })
 }
 export const addrInfo = ({ dispatch }, param) => { //修改客户地址
-    
+
     const updatedata = {
         type:param.type,
         contactName:param.contactName,
@@ -1997,7 +1997,7 @@ export const transferEmploy = ({ dispatch }, param) => { //客户业务员划转
         }
     }).then((res) => {
         console.log('划转业务员成功')
-        dispatch(types.EMPLOYEE_DATA, param);
+        dispatch(types.CUSTOMER_TRANSFER, param);
     }, (res) => {
         console.log('fail');
     });
@@ -2022,7 +2022,7 @@ export const transferInfo = ({ dispatch }, param) => { //客户部门划转信�
         }
     }).then((res) => {
         console.log('划转部门成功')
-        dispatch(types.ORG_LIST_DATA, param);
+        dispatch(types.CUSTOMER_TRANSFER, param);
     }, (res) => {
         console.log('fail');
     });
@@ -2241,7 +2241,7 @@ export const updateMsg = ({ dispatch }, param) => {  //修改留言信息
     }).then((res) => {
         console.log('修改成功')
         param.show = false;
-        
+
     }, (res) => {
         console.log('fail');
         param.show = false;
@@ -2783,7 +2783,7 @@ export const intentionUpAndDown = ({ dispatch }, param) => { //意向上下架
         ids: param.ids,
         onSell:param.onSell
     }
-   
+
     Vue.http({
         method: 'PUT',
         url: apiUrl.clientList + '/intention/upAndDowns',

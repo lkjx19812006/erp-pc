@@ -39,14 +39,7 @@
                                                 key:'customerList'
                                                 })">删除客户信息</button>
                         </li>
-                        <li>
-                          <button type="button" class="btn btn-base"  @click="createTrack({
-                                           status:'',
-                                           link:createLabel,
-                                           url:'/customer/insertLabel',
-                                           key:'labels'
-                                           })">新建跟进</button>
-                        </li>
+
                         <li>
                           <button type="button" class="btn btn-base"  @click="clientTransferSupplier({
                                            id:param.id,
@@ -57,21 +50,7 @@
                                            title:'客户提取为供应商备注'
                                            })">提取为供应商</button>
                         </li>
-                        <li>
-                            <button type="button" class="btn btn-base"  @click="newlabel({
-                                             customerId:param.id,
-                                             id:param.id,
-                                             show:true,
-                                             title:'标签',
-                                             labelist:'标签',
-                                             statuslist:'类型',
-                                             label:'',
-                                             status:'',
-                                             link:createLabel,
-                                             url:'/customer/insertLabel',
-                                             key:'labels'
-                                             })">新建标签</button>
-                        </li>
+
                       <li v-if="initClientDetail.blacklist==0">
                         <button type="button" class="btn btn-base"  @click="clientTransferBlack()">加入黑名单</button>
                       </li>
@@ -1252,6 +1231,7 @@ export default {
         this.customerTransferBlacklist(this.auditParam);
       },
       clientTransferBlack(){
+        this.auditParam.link='/customer/transferBlacklist';
         this.auditParam.arr=[];
         this.auditParam.arr.push(this.initClientDetail.id);
 
