@@ -11,6 +11,11 @@
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
         <input type="button" class="btn  btn-confirm"  @click="param.callback(),param.show = false" value="确定" />
       </div>
+      <div class="model-footer" v-if="param.supplier">
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+        <input type="button" class="btn  btn-confirm"  @click="param.callback(),param.show = false" value="确定" />
+      </div>
+      
       <div class="model-footer" v-if="param.audit">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
         <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="不通过" />
