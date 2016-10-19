@@ -99,31 +99,30 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     console.log(data);
     const body = {
         type:data.type,
-        customer:data.customer,
+        sourceType:data.sourceType,
         sample:data.sample,
         intl:data.intl,
+        customer:data.customer,
         incidentals:data.incidentals,
         incidentalsDesc:data.incidentalsDesc,
-        preferential:data.preferential,   
-        preferentialDesc:data.preferentialDesc,  
-        currency:data.currency,     
-        consignee:data.consignee,    
+        preferential:data.preferential,
+        preferentialDesc:data.preferentialDesc,
+        currency:data.currency,
+        consignee:data.consignee,
         consigneePhone:data.consigneePhone,
-        zipCode:data.zipCode,     
+        zipCode:data.zipCode,
         country:data.country,
         province:data.province,
         city:data.city,
         district:data.district,
         consigneeAddr:data.consigneeAddr,
         comments:data.comments,   
-        quality:data.quality,
-        location:data.location,
         goods:[{
-            sourceType:data.sourceType,
-            sourceId:'12545',
+            sourceType:data.goods[0].sourceType,
+            sourceId:data.goods[0].sourceId,
             title:data.goods[0].title,
             breedId:data.goods[0].breedId,
-            brredName:data.goods[0].brredName,
+            brredName:data.goods[0].breedName,
             quality:data.goods[0].quality,
             location:data.goods[0].location,
             spec:data.goods[0].spec,
@@ -132,40 +131,6 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             number:data.goods[0].number
         }] 
     }
-   /* const body = {
-        type:1,
-        sourceType:1,
-        sample:1,
-        intl:1,
-        customer:1,
-        incidentals:1.1,
-        incidentalsDesc:'asada',
-        preferential:1.1,
-        preferentialDesc:'dad',
-        currency:1,
-        consignee:'4111',
-        consigneePhone:'12455',
-        zipCode:'423453',
-        country:'7',
-        province:'243',
-        city:'3056',
-        district:'1346',
-        consigneeAddr:'大大',
-        comments:'阿斯蒂芬',
-        goods:[{
-            sourceType:2,
-            sourceId:'12545',
-            title:'424',
-            breedId:123,
-            brredName:'ff',
-            quality:'dada',
-            location:'dad',
-            spec:'da',
-            price:1.2,
-            unit:'kg',
-            number:12
-        }]
-    }*/
     console.log(body);
     Vue.http({
         method: 'POST',
@@ -185,7 +150,63 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         console.log('fail');
         data.show = false;
     });
-};
+}
+export const alterOrder = ({ dispatch }, param) => { //修改订单
+    console.log(param);
+    const body = {
+        type:param.type,
+        id:param.id,
+        sourceType:param.sourceType,
+        sample:param.sample,
+        intl:param.intl,
+        customer:param.customer,
+        incidentals:param.incidentals,
+        incidentalsDesc:param.incidentalsDesc,
+        preferential:param.preferential,
+        preferentialDesc:param.preferentialDesc,
+        currency:param.currency,
+        consignee:param.consignee,
+        consigneePhone:param.consigneePhone,
+        zipCode:param.zipCode,
+        country:param.country,
+        province:param.province,
+        city:param.city,
+        district:param.district,
+        consigneeAddr:param.consigneeAddr,
+        comments:param.comments,   
+        goods:[{
+            sourceType:param.goods[0].sourceType,
+            sourceId:param.goods[0].sourceId,
+            title:param.goods[0].title,
+            breedId:param.goods[0].breedId,
+            brredName:param.goods[0].breedName,
+            quality:param.goods[0].quality,
+            location:param.goods[0].location,
+            spec:param.goods[0].spec,
+            price:param.goods[0].price,
+            unit:param.goods[0].unit,
+            number:param.goods[0].number
+        }] 
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.orderList + '/order/',
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.ORDER_ADD_DATA, param);
+        param.show = false;
+    }, (res) => {
+        console.log('fail');
+        param.show = false;
+    });
+}
 
 export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
     console.log(param)
@@ -198,10 +219,14 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
         }
     }).then((res) => {
         var orderDetail = res.json().result;
+        console.log(orderDetail)
         var goods = orderDetail.goods;
         orderDetail.goods={};
         orderDetail.goods.arr = goods;
         orderDetail.goods.show = true;
+        for (var i in orderDetail.goods.arr) {
+            orderDetail.goods.arr[i].show = false;
+        }
         dispatch(types.ORDER_DETAIL_DATA, orderDetail);
     }, (res) => {
         console.log('fail');
@@ -2250,6 +2275,7 @@ export const updateMsg = ({ dispatch }, param) => {  //修改留言信息
         }
     }).then((res) => {
         console.log('修改成功')
+        dispatch(types.MSG_UPDATE_DATA, param);
         param.show = false;
         
     }, (res) => {

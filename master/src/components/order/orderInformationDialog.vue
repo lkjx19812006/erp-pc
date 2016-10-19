@@ -63,8 +63,7 @@
                                       :on-change="selectCity"
                                       :options="initProvince"
                                       placeholder="省"
-                                      label="cname"
-                                    >
+                                      label="cname">
                                     </v-select>
                                 </div>
                             </div>
@@ -77,8 +76,7 @@
                                           :value.sync="district"
                                           :options="initDistrictlist"
                                           placeholder="区"
-                                          label="cname"
-                                    >
+                                          label="cname">
                                     </v-select>
                                  </div>
                             </div>
@@ -147,7 +145,6 @@
                                     <option value="0" selected>人民币</option>
                                    <!--  <option value="1">是</option> -->
                                 </select>
-                                <!-- <input type="text" class="form-control edit-input" v-model="param.currency" value="{{param.currency}}"/> -->
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">是否样品订单</label>
@@ -225,7 +222,7 @@
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="confirm()">保存</button>
+            <button type="button" class="btn  btn-confirm" @click="confirm(param)">保存</button>
         </div>
     </div>
 </template>
@@ -244,8 +241,7 @@ import {
     getCountryList,
     getProvinceList,
     getCityList,
-    getDistrictList,
-    createOrder
+    getDistrictList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -300,12 +296,10 @@ export default {
             getCountryList,
             getProvinceList,
             getCityList,
-            getDistrictList,
-            createOrder
+            getDistrictList
         }
     },
     methods:{
-        
         selectProvince:function(){
             console.log('selectProvince');
             this.province = '';
@@ -314,7 +308,6 @@ export default {
             if(this.country!=''&&this.country!=null){
               this.getProvinceList(this.country);
             }
-
         },
 
         selectCity:function(){
@@ -343,13 +336,13 @@ export default {
                 this.empNameParam.employeeId = this.param.employeeId;
             }*/
         },
-        confirm:function(){
+        confirm:function(param){
             this.param.country = this.country.id;
             this.param.province = this.province.id;
             this.param.city = this.city.id;
             this.param.district = this.district.id;
             console.log(this.param);
-            this.createOrder(this.param);
+            this.param.link(this.param);
 
         }
     },

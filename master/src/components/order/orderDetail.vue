@@ -33,7 +33,7 @@
         <section>
             <div class="client-section clearfix" >
                 <div class="col-md-8 client-detail">
-                    <h4 class="section_title">相关{{initOrderDetail.goods.arr}}</h4>
+                    <h4 class="section_title">相关</h4>
                     <article>
                         <div class="panel-group">
                             <div class="panel panel-default">
@@ -53,7 +53,7 @@
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>名称</th>
+                                            <th>商品名称</th>
                                             <th>产地</th>
                                             <th>规格</th>
                                             <th>数量</th>
@@ -63,7 +63,7 @@
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.goods.arr">
-                                                <td>{{item.breedName}}</td>
+                                                <td>{{item.brredName}}</td>
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
                                                 <td>{{item.number}}</td>

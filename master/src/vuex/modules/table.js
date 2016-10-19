@@ -1,7 +1,9 @@
 import {
 
    ORDER_TABLE,
+   ORDER_ADD_DATA,
    ORDER_DETAIL_DATA,
+   ORDER_UPDATE_DATA,
    CHANGE_SHOW_STATUE,
    SYSTEM_DATA,
    PROVINCE_DATA,
@@ -60,6 +62,7 @@ import {
    INTENTION_DETAIL_DATA,
    OFFER_LIST_DATA,
    MSG_LIST_DATA,
+   MSG_UPDATE_DATA,
    UPDATA_INTENTION_DATA,
    INTENTION_DATA,
    INTENTION_UP_DOWN,
@@ -72,8 +75,7 @@ import {
    ALTER_PRODUCT_DATA,
    SUPPLY_PRODUCT_DATA,
    PRODUCT_DATA,
-   FILES_DATA_LIST,
-   ORDER_ADD_DATA
+   FILES_DATA_LIST
 
 } from '../mutation-types'
 
@@ -218,8 +220,6 @@ const state = {
             {"id": 248,"pid": 7, "path": ",1,7,248,","level": 3,"cname": "天津", "nameEn": "Tianjin","namePy": null, "code": "12","twoNumber": null,"number": null,"iso": null,"sortnum": 248, "show": true }
         ]
     },
-
-
     breedDetail: {
         "code": "232去",
         "icon": "http://p.ayxbk.com/images/thumb/4/4f/Bkg32.jpg/220px-Bkg32.jpg",
@@ -358,7 +358,55 @@ const mutations = {
     [ORDER_TABLE](state, data) { //订单列表
         state.basicBaseList.orderList = data;
     },
-    [ORDER_DETAIL_DATA](state, data) { //订单详情
+    [ORDER_UPDATE_DATA](state,data){ //修改订单
+        for (var key in data) {
+            state.basicBaseList.orderList[data.sub][key] = data[key];
+        }
+        console.log(state.basicBaseList.orderList[data.sub]);
+    },
+    [ORDER_ADD_DATA](state, data) {  //创建订单
+        if(data.key == 'intentionDetail'){
+            console.log('意向详情采纳报价');   
+        }
+        if(data.key == 'orderList'){
+            state.basicBaseList[data.key].unshift({
+                "type":data.type,
+                "sourceType":data.sourceType,
+                "sample":data.sample,
+                "intl":data.intl,
+                "customer":data.customer,
+                "incidentals":data.incidentals,
+                'incidentalsDesc':data.incidentalsDesc,
+                "preferential":data.preferential,
+                'preferentialDesc':data.preferentialDesc,
+                'currency':data.currency,
+                "consignee":data.consignee,
+                'consigneePhone':data.consigneePhone,
+                "zipCode":data.zipCode,
+                "country":data.country,
+                "province":data.province,
+                "city":data.city,
+                "district":data.district,
+                "consigneeAddr":data.consigneeAddr,
+                'comments':data.comments,   
+                goods:[{
+                    "sourceType":data.goods[0].sourceType,
+                    "sourceId":data.goods[0].sourceId,
+                    "title":data.goods[0].title,
+                    "breedId":data.goods[0].breedId,
+                    "brredName":data.goods[0].breedName,
+                    "quality":data.goods[0].quality,
+                    'location':data.goods[0].location,
+                    "spec":data.goods[0].spec,
+                    "price":data.goods[0].price,
+                    "unit":data.goods[0].unit,
+                    "number":data.goods[0].number
+                }],
+                "show": false
+            });
+        }
+    },
+    [ORDER_DETAIL_DATA](state, data) {//订单详情
         console.log(data);
         state.orderDetail = data;
     },
@@ -696,6 +744,15 @@ const mutations = {
     },
     [MSG_LIST_DATA](state, data) { //留言列表
         state.basicBaseList.msgList = data;
+    },
+    [MSG_UPDATE_DATA](state, data) { //留言修改
+        if(data.key=='msgList'){
+            console.log('留言列表修改');
+            state.basicBaseList.msgList[data.index].comments = data.comments;
+        }
+        if(data.key=='intentionDetail'){
+            state.basicBaseList.intentionDetail.msgs.arr[data.index].comments = data.comments;
+        }
     },
     [USER_DATA](state, data) { // 会员列表
         state.basicBaseList.userList = data;

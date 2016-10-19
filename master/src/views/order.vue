@@ -15,7 +15,6 @@
                             title1:'新建订单',
                             type:'',
                             sourceType:'',
-                            clients:'',
                             sample:'',
                             intl:'',
                             customer:'',
@@ -45,7 +44,9 @@
                                     price:'',
                                     unit:'',
                                     number:''
-                                }]
+                                }],
+                            key:'orderList',
+                            link:createOrder
                             })">新建</button>
                         <button class="new_btn transfer" @click="createSearch()">搜索</button>
                     </div>
@@ -106,7 +107,47 @@
                               <img height="24" width="24" src="/static/images/default_arrow.png" />
                               <div class="component_action" v-show="item.show">
                                    <ul>
-                                       <li @click="editor()">编辑</li>
+                                       <li @click="updateOrder({
+                                                sub:$index,
+                                                id:item.id,
+                                                show:true,
+                                                title1:'修改订单',
+                                                type:item.type,
+                                                sourceType:item.sourceType,
+                                                sample:item.sample,
+                                                intl:item.intl,
+                                                customer:item.customer,
+                                                currency:item.currency,
+                                                consignee:item.consignee,
+                                                consigneePhone:item.consigneePhone,
+                                                zipCode:item.zipCode,
+                                                country:item.country,
+                                                province:item.province,
+                                                city:item.city,
+                                                district:item.district,
+                                                consigneeAddr:item.consigneeAddr,
+                                                comments:item.comments,
+                                                incidentals:item.incidentals,
+                                                incidentalsDesc:item.incidentalsDesc,
+                                                preferential:item.preferential,
+                                                preferentialDesc:item.preferentialDesc,
+                                                goods:[{
+                                                        sourceType:item.sourceType,
+                                                        sourceId:item.sourceId,
+                                                        title:item.title,
+                                                        breedId:item.breedId,
+                                                        brredName:item.brredName,
+                                                        quality:item.quality,
+                                                        location:item.location,
+                                                        spec:item.spec,
+                                                        price:item.price,
+                                                        unit:item.unit,
+                                                        number:item.number
+                                                    }],
+                                                key:'orderList',
+                                                link:alterOrder,
+                                                url:'/order/'
+                                                })">编辑</li>
                                        <li @click="specDelete({
                                                 id:item.id,
                                                 sub:$index,
@@ -122,8 +163,7 @@
                           </td>
                         </tr>
                     </tbody>
-                  </table>
-               
+                </table>
             </div>
         </div>
         <div class="order_pagination">
@@ -144,7 +184,9 @@ import {
 } from '../vuex/getters'
 import {
     getOrderList,
-    deleteInfo
+    deleteInfo,
+    alterOrder,
+    createOrder
 } from '../vuex/actions'
 
 export default {
@@ -171,18 +213,21 @@ export default {
                 orderStatus:'',
                 payWay:'',
                 clients:'',
-                dataStatus:'',
+                dataStatus:''
             },
             dialogParam:{
-                 show: false
+                show: false
             },
             updateParam: {
-                 show:false,   
+                show:false,   
             },
             detailParam: {
-                 show:false
+                show:false
             },
             deleteParam:{
+                show:false
+            },
+            updateorderParam:{
                 show:false
             },
             show:true
@@ -195,7 +240,9 @@ export default {
         },
         actions: {
             getOrderList,
-            deleteInfo
+            deleteInfo,
+            alterOrder,
+            createOrder
         }
     },
     created() {
@@ -223,12 +270,11 @@ export default {
             console.log(initOrderlist);
             this.detailParam=initOrderlist;
         },
-        editor:function(){
-            console.log("editor");
-            this.updateParam.show=true;
-        },
         specDelete:function(initOrderlist){
             this.deleteParam = initOrderlist;
+        },
+        updateOrder:function(initOrderlist){
+            this.dialogParam=initOrderlist;
         }
     },
      route: {

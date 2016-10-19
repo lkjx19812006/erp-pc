@@ -2,15 +2,15 @@
      <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
      <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
      <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
-     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+     <auditdialog-model :param="auditParam" v-if="auditParam.show"></auditdialog-model>
      <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
      <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
      <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
      <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
      
-	 <div v-show="!chanceParam.show">
+   <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">我的意向</div>
+            <div class="my_enterprise col-xs-2">部门意向</div>
             <div class="col-xs-5 my_order_search">
                <!-- <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
@@ -30,7 +30,7 @@
                 <button class="new_btn transfer" @click="upOrDown({
                                                               onSell:1
                                                             })">上架</button>
-                <button class="new_btn" @click="createIntention({
+                <!-- <button class="new_btn" @click="createIntention({
                        show:true,
                        selectCustomer:true,
                        flag:0,
@@ -70,7 +70,7 @@
                        key:'intentionList',
                        link:createIntentionInfo,
                        url:'/intention/'
-                       })">新建</button> 
+                       })">新建</button>  -->
             </div>
         </div>
         <div class="service-nav clearfix">
@@ -168,13 +168,13 @@
                     <tr>  
                         <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
                         <th>类型</th>
-      	            		<th>特殊的</th>
-      	            		<th>客户名称</th>
-      	            		<th>客户手机号</th>
-      	            		<th>品种名称</th>
-      	            		<th>资格资质</th>
-      	            		<th>规格</th>
-      	            		<th>单位</th>
+                        <th>特殊的</th>
+                        <th>客户名称</th>
+                        <th>客户手机号</th>
+                        <th>品种名称</th>
+                        <th>资格资质</th>
+                        <th>规格</th>
+                        <th>单位</th>
                         <th>单价</th>
                         <th>产地</th>
                         <th>数量</th>
@@ -182,20 +182,20 @@
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>所在区</th>
-	            		      <th>交收地址</th>
-      	            		<th>预付比例</th>
-      	            		<th>发票</th>
-      	            		<th>上门看货</th>
-      	            		<th>包装</th>
-      	            		<th>是否国际</th>
-      	            		<th>提供样品</th>
-      	            		<th>样品数量</th>
-      	            		<th>样品单位</th>
-      	            		<th>样品价格</th>
-      	            		<th>报价人数</th>
-      	            		<th>审核状态</th>
+                        <th>交收地址</th>
+                        <th>预付比例</th>
+                        <th>发票</th>
+                        <th>上门看货</th>
+                        <th>包装</th>
+                        <th>是否国际</th>
+                        <th>提供样品</th>
+                        <th>样品数量</th>
+                        <th>样品单位</th>
+                        <th>样品价格</th>
+                        <th>报价人数</th>
+                        <th>审核状态</th>
                         <th>上下架</th>
-      	            		<th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -293,28 +293,28 @@
                                                customerPhone:item.customerPhone,
                                                breedName:item.breedName,
                                                breedId:item.breedId,
-      				                                type:item.type,
-      				                                especial:item.especial,
-      				                                quality:item.quality,
-      				                                qualification:item.qualification,
-      				                                spec:item.spec,
-      				                                number:item.number,
-      				                                unit:item.unit,
-      				                                price:item.price,
-      				                                address:item.address,
-      				                                location:item.location,
-      				                                advance:item.advance,
-      				                                invoic:item.invoic,
-      				                                visit:item.visit,
-      				                                pack:item.pack,
-      				                                intl:item.intl,
-      				                                visit:item.visit,
-      				                                sampling:item.sampling,
-      				                                sampleNumber:item.sampleNumber,
-      				                                sampleUnit:item.sampleUnit,
-      				                                sampleAmount:item.sampleAmount,
-      				                                offer:item.offer,
-      				                                status:item.status,
+                                              type:item.type,
+                                              especial:item.especial,
+                                              quality:item.quality,
+                                              qualification:item.qualification,
+                                              spec:item.spec,
+                                              number:item.number,
+                                              unit:item.unit,
+                                              price:item.price,
+                                              address:item.address,
+                                              location:item.location,
+                                              advance:item.advance,
+                                              invoic:item.invoic,
+                                              visit:item.visit,
+                                              pack:item.pack,
+                                              intl:item.intl,
+                                              visit:item.visit,
+                                              sampling:item.sampling,
+                                              sampleNumber:item.sampleNumber,
+                                              sampleUnit:item.sampleUnit,
+                                              sampleAmount:item.sampleAmount,
+                                              offer:item.offer,
+                                              status:item.status,
                                                country:item.country,
                                                province:item.province,
                                                city:item.city,
@@ -334,9 +334,7 @@
                                                url:'/intention/',
                                                key:'intentionList'
                                                })">删除</li>
-                                   <li @click="up($index,item.id)">上架</li>
-                                   <li @click="down($index,item.id)">下架</li>
-                                   <li @click="applyDown($index,item.id)">申请下架</li >           
+                                   <li @click="audit($index,item.id)">审核</li>          
                                </ul>
                            </div>
                        </td>
@@ -428,23 +426,23 @@ import filter from '../../../filters/filters'
 import chancedetailModel from '../../Intention/chanceDetail'
 import transferintentModel from '../../Intention/transferIntent'
 import intentionauditModel from'../../user/intentionAudit'
-import tipsdialogModel  from '../../tipsDialog'
+import auditdialogModel  from '../../tips/auditDialog'
 import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import editintentModel  from  '../../Intention/Editintention'
 import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
 
 import {
-	initIntentionList,
+  initIntentionList,
   initSupplyDemandList
 } from '../../../vuex/getters'
 import {
-	getIntentionList,
+  getIntentionList,
   getSupplyDemandList,
   intentionUpAndDown,
-	deleteInfo,
-	editintentInfo,
-	createIntentionInfo,
+  deleteInfo,
+  editintentInfo,
+  createIntentionInfo,
 } from '../../../vuex/actions'
 export default {
     components: {   
@@ -452,7 +450,7 @@ export default {
         chancedetailModel,
         transferintentModel,
         intentionauditModel,
-        tipsdialogModel,
+        auditdialogModel,
         deletebreedModel,
         editintentModel,
         createintentModel,
@@ -480,7 +478,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                link:'/intention/employee/list',
+                link:'/intention/user/list',
                 type:'',
                 invoic:'',
                 visit:'',
@@ -513,25 +511,26 @@ export default {
                 validate:0,
                 description:''
             },
-            tipsParam:{
+            auditParam:{
                 show:false,
                 name:'',
-                ids:[],
-                index:[],
-                onSell:0
+                audit:true,
+                title:'意向审核',
+                pass:'pass',
+                reject:'pass'
             },
             deleteParam:{
-            	show:false
+              show:false
             },
             editParam:{
-            	show:false
+              show:false
             },
             createParam:{
-            	show:false
+              show:false
             },
             offerParam:{
-            	show:false,
-            	id:''
+              show:false,
+              id:''
             },
             checked:false
         }
@@ -582,16 +581,16 @@ export default {
             }
         },
         checkedAll:function(){
-       			this.checked = !this.checked;
-       			if(this.checked){
-         				this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-         					item.checked = true;
-         				})		
-       			}else{
-         				this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-         					item.checked = false;
-         				})
-       			}   	
+            this.checked = !this.checked;
+            if(this.checked){
+                this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
+                  item.checked = true;
+                })    
+            }else{
+                this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
+                  item.checked = false;
+                })
+            }     
         },
         intentionAudit:function(){
             this.intentionAuditParam.arr = []; 
@@ -634,26 +633,13 @@ export default {
             }  
             
         },
-        up:function(index,id){
-            this.tipsParam.ids = [];
-            this.tipsParam.indexs = [];
-            this.tipsParam.ids.push(id);
-            this.tipsParam.indexs.push(index);
-            this.tipsParam.onSell = 1;
-            this.tipsParam.name = '意向上架成功';
-            this.intentionUpAndDown(this.tipsParam);
+        audit:function(index,id){
+            console.log(index+'==='+id);
+            this.auditParam.name = "意向审核";
+            this.auditParam.show = true;
         },
-        down:function(index,id){
-            this.tipsParam.ids = [];
-            this.tipsParam.indexs = [];
-            this.tipsParam.ids.push(id);
-            this.tipsParam.indexs.push(index);
-            this.tipsParam.onSell = 2;
-            this.tipsParam.name = '意向下架成功';
-            this.intentionUpAndDown(this.tipsParam);
-        },
-        applyDown:function(index,id){
-          console.log("申请下架");
+        pass:function(){
+            console.log('审核通过');
         },
         clientTransfer:function(initIntentionList){
             this.intentionParam = initIntentionList;
@@ -688,14 +674,14 @@ export default {
             
         },
         specDelete:function(initIntentionList){
-        	this.deleteParam = initIntentionList;
+          this.deleteParam = initIntentionList;
         },
         modifyIntention:function(initIntentionList){
-        	console.log(initIntentionList.unit);
-        	this.createParam = initIntentionList;
+          console.log(initIntentionList.unit);
+          this.createParam = initIntentionList;
         },
         createIntention:function(initIntentionList){
-        	   this.createParam = initIntentionList;
+             this.createParam = initIntentionList;
         }
     },
     events: {
