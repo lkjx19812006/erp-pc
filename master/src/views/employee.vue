@@ -22,10 +22,10 @@
                         <input type="text" class="search_input" v-model="loadParam.mobile"  placeholder="按员工电话搜索">
                     </div>
                     <div class="name_search clearfix">
-                        <button class="new_btn " style="line-height:20px" @click="loadByCondition()">搜索</button>
+                        <button class="new_btn " style="line-height:20px;" @click="loadByCondition()">搜索</button>
                     </div>
                 </div>
-                <div class="right col-xs-2">
+                <div class="right col-xs-1">
                     <button class="new_btn transfer" @click="newData({
                          title:'新建员工',
                          show:true,
@@ -113,8 +113,8 @@
                     <td>{{item.position}}</td>
                     <td>{{item.mobile}}</td>
                     <td>{{item.extno}}</td>
-                    <td>{{item.entrydate | dateFormat}}</td>
-                    <td>{{item.leavedate | dateFormat}}</td>
+                    <td>{{item.entrydate}}</td>
+                    <td>{{item.leavedate}}</td>
                     <td>{{item.level | levelstate}}</td>
                     <td  @click="editData($index,{
                             concrete:'employeeList'

@@ -16,6 +16,9 @@
     	<div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
+      <div class="cover_loading">
+        <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+      </div>
         <div class="client_nav">
             <nav class="navbar navbar-client" role="navigation">
                 <div class="container-fluid">
@@ -36,14 +39,14 @@
                                                 key:'customerList'
                                                 })">删除客户信息</button>
                         </li>
-                        <!--  <li>
-                           <button type="button" class="btn btn-base"  @click="createTrack({
-                                            status:'',
-                                            link:createLabel,
-                                            url:'/customer/insertLabel',
-                                            key:'labels'
-                                            })">新建跟进</button>
-                                                </li> -->
+                        <li>
+                          <button type="button" class="btn btn-base"  @click="createTrack({
+                                           status:'',
+                                           link:createLabel,
+                                           url:'/customer/insertLabel',
+                                           key:'labels'
+                                           })">新建跟进</button>
+                        </li> 
                         <li>
                             <button type="button" class="btn btn-base"  @click="newlabel({
                                              customerId:param.id,
@@ -270,14 +273,16 @@
                     											文件（{{initClientDetail.files.arr.length}}）
                     										</a>
                     										<button type="button" class="btn btn-base pull-right" @click.stop="createfiles({
-                      											 customerId:param.id,
+                      											 bizId:param.id,
                                              id:param.id,
     		                                     show:true,
-                                             type:'',
+                                             title:'新建文件',
+                                             fileType:'',
+                                             bizType:'',
+                                             description:'',
                                              path:'',
-                                             catagory:'',
-    		                                     link:uploadFiles,
-    		                                     url:'/customer/file',
+                                             link:uploadFiles,
+                                             url:'/customer/file/',
     		                                     key:'files'
                       											})">新建</button>
                           				</h4>
@@ -288,16 +293,18 @@
                                       	<thead>
                                       		<th>文件路径</th>
                                       		<th>文件类型</th>
-                                      		<th>文件分类</th>
+                                      		<th>所属文件</th>
+                                          <th>描述</th>
                                       		<th></th>
                                       	</thead>
 		                                    <tbody>
 		                                         <tr v-for="item in initClientDetail.files.arr">
 		                                            <!-- <td><img v-bind:src="item.path" /></td> -->
-                                                <td><img v-bind:src="item.path" v-if="item.type=='图片'" style='float:left; margin-left:15px;' />
+                                                <td><img v-bind:src="item.path" v-if="item.fileType=='image'" style='float:left; margin-left:15px;' />
                                                     <img style='float:left; margin-left:15px;' src="/static/images/pdf.png" v-else></td>
-		                                            <td>{{item.type}}</td>
-		                                            <td>{{item.catagory}}</td>
+		                                            <td>{{item.fileType}}</td>
+		                                            <td>{{item.bizType}}</td>
+                                                <td>{{item.description}}</td>
                                                 <td  @click="clickShow($index,{
                                                     concrete:'files'
                                                     })">
@@ -453,54 +460,66 @@
                                   </div>
                               </div>
                           </div>
-                           <!--  <div class="panel panel-default">
+                             <div class="panel panel-default">
                                <div class="panel-heading">
-                                   <h4 class="panel-title clearfix" >
+                                   <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:initClientDetail.trackings,
+                                              crete:'trackings'
+                                              })">
                            										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
                            										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                           											跟进（）
+                           											跟进（{{initClientDetail.trackings.arr.length}}）
                            										</a>
-                           										<button type="button" class="btn btn-base pull-right" @click.stop="createtrack({
-                           											 customerId:param.id,
-         		                                     id:param.id,
-         		                                     contactId:param.id,
-         		                                     bizId:param.id,
-         		                                     show:true,
-                                                  type:'',
-                                                  trackingWay:'',
-                                                  comments:'',
-         		                                     link:createTrack,
-         		                                     url:'/customer/insertTracking',
-         		                                     key:'tracks'
-                           											})">新建</button>
+                                      <button type="button" class="btn btn-base pull-right" @click.stop="createTracking({
+                                          objId:initClientDetail.id,
+                                          bizId:'',
+                                          bizName:'',
+                                          type:1,
+                                          trackingWay:'',
+                                          bizType:'',
+                                          contactNo:'',
+                                          comments:'',
+                                          show:true,
+                                          customer:true,
+                                          flag:0
+                                        })">新建</button>
                            									</h4>
                                </div>
-                               <div  class="panel-collapse" v-show="!initClientDetail.files.show">
+                               <div  class="panel-collapse" v-show="!initClientDetail.trackings.show">
                                   <div class="panel-body panel-set">
-                           	                                    <table class="table contactSet">
-                                       	<thead>
-                                       		<th>药品名称</th>
-                                       		<th>药品编号</th>
-                                       		<th>药品类型</th>
-                                       		<th>所属公司</th>
-                                       		<th>公司地址</th>
-                                       		<th>说明</th>
-                                       	</thead>
+                                    <table class="table contactSet">
+                                      <thead>
+                                      <th>业务类型</th>
+                                      <th>跟进方式</th>
+                                      <th>联系账号</th>
+                                      <th>备注</th>
+                                      <th style="text-align:center">操作</th>
+                                      </thead>
  		                                    <tbody>
- 		                                         <tr v-for="item in initClientDetail">
- 		                                            <td>{{item.name}}</td>
- 		                                            <td>{{item.number}}</td>
- 		                                            <td>{{item.drugType}}</td>
- 		                                            <td>{{item.company}}</td>
- 		                                            <td>{{item.address}}</td>
- 		                                            <td>{{item.spec}}</td>
+ 		                                         <tr v-for="item in initClientDetail.trackings.arr">
+                                               <td v-if="!item.bizType">客户</td>
+                                               <td v-if="item.bizType==1">意向</td>
+                                               <td v-if="item.bizType==2">订单</td>
+                                               <td v-if="item.bizType!=0&&item.bizType!=1&&item.bizType!=2"></td>
+                                               <td>{{item.trackingWay}}</td>
+                                               <td>{{item.contactNo}}</td>
+                                               <td>{{item.comments}}</td>
+                                               <td  @click="clickShow($index,{
+                                                concrete:'tracking'
+                                                })">
+                                                 <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                 <div class="breed_action" v-show="item.show" >
+
+                                                   <dt @click="updateTracking(item,$index)">编辑</dt>
+                                                 </div>
+                                               </td>
  		                                        </tr>
  		                                    </tbody>
  		                                </table>
-                                       <p class="contact-view">查看全部</p>
+                                       <!--<p class="contact-view">查看全部</p>-->
                                    </div>
                                </div>
-                           </div> -->
+                           </div>
                              <div class="panel panel-default" collapse>
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -873,16 +892,19 @@
 				                                                   key:'products',
 				                                                   headline:'clientDetail'
 				                                                   })">编辑</dt>
-				                                               <!-- <dt @click="specDelete({
-				                                                   id:item.id,
-				                                                   sub:$index,
-				                                                   show:true,
-				                                                   title:'产品',
-				                                                   link:addrDel,
-				                                                   url:'/customer/deleteAddress/',
-				                                                   key:'products',
-				                                                   headline:'clientDetail'
-				                                                   })">删除</dt> -->
+				                                                <dt @click="createfiles({
+                                                             bizId:param.id,
+                                                             id:param.id,
+                                                             show:true,
+                                                             title:'新建产品文件',
+                                                             fileType:'',
+                                                             bizType:'',
+                                                             description:'',
+                                                             path:'',
+                                                             link:uploadFiles,
+                                                             url:'/customer/file/',
+                                                             key:'files'
+                                                           })">上传产品文件</dt> 
 				                                           </dl>
 				                                        </div>
 		                                            </td>
@@ -918,7 +940,7 @@
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>电话</label>
-                                    <input type="text" class="form-control" v-model="initClientDetail.tel" value="{{initClientDetail.tel}}" disabled="disabled"/>
+                                    <input type="text" class="form-control" v-model="initClientDetail.mainPhone" value="{{initClientDetail.mainPhone}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
@@ -978,7 +1000,7 @@ import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDe
 import updatecontactModel from '../clientRelate/updateContactInfo'
 import updateaddrModel from '../clientRelate/updataAddrInfo'
 import createfilesModel from  '../clientRelate/createFiles'
-import createtrackModel from '../clientRelate/label/createTrack'
+import createtrackModel from '../user/userTracking'
 import createproductModel from  '../clientRelate/label/createProduct'
 import intentionModel from  '../user/userIntention'
 import auditDialog from '../tips/auditDialog'
@@ -1003,6 +1025,7 @@ import {
 	uploadFiles,
   deleteInfo,
   customerTransferBlacklist
+
 } from '../../vuex/actions'
 export default {
     components: {
@@ -1054,7 +1077,16 @@ export default {
         },
     		ctrackParam:{
     			show:false,
-    			name:''
+          objId:'',
+          bizId:'',
+          bizName:'',
+          type:0,
+          trackingWay:'',
+          bizType:'',
+          contactNo:'',
+          comments:'',
+          customer:true,
+          flag:0
     		},
     		cproductParam:{
     			show:false
@@ -1103,12 +1135,9 @@ export default {
             }
             this.$store.state.table.clientDetail[param.crete].show = !this.$store.state.table.clientDetail[param.crete].show;
     	},
-      newTracking:function(param){
-
-      },
     	clickShow: function(id,param) {
           this.$store.state.table.clientDetail[param.concrete].arr[id].show = !this.$store.state.table.clientDetail[param.concrete].arr[id].show;
-      
+
       },
       createFormt:function(initBreedDetail){
       	this.custParam = initBreedDetail;
@@ -1133,13 +1162,21 @@ export default {
       },
       createfiles:function(initBreedDetail){
       	 this.cfilesParam = initBreedDetail;
-         console.log(this.cfilesParam.path)
          this.$broadcast('getImageData');
       },
-      createTrack:function(value){
-        console.log('fsfsfs');
-        	this.ctrackParam.show = true;
-        	this.ctrackParam.name= value;
+      createTracking:function(param){
+        this.ctrackParam.objId=param.objId;
+        this.ctrackParam.bizId=param.bizId;
+        this.ctrackParam.bizName=param.bizName;
+        this.ctrackParam.type=param.type;
+        this.ctrackParam.trackingWay=param.trackingWay;
+        this.ctrackParam.bizType=param.bizType;
+        this.ctrackParam.contactNo=param.contactNo;
+        this.ctrackParam.comments=param.comments;
+        this.ctrackParam.show=param.show;
+        this.ctrackParam.customer=param.customer;
+        this.ctrackParam.flag=param.flag;
+
       },
       newproduct:function(initBreedDetail){
       	 this.cproductParam = initBreedDetail;
@@ -1216,7 +1253,11 @@ export default {
 
 
       }
-    }
+    },
+
+  created(){
+    this.getClientDetail(this.param);
+  }
 }
 </script>
 <style scoped>

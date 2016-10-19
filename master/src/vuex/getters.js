@@ -99,9 +99,15 @@ export const initDruglist = (state) => {
 export const initCustomerlist = (state) => {
     return parseJson(state.table.basicBaseList.customerList);
 }
+/*供应商产品*/
 export const initProductlist = (state) => {
-    return JSON.parse(JSON.stringify(state.table.basicBaseList.productList));
+    return parseJson(state.table.basicBaseList.productList);
 }
+/*供应商文件*/
+export const initFileslist = (state) => {
+    return parseJson(state.table.basicBaseList.filesList);
+}
+/*---end---*/
 export const initClientDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.clientDetail));
 }
@@ -116,6 +122,11 @@ export const initOrgList = (state) => {
 /*--意向信息--*/
 export const initIntentionList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionList));
+}
+
+/*--供求意向匹配--*/
+export const initSupplyDemandList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.supplyDemandList));
 }
 
 /*--报价信息--*/

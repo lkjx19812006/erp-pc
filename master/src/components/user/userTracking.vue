@@ -20,11 +20,20 @@
             </div>
 
 
-            <div v-if="param.flag==0" class="editpage-input">
+            <div v-if="param.flag==0&&!param.customer" class="editpage-input">
               <label class="editlabel">业务类型</label>
               <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType">
                 <option value="">请选择业务类型</option>
                 <option value="1">意向</option>
+              </select>
+            </div>
+
+            <div v-if="param.flag==0&&param.customer" class="editpage-input">
+              <label class="editlabel">业务类型</label>
+              <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType">
+                <option value="">请选择业务类型</option>
+                <option value="1">意向</option>
+                <option value="2">订单</option>
               </select>
             </div>
 
@@ -176,39 +185,26 @@
 
       },
       selectBizId: function () {
-        if (this.param.bizType !== '') {
+
+        if (this.param.bizType != '') {
           this.bizParam.show = true;
           this.bizParam.bizType = this.param.bizType;
-          this.bizParam.userId=this.param.userId;
-          console.log(this.param.bizType);
+          this.bizParam.userId=this.param.objId;
         }
-        this.intention.breedName='';
-        this.intention.location='';
-        this.intention.spec='';
-        this.intention.number='';
-        this.intention.price='';
-        this.intention.unit='';
-        this.param.bizId = '';
 
-      },
-
+      }
     },
     events: {
       'getBiz': function (biz) {
-
-        if(biz.breedName){
-          this.intention.breedName=biz.breedName;
-          this.intention.location=biz.location;
-          this.intention.spec=biz.spec;
-          this.intention.number=biz.number;
-          this.intention.price=biz.price;
-          this.intention.unit=biz.unit;
-        };
+        this.param.bizTypeCopy=this.param.bizType;
         this.param.bizId = biz.id;
-        this.param.bizName = biz.breedName;
       },
       'cancel':function(){
-        this.param.bizType='';
+        if(this.param.bizTypeCopy){
+          this.param.bizType=this.param.bizTypeCopy
+        }else{
+          this.param.bizType='';
+        }
       }
     }
   }

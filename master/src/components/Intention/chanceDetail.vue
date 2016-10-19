@@ -1,7 +1,8 @@
 <template>
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+  <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
     <div class="client_body">
-      <div @click="param.show=false" class="top-title">
+        <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="client_nav">
@@ -29,38 +30,43 @@
                             
                           <div class="panel panel-default">
                               <div class="panel-heading" v-cloak>
-                                  <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:initIntentionDetail.offers,
-                                              crete:'offers'
-                                              })">
-                                        <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          报价（{{initIntentionDetail.offers.arr.length}}）
-                                        </a>
-                                        <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
-                                  </h4>
+                              <!-- <div class="cover_loading">
+                                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+                              </div> -->
+                                <h4 class="panel-title clearfix" @click="enfoldment({
+                                            link:initIntentionDetail.offers,
+                                            crete:'offers'
+                                            })">
+                                      <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                        报价（{{initIntentionDetail.offers.arr.length}}）
+                                      </a>
+                                      <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                </h4>
                               </div>
                               <div  class="panel-collapse" v-show="initIntentionDetail.offers.show&&initIntentionDetail.offers.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>会员</th>
+                                          <th>会员名</th>
+                                          <th>联系方式</th>
                                           <th>单价</th>
                                           <th>数量</th>
                                           <th>单位</th>
                                           <th>杂费</th>
-                                          <th></th>
+                                          <th>杂费说明</th>
                                           <th></th>
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntentionDetail.offers.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.userId}}</td>
+                                                <td>{{item.userName}}</td>
+                                                <td>{{item.userPhone}}</td>
                                                 <td>{{item.price}}</td>
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.unit}}</td>
                                                 <td>{{item.incidentals}}</td>
-                                                <td></td>
+                                                <td>{{item.incidentalsDesc}}</td>
                                                 <td></td>
                                                 <td  @click="clickShow($index,{
                                                     concrete:'offers'
@@ -68,7 +74,7 @@
                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                     <div class="files_action" v-show="item.show" >
                                                         <dl>
-                                                            <dt @click="specDelete()">采纳</dt>
+                                                            <dt @click="adopt(item)">采纳</dt>
                                                         </dl>
                                                     </div>
                                                 </td>
@@ -96,7 +102,7 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>会员</th>
+                                          <th>会员名</th>
                                           <th>备注</th>
                                           <th>回复</th>
                                           <th>回复人</th>
@@ -107,7 +113,7 @@
                                         <tbody>
                                              <tr v-for="item in initIntentionDetail.msgs.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.userId}}</td>
+                                                <td>{{item.fullname}}</td>
                                                 <td>{{item.comments}}</td>
                                                 <td>{{item.reply}}</td>
                                                 <td>{{item.replier}}</td>
@@ -300,6 +306,8 @@
 <script>
 import filter from '../../filters/filters'
 import tipsdialogModel  from '../tipsDialog'
+import createorderModel  from './createOrder'
+
 import{
     initIntentionDetail
 } from '../../vuex/getters'
@@ -310,7 +318,8 @@ import {
 export default {
     components: {
         filter,
-        tipsdialogModel
+        tipsdialogModel,
+        createorderModel
     },
     data() {
         return {
@@ -324,6 +333,39 @@ export default {
                 show:false,
                 name:'修改成功'
             },
+            orderParam:{
+                show:false,
+                type:this.initIntentionDetail.type,
+                customer:this.initIntentionDetail.customerId,
+                sample:'',
+                intl:0,
+                incidentals:'',
+                incidentalsDesc:'',
+                preferential:'',   //优惠金额
+                preferentialDesc:'',  
+                currency:'',     //货币品种
+                consignee:'',    //收货人姓名
+                consigneePhone:'',
+                zipCode:'',     //邮编
+                country:'',
+                province:'',
+                city:'',
+                district:'',
+                consigneeAddr:'',
+                comments:'', 
+                sourceType:2,     //商品来源类型
+                sourceId:'',     //商品来源ID
+                title:'',     //订单商品标题
+                breedId:this.initIntentionDetail.breedId,   
+                breedName:this.initIntentionDetail.breedName,
+                quality:'',
+                location:'',
+                spec:'',
+                price:'',
+                unit:'',
+                number:''
+
+            }
         }
     },
     props:['param'],
@@ -349,10 +391,26 @@ export default {
       },
       clickShow: function(index,param) {  
           this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = !this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show; 
+
+      },
+      adopt:function(item){
+          console.log("创建订单");
+          console.log(item.incidentals);
+          this.orderParam.show = true;
+          //this.orderParam.customer = item.customerId;
+          this.orderParam.spec = item.spec;
+          this.orderParam.price = item.price;
+          this.orderParam.unit = item.unit;
+          this.orderParam.number = item.number;
+          this.orderParam.incidentals = item.incidentals;
+          this.orderParam.incidentalsDesc = item.incidentalsDesc;
+          this.orderParam.quality = item.quality;
+          this.orderParam.location = item.location;
+
       }
     },
     created(){
-      this.getIntentionDetail(this.param);
+       this.getIntentionDetail(this.param,);
     },
     filter: (filter, {})
 }

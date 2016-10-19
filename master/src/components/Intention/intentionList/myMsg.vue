@@ -1,4 +1,5 @@
 <template>
+     <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
 	 <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">我的留言</div>
@@ -52,7 +53,7 @@
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
                                <ul>
-                                   <li @click="">编辑</li>
+                                   <li @click="updateParam.id=item.id,updateParam.show=true">编辑</li>
                                </ul>
                            </div>
                        </td>
@@ -68,6 +69,7 @@
 <script>
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
+import editmsgModel from '../editMsg'
 
 import {
 	initMsgList
@@ -80,7 +82,7 @@ import {
 export default {
     components: {   
         pagination,
-       
+        editmsgModel
     },
     vuex: {
         getters: {
@@ -104,6 +106,11 @@ export default {
             },
             chanceParam:{
                 show:false
+            },
+            updateParam:{
+                show:false,
+                comments:'',
+                id:''
             },
             checked:false
         }

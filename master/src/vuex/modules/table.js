@@ -56,6 +56,7 @@ import {
    UPDATE_TRACKING_DATA,
    ADD_TRACKING_DATA,
    INTENTION_LIST_DATA,
+   SUPPLY_DEMAND_DATA,
    INTENTION_DETAIL_DATA,
    OFFER_LIST_DATA,
    MSG_LIST_DATA,
@@ -69,7 +70,9 @@ import {
    DISTRICT_LIST,
    ADD_FILES_DATA,
    ALTER_PRODUCT_DATA,
-   SUPPLY_PRODUCT_DATA
+   SUPPLY_PRODUCT_DATA,
+   PRODUCT_DATA,
+   FILES_DATA_LIST
 
 } from '../mutation-types'
 
@@ -147,6 +150,10 @@ const state = {
             { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
 
         ],
+        supplyDemandList: [
+            { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
+
+        ],
         offerList:[
             {"id":"163","intentionId":"57568d24a2ec516dc1d0f57c","userId":"3ed2a1d7dafe449eb5e631a46f20f713","customerId":null,"number":3000,"unit":"63","price":12.000000,"incidentals":1.000000,"incidentalsDesc":"含运费价格","total":36000.000000,"qualification":null,"quality":null,"location":null,"spec":null,"advance":null,"invoic":null,"visit":null,"pack":null,"sampling":null,"sampleNumber":null,"sampleUnit":null,"sampleAmount":null,"address":null,"comments":null,"otime":"2016-06-07 17:19","clients":null,"status":1,"description":"","updater":null,"utime":"2016-09-27 10:08","creater":null,"ctime":"2016-09-27 10:08"},
             {"id":"184","intentionId":"575d3527a2ec789e03ce62f1","userId":"6496e96c50774ca5a311ab02eb3f873e","customerId":null,"number":200,"unit":"63","price":30.000000,"incidentals":200.000000,"incidentalsDesc":"因为需要运费…","total":6000.000000,"qualification":null,"quality":null,"location":null,"spec":null,"advance":null,"invoic":null,"visit":null,"pack":null,"sampling":null,"sampleNumber":null,"sampleUnit":null,"sampleAmount":null,"address":null,"comments":null,"otime":"2016-06-12 18:20","clients":null,"status":1,"description":"","updater":null,"utime":"2016-09-27 10:08","creater":null,"ctime":"2016-09-27 10:08"}
@@ -181,6 +188,9 @@ const state = {
             "id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"password": "56bf5523459ce2dfc6720798d852d6e6",
             "nickname": "卖蘑菇的小姑凉", "fullname": "沈威峰","phone": "13851379713","email": "857714234@qq.com","qq": "857714234",
             "company": "个体种植户","score": 300,"source": 1,"status": 0,"userIds": null,"customerId": null,"main": null,"show": true
+        }],
+        filesList:[{
+            "id": 2617,"fileType": "image","bizType": "customer_license","bizId": "57f8817888e8bb85da01df7b","path": "/photos/order_photos_other/57f8815a88e8bb85da01df7a.jpg","description": null,"status": 1,"category": 0,"show":true
         }]
 
     },
@@ -301,7 +311,7 @@ const state = {
             ],
             show: false
         },
-        "track": { arr: [], show: false },
+        "trackings": { arr: [], show: false },
         "remarks": {
             arr: [
                 { "id": 0, "customerId": 10, "remark": "dfhidfhi", "status": 0, "show": true }
@@ -526,7 +536,7 @@ const mutations = {
           source:4,
           sourceType:'业务录入',
           tel:data.tel,
-          type:data.type,
+          type:data.type, 
           typeDesc:data.typeDesc,
           show: false
         })
@@ -541,6 +551,7 @@ const mutations = {
 
     },
     [CUSTOMER_UPDATE_DATA](state, data) { //修改客户列表信息
+        console.log(data)
         for (var key in data) {
             state.basicBaseList[data.key][data.sub][key] = data[key];
         }
@@ -573,7 +584,7 @@ const mutations = {
             state.basicBaseList[data.headline][data.sub][i] = data[i];
         }
     },
-    
+
     [CUSTOMER_CONTACT_DATA](state, data) { // 新增客户联系人信息
         state.clientDetail[data.key].arr.unshift({
             "name": data.name,
@@ -635,6 +646,9 @@ const mutations = {
             "show": false,
         })
     },
+    [PRODUCT_DATA](state, data) { //供应商产品列表
+        state.basicBaseList.productList = data;
+    },
     [SUPPLY_PRODUCT_DATA](state, data) { //新增供应商产品
         console.log(data)
         console.log(state.basicBaseList.productList)
@@ -655,6 +669,10 @@ const mutations = {
             "show": false,
         })
     },
+    [FILES_DATA_LIST](state,data){ //文件列表
+        state.basicBaseList.filesList = data;
+    },
+
     [FILE_DATA](state, data) { //新增客户文件
         state.clientDetail[data.key].arr.unshift({
             "catagory": data.catagory,
@@ -670,6 +688,9 @@ const mutations = {
     },
     [INTENTION_LIST_DATA](state, data) { //意向列表
         state.basicBaseList.intentionList = data;
+    },
+    [SUPPLY_DEMAND_DATA](state, data) { //供求匹配信息列表
+        state.basicBaseList.supplyDemandList = data;
     },
     [OFFER_LIST_DATA](state, data) { //报价列表
         state.basicBaseList.offerList = data;
@@ -746,7 +767,7 @@ const mutations = {
               state.userDetail.intention.arr[k].checked = false;
             }
         }
-        
+
         if(state.basicBaseList.intentionList.length>0){
             console.log("意向列表页审核意向");
             for(let i=0;i<data.indexs.length;i++){
@@ -756,7 +777,7 @@ const mutations = {
               state.basicBaseList.intentionList[k].checked = false;
             }
         }
-        
+
 
     },
 
@@ -841,6 +862,7 @@ const mutations = {
     },
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
       var temp = {
+        "id":data.id,
         "type":data.type,
         "especial":data.especial,
         "customerName":data.customerName,
@@ -872,7 +894,8 @@ const mutations = {
         "quality":data.quality,
         "show":false,
         "duedate":data.duedate,
-        "images":data.images
+        "images":data.images,
+        "audit":data.audit
       };
 
         if(data.key=="intentionList"){
@@ -918,13 +941,12 @@ const mutations = {
 
     [ADD_FILES_DATA](state,data){
         state.clientDetail.files.arr.unshift({
-            "id":data.id,
             "path": data.path,
-            "type": data.type,
-            "catagory": data.catagory,
-            "customerId":data.customerId,
+            "fileType": data.fileType,
+            "bizType":data.bizType,
+            "bizId":data.bizId,
+            "description":data.description,
             "show":false
-
         })
 
     }

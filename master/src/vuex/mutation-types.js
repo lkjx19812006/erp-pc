@@ -50,9 +50,12 @@ export const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA' // 修改客户产品
 export const CUSTOMER_BATCH_DELETE = 'CUSTOMER_BATCH_DELETE' //客户批量删除
 export const ALTER_PRODUCT_DATA = 'ALTER_PRODUCT_DATA' // 修改供应商产品
 export const SUPPLY_PRODUCT_DATA = 'SUPPLY_PRODUCT_DATA' // 新增供应商产品
+export const PRODUCT_DATA = 'PRODUCT_DATA' // 供应商产品列表
+
 
 
 export const INTENTION_LIST_DATA ='INTENTION_LIST_DATA'  //意向数据列表
+export const SUPPLY_DEMAND_DATA ='SUPPLY_DEMAND_DATA'  //意向数据列表
 export const INTENTION_DETAIL_DATA ='INTENTION_DETAIL_DATA'  //意向详情
 export const INTENTION_UP_DOWN ='INTENTION_UP_DOWN'  //意向批量上下架
 export const OFFER_LIST_DATA ='OFFER_LIST_DATA'  //报价数据列表
@@ -92,6 +95,5 @@ export const ABSTRACT_ADD_DATA = 'ABSTRACT_ADD_DATA' //新增数据
 
 
 export const ADD_FILES_DATA = 'ADD_FILES_DATA' //新增上传文件
-
-
+export const FILES_DATA_LIST = 'FILES_DATA_LIST' //文件/资质证书列表
 

@@ -47,7 +47,7 @@
                         <th>数量</th>
                         <th>总价</th>
                         <th>杂费</th>
-      	            	<th></th>
+      	            	  <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,8 +64,7 @@
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
                                <ul>
-                                   <li @click="">编辑</li>
-                                   <li @click="">删除</li>
+                                   <li @click="">采纳</li>
                                </ul>
                            </div>
                        </td>
@@ -93,9 +92,7 @@ import {
 	initOfferList
 } from '../../../vuex/getters'
 import {
-	getOfferList,
-	
-	
+	getOfferList
 } from '../../../vuex/actions'
 export default {
     components: {   
@@ -112,9 +109,7 @@ export default {
             initOfferList
         },
         actions: {
-            getOfferList,
-            
-            
+            getOfferList
         }
     },
     data() {
@@ -125,7 +120,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                link:'/intention/employee/list',
+/*                link:'/intention/employee/list',*/
                 type:'',
                 invoic:'',
                 visit:'',
