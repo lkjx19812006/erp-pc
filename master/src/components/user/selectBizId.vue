@@ -52,7 +52,7 @@
           <thead>
           <tr>
             <th></th>
-            <th>流水号</th>
+            <th>订单流水号</th>
             <th>订单金额</th>
             <th>商品</th>
             <th>创建时间</th>
@@ -117,7 +117,8 @@ export default {
                 size: '15px',
                 userId: this.param.userId,
                 cur: 1,
-                all: 7
+                all: 7,
+                link:'/intention/'
           }
         }
     },
@@ -141,7 +142,7 @@ export default {
         this.getIntentionList(this.intentionParam);
       },
       selectOrder:function(item){
-          this.$dispatch('getBiz',{id:item.id});
+          this.$dispatch('getBiz',item);
           this.param.show=false;
 
       },
@@ -160,7 +161,7 @@ export default {
     fresh: function(input) {
       if(param.bizType==1){
         this.intentionParam.cur = input;
-      this.getIntentionList(this.intentionParam);}
+        this.getIntentionList(this.intentionParam);}
       else if(param.bizType==2){
         this.orderParam.cur = input;
         this.getOrderList(this.orderParam);

@@ -46,7 +46,7 @@
                                            url:'/customer/insertLabel',
                                            key:'labels'
                                            })">新建跟进</button>
-                        </li> 
+                        </li>
                         <li>
                           <button type="button" class="btn btn-base"  @click="clientTransferSupplier({
                                            id:param.id,
@@ -510,12 +510,11 @@
                                                <td v-if="!item.bizType">客户</td>
                                                <td v-if="item.bizType==1">意向</td>
                                                <td v-if="item.bizType==2">订单</td>
-                                               <td v-if="item.bizType!=0&&item.bizType!=1&&item.bizType!=2"></td>
                                                <td>{{item.trackingWay}}</td>
                                                <td>{{item.contactNo}}</td>
                                                <td>{{item.comments}}</td>
                                                <td  @click="clickShow($index,{
-                                                concrete:'tracking'
+                                                concrete:'trackings'
                                                 })">
                                                  <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                  <div class="breed_action" v-show="item.show" >
@@ -914,7 +913,7 @@
                                                              link:uploadFiles,
                                                              url:'/customer/file/',
                                                              key:'files'
-                                                           })">上传产品文件</dt> 
+                                                           })">上传产品文件</dt>
 				                                           </dl>
 				                                        </div>
 		                                            </td>
@@ -1185,6 +1184,14 @@ export default {
         this.ctrackParam.show=param.show;
         this.ctrackParam.customer=param.customer;
         this.ctrackParam.flag=param.flag;
+
+      },
+      updateTracking:function(item,index){
+        item.show=!item.show;
+        item.index = index;
+        this.ctrackParam = item;
+        this.ctrackParam.flag = 1;   //1表示修改
+        this.ctrackParam.show = true;
 
       },
       newproduct:function(initBreedDetail){
