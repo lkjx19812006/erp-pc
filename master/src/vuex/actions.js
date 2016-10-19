@@ -46,17 +46,30 @@ export const freshPiecharts = ({ dispatch }, getPiechart) => {
         });
 };
 
-export const getOrderList = ({ dispatch }, param) => {
+export const getOrderList = ({ dispatch }, param) => { //订单列表以及订单搜索
     param.loading = true;
     var url = apiUrl.orderList+'/order/?'+'page=' + param.cur + '&pageSize=15';
-    console.log('param===>');
-    console.log(param);
     for(var key in param){
-        if(key=='orderNum'&&param[key]!=''){
-             url += '&orderNum='+param[key];
+        if(key=='consignee'&&param[key]!=''){
+             url += '&consignee='+param[key];
         }
-        if(key=='customerId'&&param[key]!=''){
-          url += '&customerId='+param[key];
+        if(key=='clients'&&param[key]!=''){
+          url += '&clients='+param[key];
+        }
+        if(key=='dataStatus'&&param[key]!=''){
+          url += '&dataStatus='+param[key];
+        }
+        if(key=='orderStatus'&&param[key]!=''){
+          url += '&orderStatus='+param[key];
+        }
+        if(key=='payWay'&&param[key]!=''){
+          url += '&payWay='+param[key];
+        }
+         if(key=='consigneePhone'&&param[key]!=''){
+          url += '&consigneePhone='+param[key];
+        }
+         if(key=='type'&&param[key]!=''){
+          url += '&type='+param[key];
         }
     }
     Vue.http({
@@ -68,8 +81,6 @@ export const getOrderList = ({ dispatch }, param) => {
         }
     }).then((res)=>{
            var orderList = res.json().result.list;
-           console.log('订单列表!!!');
-           console.log(orderList);
            for (var i in orderList){
                 orderList[i].checked = false;
                 orderList[i].show =false;
@@ -251,7 +262,8 @@ export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
         id: data.id,
         name: data.name,
         status: data.status,
-        type: data.type
+        type: data.type,
+        typedesc:data.typedesc
     }
     Vue.http({
         method: 'POST',
@@ -278,7 +290,8 @@ export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
         id: param.id,
         name: param.name,
         status: param.status,
-        type: param.type
+        type: param.type,
+        typedesc:param.typedesc
     }
     Vue.http({
         method: 'PUT',

@@ -11,52 +11,142 @@
                     <div class="col-xs-8 my_order_search">
                         <div class="name_search clearfix">
                             <img src="/static/images/search.png" height="24" width="24">
-                            <input type="text" class="search_input" v-model="loadParam.orderName" placeholder="按名字搜索"  @keyup.enter="orderSearch()">
+                            <input type="text" class="search_input" v-model="loadParam.consignee" placeholder="按收货人姓名搜索"  @keyup.enter="orderSearch()">
                         </div>
                         <div class="ordertel_search clearfix">
                             <img src="/static/images/search.png" height="24" width="24">
-                            <input type="text" class="search_input" v-model="loadParam.orderNum" placeholder="按订单号搜索"  @keyup.enter="orderSearch()">
+                            <input type="text" class="search_input" v-model="loadParam.consigneePhone" placeholder="按收货人联系方式搜索"  @keyup.enter="orderSearch()">
                         </div>
-                        <div class="tel_search clearfix">
+                        <div class="ordertel_search clearfix" style="border:none;line-height:20px;">
+                            <button class="new_btn" @click="orderSearch()">搜索</button>
+                        </div>
+                        <!-- <div class="tel_search clearfix">
                             <img src="/static/images/search.png" height="24" width="24">
                             <input type="text" maxlength="11" class="search_input" v-model="loadParam.orderTel" placeholder="按电话搜索" @keyup.enter="orderSearch()">
-                        </div>
+                        </div> -->
                     </div>
                     <div class="right col-xs-2">
                         <button class="new_btn" @click="newOrder('new')" data-toggle="modal" data-target="#myModal">新建</button>
                     </div>
                 </div>
             </div>
-
+             <div class="service-nav clearfix">
+            <div class="my_order_search">
+               <div class="filter_search clearfix">
+                    <dl class="clearfix">
+                        <dt>订单类别：</dt>
+                        <dd>
+                            <select  v-model="loadParam.type" @change="orderSearch()">
+                                <option value="">请选择订单类别</option>
+                                <option value="0">采购</option>
+                                <option value="1">销售</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>订单状态：</dt>
+                        <dd>
+                            <select v-model="loadParam.orderStatus" @change="orderSearch()">
+                                <option value="">请选择订单状态</option>
+                                <option value="0">0</option>
+                                <option value="1">10</option>
+                                <option value="2">20</option>
+                                <option value="3">30</option>
+                                <option value="4">40</option>
+                                <option value="5">50</option>
+                                <option value="6">60</option>
+                                <option value="7">70</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>支付方式：</dt>
+                        <dd>
+                            <select v-model="loadParam.payWay" @change="orderSearch()">
+                                <option value="">请选择支付方式</option>
+                                <option value="0">线下</option>
+                                <option value="1">支付宝</option>
+                                <option value="2">平安</option>
+                                <option value="3">药款</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>数据状态：</dt>
+                        <dd>
+                            <select v-model="loadParam.dataStatus" @change="orderSearch()">
+                                <option value="">请选择数据状态</option>
+                                <option value="0">无效</option>
+                                <option value="1">待审</option>
+                                <option value="2">审核通过</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>客户端来源：</dt>
+                        <dd>
+                            <select v-model="loadParam.clients" @change="orderSearch()">
+                                <option value="">请选择客户端来源</option>
+                                <option value="0">pc</option>
+                                <option value="1">android</option>
+                                <option value="2">wechart</option>
+                                <option value="3">ios</option>
+                            </select>
+                        </dd>
+                    </dl>
+               </div>
+           </div>
+        </div>
             <div class="order_table">
                 <table class="table table-hover table_color table-striped " v-cloak>
                     <thead>
                         <tr>  
-                            <th></th>
                             <th>订单号</th>
-                            <th>收货人</th>
+                            <th>订单类别</th>
+                            <th>订单来源</th>
+                            <th>收货人名称</th>
                             <th>收货人电话</th>
                             <th>收货人地址</th>
+                            <th>国家</th>
+                            <th>所在省</th>
+                            <th>所在市</th>
+                            <th>业务员</th>
+                            <th>物流单号</th>
                             <th>备注</th>
-                            
+                            <th>客户端类型</th>
+                            <th>订单状态</th>
+                            <th>审核状态</th>
+                            <th>支付方式</th>
+                            <th>支付状态</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="item in initOrderlist"  v-cloak >
-                          <td></td>
-                          <!--  <td  @click.stop="">
-                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
-                           </td> -->
                           <td><a @click="clickOn({
                                                     show:true,
                                                     id:item.id
                                                 })">{{item.no }}</a></td>
+                          <td>{{item.type}}</td>
+                          <td>{{item.sourceType}}</td>
                           <td>{{item.consignee}}</td>
                           <td>{{item.consigneePhone}}</td>
                           <td>{{item.consigneeAddr}}</td>
+                          <td>{{item.country}}</td>
+                          <td>{{item.province}}</td>
+                          <td>{{item.city}}</td>
+                          <td>{{item.employee}}</td>
+                          <td>{{item.logisticsNo}}</td>
                           <td>{{item.comments}}</td>
-                         
+
+                          <td v-if="item.clients==0||item.clients==null" style="background:red;color:#fff">{{item.clients}}</td>
+                          <td v-if="item.clients==1" style="background:green;color:#fff">{{item.clients}}</td>
+                          <td v-if="item.clients==2" style="background:blue;color:#fff">{{item.clients}}</td>
+                          <td v-if="item.clients==3" style="background:#444444;color:#fff">{{item.clients}}</td>
+                          <td>{{item.orderStatus}}</td>
+                          <td>{{item.status}}</td>
+                          <td>{{item.payWay}}</td>
+                          <td>{{item.pay}}</td>
                           <td @click="editClick($index)">
                               <img height="24" width="24" src="/static/images/default_arrow.png" />
                               <div class="component_action" v-show="item.show">
@@ -107,9 +197,13 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                orderName:'',
-                orderNum:'',
-                orderTel:''
+                consignee:'',
+                consigneePhone:'',
+                type:'',
+                orderStatus:'',
+                payWay:'',
+                clients:'',
+                dataStatus:'',
             },
             dialogParam:{
                  show: false,
@@ -148,8 +242,7 @@ export default {
                 this.$store.state.table.orderList[sub].show=!this.$store.state.table.orderList[sub].show;
             }else{
                  this.$store.state.table.orderList[sub].show=true;
-            }
-            //console.log(this.$store.state.table.orderList[sub].show)       
+            }    
         },
         newOrder:function(value){
              this.dialogParam.name=value;
@@ -165,8 +258,7 @@ export default {
         editor:function(){
             console.log("editor");
             this.updateParam.show=true;
-        },
-
+        }
     },
      route: {
         activate: function (transition) {

@@ -375,6 +375,7 @@ const mutations = {
             "type": data.type,
             "desc": data.desc,
             "status": data.status,
+            "typedesc":data.typedesc,
             "id": data.id,
             "show": false
         });

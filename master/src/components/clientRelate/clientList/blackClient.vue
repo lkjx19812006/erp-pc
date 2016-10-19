@@ -21,7 +21,8 @@
           <th>分类</th>
           <th>客户来源</th>
           <th>客户等级</th>
-          <th>名称</th>
+          <th></th>
+          <th>客户名称</th>
           <th>分类码</th>
           <!-- <th>所属分类</th> -->
           <th>所属业务员</th>
@@ -51,6 +52,7 @@
           <td>{{item.classifyDesc}}</td>
           <td>{{item.sourceType}}</td>
           <td>{{item.creditLevel}}</td>
+          <td><img src="/static/images/compact.png" style='float:left;' /></td>
           <td class="underline"  @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -60,7 +62,7 @@
                                 link:alterInfo,
                                 url:'/customer/',
                                 key:'customerList'
-                                })"><img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>{{item.name}}</td>
+                                })">{{item.name}}</td>
           <!-- 上面这个img显示新客户图标 -->
           <td>{{item.category}}</td>
           <!-- <td>{{item.classify | classify}}</td> -->
