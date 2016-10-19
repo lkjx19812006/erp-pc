@@ -166,9 +166,11 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         }
     }).then((res) => {
         console.log('添加成功')
-        dispatch(types.ADD_DATA, data);
+        dispatch(types.ORDER_ADD_DATA, data);
+        data.show = false;
     }, (res) => {
         console.log('fail');
+        data.show = false;
     });
 };
 
@@ -2219,8 +2221,7 @@ export const updateMsg = ({ dispatch }, param) => {  //修改留言信息
     var url = apiUrl.clientList+'/intention/msgs';
     const data = {
         id: param.id,
-        comments: param.comments,
-        status:10
+        comments: param.comments
     }
     console.log(data);
     Vue.http({
