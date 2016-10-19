@@ -1,5 +1,5 @@
 <template>
-	<delete-model :param="delParam" v-if="!delmodel"></delete-model>
+	<delete-model :param="delParam" v-if="delParam.show"></delete-model>
     <modify-model :param="modifyParam" v-if="modifyParam.show"></modify-model>
     <system-model :param="dialogParam" v-if="dialogParam.show"></system-model>
 	<div class="order_search">
@@ -71,7 +71,11 @@
                    <div class="component_action" v-show='item.show' transition="expand">
                       <ul>
                           <li @click="modify($index)">编辑</li>
-                          <li @click="del($index,item.id)">删除</li>
+                          <li @click="del({
+                                sub:$index,
+                                id:item.id,
+                                show:true
+                                })">删除</li>
                       </ul>
                     </div>
                 </td>
@@ -153,7 +157,6 @@ export default {
             ],
             show:true,
             editmodel:true,
-            delmodel:true,
             sel:''
         }
     },
@@ -198,10 +201,9 @@ export default {
             this.modifyParam.show=true;
             this.$broadcast('getParam');
         },
-         del:function(sub,id){
-            this.delParam.id=id;
-            this.delParam.sub=sub;
-            this.delmodel=false;
+        del:function(param){
+            this.delParam.id=param.id;
+            this.delParam.sub=param.sub;
             this.delParam.show=true;
         }
     },

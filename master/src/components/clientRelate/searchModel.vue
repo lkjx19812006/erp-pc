@@ -23,7 +23,7 @@
                         <input type="text"  class="form-control" v-model="param.bizScope"  placeholder="按客户经营的品种搜索"/>
                     </div>
                     <div class="client-detailInfo  col-xs-6">
-                        <label>手机省：</label>
+                        <label>所在省：</label>
                         <!-- <input type="text"  class="form-control" v-model="param.provinceName"  placeholder="按手机省搜索"/> -->
                         <v-select
                               :debounce="250"
@@ -38,7 +38,7 @@
                             </v-select>
                     </div>
                     <div class="client-detailInfo  col-xs-6">
-                        <label>手机市：</label>
+                        <label>所在市：</label>
                         <input type="text" v-if="!province.cname" class="form-control" disabled="disabled" v-model="param.cityName" style="height:37px"  placeholder="请先选择一个省"/>
                         <div v-if="province.cname" >
                             <v-select

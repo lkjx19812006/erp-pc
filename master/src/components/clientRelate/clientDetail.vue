@@ -48,6 +48,16 @@
                                            })">新建跟进</button>
                         </li> 
                         <li>
+                          <button type="button" class="btn btn-base"  @click="clientTransferSupplier({
+                                           id:param.id,
+                                           sub:param.sub,
+                                           show:true,
+                                           link:customerTransferBlacklist,
+                                           url:'/customer/setSupplier',
+                                           title:'客户提取为供应商备注'
+                                           })">提取为供应商</button>
+                        </li>
+                        <li>
                             <button type="button" class="btn btn-base"  @click="newlabel({
                                              customerId:param.id,
                                              id:param.id,
@@ -1095,11 +1105,7 @@ export default {
     			show:false
     		},
         auditParam:{
-          link:'/customer/transferBlacklist',
-          show:false,
-          title:'客户拉入黑名单备注',
-          arr:[],
-          blacklist:1
+          show:false
         },
     		show:true
     	}
@@ -1150,6 +1156,9 @@ export default {
       },
       specDelete:function(initBreedDetail){
           this.deleteParam = initBreedDetail;
+      },
+      clientTransferSupplier:function(initBreedDetail){
+          this.auditParam=initBreedDetail;
       },
       updateSpec:function(initBreedDetail){
       	 this.updateParam = initBreedDetail;
