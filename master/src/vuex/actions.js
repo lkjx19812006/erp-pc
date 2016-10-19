@@ -166,9 +166,11 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         }
     }).then((res) => {
         console.log('添加成功')
-        dispatch(types.ADD_DATA, data);
+        dispatch(types.ORDER_ADD_DATA, data);
+        data.show = false;
     }, (res) => {
         console.log('fail');
+        data.show = false;
     });
 };
 
@@ -251,7 +253,8 @@ export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
         id: data.id,
         name: data.name,
         status: data.status,
-        type: data.type
+        type: data.type,
+        // typedesc : data.typedesc
     }
     Vue.http({
         method: 'POST',
@@ -278,7 +281,8 @@ export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
         id: param.id,
         name: param.name,
         status: param.status,
-        type: param.type
+        type: param.type,
+        // typedesc: param.typedesc
     }
     Vue.http({
         method: 'PUT',
@@ -291,8 +295,9 @@ export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('修改成功')
+        
         dispatch(types.UPDATE_DATA, param);
+        console.log('修改成功')
     }, (res) => {
         console.log('fail');
     });
@@ -1502,6 +1507,7 @@ export const updateContact = ({ dispatch }, param) => { //修改客户联系人
     })
 }
 export const addrInfo = ({ dispatch }, param) => { //修改客户地址
+    
     const updatedata = {
         type:param.type,
         contactName:param.contactName,
@@ -2219,8 +2225,7 @@ export const updateMsg = ({ dispatch }, param) => {  //修改留言信息
     var url = apiUrl.clientList+'/intention/msgs';
     const data = {
         id: param.id,
-        comments: param.comments,
-        status:10
+        comments: param.comments
     }
     console.log(data);
     Vue.http({

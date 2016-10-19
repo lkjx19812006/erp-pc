@@ -83,6 +83,7 @@ export default {
                 type: this.initSystemlist[this.param.id].type,
                 desc: this.initSystemlist[this.param.id].desc,
                 status: this.initSystemlist[this.param.id].status
+                // typedesc: this.initSystemlist[this.param.id].typedesc
             }
         }
     },
@@ -103,6 +104,7 @@ export default {
             this.$set('systemData.status', this.initSystemlist[this.param.id].status);
             this.$set('systemData.desc', this.initSystemlist[this.param.id].desc);
             this.$set('systemData.id', this.initSystemlist[this.param.id].id);
+            //this.$set('systemData.typedesc', this.initSystemlist[this.param.id].typedesc);
         }
     }
 }

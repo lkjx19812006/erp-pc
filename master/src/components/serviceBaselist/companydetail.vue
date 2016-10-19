@@ -120,6 +120,8 @@
                                                </div>
                                             </td>
                                         </tr>
+                                    </tbody>
+                                    <tbody>
                                         <tr>
                                           <td></td>
                                           <td></td>
@@ -352,6 +354,17 @@ export default {
 }
 </script>
 <style scoped>
+table{
+  margin:0;
+}
+
+.table>tbody+tbody{
+  border-top: 0;
+}
+
+.table>tbody tr td{
+  padding: 15px 0;
+}
 .top-title{
     width: 100%;
     right: 0;
@@ -376,9 +389,16 @@ export default {
 .panel-group .panel{
     border-radius: 10px;
 }
-.breed_action {
-    top: 33px;
-    right: 30px;
+.btn-base {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #003077;
+    margin-right: 5px;
+    font-size: 14px;
+}
+.breed_action{
+  top: 20px;
+  right: 40px;
 }
 
 .breed_action {
@@ -389,7 +409,7 @@ export default {
     margin-bottom: 0;
 }
 
-.breed_action dl dt {
+.breed_action dl dt{
     display: block;
     padding: 3px;
     font-size: 14px;
@@ -401,7 +421,6 @@ export default {
 }
 .contactSet>tbody>tr>td,.contactSet>thead>tr>th{
     border-bottom: none;
-    border-top: none;
     text-align: left;
 }
 .contact_img{
