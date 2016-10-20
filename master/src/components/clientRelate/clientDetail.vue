@@ -937,7 +937,7 @@
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>所在省</label>
-                                    <input type="text" class="form-control" v-model="initClientDetail.province" value="{{initClientDetail.province}}" disabled="disabled" />
+                                    <input type="text" class="form-control" v-model="initClientDetail.provinceName" value="{{initClientDetail.provinceName}}" disabled="disabled" />
                                 </div>
                             </div>
                             <div class="clearfix">
@@ -947,7 +947,7 @@
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>所在市</label>
-                                    <input type="text" class="form-control" v-model="initClientDetail.city" value="{{initClientDetail.city}}" disabled="disabled" />
+                                    <input type="text" class="form-control" v-model="initClientDetail.cityName" value="{{initClientDetail.cityName}}" disabled="disabled" />
                                 </div>
                             </div>
                             <div class="clearfix">

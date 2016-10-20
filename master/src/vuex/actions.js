@@ -1490,7 +1490,9 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         city:param.city,
         address:param.address,
         comments:param.comments,
-        id: param.id
+        id: param.id,
+        orgId:param.orgId,
+        employeeId:param.employeeId
     }
     Vue.http({
         method: 'PUT',

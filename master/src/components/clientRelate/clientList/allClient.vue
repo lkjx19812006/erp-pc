@@ -117,7 +117,10 @@
                                                 comments:item.comments,
                                                 link:alterInfo,
                                                 url:'/customer/',
-                                                key:'customerList'
+                                                key:'customerList',
+                                                employeeId:item.employeeId,
+                                                employeeName:item.employeeName,
+                                                orgId:item.orgId
                                                 })">编辑</li>
                                     <li @click="specDelete({
                                                 id:item.id,
