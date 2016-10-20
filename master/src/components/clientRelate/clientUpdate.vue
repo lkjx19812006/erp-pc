@@ -1,4 +1,5 @@
 <template>
+    <select-model :param="selectParam" v-if="selectParam.show"></select-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
@@ -26,7 +27,7 @@
                         </div>
                         <div class="editpage-input">
                             <label class="editlabel">分类码</label>
-                            <input type="text" v-model='param.category' class="form-control edit-input" value="{{param.category}}" /> 
+                            <input type="text" v-model='param.category' class="form-control edit-input" value="{{param.category}}" />
                         </div>
                          <div class="editpage-input">
                             <label  class="editlabel">所在国家</label>
@@ -85,6 +86,15 @@
                                  <option value="2">买卖</option>
                             </select>
                         </div>
+
+                      <div class="editpage-input">
+                        <label>业务员/部门</label>
+                        <input v-if="!param.orgId" type="text" class="form-control" readonly="readonly"
+                               v-model="param.employeeName" @click="selectParam.show=true"/>
+                        <input v-if="param.orgId" type="text" class="form-control" readonly="readonly" v-model="param.orgName"
+                               @click="selectParam.show=true"/>
+                      </div>
+
                         <div class="editpage-input">
                             <label class="editlabel">负责人</label>
                             <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />
@@ -100,7 +110,7 @@
                         <div class="editpage-input">
                             <label class="editlabel">备注</label>
                             <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
-                        </div>         
+                        </div>
                         <div class="editpage-input">
                             <label class="editlabel">注册地址</label>
                             <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
@@ -112,13 +122,15 @@
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <!-- <button type="button" class="btn  btn-confirm" @click="param.link(param,param.show = false)">确定</button> -->
-            <button type="button" class="btn  btn-confirm" @click="confirm()">确定</button> 
+            <button type="button" class="btn  btn-confirm" @click="confirm()">确定</button>
         </div>
     </div>
 </template>
 <script>
 import tipsdialogModel  from '../tips/tipDialog'
 import vSelect from '../tools/vueSelect/components/Select'
+import selectModel  from '../user/employeeOrOrg.vue'
+
 import {
     initCountrylist,
     initProvince,
@@ -132,17 +144,25 @@ import {
 export default {
     components: {
         tipsdialogModel,
-        vSelect
+        vSelect,
+        selectModel
     },
     props: ['param'],
     data() {
         return {
+          selectParam: {
+            show: false,
+            employeeId: '',
+            employeeName: '',
+            orgId: '',
+            orgName: ''
+          },
             tipsParam:{
                 show:false,
                 confirm:true,
                 name:"确认修改信息?",
                 callback:this.alertInfo
-                
+
               },
                 province: {
                   cname: ''
@@ -193,16 +213,6 @@ export default {
           getCityList
         }
     },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
-    },
     methods: {
         alertInfo: function(){
             this.param.show = false;
@@ -211,7 +221,7 @@ export default {
         selectProvince:function(){
             this.province = '';
             this.city = '';
-            
+
             this.param.province=this.province.cname;
             this.param.city=this.city.cname;
             if(this.country!=''&&this.country!=null){
@@ -220,7 +230,7 @@ export default {
       },
       selectCity:function(){
         this.city = '';
-        
+
         this.param.city=this.city.cname;
         if(this.province!=''&&this.province!=null){
           this.getCityList(this.province);
@@ -237,6 +247,14 @@ export default {
         this.tipsParam.show=true
 
       }
+    },
+    events: {
+    'selectEmpOrOrg': function (param) {
+      this.param.employeeId = param.employeeId;
+      this.param.employeeName = param.employeeName;
+      this.param.orgId = param.orgId;
+      this.param.orgName = param.orgName;
+    }
     },
     created(){
       if(this.param.country){

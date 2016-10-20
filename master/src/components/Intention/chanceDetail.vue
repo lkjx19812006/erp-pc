@@ -370,7 +370,7 @@ export default {
                   price:'',
                   unit:'',
                   number:''
-        }]
+              }]
 
             },
             updateParam:{

@@ -108,7 +108,7 @@
                                         show:true,
                                         key:'enterpriseList',
                                         companyId:item.id,
-                                        category:item.category,
+                                        category:item.type,
                                         type:'1,企业',
                                         name:item.name,
                                         tel:item.tel,
@@ -225,6 +225,15 @@ export default {
         },
         createCustomer:function(initEnterpriselist){
             this.transferParam=initEnterpriselist;
+
+            const obj={
+              '保健品厂':"HF",
+              '药厂':"MF",
+              '化妆品厂':"CF",
+              '食品厂':"FF"
+            }
+            this.transferParam.category=obj[this.transferParam.category];
+
           this.transferParam.show=true;
             console.log(this.transferParam);
         }
