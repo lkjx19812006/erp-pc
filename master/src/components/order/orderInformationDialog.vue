@@ -107,7 +107,7 @@
                         <div class="editpageright">
                             <div class="editpage-input">
                                 <label class="editlabel">选择客户</label>
-                                <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customer}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
+                                <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customer}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer,param.employee)"/>
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">是否国际</label>
@@ -330,7 +330,7 @@ export default {
                 /*this.param.breedName = this.breedParam.breedName;
                 this.param.breedId = this.breedParam.breedId;*/
           },
-        searchCustomer:function(customerName,customer){
+        searchCustomer:function(customerName,customer,employee){
             this.empNameParam.show=true;
             /*if("employeeId" in this.param){
                 this.empNameParam.employeeId = this.param.employeeId;
@@ -359,6 +359,7 @@ export default {
         customer:function(customer){
             this.param.customerName = customer.customerName;
             this.param.customer = customer.customerId;
+            this.param.employee = customer.employeeName;
         }
     },
     created(){

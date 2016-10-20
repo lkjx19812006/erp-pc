@@ -3,8 +3,8 @@
     <update-model :param="updateParam" v-if="updateParam.show"></update-model>
     <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
-    <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
-    <div v-show="!detailParam.show">
+    <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
+    <div v-show="!detailParam.show&&!disposeParam.show">
         <div class="myOrder">
             <div class="order_search">
                 <div class="clear">
@@ -52,7 +52,6 @@
                     </div>
                 </div>
             </div>
-        </div>
             <div class="order_table">
                 <table class="table table-hover table_color table-striped " v-cloak>
                     <thead>
@@ -148,16 +147,35 @@
                                                 link:alterOrder,
                                                 url:'/order/'
                                                 })">编辑</li>
-                                       <li @click="specDelete({
-                                                id:item.id,
-                                                sub:$index,
-                                                show:true,
-                                                name:item.no,
-                                                title:'订单',
-                                                link:deleteInfo,
-                                                url:'/order/',
-                                                key:'orderList'
-                                                })">删除</li>
+                                        <li v-if="item.orderStatus==-1&&item.type==0"  @click="pendingOrder(item,$index)">订单已取消</li>
+                                        <li v-if="item.orderStatus==-2&&item.type==0" @click="pendingOrder(item,$index)">订单已过期</li>
+                                        <li v-if="item.orderStatus==0&&item.type==0"  @click="pendingOrder(item,$index)">待处理订单</li>
+                                        <li v-if="item.orderStatus==10&&item.type==0"  @click="pendingOrder(item,$index)">订单处理中</li>
+                                        <li v-if="item.orderStatus==20&&item.type==0" @click="pendingOrder(item,$index)">等待支付</li>
+                                        <li v-if="item.orderStatus==30&&item.type==0">待确认</li>
+                                        <li v-if="item.orderStatus==40&&item.type==0">等待发货</li>
+                                        <li v-if="item.orderStatus==50&&item.type==0">等待收货</li>
+                                        <li v-if="item.orderStatus==60&&item.type==0" @click="pendingOrder(item,$index)">已完成订单</li>
+                                        <li v-if="item.orderStatus==-1&&item.type==1"  @click="pendingOrder(item,$index)">订单已取消</li>
+                                        <li v-if="item.orderStatus==-2&&item.type==1" @click="pendingOrder(item,$index)">订单已过期</li>
+                                        <li v-if="item.orderStatus==0&&item.type==1"  @click="pendingOrder(item,$index)">待处理订单</li>
+                                        <li v-if="item.orderStatus==10&&item.type==1"  @click="pendingOrder(item,$index)">订单处理中</li>
+                                        <li v-if="item.orderStatus==20&&item.type==1" @click="pendingOrder(item,$index)">等待支付</li>
+                                        <li v-if="item.orderStatus==30&&item.type==1">待确认</li>
+                                        <li v-if="item.orderStatus==40&&item.type==1">等待发货</li>
+                                        <li v-if="item.orderStatus==50&&item.type==1">等待收货</li>
+                                        <li v-if="item.orderStatus==60&&item.type==1" @click="pendingOrder(item,$index)">已完成订单</li>
+                                        <li v-if="item.orderStatus==100&&item.type==1">待支付核查订单</li>
+                                      <!--  <li @click="specDelete({
+                                               id:item.id,
+                                               sub:$index,
+                                               show:true,
+                                               name:item.no,
+                                               title:'订单',
+                                               link:deleteInfo,
+                                               url:'/order/',
+                                               key:'orderList'
+                                               })">删除</li> -->
                                    </ul>
                                </div>
                           </td>
@@ -178,15 +196,17 @@ import updateModel from '../components/order/orderUpdate'
 import detailModel from '../components/order/orderDetail'
 import searchModel from '../components/order/orderSearch'
 import deletebreedModel from  '../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
+import disposeModel  from  '../components/order/orderStatus'
 import {
     getList,
     initOrderlist
 } from '../vuex/getters'
 import {
     getOrderList,
-    deleteInfo,
     alterOrder,
-    createOrder
+    createOrder,
+    orderStatu,
+    getOrderDetail
 } from '../vuex/actions'
 
 export default {
@@ -196,7 +216,8 @@ export default {
         updateModel,
         detailModel,
         searchModel,
-        deletebreedModel
+        deletebreedModel,
+        disposeModel
     },
     data() {
         return {
@@ -224,11 +245,14 @@ export default {
             detailParam: {
                 show:false
             },
-            deleteParam:{
-                show:false
-            },
             updateorderParam:{
                 show:false
+            },
+            disposeParam:{ //待处理订单
+                show:false,
+                link:'',
+                sales:false,
+                payment:false
             },
             show:true
         }
@@ -240,9 +264,10 @@ export default {
         },
         actions: {
             getOrderList,
-            deleteInfo,
             alterOrder,
-            createOrder
+            createOrder,
+            orderStatu,
+            getOrderDetail
         }
     },
     created() {
@@ -270,11 +295,75 @@ export default {
             console.log(initOrderlist);
             this.detailParam=initOrderlist;
         },
-        specDelete:function(initOrderlist){
-            this.deleteParam = initOrderlist;
-        },
         updateOrder:function(initOrderlist){
+            console.log(initOrderlist)
+            console.log(initOrderlist.goods)
             this.dialogParam=initOrderlist;
+        },
+        pendingOrder:function(item,sub){
+            item.show=!item.show;
+            item.sub = sub;
+            this.disposeParam = item;
+            this.disposeParam.show = true;
+            /*--采购状态type==0--*/
+            if(item.orderStatus==0&&item.type==0){
+                this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
+                this.disposeParam.link='/order/handle';
+                this.orderStatu(this.disposeParam);
+                this.disposeParam.payment=true;
+            }
+            if(item.orderStatus==10&&item.type==0){
+                this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
+                this.disposeParam.link='/order/handle';
+                this.orderStatu(this.disposeParam);
+            }
+            if(item.orderStatus==-1&&item.type==0){
+                this.disposeParam.tips="订单已取消！";
+                this.disposeParam.link='/order/cancle';
+            }
+            if(item.orderStatus==-2&&item.type==0){
+                this.disposeParam.tips="订单已过期！";
+                /*this.disposeParam.link='/order/cancle';*/
+            }
+            if(item.orderStatus==20&&item.type==0){
+                this.disposeParam.tips="订单处理完成，等待买家付款！";
+                this.disposeParam.payment=true;
+                /*this.disposeParam.link='/order/cancle';*/
+            }
+            if(item.orderStatus==60&&item.type==0){
+                this.disposeParam.tips="买家已收货，订单已完成！";
+                this.disposeParam.link='/order/receiveConfirm';
+            }
+
+            /*--销售状态type==1--*/
+            if(item.orderStatus==0&&item.type==1){
+                this.disposeParam.tips="订单已提交，请审核！";
+                this.disposeParam.link='/order/handle';
+                this.disposeParam.sales = true;
+                this.orderStatu(this.disposeParam);
+            }
+            if(item.orderStatus==10&&item.type==1){
+                this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
+                this.disposeParam.link='/order/handle';
+                this.orderStatu(this.disposeParam);
+            }
+            if(item.orderStatus==-1&&item.type==1){
+                this.disposeParam.tips="订单已取消！";
+                this.disposeParam.link='/order/cancle';
+            }
+            if(item.orderStatus==-2&&item.type==0){
+                this.disposeParam.tips="订单已过期！";
+                /*this.disposeParam.link='/order/cancle';*/
+            }
+            if(item.orderStatus==20&&item.type==1){
+                this.disposeParam.tips="订单处理完成，等待买家付款！";
+                this.disposeParam.payment=true;
+                /*this.disposeParam.link='/order/cancle';*/
+            }
+            if(item.orderStatus==60&&item.type==1){
+                this.disposeParam.tips="买家已收货，订单已完成！";
+                this.disposeParam.link='/order/receiveConfirm';
+            }
         }
     },
      route: {

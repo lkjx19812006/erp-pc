@@ -76,7 +76,8 @@ import {
    SUPPLY_PRODUCT_DATA,
    PRODUCT_DATA,
    FILES_DATA_LIST,
-   CUSTOMER_TRANSFER
+   CUSTOMER_TRANSFER,
+   ORDER_STATUS
 
 } from '../mutation-types'
 
@@ -404,16 +405,17 @@ const mutations = {
                 "show": false
             });
         }
-
     },
     [ORDER_DETAIL_DATA](state, data) {//订单详情
         console.log(data);
         state.orderDetail = data;
     },
+    [ORDER_STATUS](state,data){   //订单状态详情
+        console.log(data);
+        state.basicBaseList.orderList = data;
+    },
     [SYSTEM_DATA](state, data) { //枚举类型
-
       state.systemBaseList.enumlist = data;
-
     },
     [PROVINCE_DATA](state, data) { //省市区
         state.systemBaseList.locationlist = data;

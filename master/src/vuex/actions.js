@@ -209,6 +209,54 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
     });
 }
 
+export const orderStatu = ({ dispatch }, param) => { //订单状态详情
+    console.log(param)
+    const body = {
+       orderId:param.id
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        body:body,
+        emulateJSON: true,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var orderDetail = res.json().result;
+        console.log(res.json())
+        console.log('订单已处理')
+        dispatch(types.ORDER_STATUS, orderDetail);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+export const orderCancle = ({ dispatch }, param) => { //订单取消状态
+    console.log(param)
+    const body = {
+       orderId:param.id,
+       cancleCauses:param.cancleCauses
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateJSON: true, 
+        body:body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('订单取消成功')
+        dispatch(types.ORDER_STATUS, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
     console.log(param)
     Vue.http({

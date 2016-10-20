@@ -9,6 +9,7 @@ export const ORDER_TABLE = 'ORDER_TABLE' //订单
 export const ORDER_ADD_DATA = 'ORDER_ADD_DATA' //创建订单
 export const ORDER_UPDATE_DATA = 'ORDER_UPDATE_DATA' //修改订单
 export const ORDER_DETAIL_DATA = 'ORDER_DETAIL_DATA' //订单详情
+export const ORDER_STATUS = 'ORDER_STATUS' //订单状态详情
 export const SYSTEM_DATA = 'SYSTEM_DATA' //系统数据
 export const PROVINCE_DATA = 'PROVINCE_DATA' //省市区列表数据
 export const SERVICE_ENTERPRISE = 'SERVICE_ENTERPRISE' //业务企业数据

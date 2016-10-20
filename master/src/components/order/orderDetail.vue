@@ -1,5 +1,5 @@
 <template>
- 
+   <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
 <div class="client_body">
       <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -44,7 +44,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          商品列表（{{initOrderDetail.goods.arr.length}}）
+                                          商品订单列表（{{initOrderDetail.goods.arr.length}}）
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
                                     </h4>
@@ -57,9 +57,11 @@
                                             <th>产地</th>
                                             <th>规格</th>
                                             <th>数量</th>
+                                            <th>质量</th>
                                             <th>价格</th>
                                             <th>单位</th>
                                             <th>总价</th>
+                                            <th>商品图片</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.goods.arr">
@@ -67,20 +69,23 @@
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
                                                 <td>{{item.number}}</td>
+                                                <td>{{item.quality}}</td>
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
                                                 <td>{{item.amount}}元</td>
-                                                <!-- <td  @click="clickShow($index,{
-                                                  concrete:'goods'
-                                                  })">
-                                                  <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                <div class="breed_action" v-show="item.show">
-                                                    <dl>
-                                                       <dt @click="createChance()">编辑</dt>
-                                                       <dt @click="specDelete()">删除</dt>
-                                                   </dl>
-                                                </div>
-                                                </td> -->
+                                                <td>
+                                                    <img v-bind:src="item.image" />
+                                                </td>
+                                                <td  @click="clickShow($index,{
+                                                      concrete:'goods'
+                                                      })">
+                                                      <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                    <div class="breed_action" v-show="item.show">
+                                                        <dl>
+                                                           <dt @click="createChance(item,$index)">编辑</dt>
+                                                       </dl>
+                                                    </div>
+                                                </td> 
                                             </tr>
                                         </tbody>
                                     </table>
@@ -90,7 +95,7 @@
                         </div>
                     </article>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" style="border-left: 1px solid #ddd;">
                     <h4 class="section_title">详情</h4>
                     <article>
                         <div class="edit-detail">
@@ -106,12 +111,42 @@
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>收货人</label>
+                                    <label>订单类别</label>
+                                    <input type="text" class="form-control"  value="{{initOrderDetail.type}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>订单来源</label>
+                                    <input type="text" class="form-control"  value="{{initOrderDetail.sourceType}}" disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>收货人姓名</label>
                                     <input type="text" class="form-control"  v-model="initOrderDetail.consignee" value="{{initOrderDetail.consignee}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>收货人电话</label>
                                     <input type="text" class="form-control" v-model="initOrderDetail.consigneePhone" value="{{initOrderDetail.consigneePhone}}" disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>国家</label>
+                                    <input type="text" class="form-control"  value="{{initOrderDetail.country}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>所在省</label>
+                                    <input type="text" class="form-control"  value="{{initOrderDetail.province}}" disabled="disabled"/>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>所在市</label>
+                                    <input type="text" class="form-control"  value="{{initOrderDetail.city}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>邮政编码</label>
+                                    <input type="text" class="form-control"  value="{{initOrderDetail.zipCode}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
@@ -123,15 +158,7 @@
                                     <label>备注</label>
                                     <input type="text" class="form-control" v-model="initOrderDetail.comments" value="{{initOrderDetail.comments}}" disabled="disabled"/>
                                 </div>
-                            </div>
-                            <!-- <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-12 col-xs-12">
-                                    <label>备注</label>
-                                    <input type="text" class="form-control" v-model="initUserDetail.comment" value="{{initUserDetail.comment}}" disabled="disabled"/>
-                                </div>
-                              
-                            </div> -->
-                           
+                            </div>              
                         </div>
                     </article>
                 </div>
@@ -140,6 +167,7 @@
        </div>
 </template>
 <script>
+import trackingModel from '../order/ordergoods'
 import {
   initOrderDetail
 } from '../../vuex/getters'
@@ -148,7 +176,7 @@ import {
 } from '../../vuex/actions'
 export default {
     components: {
-      
+      trackingModel
     },
     props:['param'],
     data(){
@@ -168,13 +196,28 @@ export default {
       }
     },
     methods:{
-      enfoldment:function(param){
-      	console.log(this.$store.state.table.orderDetail[param.crete].arr.length)
-        if(this.$store.state.table.orderDetail[param.crete].arr.length==0){
-                this.$store.state.table.orderDetail[param.crete].show=true;
+          enfoldment:function(param){
+          	console.log(this.$store.state.table.orderDetail[param.crete].arr.length)
+            if(this.$store.state.table.orderDetail[param.crete].arr.length==0){
+                    this.$store.state.table.orderDetail[param.crete].show=true;
+                }
+                this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
+          },
+          createChance:function(item,index){
+            console.log(item)
+                item.show=!item.show;
+                item.index = index;
+                this.trackingParam = item;
+                this.trackingParam.show = true;
+          },
+         clickShow: function(index,param) {
+            if (this.$store.state.table.orderDetail[param.concrete].arr[index].show) {
+                this.$store.state.table.orderDetail[param.concrete].arr[index].show = false;
+            } else {
+                this.$store.state.table.orderDetail[param.concrete].arr[index].show = true
             }
-            this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
-      } 
+
+         }
     },
    created(){
    	  this.getOrderDetail(this.param);
@@ -216,8 +259,9 @@ section {
     background-color: #fff;
 }
 .breed_action{
-  top: 20px;
-  right: 40px;
+  top: 10px;
+  right: 35px;
+  padding: 0 2px;
 }
 .breed_action dl dt{
     display: block;
