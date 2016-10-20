@@ -36,7 +36,8 @@
                         <th>分类</th>
                         <th>客户来源</th>
                         <th>客户等级</th>
-                        <th>名称</th>
+                        <th></th>
+                        <th>客户名称</th>
                         <th>分类码</th>
                         <!-- <th>所属分类</th> -->
                         <th>所属业务员</th>
@@ -66,6 +67,7 @@
                         <td>{{item.classifyDesc}}</td>
                         <td>{{item.sourceType}}</td>
                         <td>{{item.creditLevel}}</td>
+                        <td><img src="/static/images/compact.png" style='float:left;' /></td>
                         <td class="underline"  @click="clickOn({
                                 id:item.id,
                                 sub:$index,
@@ -75,7 +77,7 @@
                                 url:'/customer/',
                                 loading:true,
                                 key:'customerList'
-                                })"><!-- <img src="/static/images/compact.png" style='float:left;' /> -->{{item.name}}</td>
+                                })">{{item.name}}</td>
                                     <!-- 上面这个img显示新客户图标 -->
                         <td>{{item.category}}</td>
                         <!-- <td>{{item.classify | classify}}</td> -->
@@ -394,9 +396,13 @@ export default {
     margin-left: 18px;
 }
 .table>tbody>tr>td{
-    max-width: 400px;
+    max-width: 300px;
     white-space: normal;
-    min-width: 150px;
+    word-wrap: break-word;
+    /* word-break:break-all; */
+}
+.component_action{
+    right: 30px;
 }
 .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

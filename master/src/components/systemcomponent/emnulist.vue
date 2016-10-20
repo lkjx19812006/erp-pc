@@ -29,6 +29,7 @@
                         <option  value="POS">职位</option>
                         <option  value="LBL">常见标签</option>
                         <option  value="ON">客户信用等级</option>
+                        <option  value="CUST_CN">其他类型</option>
                     </select>
                 </div>
             </div>
@@ -51,20 +52,11 @@
                  <th></th>
               </tr>
             </thead>
-            <thead class="space">
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
             <tbody>
               <tr v-for="item in initSystemlist">
                 <td>{{item.code }}</td>
                 <td>{{item.name}}</td>
-                <td>{{item.type }}</td>
+                <td>{{item.type | enumlist }}</td>
                 <td>{{item.desc }}</td>
                 <td  @click="editData($index)">
                   <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>

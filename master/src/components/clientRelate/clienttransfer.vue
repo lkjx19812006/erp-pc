@@ -49,7 +49,7 @@
 			                   <select  class="form-control" v-model="loadParam.orgId" @change="employNameSearch()">
 			                        <option selected value="">请选择业务员部门</option>
 			                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-			                  </select> 
+			                  </select>
 			                </div>
 			            </div>
 	    				<div class="col-xs-8">
@@ -183,7 +183,8 @@ export default{
 			}
 
 			this.param.employeeId=id;
-			
+      this.param.employeeName=this.$store.state.table.basicBaseList.employeeList[sub].name;
+
 			this.param.orgId=orgId;
 		},
 		employNameSearch: function(name) {
@@ -191,11 +192,11 @@ export default{
         },
         orgtransfer:function(param){
            this.tipsParam.show= true;
-           this.transferInfo(param) 
+           this.transferInfo(param)
         },
         transfer:function(param){
            this.tipsParam.show= true;
-           this.transferEmploy(param) 
+           this.transferEmploy(param)
         }
 	},
     events: {

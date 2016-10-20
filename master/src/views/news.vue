@@ -13,7 +13,7 @@
 
             <div class="right col-xs-1">
                 <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
-                <button type="button" class="btn btn-default" height="24" width="24" @click="search()">查询</button>
+                <button type="button" class="btn btn-default" height="24" width="24" @click="search()">搜索</button>
             </div>
 
         </div>
@@ -64,10 +64,10 @@
                         <td>{{item.qq}}</td>
                         <td>{{item.company}}</td>
                         <td>{{item.busiType}}</td>
-                        <td v-if="item.source==0" style="color:red">{{item.sourceType}}</td>
-                        <td v-if="item.source==1" style="color:green">{{item.sourceType}}</td>
-                        <td v-if="item.source==2" style="color:blue">{{item.sourceType}}</td>
-                        <td v-if="item.source==3" style="color:#444444 ">{{item.sourceType}}</td>
+                        <td v-if="item.source==0" style="background:red;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==1" style="background:green;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==2" style="background:blue;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==3" style="background:#444444;color:#fff">{{item.sourceType}}</td>
                         <td>{{item.bizTypeName}}</td>
                         <td>{{item.auditResult}}</td>
                         <td v-if="item.utype==0">待认证</td>

@@ -7,6 +7,7 @@ export const CHANGE_LINECHARTS = 'CHANGE_LINECHARTS' //折线图表
 export const CHANGE_PIECHARTS = 'CHANGE_PIECHARTS' //饼状图
 export const ORDER_TABLE = 'ORDER_TABLE' //订单
 export const ORDER_ADD_DATA = 'ORDER_ADD_DATA' //创建订单
+export const ORDER_UPDATE_DATA = 'ORDER_UPDATE_DATA' //修改订单
 export const ORDER_DETAIL_DATA = 'ORDER_DETAIL_DATA' //订单详情
 export const SYSTEM_DATA = 'SYSTEM_DATA' //系统数据
 export const PROVINCE_DATA = 'PROVINCE_DATA' //省市区列表数据
@@ -52,7 +53,7 @@ export const CUSTOMER_BATCH_DELETE = 'CUSTOMER_BATCH_DELETE' //客户批量删�
 export const ALTER_PRODUCT_DATA = 'ALTER_PRODUCT_DATA' // 修改供应商产品
 export const SUPPLY_PRODUCT_DATA = 'SUPPLY_PRODUCT_DATA' // 新增供应商产品
 export const PRODUCT_DATA = 'PRODUCT_DATA' // 供应商产品列表
-
+export const CUSTOMER_TRANSFER='CUSTOMER_TRANSFER' //客户划转
 
 
 export const INTENTION_LIST_DATA ='INTENTION_LIST_DATA'  //意向数据列表

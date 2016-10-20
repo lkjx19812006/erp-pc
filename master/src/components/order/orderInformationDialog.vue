@@ -1,112 +1,369 @@
 <template>
+    <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
+    <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
     <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建订单</h3>
+            <h3>{{param.title1}}</h3>
         </div>
         <div class="edit-model">
             <form name="editOrderinfo" action="javascript:void(0)">
                 <section class="editsection">
+                    <div style="margin-top:20px;">
+                       <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
+                       <h4 style="display:inline">客户信息</h4>
+                    </div>
                     <div class="editpage">
                         <div class="editpageleft">
                             <div class="editpage-input">
-                                <label class="editlabel">潜在客户名称</label>
-                                <input type="text" class="edit-input" />
+                                <label class="editlabel">订单类别</label>
+                                <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" >
+                                    <option value="0">采购</option>
+                                    <option value="1">销售</option>
+                                </select>
+                                <!-- <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/> -->
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">职务</label>
-                                <input type="text" class="edit-input" />
+                                <label class="editlabel">来源类型</label>
+                                <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" >
+                                    <option value="0">新建</option>
+                                    <option value="1">意向</option>
+                                    <option value="2">报价</option>
+                                </select>
+                                <!-- <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/> -->
+                            </div>
+                             <div class="editpage-input">
+                                <label class="editlabel">收货人姓名</label>
+                                <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}"/>
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">公司名称</label>
-                                <input type="text" class="edit-input" />
+                                <label class="editlabel">国家</label>
+                                <div type="text" class="edit-input">
+                                    <v-select
+                                       :debounce="250"
+                                       :value.sync="country"
+                                       :on-change="selectProvince"
+                                       :options="initCountrylist"
+                                       placeholder="国家"
+                                       label="cname"
+                                      >
+                                     </v-select>
+                               </div>
                             </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">电话</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">电子邮件</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">新建文件</label>
-                                <div class="editpage_img clearfix">
-                                    <div class="editpage-image col-md-4">
-                                        <press-image></press-image>
-                                     </div>
-                                     <div class="editpage-image col-md-4">
-                                        <press-image></press-image>
-                                     </div>
-                                     <div class="editpage-image col-md-4">
-                                        <press-image></press-image>
-                                     </div>
+                             <div class="editpage-input">
+                                <label class="editlabel">省</label>
+                                <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                                <div v-if="country.cname" type="text" class="edit-input">
+                                    <v-select
+                                      :debounce="250"
+                                      :value.sync="province"
+                                      :on-change="selectCity"
+                                      :options="initProvince"
+                                      placeholder="省"
+                                      label="cname">
+                                    </v-select>
                                 </div>
                             </div>
+                             <div class="editpage-input">
+                                <label class="editlabel">区</label>
+                                <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
+                                <div v-if="city.cname" type="text" class="edit-input">
+                                    <v-select
+                                          :debounce="250"
+                                          :value.sync="district"
+                                          :options="initDistrictlist"
+                                          placeholder="区"
+                                          label="cname">
+                                    </v-select>
+                                 </div>
+                            </div>
+                             <div class="editpage-input">
+                                <label class="editlabel">收货人详细地址</label>
+                                <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"  value="{{param.consigneeAdd}}"/>
+                            </div>  
+                             <div class="editpage-input">
+                                <label class="editlabel">杂费</label>
+                                <input type="text" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">优惠金额</label>
+                                <input type="text" class="form-control edit-input" v-model="param.preferential" value="{{parampreferential}}"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">优惠说明</label>
+                                <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" value="{{param.preferentialDesc}}"/>
+                            </div>
+                          <!--   <div class="editpage-input">
+                              <label class="editlabel">客户端来源</label>
+                              <select type="text" class="form-control edit-input" v-model="param.clients">
+                                  <option value="0" selected>pc</option>
+                                  <option value="1">是</option>
+                              </select>
+                          </div> -->
                         </div>
                         <div class="editpageright">
                             <div class="editpage-input">
-                                <label class="editlabel">所有人别名</label>
-                                <input type="text" class="edit-input" />
+                                <label class="editlabel">选择客户</label>
+                                <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customer}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">结束时间</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">金额</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">可能性（%）</label>
-                                <input type="text" class="edit-input" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">潜在客户划转</label>
-                                <select class="form-control" style="width:90%;">
-                                    <option></option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+                                <label class="editlabel">是否国际</label>
+                                <select type="text" class="form-control edit-input" v-model="param.intl">
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
                                 </select>
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">黑名单</label>
-                                <p class="addblack">
-                                    <img class="left" src="/static/images/addblack.png" height="28" width="28" />
-                                    <span>加入黑名单</span>
-                                </p>
+                                <label class="editlabel">收货人电话</label>
+                                <input type="text" class="form-control edit-input" v-model="param.consigneePhone" value="{{param.consigneePhone}}"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">邮编</label>
+                                <input type="text" class="form-control edit-input" v-model="param.zipCode" value="{{param.zipCode}}"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">市</label>
+                                <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                                <div v-if="province.cname" type="text" class="edit-input">
+                                    <v-select
+                                         :debounce="250"
+                                         :value.sync="city"
+                                         :on-change="selectDistrict"
+                                         :options="initCitylist"
+                                         placeholder="市"
+                                         label="cname"
+                                    >
+                                    </v-select>
+                                </div>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">货币类型</label>
+                                 <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}">
+                                    <option value="0" selected>人民币</option>
+                                   <!--  <option value="1">是</option> -->
+                                </select>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">是否样品订单</label>
+                                <select type="text" class="form-control edit-input" v-model="param.sample" value="{{param.sample}}" >
+                                    <option value="0">否</option>
+                                    <option value="1">是</option>
+                                </select>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">备注</label>
+                                <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
+                            </div>
+                             <div class="editpage-input">
+                                <label class="editlabel">杂费说明</label>
+                                <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
                             </div>
                         </div>
                     </div>
                 </section>
+                <div>
+                   <div style="margin-top:20px;">
+                       <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
+                       <h4 style="display:inline">订单商品信息</h4>
+                    </div> 
+                    <div class="editpage">
+                         <div class="editpageleft">
+                            <div class="editpage-input">
+                                 <label class="editlabel">订单商品标题</label>
+                                <input type="text" class="form-control edit-input" v-model="param.goods[0].title"  value="{{param.goods[0].title}}" />
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">订单商品来源</label>
+                                <select type="text" class="form-control edit-input" v-model="param.goods[0].sourceType"  value="{{param.goods[0].sourceType}}" >
+                                    <option value="0">新建</option>
+                                    <option value="1">意向</option>
+                                    <option value="2">报价</option>
+                                </select>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">商品单位</label>
+                                <input type="text" class="form-control edit-input" v-model="param.goods[0].unit" value="{{param.goods[0].unit}}"/>
+                            </div>
+
+                            <div class="editpage-input">
+                                <label class="editlabel">商品质量</label>
+                                <input type="text" class="form-control edit-input" v-model="param.goods[0].quality" value="{{param.goods[0].quality}}"/>
+                            </div>
+                             <div class="editpage-input">
+                                <label class="editlabel">商品价格</label>
+                                <input type="text" class="form-control edit-input" v-model="param.goods[0].price" value="{{param.goods[0].price}}"/>
+                            </div>
+                        </div>
+                        <div class="editpageright">
+                            <div class="editpage-input">
+                                <label class="editlabel">订单商品药材品种名称</label>
+                                <input type="text" class="form-control edit-input" v-model="param.goods[0].brredName"  value="{{param.goods[0].brredName}}"  @click="searchBreed(param.brredName,param.breedId)"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">商品数量</label>
+                                <input type="text" class="form-control edit-input" v-model="param.goods[0].number" value="{{param.goods[0].number}}"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">商品规格</label>
+                                <input type="text" class="form-control form-control edit-input" v-model="param.goods[0].spec"  value="{{param.goods[0].spec}}"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">商品产地</label>
+                                <input type="text" class="form-control edit-input" v-model="param.goods[0].location" value="{{param.goods[0].location}}"/>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="confirm()">保存</button>
+            <button type="button" class="btn  btn-confirm" @click="confirm(param)">保存</button>
         </div>
     </div>
 </template>
 <script>
-import pressImage from '../../components/imagePress'
+import vSelect from  '../tools/vueSelect/components/Select'
+import pressImage from '../imagePress'
+import searchcustomerModel  from '../Intention/clientname'
+import searchbreedModel  from '../Intention/breedsearch'
+import {
+    initCountrylist,
+    initProvince,
+    initCitylist,
+    initDistrictlist, 
+} from '../../vuex/getters'
+import {
+    getCountryList,
+    getProvinceList,
+    getCityList,
+    getDistrictList
+} from '../../vuex/actions'
 export default {
     components: {
-        pressImage
+        vSelect,
+        pressImage,
+        searchcustomerModel,
+        searchbreedModel
     },
     props: ['param'],
     data() {
-        return {}
+        return {
+            countryParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7
+            },
+            empNameParam:{
+                show:false,
+                customer:'',
+                customerName:''
+            },
+            breedParam:{
+                show:false,
+                brredName:'',
+                breedId:''
+            },
+            country:{
+              cname:'',
+            },
+            province:{
+              cname:''
+            },
+            city:{
+              cname:''
+            },
+            district:{
+              cname:''
+            }
+        }
+    },
+    vuex: {
+        getters:{
+            initCountrylist,
+            initProvince,
+            initCitylist,
+            initDistrictlist, 
+        },
+        actions:{
+            getCountryList,
+            getProvinceList,
+            getCityList,
+            getDistrictList
+        }
     },
     methods:{
-        confirm:function(){
+        selectProvince:function(){
+            console.log('selectProvince');
+            this.province = '';
+            this.city = '';
+            this.district = '';
+            if(this.country!=''&&this.country!=null){
+              this.getProvinceList(this.country);
+            }
+        },
+
+        selectCity:function(){
+            this.city = '';
+            this.district = '';
+            if(this.province!=''&&this.province!=null){
+              this.getCityList(this.province);
+            }
+
+        },
+        selectDistrict:function(){
+            this.district = '';
+            if(this.city!=''&&this.city!=null){
+              this.getDistrictList(this.city);
+            }
+
+        },
+        searchBreed:function(brredName,breedId){
+                this.breedParam.show=true;
+                /*this.param.breedName = this.breedParam.breedName;
+                this.param.breedId = this.breedParam.breedId;*/
+          },
+        searchCustomer:function(customerName,customer){
+            this.empNameParam.show=true;
+            /*if("employeeId" in this.param){
+                this.empNameParam.employeeId = this.param.employeeId;
+            }*/
+        },
+        confirm:function(param){
+            this.param.country = this.country.id;
+            this.param.province = this.province.id;
+            this.param.city = this.city.id;
+            this.param.district = this.district.id;
+            console.log(this.param);
+            this.param.link(this.param);
 
         }
+    },
+    events:{
+        breed:function(breed){
+            console.log(this.param.goods[0])
+            this.param.goods[0].brredName = breed.breedName;
+            this.param.goods[0].breedId = breed.breedId;
+           /* this.breedParam.breedName = breed.breedName;
+            this.breedParam.id = breed.breedId;
+            this.breedParam.loading=true;
+            this.getBreedDetail(this.breedParam);*/
+        },
+        customer:function(customer){
+            this.param.customerName = customer.customerName;
+            this.param.customer = customer.customerId;
+        }
+    },
+    created(){
+        this.getCountryList(this.countryParam);
+        console.log(this.param);
     }
 }
 </script>
@@ -174,7 +431,6 @@ export default {
 
 .edit-input {
     height: 36px;
-    line-height: 36px;
     width: 90%;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -199,6 +455,7 @@ export default {
     border-top: 1px solid #ddd;
     text-align: right;
     padding: 10px 20px;
+    bottom:5px;
     margin-top: 50px;
 }
 

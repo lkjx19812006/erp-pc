@@ -17,7 +17,7 @@ Vue.filter('telstate', function(val){
 		return ''+val;
 	}
 });
-  
+
 Vue.filter('numberstate', function(val){
 	var val = val;
 	if(val==null){
@@ -42,7 +42,7 @@ Vue.filter('isostate', function(val){
 		return val;
 	}
 });
-  
+
 Vue.filter('systemcode', function(val){
 	var val = val;
 	if(val==null){
@@ -137,8 +137,8 @@ Vue.filter('entry', function(val){
 	}else{
 		return val;
 	}
-	
-}) 
+
+})
 Vue.filter('levelstate', function(val){ //等级
 	var val = val;
 	if(val==null){
@@ -231,5 +231,38 @@ Vue.filter('classify', function(val){ //国家
 	}else{
 		return val;
 	}
+})
+
+Vue.filter('enumlist', function(val){ //国家
+  var val = val;
+  var obj=  {
+    "TRACE" : '跟进类型',
+    "ST" : '规格类型',
+    "BANK" : '银行',
+    "OSTAT" : '订单状态',
+    "OT" : '包装方式',
+    "MU" : '计量单位',
+    "PAY" : '付款方式',
+    "CL" : '客户信用等级',
+    "IS" : '意向状态',
+    "HT" : '药材品类',
+    "ES" : '员工状态',
+    "ET" : '企业类型',
+    "CS" : '客户来源',
+    "CT" : '证书类型',
+    "AS" : '审核状态',
+    "DEV" : '快递公司',
+    "POS" : '职位',
+    "LBL" : '常见标签',
+    "ON" : '客户信用等级',
+    'CUST_CN':'其他类型'
+  }
+  if(obj[val]){
+    return obj[val]
+  }else{
+    return val;
+  }
+
+
 })
 

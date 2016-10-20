@@ -41,6 +41,7 @@
                                             <option  value="POS">职位</option>
                                             <option  value="LBL">常见标签</option>
                                             <option  value="ON">客户信用等级</option>
+                                            <option  value="CUST_CN">其他类型</option>
                                         </select>
                                 </div>
                             </div>

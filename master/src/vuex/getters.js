@@ -39,7 +39,7 @@ export const getPiechart = (state) => {
 }
 
 export const initOrderlist = (state) => {
-    return parseJson(state.table.orderList);
+    return parseJson(state.table.basicBaseList.orderList);
 }
 
 export const initOrderDetail = (state) => {

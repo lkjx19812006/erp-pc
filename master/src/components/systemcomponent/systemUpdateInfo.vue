@@ -19,8 +19,7 @@
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel">类型</label>
-                                <select class="form-control" v-model="systemData.type" style="width:90%;">
-
+                                <select class="form-control" v-model="systemData.type" style="width:90%;" value="{{systemData.typedesc}}">
                                     <option  value="TRACE">跟进类型</option>
                                     <option  value="ST">规格类型</option>
                                     <option  value="BANK">银行</option>
@@ -80,6 +79,7 @@ export default {
                 id: this.initSystemlist[this.param.id].id,
                 name: this.initSystemlist[this.param.id].name,
                 code: this.initSystemlist[this.param.id].code,
+                typedesc: this.initSystemlist[this.param.id].typedesc,
                 type: this.initSystemlist[this.param.id].type,
                 desc: this.initSystemlist[this.param.id].desc,
                 status: this.initSystemlist[this.param.id].status
@@ -101,10 +101,10 @@ export default {
             this.$set('systemData.name', this.initSystemlist[this.param.id].name);
             this.$set('systemData.code', this.initSystemlist[this.param.id].code);
             this.$set('systemData.type', this.initSystemlist[this.param.id].type);
+            this.$set('systemData.typedesc', this.initSystemlist[this.param.id].typedesc);
             this.$set('systemData.status', this.initSystemlist[this.param.id].status);
             this.$set('systemData.desc', this.initSystemlist[this.param.id].desc);
             this.$set('systemData.id', this.initSystemlist[this.param.id].id);
-            //this.$set('systemData.typedesc', this.initSystemlist[this.param.id].typedesc);
         }
     }
 }
