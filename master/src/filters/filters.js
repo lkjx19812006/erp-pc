@@ -266,3 +266,57 @@ Vue.filter('enumlist', function(val){ //国家
 
 })
 
+Vue.filter('onsell',function(val){      //意向上下架
+	var val = val;
+	if(val==0){
+		 return '初始';
+	}
+	if(val==1){
+		 return '申请上架';
+	}
+	if(val==2){
+		 return '上架';
+	}
+	if(val==-2){
+		 return '上架失败';
+	}
+	if(val==3){
+		 return '申请下架';
+	}
+	if(val==4){
+		 return '下架';
+	}
+	if(val==-4){
+		 return '下架失败';
+	}else{
+		return '其他';
+	}
+})
+
+Vue.filter('intentionAudit',function(val){      //意向审核
+	var val = val;
+	if(val==0){
+		 return '初始';
+	}
+	if(val==1){
+		 return '客服审核通过';
+	}
+	if(val==-1){
+		 return '客户审核不通过';
+	}
+	if(val==2){
+		 return '业务员审核通过';
+	}
+	if(val==-2){
+		 return '业务员审核不通过';
+	}
+	if(val==3){
+		 return '主管审核通过';
+	}
+	if(val==-3){
+		 return '主管审核不通过';
+	}else{
+		return '其他';
+	}
+})
+

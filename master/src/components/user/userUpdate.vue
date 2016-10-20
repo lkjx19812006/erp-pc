@@ -19,8 +19,8 @@
                  </div>
                    <div class="editpageleft">
                        <div class="editpage-input">
-                            <label class="editlabel" for="system">姓名<span class="system_danger" v-if="$validation.fullname.required||$validation.fullname.minlength">请输入姓名且不少于两位数</span></label>
-                           <input type="text" class="form-control  edit-input" v-validate:fullname="{required:true,minlength:2}" v-model='param.fullname' value="{{initUserDetail.fullname}}"/>
+                            <label class="editlabel" for="system">姓名<span class="system_danger" v-if="$validation.fullname.minlength">请输入姓名且不少于两位数</span></label>
+                           <input type="text" class="form-control  edit-input" v-validate:fullname="{minlength:2}" v-model='param.fullname' value="{{initUserDetail.fullname}}"/>
                            <!-- <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{initUserDetail.fullname}}" /> -->
                        </div>
                        <div class="editpage-input">
@@ -29,17 +29,17 @@
                        </div>
 
                      <div class="editpage-input">
-                          <label class="editlabel" for="system">电话<span class="system_danger" v-if="$validation.system.required">电话不能为空</span></label>
-                          <input type="text" class="form-control  edit-input" id="system" v-validate:system="{required:true}" v-model='param.tel' value="{{initUserDetail.tel}}"/>
+                          
+                          <label class="editlabel" for="system">电话<span class="system_danger" v-if="$validation.tel.tel">格式不对</span></label>
+                          <input type="text" class="form-control  edit-input" v-validate:tel="['tel']" v-model='param.tel' value="{{initUserDetail.tel}}"/>
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">性别</label>
-
                        <input type="text" v-model='param.gender' class="form-control edit-input" value="{{initUserDetail.gender}}" />
                      </div>
                      <div class="editpage-input">
-                       <label class="editlabel">身份证号码</label>
-                       <input type="text" v-model='param.idnumber' class="form-control edit-input" value="{{initUserDetail.idnumber}}" />
+                       <label class="editlabel" for="system">身份证号码<span class="system_danger" v-if="$validation.idnumber.IDCard">格式不对</span></label>
+                       <input type="text" class="form-control  edit-input" v-validate:idnumber="['IDCard']" v-model='param.idnumber' value="{{initUserDetail.idnumber}}"/>
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">会员等级</label>
@@ -73,8 +73,8 @@
                            <input type="text" v-model='param.email' class="form-control edit-input" value="{{initUserDetail.email}}" />
                        </div>
                        <div class="editpage-input">
-                           <label class="editlabel">手机</label>
-                            <input type="text" v-model='param.phone' class="form-control edit-input" value="{{initUserDetail.phone}}" />
+                            <label class="editlabel" for="system">手机<span class="system_danger" v-if="$validation.phone.phone">请输入正确的手机号</span></label>
+                            <input type="text" class="form-control  edit-input" v-validate:phone="['phone']" v-model='param.phone' value="{{initUserDetail.phone}}"/>
                        </div>
                        <div class="editpage-input">
                            <label class="editlabel">公司</label>
@@ -110,7 +110,12 @@
        </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true">确定</button>
+            <button type="button" class="btn  btn-confirm" v-if="$validation.fullname.minlength
+                          ||$validation.nickname.required
+                          ||$validation.tel.tel
+                          ||$validation.phone.phone
+                          ||$validation.idnumber.IDCard" disabled="true">确定</button>
+            <button type="button" class="btn  btn-confirm" v-else @click="tipsParam.show=true">确定</button>
         </div>
     </div>
 </template>

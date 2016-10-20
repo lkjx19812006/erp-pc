@@ -34,7 +34,10 @@
                         	<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
                         </th>
                         <th>意向ID</th>	
-                        <th>会员名</th>
+                        <th>留言会员</th>
+                        <th>会员手机</th>
+                        <th>发布意向客户</th>
+                        <th>客户手机</th>
                         <th>留言信息</th>
                         <th>备注</th>
                         <th>回复</th>
@@ -48,6 +51,9 @@
                         </td>
                         <td>{{item.intentionId}}</td>
                         <td>{{item.fullname}}</td>
+                        <td>{{item.phone}}</td>
+                        <td>{{item.customerName}}</td>
+                        <td>{{item.customerPhone}}</td>
                         <td>{{item.content}}</td>
                         <td>{{item.comments}}</td>
                         <td>{{item.reply}}</td>

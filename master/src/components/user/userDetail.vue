@@ -469,6 +469,7 @@ export default {
         },
         intentionAuditParam:{
           show:false,
+          key:'user',
           arr:[],
           indexs:[],
           validate:0,

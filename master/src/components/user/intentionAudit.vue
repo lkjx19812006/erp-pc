@@ -66,11 +66,28 @@ export default {
     methods: {
 
         pass: function(){
-            this.param.validate = 1;
+            if(this.param.key=='user'){   //客服审核意向(初审会员的意向)
+                this.param.validate = 1;     
+            }
+            if(this.param.key=='employee'){    //业务员审核意向(部门意向)
+                this.param.validate = 2;  
+            }
+            if(this.param.key=='org'){    //主管审核意向(部门意向)
+                this.param.validate = 3;  
+            }
+            
             this.batchUserIntentionAudit(this.param);
         },
         reject: function(){
-            this.param.validate = 2;
+            if(this.param.key=='user'){
+                this.param.validate = -1;   
+            }
+            if(this.param.key=='employee'){    
+                this.param.validate = -2;  
+            }
+            if(this.param.key=='org'){
+                this.param.validate = -3;  
+            }
             this.batchUserIntentionAudit(this.param);
         },
     },

@@ -1,3 +1,275 @@
 <template>
-	<h2>部门报价</h2>
+     <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
+     <div>
+        <div class="service-nav clearfix">
+            <div class="my_enterprise col-xs-2">部门报价</div>
+            <div class="col-xs-5 my_order_search">
+               <div class="name_search clearfix">
+                   <img src="/static/images/search.png" height="24" width="24">
+                   <input type="text" class="search_input" placeholder="按意向ID搜索" v-model="loadParam.intentionId"  @keyup.enter="searchOffer()">
+               </div>
+              <div class="ordertel_search clearfix">
+                   <img src="/static/images/search.png" height="24" width="24">
+                   <input type="text" class="search_input" v-model="loadParam.customerId" placeholder="按客户名称搜索" @keyup.enter="searchOffer()">
+               </div>
+           </div> 
+            <div class="right col-xs-2">
+              <button class="new_btn transfer" @click="searchOffer()">搜索</button>
+              <!-- <button class="new_btn" @click="createIntention()">新建</button> -->
+            </div>
+        </div>
+        <div class="service-nav clearfix">
+            <div class="my_order_search">
+               <div class="filter_search clearfix">
+                    
+               </div>
+           </div>
+        </div>
+        <div class="order_table">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_color table-striped " v-cloak>
+                <thead>
+                    <tr>  
+                        <th>
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
+                        </th>
+                        <th>意向ID</th>   
+                        <th>报价会员</th>
+                        <th>会员手机</th>
+                        <th>发布意向客户</th>
+                        <th>客户手机</th>
+                        <th>品种</th>
+                        <th>单价</th>
+                        <th>数量</th>
+                        <th>总价</th>
+                        <th>杂费</th>
+                        <th>备注</th>
+                        <th>是否已采纳</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in initOfferList">
+                         <td  >
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)"></label>
+                        </td>
+                        <td>{{item.intentionId}}</td>
+                        <td>{{item.userName}}</td>
+                        <td>{{item.userPhone}}</td>
+                        <td>{{item.customerName}}</td>
+                        <td>{{item.customerPhone}}</td>
+                        <td>{{item.breedName}}</td>
+                        <td>{{item.price}}</td> 
+                        <td>{{item.number}}</td> 
+                        <td>{{item.total}}</td> 
+                        <td>{{item.incidentals}}</td> 
+                        <td>{{item.comments}}</td>
+                        <td>
+                           <div v-if="item.orderTime==0">未采纳</div>
+                           <div v-else>已采纳{{item.orderTime}}次</div>
+
+                        </td>
+                        <td @click.stop="clickShow($index)">
+                           <img height="24" width="24" src="/static/images/default_arrow.png" />
+                           <div class="component_action" v-show="item.show">
+                               <ul>
+                                   <li @click="adopt(item)">采纳</li>
+                               </ul>
+                           </div>
+                       </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="base_pagination">
+            <pagination :combination="loadParam"></pagination>
+        </div>
+    </div>
 </template>
+<script>
+import pagination from '../../pagination'
+import filter from '../../../filters/filters'
+import createorderModel  from '../createOrder'
+import {
+    initOfferList
+} from '../../../vuex/getters'
+import {
+    getOfferList
+} from '../../../vuex/actions'
+export default {
+    components: {   
+        pagination,
+        createorderModel
+    },
+    vuex: {
+        getters: {
+            initOfferList
+        },
+        actions: {
+            getOfferList
+        }
+    },
+    data() {
+        return {
+            loadParam: {
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7,
+                link:'/intention/org/offers',
+                breedName:'',
+                customerId:'',
+                userId:'',
+                intentionId:''
+            },
+            
+            offerParam:{
+                show:false,
+                id:''
+            },
+            orderParam:{
+                show:false,
+                key:'offerList',
+                type:'',
+                customer:'',
+                sample:0,
+                intl:0,
+                incidentals:'',
+                incidentalsDesc:'',
+                preferential:'',   //优惠金额
+                preferentialDesc:'',  
+                currency:'',     //货币品种
+                consignee:'',    //收货人姓名
+                consigneePhone:'',
+                zipCode:'',     //邮编
+                country:'',
+                province:'',
+                city:'',
+                district:'',
+                consigneeAddr:'',
+                comments:'', 
+                sourceType:1,        //商品来源类型(意向)
+                goods:[{
+                  sourceType:2,   //商品来源类型(报价)
+                  sourceId:'',    //商品来源ID
+                  title:'',       //订单商品标题
+                  breedId:'',
+                  brredName:'',
+                  quality:'',
+                  location:'',
+                  spec:'',
+                  price:'',
+                  unit:'',
+                  number:''
+                }]
+
+            },
+            checked:false
+        }
+    },
+    methods: {
+        searchOffer:function(){
+            this.getOfferList(this.loadParam);
+        },
+        clickShow:function(index){
+            this.$store.state.table.basicBaseList.offerList[index].show=!this.$store.state.table.basicBaseList.offerList[index].show;
+        }, 
+        onlyselected:function(index){
+            var _this = this;
+            this.$store.state.table.basicBaseList.offerList[index].checked=!this.$store.state.table.basicBaseList.offerList[index].checked;
+            if(!this.$store.state.table.basicBaseList.offerList[index].checked){
+                this.checked = false;
+            }else{
+                this.checked = true;
+                this.$store.state.table.basicBaseList.offerList.forEach(function(item){
+                    if(!item.checked){
+                        _this.checked = false;
+                    }
+                })
+            }   
+        },
+        checkedAll:function(){
+            this.checked = !this.checked;
+            if(this.checked){
+                this.$store.state.table.basicBaseList.offerList.forEach(function(item){
+                    item.checked = true;
+                })      
+            }else{
+                this.$store.state.table.basicBaseList.offerList.forEach(function(item){
+                    item.checked = false;
+                })
+            }       
+        },
+        adopt:function(item){
+            console.log("创建订单");
+            this.orderParam.show = true;
+            this.orderParam.customer = item.customerId;
+            this.orderParam.incidentals = item.incidentals;
+            this.orderParam.incidentalsDesc = item.incidentalsDesc;
+
+            this.orderParam.goods[0].breedId = item.breedId;
+            this.orderParam.goods[0].breedName = item.breedName;
+            this.orderParam.goods[0].spec = item.spec;
+            this.orderParam.goods[0].price = item.price;
+            this.orderParam.goods[0].unit = item.unit;
+            this.orderParam.goods[0].number = item.number;
+            this.orderParam.goods[0].quality = item.quality;
+            this.orderParam.goods[0].location = item.location;
+            
+            for(var key in this.orderParam){
+                if(this.orderParam[key]!=''){
+                    console.log(key+'=='+this.orderParam[key]);
+                }
+            }
+            console.log(this.orderParam.goods[0]);
+            return ;
+        }
+        
+    },
+    events: {
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getOfferList(this.loadParam);
+        }
+    },
+    created() {
+        this.getOfferList(this.loadParam, this.loadParam.all);
+    },
+    filter: (filter,{})
+}
+</script>
+<style scoped>
+.breed_action {
+    top: 33px;
+    right: 106px;
+}
+.transfer{
+    margin-left: 18px;
+}
+.checkbox_unselect{
+    background-image: url(/static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+}
+.checkbox_select{
+    background-image: url(/static/images/selected.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+}
+</style>
+

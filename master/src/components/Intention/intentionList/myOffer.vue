@@ -6,11 +6,11 @@
             <div class="col-xs-5 my_order_search">
                <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchOffer()">
+                   <input type="text" class="search_input" placeholder="按意向ID搜索" v-model="loadParam.intentionId"  @keyup.enter="searchOffer()">
                </div>
               <div class="ordertel_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索" @keyup.enter="searchOffer()">
+                   <input type="text" class="search_input" v-model="loadParam.customerId" placeholder="按客户名称搜索" @keyup.enter="searchOffer()">
                </div>
            </div> 
             <div class="right col-xs-2">
@@ -37,11 +37,16 @@
                         </th>
                         <th>意向ID</th>	
                         <th>报价会员</th>
+                        <th>会员手机</th>
                         <th>发布意向客户</th>
+                        <th>客户手机</th>
+                        <th>品种</th>
                         <th>单价</th>
                         <th>数量</th>
                         <th>总价</th>
                         <th>杂费</th>
+                        <th>备注</th>
+                        <th>是否已采纳</th>
       	            	<th></th>
                     </tr>
                 </thead>
@@ -52,16 +57,25 @@
                         </td>
                         <td>{{item.intentionId}}</td>
                         <td>{{item.userName}}</td>
+                        <td>{{item.userPhone}}</td>
                         <td>{{item.customerName}}</td>
+                        <td>{{item.customerPhone}}</td>
+                        <td>{{item.breedName}}</td>
                         <td>{{item.price}}</td> 
                         <td>{{item.number}}</td> 
                         <td>{{item.total}}</td> 
                         <td>{{item.incidentals}}</td> 
+                        <td>{{item.comments}}</td>
+                        <td>
+                           <div v-if="item.orderTime==0">未采纳</div>
+                           <div v-else>已采纳{{item.orderTime}}次</div>
+
+                        </td>
                         <td @click.stop="clickShow($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
                                <ul>
-                                   <li @click="adopt()">采纳</li>
+                                   <li @click="adopt(item)">采纳</li>
                                </ul>
                            </div>
                        </td>
@@ -105,15 +119,11 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                /*link:'/intention/employee/list',*/
-                type:'',
-                invoic:'',
-                visit:'',
-                intl:'',
-                sampling:'',
-                status:'',
-                advance:'',
-                customerName:''
+                link:'/intention/employee/offers',
+                breedName:'',
+                customerId:'',
+                userId:'',
+                intentionId:''
             },
             
             offerParam:{
@@ -141,9 +151,9 @@ export default {
                 district:'',
                 consigneeAddr:'',
                 comments:'', 
-                sourceType:2,        
+                sourceType:1,        //商品来源类型(意向)
                 goods:[{
-                  sourceType:2,   //商品来源类型
+                  sourceType:2,   //商品来源类型(报价)
                   sourceId:'',    //商品来源ID
                   title:'',       //订单商品标题
                   breedId:'',
@@ -161,6 +171,9 @@ export default {
         }
     },
     methods: {
+        searchOffer:function(){
+            this.getOfferList(this.loadParam);
+        },
         clickShow:function(index){
         	this.$store.state.table.basicBaseList.offerList[index].show=!this.$store.state.table.basicBaseList.offerList[index].show;
         }, 
@@ -190,18 +203,29 @@ export default {
    				})
    			}   	
         },
-        adopt:function(){
+        adopt:function(item){
             console.log("创建订单");
             this.orderParam.show = true;
-            //this.orderParam.customer = item.customerId;
-            /*this.orderParam.spec = item.spec;
-            this.orderParam.price = item.price;
-            this.orderParam.unit = item.unit;
-            this.orderParam.number = item.number;
+            this.orderParam.customer = item.customerId;
             this.orderParam.incidentals = item.incidentals;
             this.orderParam.incidentalsDesc = item.incidentalsDesc;
-            this.orderParam.quality = item.quality;
-            this.orderParam.location = item.location;*/
+
+            this.orderParam.goods[0].breedId = item.breedId;
+            this.orderParam.goods[0].breedName = item.breedName;
+            this.orderParam.goods[0].spec = item.spec;
+            this.orderParam.goods[0].price = item.price;
+            this.orderParam.goods[0].unit = item.unit;
+            this.orderParam.goods[0].number = item.number;
+            this.orderParam.goods[0].quality = item.quality;
+            this.orderParam.goods[0].location = item.location;
+            
+            for(var key in this.orderParam){
+                if(this.orderParam[key]!=''){
+                    console.log(key+'=='+this.orderParam[key]);
+                }
+            }
+            console.log(this.orderParam.goods[0]);
+            return ;
         }
         
     },

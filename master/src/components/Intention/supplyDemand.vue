@@ -70,11 +70,9 @@
                         <td>{{item.sampleNumber}}</td>
                         <td>{{item.sampleUnit}}</td>
                         <td>{{item.sampleAmount}}</td>
-                        <td>{{item.validate}}</td>
+                        <td>{{item.validate | intentionAudit}}</td>
                         <td>
-                          <div v-if="item.onSell==0">初始</div>
-                          <div v-if="item.onSell==1">上架</div>
-                          <div v-if="item.onSell==2">下架</div>
+                          <div>{{item.onSell | onsell}}</div>
                         </td>
                     </tr>
 

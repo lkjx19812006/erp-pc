@@ -2199,9 +2199,12 @@ export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
 
 export const getOfferList = ({ dispatch }, param) => {  //报价信息列表以及搜索
     param.loading = true;
-    var url = apiUrl.clientList+'/intention/employee/offers?'+'&page=' + param.cur + '&pageSize=15';
+    var url = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
     if('intentionId' in param&&param.intentionId!==''){
         url += '&intentionId='+param.intentionId
+    }
+    if('customerId' in param&&param.customerId!==''){
+        url += '&customerId='+param.customerId
     }
     Vue.http({
         method:'GET',

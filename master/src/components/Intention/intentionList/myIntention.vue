@@ -7,6 +7,7 @@
      <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
      <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
      <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
+     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      
 	 <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
@@ -23,13 +24,14 @@
            </div> 
             <div class="right">
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
+                <button class="new_btn transfer" @click="search()">搜索</button>
                 <!-- <button class="new_btn transfer" @click="intentionAudit()">审核</button> -->
-                <button class="new_btn transfer" @click="upOrDown({
-                                                                onSell:2  
-                                                              })">下架</button>
-                <button class="new_btn transfer" @click="upOrDown({
-                                                              onSell:1
-                                                            })">上架</button>
+               <!--  <button class="new_btn transfer" @click="upOrDown({
+                                                               onSell:2  
+                                                             })">下架</button>
+               <button class="new_btn transfer" @click="upOrDown({
+                                                             onSell:1
+                                                           })">上架</button> -->
                 <button class="new_btn" @click="createIntention({
                        show:true,
                        selectCustomer:true,
@@ -75,7 +77,7 @@
         </div>
         <div class="service-nav clearfix">
             <div class="my_order_search">
-               <div class="filter_search clearfix">
+               <!-- <div class="filter_search clearfix">
                     <dl class="clearfix">
                         <dt>类型：</dt>
                         <dd>
@@ -156,7 +158,7 @@
                             </select>
                         </dd>
                     </dl>
-               </div>
+               </div> -->
            </div>
         </div>
         <div class="order_table">
@@ -206,7 +208,12 @@
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
                         <td>{{item.type | chanceType}}</td>
-                        <td>{{item.especial | chanceEspec}}</td>
+                        <td>
+                            <div v-if="item.especial==0">普通</div>
+                            <div v-if="item.especial==1&&item.type==0">紧急求购</div>
+                            <div v-if="item.especial==1&&item.type==1">低价资源</div>
+                        </td>
+
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
                         <td class="underline" @click.stop="detailClick({
@@ -272,11 +279,9 @@
                         <td>{{item.sampleUnit}}</td>
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offerNumber}}</td>
-                        <td>{{item.validate}}</td>
+                        <td>{{item.validate | intentionAudit}}</td>
                         <td>
-                          <div v-if="item.onSell==0">初始</div>
-                          <div v-if="item.onSell==1">上架</div>
-                          <div v-if="item.onSell==2">下架</div>
+                          <div>{{item.onSell | onsell}}</div>
                         </td>
                         <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
@@ -334,9 +339,9 @@
                                                url:'/intention/',
                                                key:'intentionList'
                                                })">删除</li>
-                                   <li @click="up($index,item.id)">上架</li>
-                                   <li @click="down($index,item.id)">下架</li>
-                                   <li @click="applyDown($index,item.id)">申请下架</li >           
+                                   <li v-if="item.validate==3&&item.onSell==0&&item.type==1&&item.especial==1" @click="up($index,item.id)">上架</li>
+                                   <li v-if="item.onSell==2&&!(item.type==1&&item.especial==1)" @click="down($index,item.id)">下架</li>
+                                   <li v-if="item.onSell==2&&item.type==1&&item.especial==1" @click="applyDown($index,item.id)">申请下架</li >           
                                </ul>
                            </div>
                        </td>
@@ -433,6 +438,7 @@ import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBree
 import editintentModel  from  '../../Intention/Editintention'
 import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
+import searchModel from '../intentionSearch'
 
 import {
 	initIntentionList,
@@ -456,7 +462,8 @@ export default {
         deletebreedModel,
         editintentModel,
         createintentModel,
-        supdemModel
+        supdemModel,
+        searchModel
     },
     vuex: {
         getters: {
@@ -476,6 +483,7 @@ export default {
         return {
             loadParam: {
                 loading: true,
+                show:false,
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
@@ -613,10 +621,10 @@ export default {
             this.tipsParam.ids = [];
             this.tipsParam.indexs = [];
             this.tipsParam.onSell = param.onSell;
-            if(param.onSell==1){
+            if(param.onSell==2){
                 this.tipsParam.name = '意向上架成功';
             }
-            if(param.onSell==2){
+            if(param.onSell==4){
                 this.tipsParam.name = '意向下架成功';
             }
             for(var i=0;i<this.initIntentionList.length;i++){
@@ -639,7 +647,7 @@ export default {
             this.tipsParam.indexs = [];
             this.tipsParam.ids.push(id);
             this.tipsParam.indexs.push(index);
-            this.tipsParam.onSell = 1;
+            this.tipsParam.onSell = 2;
             this.tipsParam.name = '意向上架成功';
             this.intentionUpAndDown(this.tipsParam);
         },
@@ -648,12 +656,18 @@ export default {
             this.tipsParam.indexs = [];
             this.tipsParam.ids.push(id);
             this.tipsParam.indexs.push(index);
-            this.tipsParam.onSell = 2;
+            this.tipsParam.onSell = 4;
             this.tipsParam.name = '意向下架成功';
             this.intentionUpAndDown(this.tipsParam);
         },
         applyDown:function(index,id){
-          console.log("申请下架");
+          this.tipsParam.ids = [];
+            this.tipsParam.indexs = [];
+            this.tipsParam.ids.push(id);
+            this.tipsParam.indexs.push(index);
+            this.tipsParam.onSell = 3;
+            this.tipsParam.name = '申请下架成功';
+            this.intentionUpAndDown(this.tipsParam);
         },
         clientTransfer:function(initIntentionList){
             this.intentionParam = initIntentionList;
@@ -671,6 +685,11 @@ export default {
                     this.intentionParam.show=false;
                 }
             }
+        },
+        search:function(){
+          this.loadParam.loading = false;
+          this.loadParam.show = true;
+
         },
         searchIntention:function(){
             this.getIntentionList(this.loadParam);

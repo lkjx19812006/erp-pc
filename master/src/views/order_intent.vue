@@ -21,12 +21,9 @@
      </div>
      <!-- 我的留言 -->
      <div class="myOrder" v-if="$route.path.split('=')[1]==5">
-        <my-msg></my-msg>
+        <msg></msg>
      </div>
-     <!-- 部门留言 -->
-     <div class="myOrder" v-if="$route.path.split('=')[1]==6">
-        <org-msg></org-msg>
-     </div>
+     
 </template>
 <script>
 import userIntention from '../components/Intention/intentionList/userIntention.vue'
@@ -34,8 +31,8 @@ import myIntention from '../components/Intention/intentionList/myIntention.vue'
 import orgIntention from '../components/Intention/intentionList/orgIntention.vue'
 import myOffer from '../components/Intention/intentionList/myOffer.vue'
 import orgOffer from '../components/Intention/intentionList/orgOffer.vue'
-import myMsg from '../components/Intention/intentionList/myMsg.vue'
-import orgMsg from '../components/Intention/intentionList/orgMsg.vue'
+import msg from '../components/Intention/intentionList/msg.vue'
+
 
 import {
 	
@@ -50,8 +47,8 @@ export default {
         orgIntention,
         myOffer,
         orgOffer,
-        myMsg,
-        orgMsg
+        msg,
+       
     }
 }
 </script>

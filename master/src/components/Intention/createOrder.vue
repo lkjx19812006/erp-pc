@@ -139,10 +139,6 @@
                     <div class="editpage">
                         <div class="editpageleft">
                             <div class="editpage-input">
-                                <label class="editlabel">商品来源类型</label>
-                                <input type="text" class="edit-input" v-model="param.goods[0].sourceType"/>
-                            </div>
-                            <div class="editpage-input">
                                 <label class="editlabel">商品标题</label>
                                 <input type="text" class="edit-input" v-model="param.goods[0].title"/>
                             </div>

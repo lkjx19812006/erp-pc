@@ -2,15 +2,17 @@
      <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
      <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
      <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
-     <auditdialog-model :param="auditParam" v-if="auditParam.show"></auditdialog-model>
+     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
      <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
      <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
      <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
      <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
+     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
+     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      
    <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">部门意向</div>
+            <div class="my_enterprise col-xs-2">会员意向</div>
             <div class="col-xs-5 my_order_search">
                <!-- <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
@@ -23,7 +25,8 @@
            </div> 
             <div class="right">
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-                <!-- <button class="new_btn transfer" @click="intentionAudit()">审核</button> -->
+                <button class="new_btn transfer" @click="search()">搜索</button>
+                <button class="new_btn transfer" @click="intentionAudit()">审核</button> 
                 <!-- <button class="new_btn" @click="createIntention({
                        show:true,
                        selectCustomer:true,
@@ -69,7 +72,7 @@
         </div>
         <div class="service-nav clearfix">
             <div class="my_order_search">
-               <div class="filter_search clearfix">
+               <!-- <div class="filter_search clearfix">
                     <dl class="clearfix">
                         <dt>类型：</dt>
                         <dd>
@@ -150,7 +153,7 @@
                             </select>
                         </dd>
                     </dl>
-               </div>
+               </div> -->
            </div>
         </div>
         <div class="order_table">
@@ -188,7 +191,7 @@
                         <th>样品价格</th>
                         <th>报价人数</th>
                         <th>审核状态</th>
-                        <th>上下架</th>
+                        <!-- <th>上下架</th> -->
                         <th></th>
                     </tr>
                 </thead>
@@ -197,10 +200,15 @@
                     <tr v-for="item in initIntentionList" 
                         @click="match(item)"  style="cursor:pointer">
                          <td>
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
+                            <label v-if="item.validate==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" >
+                            </label>
                         </td>
                         <td>{{item.type | chanceType}}</td>
-                        <td>{{item.especial | chanceEspec}}</td>
+                        <td>
+                            <div v-if="item.especial==0">普通</div>
+                            <div v-if="item.especial==1&&item.type==0">紧急求购</div>
+                            <div v-if="item.especial==1&&item.type==1">低价资源</div>
+                        </td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
                         <td class="underline" @click.stop="detailClick({
@@ -266,12 +274,10 @@
                         <td>{{item.sampleUnit}}</td>
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offerNumber}}</td>
-                        <td>{{item.validate}}</td>
-                        <td>
-                          <div v-if="item.onSell==0">初始</div>
-                          <div v-if="item.onSell==1">上架</div>
-                          <div v-if="item.onSell==2">下架</div>
-                        </td>
+                        <td>{{item.validate | intentionAudit}}</td>
+                        <!-- <td>
+                          <div>{{item.onSell | onsell}}</div>
+                        </td> -->
                         <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
@@ -328,7 +334,39 @@
                                                url:'/intention/',
                                                key:'intentionList'
                                                })">删除</li>
-                                   <li @click="audit($index,item.id)">审核</li>          
+                                   <li @click="userToClient({
+                                                  name:item.fullname,
+                                                  keyname:'transStatus',
+                                                  sub:$index,
+                                                  userId:item.id,
+                                                  main:item.main,
+                                                  province:'',
+                                                  phone:item.phone,
+                                                  tel:item.tel,
+                                                  email:item.email,
+                                                  qq:item.qq,
+                                                  type:'',
+                                                  fullname:item.fullname,
+                                                  employeeId:'',
+                                                  employeeName:'',
+                                                  orgId:'',
+                                                  orgName:'',
+                                                  show:true,
+                                                  key:'userList',
+                                                  countryId:7,
+                                                  countryName:'中国',
+                                                  contact:{
+                                                   name: item.fullname,
+                                                   position: '',
+                                                   department: '',
+                                                   phone: item.phone,
+                                                   tel: item.tel,
+                                                   email: item.email,
+                                                   qq: item.qq,
+                                                   wechart: ''
+                                                  }
+                                                },item.show=false)">划转</li>
+                                   <li v-if="item.validate==0" @click="audit($index,item.id)">审核</li>          
                                </ul>
                            </div>
                        </td>
@@ -420,11 +458,14 @@ import filter from '../../../filters/filters'
 import chancedetailModel from '../../Intention/chanceDetail'
 import transferintentModel from '../../Intention/transferIntent'
 import intentionauditModel from'../../user/intentionAudit'
-import auditdialogModel  from '../../tips/auditDialog'
+import tipsdialogModel  from '../../tips/tipDialog'
 import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import editintentModel  from  '../../Intention/Editintention'
 import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
+import transferModel  from '../../user/userTransfer'
+import searchModel from '../intentionSearch'
+
 
 import {
   initIntentionList,
@@ -444,11 +485,13 @@ export default {
         chancedetailModel,
         transferintentModel,
         intentionauditModel,
-        auditdialogModel,
+        tipsdialogModel,
         deletebreedModel,
         editintentModel,
         createintentModel,
-        supdemModel
+        supdemModel,
+        transferModel,
+        searchModel
     },
     vuex: {
         getters: {
@@ -468,6 +511,7 @@ export default {
         return {
             loadParam: {
                 loading: true,
+                show:false,
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
@@ -490,6 +534,9 @@ export default {
                 typeName:'',
                 link:'/intention/'
             },
+            transferParam:{
+              show:false
+            },
             chanceParam:{
                 show:false
             },
@@ -498,20 +545,19 @@ export default {
                 id:'',
                 name:'意向'
             },
+            tipsParam:{
+                show:false,
+                alert:true,
+                name:''
+
+            },
             intentionAuditParam:{
                 show:false,
+                key:'user',
                 arr:[],
                 indexs:[],
                 validate:0,
                 description:''
-            },
-            auditParam:{
-                show:false,
-                name:'',
-                audit:true,
-                title:'意向审核',
-                pass:this.pass,
-                reject:this.reject
             },
             deleteParam:{
               show:false
@@ -568,7 +614,7 @@ export default {
             }else{
                 this.checked = true;
                 this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-                    if(!item.checked){
+                    if(!item.checked&&item.validate==0){
                         _this.checked = false;
                     }
                 })
@@ -578,7 +624,9 @@ export default {
             this.checked = !this.checked;
             if(this.checked){
                 this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-                  item.checked = true;
+                    if(item.validate==0){
+                        item.checked = true;
+                    }
                 })    
             }else{
                 this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
@@ -599,6 +647,7 @@ export default {
                 this.tipsParam.name = '请先选择意向';
                 this.tipsParam.show = true;
             }else{
+                console.log(this.intentionAuditParam.indexs);
                 this.intentionAuditParam.show = true;
             }          
         },
@@ -627,34 +676,23 @@ export default {
             }  
             
         },
-        audit:function(index,id){
-            this.auditParam.show = true;
+        audit:function(index,id){   //单个意向审核
+            this.intentionAuditParam.show = true;
+            this.intentionAuditParam.arr = []; 
+            this.intentionAuditParam.indexs = []; 
+            this.intentionAuditParam.arr.push(id);
+            this.intentionAuditParam.indexs.push(index);
         },
-        pass:function(){
-            console.log('审核通过');
-        },
-        reject:function(){
-            console.log('审核不通过');
-        },
-        clientTransfer:function(initIntentionList){
-            this.intentionParam = initIntentionList;
-            console.log(this.initIntentionList)
-            for(var i in this.initIntentionList){
-                if(this.initIntentionList[i].checked){
-                    if(this.initIntentionList[i].checked==true){
-                         this.intentionParam.id=this.initIntentionList[i].id;
-                         this.intentionParam = this.initIntentionList[i];
-                         this.intentionParam.show=true;
-                    }  
-                }else if(this.intentionParam.id==""&&!this.initIntentionList[i].checked){
-                    this.tipsParam.show= true;
-                    this.tipsParam.name= '请先选择业务机会';
-                    this.intentionParam.show=false;
-                }
-            }
+        userToClient:function(item){
+            this.transferParam = item;
         },
         searchIntention:function(){
             this.getIntentionList(this.loadParam);
+        },
+        search:function(){
+          this.loadParam.loading = false;
+          this.loadParam.show = true;
+
         },
         resetCondition:function(){
             this.loadParam.type='';

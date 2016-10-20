@@ -56,6 +56,7 @@
                                           <th>单位</th>
                                           <th>杂费</th>
                                           <th>杂费说明</th>
+                                          <th>是否已采纳</th>
                                           <th></th>
                                         </thead>
                                         <tbody>
@@ -68,7 +69,11 @@
                                                 <td>{{item.unit}}</td>
                                                 <td>{{item.incidentals}}</td>
                                                 <td>{{item.incidentalsDesc}}</td>
-                                                <td></td>
+                                                <td>
+                                                  <div v-if="item.orderTime==0">未采纳</div>
+                                                  <div v-else>已采纳{{item.orderTime}}次</div>
+
+                                                </td>
                                                 <td  @click="clickShow($index,{
                                                     concrete:'offers'
                                                     })">
@@ -357,9 +362,9 @@ export default {
                 district:'',
                 consigneeAddr:'',
                 comments:'', 
-                sourceType:2,        
+                sourceType:1,    //来源类型(意向)       
                 goods:[{
-                  sourceType:2,   //商品来源类型
+                  sourceType:2,   //商品来源类型(报价)
                   sourceId:'',   //商品来源ID
                   title:'',      //订单商品标题
                   breedId:this.initIntentionDetail.breedId,
