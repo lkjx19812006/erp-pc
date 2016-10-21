@@ -12,11 +12,11 @@
         <validator name="validation">
             <form novalidate>
                 <div class="edit-model">
-                    <section class="editsection"  v-cloak>   
+                    <section class="editsection"  v-cloak>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">名称 <span class="system_danger" v-if="$validation.username.required">请输入产品名称</span></label>
-                                <input type="text" id="username" class="form-control" v-model="param.name" v-validate:username="['required']" value="{{param.name}}" />
+                                <label class="editlabel">名称</label>
+                                <input type="text"  class="form-control" v-model="param.name" value="{{param.name}}" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">类型</label>
@@ -29,8 +29,8 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">品种类别 <span class="system_danger" v-if="$validation.breed.required">请选择品种类别</span></label>
-                                <select   v-model="param.breedId" class="form-control" v-validate:breed="['required']" >
+                                <label class="editlabel">品种类别 </label>
+                                <select   v-model="param.breedId" class="form-control" >
                                     <option v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                                 </select>
                                 <!-- <input type="text" id="breed" class="form-control" v-model="param.breedId" v-validate:breed="['required']" value="{{param.breedId}}" disabled="true"  @click="searchBreed(param.categoryName,param.breedId)"/> -->
@@ -42,8 +42,8 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">产地 <span class="system_danger" v-if="$validation.location1.required">请输入产地</span></label>
-                                 <select  value="{{param.location}}" v-model="param.location" class="form-control" v-validate:location1="['required']" >
+                                <label class="editlabel">产地 </label>
+                                 <select  value="{{param.location}}" v-model="param.location" class="form-control"  >
                                     <option v-for="item in initProvince">{{item.cname}}</option>
                                 </select>
                             </div>
@@ -54,17 +54,17 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">数量 <span class="system_danger" v-if="$validation.number.required">请输入数量</span></label>
-                                <input type="number" class="form-control" v-model="param.number" id="number" v-validate:number="['required']" value="{{param.number}}" />
+                                <label class="editlabel">数量 </label>
+                                <input type="text" class="form-control" v-model="param.number"  value="{{param.number}}" />
                             </div>
                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">规格 <span class="system_danger" v-if="$validation.spec.required">请输入规格</span></label>
-                                <input type="text" class="form-control" v-model="param.spec"  id="spec" v-validate:spec="['required']" value="{{param.spec}}"/>
+                                <label class="editlabel">规格 ></label>
+                                <input type="text" class="form-control" v-model="param.spec"   value="{{param.spec}}"/>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">单位 <span class="system_danger" v-if="$validation.unit.required"  v-validate:unit="['required']">请输入单位</span></label>
+                                <label class="editlabel">单位 </label>
                                 <div type="text" class="edit-input">
                                    <input-select
                                      :value.sync="param.unit"
@@ -77,8 +77,8 @@
                                  </div>
                             </div>
                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">价格 <span class="system_danger" v-if="$validation.price.required">请输入价格</span></label>
-                                 <input type="number" v-model='param.price' class="form-control edit-input" value="{{param.price}}" v-validate:price="['required']" style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
+                                <label class="editlabel">价格 </label>
+                                 <input type="text" v-model='param.price' class="form-control edit-input" value="{{param.price}}" style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
                             </div>
                         </div>
                         <div class="clearfix">
@@ -151,7 +151,7 @@ export default {
     vuex: {
       getters: {
          initProvince,
-        initCategorylist         
+        initCategorylist
       },
       actions: {
          getProvinceList,
@@ -182,7 +182,7 @@ export default {
             if("id" in this.param){
                 this.supplyParam.cid = this.param.id;
             }
-            
+
         }
     },
     events:{
