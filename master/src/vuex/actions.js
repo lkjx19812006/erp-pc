@@ -1285,7 +1285,35 @@ export const getProductList = ({ dispatch }, param) => {  //供应商产品列�
             param.loading = false;
         })
 }
-
+export const getProductDetail = ({ dispatch }, param) => { //获取供应商产品详情
+    console.log(param)
+    param.loading = true;
+     console.log(param)
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList + '/customer/product/' + param.id,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        param.loading=false;
+        var product = res.json().result;
+        var arr = product.filesList;
+        product.filesList = {
+            arr: arr,
+            show: true
+        };
+        for (var i in product.filesList.arr) {
+            product.filesList.arr[i].show = false;
+        }
+        dispatch(types.PRODUCT_DETAIL_DATA, product);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+}
 export const getMyClientList = ({ dispatch }, param) => {  //业务员的(我的)客户信息列表与搜索
     param.loading = true;
     console.log(param);

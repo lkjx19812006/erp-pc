@@ -1,6 +1,4 @@
 <template>
-  <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-  <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
     <div class="client_body">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -23,129 +21,122 @@
         </div>
         <section>
             <div class="client-section clearfix" >
-                <div class="col-md-8 client-detail">
-                    <h4 class="section_title">相关</h4>
+                <div class="col-md-8">
+                    <h4 class="section_title">产品相关</h4>
                     <article>
                         <div class="panel-group">
                             
-                        <!--   <div class="panel panel-default">
-                            <div class="panel-heading" v-cloak>
-                            <div class="cover_loading">
-                              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-                            </div>
-                              <h4 class="panel-title clearfix" @click="enfoldment({
-                                          link:initIntentionDetail.offers,
-                                          crete:'offers'
-                                          })">
-                                    <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
-                                    <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                      报价（{{initIntentionDetail.offers.arr.length}}）
-                                    </a>
-                                    <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button>
-                              </h4>
-                            </div>
-                            <div  class="panel-collapse" v-show="initIntentionDetail.offers.show&&initIntentionDetail.offers.arr.length>0">
-                               <div class="panel-body panel-set">
-                                    <table class="table contactSet">
-                                      <thead>
-                                        <th>会员名</th>
-                                        <th>联系方式</th>
-                                        <th>单价</th>
-                                        <th>数量</th>
-                                        <th>单位</th>
-                                        <th>杂费</th>
-                                        <th>杂费说明</th>
-                                        <th></th>
-                                      </thead>
-                                      <tbody>
-                                           <tr v-for="item in initIntentionDetail.offers.arr">
-                                              <td><img :src="item.path" /></td>
-                                              <td>{{item.userName}}</td>
-                                              <td>{{item.userPhone}}</td>
-                                              <td>{{item.price}}</td>
-                                              <td>{{item.number}}</td>
-                                              <td>{{item.unit}}</td>
-                                              <td>{{item.incidentals}}</td>
-                                              <td>{{item.incidentalsDesc}}</td>
-                                              <td></td>
-                                              <td  @click="clickShow($index,{
-                                                  concrete:'offers'
-                                                  })">
-                                                  <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                  <div class="files_action" v-show="item.show" >
-                                                      <dl>
-                                                          <dt @click="adopt(item)">采纳</dt>
-                                                      </dl>
-                                                  </div>
-                                              </td>
-                                          </tr>
-                                      </tbody>
-                                  </table>
-                                </div>
-                            </div>
-                        </div> -->
-                
+                          <div class="panel panel-default">
+                              <div class="panel-heading" v-cloak>
+                              <div class="cover_loading">
+                                <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+                              </div>
+                                <h4 class="panel-title clearfix" @click="enfoldment({
+                                            link:initProductDetail.filesList,
+                                            crete:'filesList'
+                                            })">
+                                      <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                        产品相关文件（{{initProductDetail.filesList.arr.length}}）
+                                      </a>
+                                </h4>
+                              </div>
+                              <div  class="panel-collapse" v-show="initProductDetail.filesList.show&&initProductDetail.filesList.arr.length>0">
+                                 <div class="panel-body panel-set">
+                                      <table class="table contactSet">
+                                        <thead>
+                                          <th>文件类型</th>
+                                          <th>所属文件类型</th>
+                                          <th>路径</th>
+                                          <th>描述</th>
+                                          <!-- <th></th> -->
+                                        </thead>
+                                        <tbody>
+                                             <tr v-for="item in initProductDetail.filesList.arr">
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.bizType}}</td>
+                                                <td>
+                                                    <img :src="item.path"  v-if="item.fileType==image"/>
+                                                    <img src="/static/images/pdf.png"  v-else />
+                                                </td>
+                                                <td>{{item.description}}</td>
+                                                <!-- <td  @click="clickShow($index,{
+                                                    concrete:'filesList'
+                                                    })">
+                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                    <div class="files_action" v-show="item.show" >
+                                                        <dl>
+                                                            <dt @click="adopt(item)">采纳</dt>
+                                                        </dl>
+                                                    </div>
+                                                </td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                  </div>
+                              </div>
+                          </div> 
                         </div>
                     </article>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 client-line">
                     <h4 class="section_title">详情</h4>
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label class="editlabel">产品类型</label>
-                                     <input type="text" class="form-control edit-input"  value="{{param.customerName}}" disabled="disabled"/>
+                                     <input type="text" class="form-control edit-input"  value="{{initProductDetail.type}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                                     <label class="editlabel">品种ID</label>
-                                    <input type="text" class="form-control edit-input"   value="{{param.customerName}}" disabled="disabled"/>
+                                    <input type="text" class="form-control edit-input"   value="{{initProductDetail.breedId}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label class="editlabel">产地</label>
-                                    <input type="text" class="form-control edit-input"  value="{{param.breedName}}" disabled="disabled"/>
+                                    <input type="text" class="form-control edit-input"  value="{{initProductDetail.location}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label class="editlabel">数量（库存）</label>
-                                     <input type="text" class="form-control edit-input"  value="{{param.breedName}}" disabled="disabled"/>
+                                     <input type="text" class="form-control edit-input"  value="{{initProductDetail.number}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label class="editlabel">产品名称</label>
-                                     <input type="text" class="form-control edit-input"   value="{{param.customerPhone}}" disabled="disabled"/>
+                                     <input type="text" class="form-control edit-input"   value="{{initProductDetail.name}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                                     <label class="editlabel">产品质量</label>
-                                    <input type="text" class="form-control edit-input"  value="{{param.country}}" disabled="disabled"/>
+                                    <input type="text" class="form-control edit-input"  value="{{initProductDetail.quality}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label class="editlabel">规格</label>
-                                     <input type="text" class="form-control edit-input"   value="{{param.province}}" disabled="disabled"/>
+                                     <input type="text" class="form-control edit-input"   value="{{initProductDetail.spec}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                                     <label class="editlabel">价格</label>
-                                    <input type="text" class="form-control edit-input"  value="{{param.city}}" disabled="disabled"/>
+                                    <input type="text" class="form-control edit-input"  value="{{initProductDetail.price}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label class="editlabel">单位</label>
-                                     <input type="text" class="form-control edit-input"  v-model="param.district" value="{{param.district}}" disabled="disabled"/>
+                                     <input type="text" class="form-control edit-input"  v-model="initProductDetail.unit" value="{{initProductDetail.unit}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                                     <label class="editlabel">检测报告</label>
-                                    <input type="text" class="form-control edit-input"  v-model="param.number" value="{{param.number}}" disabled="disabled"/>
+                                    <input type="text" class="form-control edit-input"  v-model="initProductDetail.coa" value="{{initProductDetail.coa}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <div class="client-detailInfo  col-xs-12">
                                     <label class="editlabel">价格过期时间</label>
-                                    <input type="text" class="form-control edit-input"  v-model="param.location" value="{{param.location}}"  disabled="disabled"/>
+                                    <input type="text" class="form-control edit-input"  v-model="initProductDetail.duedate" value="{{initProductDetail.duedate}}"  disabled="disabled"/>
                                 </div>
                             </div>
                         </div>
@@ -159,16 +150,15 @@
 /*import tipsdialogModel  from '../tipsDialog'
 import createorderModel  from './createOrder'*/
 
-/*import{
-    initIntentionDetail
-} from '../../vuex/getters'*/
+import{
+    initProductDetail
+} from '../../vuex/getters'
 import {
     getProductDetail
 } from '../../vuex/actions'
 export default {
     components: {
-        /*tipsdialogModel,
-        createorderModel*/
+        /*createorderModel*/
     },
     data() {
         return {
@@ -178,65 +168,30 @@ export default {
                 color: '#5dc596',
                 size: '15px'
             },
-            tipsParam:{
-                show:false,
-                name:'修改成功'
-            },
-           /* orderParam:{
-                show:false,
-                type:this.initIntentionDetail.type,
-                customer:this.initIntentionDetail.customerId,
-                sample:'',
-                intl:0,
-                incidentals:'',
-                incidentalsDesc:'',
-                preferential:'',   //优惠金额
-                preferentialDesc:'',  
-                currency:'',     //货币品种
-                consignee:'',    //收货人姓名
-                consigneePhone:'',
-                zipCode:'',     //邮编
-                country:'',
-                province:'',
-                city:'',
-                district:'',
-                consigneeAddr:'',
-                comments:'', 
-                sourceType:2,     //商品来源类型
-                sourceId:'',     //商品来源ID
-                title:'',     //订单商品标题
-                breedId:this.initIntentionDetail.breedId,   
-                breedName:this.initIntentionDetail.breedName,
-                quality:'',
-                location:'',
-                spec:'',
-                price:'',
-                unit:'',
-                number:''
-
-            }*/
         }
     },
     props:['param'],
     vuex: {
         getters:{
-            
+            initProductDetail
         },
         actions:{
             getProductDetail
         }
     },
     methods: {
+      enfoldment:function(param){
+          if(this.$store.state.table.productDetail[param.crete].arr.length==0){
+              this.$store.state.table.productDetail[param.crete].show=true;
+          }
+          this.$store.state.table.productDetail[param.crete].show = !this.$store.state.table.productDetail[param.crete].show;
+          console.log(this.$store.state.table.productDetail[param.crete].show)
+      },
      /* saveSucc:function(param){
            this.tipsParam.show= true;
            this.editintentInfo(param); 
       },
-      enfoldment:function(param){
-          if(this.$store.state.table.basicBaseList.intentionDetail[param.crete].arr.length==0){
-                  this.$store.state.table.basicBaseList.intentionDetail[param.crete].show=true;
-          }
-          this.$store.state.table.basicBaseList.intentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intentionDetail[param.crete].show;
-      },
+      
       clickShow: function(index,param) {  
           this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = !this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show; 
 
@@ -257,9 +212,9 @@ export default {
 
       }*/
     },
-   /* created(){
+    created(){
        this.getProductDetail(this.param);
-    }*/
+    }
 }
 </script>
 <style scoped>
@@ -279,7 +234,9 @@ export default {
     float: left;
     margin-right: 10px;
 }
-
+.client-line{
+  border-left: 1px solid #ddd;
+}
 .navbar-name {
     color: #fa6705;
     font-size: 20px;

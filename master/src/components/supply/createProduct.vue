@@ -64,8 +64,8 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">单位 <span class="system_danger" v-if="$validation.unit.required"  v-validate:unit="['required']">请输入单位</span></label>
-                                <div type="text" class="edit-input">
+                                <label class="editlabel">单位</label>
+                                <div type="text" class="editpage-input" style="margin-top:0">
                                    <input-select
                                      :value.sync="param.unit"
                                      :prevalue="param.unit"
@@ -78,7 +78,7 @@
                             </div>
                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">价格 <span class="system_danger" v-if="$validation.price.required">请输入价格</span></label>
-                                 <input type="number" v-model='param.price' class="form-control edit-input" value="{{param.price}}" v-validate:price="['required']" style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
+                                 <input type="number" v-model='param.price' class="form-control edit-input" value="{{param.price}}" id="price" v-validate:price="['required']" style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
                             </div>
                         </div>
                         <div class="clearfix">
@@ -215,7 +215,7 @@ export default {
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
-    padding: 10px 30px 30px 30px;
+    padding: 10px 30px 50px 30px;
 }
 
 .editsection {

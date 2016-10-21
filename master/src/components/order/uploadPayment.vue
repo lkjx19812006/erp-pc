@@ -54,7 +54,7 @@ export default {
             console.log(imageData);
             console.log(this.param)
             var images = new Array();
-            this.param.images=imageData.result.images;
+            this.param.image=imageData.result.image;
         }
     }
 }
