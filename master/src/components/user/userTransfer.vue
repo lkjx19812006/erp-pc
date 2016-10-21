@@ -23,9 +23,9 @@
             </div>
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>名称</label>
-                <input type="text" id="username" class="form-control" v-model="param.name"
-                       v-validate:username="['required']"/>
+                 <label class="editlabel" for="system">名称<span class="system_danger" v-if="$validation.name.minlength">请输入客户名且不少于两位</span></label>
+                 <input type="text" id="username" class="form-control" v-model="param.name"
+                       v-validate:name="{minlength:2}"/>
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                 <label class="editlabel">类型</label>
@@ -88,12 +88,12 @@
             </div>
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>电话</label>
-                <input type="text" class="form-control" maxlength="11" v-model="param.tel"/>
+                 <label class="editlabel" for="system">电话<span class="system_danger" v-if="$validation.tel.tel">请输入正确的电话</span></label>
+                 <input type="text" class="form-control" v-validate:tel="['tel']" v-model="param.tel" />
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                <label>邮箱</label>
-                <input type="email" class="form-control" v-model="param.email"/>
+                <label class="editlabel" for="system">邮箱<span class="system_danger" v-if="$validation.email.email">请输入正确的邮箱</span></label>
+                <input type="email" class="form-control" v-validate:email="['email']" v-model="param.email"/>
               </div>
             </div>
 
@@ -182,13 +182,14 @@
               </div>
               <div class="clearfix">
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                  <label>联系人名称</label>
-                  <input type="text" class="form-control" v-model="contacts[0].name"/>
+                  <label class="editlabel" for="system">联系人名称<span class="system_danger" v-if="$validation.cname.minlength">请输入联系人姓名且至少两位</span></label>
+                  <input type="text" class="form-control" v-validate:cname="{minlength:2}" v-model="contacts[0].name"/>
                 </div>
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                   <label>是否主联系人</label>
                   <select class="form-control edit-input" v-model='contacts[0].main'>
-                    <option value="0" selected="selected">是</option>
+                    <option value="1" selected="selected">是</option>
+                    <option value="0">否</option>
 
                   </select>
                 </div>
@@ -207,29 +208,29 @@
               </div>
               <div class="clearfix">
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                  <label>手机</label>
-                  <input type="text" class="form-control" maxlength="11" v-model="contacts[0].phone"/>
+                  <label class="editlabel" for="system">手机<span class="system_danger" v-if="$validation.cphone.phone">请输入正确的手机</span></label>
+                  <input type="text" class="form-control" v-validate:cphone="['phone']" v-model="contacts[0].phone"/>
                 </div>
                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                  <label>电话</label>
-                  <input type="text" class="form-control" v-model="contacts[0].tel"/>
+                  <label class="editlabel" for="system">电话<span class="system_danger" v-if="$validation.ctel.tel">请输入正确的电话</span></label>
+                  <input type="text" class="form-control" v-validate:ctel="['tel']" v-model="contacts[0].tel"/>
                 </div>
               </div>
               <div class="clearfix">
                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                  <label>邮箱</label>
-                  <input type="email" class="form-control" v-model="contacts[0].email"/>
+                  <label class="editlabel" for="system">邮箱<span class="system_danger" v-if="$validation.cemail.email">格式有误</span></label>
+                  <input type="email" class="form-control" v-validate:cemail="['email']" v-model="contacts[0].email"/>
                 </div>
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                  <label>微信</label>
-                  <input type="text" class="form-control" v-model="contacts[0].wechart"/>
+                  <label class="editlabel" for="system">微信<span class="system_danger" v-if="$validation.cwechart.wechart">格式有误</span></label>
+                  <input type="text" class="form-control" v-validate:cwechart="['wechart']" v-model="contacts[0].wechart"/>
                 </div>
 
               </div>
               <div class="clearfix">
                 <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
-                  <label>qq</label>
-                  <input type="text" class="form-control" v-model="contacts[0].qq"/>
+                  <label class="editlabel" for="system">qq<span class="system_danger" v-if="$validation.cqq.qq">格式有误</span></label>
+                  <input type="text" class="form-control" v-validate:cqq="['qq']" v-model="contacts[0].qq"/>
                 </div>
               </div>
             </div>
@@ -238,7 +239,16 @@
         </div>
         <div class="edit_footer">
           <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-          <input type="button" class="btn  btn-confirm" @click="save(param.show = false)" value="确定"/>
+          <button type="button" class="btn  btn-confirm" v-if="$validation.name.minlength
+                          ||$validation.tel.tel
+                          ||$validation.email.email
+                          ||$validation.cname.minlength
+                          ||$validation.cphone.phone
+                          ||$validation.ctel.tel
+                          ||$validation.cemail.email
+                          ||$validation.cwechart.wechart
+                          ||$validation.cqq.qq" disabled="true">确定</button>
+          <input type="button" class="btn  btn-confirm" v-else @click="save(param.show = false)" value="确定"/>
         </div>
       </form>
     </validator>

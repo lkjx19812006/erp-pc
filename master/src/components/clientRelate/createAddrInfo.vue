@@ -321,7 +321,7 @@ export default {
 
 .edit-input {
     height: 36px;
-    line-height: 36px;
+    line-height: 18px;
     width: 90%;
     border: 1px solid #ddd;
     border-radius: 5px;
