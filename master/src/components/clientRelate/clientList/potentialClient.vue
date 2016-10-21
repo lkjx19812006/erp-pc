@@ -10,7 +10,7 @@
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">潜在客户</div>
-            <div class="right col-xs-4">
+            <div class="right">
                 <button class="new_btn transfer" @click="clientTransfer({
                     arr:[],
                     name:'test',
@@ -32,8 +32,8 @@
                     <tr>
                         <th>
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
-                        <th>类型</th>
-                        <th>分类</th>
+                        <th>类 型</th>
+                        <th>分 类</th>
                         <th>客户来源</th>
                         <th>客户等级</th>
                         <th></th>
@@ -42,12 +42,12 @@
                         <!-- <th>所属分类</th> -->
                         <th>所属业务员</th>
                         <th>负责人</th>
-                        <th>经营范围</th>
-                        <th>电话</th>
+                        <th style="min-width:120px;">经营范围</th>
+                        <th>电 话</th>
                         <th>手机省</th>
                         <th>手机市</th>
-                        <th>邮箱</th>
-                        <th>国家</th>
+                        <th>邮 箱</th>
+                        <th>国 家</th>
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>注册地址</th>

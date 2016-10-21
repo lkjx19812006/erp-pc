@@ -372,9 +372,8 @@ export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
         desc: data.desc,
         id: data.id,
         name: data.name,
-        status: data.status,
-        type: data.typedesc,
-        typedesc:data.typedesc
+        type: data.type,
+        typedesc:data.type
     }
     Vue.http({
         method: 'POST',

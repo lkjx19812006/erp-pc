@@ -447,7 +447,6 @@ const mutations = {
             "code": data.code,
             "type": data.type,
             "desc": data.desc,
-            "status": data.status,
             "typedesc":data.type,
             "id": data.id,
             "show": false

@@ -56,7 +56,7 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.bizType}}</td>
                                                 <td>
-                                                    <img :src="item.path"  v-if="item.fileType==image"/>
+                                                    <img v-if="item.fileType=='image'" :src="item.path"  />
                                                     <img src="/static/images/pdf.png"  v-else />
                                                 </td>
                                                 <td>{{item.description}}</td>
@@ -316,9 +316,6 @@ section article {
     cursor: pointer;
 }
 
-.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
-  text-align: left;
-}
 .edit-detail {
     border: 1px solid #ddd;
     border-radius: 3px;
