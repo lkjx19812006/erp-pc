@@ -310,7 +310,6 @@ export default {
                 this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
                 this.disposeParam.link='/order/handle';
                 this.orderStatu(this.disposeParam);
-                this.disposeParam.payment=true;
             }
             if(item.orderStatus==10&&item.type==0){
                 this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";

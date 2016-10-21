@@ -255,6 +255,42 @@ export const orderCancle = ({ dispatch }, param) => { //订单取消状态
     }, (res) => {
         console.log('fail');
     })
+} 
+
+export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
+    console.log(param)
+    console.log(param.images)
+    param.images='';
+    if(param.image_f){
+        param.images+=param.image_f+','
+    }
+    if(param.image_s){param.images+=param.image_s+','}
+    if(param.image_t){param.images+=param.image_t};
+ console.log(param.images)
+    const body = {
+       orderId:param.id,
+       payWay:param.payWay
+    }
+    if(param.images){
+        body.images = param.images;
+    }
+     console.log(param.images)
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateJSON: true, 
+        body:body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('药款支付成功')
+        dispatch(types.ORDER_STATUS, param);
+    }, (res) => {
+        console.log('fail');
+    })
 }
 
 export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情

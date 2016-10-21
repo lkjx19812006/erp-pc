@@ -588,7 +588,7 @@ export default {
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
-    padding: 10px 30px 30px 30px;
+    padding: 10px 30px 70px 30px;
 }
 
 .editsection {
@@ -662,11 +662,11 @@ export default {
     border-top: 1px solid #ddd;
     text-align: right;
     padding: 10px 20px;
-    margin-top: 50px;
+   /*  margin-top: 50px; */
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 10px;
+    bottom: 50px;
     width: 800px;
     background: #fff;
     margin: auto;

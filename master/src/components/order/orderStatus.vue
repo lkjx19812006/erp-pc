@@ -1,5 +1,7 @@
 <template>
     <cancle-model :param="cancleReason" v-if="cancleReason.show"></cancle-model>
+    <undeline-model :param="undelinePay" v-if="undelinePay.show"></undeline-model>
+    <yaokuan-model :param="yaokuanPay" v-if="yaokuanPay.show"></yaokuan-model>
     <div class="client_body">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -27,18 +29,19 @@
                   <p>{{param.goods[0].brredName}}</p>
                   <p>{{param.goods[0].price}}元/{{param.goods[0].unit}}</p>
                   <p>数量：{{param.goods[0].number}}</p>
-                  <p>下单时间：{{param.goods[0].ctime}}</p>
+                  <p>下单时间：{{param.ctime}}</p>
               </div>
               <div class="col-xs-6 pull-left">
                  <p><label>杂费：</label><span style="color:#fa6705">¥{{param.incidentals.toFixed(2)}}</span>（运费）</p>
-                 <p><label>合计：</label><span  style="color:#fa6705">¥{{param.goods[0].amount.toFixed(2)}}</span></p>
+                 <p><span  style="color:#fa6705">合计：¥{{param.total.toFixed(2)}}</span></p>
               </div> 
             </div>
             <div class="clearfix" v-if="param.sales">
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
                     id:param.id,
                     show:true,
-                    link:'/order/confirm'
+                    link:'/order/confirm',
+                    images:''
                    },param.show=false)"  value="接单" />
                 <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
                     id:param.id,
@@ -55,7 +58,7 @@
                 <p class="order-message">支付方式</p>
                 <div class="space_15 clearfix">
                     <div class="col-xs-6 clearfix"   @click="paychoice(3)">
-                         <img src="/static/images/checked.png" v-if="undelinePaySelect.show" height="25" width="25"  class="left margin-10" />
+                         <img src="/static/images/checked.png" v-if="yaokuanPaySelected" height="25" width="25"  class="left margin-10" />
                         <img src="/static/images/unchecked.png" height="25" width="25"  class="left margin-10" v-else/>
                          <img src="/static/images/drugs.png" height="39" width="50" class="left margin-10" />
                          <p>
@@ -64,7 +67,8 @@
                          </p>
                     </div>
                     <div class="col-xs-6 clearfix"  @click="paychoice(0)">
-                         <img src="/static/images/unchecked.png" height="25" width="25"  class="left margin-10" />
+                        <img src="/static/images/checked.png" v-if="undelinePaySelect" height="25" width="25"  class="left margin-10" />
+                         <img src="/static/images/unchecked.png" height="25" width="25"  class="left margin-10" v-else/>
                          <img src="/static/images/alipay.png" height="37" width="61" class="left margin-10" />
                          <p>
                             <span>线下打款</span><br>
@@ -77,8 +81,11 @@
                 <input type="button" class="btn  btn-confirm right"  @click="payOrder({
                     id:param.id,
                     show:true,
-                    link:'/order/pay'
-                   },param.show=false)"  value="支付" />
+                    link:'/order/pay',
+                    payWay:'',
+                    images:'',
+                    callback:yankuanPayorder
+                    })"  value="支付" />
                 <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
                     id:param.id,
                     cancleCauses:'',
@@ -93,13 +100,18 @@
 </template>
 <script> 
 import cancleModel from  '../order/cancleMsg'
+import undelineModel from  '../order/uploadPayment'
+import yaokuanModel from  '../order/orderpayPassword'
 import {
     orderCancle,
-    orderStatu
+    orderStatu,
+    yankuanPayorder
 } from '../../vuex/actions'
 export default {
     components: {
-        cancleModel
+        cancleModel,
+        undelineModel,
+        yaokuanModel
     },
     data() {
         return {
@@ -114,6 +126,15 @@ export default {
             },
             undelinePaySelect:false,
             yaokuanPaySelected:false,
+            yaokuanPay:{
+               show:false,
+               callback:'yankuanPayorder'
+            },
+            undelinePay:{
+               show:false,
+               callback:'undelinePayorder',
+               images:''
+            }
         }
     },
     props:['param'],
@@ -123,7 +144,8 @@ export default {
         },
         actions:{
             orderCancle,
-            orderStatu
+            orderStatu,
+            yankuanPayorder
         }
     },
     methods: {
@@ -141,11 +163,28 @@ export default {
             this.payWay = payWay;
             if(payWay ==0){
               this.undelinePaySelect = true; //线下
+              this.yaokuanPaySelected = false;
             }else if(payWay ==3){
               this.yaokuanPaySelected = true; //药款
+              this.undelinePaySelect = false;
             }
         },
-        payOrder:function(){
+        payOrder:function(payorder){
+          payorder.payWay = this.payWay;
+          console.log(payorder.payWay)
+
+         if(payorder.payWay==0){
+             this.undelinePay=payorder;
+             console.log(payorder)
+             this.$broadcast('getImageData');
+          }else if(payorder.payWay==3){
+             console.log('33333')
+             this.yaokuanPay=payorder;
+          }else {
+             console.log('请选择支付方式');
+          }
+
+          console.log(payorder)
 
         }
     },
@@ -178,7 +217,7 @@ export default {
   width: 33.33%;
 }
 .tips{
-  margin-left: 20px;
+  margin-left: 13px;
   margin-top: 5px;
   display: inline-block;
 }
@@ -210,5 +249,6 @@ export default {
 }
 .order_info div:nth-child(2){
   margin-top: 20px;
+  padding-left: 13%;
 }
 </style>
