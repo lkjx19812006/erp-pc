@@ -8,10 +8,11 @@
         <div class="edit-content">
             <h3>编辑{{param.fullname}}的信息</h3>
         </div>
-       <div class="edit-model">
+        <validator name="validation">
+        <div class="edit-model">
            <section class="editsection" v-cloak>
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-               <validator name="validation">
+               
                <div class="editpage">
 
                  <div class="cover_loading">
@@ -69,8 +70,8 @@
                    </div>
                    <div class="editpageright">
                        <div class="editpage-input">
-                           <label class="editlabel">邮箱</label>
-                           <input type="text" v-model='param.email' class="form-control edit-input" value="{{initUserDetail.email}}" />
+                           <label class="editlabel" for="system">邮箱<span class="system_danger" v-if="$validation.email.email">邮箱格式不对</span></label>
+                           <input type="text" class="form-control  edit-input" v-validate:email="['email']" v-model='param.email' value="{{initUserDetail.email}}"/>
                        </div>
                        <div class="editpage-input">
                             <label class="editlabel" for="system">手机<span class="system_danger" v-if="$validation.phone.phone">请输入正确的手机号</span></label>
@@ -82,8 +83,9 @@
                        </div>
 
                      <div class="editpage-input">
-                       <label class="editlabel">qq</label>
-                       <input type="text" v-model="param.qq" class="form-control edit-input" value="{{initUserDetail.qq}}" />
+                       
+                       <label class="editlabel" for="system">qq<span class="system_danger" v-if="$validation.qq.qq">请输入正确的qq号</span></label>
+                       <input type="text" class="form-control  edit-input" v-validate:qq="['qq']" v-model='param.qq' value="{{initUserDetail.qq}}"/>
                      </div>
 
                      <div class="editpage-input">
@@ -105,18 +107,21 @@
 
                    </div>
                </div>
-               </validator>
+               
            </section>
-       </div>
+        </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <button type="button" class="btn  btn-confirm" v-if="$validation.fullname.minlength
                           ||$validation.nickname.required
                           ||$validation.tel.tel
                           ||$validation.phone.phone
-                          ||$validation.idnumber.IDCard" disabled="true">确定</button>
+                          ||$validation.idnumber.IDCard
+                          ||$validation.email.email
+                          ||$validation.qq.qq" disabled="true">确定</button>
             <button type="button" class="btn  btn-confirm" v-else @click="tipsParam.show=true">确定</button>
         </div>
+        </validator>
     </div>
 </template>
 <script>

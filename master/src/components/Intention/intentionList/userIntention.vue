@@ -288,6 +288,7 @@
                                                selectCustomer:false,
                                                flag:1,
                                                show:true,
+                                               loading:true,
                                                title:'编辑',
                                                customerName:item.customerName,
                                                customerPhone:item.customerPhone,
@@ -335,18 +336,18 @@
                                                key:'intentionList'
                                                })">删除</li>
                                    <li @click="userToClient({
-                                                  name:item.fullname,
+                                                  name:item.userFullname,
                                                   keyname:'transStatus',
                                                   sub:$index,
-                                                  userId:item.id,
-                                                  main:item.main,
+                                                  userId:item.userId,
+                                                  main:1,
                                                   province:'',
-                                                  phone:item.phone,
-                                                  tel:item.tel,
-                                                  email:item.email,
-                                                  qq:item.qq,
+                                                  phone:item.userPhone,
+                                                  tel:item.userTel,
+                                                  email:item.userEmail,
+                                                  qq:item.userQq,
                                                   type:'',
-                                                  fullname:item.fullname,
+                                                  fullname:item.userFullname,
                                                   employeeId:'',
                                                   employeeName:'',
                                                   orgId:'',
@@ -356,13 +357,13 @@
                                                   countryId:7,
                                                   countryName:'中国',
                                                   contact:{
-                                                   name: item.fullname,
+                                                   name: item.userFullname,
                                                    position: '',
                                                    department: '',
-                                                   phone: item.phone,
-                                                   tel: item.tel,
+                                                   phone: item.userPhone,
+                                                   tel: item.userTel,
                                                    email: item.email,
-                                                   qq: item.qq,
+                                                   qq: item.userQq,
                                                    wechart: ''
                                                   }
                                                 },item.show=false)">划转</li>
@@ -684,6 +685,8 @@ export default {
             this.intentionAuditParam.indexs.push(index);
         },
         userToClient:function(item){
+            console.log(item);
+            
             this.transferParam = item;
         },
         searchIntention:function(){
