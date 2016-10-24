@@ -14,22 +14,22 @@
                     <section class="editsection" v-cloak>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>{{param.namelist}}  <span class="system_danger" v-if="$validation.username.required">请输入员工姓名</span></label>
-                                <input type="text" id="username" class="form-control" v-model="param.name" v-validate:username="['required']"/>
+                                <label>{{param.namelist}}  <span class="system_danger" v-if="$validation.username.minlength">请输入至少两位</span></label>
+                                <input type="text" class="form-control" v-model="param.name" v-validate:username="{minlength:2}"/>
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label>{{param.englist}}</label>
-                                <input type="text" id="usertype" class="form-control" v-model="param.ename" v-validate:usertype="['required']" />
+                                <input type="text" class="form-control" v-model="param.ename"/>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label>{{param.job}}  <span class="system_danger" v-if="$validation.no.required">请输入员工工号</span></label>
-                                <input type="text" id="no" class="form-control" v-model="param.no" v-validate:no="['required']" />
+                                <input type="text" class="form-control" v-model="param.no" v-validate:no="['required']" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>{{param.parten}}  <span class="system_danger" v-if="$validation.org.required">请输入具体部门</span></label>
-                                 <input type="text" id="org" class="form-control" v-model="param.orgName" v-validate:org="['required']" @click="selectorg()"/>
+                                <label>{{param.parten}}  <span class="system_danger" v-if="$validation.org.required">请选择部门</span></label>
+                                 <input type="text" class="form-control" v-model="param.orgName" v-validate:org="['required']" @click="selectorg()" readonly="true" />
                                <!--  <select class="form-control" v-model="param.orgName" id="userown" v-validate:userown="['required']">
                                    <option v-for="item in initOrgList">{{item.name}}</option>
                                </select> -->
@@ -38,11 +38,11 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label>{{param.positionlist}} <span class="system_danger" v-if="$validation.position.required">请输入职位</span></label>
-                                <input type="text" class="form-control" maxlength="11" v-model="param.position" id="position" v-validate:position="['required']" />
+                                <input type="text" class="form-control" maxlength="11" v-model="param.position" v-validate:position="['required']" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>{{param.phonelist}} <span class="system_danger" v-if="$validation.phone.required">请输入联系方式</span></label>
-                                <input type="email" class="form-control" v-model="param.mobile"  id="phone" v-validate:phone="['required']"/>
+                                <label>{{param.phonelist}} <span class="system_danger" v-if="$validation.phone.phone">请输入正确的手机号</span></label>
+                                <input type="email" class="form-control" v-model="param.mobile" v-validate:phone="['phone']"/>
                             </div>
                         </div>
                         <div class="clearfix">
@@ -76,7 +76,7 @@
                                 <label>角色</label>
                                 <div  class="clerafix">
                                     <div class="pull-left role clerafix" v-for="item in param.role">
-                                        <input type="checkbox" class="checkbox_unselect" id="admin" 
+                                        <input type="checkbox" class="checkbox_unselect"  
                                         v-model="item.checked" @click="checked(item)"/>
                                         <label for="admin">{{item.type}}</label>
                                     </div>
@@ -91,7 +91,8 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <input type="button" class="btn  btn-confirm"  @click="param.link(param,param.show = false)" value="保存" />
+                    <button type="button" class="btn btn-confirm" v-if="$validation.valid"  @click="param.link(param,param.show = false)">保存</button>
+                    <button type="button" class="btn btn-confirm" v-else v-else disabled="disabled">保存</button>
                 </div>
             </form>
         </validator>

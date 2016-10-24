@@ -36,6 +36,14 @@ Vue.validator('wechart', function (val) {    //微信
   return (/^[a-zA-Z][-_a-zA-Z0-9]{5,19}$/.test(val)||(val===''));
 });
 
-Vue.validator('empty', function (val) {    //微信
-  return (/^[a-zA-Z][-_a-zA-Z0-9]{5,19}$/.test(val)||(val===''));
+Vue.validator('postcode', function (val) {    //邮编
+  return (/^[1-9][0-9]{5}$/.test(val)||(val===''));
+});
+
+Vue.validator('test', function (val) {    //邮编
+  var start="'img':'a,b,c'";
+  var end='';
+  end = start.replace(/:/g,":[").replace(/,/g,"','")+"]";
+  console.log(end);
+  return false;
 });

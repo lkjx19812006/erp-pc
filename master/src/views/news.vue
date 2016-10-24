@@ -89,6 +89,7 @@
                                     <li @click="modifyUser({
                                                 id:item.id,
                                                 show:true,
+                                                userType:3,
                                                 link:alertInfo,
                                                 url:'/user/',
                                                 key:'userList',

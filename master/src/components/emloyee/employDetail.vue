@@ -5,77 +5,81 @@
             <div @click="param.show=false" class="top-title">
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
-            <div  class="section_title clearfix">
-                <span>{{param.name}}的信息</span>
-                <button class="new_btn transfer" @click="saveSucc(param)">保存</button> 
-            </div>
-            <div class="edit-detail">
-                <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">姓名</label>
-                     <input type="text" class="form-control edit-input"  v-model="param.name" value="{{param.name}}" />
+            <validator name="validation">
+                <div  class="section_title clearfix">
+                    <span>{{param.name}}的信息</span>
+                    <button class="new_btn transfer" v-if="$validation.valid" @click="saveSucc(param)">保存</button> 
+                    <button class="new_btn transfer" v-else disabled="disabled">保存</button> 
+
                 </div>
-                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">英文名</label>
-                     <input type="text" class="form-control edit-input"  v-model="param.ename" value="{{param.ename}}" />
-                </div>
-            </div>
-             <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">工号</label>
-                    <input type="text" class="form-control edit-input"   v-model="param.no" value="{{param.no}}" />
-                </div>
-                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">部门</label>
-                     <input type="text" class="form-control edit-input"   v-model="param.orgName" value="{{param.orgName}}" />
-                </div>
-            </div>
-             <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">职位</label>
-                     <input type="text" class="form-control edit-input"  v-model="param.position" value="{{param.position}}" />
-                </div>
-                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">手机号</label>
-                    <input type="text" class="form-control edit-input"  v-model="param.mobile" value="{{param.mobile}}" />
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">分机号</label>
-                     <input type="text" class="form-control edit-input"   v-model="param.extno" value="{{param.extno}}"/>
-                </div>
-                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">职级</label>
-                    <input type="text" class="form-control edit-input"  v-model="param.level" value="{{param.level | levelstate}}"/>
-                </div>
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">入职时间</label>
-                    <div class="search_input">
-                        <mz-datepicker :time.sync="param.entrydate" format="yyyy-MM-dd HH:mm:ss">
-                        </mz-datepicker>
+                <div class="edit-detail">
+                    <div class="clearfix">
+                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <label class="editlabel">姓名<span class="system_danger" v-if="$validation.name.minlength">请输入至少两位</span></label>
+                            <input type="text" class="form-control edit-input" v-validate:name="{minlength:2}" v-model="param.name" value="{{param.name}}" />
+                        </div>
+                        <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                            <label class="editlabel">英文名</label>
+                            <input type="text" class="form-control edit-input"  v-model="param.ename" value="{{param.ename}}" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <label class="editlabel">工号<span class="system_danger" v-if="$validation.no.required">请输入员工工号</span></label>
+                            <input type="text" class="form-control edit-input" v-validate:no="['required']"  v-model="param.no" value="{{param.no}}" />
+                        </div>
+                        <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                            <label class="editlabel">部门</label>
+                             <input type="text" class="form-control edit-input"   v-model="param.orgName" value="{{param.orgName}}" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <label class="editlabel">职位<span class="system_danger" v-if="$validation.position.required">请输入职位</span></label>
+                             <input type="text" class="form-control edit-input" v-validate:position="['required']" v-model="param.position" value="{{param.position}}" />
+                        </div>
+                        <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                            <label class="editlabel">手机号<span class="system_danger" v-if="$validation.mobile.phone">请输入正确的手机号</span></label>
+                            <input type="text" class="form-control edit-input"v-validate:mobile="['phone']" v-model="param.mobile" value="{{param.mobile}}" />
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <label class="editlabel">分机号</label>
+                             <input type="text" class="form-control edit-input"   v-model="param.extno" value="{{param.extno}}"/>
+                        </div>
+                        <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                            <label class="editlabel">职级</label>
+                            <input type="text" class="form-control edit-input"  v-model="param.level" value="{{param.level | levelstate}}"/>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <label class="editlabel">入职时间</label>
+                            <div class="search_input">
+                                <mz-datepicker :time.sync="param.entrydate" format="yyyy-MM-dd HH:mm:ss">
+                                </mz-datepicker>
+                            </div>
+                        </div>
+                        <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                            <label class="editlabel">离职时间</label>
+                            <div class="search_input">
+                                <mz-datepicker :time.sync="param.leavedate" format="yyyy-MM-dd HH:mm:ss">
+                                </mz-datepicker>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="clearfix">
+                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <label class="editlabel">角色</label>
+                            <div class="pull-left role clerafix">
+                                 <input type="checkbox" class="checkbox_unselect" id="client_ids"  value="部门经理" />
+                                 <label  for="client_ids">部门经理</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                    <label class="editlabel">离职时间</label>
-                    <div class="search_input">
-                        <mz-datepicker :time.sync="param.leavedate" format="yyyy-MM-dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </div> 
-            </div>
-            <div class="clearfix">
-                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                    <label class="editlabel">角色</label>
-                    <div class="pull-left role clerafix">
-                         <input type="checkbox" class="checkbox_unselect" id="client_ids"  value="部门经理" />
-                         <label  for="client_ids">部门经理</label>
-                    </div>
-                </div>
-            </div>
-    </div>
+            </validator>   
 </template>
 <script>
 import filter from '../../filters/filters'

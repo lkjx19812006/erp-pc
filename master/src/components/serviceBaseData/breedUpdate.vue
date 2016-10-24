@@ -8,50 +8,52 @@
         <div class="edit-content">
             <h3>编辑药材</h3>
         </div>
-        <div class="edit-model">
-            <validator name="validation">
-                <section class="editsection" v-cloak>
-                    <input type="hidden"  class="form-control edit-input" value="{{categoryData.id}}" />
-                    <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">编码 <span class="system_danger" v-if="$validation.code.required">请输入编码</span></label>
-                            <input type="text" v-model='categoryData.code' class="form-control edit-input" value="{{categoryData.code | breedcode}}" id="code" v-validate:code="['required']" />
+        <validator name="validation">
+            <div class="edit-model">
+                
+                    <section class="editsection" v-cloak>
+                        <input type="hidden"  class="form-control edit-input" value="{{categoryData.id}}" />
+                        <div class="clearfix">
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">编码 <span class="system_danger" v-if="$validation.code.required">请输入编码</span></label>
+                                <input type="text" v-model='categoryData.code' class="form-control edit-input" value="{{categoryData.code | breedcode}}" v-validate:code="['required']" />
+                            </div>
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">品种名称 <span class="system_danger" v-if="$validation.name.required">请输入品种名称</span></label>
+                                <input type="text" v-model='categoryData.name' class="form-control edit-input" value="{{categoryData.name}}" v-validate:name="['required']"/>
+                            </div>
                         </div>
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">品种名称 <span class="system_danger" v-if="$validation.code.required">请输入品种名称</span></label>
-                            <input type="text" v-model='categoryData.name' class="form-control edit-input" value="{{categoryData.name}}"  id="name" v-validate:name="['required']"/>
+                        <div class="clearfix">
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">品种分类选择</label>
+                                <select class="form-control" v-model="categoryData.selected" style="width:90%;">
+                                   <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
+                                 </select>
+                            </div>
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">品种名称拼音</label>
+                                <input type="text" v-model='categoryData.pinyin' class="form-control edit-input"  />
+                            </div>
                         </div>
-                    </div>
-                    <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">品种分类选择 <span class="system_danger" v-if="$validation.code.required">请选择品种分类</span></label>
-                            <select class="form-control" v-model="categoryData.selected" style="width:90%;">
-                               <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
-                             </select>
+                         <div class="clearfix">
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">品种名称英文</label>
+                                <input type="text" v-model='categoryData.eName' class="form-control edit-input" />
+                            </div>
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label class="editlabel">品种名称拉丁文</label>
+                                <input type="text" v-model='categoryData.lName' class="form-control edit-input"  />
+                            </div>
                         </div>
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">品种名称拼音</label>
-                            <input type="text" v-model='categoryData.pinyin' class="form-control edit-input"  />
-                        </div>
-                    </div>
-                     <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">品种名称英文</label>
-                            <input type="text" v-model='categoryData.eName' class="form-control edit-input" />
-                        </div>
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">品种名称拉丁文</label>
-                            <input type="text" v-model='categoryData.lName' class="form-control edit-input"  />
-                        </div>
-                    </div>
-                </section>
-            </validator>
-        </div>
-        <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <!-- <button type="button" class="btn  btn-confirm" @click="updateBreedInfo(categoryData,categoryData.sub=param.id,param.show = false)">确定</button> -->
-            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true">确定</button>
-        </div>
+                    </section>
+            </div>
+            <div class="edit_footer">
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+                <!-- <button type="button" class="btn  btn-confirm" @click="updateBreedInfo(categoryData,categoryData.sub=param.id,param.show = false)">确定</button> -->
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="tipsParam.show=true">确定</button>
+                <button type="button" class="btn  btn-confirm" v-else disabled="disabled">确定</button>
+            </div>
+        </validator>
     </div>
 </template>
 <script>

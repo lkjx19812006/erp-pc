@@ -44,10 +44,6 @@ router.beforeEach(function ({ to, next }) {
 router.start(Vue.extend(App),'#app')
 
 
-Vue.validator('phone', function (val) {    //手机
-  return (/^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\d{8}$/.test(val)||(val===''));
-});
-
 
 
 
