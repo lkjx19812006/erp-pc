@@ -1,5 +1,7 @@
 
 import Vue from 'vue'
+import Validator from 'vue-validator'
+Vue.use(Validator)
 
 //表单验证
 Vue.validator('tel', function (val) {    //电话
