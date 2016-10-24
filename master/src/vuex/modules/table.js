@@ -379,6 +379,7 @@ const mutations = {
         state.basicBaseList.orderList = data;
     },
     [ORDER_UPDATE_DATA](state,data){ //修改订单
+        console.log(data)
         for (var key in data) {
             state.basicBaseList.orderList[data.sub][key] = data[key];
         }

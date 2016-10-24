@@ -55,7 +55,7 @@
                     <dl class="clearfix">
                         <dt>名称：</dt>
                         <dd>
-                            <input type="text"  placeholder="按产品名称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
+                            <input type="text"  placeholder="按产品名称全称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
                         </dd>
                     </dl>
                     <dl>

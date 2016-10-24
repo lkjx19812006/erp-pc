@@ -180,7 +180,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
             sourceId:param.goods[0].sourceId,
             title:param.goods[0].title,
             breedId:param.goods[0].breedId,
-            brredName:param.goods[0].breedName,
+            brredName:param.goods[0].brredName,
             quality:param.goods[0].quality,
             location:param.goods[0].location,
             spec:param.goods[0].spec,
@@ -201,7 +201,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         }
     }).then((res) => {
         console.log('修改成功')
-        dispatch(types.ORDER_ADD_DATA, param);
+        dispatch(types.ORDER_UPDATE_DATA, param);
         param.show = false;
     }, (res) => {
         console.log('fail');
