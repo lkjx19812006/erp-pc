@@ -7,8 +7,8 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3 v-if="param.flag==0">新增会员意向</h3>
-            <h3 v-if="param.flag==1">修改会员意向</h3>
+            <h3 v-if="param.flag==0">新增意向</h3>
+            <h3 v-if="param.flag==1">修改意向</h3>
         </div>
         <validator name="validation">
           <div class="edit-model">
@@ -73,7 +73,7 @@
                               <select type="text" class="form-control edit-input" v-model="param.especial" >
                                   <option value="0">普通</option>
                                   <option value="1">特殊</option>
-                              </select> 
+                              </select>
                          </div>
 
                           <div class="editpage-input">
