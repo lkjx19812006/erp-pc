@@ -34,4 +34,6 @@ Vue.validator('wechart', function (val) {    //微信
   return (/^[a-zA-Z][-_a-zA-Z0-9]{5,19}$/.test(val)||(val===''));
 });
 
-
+Vue.validator('empty', function (val) {    //微信
+  return (/^[a-zA-Z][-_a-zA-Z0-9]{5,19}$/.test(val)||(val===''));
+});

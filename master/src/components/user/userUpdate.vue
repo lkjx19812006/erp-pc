@@ -55,7 +55,7 @@
                        <input type="text" v-model="param.bizType" class="form-control edit-input" value="{{initUserDetail.bizType}}" />
                      </div>
                      <div class="editpage-input">
-                       <label class="editlabel">会员类型{{}}<span class="system_danger" v-if="$validation.usertype.required">请选择会员类型</span></label>
+                       <label class="editlabel">会员类型<span class="system_danger" v-if="$validation.usertype.required">请选择会员类型</span></label>
                        <select class="form-control edit-input"  v-model="param.userType" value="{{initUserDetail.userType}}" v-validate:usertype="['required']">
                            <option value="0">个人账户</option>
                            <option value="1">企业账户</option>
