@@ -40,12 +40,12 @@
 
                 <div class="editpage-input">
                   <label class="editlabel">联系账号
-                    <span class="system_danger" v-if="$validation.phone.phone&&true">请输入正确的手机号</span>
-                    <span class="system_danger" v-if="param.trackingWay=='qq'">请输入正确的qq号</span>
-                    <span class="system_danger" v-if="param.trackingWay=='微信'">请输入正确的微信号</span>
-                    <span class="system_danger" v-if="param.trackingWay=='邮件'">请输入正确的邮箱</span>
+                    <span class="system_danger" v-if="param.trackingWay=='手机'&&$validation.contactno.phone">请输入正确的手机号</span>
+                    <span class="system_danger" v-if="param.trackingWay=='qq'&&$validation.contactno.qq">请输入正确的qq号</span>
+                    <span class="system_danger" v-if="param.trackingWay=='微信'&&$validation.contactno.wechart">请输入正确的微信号</span>
+                    <span class="system_danger" v-if="param.trackingWay=='邮件'&&$validation.contactno.email">请输入正确的邮箱</span>
                   </label>
-                  <input type="text" v-model='param.contactNo' class="form-control edit-input" v-validate:phone="['phone']" value="{{param.contactNo}}"/>
+                  <input type="text" v-model='param.contactNo' class="form-control edit-input" v-validate:contactno="['phone','qq','wechart','email']" value="{{param.contactNo}}"/>
                 </div>
               </div>
               <div class="editpageright">
@@ -57,7 +57,7 @@
                   <label class="editlabel">跟进方式</label>
                   <select type="text" class="form-control edit-input" v-model='param.trackingWay'>
                     <option value="">请选择跟进方式</option>
-                    <option value="电话">电话</option>
+                    <option value="手机">手机</option>
                     <option value="qq">qq</option>
                     <option value="微信">微信</option>
                     <option value="邮件">邮件</option>
@@ -162,7 +162,12 @@
         </div>
         <div class="edit_footer">
           <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-          <button type="button" class="btn  btn-confirm" @click="updateOrAddTrackingInfo(param,param.show = false)">确定
+          <button type="button" class="btn  btn-confirm" v-if="($validation.contactno.phone&&param.trackingWay=='手机')
+                          ||($validation.contactno.qq&&param.trackingWay=='qq')
+                          ||($validation.contactno.wechart&&param.trackingWay=='微信')
+                          ||($validation.contactno.email&&param.trackingWay=='邮件')
+                          " disabled="true">确定</button>
+          <button type="button" class="btn  btn-confirm" v-else @click="updateOrAddTrackingInfo(param,param.show = false)">确定
           </button>
         </div>
     </validator>

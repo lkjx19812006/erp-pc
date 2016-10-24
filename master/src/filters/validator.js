@@ -1,6 +1,4 @@
-/**
- * Created by wei on 16-10-21.
- */
+
 import Vue from 'vue'
 
 //表单验证
@@ -13,7 +11,6 @@ Vue.validator('phone', function (val) {    //手机
 });
 
 Vue.validator('IDCard', function (val) {    //身份证
-  console.log(val);
   return (/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/.test(val)||/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test(val)||(val===''));
 });
 
@@ -33,8 +30,8 @@ Vue.validator('quantity', function (val) {    //数量
   return (/^(([1-9]\d*)|0)(\.\d{1,4})?$/.test(val));
 });
 
-Vue.validator('wechart', function (val) {    //数量
+Vue.validator('wechart', function (val) {    //微信
   return (/^[a-zA-Z][-_a-zA-Z0-9]{5,19}$/.test(val)||(val===''));
 });
 
-//
+

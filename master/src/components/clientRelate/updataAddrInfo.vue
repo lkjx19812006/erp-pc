@@ -18,12 +18,12 @@
                                     <input type="text" class="form-control edit-input"  v-model="param.type" value="{{param.type}}" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.namelist}}</label>
-                                    <input type="text" class="form-control edit-input"  v-model="param.contactName" value="{{param.contactName}}" />
+                                    <label class="editlabel">{{param.namelist}}<span class="system_danger" v-if="$validation.name.minlength">请输入姓名且不少于两位数</span></label>
+                                    <input type="text" class="form-control edit-input"  v-model="param.contactName" v-validate:name="{minlength:2}" />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel">{{param.phonelist}}</label>
-                                    <input type="text" class="form-control edit-input"   v-model="param.contactPhone" value="{{param.contactPhone}}" />
+                                    <label class="editlabel">{{param.phonelist}}<span class="system_danger" v-if="$validation.phone.phone">请输入正确的号码</span></label>
+                                    <input type="text" class="form-control edit-input" v-model="param.contactPhone" v-validate:phone="['phone']" />
                                 </div>
                                  <div class="editpage-input">
                                     <label class="editlabel">{{param.sexlist}}</label>
@@ -114,6 +114,7 @@
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                     <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-else  disabled="true">保存</button>
                 </div>
             </form>
         </validator>
