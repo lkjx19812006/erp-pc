@@ -389,7 +389,8 @@
                                                             visit:item.visit,
                                                             duedate:item.duedate,
                                                             breedId:item.breedId,
-                                                            inType:3
+                                                            inType:3,
+                                                            loading:false
                                                         })">编辑</dt>
                                                 </div>
                                                 </td>

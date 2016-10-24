@@ -6,17 +6,17 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>编辑{{param.fullname}}的信息</h3>
+            <h3>编辑{{initUserDetail.fullname}}的信息</h3>
         </div>
         <validator name="validation">
         <div class="edit-model">
            <section class="editsection" v-cloak>
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-               
+
                <div class="editpage">
 
                  <div class="cover_loading">
-                   <pulse-loader :loading="detailParam.loading" :color="color" :size="size"></pulse-loader>
+                   <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
                  </div>
                    <div class="editpageleft">
                        <div class="editpage-input">
@@ -30,7 +30,7 @@
                        </div>
 
                      <div class="editpage-input">
-                          
+
                           <label class="editlabel" for="system">电话<span class="system_danger" v-if="$validation.tel.tel">格式不对</span></label>
                           <input type="text" class="form-control  edit-input" v-validate:tel="['tel']" v-model='param.tel' value="{{initUserDetail.tel}}"/>
                      </div>
@@ -48,24 +48,42 @@
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">经营类型</label>
-                       <input type="text" v-model="param.busiType" class="form-control edit-input" value="{{initUserDetail.busiType}}" />
+                       <select class="form-control edit-input"  v-model="initUserDetail.bizType"  v-validate:usertype="['required']">
+                         <option value="0">其它</option>
+                         <option value="1">合作社</option>
+                         <option value="2">药商</option>
+                         <option value="3">药厂</option>
+                         <option value="4">个体户</option>
+                         <option value="5">药店</option>
+                         <option value="6">医院</option>
+                         <option value="7">贸易公司</option>
+                         <option value="8">零售商行</option>
+                         <option value="9">药农</option>
+                         <option value="10">介绍人</option>
+                         <option value="11">药贩子</option>
+                         <option value="12">产地药商</option>
+                         <option value="13">销地药商</option>
+                         <option value="14">养生诊所</option>
+                         <option value="15">化工厂</option>
+                         <option value="16">化妆品厂</option>
+                         <option value="17">提取物厂</option>
+                         <option value="18">食品厂</option>
+                         <option value="19">实验室</option>
+                         <option value="20">网上电商</option>
+                         <option value="21">中成药生产商</option>
+                         <option value="22">西药生产商</option>
+                         <option value="23">饮片厂</option>
+                       </select>
                      </div>
                      <div class="editpage-input">
-                       <label class="editlabel">业务类型</label>
-                       <input type="text" v-model="param.bizType" class="form-control edit-input" value="{{initUserDetail.bizType}}" />
-                     </div>
-                     <div class="editpage-input">
-                       <label class="editlabel">会员类型{{}}<span class="system_danger" v-if="$validation.usertype.required">请选择会员类型</span></label>
-                       <select class="form-control edit-input"  v-model="param.userType" value="{{initUserDetail.userType}}" v-validate:usertype="['required']">
-                           <option value="0">个人账户</option>
-                           <option value="1">企业账户</option>
+                       <label class="editlabel">会员类型<span class="system_danger" v-if="$validation.usertype.required">请选择会员类型</span></label>
+                       <select class="form-control edit-input"  v-model="initUserDetail.userType"  v-validate:usertype="['required']">
+                           <option value="0">个人</option>
+                           <option value="1">企业</option>
                       </select>
                       <!--  <input type="text" v-model="param.userType" class="form-control edit-input" value="{{initUserDetail.userType}}" /> -->
                      </div>
-                     <div class="editpage-input">
-                       <label class="editlabel">备注</label>
-                       <input type="text" v-model='param.comment' class="form-control edit-input" value="{{initUserDetail.comment}}" />
-                     </div>
+
 
                    </div>
                    <div class="editpageright">
@@ -83,37 +101,34 @@
                        </div>
 
                      <div class="editpage-input">
-                       
+
                        <label class="editlabel" for="system">qq<span class="system_danger" v-if="$validation.qq.qq">请输入正确的qq号</span></label>
                        <input type="text" class="form-control  edit-input" v-validate:qq="['qq']" v-model='param.qq' value="{{initUserDetail.qq}}"/>
                      </div>
 
                      <div class="editpage-input">
-                       <label class="editlabel">专属业务员</label>
-                       <input type="text" v-model="param.employee" class="form-control edit-input" value="{{initUserDetail.employee}}" />
-                     </div>
-                     <div class="editpage-input">
                        <label class="editlabel">地址</label>
                        <input type="text" v-model="param.address" class="form-control edit-input" value="{{initUserDetail.address}}" />
-                     </div>
-                     <div class="editpage-input">
-                       <label class="editlabel">主经营品种</label>
-                       <input type="text" v-model="param.bizMain" class="form-control edit-input" value="{{initUserDetail.bizMain}}" />
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">重要级别</label>
                        <input type="text" v-model="param.importance" class="form-control edit-input" value="{{initUserDetail.importance}}" />
                      </div>
 
+                     <div class="editpage-input">
+                       <label class="editlabel">备注</label>
+                       <input type="text" v-model='param.comment' class="form-control edit-input" value="{{initUserDetail.comment}}" />
+                     </div>
+
                    </div>
                </div>
-               
+
            </section>
         </div>
         <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>        
-            <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="tipsParam.show=true">确定</button>
-            <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>   
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+            <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.userType=initUserDetail.userType,param.bizType=initUserDetail.bizType,tipsParam.show=true">确定</button>
+            <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
         </div>
         </validator>
     </div>
@@ -139,11 +154,6 @@ export default {
             confirm:true,
             name:"确认修改信息?",
             callback:this.alertInfo
-
-          },
-          detailParam:{
-            show:false,
-            loading:true
           }
         }
     },
@@ -163,8 +173,8 @@ export default {
       }
     },
     created(){
-      this.detailParam.id = this.param.id;
-      this.getUserDetail(this.detailParam);
+      this.getUserDetail(this.param);
+
     }
 }
 </script>
