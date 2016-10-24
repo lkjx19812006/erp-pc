@@ -147,7 +147,8 @@
                                                             intentionParam.description=item.description,
                                                             intentionParam.image_f='',
                                                             intentionParam.image_s='',
-                                                            intentionParam.image_t=''
+                                                            intentionParam.image_t='',
+                                                            intentionParam.inType=2
                                                         )">编辑</dt>
                                                 </div>
                                                 </td>
@@ -465,7 +466,8 @@ export default {
           image_f:'',
           image_s:'',
           image_t:'',
-          description:''
+          description:'',
+          inType:2
         },
         intentionAuditParam:{
           show:false,
