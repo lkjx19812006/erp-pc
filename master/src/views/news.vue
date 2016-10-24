@@ -263,7 +263,8 @@ export default {
             sampleNumber:0,
             sampleAmount:0,
             qualification:'',
-            url:'/intention/'
+            url:'/intention/',
+            inType:2
         },
           checked:false
 

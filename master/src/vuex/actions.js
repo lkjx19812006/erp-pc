@@ -242,7 +242,7 @@ export const orderCancle = ({ dispatch }, param) => { //订单取消状态
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
-        emulateJSON: true, 
+        emulateJSON: true,
         body:body,
         emulateJSON: false,
         headers: {
@@ -255,7 +255,7 @@ export const orderCancle = ({ dispatch }, param) => { //订单取消状态
     }, (res) => {
         console.log('fail');
     })
-} 
+}
 
 export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
     console.log(param)
@@ -278,7 +278,7 @@ export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
-        emulateJSON: true, 
+        emulateJSON: true,
         body:body,
         emulateJSON: false,
         headers: {
@@ -2908,7 +2908,8 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
          "number":param.number,
          "quality":param.quality,
          "duedate":param.duedate,
-         "images":param.images
+         "images":param.images,
+         "inType":param.inType
     }
     console.log(data1);
     Vue.http({

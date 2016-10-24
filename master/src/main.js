@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import VueResource from 'vue-resource'
-import VueValidator from 'vue-validator'
+import VueValidator from './filters/validator'
 import VueRouter from 'vue-router'
 import configRouter from './router'
 import VueAnimatedList from 'vue-animated-list'
@@ -18,7 +18,7 @@ Vue.component('treeview',treeview);
 
 Vue.directive('echarts', require('./directives/echarts'));
 
-Vue.use(VueValidator)
+// Vue.use(VueValidator)
 Vue.use(VueAnimatedList)
 Vue.use(VueRouter)
 Vue.use(VueResource)
