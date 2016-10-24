@@ -55,8 +55,8 @@
                        <input type="text" v-model="param.bizType" class="form-control edit-input" value="{{initUserDetail.bizType}}" />
                      </div>
                      <div class="editpage-input">
-                       <label class="editlabel">会员类型</label>
-                       <select class="form-control edit-input"  v-model="param.userType" value="{{initUserDetail.userType}}">
+                       <label class="editlabel">会员类型{{}}<span class="system_danger" v-if="$validation.usertype.required">请选择会员类型</span></label>
+                       <select class="form-control edit-input"  v-model="param.userType" value="{{initUserDetail.userType}}" v-validate:usertype="['required']">
                            <option value="0">个人账户</option>
                            <option value="1">企业账户</option>
                       </select>
@@ -111,15 +111,9 @@
            </section>
         </div>
         <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" v-if="$validation.fullname.minlength
-                          ||$validation.nickname.required
-                          ||$validation.tel.tel
-                          ||$validation.phone.phone
-                          ||$validation.idnumber.IDCard
-                          ||$validation.email.email
-                          ||$validation.qq.qq" disabled="true">确定</button>
-            <button type="button" class="btn  btn-confirm" v-else @click="tipsParam.show=true">确定</button>
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>        
+            <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="tipsParam.show=true">确定</button>
+            <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>   
         </div>
         </validator>
     </div>

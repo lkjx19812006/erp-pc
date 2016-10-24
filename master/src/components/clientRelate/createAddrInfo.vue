@@ -14,16 +14,16 @@
                         <div class="editpage" v-cloak>
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.namelist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.contactName" v-validate:name="['required']" />
+                                    <label class="editlabel">{{param.namelist}}<span class="system_danger" v-if="$validation.name.minlength">请输入姓名且不少于两位数</span></label>
+                                    <input type="text" class="form-control edit-input"  v-model="param.contactName" v-validate:name="{minlength:2}" />
                                 </div>
                                  <div class="editpage-input">
                                     <label class="editlabel">{{param.typelist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="type" v-model="param.type"  />
+                                    <input type="text" class="form-control edit-input"  v-model="param.type" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.phonelist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="phone" v-model="param.contactPhone" v-validate:phone="['required']" />
+                                    <label class="editlabel">{{param.phonelist}}<span class="system_danger" v-if="$validation.phone.phone">请输入正确的号码</span></label>
+                                    <input type="text" class="form-control edit-input" v-model="param.contactPhone" v-validate:phone="['phone']" />
                                 </div>
                                  <div class="editpage-input">
                                     <label class="editlabel">{{param.sexlist}}</label>
@@ -34,11 +34,11 @@
                                 </div>
                                  <div class="editpage-input">
                                     <label class="editlabel">{{param.addr}}</label>
-                                    <input type="text" class="form-control edit-input"  id="addr" v-model="param.address" v-validate:addr="['required']" />
+                                    <input type="text" class="form-control edit-input"  v-model="param.address" />
                                 </div>
                                  <div class="editpage-input">
                                     <label class="editlabel">{{param.streetlist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="street" v-model="param.street"  v-validate:street="['required']"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.street" />
                                 </div>
                             </div>
                             <div class="editpageright">
@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">{{param.addr_detail}}</label>
-                                    <input type="text" class="form-control edit-input"  id="detail_addr" v-model="param.detailAddr" v-validate:detail_addr="['required']" />
+                                    <input type="text" class="form-control edit-input" v-model="param.detailAddr"  />
                                 </div>
                             </div>
                         </div>
@@ -112,6 +112,7 @@
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                     <button type="button" class="btn  btn-confirm" v-if="$validation.valid"  @click="param.link(param,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-else  disabled="true">保存</button>
                 </div>
             </form>
         </validator>

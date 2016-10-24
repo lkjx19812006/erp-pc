@@ -69,7 +69,7 @@
                            </div>
                          </div>
                          <div class="editpage-input">
-                             <label class="editlabel" for="system">{{param.especial}}是否特殊</label>
+                             <label class="editlabel" for="system">是否特殊</label>
                               <select type="text" class="form-control edit-input" v-model="param.especial" >
                                   <option value="0">普通</option>
                                   <option value="1">特殊</option>
@@ -333,10 +333,8 @@
           </div>
           <div class="edit_footer">
               <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-              <button type="button" class="btn  btn-confirm" v-if="$validation.breedname.required
-                          ||$validation.price.money
-                          ||$validation.number.quantity" disabled="true">确定</button>
-              <button type="button" class="btn  btn-confirm" v-else @click="createOrUpdateIntention(param,param.show = false)">确定</button>
+              <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="createOrUpdateIntention(param,param.show = false)">确定</button>
+              <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
           </div>
         </validator>
     </div>

@@ -16,7 +16,7 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">名称 <span class="system_danger" v-if="$validation.username.required">请输入产品名称</span></label>
-                                <input type="text" id="username" class="form-control" v-model="param.name" v-validate:username="['required']" value="{{param.name}}" />
+                                <input type="text" class="form-control" v-model="param.name" v-validate:username="['required']" value="{{param.name}}" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">类型</label>
@@ -37,7 +37,7 @@
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">供应商ID</label>
-                                <input type="text" class="form-control" v-model="param.cid" value="{{param.cid}}" @click="selectSupply(param.cid)" />
+                                <input type="text" class="form-control" v-model="param.cid" value="{{param.cid}}" readonly="readonly" @click="selectSupply(param.cid)" />
                             </div>
                         </div>
                         <div class="clearfix">
@@ -55,30 +55,30 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">数量 <span class="system_danger" v-if="$validation.number.required">请输入数量</span></label>
-                                <input type="number" class="form-control" v-model="param.number" id="number" v-validate:number="['required']" value="{{param.number}}" />
+                                <input type="number" class="form-control" v-model="param.number" v-validate:number="['required']" value="{{param.number}}" />
                             </div>
                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">规格 <span class="system_danger" v-if="$validation.spec.required">请输入规格</span></label>
-                                <input type="text" class="form-control" v-model="param.spec"  id="spec" v-validate:spec="['required']" value="{{param.spec}}"/>
+                                <input type="text" class="form-control" v-model="param.spec"  v-validate:spec="['required']" value="{{param.spec}}"/>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">单位 <span class="system_danger" v-if="$validation.unit.required"  v-validate:unit="['required']">请输入单位</span></label>
-                                <div type="text" class="edit-input">
+                                <label class="editlabel">单位</label>
+                                <div type="text" class="edit-input" >
                                    <input-select
                                      :value.sync="param.unit"
                                      :prevalue="param.unit"
                                      :options="initCategorylist.unit"
                                      placeholder="单位"
-                                     label="name"
+                                     label="name" 
                                    >
                                    </input-select>
                                  </div>
                             </div>
                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">价格 <span class="system_danger" v-if="$validation.price.required">请输入价格</span></label>
-                                 <input type="number" v-model='param.price' class="form-control edit-input" value="{{param.price}}" v-validate:price="['required']" style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
+                                <label class="editlabel">价格 <span class="system_danger" v-if="$validation.price.money">请输入价格</span></label>
+                                 <input type="number" v-model='param.price' class="form-control edit-input" value="{{param.price}}" v-validate:price="['money']" style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
                             </div>
                         </div>
                         <div class="clearfix">
@@ -99,7 +99,8 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <input type="button" class="btn btn-confirm"  @click="param.link(param,param.show=false)" value="保存" />
+                    <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show=false)">保存</button>
+                    <button type="button" class="btn btn-confirm" v-else disabled="true">保存</button>
                 </div>
             </form>
         </validator>
