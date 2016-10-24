@@ -21,16 +21,16 @@
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">类型</label>
                                  <select  value="{{param.type}}" v-model="param.type" class="form-control">
-                                    <option>药材</option>
-                                    <option>提取物</option>
-                                    <option>饮片</option>
+                                    <option value="0">药材</option>
+                                    <option value="1">提取物</option>
+                                    <option value="2">饮片</option>
                                 </select>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">品种类别 </label>
-                                <select   v-model="param.breedId" class="form-control" >
+                                <label class="editlabel">品种类别 <span class="system_danger" v-if="$validation.breed.required">请选择品种类别</span></label>
+                                <select   v-model="param.breedId" class="form-control"  v-validate:breed="['required']" >
                                     <option v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                                 </select>
                                 <!-- <input type="text" id="breed" class="form-control" v-model="param.breedId" v-validate:breed="['required']" value="{{param.breedId}}" disabled="true"  @click="searchBreed(param.categoryName,param.breedId)"/> -->
@@ -42,8 +42,9 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">产地 </label>
-                                 <select  value="{{param.location}}" v-model="param.location" class="form-control"  >
+
+                                <label class="editlabel">产地 <span class="system_danger" v-if="$validation.location1.required">请输入产地</span></label>
+                                 <select  value="{{param.location}}" v-model="param.location" class="form-control" id="location1" v-validate:location1="['required']" >
                                     <option v-for="item in initProvince">{{item.cname}}</option>
                                 </select>
                             </div>
@@ -64,8 +65,9 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">单位 </label>
-                                <div type="text" class="edit-input">
+
+                                <label class="editlabel">单位</label>
+                                <div type="text" class="editpage-input" style="margin-top:0">
                                    <input-select
                                      :value.sync="param.unit"
                                      :prevalue="param.unit"
@@ -77,8 +79,10 @@
                                  </div>
                             </div>
                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">价格 </label>
-                                 <input type="text" v-model='param.price' class="form-control edit-input" value="{{param.price}}" style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
+
+                                <label class="editlabel">价格 <span class="system_danger" v-if="$validation.price.required">请输入价格</span></label>
+                                 <input type="number" v-model='param.price' class="form-control edit-input" value="{{param.price}}" id="price" v-validate:price="['required']" style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
+
                             </div>
                         </div>
                         <div class="clearfix">
@@ -213,9 +217,8 @@ export default {
 }
 
 .edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
+    overflow:inherit;
+    padding: 10px 30px 50px 30px;
 }
 
 .editsection {

@@ -99,9 +99,12 @@ export const initDruglist = (state) => {
 export const initCustomerlist = (state) => {
     return parseJson(state.table.basicBaseList.customerList);
 }
-/*供应商产品*/
+/*供应商产品列表以及详情*/
 export const initProductlist = (state) => {
     return parseJson(state.table.basicBaseList.productList);
+}
+export const initProductDetail = (state) => {
+    return JSON.parse(JSON.stringify(state.table.productDetail));
 }
 /*供应商文件*/
 export const initFileslist = (state) => {

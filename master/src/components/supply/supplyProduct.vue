@@ -55,7 +55,7 @@
                     <dl class="clearfix">
                         <dt>名称：</dt>
                         <dd>
-                            <input type="text"  placeholder="按产品名称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
+                            <input type="text"  placeholder="按产品名称全称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
                         </dd>
                     </dl>
                     <dl>
@@ -97,7 +97,8 @@
                              id:item.id,
                              sub:$index,
                              show:true,
-                             name:item.name
+                             name:item.name,
+                             loading:false
                              })">{{item.name}}</td>
           <td>{{item.quality}}</td>
           <td>{{item.location}}</td>
@@ -258,9 +259,12 @@
   .transfer{
     margin-left: 18px;
   }
-  .table>tbody>tr>td{
-/*     max-width: 300px; */
-   /*  white-space: normal; */
+  .search_input{
+    border: 1px solid #ddd;
+    font-size: 16px;
+  }
+  .filter_search dl{
+    font-size: 16px;
   }
   .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

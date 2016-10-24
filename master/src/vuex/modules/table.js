@@ -75,6 +75,7 @@ import {
    ALTER_PRODUCT_DATA,
    SUPPLY_PRODUCT_DATA,
    PRODUCT_DATA,
+   PRODUCT_DETAIL_DATA,
    FILES_DATA_LIST,
    CUSTOMER_TRANSFER,
    ORDER_STATUS
@@ -349,6 +350,25 @@ const state = {
     "customerId":null,"main":null,"audit":0,"bizMain":null,"userType":0,"auditResult":null,"sourceType":null,
     "intention":{"show":false,"arr":[]},"tracking":{"show":false,"arr":[]},"personalAuthShow":false,"companyAuthShow":false
   },
+  productDetail:{
+    "id": "442",
+    "cid": 1,
+    "type": "提取物",
+    "name": "1111",
+    "breedId": 810,
+    "quality": "1111",
+    "location": "北京",
+    "spec": "干",
+    "number": 1111,
+    "price": 11,
+    "unit": "1111",
+    "filesList":{
+         arr: [
+                { "id": 1, "customerId": 10, "label": "dfhidfhi", "status": 0, "show": true }
+            ],
+            show: false
+    }
+  },
   identify:{},
   trackingDetail:{}
 }
@@ -359,6 +379,7 @@ const mutations = {
         state.basicBaseList.orderList = data;
     },
     [ORDER_UPDATE_DATA](state,data){ //修改订单
+        console.log(data)
         for (var key in data) {
             state.basicBaseList.orderList[data.sub][key] = data[key];
         }
@@ -427,7 +448,6 @@ const mutations = {
             "code": data.code,
             "type": data.type,
             "desc": data.desc,
-            "status": data.status,
             "typedesc":data.type,
             "id": data.id,
             "show": false
@@ -753,6 +773,9 @@ const mutations = {
     },
     [PRODUCT_DATA](state, data) { //供应商产品列表
         state.basicBaseList.productList = data;
+    },
+    [PRODUCT_DETAIL_DATA](state,data){ //供应商产品详情
+        state.productDetail  = data;
     },
     [SUPPLY_PRODUCT_DATA](state, data) { //新增供应商产品
         console.log(data)

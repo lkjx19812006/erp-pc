@@ -152,18 +152,18 @@
                                         <li v-if="item.orderStatus==0&&item.type==0"  @click="pendingOrder(item,$index)">待处理订单</li>
                                         <li v-if="item.orderStatus==10&&item.type==0"  @click="pendingOrder(item,$index)">订单处理中</li>
                                         <li v-if="item.orderStatus==20&&item.type==0" @click="pendingOrder(item,$index)">等待支付</li>
-                                        <li v-if="item.orderStatus==30&&item.type==0">待确认</li>
-                                        <li v-if="item.orderStatus==40&&item.type==0">等待发货</li>
-                                        <li v-if="item.orderStatus==50&&item.type==0">等待收货</li>
+                                        <li v-if="item.orderStatus==30&&item.type==0" @click="pendingOrder(item,$index)">等待核查</li>
+                                        <li v-if="item.orderStatus==40&&item.type==0"  @click="pendingOrder(item,$index)">等待发货</li>
+                                        <li v-if="item.orderStatus==50&&item.type==0"  @click="pendingOrder(item,$index)">等待收货</li>
                                         <li v-if="item.orderStatus==60&&item.type==0" @click="pendingOrder(item,$index)">已完成订单</li>
                                         <li v-if="item.orderStatus==-1&&item.type==1"  @click="pendingOrder(item,$index)">订单已取消</li>
                                         <li v-if="item.orderStatus==-2&&item.type==1" @click="pendingOrder(item,$index)">订单已过期</li>
                                         <li v-if="item.orderStatus==0&&item.type==1"  @click="pendingOrder(item,$index)">待处理订单</li>
                                         <li v-if="item.orderStatus==10&&item.type==1"  @click="pendingOrder(item,$index)">订单处理中</li>
                                         <li v-if="item.orderStatus==20&&item.type==1" @click="pendingOrder(item,$index)">等待支付</li>
-                                        <li v-if="item.orderStatus==30&&item.type==1">待确认</li>
-                                        <li v-if="item.orderStatus==40&&item.type==1">等待发货</li>
-                                        <li v-if="item.orderStatus==50&&item.type==1">等待收货</li>
+                                        <li v-if="item.orderStatus==30&&item.type==1" @click="pendingOrder(item,$index)">等待核查</li>
+                                        <li v-if="item.orderStatus==40&&item.type==1"  @click="pendingOrder(item,$index)">等待发货</li>
+                                        <li v-if="item.orderStatus==50&&item.type==1"  @click="pendingOrder(item,$index)">等待收货</li>
                                         <li v-if="item.orderStatus==60&&item.type==1" @click="pendingOrder(item,$index)">已完成订单</li>
                                         <li v-if="item.orderStatus==100&&item.type==1">待支付核查订单</li>
                                       <!--  <li @click="specDelete({
@@ -252,7 +252,8 @@ export default {
                 show:false,
                 link:'',
                 sales:false,
-                payment:false
+                payment:false,
+                Auditing:false,
             },
             show:true
         }
@@ -318,7 +319,7 @@ export default {
             }
             if(item.orderStatus==-1&&item.type==0){
                 this.disposeParam.tips="订单已取消！";
-                this.disposeParam.link='/order/cancle';
+               /* this.disposeParam.link='/order/cancle';*/
             }
             if(item.orderStatus==-2&&item.type==0){
                 this.disposeParam.tips="订单已过期！";
@@ -328,6 +329,16 @@ export default {
                 this.disposeParam.tips="订单处理完成，等待买家付款！";
                 this.disposeParam.payment=true;
                 /*this.disposeParam.link='/order/cancle';*/
+            }
+            if(item.orderStatus==30&&item.type==0){ 
+                this.disposeParam.tips="订单买家已付款，商家正在核查！";
+                this.disposeParam.Auditing = true; //审核按钮待添加
+            }
+            if(item.orderStatus==40&&item.type==0){ 
+                this.disposeParam.tips="您的订单已支付，请等待卖家发货！";
+            }
+            if(item.orderStatus==50&&item.type==0){ 
+                this.disposeParam.tips="您的订单已发货，请等待收货确认！";
             }
             if(item.orderStatus==60&&item.type==0){
                 this.disposeParam.tips="买家已收货，订单已完成！";
@@ -348,7 +359,7 @@ export default {
             }
             if(item.orderStatus==-1&&item.type==1){
                 this.disposeParam.tips="订单已取消！";
-                this.disposeParam.link='/order/cancle';
+                /*this.disposeParam.link='/order/cancle';*/
             }
             if(item.orderStatus==-2&&item.type==0){
                 this.disposeParam.tips="订单已过期！";
@@ -357,7 +368,16 @@ export default {
             if(item.orderStatus==20&&item.type==1){
                 this.disposeParam.tips="订单处理完成，等待买家付款！";
                 this.disposeParam.payment=true;
+            }
+            if(item.orderStatus==30&&item.type==1){ 
+                this.disposeParam.tips="订单买家已付款，商家正在核查！";
                 /*this.disposeParam.link='/order/cancle';*/
+            }
+            if(item.orderStatus==40&&item.type==1){ 
+                this.disposeParam.tips="订单已支付，请等待卖家发货！";
+            }
+            if(item.orderStatus==50&&item.type==1){ 
+                this.disposeParam.tips="订单已发货，请等待收货确认！";
             }
             if(item.orderStatus==60&&item.type==1){
                 this.disposeParam.tips="买家已收货，订单已完成！";

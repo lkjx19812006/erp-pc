@@ -88,6 +88,7 @@
                                 id:item.id,
                                 sub:$index,
                                 show:true,
+                                loading:false,
                                 name:item.name,
                                 link:alterInfo,
                                 url:'/customer/',
