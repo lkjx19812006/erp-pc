@@ -579,7 +579,7 @@
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 60px;
+    bottom: 50px;
     width: 840px;
     background: #fff;
     margin: auto;

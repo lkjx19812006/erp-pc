@@ -1,7 +1,6 @@
 <template>
    <createemp-model :param="createParam" v-if="createParam.show"></createemp-model>
    <detailemp-model :param.sync="changeParam" v-if="changeParam.show"></detailemp-model>
-   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <div  class="myemploy" v-show="!changeParam.show">
         <div class="order_search">
             <div class="clear">
@@ -14,11 +13,11 @@
                       </select>
                     </div>
                     <div class="name_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="20" />
+                        <img src="../../static/images/search.png" height="24" width="24"  />
                         <input type="text" class="search_input" v-model="loadParam.name"  placeholder="按员工名字搜索">
                     </div>
                     <div class="name_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="20">
+                        <img src="/static/images/search.png" height="24" width="24">
                         <input type="text" class="search_input" v-model="loadParam.mobile"  placeholder="按员工电话搜索">
                     </div>
                     <div class="name_search clearfix">
@@ -158,7 +157,7 @@
                                  url:'/employee/',
                                  key:'employeeList'
                                 })">编辑</li>
-                             <li @click="specDelete({
+                             <!-- <li @click="specDelete({
                                     id:item.id,
                                     sub:$index,
                                     show:true,
@@ -167,7 +166,7 @@
                                     link:deleteInfo,
                                     url:'/employee/',
                                     key:'employeeList'
-                                    })">删除</li>
+                                    })">删除</li> -->
                           </ul>
                         </div>
                     </td>
@@ -185,7 +184,6 @@ import createempModel  from '../components/emloyee/createEmploy'
 import pagination from '../components/pagination'
 import filter from '../filters/filters'
 import detailempModel  from '../components/emloyee/employDetail'
-import deletebreedModel  from '../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import {
    getList,
    initEmployeeList,
@@ -195,15 +193,13 @@ import {
     getEmployeeList,
     updateEmploy,
     createEmploy,
-    deleteInfo,
     getOrgList
 } from '../vuex/actions'
 export default {
     components:{
         pagination,
         createempModel,
-        detailempModel,
-        deletebreedModel
+        detailempModel
     },
     data() {
         return {
@@ -247,9 +243,6 @@ export default {
         clickOn: function(initEmployeeList) {
             this.changeParam = initEmployeeList;
         },
-        specDelete:function(initEmployeeList){
-            this.deleteParam = initEmployeeList;
-        },
         loadByCondition:function(){
             this.getEmployeeList(this.loadParam);
         }
@@ -264,7 +257,6 @@ export default {
             getEmployeeList,
             updateEmploy,
             createEmploy,
-            deleteInfo,
             getOrgList
         },
     },
@@ -319,9 +311,8 @@ export default {
 }
 .my_order_search .name_search > img{
     width:24px;
-    height: 30px;
-    margin: 1px 0 0 1px;
-    background: #eee;
+    height: 24px;
+    margin: 5px 0 0 1px;
     position:absolute;
     left:20px;
 }

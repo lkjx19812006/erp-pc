@@ -180,7 +180,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
             sourceId:param.goods[0].sourceId,
             title:param.goods[0].title,
             breedId:param.goods[0].breedId,
-            brredName:param.goods[0].breedName,
+            brredName:param.goods[0].brredName,
             quality:param.goods[0].quality,
             location:param.goods[0].location,
             spec:param.goods[0].spec,
@@ -201,7 +201,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         }
     }).then((res) => {
         console.log('修改成功')
-        dispatch(types.ORDER_ADD_DATA, param);
+        dispatch(types.ORDER_UPDATE_DATA, param);
         param.show = false;
     }, (res) => {
         console.log('fail');
@@ -372,9 +372,8 @@ export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
         desc: data.desc,
         id: data.id,
         name: data.name,
-        status: data.status,
-        type: data.typedesc,
-        typedesc:data.typedesc
+        type: data.type,
+        typedesc:data.type
     }
     Vue.http({
         method: 'POST',
@@ -1285,7 +1284,35 @@ export const getProductList = ({ dispatch }, param) => {  //供应商产品列�
             param.loading = false;
         })
 }
-
+export const getProductDetail = ({ dispatch }, param) => { //获取供应商产品详情
+    console.log(param)
+    param.loading = true;
+     console.log(param)
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList + '/customer/product/' + param.id,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        param.loading=false;
+        var product = res.json().result;
+        var arr = product.filesList;
+        product.filesList = {
+            arr: arr,
+            show: true
+        };
+        for (var i in product.filesList.arr) {
+            product.filesList.arr[i].show = false;
+        }
+        dispatch(types.PRODUCT_DETAIL_DATA, product);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
+}
 export const getMyClientList = ({ dispatch }, param) => {  //业务员的(我的)客户信息列表与搜索
     param.loading = true;
     console.log(param);

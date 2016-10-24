@@ -67,8 +67,8 @@
                     <tr>
                         <th>
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
-                        <th>类型</th>
-                        <th>分类</th>
+                        <th>类 型</th>
+                        <th>分 类</th>
                         <th>客户来源</th>
                         <th>客户等级</th>
                         <th>客户名称</th>
@@ -77,11 +77,11 @@
                         <th>所属业务员</th>
                         <th>负责人</th>
                         <th>经营范围</th>
-                        <th>电话</th>
+                        <th>电 话</th>
                         <th>手机省</th>
                         <th>手机市</th>
-                        <th>邮箱</th>
-                        <th>国家</th>
+                        <th>邮 箱</th>
+                        <th>国 家</th>
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>注册地址</th>
@@ -442,6 +442,12 @@ export default {
     margin: auto;
     text-align: center;
     background-position: 5px;
+}
+.table>tbody>tr>td{
+    max-width: 300px;
+    white-space: normal;
+    word-wrap: break-word;
+    /* word-break:break-all; */
 }
 .checkbox_select{
     background-image: url(/static/images/selected.png);

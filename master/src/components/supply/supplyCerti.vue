@@ -36,7 +36,7 @@
                   <ul>
                     <li @click="specDelete({
                                 id:item.id,
-                                sub:item.sub,
+                                sub:$index,
                                 show:true,
                                 name:'资质证书',
                                 title:'资质证书',

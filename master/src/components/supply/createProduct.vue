@@ -12,7 +12,7 @@
         <validator name="validation">
             <form novalidate>
                 <div class="edit-model">
-                    <section class="editsection"  v-cloak>   
+                    <section class="editsection"  v-cloak>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">名称 <span class="system_danger" v-if="$validation.username.required">请输入产品名称</span></label>
@@ -21,16 +21,16 @@
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">类型</label>
                                  <select  value="{{param.type}}" v-model="param.type" class="form-control">
-                                    <option>药材</option>
-                                    <option>提取物</option>
-                                    <option>饮片</option>
+                                    <option value="0">药材</option>
+                                    <option value="1">提取物</option>
+                                    <option value="2">饮片</option>
                                 </select>
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种类别 <span class="system_danger" v-if="$validation.breed.required">请选择品种类别</span></label>
-                                <select   v-model="param.breedId" class="form-control" v-validate:breed="['required']" >
+                                <select   v-model="param.breedId" class="form-control"  v-validate:breed="['required']" >
                                     <option v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                                 </select>
                                 <!-- <input type="text" id="breed" class="form-control" v-model="param.breedId" v-validate:breed="['required']" value="{{param.breedId}}" disabled="true"  @click="searchBreed(param.categoryName,param.breedId)"/> -->
@@ -42,8 +42,9 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+
                                 <label class="editlabel">产地 <span class="system_danger" v-if="$validation.location1.required">请输入产地</span></label>
-                                 <select  value="{{param.location}}" v-model="param.location" class="form-control" v-validate:location1="['required']" >
+                                 <select  value="{{param.location}}" v-model="param.location" class="form-control" id="location1" v-validate:location1="['required']" >
                                     <option v-for="item in initProvince">{{item.cname}}</option>
                                 </select>
                             </div>
@@ -54,18 +55,20 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+
                                 <label class="editlabel">数量 <span class="system_danger" v-if="$validation.number.required">请输入数量</span></label>
                                 <input type="number" class="form-control" v-model="param.number" v-validate:number="['required']" value="{{param.number}}" />
                             </div>
                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">规格 <span class="system_danger" v-if="$validation.spec.required">请输入规格</span></label>
                                 <input type="text" class="form-control" v-model="param.spec"  v-validate:spec="['required']" value="{{param.spec}}"/>
+
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">单位</label>
-                                <div type="text" class="edit-input" >
+                                <div type="text" class="editpage-input" style="margin-top:0">
                                    <input-select
                                      :value.sync="param.unit"
                                      :prevalue="param.unit"
@@ -152,7 +155,7 @@ export default {
     vuex: {
       getters: {
          initProvince,
-        initCategorylist         
+        initCategorylist
       },
       actions: {
          getProvinceList,
@@ -183,7 +186,7 @@ export default {
             if("id" in this.param){
                 this.supplyParam.cid = this.param.id;
             }
-            
+
         }
     },
     events:{
@@ -214,9 +217,8 @@ export default {
 }
 
 .edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
+    overflow:inherit;
+    padding: 10px 30px 50px 30px;
 }
 
 .editsection {

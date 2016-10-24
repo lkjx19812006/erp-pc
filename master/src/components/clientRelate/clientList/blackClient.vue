@@ -27,7 +27,7 @@
           <!-- <th>所属分类</th> -->
           <th>所属业务员</th>
           <th>负责人</th>
-          <th>经营范围</th>
+          <th style="min-width:120px">经营范围</th>
           <th>电话</th>
           <th>手机省</th>
           <th>手机市</th>
@@ -247,10 +247,12 @@
   .transfer{
     margin-left: 18px;
   }
-  .table>tbody>tr>td{
+.table>tbody>tr>td{
     max-width: 400px;
-   /*  white-space: normal; */
-  }
+    white-space: normal;
+    word-wrap: break-word;
+    /* word-break:break-all; */
+}
   .checkbox_unselect{
     background-image: url(/static/images/unselect.png);
     display: inline-block;
