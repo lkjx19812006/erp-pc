@@ -118,6 +118,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         district:data.district,
         consigneeAddr:data.consigneeAddr,
         comments:data.comments,
+        orderStatus:data.orderStatus,
         goods:[{
             sourceType:data.goods[0].sourceType,
             sourceId:data.goods[0].sourceId,
@@ -211,14 +212,30 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
 
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     console.log(param)
+    param.images='';
+    if(param.image_f){
+        param.images+=param.image_f+','
+    }
+    if(param.image_s){param.images+=param.image_s+','}
+    if(param.image_t){param.images+=param.image_t};
+    console.log(param.images)
     const body = {
        orderId:param.id
     }
+    if(param.images){
+        body.images = param.images;
+    }
+    if(param.lcompanyId){
+        body.lcompanyId = param.lcompanyId;
+    }
+    if(param.lcompanyNo){
+        body.lcompanyNo = param.lcompanyNo;
+    }
     Vue.http({
         method: 'POST',
-        url: apiUrl.orderList + param.link,
-        body:body,
+        url: apiUrl.orderList + param.link,    
         emulateJSON: true,
+        body:body,
         emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -259,14 +276,15 @@ export const orderCancle = ({ dispatch }, param) => { //订单取消状态
 
 export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
     console.log(param)
-    console.log(param.images)
     param.images='';
     if(param.image_f){
         param.images+=param.image_f+','
     }
     if(param.image_s){param.images+=param.image_s+','}
     if(param.image_t){param.images+=param.image_t};
- console.log(param.images)
+    /*var ss= param.images;
+    var sss = ss.split(",");//字符串转化为数组
+    sss..toString()*/
     const body = {
        orderId:param.id,
        payWay:param.payWay
@@ -274,7 +292,6 @@ export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
     if(param.images){
         body.images = param.images;
     }
-     console.log(param.images)
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
@@ -286,7 +303,7 @@ export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('药款支付成功')
+        console.log('支付成功')
         dispatch(types.ORDER_STATUS, param);
     }, (res) => {
         console.log('fail');
@@ -312,6 +329,28 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
         for (var i in orderDetail.goods.arr) {
             orderDetail.goods.arr[i].show = false;
         }
+        var payPics = orderDetail.payPics;
+        orderDetail.payPics={};
+        orderDetail.payPics.arr = payPics;
+        orderDetail.payPics.show = true;
+        for (var i in orderDetail.payPics.arr) {
+            orderDetail.payPics.arr[i].show = false;
+        }
+        var sendPics = orderDetail.sendPics;
+        orderDetail.sendPics={};
+        orderDetail.sendPics.arr = sendPics;
+        orderDetail.sendPics.show = true;
+        for (var i in orderDetail.sendPics.arr) {
+            orderDetail.sendPics.arr[i].show = false;
+        }
+        var attachFiles = orderDetail.attachFiles;
+        orderDetail.attachFiles={};
+        orderDetail.attachFiles.arr = attachFiles;
+        orderDetail.attachFiles.show = true;
+        for (var i in orderDetail.attachFiles.arr) {
+            orderDetail.attachFiles.arr[i].show = false;
+        }
+        
         dispatch(types.ORDER_DETAIL_DATA, orderDetail);
     }, (res) => {
         console.log('fail');

@@ -32,6 +32,7 @@
                             incidentalsDesc:'',
                             preferential:'',
                             preferentialDesc:'',
+                            orderStatus:'',
                             goods:[{
                                     sourceType:'',
                                     sourceId:'',
@@ -248,12 +249,13 @@ export default {
             updateorderParam:{
                 show:false
             },
-            disposeParam:{ //待处理订单
+            disposeParam:{ //订单处理各个状态
                 show:false,
-                link:'',
                 sales:false,
+                handle:false,
                 payment:false,
                 Auditing:false,
+                sendoff:false
             },
             show:true
         }
@@ -308,14 +310,15 @@ export default {
             this.disposeParam.show = true;
             /*--采购状态type==0--*/
             if(item.orderStatus==0&&item.type==0){
-                this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
-                this.disposeParam.link='/order/handle';
-                this.orderStatu(this.disposeParam);
+                this.disposeParam.tips="订单已提交，请审核！";
+                /*this.disposeParam.handle = true;*/
+                /*this.disposeParam.sendoff = true;*/
+                /*this.orderStatu(this.disposeParam);*/
             }
             if(item.orderStatus==10&&item.type==0){
                 this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
-                this.disposeParam.link='/order/handle';
-                this.orderStatu(this.disposeParam);
+                /*this.disposeParam.delivery = true;*/
+                /*this.orderStatu(this.disposeParam);*/
             }
             if(item.orderStatus==-1&&item.type==0){
                 this.disposeParam.tips="订单已取消！";
@@ -323,47 +326,44 @@ export default {
             }
             if(item.orderStatus==-2&&item.type==0){
                 this.disposeParam.tips="订单已过期！";
-                /*this.disposeParam.link='/order/cancle';*/
             }
             if(item.orderStatus==20&&item.type==0){
                 this.disposeParam.tips="订单处理完成，等待买家付款！";
                 this.disposeParam.payment=true;
-                /*this.disposeParam.link='/order/cancle';*/
             }
             if(item.orderStatus==30&&item.type==0){ 
                 this.disposeParam.tips="订单买家已付款，商家正在核查！";
-                this.disposeParam.Auditing = true; //审核按钮待添加
+                /*this.disposeParam.Auditing = true;*/ 
             }
             if(item.orderStatus==40&&item.type==0){ 
                 this.disposeParam.tips="您的订单已支付，请等待卖家发货！";
+                /*this.disposeParam.sendoff = true; */
             }
             if(item.orderStatus==50&&item.type==0){ 
-                this.disposeParam.tips="您的订单已发货，请等待收货确认！";
+                this.disposeParam.tips="您的订单已发货，请注意保持电话通畅，等待收货确认！";
+                this.disposeParam.delivery = true;
             }
             if(item.orderStatus==60&&item.type==0){
                 this.disposeParam.tips="买家已收货，订单已完成！";
-                this.disposeParam.link='/order/receiveConfirm';
+                /*this.disposeParam.link='/order/receiveConfirm';*/
             }
 
             /*--销售状态type==1--*/
             if(item.orderStatus==0&&item.type==1){
                 this.disposeParam.tips="订单已提交，请审核！";
-                this.disposeParam.link='/order/handle';
-                this.disposeParam.sales = true;
-                this.orderStatu(this.disposeParam);
+                this.disposeParam.handle = true;
+                /*this.orderStatu(this.disposeParam);*/
             }
             if(item.orderStatus==10&&item.type==1){
                 this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
-                this.disposeParam.link='/order/handle';
-                this.orderStatu(this.disposeParam);
+                this.disposeParam.sales = true;
+                /*this.orderStatu(this.disposeParam);*/
             }
             if(item.orderStatus==-1&&item.type==1){
                 this.disposeParam.tips="订单已取消！";
-                /*this.disposeParam.link='/order/cancle';*/
             }
             if(item.orderStatus==-2&&item.type==0){
                 this.disposeParam.tips="订单已过期！";
-                /*this.disposeParam.link='/order/cancle';*/
             }
             if(item.orderStatus==20&&item.type==1){
                 this.disposeParam.tips="订单处理完成，等待买家付款！";
@@ -371,17 +371,17 @@ export default {
             }
             if(item.orderStatus==30&&item.type==1){ 
                 this.disposeParam.tips="订单买家已付款，商家正在核查！";
-                /*this.disposeParam.link='/order/cancle';*/
+                this.disposeParam.Auditing = true;
             }
             if(item.orderStatus==40&&item.type==1){ 
                 this.disposeParam.tips="订单已支付，请等待卖家发货！";
+                this.disposeParam.sendoff = true;
             }
             if(item.orderStatus==50&&item.type==1){ 
                 this.disposeParam.tips="订单已发货，请等待收货确认！";
             }
             if(item.orderStatus==60&&item.type==1){
                 this.disposeParam.tips="买家已收货，订单已完成！";
-                this.disposeParam.link='/order/receiveConfirm';
             }
         }
     },
