@@ -12,6 +12,7 @@
   <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+  <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
     <div class="client_body">
     	<div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -411,7 +412,44 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           订单（{{initClientDetail.orders.arr.length}}）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button>
+                                        <button type="button" class="btn btn-base pull-right" @click.stop="newOrder({
+                                            show:true,
+                                            title1:'新建订单',
+                                            type:'',
+                                            customer:initClientDetail.id,
+                                            sample:0,
+                                            intl:0,
+                                            incidentals:'',
+                                            incidentalsDesc:'',
+                                            preferential:'',   
+                                            preferentialDesc:'',  
+                                            currency:'人民币',     
+                                            consignee:'',    
+                                            consigneePhone:'',
+                                            zipCode:'',     
+                                            country:'',
+                                            province:'',
+                                            city:'',
+                                            district:'',
+                                            consigneeAddr:'',
+                                            comments:'', 
+                                            sourceType:0,       
+                                            goods:[{
+                                                sourceType:0,   
+                                                sourceId:'',    
+                                                title:'',       
+                                                breedId:'',
+                                                brredName:'',
+                                                quality:'',
+                                                location:'',
+                                                spec:'',
+                                                price:'',
+                                                unit:'',
+                                                number:''
+                                              }],
+                                            key:'orderList',
+                                            link:createOrder
+                                          })">新建</button>
                                   </h4>
                               </div>
                               <div  class="panel-collapse" v-show="!initClientDetail.orders.show&&initClientDetail.orders.arr.length>0">
@@ -914,7 +952,7 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>名称</label>
-                                    <input type="text" class="form-control" v-model="initClientDetail.name" value="{{initClientDetail.name}}" disabled="disabled" />
+                                    <input type="text" class="form-control" v-model=".name" value="{{initClientDetail.name}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>类型</label>
@@ -993,6 +1031,7 @@ import createtrackModel from '../user/userTracking'
 import createproductModel from  '../clientRelate/label/createProduct'
 import intentionModel from  '../user/userIntention'
 import auditDialog from '../tips/auditDialog'
+import createorderModel  from  '../order/orderInformationDialog'
 import {
 	initClientDetail
 } from '../../vuex/getters'
@@ -1013,8 +1052,8 @@ import {
 	alterProduct,
 	uploadFiles,
   deleteInfo,
-  customerTransferBlacklist
-
+  customerTransferBlacklist,
+  createOrder
 } from '../../vuex/actions'
 export default {
     components: {
@@ -1031,7 +1070,8 @@ export default {
         createproductModel,
         intentionModel,
         tipsdialogModel,
-        auditDialog
+        auditDialog,
+        createorderModel
     },
     props:['param'],
     data(){
@@ -1086,7 +1126,10 @@ export default {
         auditParam:{
           show:false
         },
-    		show:true
+    		show:true,
+        orderParam:{
+          show:false
+        }
     	}
     },
     vuex:{
@@ -1110,7 +1153,8 @@ export default {
     		alterProduct,
     		uploadFiles,
         deleteInfo,
-        customerTransferBlacklist
+        customerTransferBlacklist,
+        createOrder
     	}
     },
     methods:{
@@ -1254,9 +1298,10 @@ export default {
         this.auditParam.confirm=true;
         this.auditParam.callback=this.callback;
         this.auditParam.show=true;
-
-
-
+      },
+      newOrder:function(order){
+        console.log(order)
+        this.orderParam = order;
       }
     },
 

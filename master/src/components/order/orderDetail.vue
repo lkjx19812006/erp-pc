@@ -1,6 +1,7 @@
 <template>
-   <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
-<div class="client_body">
+    <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
+    <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
+    <div class="client_body">
       <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -14,7 +15,7 @@
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
                         <a class="navbar-brand navbar-name" href="#">{{initOrderDetail.no}}</a>
                     </div>
-                    <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
+                    <!-- <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                         <li>
                             <button type="button" class="btn btn-base" @click="createTracking()">新建跟进</button>
                         </li>
@@ -26,7 +27,7 @@
                                                show:true,                                          
                                                })">编辑</button>
                         </li>
-                    </ul>
+                    </ul> -->
                 </div>
             </nav>
         </div>
@@ -92,8 +93,6 @@
                                     </div>
                                 </div>
                             </div>    
-                        </div>
-                        <div class="panel-group">
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -104,54 +103,42 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           支付凭证（{{initOrderDetail.payPics.arr.length}}）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> 
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
+                                            show:true,
+                                            orderId:initOrderDetail.id,
+                                            callback:uploadDocument,
+                                            link:'/order/attachSubmit/',
+                                            description:'',
+                                            fileType:'image',
+                                            bizType:'order_pay',
+                                            payPics:'',
+                                            titles:'上传支付凭证'
+                                            })">新建</button> 
                                     </h4>
                                 </div>
                                 <div class="panel-collapse" v-show="initOrderDetail.payPics.show">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>商品名称</th>
-                                            <th>产地</th>
-                                            <th>规格</th>
-                                            <th>数量</th>
-                                            <th>质量</th>
-                                            <th>价格</th>
-                                            <th>单位</th>
-                                            <th>总价</th>
-                                            <th>商品图片</th>
+                                            <th>文件类型</th>
+                                            <th>文件来源</th>
+                                            <th>文件图片或路径</th>
+                                            <th>描述</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.payPics.arr">
-                                                <td>{{item.brredName}}</td>
-                                                <td>{{item.location}}</td>
-                                                <td>{{item.spec}}</td>
-                                                <td>{{item.number}}</td>
-                                                <td>{{item.quality}}</td>
-                                                <td>{{item.price}}元</td>
-                                                <td>{{item.unit}}</td>
-                                                <td>{{item.amount}}元</td>
-                                                <td>
-                                                    <img v-bind:src="item.image" />
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.bizType}}</td>
+                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
+                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
                                                 </td>
-                                                <td  @click="clickShow($index,{
-                                                      concrete:'goods'
-                                                      })">
-                                                      <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="breed_action" v-show="item.show">
-                                                        <dl>
-                                                           <dt @click="createChance(item,$index)">编辑</dt>
-                                                       </dl>
-                                                    </div>
-                                                </td> 
+                                                <td>{{item.description}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     </div>
                                 </div>
                             </div>    
-                        </div>
-                         <div class="panel-group">
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -162,54 +149,45 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           上传附件（{{initOrderDetail.attachFiles.arr.length}}）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
+                                            show:true,
+                                            orderId:param.id,
+                                            link:'/order/attachSubmit/',
+                                            callback:uploadDocument,
+                                            description:'',
+                                            fileType:'image',
+                                            bizType:'attach_files',
+                                            attachFiles:'',
+                                            titles:'上传附件凭证'
+                                            })">新建</button>
                                     </h4>
                                 </div>
                                 <div class="panel-collapse" v-show="initOrderDetail.attachFiles.show">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>商品名称</th>
-                                            <th>产地</th>
-                                            <th>规格</th>
-                                            <th>数量</th>
-                                            <th>质量</th>
-                                            <th>价格</th>
-                                            <th>单位</th>
-                                            <th>总价</th>
-                                            <th>商品图片</th>
+                                            <th>文件类型</th>
+                                            <th>文件来源</th>
+                                            <th>文件图片或路径</th>
+                                            <th>描述</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.attachFiles.arr">
-                                                <td>{{item.brredName}}</td>
-                                                <td>{{item.location}}</td>
-                                                <td>{{item.spec}}</td>
-                                                <td>{{item.number}}</td>
-                                                <td>{{item.quality}}</td>
-                                                <td>{{item.price}}元</td>
-                                                <td>{{item.unit}}</td>
-                                                <td>{{item.amount}}元</td>
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.bizType}}</td>
+                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
+                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
+                                                </td>
+                                                <td>{{item.description}}</td>
                                                 <td>
                                                     <img v-bind:src="item.image" />
                                                 </td>
-                                                <td  @click="clickShow($index,{
-                                                      concrete:'goods'
-                                                      })">
-                                                      <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="breed_action" v-show="item.show">
-                                                        <dl>
-                                                           <dt @click="createChance(item,$index)">编辑</dt>
-                                                       </dl>
-                                                    </div>
-                                                </td> 
                                             </tr>
                                         </tbody>
                                     </table>
                                     </div>
                                 </div>
                             </div>    
-                        </div>
-                        <div class="panel-group">
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -220,46 +198,36 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           物流凭证（{{initOrderDetail.sendPics.arr.length}}）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
+                                            show:true,
+                                            orderId:param.id,
+                                            link:'/order/attachSubmit/',
+                                            description:'',
+                                            fileType:'image',
+                                            bizType:'order_send',
+                                            sendPics:'',
+                                            callback:uploadDocument,   
+                                            titles:'上传物流凭证'
+                                            })">新建</button>
                                     </h4>
                                 </div>
                                 <div class="panel-collapse" v-show="initOrderDetail.sendPics.show">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>商品名称</th>
-                                            <th>产地</th>
-                                            <th>规格</th>
-                                            <th>数量</th>
-                                            <th>质量</th>
-                                            <th>价格</th>
-                                            <th>单位</th>
-                                            <th>总价</th>
-                                            <th>商品图片</th>
+                                            <th>文件类型</th>
+                                            <th>文件来源</th>
+                                            <th>文件图片或路径</th>
+                                            <th>描述</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.sendPics.arr">
-                                                <td>{{item.brredName}}</td>
-                                                <td>{{item.location}}</td>
-                                                <td>{{item.spec}}</td>
-                                                <td>{{item.number}}</td>
-                                                <td>{{item.quality}}</td>
-                                                <td>{{item.price}}元</td>
-                                                <td>{{item.unit}}</td>
-                                                <td>{{item.amount}}元</td>
-                                                <td>
-                                                    <img v-bind:src="item.image" />
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.bizType}}</td>
+                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
+                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
                                                 </td>
-                                                <td  @click="clickShow($index,{
-                                                      concrete:'goods'
-                                                      })">
-                                                      <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="breed_action" v-show="item.show">
-                                                        <dl>
-                                                           <dt @click="createChance(item,$index)">编辑</dt>
-                                                       </dl>
-                                                    </div>
-                                                </td> 
+                                                <td>{{item.description}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -342,15 +310,18 @@
 </template>
 <script>
 import trackingModel from '../order/ordergoods'
+import credenceModel from '../order/createcredence'
 import {
   initOrderDetail
 } from '../../vuex/getters'
 import {
-  getOrderDetail
+  getOrderDetail,
+  uploadDocument
 } from '../../vuex/actions'
 export default {
     components: {
-      trackingModel
+      trackingModel,
+      credenceModel
     },
     props:['param'],
     data(){
@@ -358,7 +329,10 @@ export default {
         trackingParam:{
           show:false
         },
-        show:true
+        show:true,
+        credenceParam:{
+           show:false
+        }
       }
     },
     vuex:{
@@ -366,7 +340,8 @@ export default {
         initOrderDetail
       },
       actions:{
-        getOrderDetail
+        getOrderDetail,
+        uploadDocument
       }
     },
     methods:{
@@ -384,13 +359,9 @@ export default {
                 this.trackingParam = item;
                 this.trackingParam.show = true;
           },
-         clickShow: function(index,param) {
-            if (this.$store.state.table.orderDetail[param.concrete].arr[index].show) {
-                this.$store.state.table.orderDetail[param.concrete].arr[index].show = false;
-            } else {
-                this.$store.state.table.orderDetail[param.concrete].arr[index].show = true
-            }
-
+         createcredence:function(initOrderDetail){
+            console.log(initOrderDetail)
+             this.credenceParam=initOrderDetail;
          }
     },
    created(){

@@ -1,10 +1,23 @@
 <template>
   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
+  <createfiles-model :param="cfilesParam" v-if="cfilesParam.show"></createfiles-model>
   <div>
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">资质证书</div>
+      <div class="right col-xs-2">
+        <button class="new_btn transfer" @click="createfiles({
+                                   bizId:'',
+                                   show:true,
+                                   title:'新建资质证书',
+                                   fileType:'',
+                                   bizType:'',
+                                   description:'',
+                                   path:'',
+                                   link:uploadCertificate,
+                                   url:'/customer/file/'
+                                  })">新建</button>
+      </div>
     </div>
-    
     <div class="order_table">
       <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -16,7 +29,6 @@
               <th>所属文件</th>
               <th>路径</th>
               <th>描述</th>
-              <th>状态</th>
               <th></th>
             </tr>
         </thead>
@@ -29,7 +41,6 @@
                     <img  src="/static/images/pdf.png" v-else>
               </td>
               <td>{{item.description}}</td>
-              <td>{{item.status}}</td>
               <td @click.stop="eventClick($index)">
                 <img height="24" width="24" src="/static/images/default_arrow.png" />
                 <div class="component_action" v-show="item.show">
@@ -59,19 +70,21 @@
 <script>
   import pagination from '../pagination'
   import deletebreedModel from  '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
+  import createfilesModel from  '../supply/createFiles'
   import {
     initFileslist
   } from '../../vuex/getters'
   import {
     getFilesList,
     deleteInfo,
-    uploadFiles
+    uploadCertificate
   } from '../../vuex/actions'
 
   export default {
     components: {
       pagination,
-      deletebreedModel
+      deletebreedModel,
+      createfilesModel
     },
     vuex: {
       getters: {
@@ -80,7 +93,7 @@
       actions: {
         getFilesList,
         deleteInfo,
-        uploadFiles
+        uploadCertificate
       }
     },
     data() {
@@ -101,7 +114,7 @@
           city:'',
           cityName:''*/
         },
-        createParam:{
+        cfilesParam:{
           show: false
         },
         deleteParam:{
@@ -110,9 +123,6 @@
       }
     },
     methods: {
-      createCustomer:function(initFileslist){
-        this.createParam = initFileslist;
-      },
       eventClick:function(id){
         if(this.$store.state.table.basicBaseList.filesList[id].show){
           this.$store.state.table.basicBaseList.filesList[id].show = !this.$store.state.table.basicBaseList.filesList[id].show;
@@ -123,6 +133,11 @@
      specDelete:function(initFileslist){
           this.deleteParam = initFileslist;
       },
+      createfiles:function(initFileslist){
+        console.log(";;;")
+         this.cfilesParam = initFileslist;
+         this.$broadcast('getImageData');
+      }
     },
     events: {
       fresh: function(input) {

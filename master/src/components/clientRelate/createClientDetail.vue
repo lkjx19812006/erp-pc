@@ -26,7 +26,7 @@
                                     <input type="text" class="form-control edit-input" v-validate:phone="['phone']" v-model="param.phone"  />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel"><label class="editlabel" for="system">{{param.webchart}}<span class="system_danger" v-if="$validation.wechart.wechart">请输入正确的微信号</span></label></label>
+                                    <label class="editlabel" for="system">{{param.webchart}}<span class="system_danger" v-if="$validation.wechart.wechart">请输入正确的微信号</span></label>
                                     <input type="text" class="form-control edit-input" v-validate:wechart="['wechart']" v-model="param.wechart" />
                                 </div>
                                 <div class="editpage-input">

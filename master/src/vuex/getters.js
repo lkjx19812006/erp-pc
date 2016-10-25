@@ -37,12 +37,14 @@ export const getPiechart = (state) => {
     } ;
     return option;
 }
-
+/*---订单数据---*/
 export const initOrderlist = (state) => {
     return parseJson(state.table.basicBaseList.orderList);
 }
-
-export const initOrderDetail = (state) => {
+export const initExpresslist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.expressList));
+}
+export const initOrderDetail = (state) => { 
     return JSON.parse(JSON.stringify(state.table.orderDetail));
 }
 

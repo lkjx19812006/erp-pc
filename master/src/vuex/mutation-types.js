@@ -5,11 +5,15 @@ export const MENU_BAR = 'MENU_BAR' //菜单栏左滑
 export const CHANGE_CHARTS = 'CHANGE_CHARTS' //图表
 export const CHANGE_LINECHARTS = 'CHANGE_LINECHARTS' //折线图表
 export const CHANGE_PIECHARTS = 'CHANGE_PIECHARTS' //饼状图
+
 export const ORDER_TABLE = 'ORDER_TABLE' //订单
 export const ORDER_ADD_DATA = 'ORDER_ADD_DATA' //创建订单
 export const ORDER_UPDATE_DATA = 'ORDER_UPDATE_DATA' //修改订单
 export const ORDER_DETAIL_DATA = 'ORDER_DETAIL_DATA' //订单详情
 export const ORDER_STATUS = 'ORDER_STATUS' //订单状态详情
+export const EXPRESS_DATA = 'EXPRESS_DATA' //订单物流列表
+export const ORDER_UPLOAD_DATA = 'ORDER_UPLOAD_DATA' //订单详情上传凭证
+
 export const SYSTEM_DATA = 'SYSTEM_DATA' //系统数据
 export const PROVINCE_DATA = 'PROVINCE_DATA' //省市区列表数据
 export const SERVICE_ENTERPRISE = 'SERVICE_ENTERPRISE' //业务企业数据
@@ -49,6 +53,7 @@ export const ADD_LABEL_DATA = 'ADD_LABEL_DATA' // 新增标签
 export const UPDATE_LABEL_DETAIL = 'UPDATE_LABEL_DETAIL' // 修改标签
 export const ADD_PRODUCT_DATA = 'ADD_PRODUCT_DATA' // 新增客户产品
 export const FILE_DATA ='FILE_DATA'  // 新增客户文件
+export const ADD_CERTIFICATE_DATA ='ADD_CERTIFICATE_DATA'  // 新增供应商文件
 export const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA' // 修改客户产品
 export const CUSTOMER_BATCH_DELETE = 'CUSTOMER_BATCH_DELETE' //客户批量删除
 export const ALTER_PRODUCT_DATA = 'ALTER_PRODUCT_DATA' // 修改供应商产品
