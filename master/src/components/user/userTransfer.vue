@@ -239,16 +239,8 @@
         </div>
         <div class="edit_footer">
           <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-          <button type="button" class="btn  btn-confirm" v-if="$validation.name.minlength
-                          ||$validation.tel.tel
-                          ||$validation.email.email
-                          ||$validation.cname.minlength
-                          ||$validation.cphone.phone
-                          ||$validation.ctel.tel
-                          ||$validation.cemail.email
-                          ||$validation.cwechart.wechart
-                          ||$validation.cqq.qq" disabled="true">确定</button>
-          <input type="button" class="btn  btn-confirm" v-else @click="save(param.show = false)" value="确定"/>
+          <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="save(param.show = false)">确定</button>
+          <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
         </div>
       </form>
     </validator>

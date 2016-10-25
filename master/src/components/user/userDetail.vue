@@ -36,6 +36,7 @@
                             <button type="button" class="btn btn-base" @click="modifyUser({
                                                id:initUserDetail.id,
                                                show:true,
+                                               loading:false,
                                                name:initUserDetail.name,
                                                nickname:initUserDetail.nickname,
                                                fullname:initUserDetail.fullname,
@@ -147,7 +148,8 @@
                                                             intentionParam.description=item.description,
                                                             intentionParam.image_f='',
                                                             intentionParam.image_s='',
-                                                            intentionParam.image_t=''
+                                                            intentionParam.image_t='',
+                                                            intentionParam.inType=2
                                                         )">编辑</dt>
                                                 </div>
                                                 </td>
@@ -465,7 +467,8 @@ export default {
           image_f:'',
           image_s:'',
           image_t:'',
-          description:''
+          description:'',
+          inType:2
         },
         intentionAuditParam:{
           show:false,
@@ -510,7 +513,30 @@ export default {
 
     methods:{
       modifyUser:function(item){
-        this.$parent.modifyUser(item);
+        this.$parent.modifyUser({
+          loading:false,
+          id:item.id,
+          show:true,
+          link:'alertInfo',
+          url:'/user/',
+          key:'userList',
+          index:this.param.sub,
+          nickname:'',
+          qq:'',
+          fullname:'',
+          email:'',
+          phone:'',
+          tel:'',
+          nickname:'',
+          company:'',
+          comment:'',
+          address:'',
+          idnumber:'',
+          bizType:'',
+          gender:'',
+          importance:'',
+          userType:''
+        });
       },
 
       onlyselected:function(index,id){
@@ -671,7 +697,8 @@ export default {
               image_f:'',
               image_s:'',
               image_t:'',
-              images:''
+              images:'',
+              inType:2
           };
           this.intentionParam.show = true;
 

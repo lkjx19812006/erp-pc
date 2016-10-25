@@ -14,20 +14,20 @@
                         <div class="editpage" v-cloak>
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.namelist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.name" value="{{param.name}}" />
+                                    <label class="editlabel" for="system">{{param.namelist}}<span class="system_danger" v-if="$validation.name.minlength">请输入姓名且不少于两位数</span></label>
+                                    <input type="text" class="form-control edit-input" v-validate:name="{minlength:2}" v-model="param.name"  />
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">{{param.parten}}</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.department" value="{{param.department}}" />
+                                    <input type="text" class="form-control edit-input" v-model="param.department" value="{{param.department}}" />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel">{{param.tellist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.tel" value="{{param.tel}}" />
+                                    <label class="editlabel" for="system">{{param.tellist}}<span class="system_danger" v-if="$validation.tel.tel">请输入正确的电话</span></label>
+                                    <input type="text" class="form-control edit-input"  id="tel" v-validate:tel="['tel']" v-model="param.tel" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.QQ}}</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.qq" value="{{param.qq}}" />
+                                    <label class="editlabel"><label class="editlabel" for="system">{{param.QQ}}<span class="system_danger" v-if="$validation.qq.qq">请输入正确的qq号</span></label></label>
+                                    <input type="text" class="form-control edit-input"  v-validate:qq="['qq']" v-model="param.qq" v-validate:qq="['required']" />
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">是否主要</label>
@@ -41,19 +41,19 @@
                              <div class="editpageright">
                                 <div class="editpage-input">
                                     <label class="editlabel">{{param.job}}</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.position" value="{{param.position}}" />
+                                    <input type="text" class="form-control edit-input" v-model="param.position" value="{{param.position}}" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.phonelist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.phone" value="{{param.phone}}" />
+                                    <label class="editlabel" for="system">{{param.phonelist}}<span class="system_danger" v-if="$validation.phone.phone">请输入正确的手机号</span></label>
+                                    <input type="text" class="form-control edit-input" v-validate:phone="['phone']" v-model="param.phone" />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel">{{param.emaillist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.email" value="{{param.email}}" />
+                                    <label class="editlabel"><label class="editlabel" for="system">{{param.emaillist}}<span class="system_danger" v-if="$validation.email.email">请输入正确的邮箱</span></label></label>
+                                    <input type="text" class="form-control edit-input" v-validate:email="['email']" id="email" v-model="param.email" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.webchart}}</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.wechart" value="{{param.wechart}}" />
+                                    <label class="editlabel"><label class="editlabel" for="system">{{param.webchart}}<span class="system_danger" v-if="$validation.wechart.wechart">请输入正确的微信号</span></label></label>
+                                    <input type="text" class="form-control edit-input" v-validate:wechart="['wechart']" v-model="param.wechart" />
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,8 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" @click="param.link(param,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-else disabled="true">保存</button>
                 </div>
             </form>
         </validator>

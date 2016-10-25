@@ -7,60 +7,67 @@
         <div class="edit-content">
             <h3>编辑枚举类型</h3>
         </div>
-        <div class="edit-model">
-            <form name="editOrderinfo" action="javascript:void(0)">
-                <section class="editsection" v-cloak>
-                         <input type="hidden"  class="form-control edit-input" value="{{systemData.id}}" />
-                    <div class="editpage">
-                        <div class="editpageleft">
-                            <div class="editpage-input">
-                                <label class="editlabel">名称</label>
-                                <input type="text" v-model='systemData.name' class="form-control edit-input" value="{{systemData.name}}" />
+        <validator name="validation">
+            <div class="edit-model">
+                <form name="editOrderinfo" action="javascript:void(0)">
+                    <section class="editsection" v-cloak>
+                             <input type="hidden"  class="form-control edit-input" value="{{systemData.id}}" />
+                        <div class="editpage">
+                            <div class="editpageleft">
+                                <div class="editpage-input">
+                                    <label class="editlabel">名称<span class="system_danger" v-if="$validation.system.minlength">请至少三位</span></label>
+                                    <input type="text" v-model='systemData.name' v-validate:system="{minlength:3}" class="form-control edit-input" value="{{systemData.name}}" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">类型
+                                        <span class="system_danger" v-if="$validation.systemtype.required">请选择类型</span>
+                                    </label>
+                                    <select class="form-control" v-model="systemData.type" v-validate:systemtype="['required']" style="width:90%;" value="{{systemData.typedesc}}">
+                                        <option  value="TRACE">跟进类型</option>
+                                        <option  value="ST">规格类型</option>
+                                        <option  value="BANK">银行</option>
+                                        <option  value="OSTAT">订单状态</option>
+                                        <option  value="OT">包装方式</option>
+                                        <option  value="MU">计量单位</option>
+                                        <option  value="PAY">付款方式</option>
+                                        <option  value="CL">客户信用等级</option>
+                                        <option  value="IS">意向状态</option>
+                                        <option  value="HT">药材品类</option>
+                                        <option  value="ES">员工状态</option>
+                                        <option  value="ET">企业类型</option>
+                                        <option  value="CS">客户来源</option>
+                                        <option  value="CT">证书类型</option>
+                                        <option  value="AS">审核状态</option>
+                                        <option  value="DEV">快递公司</option>
+                                        <option  value="POS">职位</option>
+                                        <option  value="LBL">常见标签</option>
+                                        <option  value="ON">客户信用等级</option>
+                                    </select>
+                                    <!-- <input type="text" v-model='systemData.type' class="form-control edit-input" value="{{systemData.type}}" /> -->
+                                </div>
                             </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">类型</label>
-                                <select class="form-control" v-model="systemData.type" style="width:90%;" value="{{systemData.typedesc}}">
-                                    <option  value="TRACE">跟进类型</option>
-                                    <option  value="ST">规格类型</option>
-                                    <option  value="BANK">银行</option>
-                                    <option  value="OSTAT">订单状态</option>
-                                    <option  value="OT">包装方式</option>
-                                    <option  value="MU">计量单位</option>
-                                    <option  value="PAY">付款方式</option>
-                                    <option  value="CL">客户信用等级</option>
-                                    <option  value="IS">意向状态</option>
-                                    <option  value="HT">药材品类</option>
-                                    <option  value="ES">员工状态</option>
-                                    <option  value="ET">企业类型</option>
-                                    <option  value="CS">客户来源</option>
-                                    <option  value="CT">证书类型</option>
-                                    <option  value="AS">审核状态</option>
-                                    <option  value="DEV">快递公司</option>
-                                    <option  value="POS">职位</option>
-                                    <option  value="LBL">常见标签</option>
-                                    <option  value="ON">客户信用等级</option>
-                                </select>
-                                <!-- <input type="text" v-model='systemData.type' class="form-control edit-input" value="{{systemData.type}}" /> -->
+                            <div class="editpageright">
+                                <div class="editpage-input">
+                                    <label class="editlabel" for="systemcode">编码
+                                        <span class="system_danger" v-if="$validation.systemcode.required">请输入编码</span> 
+                                    </label>
+                                    <input type="text" class="form-control  edit-input" id="systemcode" v-validate:systemcode="['required']" v-model="systemData.code" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">描述</label>
+                                    <input type="text" v-model="systemData.desc" class="form-control edit-input" value="{{systemData.desc}}" />
+                                </div>
                             </div>
                         </div>
-                        <div class="editpageright">
-                            <div class="editpage-input">
-                                <label class="editlabel">编码</label>
-                                <input type="text" v-model='systemData.code' class="form-control edit-input" value="{{systemData.code}}" />
-                            </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">描述</label>
-                                <input type="text" v-model="systemData.desc" class="form-control edit-input" value="{{systemData.desc}}" />
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </form>
-        </div>
-        <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="updateDataInfo(systemData,systemData.sub=param.id,param.show = false)">确定</button>
-        </div>
+                    </section>
+                </form>
+            </div>
+            <div class="edit_footer">
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="updateDataInfo(systemData,systemData.sub=param.id,param.show = false)">确定</button>
+                <button type="button" class="btn  btn-confirm" v-else disabled="disabled">确定</button>
+            </div>
+        </validator>
     </div>
 </template>
 <script>

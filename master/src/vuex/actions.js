@@ -259,7 +259,7 @@ export const orderCancle = ({ dispatch }, param) => { //订单取消状态
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
-        emulateJSON: true, 
+        emulateJSON: true,
         body:body,
         emulateJSON: false,
         headers: {
@@ -272,7 +272,7 @@ export const orderCancle = ({ dispatch }, param) => { //订单取消状态
     }, (res) => {
         console.log('fail');
     })
-} 
+}
 
 export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
     console.log(param)
@@ -295,7 +295,7 @@ export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
-        emulateJSON: true, 
+        emulateJSON: true,
         body:body,
         emulateJSON: false,
         headers: {
@@ -997,6 +997,7 @@ export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情
         console.log(breed);
         dispatch(types.BREED_DETAIL_DATA, breed);
     }, (res) => {
+      param.loading=false;
         console.log('fail');
     });
 }
@@ -2569,6 +2570,9 @@ export const getUserDetail = ({ dispatch }, param) => {  //会员详情
 
         userDetail.personalAuthShow = false;
         userDetail.companyAuthShow = false;
+        for(var i in userDetail){
+          param[i]=userDetail[i];
+        }
 
         dispatch(types.USER_DETAIL_DATA, userDetail);
 
@@ -2627,20 +2631,17 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
     if(param.idnumber){
         updatedata.idnumber = param.idnumber;
     }
-    if(param.employee){
-        updatedata.employee = param.employee;
-    }
-    if(param.busiType){
-        updatedata.busiType = param.busiType;
+    if(param.bizType){
+        updatedata.bizType = param.bizType;
     }
     if(param.gender){
         updatedata.gender = param.gender;
     }
-    if(param.bizMain){
-        updatedata.bizMain = param.bizMain;
-    }
     if(param.importance){
         updatedata.importance = param.importance;
+    }
+    if(param.userType){
+        updatedata.userType = param.userType;
     }
     console.log(updatedata);
 
@@ -2911,6 +2912,9 @@ export const editintentInfo = ({ dispatch }, param) => { //修改意向
 }
 
 export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
+      if(!param.images){
+        param.images='';
+      }
       if(param.image_f){param.images+=param.image_f+','}
       if(param.image_s){param.images+=param.image_s+','}
       if(param.image_t){param.images+=param.image_t};
@@ -2947,7 +2951,8 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
          "number":param.number,
          "quality":param.quality,
          "duedate":param.duedate,
-         "images":param.images
+         "images":param.images,
+         "inType":param.inType
     }
     console.log(data1);
     Vue.http({

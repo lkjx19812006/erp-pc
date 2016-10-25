@@ -41,7 +41,7 @@
                         <!-- <th>所属分类</th> -->
                         <th>所属业务员</th>
                         <th>负责人</th>
-                        <th>经营范围</th>
+                        <th style="min-width:120px;">经营范围</th>
                         <th>电话</th>
                         <th>手机省</th>
                         <th>手机市</th>
@@ -50,8 +50,8 @@
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>注册地址</th>
-                        <th>备注</th>
-                        <th></th>
+                        <th style="min-width:200px">备注</th>
+                        <th ></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,7 +90,7 @@
                         <td>{{item.provinceName}}</td>
                         <td>{{item.cityName}}</td>
                         <td>{{item.address}}</td>
-                        <td>{{item.comments}}</td>
+                        <td >{{item.comments}}</td>
                         <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="component_action" v-show="item.show">

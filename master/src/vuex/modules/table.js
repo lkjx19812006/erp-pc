@@ -861,8 +861,9 @@ const mutations = {
           state.basicBaseList.userList[data.index].company=data.company;
           state.basicBaseList.userList[data.index].nickname=data.nickname;
           state.basicBaseList.userList[data.index].phone=data.phone;*/
-        } else { //详情页面修改
-            if (data) {
+        }
+
+        if (data) {
                 for (var key in data) {
                     state.userDetail[key] = data[key];
                 }
@@ -873,7 +874,7 @@ const mutations = {
             state.userDetail.company=data.company;
             state.userDetail.nickname=data.nickname;
             state.userDetail.phone=data.phone;  */
-        }
+
 
     },
 
@@ -920,7 +921,10 @@ const mutations = {
     },
 
     [USER_DETAIL_DATA](state, data) { // 会员详情
-        state.userDetail = data;
+
+      for (var key in data) {
+        state.userDetail[key] = data[key];
+      }
 
     },
 

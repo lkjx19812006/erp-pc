@@ -15,11 +15,11 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">编码 <span class="system_danger" v-if="$validation.code.required">请输入编码</span></label>
-                                <input type="text" v-model='breedData.code' class="form-control edit-input"  id="code" v-validate:code="['required']" />
+                                <input type="text" v-model='breedData.code' class="form-control edit-input" v-validate:code="['required']" />
                             </div>
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种名称 <span class="system_danger" v-if="$validation.name.required">请输入品种名称</span></label>
-                                <input type="text" v-model='breedData.name' class="form-control edit-input"  id="name" v-validate:name="['required']"/>
+                                <input type="text" v-model='breedData.name' class="form-control edit-input" v-validate:name="['required']"/>
                             </div>
                         </div>
                          <div class="clearfix">
@@ -31,8 +31,8 @@
                              </div>
                            {{breedData.selected.name}}
                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">品种名称拼音 <span class="system_danger" v-if="$validation.spell.required">请输入品种名称拼音</span></label>
-                                <input type="text" v-model='breedData.pinyin' class="form-control edit-input"  id="spell" v-validate:spell="['required']"/>
+                                <label class="editlabel">品种名称拼音</span></label>
+                                <input type="text" v-model='breedData.pinyin' class="form-control edit-input"/>
                             </div>
                           　
                         </div>
@@ -60,8 +60,8 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm"  @click="saveBreed(breedData,param.show = false)">保存</button>
-                    <!-- <button type="button" class="btn  btn-confirm">保存</button> -->
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid"  @click="saveBreed(breedData,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-else disabled="disabled">保存</button>
                 </div>
             </form>
         </validator>

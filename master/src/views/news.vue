@@ -87,12 +87,29 @@
                             <div class="component_action" v-show="item.show">
                                 <ul>
                                     <li @click="modifyUser({
+                                                loading:false,
                                                 id:item.id,
                                                 show:true,
+                                                userType:3,
                                                 link:alertInfo,
                                                 url:'/user/',
                                                 key:'userList',
                                                 index:$index,
+                                                nickname:'',
+                                                qq:'',
+                                                fullname:'',
+                                                email:'',
+                                                phone:'',
+                                                tel:'',
+                                                nickname:'',
+                                                company:'',
+                                                comment:'',
+                                                address:'',
+                                                idnumber:'',
+                                                bizType:'',
+                                                gender:'',
+                                                importance:'',
+                                                userType:''
                                                 },item.show=false)">编辑</li>
                                     <li v-if="item.transStatus==0" @click="userToClient({
                                                 name:item.fullname,
@@ -263,7 +280,8 @@ export default {
             sampleNumber:0,
             sampleAmount:0,
             qualification:'',
-            url:'/intention/'
+            url:'/intention/',
+            inType:2
         },
           checked:false
 
@@ -404,7 +422,8 @@ export default {
           sampleNumber:0,
           sampleAmount:0,
           qualification:'',
-          url:'/intention/'
+          url:'/intention/',
+          inType:2
       };
         this.intentionParam.show = true;
     }

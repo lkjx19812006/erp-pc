@@ -14,8 +14,8 @@
                         <div class="editpage">
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel" for="system">名称<span class="system_danger" v-if="$validation.system.required||$validation.system.minlength">请输入名称且不少于三位数</span></label>
-                                    <input type="text" class="form-control  edit-input" id="system" v-validate:system="{required:true,minlength:3}" v-model="systemData.name"  />
+                                    <label class="editlabel" for="system">名称<span class="system_danger" v-if="$validation.system.minlength">请至少三位</span></label>
+                                    <input type="text" class="form-control  edit-input" id="system" v-validate:system="{minlength:3}" v-model="systemData.name"  />
                                 </div>
                                 <div class="editpage-input">
                                         <label class="editlabel" for="systemtype">类型
@@ -61,7 +61,8 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" @click="saveDataInfo(systemData,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="saveDataInfo(systemData,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-else @click="saveDataInfo(systemData,param.show = false)" disabled="disabled">保存</button>
                 </div>
             </form>
         </validator>

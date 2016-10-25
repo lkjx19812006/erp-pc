@@ -16,8 +16,8 @@
                      </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>名称</label>
-                                <input type="text" id="cname" value="{{param.cname}}" class="form-control" maxlength="11" v-model="param.cname" v-validate:cname="['required']" />
+                                <label>名称<span class="system_danger" v-if="$validation.cname.minlength">请输入至少两位</span></label>
+                                <input type="text" id="cname" value="{{param.cname}}" class="form-control" maxlength="11" v-model="param.cname" v-validate:cname="{minlength:2}" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label>备注</label>
@@ -100,7 +100,9 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <input type="button" class="btn  btn-confirm"  @click="save()" value="保存" />
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="save()">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-else disabled="disabled">保存</button>
+
                 </div>
             </form>
         </validator>

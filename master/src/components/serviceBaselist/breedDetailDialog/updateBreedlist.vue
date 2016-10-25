@@ -14,8 +14,8 @@
                         <div class="editpage" v-cloak>
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.namelist}}</label>
-                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.name" value="{{param.name}}" />
+                                    <label class="editlabel">{{param.namelist}}<span class="system_danger" v-if="$validation.name.required">请输入{{param.namelist}}</span></label>
+                                    <input type="text" class="form-control edit-input" v-model="param.name" value="{{param.name}}" v-validate:name="['required']"/>
                                 </div>
                             </div>
                         </div>
@@ -24,6 +24,7 @@
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                     <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-else disabled="disabled">保存</button>
                 </div>
             </form>
         </validator>
