@@ -39,7 +39,7 @@
                          mobile:'',
                          extno:'',
                          level:'',
-                         role:[{'id':1,'type':'管理员','checked':false},{'id':2,'type':'部门经理','checked':false}],
+                         role:'',
                          entrydate:'',
                          leavedate:'',
                          namelist:'姓名',
@@ -112,8 +112,8 @@
                     <td>{{item.position}}</td>
                     <td>{{item.mobile}}</td>
                     <td>{{item.extno}}</td>
-                    <td>{{item.entrydate}}</td>
-                    <td>{{item.leavedate}}</td>
+                    <td>{{item.entrydate | date}}</td>
+                    <td>{{item.leavedate | date}}</td>
                     <td>{{item.level | levelstate}}</td>
                     <td  @click="editData($index,{
                             concrete:'employeeList'
@@ -235,7 +235,7 @@ export default {
         },
         newData:function(initEmployeeList){
             this.createParam=initEmployeeList;
-            console.log(this.createParam.arr)
+            //console.log(this.createParam.arr)
         },
         modify:function(initEmployeeList){
             this.createParam=initEmployeeList;

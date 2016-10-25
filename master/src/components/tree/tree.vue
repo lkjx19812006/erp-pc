@@ -32,7 +32,7 @@
       <div v-if="areValidNodes(node[children])" class="children" v-show="isOpened(index)">
         <div class="margin"></div>
         <div class="nodes">
-          <treeview :id="id" :value.sync="value" :labelname="labelname" :valuename="valuename" :children="children"
+          <treeview :id="id" :value.sync="value" :labelname="labelname" :valuename="valuename" :codename="codename" :children="children"
                     :model="node[children]" :parent.once="index" class="inner"></treeview>
         </div>
       </div>
@@ -114,6 +114,15 @@
         default: 'value',
       },
       /**
+       * Name of the property holding the node value.
+       * @since 1.0.0
+       * @var string
+       */
+      codename: {
+        Type: String,
+        default: 'code',
+      },
+      /**
        * Parent node model index.
        * @since 1.0.2
        * @var int
@@ -140,6 +149,7 @@
         this.$dispatch('treeview_click', {
           label: this.model[index][this.labelname],
           value: this.model[index][this.valuename],
+          code: this.model[index][this.codename],
           children: this.model[index][this.children]
         });
       },

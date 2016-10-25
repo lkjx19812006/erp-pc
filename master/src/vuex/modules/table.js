@@ -49,6 +49,7 @@ import {
    BATCH_UPDATE_USER_DATA,
    BATCH_USER_INTENTION_AUDIT,
    ORG_DATA,
+   ROLE_DATA,
    QUICK_EDIT,
    FILE_DATA,
    USER_DETAIL_DATA,
@@ -190,6 +191,7 @@ const state = {
             "show": true
         }],
         orgList: [{ "id": 1, "name": "冕冠电子商务有限公司", "level": null, "pid": 0, "status": 1, "utime": null, "ctime": null, "creater": null, "updater": null, "code": "0001", "show": true }],
+        roleList: [{"id":2,"cname":"系统管理员000","remark":"具有管理员权限","sortnum":null,"menus":"16,14,13,12,28,27,26,25,11,24,23,9,22,21,8,7,3,2,18,1","updater":null,"utime":null,"creater":null,"ctime":null,"status":null}],
         userList: [{
             "id": "0008fcc6c2d549888afb2e950e6343c1","type": 0,"password": "56bf5523459ce2dfc6720798d852d6e6",
             "nickname": "卖蘑菇的小姑凉", "fullname": "沈威峰","phone": "13851379713","email": "857714234@qq.com","qq": "857714234",
@@ -929,6 +931,9 @@ const mutations = {
 
     [ORG_DATA](state, data) { // 部门列表
         state.basicBaseList.orgList = data;
+    },
+    [ROLE_DATA](state, data) { // 部门列表
+        state.basicBaseList.roleList = data;
     },
     [ADD_EMPLOYEE_DATA](state, data) { //新增员工信息
         state.basicBaseList[data.key].unshift({

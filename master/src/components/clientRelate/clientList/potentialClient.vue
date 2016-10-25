@@ -232,7 +232,9 @@ export default {
             transferParam:{
                 show:false,
                 name:'',
-                arr:[]
+                arr:[],
+                orgId:'',
+                employeeId:'',
             },
             deleteParam:{
                 show:false

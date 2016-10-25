@@ -116,13 +116,13 @@
                                                 keyname:'transStatus',
                                                 sub:$index,
                                                 userId:item.id,
-                                                main:item.main,
                                                 province:'',
                                                 phone:item.phone,
                                                 tel:item.tel,
                                                 email:item.email,
                                                 qq:item.qq,
-                                                type:'',
+                                                type:'0,个人',
+                                                classify:'',
                                                 fullname:item.fullname,
                                                 employeeId:'',
                                                 employeeName:'',
@@ -140,7 +140,7 @@
                                                  tel: item.tel,
                                                  email: item.email,
                                                  qq: item.qq,
-                                                 wechart: ''
+                                                 wechart: item.wechart
                                                 }
                                                 },item.show=false)">划转</li>
                                     <li @click="createIntention(item.show=false)">意向</li>
@@ -389,6 +389,7 @@ export default {
         this.alterParam = item;
     },
     userToClient:function(item){
+        console.log(item.main);
         this.transferParam = item;
     },
     createIntention:function(){
@@ -403,22 +404,23 @@ export default {
           breedName:'',
           price:'',
           unit:'',
-          especial:'',
+          especial:1,
           quality:'',
           spec:'',
           number:'',
           location:'',
-          type:'',
+          type:0,
+          visit:0,
           country:'',
           province:'',
           city:'',
           district:'',
           address:'',
-          invoic:'',
-          sampling:'',
+          invoic:0,
+          sampling:0,
           sampleUnit:'',
-          advance:'',
-          intl:'',
+          advance:0,
+          intl:0,
           sampleNumber:0,
           sampleAmount:0,
           qualification:'',

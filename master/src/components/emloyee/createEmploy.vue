@@ -75,15 +75,12 @@
                             <div class="client-detailInfo col-xs-12">
                                 <label>角色</label>
                                 <div  class="clerafix">
-                                    <div class="pull-left role clerafix" v-for="item in param.role">
+                                    <div class="pull-left role clerafix col-md-3 col-xs-3" v-for="item in initRoleList" >
                                         <input type="checkbox" class="checkbox_unselect"  
                                         v-model="item.checked" @click="checked(item)"/>
-                                        <label for="admin">{{item.type}}</label>
+                                        <label for="admin">{{item.cname}}</label>
                                     </div>
-                                    <!-- <div class="pull-left role clerafix">
-                                         <input type="checkbox" class="checkbox_unselect" id="client_ids"  value="部门经理" />
-                                         <label  for="client_ids">部门经理</label>
-                                    </div> -->
+                                    
                                 </div>
                             </div> 
                         </div>
@@ -102,6 +99,10 @@
 import calendar from '../calendar/vue.datepicker'
 import orgsearchModel from '../emloyee/searchorg'
 import {
+    initRoleList
+} from '../../vuex/getters'
+import {
+    getRoleList,
     createEmploy
 } from '../../vuex/actions'
 export default {
@@ -125,13 +126,19 @@ export default {
                 orgid:'',
                 orgcode:''
             },
+            roleParam:{
+                pageSize:100,
+                cur:1
+
+            }
         }
     },
      vuex: {
         getters:{
-            
+            initRoleList
         },
         actions: {
+            getRoleList,
             createEmploy
         }
     },
@@ -187,7 +194,7 @@ export default {
         }
     },
     created(){
-        
+        this.getRoleList(this.roleParam);
     },
     ready() {
         this.createDateText()

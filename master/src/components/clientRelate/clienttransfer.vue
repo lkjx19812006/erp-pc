@@ -19,25 +19,34 @@
 		    			<div class="cover_loading">
 			                <pulse-loader :loading="loadParam1.loading" :color="color" :size="size"></pulse-loader>
 			            </div>
-	    				<table class="table table-hover table_head table-striped">
-			                <thead>
-			                    <tr>
-			                        <th></th>
-			                        <th>部门</th>
-			                    </tr>
-			                </thead>
-			                <tbody>
-			                    <tr v-for="item in initOrgList">
-			                       <td  @click.stop="">
-			                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="Partselected($index,item.id)" ></label>
-			                        </td>
-			                        <td>{{item.name}}</td>
-			                    </tr>
-			                </tbody>
-			            </table>
+	    				<!-- <table class="table table-hover table_head table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>部门</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="item in initOrgList">
+                                                           <td  @click.stop="">
+                                                                <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="Partselected($index,item.id)" ></label>
+                                                            </td>
+                                                            <td>{{item.name}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table> -->
+                        <div class="trans_parten" >
+                            <treeview :value.sync="id"
+                                :model="$store.state.table.basicBaseList.orgList"
+                                class="form-control"
+                                labelname="name"
+                                valuename="id"
+                                children="lowerList"
+                            ></treeview>
+                        </div> 
 			            <div class="edit_footer">
 				    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-				    		<input  type="button" class="btn btn-orange" @click="orgtransfer(param,param.show=false)" value="确定"/>
+				    		<input  type="button" class="btn btn-orange" @click="orgtransfer(param.show=false)" value="确定"/>
 				    	</div>
 	    			</div>
 	    			<div class="trans_service clearfix" v-show="!currentView">
@@ -130,6 +139,7 @@ export default{
 			currentView:true,
 			isA:true,
 			checked:false,
+            id: undefined, // Binded to component.
 			tipsParam:{
                 show:false,
                 name:'划转成功'
@@ -183,29 +193,39 @@ export default{
 			}
 
 			this.param.employeeId=id;
-      this.param.employeeName=this.$store.state.table.basicBaseList.employeeList[sub].name;
+            this.param.employeeName=this.$store.state.table.basicBaseList.employeeList[sub].name;
 
 			this.param.orgId=orgId;
 		},
 		employNameSearch: function(name) {
             this.getEmployeeList(this.loadParam);
         },
-        orgtransfer:function(param){
+        orgtransfer:function(){   //划转到部门
+           console.log(this.param); 
            this.tipsParam.show= true;
-           this.transferInfo(param)
-        },
-        transfer:function(param){
+           this.transferInfo(this.param);
+        },  
+        transfer:function(param){    //划转到业务员
            this.tipsParam.show= true;
-           this.transferEmploy(param)
+           this.transferEmploy(param);
         }
 	},
     events: {
 	    fresh: function(input) {
 	        this.loadParam.cur = input;
 	        this.getEmployeeList(this.loadParam);
-	    }
+	    },
+        treeview_click:function(param){
+            console.log(param);
+            if(param.children.length==0){
+                this.param.orgId = param.value;
+            }
+      }
     },
 	created(){
+        this.param.employeeId = '';
+        this.param.orgId = '';
+        this.param.employeeName = '';
 		this.getEmployeeList(this.loadParam);
 		this.getOrgList(this.loadParam1)
 	}
@@ -277,5 +297,12 @@ export default{
 }
 .base_pagination{
 	margin-top: 0;
+}
+.trans_parten{
+    text-align: left;
+}
+.treeview{
+    height:500px;
+    border:0px;
 }
 </style>
