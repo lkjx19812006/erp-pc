@@ -157,9 +157,24 @@
                                 <label class="editlabel">备注</label>
                                 <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
                             </div>
-                             <div class="editpage-input">
+                            <div class="editpage-input">
                                 <label class="editlabel">杂费说明</label>
                                 <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
+                            </div>
+                            <div class="editpage-input">
+                                <label class="editlabel">订单状态</label>
+                                <select type="text" class="form-control edit-input" v-model="param.orderStatus" value="{{param.orderStatus}}" >
+                                    <option value="0">订单生成</option>
+                                    <option value="10">订单处理中</option>
+                                    <option value="20">订单已处理</option>
+                                    <option value="30">订单已支付</option>
+                                    <option value="40">订单财务审核</option>
+                                    <option value="50">订单已发货</option>
+                                    <option value="60">订单确认收货</option>
+                                    <option value="-1">订单已取消</option>
+                                    <option value="-2">订单过期</option>
+                                </select>
+                                <!-- <input type="text" class="form-control edit-input" v-model="param.orderStatus" value="{{param.orderStatus}}"/> -->
                             </div>
                         </div>
                     </div>
@@ -337,10 +352,10 @@ export default {
             }*/
         },
         confirm:function(param){
-            this.param.country = this.country.id;
-            this.param.province = this.province.id;
-            this.param.city = this.city.id;
-            this.param.district = this.district.id;
+            this.param.country = this.country.cname;
+            this.param.province = this.province.cname;
+            this.param.city = this.city.cname;
+            this.param.district = this.district.cname;
             console.log(this.param);
             this.param.link(this.param);
 

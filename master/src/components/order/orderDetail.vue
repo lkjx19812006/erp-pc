@@ -93,6 +93,180 @@
                                 </div>
                             </div>    
                         </div>
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" >
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:'',
+                                              crete:'payPics'
+                                              })">
+                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          支付凭证（{{initOrderDetail.payPics.arr.length}}）
+                                        </a>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> 
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse" v-show="initOrderDetail.payPics.show">
+                                    <div class="panel-body panel-set">
+                                        <table class="table  contactSet">
+                                          <thead>
+                                            <th>商品名称</th>
+                                            <th>产地</th>
+                                            <th>规格</th>
+                                            <th>数量</th>
+                                            <th>质量</th>
+                                            <th>价格</th>
+                                            <th>单位</th>
+                                            <th>总价</th>
+                                            <th>商品图片</th>
+                                          </thead>
+                                        <tbody>
+                                            <tr v-for="item in initOrderDetail.payPics.arr">
+                                                <td>{{item.brredName}}</td>
+                                                <td>{{item.location}}</td>
+                                                <td>{{item.spec}}</td>
+                                                <td>{{item.number}}</td>
+                                                <td>{{item.quality}}</td>
+                                                <td>{{item.price}}元</td>
+                                                <td>{{item.unit}}</td>
+                                                <td>{{item.amount}}元</td>
+                                                <td>
+                                                    <img v-bind:src="item.image" />
+                                                </td>
+                                                <td  @click="clickShow($index,{
+                                                      concrete:'goods'
+                                                      })">
+                                                      <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                    <div class="breed_action" v-show="item.show">
+                                                        <dl>
+                                                           <dt @click="createChance(item,$index)">编辑</dt>
+                                                       </dl>
+                                                    </div>
+                                                </td> 
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                         <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" >
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:'',
+                                              crete:'attachFiles'
+                                              })">
+                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          上传附件（{{initOrderDetail.attachFiles.arr.length}}）
+                                        </a>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button>
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse" v-show="initOrderDetail.attachFiles.show">
+                                    <div class="panel-body panel-set">
+                                        <table class="table  contactSet">
+                                          <thead>
+                                            <th>商品名称</th>
+                                            <th>产地</th>
+                                            <th>规格</th>
+                                            <th>数量</th>
+                                            <th>质量</th>
+                                            <th>价格</th>
+                                            <th>单位</th>
+                                            <th>总价</th>
+                                            <th>商品图片</th>
+                                          </thead>
+                                        <tbody>
+                                            <tr v-for="item in initOrderDetail.attachFiles.arr">
+                                                <td>{{item.brredName}}</td>
+                                                <td>{{item.location}}</td>
+                                                <td>{{item.spec}}</td>
+                                                <td>{{item.number}}</td>
+                                                <td>{{item.quality}}</td>
+                                                <td>{{item.price}}元</td>
+                                                <td>{{item.unit}}</td>
+                                                <td>{{item.amount}}元</td>
+                                                <td>
+                                                    <img v-bind:src="item.image" />
+                                                </td>
+                                                <td  @click="clickShow($index,{
+                                                      concrete:'goods'
+                                                      })">
+                                                      <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                    <div class="breed_action" v-show="item.show">
+                                                        <dl>
+                                                           <dt @click="createChance(item,$index)">编辑</dt>
+                                                       </dl>
+                                                    </div>
+                                                </td> 
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="panel-group">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" >
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:'',
+                                              crete:'sendPics'
+                                              })">
+                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          物流凭证（{{initOrderDetail.sendPics.arr.length}}）
+                                        </a>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button>
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse" v-show="initOrderDetail.sendPics.show">
+                                    <div class="panel-body panel-set">
+                                        <table class="table  contactSet">
+                                          <thead>
+                                            <th>商品名称</th>
+                                            <th>产地</th>
+                                            <th>规格</th>
+                                            <th>数量</th>
+                                            <th>质量</th>
+                                            <th>价格</th>
+                                            <th>单位</th>
+                                            <th>总价</th>
+                                            <th>商品图片</th>
+                                          </thead>
+                                        <tbody>
+                                            <tr v-for="item in initOrderDetail.sendPics.arr">
+                                                <td>{{item.brredName}}</td>
+                                                <td>{{item.location}}</td>
+                                                <td>{{item.spec}}</td>
+                                                <td>{{item.number}}</td>
+                                                <td>{{item.quality}}</td>
+                                                <td>{{item.price}}元</td>
+                                                <td>{{item.unit}}</td>
+                                                <td>{{item.amount}}元</td>
+                                                <td>
+                                                    <img v-bind:src="item.image" />
+                                                </td>
+                                                <td  @click="clickShow($index,{
+                                                      concrete:'goods'
+                                                      })">
+                                                      <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                    <div class="breed_action" v-show="item.show">
+                                                        <dl>
+                                                           <dt @click="createChance(item,$index)">编辑</dt>
+                                                       </dl>
+                                                    </div>
+                                                </td> 
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
                     </article>
                 </div>
                 <div class="col-md-4" style="border-left: 1px solid #ddd;">
@@ -197,7 +371,7 @@ export default {
     },
     methods:{
           enfoldment:function(param){
-          	console.log(this.$store.state.table.orderDetail[param.crete].arr.length)
+          	console.log(this.$store.state.table.orderDetail[param.crete].show)
             if(this.$store.state.table.orderDetail[param.crete].arr.length==0){
                     this.$store.state.table.orderDetail[param.crete].show=true;
                 }

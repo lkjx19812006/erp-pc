@@ -1,11 +1,11 @@
 <template>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>编辑{{param.brredName}}订单</h3>
+            <h3>编辑{{param.no}}订单</h3>
         </div>
         <validator name="validation">
             <form novalidate>

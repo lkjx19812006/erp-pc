@@ -2,6 +2,8 @@
     <cancle-model :param="cancleReason" v-if="cancleReason.show"></cancle-model>
     <undeline-model :param="undelinePay" v-if="undelinePay.show"></undeline-model>
     <yaokuan-model :param="yaokuanPay" v-if="yaokuanPay.show"></yaokuan-model>
+    <logistics-model :param="logisticsDetail" v-if="logisticsDetail.show"></logistics-model>
+    <editorder-model :param="editorder" v-if="editorder.show"></editorder-model>
     <div class="client_body">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -36,11 +38,12 @@
                  <p><span  style="color:#fa6705">合计：¥{{param.total.toFixed(2)}}</span></p>
               </div> 
             </div>
-            <div class="clearfix" v-if="param.sales">
+            <!-- 处理订单0 -->
+            <div class="clearfix" v-if="param.handle">
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
                     id:param.id,
                     show:true,
-                    link:'/order/confirm',
+                    link:'/order/handle',
                     images:''
                    },param.show=false)"  value="接单" />
                 <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
@@ -52,7 +55,53 @@
                     callback:orderCancle
                   })">取消</button>
             </div>
+            <!-- 订单确认10 -->
+            <div class="clearfix" v-if="param.sales">
+                <input type="button" class="btn  btn-confirm right"  @click="confirmEdit({
+                    id:param.id,
+                    show:true,
+                    no:param.no,
+                    consignee:param.consignee,
+                    consigneePhone:param.consigneePhone,
+                    consigneeAddr:param.consigneeAddr,
+                    brredName:param.goods[0].brredName,
+                    price:param.goods[0].price,
+                    unit:param.goods[0].unit,
+                    number:param.goods[0].number,
+                    ctime:param.ctime,
+                    incidentals:param.incidentals,
+                    total:param.total,
+                    link:'/order/confirm',
+                    images:''
+                   })"  value="确定" />
+                <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
+                    id:param.id,
+                    cancleCauses:'',
+                    show:true,
+                    headline:'取消订单原因',
+                    link:'/order/cancle',
+                    callback:orderCancle
+                  })">取消</button>
+            </div>
+            <!-- 订单财务审核 -->
+            <div class="clearfix" v-if="param.Auditing">
+                <input type="button" class="btn  btn-confirm right"  @click="accept({
+                    id:param.id,
+                    show:true,
+                    link:'/order/payConfirm',
+                    images:''
+                   },param.show=false)"  value="审核" />
+                <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
+                    id:param.id,
+                    cancleCauses:'',
+                    show:true,
+                    headline:'取消订单原因',
+                    link:'/order/cancle',
+                    callback:orderCancle
+                  })">取消</button>
+            </div>
         </div>
+        <!-- 订单支付 -->
         <div class="navbar-client" v-if="param.payment">
             <div class="message clearfix">
                 <p class="order-message">支付方式</p>
@@ -96,12 +145,85 @@
                   })">取消</button>
             </div>
         </div>
+        <!-- 订单发货上传物流信息 -->
+        <div class="navbar-client" v-if="param.sendoff">
+          <div class="message clearfix">
+              <p class="order-message">物流信息</p>
+              <div class="space_15 clearfix">
+                <div class="logical_color">
+                  <span class="mui-pull-left">物流公司：</span> 
+                  <select v-model="param.lcompanyId">
+                    <option>请选择物流公司</option>
+                    <option v-for="">韵达</option>
+                  </select>
+                </div>
+                <div class="logical_color">
+                  <span class="mui-pull-left">物流单号：</span> 
+                  <input type="number" placeholder="请输入运单号" v-model="param.lcompanyNo"/>
+                </div>
+                <div class="logical_color">
+                  <label class="editlabel">请上传物流单照片</label>
+                  <div class="clearfix">
+                      <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                     <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                     <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="clearfix">
+              <input type="button" class="btn  btn-confirm right"  @click="accept({
+                  id:param.id,
+                  show:true,
+                  link:'/order/send',
+                  image_f:param.image_f,
+                  image_s:param.image_s,
+                  image_t:param.image_t,
+                  images:'',
+                  lcompanyId:param.lcompanyId,
+                  lcompanyNo:param.lcompanyNo,
+                 },param.show=false)"  value="确认发货" />
+          </div>
+        </div>
+        <!-- 订单收货查看物流 -->
+        <div class="navbar-client" v-if="param.delivery">
+          <div class="message clearfix">
+              <p class="order-message">物流信息</p>
+              <div class="space_15 clearfix">
+                <div class="logical_color">
+                  <span>物流公司：{{param.lcompanyId}}</span>
+                </div>
+                <div class="logical_color">
+                  <span>物流单号：{{param.lcompanyNo}}</span>
+                </div>
+                <div class="logical_color">
+                  <span>物流凭证：</span>
+                  <img :src="param.sendPics" />
+                </div>
+              </div>
+              <div class="order_info clearfix">
+                <input type="button" class="btn  btn-confirm right"  @click="accept({
+                  id:param.id,
+                  show:true,
+                  link:'/order/receiveConfirm'
+                },param.show=false)"  value="确认收货" />
+                <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
+                  id:param.id,
+                  show:true
+                  })"  value="查看物流" />
+                 
+              </div>
+          </div>
+        </div>
     </div>
 </template>
 <script> 
 import cancleModel from  '../order/cancleMsg'
 import undelineModel from  '../order/uploadPayment'
 import yaokuanModel from  '../order/orderpayPassword'
+import pressImage from '../imagePress'
+import logisticsModel  from  '../order/logisticsDetail'
+import editorderModel  from  '../order/ordergoods'
 import {
     orderCancle,
     orderStatu,
@@ -111,7 +233,10 @@ export default {
     components: {
         cancleModel,
         undelineModel,
-        yaokuanModel
+        yaokuanModel,
+        pressImage,
+        logisticsModel,
+        editorderModel
     },
     data() {
         return {
@@ -134,7 +259,18 @@ export default {
                show:false,
                callback:'undelinePayorder',
                images:''
-            }
+            },
+            imageParam:{
+                url:'/crm/api/v1/file/',
+                qiniu:false
+            },
+            logisticsDetail:{
+              show:false
+            },
+            editorder:{
+              show:false
+            },
+            type:"image/*"
         }
     },
     props:['param'],
@@ -155,11 +291,19 @@ export default {
             /*this.orderCancle(this.cancleReason)*/
         },
         accept:function(confirm){
-          console.log(confirm)
+            console.log(confirm)
             this.orderStatu(confirm)
         },
+        confirmEdit:function(edit){
+          console.log(edit)
+            this.editorder = edit;
+        },
+        Viewlogistics:function(logistics){
+          console.log(logistics)
+            this.logisticsDetail = logistics;
+        },
         paychoice:function(payWay){
-          console.log(payWay)
+            console.log(payWay)
             this.payWay = payWay;
             if(payWay ==0){
               this.undelinePaySelect = true; //线下
@@ -188,25 +332,38 @@ export default {
 
         }
     },
-    created(){
-        
-    }
+   /* events: {
+      getImage: function(imageData) {
+          console.log('返回信息');
+          console.log(imageData);
+          console.log(this.param)
+          var images = new Array();
+          this.param.image=imageData.result.image;
+    }*/
 }
 </script>
 <style scoped>
 .client_body {
-    position: relative;
-    background-color: #f5f5f5;
+  position: relative;
+  background-color: #f5f5f5;
 }
-
+.logical_color{
+  margin-bottom: 10px;
+}
+.logical_color input{
+  border: 1px solid #ddd;
+}
+.logical_color select{
+  border: 1px solid #ddd;
+}
 .navbar-client {
-    margin-bottom: 0;
-    padding-top: 10px;
-    background-color: #fff;
-    padding:0 20px;
-    border-bottom: 1px solid #ddd;
-    border-top: 1px solid #ddd;
-    margin-top: 20px;
+  margin-bottom: 0;
+  padding-top: 10px;
+  background-color: #fff;
+  padding:0 20px;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  margin-top: 20px;
 }
 .order-message{
   border-bottom: 1px solid #ddd;
