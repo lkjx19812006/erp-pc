@@ -230,6 +230,8 @@ export default {
                 show:false,
                 name:'',
                 arr:[],
+                orgId:'',
+                employeeId:'',
                 flag:'allClient'
             },
             deleteParam:{

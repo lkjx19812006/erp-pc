@@ -63,14 +63,14 @@ export default {
     data() {
         return {
             select: {
-            active: true,
-            data: [
-                { active: true, value: 0, text: 'A'},
-                { active: true, value: 1, text: 'B'},
-                { active: true, value: 2, text: 'C'},
-                { active: true, value: 3, text: 'D'},
-            ]
-        },
+              active: true,
+              data: [
+                  { active: true, value: 0, text: 'A'},
+                  { active: true, value: 1, text: 'B'},
+                  { active: true, value: 2, text: 'C'},
+                  { active: true, value: 3, text: 'D'},
+              ]
+            },
             modelParam: {
                 show: false,
                 name: 'hello'
@@ -82,55 +82,55 @@ export default {
             dateText:'',
             show:false,
             city:{
-          value:'',
-          arr:[]
-         },
-          id: undefined, // Binded to component.
-          users: [
-        {
-          label: 'Root',
-          value: 1,
-          arr: [
-            {
-              label: 'Parent #1',
-              value: 2,
-              arr: [
-                {
-                  label: 'Child 1 from #1',
-                  value: 3
-                },
-                {
-                  label: 'Child 2 from #1',
-                  value: 13
-                }
-              ]
+              value:'',
+              arr:[]
             },
-            {
-              label: 'Parent #2',
-              value: 4,
-              arr: [
-                {
-                  label: 'Child 1 from #2',
-                  value: 5
-                },
-              ]
-            },
-            {
-              label: 'Child #1 from root',
-              value: 6
-            },
-            {
-              label: 'Child #2 from root',
-              value: 7
-            },
-            {
-              label: 'Child #3 from root',
-              value: 8
-            }
-          ],
-        }
-      ],
-        }
+            id: undefined, // Binded to component.
+            users: [
+              {
+                label: 'Root',
+                value: 1,
+                arr: [
+                  {
+                    label: 'Parent #1',
+                    value: 2,
+                    arr: [
+                      {
+                        label: 'Child 1 from #1',
+                        value: 3
+                      },
+                      {
+                        label: 'Child 2 from #1',
+                        value: 13
+                      }
+                    ]
+                  },
+                  {
+                    label: 'Parent #2',
+                    value: 4,
+                    arr: [
+                      {
+                        label: 'Child 1 from #2',
+                        value: 5
+                      },
+                    ]
+                  },
+                  {
+                    label: 'Child #1 from root',
+                    value: 6
+                  },
+                  {
+                    label: 'Child #2 from root',
+                    value: 7
+                  },
+                  {
+                    label: 'Child #3 from root',
+                    value: 8
+                  }
+                ],
+              }
+            ],
+          }
     },
     watch: {
             show(value) {
@@ -182,6 +182,7 @@ export default {
             console.log(imageData);
         },
       treeview_click:function(param){
+        console.log(this.id);
             console.log(param);
             if(param.children===undefined){
                 console.log('标签'+param.label+'是叶子节点了');

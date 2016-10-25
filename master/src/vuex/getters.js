@@ -122,6 +122,9 @@ export const initEmployeeList = (state) => {
 export const initOrgList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.orgList));
 }
+export const initRoleList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.roleList));
+}
 /*--意向信息--*/
 export const initIntentionList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionList));
