@@ -541,6 +541,7 @@ export default {
         }
     },
     created(){
+      console.log(this.param);
       if(this.param.breedId){
         this.breedParam.breedName = this.param.breedName;
         this.breedParam.id = this.param.breedId;

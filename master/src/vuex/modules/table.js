@@ -636,7 +636,7 @@ const mutations = {
     },
     [CUSTOMER_ADD_DATA](state, data) { //新增客户
 
-      if(data.employee==data.employeeId||data.org==data.orgId){
+
         state.basicBaseList.customerList.unshift({
           address:data.address,
           bizScope:data.bizScope,
@@ -664,11 +664,12 @@ const mutations = {
           tel:data.tel,
           type:data.type,
           typeDesc:data.typeDesc,
-          show: false
+          show: false,
+          supplier:data.supplier
         })
-      }
 
-      if(data.sub!='undefined'){
+        console.log(data);
+      if(data.sub!='undefined'&&data.sub){
         state.basicBaseList[data.key][data.sub][data.keyname]=1;
       }
       if(data.detail){
@@ -1098,7 +1099,8 @@ const mutations = {
             "bizType":data.bizType,
             "bizId":data.bizId,
             "description":data.description,
-            "show":false
+            "show":false,
+            "id":data.id
         })
 
     }

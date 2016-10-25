@@ -233,7 +233,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     }
     Vue.http({
         method: 'POST',
-        url: apiUrl.orderList + param.link,    
+        url: apiUrl.orderList + param.link,
         emulateJSON: true,
         body:body,
         emulateJSON: false,
@@ -350,7 +350,7 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
         for (var i in orderDetail.attachFiles.arr) {
             orderDetail.attachFiles.arr[i].show = false;
         }
-        
+
         dispatch(types.ORDER_DETAIL_DATA, orderDetail);
     }, (res) => {
         console.log('fail');
@@ -1232,29 +1232,29 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
     console.log(param);
     var clienturl = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
     for(var search in param){
-        if(search=='name'&&param[search]!==''){
+        if(search=='name'&&param[search]!==''&&param[search]!='undefine'){
             clienturl += '&name='+param.name
         }
-        if(search=='type'&&param[search]!==''){
+        if(search=='type'&&param[search]!==''&&param[search]!='undefine'){
             clienturl += '&type='+param.type
         }
-        if(search=='classify'&&param[search]!==''){
+        if(search=='classify'&&param[search]!==''&&param[search]!='undefine'){
             clienturl += '&classify='+param.classify
         }
 
-        if(search=='phone'&&param[search]!==''){
+        if(search=='phone'&&param[search]!==''&&param[search]!='undefine'){
             clienturl += '&phone='+param.phone
         }
-        if(search=='employeeId'&&param[search]!==''){
+        if(search=='employeeId'&&param[search]!==''&&param[search]!='undefine'){
             clienturl += '&employeeId='+param.employeeId
         }
-        if(search=='bizScope'&&param[search]!==''){
+        if(search=='bizScope'&&param[search]!=''&&param[search]!='undefine'){
             clienturl += '&bizScope='+param.bizScope
         }
-        if(search=='province'&&param[search]!==''){
+        if(search=='province'&&param[search]!==''&&param[search]!='undefine'){
             clienturl += '&province='+param.province
         }
-        if(search=='creditLevel'&&param[search]!==''){
+        if(search=='creditLevel'&&param[search]!==''&&param[search]!='undefine'){
             clienturl += '&creditLevel='+param.creditLevel
         }
         if(search=='city'&&param[search]!==''&&param[search]!==undefined){
@@ -1263,9 +1263,16 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         if(search=='blacklist'&&param[search]!==''&&param[search]!==undefined){
           clienturl += '&blacklist='+param.blacklist
         }
-        if(search=='status'&&param[search]!==''&&param[search]!==undefined){
-            clienturl += '&status='+param.status
-        }
+
+      if(search=='label'&&param[search]!==''&&param[search]!==undefined){
+        clienturl += '&label='+param.label
+      }
+      if(search=='phoneCityName'&&param[search]!==''&&param[search]!==undefined){
+        clienturl += '&phoneCity='+param.phoneCityName
+      }
+      if(search=='phoneProvinceName'&&param[search]!==''&&param[search]!==undefined){
+        clienturl += '&phoneProvince='+param.phoneProvinceName
+      }
     }
     Vue.http({
         method:'GET',
@@ -1588,6 +1595,9 @@ export const  saveCreate = ({ dispatch }, data) => { //新增客户列表
         "orgId":data.orgId,
         "employeeId":data.employeeId,
         "country":data.country
+    }
+    if(data.supplier){
+      Cdata.supplier=data.supplier;
     }
     console.log(Cdata);
     Vue.http({
@@ -2640,6 +2650,9 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
     if(param.importance){
         updatedata.importance = param.importance;
     }
+  if(param.grade){
+    updatedata.grade = param.grade;
+  }
     if(param.userType){
         updatedata.userType = param.userType;
     }
@@ -2772,7 +2785,7 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
         }
     }).then((res) => {
         console.log('文件添加成功')
-        /*param.id = res.json().result.id;*/
+        param.id = res.json().result.id;
         dispatch(types.ADD_FILES_DATA, param);
     }, (res) => {
         console.log('fail');
