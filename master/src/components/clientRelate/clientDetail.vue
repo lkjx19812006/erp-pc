@@ -41,8 +41,8 @@
                                                 })">删除客户信息</button>
                         </li>
 
-                        <li>
-                          <button type="button" class="btn btn-base"  @click="clientTransferSupplier({
+                        <li v-if="initClientDetail.supplier!=1">
+                          <button  type="button" class="btn btn-base"  @click="clientTransferSupplier({
                                            id:param.id,
                                            sub:param.sub,
                                            show:true,
@@ -1201,7 +1201,7 @@ export default {
       },
       createfiles:function(initBreedDetail){
       	 this.cfilesParam = initBreedDetail;
-         this.$broadcast('getImageData');
+//         this.$broadcast('getImageData');
       },
       createTracking:function(param){
         this.ctrackParam.objId=param.objId;

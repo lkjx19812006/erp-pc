@@ -38,14 +38,14 @@
 
             <div class="clearfix" v-if="param.type=='1,企业'">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>法人</label>
+                <label>法人<span class="system_danger" v-if="$validation.legalperson.minlength">请输入法人姓名(至少两位)</span></label>
                 <input type="text" id="legalPerson" class="form-control" v-model="param.legalPerson"
-                       v-validate:legalPerson="['required']"/>
+                       v-validate:legalperson="{minlength:2}"/>
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                <label class="editlabel">负责人</label>
+                <label class="editlabel">负责人<span class="system_danger" v-if="$validation.principal.minlength">请输入负责人姓名(至少两位)</span></label>
                 <input type="text" id="principal" class="form-control" v-model="param.principal"
-                       v-validate:principal="['required']"/>
+                       v-validate:principal="{minlength:2}"/>
               </div>
             </div>
 
@@ -71,7 +71,7 @@
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                 <label>分类码</label>
-                <select class="form-control edit-input" id="classify" v-model="param.classify" v-validate:classify="['required']">
+                <select class="form-control edit-input" id="classify" v-model="param.classify">
                   <option value="1,'买'">买</option>
                   <option value="2,'卖'">卖</option>
                   <option value="3,'买卖'">买卖</option>
@@ -80,9 +80,9 @@
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                 <label>业务员/部门</label>
-                <input v-if="!param.orgId" type="text" class="form-control" readonly="readonly"
+                <input v-if="param.employeeId" type="text" class="form-control" readonly="readonly"
                        v-model="param.employeeName" @click="selectParam.show=true"/>
-                <input v-if="param.orgId" type="text" class="form-control" readonly="readonly" v-model="param.orgName"
+                <input v-if="!param.employeeId" type="text" class="form-control" readonly="readonly" v-model="param.orgName"
                        @click="selectParam.show=true"/>
               </div>
             </div>
@@ -188,7 +188,7 @@
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                   <label>是否主联系人</label>
                   <select class="form-control edit-input" v-model='contacts[0].main'>
-                    <option value="1" selected="selected">是</option>
+                    <option value="1">是</option>
                     <option value="0">否</option>
 
                   </select>

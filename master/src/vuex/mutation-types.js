@@ -83,6 +83,7 @@ export const BATCH_USER_INTENTION_AUDIT = 'BATCH_USER_INTENTION_AUDIT'  //批量
 export const USER_DETAIL_DATA = 'USER_DETAIL_DATA'   //会员详情
 
 export const ORG_DATA = 'ORG_DATA'    //部门列表
+export const ROLE_DATA = 'ROLE_DATA'    //角色列表
 
 export const EMPLOYEE_DATA ='EMPLOYEE_DATA'  //员工（业务员）列表数据
 export const ADD_EMPLOYEE_DATA = 'ADD_EMPLOYEE_DATA'  //新增员工信息

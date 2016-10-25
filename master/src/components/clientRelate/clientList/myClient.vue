@@ -262,6 +262,8 @@ export default {
             transferParam:{
                 show:false,
                 name:'',
+                orgId:'',
+                employeeId:'',
                 arr:[]
             },
             deleteParam:{

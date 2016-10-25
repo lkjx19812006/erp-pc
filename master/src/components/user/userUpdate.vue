@@ -36,7 +36,12 @@
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">性别</label>
-                       <input type="text" v-model='param.gender' class="form-control edit-input" value="{{initUserDetail.gender}}" />
+                       <select class="form-control edit-input"  v-model="param.gender"  v-validate:usertype="['required']">
+                         <option value="男">男</option>
+                         <option value="女">女</option>
+                         <option value="其它">其它</option>
+                       </select>
+                       <!--<input type="text" v-model='param.gender' class="form-control edit-input" value="{{initUserDetail.gender}}" />-->
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel" for="system">身份证号码<span class="system_danger" v-if="$validation.idnumber.IDCard">格式不对</span></label>

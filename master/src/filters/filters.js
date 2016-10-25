@@ -320,3 +320,12 @@ Vue.filter('intentionAudit',function(val){      //意向审核
 	}
 })
 
+Vue.filter('date',function(val){      //将时间的时分秒去掉
+	var val = val;
+	if(typeof val==='string'){
+		return val.split(' ')[0];
+	}else{
+		return val;
+	}
+	
+})

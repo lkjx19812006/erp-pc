@@ -235,6 +235,12 @@ body {
 .table>tbody>tr {
     position: relative;
 }
+.table>tbody>tr>td{
+  max-width: 300px;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
 
 .table>tbody>tr>td img {
     margin: auto;

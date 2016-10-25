@@ -24,7 +24,7 @@
                     </div>
                     <div class="client-detailInfo  col-xs-6">
                         <label>所在省：</label>
-                        <!-- <input type="text"  class="form-control" v-model="param.provinceName"  placeholder="按手机省搜索"/> -->
+                      <div   class="form-control" style="padding:0;border:none;height:31px">
                         <v-select
                               :debounce="250"
                               :value.sync="province"
@@ -36,11 +36,12 @@
                          >
 
                             </v-select>
+                        </div>
                     </div>
                     <div class="client-detailInfo  col-xs-6">
                         <label>所在市：</label>
                         <input type="text" v-if="!province.cname" class="form-control" disabled="disabled" v-model="param.cityName" style="height:37px"  placeholder="请先选择一个省"/>
-                        <div v-if="province.cname" >
+                      <div v-if="province.cname"  class="form-control" style="padding:0;border:none;height:31px">
                             <v-select
                                      :debounce="250"
                                      :value.sync="city"
@@ -51,8 +52,41 @@
 
                            >
                            </v-select>
-                       </div>
+                        </div>
+
                     </div>
+                  <div class="client-detailInfo  col-xs-6">
+                    <label>手机所在省：</label>
+                    <div   class="form-control" style="padding:0;border:none;height:31px">
+                    <v-select
+                      :debounce="250"
+                      :value.sync="phoneProvince"
+                      :on-change="selectPhoneProvince"
+                      :options="initProvince"
+                      placeholder="省"
+                      label="cname"
+
+                    >
+
+                    </v-select>
+                    </div>
+                  </div>
+                  <div class="client-detailInfo  col-xs-6">
+                    <label>手机所在市：</label>
+                    <input type="text" v-if="!phoneProvince.cname" class="form-control" disabled="disabled" v-model="param.phoneCityName" style="height:37px"  placeholder="请先选择一个省"/>
+                    <div v-if="phoneProvince.cname"  class="form-control" style="padding:0;border:none;height:31px">
+                      <v-select
+                        :debounce="250"
+                        :value.sync="phoneCity"
+                        :on-change="selectPhoneCity"
+                        :options="initCitylist"
+                        placeholder="市"
+                        label="cname"
+
+                      >
+                      </v-select>
+                    </div>
+                  </div>
                     <div class="client-detailInfo col-xs-6">
                         <label>手机：</label>
                         <input type="text"  class="form-control" v-model="param.phone"  placeholder="按客户手机搜索"/>
@@ -97,7 +131,7 @@
                   </div>
                   <div class="client-detailInfo col-xs-6">
                     <label>客户标签：</label>
-                    <input type="text"  class="form-control"   placeholder="按会员标签搜索"  />
+                    <input type="text"  class="form-control" v-model="param.label"   placeholder="按会员标签搜索"  />
                   </div>
                     <!-- <div class="client-detailInfo col-xs-12">
                         <label>标签：</label>
@@ -172,6 +206,12 @@ export default {
             city:{
               cname:''
             },
+          phoneProvince:{
+            cname:''
+          },
+          phoneCity:{
+            cname:''
+          },
             provinceParam:{
               loading:true,
               show:false,
@@ -221,10 +261,26 @@ export default {
 
 
         },
+      selectPhoneProvince:function(){
+        this.phoneCity = '';
+        this.param.phoneCity = '';
+        this.param.phoneCityName = '';
+        this.param.phoneProvince = this.phoneProvince.id;
+        this.param.phoneProvinceName = this.phoneProvince.cname;
+        if(this.phoneProvince.cname){
+          this.getCityList(this.phoneProvince);
+        }
+
+
+      },
         selectCity:function(){
             this.param.city = this.city.id;
             this.param.cityName = this.city.cname;
-        }
+        },
+      selectPhoneCity:function(){
+        this.param.phoneCity = this.phoneCity.id;
+        this.param.phoneCityName = this.phoneCity.cname;
+      }
     },
     route: {
         activate: function(transition) {

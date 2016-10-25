@@ -315,58 +315,81 @@
                           <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                   <label>姓名</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.fullname" value="{{initUserDetail.fullname}}" disabled="disabled" />
+                                  <input type="text" class="form-control" value="{{initUserDetail.fullname}}" disabled="disabled" />
                               </div>
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>昵称</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.nickname" value="{{initUserDetail.nickname}}" disabled="disabled"/>
+                                  <input type="text" class="form-control"  value="{{initUserDetail.nickname}}" disabled="disabled"/>
                               </div>
                           </div>
                           <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                   <label>手机</label>
-                                  <input type="text" class="form-control"  v-model="initUserDetail.phone" value="{{initUserDetail.phone}}" disabled="disabled"/>
+                                  <input type="text" class="form-control"   value="{{initUserDetail.phone}}" disabled="disabled"/>
                               </div>
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                   <label>归属地</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.province" value="{{initUserDetail.province}}" disabled="disabled"/>
+                                  <input type="text" class="form-control"  value="{{initUserDetail.province}}" disabled="disabled"/>
                               </div>
 
                           </div>
                           <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                   <label>qq</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.qq" value="{{initUserDetail.qq}}" disabled="disabled"/>
+                                  <input type="text" class="form-control"  value="{{initUserDetail.qq}}" disabled="disabled"/>
                               </div>
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>公司</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.company" value="{{initUserDetail.company}}" disabled="disabled"/>
+                                  <input type="text" class="form-control"  value="{{initUserDetail.company}}" disabled="disabled"/>
                               </div>
                           </div>
                           <div class="clearfix">
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>邮箱</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.email" value="{{initUserDetail.email}}" disabled="disabled"/>
+                                  <input type="text" class="form-control"  value="{{initUserDetail.email}}" disabled="disabled"/>
                               </div>
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                  <label>主营业务</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.busiType" value="{{initUserDetail.busiType}}" disabled="disabled"/>
+                                  <label>经营类型</label>
+                                  <input v-if="initUserDetail.bizType==0"  type="text" class="form-control"  value="其它" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==1"  type="text" class="form-control"  value="合作社" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==2"  type="text" class="form-control"  value="药商" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==3"  type="text" class="form-control"  value="药厂" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==4"  type="text" class="form-control"  value="个体户" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==5"  type="text" class="form-control"  value="药店" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==6"  type="text" class="form-control"  value="医院" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==7"  type="text" class="form-control"  value="贸易公司" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==8"  type="text" class="form-control"  value="零售商行" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==9"  type="text" class="form-control"  value="药农" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==10"  type="text" class="form-control"  value="介绍人" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==11"  type="text" class="form-control"  value="药贩子" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==12"  type="text" class="form-control"  value="产地药商" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==13"  type="text" class="form-control"  value="销地药商" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==14"  type="text" class="form-control"  value="养生诊所" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==15"  type="text" class="form-control"  value="化工厂" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==16"  type="text" class="form-control"  value="化妆品厂" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==17"  type="text" class="form-control"  value="提取物厂" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==18"  type="text" class="form-control"  value="食品厂" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==19"  type="text" class="form-control"  value="实验室" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==20"  type="text" class="form-control"  value="网上电商" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==21"  type="text" class="form-control"  value="中成药生产商" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==22"  type="text" class="form-control"  value="西药生产商" disabled="disabled"/>
+                                  <input v-if="initUserDetail.bizType==23"  type="text" class="form-control"  value="饮片厂" disabled="disabled"/>
                               </div>
                           </div>
                           <div class="clearfix">
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>来源</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.sourceType" value="{{initUserDetail.sourceType}}" disabled="disabled"/>
+                                  <input type="text" class="form-control"  value="{{initUserDetail.sourceType}}" disabled="disabled"/>
                               </div>
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>客户类型</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.bizTypeName" value="{{initUserDetail.bizTypeName}}" disabled="disabled"/>
+                                  <input type="text" class="form-control"  value="{{initUserDetail.bizTypeName}}" disabled="disabled"/>
                               </div>
                           </div>
                           <div class="clearfix">
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>审核状态</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.auditResult" value="{{initUserDetail.auditResult}}" disabled="disabled"/>
+                                  <input type="text" class="form-control"  value="{{initUserDetail.auditResult}}" disabled="disabled"/>
                               </div>
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>划转状态</label>
@@ -377,7 +400,7 @@
                           <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-12 col-xs-12">
                                   <label>备注</label>
-                                  <input type="text" class="form-control" v-model="initUserDetail.comment" value="{{initUserDetail.comment}}" disabled="disabled"/>
+                                  <input type="text" class="form-control"  value="{{initUserDetail.comment}}" disabled="disabled"/>
                               </div>
 
                           </div>
@@ -674,22 +697,23 @@ export default {
               breedName:'',
               price:'',
               unit:'',
-              especial:'',
+              especial:1,
               quality:'',
               spec:'',
               number:'',
               location:'',
-              type:'',
+              type:0,
+              visit:0,
               country:'',
               province:'',
               city:'',
               district:'',
               address:'',
-              invoic:'',
-              sampling:'',
+              invoic:0,
+              sampling:0,
               sampleUnit:'',
-              advance:'',
-              intl:'',
+              advance:0,
+              intl:0,
               sampleNumber:0,
               sampleAmount:0,
               qualification:'',
