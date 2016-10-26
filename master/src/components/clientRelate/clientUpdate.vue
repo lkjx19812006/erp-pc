@@ -90,9 +90,9 @@
 
                           <div class="editpage-input">
                             <label>业务员/部门</label>
-                            <input v-if="!param.orgId" type="text" class="form-control edit-input" readonly="readonly"
+                            <input v-if="param.employeeName" type="text" class="form-control edit-input" readonly="readonly"
                                    v-model="param.employeeName" @click="selectParam.show=true"/>
-                            <input v-if="param.orgId" type="text" class="form-control edit-input" readonly="readonly" v-model="param.orgName"
+                            <input v-if="!param.employeeName" type="text" class="form-control edit-input" readonly="readonly" v-model="param.orgName"
                                    @click="selectParam.show=true"/>
                           </div>
 
@@ -125,8 +125,9 @@
                 <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="confirm()">确定</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
             </div>
-        </validate>
+          </validator>
     </div>
+
 </template>
 <script>
 import tipsdialogModel  from '../tips/tipDialog'

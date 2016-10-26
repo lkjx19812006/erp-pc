@@ -140,7 +140,8 @@
                               orgId:item.orgId,
                               link:alterInfo,
                               url:'/customer/',
-                              key:'customerList'
+                              key:'customerList',
+                              supplier:1
                               })">编辑</li>
                 <li @click="specDelete({
                             id:item.id,
