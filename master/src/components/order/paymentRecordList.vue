@@ -122,7 +122,7 @@
           color: '#5dc596',
           size: '15px',
           cur: 1,
-          all: 7,
+          all: 1,
           link:'/customer/product/file',
           name:'',
           type:'',

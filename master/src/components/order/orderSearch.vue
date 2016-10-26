@@ -88,7 +88,8 @@ import {
    initOrderlist
 } from '../../vuex/getters'
 import {
-    getOrderList
+    getOrderList,
+    getEmpolyeeOrder
 } from '../../vuex/actions'
 export default {
     components: {
@@ -118,14 +119,21 @@ export default {
             initOrderlist
         },
         actions: {
-            getOrderList
+            getOrderList,
+            getEmpolyeeOrder
         }
     },
     methods:{
         clientSearch:function(){
             console.log("111")
             console.log(this.param)
-             this.getOrderList(this.param);
+            if(this.param.link=='/order/'){
+                this.getOrderList(this.param);
+            }
+            if(this.param.link=='/order/myList'){
+                this.getEmpolyeeOrder(this.param);
+            }
+            
         }
     },
     route: {

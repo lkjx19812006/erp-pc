@@ -46,7 +46,7 @@ export const freshPiecharts = ({ dispatch }, getPiechart) => {
         });
 };
 
-export const getOrderList = ({ dispatch }, param) => { //订单列表以及订单搜索
+export const getOrderList = ({ dispatch }, param) => { //全部订单列表以及订单搜索
     param.loading = true;
     var url = apiUrl.orderList+param.link+'?page=' + param.cur + '&pageSize=15';
     for(var key in param){
@@ -80,12 +80,11 @@ export const getOrderList = ({ dispatch }, param) => { //订单列表以及订�
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res)=>{
-           var orderList = res.json().result.list;
-           for (var i in orderList){
+            var orderList = res.json().result.list;
+            for (var i in orderList){
                 orderList[i].checked = false;
                 orderList[i].show =false;
-
-           }
+            }
             dispatch(types.ORDER_TABLE, orderList);
             param.all = res.json().result.pages;
             param.loading = false;
@@ -94,6 +93,114 @@ export const getOrderList = ({ dispatch }, param) => { //订单列表以及订�
         param.loading = false;
     })
 }
+export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核列表以及订单搜索
+    param.loading = true;
+    var url = apiUrl.orderList+param.link+'?orderStatus=30&page=' + param.cur + '&pageSize=15';
+    for(var key in param){
+        if(key=='consignee'&&param[key]!=''){
+             url += '&consignee='+param[key];
+        }
+        if(key=='clients'&&param[key]!=''){
+          url += '&clients='+param[key];
+        }
+        if(key=='dataStatus'&&param[key]!=''){
+          url += '&dataStatus='+param[key];
+        }
+        /*if(key=='orderStatus'&&param[key]!=''){
+          url += '&orderStatus='+param[key];
+        }*/
+        if(key=='payWay'&&param[key]!=''){
+          url += '&payWay='+param[key];
+        }
+        if(key=='consigneePhone'&&param[key]!=''){
+          url += '&consigneePhone='+param[key];
+        }
+        if(key=='type'&&param[key]!=''){
+          url += '&type='+param[key];
+        }
+    }
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+            var orderList = res.json().result.list;
+            for (var i in orderList){
+                orderList[i].checked = false;
+                orderList[i].show =false;
+            }
+            dispatch(types.ORDER_TABLE, orderList);
+            param.all = res.json().result.pages;
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单列表
+    console.log(param)
+    param.loading = true;
+    const body = {
+       employee:100011,
+       page:param.cur,
+       pageSize:15
+    }
+    for(var key in param){
+        if(key=='consignee'&&param[key]!=''){
+            body.consignee=param[key];
+        }
+        if(key=='clients'&&param[key]!=''){
+          body.clients=param[key];
+        }
+        if(key=='dataStatus'&&param[key]!=''){
+          body.dataStatus=param[key];
+        }
+        if(key=='orderStatus'&&param[key]!=''){
+          body.orderStatus=param[key];
+        }
+        if(key=='payWay'&&param[key]!=''){
+          body.payWay=param[key];
+        }
+        if(key=='consigneePhone'&&param[key]!=''){
+          body.consigneePhone=param[key];
+        }
+        if(key=='type'&&param[key]!=''){
+          body.type=param[key];
+        }
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json().result)
+        var orderList = res.json().result.list;
+        console.log(orderList)
+        for (var i in orderList){
+            orderList[i].checked = false;
+            orderList[i].show =false;
+        }
+        console.log('订单查询成功')
+        dispatch(types.ORDER_TABLE, orderList); 
+        param.all = res.json().result.pages;
+        console.log(param.cur)
+        param.loading = false;  
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+
 export const getExpressList = ({ dispatch }, param) => { //物流列表
     param.loading = true;
     var url = apiUrl.orderList+'/express/';
@@ -143,7 +250,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             sourceId:data.goods[0].sourceId,
             title:data.goods[0].title,
             breedId:data.goods[0].breedId,
-            brredName:data.goods[0].breedName,
+            brredName:data.goods[0].brredName,
             quality:data.goods[0].quality,
             location:data.goods[0].location,
             spec:data.goods[0].spec,
@@ -1907,31 +2014,7 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
                 ]
             }
           var result = json.result;
-           /*function tree(param){
-                console.log('root');
-                console.log(param.lowerList.length);
-                if(param.lowerList.length==0){
-                    //console.log(param);
-                    param.lowerList = undefined;
-                }else{
-                    for(var i=0;i<param.lowerList.length;i++){
-                        
-                        tree(param.lowerList[i]);
-                    }
-                }
-           }
-
-           result.forEach(function(item){
-                tree(item);
-           })*/
-           
-           /*for (var i in org){
-                org[i].show =false;
-                org[i].checked =false;
-           }*/
-
            dispatch(types.ORG_DATA, result);
-           
            param.loading = false;
         }, (res) => {
             console.log('fail');
@@ -1939,29 +2022,6 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
         })
 }
 
-/*export const getOrgList = ({ dispatch }, param) => {  //部门列表
-    param.loading = true;
-    Vue.http({
-        method:'GET',
-        url:apiUrl.clientList+'/org/',
-        emulateJSON: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-        }).then((res) => {
-           var org = res.json().result;
-           for (var i in org){
-                org[i].show =false;
-                org[i].checked =false;
-           }
-           console.log(res.json())
-           dispatch(types.ORG_DATA, org);
-           param.loading = false;
-        }, (res) => {
-            console.log('fail');
-            param.loading = false;
-        })
-}*/
 
 export const getRoleList = ({ dispatch }, param) => {  //获取角色列表
     param.loading = true;

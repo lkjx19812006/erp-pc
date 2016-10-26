@@ -9,7 +9,7 @@
         <div class="clear">
             <div class="my_order col-xs-2">部门订单</div>
             <div class="right">
-                <button class="new_btn" @click="newOrder({
+                <!-- <button class="new_btn" @click="newOrder({
                     show:true,
                     title1:'新建订单',
                     type:'',
@@ -47,7 +47,7 @@
                         }],
                     key:'orderList',
                     link:createOrder
-                    })">新建</button>
+                    })">新建</button> -->
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
@@ -218,7 +218,7 @@
             detailModel,
             searchModel,
             deletebreedModel,
-            pagination
+            disposeModel
         },
         data() {
             return {
@@ -228,7 +228,7 @@
                     size: '15px',
                     show:false,
                     cur: 1,
-                    all: 7,
+                    all: 1,
                     consignee:'',
                     link:'/order/',
                     consigneePhone:'',

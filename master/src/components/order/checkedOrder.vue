@@ -7,9 +7,9 @@
     <div v-show="!detailParam.show&&!disposeParam.show">
       <div class="order_search">
         <div class="clear">
-            <div class="my_order col-xs-2">我的订单</div>
+            <div class="my_order col-xs-2">订单审核</div>
             <div class="right">
-                <button class="new_btn" @click="newOrder({
+                <!-- <button class="new_btn" @click="newOrder({
                     show:true,
                     title1:'新建订单',
                     type:'',
@@ -24,8 +24,6 @@
                     country:'',
                     province:'',
                     city:'',
-                    employee:'',
-                    org:'',
                     district:'',
                     consigneeAddr:'',
                     comments:'',
@@ -49,7 +47,7 @@
                         }],
                     key:'orderList',
                     link:createOrder
-                    })">新建</button>
+                    })">新建</button> -->
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
@@ -125,8 +123,6 @@
                                         country:item.country,
                                         province:item.province,
                                         city:item.city,
-                                        employee:item.employee,
-                                        org:item.org,
                                         district:item.district,
                                         consigneeAddr:item.consigneeAddr,
                                         comments:item.comments,
@@ -207,7 +203,7 @@
         initOrderlist
     } from '../../vuex/getters'
     import {
-        getEmpolyeeOrder,
+        getOrderCheckList,
         alterOrder,
         createOrder,
         orderStatu,
@@ -232,9 +228,9 @@
                     size: '15px',
                     show:false,
                     cur: 1,
-                    all:1,
+                    all: 1,
                     consignee:'',
-                    link:'/order/myList',
+                    link:'/order/',
                     consigneePhone:'',
                     type:'',
                     orderStatus:'',
@@ -273,7 +269,7 @@
                 initOrderlist
             },
             actions: {
-                getEmpolyeeOrder,
+                getOrderCheckList,
                 alterOrder,
                 createOrder,
                 orderStatu,
@@ -281,8 +277,7 @@
             }
         },
         created() {
-            this.getEmpolyeeOrder(this.loadParam)
-            console.log(this.loadParam)
+            this.getOrderCheckList(this.loadParam)
         },
         methods: {
             editClick: function(sub) {
@@ -410,7 +405,7 @@
         events: {
             fresh: function(input) {
                 this.loadParam.cur = input;
-                this.getEmpolyeeOrder(this.loadParam);
+                this.getOrderCheckList(this.loadParam);
             }
         }
     }

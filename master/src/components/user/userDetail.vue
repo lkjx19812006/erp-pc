@@ -780,12 +780,16 @@ section {
 .breed_action{
   top: 20px;
   right: 40px;
+  z-index: 99
 }
-.breed_action dl dt{
+.breed_action  dt{
     display: block;
     padding: 3px;
     font-size: 14px;
     cursor: pointer;
+}
+.breed_action  dt:hover{
+  color: #fa6705;
 }
 section article {
     margin-top: 30px;

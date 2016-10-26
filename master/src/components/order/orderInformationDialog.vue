@@ -164,7 +164,7 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">订单状态</label>
-                              <select type="text" class="form-control edit-input" v-model="param.orderStatus" value="{{param.orderStatus}}" >
+                              <select  class="form-control edit-input" v-model="param.orderStatus"  >
                                   <option value="0">订单生成</option>
                                   <option value="10">订单处理中</option>
                                   <option value="20">订单已处理</option>

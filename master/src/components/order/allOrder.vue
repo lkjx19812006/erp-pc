@@ -1,5 +1,5 @@
   <template>
-    <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
+   <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
     <update-model :param="updateParam" v-if="updateParam.show"></update-model>
     <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
@@ -9,47 +9,45 @@
         <div class="clear">
             <div class="my_order col-xs-2">我的订单</div>
             <div class="right">
-                <button class="new_btn" @click="newOrder({
-                    show:true,
-                    title1:'新建订单',
-                    type:'',
-                    sourceType:'',
-                    sample:'',
-                    intl:'',
-                    customer:'',
-                    currency:'',
-                    consignee:'',
-                    consigneePhone:'',
-                    zipCode:'',
-                    country:'',
-                    province:'',
-                    city:'',
-                    employee:'',
-                    org:'',
-                    district:'',
-                    consigneeAddr:'',
-                    comments:'',
-                    incidentals:'',
-                    incidentalsDesc:'',
-                    preferential:'',
-                    preferentialDesc:'',
-                    orderStatus:'',
-                    goods:[{
-                            sourceType:'',
-                            sourceId:'',
-                            title:'',
-                            breedId:'',
-                            brredName:'',
-                            quality:'',
-                            location:'',
-                            spec:'',
-                            price:'',
-                            unit:'',
-                            number:''
-                        }],
-                    key:'orderList',
-                    link:createOrder
-                    })">新建</button>
+               <!--  <button class="new_btn" @click="newOrder({
+                   show:true,
+                   title1:'新建订单',
+                   type:'',
+                   sourceType:'',
+                   sample:'',
+                   intl:'',
+                   customer:'',
+                   currency:'',
+                   consignee:'',
+                   consigneePhone:'',
+                   zipCode:'',
+                   country:'',
+                   province:'',
+                   city:'',
+                   district:'',
+                   consigneeAddr:'',
+                   comments:'',
+                   incidentals:'',
+                   incidentalsDesc:'',
+                   preferential:'',
+                   preferentialDesc:'',
+                   orderStatus:'',
+                   goods:[{
+                           sourceType:'',
+                           sourceId:'',
+                           title:'',
+                           breedId:'',
+                           brredName:'',
+                           quality:'',
+                           location:'',
+                           spec:'',
+                           price:'',
+                           unit:'',
+                           number:''
+                       }],
+                   key:'orderList',
+                   link:createOrder
+                   })">新建</button> -->
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
@@ -125,8 +123,6 @@
                                         country:item.country,
                                         province:item.province,
                                         city:item.city,
-                                        employee:item.employee,
-                                        org:item.org,
                                         district:item.district,
                                         consigneeAddr:item.consigneeAddr,
                                         comments:item.comments,
@@ -207,7 +203,7 @@
         initOrderlist
     } from '../../vuex/getters'
     import {
-        getEmpolyeeOrder,
+        getOrderList,
         alterOrder,
         createOrder,
         orderStatu,
@@ -232,9 +228,9 @@
                     size: '15px',
                     show:false,
                     cur: 1,
-                    all:1,
+                    all: 1,
                     consignee:'',
-                    link:'/order/myList',
+                    link:'/order/',
                     consigneePhone:'',
                     type:'',
                     orderStatus:'',
@@ -246,7 +242,7 @@
                     show: false
                 },
                 updateParam: {
-                    show:false,   
+                    show:false,  
                 },
                 detailParam: {
                     show:false
@@ -273,7 +269,7 @@
                 initOrderlist
             },
             actions: {
-                getEmpolyeeOrder,
+                getOrderList,
                 alterOrder,
                 createOrder,
                 orderStatu,
@@ -281,8 +277,7 @@
             }
         },
         created() {
-            this.getEmpolyeeOrder(this.loadParam)
-            console.log(this.loadParam)
+            this.getOrderList(this.loadParam)
         },
         methods: {
             editClick: function(sub) {
@@ -305,7 +300,6 @@
             },
             updateOrder:function(initOrderlist){
                 console.log(initOrderlist)
-                console.log(initOrderlist.goods)
                 this.dialogParam=initOrderlist;
             },
             pendingOrder:function(item,sub){
@@ -410,7 +404,7 @@
         events: {
             fresh: function(input) {
                 this.loadParam.cur = input;
-                this.getEmpolyeeOrder(this.loadParam);
+                this.getOrderList(this.loadParam);
             }
         }
     }

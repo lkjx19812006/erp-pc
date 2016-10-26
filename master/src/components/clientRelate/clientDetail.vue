@@ -447,7 +447,7 @@
                                                 unit:'',
                                                 number:''
                                               }],
-                                            key:'orderList',
+                                            key:'orders',
                                             link:createOrder
                                           })">新建</button>
                                   </h4>
@@ -457,13 +457,22 @@
                                       <table class="table contactSet">
                                         <thead>
                                           <th>订单流水号</th>
-                                          <th></th>
+                                          <th>订单来源</th>
+                                          <th>收货人姓名</th>
+                                          <th>收货人手机号</th>
+                                          <th>收货人地址</th>
+                                          <th>订单状态</th>
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initClientDetail.orders.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>20160819</td>
-                                                <td  @click="clickShow($index,{
+                                                <td>{{item.no}}</td>
+                                                <td>{{item.sourceType}}</td>
+                                                <td>{{item.consignee}}</td>
+                                                <td>{{item.consigneePhone}}</td>
+                                                <td>{{item.consigneeAddr}}</td>
+                                                <td>{{item.orderStatus}}</td>
+                                                <!-- <td  @click="clickShow($index,{
                                                     concrete:'orders'
                                                     })">
                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
@@ -481,7 +490,7 @@
                                                                  })">删除</dt>
                                                         </dl>
                                                     </div>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -952,7 +961,7 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>名称</label>
-                                    <input type="text" class="form-control" v-model=".name" value="{{initClientDetail.name}}" disabled="disabled" />
+                                    <input type="text" class="form-control" v-model="initClientDetail.name" value="{{initClientDetail.name}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>类型</label>

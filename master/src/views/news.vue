@@ -31,7 +31,7 @@
                         <th>归属地</th>
                         <th>邮箱</th>
                         <th>qq</th>
-                        <th>公司</th>
+                        <th>所在公司</th>
                         <th>主营业务</th>
                         <th>来源</th>
                         <th>客户类型</th>

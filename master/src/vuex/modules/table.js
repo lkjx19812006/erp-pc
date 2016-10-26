@@ -401,7 +401,47 @@ const mutations = {
             console.log('意向详情采纳报价');
         }
         if(data.key == 'orderList'){
+            console.log(data)
             state.basicBaseList[data.key].unshift({
+                "type":data.type,
+                "sourceType":data.sourceType,
+                "sample":data.sample,
+                "intl":data.intl,
+                "customer":data.customer,
+                "incidentals":data.incidentals,
+                'incidentalsDesc':data.incidentalsDesc,
+                "preferential":data.preferential,
+                'preferentialDesc':data.preferentialDesc,
+                'currency':data.currency,
+                "consignee":data.consignee,
+                'consigneePhone':data.consigneePhone,
+                "zipCode":data.zipCode,
+                "country":data.country,
+                "province":data.province,
+                "city":data.city,
+                "district":data.district,
+                "consigneeAddr":data.consigneeAddr,
+                'comments':data.comments,
+                "orderStatus":data.orderStatus,
+                goods:[{
+                    "sourceType":data.goods[0].sourceType,
+                    "sourceId":data.goods[0].sourceId,
+                    "title":data.goods[0].title,
+                    "breedId":data.goods[0].breedId,
+                    "brredName":data.goods[0].breedName,
+                    "quality":data.goods[0].quality,
+                    'location':data.goods[0].location,
+                    "spec":data.goods[0].spec,
+                    "price":data.goods[0].price,
+                    "unit":data.goods[0].unit,
+                    "number":data.goods[0].number
+                }],
+                "show": false
+            });
+        }
+        if(data.key == 'orders'){
+            console.log(data)
+            state.clientDetail[data.key].arr.unshift({
                 "type":data.type,
                 "sourceType":data.sourceType,
                 "sample":data.sample,
