@@ -431,7 +431,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     }).then((res) => {
         var orderDetail = res.json().result;
         console.log('订单已处理')
-        dispatch(types.ORDER_STATUS, orderDetail);
+        dispatch(types.ORDER_STATUS, param);
     }, (res) => {
         console.log('fail');
     })

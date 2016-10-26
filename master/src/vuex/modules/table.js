@@ -492,7 +492,7 @@ const mutations = {
                 "description":data.description,
                 "fileType":data.fileType,
                 "bizType":data.bizType,
-                "show":false 
+                "show":false
             })
         }
         if(data.sendPics){
@@ -502,7 +502,7 @@ const mutations = {
                 "description":data.description,
                 "fileType":data.fileType,
                 "bizType":data.bizType,
-                "show":false 
+                "show":false
             })
         }
         if(data.bizType=="attach_files"){
@@ -512,13 +512,18 @@ const mutations = {
                 "fileType":data.fileType,
                 "bizType":data.bizType,
                 "description":data.description,
-                "show":false  
+                "show":false
             })
         }
     },
     [ORDER_STATUS](state,data){   //订单状态详情
         console.log(data);
-        state.basicBaseList.orderList = data;
+      for(var i in state.basicBaseList.orderList){
+        if(state.basicBaseList.orderList[i].id==data.id){
+          state.basicBaseList.orderList[i]=data;
+        }
+      }
+
     },
     [SYSTEM_DATA](state, data) { //枚举类型
       state.systemBaseList.enumlist = data;
