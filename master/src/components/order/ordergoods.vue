@@ -33,6 +33,10 @@
                                     <label class="editlabel">规格</label>
                                     <input type="text" class="form-control edit-input"  v-model="param.spec" v-validate:phone="['required']" />
                                 </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">杂费说明</label>
+                                    <input type="text" class="form-control edit-input"  v-model="param.incidentalsDesc" v-validate:amount="['required']" />
+                                </div>
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input">
@@ -52,8 +56,12 @@
                                     <input type="text" class="form-control edit-input"  v-model="param.number" v-validate:wechart="['required']" />
                                 </div>
                                 <div class="editpage-input">
+                                    <label class="editlabel">杂费</label>
+                                    <input type="text" class="form-control edit-input"  v-model="param.incidentals" v-validate:amount="['required']" />
+                                </div>
+                                <div class="editpage-input">
                                     <label class="editlabel">总价</label>
-                                    <input type="text" class="form-control edit-input"  v-model="param.total" v-validate:amount="['required']" />
+                                    <input type="text" class="form-control edit-input"  v-model="param.total" disabled="true" v-validate:amount="['required']" />
                                 </div>
                             </div>
                         </div>
@@ -98,18 +106,8 @@ export default {
 .modal_con{
     max-height: 600px;
 }
-.edit_footer{
-    position: absolute;
-    width: 100%;
-    bottom:0px;
-}
 .big-font {
     font-size: 36px;
-}
-.top-title{
-    position: absolute;
-    width: 100%;
-    top: 0;
 }
 .top-title span {
     font-size: 28px;

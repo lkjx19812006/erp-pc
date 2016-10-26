@@ -13,6 +13,8 @@ export const ORDER_DETAIL_DATA = 'ORDER_DETAIL_DATA' //订单详情
 export const ORDER_STATUS = 'ORDER_STATUS' //订单状态详情
 export const EXPRESS_DATA = 'EXPRESS_DATA' //订单物流列表
 export const ORDER_UPLOAD_DATA = 'ORDER_UPLOAD_DATA' //订单详情上传凭证
+export const ORDER_PAY_DATA = 'ORDER_PAY_DATA' //订单支付记录
+export const ORDER_ROLLOUT_DATA = 'ORDER_ROLLOUT_DATA' //订单药款转出记录
 
 export const SYSTEM_DATA = 'SYSTEM_DATA' //系统数据
 export const PROVINCE_DATA = 'PROVINCE_DATA' //省市区列表数据

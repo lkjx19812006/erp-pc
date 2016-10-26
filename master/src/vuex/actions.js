@@ -93,6 +93,87 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         param.loading = false;
     })
 }
+export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录列表以及订单搜索
+    param.loading = true;
+    const body = {
+       page:param.cur,
+       pageSize:15
+    }
+    for(var key in param){
+        if(key=='orderNo'&&param[key]!=''){
+             body.orderNo=param[key];
+        }
+        if(key=='payWay'&&param[key]!=''){
+          body.payWay=param[key];
+        }
+    }
+    Vue.http({
+        method:'POST',
+        url: apiUrl.orderList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res)=>{
+            var orderList = res.json().result.list;
+            for (var i in orderList){
+                orderList[i].checked = false;
+                orderList[i].show =false;
+            }
+            dispatch(types.ORDER_PAY_DATA, orderList);
+            param.all = res.json().result.pages;
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列表以及订单搜索
+    param.loading = true;
+    var url = apiUrl.orderList+param.link+'?page=' + param.cur + '&pageSize=15';
+    for(var key in param){
+        if(key=='consignee'&&param[key]!=''){
+             url += '&consignee='+param[key];
+        }
+        if(key=='clients'&&param[key]!=''){
+          url += '&clients='+param[key];
+        }
+        if(key=='dataStatus'&&param[key]!=''){
+          url += '&dataStatus='+param[key];
+        }
+        if(key=='orderStatus'&&param[key]!=''){
+          url += '&orderStatus='+param[key];
+        }
+        if(key=='payWay'&&param[key]!=''){
+          url += '&payWay='+param[key];
+        }
+         if(key=='consigneePhone'&&param[key]!=''){
+          url += '&consigneePhone='+param[key];
+        }
+         if(key=='type'&&param[key]!=''){
+          url += '&type='+param[key];
+        }
+    }
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+            var orderList = res.json().result.list;
+            dispatch(types.ORDER_ROLLOUT_DATA, orderList);
+            param.all = res.json().result.pages;
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
 export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核列表以及订单搜索
     param.loading = true;
     var url = apiUrl.orderList+param.link+'?orderStatus=30&page=' + param.cur + '&pageSize=15';
@@ -140,7 +221,7 @@ export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核
         param.loading = false;
     })
 }
-export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单列表
+export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(我的订单)列表
     console.log(param)
     param.loading = true;
     const body = {
@@ -199,7 +280,65 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单�
         param.loading = false;
     })
 }
-
+export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
+    console.log(param)
+    param.loading = true;
+    const body = {
+       org:17,
+       page:param.cur,
+       pageSize:15
+    }
+    for(var key in param){
+        if(key=='consignee'&&param[key]!=''){
+            body.consignee=param[key];
+        }
+        if(key=='clients'&&param[key]!=''){
+          body.clients=param[key];
+        }
+        if(key=='dataStatus'&&param[key]!=''){
+          body.dataStatus=param[key];
+        }
+        if(key=='orderStatus'&&param[key]!=''){
+          body.orderStatus=param[key];
+        }
+        if(key=='payWay'&&param[key]!=''){
+          body.payWay=param[key];
+        }
+        if(key=='consigneePhone'&&param[key]!=''){
+          body.consigneePhone=param[key];
+        }
+        if(key=='type'&&param[key]!=''){
+          body.type=param[key];
+        }
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json().result)
+        var orderList = res.json().result.list;
+        console.log(orderList)
+        for (var i in orderList){
+            orderList[i].checked = false;
+            orderList[i].show =false;
+        }
+        console.log('订单查询成功')
+        dispatch(types.ORDER_TABLE, orderList);
+        param.all = res.json().result.pages;
+        console.log(param.cur)
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
 
 export const getExpressList = ({ dispatch }, param) => { //物流列表
     param.loading = true;
@@ -429,9 +568,9 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        var orderDetail = res.json().result;
         console.log('订单已处理')
-        dispatch(types.ORDER_STATUS, param);
+
+        dispatch(types.ORDER_STATUS, res.json().result);
     }, (res) => {
         console.log('fail');
     })
