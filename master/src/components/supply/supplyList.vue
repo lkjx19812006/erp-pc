@@ -28,6 +28,7 @@
                                         orgName:'',
                                         province:'',
                                         city:'',
+                                        supplier:1,
                                         contacts:[
                                             {
                                                 name:'',
@@ -128,12 +129,20 @@
                               province:item.province,
                               city:item.city,
                               address:item.address,
+                              country:item.country,
                               comments:item.comments,
+                              countryName:item.countryName,
+                              provinceName:item.provinceName,
+                              cityName:item.cityName,
+                              employeeId:item.employeeId,
+                              employeeName:item.employeeName,
+                              orgName:item.orgName,
+                              orgId:item.orgId,
                               link:alterInfo,
                               url:'/customer/',
                               key:'customerList'
                               })">编辑</li>
-                <li @click="specDelete({        
+                <li @click="specDelete({
                             id:item.id,
                             sub:$index,
                             show:true,
@@ -156,7 +165,7 @@
   </div>
 </template>
 <script>
-  import pagination from '..//pagination'
+  import pagination from '../pagination'
   import detailModel from '../clientRelate/clientDetail'
   import createModel  from '../user/userTransfer'
   import deletebreedModel  from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'

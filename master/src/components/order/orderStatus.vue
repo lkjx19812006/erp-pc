@@ -1,7 +1,7 @@
 <template>
     <cancle-model :param="cancleReason" v-if="cancleReason.show"></cancle-model>
     <undeline-model :param="undelinePay" v-if="undelinePay.show"></undeline-model>
-    <yaokuan-model :param="yaokuanPay" v-if="yaokuanPay.show"></yaokuan-model>
+    <!-- <yaokuan-model :param="yaokuanPay" v-if="yaokuanPay.show"></yaokuan-model> -->
     <logistics-model :param="logisticsDetail" v-if="logisticsDetail.show"></logistics-model>
     <editorder-model :param="editorder" v-if="editorder.show"></editorder-model>
     <div class="client_body">
@@ -70,9 +70,12 @@
                     number:param.goods[0].number,
                     ctime:param.ctime,
                     incidentals:param.incidentals,
+                    spec:param.goods[0].spec,
+                    location:param.goods[0].location,
                     total:param.total,
                     link:'/order/confirm',
-                    images:''
+                    images:'',
+                    callback:orderStatu
                    })"  value="确定" />
                 <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
                     id:param.id,
@@ -90,7 +93,7 @@
                     show:true,
                     link:'/order/payConfirm',
                     images:''
-                   },param.show=false)"  value="审核" />
+                   },param.show=false)"  value="通过核查" />
                 <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
                     id:param.id,
                     cancleCauses:'',
@@ -154,7 +157,7 @@
                   <span class="mui-pull-left">物流公司：</span> 
                   <select v-model="param.lcompanyId">
                     <option>请选择物流公司</option>
-                    <option v-for="">韵达</option>
+                    <option v-for="item in initExpresslist" value="{{item.id}}">{{item.name}}</option>
                   </select>
                 </div>
                 <div class="logical_color">
@@ -162,7 +165,7 @@
                   <input type="number" placeholder="请输入运单号" v-model="param.lcompanyNo"/>
                 </div>
                 <div class="logical_color">
-                  <label class="editlabel">请上传物流单照片</label>
+                  <label class="editlabel">请上传物流单凭证照片</label>
                   <div class="clearfix">
                       <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
                      <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
@@ -185,7 +188,7 @@
                  },param.show=false)"  value="确认发货" />
           </div>
         </div>
-        <!-- 订单收货查看物流 -->
+        <!-- 订单待收货查看物流 -->
         <div class="navbar-client" v-if="param.delivery">
           <div class="message clearfix">
               <p class="order-message">物流信息</p>
@@ -215,25 +218,55 @@
               </div>
           </div>
         </div>
+        <!-- 买家订单待收货查看物流 -->
+        <div class="navbar-client" v-if="param.express">
+          <div class="message clearfix">
+              <p class="order-message">物流信息</p>
+              <div class="space_15 clearfix">
+                <div class="logical_color">
+                  <span>物流公司：{{param.lcompanyName}}</span>
+                  <input type="hidden" value="{{param.lcompanyName}}" />
+                </div>
+                <div class="logical_color">
+                  <span>物流单号：{{param.logisticsNo}}</span>
+                </div>
+                <div class="logical_color">
+                  <span>物流凭证：</span>
+                  <img :src="param.sendPics" />
+                </div>
+              </div>
+              <div class="order_info clearfix">
+                <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
+                  id:param.id,
+                  show:true
+                  })"  value="查看物流" />
+                 
+              </div>
+          </div>
+        </div>
+
     </div>
 </template>
 <script> 
 import cancleModel from  '../order/cancleMsg'
 import undelineModel from  '../order/uploadPayment'
-import yaokuanModel from  '../order/orderpayPassword'
+/*import yaokuanModel from  '../order/orderpayPassword'*/
 import pressImage from '../imagePress'
 import logisticsModel  from  '../order/logisticsDetail'
 import editorderModel  from  '../order/ordergoods'
 import {
+  initExpresslist
+} from '../../vuex/getters'
+import {
     orderCancle,
     orderStatu,
-    yankuanPayorder
+    yankuanPayorder,
+    getExpressList
 } from '../../vuex/actions'
 export default {
     components: {
         cancleModel,
         undelineModel,
-        yaokuanModel,
         pressImage,
         logisticsModel,
         editorderModel
@@ -251,14 +284,13 @@ export default {
             },
             undelinePaySelect:false,
             yaokuanPaySelected:false,
-            yaokuanPay:{
-               show:false,
-               callback:'yankuanPayorder'
-            },
             undelinePay:{
                show:false,
                callback:'undelinePayorder',
                images:''
+            },
+            payorder:{
+              show:false,
             },
             imageParam:{
                 url:'/crm/api/v1/file/',
@@ -276,12 +308,13 @@ export default {
     props:['param'],
     vuex: {
         getters:{
-            
+            initExpresslist
         },
         actions:{
             orderCancle,
             orderStatu,
-            yankuanPayorder
+            yankuanPayorder,
+            getExpressList
         }
     },
     methods: {
@@ -323,7 +356,9 @@ export default {
              this.$broadcast('getImageData');
           }else if(payorder.payWay==3){
              console.log('33333')
-             this.yaokuanPay=payorder;
+             this.yankuanPayorder(payorder);
+             console.log(this.param)
+             this.param.show=false;
           }else {
              console.log('请选择支付方式');
           }
@@ -332,14 +367,9 @@ export default {
 
         }
     },
-   /* events: {
-      getImage: function(imageData) {
-          console.log('返回信息');
-          console.log(imageData);
-          console.log(this.param)
-          var images = new Array();
-          this.param.image=imageData.result.image;
-    }*/
+    created() {
+        this.getExpressList(this.loadParam); 
+    }
 }
 </script>
 <style scoped>

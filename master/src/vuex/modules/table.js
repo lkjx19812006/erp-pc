@@ -73,13 +73,16 @@ import {
    CITY_LIST,
    DISTRICT_LIST,
    ADD_FILES_DATA,
+   ADD_CERTIFICATE_DATA,
    ALTER_PRODUCT_DATA,
    SUPPLY_PRODUCT_DATA,
    PRODUCT_DATA,
    PRODUCT_DETAIL_DATA,
    FILES_DATA_LIST,
    CUSTOMER_TRANSFER,
-   ORDER_STATUS
+   ORDER_STATUS,
+   EXPRESS_DATA,
+   ORDER_UPLOAD_DATA
 
 } from '../mutation-types'
 
@@ -199,6 +202,9 @@ const state = {
         }],
         filesList:[{
             "id": 2617,"fileType": "image","bizType": "customer_license","bizId": "57f8817888e8bb85da01df7b","path": "/photos/order_photos_other/57f8815a88e8bb85da01df7a.jpg","description": null,"status": 1,"category": 0,"show":true
+        }],
+        expressList:[{
+            "id": 2,"name": "韵达快运","code": "yunda","codeAick": "yunda","status": 1,"show":true
         }]
 
     },
@@ -380,6 +386,9 @@ const mutations = {
     [ORDER_TABLE](state, data) { //订单列表
         state.basicBaseList.orderList = data;
     },
+    [EXPRESS_DATA](state,data){ //物流列表
+        state.basicBaseList.expressList = data;
+    },
     [ORDER_UPDATE_DATA](state,data){ //修改订单
         console.log(data)
         for (var key in data) {
@@ -433,6 +442,39 @@ const mutations = {
     [ORDER_DETAIL_DATA](state, data) {//订单详情
         console.log(data);
         state.orderDetail = data;
+    },
+    [ORDER_UPLOAD_DATA](state,data){ //新建订单详情凭证
+        console.log(data);
+        if(data.payPics){
+            state.orderDetail.payPics.arr.unshift({
+                "orderId":data.orderId,
+                "path":data.payPics,
+                "description":data.description,
+                "fileType":data.fileType,
+                "bizType":data.bizType,
+                "show":false 
+            })
+        }
+        if(data.sendPics){
+            state.orderDetail.sendPics.arr.unshift({
+                "orderId":data.orderId,
+                "path":data.sendPics,
+                "description":data.description,
+                "fileType":data.fileType,
+                "bizType":data.bizType,
+                "show":false 
+            })
+        }
+        if(data.bizType=="attach_files"){
+            state.orderDetail.attachFiles.arr.unshift({
+                "orderId":data.orderId,
+                "path":data.attachFiles,
+                "fileType":data.fileType,
+                "bizType":data.bizType,
+                "description":data.description,
+                "show":false  
+            })
+        }
     },
     [ORDER_STATUS](state,data){   //订单状态详情
         console.log(data);
@@ -638,7 +680,7 @@ const mutations = {
     },
     [CUSTOMER_ADD_DATA](state, data) { //新增客户
 
-      if(data.employee==data.employeeId||data.org==data.orgId){
+
         state.basicBaseList.customerList.unshift({
           address:data.address,
           bizScope:data.bizScope,
@@ -666,11 +708,12 @@ const mutations = {
           tel:data.tel,
           type:data.type,
           typeDesc:data.typeDesc,
-          show: false
+          show: false,
+          supplier:data.supplier
         })
-      }
 
-      if(data.sub!='undefined'){
+        console.log(data);
+      if(data.sub!='undefined'&&data.sub){
         state.basicBaseList[data.key][data.sub][data.keyname]=1;
       }
       if(data.detail){
@@ -800,10 +843,20 @@ const mutations = {
             "show": false,
         })
     },
-    [FILES_DATA_LIST](state,data){ //文件列表
+    [FILES_DATA_LIST](state,data){ //供应商文件列表
         state.basicBaseList.filesList = data;
     },
-
+    [ADD_CERTIFICATE_DATA](state,data){ //新增供应商资质证书
+        console.log(data)
+        state.basicBaseList.filesList.unshift({
+            "path": data.path,
+            "fileType": data.fileType,
+            "bizType":data.bizType,
+            "bizId":data.bizId,
+            "description":data.description,
+            "show":false
+        })
+    },
     [FILE_DATA](state, data) { //新增客户文件
         state.clientDetail[data.key].arr.unshift({
             "catagory": data.catagory,
@@ -1103,9 +1156,9 @@ const mutations = {
             "bizType":data.bizType,
             "bizId":data.bizId,
             "description":data.description,
-            "show":false
+            "show":false,
+            "id":data.id
         })
-
     }
 
 

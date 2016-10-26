@@ -1,14 +1,23 @@
 <template>
+    <!-- 我的订单 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==0">
+        <employee-order></employee-order>
+    </div>
+    <!-- 部门订单 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==1">
+        <org-order></org-order>
+    </div> 
+    <!-- 全部订单列表 -->
     <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
     <update-model :param="updateParam" v-if="updateParam.show"></update-model>
     <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
-    <div v-show="!detailParam.show&&!disposeParam.show">
+    <div v-show="!detailParam.show&&!disposeParam.show"  v-if="$route.path.split('=')[1]==2">
         <div class="myOrder">
             <div class="order_search">
                 <div class="clear">
-                    <div class="my_order col-xs-2">我的订单</div>
+                    <div class="my_order col-xs-2">所有订单</div>
                     <div class="right">
                         <button class="new_btn" @click="newOrder({
                             show:true,
@@ -132,17 +141,17 @@
                                                 preferential:item.preferential,
                                                 preferentialDesc:item.preferentialDesc,
                                                 goods:[{
-                                                        sourceType:item.sourceType,
-                                                        sourceId:item.sourceId,
-                                                        title:item.title,
-                                                        breedId:item.breedId,
-                                                        brredName:item.brredName,
-                                                        quality:item.quality,
-                                                        location:item.location,
-                                                        spec:item.spec,
-                                                        price:item.price,
-                                                        unit:item.unit,
-                                                        number:item.number
+                                                        sourceType:item.goods[0].sourceType,
+                                                        sourceId:item.goods[0].sourceId,
+                                                        title:item.goods[0].title,
+                                                        breedId:item.goods[0].breedId,
+                                                        brredName:item.goods[0].brredName,
+                                                        quality:item.goods[0].quality,
+                                                        location:item.goods[0].location,
+                                                        spec:item.goods[0].spec,
+                                                        price:item.goods[0].price,
+                                                        unit:item.goods[0].unit,
+                                                        number:item.goods[0].number
                                                     }],
                                                 key:'orderList',
                                                 link:alterOrder,
@@ -157,6 +166,7 @@
                                         <li v-if="item.orderStatus==40&&item.type==0"  @click="pendingOrder(item,$index)">等待发货</li>
                                         <li v-if="item.orderStatus==50&&item.type==0"  @click="pendingOrder(item,$index)">等待收货</li>
                                         <li v-if="item.orderStatus==60&&item.type==0" @click="pendingOrder(item,$index)">已完成订单</li>
+                                        <li v-if="item.orderStatus==70&&item.type==0" @click="pendingOrder(item,$index)">已完成订单</li>
                                         <li v-if="item.orderStatus==-1&&item.type==1"  @click="pendingOrder(item,$index)">订单已取消</li>
                                         <li v-if="item.orderStatus==-2&&item.type==1" @click="pendingOrder(item,$index)">订单已过期</li>
                                         <li v-if="item.orderStatus==0&&item.type==1"  @click="pendingOrder(item,$index)">待处理订单</li>
@@ -166,6 +176,7 @@
                                         <li v-if="item.orderStatus==40&&item.type==1"  @click="pendingOrder(item,$index)">等待发货</li>
                                         <li v-if="item.orderStatus==50&&item.type==1"  @click="pendingOrder(item,$index)">等待收货</li>
                                         <li v-if="item.orderStatus==60&&item.type==1" @click="pendingOrder(item,$index)">已完成订单</li>
+                                        <li v-if="item.orderStatus==70&&item.type==1" @click="pendingOrder(item,$index)">已完成订单</li>
                                         <li v-if="item.orderStatus==100&&item.type==1">待支付核查订单</li>
                                       <!--  <li @click="specDelete({
                                                id:item.id,
@@ -188,7 +199,15 @@
         <div class="order_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
-    </div>   
+    </div>  
+    <!-- 订单支付记录 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==3">
+        <payment-record></payment-record>
+    </div>
+    <!-- 药款转出记录 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==4">
+        <drugs-record></drugs-record>
+    </div> 
 </template>
 <script>
 import pagination from '../components/pagination'
@@ -198,6 +217,10 @@ import detailModel from '../components/order/orderDetail'
 import searchModel from '../components/order/orderSearch'
 import deletebreedModel from  '../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import disposeModel  from  '../components/order/orderStatus'
+import paymentRecord from '../components/order/paymentRecordList'
+import drugsRecord  from  '../components/order/drugsRecordList'
+import employeeOrder from '../components/order/myOrderlist'
+import orgOrder  from  '../components/order/orgOrderlist'
 import {
     getList,
     initOrderlist
@@ -218,7 +241,11 @@ export default {
         detailModel,
         searchModel,
         deletebreedModel,
-        disposeModel
+        disposeModel,
+        paymentRecord,
+        drugsRecord,
+        employeeOrder,
+        orgOrder
     },
     data() {
         return {
@@ -230,6 +257,7 @@ export default {
                 cur: 1,
                 all: 7,
                 consignee:'',
+                link:'/order/',
                 consigneePhone:'',
                 type:'',
                 orderStatus:'',
@@ -255,7 +283,9 @@ export default {
                 handle:false,
                 payment:false,
                 Auditing:false,
-                sendoff:false
+                sendoff:false,
+                express:false,
+                delivery:false
             },
             show:true
         }
@@ -274,10 +304,7 @@ export default {
         }
     },
     created() {
-        this.getOrderList(this.loadParam);
-        if (this.$route.query.id > this.getList[6].subcategory.length || isNaN(this.$route.query.id)) {
-            this.$route.query.id = 0;
-        }
+        this.getOrderList(this.loadParam)
     },
     methods: {
         editClick: function(sub) {
@@ -347,7 +374,10 @@ export default {
                 this.disposeParam.tips="买家已收货，订单已完成！";
                 /*this.disposeParam.link='/order/receiveConfirm';*/
             }
-
+            if(item.orderStatus==70&&item.type==0){
+                this.disposeParam.tips="买家已收货，订单已完成！";
+                /*this.disposeParam.link='/order/receiveConfirm';*/
+            }
             /*--销售状态type==1--*/
             if(item.orderStatus==0&&item.type==1){
                 this.disposeParam.tips="订单已提交，请审核！";
@@ -379,8 +409,12 @@ export default {
             }
             if(item.orderStatus==50&&item.type==1){ 
                 this.disposeParam.tips="订单已发货，请等待收货确认！";
+                this.disposeParam.express = true;
             }
             if(item.orderStatus==60&&item.type==1){
+                this.disposeParam.tips="买家已收货，订单已完成！";
+            }
+            if(item.orderStatus==70&&item.type==1){
                 this.disposeParam.tips="买家已收货，订单已完成！";
             }
         }

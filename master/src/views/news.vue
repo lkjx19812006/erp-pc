@@ -39,7 +39,7 @@
                         <th>个人认证</th>
                         <th>企业认证</th>
                         <th>划转状态</th>
-                        <th>备注</th>
+                        <th style="min-width:200px">备注</th>
                         <th></th>
 
                     </tr>

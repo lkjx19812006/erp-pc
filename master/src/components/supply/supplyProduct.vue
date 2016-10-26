@@ -26,6 +26,7 @@
                                              link:newProduct,
                                              url:'/customer/product'
                                         })">新建</button>
+        <button class="new_btn"  @click="searchProduct()">搜索</button>
       </div>
     </div>
      <div class="service-nav clearfix">
@@ -58,9 +59,7 @@
                             <input type="text"  placeholder="按产品名称全称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
                         </dd>
                     </dl>
-                    <dl>
-                       <button class="new_btn"  @click="searchProduct()">搜索</button>
-                    </dl>
+                   
                </div>
            </div>
         </div>
@@ -191,7 +190,7 @@
           size: '15px',
           cur: 1,
           all: 7,
-          link:'/customer/queryproduct',
+          link:'/customer/product',
           name:'',
           type:'',
           status:''

@@ -14,6 +14,14 @@
                         <div class="editpage" v-cloak>
                             <div class="editpageleft">
                                 <div class="editpage-input">
+                                    <label class="editlabel">收件人</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.consignee" v-validate:name="['required']" />
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">收件人联系方式</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.consigneePhone" v-validate:name="['required']" />
+                                </div>
+                                <div class="editpage-input">
                                     <label class="editlabel">商品名称</label>
                                     <input type="text" class="form-control edit-input"  id="name" v-model="param.brredName" v-validate:name="['required']" />
                                 </div>
@@ -25,15 +33,11 @@
                                     <label class="editlabel">规格</label>
                                     <input type="text" class="form-control edit-input"  v-model="param.spec" v-validate:phone="['required']" />
                                 </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">数量</label>
-                                    <input type="text" class="form-control edit-input"  v-model="param.number" v-validate:wechart="['required']" />
-                                </div>
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input">
-                                    <label class="editlabel">质量</label>
-                                    <input type="text" class="form-control edit-input"   v-model="param.quality" v-validate:department="['required']" />
+                                    <label class="editlabel">收件人地址</label>
+                                    <input type="text" class="form-control edit-input"  id="name" v-model="param.consigneeAddr" v-validate:name="['required']" />
                                 </div>
                                  <div class="editpage-input">
                                     <label class="editlabel">价格</label>
@@ -44,8 +48,12 @@
                                     <input type="text" class="form-control edit-input"  v-model="param.unit" v-validate:unit="['required']" />
                                 </div>
                                 <div class="editpage-input">
+                                    <label class="editlabel">数量</label>
+                                    <input type="text" class="form-control edit-input"  v-model="param.number" v-validate:wechart="['required']" />
+                                </div>
+                                <div class="editpage-input">
                                     <label class="editlabel">总价</label>
-                                    <input type="text" class="form-control edit-input"  v-model="param.amount" v-validate:amount="['required']" />
+                                    <input type="text" class="form-control edit-input"  v-model="param.total" v-validate:amount="['required']" />
                                 </div>
                             </div>
                         </div>
@@ -54,7 +62,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <input type="button" class="btn  btn-confirm"   @click="param.link(param,param.show = false)" value="保存"/>
+                    <input type="button" class="btn  btn-confirm"   @click="param.callback(param,param.show = false)" value="保存"/>
                 </div>
             </form>
         </validator>
@@ -93,7 +101,7 @@ export default {
 .edit_footer{
     position: absolute;
     width: 100%;
-    bottom: 10px;
+    bottom:0px;
 }
 .big-font {
     font-size: 36px;
