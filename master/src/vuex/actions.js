@@ -271,10 +271,10 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
             orderList[i].show =false;
         }
         console.log('订单查询成功')
-        dispatch(types.ORDER_TABLE, orderList); 
+        dispatch(types.ORDER_TABLE, orderList);
         param.all = res.json().result.pages;
         console.log(param.cur)
-        param.loading = false;  
+        param.loading = false;
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -501,7 +501,7 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         if(param.image_t){param.sendPics+=param.image_t};
         console.log(param.sendPics)
     }
-   
+
     const body = {
        orderId:param.orderId,
        description:param.description,
@@ -2282,6 +2282,9 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         id: param.id,
         orgId:param.orgId,
         employeeId:param.employeeId
+    }
+    if(param.supplier){
+      data.supplier=param.supplier;
     }
     Vue.http({
         method: 'PUT',
