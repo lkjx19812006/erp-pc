@@ -3543,6 +3543,7 @@ export const baseAddData = ({ dispatch }, param) => { //查询认证信息
 }
 
 export const baseUpdateData = ({ dispatch }, param) => { //查询认证信息
+    console.log(param.body);
     Vue.http({
         method: 'PUT',
         url: apiUrl.base + param.url,
