@@ -209,8 +209,8 @@
                               <input type="text" class="form-control edit-input" v-model="param.goods[0].quality" id="qual" v-validate:qual="['required']" value="{{param.goods[0].quality}}"/>
                           </div>
                            <div class="editpage-input">
-                              <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.money">请输入商品的价格</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].price" id="price" v-validate:price="['money']"  value="{{param.goods[0].price}}"/>
+                              <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.required">请输入商品的价格</span></label>
+                              <input type="number" class="form-control edit-input" v-model="param.goods[0].price" id="price" v-validate:price="['required']"  value="{{param.goods[0].price}}"/>
                           </div>
                       </div>
                       <div class="editpageright">
@@ -220,7 +220,7 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">商品数量  <span class="system_danger" v-if="$validation.number.quantity">请输入商品的数量</span></label>
-                              <input type="number" class="form-control edit-input" v-model="param.goods[0].number" id="number" v-validate:number="['quantity']" value="{{param.goods[0].number}}"/>
+                              <input type="number" class="form-control edit-input" v-model="param.goods[0].number" id="number" v-validate:number="['quantity']" />
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">商品规格 <span class="system_danger" v-if="$validation.spec.required">请输入商品的规格</span></label>

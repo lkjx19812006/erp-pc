@@ -90,10 +90,8 @@
 
                           <div class="editpage-input">
                             <label>业务员/部门</label>
-                            <input v-if="!param.orgId" type="text" class="form-control edit-input" readonly="readonly"
-                                   v-model="param.employeeName" @click="selectParam.show=true"/>
-                            <input v-if="param.orgId" type="text" class="form-control edit-input" readonly="readonly" v-model="param.orgName"
-                                   @click="selectParam.show=true"/>
+                            <input v-if="!param.orgId" type="text" class="form-control edit-input" readonly="readonly" v-model="param.employeeName" @click="selectParam.show=true"/>
+                            <input v-if="param.orgId" type="text" class="form-control edit-input" readonly="readonly" v-model="param.orgName" @click="selectParam.show=true"/>
                           </div>
 
                             <div class="editpage-input">

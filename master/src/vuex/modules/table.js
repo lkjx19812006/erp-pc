@@ -82,7 +82,9 @@ import {
    CUSTOMER_TRANSFER,
    ORDER_STATUS,
    EXPRESS_DATA,
-   ORDER_UPLOAD_DATA
+   ORDER_UPLOAD_DATA,
+   ORDER_PAY_DATA,
+   ORDER_ROLLOUT_DATA
 
 } from '../mutation-types'
 
@@ -205,6 +207,9 @@ const state = {
         }],
         expressList:[{
             "id": 2,"name": "韵达快运","code": "yunda","codeAick": "yunda","status": 1,"show":true
+        }],
+        orderPayList:[{
+             "id": 2,"orderNo": "11111"
         }]
 
     },
@@ -389,6 +394,12 @@ const mutations = {
     [EXPRESS_DATA](state,data){ //物流列表
         state.basicBaseList.expressList = data;
     },
+    [ORDER_PAY_DATA](state,data){  //订单支付记录
+        state.basicBaseList.orderPayList = data;
+    },
+    [ORDER_ROLLOUT_DATA](state,data){ //药款到转出记录
+        state.basicBaseList.orderRolloutList = data;
+    },
     [ORDER_UPDATE_DATA](state,data){ //修改订单
         console.log(data)
         for (var key in data) {
@@ -517,8 +528,17 @@ const mutations = {
         }
     },
     [ORDER_STATUS](state,data){   //订单状态详情
-        console.log(data);
-        state.basicBaseList.orderList = data;
+        console.log(data)
+        for(var i in  state.basicBaseList.orderList){
+            if(state.basicBaseList.orderList[i].id==data.id){
+                state.basicBaseList.orderList[i].orderStatus=data.orderStatus;
+                state.basicBaseList.orderList[i].payWay=data.payWay;
+                state.basicBaseList.orderList[i].lcompanyId=data.lcompanyId;
+                state.basicBaseList.orderList[i].lcompanyNo=data.lcompanyNo;
+                
+            }
+        }
+        // state.basicBaseList.orderList[data.id].orderStatus = data.orderStatus;
     },
     [SYSTEM_DATA](state, data) { //枚举类型
       state.systemBaseList.enumlist = data;

@@ -34,7 +34,7 @@
                   <p>下单时间：{{param.ctime}}</p>
               </div>
               <div class="col-xs-6 pull-left">
-                 <p><label>杂费：</label><span style="color:#fa6705">¥{{param.incidentals.toFixed(2)}}</span>（运费）</p>
+                 <p><label>杂费：</label><span style="color:#fa6705">¥{{param.incidentals}}</span>（运费）</p>
                  <p><span  style="color:#fa6705">合计：¥{{param.total.toFixed(2)}}</span></p>
               </div> 
             </div>
@@ -43,9 +43,10 @@
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
                     id:param.id,
                     show:true,
+                    orderStatus:'',
                     link:'/order/handle',
                     images:''
-                   },param.show=false)"  value="接单" />
+                   },param.show=false)"  value="接受订单" />
                 <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
                     id:param.id,
                     cancleCauses:'',
@@ -58,25 +59,31 @@
             <!-- 订单确认10 -->
             <div class="clearfix" v-if="param.sales">
                 <input type="button" class="btn  btn-confirm right"  @click="confirmEdit({
-                    id:param.id,
-                    show:true,
-                    no:param.no,
-                    consignee:param.consignee,
-                    consigneePhone:param.consigneePhone,
-                    consigneeAddr:param.consigneeAddr,
-                    brredName:param.goods[0].brredName,
-                    price:param.goods[0].price,
-                    unit:param.goods[0].unit,
-                    number:param.goods[0].number,
-                    ctime:param.ctime,
-                    incidentals:param.incidentals,
-                    spec:param.goods[0].spec,
-                    location:param.goods[0].location,
-                    total:param.total,
-                    link:'/order/confirm',
-                    images:'',
-                    callback:orderStatu
-                   })"  value="确定" />
+                        id:param.id,
+                        show:true,
+                        orderStatus:'',
+                        link:'/order/confirm',
+                        images:'',
+                       },param.show=false)"  value="确定" />
+                 <!--  <input type="button" class="btn  btn-confirm  right"  @click="orderEdit({
+                       id:param.id,
+                       show:true,
+                       no:param.no,
+                       consignee:param.consignee,
+                       consigneePhone:param.consigneePhone,
+                       consigneeAddr:param.consigneeAddr,
+                       brredName:param.goods[0].brredName,
+                       price:param.goods[0].price,
+                       unit:param.goods[0].unit,
+                       number:param.goods[0].number,
+                       ctime:param.ctime,
+                       incidentals:param.incidentals,
+                       spec:param.goods[0].spec,
+                       location:param.goods[0].location,
+                       total:param.total,
+                       images:'',
+                       callback:alterOrder
+                      })"  value="编辑订单" /> -->
                 <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
                     id:param.id,
                     cancleCauses:'',
@@ -92,6 +99,7 @@
                     id:param.id,
                     show:true,
                     link:'/order/payConfirm',
+                    orderStatus:'',
                     images:''
                    },param.show=false)"  value="通过核查" />
                 <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
@@ -135,6 +143,7 @@
                     show:true,
                     link:'/order/pay',
                     payWay:'',
+                    orderStatus:'',
                     images:'',
                     callback:yankuanPayorder
                     })"  value="支付" />
@@ -156,7 +165,6 @@
                 <div class="logical_color">
                   <span class="mui-pull-left">物流公司：</span> 
                   <select v-model="param.lcompanyId">
-                    <option>请选择物流公司</option>
                     <option v-for="item in initExpresslist" value="{{item.id}}">{{item.name}}</option>
                   </select>
                 </div>
@@ -183,6 +191,7 @@
                   image_s:param.image_s,
                   image_t:param.image_t,
                   images:'',
+                  orderStatus:'',
                   lcompanyId:param.lcompanyId,
                   lcompanyNo:param.lcompanyNo,
                  },param.show=false)"  value="确认发货" />
@@ -208,12 +217,13 @@
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
                   id:param.id,
                   show:true,
+                  orderStatus:'',
                   link:'/order/receiveConfirm'
                 },param.show=false)"  value="确认收货" />
                 <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
                   id:param.id,
                   show:true
-                  })"  value="查看物流" />
+                  })" value="查看物流" />
                  
               </div>
           </div>
@@ -261,7 +271,8 @@ import {
     orderCancle,
     orderStatu,
     yankuanPayorder,
-    getExpressList
+    getExpressList,
+    alterOrder
 } from '../../vuex/actions'
 export default {
     components: {
@@ -314,7 +325,8 @@ export default {
             orderCancle,
             orderStatu,
             yankuanPayorder,
-            getExpressList
+            getExpressList,
+            alterOrder
         }
     },
     methods: {
@@ -327,9 +339,13 @@ export default {
             console.log(confirm)
             this.orderStatu(confirm)
         },
-        confirmEdit:function(edit){
+        confirmEdit:function(confirm){
+          console.log(confirm)
+            this.orderStatu(confirm)
+        },
+        orderEdit:function(edit){
           console.log(edit)
-            this.editorder = edit;
+          this.editorder = edit;
         },
         Viewlogistics:function(logistics){
           console.log(logistics)
@@ -394,6 +410,9 @@ export default {
   border-bottom: 1px solid #ddd;
   border-top: 1px solid #ddd;
   margin-top: 20px;
+}
+.btn-confirm{
+  margin-right: 10px;
 }
 .order-message{
   border-bottom: 1px solid #ddd;
