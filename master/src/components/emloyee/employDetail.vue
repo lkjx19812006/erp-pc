@@ -72,10 +72,14 @@
                     <div class="clearfix">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                             <label class="editlabel">角色</label>
-                            <div class="pull-left role clerafix">
-                                 <input type="checkbox" class="checkbox_unselect" id="client_ids"  value="部门经理" />
-                                 <label  for="client_ids">部门经理</label>
-                            </div>
+                            <div  class="clerafix">
+                                    <div class="pull-left role clerafix col-md-3 col-xs-3" v-for="item in initRoleList" >
+                                        <input type="checkbox" class="checkbox_unselect"  
+                                        v-model="item.checked" @click="checked(item)"/>
+                                        <label for="admin">{{item.cname}}</label>
+                                    </div>
+                                    
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -86,6 +90,10 @@ import filter from '../../filters/filters'
 import tipsdialogModel  from '../tipsDialog'
 import calendar from '../calendar/vue.datepicker'
 import {
+    initRoleList
+} from '../../vuex/getters'
+import {
+    getRoleList,
     updateEmploy
 } from '../../vuex/actions'
 export default {
@@ -106,13 +114,23 @@ export default {
                 show:false,
                 name:'修改成功'
             },
+            roleParam:{
+                pageSize:100,
+                cur:1,
+                roles:[]
+
+            },
             dateText:''
         }
     },
     props:['param'],
     vuex: {
+        getters:{
+            initRoleList
+        },
        actions:{
-           updateEmploy
+            getRoleList,
+            updateEmploy
        }
     },
     methods: {
@@ -125,9 +143,33 @@ export default {
             this.dateText = str.replace(/\b(\w)\b/g, "0$1")
         },
         saveSucc:function(param){
+            console.log('确定');
+            var temp = '';
+            this.initRoleList.forEach(function(item){
+                if(item.checked){
+                    temp += item.id + ',';
+                }         
+            })
+            console.log(temp);
+            param.privilege = temp.substring(0,temp.length-1);
+            console.log(param.privilege);
            this.tipsParam.show= true;
            this.updateEmploy(param) 
+        },
+        checked:function(item){
+            if(item.checked){
+                item.checked=false;
+            }else{
+                item.checked=true;
+            }
+            console.log(item.checked);
+        },
+    },
+    created(){
+        if(this.param.privilege!=''&&this.param.privilege!=null){
+            this.roleParam.roles = this.param.privilege.split(',');
         }
+        this.getRoleList(this.roleParam);
     },
     ready() {
         this.createDateText()

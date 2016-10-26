@@ -1004,8 +1004,8 @@ const mutations = {
             "leavedate": data.leavedate,
             "orgid": data.orgid,
             "orgcode": data.orgcode,
-            "status": data.status
-           /* "role": param.role*/
+            "status": data.status,
+            "privilege": data.privilege
         })
     },
 

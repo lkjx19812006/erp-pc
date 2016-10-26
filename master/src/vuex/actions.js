@@ -1980,10 +1980,14 @@ export const getRoleList = ({ dispatch }, param) => {  //获取角色列表
         }
         }).then((res) => {
             var role = res.json().result.list;
-            role.forEach(function(item){
-                item.checked = false;
-            });
-            console.log(role);
+            for(var i=0;i<role.length;i++){
+                role[i].checked = false;
+                for(var j=0;j<param.roles.length;j++){
+                    if(role[i].id==param.roles[j]){
+                        role[i].checked = true;
+                    }
+                }
+            }
             dispatch(types.ROLE_DATA, role)
             param.all = res.json().result.pages;
             param.loading = false;
@@ -3265,8 +3269,10 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
         "orgid":param.orgid,
         "orgcode":param.orgcode,
         'status':param.status,
-        //"role":param.role
+        'privilege':param.privilege
     }
+    console.log('=====');
+    console.log(data1);
     Vue.http({
         method: "POST",
         url:  apiUrl.clientList + param.url,
@@ -3302,7 +3308,7 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
         orgid:param.orgid,
         orgcode:param.orgcode,
         status:param.status,
-        role:param.role
+        privilege:param.privilege
     }
     Vue.http({
         method: 'PUT',
