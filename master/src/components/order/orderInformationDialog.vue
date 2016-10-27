@@ -54,32 +54,25 @@
                                    </v-select>
                              </div>
                           </div>
-                           <div class="editpage-input">
-                              <label class="editlabel">省</label>
-                              <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
-                              <div v-if="country.cname" type="text" class="edit-input">
+                          <div class="editpage-input">
+                              <label class="editlabel">市</label>
+                              <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                              <div v-if="province.cname" type="text" class="edit-input">
                                   <v-select
-                                    :debounce="250"
-                                    :value.sync="province"
-                                    :on-change="selectCity"
-                                    :options="initProvince"
-                                    placeholder="省"
-                                    label="cname">
+                                       :debounce="250"
+                                       :value.sync="city"
+                                       :on-change="selectDistrict"
+                                       :options="initCitylist"
+                                       placeholder="市"
+                                       label="cname"
+                                  >
                                   </v-select>
                               </div>
                           </div>
-                           <div class="editpage-input">
-                              <label class="editlabel">区</label>
-                              <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
-                              <div v-if="city.cname" type="text" class="edit-input">
-                                  <v-select
-                                        :debounce="250"
-                                        :value.sync="district"
-                                        :options="initDistrictlist"
-                                        placeholder="区"
-                                        label="cname">
-                                  </v-select>
-                               </div>
+                          
+                          <div class="editpage-input">
+                              <label class="editlabel">邮编</label>
+                              <input type="text" class="form-control edit-input" v-model="param.zipCode" value="{{param.zipCode}}"/>
                           </div>
                            <div class="editpage-input">
                               <label class="editlabel">收货人详细地址 <span class="system_danger" v-if="$validation.addr.required">请输入收货人详细地址</span></label>
@@ -108,7 +101,7 @@
                       <div class="editpageright">
                           <div class="editpage-input">
                               <label class="editlabel">选择客户 <span class="system_danger" v-if="$validation.custname.required">请选择客户</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.customerName" id="custname"  v-validate:custname="['required']" value="{{param.customer}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer,param.employee)"/>
+                              <input type="text" class="form-control edit-input" v-model="param.customerName" id="custname"  v-validate:custname="['required']" value="{{param.customer}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">是否国际</label>
@@ -122,23 +115,31 @@
                               <input type="text" class="form-control edit-input" v-model="param.consigneePhone" id="phone" v-validate:phone="['phone']" value="{{param.consigneePhone}}"/>
                           </div>
                           <div class="editpage-input">
-                              <label class="editlabel">邮编</label>
-                              <input type="text" class="form-control edit-input" v-model="param.zipCode" value="{{param.zipCode}}"/>
-                          </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">市</label>
-                              <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                              <div v-if="province.cname" type="text" class="edit-input">
+                              <label class="editlabel">省</label>
+                              <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                              <div v-if="country.cname" type="text" class="edit-input">
                                   <v-select
-                                       :debounce="250"
-                                       :value.sync="city"
-                                       :on-change="selectDistrict"
-                                       :options="initCitylist"
-                                       placeholder="市"
-                                       label="cname"
-                                  >
+                                    :debounce="250"
+                                    :value.sync="province"
+                                    :on-change="selectCity"
+                                    :options="initProvince"
+                                    placeholder="省"
+                                    label="cname">
                                   </v-select>
                               </div>
+                          </div>
+                           <div class="editpage-input">
+                              <label class="editlabel">区</label>
+                              <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
+                              <div v-if="city.cname" type="text" class="edit-input">
+                                  <v-select
+                                        :debounce="250"
+                                        :value.sync="district"
+                                        :options="initDistrictlist"
+                                        placeholder="区"
+                                        label="cname">
+                                  </v-select>
+                               </div>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">货币类型</label>
@@ -203,15 +204,15 @@
                               <label class="editlabel">商品单位 <span class="system_danger" v-if="$validation.unit.required">请输入商品的单位</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.goods[0].unit" id="unit" v-validate:unit="['required']" value="{{param.goods[0].unit}}"/>
                           </div>
-
+                          <div class="editpage-input">
+                              <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.required">请输入商品的价格</span></label>
+                              <input type="number" class="form-control edit-input" v-model="param.goods[0].price" id="price" v-validate:price="['required']"  value="{{param.goods[0].price}}"/>
+                          </div>
                           <div class="editpage-input">
                               <label class="editlabel">商品质量 <span class="system_danger" v-if="$validation.qual.required">请输入商品的质量</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.goods[0].quality" id="qual" v-validate:qual="['required']" value="{{param.goods[0].quality}}"/>
                           </div>
-                           <div class="editpage-input">
-                              <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.required">请输入商品的价格</span></label>
-                              <input type="number" class="form-control edit-input" v-model="param.goods[0].price" id="price" v-validate:price="['required']"  value="{{param.goods[0].price}}"/>
-                          </div>
+                           
                       </div>
                       <div class="editpageright">
                           <div class="editpage-input">
@@ -348,7 +349,7 @@ export default {
                 /*this.param.breedName = this.breedParam.breedName;
                 this.param.breedId = this.breedParam.breedId;*/
           },
-        searchCustomer:function(customerName,customer,employee){
+        searchCustomer:function(customerName,customer){
             this.empNameParam.show=true;
             /*if("employeeId" in this.param){
                 this.empNameParam.employeeId = this.param.employeeId;
@@ -377,7 +378,6 @@ export default {
         customer:function(customer){
             this.param.customerName = customer.customerName;
             this.param.customer = customer.customerId;
-            this.param.employee = customer.employeeName;
         }
     },
     created(){

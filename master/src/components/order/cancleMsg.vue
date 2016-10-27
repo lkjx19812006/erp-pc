@@ -58,8 +58,22 @@ export default {
 }
 </script>
 <style scoped>
+.modal_con {
+    width: 554px;
+    height: 400px;
+}
+.edit_footer{
+    width: 554px;
+    position: absolute;
+    bottom: 0;
+}
 .big-font {
     font-size: 36px;
+}
+.top-title{
+    position: absolute;
+    top: 0;
+    width: 554px;
 }
 .top-title span {
     font-size: 28px;

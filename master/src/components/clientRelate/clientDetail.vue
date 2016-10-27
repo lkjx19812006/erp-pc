@@ -429,6 +429,8 @@
                                             zipCode:'',     
                                             country:'',
                                             province:'',
+                                            employee:initClientDetail.employeeId,
+                                            org:initClientDetail.orgId,
                                             city:'',
                                             district:'',
                                             consigneeAddr:'',
@@ -472,25 +474,6 @@
                                                 <td>{{item.consigneePhone}}</td>
                                                 <td>{{item.consigneeAddr}}</td>
                                                 <td>{{item.orderStatus}}</td>
-                                                <!-- <td  @click="clickShow($index,{
-                                                    concrete:'orders'
-                                                    })">
-                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="files_action" v-show="item.show" >
-                                                        <dl>
-                                                            <dt @click="specDelete({
-                                                                 id:item.id,
-                                                                 sub:$index,
-                                                                 show:true,
-                                                                 title:'文件',
-                                                                 link:specDel,
-                                                                 url:'/customer/file/',
-                                                                 key:'orders',
-                                                                 headline:'clientDetail'
-                                                                 })">删除</dt>
-                                                        </dl>
-                                                    </div>
-                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>

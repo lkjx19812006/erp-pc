@@ -151,13 +151,6 @@
 
             </div>
 
-
-
-
-
-
-
-
           </section>
         </div>
         <div class="edit_footer">

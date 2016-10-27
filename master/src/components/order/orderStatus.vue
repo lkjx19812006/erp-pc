@@ -52,6 +52,7 @@
                     cancleCauses:'',
                     show:true,
                     headline:'取消订单原因',
+                    orderStatus:'',
                     link:'/order/cancle',
                     callback:orderCancle
                   })">取消</button>
@@ -84,14 +85,7 @@
                        images:'',
                        callback:alterOrder
                       })"  value="编辑订单" /> -->
-                <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
-                    id:param.id,
-                    cancleCauses:'',
-                    show:true,
-                    headline:'取消订单原因',
-                    link:'/order/cancle',
-                    callback:orderCancle
-                  })">取消</button>
+                <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
             <!-- 订单财务审核 -->
             <div class="clearfix" v-if="param.Auditing">
@@ -102,14 +96,7 @@
                     orderStatus:'',
                     images:''
                    },param.show=false)"  value="通过核查" />
-                <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
-                    id:param.id,
-                    cancleCauses:'',
-                    show:true,
-                    headline:'取消订单原因',
-                    link:'/order/cancle',
-                    callback:orderCancle
-                  })">取消</button>
+                <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
         </div>
         <!-- 订单支付 -->
@@ -147,14 +134,7 @@
                     images:'',
                     callback:yankuanPayorder
                     })"  value="支付" />
-                <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
-                    id:param.id,
-                    cancleCauses:'',
-                    show:true,
-                    headline:'取消订单原因',
-                    link:'/order/cancle',
-                    callback:orderCancle
-                  })">取消</button>
+                <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
         </div>
         <!-- 订单发货上传物流信息 -->
@@ -165,7 +145,7 @@
                 <div class="logical_color">
                   <span class="mui-pull-left">物流公司：</span> 
                   <select v-model="param.lcompanyId">
-                    <option v-for="item in initExpresslist" value="{{item.id}}">{{item.name}}</option>
+                    <option v-for="item in initExpresslist"  value="{{item.id}}">{{item.name}}</option>
                   </select>
                 </div>
                 <div class="logical_color">
@@ -175,9 +155,9 @@
                 <div class="logical_color">
                   <label class="editlabel">请上传物流单凭证照片</label>
                   <div class="clearfix">
-                      <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                     <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                     <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                      <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
+                     <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
+                     <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
                   </div>
                 </div>
               </div>
@@ -203,10 +183,10 @@
               <p class="order-message">物流信息</p>
               <div class="space_15 clearfix">
                 <div class="logical_color">
-                  <span>物流公司：{{param.lcompanyId}}</span>
+                  <span>物流公司：{{param.lcompanyName}}</span>
                 </div>
                 <div class="logical_color">
-                  <span>物流单号：{{param.lcompanyNo}}</span>
+                  <span>物流单号：{{param.logisticsNo}}</span>
                 </div>
                 <div class="logical_color">
                   <span>物流凭证：</span>
@@ -222,7 +202,11 @@
                 },param.show=false)"  value="确认收货" />
                 <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
                   id:param.id,
-                  show:true
+                  lcompanyId:param.lcompanyId,
+                  code:param.code,
+                  number:param.logisticsNo,
+                  show:true,
+                  callback:logisticsInfo
                   })" value="查看物流" />
                  
               </div>
@@ -248,7 +232,11 @@
               <div class="order_info clearfix">
                 <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
                   id:param.id,
-                  show:true
+                  lcompanyId:param.lcompanyId,
+                  code:param.code,
+                  number:param.logisticsNo,
+                  show:true,
+                  callback:logisticsInfo
                   })"  value="查看物流" />
                  
               </div>
@@ -272,7 +260,8 @@ import {
     orderStatu,
     yankuanPayorder,
     getExpressList,
-    alterOrder
+    alterOrder,
+    logisticsInfo
 } from '../../vuex/actions'
 export default {
     components: {
@@ -291,7 +280,7 @@ export default {
                 size: '15px'
             },
             cancleReason:{
-               show:false
+               show:false,
             },
             undelinePaySelect:false,
             yaokuanPaySelected:false,
@@ -326,7 +315,8 @@ export default {
             orderStatu,
             yankuanPayorder,
             getExpressList,
-            alterOrder
+            alterOrder,
+            logisticsInfo
         }
     },
     methods: {
@@ -350,6 +340,7 @@ export default {
         Viewlogistics:function(logistics){
           console.log(logistics)
             this.logisticsDetail = logistics;
+            this.logisticsInfo(this.logisticsDetail)
         },
         paychoice:function(payWay){
             console.log(payWay)

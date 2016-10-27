@@ -37,7 +37,7 @@
                                             })">
                                       <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                        产品相关文件（{{initProductDetail.filesList.arr.length}}）
+                                        产品相关资质证书（{{initProductDetail.filesList.arr.length}}）
                                       </a>
                                 </h4>
                               </div>

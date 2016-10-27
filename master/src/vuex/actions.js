@@ -221,6 +221,7 @@ export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核
         param.loading = false;
     })
 }
+
 export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(我的订单)列表
     console.log(param)
     param.loading = true;
@@ -360,9 +361,26 @@ export const getExpressList = ({ dispatch }, param) => { //物流列表
     })
 }
 
+export const logisticsInfo = ({ dispatch }, param) => { //物流查看详情
+    param.loading = true;
+    var url = apiUrl.orderList+'/order/logistics?checkCode=yunda&number=3903300539521';
+     /*var url = apiUrl.orderList+param.link+'?checkCode='+param.code+'&number='+param.number;*/
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+        dispatch(types.EXPRESS_DETAIL_DATA, res.json().result);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+    })
+}
 export const createOrder = ({ dispatch }, data) => { //创建订单
     console.log(data);
-
     const body = {
         type:data.type,
         sourceType:data.sourceType,
@@ -380,6 +398,8 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         country:data.country,
         province:data.province,
         city:data.city,
+        employee:data.employee,
+        org:data.org,
         district:data.district,
         consigneeAddr:data.consigneeAddr,
         comments:data.comments,
@@ -411,6 +431,8 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         }
     }).then((res) => {
         console.log('添加成功')
+        data.no=res.json().result.no;
+        data.id=res.json().result.id;
         dispatch(types.ORDER_ADD_DATA, data);
         data.show = false;
     }, (res) => {
@@ -575,6 +597,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
         console.log('fail');
     })
 }
+
 export const orderCancle = ({ dispatch }, param) => { //订单取消状态
     console.log(param)
     const body = {
@@ -593,7 +616,7 @@ export const orderCancle = ({ dispatch }, param) => { //订单取消状态
         }
     }).then((res) => {
         console.log('订单取消成功')
-        dispatch(types.ORDER_STATUS, param);
+        dispatch(types.ORDER_STATUS, res.json().result);
     }, (res) => {
         console.log('fail');
     })
@@ -629,7 +652,7 @@ export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
         }
     }).then((res) => {
         console.log('支付成功')
-        dispatch(types.ORDER_STATUS, param);
+        dispatch(types.ORDER_STATUS, res.json().result);
     }, (res) => {
         console.log('fail');
     })
@@ -2271,6 +2294,9 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         name:param.name,
         type:param.type,
         category:param.category,
+        typeDesc:param.type,
+        classifyDesc:param.classify,
+        classify:param.classify,
         principal:param.principal,
         bizScope:param.bizScope,
         mainPhone:param.mainPhone,

@@ -24,8 +24,8 @@
                     country:'',
                     province:'',
                     city:'',
-                    employee:'',
-                    org:'',
+                    employee:'100011',
+                    org:'8',
                     district:'',
                     consigneeAddr:'',
                     comments:'',
@@ -55,6 +55,9 @@
         </div>
       </div>
       <div class="order_table">
+        <div class="cover_loading">
+            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+        </div>
         <table class="table table-hover table_color table-striped " v-cloak>
             <thead>
                 <tr>  

@@ -81,10 +81,10 @@
                         <div class="editpageright">
                             <div class="editpage-input">
                                 <label class="editlabel">分类</label>
-                                <select class="form-control edit-input"  v-model='param.classify' >
-                                     <option value="0">买</option>
-                                     <option value="1">卖</option>
-                                     <option value="2">买卖</option>
+                                <select class="form-control edit-input"  v-model='param.classify' value="{{param.classify}}">
+                                     <option value="1">买</option>
+                                     <option value="2">卖</option>
+                                     <option value="3">买卖</option>
                                 </select>
                             </div>
 
