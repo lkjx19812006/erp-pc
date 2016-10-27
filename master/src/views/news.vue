@@ -68,6 +68,8 @@
                         <td v-if="item.source==1" style="background:green;color:#fff">{{item.sourceType}}</td>
                         <td v-if="item.source==2" style="background:blue;color:#fff">{{item.sourceType}}</td>
                         <td v-if="item.source==3" style="background:#444444;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==4" style="background:black;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="!item.source" >其它</td>
                         <td>{{item.bizTypeName}}</td>
                         <td>{{item.auditResult}}</td>
                         <td v-if="item.utype==0">待认证</td>
@@ -143,7 +145,7 @@
                                                  wechart: item.wechart
                                                 }
                                                 },item.show=false)">划转</li>
-                                    <li @click="createIntention(item.show=false)">意向</li>
+                                    <!--<li @click="createIntention(item.show=false)">意向</li>-->
                                     <li v-if="item.utype==1" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">个人认证</li>
                                     <li v-if="item.ctype==1" @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)">企业认证</li>
                                 </ul>
