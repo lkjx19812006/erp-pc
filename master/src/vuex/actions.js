@@ -818,6 +818,7 @@ export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
         }
     }).then((res) => {
         console.log('添加成功')
+        data.id=res.json().result.id;
         dispatch(types.ADD_DATA, data);
     }, (res) => {
         console.log('fail');
@@ -1123,7 +1124,7 @@ export const getCompanyData = ({ dispatch }, param) => { //企业搜索
 export const getCompanyDetail = ({ dispatch }, param) => { //获取企业详情
     Vue.http({
         method: 'GET',
-        url: apiUrl.enterpriseList + '/' + param.id,
+        url: apiUrl.enterpriseList  + param.id,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -1168,7 +1169,8 @@ export const alterCompany = ({ dispatch }, param) => { //修改企业联系人
         email: param.email,
         wechart: param.wechart,
         main:param.main,
-        id:param.id
+        id:param.id,
+        status:1
     }
     Vue.http({
         method: 'PUT',
@@ -1235,8 +1237,8 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
         }
     }).then((res) => {
         console.log('联系人添加成功')
-      console.log(res);
-      param.id=res.json().result.id;
+        console.log(res);
+        param.id=res.json().result.id;
         dispatch(types.ADD_CONTACT_DATA, param)
     }, (res) => {
         console.log('fail');
@@ -1269,6 +1271,9 @@ export const getComponentData = ({ dispatch }, param) => { //成分
     });
 };
 export const getRecipeDetail = ({ dispatch }, param) => { //获取成分详情
+    if(param.loading){
+      param.loading=true;
+    }
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/recipe/company/?id=' + param.id,
@@ -1277,6 +1282,9 @@ export const getRecipeDetail = ({ dispatch }, param) => { //获取成分详情
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
+      if(param.loading){
+        param.loading=false;
+      }
         var obj = res.json().result;
         var arr = obj.list;
         obj.list = {};
@@ -1288,6 +1296,9 @@ export const getRecipeDetail = ({ dispatch }, param) => { //获取成分详情
         console.log(obj)
         dispatch(types.DRUG_DETAIL_DATA, obj.list);
     }, (res) => {
+      if(param.loading){
+        param.loading=false;
+      }
         console.log('fail');
     });
 }
@@ -1439,8 +1450,9 @@ export const getCategoryData = ({ dispatch }, param) => { // 获取品种信息
 }
 
 export const saveBreed = ({ dispatch }, data) => { //新增药材信息
+
     const data1 = {
-        categoryId: data.selected,
+        categoryId: data.categoryId,
         name: data.name,
         code: data.code,
         pinyin: data.pinyin,
@@ -1461,8 +1473,10 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
         }
     }).then((res) => {
         console.log('添加成功')
-        dispatch(types.ADD_BREED_DATA, data);
+        data.id=res.json().result.id;
         console.log(data)
+        dispatch(types.ADD_BREED_DATA, data);
+
     }, (res) => {
         console.log('fail');
     });
@@ -1525,11 +1539,12 @@ export const updateBreedInfo = ({ dispatch }, param) => { //修改药材信息
     const updatedata = {
         code: param.code,
         name: param.name,
-        categoryId: param.selected,
+        categoryId: param.categoryId,
         eName: param.eName,
         lName: param.lName,
         pinyin: param.pinyin,
-        id: param.id
+        id: param.id,
+        icon:param.icon
     }
     console.log('update===');
     console.log(updatedata);

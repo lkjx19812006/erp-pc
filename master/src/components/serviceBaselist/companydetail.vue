@@ -3,6 +3,9 @@
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <div class="breed_detail">
+      <div class="cover_loading" v-if="param.id!=initCompanyDetail.id">
+        <pulse-loader :loading="true" :color="color" :size="size"></pulse-loader>
+      </div>
         <div class="client-section clearfix" v-cloak>
             <div @click="param.show=false" class="top-title">
                 <span class="glyphicon glyphicon-remove-circle"></span>
@@ -44,7 +47,7 @@
                             <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
                                 联系人({{initCompanyDetail.companyContacts.arr.length}})
                             </a>
-                            <button type="button" class="btn btn-base pull-right" @click.stop="createCompany({
+                            <button v-if="!initCompanyDetail.customerId" type="button" class="btn btn-base pull-right" @click.stop="createCompany({
                                cid:param.id,
                                show:true,
                                title:'新建联系人',
@@ -60,7 +63,7 @@
                                email:'',
                                wechart:'',
                                main:0,
-                               link:createContact,
+                               link:1,
                                url:'contract',
                                key:'companyContacts'
                               })">新建</button>
@@ -196,19 +199,18 @@
                                            <th>证书编号</th>
                                            <th>发证日期</th>
                                            <th>过期日期</th>
-                                           <th>状态</th>
                                        </tr>
                                    </thead>
                                    <tbody>
                                        <tr v-for="item in initCompanyDetail.companyLicenses.arr">
-                                           <td>{{item.type}}</td>
+                                           <td v-if="item.type==0">企业证书</td>
+                                           <td v-if="item.type==1">产品证书</td>
                                            <td>{{item.productName}}</td>
                                            <td>{{item.name}}</td>
                                            <td>{{item.organization}}</td>
                                            <td>{{item.number}}</td>
-                                           <td>{{item.release_date}}</td>
-                                           <td>{{item.due_date}}</td>
-                                           <td>{{item.status}}</td>
+                                           <td>{{item.releaseDate}}</td>
+                                           <td>{{item.dueDate}}</td>
                                        </tr>
                                    </tbody>
                                </table>

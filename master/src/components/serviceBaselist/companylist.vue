@@ -74,8 +74,10 @@
                                         name:item.name,
                                         tel:item.tel,
                                         principal:item.principal,
+                                        legalPerson:item.legalPerson,
                                         bizScope:item.bizScope,
                                         province:item.province,
+                                        number:item.number,
                                         city:item.city,
                                         address:item.address,
                                         employeeId:'',
@@ -107,7 +109,7 @@ import searchModel from './companySearch'
 
 import {
     initEnterpriselist,
-    initProvince
+
 } from '../../vuex/getters'
 import {
     getEnterpriseData,
@@ -160,7 +162,7 @@ export default {
             getCompanyData,
             getProvinceList
         }
-    },
+
     methods: {
         companyDetail:function(id,index){
             this.companyParam.show = true;
@@ -208,6 +210,8 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getEnterpriseData(this.loadParam);
+            this.getCompanyData(this.loadParam);
+
         }
     },
     filter: (filter, {}),

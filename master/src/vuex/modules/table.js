@@ -589,7 +589,8 @@ const mutations = {
             "desc": data.desc,
             "typedesc":data.type,
             "id": data.id,
-            "show": false
+            "show": false,
+            "status":1
         });
     },
     [UPDATE_DATA](state, data) { //枚举修改
@@ -623,13 +624,14 @@ const mutations = {
             "eName": data.eName,
             "lName": data.lName,
             "id": data.id,
-            "show": false
+            "show":false,
+            "icon":data.path
         })
     },
     [ADD_CONTACT_DATA](state, data) { //新增企业联系人
         state.companyDetail.companyContacts.arr.unshift({
             "name": data.name,
-            "cid": data.id,
+            "cid": data.cid,
             "tel": data.tel,
             "phone": data.phone,
             "wechart": data.wechart,
