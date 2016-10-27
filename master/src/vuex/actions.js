@@ -323,7 +323,7 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log(res.json().result)
+       console.log(res.json().result)
         var orderList = res.json().result.list;
         console.log(orderList)
         for (var i in orderList){

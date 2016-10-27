@@ -89,7 +89,8 @@ import {
 } from '../../vuex/getters'
 import {
     getOrderList,
-    getEmpolyeeOrder
+    getEmpolyeeOrder,
+    getOrgOrder
 } from '../../vuex/actions'
 export default {
     components: {
@@ -120,7 +121,8 @@ export default {
         },
         actions: {
             getOrderList,
-            getEmpolyeeOrder
+            getEmpolyeeOrder,
+            getOrgOrder
         }
     },
     methods:{
@@ -132,6 +134,9 @@ export default {
             }
             if(this.param.link=='/order/myList'){
                 this.getEmpolyeeOrder(this.param);
+            }
+            if(this.param.link=='/order/sectionList'){
+                this.getOrgOrder(this.param);
             }
             
         }
@@ -145,16 +150,11 @@ export default {
             console.log('hook-example deactivated!')
             transition.next()
         }
-    }/*,
-    created() {
-        this.getProvinceList(this.provinceParam);
-
-    }*/
+    }
 }
 </script>
 <style scoped>
 .modal_con{
-    /*max-height: 720px;*/
     width: 600px;
 }
 .top-title{
@@ -226,7 +226,7 @@ export default {
 
 .editpageleft,
 .editpageright {
-    -webkit-box-flex: 1;
+129    -webkit-box-flex: 1;
     -webkit-flex: auto;
     -ms-flex: auto;
     flex: auto;
