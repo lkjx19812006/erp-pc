@@ -1,6 +1,4 @@
   <template>
-    <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
-    <update-model :param="updateParam" v-if="updateParam.show"></update-model>
     <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
@@ -9,45 +7,6 @@
         <div class="clear">
             <div class="my_order col-xs-2">订单审核</div>
             <div class="right">
-                <!-- <button class="new_btn" @click="newOrder({
-                    show:true,
-                    title1:'新建订单',
-                    type:'',
-                    sourceType:'',
-                    sample:'',
-                    intl:'',
-                    customer:'',
-                    currency:'',
-                    consignee:'',
-                    consigneePhone:'',
-                    zipCode:'',
-                    country:'',
-                    province:'',
-                    city:'',
-                    district:'',
-                    consigneeAddr:'',
-                    comments:'',
-                    incidentals:'',
-                    incidentalsDesc:'',
-                    preferential:'',
-                    preferentialDesc:'',
-                    orderStatus:'',
-                    goods:[{
-                            sourceType:'',
-                            sourceId:'',
-                            title:'',
-                            breedId:'',
-                            brredName:'',
-                            quality:'',
-                            location:'',
-                            spec:'',
-                            price:'',
-                            unit:'',
-                            number:''
-                        }],
-                    key:'orderList',
-                    link:createOrder
-                    })">新建</button> -->
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
@@ -114,60 +73,8 @@
                       <img height="24" width="24" src="/static/images/default_arrow.png" />
                       <div class="component_action" v-show="item.show">
                            <ul>
-                               <li @click="updateOrder({
-                                        sub:$index,
-                                        id:item.id,
-                                        show:true,
-                                        title1:'修改订单',
-                                        type:item.type,
-                                        sourceType:item.sourceType,
-                                        sample:item.sample,
-                                        intl:item.intl,
-                                        customer:item.customer,
-                                        currency:item.currency,
-                                        consignee:item.consignee,
-                                        consigneePhone:item.consigneePhone,
-                                        zipCode:item.zipCode,
-                                        country:item.country,
-                                        province:item.province,
-                                        city:item.city,
-                                        district:item.district,
-                                        consigneeAddr:item.consigneeAddr,
-                                        comments:item.comments,
-                                        incidentals:item.incidentals,
-                                        incidentalsDesc:item.incidentalsDesc,
-                                        preferential:item.preferential,
-                                        preferentialDesc:item.preferentialDesc,
-                                        goods:[{
-                                                sourceType:item.goods[0].sourceType,
-                                                sourceId:item.goods[0].sourceId,
-                                                title:item.goods[0].title,
-                                                breedId:item.goods[0].breedId,
-                                                brredName:item.goods[0].brredName,
-                                                quality:item.goods[0].quality,
-                                                location:item.goods[0].location,
-                                                spec:item.goods[0].spec,
-                                                price:item.goods[0].price,
-                                                unit:item.goods[0].unit,
-                                                number:item.goods[0].number
-                                            }],
-                                        key:'orderList',
-                                        link:alterOrder,
-                                        url:'/order/'
-                                        })">编辑</li>
-                                
                                 <li v-if="item.orderStatus==30&&item.type==0" @click="pendingOrder(item,$index)">等待核查</li>
                                 <li v-if="item.orderStatus==30&&item.type==1" @click="pendingOrder(item,$index)">等待核查</li>
-                              <!--  <li @click="specDelete({
-                                       id:item.id,
-                                       sub:$index,
-                                       show:true,
-                                       name:item.no,
-                                       title:'订单',
-                                       link:deleteInfo,
-                                       url:'/order/',
-                                       key:'orderList'
-                                       })">删除</li> -->
                            </ul>
                        </div>
                   </td>
@@ -182,11 +89,8 @@
   </template>
   <script>
     import pagination from '../pagination'
-    import editorderModel from '../order/orderInformationDialog'
-    import updateModel from '../order/orderUpdate'
     import detailModel from '../order/orderDetail'
     import searchModel from '../order/orderSearch'
-    import deletebreedModel from  '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
     import disposeModel  from  '../order/orderStatus'
     import {
         getList,
@@ -202,12 +106,9 @@
 
     export default {
         components: {
-            editorderModel,
             pagination,
-            updateModel,
             detailModel,
             searchModel,
-            deletebreedModel,
             disposeModel
         },
         data() {

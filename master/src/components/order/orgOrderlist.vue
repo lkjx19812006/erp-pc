@@ -9,45 +9,6 @@
         <div class="clear">
             <div class="my_order col-xs-2">部门订单</div>
             <div class="right">
-                <!-- <button class="new_btn" @click="newOrder({
-                    show:true,
-                    title1:'新建订单',
-                    type:'',
-                    sourceType:'',
-                    sample:'',
-                    intl:'',
-                    customer:'',
-                    currency:'',
-                    consignee:'',
-                    consigneePhone:'',
-                    zipCode:'',
-                    country:'',
-                    province:'',
-                    city:'',
-                    district:'',
-                    consigneeAddr:'',
-                    comments:'',
-                    incidentals:'',
-                    incidentalsDesc:'',
-                    preferential:'',
-                    preferentialDesc:'',
-                    orderStatus:'',
-                    goods:[{
-                            sourceType:'',
-                            sourceId:'',
-                            title:'',
-                            breedId:'',
-                            brredName:'',
-                            quality:'',
-                            location:'',
-                            spec:'',
-                            price:'',
-                            unit:'',
-                            number:''
-                        }],
-                    key:'orderList',
-                    link:createOrder
-                    })">新建</button> -->
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
@@ -176,16 +137,6 @@
                                 <li v-if="item.orderStatus==60&&item.type==1" @click="pendingOrder(item,$index)">已完成订单</li>
                                 <li v-if="item.orderStatus==70&&item.type==1" @click="pendingOrder(item,$index)">已完成订单</li>
                                 <li v-if="item.orderStatus==100&&item.type==1">待支付核查订单</li>
-                              <!--  <li @click="specDelete({
-                                       id:item.id,
-                                       sub:$index,
-                                       show:true,
-                                       name:item.no,
-                                       title:'订单',
-                                       link:deleteInfo,
-                                       url:'/order/',
-                                       key:'orderList'
-                                       })">删除</li> -->
                            </ul>
                        </div>
                   </td>
@@ -231,12 +182,12 @@
         data() {
             return {
                 loadParam: {
-                    loading: true,
+                   loading: true,
                     color: '#5dc596',
                     size: '15px',
                     show:false,
                     cur: 1,
-                    all: 1,
+                    all:1,
                     consignee:'',
                     link:'/order/sectionList',
                     consigneePhone:'',

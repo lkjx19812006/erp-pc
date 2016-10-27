@@ -135,6 +135,8 @@
                                                 show:true,
                                                 name:item.name,
                                                 type:item.type,
+                                                typeDesc:item.type,
+                                                classifyDesc:item.classify,
                                                 classify:item.classify,
                                                 category:item.category,
                                                 principal:item.principal,

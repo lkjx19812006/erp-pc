@@ -53,6 +53,9 @@ export const initRolloutlist = (state) => {
 export const initOrderDetail = (state) => { 
     return JSON.parse(JSON.stringify(state.table.orderDetail));
 }
+export const initLogisticsDetail = (state) => { 
+    return JSON.parse(JSON.stringify(state.table.logisticsDetail));
+}
 
 
 /*--系统基础数据--*/
