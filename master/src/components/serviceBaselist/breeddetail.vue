@@ -3,6 +3,9 @@
     <updatebreed-model :param="breedlistParam" v-if="breedlistParam.show"></updatebreed-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <div class="breed_detail">
+      <div class="cover_loading" v-if="param.id!=initBreedDetail.id">
+        <pulse-loader :loading="true" :color="color" :size="size"></pulse-loader>
+      </div>
     <div class="client-section clearfix" v-cloak>
         <div @click="close()" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -284,10 +287,21 @@
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>品种分类选择</label>
-                        <select class="form-control" v-model="initBreedDetail.categoryId" disabled="disabled">
-                            <option v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
-                        </select>
+                      <input v-if="breedCategory[initBreedDetail.categoryId]" type="text" class="form-control" value="{{breedCategory[initBreedDetail.categoryId]}}" disabled="disabled" />
+                      <input v-if="!breedCategory[initBreedDetail.categoryId]" type="text" class="form-control" value="其它类" disabled="disabled" />
                     </div>
+                  <div class="client-detailInfo  col-xs-12">
+                    <label>拼音</label>
+                    <input type="text" class="form-control" value="{{initBreedDetail.pinyin}}" disabled="disabled" />
+                  </div>
+                  <div class="client-detailInfo  col-xs-12">
+                    <label>英文</label>
+                    <input type="text" class="form-control" value="{{initBreedDetail.eName}}" disabled="disabled" />
+                  </div>
+                  <div class="client-detailInfo  col-xs-12">
+                    <label>拉丁文</label>
+                    <input type="text" class="form-control" value="{{initBreedDetail.lName}}" disabled="disabled" />
+                  </div>
                     <div class="client-detailInfo  col-xs-12 ">
                         <label>图标</label>
                         <div class="clearfix">
@@ -351,6 +365,22 @@ export default {
             },
             deleteParam:{
                 show:false
+            },
+            breedCategory:{
+              800:"药材和饮片",
+              810:'全草类',
+              811:'花类',
+              812:'果实籽仁类',
+              813:'根茎类',
+              814:'叶类',
+              815:'树皮类',
+              816:'藤木类',
+              817:'树脂类',
+              818:'菌藻类',
+              819:'动物类',
+              820:'矿物类',
+              900:'提取物和植物油脂类',
+              901:'ww'
             }
         }
     },

@@ -20,7 +20,7 @@
               </div>
               <div class="ordertel_search clearfix" style='border:0;'>
                   <button class="new_btn" @click="categoryNameSearch()">搜索</button>
-              </div>   
+              </div>
             </div>
             <div class="right col-xs-1">
                 <button class="new_btn" @click="createBreed('create')">新建</button>
@@ -57,15 +57,16 @@
                     <tr v-for="item in initBreedlist">
                         <td>{{item.code | breedcode}}</td>
                         <td  class="underline"  @click="editBreed(item.id)">{{item.name}}</td>
-                        <td>{{item.categoryName}}</td>
+                        <td v-if="breedCategory[item.categoryId]">{{breedCategory[item.categoryId]}}</td>
+                        <td v-if="!breedCategory[item.categoryId]">其它类</td>
                         <td>{{item.pinyin}}</td>
                         <td>{{item.eName}}</td>
                         <td>{{item.lName}}</td>
-                        <td @click.stop="breedClick($index)">
+                        <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="breed_action" v-show="item.show">
                                 <ul>
-                                    <li @click="modifyBreed($index,item)">编辑</li>
+                                    <li @click="item.show=false,modifyBreed($index,item)">编辑</li>
                                     <li @click="specDelete({
                                         id:item.id,
                                         sub:$index,
@@ -140,11 +141,27 @@ export default {
                 show: false,
                 id: ''
             },
+            breedCategory:{
+              800:"药材和饮片",
+              810:'全草类',
+              811:'花类',
+              812:'果实籽仁类',
+              813:'根茎类',
+              814:'叶类',
+              815:'树皮类',
+              816:'藤木类',
+              817:'树脂类',
+              818:'菌藻类',
+              819:'动物类',
+              820:'矿物类',
+              900:'提取物和植物油脂类',
+              901:'ww'
+            },
             changeParam: {
                 show: false,
                 id: ''
-            },
-            breedBaseData: this.initBreedlist
+            }
+
         }
     },
     vuex: {
@@ -172,15 +189,6 @@ export default {
             this.breedParam.show = true;
             this.breedParam.name = value;
         },
-        breedClick: function(id) {
-            console.log(id);
-            console.log(this.$store.state.table.basicBaseList.breedList[id]);
-            if (this.$store.state.table.basicBaseList.breedList[id].show) {
-                this.$store.state.table.basicBaseList.breedList[id].show = !this.$store.state.table.basicBaseList.breedList[id].show;
-            } else {
-                this.$store.state.table.basicBaseList.breedList[id].show = true;
-            }
-        },
         editBreed: function(id) {
             this.changeParam.show = true;
             this.changeParam.id = id;
@@ -192,12 +200,11 @@ export default {
         modifyBreed: function(id) {
             this.reviseParam.id = id;
             this.reviseParam.show = true;
-            this.reviseshow = false;
-            this.$broadcast('getParam');
-            if (this.$store.state.table.basicBaseList.breedList[id].show == true) {
-                this.$store.state.table.basicBaseList.breedList[id].show = !this.$store.state.table.basicBaseList.breedList[id].show;
-            }
-        }
+        },
+      eventClick:function(sub){
+
+        this.$store.state.table.basicBaseList.breedList[sub].show=!this.$store.state.table.basicBaseList.breedList[sub].show;
+      }
     },
     events: {
         fresh: function(input) {

@@ -3,6 +3,9 @@
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <div class="breed_detail">
+      <div class="cover_loading" v-if="param.id!=initCompanyDetail.id">
+        <pulse-loader :loading="true" :color="color" :size="size"></pulse-loader>
+      </div>
         <div class="client-section clearfix" v-cloak>
             <div @click="param.show=false" class="top-title">
                 <span class="glyphicon glyphicon-remove-circle"></span>

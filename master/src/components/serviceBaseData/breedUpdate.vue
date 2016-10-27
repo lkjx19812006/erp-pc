@@ -10,7 +10,7 @@
         </div>
         <validator name="validation">
             <div class="edit-model">
-                
+
                     <section class="editsection" v-cloak>
                         <input type="hidden"  class="form-control edit-input" value="{{categoryData.id}}" />
                         <div class="clearfix">
@@ -26,7 +26,7 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种分类选择</label>
-                                <select class="form-control" v-model="categoryData.selected" style="width:90%;">
+                                <select class="form-control" v-model="categoryData.categoryId" style="width:90%;">
                                    <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                                  </select>
                             </div>
@@ -45,6 +45,16 @@
                                 <input type="text" v-model='categoryData.lName' class="form-control edit-input"  />
                             </div>
                         </div>
+                      <div class="clearfix">
+                        <div class="editpage-input">
+                          　<label class="editlabel">修改图标</label>
+                          　<div class="editpage_img clearfix">
+                          <div class="editpage-image col-md-4">
+                            <press-image :value.sync="categoryData.icon"></press-image>
+                          </div>
+                          　</div>
+                          　</div>
+                      </div>
                     </section>
             </div>
             <div class="edit_footer">
@@ -57,6 +67,7 @@
     </div>
 </template>
 <script>
+import pressImage from '../../components/imagePress'
 import tipsdialogModel  from '../tips/tipDialog'
 import filter from '../../filters/filters'
 import {
@@ -72,7 +83,8 @@ export default {
     props: ['param'],
     components:{
         filter,
-        tipsdialogModel
+        tipsdialogModel,
+        pressImage
     },
     data() {
         return {
@@ -80,10 +92,11 @@ export default {
                 id: this.initBreedlist[this.param.id].id,
                 code: this.initBreedlist[this.param.id].code,
                 name: this.initBreedlist[this.param.id].name,
-                selected: this.initBreedlist[this.param.id].categoryId,
+                categoryId: this.initBreedlist[this.param.id].categoryId,
                 pinyin: this.initBreedlist[this.param.id].pinyin,
                 eName: this.initBreedlist[this.param.id].eName,
                 lName: this.initBreedlist[this.param.id].lName,
+                icon:this.initBreedlist[this.param.id].icon
             },
             tipsParam: {
                 show:false,
@@ -104,24 +117,6 @@ export default {
             getCategoryData
         }
     },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
-    },
-    events: {
-        'getParam' () {
-            this.$set('categoryData.name', this.initBreedlist[this.param.id].name);
-            this.$set('categoryData.code', this.initBreedlist[this.param.id].code);
-            this.$set('categoryData.selected', this.initBreedlist[this.param.id].categoryId);
-            this.$set('categoryData.id', this.initBreedlist[this.param.id].id);
-        }
-    },
     methods: {
       confirm:function(){
         this.param.show = false;
@@ -137,7 +132,7 @@ export default {
 </script>
 <style scoped>
 .modal_con{
-    max-height: 400px;
+    max-height: 600px;
     max-width: 600px;
 }
 .top-title {

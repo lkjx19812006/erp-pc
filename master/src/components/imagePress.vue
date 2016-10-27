@@ -25,7 +25,8 @@ export default {
         },
         props: {
           param:{
-            default: null
+            default: null,
+            qiniu:''
           },
           value:'',
           type:'*'
@@ -34,7 +35,7 @@ export default {
             previewImg: function(e) {
                 let _self = this;
                 let input = e.target;
-               console.log(_self.param);
+
                 if (input.files && input.files[0]) {
                     let file = input.files[0];
                     console.log(file)
@@ -56,7 +57,8 @@ export default {
                         }
                           let param ={};
                             param.mFile=_self.image;
-                            param.qiniu=_self.param.qiniu;
+                            if(_self.param&&_self.param.qiniu){param.qiniu=_self.param.qiniu;}
+                            else{ param.qiniu=false;}
                             _self.close=true;
                             _self.upload(param,'base64');
                     }
@@ -110,7 +112,7 @@ export default {
                 var _self=this;
                    this.$http({
                         method: 'POST',
-                        url: _self.param.url+url,
+                        url: '/crm/api/v1/file/'+url,
                         emulateJSON: false,
                         emulateHTTP: false,
                         body: data
