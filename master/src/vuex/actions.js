@@ -56,6 +56,18 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         if(key=='clients'&&param[key]!=''){
           url += '&clients='+param[key];
         }
+        if(key=='no'&&param[key]!=''){
+             url += '&orderNo='+param[key];
+        }
+        if(key=='ctime'&&param[key]!=''){
+            url += '&startTime='+param[key];
+        }
+        if(key=='ftime'&&param[key]!=''){
+            url += '&endTime='+param[key];
+        }
+        if(key=='mode'&&param[key]!=''){
+            url += '&mode='+param[key];
+        }
         if(key=='dataStatus'&&param[key]!=''){
           url += '&dataStatus='+param[key];
         }
@@ -65,10 +77,10 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         if(key=='payWay'&&param[key]!=''){
           url += '&payWay='+param[key];
         }
-         if(key=='consigneePhone'&&param[key]!=''){
+        if(key=='consigneePhone'&&param[key]!=''){
           url += '&consigneePhone='+param[key];
         }
-         if(key=='type'&&param[key]!=''){
+        if(key=='type'&&param[key]!=''){
           url += '&type='+param[key];
         }
     }
@@ -176,7 +188,7 @@ export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列
 }
 export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核列表以及订单搜索
     param.loading = true;
-    var url = apiUrl.orderList+param.link+'?orderStatus=30&page=' + param.cur + '&pageSize=15';
+    var url = apiUrl.orderList+param.link+'?orderStatus=30&type=1&page=' + param.cur + '&pageSize=15';
     for(var key in param){
         if(key=='consignee'&&param[key]!=''){
              url += '&consignee='+param[key];
@@ -235,10 +247,22 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
             body.consignee=param[key];
         }
         if(key=='clients'&&param[key]!=''){
-          body.clients=param[key];
+           body.clients=param[key];
+        }
+        if(key=='no'&&param[key]!=''){
+            body.orderNo=param[key];
+        }
+        if(key=='ctime'&&param[key]!=''){
+            body.startTime=param[key];
+        }
+        if(key=='ftime'&&param[key]!=''){
+            body.endTime=param[key];
+        }
+        if(key=='mode'&&param[key]!=''){
+            body.mode=param[key];
         }
         if(key=='dataStatus'&&param[key]!=''){
-          body.dataStatus=param[key];
+           body.dataStatus=param[key];
         }
         if(key=='orderStatus'&&param[key]!=''){
           body.orderStatus=param[key];
@@ -296,8 +320,20 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
         if(key=='clients'&&param[key]!=''){
           body.clients=param[key];
         }
+         if(key=='no'&&param[key]!=''){
+            body.orderNo=param[key];
+        }
+        if(key=='ctime'&&param[key]!=''){
+           body.startTime=param[key];
+        }
+        if(key=='ftime'&&param[key]!=''){
+            body.endTime=param[key];
+        }
+        if(key=='mode'&&param[key]!=''){
+            body.mode=param[key];
+        }
         if(key=='dataStatus'&&param[key]!=''){
-          body.dataStatus=param[key];
+           body.dataStatus=param[key];
         }
         if(key=='orderStatus'&&param[key]!=''){
           body.orderStatus=param[key];
@@ -362,9 +398,10 @@ export const getExpressList = ({ dispatch }, param) => { //物流列表
 }
 
 export const logisticsInfo = ({ dispatch }, param) => { //物流查看详情
+    console.log(param)
     param.loading = true;
-    var url = apiUrl.orderList+'/order/logistics?checkCode=yunda&number=3903300539521';
-     /*var url = apiUrl.orderList+param.link+'?checkCode='+param.code+'&number='+param.number;*/
+   /* var url = apiUrl.orderList+'/order/logistics?checkCode=yunda&number=3903300539521';*/
+    var url = apiUrl.orderList+'/order/logistics?checkCode='+param.lcompanyCode+'&number='+param.number;
     Vue.http({
         method:'GET',
         url:url,
@@ -531,13 +568,13 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
        bizType:param.bizType
     }
     if(param.payPics){
-        body.path = param.payPics;
+        body.payPics = param.payPics;
     }
     if(param.sendPics){
-        body.path = param.sendPics;
+        body.sendPics = param.sendPics;
     }
     if(param.attachFiles){
-        body.path = param.attachFiles;
+        body.attachFiles = param.attachFiles;
     }
     Vue.http({
         method: 'POST',
@@ -697,6 +734,13 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
         orderDetail.attachFiles.show = true;
         for (var i in orderDetail.attachFiles.arr) {
             orderDetail.attachFiles.arr[i].show = false;
+        }
+        var logisticses = orderDetail.logisticses;
+        orderDetail.logisticses={};
+        orderDetail.logisticses.arr = logisticses;
+        orderDetail.logisticses.show = true;
+        for (var i in orderDetail.logisticses.arr) {
+            orderDetail.logisticses.arr[i].show = false;
         }
 
         dispatch(types.ORDER_DETAIL_DATA, orderDetail);
@@ -998,8 +1042,6 @@ export const getDistrictList = ({ dispatch }, param) => { //获取区的列表
 
 export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
     param.loading = true;
-    console.log('url==>');
-    console.log(apiUrl.clientList + '/company/query?type=&name=&category=&province=&transform=&page=' + param.cur + '&pageSize=15');
     Vue.http({
         method: "GET",
         url: apiUrl.clientList + '/company/query?type=&name=&category=&province=&transform=&page=' + param.cur + '&pageSize=15',
@@ -1008,13 +1050,11 @@ export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
-        console.log('---------------->');
         console.log(res.json());
         var obj = res.json().result.list;
         for (var i in obj) {
             obj[i].show = false;
         }
-
         dispatch(types.SERVICE_ENTERPRISE, obj);
         param.all = res.json().result.pages;
         param.loading = false;
@@ -1196,6 +1236,7 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
     }).then((res) => {
         console.log('联系人添加成功')
       console.log(res);
+      param.id=res.json().result.id;
         dispatch(types.ADD_CONTACT_DATA, param)
     }, (res) => {
         console.log('fail');

@@ -14,6 +14,9 @@
         </div>
       </div>
       <div class="order_table">
+        <div class="cover_loading">
+            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+        </div>
         <table class="table table-hover table_color table-striped " v-cloak>
             <thead>
                 <tr>  
@@ -61,7 +64,17 @@
                   <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
                   <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
                   <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
-                  <td>{{item.orderStatus}}</td>
+                  <td v-if="item.orderStatus==0">订单生成</td>
+                  <td v-if="item.orderStatus==10">等待处理</td>
+                  <td v-if="item.orderStatus==20">等待支付</td>
+                  <td v-if="item.orderStatus==30">等待审核</td>
+                  <td v-if="item.orderStatus==40">等待卖家发货</td>
+                  <td v-if="item.orderStatus==50">等待收货</td>
+                  <td v-if="item.orderStatus==60">已完成</td>
+                  <td v-if="item.orderStatus==70">已完成</td>
+                  <td v-if="item.orderStatus==-1">已取消</td>
+                  <td v-if="item.orderStatus==-2">已过期</td>
+                  
                   <td v-if="item.status==0">无效</td>
                   <td v-if="item.status==1">待审</td>
                   <td v-if="item.status==2">审核通过</td>

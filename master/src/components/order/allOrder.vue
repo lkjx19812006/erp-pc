@@ -7,7 +7,7 @@
     <div v-show="!detailParam.show&&!disposeParam.show">
       <div class="order_search">
         <div class="clear">
-            <div class="my_order col-xs-2">我的订单</div>
+            <div class="my_order col-xs-2">全部订单</div>
             <div class="right">
                <!--  <button class="new_btn" @click="newOrder({
                    show:true,
@@ -53,9 +53,9 @@
         </div>
       </div>
       <div class="order_table">
-      <div class="cover_loading">
-          <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-      </div>
+          <div class="cover_loading">
+              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+          </div>
         <table class="table table-hover table_color table-striped " v-cloak>
             <thead>
                 <tr>  
@@ -97,13 +97,23 @@
                   <td>{{item.province}}</td>
                   <td>{{item.city}}</td>
                   <td>{{item.employee}}</td>
-                  <td>{{item.logisticsNo}}</td>
+                  <td>{{item.logistics}}</td>
                   <td>{{item.comments}}</td>
                   <td v-if="item.clients==0||item.clients==null" style="background:red;color:#fff">PC</td>
                   <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
                   <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
                   <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
-                  <td>{{item.orderStatus}}</td>
+                  <td v-if="item.orderStatus==0">订单生成</td>
+                  <td v-if="item.orderStatus==10">等待处理</td>
+                  <td v-if="item.orderStatus==20">等待支付</td>
+                  <td v-if="item.orderStatus==30">等待审核</td>
+                  <td v-if="item.orderStatus==40">等待卖家发货</td>
+                  <td v-if="item.orderStatus==50">等待收货</td>
+                  <td v-if="item.orderStatus==60">已完成</td>
+                  <td v-if="item.orderStatus==70">已完成</td>
+                  <td v-if="item.orderStatus==-1">已取消</td>
+                  <td v-if="item.orderStatus==-2">已过期</td>
+                 
                   <td v-if="item.status==0">无效</td>
                   <td v-if="item.status==1">待审</td>
                   <td v-if="item.status==2">审核通过</td>
@@ -302,9 +312,11 @@
                 this.dialogParam=initOrderlist;
             },
             pendingOrder:function(item,sub){
+              console.log(item)
                 item.show=!item.show;
                 item.sub = sub;
                 this.disposeParam = item;
+                this.disposeParam.id = item.id;
                 this.disposeParam.show = true;
                 /*--采购状态type==0--*/
                 if(item.orderStatus==0&&item.type==0){

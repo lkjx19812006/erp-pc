@@ -31,8 +31,6 @@ import allClient from '../components/clientRelate/clientList/allClient'
 import potentialClient from '../components/clientRelate/clientList/potentialClient'
 import blackClient from '../components/clientRelate/clientList/blackClient'
 
-
-
 export default {
     components: {
         myClient,

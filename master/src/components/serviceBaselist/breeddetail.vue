@@ -4,7 +4,7 @@
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <div class="breed_detail">
     <div class="client-section clearfix" v-cloak>
-        <div @click="close()" class="top-title">
+        <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="col-md-8 client-detail">
@@ -376,9 +376,6 @@ export default {
                 this.$store.state.table.breedDetail[param.crete].show=false
             }
             this.$store.state.table.breedDetail[param.crete].show = !this.$store.state.table.breedDetail[param.crete].show;
-        },
-        close: function() {
-            this.param.show = false;
         },
         createFormt: function(initBreedDetail){
             this.specParam=initBreedDetail;

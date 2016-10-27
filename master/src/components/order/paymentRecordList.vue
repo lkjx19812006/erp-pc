@@ -5,7 +5,7 @@
       <div class="my_enterprise col-xs-2">订单支付记录</div>
       <div class="my_order_search">
           <select  v-model="loadParam.payWay" class="form-control" @change="searchProduct()">
-              <option selected>请选择支付方式</option>
+              <option selected value="">请选择支付方式</option>
               <option value="0">线下打款</option>
               <option value="1">支付宝</option>
               <option value="2">平安支付</option>

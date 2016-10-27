@@ -1,7 +1,6 @@
 <template>
     <cancle-model :param="cancleReason" v-if="cancleReason.show"></cancle-model>
     <undeline-model :param="undelinePay" v-if="undelinePay.show"></undeline-model>
-    <!-- <yaokuan-model :param="yaokuanPay" v-if="yaokuanPay.show"></yaokuan-model> -->
     <logistics-model :param="logisticsDetail" v-if="logisticsDetail.show"></logistics-model>
     <editorder-model :param="editorder" v-if="editorder.show"></editorder-model>
     <div class="client_body">
@@ -21,34 +20,34 @@
             <div class="message clearfix">
                 <p class="order-message">订单信息</p>
                 <div class="space_15 clearfix">
-                    <div class="left message_front" style="margin-top:5px;">订单号：{{param.no}}</div>
-                    <div class="left message_front"><img src="../../../static/images/contacter.png" height="30" width="23"  class="left"/><span class="tips">收件人：{{param.consignee}} | {{param.consigneePhone}}</span></div>
+                    <div class="left message_front" style="margin-top:5px;">订单号：{{initOrderDetail.no}}</div>
+                    <div class="left message_front"><img src="../../../static/images/contacter.png" height="30" width="23"  class="left"/><span class="tips">收件人：{{initOrderDetail.consignee}} | {{initOrderDetail.consigneePhone}}</span></div>
                     <div class="left message_front"><img src="../../../static/images/address.png" class="left" height="34" width="24"  /><span class="tips">收件人地址：{{param.consigneeAddr}}</span></div>
                 </div>
             </div>
             <div class="order_info clearfix">
               <div class="col-xs-6 pull-left">
-                  <p>{{param.goods[0].brredName}}</p>
-                  <p>{{param.goods[0].price}}元/{{param.goods[0].unit}}</p>
-                  <p>数量：{{param.goods[0].number}}</p>
-                  <p>下单时间：{{param.ctime}}</p>
+                  <p>{{initOrderDetail.goods.arr[0].brredName}}</p>
+                  <p>{{initOrderDetail.goods.arr[0].price}}元/{{initOrderDetail.goods.arr[0].unit}}</p>
+                  <p>数量：{{initOrderDetail.goods.arr[0].number}}</p>
+                  <p>下单时间：{{initOrderDetail.ctime}}</p>
               </div>
               <div class="col-xs-6 pull-left">
-                 <p><label>杂费：</label><span style="color:#fa6705">¥{{param.incidentals}}</span>（运费）</p>
-                 <p><span  style="color:#fa6705">合计：¥{{param.total.toFixed(2)}}</span></p>
+                 <p><label>杂费：</label><span style="color:#fa6705">¥{{initOrderDetail.incidentals}}</span>（运费）</p>
+                 <p><span  style="color:#fa6705">合计：¥{{initOrderDetail.total.toFixed(2)}}</span></p>
               </div> 
             </div>
             <!-- 处理订单0 -->
             <div class="clearfix" v-if="param.handle">
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
-                    id:param.id,
+                    id:initOrderDetail.id,
                     show:true,
                     orderStatus:'',
                     link:'/order/handle',
                     images:''
                    },param.show=false)"  value="接受订单" />
                 <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
-                    id:param.id,
+                    id:initOrderDetail.id,
                     cancleCauses:'',
                     show:true,
                     headline:'取消订单原因',
@@ -60,7 +59,7 @@
             <!-- 订单确认10 -->
             <div class="clearfix" v-if="param.sales">
                 <input type="button" class="btn  btn-confirm right"  @click="confirmEdit({
-                        id:param.id,
+                        id:initOrderDetail.id,
                         show:true,
                         orderStatus:'',
                         link:'/order/confirm',
@@ -90,7 +89,7 @@
             <!-- 订单财务审核 -->
             <div class="clearfix" v-if="param.Auditing">
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
-                    id:param.id,
+                    id:initOrderDetail.id,
                     show:true,
                     link:'/order/payConfirm',
                     orderStatus:'',
@@ -126,7 +125,7 @@
             </div>
             <div class="clearfix">
                 <input type="button" class="btn  btn-confirm right"  @click="payOrder({
-                    id:param.id,
+                    id:initOrderDetail.id,
                     show:true,
                     link:'/order/pay',
                     payWay:'',
@@ -144,37 +143,26 @@
               <div class="space_15 clearfix">
                 <div class="logical_color">
                   <span class="mui-pull-left">物流公司：</span> 
-                  <select v-model="param.lcompanyId">
+                  <select v-model="uploadLogistic.lcompanyId">
                     <option v-for="item in initExpresslist"  value="{{item.id}}">{{item.name}}</option>
                   </select>
                 </div>
                 <div class="logical_color">
                   <span class="mui-pull-left">物流单号：</span> 
-                  <input type="number" placeholder="请输入运单号" v-model="param.lcompanyNo"/>
+                  <input type="number" placeholder="请输入运单号" v-model="uploadLogistic.lcompanyNo"/>
                 </div>
                 <div class="logical_color">
                   <label class="editlabel">请上传物流单凭证照片</label>
                   <div class="clearfix">
-                      <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
-                     <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
-                     <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
+                      <press-image :value.sync="uploadLogistic.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
+                     <press-image :value.sync="uploadLogistic.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
+                     <press-image :value.sync="uploadLogistic.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
                   </div>
                 </div>
               </div>
           </div>
           <div class="clearfix">
-              <input type="button" class="btn  btn-confirm right"  @click="accept({
-                  id:param.id,
-                  show:true,
-                  link:'/order/send',
-                  image_f:param.image_f,
-                  image_s:param.image_s,
-                  image_t:param.image_t,
-                  images:'',
-                  orderStatus:'',
-                  lcompanyId:param.lcompanyId,
-                  lcompanyNo:param.lcompanyNo,
-                 },param.show=false)"  value="确认发货" />
+              <input type="button" class="btn  btn-confirm right"  @click="accept(uploadLogistic)"  value="确认发货" />
           </div>
         </div>
         <!-- 订单待收货查看物流 -->
@@ -183,14 +171,14 @@
               <p class="order-message">物流信息</p>
               <div class="space_15 clearfix">
                 <div class="logical_color">
-                  <span>物流公司：{{param.lcompanyName}}</span>
+                  <span>物流公司：{{initOrderDetail.logisticses.arr[0].logistics}}</span>
                 </div>
                 <div class="logical_color">
-                  <span>物流单号：{{param.logisticsNo}}</span>
+                  <span>物流单号：{{initOrderDetail.logisticses.arr[0].number}}</span>
                 </div>
-                <div class="logical_color">
-                  <span>物流凭证：</span>
-                  <img :src="param.sendPics" />
+                <div class="logical_color clearfix">
+                  <p>物流凭证：</p>
+                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.path"/>
                 </div>
               </div>
               <div class="order_info clearfix">
@@ -201,11 +189,12 @@
                   link:'/order/receiveConfirm'
                 },param.show=false)"  value="确认收货" />
                 <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
-                  id:param.id,
-                  lcompanyId:param.lcompanyId,
-                  code:param.code,
-                  number:param.logisticsNo,
+                  id:initOrderDetail.logisticses.arr[0].id,
+                  lcompanyId:initOrderDetail.logisticses.arr[0].logistics,
+                  lcompanyCode:initOrderDetail.logisticses.arr[0].code,
+                  number:initOrderDetail.logisticses.arr[0].number,
                   show:true,
+                  loading:true,
                   callback:logisticsInfo
                   })" value="查看物流" />
                  
@@ -218,24 +207,24 @@
               <p class="order-message">物流信息</p>
               <div class="space_15 clearfix">
                 <div class="logical_color">
-                  <span>物流公司：{{param.lcompanyName}}</span>
-                  <input type="hidden" value="{{param.lcompanyName}}" />
+                  <span>物流公司：{{initOrderDetail.logisticses.arr[0].logistics}}</span>
                 </div>
                 <div class="logical_color">
-                  <span>物流单号：{{param.logisticsNo}}</span>
+                  <span>物流单号：{{initOrderDetail.logisticses.arr[0].number}}</span>
                 </div>
-                <div class="logical_color">
-                  <span>物流凭证：</span>
-                  <img :src="param.sendPics" />
+                <div class="logical_color clearfix">
+                  <p>物流凭证：</p>
+                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.path"/>
                 </div>
               </div>
               <div class="order_info clearfix">
                 <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
-                  id:param.id,
-                  lcompanyId:param.lcompanyId,
-                  code:param.code,
-                  number:param.logisticsNo,
+                  id:initOrderDetail.logisticses.arr[0].id,
+                  lcompanyId:initOrderDetail.logisticses.arr[0].logistics,
+                  lcompanyCode:initOrderDetail.logisticses.arr[0].code,
+                  number:initOrderDetail.logisticses.arr[0].number,
                   show:true,
+                  loading:true,
                   callback:logisticsInfo
                   })"  value="查看物流" />
                  
@@ -253,9 +242,11 @@ import pressImage from '../imagePress'
 import logisticsModel  from  '../order/logisticsDetail'
 import editorderModel  from  '../order/ordergoods'
 import {
-  initExpresslist
+  initExpresslist,
+  initOrderDetail
 } from '../../vuex/getters'
 import {
+    getOrderDetail,
     orderCancle,
     orderStatu,
     yankuanPayorder,
@@ -271,6 +262,7 @@ export default {
         logisticsModel,
         editorderModel
     },
+    props:['param'],
     data() {
         return {
             changeShow: true,
@@ -302,15 +294,29 @@ export default {
             editorder:{
               show:false
             },
-            type:"image/*"
+            type:"image/*",
+            uploadLogistic:{
+              images:'',
+              orderStatus:'',
+              lcompanyId:'',
+              lcompanyNo:'',
+              id:this.param.id,
+              show:true,
+              link:'/order/send',
+              image_f:'',
+              image_s:'',
+              image_t:''
+            }
         }
     },
-    props:['param'],
+    
     vuex: {
         getters:{
-            initExpresslist
+            initExpresslist,
+            initOrderDetail
         },
         actions:{
+          getOrderDetail,
             orderCancle,
             orderStatu,
             yankuanPayorder,
@@ -323,6 +329,7 @@ export default {
         cancleBtn:function(cancle){
             console.log(cancle)
             this.cancleReason = cancle;
+            this.param.show=true;
             /*this.orderCancle(this.cancleReason)*/
         },
         accept:function(confirm){
@@ -376,6 +383,7 @@ export default {
     },
     created() {
         this.getExpressList(this.loadParam); 
+        this.getOrderDetail(this.param)
     }
 }
 </script>
@@ -392,6 +400,10 @@ export default {
 }
 .logical_color select{
   border: 1px solid #ddd;
+}
+.picture{
+  float: left;
+  width: 14%;
 }
 .navbar-client {
   margin-bottom: 0;
@@ -417,6 +429,7 @@ export default {
   margin-left: 13px;
   margin-top: 5px;
   display: inline-block;
+  white-space: normal;
 }
 .btn-close,.margin-10{
   margin-right:10px;

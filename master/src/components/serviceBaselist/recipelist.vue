@@ -102,7 +102,7 @@ export default {
         }
     },
     created() {
-        this.getComponentData(this.loadParam, this.loadParam.all)
+        this.getComponentData(this.loadParam)
     },
     methods: {
         clickRecipe:function(initConponentlist){

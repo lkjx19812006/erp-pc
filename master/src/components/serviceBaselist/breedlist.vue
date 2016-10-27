@@ -88,7 +88,7 @@
         </div>
     </div>
 </template>
-<script type="text/javascript">
+<script>
 import pagination from '../../components/pagination'
 import pressImage from '../../components/imagePress'
 import filter from '../../filters/filters'
@@ -104,8 +104,7 @@ import {
     getBreedData,
     getBreedNameSearch,
     getBreedDetail,
-    deleteInfo,
-    getCategoryData
+    deleteInfo
 } from '../../vuex/actions'
 export default {
     components: {
@@ -125,8 +124,8 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-              categoryId:'',
-              name:''
+               categoryId:'',
+               name:''
             },
             breedParam: {
                 show: false,
@@ -156,17 +155,12 @@ export default {
             getBreedData,
             getBreedNameSearch,
             getBreedDetail,
-            deleteInfo,
-          getCategoryData
+            deleteInfo
         }
-    },
-    created() {
-        this.getBreedData(this.loadParam, this.loadParam.all);
-        this.getCategoryData();
     },
     methods: {
         categoryNameSearch: function() {
-            this.getBreedNameSearch(this.loadParam, this.loadParam.all);
+            this.getBreedNameSearch(this.loadParam);
         },
         createBreed: function(value) {
             this.breedParam.show = true;
@@ -203,10 +197,13 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             console.log(this.loadParam);
-            this.getBreedNameSearch(this.loadParam, this.loadParam.all);
+            this.getBreedNameSearch(this.loadParam);
         }
     },
-    filter: (filter, {})
+    filter: (filter, {}),
+    created() {
+        this.getBreedData(this.loadParam);
+    }
 }
 </script>
 <style scoped>

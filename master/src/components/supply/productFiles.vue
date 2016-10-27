@@ -50,7 +50,9 @@
                                name:item.name
                                })">
                     <img v-bind:src="item.path" v-if="item.fileType=='image'" />
-                    <img  src="/static/images/pdf.png" v-else>
+                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
+                    <img  src="/static/images/word.png" v-if="item.fileType=='word'">
+                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
             </td>
             <td>{{item.description}}</td>
             <td>{{item.status}}</td>

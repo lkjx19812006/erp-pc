@@ -290,7 +290,9 @@
 		                                         <tr v-for="item in initClientDetail.files.arr">
 		                                            <!-- <td><img v-bind:src="item.path" /></td> -->
                                                 <td><img v-bind:src="item.path" v-if="item.fileType=='image'" style='float:left; margin-left:15px;' />
-                                                    <img style='float:left; margin-left:15px;' src="/static/images/pdf.png" v-else></td>
+                                                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'" style='float:left; margin-left:15px;'>
+                                                    <img  src="/static/images/word.png" v-if="item.fileType=='word'" style='float:left; margin-left:15px;'>
+                                                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'" style='float:left; margin-left:15px;'>
 		                                            <td>{{item.fileType}}</td>
 		                                            <td>{{item.bizType}}</td>
                                                 <td>{{item.description}}</td>
@@ -357,6 +359,7 @@
                                                   })">
                                                   <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show">
+                                                     <dl>
                                                        <dt @click="updateIntention({
                                                             flag:1,
                                                             show:true,
@@ -393,7 +396,8 @@
                                                             inType:3,
                                                             loading:false
                                                         })">编辑</dt>
-                                                </div>
+                                                      </dl>
+                                                  </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -528,8 +532,9 @@
                                                 })">
                                                  <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                  <div class="breed_action" v-show="item.show" >
-
-                                                   <dt @click="updateTracking(item,$index)">编辑</dt>
+                                                    <dl>
+                                                      <dt @click="updateTracking(item,$index)">编辑</dt>
+                                                    </dl>
                                                  </div>
                                                </td>
  		                                        </tr>

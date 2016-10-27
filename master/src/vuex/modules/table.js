@@ -636,8 +636,9 @@ const mutations = {
             "email": data.email,
             "show": false,
             "id": data.id,
-            "main":data.main
+            "main":data.main 
         })
+        console.log(data.id)
     },
 
     [DELETE_CONTACT_DATA](state,data){

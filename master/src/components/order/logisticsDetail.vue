@@ -6,7 +6,7 @@
         </div>
         <div class="edit-model">
             <div class="cover_loading">
-              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+              <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
             </div>
             <p>物流单号：{{initLogisticsDetail.codenumber}}</p>
             <p class="clearfix express_condition"><img src="/static/images/logistics.png" class="left" height="25" width="25" />物流情况：</p>
@@ -26,7 +26,7 @@ import {
     initLogisticsDetail
 } from '../../vuex/getters'
 import {
-    logisticsInfo
+    
 } from '../../vuex/actions'
 export default {
     components: {
@@ -50,7 +50,7 @@ export default {
             initLogisticsDetail
         },
         actions:{
-           logisticsInfo 
+            
         }
     },
     methods:{
@@ -65,9 +65,6 @@ export default {
             console.log('hook-example deactivated!')
             transition.next()
         }
-    },
-    created(){
-        this.logisticsInfo(this.loadParam)
     }
 }
 </script>

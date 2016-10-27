@@ -166,7 +166,6 @@ export default {
                 confirm:true,
                 name:"确认修改信息?",
                 callback:this.alertInfo
-
               },
                 province: {
                   cname: ''

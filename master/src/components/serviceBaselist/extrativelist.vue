@@ -1,7 +1,5 @@
 <template>
-    <div class="cover_loading">
-        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-    </div>
+    
     <div class="service-nav clearfix">
         <div class="my_enterprise col-xs-1">提取物</div>
         <div class="col-xs-6">
@@ -17,6 +15,9 @@
        </div>
     </div>
     <div class="order_table">
+        <div class="cover_loading">
+            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+        </div>
         <table class="table table-hover table_color table-striped" v-cloak>
             <thead>
                 <tr>
@@ -90,7 +91,7 @@ export default {
         }
     },
     created() {
-        this.getDrawData(this.loadParam, this.loadParam.all)
+        this.getDrawData(this.loadParam)
     },
     events: {
         fresh: function(input) {
