@@ -631,7 +631,7 @@ const mutations = {
     [ADD_CONTACT_DATA](state, data) { //新增企业联系人
         state.companyDetail.companyContacts.arr.unshift({
             "name": data.name,
-            "cid": data.id,
+            "cid": data.cid,
             "tel": data.tel,
             "phone": data.phone,
             "wechart": data.wechart,

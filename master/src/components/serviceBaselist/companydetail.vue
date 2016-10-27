@@ -47,7 +47,7 @@
                             <a data-toggle="collapse" data-parent="#accordion"  class="panel-title-set">
                                 联系人({{initCompanyDetail.companyContacts.arr.length}})
                             </a>
-                            <button type="button" class="btn btn-base pull-right" @click.stop="createCompany({
+                            <button v-if="!initCompanyDetail.customerId" type="button" class="btn btn-base pull-right" @click.stop="createCompany({
                                cid:param.id,
                                show:true,
                                title:'新建联系人',
@@ -63,7 +63,7 @@
                                email:'',
                                wechart:'',
                                main:0,
-                               link:createContact,
+                               link:1,
                                url:'contract',
                                key:'companyContacts'
                               })">新建</button>
@@ -199,19 +199,18 @@
                                            <th>证书编号</th>
                                            <th>发证日期</th>
                                            <th>过期日期</th>
-                                           <th>状态</th>
                                        </tr>
                                    </thead>
                                    <tbody>
                                        <tr v-for="item in initCompanyDetail.companyLicenses.arr">
-                                           <td>{{item.type}}</td>
+                                           <td v-if="item.type==0">企业证书</td>
+                                           <td v-if="item.type==1">产品证书</td>
                                            <td>{{item.productName}}</td>
                                            <td>{{item.name}}</td>
                                            <td>{{item.organization}}</td>
                                            <td>{{item.number}}</td>
-                                           <td>{{item.release_date}}</td>
-                                           <td>{{item.due_date}}</td>
-                                           <td>{{item.status}}</td>
+                                           <td>{{item.releaseDate}}</td>
+                                           <td>{{item.dueDate}}</td>
                                        </tr>
                                    </tbody>
                                </table>

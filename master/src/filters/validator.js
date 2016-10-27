@@ -25,7 +25,7 @@ Vue.validator('qq', function (val) {    //qq
 });
 
 Vue.validator('money', function (val) {    //单价
-  return (/^(([1-9]\d*)|0)(\.\d{1,2})?$/.test(val)||(val===''));
+  return (/^(([1-9]\d*)|0)(\.\d{1,2})?$/.test(val));
 });
 
 Vue.validator('quantity', function (val) {    //数量

@@ -113,8 +113,10 @@
                                         name:item.name,
                                         tel:item.tel,
                                         principal:item.principal,
+                                        legalPerson:item.legalPerson,
                                         bizScope:item.bizScope,
                                         province:item.province,
+                                        number:item.number,
                                         city:item.city,
                                         address:item.address,
                                         employeeId:'',
@@ -146,7 +148,7 @@ import searchModel from './companySearch'
 
 import {
     initEnterpriselist,
-    initProvince
+
 } from '../../vuex/getters'
 import {
     getEnterpriseData,
@@ -165,7 +167,7 @@ export default {
     vuex: {
         getters: {
             initEnterpriselist,
-            initProvince
+
         },
         actions: {
             getEnterpriseData,
@@ -201,7 +203,8 @@ export default {
         }
     },
     created() {
-        this.getEnterpriseData(this.loadParam)
+      this.getCompanyData(this.loadParam);
+//        this.getEnterpriseData(this.loadParam)
         this.getProvinceList(this.loadParam)
     },
     methods: {
@@ -241,7 +244,7 @@ export default {
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getEnterpriseData(this.loadParam);
+//            this.getEnterpriseData(this.loadParam);
             this.getCompanyData(this.loadParam);
         }
     },

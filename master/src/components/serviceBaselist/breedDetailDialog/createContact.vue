@@ -32,7 +32,9 @@
                                     <input type="text" class="form-control edit-input" v-model="param.phone" value="{{param.phone}}" v-validate:phone="['phone']" />
                                 </div>
                                  <div class="editpage-input">
-                                     <label class="editlabel">{{param.tellist}}<span class="system_danger" v-if="$validation.tel.tel">请输入正确的电话</span></label>
+                                     <label class="editlabel">{{param.tellist}}
+                                       <span class="system_danger" v-if="$validation.tel.tel">请输入正确的电话</span>
+                                     </label>
                                     <input type="text" class="form-control edit-input" v-model="param.tel" value="{{param.tel}}" v-validate:tel="['tel']" />
                                 </div>
                                 <div class="editpage-input">

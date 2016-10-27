@@ -1129,7 +1129,8 @@ export const alterCompany = ({ dispatch }, param) => { //修改企业联系人
         email: param.email,
         wechart: param.wechart,
         main:param.main,
-        id:param.id
+        id:param.id,
+        status:1
     }
     Vue.http({
         method: 'PUT',
@@ -1195,8 +1196,8 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('联系人添加成功')
-      console.log(res);
+        console.log(res);
+        param.id=res.json().result.id;
         dispatch(types.ADD_CONTACT_DATA, param)
     }, (res) => {
         console.log('fail');
