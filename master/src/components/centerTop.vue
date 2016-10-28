@@ -1,28 +1,26 @@
 <template>
     <div class="center_top light_bg mui-clearfix" v-bind:class="{'center_top':getMenu==240,'center_nav':getMenu==50}" transition="expand">
-        <div class="new_time left">{{ msg }}</div>
+        <div class="new_time left">最近登录时间:{{ initLogin.time }}</div>
         <div class="right head_info">
-            <img src="/static/images/head.png" height="52" width="52" />
+            <span style="float:left;margin:20px 10px 0 0 ">{{initLogin.name}}</span><img src="/static/images/head.png" height="52" width="52" />
         </div>
     </div>
 </template>
 <script>
 import {
-    getMenu
+    getMenu,
+    initLogin
 } from '../vuex/getters'
 export default {
     data() {
             return {
-                // note: changing this line won't causes changes
-                // with hot-reload because the reloaded component
-                // preserves its current state and we are modifying
-                // its initial state.
-                msg: '最后更新时间:2016-7-22 12:23:36'
+
             }
         },
         vuex: {
             getters: {
-                getMenu
+                getMenu,
+              initLogin
             }
         }
 }

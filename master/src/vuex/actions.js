@@ -67,18 +67,37 @@ export const login = ({ dispatch }, data) => { //登录
           return test;
         }
 
-        var no = compile(data.no);
-        var password = compile(data.password);
+      function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+          month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+          + " " + date.getHours() + seperator2 + date.getMinutes()
+          + seperator2 + date.getSeconds();
+        return currentdate;
+      }
 
-        var expire = new Date((new Date()).getTime() - 8 * 3600000 + 90000);  //得到的时间与真实时间差了8小时,cookie将在1小时后过期
+        var no = compile(data.no);
+        var lastTime= getNowFormatDate();
+
+        var expire = new Date((new Date()).getTime() + 24 * 3600000 );  //得到的时间与真实时间差了8小时,cookie将在1小时后过期
         document.cookie = "no=" + no + ";expires=" + expire;
-        document.cookie = "password=" + password + ";expires=" + expire;
         document.cookie = "id=" + compile(res.json().result.id) + ";expires=" + expire;
         document.cookie = "orgId=" + compile(res.json().result.orgid) + ";expires=" + expire;
         document.cookie = "name=" + compile(res.json().result.name) + ";expires=" + expire;
-        console.log(document.cookie);
+        document.cookie = "time=" + lastTime + ";expires=" + expire;
+
         var result = res.json().result;
-        console.log(result);
+            result.time=lastTime;
+
         dispatch(types.LOGIN_DATA, result);
         dispatch(types.INIT_LIST, result);
         //本地存储左侧菜单
