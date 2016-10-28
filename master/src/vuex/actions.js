@@ -3226,6 +3226,36 @@ export const getUserDetail = ({ dispatch }, param) => {  //会员详情
 
 export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信息
 
+  var bizCategory={
+      0:'其它',
+      1:'合作社',
+      2:'药商',
+      3:'药厂',
+      4:'个体户',
+      5:'药店',
+      6:'医院',
+      7:'贸易公司',
+      8:'零售商行',
+      9:'药农',
+      10:'介绍人',
+      11:'药贩子',
+      12:'产地药商',
+      13:'销地药商',
+      14:'养生诊所',
+      15:'化工厂',
+      16:'化妆品厂',
+      17:'提取物厂',
+      18:'食品厂',
+      19:'实验室',
+      20:'网上电商',
+      21:'中成药生产商',
+      22:'西药生产商',
+      23:'饮片厂'
+    }
+
+
+
+
     console.log(param);
     const updatedata = {
         id: param.id
@@ -3304,6 +3334,7 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
         }
     }).then((res) => {
         updatedata.index = param.index;
+      updatedata.bizTypeName=bizCategory[param.bizType];
         console.log(updatedata);
         dispatch(types.UPDATE_USER_DATA, updatedata);
     }, (res) => {

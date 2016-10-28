@@ -81,9 +81,9 @@
                 <input v-show="false" type="text" class="form-control" readonly="readonly"
                        v-model="param.orgId" v-validate:orgid="['required']"  />
                 <input v-if="param.employeeId" type="text" class="form-control" readonly="readonly"
-                       v-model="param.employeeId"  @click="selectParam.show=true"/>
-                <input v-if="!param.employeeId" type="text" class="form-control" readonly="readonly" v-model="param.employeeId"
-                       @click="selectParam.show=true" />
+                       v-model="param.employeeName"  @click="selectParam.show=true" value="{{param.employeeName}}"/>
+                <input v-if="!param.employeeId" type="text" class="form-control" readonly="readonly" v-model="param.orgName"
+                       @click="selectParam.show=true" value="{{param.orgName}}" />
               </div>
             </div>
             <div class="clearfix">
