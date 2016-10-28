@@ -201,8 +201,8 @@ router.beforeEach(function ({ to, next }) {
       }
     }
     
-    next()
-})
+    next();
+});
 
 
 
