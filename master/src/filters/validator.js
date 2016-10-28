@@ -5,7 +5,7 @@ Vue.use(Validator)
 
 //表单验证
 Vue.validator('tel', function (val) {    //电话
-  return (/^[0-9]{11}$/.test(val)||(val===''));
+  return (/^(0[1-9]{2})-\d{8}$|^(0[1-9]{3}-(\d{7,8}))$/.test(val)||(val===''));
 });
 
 Vue.validator('phone', function (val) {    //手机

@@ -67,32 +67,59 @@ export const login = ({ dispatch }, data) => { //登录
           return test;
         }
 
+      function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+          month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+          + " " + date.getHours() + seperator2 + date.getMinutes()
+          + seperator2 + date.getSeconds();
+        return currentdate;
+      }
+      data.loading=false;
+      if(res.json().result){
         var no = compile(data.no);
-        var password = compile(data.password);
 
-        var expire = new Date((new Date()).getTime() + 24 * 3600000);  //得到的时间与真实时间差了8小时,cookie将在1小时后过期
+        var lastTime= getNowFormatDate();
+        var expire = new Date((new Date()).getTime() + 24 * 3600000 );  //得到的时间与真实时间差了8小时,cookie将在1小时后过期
         document.cookie = "no=" + no + ";expires=" + expire;
-        document.cookie = "password=" + password + ";expires=" + expire;
         document.cookie = "id=" + compile(res.json().result.id) + ";expires=" + expire;
         document.cookie = "orgId=" + compile(res.json().result.orgid) + ";expires=" + expire;
         document.cookie = "name=" + compile(res.json().result.name) + ";expires=" + expire;
+        document.cookie = "time=" + lastTime + ";expires=" + expire;
 
-        console.log(document.cookie);
 
         var result = res.json().result;
-        console.log(result);
-
+        result.time=lastTime;
 
         dispatch(types.LOGIN_DATA, result);
         dispatch(types.INIT_LIST, result);
         //本地存储左侧菜单
         localStorage.menus = JSON.stringify(result.menus);
 
-        data.show = false;
+
         data.loginCallback();
+      }else{
+
+        data.name=res.json().msg;
+        data.show = true;
+
+      }
+
+
     }, (res) => {
         console.log('fail');
-        data.show = false;
+        data.name='服务器内部错误';
+        data.show = true;
+        data.loading=false;
     });
 }
 
@@ -3572,6 +3599,8 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
     }).then((res) => {
         console.log('添加成功')
         param.id=res.json().result.intentionId;
+        param.validate = 0;
+        param.checked = false;
         dispatch(types.INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');

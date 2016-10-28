@@ -53,7 +53,7 @@
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label>{{param.entry}}</label>
                                 <div class="search_input">
-                                    <mz-datepicker :time.sync="param.entrydate" format="yyyy-MM-dd HH:mm:ss">
+                                    <mz-datepicker :time.sync="param.entrydate" format="yyyy-MM-dd">
                                     </mz-datepicker>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                             <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                                 <label>{{param.leave}}</label>
                                  <div class="search_input">
-                                    <mz-datepicker :time.sync="param.leavedate"  format="yyyy-MM-dd HH:mm:ss">
+                                    <mz-datepicker :time.sync="param.leavedate"  format="yyyy-MM-dd">
                                     </mz-datepicker>
                                 </div>
                             </div>

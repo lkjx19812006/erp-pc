@@ -1,7 +1,11 @@
 <template>
+  <tipsdialog-model :param="loginParam" v-if="loginParam.show"></tipsdialog-model>
   <div class="login_container clearfix">
     <div>
         <img src="/static/images/login.png" class="pull-left"  margin-top="100%"/>
+    </div>
+    <div class="cover_loading">
+      <pulse-loader :loading="loginParam.loading" :color="color" :size="size"></pulse-loader>
     </div>
     <div class="container modal_con">
         <div class="model-header">
@@ -15,7 +19,7 @@
                 <input type="text" class="form-control" v-model="loginParam.no"/>
             </div>
             <div class="client-detailInfo  col-xs-12" style="margin-top:10px">
-                <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">密&nbsp;&nbsp;&nbsp;码:</div>
+                <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">密&nbsp;&nbsp;&nbsp;&nbsp;码:</div>
                 <input type="password" class="form-control" v-model="loginParam.password"/>
             </div>
 
@@ -31,6 +35,9 @@
 
 <script>
 
+  import tipsdialogModel  from '../components/tips/tipDialog'
+
+
 import {
 
 } from '../vuex/getters'
@@ -39,14 +46,17 @@ import {
 } from '../vuex/actions'
 export default {
     components: {
-
+      tipsdialogModel
     },
     data() {
         return {
            checked:false,
            loginParam:{
                 no:'',
-                password:''
+                password:'',
+                loading:false,
+                show:false,
+                alert:true
            },
            base64DecodeChars:[
               -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -70,9 +80,9 @@ export default {
     },
     methods: {
         confirm:function(){
+          this.loginParam.loading=true;
           this.loginParam.loginCallback=this.loginCallback;
-            this.login(this.loginParam);
-            //window.location.href='https://www.baidu.com';
+          this.login(this.loginParam);
 
         },
         getCookie:function(name){          //获取cookie
@@ -176,7 +186,7 @@ export default {
         width: 200px;
     }
     .container{
-        height:241px;
+        height:247px;
         width:400px;
         border:1px solid #ddd;
 

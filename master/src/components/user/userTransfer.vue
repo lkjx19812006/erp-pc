@@ -210,7 +210,7 @@
                   <input type="text" class="form-control" v-validate:cphone="['phone']" v-model="contacts[0].phone"/>
                 </div>
                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                  <label class="editlabel" for="system">电话<span class="system_danger" v-if="$validation.ctel.tel">请输入正确的电话</span></label>
+                  <label class="editlabel" for="system">固话<span class="system_danger" v-if="$validation.ctel.tel">请输入正确的电话，如021-23569847</span></label>
                   <input type="text" class="form-control" v-validate:ctel="['tel']" v-model="contacts[0].tel"/>
                 </div>
               </div>

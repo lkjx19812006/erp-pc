@@ -196,6 +196,7 @@
                                                city:item.city,
                                                district:item.district,
                                                address:item.address,
+                                               validate:item.validate,
                                                link:editintentInfo,
                                                url:'/intention/',
                                                key:'intentionList'

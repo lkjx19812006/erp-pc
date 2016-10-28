@@ -55,7 +55,7 @@
                          </div>
 
                          <div class="editpage-input">
-                             <label class="editlabel">单位</label>
+                             <label class="editlabel">单位<span class="system_danger" v-if="!param.unit">请选择单位</span></label>
                            <input type="text" v-if="!breedParam.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
                            <div type="text" class="edit-input" v-if="breedParam.id">
                              <input-select
@@ -98,7 +98,7 @@
                      <div class="editpageright">
 
                          <div class="editpage-input">
-                             <label class="editlabel">规格</label>
+                             <label class="editlabel">规格<span class="system_danger" v-if="!param.spec">请选择规格</span></label>
                            <input type="text" v-if="!breedParam.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
                            <div type="text" class="edit-input" v-if="breedParam.id">
                              <input-select
@@ -118,7 +118,7 @@
                          </div>
 
                          <div class="editpage-input">
-                             <label class="editlabel">产地</label>
+                             <label class="editlabel">产地<span class="system_danger" v-if="!param.location">请选择产地</span></label>
                            <input type="text" v-if="!breedParam.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
 
                            <div type="text" class="edit-input" v-if="breedParam.id">
@@ -160,22 +160,23 @@
                  <div class="editpage">
                      <div class="editpageleft">
                        <div class="editpage-input">
-                         <label class="editlabel">国家</label>
-                         <div type="text" class="edit-input">
+                         <label class="editlabel">国家<span class="system_danger" v-if="!country.cname">请选择国家</span></label>
+                         <div type="text" class="edit-input" >
                            <v-select
                              :debounce="250"
                              :value.sync="country"
                              :on-change="selectProvince"
                              :options="initCountrylist"
                              placeholder="国家"
-                             label="cname"
+                             label="cname" 
+                             
                             >
                            </v-select>
                          </div>
                        </div>
 
                          <div class="editpage-input">
-                             <label class="editlabel">省</label>
+                             <label class="editlabel">省<span class="system_danger" v-if="!province.cname">请选择省</span></label>
                              <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
                            <div v-if="country.cname" type="text" class="edit-input">
                               <v-select
@@ -222,8 +223,8 @@
                          </div>
 
                        <div class="editpage-input">
-                         <label class="editlabel">详细地址</label>
-                         <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
+                         <label class="editlabel">详细地址<span v-if="$validation.address.required" class="system_danger">请输入详细地址</span></label>
+                         <input type="text" v-model='param.address' v-validate:address="['required']" class="form-control edit-input" value="{{param.address}}" />
                        </div>
 
                        <div class="editpage-input">
@@ -333,7 +334,7 @@
           </div>
           <div class="edit_footer">
               <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-              <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="createOrUpdateIntention(param,param.show = false)">确定</button>
+              <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&country.cname&&province.cname&&param.unit&&param.location&&param.spec" @click="createOrUpdateIntention(param,param.show = false)">确定</button>
               <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
           </div>
         </validator>

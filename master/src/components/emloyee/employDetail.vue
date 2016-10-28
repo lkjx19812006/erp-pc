@@ -3,17 +3,22 @@
     <div class="breed_detail">
         <div class="client-section clearfix" v-cloak>
             <div @click="param.show=false" class="top-title">
-                <span class="glyphicon glyphicon-remove-circle"></span>
+                <span class="glyphicon glyphicon-remove-circle" style="font-size:30px"></span>
             </div>
             <validator name="validation">
                 <div  class="section_title clearfix">
-                    <span>{{param.name}}的信息</span>
+                    <span style="font-size:18px;color:#FA6705">{{param.name}}</span>
                     <button class="new_btn transfer" v-if="$validation.valid" @click="saveSucc(param)">保存</button> 
                     <button class="new_btn transfer" v-else disabled="disabled">保存</button> 
 
                 </div>
-                <div class="edit-detail">
-                    <div class="clearfix">
+                <div class="edit-left col-md-8 col-xs-12">
+
+                    <div class="section_title clearfix col-md-11 col-xs-12">
+                        <span style="font-size:14px">基本信息</span>
+                    </div>
+
+                    <div class="clearfix col-md-11 col-xs-12">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                             <label class="editlabel">姓名<span class="system_danger" v-if="$validation.name.minlength">请输入至少两位</span></label>
                             <input type="text" class="form-control edit-input" v-validate:name="{minlength:2}" v-model="param.name" value="{{param.name}}" />
@@ -23,7 +28,7 @@
                             <input type="text" class="form-control edit-input"  v-model="param.ename" value="{{param.ename}}" />
                         </div>
                     </div>
-                    <div class="clearfix">
+                    <div class="clearfix col-md-11 col-xs-12">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                             <label class="editlabel">工号<span class="system_danger" v-if="$validation.no.required">请输入员工工号</span></label>
                             <input type="text" class="form-control edit-input" v-validate:no="['required']"  v-model="param.no" value="{{param.no}}" />
@@ -33,7 +38,7 @@
                              <input type="text" class="form-control edit-input"   v-model="param.orgName" value="{{param.orgName}}" />
                         </div>
                     </div>
-                    <div class="clearfix">
+                    <div class="clearfix col-md-11 col-xs-12">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                             <label class="editlabel">职位<span class="system_danger" v-if="$validation.position.required">请输入职位</span></label>
                              <input type="text" class="form-control edit-input" v-validate:position="['required']" v-model="param.position" value="{{param.position}}" />
@@ -43,7 +48,7 @@
                             <input type="text" class="form-control edit-input"v-validate:mobile="['phone']" v-model="param.mobile" value="{{param.mobile}}" />
                         </div>
                     </div>
-                    <div class="clearfix">
+                    <div class="clearfix col-md-11 col-xs-12">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                             <label class="editlabel">分机号</label>
                              <input type="text" class="form-control edit-input"   v-model="param.extno" value="{{param.extno}}"/>
@@ -53,7 +58,7 @@
                             <input type="text" class="form-control edit-input"  v-model="param.level" value="{{param.level | levelstate}}"/>
                         </div>
                     </div>
-                    <div class="clearfix">
+                    <!-- <div class="clearfix col-md-10 col-xs-12">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                             <label class="editlabel">入职时间</label>
                             <div class="search_input">
@@ -68,9 +73,9 @@
                                 </mz-datepicker>
                             </div>
                         </div> 
-                    </div>
-                    <div class="clearfix">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                    </div> -->
+                    <div class="clearfix col-md-11 col-xs-12">
+                        <div class="client-detailInfo pull-left col-md-12 col-xs-12">
                             <label class="editlabel">角色</label>
                             <div  class="clerafix">
                                     <div class="pull-left role clerafix col-md-3 col-xs-3" v-for="item in initRoleList" >
@@ -82,6 +87,33 @@
                                 </div>
                         </div>
                     </div>
+                </div>
+
+                <div class=" col-md-4 col-xs-12 pull-right">
+                         <span class="section_title clearfix col-md-12 col-xs-12" style="margin-top:15px;font-size:14px;">工作时间信息</span>
+                </div>
+                <div class="col-md-4 col-xs-12 pull-right">
+                    
+                     
+                     <div class="edit-right clearfix">
+                        <div class="client-detailInfo pull-left col-md-11 col-xs-12">
+                            <label class="editlabel">入职时间</label>
+                            <div class="search_input">
+                                <mz-datepicker :time.sync="param.entrydate" format="yyyy-MM-dd HH:mm:ss">
+                                </mz-datepicker>
+                            </div>
+                        </div>
+                        <div class="client-detailInfo pull-left col-md-11 col-xs-12">
+                            <label class="editlabel">离职时间</label>
+                            <div class="search_input" style="width:350px">
+                                <mz-datepicker :time.sync="param.leavedate" format="yyyy-MM-dd HH:mm:ss">
+                                </mz-datepicker>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+
                 </div>
             </validator>   
 </template>
@@ -178,10 +210,22 @@ export default {
 }
 </script>
 <style scoped>
+span{
+    font-size:12px;
+}
+label{
+    font-size:12px;
+}
+input{
+    font-size:12px;
+}
 .top-title{
     width: 100%;
     right: 0;
     top:130px;
+}
+.section_title{
+    padding-top:6px;
 }
 .client-detailInfo img {
     width: 100px;
@@ -237,13 +281,57 @@ export default {
     background-image: url(/static/images/unselect.png);
     display: inline-block;
     background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     background-size: 80%;
     margin: auto;
     text-align: center;
     background-position: 5px;
     float: left;
     margin-right: 10px;
+}
+
+.edit-left {
+    border-right: 1px solid #ddd;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    position: relative;
+    padding: 10px;
+    
+    margin-top: 5px;
+}
+
+.edit-right {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    position: relative;
+    padding: 5px;
+    margin-top: 20px;
+}
+
+.mz-datepicker > input {
+    font-family: 'Microsoft YaHei', serif;
+    color: #666;
+    border: 1px solid #d9d9d9;
+    height: 30px;
+    box-sizing: border-box;
+    outline: none;
+    padding: 0 30px 0 7px;
+    font-size: 15px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.mz-datepicker > i {
+    
+    height: 36px;
+}
+.glyphicon{
+    top: -58px;
 }
 </style>

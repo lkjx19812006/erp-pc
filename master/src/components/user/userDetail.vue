@@ -104,9 +104,7 @@
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
-                                                <td v-if="item.validate==0">待审核</td>
-                                                <td v-if="item.validate==1">审核通过</td>
-                                                <td v-if="item.validate==-1">审核不通过</td>
+                                                <td>{{item.validate | intentionAudit}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td  @click="clickShow($index,{
                                                   concrete:'intention'
@@ -420,6 +418,7 @@ import personalauthModel from './personalAuth'
 import companyauthModel from './companyAuth'
 import intentionauditModel from'./intentionAudit'
 import tipsdialogModel  from '../tips/tipDialog'
+import filter from '../../filters/filters'
 
 
 import {
@@ -485,7 +484,6 @@ export default {
           sampleAmount:0,
           qualification:'',
           url:'/intention/',
-          validate:0,
           image_f:'',
           image_s:'',
           image_t:'',
@@ -703,7 +701,8 @@ export default {
               location:'',
               type:0,
               visit:0,
-              country:'',
+              validate:0,
+              country:'中国',
               province:'',
               city:'',
               district:'',
@@ -722,6 +721,7 @@ export default {
               image_t:'',
               images:'',
               inType:2
+
           };
           this.intentionParam.show = true;
 
@@ -737,8 +737,8 @@ export default {
 
         }
 
-    }
-
+    },
+ filter: (filter,{})
 
 }
 </script>

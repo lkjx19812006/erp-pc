@@ -302,7 +302,7 @@ Vue.filter('intentionAudit',function(val){      //意向审核
 		 return '客服审核通过';
 	}
 	if(val==-1){
-		 return '客户审核不通过';
+		 return '客服审核不通过';
 	}
 	if(val==2){
 		 return '业务员审核通过';
