@@ -1,15 +1,17 @@
   <template>
     <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
-    <update-model :param="updateParam" v-if="updateParam.show"></update-model>
     <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
+    <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div v-show="!detailParam.show&&!disposeParam.show">
       <div class="order_search">
         <div class="clear">
             <div class="my_order col-xs-2">部门订单</div>
             <div class="right">
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
+                <button class="new_btn transfer" @click="orgCheck()">审核</button>
             </div>
         </div>
       </div>
@@ -19,7 +21,8 @@
         </div>
         <table class="table table-hover table_color table-striped " v-cloak>
             <thead>
-                <tr>  
+                <tr> 
+                    <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
                     <th>订单号</th>
                     <th>订单类别</th>
                     <th>订单来源</th>
@@ -41,6 +44,9 @@
             </thead>
             <tbody>
                 <tr v-for="item in initOrderlist"  v-cloak>
+                  <td  @click.stop="">
+                    <label v-if="(item.sourceType==0&&item.validate==1)||(item.sourceType==0&&item.validate==0)" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
+                  </td>
                   <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
@@ -75,11 +81,13 @@
                   <td v-if="item.orderStatus==-1">已取消</td>
                   <td v-if="item.orderStatus==-2">已过期</td>
                   
-                  <td v-if="item.status==0">无效</td>
-                  <td v-if="item.status==1">待审</td>
-                  <td v-if="item.status==2">审核通过</td>
+                  <td v-if="item.validate==0">待审核</td>
+                  <td v-if="item.validate==1">申请审核</td>
+                  <td v-if="item.validate==2">审核通过</td>
+                  <td v-if="item.validate==-2">审核未通过</td>
+                  <td v-if="item.validate==null">待审核</td>
 
-                  <td v-if="item.payWay==0">线下打款</td>
+                  <td v-if="item.payWay===0">线下打款</td>
                   <td v-if="item.payWay==1">支付宝</td>
                   <td v-if="item.payWay==2">平安支付</td>
                   <td v-if="item.payWay==3">药款支付</td>
@@ -108,6 +116,7 @@
                                         district:item.district,
                                         consigneeAddr:item.consigneeAddr,
                                         comments:item.comments,
+                                        orderStatus:item.orderStatus,
                                         incidentals:item.incidentals,
                                         incidentalsDesc:item.incidentalsDesc,
                                         preferential:item.preferential,
@@ -165,11 +174,12 @@
   <script>
     import pagination from '../pagination'
     import editorderModel from '../order/orderInformationDialog'
-    import updateModel from '../order/orderUpdate'
     import detailModel from '../order/orderDetail'
     import searchModel from '../order/orderSearch'
     import deletebreedModel from  '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
     import disposeModel  from  '../order/orderStatus'
+    import tipsdialogModel  from '../tips/tipDialog'
+    import auditModel  from '../order/orgAudit'
     import {
         getList,
         initOrderlist
@@ -186,11 +196,12 @@
         components: {
             editorderModel,
             pagination,
-            updateModel,
             detailModel,
             searchModel,
             deletebreedModel,
-            disposeModel
+            disposeModel,
+            tipsdialogModel,
+            auditModel
         },
         data() {
             return {
@@ -232,7 +243,20 @@
                     express:false,
                     delivery:false
                 },
-                show:true
+                show:true,
+                checked:false,
+                auditParam:{
+                    show:false,
+                    indexs:[],
+                    ids:[],
+                    description:'',
+                    validate:''
+                },
+                tipsParam:{
+                    show:false,
+                    alert:true,
+                    name:"请选择订单"
+                }
             }
         },
         vuex: {
@@ -259,6 +283,49 @@
                      this.$store.state.table.basicBaseList.orderList[sub].show=true;
                 }    
             },
+            orgCheck:function(){
+                var _this = this;
+                _this.auditParam.ids = [];
+                _this.auditParam.indexs = [];
+               _this.checked=false;
+                for(var i=0;i<this.initOrderlist.length;i++){
+                    if(this.$store.state.table.basicBaseList.orderList[i].checked){
+                        _this.auditParam.ids.push(this.$store.state.table.basicBaseList.orderList[i].id);
+                        _this.auditParam.indexs.push(i);
+                        _this.auditParam.validate = this.$store.state.table.basicBaseList.orderList[i].validate;
+                    }
+                }
+                if(this.auditParam.ids.length>0){
+                    this.auditParam.show = true;
+                }else{
+                    this.tipsParam.show = true;
+                }
+            },
+            onlyselected: function(index){
+                  const _self=this;
+                    this.$store.state.table.basicBaseList.orderList[index].checked=!this.$store.state.table.basicBaseList.orderList[index].checked;
+                    if(_self.checked){
+                      _self.checked=false;
+                    }else {
+                      _self.checked=true;
+                      this.$store.state.table.basicBaseList.orderList.forEach(function (item) {
+                        if(!item.checked){
+                          if((item.sourceType==0&&item.validate==1)||(item.sourceType==0&&item.validate==0)){
+                            _self.checked=item.checked;
+                            _self.validate = item.validate;
+                          } 
+                        }
+                      })
+                    }
+            },
+            select:function(){
+                  this.checked=!this.checked;
+                  const checked=this.checked;
+                  this.$store.state.table.basicBaseList.orderList.forEach(function(item){
+                    if((item.sourceType==0&&item.validate==1)||(item.sourceType==0&&item.validate==0))item.checked=checked;
+                  })
+
+            },
             newOrder:function(initOrderlist){
                  this.dialogParam=initOrderlist;
             },
@@ -283,18 +350,12 @@
                 /*--采购状态type==0--*/
                 if(item.orderStatus==0&&item.type==0){
                     this.disposeParam.tips="订单已提交，请审核！";
-                    /*this.disposeParam.handle = true;*/
-                    /*this.disposeParam.sendoff = true;*/
-                    /*this.orderStatu(this.disposeParam);*/
                 }
                 if(item.orderStatus==10&&item.type==0){
                     this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
-                    /*this.disposeParam.delivery = true;*/
-                    /*this.orderStatu(this.disposeParam);*/
                 }
                 if(item.orderStatus==-1&&item.type==0){
                     this.disposeParam.tips="订单已取消！";
-                   /* this.disposeParam.link='/order/cancle';*/
                 }
                 if(item.orderStatus==-2&&item.type==0){
                     this.disposeParam.tips="订单已过期！";
@@ -305,7 +366,6 @@
                 }
                 if(item.orderStatus==30&&item.type==0){ 
                     this.disposeParam.tips="订单买家已付款，商家正在核查！";
-                    /*this.disposeParam.Auditing = true;*/ 
                 }
                 if(item.orderStatus==40&&item.type==0){ 
                     this.disposeParam.tips="您的订单已支付，请等待卖家发货！";
@@ -332,7 +392,6 @@
                 if(item.orderStatus==10&&item.type==1){
                     this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
                     this.disposeParam.sales = true;
-                    /*this.orderStatu(this.disposeParam);*/
                 }
                 if(item.orderStatus==-1&&item.type==1){
                     this.disposeParam.tips="订单已取消！";
@@ -396,12 +455,30 @@
         font-size: 20px;
         padding: 0;
     }
+    .checkbox_unselect{
+        background-image: url(/static/images/unselect.png);
+        display: inline-block;
+        background-repeat: no-repeat;
+        width: 24px;
+        height: 24px;
+        background-size: 80%;
+        margin: auto;
+        text-align: center;
+        background-position: 5px;
+    }
+    .checkbox_select{
+        background-image: url(/static/images/selected.png);
+        display: inline-block;
+        background-repeat: no-repeat;
+        width: 24px;
+        height: 24px;
+        background-size: 80%;
+        margin: auto;
+        text-align: center;
+        background-position: 5px;
+    }
     .transfer{
         margin-right: 20px;
-    }
-    .component_action{
-        right: 34px;
-        top: 27px;
     }
     .new_btn {
         float: right;

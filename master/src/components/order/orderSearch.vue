@@ -60,7 +60,7 @@
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                        <label>订单审核状态：</label>
+                        <label>订单数据状态：</label>
                         <select v-model="param.dataStatus"  class="form-control">
                             <option value="">请选择数据状态</option>
                             <option value="0">无效</option>

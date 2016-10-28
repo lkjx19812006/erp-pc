@@ -51,7 +51,7 @@
                                　<label class="editlabel">上传图标</label>
                                　<div class="editpage_img clearfix">
                                    <div class="editpage-image col-md-4">
-                                       <press-image :param.sync="file"></press-image>
+                                       <press-image :param.sync="file" :value.sync="breedData.icon" :showurl.sync="breedData.url"></press-image>
                                    </div>
                                　</div>
                            　</div>
@@ -74,8 +74,7 @@ import {
     initCategorylist
 } from  '../../vuex/getters'
 import {
-    saveBreed,
-    getCategoryData
+    saveBreed
 } from '../../vuex/actions'
 export default {
     components: {
@@ -89,7 +88,9 @@ export default {
                 code: '',
                 name: '',
                 path:'',
-                show:false
+                show:false,
+                icon:'',
+                url:''
             },
             tipsParam: {
                 show:false,
@@ -108,8 +109,7 @@ export default {
             initCategorylist
         },
         actions: {
-            saveBreed,
-            getCategoryData
+            saveBreed
         }
     },
     methods: {
@@ -118,15 +118,6 @@ export default {
 
         this.saveBreed(this.breedData);
       }
-    },
-    events: {
-        getImageData: function(imageData) {
-            var paths = new Array();
-            this.breedData.path=imageData.result.path;
-        }
-    },
-    created() {
-        this.getCategoryData();
     }
 }
 </script>

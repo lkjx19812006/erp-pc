@@ -12,9 +12,9 @@
         </div>
         <validator name="validation">
           <div class="edit-model">
-            <div class="cover_loading">
-              <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
-            </div>
+            <!--<div class="cover_loading">-->
+              <!--<pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>-->
+            <!--</div>-->
             <div class="cover_loading">
               <pulse-loader :loading="breedParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -169,8 +169,8 @@
                              :on-change="selectProvince"
                              :options="initCountrylist"
                              placeholder="国家"
-                             label="cname" 
-                             
+                             label="cname"
+
                             >
                            </v-select>
                          </div>

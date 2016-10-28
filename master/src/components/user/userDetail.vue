@@ -17,7 +17,8 @@
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
                         <a class="navbar-brand navbar-name" href="#">{{initUserDetail.fullname}}</a>
                     </div>
-                    <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
+
+                  <!--   <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
 
                         <li>
                             <button type="button" class="btn btn-base" @click="modifyUser({
@@ -38,7 +39,7 @@
                                                })">编辑</button>
                         </li>
 
-                    </ul>
+                    </ul> -->
                 </div>
             </nav>
         </div>

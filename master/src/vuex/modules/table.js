@@ -86,7 +86,8 @@ import {
    ORDER_UPLOAD_DATA,
    ORDER_PAY_DATA,
    ORDER_ROLLOUT_DATA,
-   EXPRESS_DETAIL_DATA
+   EXPRESS_DETAIL_DATA,
+   BATCH_ORG_ORDER
 
 } from '../mutation-types'
 
@@ -518,9 +519,26 @@ const mutations = {
     [EXPRESS_DATA](state,data){ //物流列表
         state.basicBaseList.expressList = data;
     },
-    [EXPRESS_DETAIL_DATA](state,data){
+    [EXPRESS_DETAIL_DATA](state,data){  //物流详情
       console.log(data)
         state.logisticsDetail = data;
+    },
+    [BATCH_ORG_ORDER](state, data) { // 批量审核部门订单
+      console.log(data)
+        for(var i=0;i<data.indexs.length;i++){
+           var k = data.indexs[i];
+           state.basicBaseList.orderList[k].checked = false;
+           for (var key in data) {
+                    if(key=="validate"&&data[key]==2){
+                        state.basicBaseList.orderList[k].validate = "2";
+                    }else if(key=="validate"&&data[key]==-2){
+                        state.basicBaseList.orderList[k].validate = "-2";
+                    }else if(key=="validate"&&data[key]==1){
+                        state.basicBaseList.orderList[k].validate = "1";
+                    }
+                    state.basicBaseList.orderList[k][key] = data[key];
+                }
+        }
     },
     [ORDER_PAY_DATA](state,data){  //订单支付记录
         state.basicBaseList.orderPayList = data;
@@ -585,7 +603,8 @@ const mutations = {
                 }],
                 "show": false,
                 "no":data.no,
-                "id":data.id
+                "id":data.id,
+                "payWay":data.payWay
             });
         }
         if(data.key == 'orders'){
@@ -732,7 +751,8 @@ const mutations = {
             "lName": data.lName,
             "id": data.id,
             "show":false,
-            "icon":data.path
+            "icon":data.path,
+            "url":data.url
         })
     },
     [ADD_CONTACT_DATA](state, data) { //新增企业联系人
@@ -1136,6 +1156,7 @@ const mutations = {
 
 
     },
+
 
     [BATCH_UPDATE_USER_DATA](state, data) { // 批量审核会员
         for(var i=0;i<data.indexs.length;i++){

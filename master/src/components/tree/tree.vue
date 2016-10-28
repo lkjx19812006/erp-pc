@@ -20,7 +20,7 @@
             </g>
           </svg>
         </span>
-        <span class="icon node" v-if="!areValidNodes(node[children])">
+        <span class="icon node" v-if="!areValidNodes(node[children])" >
           <svg width="8" height="8" viewBox="0 0 35 35">
             <g transform="translate(0,-1017.3622)">
               <circle cx="17.488264" cy="1034.874" r="16.003242"/>
@@ -161,9 +161,11 @@
        */
       toggleOpen: function (index) {
         // Return if no children
-        if (!this.areValidNodes(this.model[index][this.children]))
-          return;
+        console.log(this.areValidNodes(this.model[index][this.children]))
+        if (this.areValidNodes(this.model[index][this.children]))
+           this.areValidNodes(this.model[index][this.children])==!this.areValidNodes(this.model[index][this.children])
         // Init
+      
         if (this.model[index].isOpened == undefined)
           this.$set('model[' + index + '].isOpened', this.hasSelectedChild(index));
         // General
@@ -233,7 +235,7 @@
        * @return bool
        */
       isOpened: function (index) {
-        return (this.model[index].isOpened != undefined && this.model[index].isOpened)
+        return !(this.model[index].isOpened != undefined && this.model[index].isOpened)
           || this.hasSelectedChild(index);
       },
     }

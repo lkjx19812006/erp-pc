@@ -110,7 +110,6 @@ import searchModel from './companySearch'
 import {
     initEnterpriselist,
     initProvince
-
 } from '../../vuex/getters'
 import {
     getEnterpriseData,
@@ -163,7 +162,9 @@ export default {
             getCompanyData,
             getProvinceList
         }
+
     },    
+
     methods: {
         companyDetail:function(id,index){
             this.companyParam.show = true;

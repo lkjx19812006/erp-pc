@@ -15,14 +15,14 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==3">
         <payment-record></payment-record>
     </div>
-    <!-- 药款转出记录 -->
+    <!-- 订单审核 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==4">
+        <order-review></order-review>
+    </div>
+    <!-- 药款转出记录 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==5">
         <drugs-record></drugs-record>
     </div>
-    <!-- 订单审核 -->
-    <div class="myOrder" v-if="$route.path.split('=')[1]==5">
-        <order-review></order-review>
-    </div>  
 </template>
 <script>
 import paymentRecord from '../components/order/paymentRecordList'

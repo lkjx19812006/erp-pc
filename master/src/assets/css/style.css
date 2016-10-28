@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-10-17 10:53:11
+* @Last Modified time: 2016-10-28 18:29:47
 */
 
 * {
@@ -93,7 +93,11 @@ body {
     transition: all .5s ease-in-out 0.1s;
     overflow: inherit;
 }
-
+.editlabel {
+    color: #333;
+    font-size: 13px;
+    display: block;
+}
 
 /* .expand-enter 定义进入的开始状态 */
 
@@ -166,9 +170,9 @@ body {
     padding: 25px 30px 0 40px;
 }
 
-.my_enterprise {
+.my_enterprise,.my_order{
     color: #fa6705;
-    font-size: 20px;
+    font-size: 16px;
     padding: 0;
 }
 
@@ -217,7 +221,9 @@ body {
 .table>thead>tr>th {
     text-align: center;
     border-bottom: 1px solid #ddd;
+
     font-size: 12px;
+
     position: relative;
     vertical-align: middle;
 }
@@ -253,13 +259,16 @@ body {
     background-color: #f4f6f9;
     height: 10px;
 }
-
+.navbar-name {
+    color: #fa6705;
+    font-size:16px;
+}
 .component_action,
 .breed_action {
     position: absolute;
-    right: 6px;
+    right: 30px;
     padding: 8px 0;
-    top: 35px;
+    top:50%;
     border: 1px solid #ccc;
     border-radius: 3px;
     background: #fff;
@@ -333,7 +342,7 @@ body {
 }
 
 .section_title {
-    font-size: 18px;
+    font-size: 16px;
     color: #333;
     border-bottom: 1px solid #ddd;
     padding: 15px 0;
@@ -342,9 +351,9 @@ body {
 
 .panel-title-set {
     margin-top: 6px;
-    margin-left: 26px;
+    margin-left: 20px;
     display: inline-block;
-    font-size: 17px;
+    font-size: 15px;
     color: #333;
 }
 
@@ -445,9 +454,11 @@ fieldset[disabled] .form-control {
 .client-detailInfo label {
     display: block;
     color: #333;
-    font-size: 15px;
+    font-size: 13px;
 }
-
+.form-control{
+    font-size: 13px;
+}
 .client-editbtn {
     text-align: right;
     margin-top: 15px;
@@ -566,7 +577,9 @@ fieldset[disabled] .form-control {
     border-bottom: 1px solid #ddd;
     color: #fa6705;
 }
-
+.btn{
+    font-size: 13px;
+}
 .btn-orange {
     background-color: #fa6705;
     color: #fff;

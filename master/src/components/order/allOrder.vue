@@ -1,6 +1,5 @@
   <template>
    <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
-    <update-model :param="updateParam" v-if="updateParam.show"></update-model>
     <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
@@ -84,7 +83,7 @@
                                 show:true,
                                 id:item.id,
                                 loading:false
-                        })">{{item.no }}</a></td>
+                        })">{{item.no}}</a></td>
                   <td v-if="item.type==1">销售</td>
                   <td v-if="item.type==0">采购</td>
                   <td v-if="item.sourceType==0">新建</td>
@@ -114,11 +113,13 @@
                   <td v-if="item.orderStatus==-1">已取消</td>
                   <td v-if="item.orderStatus==-2">已过期</td>
                  
-                  <td v-if="item.status==0">无效</td>
-                  <td v-if="item.status==1">待审</td>
-                  <td v-if="item.status==2">审核通过</td>
+                  <td v-if="item.validate==0">待审核</td>
+                  <td v-if="item.validate==1">申请审核</td>
+                  <td v-if="item.validate==2">审核通过</td>
+                  <td v-if="item.validate==-2">审核未通过</td>
+                  <td v-if="item.validate==null">待审核</td>
 
-                  <td v-if="item.payWay==0">线下打款</td>
+                  <td v-if="item.payWay===0">线下打款</td>
                   <td v-if="item.payWay==1">支付宝</td>
                   <td v-if="item.payWay==2">平安支付</td>
                   <td v-if="item.payWay==3">药款支付</td>
@@ -147,6 +148,7 @@
                                         district:item.district,
                                         consigneeAddr:item.consigneeAddr,
                                         comments:item.comments,
+                                        orderStatus:item.orderStatus,
                                         incidentals:item.incidentals,
                                         incidentalsDesc:item.incidentalsDesc,
                                         preferential:item.preferential,
@@ -202,7 +204,6 @@
   <script>
     import pagination from '../pagination'
     import editorderModel from '../order/orderInformationDialog'
-    import updateModel from '../order/orderUpdate'
     import detailModel from '../order/orderDetail'
     import searchModel from '../order/orderSearch'
     import deletebreedModel from  '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
@@ -223,7 +224,6 @@
         components: {
             editorderModel,
             pagination,
-            updateModel,
             detailModel,
             searchModel,
             deletebreedModel,
@@ -296,9 +296,9 @@
                      this.$store.state.table.basicBaseList.orderList[sub].show=true;
                 }    
             },
-            newOrder:function(initOrderlist){
+            /*newOrder:function(initOrderlist){
                  this.dialogParam=initOrderlist;
-            },
+            },*/
             createSearch:function(){
                  this.loadParam.show=true;
                  this.loadParam.loading=false;
@@ -321,18 +321,12 @@
                 /*--采购状态type==0--*/
                 if(item.orderStatus==0&&item.type==0){
                     this.disposeParam.tips="订单已提交，请审核！";
-                    /*this.disposeParam.handle = true;*/
-                    /*this.disposeParam.sendoff = true;*/
-                    /*this.orderStatu(this.disposeParam);*/
                 }
                 if(item.orderStatus==10&&item.type==0){
                     this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
-                    /*this.disposeParam.delivery = true;*/
-                    /*this.orderStatu(this.disposeParam);*/
                 }
                 if(item.orderStatus==-1&&item.type==0){
                     this.disposeParam.tips="订单已取消！";
-                   /* this.disposeParam.link='/order/cancle';*/
                 }
                 if(item.orderStatus==-2&&item.type==0){
                     this.disposeParam.tips="订单已过期！";
@@ -355,22 +349,18 @@
                 }
                 if(item.orderStatus==60&&item.type==0){
                     this.disposeParam.tips="买家已收货，订单已完成！";
-                    /*this.disposeParam.link='/order/receiveConfirm';*/
                 }
                 if(item.orderStatus==70&&item.type==0){
                     this.disposeParam.tips="买家已收货，订单已完成！";
-                    /*this.disposeParam.link='/order/receiveConfirm';*/
                 }
                 /*--销售状态type==1--*/
                 if(item.orderStatus==0&&item.type==1){
                     this.disposeParam.tips="订单已提交，请审核！";
                     this.disposeParam.handle = true;
-                    /*this.orderStatu(this.disposeParam);*/
                 }
                 if(item.orderStatus==10&&item.type==1){
                     this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
                     this.disposeParam.sales = true;
-                    /*this.orderStatu(this.disposeParam);*/
                 }
                 if(item.orderStatus==-1&&item.type==1){
                     this.disposeParam.tips="订单已取消！";
@@ -436,10 +426,6 @@
     }
     .transfer{
         margin-right: 20px;
-    }
-    .component_action{
-        right: 34px;
-        top: 27px;
     }
     .new_btn {
         float: right;

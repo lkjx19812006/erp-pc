@@ -450,7 +450,11 @@ export default {
 </script>
 
 <style scoped>
-
+.component_action{
+    right: 32px;
+    top: 50%;
+    padding: 3px 0;
+}
 .checkbox_unselect{
     background-image: url(../../static/images/unselect.png);
     display: inline-block;
