@@ -751,7 +751,8 @@ const mutations = {
             "lName": data.lName,
             "id": data.id,
             "show":false,
-            "icon":data.path
+            "icon":data.path,
+            "url":data.url
         })
     },
     [ADD_CONTACT_DATA](state, data) { //新增企业联系人
@@ -1155,7 +1156,7 @@ const mutations = {
 
 
     },
-    
+
 
     [BATCH_UPDATE_USER_DATA](state, data) { // 批量审核会员
         for(var i=0;i<data.indexs.length;i++){

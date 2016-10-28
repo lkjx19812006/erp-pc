@@ -105,7 +105,8 @@ import {
     getBreedData,
     getBreedNameSearch,
     getBreedDetail,
-    deleteInfo
+    deleteInfo,
+  getCategoryData
 } from '../../vuex/actions'
 export default {
     components: {
@@ -172,7 +173,8 @@ export default {
             getBreedData,
             getBreedNameSearch,
             getBreedDetail,
-            deleteInfo
+            deleteInfo,
+          getCategoryData
         }
     },
     methods: {
@@ -210,6 +212,7 @@ export default {
     filter: (filter, {}),
     created() {
         this.getBreedData(this.loadParam);
+        this.getCategoryData();
     }
 }
 </script>

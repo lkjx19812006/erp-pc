@@ -1612,7 +1612,8 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
         pinyin: data.pinyin,
         eName: data.eName,
         lName:data.lName,
-        icon: data.path
+        icon: data.path,
+        url:data.url
     }
 
     Vue.http({
@@ -2117,27 +2118,27 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
                 org[i].show =false;
                 org[i].checked =false;
            }*/
-           
-          
+
+
            var arr = [];
            function getLeaf(tree,arr){     //获取树的叶子节点
                 if(tree.lowerList.length==0){
                     arr.push(tree);
-                    
+
                 }else{
                     for(var i=0;i<tree.lowerList.length;i++){
-                        getLeaf(tree.lowerList[i],arr);  
-                    } 
-                }  
+                        getLeaf(tree.lowerList[i],arr);
+                    }
+                }
            }
            getLeaf(org[0],arr);
-           
+
            if('list' in param&&param.list==true){
                 dispatch(types.ORG_DATA, arr);
            }else{
                 dispatch(types.ORG_DATA, org);
            }
-           
+
            param.loading = false;
         }, (res) => {
             console.log('fail');
