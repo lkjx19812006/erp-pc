@@ -68,7 +68,9 @@
 
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>分类</label>
+                <label>分类<span class="system_danger" v-if="$validation.classify.required">分类不能为空</span></label>
+                <input v-show="false" type="text" class="form-control" readonly="readonly"
+                       v-model="param.classify" v-validate:classify="['required']"  />
                 <select class="form-control edit-input" id="classify" v-model="param.classify">
                   <option value="1,'买'">买</option>
                   <option value="2,'卖'">卖</option>
