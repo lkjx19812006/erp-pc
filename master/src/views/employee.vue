@@ -25,6 +25,9 @@
                         <img src="/static/images/search.png" height="24" width="24">
                         <input type="text" class="search_input" v-model="loadParam.mobile"  placeholder="按员工电话搜索">
                     </div>
+                    <div class="name_search clearfix" style="margin-right:0px">
+                        <button class="new_btn " style="line-height:20px;" @click="rest()">清空条件</button>
+                    </div>
                     <div class="name_search clearfix">
                         <button class="new_btn " style="line-height:20px;" @click="loadByCondition()">搜索</button>
                     </div>
@@ -260,6 +263,14 @@ export default {
             this.changeParam = initEmployeeList;
         },
         loadByCondition:function(){
+            this.getEmployeeList(this.loadParam);
+        },
+        rest:function(){
+            this.loadParam.name = '';
+            this.loadParam.mobile = '';
+            this.loadParam.orgId = '';
+            this.loadParam.orgName = '';
+            this.loadParam.orgCode = '';
             this.getEmployeeList(this.loadParam);
         },
         searchOrg:function(){

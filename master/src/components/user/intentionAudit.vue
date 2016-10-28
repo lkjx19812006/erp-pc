@@ -99,8 +99,21 @@ export default {
 </script>
 <style scoped>
 
-
-
+.modal_con{
+    width:400px;
+    height:300px;
+    top:0;
+}
+.edit_footer{
+    position: absolute;
+    bottom: 0px;
+    width:400px;
+}
+.top-title{
+    width: 100%;
+    position: absolute;
+    top:0;
+}
 .big-font {
     font-size: 36px;
 }
@@ -115,7 +128,7 @@ export default {
 }
 
 .edit-content h3 {
-    font-size: 20px;
+    font-size: 15px;
     color: #fa6705;
     margin: 0;
 }
@@ -151,9 +164,6 @@ export default {
     width: 50%;
 }
 
-.editpage-input {
-    margin-top: 15px;
-}
 
 .editlabel {
     color: #333;
@@ -183,11 +193,6 @@ export default {
     margin-left: 10px;
     margin-top: 5px;
 }
-
-.edit_footer button {
-    margin-left: 15px;
-}
-
 .btn-confirm {
     background-color: #fa6705;
     color: #fff;
