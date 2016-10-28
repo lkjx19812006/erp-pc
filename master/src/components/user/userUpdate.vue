@@ -133,6 +133,12 @@
                      </div>
 
                      <div class="editpage-input">
+                       <label class="editlabel">主营业务</label>
+                       <input type="text" v-model='param.bizMain' class="form-control edit-input" value="{{initUserDetail.busiType}}" />
+                     </div>
+
+
+                     <div class="editpage-input">
                        <label class="editlabel">备注</label>
                        <input type="text" v-model='param.comment' class="form-control edit-input" value="{{initUserDetail.comment}}" />
                      </div>

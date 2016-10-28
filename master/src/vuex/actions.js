@@ -3284,6 +3284,9 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
     if(param.userType){
         updatedata.userType = param.userType;
     }
+    if(param.bizMain){
+      updatedata.bizMain = param.bizMain;
+    }
     console.log(updatedata);
 
     Vue.http({
