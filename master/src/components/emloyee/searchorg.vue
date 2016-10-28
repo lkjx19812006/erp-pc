@@ -99,17 +99,27 @@ export default{
         },
         confirm:function(){
             this.param.show=false;
+            console.log(this.param);
             this.$dispatch('org',this.param);
         }
 
 	},
-    events: {
+    events: {  
       treeview_click:function(param){
-        if(param.children.length==0){   //叶子节点
+        if('all' in this.param&&this.param.all===true){      //获取所有部门信息
+            console.log('所有部门');
             this.param.orgid= param.value;
             this.param.orgcode= param.code;
             this.param.orgName = param.label;
+        }else if('leaf' in this.param&&this.param.leaf===true){
+            console.log('叶子');
+            if(param.children.length==0){   //获取叶子节点部门信息
+                this.param.orgid= param.value;
+                this.param.orgcode= param.code;
+                this.param.orgName = param.label;
+            }
         }
+        
       }
     },
 	created(){
