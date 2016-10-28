@@ -160,17 +160,17 @@ function uncompile(code){
 uncompile(compile(data));
 
 function getCookie(name){          //获取cookie
-    var search = name + "=" ; 
-    var offset = document.cookie.indexOf(search); 
+    var search = name + "=" ;
+    var offset = document.cookie.indexOf(search);
     if(offset==-1){     //cookie中不存在这个变量
         return '';
     }else{
-        offset += search.length; 
+        offset += search.length;
         var end = document.cookie.indexOf(";", offset);
         if(end == -1) {
             end = document.cookie.length;
         }
-        return(document.cookie.substring(offset, end));   
+        return(document.cookie.substring(offset, end));
     }
 }
 
@@ -188,19 +188,19 @@ router.beforeEach(function ({ to, next }) {
     }else{
       if(!getCookie('no')){
         console.log('无cookie');
-        window.location.href='http://127.0.0.1:8080/#!/login';
+        router.go({name: 'login'});
       }else{
         console.log("有cookie");
         console.log(getCookie('id'));
-        
+
         /*$store.state.table.login.id = getCookie('id');
         $store.state.table.login.name = getCookie('name');
         $store.state.table.login.no = uncompile(getCookie('no'));
         $store.state.table.login.orgId = getCookie('orgId');*/
-       
+
       }
     }
-    
+
     next()
 })
 

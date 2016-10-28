@@ -77,7 +77,7 @@ export const login = ({ dispatch }, data) => { //登录
         document.cookie = "orgId=" + res.json().result.orgid + ";expires=" + expire;
         document.cookie = "name=" + res.json().result.name + ";expires=" + expire;
 
-        console.log(document.cookie); 
+        console.log(document.cookie);
 
         var result = res.json().result;
         console.log(result);
@@ -88,8 +88,8 @@ export const login = ({ dispatch }, data) => { //登录
         //本地存储左侧菜单
         localStorage.menus = JSON.stringify(result.menus);
 
-        window.location.href='http://127.0.0.1:8080/#!/home/main';
         data.show = false;
+        data.loginCallback();
     }, (res) => {
         console.log('fail');
         data.show = false;
