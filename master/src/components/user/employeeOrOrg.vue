@@ -19,21 +19,24 @@
 	    			</div>
 	    		</div>
     			<div class="trans_service clearfix" v-show="currentView==1">
+
 					<!-- <div class="col-xs-4">
-                        <select  class="form-control" v-model="employeeParam.orgId" @change="employSearch()">
+                        <select  class="form-control" v-model="loadParam.orgId" @change="employSearch()">
                                                 <option selected value="">请选择业务员部门</option>
                                                   <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
                                               </select>
                     </div> -->
-                    <div>
-                        <div class="input-group col-xs-4 pull-right">
+                    <div style="margin-top:30px;margin-bottom:15px">
+                        <div class="col-xs-1 pull-left"></div>
+                        <div class="input-group col-xs-4 pull-left">
                             <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
-                            <input type="text" class="form-control" v-model="employeeParam.name" placeholder="请输入业务员名字" @keyup.enter="employSearch()">
+                            <input type="text" class="form-control" v-model="loadParam.name" placeholder="请输入业务员名字" @keyup.enter="employSearch()">
 
                         </div>
+                        <div class="col-xs-1 pull-left"></div>
                         <div class="input-group col-xs-4">
                             <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
-                            <input type="text" class="form-control" v-model="employeeParam.mobile" placeholder="请输入业务员手机号"  @keyup.enter="employSearch()">
+                            <input type="text" class="form-control" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @keyup.enter="employSearch()">
                         </div>
                     </div>
     				
@@ -58,6 +61,9 @@
 
 		                </tbody>
 		            </table>
+                    <div class="base_pagination">
+                        <pagination :combination="loadParam"></pagination>
+                    </div>
                     <div class="edit_footer">
                         <button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
                         <button type="button" class="btn btn-orange" @click="confirmEmp()">确定</button>
@@ -106,6 +112,7 @@
 	</div>
 </template>
 <script>
+import pagination from '../pagination'
 import {
     initCustomerlist,
     initEmployeeList,
@@ -119,7 +126,7 @@ import {
 } from '../../vuex/actions'
 export default{
 	components:{
-
+        pagination
 	},
 	props:['param'],
 	data(){
@@ -130,7 +137,7 @@ export default{
 			checked:false,
 			customerFlag:0,
             id: undefined, // Binded to component.
-			loadParam: {
+			orgParam: {
                   loading: true,
                   color: '#5dc596',
                   size: '15px',
@@ -138,7 +145,7 @@ export default{
                   all: 7
               },
 
-              employeeParam: {
+              loadParam: {
                   loading: true,
                   color: '#5dc596',
                   size: '15px',
@@ -184,8 +191,8 @@ export default{
 			this.isA=false;
 		},
 		employSearch:function(){
-        	/*this.getEmployOrgSearch(this.loadParam);*/
-        	this.getEmployeeList(this.employeeParam);
+        	/*this.getEmployOrgSearch(this.orgParam);*/
+        	this.getEmployeeList(this.loadParam);
         },
 		Partselected:function(){
 			this.checked=!this.checked;
@@ -277,7 +284,14 @@ export default{
         }
 
 	},
+
     events: {
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getEmployeeList(this.loadParam);
+            this.checked=false;
+
+        },
       treeview_click:function(param){
             console.log(param);
             if(param.children.length==0){
@@ -289,9 +303,9 @@ export default{
       }
     },
 	created() {
-      //this.getClientList(this.loadParam, this.loadParam.all);
-      this.getEmployeeList(this.employeeParam, this.employeeParam.all);
-      this.getOrgList(this.loadParam, this.loadParam.all);
+      //this.getClientList(this.orgParam, this.orgParam.all);
+      this.getEmployeeList(this.loadParam, this.loadParam.all);
+      this.getOrgList(this.orgParam, this.orgParam.all);
 
     }
 }
