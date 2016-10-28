@@ -6,12 +6,12 @@
                 <span class="glyphicon glyphicon-remove-circle" style="font-size:30px"></span>
             </div>
             <validator name="validation">
-                <div  class="section_title clearfix">
+                <!-- <div  class="section_title clearfix">
                     <span style="font-size:18px;color:#FA6705">{{param.name}}</span>
                     <button class="new_btn transfer" v-if="$validation.valid" @click="saveSucc(param)">保存</button> 
                     <button class="new_btn transfer" v-else disabled="disabled">保存</button> 
-
-                </div>
+                
+                </div> -->
                 <div class="edit-left col-md-8 col-xs-12">
 
                     <div class="section_title clearfix col-md-11 col-xs-12">
@@ -20,42 +20,42 @@
 
                     <div class="clearfix col-md-11 col-xs-12">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">姓名<span class="system_danger" v-if="$validation.name.minlength">请输入至少两位</span></label>
-                            <input type="text" class="form-control edit-input" v-validate:name="{minlength:2}" v-model="param.name" value="{{param.name}}" />
+                            <label class="editlabel">姓名</label>
+                            <input type="text" class="form-control edit-input" v-model="param.name" value="{{param.name}}" disabled="disabled"/>
                         </div>
                         <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                             <label class="editlabel">英文名</label>
-                            <input type="text" class="form-control edit-input"  v-model="param.ename" value="{{param.ename}}" />
+                            <input type="text" class="form-control edit-input"  v-model="param.ename" value="{{param.ename}}" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="clearfix col-md-11 col-xs-12">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">工号<span class="system_danger" v-if="$validation.no.required">请输入员工工号</span></label>
-                            <input type="text" class="form-control edit-input" v-validate:no="['required']"  v-model="param.no" value="{{param.no}}" />
+                            <label class="editlabel">工号</label>
+                            <input type="text" class="form-control edit-input" v-model="param.no" value="{{param.no}}" disabled="disabled"/>
                         </div>
                         <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                             <label class="editlabel">部门</label>
-                             <input type="text" class="form-control edit-input"   v-model="param.orgName" value="{{param.orgName}}" />
+                             <input type="text" class="form-control edit-input" v-model="param.orgName" value="{{param.orgName}}" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="clearfix col-md-11 col-xs-12">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">职位<span class="system_danger" v-if="$validation.position.required">请输入职位</span></label>
-                             <input type="text" class="form-control edit-input" v-validate:position="['required']" v-model="param.position" value="{{param.position}}" />
+                            <label class="editlabel">职位</label>
+                             <input type="text" class="form-control edit-input" v-model="param.position" value="{{param.position}}" disabled="disabled"/>
                         </div>
                         <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                            <label class="editlabel">手机号<span class="system_danger" v-if="$validation.mobile.phone">请输入正确的手机号</span></label>
-                            <input type="text" class="form-control edit-input"v-validate:mobile="['phone']" v-model="param.mobile" value="{{param.mobile}}" />
+                            <label class="editlabel">手机号</label>
+                            <input type="text" class="form-control edit-input" v-model="param.mobile" value="{{param.mobile}}" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="clearfix col-md-11 col-xs-12">
                         <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                             <label class="editlabel">分机号</label>
-                             <input type="text" class="form-control edit-input"   v-model="param.extno" value="{{param.extno}}"/>
+                             <input type="text" class="form-control edit-input"   v-model="param.extno" value="{{param.extno}}" disabled="disabled"/>
                         </div>
                         <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                             <label class="editlabel">职级</label>
-                            <input type="text" class="form-control edit-input"  v-model="param.level" value="{{param.level | levelstate}}"/>
+                            <input type="text" class="form-control edit-input"  v-model="param.level" value="{{param.level | levelstate}}" disabled="disabled"/>
                         </div>
                     </div>
                     <!-- <div class="clearfix col-md-10 col-xs-12">
@@ -80,7 +80,7 @@
                             <div  class="clerafix">
                                     <div class="pull-left role clerafix col-md-3 col-xs-3" v-for="item in initRoleList" >
                                         <input type="checkbox" class="checkbox_unselect"  
-                                        v-model="item.checked" @click="checked(item)"/>
+                                        v-model="item.checked" />
                                         <label for="admin">{{item.cname}}</label>
                                     </div>
                                     
