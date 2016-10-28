@@ -61,7 +61,7 @@
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
                                <ul>
-                                   <li @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true">编辑</li>
+                                   <li @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments">编辑</li>
                                </ul>
                            </div>
                        </td>

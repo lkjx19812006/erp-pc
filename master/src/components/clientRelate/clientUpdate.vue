@@ -81,19 +81,20 @@
                         <div class="editpageright">
                             <div class="editpage-input">
                                 <label class="editlabel">分类</label>
-                                <select class="form-control edit-input"  v-model='param.classify' >
-                                     <option value="0">买</option>
-                                     <option value="1">卖</option>
-                                     <option value="2">买卖</option>
+                                <select class="form-control edit-input"  v-model='param.classify' value="{{param.classify}}">
+                                     <option value="1">买</option>
+                                     <option value="2">卖</option>
+                                     <option value="3">买卖</option>
                                 </select>
                             </div>
 
                           <div class="editpage-input">
                             <label>业务员/部门</label>
-                            <input v-if="!param.orgId" type="text" class="form-control edit-input" readonly="readonly"
+                            <input v-if="param.employeeName" type="text" class="form-control edit-input" readonly="readonly"
                                    v-model="param.employeeName" @click="selectParam.show=true"/>
-                            <input v-if="param.orgId" type="text" class="form-control edit-input" readonly="readonly" v-model="param.orgName"
+                            <input v-if="!param.employeeName" type="text" class="form-control edit-input" readonly="readonly" v-model="param.orgName"
                                    @click="selectParam.show=true"/>
+
                           </div>
 
                             <div class="editpage-input">
@@ -125,8 +126,11 @@
                 <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="confirm()">确定</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
             </div>
+            
         </validator>
+
     </div>
+
 </template>
 <script>
 import tipsdialogModel  from '../tips/tipDialog'
@@ -164,7 +168,6 @@ export default {
                 confirm:true,
                 name:"确认修改信息?",
                 callback:this.alertInfo
-
               },
                 province: {
                   cname: ''

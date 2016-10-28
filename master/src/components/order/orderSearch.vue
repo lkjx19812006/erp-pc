@@ -21,6 +21,10 @@
                         <label>联系方式：</label>
                         <input type="text"  class="form-control" v-model="param.consigneePhone"  placeholder="按收货人联系方式搜索"/>
                     </div>
+                    <div class="client-detailInfo col-xs-12">
+                        <label>订单流水号：</label>
+                        <input type="text"  class="form-control" v-model="param.no"  placeholder="按订单流水号搜索"/>
+                    </div>
                     <div class="client-detailInfo col-xs-6">
                         <label>订单类别</label>
                         <select class="form-control" v-model="param.type">
@@ -30,19 +34,19 @@
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                        <label>订单状态：</label>
+                        <label>订单数据状态：</label>
                          <select v-model="param.orderStatus"  class="form-control">
                                 <option value="">请选择订单状态</option>
-                                <option value="0">0</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                                <option value="40">40</option>
-                                <option value="50">50</option>
-                                <option value="60">60</option>
-                                <option value="70">70</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
+                                <option value="0">订单生成</option>
+                                <option value="10">等待处理</option>
+                                <option value="20">等待支付</option>
+                                <option value="30">等待审核</option>
+                                <option value="40">等待发货</option>
+                                <option value="50">等待收货</option>
+                                <option value="60">已完成</option>
+                                <option value="70">已完成</option>
+                                <option value="-1">已取消</option>
+                                <option value="-2">已过期</option>
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">
@@ -56,7 +60,7 @@
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                        <label>数据状态：</label>
+                        <label>订单审核状态：</label>
                         <select v-model="param.dataStatus"  class="form-control">
                             <option value="">请选择数据状态</option>
                             <option value="0">无效</option>
@@ -74,25 +78,60 @@
                             <option value="3">ios</option>
                         </select>
                     </div>
+                    <div class="client-detailInfo col-xs-6">
+                        <label>交易模式</label>
+                        <select v-model="param.mode"  class="form-control">
+                            <option value="">请选择交易模式</option>
+                            <option value="1">撮合</option>
+                            <option value="2">三方</option>
+                            <option value="3">自营</option>
+                        </select>
+                    </div>
+                    <div class="client-detailInfo col-xs-6" v-if="param.link='/order/'">
+                        <label>下单时间开始：</label>
+                        <mz-datepicker :time.sync="param.ctime" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                    <div class="client-detailInfo col-xs-6" v-else>
+                        <label>下单时间开始：</label>
+                        <mz-datepicker :time.sync="param.ctime" format="yyyy-MM-dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                    <div class="client-detailInfo col-xs-6" v-if="param.link='/order/'">
+                        <label>下单时间结束：</label>
+                        <mz-datepicker :time.sync="param.ftime" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                    <div class="client-detailInfo col-xs-6" v-else>
+                        <label>下单时间结束：</label>
+                        <mz-datepicker :time.sync="param.ftime" format="yyyy-MM-dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                    <div class="client-detailInfo col-xs-6">
+                         <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空</button> 
+                    </div>
                 </div>
             </section>
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <input type="button" class="btn  btn-confirm"  @click="clientSearch(param.show = false)" value="确定">
+            <input type="button" class="btn  btn-confirm"  @click="clientSearch(param,param.show = false)" value="确定">
         </div>
     </div>
 </template>
 <script>
+import calendar from '../calendar/vue.datepicker'
 import {
    initOrderlist
 } from '../../vuex/getters'
 import {
-    getOrderList
+    getOrderList,
+    getEmpolyeeOrder,
+    getOrgOrder
 } from '../../vuex/actions'
 export default {
     components: {
-
+        calendar
     },
     props: ['param'],
     data() {
@@ -109,7 +148,11 @@ export default {
                 orderStatus:'',
                 payWay:'',
                 clients:'',
-                dataStatus:''
+                dataStatus:'',
+                no:'',
+                ctime:'',
+                ftime:'',
+                mode:''
             }
         }
     },
@@ -118,14 +161,29 @@ export default {
             initOrderlist
         },
         actions: {
-            getOrderList
+            getOrderList,
+            getEmpolyeeOrder,
+            getOrgOrder
         }
     },
     methods:{
         clientSearch:function(){
-            console.log("111")
             console.log(this.param)
-             this.getOrderList(this.param);
+            if(this.param.link=='/order/'){
+                this.getOrderList(this.param);
+            }
+            if(this.param.link=='/order/myList'){
+                this.getEmpolyeeOrder(this.param);
+            }
+            if(this.param.link=='/order/sectionList'){
+                this.getOrgOrder(this.param);
+            }
+        },
+        resetTime:function(){
+            console.log(this.param)
+            this.param.ctime = "";
+            this.param.ftime = "";
+            this.param.consigneePhone = "";
         }
     },
     route: {
@@ -137,16 +195,11 @@ export default {
             console.log('hook-example deactivated!')
             transition.next()
         }
-    }/*,
-    created() {
-        this.getProvinceList(this.provinceParam);
-
-    }*/
+    }
 }
 </script>
 <style scoped>
 .modal_con{
-    /*max-height: 720px;*/
     width: 600px;
 }
 .top-title{
@@ -194,8 +247,6 @@ export default {
 }
 
 .edit-model {
-    overflow: hidden;
-    overflow-y: auto;
     padding: 10px 30px 30px 30px;
 }
 
@@ -218,7 +269,7 @@ export default {
 
 .editpageleft,
 .editpageright {
-    -webkit-box-flex: 1;
+129    -webkit-box-flex: 1;
     -webkit-flex: auto;
     -ms-flex: auto;
     flex: auto;

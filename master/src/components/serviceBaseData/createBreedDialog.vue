@@ -25,13 +25,13 @@
                          <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">品种分类选择 <span class="system_danger" v-if="$validation.category.required">请选择品种分类</span></label>
-                                <select class="form-control" id="category" v-validate:category="['required']" v-model="breedData.selected" style="width:90%;">
-                                   <option  v-for="item in initCategorylist" value="{{item.name+','+item.id}}">{{item.name}}</option>
+                                <select class="form-control" id="category" v-validate:category="['required']" v-model="breedData.categoryId" style="width:90%;">
+                                   <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                                  </select>
                              </div>
-                           {{breedData.selected.name}}
+
                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">品种名称拼音</span></label>
+                                <label class="editlabel">品种名称拼音</label>
                                 <input type="text" v-model='breedData.pinyin' class="form-control edit-input"/>
                             </div>
                           　
@@ -88,7 +88,6 @@ export default {
             breedData: {
                 code: '',
                 name: '',
-              selected:'',
                 path:'',
                 show:false
             },
@@ -113,19 +112,10 @@ export default {
             getCategoryData
         }
     },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
-    },
     methods: {
       confirm:function(){
         this.param.show = false;
+
         this.saveBreed(this.breedData);
       }
     },

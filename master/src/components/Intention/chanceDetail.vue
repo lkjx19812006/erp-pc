@@ -132,7 +132,7 @@
                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                     <div class="files_action" v-show="item.show" >
                                                         <dl>
-                                                            <dt @click="edit($index,item.id)">修改备注</dt>
+                                                            <dt @click="edit($index,item)">修改备注</dt>
                                                         </dl>
                                                     </div>
                                                 </td>
@@ -429,10 +429,12 @@ export default {
           this.orderParam.goods[0].quality = item.quality;
           this.orderParam.goods[0].location = item.location;
       },
-      edit:function(index,id){
+      edit:function(index,item){
+        console.log(item)
           this.updateParam.index = index;
-          this.updateParam.id = id;
+          this.updateParam.id = item.id;
           this.updateParam.show = true;
+          this.updateParam.comments = item.comments;
       }
     },
     created(){
@@ -481,7 +483,7 @@ section {
 }
 .files_action{
   position: absolute;
-  top: 32px;
+  top: 18px;
   right: 40px;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -489,7 +491,7 @@ section {
   z-index: 1000;
   min-width: 80px;
   height: 30px;
-  padding: 5px 15px;
+  padding: 5px 8px;
   cursor: pointer;
 }
 .files_action:hover{

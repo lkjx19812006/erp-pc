@@ -52,10 +52,8 @@
             <div class="clearfix" v-if="param.type=='1,企业'">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                 <label>编码</label>
-                <select class="form-control edit-input" v-model="param.number">
-                  <option value="true">有</option>
-                  <option value="false">无</option>
-                </select>
+                <input type="text"  class="form-control" v-model="param.number"
+                      />
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                 <label class="editlabel">类型</label>
@@ -70,7 +68,7 @@
 
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>分类码</label>
+                <label>分类</label>
                 <select class="form-control edit-input" id="classify" v-model="param.classify">
                   <option value="1,'买'">买</option>
                   <option value="2,'卖'">卖</option>

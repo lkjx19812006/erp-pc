@@ -50,8 +50,17 @@ export const initOrderlist = (state) => {
 export const initExpresslist = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.expressList));
 }
+export const initOrderPaylist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.orderPayList));
+}
+export const initRolloutlist = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.orderRolloutList));
+}
 export const initOrderDetail = (state) => { 
     return JSON.parse(JSON.stringify(state.table.orderDetail));
+}
+export const initLogisticsDetail = (state) => { 
+    return JSON.parse(JSON.stringify(state.table.logisticsDetail));
 }
 
 

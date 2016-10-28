@@ -5,13 +5,16 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-model">
-            <p>物流单号：{{param.lcompanyNo}}</p>
-            <p class="clearfix"><img src="/static/images/logistics.png" class="left" height="25" width="25" />物流情况：</p>
-            <div class="condition" v-for="">  
+            <div class="cover_loading">
+              <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <p>物流单号：{{initLogisticsDetail.codenumber}}</p>
+            <p class="clearfix express_condition"><img src="/static/images/logistics.png" class="left" height="25" width="25" />物流情况：</p>
+            <div class="condition" v-for="item in initLogisticsDetail.data">  
                 <img src="/static/images/line.png" height="81" width="8"/>
                 <div class="logistics_condition">
-                    <span>已收入</span>
-                    <p>2016-10-22 10:05:00</p>
+                    <span>{{item.context}}</span>
+                    <p>{{item.time}}</p>
                 </div>
             </div>
            
@@ -19,6 +22,12 @@
     </div>
 </template>
 <script>
+import {
+    initLogisticsDetail
+} from '../../vuex/getters'
+import {
+    
+} from '../../vuex/actions'
 export default {
     components: {
         
@@ -26,8 +35,23 @@ export default {
     props: ['param'],
     data() {
         return {
-            
+            loadParam: {
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                show:false,
+                cur: 1,
+                all: 1
+            }
         } 
+    },
+    vuex:{
+        getters:{
+            initLogisticsDetail
+        },
+        actions:{
+            
+        }
     },
     methods:{
 
@@ -53,6 +77,9 @@ export default {
 .condition{
     position: relative;
     padding: 0 20px;
+}
+.express_condition{
+    margin: 21px 0;
 }
 .logistics_condition {
     position: absolute;

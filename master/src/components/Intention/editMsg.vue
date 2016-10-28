@@ -15,7 +15,7 @@
                     <div class="editpage-input">
                            <label class="editlabel">备注</label>
                            <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
-                           <textarea v-model='param.comments' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5"></textarea>
+                           <textarea v-model='param.comments' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none" rows="6"></textarea>
                     </div>
 
                    
@@ -69,6 +69,20 @@ export default {
 }
 </script>
 <style scoped>
+.modal_con{
+    width: 500px;
+    height: 400px;
+}
+.top-title{
+    width: 500px;
+    position: absolute;
+    top: 0;
+}
+.edit_footer{
+     width: 500px;
+    position: absolute;
+    bottom: 0;
+}
 .big-font {
     font-size: 36px;
 }

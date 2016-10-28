@@ -1,58 +1,19 @@
 <template>
-
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
-    <detail-model  :param="companyParam" v-if="companyParam.show"></detail-model>
-    <search-model  :param="loadParam" ></search-model>
-    <div class="cover_loading">
-        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-    </div>
+    <detail-model  :param.sync="companyParam" v-if="companyParam.show"></detail-model>
+    <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <div v-show="!companyParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">企业</div>
-            <div class="col-xs-10 my_order_search">
-                <!--<div class="name_search clearfix" style="border:none">-->
-                    <!--<select class="form-control" v-model="loadParam.conProvince" @change="multiSearch()">-->
-                         <!--<option value="" selected>按省条件搜索</option>-->
-                         <!--<option v-for="item in initProvince">{{item.cname}}</option>-->
-                     <!--</select>-->
-                <!--</div>-->
-                <!--<div class="name_search clearfix" style="border:none">-->
-                     <!--&lt;!&ndash; <img src="/static/images/search.png" height="24" width="24"> &ndash;&gt;-->
-                     <!--&lt;!&ndash; <input type="text" class="search_input" placeholder="按类别搜索" v-model="loadParam.conType"/> &ndash;&gt;-->
-                     <!--<select class="form-control" v-model="loadParam.conType" @change="multiSearch()">-->
-                         <!--<option value="" selected>按类别搜索</option>-->
-                         <!--<option value="MF">药厂</option>-->
-                         <!--<option value="CF">化妆品厂</option>-->
-                         <!--<option value="FF">食品厂</option>-->
-                         <!--<option value="HF">保健品厂</option>-->
-                     <!--</select>-->
-                <!--</div>-->
-                <!--<div class="name_search clearfix" style="border:none">-->
-                    <!--&lt;!&ndash; <img src="/static/images/search.png" height="24" width="24">-->
-                      <!--<input type="text" class="search_input" placeholder="按客户是否划转搜索" v-model="loadParam"/> &ndash;&gt;-->
-                     <!--<select class="form-control" v-model="loadParam.transform" @change="multiSearch()">-->
-                         <!--<option value="" selected>根据客户划转</option>-->
-                         <!--<option value="">已划转</option>-->
-                         <!--<option value="">未划转</option>-->
-                     <!--</select>-->
-                <!--</div>-->
-                 <!--<div class="name_search clearfix">-->
-                    <!--<img src="/static/images/search.png" height="24" width="24">-->
-                    <!--<input type="text" class="search_input" placeholder="按企业名称搜索" v-model="loadParam.conName" >-->
-                <!--</div>-->
-                 <!--<div class="name_search clearfix">-->
-                    <!--<img src="/static/images/search.png" height="24" width="24">-->
-                    <!--<input type="text" class="search_input" placeholder="按分类码搜索" v-model="loadParam.category"/>-->
-                <!--</div>-->
-                <!-- <a class="new_btn transfer"  @click="multiSearch()">查询</a> -->
+            <div class="my_order_search">
                 <a class="new_btn transfer" style="float:right"  @click="loadParam.show=true">查询</a>
             </div>
-           <!--  <div class=" col-xs-1">
-               <a class="new_btn transfer" @click="multiSearch()">查询</a>
-           </div> -->
         </div>
 
         <div class="order_table" v-cloak>
+             <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
             <table class="table table-hover table_color table-striped">
                 <thead>
                     <tr>
@@ -113,8 +74,10 @@
                                         name:item.name,
                                         tel:item.tel,
                                         principal:item.principal,
+                                        legalPerson:item.legalPerson,
                                         bizScope:item.bizScope,
                                         province:item.province,
+                                        number:item.number,
                                         city:item.city,
                                         address:item.address,
                                         employeeId:'',
@@ -146,7 +109,7 @@ import searchModel from './companySearch'
 
 import {
     initEnterpriselist,
-    initProvince
+
 } from '../../vuex/getters'
 import {
     getEnterpriseData,
@@ -161,18 +124,6 @@ export default {
         detailModel,
         transferModel,
         searchModel
-    },
-    vuex: {
-        getters: {
-            initEnterpriselist,
-            initProvince
-        },
-        actions: {
-            getEnterpriseData,
-            getCompanyDetail,
-            getCompanyData,
-            getProvinceList
-        }
     },
     data() {
         return {
@@ -200,10 +151,18 @@ export default {
             },
         }
     },
-    created() {
-        this.getEnterpriseData(this.loadParam)
-        this.getProvinceList(this.loadParam)
-    },
+    vuex: {
+        getters: {
+            initEnterpriselist,
+            initProvince
+        },
+        actions: {
+            getEnterpriseData,
+            getCompanyDetail,
+            getCompanyData,
+            getProvinceList
+        }
+
     methods: {
         companyDetail:function(id,index){
             this.companyParam.show = true;
@@ -215,7 +174,6 @@ export default {
             this.getCompanyData(this.loadParam);
         },
         companyClick:function(sub){
-            console.log(sub);
             console.log(this.$store.state.table.basicBaseList.enterpriseList[sub].show);
             if(this.$store.state.table.basicBaseList.enterpriseList[sub].show) {
                 this.$store.state.table.basicBaseList.enterpriseList[sub].show = !this.$store.state.table.basicBaseList.enterpriseList[sub].show;
@@ -238,14 +196,29 @@ export default {
             console.log(this.transferParam);
         }
     },
+    route: {
+            activate: function (transition) {
+              console.log('hook-example activated!')
+              transition.next()
+            },
+            deactivate: function (transition) {
+              console.log('hook-example deactivated!')
+              transition.next()
+          }
+    },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getEnterpriseData(this.loadParam);
             this.getCompanyData(this.loadParam);
+
         }
     },
-    filter: (filter, {})
+    filter: (filter, {}),
+    created() {
+        this.getEnterpriseData(this.loadParam)
+        this.getProvinceList(this.loadParam)
+    }
 }
 </script>
 <style scoped>

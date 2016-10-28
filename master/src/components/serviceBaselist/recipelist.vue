@@ -46,7 +46,8 @@
                             quantity:item.quantity,
                             unit:item.unit,
                             status:item.status,
-                            show:true
+                            show:true,
+                            loading:true
                             })">{{item.name}}</td>
                         <td>{{item.breedName}}</td>
                         <td>{{item.quantity}}</td>
@@ -68,8 +69,7 @@ import {
     initConponentlist
 } from '../../vuex/getters'
 import {
-    getComponentData,
-    getRecipeDetail
+    getComponentData
 } from '../../vuex/actions'
 export default {
     components: {
@@ -82,8 +82,7 @@ export default {
             initConponentlist
         },
         actions: {
-            getComponentData,
-            getRecipeDetail
+            getComponentData
         }
     },
     data() {
@@ -102,12 +101,11 @@ export default {
         }
     },
     created() {
-        this.getComponentData(this.loadParam, this.loadParam.all)
+        this.getComponentData(this.loadParam)
     },
     methods: {
         clickRecipe:function(initConponentlist){
             this.changeParam=initConponentlist;
-            this.getRecipeDetail(this.changeParam);
         },
         multiSearch:function(){
             this.getComponentData(this.loadParam)
@@ -117,16 +115,6 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getComponentData(this.loadParam);
-        }
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
         }
     },
     filter: (filter, {})

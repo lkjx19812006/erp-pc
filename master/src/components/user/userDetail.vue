@@ -280,7 +280,7 @@
                                         </thead>
                                       <tbody>
                                           <tr v-for="item in initUserDetail.tracking.arr">
-                                              <td v-if="item.bizType==0">客户</td>
+                                              <td v-if="item.bizType==0">会员</td>
                                               <td v-if="item.bizType==1">意向</td>
                                               <td v-if="item.bizType==2">订单</td>
                                               <td v-if="item.bizType!=0&&item.bizType!=1&&item.bizType!=2"></td>
@@ -292,8 +292,7 @@
                                                 })">
                                                 <img src="/static/images/default_arrow.png" height="24" width="24" />
                                               <div class="breed_action" v-show="item.show" >
-
-                                                     <dt @click="updateTracking(item,$index)">编辑</dt>
+                                                  <dt @click="updateTracking(item,$index)">编辑</dt>
                                               </div>
                                               </td>
                                           </tr>
@@ -780,12 +779,16 @@ section {
 .breed_action{
   top: 20px;
   right: 40px;
+  z-index: 99
 }
-.breed_action dl dt{
+.breed_action  dt{
     display: block;
     padding: 3px;
     font-size: 14px;
     cursor: pointer;
+}
+.breed_action  dt:hover{
+  color: #fa6705;
 }
 section article {
     margin-top: 30px;

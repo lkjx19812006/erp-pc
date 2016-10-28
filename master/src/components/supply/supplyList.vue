@@ -120,7 +120,9 @@
                               show:true,
                               name:item.name,
                               type:item.type,
+                              typeDesc:item.typeDesc,
                               classify:item.classify,
+                              classifyDesc:item.classify,
                               category:item.category,
                               principal:item.principal,
                               bizScope:item.bizScope,
@@ -140,7 +142,8 @@
                               orgId:item.orgId,
                               link:alterInfo,
                               url:'/customer/',
-                              key:'customerList'
+                              key:'customerList',
+                              supplier:1
                               })">编辑</li>
                 <li @click="specDelete({
                             id:item.id,

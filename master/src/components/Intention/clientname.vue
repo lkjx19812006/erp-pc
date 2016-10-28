@@ -34,7 +34,7 @@
 	                    <tr>
 	                    	<th></th>
 	                        <th>类型</th>
-	                        <th>名称</th>
+	                        <th>客户名称</th>
 	                        <th>电话</th>
 	                        <th>分类</th>
 	                    </tr>
@@ -76,7 +76,7 @@ export default{
                 size: '15px',
                 cur: 1,
                 all: 7,
-                link:'/customer/',
+                link:'/customer/employeeDistributed',
                 name:'',
                 phone:'',
                 type:'',

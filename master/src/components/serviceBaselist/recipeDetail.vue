@@ -4,6 +4,10 @@
             <div @click="close()" class="top-title">
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
+
+          <div class="cover_loading" >
+            <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+          </div>
             <div class="col-md-8">
                 <h4 class="section_title">成分相关</h4>
                 <div class="panel-group">
@@ -16,7 +20,7 @@
                                 </a>
                             </h4>
                         </div>
-                        <div class="panel-collapse"   v-show="!initDruglist.show"> 
+                        <div class="panel-collapse"   v-show="!initDruglist.show">
                             <div class="panel-body panel-set">
                                 <table class="table contactSet">
                                     <thead>
@@ -116,7 +120,10 @@ export default {
             this.param.show = false;
         }
     },
-    filter: (filter, {})
+    filter: (filter, {}),
+    created:function(){
+      this.getRecipeDetail(this.param);
+    }
 }
 </script>
 <style scoped>

@@ -1,61 +1,36 @@
 <template>
     <div class="service-data" v-show="$route.path.split('=')[1]==0">
-        <company></company>
+        <company-model></company-model>
     </div>
     <!-- 成分 -->
     <div class="service-data" v-show="$route.path.split('=')[1]==1">
-        <recipe></recipe>
+        <recipe-model></recipe-model>
     </div>
     <!-- 提取物 -->
     <div class="service-data" v-show="$route.path.split('=')[1]==2">
-        <extractive></extractive>
+        <extractive-model></extractive-model>
     </div>
     <!-- 药材 -->
     <div class="service-data" v-show="$route.path.split('=')[1]==3">
-        <breed></breed>
+        <breed-model></breed-model>
     </div>
 </template>
 <script>
-import breed from '../components/serviceBaselist/breedlist'
-import recipe from '../components/serviceBaselist/recipelist'
-import company from '../components/serviceBaselist/companylist'
-import extractive  from '../components/serviceBaselist/extrativelist'
-import  store from '../vuex/store'
-import {
-    getList
-} from '../vuex/getters'
+import breedModel from '../components/serviceBaselist/breedlist'
+import recipeModel from '../components/serviceBaselist/recipelist'
+import companyModel  from '../components/serviceBaselist/companylist'
+import extractiveModel  from '../components/serviceBaselist/extrativelist'
+
 export default {
     components: {
-        breed,
-        recipe,
-        company,
-        extractive
+        breedModel,
+        recipeModel,
+        companyModel,
+        extractiveModel
     },
-    store,
     data() {
         return {
 
-        }
-    },
-    vuex: {
-        getters: {
-            getList
-        }
-    },
-    created() {
-        if (this.$route.query.id > this.getList[9].subcategory.length || isNaN(this.$route.query.id) || !this.$route.query.id) {
-            this.$route.query.id = 0;
-        }
-
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
         }
     }
 }

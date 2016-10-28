@@ -1,5 +1,5 @@
   <template>
-    <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
+   <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
     <update-model :param="updateParam" v-if="updateParam.show"></update-model>
     <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
@@ -7,57 +7,55 @@
     <div v-show="!detailParam.show&&!disposeParam.show">
       <div class="order_search">
         <div class="clear">
-            <div class="my_order col-xs-2">我的订单</div>
+            <div class="my_order col-xs-2">全部订单</div>
             <div class="right">
-                <button class="new_btn" @click="newOrder({
-                    show:true,
-                    title1:'新建订单',
-                    type:'',
-                    sourceType:'',
-                    sample:'',
-                    intl:'',
-                    customer:'',
-                    currency:'',
-                    consignee:'',
-                    consigneePhone:'',
-                    zipCode:'',
-                    country:'',
-                    province:'',
-                    city:'',
-                    employee:'100011',
-                    org:'8',
-                    district:'',
-                    consigneeAddr:'',
-                    comments:'',
-                    incidentals:'',
-                    incidentalsDesc:'',
-                    preferential:'',
-                    preferentialDesc:'',
-                    orderStatus:'',
-                    goods:[{
-                            sourceType:'',
-                            sourceId:'',
-                            title:'',
-                            breedId:'',
-                            brredName:'',
-                            quality:'',
-                            location:'',
-                            spec:'',
-                            price:'',
-                            unit:'',
-                            number:''
-                        }],
-                    key:'orderList',
-                    link:createOrder
-                    })">新建</button>
+               <!--  <button class="new_btn" @click="newOrder({
+                   show:true,
+                   title1:'新建订单',
+                   type:'',
+                   sourceType:'',
+                   sample:'',
+                   intl:'',
+                   customer:'',
+                   currency:'',
+                   consignee:'',
+                   consigneePhone:'',
+                   zipCode:'',
+                   country:'',
+                   province:'',
+                   city:'',
+                   district:'',
+                   consigneeAddr:'',
+                   comments:'',
+                   incidentals:'',
+                   incidentalsDesc:'',
+                   preferential:'',
+                   preferentialDesc:'',
+                   orderStatus:'',
+                   goods:[{
+                           sourceType:'',
+                           sourceId:'',
+                           title:'',
+                           breedId:'',
+                           brredName:'',
+                           quality:'',
+                           location:'',
+                           spec:'',
+                           price:'',
+                           unit:'',
+                           number:''
+                       }],
+                   key:'orderList',
+                   link:createOrder
+                   })">新建</button> -->
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
       </div>
       <div class="order_table">
-        <div class="cover_loading">
-            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-        </div>
+          <div class="cover_loading">
+              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+          </div>
         <table class="table table-hover table_color table-striped " v-cloak>
             <thead>
                 <tr>  
@@ -99,7 +97,7 @@
                   <td>{{item.province}}</td>
                   <td>{{item.city}}</td>
                   <td>{{item.employee}}</td>
-                  <td>{{item.logisticsNo}}</td>
+                  <td>{{item.logistics}}</td>
                   <td>{{item.comments}}</td>
                   <td v-if="item.clients==0||item.clients==null" style="background:red;color:#fff">PC</td>
                   <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
@@ -115,11 +113,10 @@
                   <td v-if="item.orderStatus==70">已完成</td>
                   <td v-if="item.orderStatus==-1">已取消</td>
                   <td v-if="item.orderStatus==-2">已过期</td>
-                  
+                 
                   <td v-if="item.status==0">无效</td>
                   <td v-if="item.status==1">待审</td>
                   <td v-if="item.status==2">审核通过</td>
-                  <td v-if="item.status==null">待审</td>
 
                   <td v-if="item.payWay==0">线下打款</td>
                   <td v-if="item.payWay==1">支付宝</td>
@@ -147,8 +144,6 @@
                                         country:item.country,
                                         province:item.province,
                                         city:item.city,
-                                        employee:item.employee,
-                                        org:item.org,
                                         district:item.district,
                                         consigneeAddr:item.consigneeAddr,
                                         comments:item.comments,
@@ -156,19 +151,7 @@
                                         incidentalsDesc:item.incidentalsDesc,
                                         preferential:item.preferential,
                                         preferentialDesc:item.preferentialDesc,
-                                        goods:[{
-                                                sourceType:item.goods[0].sourceType,
-                                                sourceId:item.goods[0].sourceId,
-                                                title:item.goods[0].title,
-                                                breedId:item.goods[0].breedId,
-                                                brredName:item.goods[0].brredName,
-                                                quality:item.goods[0].quality,
-                                                location:item.goods[0].location,
-                                                spec:item.goods[0].spec,
-                                                price:item.goods[0].price,
-                                                unit:item.goods[0].unit,
-                                                number:item.goods[0].number
-                                            }],
+                                        goods:item.goods,
                                         key:'orderList',
                                         link:alterOrder,
                                         url:'/order/'
@@ -193,6 +176,7 @@
                                 <li v-if="item.orderStatus==50&&item.type==1"  @click="pendingOrder(item,$index)">等待收货</li>
                                 <li v-if="item.orderStatus==60&&item.type==1" @click="pendingOrder(item,$index)">已完成订单</li>
                                 <li v-if="item.orderStatus==70&&item.type==1" @click="pendingOrder(item,$index)">已完成订单</li>
+                                <li v-if="item.orderStatus==100&&item.type==1">待支付核查订单</li>
                               <!--  <li @click="specDelete({
                                        id:item.id,
                                        sub:$index,
@@ -228,7 +212,7 @@
         initOrderlist
     } from '../../vuex/getters'
     import {
-        getEmpolyeeOrder,
+        getOrderList,
         alterOrder,
         createOrder,
         orderStatu,
@@ -253,9 +237,9 @@
                     size: '15px',
                     show:false,
                     cur: 1,
-                    all:1,
+                    all: 1,
                     consignee:'',
-                    link:'/order/myList',
+                    link:'/order/',
                     consigneePhone:'',
                     type:'',
                     orderStatus:'',
@@ -267,7 +251,7 @@
                     show: false
                 },
                 updateParam: {
-                    show:false,   
+                    show:false,  
                 },
                 detailParam: {
                     show:false
@@ -294,7 +278,7 @@
                 initOrderlist
             },
             actions: {
-                getEmpolyeeOrder,
+                getOrderList,
                 alterOrder,
                 createOrder,
                 orderStatu,
@@ -302,8 +286,7 @@
             }
         },
         created() {
-            this.getEmpolyeeOrder(this.loadParam)
-            console.log(this.loadParam)
+            this.getOrderList(this.loadParam)
         },
         methods: {
             editClick: function(sub) {
@@ -326,13 +309,14 @@
             },
             updateOrder:function(initOrderlist){
                 console.log(initOrderlist)
-                console.log(initOrderlist.goods)
                 this.dialogParam=initOrderlist;
             },
             pendingOrder:function(item,sub){
+              console.log(item)
                 item.show=!item.show;
                 item.sub = sub;
                 this.disposeParam = item;
+                this.disposeParam.id = item.id;
                 this.disposeParam.show = true;
                 /*--采购状态type==0--*/
                 if(item.orderStatus==0&&item.type==0){
@@ -407,7 +391,7 @@
                     this.disposeParam.sendoff = true;
                 }
                 if(item.orderStatus==50&&item.type==1){ 
-                    this.disposeParam.tips="订单已发货，请等待收货确认！";
+                    this.disposeParam.tips="订单已发货，请等待买家收货确认！";
                     this.disposeParam.express = true;
                 }
                 if(item.orderStatus==60&&item.type==1){
@@ -431,7 +415,7 @@
         events: {
             fresh: function(input) {
                 this.loadParam.cur = input;
-                this.getEmpolyeeOrder(this.loadParam);
+                this.getOrderList(this.loadParam);
             }
         }
     }
@@ -453,6 +437,10 @@
     .transfer{
         margin-right: 20px;
     }
+    .component_action{
+        right: 34px;
+        top: 27px;
+    }
     .new_btn {
         float: right;
         border: 1px solid #ccc;
@@ -463,10 +451,6 @@
         -moz-border-radius: 3px;
         -ms-border-radius: 3px;
         background: #fff;
-    }
-    .component_action{
-        right: 34px;
-        top: 27px;
     }
     .order_table {
         margin-top: 20px;

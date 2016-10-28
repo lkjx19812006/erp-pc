@@ -82,7 +82,10 @@ import {
    CUSTOMER_TRANSFER,
    ORDER_STATUS,
    EXPRESS_DATA,
-   ORDER_UPLOAD_DATA
+   ORDER_UPLOAD_DATA,
+   ORDER_PAY_DATA,
+   ORDER_ROLLOUT_DATA,
+   EXPRESS_DETAIL_DATA
 
 } from '../mutation-types'
 
@@ -119,7 +122,7 @@ const state = {
     } ,
 
     basicBaseList: {
-         orderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
+        orderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
                 "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
                 "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
                 "lcompanyName":null,"logisticsNo":null,"consignee":"测试","consigneePhone":"18505565316","zipCode":"000000",
@@ -156,9 +159,9 @@ const state = {
             show: true
         },
         customerList: [
-            { "id": 0, "type": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false },
-            { "id": 1, "type": 0, "name": "ddf", "category": "14frff555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false },
-            { "id": 2, "type": 1, "name": "ggg", "category": "gvgg", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false }
+            { "id": 0, "type": 0,"typeDesc": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false },
+            { "id": 1, "type": 0,"typeDesc": 0, "name": "ddf", "category": "14frff555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false },
+            { "id": 2, "type": 1, "typeDesc": 0,"name": "ggg", "category": "gvgg", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false }
         ],
         productList:[
              {"id": "442","cid": 1,"type": "1","name": "1111","breedId": 1111,"quality": "1111","location": "111","spec": "干","number": 1111,"price": 11,"unit": "1111","duedate": "2016-10-23 00:00","coa": 0,"comments": null,"status": 1,"show":true}
@@ -212,6 +215,9 @@ const state = {
         }],
         expressList:[{
             "id": 2,"name": "韵达快运","code": "yunda","codeAick": "yunda","status": 1,"show":true
+        }],
+        orderPayList:[{
+             "id": "580ebddddeb2e33b1ffb9495","payWay":"3","orderId":"57f88e6288e8bb85da01df9b","orderNo": "11111","payFee":"0"
         }]
 
     },
@@ -365,6 +371,28 @@ const state = {
     "customerId":null,"main":null,"audit":0,"bizMain":null,"userType":0,"auditResult":null,"sourceType":null,
     "intention":{"show":false,"arr":[]},"tracking":{"show":false,"arr":[]},"personalAuthShow":false,"companyAuthShow":false
   },
+  logisticsDetail:{
+    "com": "yunda",
+    "codenumber": "3903300539521",
+    "ischeck": "1",
+    "condition": "F00",
+    "data": [
+        {
+          "ftime": "2016-08-20 18:06:39",
+          "context": "在河南南阳公司卧龙分部进行签收扫描，快件已被 已签收 签收",
+          "location": "",
+          "time": "2016-08-20 18:06:39"
+        },
+        {
+          "ftime": "2016-08-20 18:02:01",
+          "context": "在河南南阳公司卧龙分部进行派件扫描；派送业务员：邓师傅；联系电话：15637757071",
+          "location": "",
+          "time": "2016-08-20 18:02:01"
+        },
+    ],
+    "companytype": "yunda",
+    "nu": "3903300539521"
+  },
   productDetail:{
     "id": "442",
     "cid": 1,
@@ -399,6 +427,16 @@ const mutations = {
     [EXPRESS_DATA](state,data){ //物流列表
         state.basicBaseList.expressList = data;
     },
+    [EXPRESS_DETAIL_DATA](state,data){
+      console.log(data)
+        state.logisticsDetail = data;
+    },
+    [ORDER_PAY_DATA](state,data){  //订单支付记录
+        state.basicBaseList.orderPayList = data;
+    },
+    [ORDER_ROLLOUT_DATA](state,data){ //药款到转出记录
+        state.basicBaseList.orderRolloutList = data;
+    },
     [ORDER_UPDATE_DATA](state,data){ //修改订单
         console.log(data)
         for (var key in data) {
@@ -417,6 +455,7 @@ const mutations = {
             state.basicBaseList.offerList[data.index].orderTime++;
         }
         if(data.key == 'orderList'){
+            console.log(data)
             state.basicBaseList[data.key].unshift({
                 "type":data.type,
                 "sourceType":data.sourceType,
@@ -433,6 +472,8 @@ const mutations = {
                 "zipCode":data.zipCode,
                 "country":data.country,
                 "province":data.province,
+                "employee":data.employee,
+                "org":data.org,
                 "city":data.city,
                 "district":data.district,
                 "consigneeAddr":data.consigneeAddr,
@@ -451,7 +492,52 @@ const mutations = {
                     "unit":data.goods[0].unit,
                     "number":data.goods[0].number
                 }],
-                "show": false
+                "show": false,
+                "no":data.no,
+                "id":data.id
+            });
+        }
+        if(data.key == 'orders'){
+            console.log(data)
+            state.clientDetail[data.key].arr.unshift({
+                "type":data.type,
+                "sourceType":data.sourceType,
+                "sample":data.sample,
+                "intl":data.intl,
+                "customer":data.customer,
+                "incidentals":data.incidentals,
+                'incidentalsDesc':data.incidentalsDesc,
+                "preferential":data.preferential,
+                'preferentialDesc':data.preferentialDesc,
+                'currency':data.currency,
+                "consignee":data.consignee,
+                'consigneePhone':data.consigneePhone,
+                "zipCode":data.zipCode,
+                "country":data.country,
+                "province":data.province,
+                "employee":data.employee,
+                "org":data.org,
+                "city":data.city,
+                "district":data.district,
+                "consigneeAddr":data.consigneeAddr,
+                'comments':data.comments,
+                "orderStatus":data.orderStatus,
+                goods:[{
+                    "sourceType":data.goods[0].sourceType,
+                    "sourceId":data.goods[0].sourceId,
+                    "title":data.goods[0].title,
+                    "breedId":data.goods[0].breedId,
+                    "brredName":data.goods[0].breedName,
+                    "quality":data.goods[0].quality,
+                    'location':data.goods[0].location,
+                    "spec":data.goods[0].spec,
+                    "price":data.goods[0].price,
+                    "unit":data.goods[0].unit,
+                    "number":data.goods[0].number
+                }],
+                "show": false,
+                "no":data.no,
+                "id":data.id
             });
         }
     },
@@ -468,7 +554,7 @@ const mutations = {
                 "description":data.description,
                 "fileType":data.fileType,
                 "bizType":data.bizType,
-                "show":false 
+                "show":false
             })
         }
         if(data.sendPics){
@@ -478,7 +564,7 @@ const mutations = {
                 "description":data.description,
                 "fileType":data.fileType,
                 "bizType":data.bizType,
-                "show":false 
+                "show":false
             })
         }
         if(data.bizType=="attach_files"){
@@ -488,13 +574,21 @@ const mutations = {
                 "fileType":data.fileType,
                 "bizType":data.bizType,
                 "description":data.description,
-                "show":false  
+                "show":false
             })
         }
     },
     [ORDER_STATUS](state,data){   //订单状态详情
-        console.log(data);
-        state.basicBaseList.orderList = data;
+        console.log(data)
+        for(var i in  state.basicBaseList.orderList){
+            if(state.basicBaseList.orderList[i].id==data.id){
+                state.basicBaseList.orderList[i].orderStatus=data.orderStatus;
+                state.basicBaseList.orderList[i].payWay=data.payWay;
+                state.basicBaseList.orderList[i].lcompanyId=data.lcompanyId;
+                state.basicBaseList.orderList[i].logisticsNo=data.logisticsNo;
+
+            }
+        }
     },
     [SYSTEM_DATA](state, data) { //枚举类型
       state.systemBaseList.enumlist = data;
@@ -511,7 +605,8 @@ const mutations = {
             "desc": data.desc,
             "typedesc":data.type,
             "id": data.id,
-            "show": false
+            "show": false,
+            "status":1
         });
     },
     [UPDATE_DATA](state, data) { //枚举修改
@@ -545,21 +640,23 @@ const mutations = {
             "eName": data.eName,
             "lName": data.lName,
             "id": data.id,
-            "show": false
+            "show":false,
+            "icon":data.path
         })
     },
     [ADD_CONTACT_DATA](state, data) { //新增企业联系人
         state.companyDetail.companyContacts.arr.unshift({
             "name": data.name,
-            "cid": data.id,
+            "cid": data.cid,
             "tel": data.tel,
             "phone": data.phone,
             "wechart": data.wechart,
             "email": data.email,
             "show": false,
             "id": data.id,
-            "main":data.main
+            "main":data.main 
         })
+        console.log(data.id)
     },
 
     [DELETE_CONTACT_DATA](state,data){

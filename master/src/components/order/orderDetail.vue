@@ -15,19 +15,19 @@
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
                         <a class="navbar-brand navbar-name" href="#">{{initOrderDetail.no}}</a>
                     </div>
-                    <!-- <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
+                    <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                         <li>
-                            <button type="button" class="btn btn-base" @click="createTracking()">新建跟进</button>
+                            <button type="button" class="btn btn-base" @click="createTracking()">{{param.orderStatus}}支付快捷键</button>
                         </li>
-                        <li>
+                        <!-- <li>
                             <button type="button" class="btn btn-base" @click="modifyOrder({
                                                consignee:initOrderDetail.consignee,
                                                consigneePhone:initOrderDetail.consigneePhone,
                                                consigneeAddr:initOrderDetail.consigneeAddr,
                                                show:true,                                          
                                                })">编辑</button>
-                        </li>
-                    </ul> -->
+                        </li>-->
+                    </ul> 
                 </div>
             </nav>
         </div>
@@ -77,16 +77,16 @@
                                                 <td>
                                                     <img v-bind:src="item.image" />
                                                 </td>
-                                                <td  @click="clickShow($index,{
-                                                      concrete:'goods'
-                                                      })">
-                                                      <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="breed_action" v-show="item.show">
-                                                        <dl>
-                                                           <dt @click="createChance(item,$index)">编辑</dt>
-                                                       </dl>
-                                                    </div>
-                                                </td> 
+                                               <!--  <td  @click="clickShow($index,{
+                                                     concrete:'goods'
+                                                     })">
+                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                   <div class="breed_action" v-show="item.show">
+                                                       <dl>
+                                                          <dt @click="createChance(item,$index)">编辑</dt>
+                                                      </dl>
+                                                   </div>
+                                               </td>  -->
                                             </tr>
                                         </tbody>
                                     </table>

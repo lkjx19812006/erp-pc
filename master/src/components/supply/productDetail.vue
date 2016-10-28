@@ -37,7 +37,7 @@
                                             })">
                                       <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                        产品相关文件（{{initProductDetail.filesList.arr.length}}）
+                                        产品相关资质证书（{{initProductDetail.filesList.arr.length}}）
                                       </a>
                                 </h4>
                               </div>
@@ -57,7 +57,9 @@
                                                 <td>{{item.bizType}}</td>
                                                 <td>
                                                     <img v-if="item.fileType=='image'" :src="item.path"  />
-                                                    <img src="/static/images/pdf.png"  v-else />
+                                                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
+                                                    <img  src="/static/images/word.png" v-if="item.fileType=='word'">
+                                                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
                                                 </td>
                                                 <td>{{item.description}}</td>
                                                 <!-- <td  @click="clickShow($index,{
