@@ -35,7 +35,7 @@
                         <th>所在公司</th>
                         <th>主营业务</th>
                         <th>来源</th>
-                        <th>客户类型</th>
+                        <th>经营类型</th>
                         <th>审核状态</th>
                         <th>个人认证</th>
                         <th>企业认证</th>
@@ -68,7 +68,7 @@
                         <!--<td>{{item.email}}</td>-->
                         <!--<td>{{item.qq}}</td>-->
                         <td>{{item.company}}</td>
-                        <td>{{item.busiType}}</td>
+                        <td>{{item.bizMain}}</td>
                         <td v-if="item.source==0" style="background:red;color:#fff">{{item.sourceType}}</td>
                         <td v-if="item.source==1" style="background:green;color:#fff">{{item.sourceType}}</td>
                         <td v-if="item.source==2" style="background:blue;color:#fff">{{item.sourceType}}</td>
@@ -117,6 +117,7 @@
                                                 gender:'',
                                                 importance:'',
                                                 userType:'',
+                                                bizMain:'',
                                                 grade:item.grade
                                                 },item.show=false)">编辑</li>
                                     <li v-if="item.transStatus==0" @click="userToClient({

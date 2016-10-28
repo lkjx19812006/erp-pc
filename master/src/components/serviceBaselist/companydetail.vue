@@ -63,7 +63,7 @@
                                email:'',
                                wechart:'',
                                main:0,
-                               link:1,
+                               link:createContact,
                                url:'contract',
                                key:'companyContacts'
                               })">新建</button>
