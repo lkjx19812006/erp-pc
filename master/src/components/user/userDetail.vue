@@ -78,8 +78,10 @@
                                             <th>数量</th>
                                             <th>价格</th>
                                             <th>单位</th>
-                                            <th>审核状态</th>
                                             <th>意向类型</th>
+                                            <th>审核状态</th>
+                                            <th>审核备注</th>
+
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initUserDetail.intention.arr">
@@ -93,10 +95,19 @@
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
 
-                                                <td>{{item.validate | intentionAudit}}</td>
+                                                <td>
+                                                  <div v-if="item.type==0">求购</div>
+                                                  <div v-if="item.type==1">供应</div>
+                                                </td>
 
-                                                <td v-if="item.type==0">求购</td>
-                                                <td v-if="item.type==1">供应</td>
+                                                <!-- <td>{{item.validate | intentionAudit}}</td> -->
+                                                <td>
+                                                  <div v-if="item.validate==-1">审核不通过</div>
+                                                  <div v-if="item.validate==0">初始</div>
+                                                  <div v-if="item.validate==1">审核通过</div>
+                                                </td>
+                                                <td>{{item.description}}</td>
+
                                                 <td  @click="clickShow($index,{
                                                   concrete:'intention'
                                                   })">
@@ -799,7 +810,7 @@ section article {
   z-index: 100;
   width: 100%;
   right: 0;
-  top: 130px;
+  top: 70px;
 }
 .client-section {
     padding: 10px 5px 40px 5px;
