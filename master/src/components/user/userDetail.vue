@@ -340,30 +340,7 @@
                               </div>
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>经营类型</label>
-                                  <input v-if="initUserDetail.bizType==0"  type="text" class="form-control"  value="其它" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==1"  type="text" class="form-control"  value="合作社" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==2"  type="text" class="form-control"  value="药商" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==3"  type="text" class="form-control"  value="药厂" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==4"  type="text" class="form-control"  value="个体户" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==5"  type="text" class="form-control"  value="药店" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==6"  type="text" class="form-control"  value="医院" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==7"  type="text" class="form-control"  value="贸易公司" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==8"  type="text" class="form-control"  value="零售商行" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==9"  type="text" class="form-control"  value="药农" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==10"  type="text" class="form-control"  value="介绍人" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==11"  type="text" class="form-control"  value="药贩子" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==12"  type="text" class="form-control"  value="产地药商" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==13"  type="text" class="form-control"  value="销地药商" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==14"  type="text" class="form-control"  value="养生诊所" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==15"  type="text" class="form-control"  value="化工厂" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==16"  type="text" class="form-control"  value="化妆品厂" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==17"  type="text" class="form-control"  value="提取物厂" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==18"  type="text" class="form-control"  value="食品厂" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==19"  type="text" class="form-control"  value="实验室" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==20"  type="text" class="form-control"  value="网上电商" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==21"  type="text" class="form-control"  value="中成药生产商" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==22"  type="text" class="form-control"  value="西药生产商" disabled="disabled"/>
-                                  <input v-if="initUserDetail.bizType==23"  type="text" class="form-control"  value="饮片厂" disabled="disabled"/>
+                                <input type="text" class="form-control"  value="{{initUserDetail.bizTypeName}}" disabled="disabled"/>
                               </div>
                           </div>
                           <div class="clearfix">
@@ -372,10 +349,20 @@
                                   <input type="text" class="form-control"  value="{{initUserDetail.sourceType}}" disabled="disabled"/>
                               </div>
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                  <label>客户类型</label>
-                                  <input type="text" class="form-control"  value="{{initUserDetail.bizTypeName}}" disabled="disabled"/>
+                                  <label>主营业务</label>
+                                <input type="text" class="form-control"  value="{{initUserDetail.bizMain}}" disabled="disabled"/>
                               </div>
                           </div>
+                        <div class="clearfix">
+                          <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                            <label>身份证号码</label>
+                            <input type="text" class="form-control"  value="{{initUserDetail.idnumber}}" disabled="disabled"/>
+                          </div>
+                          <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                            <label>重要等级</label>
+                            <input type="text" class="form-control"  value="{{importance[initUserDetail.importance]}}" disabled="disabled"/>
+                          </div>
+                        </div>
                           <div class="clearfix">
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                   <label>审核状态</label>
@@ -387,11 +374,19 @@
                                   <input v-else type="text" class="form-control" value="未划转" disabled="disabled"/>
                               </div>
                           </div>
+                        <div class="clearfix">
+
+                          <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
+                            <label>会员星级</label>
+                            <input type="text" class="form-control"  value="{{grade[initUserDetail.grade]}}"  disabled="disabled"/>
+                          </div>
+                        </div>
                           <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-12 col-xs-12">
                                   <label>备注</label>
-                                  <input type="text" class="form-control"  value="{{initUserDetail.comment}}" disabled="disabled"/>
+                                  <input type="text" class="form-control" value="{{initUserDetail.comment}}"  disabled="disabled"/>
                               </div>
+
 
                           </div>
 
@@ -441,6 +436,16 @@ export default {
 
         trackingParam:{
           show:false
+        },
+        importance:{
+          0:'重要',
+          1:'很重要',
+          2:'非常重要'
+        },
+        grade:{
+          0:'一星会员',
+          1:'二星会员',
+          2:'三星会员'
         },
         intentionParam:{
           loading:false,
