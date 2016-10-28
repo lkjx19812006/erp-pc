@@ -32,21 +32,21 @@
 <script>
 
 import {
-    
+
 } from '../vuex/getters'
 import {
     login
 } from '../vuex/actions'
 export default {
     components: {
-        
+
     },
     data() {
         return {
            checked:false,
            loginParam:{
                 no:'',
-                password:''     
+                password:''
            },
            base64DecodeChars:[
               -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -62,7 +62,7 @@ export default {
     props:['param'],
     vuex: {
         getters:{
-            
+
         },
        actions:{
            login
@@ -70,22 +70,23 @@ export default {
     },
     methods: {
         confirm:function(){
+          this.loginParam.loginCallback=this.loginCallback;
             this.login(this.loginParam);
             //window.location.href='https://www.baidu.com';
 
         },
         getCookie:function(name){          //获取cookie
-            var search = name + "=" ; 
-            var offset = document.cookie.indexOf(search); 
+            var search = name + "=" ;
+            var offset = document.cookie.indexOf(search);
             if(offset==-1){     //cookie中不存在这个变量
                 return '';
             }else{
-                offset += search.length; 
+                offset += search.length;
                 var end = document.cookie.indexOf(";", offset);
                 if(end == -1) {
                     end = document.cookie.length;
                 }
-                return(document.cookie.substring(offset, end));   
+                return(document.cookie.substring(offset, end));
             }
         },
         base64decode:function(str) {
@@ -142,7 +143,10 @@ export default {
           var test=this.base64decode(code);
           test=unescape(test);
           return test;
-        }
+        },
+      loginCallback:function(){
+        this.$route.router.go({name: 'home'});
+      }
 
     },
     created(){
@@ -150,9 +154,9 @@ export default {
         this.loginParam.password = this.uncompile(this.getCookie('password'));
     },
     ready() {
-        
+
     },
-    
+
 }
 </script>
 
@@ -175,8 +179,8 @@ export default {
         height:241px;
         width:400px;
         border:1px solid #ddd;
-        
-    } 
+
+    }
     .modal_con{
         top:40px;
         right:-500px;
