@@ -1028,7 +1028,7 @@ import createtrackModel from '../user/userTracking'
 import createproductModel from  '../clientRelate/label/createProduct'
 import intentionModel from  '../user/userIntention'
 import auditDialog from '../tips/auditDialog'
-import createorderModel  from  '../order/orderInformationDialog'
+import createorderModel  from  '../order/createOrderDialog'
 import {
 	initClientDetail
 } from '../../vuex/getters'
@@ -1325,11 +1325,6 @@ export default {
     margin-right: 10px;
 }
 
-.navbar-name {
-    color: #fa6705;
-    font-size: 20px;
-}
-
 .btn-base {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -1342,8 +1337,7 @@ section {
     background-color: #fff;
 }
 .breed_action{
-	top: 20px;
-	right: 40px;
+	 right: 40px;
 }
 .files_action{
   position: absolute;
@@ -1361,12 +1355,6 @@ section {
 .files_action:hover{
   color: #fa6705;
 }
-.breed_action dl dt{
-    display: block;
-    padding: 3px;
-    font-size: 14px;
-    cursor: pointer;
-}
 section article {
     margin-top: 30px;
 }
@@ -1379,23 +1367,8 @@ section article {
 .client-section {
     padding: 10px 5px 40px 5px;
 }
-
-.section_title {
-    font-size: 20px;
-    color: #333;
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
-    margin: 0;
-}
 .contactSet thead{
 	color:#fa6705;
-}
-.panel-title-set {
-    margin-top: 6px;
-    margin-left: 26px;
-    display: inline-block;
-    font-size: 20px;
-    color: #333;
 }
 
 .contact-view {

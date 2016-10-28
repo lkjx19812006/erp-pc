@@ -21,11 +21,7 @@
                       <div class="editpageleft">
                           <div class="editpage-input">
                               <label class="editlabel">订单类别</label>
-                              <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" v-if="param.orderStatus===0||param.orderStatus==10||param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true">
-                                  <option value="0">采购</option>
-                                  <option value="1">销售</option>
-                              </select>
-                              <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" v-else>
+                              <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" >
                                   <option value="0">采购</option>
                                   <option value="1">销售</option>
                               </select>
@@ -33,23 +29,14 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">来源类型</label>
-                              <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" v-if="param.orderStatus===0||param.orderStatus==10||param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true">
-                                  <option value="0">新建</option>
-                                  <option value="1">意向</option>
-                                  <option value="2">报价</option>
-                              </select>
-                              <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" v-else>
+                              <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" >
                                   <option value="0">新建</option>
                                   <option value="1">意向</option>
                                   <option value="2">报价</option>
                               </select>
                               <!-- <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/> -->
                           </div>
-                           <div class="editpage-input" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" >
-                              <label class="editlabel">收货人姓名 <span class="system_danger" v-if="$validation.name.minlength">请输入收货人姓名且不少于两位数</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}" v-validate:name="{minlength:2}"  disabled="true"/>
-                          </div>
-                          <div class="editpage-input" v-else>
+                           <div class="editpage-input">
                               <label class="editlabel">收货人姓名 <span class="system_danger" v-if="$validation.name.minlength">请输入收货人姓名且不少于两位数</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}" v-validate:name="{minlength:2}" />
                           </div>
@@ -85,26 +72,19 @@
                           
                           <div class="editpage-input">
                               <label class="editlabel">邮编</label>
-                               <input type="text" class="form-control edit-input" v-model="param.zipCode" value="{{param.zipCode}}" v-if="param.orderStatus===0||param.orderStatus==10||param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true" />
-                              <input type="text" class="form-control edit-input" v-model="param.zipCode" value="{{param.zipCode}}" v-else />
-                          </div>
-                           <div class="editpage-input" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" >
-                              <label class="editlabel">收货人详细地址 <span class="system_danger" v-if="$validation.addr.required">请输入收货人详细地址</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"    v-validate:addr="['required']" value="{{param.consigneeAdd}}" disabled="true" />
-                          </div>  
-                          <div class="editpage-input" v-else>
-                              <label class="editlabel">收货人详细地址 <span class="system_danger" v-if="$validation.addr.required">请输入收货人详细地址</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"    v-validate:addr="['required']" value="{{param.consigneeAdd}}" />
+                              <input type="text" class="form-control edit-input" v-model="param.zipCode" value="{{param.zipCode}}" />
                           </div>
                            <div class="editpage-input">
+                              <label class="editlabel">收货人详细地址 <span class="system_danger" v-if="$validation.addr.required">请输入收货人详细地址</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"    v-validate:addr="['required']" value="{{param.consigneeAdd}}" />
+                          </div>  
+                           <div class="editpage-input">
                               <label class="editlabel">杂费</label>
-                              <input type="text" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true"/>
-                              <input type="text" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}" v-else/>
+                              <input type="text" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">优惠金额</label>
-                              <input type="text" class="form-control edit-input" v-model="param.preferential" value="{{parampreferential}}" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true"/>
-                              <input type="text" class="form-control edit-input" v-model="param.preferential" value="{{parampreferential}}" v-else/>
+                              <input type="text" class="form-control edit-input" v-model="param.preferential" value="{{parampreferential}}"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">优惠说明</label>
@@ -113,26 +93,17 @@
                       </div>
                       <div class="editpageright">
                           <div class="editpage-input">
-                              <label class="editlabel">选择客户</label>
-                              <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customer}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true"/>
-                              <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customer}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)" v-else/ >
+                              <label class="editlabel">选择客户 <span class="system_danger" v-if="$validation.custname.required">请选择客户</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.customerName" id="custname"  v-validate:custname="['required']" value="{{param.customer}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">是否国际</label>
-                              <select type="text" class="form-control edit-input" v-model="param.intl" disabled="true" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2">
-                                  <option value="0">否</option>
-                                  <option value="1">是</option>
-                              </select>
-                              <select type="text" class="form-control edit-input" v-model="param.intl" v-else>
+                              <select type="text" class="form-control edit-input" v-model="param.intl">
                                   <option value="0">否</option>
                                   <option value="1">是</option>
                               </select>
                           </div>
-                          <div class="editpage-input" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" >
-                              <label class="editlabel">收货人电话 <span class="system_danger" v-if="$validation.phone.phone">请输入正确有效的手机号</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consigneePhone" id="phone" v-validate:phone="['phone']" value="{{param.consigneePhone}}" disabled="true"/>
-                          </div>
-                          <div class="editpage-input" v-else>
+                          <div class="editpage-input">
                               <label class="editlabel">收货人电话 <span class="system_danger" v-if="$validation.phone.phone">请输入正确有效的手机号</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consigneePhone" id="phone" v-validate:phone="['phone']" value="{{param.consigneePhone}}"/>
                           </div>
@@ -165,18 +136,14 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">货币类型</label>
-                               <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" disabled="true">
+                               <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}">
                                   <option value="0" selected>人民币</option>
                                  <!--  <option value="1">是</option> -->
                               </select>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">是否样品订单</label>
-                              <select type="text" class="form-control edit-input" v-model="param.sample" value="{{param.sample}}" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true">
-                                  <option value="0">否</option>
-                                  <option value="1">是</option>
-                              </select>
-                              <select type="text" class="form-control edit-input" v-else>
+                              <select type="text" class="form-control edit-input" v-model="param.sample" value="{{param.sample}}" >
                                   <option value="0">否</option>
                                   <option value="1">是</option>
                               </select>
@@ -191,19 +158,7 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">订单状态</label>
-                              <select  class="form-control edit-input" v-model="param.orderStatus"  v-if="param.orderStatus===0||param.orderStatus==10||param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true">
-                                  <option value="0">订单生成</option>
-                                  <option value="10">订单处理中</option>
-                                  <option value="20">订单等待支付</option>
-                                  <option value="30">已支付，等待审核</option>
-                                  <option value="40">等待发货</option>
-                                  <option value="50">已发货，等待收货</option>
-                                  <option value="60">订单已完成</option>
-                                  <option value="70">订单已完成</option>
-                                  <option value="-1">订单已取消</option>
-                                  <option value="-2">订单过期</option>
-                              </select>
-                              <select  class="form-control edit-input" v-model="param.orderStatus"  v-else>
+                              <select  class="form-control edit-input" v-model="param.orderStatus"   >
                                   <option value="0">订单生成</option>
                                   <option value="10">订单处理中</option>
                                   <option value="20">订单等待支付</option>
@@ -228,73 +183,44 @@
                        <div class="editpageleft">
                           <div class="editpage-input">
                                <label class="editlabel">订单商品标题</label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].title"  value="{{param.goods[0].title}}"  v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true"/>
-                               <input type="text" class="form-control edit-input" v-model="param.goods[0].title"  value="{{param.goods[0].title}}"  v-else />
+                              <input type="text" class="form-control edit-input" v-model="param.goods[0].title"  value="{{param.goods[0].title}}" />
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">订单商品来源</label>
-                              <select type="text" class="form-control edit-input" v-model="param.goods[0].sourceType"  value="{{param.goods[0].sourceType}}"  disabled="true">
+                              <select type="text" class="form-control edit-input" v-model="param.goods[0].sourceType"  value="{{param.goods[0].sourceType}}" >
                                   <option value="0">新建</option>
                                   <option value="1">意向</option>
                                   <option value="2">报价</option>
                               </select>
                           </div>
-                          <div class="editpage-input" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" >
-                              <label class="editlabel">商品单位 <span class="system_danger" v-if="$validation.unit.required">请输入商品的单位</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].unit" id="unit" v-validate:unit="['required']" value="{{param.goods[0].unit}}" disabled="true"/>
-                          </div>
-                          <div class="editpage-input" v-else >
+                          <div class="editpage-input">
                               <label class="editlabel">商品单位 <span class="system_danger" v-if="$validation.unit.required">请输入商品的单位</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.goods[0].unit" id="unit" v-validate:unit="['required']" value="{{param.goods[0].unit}}"/>
                           </div>
-                          <div class="editpage-input" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2">
+                          <div class="editpage-input">
                               <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.required">请输入商品的价格</span></label>
-                              <input type="number" class="form-control edit-input" v-model="param.goods[0].price" id="price" v-validate:price="['required']"  value="{{param.goods[0].price}}" disabled="true" />
+                              <input type="number" class="form-control edit-input" v-model="param.goods[0].price" id="price" v-validate:price="['required']"  value="{{param.goods[0].price}}"/>
                           </div>
-                          <div class="editpage-input" v-else>
-                              <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.required">请输入商品的价格</span></label>
-                              <input type="number" class="form-control edit-input" v-model="param.goods[0].price" id="price" v-validate:price="['required']"  value="{{param.goods[0].price}}"  />
-                          </div>
-                          <div class="editpage-input" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2">
+                          <div class="editpage-input">
                               <label class="editlabel">商品质量 <span class="system_danger" v-if="$validation.qual.required">请输入商品的质量</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].quality" id="qual" v-validate:qual="['required']" value="{{param.goods[0].quality}}" disabled="true" />
-                          </div>
-                           <div class="editpage-input" v-else>
-                              <label class="editlabel">商品质量 <span class="system_danger" v-if="$validation.qual.required">请输入商品的质量</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].quality" id="qual" v-validate:qual="['required']" value="{{param.goods[0].quality}}" />
+                              <input type="text" class="form-control edit-input" v-model="param.goods[0].quality" id="qual" v-validate:qual="['required']" value="{{param.goods[0].quality}}"/>
                           </div>
                            
                       </div>
                       <div class="editpageright">
-                          <div class="editpage-input" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2">
+                          <div class="editpage-input">
                               <label class="editlabel">订单商品药材品种名称 <span class="system_danger" v-if="$validation.breed.required">请输入商品的品种名称</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].brredName" id="breed" v-validate:breed="['required']" value="{{param.goods[0].brredName}}"  @click="searchBreed(param.brredName,param.breedId)" disabled="true" />
+                              <input type="text" class="form-control edit-input" v-model="param.goods[0].brredName" id="breed" v-validate:breed="['required']" value="{{param.goods[0].brredName}}"  @click="searchBreed(param.brredName,param.breedId)"/>
                           </div>
-                          <div class="editpage-input" v-else>
-                              <label class="editlabel">订单商品药材品种名称 <span class="system_danger" v-if="$validation.breed.required">请输入商品的品种名称</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].brredName" id="breed" v-validate:breed="['required']" value="{{param.goods[0].brredName}}"  @click="searchBreed(param.brredName,param.breedId)" />
-                          </div>
-                          <div class="editpage-input" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2">
-                              <label class="editlabel">商品数量  <span class="system_danger" v-if="$validation.number.quantity">请输入商品的数量</span></label>
-                              <input type="number" class="form-control edit-input" v-model="param.goods[0].number" id="number" v-validate:number="['quantity']"  disabled="true" />
-                          </div>
-                          <div class="editpage-input" v-else>
+                          <div class="editpage-input">
                               <label class="editlabel">商品数量  <span class="system_danger" v-if="$validation.number.quantity">请输入商品的数量</span></label>
                               <input type="number" class="form-control edit-input" v-model="param.goods[0].number" id="number" v-validate:number="['quantity']" />
                           </div>
-                          <div class="editpage-input" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2">
+                          <div class="editpage-input">
                               <label class="editlabel">商品规格 <span class="system_danger" v-if="$validation.spec.required">请输入商品的规格</span></label>
-                              <input type="text" class="form-control form-control edit-input" v-model="param.goods[0].spec"  id="spec" v-validate:spec="['required']"  value="{{param.goods[0].spec}}" disabled="true" />
+                              <input type="text" class="form-control form-control edit-input" v-model="param.goods[0].spec"  id="spec" v-validate:spec="['required']"  value="{{param.goods[0].spec}}"/>
                           </div>
-                          <div class="editpage-input" v-else>
-                              <label class="editlabel">商品规格 <span class="system_danger" v-if="$validation.spec.required">请输入商品的规格</span></label>
-                              <input type="text" class="form-control form-control edit-input" v-model="param.goods[0].spec"  id="spec" v-validate:spec="['required']"  value="{{param.goods[0].spec}}" />
-                          </div>
-                          <div class="editpage-input" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2">
-                              <label class="editlabel">商品产地 <span class="system_danger" v-if="$validation.location.required">请输入商品的产地</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].location" id="location" v-validate:location="['required']" value="{{param.goods[0].location}}" disabled="true" />
-                          </div>
-                          <div class="editpage-input" v-else>
+                          <div class="editpage-input">
                               <label class="editlabel">商品产地 <span class="system_danger" v-if="$validation.location.required">请输入商品的产地</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.goods[0].location" id="location" v-validate:location="['required']" value="{{param.goods[0].location}}"/>
                           </div>

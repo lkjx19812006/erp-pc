@@ -17,41 +17,40 @@
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
                         <a class="navbar-brand navbar-name" href="#">{{initUserDetail.fullname}}</a>
                     </div>
-                    <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
-                        <li>
-                            <button type="button" class="btn btn-base" @click="createTracking({
-                                    objId:initUserDetail.id,
-                                    bizId:'',
-                                    bizName:'',
-                                    type:0,
-                                    trackingWay:'',
-                                    bizType:'',
-                                    contactNo:'',
-                                    comments:'',
-                                    show:false
-                                  })">新建跟进</button>
-                        </li>
-
-                        <li>
-                            <button type="button" class="btn btn-base" @click="modifyUser({
-                                               id:initUserDetail.id,
-                                               show:true,
-                                               loading:false,
-                                               name:initUserDetail.name,
-                                               nickname:initUserDetail.nickname,
-                                               fullname:initUserDetail.fullname,
-                                               type:initUserDetail.type,
-                                               phone:initUserDetail.phone,
-                                               email:initUserDetail.email,
-                                               qq:initUserDetail.qq,
-                                               index:param.sub,
-                                               company:initUserDetail.company,
-                                               comment:initUserDetail.comment,
-
-                                               })">编辑</button>
-                        </li>
-
-                    </ul>
+                   <!--  <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
+                       <li>
+                           <button type="button" class="btn btn-base" @click="createTracking({
+                                   objId:initUserDetail.id,
+                                   bizId:'',
+                                   bizName:'',
+                                   type:0,
+                                   trackingWay:'',
+                                   bizType:'',
+                                   contactNo:'',
+                                   comments:'',
+                                   show:false
+                                 })">新建跟进</button>
+                       </li>
+                   
+                       <li>
+                           <button type="button" class="btn btn-base" @click="modifyUser({
+                                              id:initUserDetail.id,
+                                              show:true,
+                                              loading:false,
+                                              name:initUserDetail.name,
+                                              nickname:initUserDetail.nickname,
+                                              fullname:initUserDetail.fullname,
+                                              type:initUserDetail.type,
+                                              phone:initUserDetail.phone,
+                                              email:initUserDetail.email,
+                                              qq:initUserDetail.qq,
+                                              index:param.sub,
+                                              company:initUserDetail.company,
+                                              comment:initUserDetail.comment,
+                   
+                                              })">编辑</button>
+                       </li>
+                   </ul> -->
                 </div>
             </nav>
         </div>

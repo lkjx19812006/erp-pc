@@ -1,73 +1,62 @@
 <template>
-    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>  
         <div class="edit-content">
-            <h3>会员审核</h3>
+            <h3>部门订单审核</h3>
         </div>
         <div class="edit-model">
            <section class="editsection" v-cloak>
                <div class="editpage">
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpageleft">
-                    <div style="color:red;font-size:12px;font-weight:100;white-space: normal;">
+                    <!-- <div style="color:red">
                         快速编辑：
                         <span v-for="item in initAuditLabel.arr">
                             <label style="cursor:pointer" class="quick_edit" @click="addText(item.text)">{{item.text}}&nbsp;&nbsp;</label>
                         </span>
-                    </div>
+                    </div> -->
                     <div class="editpage-input">
                            <label class="editlabel">备注</label>
-                           <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
-                           <textarea v-model='param.auditComment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none" rows="5" value="{{param.auditComment}}"></textarea>
-                    </div>
-
-                   
+                           <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5" value="{{param.description}}"></textarea>
+                    </div>        
                </div>
            </section>
         </div>  
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=pass,tipsParam.name='确认审核通过?'">通过</button>
-            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=reject,tipsParam.name='确认审核不通过?'">不通过</button>
+            <button type="button" class="btn  btn-confirm" @click="pass(param)">通过</button>
+            <button type="button" class="btn  btn-confirm" @click="reject(param)">不通过</button>
         </div>
     </div>
 </template>
 <script>
-import tipsdialogModel  from '../tips/tipDialog'
 import {
-    initAuditLabel
+    /*initAuditLabel*/
 } from '../../vuex/getters'
 import {   
-    auditQuickEdit,
-    batchUpdateUserInfo
+   /* auditQuickEdit,*/
+    batchOrgOrder
 } from '../../vuex/actions'
 export default {
     components: {
-        tipsdialogModel
+        
     },
     props: ['param'],
     data() {
         return {
-            tipsParam:{
-                show:false,
-                confirm:true,
-                name:"",
-                callback:''
             
-          }
         }
     },
     vuex: {
        getters: {
-            initAuditLabel
+            /*initAuditLabel*/
         },
         actions: {
-            auditQuickEdit,
-            batchUpdateUserInfo
+            /*auditQuickEdit,*/
+            batchOrgOrder
         } 
     },
     route: {
@@ -81,42 +70,45 @@ export default {
         }
     },
     methods: {
-        addText: function(text){         
+       /* addText: function(text){
             if(this.param.auditComment.split(',').indexOf(text) == -1){
                 this.param.auditComment += text + ',';
             }
-
+        },*/
+        pass: function(param){
+            console.log(this.param)
+            if(this.param.validate==0){
+                this.param.validate = 1;   
+                this.param.show=false;    
+                this.batchOrgOrder(this.param);
+            }else if(this.param.validate==1){
+                this.param.validate = 2;   
+                this.param.show=false;    
+                this.batchOrgOrder(this.param);
+            }
         },
-        pass: function(){
-            this.param.audit = 1;        
-            console.log(this.param.userIds);
-            console.log(this.param.auditComment);
-            this.batchUpdateUserInfo(this.param);
-        },
-        reject: function(){
-            this.param.audit = 2;  
-            console.log(this.param.userIds);
-            console.log(this.param.auditComment);
+        reject: function(param){
+            this.param.validate = -2;
+            this.param.show=false;  
+            console.log(this.param.ids);
+            console.log(this.param.description);
             console.log(this.param.indexs);
-            this.batchUpdateUserInfo(this.param);
-
+            this.batchOrgOrder(this.param);
         },
     },
-    created() { 
+    /*created() { 
         this.auditQuickEdit();
-   }
+   }*/
     
 }
 </script>
 <style scoped>
 .modal_con {
-    width: 454px;
-    height: 350px;
-    top: 0;
-    bottom: 0;
+    width: 554px;
+    height: 400px;
 }
 .edit_footer{
-    width: 454px;
+    width: 554px;
     position: absolute;
     bottom: 0;
 }
@@ -126,7 +118,7 @@ export default {
 .top-title{
     position: absolute;
     top: 0;
-    width: 454px;
+    width: 554px;
 }
 .top-title span {
     font-size: 28px;
@@ -139,7 +131,7 @@ export default {
 }
 
 .edit-content h3 {
-    font-size: 16px;
+    font-size: 20px;
     color: #fa6705;
     margin: 0;
 }
@@ -181,7 +173,7 @@ export default {
 
 .editlabel {
     color: #333;
-    font-size: 13px;
+    font-size: 14px;
     display: block;
 }
 
@@ -211,9 +203,7 @@ export default {
 .edit_footer button {
     margin-left: 15px;
 }
-.btn{
-    font-size: 12px;
-}
+
 .btn-confirm {
     background-color: #fa6705;
     color: #fff;

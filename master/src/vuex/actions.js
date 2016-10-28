@@ -8,6 +8,7 @@ export const menuBar = ({ dispatch }) => dispatch(types.MENU_BAR)
 export const initList = ({ dispatch }) => {
     Vue.http.get(apiUrl.list)
         .then((res) => {
+            console.log(res)
             dispatch(types.INIT_LIST, res.data);
         }, (res) => {
             console.log('fail');
@@ -374,6 +375,36 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
     }, (res) => {
         console.log('fail');
         param.loading = false;
+    })
+}
+export const batchOrgOrder = ({ dispatch }, param) => { //批量审核部门的订单
+    const OrgOrderdata = {
+        ids: param.ids,
+    }
+    if(param.description){
+        OrgOrderdata.description = param.description;
+    }
+    if(param.validate){
+        OrgOrderdata.validate = param.validate;
+    }
+    console.log(OrgOrderdata);
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.userList + '/order/validates',
+        emulateHTTP: false,
+        body: OrgOrderdata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With":"XMLHttpRequest",
+            'Content-Type':'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.show=false;
+        param.description="";
+        OrgOrderdata.indexs = param.indexs;
+        dispatch(types.BATCH_ORG_ORDER, OrgOrderdata);
+    }, (res) => {
+        console.log('fail');
     })
 }
 

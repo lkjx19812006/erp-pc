@@ -1,7 +1,8 @@
 <template>
     <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
     <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
-    <div class="client_body">
+    <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
+    <div class="client_body" v-show="!disposeParam.show">
       <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -15,18 +16,30 @@
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
                         <a class="navbar-brand navbar-name" href="#">{{initOrderDetail.no}}</a>
                     </div>
-                    <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
+                    <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
                         <li>
-                            <button type="button" class="btn btn-base" @click="createTracking()">{{param.orderStatus}}支付快捷键</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！')" v-if="initOrderDetail.orderStatus==0&&initOrderDetail.type==0">订单生成</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！')" v-if="initOrderDetail.orderStatus==10&&initOrderDetail.type==0">等待处理</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！')" v-if="initOrderDetail.orderStatus==20&&initOrderDetail.type==0">等待支付</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单买家已付款，商家正在核查！',param.payment=true)" v-if="initOrderDetail.orderStatus==30&&initOrderDetail.type==0">等待审核</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！')" v-if="initOrderDetail.orderStatus==40&&initOrderDetail.type==0">等待卖家发货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.delivery=true)" v-if="initOrderDetail.orderStatus==50&&initOrderDetail.type==0">等待收货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==60&&initOrderDetail.type==0">已完成</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==70&&initOrderDetail.type==0">已完成</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已取消！')" v-if="initOrderDetail.orderStatus==-1&&initOrderDetail.type==0">已取消</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已过期！')" v-if="initOrderDetail.orderStatus==-2&&initOrderDetail.type==0">已过期</button>
+                            <!-- 销售订单 -->
+                             <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！',param.handle=true)" v-if="initOrderDetail.orderStatus==0&&initOrderDetail.type==1">订单生成</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initOrderDetail.orderStatus==10&&initOrderDetail.type==1">等待处理</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initOrderDetail.orderStatus==20&&initOrderDetail.type==1">等待支付</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单买家已付款，商家正在核查！',param.Auditing=true)" v-if="initOrderDetail.orderStatus==30&&initOrderDetail.type==1">等待审核</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initOrderDetail.orderStatus==40&&initOrderDetail.type==1">等待卖家发货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initOrderDetail.orderStatus==50&&initOrderDetail.type==1">等待收货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==60&&initOrderDetail.type==1">已完成</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==70&&initOrderDetail.type==1">已完成</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已取消！')" v-if="initOrderDetail.orderStatus==-1&&initOrderDetail.type==1">已取消</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已过期！')" v-if="initOrderDetail.orderStatus==-2&&initOrderDetail.type==1">已过期</button>
                         </li>
-                        <!-- <li>
-                            <button type="button" class="btn btn-base" @click="modifyOrder({
-                                               consignee:initOrderDetail.consignee,
-                                               consigneePhone:initOrderDetail.consigneePhone,
-                                               consigneeAddr:initOrderDetail.consigneeAddr,
-                                               show:true,                                          
-                                               })">编辑</button>
-                        </li>-->
                     </ul> 
                 </div>
             </nav>
@@ -44,13 +57,16 @@
                                               crete:'goods'
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.goods.arr.length">
                                           商品订单列表（{{initOrderDetail.goods.arr.length}}）
+                                        </a>
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                          商品订单列表（0）
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-show="initOrderDetail.goods.show">
+                                <div class="panel-collapse" v-if="initOrderDetail.goods.arr.length!==null" v-show="initOrderDetail.goods.show">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
@@ -92,6 +108,38 @@
                                     </table>
                                     </div>
                                 </div>
+                                <div class="panel-collapse" v-else v-show="initOrderDetail.goods.show">
+                                    <div class="panel-body panel-set">
+                                        <table class="table  contactSet">
+                                          <thead>
+                                            <th>商品名称</th>
+                                            <th>产地</th>
+                                            <th>规格</th>
+                                            <th>数量</th>
+                                            <th>质量</th>
+                                            <th>价格</th>
+                                            <th>单位</th>
+                                            <th>总价</th>
+                                            <th>商品图片</th>
+                                          </thead>
+                                        <tbody>
+                                            <tr v-for="item in initOrderDetail.goods.arr">
+                                                <td>{{item.brredName}}</td>
+                                                <td>{{item.location}}</td>
+                                                <td>{{item.spec}}</td>
+                                                <td>{{item.number}}</td>
+                                                <td>{{item.quality}}</td>
+                                                <td>{{item.price}}元</td>
+                                                <td>{{item.unit}}</td>
+                                                <td>{{item.amount}}元</td>
+                                                <td>
+                                                    <img v-bind:src="item.image" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
                             </div>    
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
@@ -100,8 +148,11 @@
                                               crete:'payPics'
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.payPics.arr.length!==null">
                                           支付凭证（{{initOrderDetail.payPics.arr.length}}）
+                                        </a>
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                          支付凭证（0）
                                         </a>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
                                             show:true,
@@ -116,7 +167,29 @@
                                             })">新建</button> 
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-show="initOrderDetail.payPics.show">
+                                <div class="panel-collapse" v-if="initOrderDetail.sendPics.arr.length!==null" v-show="initOrderDetail.payPics.show" v-cloak>
+                                    <div class="panel-body panel-set">
+                                        <table class="table  contactSet">
+                                          <thead>
+                                            <th>文件类型</th>
+                                            <th>文件来源</th>
+                                            <th>文件图片或路径</th>
+                                            <th>描述</th>
+                                          </thead>
+                                        <tbody>
+                                            <tr v-for="item in initOrderDetail.payPics.arr">
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.bizType}}</td>
+                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
+                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
+                                                </td>
+                                                <td>{{item.description}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                                 <div class="panel-collapse" v-else v-show="!initOrderDetail.payPics.show" v-cloak>
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
@@ -146,8 +219,11 @@
                                               crete:'attachFiles'
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.attachFiles.arr.length!==null">
                                           上传附件（{{initOrderDetail.attachFiles.arr.length}}）
+                                        </a>
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                          上传附件（0）
                                         </a>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
                                             show:true,
@@ -195,8 +271,11 @@
                                               crete:'sendPics'
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.sendPics.arr.length">
                                           物流凭证（{{initOrderDetail.sendPics.arr.length}}）
+                                        </a>
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                          物流凭证（0）
                                         </a>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
                                             show:true,
@@ -211,7 +290,29 @@
                                             })">新建</button>
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-show="initOrderDetail.sendPics.show">
+                                <div class="panel-collapse" v-if="initOrderDetail.sendPics.arr.length!==null" v-show="initOrderDetail.sendPics.show">
+                                    <div class="panel-body panel-set">
+                                        <table class="table  contactSet">
+                                          <thead>
+                                            <th>文件类型</th>
+                                            <th>文件来源</th>
+                                            <th>文件图片或路径</th>
+                                            <th>描述</th>
+                                          </thead>
+                                        <tbody>
+                                            <tr v-for="item in initOrderDetail.sendPics.arr">
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.bizType}}</td>
+                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
+                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
+                                                </td>
+                                                <td>{{item.description}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                                <div class="panel-collapse" v-else v-show="!initOrderDetail.sendPics.show">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
@@ -311,6 +412,7 @@
 <script>
 import trackingModel from '../order/ordergoods'
 import credenceModel from '../order/createcredence'
+import disposeModel  from  '../order/orderStatus'
 import {
   initOrderDetail
 } from '../../vuex/getters'
@@ -321,7 +423,8 @@ import {
 export default {
     components: {
       trackingModel,
-      credenceModel
+      credenceModel,
+      disposeModel
     },
     props:['param'],
     data(){
@@ -332,6 +435,17 @@ export default {
         show:true,
         credenceParam:{
            show:false
+        },
+        disposeParam:{ //订单处理各个状态
+            show:false,
+            sales:false,
+            handle:false,
+            payment:false,
+            Auditing:false,
+            sendoff:false,
+            express:false,
+            delivery:false,
+            tips:''
         }
       }
     },
@@ -346,11 +460,11 @@ export default {
     },
     methods:{
           enfoldment:function(param){
-          	console.log(this.$store.state.table.orderDetail[param.crete].show)
+          	console.log(this.$store.state.table.orderDetail[param.crete])
             if(this.$store.state.table.orderDetail[param.crete].arr.length==0){
-                    this.$store.state.table.orderDetail[param.crete].show=true;
-                }
-                this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
+                this.$store.state.table.orderDetail[param.crete].show=true;
+            } 
+            this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
           },
           createChance:function(item,index){
             console.log(item)
@@ -362,7 +476,16 @@ export default {
          createcredence:function(initOrderDetail){
             console.log(initOrderDetail)
              this.credenceParam=initOrderDetail;
-         }
+         },
+        pendingOrder:function(initOrderDetail){
+              console.log(initOrderDetail)
+              console.log(this.param)
+              console.log(this.disposeParam)
+                this.disposeParam = initOrderDetail;
+                this.disposeParam = this.param;
+                this.disposeParam.show = true;
+               
+        }
     },
    created(){
    	  this.getOrderDetail(this.param);
@@ -387,17 +510,11 @@ export default {
     margin-right: 10px;
 }
 
-.navbar-name {
-    color: #fa6705;
-    font-size: 20px;
-}
-
 .btn-base {
     background-color: #fff;
     border: 1px solid #ddd;
     color: #003077;
     margin-right: 5px;
-    font-size: 14px;
 }
 
 section {
@@ -427,22 +544,8 @@ section article {
     padding: 10px 5px 40px 5px;
 }
 
-.section_title {
-    font-size: 20px;
-    color: #333;
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
-    margin: 0;
-}
 .contactSet thead{
   color:#fa6705;
-}
-.panel-title-set {
-    margin-top: 6px;
-    margin-left: 26px;
-    display: inline-block;
-    font-size: 20px;
-    color: #333;
 }
 
 .contact-view {
@@ -463,19 +566,6 @@ section article {
     position: relative;
     padding: 10px;
 }
-
-/* .client-detailInfo {
-    padding: 0 15px 14px 15px;
-}
-
-.client-detailInfo img {
-    margin-right: 8px;
-}
-.client-detailInfo label {
-    display: block;
-    color: #333;
-    font-size: 16px;
-} */
 
 .btn-orange {
     background-color: #fa6705;

@@ -63,9 +63,10 @@
                   <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
                   <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
                   <td v-if="item.orderStatus==30">已支付，等待审核</td>
-                  <td v-if="item.status==0">无效</td>
-                  <td v-if="item.status==1">待审</td>
-                  <td v-if="item.status==2">审核通过</td>
+                  <td v-if="item.validate==0">待审核</td>
+                  <td v-if="item.validate==1">申请审核</td>
+                  <td v-if="item.validate==2">审核通过</td>
+                  <td v-if="item.validate==-2">审核未通过</td>
 
                   <td v-if="item.payWay==0">线下打款</td>
                   <td v-if="item.payWay==1">支付宝</td>

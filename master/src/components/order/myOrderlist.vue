@@ -1,6 +1,6 @@
   <template>
     <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
-    <update-model :param="updateParam" v-if="updateParam.show"></update-model>
+    <createorder-model :param="createParam" v-if="createParam.show"></createorder-model>
     <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
@@ -34,6 +34,8 @@
                     preferential:'',
                     preferentialDesc:'',
                     orderStatus:'',
+                    payWay:'',
+                    validate:'',
                     goods:[{
                             sourceType:'',
                             sourceId:'',
@@ -116,12 +118,13 @@
                   <td v-if="item.orderStatus==-1">已取消</td>
                   <td v-if="item.orderStatus==-2">已过期</td>
                   
-                  <td v-if="item.status==0">无效</td>
-                  <td v-if="item.status==1">待审</td>
-                  <td v-if="item.status==2">审核通过</td>
-                  <td v-if="item.status==null">待审</td>
+                  <td v-if="item.validate==0">待审核</td>
+                  <td v-if="item.validate==1">申请审核</td>
+                  <td v-if="item.validate==2">审核通过</td>
+                  <td v-if="item.validate==-2">审核未通过</td>
+                  <td v-if="item.validate==null">待审核</td>
 
-                  <td v-if="item.payWay==0">线下打款</td>
+                  <td v-if="item.payWay===0">线下打款</td>
                   <td v-if="item.payWay==1">支付宝</td>
                   <td v-if="item.payWay==2">平安支付</td>
                   <td v-if="item.payWay==3">药款支付</td>
@@ -150,9 +153,11 @@
                                         employee:item.employee,
                                         org:item.org,
                                         district:item.district,
+                                        orderStatus:item.orderStatus,
                                         consigneeAddr:item.consigneeAddr,
                                         comments:item.comments,
                                         incidentals:item.incidentals,
+                                        orderStatus:item.orderStatus,
                                         incidentalsDesc:item.incidentalsDesc,
                                         preferential:item.preferential,
                                         preferentialDesc:item.preferentialDesc,
@@ -218,7 +223,7 @@
   <script>
     import pagination from '../pagination'
     import editorderModel from '../order/orderInformationDialog'
-    import updateModel from '../order/orderUpdate'
+    import createorderModel from '../order/createOrderDialog'
     import detailModel from '../order/orderDetail'
     import searchModel from '../order/orderSearch'
     import deletebreedModel from  '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
@@ -239,7 +244,7 @@
         components: {
             editorderModel,
             pagination,
-            updateModel,
+            createorderModel,
             detailModel,
             searchModel,
             deletebreedModel,
@@ -266,7 +271,7 @@
                 dialogParam:{
                     show: false
                 },
-                updateParam: {
+                createParam: {
                     show:false,   
                 },
                 detailParam: {
@@ -314,7 +319,7 @@
                 }    
             },
             newOrder:function(initOrderlist){
-                 this.dialogParam=initOrderlist;
+                 this.createParam=initOrderlist;
             },
             createSearch:function(){
                  this.loadParam.show=true;
@@ -444,12 +449,6 @@
     .order_search {
         padding: 25px 30px 0 40px;
     }
-    .my_order {
-        float: left;
-        color: #fa6705;
-        font-size: 20px;
-        padding: 0;
-    }
     .transfer{
         margin-right: 20px;
     }
@@ -463,10 +462,6 @@
         -moz-border-radius: 3px;
         -ms-border-radius: 3px;
         background: #fff;
-    }
-    .component_action{
-        right: 34px;
-        top: 27px;
     }
     .order_table {
         margin-top: 20px;

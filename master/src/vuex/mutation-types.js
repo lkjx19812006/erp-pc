@@ -16,6 +16,7 @@ export const ORDER_UPLOAD_DATA = 'ORDER_UPLOAD_DATA' //订单详情上传凭证
 export const ORDER_PAY_DATA = 'ORDER_PAY_DATA' //订单支付记录
 export const ORDER_ROLLOUT_DATA = 'ORDER_ROLLOUT_DATA' //订单药款转出记录
 export const EXPRESS_DETAIL_DATA = 'EXPRESS_DETAIL_DATA' //订单物流详情
+export const BATCH_ORG_ORDER = 'BATCH_ORG_ORDER' //批量审核部门订单
 
 export const SYSTEM_DATA = 'SYSTEM_DATA' //系统数据
 export const PROVINCE_DATA = 'PROVINCE_DATA' //省市区列表数据

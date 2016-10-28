@@ -22,7 +22,7 @@
                 <div class="space_15 clearfix">
                     <div class="left message_front" style="margin-top:5px;">订单号：{{initOrderDetail.no}}</div>
                     <div class="left message_front"><img src="../../../static/images/contacter.png" height="30" width="23"  class="left"/><span class="tips">收件人：{{initOrderDetail.consignee}} | {{initOrderDetail.consigneePhone}}</span></div>
-                    <div class="left message_front"><img src="../../../static/images/address.png" class="left" height="34" width="24"  /><span class="tips">收件人地址：{{param.consigneeAddr}}</span></div>
+                    <div class="left message_front"><img src="../../../static/images/address.png" class="left" height="34" width="24"  /><span class="tips">收件人地址：{{initOrderDetail.consigneeAddr}}</span></div>
                 </div>
             </div>
             <div class="order_info clearfix">
@@ -162,7 +162,7 @@
               </div>
           </div>
           <div class="clearfix">
-              <input type="button" class="btn  btn-confirm right"  @click="accept(uploadLogistic)"  value="确认发货" />
+              <input type="button" class="btn  btn-confirm right"  @click="accept(uploadLogistic,param.show=false)"  value="确认发货" />
           </div>
         </div>
         <!-- 订单待收货查看物流 -->
