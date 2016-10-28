@@ -1309,7 +1309,9 @@ const mutations = {
         "show":false,
         "duedate":data.duedate,
         "images":data.images,
-        "audit":data.audit
+        "audit":data.audit,
+        "validate":0,
+        "loading":true
       };
 
         if(data.key=="intentionList"){

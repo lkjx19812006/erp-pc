@@ -18,19 +18,6 @@
                         <a class="navbar-brand navbar-name" href="#">{{initUserDetail.fullname}}</a>
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
-                        <li>
-                            <button type="button" class="btn btn-base" @click="createTracking({
-                                    objId:initUserDetail.id,
-                                    bizId:'',
-                                    bizName:'',
-                                    type:0,
-                                    trackingWay:'',
-                                    bizType:'',
-                                    contactNo:'',
-                                    comments:'',
-                                    show:false
-                                  })">新建跟进</button>
-                        </li>
 
                         <li>
                             <button type="button" class="btn btn-base" @click="modifyUser({
@@ -115,7 +102,6 @@
                                                   <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show">
                                                        <dt @click="updateIntention(
-
                                                             intentionParam.loading=true,
                                                             intentionParam.sub=$index,
                                                             intentionParam.id=item.id,
@@ -497,7 +483,8 @@ export default {
           image_s_show:'',
           image_t_show:'',
           description:'',
-          inType:2
+          inType:2,
+          loading:false
         },
         intentionAuditParam:{
           show:false,
@@ -721,7 +708,7 @@ export default {
               intl:0,
               sampleNumber:0,
               sampleAmount:0,
-              qualification:'',
+              qualification:'GMP',
               url:'/intention/',
               image_f:'',
               image_s:'',
