@@ -207,6 +207,7 @@ export default {
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
+                list: true,   //部门以列表的形式展现(只展示叶子节点),
                 cur: 1,
                 all: 7,
                 name:'',

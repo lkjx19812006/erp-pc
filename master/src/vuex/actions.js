@@ -70,12 +70,12 @@ export const login = ({ dispatch }, data) => { //登录
         var no = compile(data.no);
         var password = compile(data.password);
 
-        var expire = new Date((new Date()).getTime() - 8 * 3600000 + 90000);  //得到的时间与真实时间差了8小时,cookie将在1小时后过期
+        var expire = new Date((new Date()).getTime() + 24 * 3600000);  //得到的时间与真实时间差了8小时,cookie将在1小时后过期
         document.cookie = "no=" + no + ";expires=" + expire;
         document.cookie = "password=" + password + ";expires=" + expire;
-        document.cookie = "id=" + res.json().result.id + ";expires=" + expire;
-        document.cookie = "orgId=" + res.json().result.orgid + ";expires=" + expire;
-        document.cookie = "name=" + res.json().result.name + ";expires=" + expire;
+        document.cookie = "id=" + compile(res.json().result.id) + ";expires=" + expire;
+        document.cookie = "orgId=" + compile(res.json().result.orgid) + ";expires=" + expire;
+        document.cookie = "name=" + compile(res.json().result.name) + ";expires=" + expire;
 
         console.log(document.cookie);
 
@@ -2041,298 +2041,6 @@ export const getEmployeeList = ({ dispatch }, param) => {  //员工列表以及�
         })
 }
 
-/*export const getOrgList = ({ dispatch }, param) => {  //部门列表
-    console.log('部门列表');
-    param.loading = true;
-    Vue.http({
-        method:'GET',
-        url:apiUrl.clientList+'/org/',
-        emulateJSON: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-        }).then((res) => {
-           var json = {
-                "code":200,
-                "msg":"success",
-                "result":[
-                    {
-                        "id":1,
-                        "name":"冕冠电子商务有限公司",
-                        "level":1,
-                        "pid":0,
-                        "status":1,
-                        "utime":null,
-                        "ctime":null,
-                        "creater":null,
-                        "updater":null,
-                        "code":"0001",
-                        "bizType":"Sales",
-                        "lowerList":[
-                            {
-                                "id":8,
-                                "name":"技术部",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":null,
-                                "creater":null,
-                                "updater":null,
-                                "code":"0001004",
-                                "bizType":"Sales",
-                                "lowerList":[
-
-                                ]
-                            },
-                            {
-                                "id":10,
-                                "name":"综管部",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":null,
-                                "creater":null,
-                                "updater":null,
-                                "code":"0001005",
-                                "bizType":"Sales",
-                                "lowerList":[
-                                    {
-                                        "id":25,
-                                        "name":"财务部",
-                                        "level":3,
-                                        "pid":10,
-                                        "status":1,
-                                        "utime":null,
-                                        "ctime":null,
-                                        "creater":null,
-                                        "updater":null,
-                                        "code":"0001005001",
-                                        "bizType":"Sales",
-                                        "lowerList":[
-
-                                        ]
-                                    },
-                                    {
-                                        "id":26,
-                                        "name":"人事行政部",
-                                        "level":3,
-                                        "pid":10,
-                                        "status":1,
-                                        "utime":null,
-                                        "ctime":null,
-                                        "creater":null,
-                                        "updater":null,
-                                        "code":"0001005002",
-                                        "bizType":"Sales",
-                                        "lowerList":[
-
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "id":16,
-                                "name":"交易中心",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":null,
-                                "creater":null,
-                                "updater":null,
-                                "code":"0001002",
-                                "bizType":"Sales",
-                                "lowerList":[
-                                    {
-                                        "id":9,
-                                        "name":"国内业务部",
-                                        "level":3,
-                                        "pid":16,
-                                        "status":1,
-                                        "utime":null,
-                                        "ctime":"2016-08-25 17:01",
-                                        "creater":null,
-                                        "updater":null,
-                                        "code":"0001002001",
-                                        "bizType":"Sales",
-                                        "lowerList":[
-                                            {
-                                                "id":19,
-                                                "name":"交易中心一部",
-                                                "level":4,
-                                                "pid":9,
-                                                "status":1,
-                                                "utime":null,
-                                                "ctime":"2016-08-25 17:01",
-                                                "creater":null,
-                                                "updater":null,
-                                                "code":"0001002001001",
-                                                "bizType":"Sales",
-                                                "lowerList":[
-
-                                                ]
-                                            },
-                                            {
-                                                "id":21,
-                                                "name":"交易中心三部",
-                                                "level":4,
-                                                "pid":9,
-                                                "status":1,
-                                                "utime":null,
-                                                "ctime":"2016-08-25 17:02",
-                                                "creater":null,
-                                                "updater":null,
-                                                "code":"0001002001003",
-                                                "bizType":"Sales",
-                                                "lowerList":[
-
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id":11,
-                                        "name":"国际业务部",
-                                        "level":3,
-                                        "pid":16,
-                                        "status":1,
-                                        "utime":null,
-                                        "ctime":"2016-08-25 17:01",
-                                        "creater":null,
-                                        "updater":null,
-                                        "code":"0001002002",
-                                        "bizType":"Sales",
-                                        "lowerList":[
-                                            {
-                                                "id":28,
-                                                "name":"客服部(国际部)",
-                                                "level":4,
-                                                "pid":11,
-                                                "status":1,
-                                                "utime":null,
-                                                "ctime":"2016-08-25 17:02",
-                                                "creater":null,
-                                                "updater":null,
-                                                "code":"0001002002001",
-                                                "bizType":"Sales",
-                                                "lowerList":[
-
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id":17,
-                                        "name":"供应部",
-                                        "level":3,
-                                        "pid":16,
-                                        "status":1,
-                                        "utime":null,
-                                        "ctime":"2016-08-25 17:02",
-                                        "creater":null,
-                                        "updater":null,
-                                        "code":"0001002003",
-                                        "bizType":"Sales",
-                                        "lowerList":[
-
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "id":18,
-                                "name":"市场部",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":null,
-                                "creater":null,
-                                "updater":null,
-                                "code":"0001003",
-                                "bizType":"Sales",
-                                "lowerList":[
-
-                                ]
-                            },
-                            {
-                                "id":23,
-                                "name":"总经办",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":null,
-                                "creater":null,
-                                "updater":null,
-                                "code":"0001001",
-                                "bizType":"Sales",
-                                "lowerList":[
-
-                                ]
-                            },
-                            {
-                                "id":24,
-                                "name":"离职员工",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":null,
-                                "creater":null,
-                                "updater":null,
-                                "code":"0001099",
-                                "bizType":"Sales",
-                                "lowerList":[
-                                    {
-                                        "id":27,
-                                        "name":"离职业务员",
-                                        "level":null,
-                                        "pid":24,
-                                        "status":1,
-                                        "utime":null,
-                                        "ctime":null,
-                                        "creater":null,
-                                        "updater":null,
-                                        "code":"0001099001",
-                                        "bizType":"Sales",
-                                        "lowerList":[
-
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "id":29,
-                                "name":"客服部",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":"2016-03-30 10:48",
-                                "creater":"100000",
-                                "updater":null,
-                                "code":"001006",
-                                "bizType":"Sales",
-                                "lowerList":[
-
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
-          var result = json.result;
-           dispatch(types.ORG_DATA, result);
-           param.loading = false;
-        }, (res) => {
-            console.log('fail');
-            param.loading = false;
-        })
-}*/
-
 export const getOrgList = ({ dispatch }, param) => {  //部门列表
     param.loading = true;
     Vue.http({
@@ -2348,8 +2056,27 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
                 org[i].show =false;
                 org[i].checked =false;
            }*/
-           console.log(res.json())
-           dispatch(types.ORG_DATA, org);
+           /*console.log("部门列表==============");
+           console.log(org)*/
+           var arr = [];
+           function getLeaf(tree,arr){     //获取树的叶子节点
+                if(tree.lowerList.length==0){
+                    arr.push(tree);
+                    
+                }else{
+                    for(var i=0;i<tree.lowerList.length;i++){
+                        getLeaf(tree.lowerList[i],arr);  
+                    } 
+                }  
+           }
+           getLeaf(org[0],arr);
+           
+           if('list' in param&&param.list==true){
+                dispatch(types.ORG_DATA, arr);
+           }else{
+                dispatch(types.ORG_DATA, org);
+           }
+           
            param.loading = false;
         }, (res) => {
             console.log('fail');
@@ -3108,6 +2835,8 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res)=>{
+            console.log('意向搜索成功');
+            console.log();
            var intent = res.json().result.list;
            for (var i in intent){
                 intent[i].checked = false;
