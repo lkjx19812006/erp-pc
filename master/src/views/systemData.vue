@@ -31,9 +31,10 @@ export default {
         }
     },
     created() {
-        if (this.$route.query.id > this.getList[8].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
+        
+        /*if (this.$route.query.id > this.getList[8].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
             this.$route.query.id = 0;
-        }
+        }*/
     }
 }
 </script>

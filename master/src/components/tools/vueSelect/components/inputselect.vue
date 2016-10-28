@@ -194,7 +194,7 @@
         class="form-control"
         :placeholder="searchPlaceholder"
         :style="{ width: isValueEmpty ? '100%' : 'auto' }"
-        value="{{prevalue}}"
+        :value="prevalue"
       >
 
       <i v-el:open-indicator role="presentation" class="open-indicator"></i>

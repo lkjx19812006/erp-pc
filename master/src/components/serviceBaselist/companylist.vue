@@ -162,7 +162,9 @@ export default {
             getCompanyData,
             getProvinceList
         }
-},
+
+    },    
+
     methods: {
         companyDetail:function(id,index){
             this.companyParam.show = true;

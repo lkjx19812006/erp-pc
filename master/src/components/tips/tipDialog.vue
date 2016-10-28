@@ -6,8 +6,10 @@
             <div class="model-tips clearfix">
                 <img src="/static/images/bee.png"  class="pull-left" height="158" width="131"/>
                 <div class="tips_name">{{param.name}}</div>
-                </div>
-            <div class="model-footer" v-if="param.alert">
+
+            </div>
+          <div class="model-footer" v-if="param.alert">
+
                 <input type="button" class="btn btn-close"  @click="param.show = false"  value="确定"/>
             </div>
             <div class="model-footer" v-if="param.confirm">

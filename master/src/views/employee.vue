@@ -4,7 +4,7 @@
     <div  class="myemploy" v-show="!changeParam.show">
         <div class="order_search">
             <div class="clear">
-                <div class="my_order col-xs-1">员工列表</div>
+                <div class="my_order col-xs-1" style="font-size:14px">员工列表</div>
                 <div class="col-xs-9 my_order_search">
                     <div class="name_search clearfix" style="border:none; float:left;">
                        <select  class="form-control" v-model="loadParam.orgId" @change="loadByCondition()">
@@ -207,6 +207,7 @@ export default {
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
+                list: true,   //部门以列表的形式展现(只展示叶子节点),
                 cur: 1,
                 all: 7,
                 name:'',
@@ -267,9 +268,9 @@ export default {
         }
     },
     created() {
-        if (this.$route.query.id > this.getList[7].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
+        /*if (this.$route.query.id > this.getList[7].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
             this.$route.query.id = 0;
-        }
+        }*/
         this.getEmployeeList(this.loadParam,this.loadParam.all);
         this.getOrgList(this.loadParam,this.loadParam.all);
     },
@@ -277,6 +278,9 @@ export default {
 }
 </script>
 <style scoped>
+.form-control{
+    font-size:12px;
+}
 .myemploy {
     width: 100%;
     white-space: nowrap;
@@ -291,7 +295,7 @@ export default {
     float: left;
     color: #fa6705;
     font-size: 20px;
-    padding: 0;
+    padding: 5px;
 }
 .name_search{
     padding-left: 20px;
@@ -428,6 +432,14 @@ export default {
     margin: 0 auto;
     text-align: center;
 }
+
+.order_search[_v-381a4620] {
+    padding: 20px 30px 0 40px;
+}
+.order_table {
+    margin-top: 10px;
+}
+
 
 .table>tbody{
     position: relative;

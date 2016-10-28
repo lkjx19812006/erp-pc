@@ -282,16 +282,6 @@ export default {
         this.param.phoneCityName = this.phoneCity.cname;
       }
     },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
-    },
     created() {
         this.param.province = '';
         this.param.city = '';

@@ -70,6 +70,8 @@ export default {
             },
         },
         created() {
+            console.log("this.$store.state.table.login=====");
+            console.log(this.$store.state.table.login);
             this.freshLinecharts();
             this.freshPiecharts();
             if (this.$route.query.id > this.getList[0].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {

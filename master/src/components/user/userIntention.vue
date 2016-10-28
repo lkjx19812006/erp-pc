@@ -34,29 +34,27 @@
                <div class="editpage">
                <div class="editpage-input" style="width:100%">
                  <label class="editlabel">药材图片</label>
-                 <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                 <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                 <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                 <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                 <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                 <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
                </div>
                  </div>
-
                  <div class="editpage">
 
                      <div class="editpageleft">
 
                          <div class="editpage-input">
-                             <label class="editlabel" for="system">品种名称<span class="system_danger" v-if="$validation.breedname.required">品种不能为空</span></label>
-                             <input type="text" v-model='param.breedName' class="form-control edit-input" v-validate:breedname="{required:true}" value="{{param.breedName}}" @click="searchBreed(param.breedName,param.breedId)" readonly="true" />
+                             <label class="editlabel" >品种名称<span class="system_danger" v-if="$validation.breedname.required">品种不能为空</span></label>
+                             <input type="text" v-model="param.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" value="{{param.breedName}}" @click="searchBreed(param.breedName,param.breedId)" readonly="true" />
                          </div>
 
                          <div class="editpage-input" style="width:80%">
-                              <label class="editlabel" for="system">单价<span class="system_danger" v-if="$validation.price.money">请输入不超过小数点两位的数字</span></label>
+                              <label class="editlabel" >单价<span class="system_danger" v-if="$validation.price.money">请输入不超过小数点两位的数字</span></label>
                               <input type="text" v-model='param.price' v-validate:price="['money']" class="form-control edit-input" value="{{param.price}}"  style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
                          </div>
-
                          <div class="editpage-input">
-                             <label class="editlabel">单位</label>
-                           <input type="text" v-if="!breedParam.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                             <label class="editlabel">单位<span class="system_danger" v-if="$validation.unit.required">单位不能为空</span></label>
+                           <input type="text" v-show="!breedParam.id"  v-model="param.unit" v-validate:unit="{required:true}" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
                            <div type="text" class="edit-input" v-if="breedParam.id">
                              <input-select
                                :value.sync="param.unit"
@@ -69,7 +67,7 @@
                            </div>
                          </div>
                          <div class="editpage-input">
-                             <label class="editlabel" for="system">是否特殊</label>
+                             <label class="editlabel" >是否特殊</label>
                               <select type="text" class="form-control edit-input" v-model="param.especial" >
                                   <option value="0">普通</option>
                                   <option value="1">特殊</option>
@@ -77,12 +75,13 @@
                          </div>
 
                           <div class="editpage-input">
-                             <label class="editlabel">质量要求</label>
-                             <input type="text" v-model="param.quality" class="form-control edit-input" value="{{param.quality}}" />
+                             <label class="editlabel">质量要求<span class="system_danger" v-if="$validation.quality.required">质量要求不能为空</span></label>
+                             <input type="text" v-model="param.quality" class="form-control edit-input" v-validate:quality="{required:true}" value="{{param.quality}}" />
                          </div>
 
                        <div class="editpage-input">
-                         <label class="editlabel">包装</label>
+                         <label class="editlabel">包装<span class="system_danger" v-if="$validation.pack.required">包装不能为空</span></label>
+                         <input type="text" v-show="false"  v-model="param.pack" v-validate:pack="{required:true}"  />
                          <div type="text" class="edit-input" >
                            <input-select
                              :prevalue="param.pack"
@@ -98,8 +97,8 @@
                      <div class="editpageright">
 
                          <div class="editpage-input">
-                             <label class="editlabel">规格</label>
-                           <input type="text" v-if="!breedParam.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+                             <label class="editlabel">规格<span class="system_danger" v-if="$validation.spec.required">规格不能为空</span></label>
+                           <input type="text" v-show="!breedParam.id"  v-model="param.spec" class="form-control edit-input" disabled="disabled" v-validate:spec="{required:true}" />
                            <div type="text" class="edit-input" v-if="breedParam.id">
                              <input-select
                                :value.sync="param.spec"
@@ -118,8 +117,9 @@
                          </div>
 
                          <div class="editpage-input">
-                             <label class="editlabel">产地</label>
-                           <input type="text" v-if="!breedParam.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
+
+                             <label class="editlabel">产地<span class="system_danger" v-if="$validation.location.required">产地不能为空</span></label>
+                           <input type="text" v-model="param.location" v-show="!breedParam.id"  v-validate:location="{required:true}" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
 
                            <div type="text" class="edit-input" v-if="breedParam.id">
                              <input-select
@@ -128,6 +128,7 @@
                                :options="initBreedDetail.locals.arr"
                                placeholder="产地"
                                label="name"
+
                              >
                              </input-select>
                            </div>
@@ -160,22 +161,23 @@
                  <div class="editpage">
                      <div class="editpageleft">
                        <div class="editpage-input">
-                         <label class="editlabel">国家</label>
-                         <div type="text" class="edit-input">
+                         <label class="editlabel">国家<span class="system_danger" v-if="!country.cname">请选择国家</span></label>
+                         <div type="text" class="edit-input" >
                            <v-select
                              :debounce="250"
                              :value.sync="country"
                              :on-change="selectProvince"
                              :options="initCountrylist"
                              placeholder="国家"
-                             label="cname"
+                             label="cname" 
+                             
                             >
                            </v-select>
                          </div>
                        </div>
 
                          <div class="editpage-input">
-                             <label class="editlabel">省</label>
+                             <label class="editlabel">省<span class="system_danger" v-if="!province.cname">请选择省</span></label>
                              <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
                            <div v-if="country.cname" type="text" class="edit-input">
                               <v-select
@@ -222,8 +224,8 @@
                          </div>
 
                        <div class="editpage-input">
-                         <label class="editlabel">详细地址</label>
-                         <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
+                         <label class="editlabel">详细地址<span v-if="$validation.address.required" class="system_danger">请输入详细地址</span></label>
+                         <input type="text" v-model='param.address' v-validate:address="['required']" class="form-control edit-input" value="{{param.address}}" />
                        </div>
 
                        <div class="editpage-input">
@@ -296,8 +298,6 @@
                            </input-select>
                          </div>
                        </div>
-
-
                        <div class="editpage-input" v-show="param.sampling==1">
                              <label class="editlabel">样品数量</label>
                               <input type="text" v-model='param.sampleNumber' class="form-control edit-input" value="{{param.sampleNumber}}" />
@@ -307,12 +307,8 @@
                              <label class="editlabel">样品总价</label>
                               <input type="text" v-model='param.sampleAmount' class="form-control edit-input" value="{{param.sampleAmount}}" />
                          </div>
-
-
-
                     </div>
                  </div>
-
                  <div style="margin-top:25px">
                     <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
                     <h4 style="display:inline">商家信息</h4>
@@ -442,8 +438,6 @@ export default {
             qiniu:false
           },
           type:"image/*"
-
-
         }
     },
     vuex: {

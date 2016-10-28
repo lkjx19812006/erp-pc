@@ -22,7 +22,7 @@
                                         <option value="1">是</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="editpage-input">
                                     <label class="editlabel">杂费</label>
                                     <input type="text" class="edit-input" v-model="param.incidentals"/>
@@ -35,7 +35,7 @@
                                     <label class="editlabel">收货人</label>
                                     <input type="text" class="edit-input" v-model="param.consignee"/>
                                 </div>
-                                
+
                                 <div class="editpage-input">
                                     <label class="editlabel">国家</label>
                                     <div type="text" class="edit-input">
@@ -132,7 +132,7 @@
                                     <label class="editlabel">邮编<span class="system_danger" v-if="$validation.zipcode.postcode">请输入正确的邮编</span></label>
                                     <input type="text" class="edit-input" v-model="param.zipCode" v-validate:zipcode="['postcode']"/>
                                 </div>
-                                
+
                             </div>
 
                         </div>
@@ -159,7 +159,7 @@
                             <div class="editpageright">
                                 <div class="editpage-input">
                                     <label class="editlabel">商品来源ID</label>
-                                    <input type="text" class="edit-input" v-model="param.goods[0].sourceId"/>
+                                    <input type="text" class="edit-input" v-model="param.goods[0].sourceId" disabled="true"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">品质</label>
@@ -175,7 +175,7 @@
                                 </div>
 
                             </div>
-                        </div>        
+                        </div>
                     </section>
                 </form>
             </div>
@@ -194,7 +194,7 @@ import {
     initCountrylist,
     initProvince,
     initCitylist,
-    initDistrictlist, 
+    initDistrictlist,
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -238,7 +238,7 @@ export default {
             initCountrylist,
             initProvince,
             initCitylist,
-            initDistrictlist, 
+            initDistrictlist,
         },
         actions:{
             getCountryList,
@@ -249,7 +249,7 @@ export default {
         }
     },
     methods:{
-        
+
         selectProvince:function(){
             console.log('selectProvince');
             this.province = '';
@@ -276,7 +276,7 @@ export default {
             }
 
         },
-        
+
         confirm:function(){
             this.param.country = this.country.id;
             this.param.province = this.province.id;

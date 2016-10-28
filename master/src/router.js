@@ -2,13 +2,19 @@ export default (router) => router.map({
     '/': {
         name: 'welcome', //应用首页
         component: function(resolve) {
+                require(['./views/home'], resolve)
+            } //加载index页面
+    },
+    '/login': {
+        name: 'login', //应用首页
+        component: function(resolve) {
                 require(['./views/login'], resolve)
             } //加载index页面
     },
     '/home': {
         name: 'home',
         component: function(resolve) {
-            require(['./views/home'], resolve)
+                require(['./views/home'], resolve)
         },
         auth: true,
         subRoutes: {

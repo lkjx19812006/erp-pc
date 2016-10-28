@@ -71,16 +71,16 @@
                                                 <td>{{item.incidentalsDesc}}</td>
                                                 <td>
                                                   <div v-if="item.orderTime==0">未采纳</div>
-                                                  <div v-else>已采纳{{item.orderTime}}次</div>
+                                                  <div v-else>已采纳</div>
 
                                                 </td>
-                                                <td  @click="clickShow($index,{
+                                                <td v-if="item.orderTime==0"  @click="clickShow($index,{
                                                     concrete:'offers'
                                                     })">
                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                     <div class="files_action" v-show="item.show" >
                                                         <dl>
-                                                            <dt @click="adopt(item)">采纳</dt>
+                                                            <dt @click="adopt(item,$index)">采纳</dt>
                                                         </dl>
                                                     </div>
                                                 </td>
@@ -343,6 +343,7 @@ export default {
             },
             orderParam:{
                 show:false,
+                index:'',
                 key:'intentionDetail',
                 type:this.initIntentionDetail.type,
                 customer:this.initIntentionDetail.customerId,
@@ -411,19 +412,22 @@ export default {
       clickShow: function(index,param) {  
           this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = !this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show; 
       },
-      adopt:function(item){
+      adopt:function(item,index){
           console.log("创建订单");
-          console.log(item.incidentals);
+          console.log(item);
+
           this.orderParam.show = true;
+          this.orderParam.index = index;
           //this.orderParam.customer = item.customerId;
-          this.orderParam.spec = item.spec;
-          this.orderParam.price = item.price;
-          this.orderParam.unit = item.unit;
-          this.orderParam.number = item.number;
+          this.orderParam.goods[0].sourceId = item.id;
+          this.orderParam.goods[0].spec = item.spec;
+          this.orderParam.goods[0].price = item.price;
+          this.orderParam.goods[0].unit = item.unit;
+          this.orderParam.goods[0].number = item.number;
           this.orderParam.incidentals = item.incidentals;
           this.orderParam.incidentalsDesc = item.incidentalsDesc;
-          this.orderParam.quality = item.quality;
-          this.orderParam.location = item.location;
+          this.orderParam.goods[0].quality = item.quality;
+          this.orderParam.goods[0].location = item.location;
       },
       edit:function(index,item){
         console.log(item)

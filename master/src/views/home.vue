@@ -1,9 +1,9 @@
 <template>
- <top></top>
+ <!--<top></top>-->
  <left></left>
  <centerTop></centerTop>
  <center></center>
- 
+
 </template>
 
 <script>

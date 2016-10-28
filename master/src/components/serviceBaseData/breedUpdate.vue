@@ -50,7 +50,7 @@
                           　<label class="editlabel">修改图标</label>
                           　<div class="editpage_img clearfix">
                           <div class="editpage-image col-md-4">
-                            <press-image :value.sync="categoryData.icon"></press-image>
+                            <press-image :value.sync="categoryData.icon" :showurl.sync="categoryData.url" ></press-image>
                           </div>
                           　</div>
                           　</div>
@@ -96,7 +96,8 @@ export default {
                 pinyin: this.initBreedlist[this.param.id].pinyin,
                 eName: this.initBreedlist[this.param.id].eName,
                 lName: this.initBreedlist[this.param.id].lName,
-                icon:this.initBreedlist[this.param.id].icon
+                icon:this.initBreedlist[this.param.id].icon,
+                url:this.initBreedlist[this.param.id].url
             },
             tipsParam: {
                 show:false,

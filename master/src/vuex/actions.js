@@ -5,10 +5,133 @@ import apiUrl from './api/api'
 export const increment = ({ dispatch }) => dispatch(types.INCREMENT)
 export const decrement = ({ dispatch }) => dispatch(types.DECREMENT)
 export const menuBar = ({ dispatch }) => dispatch(types.MENU_BAR)
+
+export const login = ({ dispatch }, data) => { //登录
+    console.log(data);
+    const body = {
+        no:data.no,
+        password:data.password
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + '/employee/login',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('登录成功');
+        //对用户名和密码加密
+        var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        function base64encode(str) {
+          var out, i, len;
+          var c1, c2, c3;
+
+          len = str.length;
+          i = 0;
+          out = "";
+          while(i < len) {
+            c1 = str.charCodeAt(i++) & 0xff;
+            if(i == len)
+            {
+              out += base64EncodeChars.charAt(c1 >> 2);
+              out += base64EncodeChars.charAt((c1 & 0x3) << 4);
+              out += "==";
+              break;
+            }
+            c2 = str.charCodeAt(i++);
+            if(i == len)
+            {
+              out += base64EncodeChars.charAt(c1 >> 2);
+              out += base64EncodeChars.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
+              out += base64EncodeChars.charAt((c2 & 0xF) << 2);
+              out += "=";
+              break;
+            }
+            c3 = str.charCodeAt(i++);
+            out += base64EncodeChars.charAt(c1 >> 2);
+            out += base64EncodeChars.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
+            out += base64EncodeChars.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >>6));
+            out += base64EncodeChars.charAt(c3 & 0x3F);
+          }
+          return out;
+        }
+
+        function compile(code){
+          var test= escape(code);
+          test=base64encode(test);
+          return test;
+        }
+
+      function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+          month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+          + " " + date.getHours() + seperator2 + date.getMinutes()
+          + seperator2 + date.getSeconds();
+        return currentdate;
+      }
+      data.loading=false;
+      if(res.json().result){
+        var no = compile(data.no);
+
+        var lastTime= getNowFormatDate();
+        var expire = new Date((new Date()).getTime() + 24 * 3600000 );  //得到的时间与真实时间差了8小时,cookie将在1小时后过期
+        document.cookie = "no=" + no + ";expires=" + expire;
+        document.cookie = "id=" + compile(res.json().result.id) + ";expires=" + expire;
+        document.cookie = "orgId=" + compile(res.json().result.orgid) + ";expires=" + expire;
+        document.cookie = "name=" + compile(res.json().result.name) + ";expires=" + expire;
+        document.cookie = "time=" + lastTime + ";expires=" + expire;
+
+
+        var result = res.json().result;
+        result.time=lastTime;
+
+        dispatch(types.LOGIN_DATA, result);
+        dispatch(types.INIT_LIST, result);
+        //本地存储左侧菜单
+        console.log(result.menus);
+        for(var i in result.menus){
+          result.menus[i].show=false;
+        }
+        localStorage.menus = JSON.stringify(result.menus);
+
+
+        data.loginCallback();
+      }else{
+
+        data.name=res.json().msg;
+        data.show = true;
+
+      }
+
+
+    }, (res) => {
+        console.log('fail');
+        data.name='服务器内部错误';
+        data.show = true;
+        data.loading=false;
+    });
+}
+
 export const initList = ({ dispatch }) => {
     Vue.http.get(apiUrl.list)
         .then((res) => {
-            console.log(res)
+            console.log('目录结构');
+            console.log(res.data);
             dispatch(types.INIT_LIST, res.data);
         }, (res) => {
             console.log('fail');
@@ -1980,7 +2103,6 @@ export const getEmployeeList = ({ dispatch }, param) => {  //员工列表以及�
 }
 
 export const getOrgList = ({ dispatch }, param) => {  //部门列表
-    console.log('部门列表');
     param.loading = true;
     Vue.http({
         method:'GET',
@@ -1990,287 +2112,38 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
             "X-Requested-With": "XMLHttpRequest"
         }
         }).then((res) => {
-           var json = {
-                "code":200,
-                "msg":"success",
-                "result":[
-                    {
-                        "id":1,
-                        "name":"冕冠电子商务有限公司",
-                        "level":1,
-                        "pid":0,
-                        "status":1,
-                        "utime":null,
-                        "ctime":null,
-                        "creater":null,
-                        "updater":null,
-                        "code":"0001",
-                        "bizType":"Sales",
-                        "lowerList":[
-                            {
-                                "id":8,
-                                "name":"技术部",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":null,
-                                "creater":null,
-                                "updater":null,
-                                "code":"0001004",
-                                "bizType":"Sales",
-                                "lowerList":[
-
-                                ]
-                            },
-                            {
-                                "id":10,
-                                "name":"综管部",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":null,
-                                "creater":null,
-                                "updater":null,
-                                "code":"0001005",
-                                "bizType":"Sales",
-                                "lowerList":[
-                                    {
-                                        "id":25,
-                                        "name":"财务部",
-                                        "level":3,
-                                        "pid":10,
-                                        "status":1,
-                                        "utime":null,
-                                        "ctime":null,
-                                        "creater":null,
-                                        "updater":null,
-                                        "code":"0001005001",
-                                        "bizType":"Sales",
-                                        "lowerList":[
-
-                                        ]
-                                    },
-                                    {
-                                        "id":26,
-                                        "name":"人事行政部",
-                                        "level":3,
-                                        "pid":10,
-                                        "status":1,
-                                        "utime":null,
-                                        "ctime":null,
-                                        "creater":null,
-                                        "updater":null,
-                                        "code":"0001005002",
-                                        "bizType":"Sales",
-                                        "lowerList":[
-
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "id":16,
-                                "name":"交易中心",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":null,
-                                "creater":null,
-                                "updater":null,
-                                "code":"0001002",
-                                "bizType":"Sales",
-                                "lowerList":[
-                                    {
-                                        "id":9,
-                                        "name":"国内业务部",
-                                        "level":3,
-                                        "pid":16,
-                                        "status":1,
-                                        "utime":null,
-                                        "ctime":"2016-08-25 17:01",
-                                        "creater":null,
-                                        "updater":null,
-                                        "code":"0001002001",
-                                        "bizType":"Sales",
-                                        "lowerList":[
-                                            {
-                                                "id":19,
-                                                "name":"交易中心一部",
-                                                "level":4,
-                                                "pid":9,
-                                                "status":1,
-                                                "utime":null,
-                                                "ctime":"2016-08-25 17:01",
-                                                "creater":null,
-                                                "updater":null,
-                                                "code":"0001002001001",
-                                                "bizType":"Sales",
-                                                "lowerList":[
-
-                                                ]
-                                            },
-                                            {
-                                                "id":21,
-                                                "name":"交易中心三部",
-                                                "level":4,
-                                                "pid":9,
-                                                "status":1,
-                                                "utime":null,
-                                                "ctime":"2016-08-25 17:02",
-                                                "creater":null,
-                                                "updater":null,
-                                                "code":"0001002001003",
-                                                "bizType":"Sales",
-                                                "lowerList":[
-
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id":11,
-                                        "name":"国际业务部",
-                                        "level":3,
-                                        "pid":16,
-                                        "status":1,
-                                        "utime":null,
-                                        "ctime":"2016-08-25 17:01",
-                                        "creater":null,
-                                        "updater":null,
-                                        "code":"0001002002",
-                                        "bizType":"Sales",
-                                        "lowerList":[
-                                            {
-                                                "id":28,
-                                                "name":"客服部(国际部)",
-                                                "level":4,
-                                                "pid":11,
-                                                "status":1,
-                                                "utime":null,
-                                                "ctime":"2016-08-25 17:02",
-                                                "creater":null,
-                                                "updater":null,
-                                                "code":"0001002002001",
-                                                "bizType":"Sales",
-                                                "lowerList":[
-
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id":17,
-                                        "name":"供应部",
-                                        "level":3,
-                                        "pid":16,
-                                        "status":1,
-                                        "utime":null,
-                                        "ctime":"2016-08-25 17:02",
-                                        "creater":null,
-                                        "updater":null,
-                                        "code":"0001002003",
-                                        "bizType":"Sales",
-                                        "lowerList":[
-
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "id":18,
-                                "name":"市场部",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":null,
-                                "creater":null,
-                                "updater":null,
-                                "code":"0001003",
-                                "bizType":"Sales",
-                                "lowerList":[
-
-                                ]
-                            },
-                            {
-                                "id":23,
-                                "name":"总经办",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":null,
-                                "creater":null,
-                                "updater":null,
-                                "code":"0001001",
-                                "bizType":"Sales",
-                                "lowerList":[
-
-                                ]
-                            },
-                            {
-                                "id":24,
-                                "name":"离职员工",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":null,
-                                "creater":null,
-                                "updater":null,
-                                "code":"0001099",
-                                "bizType":"Sales",
-                                "lowerList":[
-                                    {
-                                        "id":27,
-                                        "name":"离职业务员",
-                                        "level":null,
-                                        "pid":24,
-                                        "status":1,
-                                        "utime":null,
-                                        "ctime":null,
-                                        "creater":null,
-                                        "updater":null,
-                                        "code":"0001099001",
-                                        "bizType":"Sales",
-                                        "lowerList":[
-
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "id":29,
-                                "name":"客服部",
-                                "level":2,
-                                "pid":1,
-                                "status":1,
-                                "utime":null,
-                                "ctime":"2016-03-30 10:48",
-                                "creater":"100000",
-                                "updater":null,
-                                "code":"001006",
-                                "bizType":"Sales",
-                                "lowerList":[
-
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
-          var result = json.result;
-           dispatch(types.ORG_DATA, result);
+           var org = res.json().result;
+           /*for (var i in org){
+                org[i].show =false;
+                org[i].checked =false;
+           }*/
+           
+          
+           var arr = [];
+           function getLeaf(tree,arr){     //获取树的叶子节点
+                if(tree.lowerList.length==0){
+                    arr.push(tree);
+                    
+                }else{
+                    for(var i=0;i<tree.lowerList.length;i++){
+                        getLeaf(tree.lowerList[i],arr);  
+                    } 
+                }  
+           }
+           getLeaf(org[0],arr);
+           
+           if('list' in param&&param.list==true){
+                dispatch(types.ORG_DATA, arr);
+           }else{
+                dispatch(types.ORG_DATA, org);
+           }
+           
            param.loading = false;
         }, (res) => {
             console.log('fail');
             param.loading = false;
         })
 }
-
 
 export const getRoleList = ({ dispatch }, param) => {  //获取角色列表
     param.loading = true;
@@ -3023,6 +2896,8 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res)=>{
+            console.log('意向搜索成功');
+            console.log();
            var intent = res.json().result.list;
            for (var i in intent){
                 intent[i].checked = false;
@@ -3092,13 +2967,17 @@ export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
             dispatch(types.INTENTION_DETAIL_DATA, result);
             if(res.json().result.pics[0]){
               param.image_f=res.json().result.pics[0].path;
+              param.image_f_show=res.json().result.pics[0].url;
             }
             if(res.json().result.pics[1]){
               param.image_s=res.json().result.pics[1].path;
+              param.image_s_show=res.json().result.pics[1].url;
             }
             if(res.json().result.pics[2]){
               param.image_t=res.json().result.pics[2].path;
+              param.image_t_show=res.json().result.pics[2].url;
             }
+            // console.log(param);
 
             param.loading = false;
     }, (res) => {
@@ -3220,6 +3099,7 @@ export const updateMsg = ({ dispatch }, param) => {  //修改留言信息
 
 export const getUserList = ({ dispatch }, param) => {  //会员信息列表
     param.loading = true;
+  console.log(param);
     var url = apiUrl.userList+'/user/?'+'&page=' + param.cur + '&pageSize=15';
     for(var key in param){
         if(key=='phone'&&param[key]!==''){
@@ -3246,7 +3126,7 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
         if(key=='transform'&&param[key]!==''){
              url += '&transStatus='+param[key];
         }
-        if(key=='city'&&param[key]!==''){
+        if(key=='city'&&param[key]!==''&&param[key]!=undefined){
              url += '&city='+param[key];
         }
         if(key=='province'&&param[key]!==''){
@@ -3758,6 +3638,8 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
     }).then((res) => {
         console.log('添加成功')
         param.id=res.json().result.intentionId;
+        param.validate = 0;
+        param.checked = false;
         dispatch(types.INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');

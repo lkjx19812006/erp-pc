@@ -5,22 +5,22 @@
         </div>
         <ul class="left_menu">
             <!-- li左侧菜单列表循环 -->
-            <li v-for="item  in  getList" transition="item">
-                <div v-link="item.path" class="menu_div" @click="init_data(item.categoryid)">
+            <li v-for="item in getList" transition="item">
+                <div v-link="item.url" class="menu_div" @click="init_data(item.id)">
                     <div class="bleft">
-                        <img v-bind:src="item.img" height="21" width="21">
+                        <img v-bind:src="item.icon" height="21" width="21">
                     </div>
-                    <a>{{item.category}}</a>
+                    <a >{{item.cname}}</a>
                 </div>
-                <div class="bshow" v-if="$route.path.split('?')[0]==item.path.split('?')[0]" transition="expand_trans">
+                <div class="bshow" v-if="$route.path.split('?')[0]==item.url.split('?')[0]" transition="expand_trans">
                     <dl class="bshow_dl" clear>
-                        <dd class="clear" v-for="sub in item.subcategory" v-link="sub.path" transition="item">
+                        <dd class="clear" v-for="sub in item.subcategory" v-link="sub.url" transition="item">
                             <i class="fold_line"></i>
                             <div class="fold_content" >
                                 <div class="bleft">
-                                    <img v-bind:src="sub.img" height="15" width="15">
+                                    <img v-bind:src="sub.icon" height="15" width="15">
                                 </div>
-                                <span class="{{$route.query.id==$index?'active_font':''}}">{{sub.subcategory}}</span>
+                                <span style="cursor:pointer;" class="{{$route.query.id==$index?'active_font':''}}">{{sub.cname}}</span>
                             </div>
                         </dd>
                     </dl>
@@ -55,8 +55,7 @@ export default {
             },
         },
         created() {
-            this.initList();
-            console.log(this.$route);
+
         },
         methods: {
             init_data: function(id) {
@@ -106,8 +105,7 @@ export default {
 .left {
     height: 100%;
     position: fixed;
-    top: 60px;
-    width: 240px;
+    width: 170px;
     overflow: hidden;
     white-space: nowrap;
     z-index: 999;
@@ -134,13 +132,14 @@ export default {
 }
 
 .left_menu {
-    font-size: 14px;
+    font-size: 12px;
     padding: 0 16px;
 }
 
 .left_menu li {
     margin-bottom: 10px;
     position: relative;
+  cursor:pointer;
 }
 
 .menu_div {
@@ -154,7 +153,8 @@ export default {
 
 .left_menu li a {
     color: #fff;
-    font-size: 14px;
+    font-size: 12px;
+    cursor:pointer;
 }
 
 .menu_div .bleft {

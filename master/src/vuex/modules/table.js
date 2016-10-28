@@ -1,5 +1,6 @@
-import {
 
+import {
+   LOGIN_DATA,
    ORDER_TABLE,
    ORDER_ADD_DATA,
    ORDER_DETAIL_DATA,
@@ -90,7 +91,104 @@ import {
 
 } from '../mutation-types'
 
+
+
+
+var base64DecodeChars = new Array(
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+  -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63,
+  52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1,
+  -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+  15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1,
+  -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+  41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1);
+
+function base64decode(str) {
+  var c1, c2, c3, c4;
+  var i, len, out;
+
+  len = str.length;
+  i = 0;
+  out = "";
+  while(i < len) {
+    /* c1 */
+    do {
+      c1 = base64DecodeChars[str.charCodeAt(i++) & 0xff];
+    } while(i < len && c1 == -1);
+    if(c1 == -1)
+      break;
+
+    /* c2 */
+    do {
+      c2 = base64DecodeChars[str.charCodeAt(i++) & 0xff];
+    } while(i < len && c2 == -1);
+    if(c2 == -1)
+      break;
+
+    out += String.fromCharCode((c1 << 2) | ((c2 & 0x30) >> 4));
+
+    /* c3 */
+    do {
+      c3 = str.charCodeAt(i++) & 0xff;
+      if(c3 == 61)
+        return out;
+      c3 = base64DecodeChars[c3];
+    } while(i < len && c3 == -1);
+    if(c3 == -1)
+      break;
+
+    out += String.fromCharCode(((c2 & 0XF) << 4) | ((c3 & 0x3C) >> 2));
+
+    /* c4 */
+    do {
+      c4 = str.charCodeAt(i++) & 0xff;
+      if(c4 == 61)
+        return out;
+      c4 = base64DecodeChars[c4];
+    } while(i < len && c4 == -1);
+    if(c4 == -1)
+      break;
+    out += String.fromCharCode(((c3 & 0x03) << 6) | c4);
+  }
+  return out;
+}
+
+
+
+function uncompile(code){
+  var test=base64decode(code);
+  test=unescape(test);
+  return test;
+
+}
+
+
+function getCookie(name){          //获取cookie
+  var search = name + "=" ;
+  var offset = document.cookie.indexOf(search);
+  if(offset==-1){     //cookie中不存在这个变量
+    return '';
+  }else{
+    offset += search.length;
+    var end = document.cookie.indexOf(";", offset);
+    if(end == -1) {
+      end = document.cookie.length;
+    }
+    return(document.cookie.substring(offset, end));
+  }
+}
+
+
+
 const state = {
+    login:{
+        "id":uncompile(getCookie('id')),
+        "name":uncompile(getCookie('name')),
+        "no":uncompile(getCookie('no')),
+        "orgId":uncompile(getCookie('orgId')),
+        "time":getCookie('time')
+    },
     systemBaseList: {
         enumlist: [
             { "id": 0, "code": "022112", "type": "1", "desc": "123456789011", "status": "0" },
@@ -411,6 +509,9 @@ const state = {
 }
 
 const mutations = {
+    [LOGIN_DATA](state, data) { //订单列表
+        state.login = data;
+    },
 
     [ORDER_TABLE](state, data) { //订单列表
         state.basicBaseList.orderList = data;
@@ -455,6 +556,12 @@ const mutations = {
     [ORDER_ADD_DATA](state, data) {  //创建订单
         if(data.key == 'intentionDetail'){
             console.log('意向详情采纳报价');
+            state.basicBaseList.intentionDetail.offers.arr[data.index].orderTime++;
+
+        }
+        if(data.key == 'offerList'){
+            console.log('报价采纳报价');
+            state.basicBaseList.offerList[data.index].orderTime++;
         }
         if(data.key == 'orderList'){
             console.log(data)
@@ -657,7 +764,7 @@ const mutations = {
             "email": data.email,
             "show": false,
             "id": data.id,
-            "main":data.main 
+            "main":data.main
         })
         console.log(data.id)
     },
@@ -1157,8 +1264,8 @@ const mutations = {
         temp.bizType = data.bizType;
         temp.show = false;
         temp.id=data.id;
-        state.userDetail.tracking.arr.push(temp);
-        state.clientDetail.trackings.arr.push(temp);
+        state.userDetail.tracking.arr.unshift(temp);
+        state.clientDetail.trackings.arr.unshift(temp);
     },
 
 
@@ -1222,7 +1329,10 @@ const mutations = {
         "show":false,
         "duedate":data.duedate,
         "images":data.images,
-        "audit":data.audit
+        "audit":data.audit,
+        "checked":data.checked,
+        "validate":0,
+        "loading":true
       };
 
         if(data.key=="intentionList"){

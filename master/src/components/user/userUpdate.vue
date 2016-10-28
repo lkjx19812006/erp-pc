@@ -49,7 +49,12 @@
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">会员等级</label>
-                       <input type="text" v-model="param.grade" class="form-control edit-input" value="{{initUserDetail.grade}}" />
+                       <select class="form-control edit-input"  v-model="param.grade">
+                         <option value=0>一星</option>
+                         <option value=1>二星</option>
+                         <option value=2>三星</option>
+                         </select>
+                       <!--<input type="text" v-model="param.grade" class="form-control edit-input" value="{{initUserDetail.grade}}" />-->
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">经营类型</label>
@@ -118,7 +123,12 @@
                      </div>
                      <div class="editpage-input">
                        <label class="editlabel">重要级别</label>
-                       <input type="text" v-model="param.importance" class="form-control edit-input" value="{{initUserDetail.importance}}" />
+                       <select class="form-control edit-input"  v-model="param.importance">
+                         <option value="0">重要</option>
+                         <option value="1">很重要</option>
+                         <option value="2">非常重要</option>
+                       </select>
+                       <!--<input type="text" v-model="param.importance" class="form-control edit-input" value="{{initUserDetail.importance}}" />-->
                      </div>
 
                      <div class="editpage-input">

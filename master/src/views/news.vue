@@ -27,10 +27,11 @@
                         <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
                         <th>姓名</th>
                         <th>昵称</th>
+                        <th>等级</th>
                         <th>手机</th>
                         <th>归属地</th>
-                        <th>邮箱</th>
-                        <th>qq</th>
+                        <!--<th>邮箱</th>-->
+                        <!--<th>qq</th>-->
                         <th>所在公司</th>
                         <th>主营业务</th>
                         <th>来源</th>
@@ -39,7 +40,7 @@
                         <th>个人认证</th>
                         <th>企业认证</th>
                         <th>划转状态</th>
-                        <th style="min-width:200px">备注</th>
+
                         <th></th>
 
                     </tr>
@@ -58,10 +59,14 @@
                                 show:true
                                 })">{{item.fullname}}</td>
                         <td>{{item.nickname}}</td>
+                        <td v-if="item.grade==0">一星</td>
+                        <td v-if="item.grade==1">二星</td>
+                        <td v-if="item.grade==2">三星</td>
+                        <td v-if="item.grade!=0&&item.grade!=1&&item.grade!=2">其它</td>
                         <td>{{item.phone}}</td>
                         <td>{{item.province+item.city}}</td>
-                        <td>{{item.email}}</td>
-                        <td>{{item.qq}}</td>
+                        <!--<td>{{item.email}}</td>-->
+                        <!--<td>{{item.qq}}</td>-->
                         <td>{{item.company}}</td>
                         <td>{{item.busiType}}</td>
                         <td v-if="item.source==0" style="background:red;color:#fff">{{item.sourceType}}</td>
@@ -82,7 +87,7 @@
                         <td v-if="item.ctype==3">认证失败</td>
                         <td v-if="item.transStatus==1">已划转</td>
                         <td v-else>未划转</td>
-                        <td>{{item.comment}}</td>
+
 
                         <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
@@ -111,7 +116,8 @@
                                                 bizType:'',
                                                 gender:'',
                                                 importance:'',
-                                                userType:''
+                                                userType:'',
+                                                grade:item.grade
                                                 },item.show=false)">编辑</li>
                                     <li v-if="item.transStatus==0" @click="userToClient({
                                                 name:item.fullname,
