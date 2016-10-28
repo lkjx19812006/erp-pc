@@ -6,10 +6,15 @@ import {
     FOLD
 } from '../mutation-types'
 
+var categoryJson={};
+if(localStorage.menus){
+  categoryJson=JSON.parse(localStorage.menus)
+}
+
 const state = {
     count: 0,
 
-    list: JSON.parse(localStorage.menus),
+    list:categoryJson,
     left: 240,
     expand:true
 }

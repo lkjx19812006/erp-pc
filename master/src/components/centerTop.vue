@@ -2,7 +2,15 @@
     <div class="center_top light_bg mui-clearfix" v-bind:class="{'center_top':getMenu==240,'center_nav':getMenu==50}" transition="expand">
         <div class="new_time left">最近登录时间:{{ initLogin.time }}</div>
         <div class="right head_info">
-            <span style="float:left;margin:20px 10px 0 0 ">{{initLogin.name}}</span><img src="/static/images/head.png" height="52" width="52" />
+            <span style="float:left;margin:20px 10px 0 0 ">{{initLogin.name}}</span>
+            <img src="/static/images/head.png" height="52" width="52" @click="show=!show"/>
+            <div class="component_action" v-show="show">
+              <ul>
+                <li @click="exit()">
+                  退出登录
+                </li>
+              </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -14,7 +22,7 @@ import {
 export default {
     data() {
             return {
-
+                  show:false
             }
         },
         vuex: {
@@ -22,7 +30,17 @@ export default {
                 getMenu,
               initLogin
             }
-        }
+        },
+  methods:{
+    exit:function(){
+      document.cookie = "no=;expires=" ;
+      document.cookie = "id=;expires=" ;
+      document.cookie = "orgId=;expires=";
+      document.cookie = "name=;expires=";
+      this.$route.router.go({name: 'login'});
+
+    }
+  }
 }
 </script>
 <style scoped>
@@ -31,9 +49,8 @@ export default {
     position: fixed;
     right: 0;
     white-space: nowrap;
-    left: 240px;
+    left: 170px;
     box-shadow: 0px 2px 2px #999;
-    top: 60px;
     z-index: 1000;
 }
 
@@ -63,4 +80,10 @@ export default {
     padding-top: 10px;
 }
 
+.component_action{
+  min-width: 75px;
+  padding: 0;
+  text-align: center;
+  margin-top: 28px;
+}
 </style>

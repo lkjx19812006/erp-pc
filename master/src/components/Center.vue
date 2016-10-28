@@ -22,8 +22,8 @@ export default {
     height: calc(100% - 130px);
     position: absolute;
     right: 0;
-    top: 130px;
-    left: 240px;
+    top: 70px;
+    left: 170px;
     white-space: nowrap;
    /*  min-width: 1500px; */
 }

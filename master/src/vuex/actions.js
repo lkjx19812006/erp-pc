@@ -84,10 +84,10 @@ export const login = ({ dispatch }, data) => { //登录
           + seperator2 + date.getSeconds();
         return currentdate;
       }
-
+      data.loading=false;
+      if(res.json().result){
         var no = compile(data.no);
         var lastTime= getNowFormatDate();
-
         var expire = new Date((new Date()).getTime() + 24 * 3600000 );  //得到的时间与真实时间差了8小时,cookie将在1小时后过期
         document.cookie = "no=" + no + ";expires=" + expire;
         document.cookie = "id=" + compile(res.json().result.id) + ";expires=" + expire;
@@ -96,18 +96,28 @@ export const login = ({ dispatch }, data) => { //登录
         document.cookie = "time=" + lastTime + ";expires=" + expire;
 
         var result = res.json().result;
-            result.time=lastTime;
+        result.time=lastTime;
 
         dispatch(types.LOGIN_DATA, result);
         dispatch(types.INIT_LIST, result);
         //本地存储左侧菜单
         localStorage.menus = JSON.stringify(result.menus);
 
-        data.show = false;
+
         data.loginCallback();
+      }else{
+
+        data.name=res.json().msg;
+        data.show = true;
+
+      }
+
+
     }, (res) => {
         console.log('fail');
-        data.show = false;
+        data.name='服务器内部错误';
+        data.show = true;
+        data.loading=false;
     });
 }
 
