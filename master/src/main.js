@@ -70,6 +70,23 @@ router.beforeEach(function ({ to, next }) {
     }
 })
 
+Vue.http.interceptors.push((request, next) => {
+  // ...
+  // 请求发送前的处理逻辑
+  // ...
+  next((response) => {
+    console.log(response.json().code);
+    if(response.json().code==100070){
+        return  router.go({name: 'login'});
+    }
+    // ...
+    // 请求发送后的处理逻辑
+    // ...
+    // 根据请求的状态，response参数会返回给successCallback或errorCallback
+    return response
+  })
+})
+
 
 
 router.start(Vue.extend(App),'#app')

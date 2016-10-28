@@ -3330,6 +3330,7 @@ export const updateMsg = ({ dispatch }, param) => {  //修改留言信息
 
 export const getUserList = ({ dispatch }, param) => {  //会员信息列表
     param.loading = true;
+  console.log(param);
     var url = apiUrl.userList+'/user/?'+'&page=' + param.cur + '&pageSize=15';
     for(var key in param){
         if(key=='phone'&&param[key]!==''){
@@ -3356,7 +3357,7 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
         if(key=='transform'&&param[key]!==''){
              url += '&transStatus='+param[key];
         }
-        if(key=='city'&&param[key]!==''){
+        if(key=='city'&&param[key]!==''&&param[key]!=undefined){
              url += '&city='+param[key];
         }
         if(key=='province'&&param[key]!==''){
