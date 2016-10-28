@@ -103,6 +103,10 @@ export const login = ({ dispatch }, data) => { //登录
         dispatch(types.LOGIN_DATA, result);
         dispatch(types.INIT_LIST, result);
         //本地存储左侧菜单
+        console.log(result.menus);
+        for(var i in result.menus){
+          result.menus[i].show=false;
+        }
         localStorage.menus = JSON.stringify(result.menus);
 
 
@@ -2933,13 +2937,17 @@ export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
             dispatch(types.INTENTION_DETAIL_DATA, result);
             if(res.json().result.pics[0]){
               param.image_f=res.json().result.pics[0].path;
+              param.image_f_show=res.json().result.pics[0].url;
             }
             if(res.json().result.pics[1]){
               param.image_s=res.json().result.pics[1].path;
+              param.image_s_show=res.json().result.pics[1].url;
             }
             if(res.json().result.pics[2]){
               param.image_t=res.json().result.pics[2].path;
+              param.image_t_show=res.json().result.pics[2].url;
             }
+            // console.log(param);
 
             param.loading = false;
     }, (res) => {
@@ -3061,6 +3069,7 @@ export const updateMsg = ({ dispatch }, param) => {  //修改留言信息
 
 export const getUserList = ({ dispatch }, param) => {  //会员信息列表
     param.loading = true;
+  console.log(param);
     var url = apiUrl.userList+'/user/?'+'&page=' + param.cur + '&pageSize=15';
     for(var key in param){
         if(key=='phone'&&param[key]!==''){
@@ -3087,7 +3096,7 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
         if(key=='transform'&&param[key]!==''){
              url += '&transStatus='+param[key];
         }
-        if(key=='city'&&param[key]!==''){
+        if(key=='city'&&param[key]!==''&&param[key]!=undefined){
              url += '&city='+param[key];
         }
         if(key=='province'&&param[key]!==''){

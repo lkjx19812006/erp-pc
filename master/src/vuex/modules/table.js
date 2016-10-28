@@ -1310,8 +1310,9 @@ const mutations = {
         "duedate":data.duedate,
         "images":data.images,
         "audit":data.audit,
-        "validate":data.validate,
-        "checked":data.checked
+        "checked":data.checked,
+        "validate":0,
+        "loading":true
       };
 
         if(data.key=="intentionList"){

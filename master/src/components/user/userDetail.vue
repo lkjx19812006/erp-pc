@@ -18,19 +18,6 @@
                         <a class="navbar-brand navbar-name" href="#">{{initUserDetail.fullname}}</a>
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
-                        <li>
-                            <button type="button" class="btn btn-base" @click="createTracking({
-                                    objId:initUserDetail.id,
-                                    bizId:'',
-                                    bizName:'',
-                                    type:0,
-                                    trackingWay:'',
-                                    bizType:'',
-                                    contactNo:'',
-                                    comments:'',
-                                    show:false
-                                  })">新建跟进</button>
-                        </li>
 
                         <li>
                             <button type="button" class="btn btn-base" @click="modifyUser({
@@ -73,7 +60,7 @@
                                           会员意向（{{initUserDetail.intention.arr.length}}）
                                         </a>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createIntention()">新建</button>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="intentionAudit()">批量审核</button>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="intentionAudit()">审核</button>
                                       </h4>
 
                                 </div>
@@ -91,7 +78,7 @@
                                             <th>价格</th>
                                             <th>单位</th>
                                             <th>审核状态</th>
-                                            <th>备注</th>
+                                            <th>意向类型</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initUserDetail.intention.arr">
@@ -104,8 +91,11 @@
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
+
                                                 <td>{{item.validate | intentionAudit}}</td>
-                                                <td>{{item.description}}</td>
+                                          
+                                                <td v-if="item.type==0">求购</td>
+                                                <td v-if="item.type==1">供应</td>
                                                 <td  @click="clickShow($index,{
                                                   concrete:'intention'
                                                   })">
@@ -147,6 +137,9 @@
                                                             intentionParam.image_f='',
                                                             intentionParam.image_s='',
                                                             intentionParam.image_t='',
+                                                            intentionParam.image_f_show='',
+                                                            intentionParam.image_s_show='',
+                                                            intentionParam.image_t_show='',
                                                             intentionParam.inType=2
                                                         )">编辑</dt>
                                                 </div>
@@ -200,7 +193,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
 
                             <div class="panel panel-default">
@@ -281,7 +273,7 @@
                                               <td v-if="item.bizType==0">会员</td>
                                               <td v-if="item.bizType==1">意向</td>
                                               <td v-if="item.bizType==2">订单</td>
-                                              <td v-if="item.bizType!=0&&item.bizType!=1&&item.bizType!=2"></td>
+                                              <td v-if="item.bizType!=0&&item.bizType!=1&&item.bizType!=2">会员</td>
                                               <td>{{item.trackingWay}}</td>
                                               <td>{{item.contactNo}}</td>
                                               <td>{{item.comments}}</td>
@@ -487,8 +479,12 @@ export default {
           image_f:'',
           image_s:'',
           image_t:'',
+          image_f_show:'',
+          image_s_show:'',
+          image_t_show:'',
           description:'',
-          inType:2
+          inType:2,
+          loading:false
         },
         intentionAuditParam:{
           show:false,
@@ -653,8 +649,6 @@ export default {
       },
 
       clickShow: function(index,param) {
-            console.log('clickShow');
-            console.log(this.$store.state.table.userDetail[param.concrete].arr[index]);
             if (this.$store.state.table.userDetail[param.concrete].arr[index].show) {
                 this.$store.state.table.userDetail[param.concrete].arr[index].show = false;
             } else {
@@ -680,7 +674,8 @@ export default {
         },
         createIntention:function(){
           this.intentionParam={
-            show:false,
+              validate:0,
+              show:false,
               flag:0,   //0表示创建，1表示修改
               sub:'',
               key:'user',
@@ -714,14 +709,14 @@ export default {
               intl:0,
               sampleNumber:0,
               sampleAmount:0,
-              qualification:'',
+              qualification:'GMP',
               url:'/intention/',
               image_f:'',
               image_s:'',
               image_t:'',
               images:'',
-              inType:2
-
+              inType:2,
+              audit:0
           };
           this.intentionParam.show = true;
 

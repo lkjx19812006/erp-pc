@@ -20,7 +20,7 @@
 
                 </div>
 
-                
+
                 <div v-if="param.flag==0&&!param.customer" class="editpage-input">
                   <label class="editlabel">业务类型</label>
                   <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType">
@@ -58,6 +58,7 @@
                   <select type="text" class="form-control edit-input" v-model='param.trackingWay'>
                     <option value="">请选择跟进方式</option>
                     <option value="手机">手机</option>
+                    <option value="固话">固话</option>
                     <option value="qq">qq</option>
                     <option value="微信">微信</option>
                     <option value="邮件">邮件</option>

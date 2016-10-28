@@ -55,17 +55,7 @@ export default {
             },
         },
         created() {
-            //this.initList();
-            console.log("获取的目录");
-            if(localStorage.menus){
-                this.$store.state.category.list = JSON.parse(localStorage.menus);
 
-            }else{
-                window.location.href='http://127.0.0.1:8080/#!';
-            }
-
-            //console.log(this.getList);
-            console.log(this.$route);
         },
         methods: {
             init_data: function(id) {

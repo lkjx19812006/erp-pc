@@ -33,11 +33,36 @@
                     </div>
                   <div class="client-detailInfo  col-xs-6">
                     <label>手机省：</label>
-                    <input type="text"  class="form-control" v-model="param.province"  placeholder="按手机省搜索"/>
+                    <div   class="form-control" style="padding:0;border:none;height:31px">
+                      <v-select
+                        :debounce="250"
+                        :value.sync="phoneProvince"
+                        :on-change="selectPhoneProvince"
+                        :options="initProvince"
+                        placeholder="省"
+                        label="cname"
+
+                      >
+                      </v-select>
+                    </div>
+                    <!--<input type="text"  class="form-control" v-model="param.province"  placeholder="按手机省搜索"/>-->
                   </div>
                   <div class="client-detailInfo  col-xs-6">
                     <label>手机市：</label>
-                    <input type="text"  class="form-control" v-model="param.city"  placeholder="按手机市搜索"/>
+                    <input type="text" v-if="!phoneProvince.cname" class="form-control" disabled="disabled"  style="height:37px"  placeholder="请先选择一个省"/>
+                    <div v-if="phoneProvince.cname"  class="form-control" style="padding:0;border:none;height:31px">
+                      <v-select
+                        :debounce="250"
+                        :value.sync="phoneCity"
+                        :on-change="selectPhoneCity"
+                        :options="initCitylist"
+                        placeholder="市"
+                        label="cname"
+
+                      >
+                      </v-select>
+                    </div>
+                    <!--<input type="text"  class="form-control" v-model="param.city"  placeholder="按手机市搜索"/>-->
                   </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>手机号：</label>
@@ -91,13 +116,19 @@
 </template>
 <script>
 
-import calendar from '../calendar/vue.datepicker'
+import vSelect from '../tools/vueSelect/components/Select'
 import {
+  initProvince,
+  initCitylist
+} from '../../vuex/getters'
+import {
+    getProvinceList,
+    getCityList,
     getUserList
 } from '../../vuex/actions'
 export default {
     components: {
-
+      vSelect
     },
     props: ['param'],
     data() {
@@ -117,18 +148,33 @@ export default {
                 show:false,
                 employeeId:'',
                 employeeName:''
-            }
+            },
+            phoneProvince:{
+            cname:''
+            },
+            phoneCity:{
+            cname:''
+            },
+          provinceParam:{
+            loading:true,
+            show:false,
+            color: '#5dc596',
+            size: '15px',
+            cur: 1,
+            all: 7,
+            country:''
+          },
         }
     },
     vuex: {
+      getters: {
+        initProvince,
+        initCitylist
+      },
         actions: {
-             getUserList
-        }
-    },
-    events:{
-        a:function(qq){
-            this.loadParam.employeeId = qq.employeeId;
-            this.loadParam.employeeName = qq.employeeName;
+          getProvinceList,
+          getCityList,
+          getUserList
         }
     },
     methods:{
@@ -140,14 +186,25 @@ export default {
         	this.param.startCtime = "";
         	this.param.endCtime = "";
         },
-        employee:function(employeeId,employeeName){
-            this.empNameParam.show=true;
-            this.loadParam.employeeId = this.empNameParam.employeeId;
-            this.loadParam.employeeName = this.empNameParam.employeeName;
+      selectPhoneProvince:function(){
+        this.phoneCity = '';
+        this.param.city = '';
+        this.param.phoneCityName = '';
+        this.param.province = this.phoneProvince.cname;
+        this.param.phoneProvinceName = this.phoneProvince.cname;
+        if(this.phoneProvince.cname){
+          this.getCityList(this.phoneProvince);
         }
+      },
+      selectPhoneCity:function(){
+        this.param.city = this.phoneCity.cname;
+        this.param.phoneCityName = this.phoneCity.cname;
+      }
     },
     created() {
-        //this.getUserList(this.loadParam);
+      this.param.province = '';
+      this.param.city = '';
+      this.getProvinceList(this.provinceParam);
     }
 }
 </script>
