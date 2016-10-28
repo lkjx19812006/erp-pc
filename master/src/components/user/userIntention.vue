@@ -34,12 +34,11 @@
                <div class="editpage">
                <div class="editpage-input" style="width:100%">
                  <label class="editlabel">药材图片</label>
-                 <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                 <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                 <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                 <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                 <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                 <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
                </div>
                  </div>
-
                  <div class="editpage">
 
                      <div class="editpageleft">
@@ -296,8 +295,6 @@
                            </input-select>
                          </div>
                        </div>
-
-
                        <div class="editpage-input" v-show="param.sampling==1">
                              <label class="editlabel">样品数量</label>
                               <input type="text" v-model='param.sampleNumber' class="form-control edit-input" value="{{param.sampleNumber}}" />
@@ -307,12 +304,8 @@
                              <label class="editlabel">样品总价</label>
                               <input type="text" v-model='param.sampleAmount' class="form-control edit-input" value="{{param.sampleAmount}}" />
                          </div>
-
-
-
                     </div>
                  </div>
-
                  <div style="margin-top:25px">
                     <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
                     <h4 style="display:inline">商家信息</h4>
@@ -442,8 +435,6 @@ export default {
             qiniu:false
           },
           type:"image/*"
-
-
         }
     },
     vuex: {

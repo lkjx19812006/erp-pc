@@ -2,9 +2,9 @@
     <div class="img_div">
         <form>
             <input type="file" @change="previewImg" class="input_image" name="photo" accept="{{type}}">
-            <img v-bind:src="image" class="image_show" v-if="imageShow&&!value">
-            <img v-bind:src="value" class="image_show" v-if="imageShow&&value">
-            <img src="../../static/images/close.png" v-show="value" @click="delImage" class="close_image">
+            <img v-bind:src="image" class="image_show" v-if="imageShow&&!showurl">
+            <img v-bind:src="showurl" class="image_show" v-if="imageShow&&showurl">
+            <img src="../../static/images/close.png" v-show="showurl" @click="delImage" class="close_image">
             <div v-show="!imageShow">
                 <div>{{fileName}}</div>
                 <input type="button" value="重新选择文件" class="btn btn-default select_button">
@@ -29,6 +29,7 @@ export default {
             qiniu:''
           },
           value:'',
+          showurl:'',
           type:'*'
         },
         methods: {
@@ -120,6 +121,7 @@ export default {
                           console.log(res);
                         _self.$dispatch("getImageData", res.json());
                         _self.value=res.json().result.path;
+                        _self.showurl=res.json().result.url;
               console.log(res.json());
                         }, (res) => {
                       console.log('fail');

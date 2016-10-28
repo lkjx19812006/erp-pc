@@ -15,8 +15,8 @@
                         <div class="editpage">
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel">名称<span class="system_danger" v-if="$validation.system.minlength">请至少三位</span></label>
-                                    <input type="text" v-model='systemData.name' v-validate:system="{minlength:3}" class="form-control edit-input" value="{{systemData.name}}" />
+                                  <label class="editlabel" >名称<span class="system_danger" v-if="$validation.system.required">请输入名称</span></label>
+                                  <input type="text" class="form-control  edit-input" id="system" v-validate:system="['required']" v-model="systemData.name"  />
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">类型
@@ -49,7 +49,7 @@
                             <div class="editpageright">
                                 <div class="editpage-input">
                                     <label class="editlabel" for="systemcode">编码
-                                        <span class="system_danger" v-if="$validation.systemcode.required">请输入编码</span> 
+                                        <span class="system_danger" v-if="$validation.systemcode.required">请输入编码</span>
                                     </label>
                                     <input type="text" class="form-control  edit-input" id="systemcode" v-validate:systemcode="['required']" v-model="systemData.code" />
                                 </div>

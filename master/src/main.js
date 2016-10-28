@@ -75,8 +75,7 @@ Vue.http.interceptors.push((request, next) => {
   // 请求发送前的处理逻辑
   // ...
   next((response) => {
-    console.log(response.json().code);
-    if(response.json().code==100070){
+    if(response.json()&&response.json().code==100070){
         return  router.go({name: 'login'});
     }
     // ...

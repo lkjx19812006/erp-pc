@@ -307,7 +307,7 @@
                         <div class="clearfix">
                             <div class="client-image col-md-4">
                                 <!--<span>{{initBreedDetail.icon}}</span>-->
-                                <img :src="initBreedDetail.icon" />
+                                <img :src="initBreedDetail.url" />
                             </div>
                         </div>
                     </div>
