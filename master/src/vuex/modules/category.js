@@ -8,24 +8,26 @@ import {
 
 const state = {
     count: 0,
+    
     list: [
-        {"categoryid":0,"category":"主页","img":"/static/images/icon_main.png","path":"/home/main","subcategory":[]},
-        {"categoryid":1,"category":"会员","img":"/static/images/icon_unuser.png","path":"/home/unclient","subcategory":[]},
-        {"categoryid":2,"category":"客户","img":"/static/images/icon_user.png","path":"/home/client","subcategory":[]},
-        {"categoryid":3,"category":"意向","img":"/static/images/order_intent.png","path":"/home/order_intent","subcategory":[]},
-        {"categoryid":4,"category":"订单","img":"/static/images/icon_order.png","path":"/home/order?id=0","subcategory":[{"subcategoryId":1,"subcategory":"我的订单","img":"/static/images/icon_order.png","path":"/home/order?id=0"},{"subcategoryId":2,"subcategory":"客户订单","img":"/static/images/icon_order.png","path":"/home/order?id=1"}]},
-        {"categoryid":5,"category":"合同","img":"/static/images/icon_compact.png","path":"/home/company","subcategory":[]},
-        {"categoryid":6,"category":"员工","img":"/static/images/icon_person.png","path":"/home/person","subcategory":[]},
-        {"categoryid":7,"category":"权限","img":"/static/images/icon_power.png","path":"/home/scope","subcategory":[]},
-        {"categoryid":8,"category":"系统基础数据","img":"/static/images/icon_base.png","path":"/home/base?id=0","show":"true","subcategory":[{"subcategoryId":1,"subcategory":"枚举类型","img":"/static/images/icon_order.png","path":"/home/base?id=0"},{"subcategoryId":2,"subcategory":"省市区","img":"/static/images/icon_order.png","path":"/home/base?id=1"}]},
-        {"categoryid":9,"category":"业务基础数据","img":"/static/images/icon_data.png","path":"/home/baseData?id=0","subcategory":[{"subcategoryId":1,"subcategory":"企业","img":"/static/images/icon_order.png","path":"/home/baseData?id=0"},{"subcategoryId":2,"subcategory":"成分","img":"/static/images/icon_order.png","path":"/home/baseData?id=1"},{"subcategoryId":3,"subcategory":"提取物","img":"/static/images/icon_order.png","path":"/home/baseData?id=2"},{"subcategoryId":4,"subcategory":"药材","img":"/static/images/icon_order.png","path":"/home/baseData?id=3"}]}
+
+        {"id":1,"cname":"主页","icon":"/static/images/icon_main.png","url":"/home/main","subcategory":[]},
+        {"id":2,"cname":"会员","icon":"/static/images/icon_unuser.png","url":"/home/unclient","subcategory":[]},
+        {"id":3,"cname":"客户","icon":"/static/images/icon_user.png","url":"/home/client","subcategory":[]},
+        {"id":4,"cname":"意向","icon":"/static/images/order_intent.png","url":"/home/order_intent","subcategory":[]},
+        {"id":5,"cname":"订单","icon":"/static/images/icon_order.png","url":"/home/order?id=0","subcategory":[{"id":1,"cname":"我的订单","icon":"/static/images/icon_order.png","url":"/home/order?id=0"},{"id":2,"cname":"客户订单","icon":"/static/images/icon_order.png","url":"/home/order?id=1"}]},
+        {"id":6,"cname":"合同","icon":"/static/images/icon_compact.png","url":"/home/company","subcategory":[]},
+        {"id":7,"cname":"员工","icon":"/static/images/icon_person.png","url":"/home/person","subcategory":[]},
+        {"id":8,"cname":"权限","icon":"/static/images/icon_power.png","url":"/home/scope","subcategory":[]},
+        {"id":9,"cname":"系统基础数据","icon":"/static/images/icon_base.png","url":"/home/base?id=0","show":"true","subcategory":[{"id":1,"cname":"枚举类型","icon":"/static/images/icon_order.png","url":"/home/base?id=0"},{"id":2,"cname":"省市区","icon":"/static/images/icon_order.png","url":"/home/base?id=1"}]},
+        {"id":10,"cname":"业务基础数据","icon":"/static/images/icon_data.png","url":"/home/baseData?id=0","subcategory":[{"id":1,"cname":"企业","icon":"/static/images/icon_order.png","url":"/home/baseData?id=0"},{"id":2,"cname":"成分","icon":"/static/images/icon_order.png","url":"/home/baseData?id=1"},{"id":3,"cname":"提取物","icon":"/static/images/icon_order.png","url":"/home/baseData?id=2"},{"id":4,"cname":"药材","icon":"/static/images/icon_order.png","url":"/home/baseData?id=3"}]}
        /* 
-        {"categoryid":7,"category":"业绩","img":"/static/images/achieve.png","path":"/home/achive?id=0","subcategory":[{"subcategoryId":1,"subcategory":"部门业绩","img":"/static/images/icon_order.png","path":"/home/achive?id=0"},{"subcategoryId":2,"subcategory":"个人业绩","img":"/static/images/icon_order.png","path":"/home/achive?id=1"}]},
-        {"categoryid":1,"category":"业务机会","img":"/static/images/icon_change.png","path":"/home/change","subcategory":[]},
-        {"categoryid":11,"category":"报表","img":"/static/images/icon_reports.png","path":"/home/reports","subcategory":[]},
-        {"categoryid":12,"category":"仪表盘","img":"/static/images/icon_board.png","path":"/home/board","subcategory":[]},
-        {"categoryid":13,"category":"日志","img":"/static/images/icon_report.png","path":"/home/record","subcategory":[]},
-        {"categoryid":14,"category":"设置","img":"/static/images/icon_set.png","path":"/home/set","subcategory":[]}*/
+        {"id":7,"cname":"业绩","icon":"/static/images/achieve.png","url":"/home/achive?id=0","subcategory":[{"id":1,"cname":"部门业绩","icon":"/static/images/icon_order.png","url":"/home/achive?id=0"},{"id":2,"cname":"个人业绩","icon":"/static/images/icon_order.png","url":"/home/achive?id=1"}]},
+        {"id":1,"cname":"业务机会","icon":"/static/images/icon_change.png","url":"/home/change","subcategory":[]},
+        {"id":11,"cname":"报表","icon":"/static/images/icon_reports.png","url":"/home/reports","subcategory":[]},
+        {"id":12,"cname":"仪表盘","icon":"/static/images/icon_board.png","url":"/home/board","subcategory":[]},
+        {"id":13,"cname":"日志","icon":"/static/images/icon_report.png","url":"/home/record","subcategory":[]},
+        {"id":14,"cname":"设置","icon":"/static/images/icon_set.png","url":"/home/set","subcategory":[]}*/
     ],
     left: 240,
     expand:true
@@ -43,8 +45,7 @@ const mutations = {
     },
 
     [INIT_LIST](state,data) {
-        console.log(data)
-        state.list = data.results;
+        state.list = data.menus;
     },
     [MENU_BAR](state) {
         if (state.left == 240) {

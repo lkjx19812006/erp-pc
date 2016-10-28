@@ -9,6 +9,7 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import treeview from './components/tree/tree.vue'
 
 
+
 require('./assets/css/style.css')
 require('./components/calendar/vue.datepicker.css')
 
@@ -158,14 +159,48 @@ function uncompile(code){
 
 uncompile(compile(data));
 
+function getCookie(name){          //获取cookie
+    var search = name + "=" ; 
+    var offset = document.cookie.indexOf(search); 
+    if(offset==-1){     //cookie中不存在这个变量
+        return '';
+    }else{
+        offset += search.length; 
+        var end = document.cookie.indexOf(";", offset);
+        if(end == -1) {
+            end = document.cookie.length;
+        }
+        return(document.cookie.substring(offset, end));   
+    }
+}
 
+console.log(456789);
+
+console.log(987654);
 
 //路由拦截器判断是否登录
 router.beforeEach(function ({ to, next }) {
-  //加密
 
-  console.log('登录拦截器');
- console.log(to);
+    console.log('登录拦截器');
+    console.log(to);
+    if(to.name=="login"){
+
+    }else{
+      if(!getCookie('no')){
+        console.log('无cookie');
+        window.location.href='http://127.0.0.1:8080/#!/login';
+      }else{
+        console.log("有cookie");
+        console.log(getCookie('id'));
+        
+        /*$store.state.table.login.id = getCookie('id');
+        $store.state.table.login.name = getCookie('name');
+        $store.state.table.login.no = uncompile(getCookie('no'));
+        $store.state.table.login.orgId = getCookie('orgId');*/
+       
+      }
+    }
+    
     next()
 })
 

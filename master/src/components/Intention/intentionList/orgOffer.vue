@@ -68,14 +68,14 @@
                         <td>{{item.comments}}</td>
                         <td>
                            <div v-if="item.orderTime==0">未采纳</div>
-                           <div v-else>已采纳{{item.orderTime}}次</div>
+                           <div v-else>已采纳</div>
 
                         </td>
-                        <td @click.stop="clickShow($index)">
+                        <td v-if="item.orderTime==0" @click.stop="clickShow($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
                                <ul>
-                                   <li @click="adopt(item)">采纳</li>
+                                   <li @click="adopt(item,$index)">采纳</li>
                                </ul>
                            </div>
                        </td>
@@ -132,6 +132,7 @@ export default {
             },
             orderParam:{
                 show:false,
+                index:'',
                 key:'offerList',
                 type:'',
                 customer:'',
@@ -203,13 +204,15 @@ export default {
                 })
             }       
         },
-        adopt:function(item){
+        adopt:function(item,index){
             console.log("创建订单");
             this.orderParam.show = true;
+            this.orderParam.index = index;
             this.orderParam.customer = item.customerId;
             this.orderParam.incidentals = item.incidentals;
             this.orderParam.incidentalsDesc = item.incidentalsDesc;
-
+            
+            this.orderParam.goods[0].sourceId = item.id;
             this.orderParam.goods[0].breedId = item.breedId;
             this.orderParam.goods[0].breedName = item.breedName;
             this.orderParam.goods[0].spec = item.spec;

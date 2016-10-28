@@ -1,5 +1,5 @@
 import {
-
+   LOGIN_DATA, 
    ORDER_TABLE,
    ORDER_ADD_DATA,
    ORDER_DETAIL_DATA,
@@ -87,6 +87,13 @@ import {
 } from '../mutation-types'
 
 const state = {
+    login:{
+        "id":"",
+        "name":"",
+        "no":"",
+        "orgId":"",
+
+    },
     systemBaseList: {
         enumlist: [
             { "id": 0, "code": "022112", "type": "1", "desc": "123456789011", "status": "0" },
@@ -382,6 +389,9 @@ const state = {
 }
 
 const mutations = {
+    [LOGIN_DATA](state, data) { //订单列表
+        state.login = data;
+    },
 
     [ORDER_TABLE](state, data) { //订单列表
         state.basicBaseList.orderList = data;
@@ -399,6 +409,12 @@ const mutations = {
     [ORDER_ADD_DATA](state, data) {  //创建订单
         if(data.key == 'intentionDetail'){
             console.log('意向详情采纳报价');
+            state.basicBaseList.intentionDetail.offers.arr[data.index].orderTime++;
+            
+        }
+        if(data.key == 'offerList'){
+            console.log('报价采纳报价');
+            state.basicBaseList.offerList[data.index].orderTime++;
         }
         if(data.key == 'orderList'){
             state.basicBaseList[data.key].unshift({

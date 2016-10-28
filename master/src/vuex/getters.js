@@ -11,6 +11,7 @@ export const getMenu = (state) => {
     return state.category.left
 };
 export const getList = (state) => {
+    console.log('getter');
     return JSON.parse(JSON.stringify(state.category.list));
 }
 
@@ -21,6 +22,11 @@ export const getCharList = (state) => {
     } ;
     return option;
 }
+
+export const initLogin = (state) => {
+    return JSON.parse(JSON.stringify(state.table.login));
+}
+
 
 export const getLinechart = (state) => {
     const option={

@@ -125,7 +125,7 @@
                 <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="confirm()">确定</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
             </div>
-        </validate>
+        </validator>
     </div>
 </template>
 <script>

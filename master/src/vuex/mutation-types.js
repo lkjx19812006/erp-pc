@@ -6,6 +6,8 @@ export const CHANGE_CHARTS = 'CHANGE_CHARTS' //图表
 export const CHANGE_LINECHARTS = 'CHANGE_LINECHARTS' //折线图表
 export const CHANGE_PIECHARTS = 'CHANGE_PIECHARTS' //饼状图
 
+export const LOGIN_DATA = 'LOGIN_DATA' //登录成功后返回信息
+
 export const ORDER_TABLE = 'ORDER_TABLE' //订单
 export const ORDER_ADD_DATA = 'ORDER_ADD_DATA' //创建订单
 export const ORDER_UPDATE_DATA = 'ORDER_UPDATE_DATA' //修改订单

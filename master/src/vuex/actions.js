@@ -5,9 +5,102 @@ import apiUrl from './api/api'
 export const increment = ({ dispatch }) => dispatch(types.INCREMENT)
 export const decrement = ({ dispatch }) => dispatch(types.DECREMENT)
 export const menuBar = ({ dispatch }) => dispatch(types.MENU_BAR)
+
+export const login = ({ dispatch }, data) => { //登录
+    console.log(data);
+    const body = {
+        no:data.no,
+        password:data.password
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + '/employee/login',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('登录成功');
+        //对用户名和密码加密
+        var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        function base64encode(str) {
+          var out, i, len;
+          var c1, c2, c3;
+
+          len = str.length;
+          i = 0;
+          out = "";
+          while(i < len) {
+            c1 = str.charCodeAt(i++) & 0xff;
+            if(i == len)
+            {
+              out += base64EncodeChars.charAt(c1 >> 2);
+              out += base64EncodeChars.charAt((c1 & 0x3) << 4);
+              out += "==";
+              break;
+            }
+            c2 = str.charCodeAt(i++);
+            if(i == len)
+            {
+              out += base64EncodeChars.charAt(c1 >> 2);
+              out += base64EncodeChars.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
+              out += base64EncodeChars.charAt((c2 & 0xF) << 2);
+              out += "=";
+              break;
+            }
+            c3 = str.charCodeAt(i++);
+            out += base64EncodeChars.charAt(c1 >> 2);
+            out += base64EncodeChars.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
+            out += base64EncodeChars.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >>6));
+            out += base64EncodeChars.charAt(c3 & 0x3F);
+          }
+          return out;
+        }
+
+        function compile(code){
+          var test= escape(code);
+          test=base64encode(test);
+          return test;
+        }
+
+        var no = compile(data.no);
+        var password = compile(data.password);
+
+        var expire = new Date((new Date()).getTime() - 8 * 3600000 + 90000);  //得到的时间与真实时间差了8小时,cookie将在1小时后过期
+        document.cookie = "no=" + no + ";expires=" + expire;
+        document.cookie = "password=" + password + ";expires=" + expire;
+        document.cookie = "id=" + res.json().result.id + ";expires=" + expire;
+        document.cookie = "orgId=" + res.json().result.orgid + ";expires=" + expire;
+        document.cookie = "name=" + res.json().result.name + ";expires=" + expire;
+
+        console.log(document.cookie); 
+
+        var result = res.json().result;
+        console.log(result);
+
+
+        dispatch(types.LOGIN_DATA, result);
+        dispatch(types.INIT_LIST, result);
+        //本地存储左侧菜单
+        localStorage.menus = JSON.stringify(result.menus);
+
+        window.location.href='http://127.0.0.1:8080/#!/home/main';
+        data.show = false;
+    }, (res) => {
+        console.log('fail');
+        data.show = false;
+    });
+}
+
 export const initList = ({ dispatch }) => {
     Vue.http.get(apiUrl.list)
         .then((res) => {
+            console.log('目录结构');
+            console.log(res.data);
             dispatch(types.INIT_LIST, res.data);
         }, (res) => {
             console.log('fail');
@@ -116,7 +209,6 @@ export const getExpressList = ({ dispatch }, param) => { //物流列表
 
 export const createOrder = ({ dispatch }, data) => { //创建订单
     console.log(data);
-
     const body = {
         type:data.type,
         sourceType:data.sourceType,
@@ -1623,7 +1715,7 @@ export const getEmployeeList = ({ dispatch }, param) => {  //员工列表以及�
         })
 }
 
-export const getOrgList = ({ dispatch }, param) => {  //部门列表
+/*export const getOrgList = ({ dispatch }, param) => {  //部门列表
     console.log('部门列表');
     param.loading = true;
     Vue.http({
@@ -1907,29 +1999,6 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
                 ]
             }
           var result = json.result;
-           /*function tree(param){
-                console.log('root');
-                console.log(param.lowerList.length);
-                if(param.lowerList.length==0){
-                    //console.log(param);
-                    param.lowerList = undefined;
-                }else{
-                    for(var i=0;i<param.lowerList.length;i++){
-                        
-                        tree(param.lowerList[i]);
-                    }
-                }
-           }
-
-           result.forEach(function(item){
-                tree(item);
-           })*/
-           
-           /*for (var i in org){
-                org[i].show =false;
-                org[i].checked =false;
-           }*/
-
            dispatch(types.ORG_DATA, result);
            
            param.loading = false;
@@ -1937,9 +2006,9 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
             console.log('fail');
             param.loading = false;
         })
-}
+}*/
 
-/*export const getOrgList = ({ dispatch }, param) => {  //部门列表
+export const getOrgList = ({ dispatch }, param) => {  //部门列表
     param.loading = true;
     Vue.http({
         method:'GET',
@@ -1950,10 +2019,10 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
         }
         }).then((res) => {
            var org = res.json().result;
-           for (var i in org){
+           /*for (var i in org){
                 org[i].show =false;
                 org[i].checked =false;
-           }
+           }*/
            console.log(res.json())
            dispatch(types.ORG_DATA, org);
            param.loading = false;
@@ -1961,7 +2030,7 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
             console.log('fail');
             param.loading = false;
         })
-}*/
+}
 
 export const getRoleList = ({ dispatch }, param) => {  //获取角色列表
     param.loading = true;

@@ -1,57 +1,212 @@
 <template>
-    <!-- <div class="container">          
-            <h1 class="page-header"><span class="glyphicon glyphicon-user"></span>用户登录</h1>
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <div class="col-md-5">
-                        <input type="text" class="form-control" placeholder="用户名/email"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-5">
-                        <input type="password" class="form-control" placeholder="密码"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-5">
-                       <button class="btn btn-primary">登陆</button>
-                    </div>
-                </div>                               
-            </form>
-        </div> -->
-
-
-  <div class="a">
-    <div class="container">
-        <div>
-            
-            <div class="client-detailInfo input-group col-md-9 col-xs-12">
-                <span class="input-group-addon "><span class="glyphicon glyphicon-user"></span></span>
-                <input type="text"  class="form-control" v-model=""  placeholder="请输入用户名"/>
+  <div class="login_container clearfix">
+    <div>
+        <img src="/static/images/login.png" class="pull-left"  margin-top="100%"/>
+    </div>
+    <div class="container modal_con">
+        <div class="model-header">
+            <div class="pull-left" style="font-size:16px;margin:10px">系统登录</div>
+            <div class="pull-right" style="font-size:16px;margin:10px;color:#FA6705">中文</div>
+            <div class="model-tips clearfix">
+                <div class="tips_name"></div>
+            </div>
+            <div class="client-detailInfo  col-xs-12" style="margin-top:30px">
+                <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">用户名:</div>
+                <input type="text" class="form-control" v-model="loginParam.no"/>
+            </div>
+            <div class="client-detailInfo  col-xs-12" style="margin-top:10px">
+                <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">密&nbsp;&nbsp;&nbsp;码:</div>
+                <input type="password" class="form-control" v-model="loginParam.password"/>
             </div>
 
-            <div class="client-detailInfo input-group col-md-9 col-xs-12">
-                <span class="input-group-addon "><span class="glyphicon glyphicon-lock"></span></span>
-                <input type="text"  class="form-control" v-model=""  placeholder="请输入密码"/>
-            </div>
-
-            <div class="model-footer" v-if="param.confirm">
-                <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                <input type="button" class="btn  btn-confirm"  @click="param.callback(),param.show = false" value="确定" />
+            <div class="model-footer col-xs-12" v-if="true">
+                <span class="pull-left" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="checked=!checked"></span>
+                <span class="pull-left">记住密码</span>
+                <button type="button" class="btn btn-default btn-close" @click="confirm()">登录</button>
             </div>
         </div>
     </div>
-  </div>  
+  </div>
 </template>
 
+<script>
+
+import {
+    
+} from '../vuex/getters'
+import {
+    login
+} from '../vuex/actions'
+export default {
+    components: {
+        
+    },
+    data() {
+        return {
+           checked:false,
+           loginParam:{
+                no:'',
+                password:''     
+           },
+           base64DecodeChars:[
+              -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+              -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+              -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63,
+              52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1,
+              -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+              15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1,
+              -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+              41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1],
+        }
+    },
+    props:['param'],
+    vuex: {
+        getters:{
+            
+        },
+       actions:{
+           login
+       }
+    },
+    methods: {
+        confirm:function(){
+            this.login(this.loginParam);
+            //window.location.href='https://www.baidu.com';
+
+        },
+        getCookie:function(name){          //获取cookie
+            var search = name + "=" ; 
+            var offset = document.cookie.indexOf(search); 
+            if(offset==-1){     //cookie中不存在这个变量
+                return '';
+            }else{
+                offset += search.length; 
+                var end = document.cookie.indexOf(";", offset);
+                if(end == -1) {
+                    end = document.cookie.length;
+                }
+                return(document.cookie.substring(offset, end));   
+            }
+        },
+        base64decode:function(str) {
+          var c1, c2, c3, c4;
+          var i, len, out;
+
+          len = str.length;
+          i = 0;
+          out = "";
+          while(i < len) {
+            /* c1 */
+            do {
+              c1 = this.base64DecodeChars[str.charCodeAt(i++) & 0xff];
+            } while(i < len && c1 == -1);
+            if(c1 == -1)
+              break;
+
+            /* c2 */
+            do {
+              c2 = this.base64DecodeChars[str.charCodeAt(i++) & 0xff];
+            } while(i < len && c2 == -1);
+            if(c2 == -1)
+              break;
+
+            out += String.fromCharCode((c1 << 2) | ((c2 & 0x30) >> 4));
+
+            /* c3 */
+            do {
+              c3 = str.charCodeAt(i++) & 0xff;
+              if(c3 == 61)
+                return out;
+              c3 = this.base64DecodeChars[c3];
+            } while(i < len && c3 == -1);
+            if(c3 == -1)
+              break;
+
+            out += String.fromCharCode(((c2 & 0XF) << 4) | ((c3 & 0x3C) >> 2));
+
+            /* c4 */
+            do {
+              c4 = str.charCodeAt(i++) & 0xff;
+              if(c4 == 61)
+                return out;
+              c4 = this.base64DecodeChars[c4];
+            } while(i < len && c4 == -1);
+            if(c4 == -1)
+              break;
+            out += String.fromCharCode(((c3 & 0x03) << 6) | c4);
+          }
+          return out;
+        },
+
+        uncompile:function(code){
+          var test=this.base64decode(code);
+          test=unescape(test);
+          return test;
+        }
+
+    },
+    created(){
+        this.loginParam.no = this.uncompile(this.getCookie('no'));
+        this.loginParam.password = this.uncompile(this.getCookie('password'));
+    },
+    ready() {
+        
+    },
+    
+}
+</script>
 
 <style scoped>
-    .container{
-        height:300px;
-        width:500px;
-        bottom:200px;
+.login_container{
+    min-width: 1200px;
+    margin: auto;
+    width: 1200px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    margin-top: -213px;
+    background-color: #fff;
+}
+    .form-control{
+        width: 200px;
     }
-   
+    .container{
+        height:241px;
+        width:400px;
+        border:1px solid #ddd;
+        
+    } 
+    .modal_con{
+        top:40px;
+        right:-500px;
+    }
+    .model-tips{
+        padding:2px 10px;
+    }
+
+    .checkbox_unselect{
+    background-image: url(/static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+}
+.checkbox_select{
+    background-image: url(/static/images/selected.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+}
 
 </style>
 

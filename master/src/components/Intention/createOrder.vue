@@ -159,7 +159,7 @@
                             <div class="editpageright">
                                 <div class="editpage-input">
                                     <label class="editlabel">商品来源ID</label>
-                                    <input type="text" class="edit-input" v-model="param.goods[0].sourceId"/>
+                                    <input type="text" class="edit-input" v-model="param.goods[0].sourceId" disabled="true/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">品质</label>

@@ -267,9 +267,9 @@ export default {
         }
     },
     created() {
-        if (this.$route.query.id > this.getList[7].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
+        /*if (this.$route.query.id > this.getList[7].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
             this.$route.query.id = 0;
-        }
+        }*/
         this.getEmployeeList(this.loadParam,this.loadParam.all);
         this.getOrgList(this.loadParam,this.loadParam.all);
     },
