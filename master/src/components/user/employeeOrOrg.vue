@@ -40,19 +40,19 @@
                         </div>
                     </div>
     				
-		            <table class="table table-hover table_head table-striped " v-cloak>
+		            <table class="table table-hover table_head table-striped" style="width:95%;text-align:center" v-cloak>
 		                <thead>
 		                    <tr>
 		                        <th></th>
 		                        <th>姓名</th>
 		                        <th>部门</th>
-		                        <th>手机<th>
+		                        <th>手机</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
 		                    <tr v-for="item in initEmployeeList">
 		                       <td  @click.stop="">
-		                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectEmployee($index)" ></label>
+		                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectEmployee($index)"></label>
 		                        </td>
 		                        <td>{{item.name}}</td>
 		                        <td>{{item.orgName}}</td>
