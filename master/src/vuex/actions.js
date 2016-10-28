@@ -73,16 +73,12 @@ export const login = ({ dispatch }, data) => { //登录
         var expire = new Date((new Date()).getTime() - 8 * 3600000 + 90000);  //得到的时间与真实时间差了8小时,cookie将在1小时后过期
         document.cookie = "no=" + no + ";expires=" + expire;
         document.cookie = "password=" + password + ";expires=" + expire;
-        document.cookie = "id=" + res.json().result.id + ";expires=" + expire;
-        document.cookie = "orgId=" + res.json().result.orgid + ";expires=" + expire;
-        document.cookie = "name=" + res.json().result.name + ";expires=" + expire;
-
+        document.cookie = "id=" + compile(res.json().result.id) + ";expires=" + expire;
+        document.cookie = "orgId=" + compile(res.json().result.orgid) + ";expires=" + expire;
+        document.cookie = "name=" + compile(res.json().result.name) + ";expires=" + expire;
         console.log(document.cookie);
-
         var result = res.json().result;
         console.log(result);
-
-
         dispatch(types.LOGIN_DATA, result);
         dispatch(types.INIT_LIST, result);
         //本地存储左侧菜单

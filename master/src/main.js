@@ -174,9 +174,7 @@ function getCookie(name){          //获取cookie
     }
 }
 
-console.log(456789);
 
-console.log(987654);
 
 //路由拦截器判断是否登录
 router.beforeEach(function ({ to, next }) {
