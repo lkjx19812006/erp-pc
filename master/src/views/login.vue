@@ -20,8 +20,8 @@
             </div>
 
             <div class="model-footer col-xs-12" v-if="true">
-                <span class="pull-left" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="checked=!checked"></span>
-                <span class="pull-left">记住密码</span>
+                <!-- <span class="pull-left" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="checked=!checked"></span>
+                <span class="pull-left">记住密码</span> -->
                 <button type="button" class="btn btn-default btn-close" @click="confirm()">登录</button>
             </div>
         </div>
