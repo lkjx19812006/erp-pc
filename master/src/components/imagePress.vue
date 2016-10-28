@@ -50,18 +50,25 @@ export default {
                             img.src = e.target.result;
                             img.onload = function() {
                                 _self.image = _self.compress(img);
+                              let param ={};
+                              param.mFile=_self.image;
+                              if(_self.param&&_self.param.qiniu){param.qiniu=_self.param.qiniu;}
+                              else{ param.qiniu=false;}
+                              _self.close=true;
+                              _self.upload(param,'base64');
                             }
                         } else {
 
                             _self.image = e.target.result;
                             _self.imageShow=true;
-                        }
                           let param ={};
-                            param.mFile=_self.image;
-                            if(_self.param&&_self.param.qiniu){param.qiniu=_self.param.qiniu;}
-                            else{ param.qiniu=false;}
-                            _self.close=true;
-                            _self.upload(param,'base64');
+                          param.mFile=_self.image;
+                          if(_self.param&&_self.param.qiniu){param.qiniu=_self.param.qiniu;}
+                          else{ param.qiniu=false;}
+                          _self.close=true;
+                          _self.upload(param,'base64');
+                        }
+
                     }
                     reader.readAsDataURL(input.files[0]);
                     }else{
@@ -108,6 +115,7 @@ export default {
                 this.image="../../static/images/default_image.png";
                 this.$dispatch("getImageData", this.image);
                 this.value='';
+                this.showurl='';
             },
             upload:function(data,url){
                 var _self=this;
