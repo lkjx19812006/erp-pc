@@ -3115,8 +3115,11 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
         if(key=='source'&&param[key]!==''){
              url += '&source='+param[key];
         }
-        if(key=='busiType'&&param[key]!==''){
-             url += '&busiType='+param[key];
+        if(key=='bizMain'&&param[key]!==''){
+             url += '&bizMain='+param[key];
+        }
+        if(key=='bizType'&&param[key]!==''){
+        url += '&bizType='+param[key];
         }
         if(key=='audit'&&param[key]!==''){
              url += '&audit='+param[key];
@@ -3675,6 +3678,7 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
          "duedate":param.duedate,
          "images":param.images,
          "inType":param.inType
+
     }
     console.log(data1);
     Vue.http({
@@ -3805,6 +3809,7 @@ export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信�
         }
     }).then((res) => {
         console.log('添加成功')
+        param.id=res.json().result.id;
         dispatch(types.ADD_TRACKING_DATA,param);
     }, (res) => {
         console.log('fail');

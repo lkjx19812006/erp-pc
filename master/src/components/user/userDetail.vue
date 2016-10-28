@@ -94,7 +94,7 @@
                                                 <td>{{item.unit}}</td>
 
                                                 <td>{{item.validate | intentionAudit}}</td>
-                                          
+
                                                 <td v-if="item.type==0">求购</td>
                                                 <td v-if="item.type==1">供应</td>
                                                 <td  @click="clickShow($index,{
@@ -723,6 +723,7 @@ export default {
 
         },
         updateIntention:function(){
+          console.log(this.intentionParam);
           this.intentionParam.flag = 1;
           this.intentionParam.show = true;
         },

@@ -478,7 +478,8 @@ export default {
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
-          this.param.district = this.district.cname;
+          if(this.district.cname){this.param.district = this.district.cname;}
+          else{this.param.district ='';}
           this.param.show=false;
           this.createIntentionInfo(this.param);
         }
