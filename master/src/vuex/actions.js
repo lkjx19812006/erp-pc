@@ -2049,6 +2049,9 @@ export const getEmployeeList = ({ dispatch }, param) => {  //员工列表以及�
         if(seach=='orgId'&&param[seach]!==''){
             apiurl += '&org='+param.orgId
         }
+        if(seach=='orgCode'&&param[seach]!==''){
+            apiurl += '&orgCode='+param.orgCode
+        }
     }
     Vue.http({
         method:'GET',
@@ -3419,7 +3422,14 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
 
 
 export const createEmploy = ({ dispatch }, param) => { //新增员工信息
-    console.log(param)
+    console.log(param);
+    if(param.entrydate){
+        console.log('dadda');
+        param.entrydate=param.entrydate.split(' ')[0] + ' 00:00:00';
+    }
+    if(param.leavedate){
+        param.leavedate=param.leavedate.split(' ')[0] + ' 00:00:00';
+    }
     const data1 = {
         "name":param.name,
         "ename":param.ename,
@@ -3458,6 +3468,13 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
 
 export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
     console.log(param)
+    if(param.entrydate){
+        console.log('dadda');
+        param.entrydate=param.entrydate.split(' ')[0] + ' 00:00:00';
+    }
+    if(param.leavedate){
+        param.leavedate=param.leavedate.split(' ')[0] + ' 00:00:00';
+    }
     const updatedata = {
         id:param.id,
         name:param.name,
