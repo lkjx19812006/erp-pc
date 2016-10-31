@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>订单搜索{{param.link}}{{param.aaa}}</h3>
+            <h3>订单搜索</h3>
         </div>
         <div class="edit-model">
              <div class="cover_loading">
@@ -87,7 +87,7 @@
                             <option value="3">自营</option>
                         </select>
                     </div>
-                    <div class="client-detailInfo col-xs-6" v-if="param.link='/order/'">
+                    <div class="client-detailInfo col-xs-6" v-if="param.link=='/order/'">
                         <label>下单时间开始：</label>
                         <mz-datepicker :time.sync="param.ctime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
@@ -97,7 +97,7 @@
                         <mz-datepicker :time.sync="param.ctime" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
-                    <div class="client-detailInfo col-xs-6" v-if="param.link='/order/'">
+                    <div class="client-detailInfo col-xs-6" v-if="param.link=='/order/'">
                         <label>下单时间结束：</label>
                         <mz-datepicker :time.sync="param.ftime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
@@ -169,15 +169,14 @@ export default {
     methods:{
         clientSearch:function(){
             console.log(this.param)
+
             if(this.param.link=='/order/'){
                 this.getOrderList(this.param);
             }
-            if(this.param.aaa=='/order/myList'){
-                this.param.link=this.param.aaa;
+            if(this.param.link=='/order/myList'){
                 this.getEmpolyeeOrder(this.param);
             }
-            if(this.param.aaa=='/order/sectionList'){
-                this.param.link=this.param.aaa;
+            if(this.param.link=='/order/sectionList'){
                 this.getOrgOrder(this.param);
             }
         },
@@ -194,6 +193,10 @@ export default {
             this.param.clients="";
             this.param.payWay="";
         }
+    },
+    created(){
+        console.log("123456");
+        console.log(this.param);
     },
     route: {
         activate: function(transition) {

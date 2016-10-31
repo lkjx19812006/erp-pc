@@ -64,11 +64,7 @@
 
                   <td v-if="item.orderStatus==30">已支付，等待审核</td>
                   <td v-if="item.orderStatus==40">已审核</td>
-                  <td v-if="item.validate==0">待审核</td>
-                  <td v-if="item.validate==1">申请审核</td>
-                  <td v-if="item.validate==2">审核通过</td>
-                  <td v-if="item.validate==-2">审核未通过</td>
-
+                  <td>{{item.validate | Auditing}}</td>
                   <td v-if="item.payWay==0">线下打款</td>
                   <td v-if="item.payWay==1">支付宝</td>
                   <td v-if="item.payWay==2">平安支付</td>
@@ -97,6 +93,7 @@
     import detailModel from '../order/orderDetail'
     import searchModel from '../order/orderSearch'
     import disposeModel  from  '../order/orderStatus'
+    import filter from '../../filters/filters'
     import {
         getList,
         initOrderlist
@@ -114,7 +111,8 @@
             pagination,
             detailModel,
             searchModel,
-            disposeModel
+            disposeModel,
+            filter
         },
         data() {
             return {
@@ -226,6 +224,7 @@
               transition.next()
           }
         },
+        filter:(filter,{}),
         events: {
             fresh: function(input) {
                 this.loadParam.cur = input;

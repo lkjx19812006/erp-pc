@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>  
         <div class="edit-content">
-            <h3>部门订单审核</h3>
+            <h3>{{param.title}}</h3>
         </div>
         <div class="edit-model">
            <section class="editsection" v-cloak>

@@ -171,6 +171,7 @@ export const freshPiecharts = ({ dispatch }, getPiechart) => {
 };
 
 export const getOrderList = ({ dispatch }, param) => { //全部订单列表以及订单搜索
+    console.log('ALLORDER');
     param.loading = true;
     var url = apiUrl.orderList+param.link+'?page=' + param.cur + '&pageSize=15';
     for(var key in param){
@@ -359,8 +360,9 @@ export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核
 }
 
 export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(我的订单)列表
+    console.log('MYORDER');
     console.log(param)
-    console.log(param.link)
+    //console.log(param.link)
     param.loading = true;
     const body = {
        employee:param.employee,
@@ -419,6 +421,7 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
             orderList[i].show =false;
         }
         console.log('订单查询成功')
+        console.log(param.link);
         dispatch(types.ORDER_TABLE, orderList);
         param.all = res.json().result.pages;
         param.loading = false;
@@ -788,8 +791,9 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     })
 }
 
-export const orderCancle = ({ dispatch }, param) => { //订单取消状态
+export const orderCancle = ({ dispatch }, param,data) => { //订单取消状态
     console.log(param)
+    console.log(data);
     const body = {
        orderId:param.id,
        cancleCauses:param.cancleCauses
@@ -806,14 +810,22 @@ export const orderCancle = ({ dispatch }, param) => { //订单取消状态
         }
     }).then((res) => {
         console.log('订单取消成功')
+         param.show=false;
+         data.show=false;
         dispatch(types.ORDER_STATUS, res.json().result);
     }, (res) => {
         console.log('fail');
     })
 }
 
-export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
+export const yankuanPayorder = ({ dispatch }, param,sub) => { //订单支付状态
     console.log(param)
+    console.log(sub)
+    if(param.payWay==0){
+        sub.show=false;
+    }
+    param.show=false;
+    return ;
     param.images='';
     if(param.image_f){
         param.images+=param.image_f+','

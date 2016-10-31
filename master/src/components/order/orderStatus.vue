@@ -50,10 +50,11 @@
                     id:initOrderDetail.id,
                     cancleCauses:'',
                     show:true,
+                    reason:true,
                     headline:'取消订单原因',
                     orderStatus:'',
                     link:'/order/cancle',
-                    callback:orderCancle
+                    callback:cancel
                   })">取消</button>
             </div>
             <!-- 订单确认10 -->
@@ -133,7 +134,7 @@
                     payWay:'',
                     orderStatus:'',
                     images:'',
-                    callback:yankuanPayorder
+                    callback:underline
                     })"  value="支付" />
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
@@ -331,8 +332,11 @@ export default {
         cancleBtn:function(cancle){
             console.log(cancle)
             this.cancleReason = cancle;
-            this.param.show=true;
+            this.param.reason=true;
             /*this.orderCancle(this.cancleReason)*/
+        },
+        cancel:function(){
+            this.orderCancle(this.cancleReason,this.param);
         },
         accept:function(confirm){
             console.log(confirm)
@@ -366,21 +370,21 @@ export default {
           payorder.payWay = this.payWay;
           console.log(payorder.payWay)
 
-         if(payorder.payWay==0){
-             this.undelinePay=payorder;
-             console.log(payorder)
-             this.$broadcast('getImageData');
-          }else if(payorder.payWay==3){
-             console.log('33333')
-             this.yankuanPayorder(payorder);
-             console.log(this.param)
-             this.param.show=false;
-          }else {
-             console.log('请选择支付方式');
-          }
+           if(payorder.payWay==0){
+               this.undelinePay=payorder;
+               console.log(payorder)
+               this.$broadcast('getImageData');
+            }else if(payorder.payWay==3){
+               this.yankuanPayorder(payorder);
+               console.log(this.param)
+               this.param.show=false;
+            }else {
+               console.log('请选择支付方式');
+            }
 
-          console.log(payorder)
-
+        },
+        underline:function(){
+          this.yankuanPayorder(this.payorder,this.param)
         }
     },
     created() {

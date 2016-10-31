@@ -1,7 +1,7 @@
 <template>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
-    <div class="container modal_con" v-show="param.show">
-        <div @click="param.show=false" class="top-title">
+    <div v-show="param.reason" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
+    <div class="container modal_con" v-show="param.reason">
+        <div @click="param.reason=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>  
         <div class="edit-content">
@@ -24,7 +24,7 @@
         </div>  
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="param.callback(param),param.show = false">保存</button>
+            <button type="button" class="btn  btn-confirm" @click="param.callback(param),param.reason = false">保存</button>
             
         </div>
     </div>
