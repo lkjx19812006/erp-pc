@@ -1359,10 +1359,10 @@ section article {
     margin-top: 30px;
 }
 .top-title{
-	z-index: 100;
+  z-index: 100;
   width: 100%;
   right: 0;
-  top: 130px;
+  top: 70px;
 }
 .client-section {
     padding: 10px 5px 40px 5px;

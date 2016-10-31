@@ -267,7 +267,7 @@ export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录�
         param.loading = false;
     })
 }
-export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列表以及订单搜索
+/*export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列表以及订单搜索
     param.loading = true;
     var url = apiUrl.orderList+param.link+'?page=' + param.cur + '&pageSize=15';
     for(var key in param){
@@ -309,7 +309,7 @@ export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列
         console.log('fail');
         param.loading = false;
     })
-}
+}*/
 export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核列表以及订单搜索
     param.loading = true;
     var url = apiUrl.orderList+param.link+'?orderStatus=30&type=1&page=' + param.cur + '&pageSize=15';
@@ -360,9 +360,10 @@ export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核
 
 export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(我的订单)列表
     console.log(param)
+    console.log(param.link)
     param.loading = true;
     const body = {
-       employee:100011,
+       employee:param.employee,
        page:param.cur,
        pageSize:15
     }
@@ -412,9 +413,7 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log(res.json().result)
         var orderList = res.json().result.list;
-        console.log(orderList)
         for (var i in orderList){
             orderList[i].checked = false;
             orderList[i].show =false;
@@ -422,7 +421,6 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
         console.log('订单查询成功')
         dispatch(types.ORDER_TABLE, orderList);
         param.all = res.json().result.pages;
-        console.log(param.cur)
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -433,7 +431,7 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
     console.log(param)
     param.loading = true;
     const body = {
-       org:17,
+       org:param.org,
        page:param.cur,
        pageSize:15
     }
@@ -624,6 +622,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         console.log('添加成功')
         data.no=res.json().result.no;
         data.id=res.json().result.id;
+        data.validate=res.json().result.validate;
         dispatch(types.ORDER_ADD_DATA, data);
         data.show = false;
     }, (res) => {
@@ -656,6 +655,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         comments:param.comments,
         goods:[{
             sourceType:param.goods[0].sourceType,
+            id:param.goods[0].id,
             sourceId:param.goods[0].sourceId,
             title:param.goods[0].title,
             breedId:param.goods[0].breedId,
@@ -757,7 +757,6 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     }
     if(param.image_s){param.images+=param.image_s+','}
     if(param.image_t){param.images+=param.image_t};
-    console.log(param.images)
     const body = {
        orderId:param.id
     }
@@ -1700,7 +1699,6 @@ export const updateBreedInfo = ({ dispatch }, param) => { //修改药材信息
         id: param.id,
         icon:param.icon
     }
-    console.log('update===');
     console.log(updatedata);
     Vue.http({
         method: 'PUT',
@@ -3178,7 +3176,6 @@ export const getUserDetail = ({ dispatch }, param) => {  //会员详情
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res)=>{
-        console.log("user详情====>");
         var userDetail = res.json().result;
         console.log(userDetail);
         if(userDetail.intention.length>0){
@@ -3466,7 +3463,6 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
         'status':param.status,
         'privilege':param.privilege
     }
-    console.log('=====');
     console.log(data1);
     Vue.http({
         method: "POST",

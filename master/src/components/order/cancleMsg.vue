@@ -24,7 +24,7 @@
         </div>  
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="param.callback(param,param.show = false)">保存</button>
+            <button type="button" class="btn  btn-confirm" @click="param.callback(param),param.show = false">保存</button>
             
         </div>
     </div>

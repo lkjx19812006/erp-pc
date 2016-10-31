@@ -780,7 +780,7 @@ section {
 .breed_action  dt{
     display: block;
     padding: 3px;
-    font-size: 14px;
+    font-size: 12px;
     cursor: pointer;
 }
 .breed_action  dt:hover{
@@ -793,7 +793,7 @@ section article {
   z-index: 100;
   width: 100%;
   right: 0;
-  top: 130px;
+  top: 70px;
 }
 .client-section {
     padding: 10px 5px 40px 5px;

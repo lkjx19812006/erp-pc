@@ -19,7 +19,7 @@
           <section class="editsection" v-cloak>
             <div style="margin-top:20px;margin-left:30px;margin-bottom:15px;">
                <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
-               <h4 style="display:inline">客户信息</h4>
+               <h5 style="display:inline">客户信息</h5>
             </div>
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
@@ -176,7 +176,7 @@
 
               <div style="margin-top:25px;margin-left:30px;margin-bottom:15px;">
                 <img src="/static/images/contact@2x.png" style="display:inline"/>
-                <h4 style="display:inline">联系人</h4>
+                <h5 style="display:inline">联系人</h5>
               </div>
               <div class="clearfix">
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
@@ -486,18 +486,6 @@
 
   .top-title {
     width: 840px;
-  }
-
-  .edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .edit-content h3 {
-    font-size: 18px;
-    color: #fa6705;
-    margin: 0;
   }
 
   .editsection {

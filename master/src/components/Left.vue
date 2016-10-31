@@ -119,7 +119,6 @@ export default {
     width: 50px;
     height: 100%;
     position: fixed;
-    top: 60px;
     overflow: hidden !important;
     white-space: nowrap;
     z-index: 999;

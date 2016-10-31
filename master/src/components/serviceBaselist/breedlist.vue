@@ -5,7 +5,7 @@
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <div v-show="!changeParam.show">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">品种</div>
+            <div class="my_enterprise col-xs-1">品种</div>
             <div class="col-xs-9 my_order_search">
                <div class="ordertel_search clearfix" style="border:none; float:left;width:180px" >
 

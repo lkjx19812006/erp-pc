@@ -92,7 +92,7 @@
                                             <td>{{item.wechart}}</td>
                                             <td v-if="item.main==0">否</td>
                                             <td v-if="item.main==1">是</td>
-                                            <td @click="contactShow($index)">
+                                            <td @click="contactShow($index)" v-if="!initCompanyDetail.customerId">
                                                 <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show" transition="expand">
                                                    <dl>
@@ -370,7 +370,6 @@ table{
 .top-title{
     width: 100%;
     right: 0;
-    top:130px;
 }
 .client-detailInfo img {
     width: 100px;

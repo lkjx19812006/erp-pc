@@ -133,7 +133,7 @@ export default {
 .top-title{
     width: 100%;
     right: 0;
-    top:130px;
+    top:70px;
 }
 .breed_detail {
     position: absolute;

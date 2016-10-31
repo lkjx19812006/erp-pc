@@ -2,7 +2,7 @@
     
     <div class="service-nav clearfix">
         <div class="my_enterprise col-xs-1">提取物</div>
-        <div class="col-xs-6">
+        <div>
             <div class="name_search clearfix">
                 <img src="/static/images/search.png" height="24" width="24">
                 <input type="text" class="search_input" placeholder="按名称搜索" v-model="loadParam.name" @keyup.enter="categoryNameSearch()">
@@ -11,7 +11,9 @@
                 <img src="/static/images/search.png" height="24" width="24">
                 <input type="text" class="search_input" placeholder="按公司名称搜索" v-model="loadParam.company" @keyup.enter="categoryNameSearch()">
             </div>
-           <button class="new_btn transfer" @click="categoryNameSearch()">搜索</button>
+            <div class="name_search clearfix" style="border:none">
+                <button class="new_btn" style="height: 30px;padding: 0 10px;" @click="categoryNameSearch()">搜索</button>
+            </div>
        </div>
     </div>
     <div class="order_table">

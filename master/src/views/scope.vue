@@ -3,14 +3,9 @@
 	<tip-model :param.sync="tipParam" v-if="tipParam.show"></tip-model>
 		 <div  class="myemploy" >
         <div class="order_search">
-            <div class="clear">
-                <div class="my_order col-xs-2">角色列表</div>
-                <div class="col-xs-6 my_order_search">
-                    <div class="name_search clearfix">
-
-                    </div>
-                </div>
-                <div class="right col-xs-1">
+            <div class="clearfix">
+                <div class="my_order col-xs-1">角色列表</div>
+                <div class="right">
                     <button class="new_btn" @click="newData()">新建</button>
                 </div>
             </div>
@@ -162,12 +157,6 @@ export default {
     padding: 25px 30px 0 40px;
 }
 
-.my_order {
-    float: left;
-    color: #fa6705;
-    font-size: 20px;
-    padding: 0;
-}
 .name_search{
     position: relative;
     border:none;
@@ -184,18 +173,6 @@ export default {
 .tel_search {
     margin-right: 0;
 }
-.new_btn {
-    float: right;
-    border: 1px solid #ccc;
-    color: #003077;
-    padding: 4px 10px;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    background: #fff;
-}
-
 .order_table {
     margin-top: 20px;
     position: relative;

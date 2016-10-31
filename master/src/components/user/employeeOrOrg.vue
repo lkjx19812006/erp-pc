@@ -15,12 +15,12 @@
 	    			</div>
 	    		</div>
     			<div class="trans_service clearfix" v-show="currentView==1">
-					<div class="col-xs-4">
+					<!-- <div class="col-xs-4">
 						<select  class="form-control" v-model="employeeParam.orgId" @change="employSearch()">
-	                        <option selected value="">请选择业务员部门</option>
-	                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-	                  	</select>
-					</div>
+						                        <option selected value="">请选择业务员部门</option>
+						                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
+						                  	</select>
+					</div> -->
 
     				<div class="col-xs-8">
 		                <div class="name_search clearfix">
@@ -40,7 +40,7 @@
 		                        <th></th>
 		                        <th>姓名</th>
 		                        <th>部门</th>
-		                        <th>手机<th>
+		                        <th>手机</th>
 		                    </tr>
 		                </thead>
 		                <tbody>
@@ -298,24 +298,18 @@ export default{
 	z-index:1081;
 }
 .modal_con {
-    display: block;
-    position: fixed;
-    top: 91px;
-    margin: auto;
-    width: 44%;
-    left: 0;
-    right: 0;
-    min-width: 300px;
-    bottom: 50px;
-    padding: 0;
-    background-color: #fff;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
+    width: 600px;
     z-index: 1082;
-    overflow: hidden;
-    overflow-y: auto;
+}
+.top-title{
+	width: 600px;
+	z-index: 1083
+}
+.edit_footer{
+	width:600px;
+}
+.trans_service{
+	margin-top: 10px;
 }
 .con_list{
 	position: relative;
@@ -335,7 +329,7 @@ export default{
 .tans_tab > .tabs{
 	width: 100px;
 	display: inline-block;
-	font-size:16px;
+	font-size:14px;
 	text-align: center;
 	background-color: #f5f5f5;
 	color: #333;
@@ -386,9 +380,7 @@ export default{
 	color: #333;
 	font-size: 18px;
 }
-.edit_footer{
-	width:44%;
-}
+
 .trans_parten{
     text-align: left;
 }

@@ -21,7 +21,7 @@
                         <input type="text" class="search_input" v-model="loadParam.mobile"  placeholder="按员工电话搜索">
                     </div>
                     <div class="name_search clearfix">
-                        <button class="new_btn " style="line-height:20px;" @click="loadByCondition()">搜索</button>
+                        <button class="new_btn" @click="loadByCondition()">搜索</button>
                     </div>
                 </div>
                 <div class="right col-xs-1">
@@ -306,8 +306,6 @@ export default {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
-    height: 34px;
-    line-height: 32px;
     margin-right: 7%;
 }
 .my_order_search .name_search .search_input{
@@ -316,23 +314,16 @@ export default {
 .my_order_search .name_search > img{
     width:24px;
     height: 24px;
-    margin: 5px 0 0 1px;
+    margin:2px 0 0 1px;
     position:absolute;
     left:20px;
 }
 .tel_search {
     margin-right: 0;
 }
-.new_btn {
-    float: right;
-    border: 1px solid #ccc;
-    color: #003077;
-    padding:4px 10px;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    background: #fff;
+.name_search > .new_btn{
+    height: 30px;
+    padding: 0 10px;
 }
 
 .order_table {

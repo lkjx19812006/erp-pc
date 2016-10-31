@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>订单搜索</h3>
+            <h3>订单搜索{{param.link}}{{param.aaa}}</h3>
         </div>
         <div class="edit-model">
              <div class="cover_loading">
@@ -122,7 +122,7 @@
 <script>
 import calendar from '../calendar/vue.datepicker'
 import {
-   initOrderlist
+   
 } from '../../vuex/getters'
 import {
     getOrderList,
@@ -158,7 +158,7 @@ export default {
     },
     vuex: {
         getters: {
-            initOrderlist
+            
         },
         actions: {
             getOrderList,
@@ -172,10 +172,12 @@ export default {
             if(this.param.link=='/order/'){
                 this.getOrderList(this.param);
             }
-            if(this.param.link=='/order/myList'){
+            if(this.param.aaa=='/order/myList'){
+                this.param.link=this.param.aaa;
                 this.getEmpolyeeOrder(this.param);
             }
-            if(this.param.link=='/order/sectionList'){
+            if(this.param.aaa=='/order/sectionList'){
+                this.param.link=this.param.aaa;
                 this.getOrgOrder(this.param);
             }
         },
@@ -184,6 +186,13 @@ export default {
             this.param.ctime = "";
             this.param.ftime = "";
             this.param.consigneePhone = "";
+            this.param.consignee = "";
+            this.param.orderStatus="";
+            this.param.no="";
+            this.param.mode="";
+            this.param.type="";
+            this.param.clients="";
+            this.param.payWay="";
         }
     },
     route: {
@@ -238,12 +247,6 @@ export default {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
 }
 
 .edit-model {

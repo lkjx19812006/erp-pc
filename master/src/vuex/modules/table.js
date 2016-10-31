@@ -587,7 +587,6 @@ const mutations = {
                 "district":data.district,
                 "consigneeAddr":data.consigneeAddr,
                 'comments':data.comments,
-                "orderStatus":data.orderStatus,
                 goods:[{
                     "sourceType":data.goods[0].sourceType,
                     "sourceId":data.goods[0].sourceId,
@@ -604,6 +603,8 @@ const mutations = {
                 "show": false,
                 "no":data.no,
                 "id":data.id,
+                 "orderStatus":data.orderStatus,
+                "validate":data.validate,
                 "payWay":data.payWay
             });
         }
@@ -631,7 +632,6 @@ const mutations = {
                 "district":data.district,
                 "consigneeAddr":data.consigneeAddr,
                 'comments':data.comments,
-                "orderStatus":data.orderStatus,
                 goods:[{
                     "sourceType":data.goods[0].sourceType,
                     "sourceId":data.goods[0].sourceId,
@@ -647,6 +647,8 @@ const mutations = {
                 }],
                 "show": false,
                 "no":data.no,
+                 "orderStatus":data.orderStatus,
+                "validate":data.validate,
                 "id":data.id
             });
         }
@@ -690,15 +692,15 @@ const mutations = {
     },
     [ORDER_STATUS](state,data){   //订单状态详情
         console.log(data)
-        for(var i in  state.basicBaseList.orderList){
-            if(state.basicBaseList.orderList[i].id==data.id){
-                state.basicBaseList.orderList[i].orderStatus=data.orderStatus;
-                state.basicBaseList.orderList[i].payWay=data.payWay;
-                state.basicBaseList.orderList[i].lcompanyId=data.lcompanyId;
-                state.basicBaseList.orderList[i].logisticsNo=data.logisticsNo;
+          for(var i in  state.basicBaseList.orderList){
+              if(state.basicBaseList.orderList[i].id==data.id){
+                  state.basicBaseList.orderList[i].orderStatus=data.orderStatus;
+                  state.basicBaseList.orderList[i].payWay=data.payWay;
+                  state.basicBaseList.orderList[i].lcompanyId=data.lcompanyId;
+                  state.basicBaseList.orderList[i].logisticsNo=data.logisticsNo;
 
-            }
-        }
+              }
+          }
     },
     [SYSTEM_DATA](state, data) { //枚举类型
       state.systemBaseList.enumlist = data;

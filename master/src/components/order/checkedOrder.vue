@@ -6,9 +6,9 @@
       <div class="order_search">
         <div class="clear">
             <div class="my_order col-xs-2">订单审核</div>
-            <div class="right">
-                <button class="new_btn transfer" @click="createSearch()">搜索</button>
-            </div>
+           <!--  <div class="right">
+               <button class="new_btn transfer" @click="createSearch()">搜索</button>
+           </div> -->
         </div>
       </div>
       <div class="order_table">
@@ -28,7 +28,6 @@
                     <th>所在省</th>
                     <th>所在市</th>
                     <th>业务员</th>
-                    <th>物流单号</th>
                     <th>备注</th>
                     <th>客户端类型</th>
                     <th>订单状态</th>
@@ -56,13 +55,15 @@
                   <td>{{item.province}}</td>
                   <td>{{item.city}}</td>
                   <td>{{item.employee}}</td>
-                  <td>{{item.logisticsNo}}</td>
                   <td>{{item.comments}}</td>
-                  <td v-if="item.clients==0||item.clients==null" style="background:red;color:#fff">PC</td>
+                  <td v-if="item.clients==0" style="background:red;color:#fff">PC</td>
                   <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
                   <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
                   <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
+                  <td v-if="item.clients==null">未说明</td>
+
                   <td v-if="item.orderStatus==30">已支付，等待审核</td>
+                  <td v-if="item.orderStatus==40">已审核</td>
                   <td v-if="item.validate==0">待审核</td>
                   <td v-if="item.validate==1">申请审核</td>
                   <td v-if="item.validate==2">审核通过</td>
@@ -73,12 +74,12 @@
                   <td v-if="item.payWay==2">平安支付</td>
                   <td v-if="item.payWay==3">药款支付</td>
                   <td v-if="item.payWay==null">其他</td>
+                  <!-- <td v-if="item.payWay==''">其他</td> -->
                   <td @click="editClick($index)">
                       <img height="24" width="24" src="/static/images/default_arrow.png" />
                       <div class="component_action" v-show="item.show">
                            <ul>
-                                <li v-if="item.orderStatus==30&&item.type==0" @click="pendingOrder(item,$index)">等待核查</li>
-                                <li v-if="item.orderStatus==30&&item.type==1" @click="pendingOrder(item,$index)">等待核查</li>
+                                <li v-if="item.orderStatus==30&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li>
                            </ul>
                        </div>
                   </td>
@@ -241,25 +242,8 @@
     .order_search {
         padding: 25px 30px 0 40px;
     }
-    .my_order {
-        float: left;
-        color: #fa6705;
-        font-size: 20px;
-        padding: 0;
-    }
     .transfer{
         margin-right: 20px;
-    }
-    .new_btn {
-        float: right;
-        border: 1px solid #ccc;
-        color: #003077;
-        padding: 4px 10px;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        -ms-border-radius: 3px;
-        background: #fff;
     }
     .order_table {
         margin-top: 20px;
@@ -272,7 +256,9 @@
         margin-bottom: 10px;
         border-top: 1px solid #ddd;
     }
-
+    .component_action{
+        right: 43px;
+    }
     .order_table .table > ul {
         position: relative;
         width: 100%;

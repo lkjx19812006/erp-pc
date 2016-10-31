@@ -88,12 +88,14 @@
             </div>
             <!-- 订单财务审核 -->
             <div class="clearfix" v-if="param.Auditing">
+                <img v-for="item in initOrderDetail.payPics.arr" class="col-xs-3" :src="item.path" alt="支付凭证"/>
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
                     id:initOrderDetail.id,
                     show:true,
                     link:'/order/payConfirm',
                     orderStatus:'',
-                    images:''
+                    images:'',
+                    sub:$index
                    },param.show=false)"  value="通过核查" />
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
@@ -420,7 +422,7 @@ export default {
 .order-message{
   border-bottom: 1px solid #ddd;
   line-height:45px;
-  font-size: 16px;
+  font-size: 14px;
 }
 .message_front{
   width: 33.33%;
@@ -448,7 +450,7 @@ export default {
   z-index: 100;
   width: 100%;
   right: 0;
-  top: 130px;
+  top: 70px;
 }
 .order_info{
   border-top: 1px solid #ddd;

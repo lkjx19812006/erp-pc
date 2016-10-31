@@ -18,26 +18,26 @@
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
                         <li>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！')" v-if="initOrderDetail.orderStatus==0&&initOrderDetail.type==0">订单生成</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！')" v-if="initOrderDetail.orderStatus==10&&initOrderDetail.type==0">等待处理</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！')" v-if="initOrderDetail.orderStatus==20&&initOrderDetail.type==0">等待支付</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单买家已付款，商家正在核查！',param.payment=true)" v-if="initOrderDetail.orderStatus==30&&initOrderDetail.type==0">等待审核</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！')" v-if="initOrderDetail.orderStatus==40&&initOrderDetail.type==0">等待卖家发货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.delivery=true)" v-if="initOrderDetail.orderStatus==50&&initOrderDetail.type==0">等待收货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==60&&initOrderDetail.type==0">已完成</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==70&&initOrderDetail.type==0">已完成</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已取消！')" v-if="initOrderDetail.orderStatus==-1&&initOrderDetail.type==0">已取消</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！')" v-if="initOrderDetail.orderStatus==0&&initOrderDetail.type==0&&initOrderDetail.validate==2">订单生成</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！')" v-if="initOrderDetail.orderStatus==10&&initOrderDetail.type==0&&initOrderDetail.validate==2">等待处理</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！')" v-if="initOrderDetail.orderStatus==20&&initOrderDetail.type==0&&initOrderDetail.validate==2">等待支付</button>
+                           <!--  <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单买家已付款，商家正在核查！',param.payment=true)" v-if="initOrderDetail.orderStatus==30&&initOrderDetail.type==0&&initOrderDetail.validate==2">等待审核</button> -->
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！')" v-if="initOrderDetail.orderStatus==40&&initOrderDetail.type==0&&initOrderDetail.validate==2">等待卖家发货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.delivery=true)" v-if="initOrderDetail.orderStatus==50&&initOrderDetail.type==0&&initOrderDetail.validate==2">等待收货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==60&&initOrderDetail.type==0&&initOrderDetail.validate==2">已完成</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==70&&initOrderDetail.type==0&&initOrderDetail.validate==2">已完成</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已取消！')" v-if="initOrderDetail.orderStatus==-1&&initOrderDetail.type==0&&initOrderDetail.validate==2">已取消</button>
                             <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已过期！')" v-if="initOrderDetail.orderStatus==-2&&initOrderDetail.type==0">已过期</button>
                             <!-- 销售订单 -->
-                             <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！',param.handle=true)" v-if="initOrderDetail.orderStatus==0&&initOrderDetail.type==1">订单生成</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initOrderDetail.orderStatus==10&&initOrderDetail.type==1">等待处理</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initOrderDetail.orderStatus==20&&initOrderDetail.type==1">等待支付</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单买家已付款，商家正在核查！',param.Auditing=true)" v-if="initOrderDetail.orderStatus==30&&initOrderDetail.type==1">等待审核</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initOrderDetail.orderStatus==40&&initOrderDetail.type==1">等待卖家发货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initOrderDetail.orderStatus==50&&initOrderDetail.type==1">等待收货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==60&&initOrderDetail.type==1">已完成</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==70&&initOrderDetail.type==1">已完成</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已取消！')" v-if="initOrderDetail.orderStatus==-1&&initOrderDetail.type==1">已取消</button>
+                             <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！',param.handle=true)" v-if="initOrderDetail.orderStatus==0&&initOrderDetail.type==1&&initOrderDetail.validate==2">订单生成</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initOrderDetail.orderStatus==10&&initOrderDetail.type==1&&initOrderDetail.validate==2">等待处理</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initOrderDetail.orderStatus==20&&initOrderDetail.type==1&&initOrderDetail.validate==2">等待支付</button>
+                            <!-- <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单买家已付款，商家正在核查！',param.Auditing=true)" v-if="initOrderDetail.orderStatus==30&&initOrderDetail.type==1&&initOrderDetail.validate==2">等待审核</button> -->
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initOrderDetail.orderStatus==40&&initOrderDetail.type==1&&initOrderDetail.validate==2">等待卖家发货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initOrderDetail.orderStatus==50&&initOrderDetail.type==1&&initOrderDetail.validate==2">等待收货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==60&&initOrderDetail.type==1&&initOrderDetail.validate==2">已完成</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==70&&initOrderDetail.type==1&&initOrderDetail.validate==2">已完成</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已取消！')" v-if="initOrderDetail.orderStatus==-1&&initOrderDetail.type==1&&initOrderDetail.validate==2">已取消</button>
                             <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已过期！')" v-if="initOrderDetail.orderStatus==-2&&initOrderDetail.type==1">已过期</button>
                         </li>
                     </ul> 
@@ -78,7 +78,6 @@
                                             <th>价格</th>
                                             <th>单位</th>
                                             <th>总价</th>
-                                            <th>商品图片</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.goods.arr">
@@ -90,9 +89,6 @@
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
                                                 <td>{{item.amount}}元</td>
-                                                <td>
-                                                    <img v-bind:src="item.image" />
-                                                </td>
                                                <!--  <td  @click="clickShow($index,{
                                                      concrete:'goods'
                                                      })">
@@ -148,7 +144,7 @@
                                               crete:'payPics'
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.payPics.arr.length!==null">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.payPics.arr.length!==null">
                                           支付凭证（{{initOrderDetail.payPics.arr.length}}）
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
@@ -164,10 +160,11 @@
                                             bizType:'order_pay',
                                             payPics:'',
                                             titles:'上传支付凭证'
-                                            })">新建</button> 
+                                            })"  v-if="initOrderDetail.payPics.arr.length!==null">新建</button>
+                                        <a v-else ></a> 
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.sendPics.arr.length!==null" v-show="initOrderDetail.payPics.show" v-cloak>
+                                <div class="panel-collapse" v-if="initOrderDetail.payPics.arr.length!==null" v-show="initOrderDetail.payPics.show" v-cloak>
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
@@ -219,10 +216,10 @@
                                               crete:'attachFiles'
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.attachFiles.arr.length!==null">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.attachFiles.arr.length!==null">
                                           上传附件（{{initOrderDetail.attachFiles.arr.length}}）
                                         </a>
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set " v-else>
                                           上传附件（0）
                                         </a>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
@@ -235,7 +232,8 @@
                                             bizType:'attach_files',
                                             attachFiles:'',
                                             titles:'上传附件凭证'
-                                            })">新建</button>
+                                            })" v-if="initOrderDetail.attachFiles.arr.length!==null">新建</button>
+                                        <a v-else ></a> 
                                     </h4>
                                 </div>
                                 <div class="panel-collapse" v-show="initOrderDetail.attachFiles.show">
@@ -271,7 +269,7 @@
                                               crete:'sendPics'
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.sendPics.arr.length">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.sendPics.arr.length">
                                           物流凭证（{{initOrderDetail.sendPics.arr.length}}）
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
@@ -287,7 +285,8 @@
                                             sendPics:'',
                                             callback:uploadDocument,   
                                             titles:'上传物流凭证'
-                                            })">新建</button>
+                                            })" v-if="initOrderDetail.sendPics.arr.length!==null">新建</button>
+                                        <a v-else></a>
                                     </h4>
                                 </div>
                                 <div class="panel-collapse" v-if="initOrderDetail.sendPics.arr.length!==null" v-show="initOrderDetail.sendPics.show">
@@ -355,7 +354,7 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>订单类别</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.type}}" disabled="disabled"/>
+                                    <input type="text" class="form-control"   value="{{initOrderDetail.type}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>订单来源</label>
@@ -395,13 +394,23 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>收货人地址</label>
-                                    <input type="text" class="form-control" v-model="initOrderDetail.consigneeAddr" value="{{initOrderDetail.consigneeAddr}}" disabled="disabled"/>
+                                    <input type="text" class="form-control" value="{{initOrderDetail.consigneeAddr}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>备注</label>
-                                    <input type="text" class="form-control" v-model="initOrderDetail.comments" value="{{initOrderDetail.comments}}" disabled="disabled"/>
+                                    <input type="text" class="form-control"  value="{{initOrderDetail.comments}}" disabled="disabled"/>
                                 </div>
-                            </div>              
+                            </div>    
+                            <div class="clearfix">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label>杂费</label>
+                                    <input type="text" class="form-control"  value="{{initOrderDetail.incidentals}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                    <label>杂费说明</label>
+                                    <input type="text" class="form-control" value="{{initOrderDetail.incidentalsDesc}}" disabled="disabled"/>
+                                </div>
+                            </div>               
                         </div>
                     </article>
                 </div>
@@ -538,7 +547,7 @@ section article {
   z-index: 100;
   width: 100%;
   right: 0;
-  top: 130px;
+  top: 70px;
 }
 .client-section {
     padding: 10px 5px 40px 5px;

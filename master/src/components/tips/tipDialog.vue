@@ -4,7 +4,7 @@
         <div class="model-header">
             <h4>友情提示</h4>
             <div class="model-tips clearfix">
-                <img src="/static/images/bee.png"  class="pull-left" height="158" width="131"/>
+                <img src="/static/images/bee.png"  class="pull-left" height="138" width="111"/>
                 <div class="tips_name">{{param.name}}</div>
 
             </div>
@@ -53,7 +53,7 @@ export default {
 }
 .tips_name{
     color: #fa6705;
-    font-size: 28px;
+    font-size: 20px;
     margin-top: 40px;
     display: inline-block;
     width: 60%;

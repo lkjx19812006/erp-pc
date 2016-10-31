@@ -1,9 +1,9 @@
 <template>
     <div class="center_top light_bg mui-clearfix" v-bind:class="{'center_top':getMenu==240,'center_nav':getMenu==50}" transition="expand">
         <div class="new_time left">最近登录时间:{{ initLogin.time }}</div>
-        <div class="right head_info">
+        <div class="right head_info clearfix">
             <span style="float:left;margin:20px 10px 0 0 ">{{initLogin.name}}</span>
-            <img src="/static/images/head.png" height="52" width="52" @click="show=!show"/>
+            <img src="/static/images/head.png" class="left" height="52" width="52" @click="show=!show"/>
             <div class="component_action" v-show="show">
               <ul>
                 <li @click="exit()">
@@ -61,7 +61,6 @@ export default {
     white-space: nowrap;
     left: 50px;
     box-shadow: 0px 2px 2px #ccc;
-    top: 60px;
 }
 
 .center_left {

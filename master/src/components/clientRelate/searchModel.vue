@@ -299,9 +299,7 @@ export default {
     width: 600px;
 }
 .top-title{
-    position: absolute;
-    width: 100%;
-    top: 0;
+    width: 600px;
 }
 .edit_footer{
     position: fixed;
@@ -337,7 +335,7 @@ export default {
 }
 
 .edit-content h3 {
-    font-size: 20px;
+    font-size: 15px;
     color: #fa6705;
     margin: 0;
 }

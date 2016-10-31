@@ -14,7 +14,7 @@
             </div>
             <div class="edit_footer">
                 <button type="button" class="btn btn-close"    @click="param.show = false">再想想</button>
-                <button type="button" class="btn btn-orange" @click="param.callback(param,param.show=false)">确认支付</button>
+                <button type="button" class="btn btn-orange" @click="param.callback(param),param.show=false">确认支付</button>
             </div>
         </div>
     </div>
