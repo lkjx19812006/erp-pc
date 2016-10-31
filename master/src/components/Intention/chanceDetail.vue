@@ -1,4 +1,5 @@
 <template>
+  <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
   <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
   <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
@@ -17,7 +18,7 @@
                          <li>
                             <!-- <button type="button" class="btn btn-base"  @click="createOffer()">新建报价</button> -->
                         </li>
-                      
+
                     </ul>
                 </div>
             </nav>
@@ -28,7 +29,7 @@
                     <h4 class="section_title">相关</h4>
                     <article>
                         <div class="panel-group">
-                            
+
                           <div class="panel panel-default">
                               <div class="panel-heading" v-cloak>
                               <!-- <div class="cover_loading">
@@ -90,7 +91,7 @@
                                   </div>
                               </div>
                           </div>
-                
+
                           <div class="panel panel-default">
                               <div class="panel-heading" v-cloak>
                                   <h4 class="panel-title clearfix" @click="enfoldment({
@@ -142,7 +143,71 @@
                                   </div>
                               </div>
                           </div>
-        
+
+
+
+                          <div class="panel panel-default">
+                            <div class="panel-heading" v-cloak>
+                              <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:initIntentionDetail.trackings,
+                                              crete:'trackings'
+                                              })">
+                                <img class="pull-left" src="/static/images/follow-up.png" height="29" width="26"  />
+                                <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                  跟进（{{initIntentionDetail.trackings.arr.length}}）
+                                </a>
+                                <button type="button" class="btn btn-base pull-right" @click.stop="createTracking({
+                                          objId:initIntentionDetail.id,
+                                          bizId:'',
+                                          bizName:'',
+                                          type:0,
+                                          trackingWay:'',
+                                          bizType:'',
+                                          contactNo:'',
+                                          comments:'',
+                                          show:false
+                                        })">新建</button>
+                              </h4>
+                            </div>
+                            <div  class="panel-collapse" v-show="initIntentionDetail.trackings.show&&initIntentionDetail.trackings.arr.length>0">
+                              <div class="panel-body panel-set">
+                                <table class="table contactSet">
+                                  <thead>
+                                  <th>业务类型</th>
+                                  <th>跟进方式	</th>
+                                  <th>联系账号</th>
+                                  <th>备注</th>
+                                  <th>操作</th>
+                                  </thead>
+                                  <tbody>
+                                  <tr v-for="item in initIntentionDetail.trackings.arr">
+                                    <!-- <td><img :src="item.path" /></td> -->
+                                    <td v-if="item.bizType==0">会员</td>
+                                    <td v-if="item.bizType==1">意向</td>
+                                    <td v-if="item.bizType==2">订单</td>
+                                    <td v-if="item.bizType!=0&&item.bizType!=1&&item.bizType!=2">会员</td>
+                                    <td>{{item.trackingWay}}</td>
+                                    <td>{{item.contactNo}}</td>
+                                    <td>{{item.comments}}</td>
+                                    <td  @click="clickShow($index,{
+                                                    concrete:'trackings'
+                                                    })">
+                                      <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                      <div class="files_action" v-show="item.show" >
+                                        <dl>
+                                          <dt @click="updateTracking(item,$index)">编辑</dt>
+                                        </dl>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+
+
+
                         </div>
                     </article>
                 </div>
@@ -178,7 +243,7 @@
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                             </div>
-                            
+
                             <div class="clearfix">
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">客户手机号</label>
@@ -201,7 +266,7 @@
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                             </div>
-                            
+
                             <div class="clearfix">
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">所在区</label>
@@ -224,7 +289,7 @@
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                             </div>
-                            
+
                             <div class="clearfix">
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">规格</label>
@@ -247,7 +312,7 @@
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                             </div>
-                            
+
                             <div class="clearfix">
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">发票</label>
@@ -280,7 +345,7 @@
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                             </div>
-                            
+
                             <div class="clearfix">
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">提供样品</label>
@@ -306,7 +371,7 @@
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                             </div>
-                            
+
                             <div class="clearfix">
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">单价</label>
@@ -330,6 +395,7 @@
     </div>
 </template>
 <script>
+  import trackingModel from  '../user/userTracking'
 import filter from '../../filters/filters'
 import tipsdialogModel  from '../tipsDialog'
 import createorderModel  from './createOrder'
@@ -348,11 +414,22 @@ export default {
         filter,
         tipsdialogModel,
         createorderModel,
-        editmsgModel
+        editmsgModel,
+        trackingModel,
     },
     data() {
         return {
             changeShow: true,
+            trackingParam:{
+                show:false,
+                bizType:1,
+                breedName:'',
+                spec:'',
+                location:'',
+                number:'',
+                unit:'',
+                price:''
+            },
             loadParam: {
                 loading: true,
                 color: '#5dc596',
@@ -375,7 +452,7 @@ export default {
                 incidentals:'',
                 incidentalsDesc:'',
                 preferential:'',   //优惠金额
-                preferentialDesc:'',  
+                preferentialDesc:'',
                 currency:'',     //货币品种
                 consignee:'',    //收货人姓名
                 consigneePhone:'',
@@ -385,9 +462,9 @@ export default {
                 city:'',
                 district:'',
                 consigneeAddr:'',
-                comments:'', 
-                sourceType:1,    //来源类型(意向) 
-                orderStatus:0,   //订单状态   
+                comments:'',
+                sourceType:1,    //来源类型(意向)
+                orderStatus:0,   //订单状态
                 goods:[{
                   sourceType:2,   //商品来源类型(报价)
                   sourceId:'',   //商品来源ID
@@ -426,7 +503,7 @@ export default {
     methods: {
       saveSucc:function(param){
            this.tipsParam.show= true;
-           this.editintentInfo(param); 
+           this.editintentInfo(param);
       },
       enfoldment:function(param){
           if(this.$store.state.table.basicBaseList.intentionDetail[param.crete].arr.length==0){
@@ -434,8 +511,8 @@ export default {
           }
           this.$store.state.table.basicBaseList.intentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intentionDetail[param.crete].show;
       },
-      clickShow: function(index,param) {  
-          this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = !this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show; 
+      clickShow: function(index,param) {
+          this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = !this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show;
       },
       adopt:function(item,index){
           console.log("创建订单");
@@ -460,6 +537,34 @@ export default {
           this.updateParam.id = item.id;
           this.updateParam.show = true;
           this.updateParam.comments = item.comments;
+      },
+      createTracking:function(item){
+        item.show=!item.show;
+        item.bizId=this.initIntentionDetail.id;
+        if(this.initIntentionDetail.customerId){
+          item.objId=this.initIntentionDetail.customerId;
+          item.type=0;
+        }else{
+          item.objId=this.initIntentionDetail.userId;
+          item.type=1;
+        }
+          item.breedName=this.initIntentionDetail.breedName;
+          item.spec=this.initIntentionDetail.spec;
+          item.location=this.initIntentionDetail.location;
+          item.number=this.initIntentionDetail.number;
+          item.unit=this.initIntentionDetail.unit;
+          item.price=this.initIntentionDetail.price;
+        item.bizType=1;
+        this.trackingParam = item;
+        this.trackingParam.show = true;
+        this.trackingParam.flag = 0;   //0表示添加
+      },
+      updateTracking:function(item,index){
+        item.show=!item.show;
+        item.index = index;
+        this.trackingParam = item;
+        this.trackingParam.flag = 1;   //1表示修改
+        this.trackingParam.show = true;
       }
     },
     created(){

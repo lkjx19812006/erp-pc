@@ -609,7 +609,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             number:data.goods[0].number
         }]
     }
-    
+
 
     console.log(body);
     Vue.http({
@@ -2968,8 +2968,14 @@ export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
                 arr:arr,
                 show:false
             };
-            for (var i in result.msgs.arr) {
-                result.msgs.arr[i].show = false;
+            var arr = result.trackings;
+            result.trackings = null;
+            result.trackings = {
+              arr:arr,
+              show:false
+            };
+            for (var i in result.trackings.arr) {
+                result.trackings.arr[i].show = false;
             };
             dispatch(types.INTENTION_DETAIL_DATA, result);
             if(res.json().result.pics[0]){

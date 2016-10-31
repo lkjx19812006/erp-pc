@@ -275,7 +275,7 @@ const state = {
         ],
         intentionDetail:
             {"id":"1008","chanceId":"","userId":"","customerId":"36485","customerName":"刘振领","customerPhone":"17756736988","type":1,"especial":1,"breedId":2246,"breedName":"红枣","qualification":null,"quality":"各种规格，保证质量，量大从优","location":"新疆","spec":"选货","number":10000,"numberDesc":"","price":null,"origPrice":null,"priceDesc":"","unit":"63","province":null,"city":null,"district":null,"address":"安徽","pubdate":null,"duedate":null,"advance":0.000000,"invoic":0,"visit":0,"pack":null,"intl":0,"country":"中国","sampling":0,"cFlagsPath":"","sampleNumber":0,"sampleUnit":null,"sampleAmount":null,"onSell":3,"shelveTime":"2016-06-17 17:23","unshelveTime":null,"employee":null,"offer":0,"offerFalse":0,"offerNumber":0,"offerVprice":null,"offerTotal":0.000000,"status":1,"validate":1,"description":"买包子","updater":"100014","utime":"2016-07-12 19:38","creater":"100014","ctime":"2016-06-17 17:22",
-              "pics":[],"ids":null,"images":null,"offers":{arr:[],show:false},"msgs":{arr:[],show:false}},
+              "pics":[],"ids":null,"images":null,"offers":{arr:[],show:false},"msgs":{arr:[],show:false},"trackings":{arr:[],show:false}},
         employeeList: [{
             "id": 6,
             "name": "lm",
@@ -1254,6 +1254,12 @@ const mutations = {
           state.clientDetail.trackings.arr[data.index].contactNo = data.contactNo;
           state.clientDetail.trackings.arr[data.index].type = data.type;
         }
+        if(state.basicBaseList.intentionDetail.trackings.arr[data.index]){
+          state.basicBaseList.intentionDetail.trackings.arr[data.index].trackingWay = data.trackingWay;
+          state.basicBaseList.intentionDetail.trackings.arr[data.index].comments = data.comments;
+          state.basicBaseList.intentionDetail.trackings.arr[data.index].contactNo = data.contactNo;
+          state.basicBaseList.intentionDetail.trackings.arr[data.index].type = data.type;
+        }
 
     },
 
@@ -1270,6 +1276,7 @@ const mutations = {
         temp.id=data.id;
         state.userDetail.tracking.arr.unshift(temp);
         state.clientDetail.trackings.arr.unshift(temp);
+        state.basicBaseList.intentionDetail.trackings.arr.unshift(temp);
     },
 
 
