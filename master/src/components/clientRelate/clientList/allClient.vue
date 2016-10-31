@@ -42,7 +42,7 @@
                         <th>所属业务员</th>
                         <th>负责人</th>
                         <th style="min-width:120px;">经营范围</th>
-                        <th>电话</th>
+                        <th>手机</th>
                         <th>手机省</th>
                         <th>手机市</th>
                         <th>邮箱</th>

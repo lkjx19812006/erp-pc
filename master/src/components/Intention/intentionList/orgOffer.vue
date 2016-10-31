@@ -1,21 +1,15 @@
 <template>
      <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
+     <search-model :param="loadParam" v-if="loadParam.show"></search-model>
      <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">部门报价</div>
-            <div class="col-xs-5 my_order_search">
-               <div class="name_search clearfix">
-                   <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" placeholder="按意向ID搜索" v-model="loadParam.intentionId"  @keyup.enter="searchOffer()">
-               </div>
-              <div class="ordertel_search clearfix">
-                   <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" v-model="loadParam.customerId" placeholder="按客户名称搜索" @keyup.enter="searchOffer()">
-               </div>
-           </div> 
+            <div class="my_enterprise col-xs-2" style="font-size:14px">部门报价</div>
+            <div class="col-xs-4 my_order_search">
+               
+            </div> 
             <div class="right col-xs-2">
               <button class="new_btn transfer" @click="searchOffer()">搜索</button>
-              <!-- <button class="new_btn" @click="createIntention()">新建</button> -->
+              <!-- <button class="new_btn" @click="createIntention()">新建</button> --> 
             </div>
         </div>
         <div class="service-nav clearfix">
@@ -32,9 +26,9 @@
             <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
                     <tr>  
-                        <th>
+                        <!-- <th>
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
-                        </th>
+                        </th> -->
                         <!-- <th>意向ID</th> -->   
                         <th>报价会员</th>
                         <th>会员手机</th>
@@ -52,9 +46,9 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initOfferList">
-                         <td  >
+                         <!-- <td  >
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)"></label>
-                        </td>
+                                                 </td> -->
                         <!-- <td>{{item.intentionId}}</td> -->
                         <td>{{item.userName}}</td>
                         <td>{{item.userPhone}}</td>
@@ -92,8 +86,10 @@
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import createorderModel  from '../createOrder'
+import searchModel  from '../offerSearch'
 import {
-    initOfferList
+    initOfferList,
+    initLogin
 } from '../../../vuex/getters'
 import {
     getOfferList
@@ -101,11 +97,13 @@ import {
 export default {
     components: {   
         pagination,
-        createorderModel
+        createorderModel,
+        searchModel
     },
     vuex: {
         getters: {
-            initOfferList
+            initOfferList,
+            initLogin
         },
         actions: {
             getOfferList
@@ -115,15 +113,17 @@ export default {
         return {
             loadParam: {
                 loading: true,
+                show:false,
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
                 all: 7,
-                link:'/intention/org/offers',
+                link:'/intention/employee/offers',
                 breedName:'',
-                customerId:'',
-                userId:'',
-                intentionId:''
+                spec:'',
+                fullname:'',
+                startTime:'',
+                endTime:''
             },
             
             offerParam:{
@@ -138,6 +138,8 @@ export default {
                 customer:'',
                 sample:0,
                 intl:0,
+                employee:this.initLogin.id,   //业务员ID
+                org:this.initLogin.orgId,    //部门ID
                 incidentals:'',
                 incidentalsDesc:'',
                 preferential:'',   //优惠金额
@@ -153,6 +155,7 @@ export default {
                 consigneeAddr:'',
                 comments:'', 
                 sourceType:1,        //商品来源类型(意向)
+                orderStatus:0,   //订单状态
                 goods:[{
                   sourceType:2,   //商品来源类型(报价)
                   sourceId:'',    //商品来源ID
@@ -173,7 +176,7 @@ export default {
     },
     methods: {
         searchOffer:function(){
-            this.getOfferList(this.loadParam);
+          this.loadParam.show = true;
         },
         clickShow:function(index){
             this.$store.state.table.basicBaseList.offerList[index].show=!this.$store.state.table.basicBaseList.offerList[index].show;
@@ -245,6 +248,15 @@ export default {
 }
 </script>
 <style scoped>
+.service-nav {
+    padding: 15px 30px 0 40px;
+}
+.order_table{
+    margin-top:-4px;
+}
+.my_enterprise{
+    padding:6px;
+}
 .breed_action {
     top: 33px;
     right: 106px;

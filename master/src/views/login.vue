@@ -7,29 +7,37 @@
     <div class="cover_loading">
       <pulse-loader :loading="loginParam.loading" :color="color" :size="size"></pulse-loader>
     </div>
-    <div class="container modal_con">
-        <div class="model-header">
-            <div class="pull-left" style="font-size:16px;margin:10px">系统登录</div>
-            <div class="pull-right" style="font-size:16px;margin:10px;color:#FA6705">中文</div>
-            <div class="model-tips clearfix">
-                <div class="tips_name"></div>
-            </div>
-            <div class="client-detailInfo  col-xs-12" style="margin-top:30px">
-                <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">用户名:</div>
-                <input type="text" class="form-control" v-model="loginParam.no"/>
-            </div>
-            <div class="client-detailInfo  col-xs-12" style="margin-top:10px">
-                <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">密&nbsp;&nbsp;&nbsp;&nbsp;码:</div>
-                <input type="password" class="form-control" v-model="loginParam.password"/>
-            </div>
+    <validator name="validation">
+        <div class="container modal_con">
+            <div class="model-header">
+                <div class="pull-left" style="font-size:16px;margin:10px">系统登录</div>
+                <div class="pull-right" style="font-size:16px;margin:10px;color:#FA6705">中文</div>
+                <div class="model-tips clearfix">
+                    <div class="tips_name"></div>
+                </div>
+                <div class="client-detailInfo  col-xs-12" style="margin-top:30px">
+                    <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">用户名:</div>
+                    <input type="text" class="form-control" v-model="loginParam.no" v-validate:no="['required']"/>
+                </div>
+                <div class="client-detailInfo  col-xs-12" style="margin-top:10px">
+                    <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">密&nbsp;&nbsp;&nbsp;&nbsp;码:</div>
+                    <input type="password" class="form-control" v-model="loginParam.password" v-validate:password="['required']"/>
+                </div>
 
-            <div class="model-footer col-xs-12" v-if="true">
-                <!-- <span class="pull-left" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="checked=!checked"></span>
-                <span class="pull-left">记住密码</span> -->
-                <button type="button" class="btn btn-default btn-close" @click="confirm()">登录</button>
+                <div class="model-footer col-xs-12" v-if="true">
+                    <!-- <span class="pull-left" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="checked=!checked"></span>
+                    <span class="pull-left">记住密码</span> -->
+                    <!-- <span v-if="validation.valid" class="pull-left system_danger">请输入账号和密码</span> -->
+                    <button type="button" class="btn btn-default btn-close" v-if="$validation.valid" @click="confirm()">登录</button>
+                    <div v-else>
+                      <button type="button" class="btn btn-default btn-close" disabled="disabled">登录</button>
+                      <span class="pull-left system_danger">请输入账号和密码</span> 
+                    </div>
+                    
+                </div>
             </div>
         </div>
-    </div>
+    </validator>
   </div>
 </template>
 

@@ -102,7 +102,7 @@
                                 <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel" for="system">电话<span class="system_danger" v-if="$validation.mainphone.phone">格式有误</span></label>
+                                <label class="editlabel" for="system">手机<span class="system_danger" v-if="$validation.mainphone.phone">请输入正确的手机号码</span></label>
                                 <input type="text" v-model="param.mainPhone" class="form-control edit-input" v-validate:mainphone="['phone']" value="{{param.mainPhone}}" />
                             </div>
                             <div class="editpage-input">
