@@ -1333,7 +1333,7 @@ const mutations = {
         "audit":data.audit,
         "checked":data.checked,
         "validate":0,
-        "loading":true
+        "loading":true,
       };
 
         if(data.key=="intentionList"){

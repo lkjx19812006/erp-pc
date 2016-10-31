@@ -121,6 +121,7 @@
                                                 grade:item.grade
                                                 },item.show=false)">编辑</li>
                                     <li v-if="item.transStatus==0" @click="userToClient({
+                                                mainBiz:item.bizMain,
                                                 name:item.fullname,
                                                 keyname:'transStatus',
                                                 sub:$index,

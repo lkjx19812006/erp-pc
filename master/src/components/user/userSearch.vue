@@ -28,9 +28,39 @@
                         </select>
                     </div>
                     <div class="client-detailInfo  col-xs-12">
-                        <label>经营品种：</label>
-                        <input type="text"  class="form-control" v-model="param.busiType"  placeholder="按经营品种(主营业务)搜索"/>
+                        <label>主营业务：</label>
+                        <input type="text"  class="form-control" v-model="param.bizMain"  placeholder="按经主营业务搜索"/>
                     </div>
+                  <div class="client-detailInfo  col-xs-12">
+                    <label>经营类型：</label>
+                    <select class="form-control edit-input"  v-model="param.bizType"  >
+                      <option value="" selected>请选择经营类型</option>
+                      <option value="0">其它</option>
+                      <option value="1">合作社</option>
+                      <option value="2">药商</option>
+                      <option value="3">药厂</option>
+                      <option value="4">个体户</option>
+                      <option value="5">药店</option>
+                      <option value="6">医院</option>
+                      <option value="7">贸易公司</option>
+                      <option value="8">零售商行</option>
+                      <option value="9">药农</option>
+                      <option value="10">介绍人</option>
+                      <option value="11">药贩子</option>
+                      <option value="12">产地药商</option>
+                      <option value="13">销地药商</option>
+                      <option value="14">养生诊所</option>
+                      <option value="15">化工厂</option>
+                      <option value="16">化妆品厂</option>
+                      <option value="17">提取物厂</option>
+                      <option value="18">食品厂</option>
+                      <option value="19">实验室</option>
+                      <option value="20">网上电商</option>
+                      <option value="21">中成药生产商</option>
+                      <option value="22">西药生产商</option>
+                      <option value="23">饮片厂</option>
+                    </select>
+                  </div>
                   <div class="client-detailInfo  col-xs-6">
                     <label>手机省：</label>
                     <div   class="form-control" style="padding:0;border:none;height:31px">
