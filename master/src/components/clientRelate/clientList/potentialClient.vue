@@ -36,14 +36,13 @@
                         <th>分 类</th>
                         <th>客户来源</th>
                         <th>客户等级</th>
-                        <th></th>
                         <th>客户名称</th>
                         <th>分类码</th>
                         <!-- <th>所属分类</th> -->
                         <th>所属业务员</th>
                         <th>负责人</th>
                         <th style="min-width:120px;">经营范围</th>
-                        <th>电 话</th>
+                        <th>手机</th>
                         <th>手机省</th>
                         <th>手机市</th>
                         <th>邮 箱</th>
@@ -67,7 +66,6 @@
                         <td>{{item.classifyDesc}}</td>
                         <td>{{item.sourceType}}</td>
                         <td>{{item.creditLevel}}</td>
-                        <td><img src="/static/images/compact.png" style='float:left;' /></td>
                         <td class="underline"  @click="clickOn({
                                 id:item.id,
                                 sub:$index,

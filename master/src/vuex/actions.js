@@ -609,6 +609,8 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             number:data.goods[0].number
         }]
     }
+    
+
     console.log(body);
     Vue.http({
         method: 'POST',

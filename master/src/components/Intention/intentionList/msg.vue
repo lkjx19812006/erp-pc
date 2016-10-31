@@ -2,25 +2,28 @@
      <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
 	 <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">我的留言</div>
-            <div class="col-xs-5 my_order_search">
+            <div class="my_enterprise col-xs-2" style="font-size:14px">我的留言</div>
+            <div class="col-xs-4 my_order_search">
                <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" placeholder="按意向ID搜索" v-model="loadParam.intentionId"  @keyup.enter="searchMsg()">
                </div>
-              <div class="ordertel_search clearfix">
+               <div class="ordertel_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" v-model="loadParam.userId" placeholder="按会员ID搜索" @keyup.enter="searchMsg()">
                </div>
-           </div> 
+               <button class="new_btn transfer" @click="searchMsg()">搜索</button>
+            </div> 
             <div class="right col-xs-2">
-              <button class="new_btn transfer" @click="searchMsg()">搜索</button>
-                <!-- <button class="new_btn" @click="createIntention()">新建</button>  -->
+              
+                
             </div>
         </div>
         <div class="service-nav clearfix">
             <div class="my_order_search">
-               
+               <div class="filter_search clearfix">
+                    
+               </div>
            </div>
         </div>
         <div class="order_table">
@@ -30,9 +33,9 @@
             <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
                     <tr>  
-                        <th>
-                        	<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
-                        </th>
+                        <!-- <th>
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
+                        </th> -->
                         <!-- <th>意向ID</th>     -->
                         <th>留言会员</th>
                         <th>会员手机</th>
@@ -46,9 +49,9 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initMsgList">
-                         <td>
+                         <!-- <td>
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
-                        </td>
+                                                 </td> -->
                         <!-- <td>{{item.intentionId}}</td> -->
                         <td>{{item.fullname}}</td>
                         <td>{{item.phone}}</td>
@@ -174,6 +177,15 @@ export default {
 }
 </script>
 <style scoped>
+.service-nav {
+    padding: 15px 30px 0 40px;
+}
+.order_table{
+    margin-top:-4px;
+}
+.my_enterprise{
+    padding:6px;
+}
 .breed_action {
     top: 33px;
     right: 106px;

@@ -166,8 +166,8 @@
                         <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
                         <th>类型</th>
                         <th>特殊的</th>
-                        <th>客户名称</th>
-                        <th>客户手机号</th>
+                        <th>会员名称</th>
+                        <th>会员手机号</th>
                         <th>品种名称</th>
                         <th>资格资质</th>
                         <th>规格</th>
@@ -209,8 +209,8 @@
                             <div v-if="item.especial==1&&item.type==0">紧急求购</div>
                             <div v-if="item.especial==1&&item.type==1">低价资源</div>
                         </td>
-                        <td>{{item.customerName}}</td>
-                        <td>{{item.customerPhone}}</td>
+                        <td>{{item.userFullname}}</td>
+                        <td>{{item.userPhone}}</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,

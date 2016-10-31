@@ -476,6 +476,13 @@ fieldset[disabled] .form-control {
     font-size: 12px;
 }
 
+.system_success {
+    color: green;
+    margin-bottom: 0;
+    font-weight: 100;
+    font-size: 12px;
+}
+
 
 /* --  提示,新增,删除弹框 --- */
 
