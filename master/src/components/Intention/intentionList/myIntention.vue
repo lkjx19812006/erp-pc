@@ -8,6 +8,7 @@
      <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
      <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
+     <audit-dialog :param.sync="auditParam" v-if="auditParam.show"></audit-dialog>
 
 	 <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
@@ -43,8 +44,9 @@
                        customerPhone:'',
                        breedName:'',
                        breedId:'',
-                       type:'',
-                       especial:'',
+                       type:0,
+                       especial:1,
+                       validate:0,
                        qualification:'',
                        quality:'',
                        spec:'',
@@ -53,18 +55,17 @@
                        price:'',
                        address:'',
                        location:'',
-                       advance:'',
-                       invoic:'',
+                       advance:0,
+                       invoic:0,
                        visit:'',
                        pack:'',
-                       intl:'',
-                       visit:'',
-                       sampling:'',
-                       sampleNumber:'',
+                       intl:0,
+                       visit:0,
+                       sampling:0,
+                       sampleNumber:0,
                        sampleUnit:'',
-                       sampleAmount:'',
-                       status:'',
-                       country:'',
+                       sampleAmount:0,
+                       country:'中国',
                        province:'',
                        city:'',
                        district:'',
@@ -72,7 +73,13 @@
                        key:'intentionList',
                        link:createIntentionInfo,
                        inType:3,
-                       url:'/intention/'
+                       url:'/intention/',
+                       image_f:'',
+                       image_s:'',
+                       image_t:'',
+                       images:'',
+                       audit:0,
+                       onSell:0
                        })">新建</button>
             </div>
         </div>
@@ -88,7 +95,7 @@
             <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
                     <tr>
-                        <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
+                        <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
                         <th>类型</th>
       	            		<th>特殊的</th>
       	            		<th>客户名称</th>
@@ -124,9 +131,9 @@
 
                     <tr v-for="item in initIntentionList"
                         @click="match(item)"  style="cursor:pointer">
-                         <td>
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
-                        </td>
+                         <!--<td>-->
+                            <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
+                        <!--</td>-->
                         <td>{{item.type | chanceType}}</td>
                         <td>
                             <div v-if="item.especial==0">普通</div>
@@ -249,7 +256,14 @@
                                                validate:item.validate,
                                                link:editintentInfo,
                                                url:'/intention/',
-                                               key:'intentionList'
+                                               key:'intentionList',
+                                               image_f:'',
+                                               image_s:'',
+                                               image_t:'',
+                                               image_f_show:'',
+                                               image_s_show:'',
+                                               image_t_show:'',
+                                               duedate:item.duedate
                                                })">编辑</li>
                                    <li @click="specDelete({
                                                id:item.id,
@@ -261,9 +275,11 @@
                                                url:'/intention/',
                                                key:'intentionList'
                                                })">删除</li>
-                                   <li v-if="item.validate==3&&item.onSell==0&&item.type==1&&item.especial==1" @click="up($index,item.id)">上架</li>
-                                   <li v-if="item.onSell==2&&!(item.type==1&&item.especial==1)" @click="down($index,item.id)">下架</li>
-                                   <li v-if="item.onSell==2&&item.type==1&&item.especial==1" @click="applyDown($index,item.id)">申请下架</li >
+                                   <li v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)">上架</li>
+                                   <li v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.especial==1&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2" @click="applyAudit($index,item.id)">申请审核</li >
+                                   <li v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click="up($index,item.id,4)">下架</li>
+                                   <li v-if="(item.onSell==-4||item.onSell==2)&&item.type==1&&item.especial==1" @click="up($index,item.id,3)">申请下架</li >
+
                                </ul>
                            </div>
                        </td>
@@ -361,6 +377,7 @@ import editintentModel  from  '../../Intention/Editintention'
 import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
 import searchModel from '../intentionSearch'
+import auditDialog from '../../tips/auditDialog'
 
 import {
 	initIntentionList,
@@ -373,6 +390,7 @@ import {
 	deleteInfo,
 	editintentInfo,
 	createIntentionInfo,
+  batchUserIntentionAudit
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -385,7 +403,8 @@ export default {
         editintentModel,
         createintentModel,
         supdemModel,
-        searchModel
+        searchModel,
+        auditDialog
     },
     vuex: {
         getters: {
@@ -399,6 +418,7 @@ export default {
             deleteInfo,
             editintentInfo,
             createIntentionInfo,
+            batchUserIntentionAudit
         }
     },
     data() {
@@ -463,7 +483,14 @@ export default {
             	show:false,
             	id:''
             },
-            checked:false
+            checked:false,
+            auditParam:{
+              title:'意向申请审核备注',
+              auditComment:'',
+              confirm:true,
+              callback:'',
+              show:false
+            }
         }
     },
     methods: {
@@ -564,13 +591,22 @@ export default {
             }
 
         },
-        up:function(index,id){
+        up:function(index,id,onSell){
+            var onSellObj={
+              "0":'初始',
+              "1":'申请上架',
+              "2":'上架',
+              "-2":'上架失败',
+              "3":'申请下架',
+              "4":'下架',
+              "-4":'下架失败'
+            }
             this.tipsParam.ids = [];
             this.tipsParam.indexs = [];
             this.tipsParam.ids.push(id);
             this.tipsParam.indexs.push(index);
-            this.tipsParam.onSell = 2;
-            this.tipsParam.name = '意向上架成功';
+            this.tipsParam.onSell = onSell;
+            this.tipsParam.name = onSellObj[onSell];
             this.intentionUpAndDown(this.tipsParam);
         },
         down:function(index,id){
@@ -583,7 +619,7 @@ export default {
             this.intentionUpAndDown(this.tipsParam);
         },
         applyDown:function(index,id){
-          this.tipsParam.ids = [];
+            this.tipsParam.ids = [];
             this.tipsParam.indexs = [];
             this.tipsParam.ids.push(id);
             this.tipsParam.indexs.push(index);
@@ -636,6 +672,19 @@ export default {
         },
         createIntention:function(initIntentionList){
         	  this.createParam = initIntentionList;
+        },
+        applyAudit:function(index,id){
+          this.auditParam.indexs = [];
+          this.auditParam.indexs.push(index);
+          this.auditParam.arr = [];
+          this.auditParam.arr.push(id);
+          this.auditParam.validate = 2;
+          this.auditParam.show=true;
+          this.auditParam.callback=this.auditCallback;
+        },
+        auditCallback:function(){
+          this.auditParam.description=this.auditParam.auditComment;
+          this.batchUserIntentionAudit(this.auditParam);
         }
     },
     events: {

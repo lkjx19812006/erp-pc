@@ -1191,6 +1191,9 @@ const mutations = {
             console.log("意向列表页审核意向");
             for(let i=0;i<data.indexs.length;i++){
               let k = data.indexs[i];
+              if(data.validate==3){
+                state.basicBaseList.intentionList[k].onSell = 0 ;
+              }
               state.basicBaseList.intentionList[k].validate = data.validate;
               state.basicBaseList.intentionList[k].description = data.description;
               state.basicBaseList.intentionList[k].checked = false;
@@ -1334,6 +1337,7 @@ const mutations = {
         "checked":data.checked,
         "validate":0,
         "loading":true,
+        "onSell":0
       };
 
         if(data.key=="intentionList"){

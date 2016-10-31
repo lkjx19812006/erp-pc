@@ -2866,11 +2866,12 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
         }else if(search=='invoic'){
             url +='&invoic='
         }
-        if(search=='status'&&param[search]!==''){
-            url += '&status='+param.status
-        }else if(search=='status'){
-            url +='&status='
+        if(search=='validate'&&param[search]!==''){
+            url += '&validate='+param.validate
         }
+       if(search=='onSell'&&param[search]!==''){
+         url += '&onSell='+param.onSell
+       }
         if(search=='intl'&&param[search]!==''){
             url += '&intl='+param.intl
         }else if(search=='intl'){
@@ -3024,11 +3025,11 @@ export const getOfferList = ({ dispatch }, param) => {  //报价信息列表以�
 export const getMsgList = ({ dispatch }, param) => {  //留言信息列表以及搜索
     param.loading = true;
     var url = apiUrl.clientList+'/intention/msgs?'+'&page=' + param.cur + '&pageSize=15';
-    if('intentionId' in param&&param.intentionId!==''){
-        url += '&intentionId='+param.intentionId
+    if(param.fullName&&param.fullName!=''){
+        url += '&fullName='+param.fullName
     }
-    if('userId' in param&&param.userId!==''){
-        url += '&userId='+param.userId
+    if(param.phone&&param.phone!=''){
+        url += '&phone='+param.phone
     }
     Vue.http({
         method:'GET',
