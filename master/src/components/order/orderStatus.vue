@@ -384,7 +384,7 @@ export default {
 
         },
         underline:function(){
-          this.yankuanPayorder(this.payorder,this.param)
+          this.yankuanPayorder(this.payorder)
         }
     },
     created() {

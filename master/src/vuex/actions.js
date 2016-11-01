@@ -818,14 +818,14 @@ export const orderCancle = ({ dispatch }, param,data) => { //订单取消状态
     })
 }
 
-export const yankuanPayorder = ({ dispatch }, param,sub) => { //订单支付状态
+export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
     console.log(param)
-    console.log(sub)
+   /* console.log(sub)
     if(param.payWay==0){
         sub.show=false;
     }
     param.show=false;
-    return ;
+    return ;*/
     param.images='';
     if(param.image_f){
         param.images+=param.image_f+','
