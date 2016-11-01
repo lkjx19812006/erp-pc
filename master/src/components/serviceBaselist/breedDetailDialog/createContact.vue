@@ -25,6 +25,13 @@
                                     <label class="editlabel">{{param.weblist}}<span class="system_danger" v-if="$validation.wechart.wechart">请输入正确的微信号</span></label>
                                     <input type="text" class="form-control edit-input" v-model="param.wechart" value="{{param.wechart}}" v-validate:wechart="['wechart']" />
                                 </div>
+                                <div class="editpage-input">
+                                  <label class="editlabel">{{param.mainlist}}</label>
+                                  <select class="form-control" style="width:90%" v-model="param.main" >-->
+                                    <option value=0>否</option>
+                                    <option value=1>是</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input">
@@ -37,17 +44,11 @@
                                      </label>
                                     <input type="text" class="form-control edit-input" v-model="param.tel" value="{{param.tel}}" v-validate:tel="['tel']" />
                                 </div>
+                               
                                 <div class="editpage-input">
-                                <label class="editlabel">{{param.mainlist}}</label>
-                                  <select class="form-control" style="width:90%" v-model="param.main" >-->
-                                    <option value=0>否</option>
-                                    <option value=1>是</option>
-                                    </select>
-                                </div>
-                                <!-- <div class="editpage-input">
-                                    <label class="editlabel">QQ</label>
-                                    <input type="text" class="form-control edit-input"  id="qq" v-model="contactData.qq" v-validate:qq="['required']" />
-                                </div> -->
+                                    <label class="editlabel">{{param.positionlist}}</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.position" />
+                                </div> 
                             </div>
                         </div>
                     </section>
@@ -80,9 +81,13 @@ export default {
 }
 </script>
 <style scoped>
+.modal{
+    z-index: 1083
+}
 .modal_con{
-    max-height: 400px;
+    height: 500px;
     width: 600px;
+    z-index: 1084;
 }
 .top-title{
     position: absolute;

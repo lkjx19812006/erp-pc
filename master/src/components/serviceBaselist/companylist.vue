@@ -1,8 +1,9 @@
 <template>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
-    <detail-model  :param.sync="companyParam" v-if="companyParam.show"></detail-model>
+    <detail-model  :param="companyParam" v-if="companyParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
-    <div v-show="!companyParam.show">
+    <update-model :param="updateParam" v-if="updateParam.show"></update-model>
+    <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">企业</div>
             <div class="my_order_search">
@@ -25,13 +26,17 @@
                         <th>经营范围</th>
                         <th>所在省</th>
                         <th>所在市</th>
+                        <th>业务员</th>
                         <th>注册地址</th>
                         <th>是否转为客户</th>
+                        <th>备注</th>
                         <th></th>
                     </tr>
                 </thead>
                 <thead class="space">
                     <tr>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -55,15 +60,17 @@
                         <td>{{item.bizScope}}</td>
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.address}}</td>
                         <td v-if="!item.transform">否</td>
                         <td v-if="item.transform">是</td>
-                        <td  >
-                          <div v-if="!item.transform" @click="companyClick($index)">
+                        <td>{{item.remark}}</td>
+                        <td>
+                          <div  @click="companyClick($index)">
                             <img height="24" width="24" src="../../../static/images/default_arrow.png" />
                             <div class="breed_action" v-show="item.show">
                                 <ul>
-                                    <li @click="createCustomer({
+                                    <li v-if="!item.transform" @click="createCustomer({
                                         keyname:'transform',
                                         sub:$index,
                                         show:true,
@@ -87,6 +94,17 @@
                                         countryId:7,
                                         countryName:'中国'
                                         })">划转</li>
+                                    <li @click="updateCompany({
+                                        sub:$index,
+                                        show:true,
+                                        name:item.name,
+                                        url:'/company/',
+                                        key:'enterpriseList',
+                                        id:item.id,
+                                        tel:item.tel,
+                                        remark:item.remark,
+                                        link:updateEnterprise
+                                        })">编辑</li>
                                 </ul>
                             </div>
                             </div>
@@ -106,7 +124,7 @@ import filter from '../../filters/filters'
 import detailModel  from '../serviceBaselist/companydetail'
 import transferModel  from '../user/userTransfer'
 import searchModel from './companySearch'
-
+import updateModel from '../serviceBaselist/breedDetailDialog/updateEnterprise'
 import {
     initEnterpriselist,
     initProvince
@@ -115,7 +133,8 @@ import {
     getEnterpriseData,
     getCompanyDetail,
     getCompanyData,
-    getProvinceList
+    getProvinceList,
+    updateEnterprise
 } from '../../vuex/actions'
 export default {
     components: {
@@ -123,7 +142,8 @@ export default {
         filter,
         detailModel,
         transferModel,
-        searchModel
+        searchModel,
+        updateModel
     },
     data() {
         return {
@@ -136,15 +156,18 @@ export default {
                 all: 8,
                 conName:'',
                 conType:'',
-                conProvince:'',
+                province:'',
                 category:'',
-                transform:''
+                transform:'',
+                city:''
             },
             companyParam:{
                 id:'',
                 show:false
             },
-
+            updateParam:{
+                show:false,
+            },
             transferParam:{
                 show:false,
 
@@ -160,7 +183,8 @@ export default {
             getEnterpriseData,
             getCompanyDetail,
             getCompanyData,
-            getProvinceList
+            getProvinceList,
+            updateEnterprise
         }
 
     },    
@@ -183,6 +207,9 @@ export default {
                 this.$store.state.table.basicBaseList.enterpriseList[sub].show = true;
             }
         },
+        updateCompany:function(initEnterpriselist){
+            this.updateParam=initEnterpriselist;
+        },
         createCustomer:function(initEnterpriselist){
             this.transferParam=initEnterpriselist;
 
@@ -198,16 +225,6 @@ export default {
             console.log(this.transferParam);
         }
     },
-    route: {
-            activate: function (transition) {
-              console.log('hook-example activated!')
-              transition.next()
-            },
-            deactivate: function (transition) {
-              console.log('hook-example deactivated!')
-              transition.next()
-          }
-    },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
@@ -219,6 +236,7 @@ export default {
     filter: (filter, {}),
     created() {
         this.getEnterpriseData(this.loadParam)
+        console.log(this.loadparam)
         this.getProvinceList(this.loadParam)
     }
 }

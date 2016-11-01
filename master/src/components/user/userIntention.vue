@@ -34,9 +34,9 @@
                <div class="editpage">
                <div class="editpage-input" style="width:100%">
                  <label class="editlabel">药材图片</label>
-                 <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                 <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                 <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                 <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+                 <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+                 <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
                </div>
                  </div>
                  <div class="editpage">
@@ -232,7 +232,7 @@
                          <label class="editlabel">过期时间</label>
                          <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">
                          </mz-datepicker>
-                         <button type="button" class="btn btn-default" height="24" width="24" @click="param.duedate=''">清空</button>
+                         <button type="button" class="btn btn-default" height="24" width="24" @click="reset()">清空</button>
                        </div>
                      </div>
 
@@ -366,6 +366,7 @@ export default {
         searchcustomerModel,
         vSelect,
         inputSelect,
+        calendar,
         pressImage
     },
     props: ['param'],
@@ -493,7 +494,11 @@ export default {
         }
 
       },
-
+      reset:function(){
+        console.log(this.param.duedate)
+          this.param.duedate="";
+           console.log(this.param.duedate)
+      },
       selectProvince:function(){
         this.province = '';
         this.city = '';
@@ -562,30 +567,22 @@ export default {
 }
 </script>
 <style scoped>
-
-.big-font {
-    font-size: 36px;
+.modal{
+  z-index: 1083
 }
-.top-title span {
-    font-size: 28px;
+.modal_con{
+  z-index: 1084
+}
+.top-title{
+    position: absolute;
+    top: 0;
+    right:0;
 }
 
 .edit-content {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 70px 30px;
 }
 
 .editsection {
@@ -625,12 +622,6 @@ export default {
 
 .editpage-input {
     margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
 }
 
 .edit-input {

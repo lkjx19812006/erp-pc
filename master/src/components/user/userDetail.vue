@@ -6,7 +6,8 @@
   <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
   <tipsdialog-model :param="tipParam" v-if="tipParam.show"></tipsdialog-model>
 
-  <div class="client_body">
+   <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con modal_overall" v-show="param.show">
       <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
       </div>
@@ -15,7 +16,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <a class="navbar-brand navbar-name" href="#">{{initUserDetail.fullname}}</a>
+                        <span class="navbar-brand navbar-name" >{{initUserDetail.fullname}}</span>
                     </div>
 
                   <!--   <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
@@ -490,6 +491,8 @@ export default {
           sampleUnit:'',
           advance:'',
           intl:'',
+          duedate:'',
+          pack:'',
           sampleNumber:0,
           sampleAmount:0,
           qualification:'',
@@ -721,6 +724,8 @@ export default {
               district:'',
               address:'',
               invoic:0,
+              duedate:'',
+              pack:'',
               sampling:0,
               sampleUnit:'',
               advance:0,
@@ -774,11 +779,6 @@ export default {
     margin-right: 10px;
 }
 
-.navbar-name {
-    color: #fa6705;
-    font-size: 20px;
-}
-
 .btn-base {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -816,25 +816,9 @@ section article {
 .client-section {
     padding: 10px 5px 40px 5px;
 }
-
-.section_title {
-    font-size: 20px;
-    color: #333;
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
-    margin: 0;
-}
 .contactSet thead{
   color:#fa6705;
 }
-.panel-title-set {
-    margin-top: 6px;
-    margin-left: 26px;
-    display: inline-block;
-    font-size: 20px;
-    color: #333;
-}
-
 .contact-view {
     color: #fa6705;
     margin-bottom: 0;
@@ -854,24 +838,6 @@ section article {
     padding: 10px;
 }
 
-/* .client-detailInfo {
-    padding: 0 15px 14px 15px;
-}
-
-.client-detailInfo img {
-    margin-right: 8px;
-}
-.client-detailInfo label {
-    display: block;
-    color: #333;
-    font-size: 16px;
-} */
-
-.btn-orange {
-    background-color: #fa6705;
-    color: #fff;
-    font-size: 18px;
-}
 .label_action{
   position: absolute;
   top:13px;

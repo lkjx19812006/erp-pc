@@ -1,7 +1,7 @@
 <template>
-    <div v-show="param.reason" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
-    <div class="container modal_con" v-show="param.reason">
-        <div @click="param.reason=false" class="top-title">
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
+    <div class="container modal_con" v-show="param.show">
+        <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>  
         <div class="edit-content">
@@ -14,17 +14,14 @@
                <div class="editpageleft">
                     <div class="editpage-input">
                            <label class="editlabel">说明</label>
-                           <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
                            <textarea v-model='param.cancleCauses' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5"></textarea>
                     </div>
-
-                   
                </div>
            </section>
         </div>  
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="param.callback(param),param.reason = false">保存</button>
+            <button type="button" class="btn  btn-confirm" @click="param.callback(param),param.show = false">保存</button>
             
         </div>
     </div>
@@ -58,9 +55,13 @@ export default {
 }
 </script>
 <style scoped>
+.modal{
+    z-index: 1113;
+}
 .modal_con {
     width: 554px;
     height: 400px;
+    z-index: 1114;
 }
 .edit_footer{
     width: 554px;

@@ -13,7 +13,8 @@
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
   <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
-    <div class="client_body">
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con modal_overall" v-show="param.show">
     	<div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -25,7 +26,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <a class="navbar-brand navbar-name" href="#">{{param.name}}</a>
+                        <span class="navbar-brand navbar-name" href="#">{{param.name}}</span>
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                          <li>
@@ -1396,17 +1397,6 @@ section article {
 
 .client-detailInfo img {
     margin-right: 8px;
-}
-.client-detailInfo label {
-    display: block;
-    color: #333;
-    font-size: 16px;
-}
-
-.btn-orange {
-    background-color: #fa6705;
-    color: #fff;
-    font-size: 18px;
 }
 .label_action{
 	position: absolute;

@@ -68,6 +68,12 @@ export default {
 }
 </script>
 <style scoped>
+.modal{
+    z-index: 1113;
+}
+.modal_con{
+    z-index: 1114;
+}
 .edit-model {
     overflow: hidden;
     overflow-y: auto;

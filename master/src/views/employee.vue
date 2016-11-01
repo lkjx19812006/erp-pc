@@ -1,8 +1,8 @@
 <template>
    <createemp-model :param="createParam" v-if="createParam.show"></createemp-model>
-   <detailemp-model :param.sync="changeParam" v-if="changeParam.show"></detailemp-model>
+   <detailemp-model :param="changeParam" v-if="changeParam.show"></detailemp-model>
    <searchorg-model :param.sync="orgParam" v-if="orgParam.show"></searchorg-model>
-    <div  class="myemploy" v-show="!changeParam.show">
+    <div  class="myemploy">
         <div class="order_search">
             <div class="clear">
                 <div class="my_order col-xs-1" style="font-size:14px">员工列表</div>

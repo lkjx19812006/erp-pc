@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-10-31 13:27:01
+* @Last Modified time: 2016-11-01 15:36:59
 */
 
 * {
@@ -195,23 +195,25 @@ body {
     background: #fff;
     text-align: center;
 }
-
+.table-hover > tbody > tr:hover{
+    background-color: #99CCFF;
+}
 .table_color {
     background-color: #fff;
 }
 
-.table-striped>thead>tr {
+.table_color>thead>tr {
     background-color: #004796;
     color: #fff;
 }
 
-.table-striped>tbody>tr:nth-of-type(odd) {
+/* .table-striped>tbody>tr:nth-of-type(odd) {
     background-color: #fff;
 }
 
 .table-striped>tbody>tr:nth-of-type(even) {
     background-color: #eee;
-}
+} */
 
 .table>tbody>tr>td,
 .table>tbody>tr>th,
@@ -221,9 +223,7 @@ body {
 .table>thead>tr>th {
     text-align: center;
     border-bottom: 1px solid #ddd;
-
     font-size: 12px;
-
     position: relative;
     vertical-align: middle;
 }
@@ -240,7 +240,15 @@ body {
 .table>tbody {
     position: relative;
 }
-
+.operate{
+    color: #fa6705;
+    font-size: 14px;
+}
+.operate:hover{
+    cursor: pointer;
+    color: #fa6705;
+    text-decoration: underline;
+}
 .table>tbody>tr {
     position: relative;
 }
@@ -284,7 +292,7 @@ body {
 
 .breed_action dl dt {
     display: block;
-    padding: 3px 10px;
+    padding: 0px 8px;
     font-size: 12px;
     cursor: pointer;
 }
@@ -297,7 +305,7 @@ body {
 .component_action ul li,
 .breed_action ul li {
     text-align: left;
-    padding: 3px 8px;
+    padding: 0px 8px;
     cursor: pointer;
 }
 
@@ -328,10 +336,11 @@ body {
 
 .top-title span {
     font-size: 28px;
+    padding: 0 0 20px 20px;
 }
 
 .client-section {
-    padding: 28px 15px 40px 20px;
+    padding: 0px 15px 40px 20px;
     position: relative;
     background-color: #fff;
 }
@@ -407,7 +416,7 @@ fieldset[disabled] .form-control {
 }
 
 .panel-body ul li label {
-    font-size: 16px;
+    font-size: 12px;
     color: #333;
     font-weight: 100;
 }
@@ -517,7 +526,9 @@ fieldset[disabled] .form-control {
     overflow: hidden;
     overflow-y: auto;
 }
-
+.modal_overall{
+    width: 70%;
+}
 .edit_footer {
     border-top: 1px solid #ddd;
     text-align: right;
@@ -540,12 +551,13 @@ fieldset[disabled] .form-control {
 }
 
 .top-title {
-    position: fixed;
-    top: 91px;
-    width:800px;
-    left: 0;
-    right: 0;
-    margin: auto;
+   /*  position: fixed;
+   top: 91px;
+   width:800px;
+   left: 0;
+   right: 0;
+   margin: auto; */
+   height: 35px;
     text-align: right;
     margin-top: 0;
 }
@@ -560,8 +572,8 @@ fieldset[disabled] .form-control {
 }
 
 .edit-model {
-    overflow: hidden;
-    overflow-y: auto;
+/*     overflow: hidden; */
+    /* overflow-y: auto; */
     padding: 10px 30px 50px 30px;
 }
 

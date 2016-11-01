@@ -1,5 +1,5 @@
 <template>
-     <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
+     <chancedetail-model :param="chanceParam" v-if="chanceParam.show"></chancedetail-model>
      <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
      <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
      <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
@@ -10,7 +10,7 @@
      <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
 
-   <div v-show="!chanceParam.show">
+   <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">会员意向</div>
             <div class="col-xs-5 my_order_search">
@@ -70,92 +70,11 @@
                        })">新建</button>  -->
             </div>
         </div>
-        <div class="service-nav clearfix">
-            <div class="my_order_search">
-               <!-- <div class="filter_search clearfix">
-                    <dl class="clearfix">
-                        <dt>类型：</dt>
-                        <dd>
-                            <select  v-model="loadParam.type" @change="searchIntention()">
-                                <option value="">请选择类型</option>
-                                <option value="0">求购</option>
-                                <option value="1">供应</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>是否提供发票：</dt>
-                        <dd>
-                            <select v-model="loadParam.invoic" @change="searchIntention()">
-                                <option value="">请选择发票</option>
-                                <option value="0">无发票</option>
-                                <option value="1">普通发票</option>
-                                <option value="2">增值发票</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>是否上门看货：</dt>
-                        <dd>
-                            <select v-model="loadParam.visit" @change="searchIntention()">
-                                <option value="">请选择</option>
-                                <option value="0">不看</option>
-                                <option value="1">会看</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>是否提供样品：</dt>
-                        <dd>
-                            <select v-model="loadParam.sampling" @change="searchIntention()">
-                                <option value="">请选择样品</option>
-                                <option value="0">无</option>
-                                <option value="1">有</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>选择状态：</dt>
-                        <dd>
-                            <select v-model="loadParam.status" @change="searchIntention()">
-                                <option value="">请选择状态</option>
-                                <option value="0">待审</option>
-                                <option value="1">通过</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>预付比例：</dt>
-                        <dd>
-                            <select v-model="loadParam.advance" @change="searchIntention()">
-                                <option value="">请选择预付比例</option>
-                                <option value="0">0</option>
-                                <option value="1">100%</option>
-                                <option value="0.1">10%</option>
-                                <option value="0.2">20%</option>
-                                <option value="0.3">30%</option>
-                                <option value="0.4">40%</option>
-                                <option value="0.5">50%</option>
-                                <option value="0.6">60%</option>
-                                <option value="0.7">70%</option>
-                                <option value="0.8">80%</option>
-                                <option value="0.9">90%</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>是否是国际信息：</dt>
-                        <dd>
-                            <select v-model="loadParam.intl" @change="searchIntention()">
-                                <option value="">通过国际搜索</option>
-                                <option value="0">国内</option>
-                                <option value="1">国际</option>
-                            </select>
-                        </dd>
-                    </dl>
-               </div> -->
-           </div>
-        </div>
+      <!--   <div class="service-nav clearfix">
+          <div class="my_order_search">
+      
+         </div>
+      </div> -->
         <div class="order_table">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>

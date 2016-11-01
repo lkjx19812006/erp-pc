@@ -1,12 +1,12 @@
   <template>
     <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
     <createorder-model :param="createParam" v-if="createParam.show"></createorder-model>
-    <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
+    <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
-    <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
+    <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <div v-show="!detailParam.show&&!disposeParam.show">
+    <div>
       <div class="order_search">
         <div class="clear">
             <div class="my_order col-xs-2">我的订单</div>
@@ -81,6 +81,7 @@
                     <th>审核状态</th>
                     <th>支付方式</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -120,11 +121,7 @@
                   <td v-if="item.payWay==3">药款支付</td>
                   <td v-if="item.payWay==null">无</td>
                   <td v-if="item.payWay===''">无</td>
-                  <td @click="editClick($index)">
-                      <img height="24" width="24" src="/static/images/default_arrow.png" />
-                      <div class="component_action" v-show="item.show">
-                           <ul>
-                               <li @click="updateOrder({
+                  <td @click="updateOrder({
                                         sub:$index,
                                         id:item.id,
                                         show:true,
@@ -169,30 +166,59 @@
                                         key:'orderList',
                                         link:alterOrder,
                                         url:'/order/'
-                                        })">编辑</li>
-                                <li v-if="item.orderStatus==-1&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
-                                <li v-if="item.orderStatus==-2&&item.type==0" @click="pendingOrder(item,$index)">订单已过期</li>
-                                <li v-if="item.orderStatus==0&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>
-                                <li v-if="item.orderStatus==10&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理确定</li>
-                                <li v-if="item.orderStatus==20&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">等待支付</li>
-                                <!-- <li v-if="item.orderStatus==30&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li> -->
-                                <li v-if="item.orderStatus==40&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">等待发货</li>
-                                <li v-if="item.orderStatus==50&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">等待收货</li>
-                                <li v-if="item.orderStatus==60&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
-                                <li v-if="item.orderStatus==70&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
-                                <li v-if="item.orderStatus==-1&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
-                                <li v-if="item.orderStatus==-2&&item.type==1" @click="pendingOrder(item,$index)">订单已过期</li>
-                                <li v-if="item.orderStatus==0&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>
-                                <li v-if="item.orderStatus==10&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理确定</li>
-                                <li v-if="item.orderStatus==20&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待支付</li>
-                                <!-- <li v-if="item.orderStatus==30&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li> -->
-                                <li v-if="item.orderStatus==40&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">等待发货</li>
-                                <li v-if="item.orderStatus==50&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">等待收货</li>
-                                <li v-if="item.orderStatus==60&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
-                                <li v-if="item.orderStatus==70&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
-                           </ul>
-                       </div>
+                                        })"><a class="operate">编辑</a></td>
+                  <td  @click="pendingOrder(item,$index)">
+                        <a class="operate" v-if="item.orderStatus==-1&&item.type==0&&item.validate==2">订单已取消</a>
+                        <a class="operate" v-if="item.orderStatus==-2&&item.type==0&&item.validate==2">订单已过期</a>
+                        <a class="operate" v-if="item.orderStatus==10&&item.type==0&&item.validate==2">订单处理确定</a>
+                        <a class="operate" v-if="item.orderStatus==20&&item.type==0&&item.validate==2">等待支付</a>
+                        <a class="operate" v-if="item.orderStatus==0&&item.type==0&&item.validate==2">订单处理中</a>
+                        <a class="operate" v-if="item.orderStatus==30&&item.type==0&&item.validate==2">等待核查</a>
+                        <a class="operate" v-if="item.orderStatus==40&&item.type==0&&item.validate==2">等待发货</a>
+                        <a class="operate" v-if="item.orderStatus==50&&item.type==0&&item.validate==2">等待收货</a>
+                        <a class="operate" v-if="item.orderStatus==60&&item.type==0&&item.validate==2">已完成订单</a>
+                        <a class="operate" v-if="item.orderStatus==70&&item.type==0&&item.validate==2">已完成订单</a>
+
+                        <a class="operate" v-if="item.orderStatus==-1&&item.type==1&&item.validate==2">订单已取消</a>
+                        <a class="operate" v-if="item.orderStatus==-2&&item.type==1&&item.validate==2">订单已过期</a>
+                        <a class="operate" v-if="item.orderStatus==0&&item.type==1&&item.validate==2">订单处理中</a>
+                        <a class="operate" v-if="item.orderStatus==10&&item.type==1&&item.validate==2">订单处理确定</a>
+                        <a class="operate" v-if="item.orderStatus==20&&item.type==1&&item.validate==2">等待支付</a>
+                        <a class="operate" v-if="item.orderStatus==30&&item.type==1&&item.validate==2">等待核查</a>
+                        <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.validate==2">等待发货</a>
+                        <a class="operate" v-if="item.orderStatus==50&&item.type==1&&item.validate==2">等待收货</a>
+                        <a class="operate" v-if="item.orderStatus==60&&item.type==1&&item.validate==2">已完成订单</a>
+                        <a class="operate" v-if="item.orderStatus==70&&item.type==1&&item.validate==2">已完成订单</a>
                   </td>
+                 
+                 <!--  <td @click="editClick($index)">
+                     <img height="24" width="24" src="/static/images/default_arrow.png" />
+                     <div class="component_action" v-show="item.show">
+                          <ul>
+                              <li >编辑</li>
+                               <li v-if="item.orderStatus==-1&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
+                               <li v-if="item.orderStatus==-2&&item.type==0" @click="pendingOrder(item,$index)">订单已过期</li>
+                               <li v-if="item.orderStatus==0&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>
+                               <li v-if="item.orderStatus==10&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理确定</li>
+                               <li v-if="item.orderStatus==20&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">等待支付</li>
+                               <li v-if="item.orderStatus==30&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li>
+                               <li v-if="item.orderStatus==40&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">等待发货</li>
+                               <li v-if="item.orderStatus==50&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">等待收货</li>
+                               <li v-if="item.orderStatus==60&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
+                               <li v-if="item.orderStatus==70&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
+                               <li v-if="item.orderStatus==-1&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
+                               <li v-if="item.orderStatus==-2&&item.type==1" @click="pendingOrder(item,$index)">订单已过期</li>
+                               <li v-if="item.orderStatus==0&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>
+                               <li v-if="item.orderStatus==10&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理确定</li>
+                               <li v-if="item.orderStatus==20&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待支付</li>
+                               <li v-if="item.orderStatus==30&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li>
+                               <li v-if="item.orderStatus==40&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">等待发货</li>
+                               <li v-if="item.orderStatus==50&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">等待收货</li>
+                               <li v-if="item.orderStatus==60&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
+                               <li v-if="item.orderStatus==70&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
+                          </ul>
+                      </div>
+                 </td> -->
                 </tr>
             </tbody>
         </table>

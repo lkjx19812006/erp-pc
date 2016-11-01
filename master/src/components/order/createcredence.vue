@@ -81,10 +81,14 @@ export default {
 .big-font {
     font-size: 36px;
 }
+.modal{
+    z-index: 1099;
+}
 .modal_con{
     width: 560px;
     height: 520px;
     top: 0;
+    z-index: 1100
 }
 .edit_footer{
      width: 560px;

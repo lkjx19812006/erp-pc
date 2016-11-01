@@ -2,8 +2,8 @@
     <breed-model :param="breedParam" v-if="breedParam.show"></breed-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <breedrevise-model :param="reviseParam" v-if="reviseParam.show"></breedrevise-model>
-    <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
-    <div v-show="!changeParam.show">
+    <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
+    <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">品种</div>
             <div class="col-xs-9 my_order_search">
@@ -67,7 +67,7 @@
                             <div class="breed_action" v-show="item.show">
                                 <ul>
                                     <li @click="item.show=false,modifyBreed($index,item)">编辑</li>
-                                    <li @click="specDelete({
+                                    <!-- <li @click="specDelete({
                                         id:item.id,
                                         sub:$index,
                                         show:true,
@@ -76,7 +76,7 @@
                                         link:deleteInfo,
                                         url:'/breed/',
                                         key:'breedList'
-                                        },item.show=false)">删除</li>
+                                        },item.show=false)">删除</li> -->
                                 </ul>
                             </div>
                         </td>
