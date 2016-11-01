@@ -17,11 +17,11 @@
                 </div>
                 <div class="client-detailInfo  col-xs-12" style="margin-top:30px">
                     <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">用户名:</div>
-                    <input type="text" class="form-control" v-model="loginParam.no" v-validate:no="['required']"/>
+                    <input type="text" class="form-control" v-model="loginParam.no" v-validate:no="['required']" @keyup.enter="confirm()"/>
                 </div>
                 <div class="client-detailInfo  col-xs-12" style="margin-top:10px">
                     <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">密&nbsp;&nbsp;&nbsp;&nbsp;码:</div>
-                    <input type="password" class="form-control" v-model="loginParam.password" v-validate:password="['required']"/>
+                    <input type="password" class="form-control" v-model="loginParam.password" v-validate:password="['required']" @keyup.enter="confirm()"/>
                 </div>
 
                 <div class="model-footer col-xs-12" v-if="true">
@@ -88,10 +88,11 @@ export default {
     },
     methods: {
         confirm:function(){
-          this.loginParam.loading=true;
-          this.loginParam.loginCallback=this.loginCallback;
-          this.login(this.loginParam);
-
+          if(this.loginParam.no&&this.loginParam.password){
+              this.loginParam.loading=true;
+              this.loginParam.loginCallback=this.loginCallback;
+              this.login(this.loginParam);
+          }        
         },
         getCookie:function(name){          //获取cookie
             var search = name + "=" ;

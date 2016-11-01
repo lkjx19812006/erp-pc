@@ -1,10 +1,10 @@
 <template>
-    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
-        </div>  
+        </div>
         <div class="edit-content">
             <h3>会员审核</h3>
         </div>
@@ -12,7 +12,7 @@
            <section class="editsection" v-cloak>
                <div class="editpage">
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-               <div class="editpageleft">
+                  <div class="editpageleft">
                     <div style="color:red;font-size:12px;font-weight:100;white-space: normal;">
                         快速编辑：
                         <span v-for="item in initAuditLabel.arr">
@@ -21,46 +21,31 @@
                     </div>
                     <div class="editpage-input">
                            <label class="editlabel">备注</label>
-                           <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
                            <textarea v-model='param.auditComment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none" rows="5" value="{{param.auditComment}}"></textarea>
                     </div>
-
-                   
+                  </div>
                </div>
            </section>
-        </div>  
+        </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=pass,tipsParam.name='确认审核通过?'">通过</button>
-            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=reject,tipsParam.name='确认审核不通过?'">不通过</button>
+            <button type="button" class="btn  btn-confirm" @click="pass(1)">审核中</button>
+            <button type="button" class="btn  btn-confirm" @click="pass(2)">通过</button>
+            <button type="button" class="btn  btn-confirm" @click="pass(3)">不通过</button>
         </div>
     </div>
 </template>
 <script>
-import tipsdialogModel  from '../tips/tipDialog'
+
 import {
     initAuditLabel
 } from '../../vuex/getters'
-import {   
+import {
     auditQuickEdit,
     batchUpdateUserInfo
 } from '../../vuex/actions'
 export default {
-    components: {
-        tipsdialogModel
-    },
     props: ['param'],
-    data() {
-        return {
-            tipsParam:{
-                show:false,
-                confirm:true,
-                name:"",
-                callback:''
-            
-          }
-        }
-    },
     vuex: {
        getters: {
             initAuditLabel
@@ -68,44 +53,24 @@ export default {
         actions: {
             auditQuickEdit,
             batchUpdateUserInfo
-        } 
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
         }
     },
     methods: {
-        addText: function(text){         
+        addText: function(text){
             if(this.param.auditComment.split(',').indexOf(text) == -1){
                 this.param.auditComment += text + ',';
             }
 
         },
-        pass: function(){
-            this.param.audit = 1;        
-            console.log(this.param.userIds);
-            console.log(this.param.auditComment);
+        pass: function(id){
+            this.param.audit = id;
             this.batchUpdateUserInfo(this.param);
-        },
-        reject: function(){
-            this.param.audit = 2;  
-            console.log(this.param.userIds);
-            console.log(this.param.auditComment);
-            console.log(this.param.indexs);
-            this.batchUpdateUserInfo(this.param);
-
-        },
+        }
     },
-    created() { 
+    created() {
         this.auditQuickEdit();
    }
-    
+
 }
 </script>
 <style scoped>

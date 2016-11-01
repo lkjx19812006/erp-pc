@@ -93,7 +93,8 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                name:''
+                name:'',
+                total:0
             },
             changeParam: {
                 show: false

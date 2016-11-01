@@ -1,14 +1,26 @@
 <template>
   <ul class='pagination'>
-    <li v-if="this.combination.cur>1" ><a v-on:click="combination.cur-- ,pageClick()"><span> « </span></a></li>
-    <li v-else class='disabled'><a><span> « </span></a></li>
+    <li v-if="this.combination.cur>1" ><a v-on:click="combination.cur-- ,pageClick()"><span> 上一页 </span></a></li>
+    <li v-else class='disabled'><a><span> 上一页 </span></a></li>
+
+    <li v-if="indexs[0]>1" ><a v-on:click="combination.cur=1,pageClick()"><span> 1 </span></a></li>
+    <li class="disabled" v-if="indexs[0]>2"><a>...</a></li>
     <li v-for="index in indexs"  v-bind:class="{'active': combination.cur === index }">
       <a v-on:click="btnClick(index)">{{ index }}</a>
     </li>
-    <li v-if="this.combination.cur != this.combination.all" ><a v-on:click="combination.cur++,pageClick()"><span> » </span></a></li>
-    <li v-else class="disabled"><a><span> » </span></a></li>
-    <li class="disabled"><a>共<i>{{ combination.all }}</i>页</a></li>
+    <li class="disabled" v-if="indexs[6]&&(indexs[6]<=combination.all-1)"><a>...</a></li>
+    <li v-if="(indexs.length==7)&&(indexs[6]!=combination.all)" ><a v-on:click="combination.cur=combination.all,pageClick()"><span> {{combination.all}} </span></a></li>
+
+    <li v-if="this.combination.cur != this.combination.all" ><a v-on:click="combination.cur++,pageClick()"><span> 下一页 </span></a></li>
+    <li v-else class="disabled"><a><span> 下一页 </span></a></li>
+    <li class="disabled"><a>共<i>{{ combination.total }}</i>条</a></li>
+    <li>
+      <p style="float:left;line-height:1.42857143;color:#777;margin:8px 10px 0 10px">跳转到:</p>
+      <input  type=number  v-model="inpage" :value="page" style="position: relative;width:60px;margin:0 10px;float: left;padding: 6px 12px;margin-left: -1px;line-height: 1.42857143;color: #337ab7;text-decoration: none; background-color: #fff;border: 1px solid #ddd;"/>
+      <a v-on:click="combination.cur=page,pageClick()" class="btn">点击跳转</a>
+    </li>
   </ul>
+  <div style="float:left"></div>
 </template>
 
 <style>
@@ -18,9 +30,20 @@
 </style>
 <script>
   module.exports = {
-    props: ['combination'],
+    props: {'combination':{
+      cur:'',
+      total:'',
+      all:''
+  }},
+    data(){
+      return{
+        inpage:1
+      }
+    },
     computed: {
       indexs: function(){
+        this.combination.cur=parseInt(this.combination.cur);
+
         var left = 1;
 
         if(this.combination.all==0){
@@ -33,6 +56,7 @@
           if(this.combination.cur > 5 && this.combination.cur < this.combination.all-4){
             left = this.combination.cur - 3;
             right = this.combination.cur + 3;
+
           }else{
             if(this.combination.cur<=5){
               left = 1;
@@ -43,13 +67,30 @@
             }
           }
         }
+
         while (left <= right){
           ar.push(left);
           left ++;
         }
         return ar;
       },
+      page:function(){
+        if(!this.inpage){
+          this.inpage=1;
+        }
+          if(parseInt(this.inpage)>this.combination.all){
+            this.inpage=this.combination.all;
+            return this.combination.all;
+          }else if(parseInt(this.inpage)<1){
+          this.inpage=1;
+          return 1;
+        }else{
+            this.inpage=parseInt(this.inpage);
+            return parseInt(this.inpage);
+          }
+      }
     },
+
     methods: {
       btnClick: function (value) {
         if(value != this.combination.cur){

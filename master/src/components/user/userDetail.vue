@@ -482,6 +482,7 @@ export default {
           location:'',
           type:'',
           country:'',
+          pack:'',
           province:'',
           city:'',
           district:'',

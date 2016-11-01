@@ -329,7 +329,7 @@
                                               link:initClientDetail.intentions,
                                               crete:'intentions'
                                               })">
-                                        <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
+                                        <img class="pull-left" src="/static/images/intent.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           意向（{{initClientDetail.intentions.arr.length}}）
                                         </a>
@@ -413,7 +413,7 @@
                                               link:initClientDetail.orders,
                                               crete:'orders'
                                               })">
-                                        <img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
+                                        <img class="pull-left" src="/static/images/order.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           订单（{{initClientDetail.orders.arr.length}}）
                                         </a>

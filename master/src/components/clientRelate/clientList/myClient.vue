@@ -53,7 +53,9 @@
                                         ],
                                         link:saveCreate,
                                         })">新建</button>
+                <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
+
             </div>
         </div>
         <div class="order_table">
@@ -196,7 +198,7 @@ import {
     initCustomerlist
 } from '../../../vuex/getters'
 import {
-    getMyClientList,
+    getClientList,
     deleteInfo,
     alterInfo,
     saveCreate,
@@ -220,7 +222,7 @@ export default {
             initCustomerlist
         },
         actions: {
-            getMyClientList,
+            getClientList,
             deleteInfo,
             alterInfo,
             saveCreate,
@@ -248,7 +250,12 @@ export default {
                 provinceName:'',
                 province:'',
                 city:'',
-                cityName:''
+                cityName:'',
+                phoneCityName:'',
+                phoneProvinceName:'',
+                label:'',
+                creditLevel:'',
+                total:0
             },
             changeParam: {
                 show: false,
@@ -299,6 +306,25 @@ export default {
         },
         createSearch:function(){
             this.loadParam.show=true;
+        },
+        resetCondition:function(){
+            this.loadParam.name='';
+            this.loadParam.phone='';
+            this.loadParam.employeeId='';
+            this.loadParam.employeeName='';
+            this.loadParam.type='';
+            this.loadParam.classify='';
+            this.loadParam.status='';
+            this.loadParam.bizScope='';
+            this.loadParam.provinceName='';
+            this.loadParam.province='';
+            this.loadParam.city='';
+            this.loadParam.cityName='';
+            this.loadParam.phoneCityName='';
+            this.loadParam.phoneProvinceName='';
+            this.loadParam.label='';
+            this.loadParam.creditLevel='';
+            this.getClientList(this.loadParam);
         },
         eventClick:function(id){
             if(this.$store.state.table.basicBaseList.customerList[id].show){
@@ -407,17 +433,17 @@ export default {
             }
         },
         searchClient:function(){
-            this.getMyClientList(this.loadParam)
+            this.getClientList(this.loadParam)
         }
     },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getMyClientList(this.loadParam);
+            this.getClientList(this.loadParam);
         }
     },
     created() {
-        this.getMyClientList(this.loadParam);
+        this.getClientList(this.loadParam);
     },
     filter:(filter,{})
 }

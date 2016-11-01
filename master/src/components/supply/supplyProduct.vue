@@ -191,6 +191,7 @@
           link:'/customer/product',
           name:'',
           type:'',
+          total:0,
           status:''
         },
         changeParam: {

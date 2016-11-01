@@ -17,7 +17,7 @@
       </div>
       <div class="col-xs-1">
          <button class="new_btn transfer" @click="searchProduct()">搜索</button>
-     </div> 
+     </div>
     </div>
     <div class="order_table">
       <div class="cover_loading">
@@ -86,7 +86,8 @@
           all: 1,
           link:'/order/payList',
           orderNo:'',
-          payWay:''
+          payWay:'',
+          total:0
         },
         changeParam: {
           show: false

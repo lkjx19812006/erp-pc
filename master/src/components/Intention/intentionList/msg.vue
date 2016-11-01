@@ -107,7 +107,8 @@ export default {
                 cur: 1,
                 all: 7,
                 fullName:'',
-                phone:''
+                phone:'',
+                total:0
 
             },
             chanceParam:{

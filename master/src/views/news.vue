@@ -11,9 +11,10 @@
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">会员</div>
 
-            <div class="right col-xs-1">
+            <div class="right col-xs-2">
                 <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
                 <button type="button" class="btn btn-default" height="24" width="24" @click="search()">搜索</button>
+                <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
             </div>
 
         </div>
@@ -29,13 +30,14 @@
                         <th>昵称</th>
                         <th>等级</th>
                         <th>手机</th>
-                        <th>归属地</th>
+                        <th>手机归属地</th>
                         <!--<th>邮箱</th>-->
                         <!--<th>qq</th>-->
                         <th>所在公司</th>
                         <th>主营业务</th>
                         <th>来源</th>
                         <th>经营类型</th>
+                        <th>经营地址</th>
                         <th>审核状态</th>
                         <th>个人认证</th>
                         <th>企业认证</th>
@@ -51,7 +53,7 @@
                         <td  @click.stop="">
                             <!-- <label v-if="item.audit!=1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                             <label v-if="item.audit==1" class="checkbox_unselect"></label> -->
-                            <label v-if="item.audit==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
+                            <label v-if="item.audit!=2" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                         </td>
                         <td class="underline" @click="clickOn({
                                 id:item.id,
@@ -64,7 +66,7 @@
                         <td v-if="item.grade==2">三星</td>
                         <td v-if="item.grade!=0&&item.grade!=1&&item.grade!=2">其它</td>
                         <td>{{item.phone}}</td>
-                        <td>{{item.province+item.city}}</td>
+                        <td>{{item.phoneProvince+item.phoneCity}}</td>
                         <!--<td>{{item.email}}</td>-->
                         <!--<td>{{item.qq}}</td>-->
                         <td>{{item.company}}</td>
@@ -76,6 +78,7 @@
                         <td v-if="item.source==4" style="background:black;color:#fff">{{item.sourceType}}</td>
                         <td v-if="!item.source" >其它</td>
                         <td>{{item.bizTypeName}}</td>
+                        <td>{{item.province+item.city}}</td>
                         <td>{{item.auditResult}}</td>
                         <td v-if="item.utype==0">待认证</td>
                         <td v-if="item.utype==1">申请认证</td>
@@ -86,7 +89,8 @@
                         <td v-if="item.ctype==2">已认证</td>
                         <td v-if="item.ctype==3">认证失败</td>
                         <td v-if="item.transStatus==1">已划转</td>
-                        <td v-else>未划转</td>
+                        <td v-if="item.transStatus==0">未划转</td>
+                        <td v-if="item.transStatus!=0&&item.transStatus!=1">转黑名单</td>
                         <td>{{item.ctime}}</td>
 
                         <td @click.stop="eventClick($index)">
@@ -216,6 +220,7 @@ export default {
                 show:false,
                 fullname:'',
                 source:'',
+                bizMain:'',
                 busiType:'',
                 phone:'',
                 startCtime:'',
@@ -227,7 +232,8 @@ export default {
                 cur: 1,
                 all: 7,
                 city:'',
-                province:''
+                province:'',
+                total:0
             },
             tipsParam:{
                 show:false,
@@ -325,13 +331,26 @@ export default {
         this.getUserDetail(this.changeParam);
     },
     eventClick:function(id){
-            if(this.$store.state.table.basicBaseList.userList[id].show){
-                this.$store.state.table.basicBaseList.userList[id].show = !this.$store.state.table.basicBaseList.userList[id].show;
-            }else{
-                this.$store.state.table.basicBaseList.userList[id].show=true;
-            }
-        },
-
+        if(this.$store.state.table.basicBaseList.userList[id].show){
+            this.$store.state.table.basicBaseList.userList[id].show = !this.$store.state.table.basicBaseList.userList[id].show;
+        }else{
+            this.$store.state.table.basicBaseList.userList[id].show=true;
+        }
+    },
+    resetCondition:function(){
+        this.loadParam.fullname='';
+        this.loadParam.source='';
+        this.loadParam.bizMain='';
+        this.loadParam.busiType='';
+        this.loadParam.phone='';
+        this.loadParam.startCtime='';
+        this.loadParam.endCtime='';
+        this.loadParam.audit='';
+        this.loadParam.transform='';
+        this.loadParam.city='';
+        this.loadParam.province='';
+        this.getUserList(this.loadParam);
+    },
     onlyselected: function(index){
       const _self=this;
         this.$store.state.table.basicBaseList.userList[index].checked=!this.$store.state.table.basicBaseList.userList[index].checked;
@@ -374,10 +393,6 @@ export default {
 
     },
 
-    resetTime:function(){
-        this.loadParam.startCtime = '';
-        this.loadParam.endCtime = '';
-    },
     loadByCondition:function(){
         this.getUserList(this.loadParam);
     },
@@ -389,7 +404,7 @@ export default {
     createUser:function(value){
         this.createParam.show=true;
         //this.createParam.name=value;
-        },
+    },
 
     clientTransfer:function(value){
         this.transferParam.show=true;

@@ -6,8 +6,9 @@
     <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">企业</div>
-            <div class="my_order_search">
-                <a class="new_btn transfer" style="float:right"  @click="loadParam.show=true">查询</a>
+            <div class="my_order_search" style="float:right">
+                <a class="new_btn transfer"   @click="loadParam.show=true">查询</a>
+                <a class="new_btn transfer"   @click="resetCondition()">清空条件</a>
             </div>
         </div>
 
@@ -159,7 +160,8 @@ export default {
                 province:'',
                 category:'',
                 transform:'',
-                city:''
+                city:'',
+                total:0
             },
             companyParam:{
                 id:'',
@@ -187,7 +189,7 @@ export default {
             updateEnterprise
         }
 
-    },    
+    },
 
     methods: {
         companyDetail:function(id,index){
@@ -198,6 +200,14 @@ export default {
         },
         multiSearch:function(){
             this.getCompanyData(this.loadParam);
+        },
+        resetCondition:function(){
+            this.loadParam.conName='';
+            this.loadParam.conType='';
+            this.loadParam.conProvince='';
+            this.loadParam.category='';
+            this.loadParam.transform='';
+            this.getEnterpriseData(this.loadParam);
         },
         companyClick:function(sub){
             console.log(this.$store.state.table.basicBaseList.enterpriseList[sub].show);
@@ -247,6 +257,12 @@ export default {
     margin-right:3%;
 }
 .new_btn{
+    padding:7px 10px;
     float: none;
+    cursor: pointer;
 }
+.transfer{
+    margin-right:15px;
+}
+
 </style>

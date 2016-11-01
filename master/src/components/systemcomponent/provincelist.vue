@@ -65,7 +65,8 @@ export default {
                 color: '#5dc596',
                 size: '15px',
                 all:10,
-                cur:1
+                cur:1,
+                total:0
             },
             show:true
         }

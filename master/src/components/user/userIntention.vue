@@ -2,6 +2,7 @@
     <div  id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
+    <tipdialog-model :param="tipParam" v-if="tipParam.show"></tipdialog-model>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -82,15 +83,21 @@
                        <div class="editpage-input">
                          <label class="editlabel">包装<span class="system_danger" v-if="$validation.pack.required">包装不能为空</span></label>
                          <input type="text" v-show="false"  v-model="param.pack" v-validate:pack="{required:true}"  />
-                         <div type="text" class="edit-input" >
-                           <input-select
-                             :prevalue="param.pack"
-                             :value.sync="param.pack"
-                             :options="tag"
-                             placeholder="包装"
-                           >
-                           </input-select>
-                         </div>
+
+                         <select type="text" class="form-control edit-input" v-model="param.pack">
+                           <option value={{item}} v-for="item in tag">{{item}}</option>
+
+                         </select>
+
+                         <!--<div type="text" class="edit-input" >-->
+                           <!--<input-select-->
+                             <!--:prevalue="param.pack"-->
+                             <!--:value.sync="param.pack"-->
+                             <!--:options="tag"-->
+                             <!--placeholder="包装"-->
+                           <!--&gt;-->
+                           <!--</input-select>-->
+                         <!--</div>-->
                        </div>
                      </div>
 
@@ -329,18 +336,18 @@
           </div>
           <div class="edit_footer">
               <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-              <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="createOrUpdateIntention(param,param.show = false)">确定</button>
+              <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="createOrUpdateIntention()">确定</button>
               <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
           </div>
         </validator>
     </div>
 </template>
 <script>
-import calendar from '../calendar/vue.datepicker'
 import searchbreedModel  from '../Intention/breedsearch'
 import searchcustomerModel  from '../Intention/clientname'
 import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
+import tipdialogModel from '../tips/tipDialog'
 import pressImage from '../imagePress'
 import {
     initCountrylist,
@@ -366,12 +373,18 @@ export default {
         searchcustomerModel,
         vSelect,
         inputSelect,
-        calendar,
+        tipdialogModel,
         pressImage
     },
     props: ['param'],
     data() {
         return {
+          tipParam:{
+              show:false,
+              name:'',
+              remain:true,
+              callback:this.callback
+          },
           breedParam:{
               show:false,
               breedName:'',
@@ -386,7 +399,7 @@ export default {
             customerPhone:'',
             employeeId:''
           },
-          tag:['真空包装','瓦楞纸箱','编织袋','积压包'],
+          tag:['真空包装','瓦楞纸箱','编织袋','积压包','其它'],
             country:{
               cname:'',
             },
@@ -474,23 +487,32 @@ export default {
                 this.empNameParam.employeeId = this.param.employeeId;
             }
       },
+      callback:function(){
+          this.param.show=false;
+          this.tipParam.show=false;
+      },
       createOrUpdateIntention:function(){
         if(this.param.flag==0){
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
-          if(this.district.cname){this.param.district = this.district.cname;}
-          else{this.param.district ='';}
-          this.param.show=false;
-          this.createIntentionInfo(this.param);
+          if(this.district.cname){
+            this.param.district = this.district.cname;
+          }else{
+            this.param.district ='';
+          }
+          this.tipParam.name = '新建意向成功';
+          //this.param.show=false;
+          this.createIntentionInfo(this.param,this.tipParam);
         }
         if(this.param.flag==1){
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
           this.param.district = this.district.cname;
-          this.param.show=false;
-          this.editintentInfo(this.param);
+          this.tipParam.name = '修改意向成功';
+          //this.param.show=false;
+          this.editintentInfo(this.param,this.tipParam);
         }
 
       },

@@ -33,7 +33,7 @@
                     </div>
                   <div class="client-detailInfo  col-xs-12">
                     <label>经营类型：</label>
-                    <select class="form-control edit-input"  v-model="param.bizType"  >
+                    <select class="form-control edit-input"  v-model="param.busiType"  >
                       <option value="" selected>请选择经营类型</option>
                       <option value="0">其它</option>
                       <option value="1">合作社</option>
@@ -115,8 +115,9 @@
                         <select type="text" class="form-control" v-model="param.audit">
                                 <option value="">请选择审核状态</option>
                                 <option value="0">待审核</option>
-                                <option value="1">已审核</option>
-                                <option value="2">审核不通过</option>
+                                <option value="1">审核中</option>
+                                <option value="2">审核通过</option>
+                                <option value="3">审核不通过</option>
                         </select>
                     </div>
 

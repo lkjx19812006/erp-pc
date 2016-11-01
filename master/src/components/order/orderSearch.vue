@@ -108,7 +108,7 @@
                         </mz-datepicker>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                         <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空</button> 
+                         <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空</button>
                     </div>
                 </div>
             </section>
@@ -122,7 +122,7 @@
 <script>
 import calendar from '../calendar/vue.datepicker'
 import {
-   
+
 } from '../../vuex/getters'
 import {
     getOrderList,
@@ -158,7 +158,7 @@ export default {
     },
     vuex: {
         getters: {
-            
+
         },
         actions: {
             getOrderList,
@@ -195,18 +195,7 @@ export default {
         }
     },
     created(){
-        console.log("123456");
-        console.log(this.param);
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
+
     }
 }
 </script>

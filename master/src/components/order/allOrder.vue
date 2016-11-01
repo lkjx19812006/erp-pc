@@ -18,7 +18,7 @@
           </div>
         <table class="table table-hover table_color table-striped " v-cloak>
             <thead>
-                <tr>  
+                <tr>
                     <th>订单号</th>
                     <th>订单类别</th>
                     <th>订单来源</th>
@@ -182,13 +182,14 @@
                     orderStatus:'',
                     payWay:'',
                     clients:'',
-                    dataStatus:''
+                    dataStatus:'',
+                    total:0
                 },
                 dialogParam:{
                     show: false
                 },
                 updateParam: {
-                    show:false,  
+                    show:false,
                 },
                 detailParam: {
                     show:false
@@ -228,7 +229,7 @@
                     this.$store.state.table.basicBaseList.orderList[sub].show=!this.$store.state.table.basicBaseList.orderList[sub].show;
                 }else{
                      this.$store.state.table.basicBaseList.orderList[sub].show=true;
-                }    
+                }
             },
             /*newOrder:function(initOrderlist){
                  this.dialogParam=initOrderlist;
@@ -270,15 +271,15 @@
                     this.disposeParam.tips="订单处理完成，等待买家付款！";
                     this.disposeParam.payment=true;
                 }
-                if(item.orderStatus==30&&item.type==0){ 
+                if(item.orderStatus==30&&item.type==0){
                     this.disposeParam.tips="订单买家已付款，商家正在核查！";
-                    /*this.disposeParam.Auditing = true;*/ 
+                    /*this.disposeParam.Auditing = true;*/
                 }
-                if(item.orderStatus==40&&item.type==0){ 
+                if(item.orderStatus==40&&item.type==0){
                     this.disposeParam.tips="您的订单已支付，请等待卖家发货！";
                     /*this.disposeParam.sendoff = true; */
                 }
-                if(item.orderStatus==50&&item.type==0){ 
+                if(item.orderStatus==50&&item.type==0){
                     this.disposeParam.tips="您的订单已发货，请注意保持电话通畅，等待收货确认！";
                     this.disposeParam.delivery = true;
                 }
@@ -307,15 +308,15 @@
                     this.disposeParam.tips="订单处理完成，等待买家付款！";
                     this.disposeParam.payment=true;
                 }
-                if(item.orderStatus==30&&item.type==1){ 
+                if(item.orderStatus==30&&item.type==1){
                     this.disposeParam.tips="订单买家已付款，商家正在核查！";
                     this.disposeParam.Auditing = true;
                 }
-                if(item.orderStatus==40&&item.type==1){ 
+                if(item.orderStatus==40&&item.type==1){
                     this.disposeParam.tips="订单已支付，请等待卖家发货！";
                     this.disposeParam.sendoff = true;
                 }
-                if(item.orderStatus==50&&item.type==1){ 
+                if(item.orderStatus==50&&item.type==1){
                     this.disposeParam.tips="订单已发货，请等待买家收货确认！";
                     this.disposeParam.express = true;
                 }
@@ -326,16 +327,6 @@
                     this.disposeParam.tips="买家已收货，订单已完成！";
                 }
             }
-        },
-         route: {
-            activate: function (transition) {
-              console.log('hook-example activated!')
-              transition.next()
-            },
-            deactivate: function (transition) {
-              console.log('hook-example deactivated!')
-              transition.next()
-          }
         },
         events: {
             fresh: function(input) {

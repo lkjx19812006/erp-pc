@@ -1174,10 +1174,12 @@ const mutations = {
            var k = data.indexs[i];
            state.basicBaseList.userList[k].checked = false;
            for (var key in data) {
-                    if(key=="audit"&&data[key]==1){
+                    if(key=="audit"&&data[key]==2){
                         state.basicBaseList.userList[k].auditResult = "已审核";
-                    }else if(key=="audit"&&data[key]==2){
+                    }else if(key=="audit"&&data[key]==3){
                         state.basicBaseList.userList[k].auditResult = "审核不通过";
+                    }else if(key=="audit"&&data[key]==1){
+                        state.basicBaseList.userList[k].auditResult = "审核中";
                     }
                     state.basicBaseList.userList[k][key] = data[key];
                 }
