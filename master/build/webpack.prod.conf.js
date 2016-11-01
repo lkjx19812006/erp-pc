@@ -36,7 +36,9 @@ var webpackConfig = merge(baseWebpackConfig, {
         warnings: false,
         drop_debugger: true,
         drop_console: true
-      }
+      },
+      minimize: true,
+      comments:false
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     // extract css into its own file
