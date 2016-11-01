@@ -1,5 +1,6 @@
 <template>
-    <div class="client_body">
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con modal_overall" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -8,7 +9,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <a class="navbar-brand navbar-name" href="#">{{param.name}}</a>
+                        <span class="navbar-brand navbar-name" href="#">{{param.name}}</span>
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                          <li>
@@ -220,12 +221,6 @@ export default {
 }
 </script>
 <style scoped>
-.client_body {
-    position: relative;
-    background-color: #fff;
-    padding: 20px;
-}
-
 .navbar-client {
     margin-bottom: 0;
     padding-top: 10px;
@@ -294,24 +289,9 @@ section article {
     padding: 10px 5px 40px 5px;
 }
 
-.section_title {
-    font-size: 20px;
-    color: #333;
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
-    margin: 0;
-}
 .contactSet thead{
   color:#fa6705;
 }
-.panel-title-set {
-    margin-top: 6px;
-    margin-left: 26px;
-    display: inline-block;
-    font-size: 20px;
-    color: #333;
-}
-
 .contact-view {
     color: #fa6705;
     margin-bottom: 0;
@@ -335,12 +315,6 @@ section article {
 .client-detailInfo img {
     margin-right: 8px;
 }
-.client-detailInfo label {
-    display: block;
-    color: #333;
-    font-size: 16px;
-}
-
 .btn-orange {
     background-color: #fa6705;
     color: #fff;

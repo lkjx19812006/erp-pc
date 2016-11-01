@@ -272,19 +272,14 @@
 </script>
 <style scoped>
   /* 整个弹框的样式 */
+  .modal{
+    z-index: 1083
+  }
   .modal_con {
     top: 120px;
     width: 620px;
-    left: 0;
-    right: 0;
     bottom: 200px;
-    padding: 0;
-    background-color: #fff;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    z-index: 1080;
+    z-index: 1084;
     overflow: hidden;
     overflow-y: auto;
   }
@@ -298,14 +293,11 @@
     position: fixed;
     top: 120px;
     width: 620px;
+    right: 0;
     left: 0;
     margin: auto;
     text-align: right;
     margin-top: 0;
-  }
-
-  .top-title span {
-    font-size: 28px;
   }
 
   .edit-content {
@@ -314,15 +306,7 @@
     border-bottom: 1px solid #ddd;
   }
 
-  .edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-  }
-
   .edit-model {
-    overflow: hidden;
-    overflow-y: auto;
     padding: 10px 30px 30px 30px;
     margin-bottom:60px;
   }
@@ -356,12 +340,6 @@
     margin-top: 15px;
   }
 
-  .editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
-  }
-
   .edit-input {
     height: 36px;
     line-height: 36px;
@@ -390,19 +368,11 @@
   }
 
   .edit_footer {
-    border-top: 1px solid #ddd;
-    text-align: right;
-    padding: 10px 20px;
-    margin-top: 50px;
-    position: fixed;
     left: 0;
     right: 0;
     bottom: 200px;
     width: 620px;
-    background: #fff;
     margin: auto;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
   }
 
   .btn-confirm {

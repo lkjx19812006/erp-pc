@@ -54,6 +54,10 @@ export default {
     opacity: 0.5;
     background-color: #000;
     display: block;
+    z-index: 1115;
+}
+.modal_con{
+    z-index: 1116;
 }
 .big-font {
     font-size: 36px;

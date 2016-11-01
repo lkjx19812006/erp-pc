@@ -55,7 +55,7 @@
                   <td>{{item.country}}</td>
                   <td>{{item.province}}</td>
                   <td>{{item.city}}</td>
-                  <td>{{item.employee}}</td>
+                  <td>{{item.employeeName}}</td>
                   <td>{{item.comments}}</td>
                   <td v-if="item.clients==0" style="background:red;color:#fff">PC</td>
                   <td v-if="item.clients==1" style="background:green;color:#fff">android</td>

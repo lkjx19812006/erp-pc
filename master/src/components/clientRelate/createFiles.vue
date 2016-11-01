@@ -33,9 +33,9 @@
                 </div>
                 <div class="editpage-input">
                     <label class="editlabel">新建文件</label>
-                    <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                   <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                   <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                    <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
+                   <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
+                   <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
                 </div>
             </section>
         </div>
@@ -87,31 +87,22 @@ export default {
 }
 </script>
 <style scoped>
-.big-font {
-    font-size: 36px;
+.modal{
+    z-index: 1083
 }
-
-.top-title span {
-    font-size: 28px;
+.modal_con{
+    z-index: 1084
+}
+.top-title {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 .edit-content {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
-}
-
 .editsection {
     width: 100%;
     box-sizing: border-box;
@@ -122,11 +113,6 @@ export default {
 }
 .editpage-input {
     margin-top: 15px;
-}
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
 }
 
 .edit-input {

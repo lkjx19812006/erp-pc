@@ -1,80 +1,30 @@
 <template>
-     <chancedetail-model :param="chanceParam" v-if="chanceParam.show"></chancedetail-model>
+     <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
      <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
      <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
-     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
-     <editintent-model :param="editParam" v-if="editParam.show"></editintent-model>
      <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
+     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
      <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
      <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
 
-   <div>
+   <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">会员意向</div>
             <div class="col-xs-5 my_order_search">
-               <!-- <div class="name_search clearfix">
-                   <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchIntention()">
-               </div>
-                             <div class="ordertel_search clearfix">
-                   <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索">
-               </div> -->
-           </div>
+
+            </div>
             <div class="right">
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 <button class="new_btn transfer" @click="search()">搜索</button>
                 <button class="new_btn transfer" @click="intentionAudit()">审核</button>
-                <!-- <button class="new_btn" @click="createIntention({
-                       show:true,
-                       selectCustomer:true,
-                       flag:0,
-                       employeeId:'100014',
-                       title:'新建',
-                       customerName:'',
-                       customerId:'',
-                       customerPhone:'',
-                       breedName:'',
-                       breedId:'',
-                       type:'',
-                       especial:'',
-                       qualification:'',
-                       quality:'',
-                       spec:'',
-                       number:'',
-                       unit:'',
-                       price:'',
-                       address:'',
-                       location:'',
-                       advance:'',
-                       invoic:'',
-                       visit:'',
-                       pack:'',
-                       intl:'',
-                       visit:'',
-                       sampling:'',
-                       sampleNumber:'',
-                       sampleUnit:'',
-                       sampleAmount:'',
-                       status:'',
-                       country:'',
-                       province:'',
-                       city:'',
-                       district:'',
-                       address:'',
-                       key:'intentionList',
-                       link:createIntentionInfo,
-                       url:'/intention/'
-                       })">新建</button>  -->
             </div>
         </div>
-      <!--   <div class="service-nav clearfix">
-          <div class="my_order_search">
-      
-         </div>
-      </div> -->
+        <div class="service-nav clearfix">
+            <div class="my_order_search">
+               
+           </div>
+        </div>
         <div class="order_table">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -85,8 +35,8 @@
                         <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
                         <th>类型</th>
                         <th>特殊的</th>
-                        <th>会员名称</th>
-                        <th>会员手机号</th>
+                        <th>客户名称</th>
+                        <th>客户手机号</th>
                         <th>品种名称</th>
                         <th>资格资质</th>
                         <th>规格</th>
@@ -110,7 +60,6 @@
                         <th>样品价格</th>
                         <th>报价人数</th>
                         <th>审核状态</th>
-                        <!-- <th>上下架</th> -->
                         <th></th>
                     </tr>
                 </thead>
@@ -128,8 +77,8 @@
                             <div v-if="item.especial==1&&item.type==0">紧急求购</div>
                             <div v-if="item.especial==1&&item.type==1">低价资源</div>
                         </td>
-                        <td>{{item.userFullname}}</td>
-                        <td>{{item.userPhone}}</td>
+                        <td>{{item.customerName}}</td>
+                        <td>{{item.customerPhone}}</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
@@ -201,9 +150,7 @@
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offerNumber}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
-                        <!-- <td>
-                          <div>{{item.onSell | onsell}}</div>
-                        </td> -->
+                        
                         <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
@@ -259,28 +206,18 @@
                                                image_t_show:'',
                                                duedate:item.duedate
                                                })">编辑</li>
-                                   <li @click="specDelete({
-                                               id:item.id,
-                                               sub:$index,
-                                               show:true,
-                                               name:item.name,
-                                               title:'意向',
-                                               link:deleteInfo,
-                                               url:'/intention/',
-                                               key:'intentionList'
-                                               })">删除</li>
                                    <li @click="userToClient({
-                                                  name:item.userFullname,
+                                                  name:item.customerName,
                                                   keyname:'transStatus',
                                                   sub:$index,
-                                                  userId:item.userId,
+                                                  //userId:item.userId,
                                                   main:1,
                                                   province:'',
-                                                  phone:item.userPhone,
+                                                  phone:item.customerPhone,
                                                   tel:item.userTel,
                                                   email:item.userEmail,
                                                   qq:item.userQq,
-                                                  type:'',
+                                                  type:0,
                                                   fullname:item.userFullname,
                                                   employeeId:'',
                                                   employeeName:'',
@@ -291,17 +228,16 @@
                                                   countryId:7,
                                                   countryName:'中国',
                                                   contact:{
-                                                   name: item.userFullname,
+                                                   name: item.customerName,
                                                    position: '',
                                                    department: '',
-                                                   phone: item.userPhone,
+                                                   phone: item.customerPhone,
                                                    tel: item.userTel,
                                                    email: item.email,
                                                    qq: item.userQq,
                                                    wechart: ''
                                                   }
                                                 },item.show=false)">划转</li>
-                                   <li v-if="item.validate==0" @click="audit($index,item.id)">审核</li>
                                </ul>
                            </div>
                        </td>
@@ -312,76 +248,6 @@
             </table>
 
         </div>
-        <!-- <div v-if="supdemParam.breedId!=''&&initSupplyDemandList.length!=0" style="min-height:30px;max-height:200px;width:87%;overflow-y:auto;position:fixed;bottom:20px;left:250px;z-index:100">
-          <table class="table table-hover table_color table-striped " v-cloak >
-            <thead>
-                <tr>
-                    <th>特殊的</th>
-                    <th>客户名称</th>
-                    <th>客户手机号</th>
-                    <th>规格</th>
-                    <th>单位</th>
-                    <th>单价</th>
-                    <th>产地</th>
-                    <th>数量</th>
-                    <th>国家</th>
-                    <th>所在省</th>
-                    <th>所在市</th>
-                    <th>所在区</th>
-                    <th>交收地址</th>
-                    <th>预付比例</th>
-                    <th>发票</th>
-                    <th>上门看货</th>
-                    <th>包装</th>
-                    <th>是否国际</th>
-                    <th>提供样品</th>
-                    <th>样品数量</th>
-                    <th>样品单位</th>
-                    <th>样品价格</th>
-                    <th>审核状态</th>
-                    <th>上下架</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                    <tr v-for="item in initSupplyDemandList">
-                        <td>{{item.especial | chanceEspec}}</td>
-                        <td>{{item.customerName}}</td>
-                        <td>{{item.customerPhone}}</td>
-                        <td>{{item.spec}}</td>
-                        <td>{{item.unit}}</td>
-                        <td>{{item.price}}</td>
-                        <td>{{item.location}}</td>
-                        <td>{{item.number}}</td>
-                        <td>{{item.country}}</td>
-                        <td>{{item.province}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.district}}</td>
-                        <td>{{item.address}}</td>
-                        <td>{{item.advance}}</td>
-                        <td>{{item.invoic | invoicstate}}</td>
-                        <td>{{item.visit | visitstate}}</td>
-                        <td>{{item.pack}}</td>
-                        <td>{{item.intl | intlstata}}</td>
-                        <td>
-                            <div v-if="item.sampling==0">否</div>
-                            <div v-if="item.sampling==1">是</div>
-                        </td>
-                        <td>{{item.sampleNumber}}</td>
-                        <td>{{item.sampleUnit}}</td>
-                        <td>{{item.sampleAmount}}</td>
-                        <td>{{item.validate}}</td>
-                        <td>
-                          <div v-if="item.onSell==0">初始</div>
-                          <div v-if="item.onSell==1">上架</div>
-                          <div v-if="item.onSell==2">下架</div>
-                        </td>
-                    </tr>
-
-
-                </tbody>
-          </table>
-        </div> -->
         <div class="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
@@ -392,11 +258,9 @@ import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import chancedetailModel from '../../Intention/chanceDetail'
 import transferintentModel from '../../Intention/transferIntent'
+import createintentModel from '../../user/userIntention'
 import intentionauditModel from'../../user/intentionAudit'
 import tipsdialogModel  from '../../tips/tipDialog'
-import deletebreedModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
-import editintentModel  from  '../../Intention/Editintention'
-import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
 import transferModel  from '../../user/userTransfer'
 import searchModel from '../intentionSearch'
@@ -410,20 +274,15 @@ import {
   getIntentionList,
   getSupplyDemandList,
   intentionUpAndDown,
-  deleteInfo,
-  editintentInfo,
-  createIntentionInfo,
 } from '../../../vuex/actions'
 export default {
     components: {
         pagination,
         chancedetailModel,
-        transferintentModel,
         intentionauditModel,
-        tipsdialogModel,
-        deletebreedModel,
-        editintentModel,
         createintentModel,
+        transferintentModel,
+        tipsdialogModel,
         supdemModel,
         transferModel,
         searchModel
@@ -437,9 +296,7 @@ export default {
             getIntentionList,
             getSupplyDemandList,
             intentionUpAndDown,
-            deleteInfo,
-            editintentInfo,
-            createIntentionInfo,
+            
         }
     },
     data() {
@@ -451,7 +308,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                link:'/intention/user/list',
+                link:'/intention/resource/list',
                 type:'',
                 invoic:'',
                 visit:'',
@@ -459,8 +316,7 @@ export default {
                 sampling:'',
                 status:'',
                 advance:'',
-                customerName:'',
-                total:0
+                customerName:''
             },
             supdemParam:{
                 show:false,
@@ -494,12 +350,6 @@ export default {
                 indexs:[],
                 validate:0,
                 description:''
-            },
-            deleteParam:{
-              show:false
-            },
-            editParam:{
-              show:false
             },
             createParam:{
               show:false

@@ -87,7 +87,8 @@ import {
    ORDER_PAY_DATA,
    ORDER_ROLLOUT_DATA,
    EXPRESS_DETAIL_DATA,
-   BATCH_ORG_ORDER
+   BATCH_ORG_ORDER,
+   UPDATE_ENTERPRISE
 
 } from '../mutation-types'
 
@@ -757,6 +758,13 @@ const mutations = {
             "url":data.url
         })
     },
+    [UPDATE_ENTERPRISE](state, data) { //修改企业列表
+      console.log(data)
+        for (var i in data) {
+            state.basicBaseList[data.key][data.sub][i] = data[i];
+        }
+        console.log(state.basicBaseList[data.key][data.sub])
+    },
     [ADD_CONTACT_DATA](state, data) { //新增企业联系人
         state.companyDetail.companyContacts.arr.unshift({
             "name": data.name,
@@ -767,7 +775,8 @@ const mutations = {
             "email": data.email,
             "show": false,
             "id": data.id,
-            "main":data.main
+            "main":data.main,
+            "position":data.position
         })
         console.log(data.id)
     },

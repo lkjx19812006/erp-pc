@@ -91,11 +91,16 @@ export default {
 }
 </script>
 <style scoped>
-.big-font {
-    font-size: 36px;
+.modal{
+    z-index: 1083
 }
-.top-title span {
-    font-size: 28px;
+.modal_con{
+    z-index: 1084
+}
+.top-title {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .edit-content {
@@ -103,19 +108,6 @@ export default {
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
-}
-
 .editsection {
     width: 100%;
     box-sizing: border-box;

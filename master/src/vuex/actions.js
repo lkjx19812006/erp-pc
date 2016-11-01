@@ -801,6 +801,9 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
 export const orderCancle = ({ dispatch }, param,data) => { //订单取消状态
     console.log(param)
     console.log(data);
+    param.show=false;
+    data.show=false;
+    return ;
     const body = {
        orderId:param.id,
        cancleCauses:param.cancleCauses
@@ -1219,10 +1222,11 @@ export const getDistrictList = ({ dispatch }, param) => { //获取区的列表
 }
 
 export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
+    console.log(param)
     param.loading = true;
     Vue.http({
         method: "GET",
-        url: apiUrl.clientList + '/company/query?type=&name=&category=&province=&transform=&page=' + param.cur + '&pageSize=15',
+        url: apiUrl.clientList + '/company/query?type=&name=&city=&category=&province=&transform=&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -1243,7 +1247,7 @@ export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
     });
 }
 export const getCompanyData = ({ dispatch }, param) => { //企业搜索
-    param.loading = true;
+ param.loading = true;
   if(!param.cur){
     param.cur='';
   }
@@ -1266,15 +1270,20 @@ export const getCompanyData = ({ dispatch }, param) => { //企业搜索
         }else if(key=='category'){
             url +='&category='
         }
-        if(key=='conProvince'&&param[key]!==''){
-            url +='&province='+ param.conProvince
-        }else if(key=='conProvince'){
+        if(key=='province'&&param[key]!==''){
+            url +='&province='+ param.province
+        }else if(key=='province'){
             url +='&province='
         }
         if(key=='transform'&&param[key]!==''){
             url +='&transform='+ param.transform
         }else if(key=='transform'){
             url +='&transform='
+        }
+        if(key=='city'&&param[key]!=='' &&param[key]!==undefined){
+            url +='&city='+ param.city
+        }else if(key=='city'){
+            url +='&city='
         }
     }
     console.log(url);
@@ -1339,6 +1348,30 @@ export const getCompanyDetail = ({ dispatch }, param) => { //获取企业详情
         console.log('fail');
     });
 }
+export const updateEnterprise = ({ dispatch }, param) => { //修改企业电话备注
+    console.log(param)
+    const alterdata = {
+        tel: param.tel,
+        remark:param.remark,
+        id:param.id
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.enterpriseList,
+        emulateHTTP: false,
+        body: alterdata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.UPDATE_ENTERPRISE, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 export const alterCompany = ({ dispatch }, param) => { //修改企业联系人
     const alterdata = {
         name: param.name,
@@ -1402,7 +1435,8 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
         "phone": param.phone,
         "wechart": param.wechart,
         "email": param.email,
-        "main":param.main
+        "main":param.main,
+        "position":param.position
     }
     Vue.http({
         method: "POST",
@@ -1818,6 +1852,8 @@ export const specDel = ({ dispatch }, param) => { //删除药材相关信息
 export const getClientList = ({ dispatch }, param) => {  //客户信息列表与搜索
     param.loading = true;
     console.log(param);
+    console.log(param.phoneCityName);
+    console.log(param.phoneProvinceName);
     var clienturl = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
     for(var search in param){
         if(search=='name'&&param[search]!==''&&param[search]!='undefine'){
@@ -1862,6 +1898,7 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         clienturl += '&phoneProvince='+param.phoneProvinceName
       }
     }
+
     Vue.http({
         method:'GET',
         url:clienturl,
@@ -2066,6 +2103,7 @@ export const getOrgClientList = ({ dispatch }, param) => {  //部门客户信息
 
 export const customerTransferBlacklist  = ({ dispatch }, param) => {
             param.loading = true;
+            console.log(param);
             const data={};
             if(param.link=='/customer/transferBlacklist'){
                 data.blackComments=param.blackComments;
@@ -2954,7 +2992,6 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
 
 export const getSupplyDemandList = ({ dispatch }, param) => {  //匹配供求信息(意向)
     param.loading = true;
-    param.type = 1;
     var url = apiUrl.clientList+param.link+'?type='+param.type+'&breedId='+param.breedId;
     Vue.http({
         method:'GET',
@@ -3035,11 +3072,20 @@ export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
 export const getOfferList = ({ dispatch }, param) => {  //报价信息列表以及搜索
     param.loading = true;
     var url = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
-    if('intentionId' in param&&param.intentionId!==''){
-        url += '&intentionId='+param.intentionId
+    if('fullname' in param&&param.fullname!==''){
+        url += '&fullname='+param.fullname
     }
-    if('customerId' in param&&param.customerId!==''){
-        url += '&customerId='+param.customerId
+    if('breedName' in param&&param.breedName!==''){
+        url += '&breedName='+param.breedName
+    }
+    if('spec' in param&&param.spec!==''){
+        url += '&spec='+param.spec
+    }
+    if('startTime' in param&&param.startTime!==''){
+        url += '&startTime='+param.startTime
+    }
+    if('endTime' in param&&param.endTime!==''){
+        url += '&endTime='+param.endTime
     }
     Vue.http({
         method:'GET',
@@ -3162,8 +3208,8 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
         if(key=='bizMain'&&param[key]!==''){
              url += '&bizMain='+param[key];
         }
-        if(key=='bizType'&&param[key]!==''){
-        url += '&bizType='+param[key];
+        if(key=='busiType'&&param[key]!==''){
+        url += '&busiType='+param[key];
         }
         if(key=='audit'&&param[key]!==''){
              url += '&audit='+param[key];
@@ -3622,7 +3668,7 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
     })
 }
 
-export const editintentInfo = ({ dispatch }, param) => { //修改意向
+export const editintentInfo = ({ dispatch }, param,tipParam) => { //修改意向
 
   param.images='';
   if(param.image_f){param.images+=param.image_f+','}
@@ -3674,13 +3720,14 @@ export const editintentInfo = ({ dispatch }, param) => { //修改意向
         }
     }).then((res) => {
         console.log('修改成功!!!!')
+        tipParam.show = true;
         dispatch(types.UPDATA_INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');
     })
 }
 
-export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
+export const createIntentionInfo = ({ dispatch }, param,tipParam) => { //新增意向
       if(!param.images){
         param.images='';
       }
@@ -3740,6 +3787,7 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
         param.id=res.json().result.intentionId;
         param.validate = 0;
         param.checked = false;
+        tipParam.show = true;
         dispatch(types.INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');

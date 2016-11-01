@@ -7,7 +7,38 @@
   <div v-show="!changeParam.show">
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">产品列表</div>
-      <div class="right col-xs-2">
+      <div class="my_order_search  col-xs-7">
+               <div class="filter_search clearfix">
+                    <dl class="clearfix">
+                        <dt>类型：</dt>
+                        <dd>
+                            <select class="form-control"  v-model="loadParam.type" @change="searchProduct()">
+                                <option value="">请选择类型</option>
+                                <option>药材</option>
+                                <option>提取物</option>
+                                <option>饮片</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>状态：</dt>
+                        <dd>
+                            <select class="form-control" v-model="loadParam.status" @change="searchProduct()">
+                                <option value="">请选择状态</option>
+                                <option value="0">无效</option>
+                                <option value="1">可用</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>名称：</dt>
+                        <dd>
+                            <input type="text"  class="form-control" placeholder="按产品名称全称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
+                        </dd>
+                    </dl>
+               </div>
+           </div>
+      <div class="right col-xs-3">
         <button class="new_btn transfer" @click="createCustomer({
                                              show:true,
                                              title:'新建产品',
@@ -26,43 +57,10 @@
                                              link:newProduct,
                                              url:'/customer/product'
                                         })">新建</button>
-        <button class="new_btn"  @click="searchProduct()">搜索</button>
+        <button class="new_btn transfer"  @click="searchProduct()">搜索</button>
+        <button class="new_btn"  @click="reset()">清除搜索</button>
       </div>
     </div>
-     <div class="service-nav clearfix">
-            <div class="my_order_search">
-               <div class="filter_search clearfix">
-                    <dl class="clearfix">
-                        <dt>类型：</dt>
-                        <dd>
-                            <select  v-model="loadParam.type" @change="searchProduct()">
-                                <option value="">请选择类型</option>
-                                <option>药材</option>
-                                <option>提取物</option>
-                                <option>饮片</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>状态：</dt>
-                        <dd>
-                            <select v-model="loadParam.status" @change="searchProduct()">
-                                <option value="">请选择状态</option>
-                                <option value="0">无效</option>
-                                <option value="1">可用</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>名称：</dt>
-                        <dd>
-                            <input type="text"  placeholder="按产品名称全称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
-                        </dd>
-                    </dl>
-
-               </div>
-           </div>
-        </div>
     <div class="order_table">
       <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -223,6 +221,11 @@
       createCustomer:function(initProductlist){
         this.createParam = initProductlist;
       },
+      reset:function(){
+        this.loadParam.name="";
+        this.loadParam.type="";
+        this.loadParam.status="";
+      },
       createSearch:function(){
         this.loadParam.show=true;
       },
@@ -259,12 +262,16 @@
   .transfer{
     margin-left: 18px;
   }
+  .filter_search dl dt{
+    font-size: 14px;
+    padding-top: 7px;
+  }
   .search_input{
     border: 1px solid #ddd;
-    font-size: 16px;
+    font-size: 14px;
   }
   .filter_search dl{
-    font-size: 16px;
+    font-size: 14px;
   }
   .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

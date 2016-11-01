@@ -2,6 +2,7 @@
     <div  id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
+    <tipdialog-model :param="tipParam" v-if="tipParam.show"></tipdialog-model>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -34,9 +35,9 @@
                <div class="editpage">
                <div class="editpage-input" style="width:100%">
                  <label class="editlabel">药材图片</label>
-                 <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                 <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                 <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                 <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+                 <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+                 <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
                </div>
                  </div>
                  <div class="editpage">
@@ -238,7 +239,7 @@
                          <label class="editlabel">过期时间</label>
                          <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">
                          </mz-datepicker>
-                         <button type="button" class="btn btn-default" height="24" width="24" @click="param.duedate=''">清空</button>
+                         <button type="button" class="btn btn-default" height="24" width="24" @click="reset()">清空</button>
                        </div>
                      </div>
 
@@ -335,18 +336,18 @@
           </div>
           <div class="edit_footer">
               <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-              <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="createOrUpdateIntention(param,param.show = false)">确定</button>
+              <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="createOrUpdateIntention()">确定</button>
               <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
           </div>
         </validator>
     </div>
 </template>
 <script>
-import calendar from '../calendar/vue.datepicker'
 import searchbreedModel  from '../Intention/breedsearch'
 import searchcustomerModel  from '../Intention/clientname'
 import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
+import tipdialogModel from '../tips/tipDialog'
 import pressImage from '../imagePress'
 import {
     initCountrylist,
@@ -372,11 +373,18 @@ export default {
         searchcustomerModel,
         vSelect,
         inputSelect,
+        tipdialogModel,
         pressImage
     },
     props: ['param'],
     data() {
         return {
+          tipParam:{
+              show:false,
+              name:'',
+              remain:true,
+              callback:this.callback
+          },
           breedParam:{
               show:false,
               breedName:'',
@@ -479,27 +487,40 @@ export default {
                 this.empNameParam.employeeId = this.param.employeeId;
             }
       },
+      callback:function(){
+          this.param.show=false;
+          this.tipParam.show=false;
+      },
       createOrUpdateIntention:function(){
         if(this.param.flag==0){
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
-          if(this.district.cname){this.param.district = this.district.cname;}
-          else{this.param.district ='';}
-          this.param.show=false;
-          this.createIntentionInfo(this.param);
+          if(this.district.cname){
+            this.param.district = this.district.cname;
+          }else{
+            this.param.district ='';
+          }
+          this.tipParam.name = '新建意向成功';
+          //this.param.show=false;
+          this.createIntentionInfo(this.param,this.tipParam);
         }
         if(this.param.flag==1){
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
           this.param.district = this.district.cname;
-          this.param.show=false;
-          this.editintentInfo(this.param);
+          this.tipParam.name = '修改意向成功';
+          //this.param.show=false;
+          this.editintentInfo(this.param,this.tipParam);
         }
 
       },
-
+      reset:function(){
+        console.log(this.param.duedate)
+          this.param.duedate="";
+           console.log(this.param.duedate)
+      },
       selectProvince:function(){
         this.province = '';
         this.city = '';
@@ -568,30 +589,22 @@ export default {
 }
 </script>
 <style scoped>
-
-.big-font {
-    font-size: 36px;
+.modal{
+  z-index: 1083
 }
-.top-title span {
-    font-size: 28px;
+.modal_con{
+  z-index: 1084
+}
+.top-title{
+    position: absolute;
+    top: 0;
+    right:0;
 }
 
 .edit-content {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 70px 30px;
 }
 
 .editsection {
@@ -631,12 +644,6 @@ export default {
 
 .editpage-input {
     margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
 }
 
 .edit-input {

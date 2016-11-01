@@ -8,6 +8,7 @@
 
             </div>
             <div class="right col-xs-2">
+              <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
               <button class="new_btn transfer" @click="searchOffer()">搜索</button>
               <!-- <button class="new_btn" @click="createIntention()">新建</button> -->
             </div>
@@ -65,11 +66,11 @@
                            <div v-else>已采纳</div>
 
                         </td>
-                        <td v-if="item.orderTime==0" @click.stop="clickShow($index)">
+                        <td @click.stop="clickShow($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
-                               <ul>
-                                   <li @click="adopt(item,$index)">采纳</li>
+                               <ul >
+                                   <li v-if="item.orderTime==0"  @click="adopt(item,$index)">采纳</li>
                                </ul>
                            </div>
                        </td>
@@ -179,6 +180,14 @@ export default {
     methods: {
         searchOffer:function(){
           this.loadParam.show = true;
+        },
+        resetCondition:function(){
+          this.loadParam.breedName='';
+          this.loadParam.spec='';
+          this.loadParam.fullname='';
+          this.loadParam.startTime='';
+          this.loadParam.endTime='';   
+          this.getOfferList(this.loadParam);
         },
         clickShow:function(index){
         	this.$store.state.table.basicBaseList.offerList[index].show=!this.$store.state.table.basicBaseList.offerList[index].show;

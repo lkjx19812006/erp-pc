@@ -1,6 +1,6 @@
 <template>
-    <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
-    <div v-show="!changeParam.show">
+    <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
+    <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">成分</div>
             <div class="col-xs-4 my_order_search">

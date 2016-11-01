@@ -123,8 +123,8 @@ export default {
 </script>
 <style scoped>
 .modal_con{
-    max-height: 600px;
-    max-width: 600px;
+    height: 600px;
+    width: 600px;
 }
 .top-title{
     position: absolute;
@@ -148,12 +148,6 @@ export default {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
 }
 
 .edit-model {
@@ -189,12 +183,6 @@ export default {
 
 .editpage-input {
     margin-top: 0px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
 }
 
 .edit-input {

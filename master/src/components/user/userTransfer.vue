@@ -90,7 +90,7 @@
             </div>
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                 <label class="editlabel" for="system">电话<span class="system_danger" v-if="$validation.tel.tel">请输入正确的电话</span></label>
+                 <label class="editlabel" for="system">电话<span class="system_danger" v-if="$validation.tel.tel">请输入正确的电话（例：021-60154155）</span></label>
                  <input type="text" class="form-control" v-validate:tel="['tel']" v-model="param.tel" />
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
@@ -484,12 +484,18 @@
   }
 </script>
 <style scoped>
+.modal{
+  z-index: 1083;
+}
   .modal_con {
     width: 840px;
+    z-index: 1084;
   }
 
   .top-title {
     width: 840px;
+    position: fixed;
+    top: 91px;
   }
 
   .editsection {

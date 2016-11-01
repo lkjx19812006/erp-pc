@@ -95,7 +95,12 @@
                             </div>
                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">价格过期时间</label>
-                                <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss"></mz-datepicker>
+                                <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm"></mz-datepicker>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <button type="button" class="btn btn-default" height="24" width="24" @click="param.duedate=''">清空时间</button>
                             </div>
                         </div>
                     </section>
@@ -209,11 +214,10 @@ export default {
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
+.top-title{
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .edit-model {
@@ -248,12 +252,6 @@ export default {
 
 .editpage-input {
     margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
 }
 
 .edit-input {

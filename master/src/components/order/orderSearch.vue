@@ -202,6 +202,7 @@ export default {
 <style scoped>
 .modal_con{
     width: 600px;
+    bottom: 125px
 }
 .top-title{
     position: absolute;
@@ -209,9 +210,8 @@ export default {
     top: 0;
 }
 .edit_footer{
-    position: fixed;
-    bottom: 20px;
     width: 600px;
+    bottom: 125px
 }
 .empSearch{
     position: absolute;
@@ -239,10 +239,6 @@ export default {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-}
-
-.edit-model {
-    padding: 10px 30px 30px 30px;
 }
 
 .editsection {

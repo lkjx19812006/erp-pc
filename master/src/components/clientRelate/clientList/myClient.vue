@@ -1,13 +1,13 @@
 <template>
     <create-model :param="createParam" v-if="createParam.show"></create-model>
-    <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
+    <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-    <div v-show="!changeParam.show">
+    <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">我的客户</div>
             <div class="right col-xs-8">
@@ -53,7 +53,9 @@
                                         ],
                                         link:saveCreate,
                                         })">新建</button>
+                <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
+
             </div>
         </div>
         <div class="order_table">
@@ -196,7 +198,7 @@ import {
     initCustomerlist
 } from '../../../vuex/getters'
 import {
-    getMyClientList,
+    getClientList,
     deleteInfo,
     alterInfo,
     saveCreate,
@@ -220,7 +222,7 @@ export default {
             initCustomerlist
         },
         actions: {
-            getMyClientList,
+            getClientList,
             deleteInfo,
             alterInfo,
             saveCreate,
@@ -249,6 +251,10 @@ export default {
                 province:'',
                 city:'',
                 cityName:'',
+                phoneCityName:'',
+                phoneProvinceName:'',
+                label:'',
+                creditLevel:'',
                 total:0
             },
             changeParam: {
@@ -300,6 +306,25 @@ export default {
         },
         createSearch:function(){
             this.loadParam.show=true;
+        },
+        resetCondition:function(){
+            this.loadParam.name='';
+            this.loadParam.phone='';
+            this.loadParam.employeeId='';
+            this.loadParam.employeeName='';
+            this.loadParam.type='';
+            this.loadParam.classify='';
+            this.loadParam.status='';
+            this.loadParam.bizScope='';
+            this.loadParam.provinceName='';
+            this.loadParam.province='';
+            this.loadParam.city='';
+            this.loadParam.cityName='';
+            this.loadParam.phoneCityName='';
+            this.loadParam.phoneProvinceName='';
+            this.loadParam.label='';
+            this.loadParam.creditLevel='';
+            this.getClientList(this.loadParam);
         },
         eventClick:function(id){
             if(this.$store.state.table.basicBaseList.customerList[id].show){
@@ -408,17 +433,17 @@ export default {
             }
         },
         searchClient:function(){
-            this.getMyClientList(this.loadParam)
+            this.getClientList(this.loadParam)
         }
     },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getMyClientList(this.loadParam);
+            this.getClientList(this.loadParam);
         }
     },
     created() {
-        this.getMyClientList(this.loadParam);
+        this.getClientList(this.loadParam);
     },
     filter:(filter,{})
 }

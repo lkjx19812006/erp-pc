@@ -1,10 +1,12 @@
 <template>
     <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
     <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
-    <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
-    <div class="client_body" v-show="!disposeParam.show">
-      <div @click="param.show=false" class="top-title">
-            <span class="glyphicon glyphicon-remove-circle"></span>
+    <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
+    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con" v-show="param.show">
+<!--     <div class="client_body" v-show="!disposeParam.show"> -->
+      <div class="top-title">
+            <span class="glyphicon glyphicon-remove-circle" @click="param.show=false"></span>
         </div>
         <div class="cover_loading">
             <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
@@ -14,7 +16,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <a class="navbar-brand navbar-name" href="#">{{initOrderDetail.no}}</a>
+                        <span class="navbar-brand navbar-name" href="#">{{initOrderDetail.no}}</span>
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
                         <li>
@@ -505,7 +507,9 @@ export default {
     background-color: #fff;
     padding: 20px;
 }
-
+.modal_con{
+    width: 70%;
+}
 .navbar-client {
     margin-bottom: 0;
     padding-top: 10px;
@@ -541,12 +545,7 @@ section {
 section article {
     margin-top: 30px;
 }
-.top-title{
-  z-index: 100;
-  width: 100%;
-  right: 0;
-  top: 70px;
-}
+
 .client-section {
     padding: 10px 5px 40px 5px;
 }
@@ -578,19 +577,6 @@ section article {
     background-color: #fa6705;
     color: #fff;
     font-size: 18px;
-}
-.label_action{
-  position: absolute;
-  top:13px;
-  right: 32px;
-  border: 1px solid #ccc;
-    border-radius: 3px;
-    background: #fff;
-    z-index: 1000;
-    min-width: 90px;
-    cursor: pointer;
-    padding: 5px 10px;
-    max-width: 200px;
 }
 .client-editbtn {
     text-align: right;

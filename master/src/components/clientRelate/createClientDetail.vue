@@ -96,36 +96,29 @@ export default {
 }
 </script>
 <style scoped>
+.modal{
+    z-index: 1083
+}
 .modal_con{
     max-height: 600px;
+    z-index: 1084
 }
 .edit_footer{
     position: absolute;
     width: 100%;
     bottom: 10px;
 }
-.big-font {
-    font-size: 36px;
-}
+
 .top-title{
     position: absolute;
     width: 100%;
     top: 0;
-}
-.top-title span {
-    font-size: 28px;
 }
 
 .edit-content {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
 }
 
 .edit-model {

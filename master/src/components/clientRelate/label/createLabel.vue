@@ -56,43 +56,30 @@ export default {
 }
 </script>
 <style scoped>
+.modal{
+    z-index: 1083
+}
 .modal_con{
-    max-height: 400px;
-    width: 32%;
+    height: 300px;
+    width: 400px;
+    z-index: 1084;
 }
 .edit_footer{
     position: absolute;
     width: 100%;
     bottom: 10px;
 }
-.big-font {
-    font-size: 36px;
-}
+
 .top-title{
     position: absolute;
     width: 100%;
     top: 0;
-}
-.top-title span {
-    font-size: 28px;
 }
 
 .edit-content {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
 }
 
 .editsection {
@@ -115,13 +102,6 @@ export default {
 .editpage-input {
     margin-top: 15px;
 }
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
-}
-
 .edit-input {
     height: 36px;
     line-height: 36px;

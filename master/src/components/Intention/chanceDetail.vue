@@ -3,16 +3,17 @@
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
   <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
   <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
-    <div class="client_body">
-        <div @click="param.show=false" class="top-title">
-            <span class="glyphicon glyphicon-remove-circle" style="top:-60px"></span>
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con modal_overall" v-show="param.show">
+        <div class="top-title">
+            <span class="glyphicon glyphicon-remove-circle"  @click="param.show=false" ></span>
         </div>
         <div class="client_nav">
             <nav class="navbar navbar-client" role="navigation">
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <a class="navbar-brand navbar-name" href="#">{{param.customerName}}</a>
+                        <span class="navbar-brand navbar-name">{{param.customerName}}</span>
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                          <li>
@@ -395,7 +396,7 @@
     </div>
 </template>
 <script>
-  import trackingModel from  '../user/userTracking'
+import trackingModel from  '../user/userTracking'
 import filter from '../../filters/filters'
 import tipsdialogModel  from '../tipsDialog'
 import createorderModel  from './createOrder'
@@ -574,11 +575,6 @@ export default {
 }
 </script>
 <style scoped>
-.client_body {
-    position: relative;
-    background-color: #fff;
-    padding: 20px;
-}
 
 .navbar-client {
     margin-bottom: 0;
@@ -591,17 +587,11 @@ export default {
     margin-right: 10px;
 }
 
-.navbar-name {
-    color: #fa6705;
-    font-size: 20px;
-}
-
 .btn-base {
     background-color: #fff;
     border: 1px solid #ddd;
     color: #003077;
     margin-right: 5px;
-    font-size: 14px;
 }
 
 section {
@@ -647,24 +637,9 @@ section article {
     padding: 10px 5px 40px 5px;
 }
 
-.section_title {
-    font-size: 20px;
-    color: #333;
-    border-bottom: 1px solid #ddd;
-    padding: 15px 0;
-    margin: 0;
-}
 .contactSet thead{
   color:#fa6705;
 }
-.panel-title-set {
-    margin-top: 6px;
-    margin-left: 26px;
-    display: inline-block;
-    font-size: 20px;
-    color: #333;
-}
-
 .contact-view {
     color: #fa6705;
     margin-bottom: 0;
@@ -695,12 +670,6 @@ section article {
 .client-detailInfo img {
     margin-right: 8px;
 }
-.client-detailInfo label {
-    display: block;
-    color: #333;
-    font-size: 16px;
-}
-
 .btn-orange {
     background-color: #fa6705;
     color: #fff;

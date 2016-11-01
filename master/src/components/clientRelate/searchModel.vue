@@ -242,7 +242,7 @@ export default {
     },
     methods:{
         clientSearch:function(){
-             this.getClientList(this.param);
+              this.getClientList(this.param);
         },
         employee:function(employeeId,employeeName){
             this.empNameParam.show=true;
