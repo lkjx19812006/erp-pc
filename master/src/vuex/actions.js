@@ -801,9 +801,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
 export const orderCancle = ({ dispatch }, param,data) => { //订单取消状态
     console.log(param)
     console.log(data);
-    param.show=false;
-    data.show=false;
-    return ;
+   
     const body = {
        orderId:param.id,
        cancleCauses:param.cancleCauses
@@ -828,33 +826,32 @@ export const orderCancle = ({ dispatch }, param,data) => { //订单取消状态
     })
 }
 
-export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
+export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单支付状态
     console.log(param)
+    console.log(undelinePay)
    /* console.log(sub)
     if(param.payWay==0){
         sub.show=false;
+    }*/
+    undelinePay.images='';
+    if(undelinePay.image_f){
+        undelinePay.images+=undelinePay.image_f+','
     }
-    param.show=false;
-    return ;*/
-    param.images='';
-    if(param.image_f){
-        param.images+=param.image_f+','
-    }
-    if(param.image_s){param.images+=param.image_s+','}
-    if(param.image_t){param.images+=param.image_t};
+    if(undelinePay.image_s){undelinePay.images+=undelinePay.image_s+','}
+    if(undelinePay.image_t){undelinePay.images+=undelinePay.image_t};
     /*var ss= param.images;
     var sss = ss.split(",");//字符串转化为数组
     sss..toString()*/
     const body = {
-       orderId:param.id,
-       payWay:param.payWay
+       orderId:undelinePay.id,
+       payWay:undelinePay.payWay
     }
-    if(param.images){
-        body.images = param.images;
+    if(undelinePay.images){
+        body.images = undelinePay.images;
     }
     Vue.http({
         method: 'POST',
-        url: apiUrl.orderList + param.link,
+        url: apiUrl.orderList + undelinePay.link,
         emulateJSON: true,
         body:body,
         emulateJSON: false,
@@ -864,7 +861,9 @@ export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
         }
     }).then((res) => {
         console.log('支付成功')
-        dispatch(types.ORDER_STATUS, res.json().result);
+        undelinePay.show = false;
+        param.show=false;
+        dispatch(types.ORDER_STATUS, undelinePay);
     }, (res) => {
         console.log('fail');
     })

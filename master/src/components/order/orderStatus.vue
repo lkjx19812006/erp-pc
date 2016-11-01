@@ -136,7 +136,7 @@
                     payWay:'',
                     orderStatus:'',
                     images:'',
-                    callback:yankuanPayorder
+                    callback:underPay
                     })"  value="支付" />
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
@@ -283,8 +283,12 @@ export default {
             yaokuanPaySelected:false,
             undelinePay:{
                show:false,
-               callback:'undelinePayorder',
-               images:''
+               images:'',
+               callback:'',
+               id:'',
+               link:'',
+               payWay:'',
+               orderStatus:''
             },
             payorder:{
               show:false,
@@ -372,22 +376,22 @@ export default {
           payorder.payWay = this.payWay;
           console.log(payorder.payWay)
 
-           if(payorder.payWay==0){
+           if(payorder.payWay==0){    //线下打款
                this.undelinePay=payorder;
                console.log(payorder)
                this.$broadcast('getImageData');
-            }else if(payorder.payWay==3){
-               this.yankuanPayorder(payorder);
+            }else if(payorder.payWay==3){    //药款支付
+               this.yankuanPayorder(this.param,payorder);
                console.log(this.param)
-               this.param.show=false;
+               //this.param.show=false;
             }else {
                console.log('请选择支付方式');
             }
 
         },
-       /* underline:function(){
-          this.yankuanPayorder(this.payorder)
-        }*/
+        underPay:function(){
+            this.yankuanPayorder(this.param,this.undelinePay);
+        },
     },
     created() {
         this.getExpressList(this.loadParam); 
