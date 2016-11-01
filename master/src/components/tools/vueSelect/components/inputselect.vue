@@ -443,6 +443,7 @@
               this.value.push(option)
             }
           } else {
+
             this.value = option
           }
         }

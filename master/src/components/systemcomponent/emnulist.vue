@@ -112,7 +112,8 @@ export default {
                 size: '15px',
                 all:10,
                 cur:1,
-                sel:''
+                sel:'',
+                total:0
             },
             dialogParam:{
                  show: false,

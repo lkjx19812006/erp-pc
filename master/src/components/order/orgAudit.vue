@@ -3,7 +3,7 @@
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
-        </div>  
+        </div>
         <div class="edit-content">
             <h3>{{param.title}}</h3>
         </div>
@@ -21,10 +21,10 @@
                     <div class="editpage-input">
                            <label class="editlabel">备注</label>
                            <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none" rows="5" value="{{param.description}}"></textarea>
-                    </div>        
+                    </div>
                </div>
            </section>
-        </div>  
+        </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <button type="button" class="btn  btn-confirm" @click="pass(param)">通过</button>
@@ -36,18 +36,18 @@
 import {
     /*initAuditLabel*/
 } from '../../vuex/getters'
-import {   
+import {
    /* auditQuickEdit,*/
     batchOrgOrder
 } from '../../vuex/actions'
 export default {
     components: {
-        
+
     },
     props: ['param'],
     data() {
         return {
-            
+
         }
     },
     vuex: {
@@ -57,16 +57,6 @@ export default {
         actions: {
             /*auditQuickEdit,*/
             batchOrgOrder
-        } 
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
         }
     },
     methods: {
@@ -78,28 +68,28 @@ export default {
         pass: function(param){
             console.log(this.param)
             if(this.param.validate==0){
-                this.param.validate = 1;   
-                this.param.show=false;    
+                this.param.validate = 1;
+                this.param.show=false;
                 this.batchOrgOrder(this.param);
             }else if(this.param.validate==1){
-                this.param.validate = 2;   
-                this.param.show=false;    
+                this.param.validate = 2;
+                this.param.show=false;
                 this.batchOrgOrder(this.param);
             }
         },
         reject: function(param){
             this.param.validate = -2;
-            this.param.show=false;  
+            this.param.show=false;
             console.log(this.param.ids);
             console.log(this.param.description);
             console.log(this.param.indexs);
             this.batchOrgOrder(this.param);
         },
     },
-    /*created() { 
+    /*created() {
         this.auditQuickEdit();
    }*/
-    
+
 }
 </script>
 <style scoped>

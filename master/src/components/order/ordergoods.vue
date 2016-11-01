@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </section>
                 </div>
                 <div class="edit_footer">
@@ -84,21 +84,11 @@ export default {
     props: ['param'],
     data() {
         return {
-          
+
         }
     },
     methods:{
 
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
     }
 }
 </script>

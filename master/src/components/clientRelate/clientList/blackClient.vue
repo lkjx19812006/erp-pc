@@ -142,7 +142,8 @@
           province:'',
           city:'',
           cityName:'',
-          blacklist:1
+          blacklist:1,
+          total:0
         },
         searchParam:{
           show:false,

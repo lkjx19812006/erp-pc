@@ -383,7 +383,8 @@ export default {
                 sampling:'',
                 status:'',
                 advance:'',
-                customerName:''
+                customerName:'',
+                total:0
             },
             supdemParam:{
                 show:false,

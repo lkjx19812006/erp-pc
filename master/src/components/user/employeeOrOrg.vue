@@ -1,5 +1,7 @@
 <template>
+  <tree-dialog v-if="treeParam.show" :param="treeParam" ></tree-dialog>
 	 <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+
 	 <div class="container modal_con" v-show="param.show">
        <div @click="param.show = false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -34,12 +36,13 @@
 
                         </div>
                         <div class="col-xs-1 pull-left"></div>
-                        <div class="input-group col-xs-4">
-                            <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
-                            <input type="text" class="form-control" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @keyup.enter="employSearch()">
+                        <div class="input-group col-xs-4" @click="treeParam.show=true">
+                          <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
+                          <input type="text" class="form-control"  value="{{treeParam.orgName}}" disabled=true placeholder="点击选择部门" >
+                            <!--<input type="button" class="form-control" value="根据部门查找" @click="treeParam.show=true"/>-->
                         </div>
                     </div>
-    				
+
 		            <table class="table table-hover table_head table-striped" style="width:95%;text-align:center" v-cloak>
 		                <thead>
 		                    <tr>
@@ -76,7 +79,7 @@
                                                         <tr>
                                                             <th></th>
                                                             <th>部门名称</th>
-                        
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -85,34 +88,35 @@
                                                                 <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectDepartment($index)" ></label>
                                                             </td>
                                                             <td>{{item.name}}</td>
-                        
+
                                                         </tr>
                                                     </tbody>
                                                 </table>  -->
                         <div>
                             <treeview :value.sync="id"
-                                :model="$store.state.table.basicBaseList.orgList"
+                                :model="initOrgList"
                                 class="form-control"
                                 labelname="name"
                                 valuename="id"
                                 children="lowerList"
                             ></treeview>
-                        </div> 
+                        </div>
                         <div class="edit_footer">
                             <button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
                             <button type="button" class="btn btn-orange" @click="confirmOrg()">确定</button>
-                        </div>                    
+                        </div>
 	    			</div>
 
 	    		</div>
-                
+
 	    	</div>
-	    	
+
 	    </div>
 	</div>
 </template>
 <script>
 import pagination from '../pagination'
+import treeDialog from '../tips/treeDialog'
 import {
     initCustomerlist,
     initEmployeeList,
@@ -126,35 +130,42 @@ import {
 } from '../../vuex/actions'
 export default{
 	components:{
-        pagination
+        pagination,
+        treeDialog
 	},
 	props:['param'],
 	data(){
 		return {
 			currentView:1,
 			isA:true,
-			//isB:true,
 			checked:false,
 			customerFlag:0,
-            id: undefined, // Binded to component.
+      id: undefined, // Binded to component.
 			orgParam: {
-                  loading: true,
-                  color: '#5dc596',
-                  size: '15px',
-                  cur: 1,
-                  all: 7
-              },
-
-              loadParam: {
-                  loading: true,
-                  color: '#5dc596',
-                  size: '15px',
-                  name:'',
-                  mobile:'',
-                  orgId:'',
-                  cur: 1,
-                  all: 7
-              },
+        loading: true,
+        color: '#5dc596',
+        size: '15px',
+        cur: 1,
+        all: 7,
+        total:''
+      },
+      loadParam: {
+        loading: true,
+        color: '#5dc596',
+        size: '15px',
+        name:'',
+        mobile:'',
+        orgId:'',
+        cur: 1,
+        all: 7,
+        total:''
+      },
+      treeParam:{
+        show:false,
+        callback:this.callback,
+        orgId:'',
+        orgName:''
+      }
 
 
 		}
@@ -174,6 +185,14 @@ export default{
 		}
 	},
 	methods:{
+    callback:function(){
+      console.log(this.treeParam);
+      if(this.treeParam.orgId){
+        this.loadParam.orgId=this.treeParam.orgId;
+        this.loadParam.orgName=this.treeParam.orgName;
+        this.employSearch();
+      }
+    },
 		/*bindCustomer:function(){
 			this.currentView=1;
 			//this.isA=!this.isA;
@@ -315,15 +334,15 @@ export default{
 	z-index:1081;
 }
 .modal_con {
-    width: 600px;
+    width: 900px;
     z-index: 1082;
 }
 .top-title{
-	width: 600px;
+	width: 900px;
 	z-index: 1083
 }
 .edit_footer{
-	width:600px;
+	width:900px;
 }
 .trans_service{
 	margin-top: 10px;

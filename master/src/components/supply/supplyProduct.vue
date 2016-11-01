@@ -59,7 +59,7 @@
                             <input type="text"  placeholder="按产品名称全称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
                         </dd>
                     </dl>
-                   
+
                </div>
            </div>
         </div>
@@ -193,6 +193,7 @@
           link:'/customer/product',
           name:'',
           type:'',
+          total:0,
           status:''
         },
         changeParam: {

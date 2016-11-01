@@ -248,7 +248,8 @@ export default {
                 provinceName:'',
                 province:'',
                 city:'',
-                cityName:''
+                cityName:'',
+                total:0
             },
             changeParam: {
                 show: false,

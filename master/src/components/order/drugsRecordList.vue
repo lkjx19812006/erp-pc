@@ -68,7 +68,8 @@
           link:'/customer/product/file',
           name:'',
           type:'',
-          status:''
+          status:'',
+          total:0
         },
         changeParam: {
           show: false
@@ -77,7 +78,7 @@
       }
     },
     methods: {
-      
+
     },
     events: {
       fresh: function(input) {

@@ -138,7 +138,8 @@ export default {
                 conType:'',
                 conProvince:'',
                 category:'',
-                transform:''
+                transform:'',
+                total:0
             },
             companyParam:{
                 id:'',
@@ -163,7 +164,7 @@ export default {
             getProvinceList
         }
 
-    },    
+    },
 
     methods: {
         companyDetail:function(id,index){

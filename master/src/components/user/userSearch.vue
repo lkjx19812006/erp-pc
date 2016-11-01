@@ -115,8 +115,9 @@
                         <select type="text" class="form-control" v-model="param.audit">
                                 <option value="">请选择审核状态</option>
                                 <option value="0">待审核</option>
-                                <option value="1">已审核</option>
-                                <option value="2">审核不通过</option>
+                                <option value="1">审核中</option>
+                                <option value="2">审核通过</option>
+                                <option value="3">审核不通过</option>
                         </select>
                     </div>
 

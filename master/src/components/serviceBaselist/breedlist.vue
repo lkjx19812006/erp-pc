@@ -127,7 +127,8 @@ export default {
                 cur: 1,
                 all: 7,
                categoryId:'',
-               name:''
+               name:'',
+              total:0
             },
             breedParam: {
                 show: false,

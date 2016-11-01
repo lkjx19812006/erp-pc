@@ -5,8 +5,8 @@
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2" style="font-size:14px">我的报价</div>
             <div class="col-xs-9 my_order_search">
-               
-            </div> 
+
+            </div>
             <div class="right col-xs-2">
               <button class="new_btn transfer" @click="searchOffer()">搜索</button>
               <!-- <button class="new_btn" @click="createIntention()">新建</button> -->
@@ -15,7 +15,7 @@
         <div class="service-nav clearfix">
             <div class="my_order_search">
                <div class="filter_search clearfix">
-                    
+
                </div>
            </div>
         </div>
@@ -25,11 +25,11 @@
             </div>
             <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
-                    <tr>  
+                    <tr>
                        <!--  <th>
                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
                        </th> -->
-                        <!-- <th>意向ID</th> -->	
+                        <!-- <th>意向ID</th> -->
                         <th>报价会员</th>
                         <th>会员手机</th>
                         <th>发布意向客户</th>
@@ -55,10 +55,10 @@
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.breedName}}</td>
-                        <td>{{item.price}}</td> 
-                        <td>{{item.number}}</td> 
-                        <td>{{item.total}}</td> 
-                        <td>{{item.incidentals}}</td> 
+                        <td>{{item.price}}</td>
+                        <td>{{item.number}}</td>
+                        <td>{{item.total}}</td>
+                        <td>{{item.incidentals}}</td>
                         <td>{{item.comments}}</td>
                         <td>
                            <div v-if="item.orderTime==0">未采纳</div>
@@ -96,7 +96,7 @@ import {
 	getOfferList
 } from '../../../vuex/actions'
 export default {
-    components: {   
+    components: {
         pagination,
         createorderModel,
         searchModel
@@ -124,9 +124,10 @@ export default {
                 spec:'',
                 fullname:'',
                 startTime:'',
-                endTime:''
+                endTime:'',
+                total:0
             },
-            
+
             offerParam:{
             	show:false,
             	id:''
@@ -144,7 +145,7 @@ export default {
                 incidentals:'',
                 incidentalsDesc:'',
                 preferential:'',   //优惠金额
-                preferentialDesc:'',  
+                preferentialDesc:'',
                 currency:'',     //货币品种
                 consignee:'',    //收货人姓名
                 consigneePhone:'',
@@ -154,9 +155,9 @@ export default {
                 city:'',
                 district:'',
                 consigneeAddr:'',
-                comments:'', 
+                comments:'',
                 sourceType:1,        //商品来源类型(意向)
-                orderStatus:0,   //订单状态   
+                orderStatus:0,   //订单状态
                 goods:[{
                   sourceType:2,   //商品来源类型(报价)
                   sourceId:'',    //商品来源ID
@@ -181,7 +182,7 @@ export default {
         },
         clickShow:function(index){
         	this.$store.state.table.basicBaseList.offerList[index].show=!this.$store.state.table.basicBaseList.offerList[index].show;
-        }, 
+        },
         onlyselected:function(index){
         	var _this = this;
             this.$store.state.table.basicBaseList.offerList[index].checked=!this.$store.state.table.basicBaseList.offerList[index].checked;
@@ -194,19 +195,19 @@ export default {
             			_this.checked = false;
             		}
             	})
-            }	
+            }
         },
         checkedAll:function(){
    			this.checked = !this.checked;
    			if(this.checked){
    				this.$store.state.table.basicBaseList.offerList.forEach(function(item){
    					item.checked = true;
-   				})		
+   				})
    			}else{
    				this.$store.state.table.basicBaseList.offerList.forEach(function(item){
    					item.checked = false;
    				})
-   			}   	
+   			}
         },
         adopt:function(item,index){
             console.log("创建订单");
@@ -216,7 +217,7 @@ export default {
             this.orderParam.customer = item.customerId;
             this.orderParam.incidentals = item.incidentals;
             this.orderParam.incidentalsDesc = item.incidentalsDesc;
-            
+
             this.orderParam.goods[0].sourceId = item.id;
             this.orderParam.goods[0].breedId = item.breedId;
             this.orderParam.goods[0].breedName = item.breedName;
@@ -226,7 +227,7 @@ export default {
             this.orderParam.goods[0].number = item.number;
             this.orderParam.goods[0].quality = item.quality;
             this.orderParam.goods[0].location = item.location;
-            
+
             for(var key in this.orderParam){
                 if(this.orderParam[key]!=''){
                     console.log(key+'=='+this.orderParam[key]);
@@ -235,7 +236,7 @@ export default {
             console.log(this.orderParam.goods[0]);
             return ;
         }
-        
+
     },
     events: {
         fresh: function(input) {
