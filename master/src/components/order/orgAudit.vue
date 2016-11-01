@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>  
         <div class="edit-content">
-            <h3>部门订单审核</h3>
+            <h3>{{param.title}}</h3>
         </div>
         <div class="edit-model">
            <section class="editsection" v-cloak>
@@ -20,7 +20,7 @@
                     </div> -->
                     <div class="editpage-input">
                            <label class="editlabel">备注</label>
-                           <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5" value="{{param.description}}"></textarea>
+                           <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none" rows="5" value="{{param.description}}"></textarea>
                     </div>        
                </div>
            </section>
@@ -104,11 +104,12 @@ export default {
 </script>
 <style scoped>
 .modal_con {
-    width: 554px;
-    height: 400px;
+    width: 454px;
+    height: 300px;
+    top: 0;
 }
 .edit_footer{
-    width: 554px;
+    width: 454px;
     position: absolute;
     bottom: 0;
 }
@@ -118,22 +119,10 @@ export default {
 .top-title{
     position: absolute;
     top: 0;
-    width: 554px;
+    width: 454px;
 }
 .top-title span {
     font-size: 28px;
-}
-
-.edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
 }
 
 .edit-model {
@@ -167,16 +156,6 @@ export default {
     width: 50%;
 }
 
-.editpage-input {
-    margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
-}
-
 .edit-input {
     height: 36px;
     line-height: 36px;
@@ -200,17 +179,9 @@ export default {
     margin-top: 5px;
 }
 
-.edit_footer button {
-    margin-left: 15px;
-}
-
 .btn-confirm {
     background-color: #fa6705;
     color: #fff;
-}
-
-.btn-close {
-    color: #fa6705;
 }
 
 .editpage_img {

@@ -798,7 +798,7 @@ section {
 .breed_action  dt{
     display: block;
     padding: 3px;
-    font-size: 14px;
+    font-size: 12px;
     cursor: pointer;
 }
 .breed_action  dt:hover{

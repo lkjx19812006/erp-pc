@@ -8,7 +8,7 @@
             <div class="cover_loading">
               <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <p>物流单号：{{initLogisticsDetail.codenumber}}</p>
+            <p>物流单号：{{param.number}}</p>
             <p class="clearfix express_condition"><img src="/static/images/logistics.png" class="left" height="25" width="25" />物流情况：</p>
             <div class="condition" v-for="item in initLogisticsDetail.data">  
                 <img src="/static/images/line.png" height="81" width="8"/>
@@ -17,7 +17,6 @@
                     <p>{{item.time}}</p>
                 </div>
             </div>
-           
         </div>
     </div>
 </template>

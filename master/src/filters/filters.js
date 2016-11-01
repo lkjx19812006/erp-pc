@@ -327,3 +327,52 @@ Vue.filter('date',function(val){      //将时间的时分秒去掉
 	}
 
 })
+Vue.filter('orderstatus',function(val){     //订单状态
+	var val = val;
+	if(val==0){
+		 return '订单生成';
+	}
+	if(val==10){
+		 return '订单处理中';
+	}
+	if(val==20){
+		 return '等待支付';
+	}
+	if(val==30){
+		 return '等待审核';
+	}
+	if(val==40){
+		 return '等待卖家发货';
+	}
+	if(val==50){
+		 return '等待收货';
+	}
+	if(val==60){
+		 return '订单已完成';
+	}
+	if(val==70){
+		 return '订单已完成';
+	}
+	if(val==-1){
+		 return '订单已取消';
+	}
+	if(val==-2){
+		 return '订单已过期';
+	}
+})
+
+Vue.filter('Auditing',function(val){     //订单审核
+	var val = val;
+	if(val==0){
+		 return '初始状态';
+	}
+	if(val==1){
+		 return '申请审核';
+	}
+	if(val==2){
+		 return '审核通过';
+	}
+	if(val==-2){
+		 return '审核未通过';
+	}
+})

@@ -56,12 +56,4 @@
     font-size: 30px;
     color: #fff;
   }
-  .tips_name{
-    color: #fa6705;
-    font-size: 28px;
-    margin-top: 40px;
-    display: inline-block;
-    width: 60%;
-    white-space: normal;
-  }
 </style>

@@ -15,13 +15,13 @@
               <section class="editsection">
                   <div style="margin-top:20px;">
                      <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
-                     <h4 style="display:inline">客户信息</h4>
+                     <h5 style="display:inline">客户信息</h5>
                   </div>
                   <div class="editpage">
                       <div class="editpageleft">
                           <div class="editpage-input">
                               <label class="editlabel">订单类别</label>
-                              <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" v-if="param.orderStatus===0||param.orderStatus==10||param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true">
+                              <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true">
                                   <option value="0">采购</option>
                                   <option value="1">销售</option>
                               </select>
@@ -33,7 +33,7 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">来源类型</label>
-                              <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" v-if="param.orderStatus===0||param.orderStatus==10||param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true">
+                              <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true">
                                   <option value="0">新建</option>
                                   <option value="1">意向</option>
                                   <option value="2">报价</option>
@@ -83,10 +83,15 @@
                               </div>
                           </div>
                           
-                          <div class="editpage-input">
-                              <label class="editlabel">邮编</label>
-                               <input type="text" class="form-control edit-input" v-model="param.zipCode" value="{{param.zipCode}}" v-if="param.orderStatus===0||param.orderStatus==10||param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true" />
-                              <input type="text" class="form-control edit-input" v-model="param.zipCode" value="{{param.zipCode}}" v-else />
+                          <div class="editpage-input" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2">
+                               <label class="editlabel">邮编 <span class="system_danger" v-if="$validation.code.postcode">请输入正确的邮编</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:code="['postcode']" value="{{param.zipCode}}" disabled="true" />
+                            
+                          </div>
+                          <div class="editpage-input" v-else>
+                               <label class="editlabel">邮编 <span class="system_danger" v-if="$validation.code.postcode">请输入正确的邮编</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:code="['postcode']" value="{{param.zipCode}}" />
+                            
                           </div>
                            <div class="editpage-input" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" >
                               <label class="editlabel">收货人详细地址 <span class="system_danger" v-if="$validation.addr.required">请输入收货人详细地址</span></label>
@@ -114,7 +119,7 @@
                       <div class="editpageright">
                           <div class="editpage-input">
                               <label class="editlabel">选择客户</label>
-                              <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customer}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true"/>
+                              <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customer}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true"/>
                               <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customer}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)" v-else/ >
                           </div>
                           <div class="editpage-input">
@@ -222,7 +227,7 @@
               <div>
                  <div style="margin-top:20px;">
                      <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
-                     <h4 style="display:inline">订单商品信息</h4>
+                     <h5 style="display:inline">订单商品信息</h5>
                   </div> 
                   <div class="editpage">
                        <div class="editpageleft">
@@ -248,8 +253,8 @@
                               <input type="text" class="form-control edit-input" v-model="param.goods[0].unit" id="unit" v-validate:unit="['required']" value="{{param.goods[0].unit}}"/>
                           </div>
                           <div class="editpage-input" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2">
-                              <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.required">请输入商品的价格</span></label>
-                              <input type="number" class="form-control edit-input" v-model="param.goods[0].price" id="price" v-validate:price="['required']"  value="{{param.goods[0].price}}" disabled="true" />
+                              <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.money">请输入商品的价格</span></label>
+                              <input type="number" class="form-control edit-input" v-model="param.goods[0].price" id="money" v-validate:price="['money']"  value="{{param.goods[0].price}}" disabled="true" />
                           </div>
                           <div class="editpage-input" v-else>
                               <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.required">请输入商品的价格</span></label>
@@ -473,18 +478,6 @@ export default {
     font-size: 28px;
 }
 
-.edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
@@ -518,12 +511,6 @@ export default {
 
 .editpage-input {
     margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
 }
 
 .edit-input {

@@ -87,7 +87,7 @@
                             <option value="3">自营</option>
                         </select>
                     </div>
-                    <div class="client-detailInfo col-xs-6" v-if="param.link='/order/'">
+                    <div class="client-detailInfo col-xs-6" v-if="param.link=='/order/'">
                         <label>下单时间开始：</label>
                         <mz-datepicker :time.sync="param.ctime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
@@ -97,7 +97,7 @@
                         <mz-datepicker :time.sync="param.ctime" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
-                    <div class="client-detailInfo col-xs-6" v-if="param.link='/order/'">
+                    <div class="client-detailInfo col-xs-6" v-if="param.link=='/order/'">
                         <label>下单时间结束：</label>
                         <mz-datepicker :time.sync="param.ftime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
@@ -122,7 +122,7 @@
 <script>
 import calendar from '../calendar/vue.datepicker'
 import {
-   initOrderlist
+   
 } from '../../vuex/getters'
 import {
     getOrderList,
@@ -158,7 +158,7 @@ export default {
     },
     vuex: {
         getters: {
-            initOrderlist
+            
         },
         actions: {
             getOrderList,
@@ -169,6 +169,7 @@ export default {
     methods:{
         clientSearch:function(){
             console.log(this.param)
+
             if(this.param.link=='/order/'){
                 this.getOrderList(this.param);
             }
@@ -184,7 +185,18 @@ export default {
             this.param.ctime = "";
             this.param.ftime = "";
             this.param.consigneePhone = "";
+            this.param.consignee = "";
+            this.param.orderStatus="";
+            this.param.no="";
+            this.param.mode="";
+            this.param.type="";
+            this.param.clients="";
+            this.param.payWay="";
         }
+    },
+    created(){
+        console.log("123456");
+        console.log(this.param);
     },
     route: {
         activate: function(transition) {
@@ -238,12 +250,6 @@ export default {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
 }
 
 .edit-model {

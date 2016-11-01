@@ -31,7 +31,7 @@ export default {
     height: calc(100% - 130px);
     position: absolute;
     right: 0;
-    top: 130px;
+    top: 70px;
     overflow: auto;
     left: 50px;
 }

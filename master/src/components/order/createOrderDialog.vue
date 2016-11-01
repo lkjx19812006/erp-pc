@@ -15,7 +15,7 @@
               <section class="editsection">
                   <div style="margin-top:20px;">
                      <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
-                     <h4 style="display:inline">客户信息</h4>
+                     <h5 style="display:inline">客户信息</h5>
                   </div>
                   <div class="editpage">
                       <div class="editpageleft">
@@ -30,7 +30,7 @@
                           <div class="editpage-input">
                               <label class="editlabel">来源类型</label>
                               <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" >
-                                  <option value="0">新建</option>
+                                  <option value="0" selected>新建</option>
                                   <option value="1">意向</option>
                                   <option value="2">报价</option>
                               </select>
@@ -71,8 +71,8 @@
                           </div>
                           
                           <div class="editpage-input">
-                              <label class="editlabel">邮编</label>
-                              <input type="text" class="form-control edit-input" v-model="param.zipCode" value="{{param.zipCode}}" />
+                              <label class="editlabel">邮编 <span class="system_danger" v-if="$validation.code.postcode">请输入正确的邮编</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:code="['postcode']" value="{{param.zipCode}}" />
                           </div>
                            <div class="editpage-input">
                               <label class="editlabel">收货人详细地址 <span class="system_danger" v-if="$validation.addr.required">请输入收货人详细地址</span></label>
@@ -99,7 +99,7 @@
                           <div class="editpage-input">
                               <label class="editlabel">是否国际</label>
                               <select type="text" class="form-control edit-input" v-model="param.intl">
-                                  <option value="0">否</option>
+                                  <option value="0" selected>否</option>
                                   <option value="1">是</option>
                               </select>
                           </div>
@@ -144,7 +144,7 @@
                           <div class="editpage-input">
                               <label class="editlabel">是否样品订单</label>
                               <select type="text" class="form-control edit-input" v-model="param.sample" value="{{param.sample}}" >
-                                  <option value="0">否</option>
+                                  <option value="0" selected>否</option>
                                   <option value="1">是</option>
                               </select>
                           </div>
@@ -159,7 +159,7 @@
                           <div class="editpage-input">
                               <label class="editlabel">订单状态</label>
                               <select  class="form-control edit-input" v-model="param.orderStatus"   >
-                                  <option value="0">订单生成</option>
+                                  <option value="0" selected>订单生成</option>
                                   <option value="10">订单处理中</option>
                                   <option value="20">订单等待支付</option>
                                   <option value="30">已支付，等待审核</option>
@@ -177,7 +177,7 @@
               <div>
                  <div style="margin-top:20px;">
                      <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
-                     <h4 style="display:inline">订单商品信息</h4>
+                     <h5 style="display:inline">订单商品信息</h5>
                   </div> 
                   <div class="editpage">
                        <div class="editpageleft">
@@ -188,7 +188,7 @@
                           <div class="editpage-input">
                               <label class="editlabel">订单商品来源</label>
                               <select type="text" class="form-control edit-input" v-model="param.goods[0].sourceType"  value="{{param.goods[0].sourceType}}" >
-                                  <option value="0">新建</option>
+                                  <option value="0" selected>新建</option>
                                   <option value="1">意向</option>
                                   <option value="2">报价</option>
                               </select>
@@ -198,8 +198,8 @@
                               <input type="text" class="form-control edit-input" v-model="param.goods[0].unit" id="unit" v-validate:unit="['required']" value="{{param.goods[0].unit}}"/>
                           </div>
                           <div class="editpage-input">
-                              <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.required">请输入商品的价格</span></label>
-                              <input type="number" class="form-control edit-input" v-model="param.goods[0].price" id="price" v-validate:price="['required']"  value="{{param.goods[0].price}}"/>
+                              <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.money">请输入商品的价格</span></label>
+                              <input type="number" class="form-control edit-input" v-model="param.goods[0].price" id="money" v-validate:price="['money']"  value="{{param.goods[0].price}}"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">商品质量 <span class="system_danger" v-if="$validation.qual.required">请输入商品的质量</span></label>
@@ -399,18 +399,6 @@ export default {
     font-size: 28px;
 }
 
-.edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
@@ -444,12 +432,6 @@ export default {
 
 .editpage-input {
     margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
 }
 
 .edit-input {

@@ -50,10 +50,11 @@
                     id:initOrderDetail.id,
                     cancleCauses:'',
                     show:true,
+                    reason:true,
                     headline:'取消订单原因',
                     orderStatus:'',
                     link:'/order/cancle',
-                    callback:orderCancle
+                    callback:cancel
                   })">取消</button>
             </div>
             <!-- 订单确认10 -->
@@ -88,12 +89,14 @@
             </div>
             <!-- 订单财务审核 -->
             <div class="clearfix" v-if="param.Auditing">
+                <img v-for="item in initOrderDetail.payPics.arr" class="col-xs-3" :src="item.path" alt="支付凭证"/>
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
                     id:initOrderDetail.id,
                     show:true,
                     link:'/order/payConfirm',
                     orderStatus:'',
-                    images:''
+                    images:'',
+                    sub:$index
                    },param.show=false)"  value="通过核查" />
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
@@ -131,7 +134,7 @@
                     payWay:'',
                     orderStatus:'',
                     images:'',
-                    callback:yankuanPayorder
+                    callback:underline
                     })"  value="支付" />
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
@@ -329,8 +332,11 @@ export default {
         cancleBtn:function(cancle){
             console.log(cancle)
             this.cancleReason = cancle;
-            this.param.show=true;
+            this.param.reason=true;
             /*this.orderCancle(this.cancleReason)*/
+        },
+        cancel:function(){
+            this.orderCancle(this.cancleReason,this.param);
         },
         accept:function(confirm){
             console.log(confirm)
@@ -364,21 +370,21 @@ export default {
           payorder.payWay = this.payWay;
           console.log(payorder.payWay)
 
-         if(payorder.payWay==0){
-             this.undelinePay=payorder;
-             console.log(payorder)
-             this.$broadcast('getImageData');
-          }else if(payorder.payWay==3){
-             console.log('33333')
-             this.yankuanPayorder(payorder);
-             console.log(this.param)
-             this.param.show=false;
-          }else {
-             console.log('请选择支付方式');
-          }
+           if(payorder.payWay==0){
+               this.undelinePay=payorder;
+               console.log(payorder)
+               this.$broadcast('getImageData');
+            }else if(payorder.payWay==3){
+               this.yankuanPayorder(payorder);
+               console.log(this.param)
+               this.param.show=false;
+            }else {
+               console.log('请选择支付方式');
+            }
 
-          console.log(payorder)
-
+        },
+        underline:function(){
+          this.yankuanPayorder(this.payorder)
         }
     },
     created() {
@@ -420,7 +426,7 @@ export default {
 .order-message{
   border-bottom: 1px solid #ddd;
   line-height:45px;
-  font-size: 16px;
+  font-size: 14px;
 }
 .message_front{
   width: 33.33%;
@@ -448,7 +454,7 @@ export default {
   z-index: 100;
   width: 100%;
   right: 0;
-  top: 130px;
+  top: 70px;
 }
 .order_info{
   border-top: 1px solid #ddd;

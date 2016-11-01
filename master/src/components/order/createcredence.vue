@@ -81,7 +81,21 @@ export default {
 .big-font {
     font-size: 36px;
 }
-
+.modal_con{
+    width: 560px;
+    height: 520px;
+    top: 0;
+}
+.edit_footer{
+     width: 560px;
+     position: absolute;
+     bottom: 0;
+}
+.top-title{
+     width: 560px;
+     position: absolute;
+     top: 0;
+}
 .top-title span {
     font-size: 28px;
 }
@@ -89,12 +103,6 @@ export default {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
 }
 
 .edit-model {

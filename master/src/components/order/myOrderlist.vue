@@ -4,6 +4,8 @@
     <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
+    <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div v-show="!detailParam.show&&!disposeParam.show">
       <div class="order_search">
         <div class="clear">
@@ -24,8 +26,8 @@
                     country:'',
                     province:'',
                     city:'',
-                    employee:'100011',
-                    org:'8',
+                    employee:this.initLogin.id,
+                    org:this.initLogin.orgId,
                     district:'',
                     consigneeAddr:'',
                     comments:'',
@@ -33,9 +35,8 @@
                     incidentalsDesc:'',
                     preferential:'',
                     preferentialDesc:'',
-                    orderStatus:'',
                     payWay:'',
-                    validate:'',
+                    orderStatus:'',
                     goods:[{
                             sourceType:'',
                             sourceId:'',
@@ -53,6 +54,7 @@
                     link:createOrder
                     })">新建</button>
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
+                <button class="new_btn transfer" @click="orgCheck()">申请审核</button>
             </div>
         </div>
       </div>
@@ -62,7 +64,8 @@
         </div>
         <table class="table table-hover table_color table-striped " v-cloak>
             <thead>
-                <tr>  
+                <tr> 
+                    <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
                     <th>订单号</th>
                     <th>订单类别</th>
                     <th>订单来源</th>
@@ -72,8 +75,6 @@
                     <th>国家</th>
                     <th>所在省</th>
                     <th>所在市</th>
-                    <th>业务员</th>
-                    <th>物流单号</th>
                     <th>备注</th>
                     <th>客户端类型</th>
                     <th>订单状态</th>
@@ -84,10 +85,14 @@
             </thead>
             <tbody>
                 <tr v-for="item in initOrderlist"  v-cloak>
+                  <td  @click.stop="">
+                    <label v-if="item.validate==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
+                  </td>
                   <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
-                                loading:false
+                                loading:false,
+                                contact:'/order/myList'
                         })">{{item.no }}</a></td>
                   <td v-if="item.type==1">销售</td>
                   <td v-if="item.type==0">采购</td>
@@ -100,35 +105,21 @@
                   <td>{{item.country}}</td>
                   <td>{{item.province}}</td>
                   <td>{{item.city}}</td>
-                  <td>{{item.employee}}</td>
-                  <td>{{item.logisticsNo}}</td>
                   <td>{{item.comments}}</td>
-                  <td v-if="item.clients==0||item.clients==null" style="background:red;color:#fff">PC</td>
+                  <td v-if="item.clients==0" style="background:red;color:#fff">PC</td>
                   <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
                   <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
                   <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
-                  <td v-if="item.orderStatus==0">订单生成</td>
-                  <td v-if="item.orderStatus==10">等待处理</td>
-                  <td v-if="item.orderStatus==20">等待支付</td>
-                  <td v-if="item.orderStatus==30">等待审核</td>
-                  <td v-if="item.orderStatus==40">等待卖家发货</td>
-                  <td v-if="item.orderStatus==50">等待收货</td>
-                  <td v-if="item.orderStatus==60">已完成</td>
-                  <td v-if="item.orderStatus==70">已完成</td>
-                  <td v-if="item.orderStatus==-1">已取消</td>
-                  <td v-if="item.orderStatus==-2">已过期</td>
+                  <td v-if="item.clients==null">未说明</td>
+                  <td>{{item.orderStatus | orderstatus}}</td>
+                  <td>{{item.validate | Auditing}}</td>
                   
-                  <td v-if="item.validate==0">待审核</td>
-                  <td v-if="item.validate==1">申请审核</td>
-                  <td v-if="item.validate==2">审核通过</td>
-                  <td v-if="item.validate==-2">审核未通过</td>
-                  <td v-if="item.validate==null">待审核</td>
-
                   <td v-if="item.payWay===0">线下打款</td>
                   <td v-if="item.payWay==1">支付宝</td>
                   <td v-if="item.payWay==2">平安支付</td>
                   <td v-if="item.payWay==3">药款支付</td>
-                  <td v-if="item.payWay==null">其他</td>
+                  <td v-if="item.payWay==null">无</td>
+                  <td v-if="item.payWay===''">无</td>
                   <td @click="editClick($index)">
                       <img height="24" width="24" src="/static/images/default_arrow.png" />
                       <div class="component_action" v-show="item.show">
@@ -163,6 +154,7 @@
                                         preferentialDesc:item.preferentialDesc,
                                         goods:[{
                                                 sourceType:item.goods[0].sourceType,
+                                                id:item.goods[0].id,
                                                 sourceId:item.goods[0].sourceId,
                                                 title:item.goods[0].title,
                                                 breedId:item.goods[0].breedId,
@@ -178,36 +170,26 @@
                                         link:alterOrder,
                                         url:'/order/'
                                         })">编辑</li>
-                                <li v-if="item.orderStatus==-1&&item.type==0"  @click="pendingOrder(item,$index)">订单已取消</li>
+                                <li v-if="item.orderStatus==-1&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
                                 <li v-if="item.orderStatus==-2&&item.type==0" @click="pendingOrder(item,$index)">订单已过期</li>
-                                <li v-if="item.orderStatus==0&&item.type==0"  @click="pendingOrder(item,$index)">待处理订单</li>
-                                <li v-if="item.orderStatus==10&&item.type==0"  @click="pendingOrder(item,$index)">订单处理中</li>
-                                <li v-if="item.orderStatus==20&&item.type==0" @click="pendingOrder(item,$index)">等待支付</li>
-                                <li v-if="item.orderStatus==30&&item.type==0" @click="pendingOrder(item,$index)">等待核查</li>
-                                <li v-if="item.orderStatus==40&&item.type==0"  @click="pendingOrder(item,$index)">等待发货</li>
-                                <li v-if="item.orderStatus==50&&item.type==0"  @click="pendingOrder(item,$index)">等待收货</li>
-                                <li v-if="item.orderStatus==60&&item.type==0" @click="pendingOrder(item,$index)">已完成订单</li>
-                                <li v-if="item.orderStatus==70&&item.type==0" @click="pendingOrder(item,$index)">已完成订单</li>
-                                <li v-if="item.orderStatus==-1&&item.type==1"  @click="pendingOrder(item,$index)">订单已取消</li>
+                                <li v-if="item.orderStatus==0&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>
+                                <li v-if="item.orderStatus==10&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理确定</li>
+                                <li v-if="item.orderStatus==20&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">等待支付</li>
+                                <!-- <li v-if="item.orderStatus==30&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li> -->
+                                <li v-if="item.orderStatus==40&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">等待发货</li>
+                                <li v-if="item.orderStatus==50&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">等待收货</li>
+                                <li v-if="item.orderStatus==60&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
+                                <li v-if="item.orderStatus==70&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
+                                <li v-if="item.orderStatus==-1&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
                                 <li v-if="item.orderStatus==-2&&item.type==1" @click="pendingOrder(item,$index)">订单已过期</li>
-                                <li v-if="item.orderStatus==0&&item.type==1"  @click="pendingOrder(item,$index)">待处理订单</li>
-                                <li v-if="item.orderStatus==10&&item.type==1"  @click="pendingOrder(item,$index)">订单处理中</li>
-                                <li v-if="item.orderStatus==20&&item.type==1" @click="pendingOrder(item,$index)">等待支付</li>
-                                <li v-if="item.orderStatus==30&&item.type==1" @click="pendingOrder(item,$index)">等待核查</li>
-                                <li v-if="item.orderStatus==40&&item.type==1"  @click="pendingOrder(item,$index)">等待发货</li>
-                                <li v-if="item.orderStatus==50&&item.type==1"  @click="pendingOrder(item,$index)">等待收货</li>
-                                <li v-if="item.orderStatus==60&&item.type==1" @click="pendingOrder(item,$index)">已完成订单</li>
-                                <li v-if="item.orderStatus==70&&item.type==1" @click="pendingOrder(item,$index)">已完成订单</li>
-                              <!--  <li @click="specDelete({
-                                       id:item.id,
-                                       sub:$index,
-                                       show:true,
-                                       name:item.no,
-                                       title:'订单',
-                                       link:deleteInfo,
-                                       url:'/order/',
-                                       key:'orderList'
-                                       })">删除</li> -->
+                                <li v-if="item.orderStatus==0&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>
+                                <li v-if="item.orderStatus==10&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理确定</li>
+                                <li v-if="item.orderStatus==20&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待支付</li>
+                                <!-- <li v-if="item.orderStatus==30&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li> -->
+                                <li v-if="item.orderStatus==40&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">等待发货</li>
+                                <li v-if="item.orderStatus==50&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">等待收货</li>
+                                <li v-if="item.orderStatus==60&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
+                                <li v-if="item.orderStatus==70&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
                            </ul>
                        </div>
                   </td>
@@ -222,15 +204,19 @@
   </template>
   <script>
     import pagination from '../pagination'
+    import filter from '../../filters/filters'
     import editorderModel from '../order/orderInformationDialog'
     import createorderModel from '../order/createOrderDialog'
     import detailModel from '../order/orderDetail'
     import searchModel from '../order/orderSearch'
     import deletebreedModel from  '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
     import disposeModel  from  '../order/orderStatus'
+    import tipsdialogModel  from '../tips/tipDialog'
+    import auditModel  from '../order/orgAudit'
     import {
         getList,
-        initOrderlist
+        initOrderlist,
+        initLogin
     } from '../../vuex/getters'
     import {
         getEmpolyeeOrder,
@@ -248,7 +234,10 @@
             detailModel,
             searchModel,
             deletebreedModel,
-            disposeModel
+            disposeModel,
+            auditModel,
+            tipsdialogModel,
+            filter
         },
         data() {
             return {
@@ -261,12 +250,15 @@
                     all:1,
                     consignee:'',
                     link:'/order/myList',
+                    employee:this.initLogin.id,
+                    org:this.initLogin.orgId,
                     consigneePhone:'',
                     type:'',
                     orderStatus:'',
                     payWay:'',
                     clients:'',
                     dataStatus:''
+                    
                 },
                 dialogParam:{
                     show: false
@@ -290,13 +282,27 @@
                     express:false,
                     delivery:false
                 },
-                show:true
+                show:true,
+                auditParam:{
+                    show:false,
+                    indexs:[],
+                    ids:[],
+                    description:'',
+                    validate:'',
+                    title:"申请订单审核"
+                },
+                tipsParam:{
+                    show:false,
+                    alert:true,
+                    name:"请选择要申请审核的订单",
+                }
             }
         },
         vuex: {
             getters: {
                 getList,
-                initOrderlist
+                initOrderlist,
+                initLogin
             },
             actions: {
                 getEmpolyeeOrder,
@@ -306,10 +312,6 @@
                 getOrderDetail
             }
         },
-        created() {
-            this.getEmpolyeeOrder(this.loadParam)
-            console.log(this.loadParam)
-        },
         methods: {
             editClick: function(sub) {
                 if(this.$store.state.table.basicBaseList.orderList[sub].show){
@@ -318,12 +320,60 @@
                      this.$store.state.table.basicBaseList.orderList[sub].show=true;
                 }    
             },
+            orgCheck:function(){
+                var _this = this;
+                _this.auditParam.ids = [];
+                _this.auditParam.indexs = [];
+               _this.checked=false;
+                for(var i=0;i<this.initOrderlist.length;i++){
+                    if(this.$store.state.table.basicBaseList.orderList[i].checked){
+                        _this.auditParam.ids.push(this.$store.state.table.basicBaseList.orderList[i].id);
+                        _this.auditParam.indexs.push(i);
+                        _this.auditParam.validate = this.$store.state.table.basicBaseList.orderList[i].validate;
+                    }
+                }
+                if(this.auditParam.ids.length>0){
+                    this.auditParam.show = true;
+                }else{
+                    this.tipsParam.show = true;
+                }
+            },
+            onlyselected: function(index){
+                  const _self=this;
+                    this.$store.state.table.basicBaseList.orderList[index].checked=!this.$store.state.table.basicBaseList.orderList[index].checked;
+                    if(_self.checked){
+                      _self.checked=false;
+                    }else {
+                      _self.checked=true;
+                      this.$store.state.table.basicBaseList.orderList.forEach(function (item) {
+                        if(!item.checked){
+                          if(item.validate==0){
+                            _self.checked=item.checked;
+                            _self.validate = item.validate;
+                          } 
+                        }
+                      })
+                    }
+            },
+            select:function(){
+                  this.checked=!this.checked;
+                  const checked=this.checked;
+                  this.$store.state.table.basicBaseList.orderList.forEach(function(item){
+                    if(item.validate==0)item.checked=checked;
+                  })
+
+            },
             newOrder:function(initOrderlist){
                  this.createParam=initOrderlist;
             },
             createSearch:function(){
                  this.loadParam.show=true;
-                 this.loadParam.loading=false;
+                 /*console.log(this.loadParam.link)
+                 this.loadParam.loading=false;*/
+                 this.loadParam.link='/order/myList';
+                /* console.log(this.loadParam)
+                 console.log(this.loadParam.link)
+                 console.log(this.loadParam)*/
             },
             clickOn:function(initOrderlist){
                 console.log(initOrderlist);
@@ -438,6 +488,15 @@
                 this.loadParam.cur = input;
                 this.getEmpolyeeOrder(this.loadParam);
             }
+        },
+        filter:(filter,{}),
+        created() {
+            this.getEmpolyeeOrder(this.loadParam)
+            console.log(this.loadParam)
+            console.log(this.loadParam.link)
+            console.log(this.initLogin)
+            console.log(this.initLogin.no)
+            console.log(this.initLogin.orgId)
         }
     }
   </script>
@@ -452,22 +511,35 @@
     .transfer{
         margin-right: 20px;
     }
-    .new_btn {
-        float: right;
-        border: 1px solid #ccc;
-        color: #003077;
-        padding: 4px 10px;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        -ms-border-radius: 3px;
-        background: #fff;
-    }
     .order_table {
         margin-top: 20px;
         position: relative;
     }
-
+   .component_action{
+        right: 43px;
+    }
+    .checkbox_unselect{
+        background-image: url(/static/images/unselect.png);
+        display: inline-block;
+        background-repeat: no-repeat;
+        width: 24px;
+        height: 24px;
+        background-size: 80%;
+        margin: auto;
+        text-align: center;
+        background-position: 5px;
+    }
+    .checkbox_select{
+        background-image: url(/static/images/selected.png);
+        display: inline-block;
+        background-repeat: no-repeat;
+        width: 24px;
+        height: 24px;
+        background-size: 80%;
+        margin: auto;
+        text-align: center;
+        background-position: 5px;
+    }
     .order_table .table {
         background: #fff;
         position: relative;
