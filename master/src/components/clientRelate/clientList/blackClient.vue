@@ -75,7 +75,7 @@
           <td>{{item.provinceName}}</td>
           <td>{{item.cityName}}</td>
           <td>{{item.address}}</td>
-          <td >{{item.comments}}</td>
+          <td >{{item.blackComments}}</td>
           <td >
           </td>
         </tr>

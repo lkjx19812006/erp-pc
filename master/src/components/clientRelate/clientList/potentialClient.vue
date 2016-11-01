@@ -20,7 +20,8 @@
                     })">划转</button>
               <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
               <button class="new_btn transfer" @click="clientTransferSupplier()">抽取供应商</button>
-                <button class="new_btn transfer" @click="createSearch()">搜索</button>
+              <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
+              <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
         <div class="order_table">
@@ -212,7 +213,11 @@ export default {
                 provinceName:'',
                 province:'',
                 city:'',
-                cityName:''
+                cityName:'',
+                phoneCityName:'',
+                phoneProvinceName:'',
+                label:'',
+                creditLevel:''
             },
             changeParam: {
                 show: false,
@@ -265,6 +270,25 @@ export default {
         },
         createSearch:function(){
             this.loadParam.show=true;
+        },
+        resetCondition:function(){
+            this.loadParam.name='';
+            this.loadParam.phone='';
+            this.loadParam.employeeId='';
+            this.loadParam.employeeName='';
+            this.loadParam.type='';
+            this.loadParam.classify='';
+            this.loadParam.status='';
+            this.loadParam.bizScope='';
+            this.loadParam.provinceName='';
+            this.loadParam.province='';
+            this.loadParam.city='';
+            this.loadParam.cityName='';
+            this.loadParam.phoneCityName='';
+            this.loadParam.phoneProvinceName='';
+            this.loadParam.label='';
+            this.loadParam.creditLevel='';
+            this.getClientList(this.loadParam);
         },
         eventClick:function(id){
             if(this.$store.state.table.basicBaseList.customerList[id].show){

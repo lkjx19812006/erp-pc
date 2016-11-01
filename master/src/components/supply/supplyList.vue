@@ -44,6 +44,7 @@
                                         ],
                                         link:saveCreate,
                                         })">新建</button>
+        <button class="new_btn transfer" @click="resetCondition()">清空条件</button>                                
         <button class="new_btn transfer" @click="createSearch()">搜索</button>
       </div>
     </div>
@@ -228,7 +229,11 @@
           provinceName:'',
           province:'',
           city:'',
-          cityName:''
+          cityName:'',
+          phoneCityName:'',
+          phoneProvinceName:'',
+          label:'',
+          creditLevel:''
         },
         changeParam: {
           show: false
@@ -262,6 +267,25 @@
       createSearch:function(){
         this.loadParam.show=true;
       },
+      resetCondition:function(){
+            this.loadParam.name='';
+            this.loadParam.phone='';
+            this.loadParam.employeeId='';
+            this.loadParam.employeeName='';
+            this.loadParam.type='';
+            this.loadParam.classify='';
+            this.loadParam.status='';
+            this.loadParam.bizScope='';
+            this.loadParam.provinceName='';
+            this.loadParam.province='';
+            this.loadParam.city='';
+            this.loadParam.cityName='';
+            this.loadParam.phoneCityName='';
+            this.loadParam.phoneProvinceName='';
+            this.loadParam.label='';
+            this.loadParam.creditLevel='';
+            this.getClientList(this.loadParam);
+        },
       eventClick:function(id){
         if(this.$store.state.table.basicBaseList.customerList[id].show){
           this.$store.state.table.basicBaseList.customerList[id].show = !this.$store.state.table.basicBaseList.customerList[id].show;

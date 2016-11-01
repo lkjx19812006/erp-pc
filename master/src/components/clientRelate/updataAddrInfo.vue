@@ -28,7 +28,6 @@
                                  <div class="editpage-input">
                                     <label class="editlabel">{{param.sexlist}}</label>
                                      <select  class="form-control" v-model="param.sex" style="width:90%;">
-                                        <option>{{param.sex}}</option>
                                         <option value="1">女</option>
                                         <option value="0">男</option>
                                     </select>
@@ -358,7 +357,7 @@ export default {
 
 .edit-input {
     height: 36px;
-    line-height: 36px;
+    line-height: 20px;
     width: 90%;
     border: 1px solid #ddd;
     border-radius: 5px;

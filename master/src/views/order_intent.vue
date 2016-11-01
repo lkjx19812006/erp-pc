@@ -7,9 +7,13 @@
      <div class="myOrder" v-if="$route.path.split('=')[1]==1">
          <my-intention></my-intention>
      </div>
-      <!-- 部门意向 -->
+     <!-- 部门意向 -->
      <div class="myOrder" v-if="$route.path.split('=')[1]==2">
         <org-intention></org-intention>
+     </div>
+     <!-- 意向资源池 -->
+     <div class="myOrder" v-if="$route.path.split('=')[1]==6">
+        <potential-intention></potential-intention>
      </div>
      <!-- 我的报价 -->
      <div class="myOrder" v-if="$route.path.split('=')[1]==3">
@@ -29,6 +33,7 @@
 import userIntention from '../components/Intention/intentionList/userIntention.vue'
 import myIntention from '../components/Intention/intentionList/myIntention.vue'
 import orgIntention from '../components/Intention/intentionList/orgIntention.vue'
+import potentialIntention from '../components/Intention/intentionList/potentialIntention.vue'
 import myOffer from '../components/Intention/intentionList/myOffer.vue'
 import orgOffer from '../components/Intention/intentionList/orgOffer.vue'
 import msg from '../components/Intention/intentionList/msg.vue'
@@ -45,6 +50,7 @@ export default {
         userIntention,  
         myIntention,
         orgIntention,
+        potentialIntention,
         myOffer,
         orgOffer,
         msg,

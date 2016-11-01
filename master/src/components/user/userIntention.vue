@@ -2,6 +2,7 @@
     <div  id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
+    <tipdialog-model :param="tipParam" v-if="tipParam.show"></tipdialog-model>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -329,7 +330,7 @@
           </div>
           <div class="edit_footer">
               <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-              <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="createOrUpdateIntention(param,param.show = false)">确定</button>
+              <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="createOrUpdateIntention()">确定</button>
               <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
           </div>
         </validator>
@@ -341,6 +342,7 @@ import searchbreedModel  from '../Intention/breedsearch'
 import searchcustomerModel  from '../Intention/clientname'
 import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
+import tipdialogModel from '../tips/tipDialog'
 import pressImage from '../imagePress'
 import {
     initCountrylist,
@@ -366,11 +368,18 @@ export default {
         searchcustomerModel,
         vSelect,
         inputSelect,
+        tipdialogModel,
         pressImage
     },
     props: ['param'],
     data() {
         return {
+          tipParam:{
+              show:false,
+              name:'',
+              remain:true,
+              callback:this.callback
+          },
           breedParam:{
               show:false,
               breedName:'',
@@ -473,23 +482,32 @@ export default {
                 this.empNameParam.employeeId = this.param.employeeId;
             }
       },
+      callback:function(){
+          this.param.show=false;
+          this.tipParam.show=false;
+      },
       createOrUpdateIntention:function(){
         if(this.param.flag==0){
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
-          if(this.district.cname){this.param.district = this.district.cname;}
-          else{this.param.district ='';}
-          this.param.show=false;
-          this.createIntentionInfo(this.param);
+          if(this.district.cname){
+            this.param.district = this.district.cname;
+          }else{
+            this.param.district ='';
+          }
+          this.tipParam.name = '新建意向成功';
+          //this.param.show=false;
+          this.createIntentionInfo(this.param,this.tipParam);
         }
         if(this.param.flag==1){
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
           this.param.district = this.district.cname;
-          this.param.show=false;
-          this.editintentInfo(this.param);
+          this.tipParam.name = '修改意向成功';
+          //this.param.show=false;
+          this.editintentInfo(this.param,this.tipParam);
         }
 
       },

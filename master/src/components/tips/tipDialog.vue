@@ -8,9 +8,11 @@
                 <div class="tips_name">{{param.name}}</div>
 
             </div>
-          <div class="model-footer" v-if="param.alert">
-
+            <div class="model-footer" v-if="param.alert">
                 <input type="button" class="btn btn-close"  @click="param.show = false"  value="确定"/>
+            </div>
+            <div class="model-footer" v-if="param.remain">
+                <input type="button" class="btn btn-close"  @click="param.callback()"  value="确定"/>
             </div>
             <div class="model-footer" v-if="param.confirm">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
