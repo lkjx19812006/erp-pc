@@ -261,31 +261,13 @@ export default {
 </script>
 <style scoped>
 .modal {
-    opacity: 0.5;
-    background-color: #000;
-    display: block;
+    z-index: 1083
 }
 
 .modal_con {
-    display: block;
-    position: fixed;
-    top: 91px;
-    margin: auto;
-    left: 0;
-    right: 0;
-    max-width: 630px;
-    min-width: 200px;
-    max-height: 600px;
-    bottom: 50px;
-    padding: 0;
-    background-color: #fff;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    z-index: 1080;
-    overflow: hidden;
-    overflow-y: auto;
+    width: 630px;
+    height: 600px;
+    z-index: 1083;
 }
 
 .big-font {
@@ -298,33 +280,11 @@ export default {
     top: 0;
 }
 
-.top-title span {
-    font-size: 28px;
-}
-
 .edit-content {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
-}
-
-.editsection {
-    width: 100%;
-    box-sizing: border-box;
-}
-
 .editpage {
     display: -webkit-flex;
     display: -webkit-box;
@@ -343,16 +303,6 @@ export default {
     -ms-flex: auto;
     flex: auto;
     width: 50%;
-}
-
-.editpage-input {
-    margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
 }
 
 .edit-input {

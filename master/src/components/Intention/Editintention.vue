@@ -245,8 +245,9 @@ export default {
 .big-font {
     font-size: 36px;
 }
-.top-title span {
-    font-size: 28px;
+.top-title {
+   position: absolute;
+   top: 0;
 }
 
 .edit-content {

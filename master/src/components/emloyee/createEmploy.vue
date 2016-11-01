@@ -213,6 +213,11 @@ export default {
 .editsection{
     margin-bottom: 50px;
 }
+.top-title{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 .search_input{
     float: none;
 }

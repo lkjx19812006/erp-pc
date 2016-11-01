@@ -3,11 +3,13 @@
     <undeline-model :param="undelinePay" v-if="undelinePay.show"></undeline-model>
     <logistics-model :param="logisticsDetail" v-if="logisticsDetail.show"></logistics-model>
     <editorder-model :param="editorder" v-if="editorder.show"></editorder-model>
-    <div class="client_body">
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con client_body" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
-        <div class="navbar-client">
+        <div class="order_contain">订单状态</div>
+        <div class="navbar-client" style="margin-top:0">
             <div class="message">
                <p class="order-message">订单消息</p>
                <p class="clearfix space_15">
@@ -38,7 +40,7 @@
               </div> 
             </div>
             <!-- 处理订单0 -->
-            <div class="clearfix" v-if="param.handle">
+            <div class="clearfix logical_color" v-if="param.handle">
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
                     id:initOrderDetail.id,
                     show:true,
@@ -58,7 +60,7 @@
                   })">取消</button>
             </div>
             <!-- 订单确认10 -->
-            <div class="clearfix" v-if="param.sales">
+            <div class="clearfix logical_color" v-if="param.sales">
                 <input type="button" class="btn  btn-confirm right"  @click="confirmEdit({
                         id:initOrderDetail.id,
                         show:true,
@@ -88,7 +90,7 @@
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
             <!-- 订单财务审核 -->
-            <div class="clearfix" v-if="param.Auditing">
+            <div class="clearfix logical_color"  v-if="param.Auditing">
                 <img v-for="item in initOrderDetail.payPics.arr" class="col-xs-3" :src="item.path" alt="支付凭证"/>
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
                     id:initOrderDetail.id,
@@ -126,7 +128,7 @@
                     </div>
                 </div>
             </div>
-            <div class="clearfix">
+            <div class="clearfix logical_color">
                 <input type="button" class="btn  btn-confirm right"  @click="payOrder({
                     id:initOrderDetail.id,
                     show:true,
@@ -134,7 +136,7 @@
                     payWay:'',
                     orderStatus:'',
                     images:'',
-                    callback:underline
+                    callback:underPay
                     })"  value="支付" />
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
@@ -164,7 +166,7 @@
                 </div>
               </div>
           </div>
-          <div class="clearfix">
+          <div class="clearfix logical_color">
               <input type="button" class="btn  btn-confirm right"  @click="accept(uploadLogistic,param.show=false)"  value="确认发货" />
           </div>
         </div>
@@ -174,7 +176,7 @@
               <p class="order-message">物流信息</p>
               <div class="space_15 clearfix">
                 <div class="logical_color">
-                  <span>物流公司：{{initOrderDetail.logisticses.arr[0].logistics}}</span>
+                  <span>物流公司：{{initOrderDetail.logisticses.arr[0].name}}</span>
                 </div>
                 <div class="logical_color">
                   <span>物流单号：{{initOrderDetail.logisticses.arr[0].number}}</span>
@@ -210,7 +212,7 @@
               <p class="order-message">物流信息</p>
               <div class="space_15 clearfix">
                 <div class="logical_color">
-                  <span>物流公司：{{initOrderDetail.logisticses.arr[0].logistics}}</span>
+                  <span>物流公司：{{initOrderDetail.logisticses.arr[0].name}}</span>
                 </div>
                 <div class="logical_color">
                   <span>物流单号：{{initOrderDetail.logisticses.arr[0].number}}</span>
@@ -281,8 +283,12 @@ export default {
             yaokuanPaySelected:false,
             undelinePay:{
                show:false,
-               callback:'undelinePayorder',
-               images:''
+               images:'',
+               callback:'',
+               id:'',
+               link:'',
+               payWay:'',
+               orderStatus:''
             },
             payorder:{
               show:false,
@@ -370,22 +376,22 @@ export default {
           payorder.payWay = this.payWay;
           console.log(payorder.payWay)
 
-           if(payorder.payWay==0){
+           if(payorder.payWay==0){    //线下打款
                this.undelinePay=payorder;
                console.log(payorder)
                this.$broadcast('getImageData');
-            }else if(payorder.payWay==3){
-               this.yankuanPayorder(payorder);
+            }else if(payorder.payWay==3){    //药款支付
+               this.yankuanPayorder(this.param,payorder);
                console.log(this.param)
-               this.param.show=false;
+               //this.param.show=false;
             }else {
                console.log('请选择支付方式');
             }
 
         },
-        underline:function(){
-          this.yankuanPayorder(this.payorder)
-        }
+        underPay:function(){
+            this.yankuanPayorder(this.param,this.undelinePay);
+        },
     },
     created() {
         this.getExpressList(this.loadParam); 
@@ -395,8 +401,19 @@ export default {
 </script>
 <style scoped>
 .client_body {
-  position: relative;
   background-color: #f5f5f5;
+}
+.modal{
+  z-index: 1111;
+}
+.modal_con{
+  z-index: 1112;
+  width: 60%;
+}
+.order_contain{
+  text-align: center;
+  padding:0 0 20px 0;
+  font-size: 16px;
 }
 .logical_color{
   margin-bottom: 10px;
@@ -450,12 +467,7 @@ export default {
 .space_15{
   margin:15px 0;
 }
-.top-title{
-  z-index: 100;
-  width: 100%;
-  right: 0;
-  top: 70px;
-}
+
 .order_info{
   border-top: 1px solid #ddd;
   padding: 20px 0;

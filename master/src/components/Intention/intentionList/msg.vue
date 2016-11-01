@@ -3,7 +3,7 @@
 	 <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2" style="font-size:14px">我的留言</div>
-            <div class="col-xs-4 my_order_search">
+            <div class="col-xs-6 my_order_search">
                <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" placeholder="会员名称" v-model="loadParam.fullName"  @keyup.enter="searchMsg()">
@@ -13,10 +13,6 @@
                    <input type="text" class="search_input" v-model="loadParam.phone" placeholder="按会员手机" @keyup.enter="searchMsg()">
                </div>
                <button class="new_btn transfer" @click="searchMsg()">搜索</button>
-            </div>
-            <div class="right col-xs-2">
-
-
             </div>
         </div>
         <div class="service-nav clearfix">

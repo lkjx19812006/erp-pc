@@ -10,12 +10,37 @@
         <div class="edit-model">
             <section class="editsection" v-cloak>
                 <div class="clearfix">
-                     <div class="client-detailInfo  col-xs-12">
+                    <div class="client-detailInfo  col-xs-12">
                         <label>省：</label>
-                       <select class="form-control" v-model="param.conProvince">
-                         <option value="" selected>按省查询</option>
-                         <option v-for="item in initProvince" value="{{item.cname}}">{{item.cname}}</option>
-                       </select>
+                       <div  class="form-control" style="padding:0;border:none;height:31px">
+                        <v-select
+                              :debounce="250"
+                              :value.sync="province"
+                              :on-change="selectProvince"
+                              :options="initProvince"
+                              placeholder="省"
+                              label="cname"
+
+                         >
+                            </v-select>
+                        </div>
+                    </div>
+                    <div class="client-detailInfo  col-xs-12">
+                        <label>市：</label>
+                       <input type="text" v-if="!province.cname" class="form-control" disabled="disabled" v-model="param.city" style="height:37px"  placeholder="请先选择一个省"/>
+                      <div v-if="province.cname"  class="form-control" style="padding:0;border:none;height:31px">
+                            <v-select
+                                     :debounce="250"
+                                     :value.sync="city"
+                                     :on-change="selectCity"
+                                     :options="initCitylist"
+                                     placeholder="市"
+                                     label="cname"
+
+                           >
+                           </v-select>
+                        </div>
+
                     </div>
                     <div class="client-detailInfo col-xs-12">
                         <label>类别：</label>
@@ -57,40 +82,78 @@
     </div>
 </template>
 <script>
-  import {
-    initProvince
-  } from '../../vuex/getters'
+import vSelect from '../tools/vueSelect/components/Select'
 import {
-    getCompanyData
+    initProvince,
+    initCitylist
+} from '../../vuex/getters'
+import {
+    getCompanyData,
+    getProvinceList,
+    getCityList
 } from '../../vuex/actions'
 export default {
     components: {
-
+        vSelect
     },
     props: ['param'],
     data() {
         return {
-
+            province:{
+              cname:''
+            },
+            city:{
+              cname:''
+            },
+            provinceParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7,
+            },
         }
     },
     vuex: {
       getters: {
-        initProvince
+        initProvince,
+        initCitylist
       },
         actions: {
-            getCompanyData
+            getCompanyData,
+            getProvinceList,
+            getCityList
         }
     },
 
     methods:{
         companySearch:function(param){
+            console.log(param)
              this.getCompanyData(this.param);
-        }
+        },
+        selectProvince:function(){
+            this.city = '';
+            this.param.city = '';
+            this.param.cityName = '';
+            this.param.province = this.province.cname;
+            this.param.provinceName = this.province.cname;
+            if(this.province.cname){
+                this.getCityList(this.province);
+            }
+        },
+        selectCity:function(){
+            this.param.city = this.city.cname;
+            this.param.cityName = this.city.cname;
+        },
 
     },
 
     created() {
         //this.getCompanyData(this.loadParam);
+        this.param.province = '';
+        this.param.city = '';
+        this.getProvinceList(this.provinceParam);
     }
 }
 </script>
@@ -101,18 +164,13 @@ export default {
     white-space: normal;
   }
 .modal_con{
-    max-height: 650px;
     width: 600px;
 }
 .top-title{
-    position: absolute;
-    width: 100%;
-    top: 0;
+    width: 600px;
 }
 .edit_footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+   width: 600px;
 }
 .empSearch{
     position: absolute;

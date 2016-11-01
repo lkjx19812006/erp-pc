@@ -42,7 +42,7 @@
                         <th>个人认证</th>
                         <th>企业认证</th>
                         <th>划转状态</th>
-
+                        <th>注册时间</th>
                         <th></th>
 
                     </tr>
@@ -91,7 +91,7 @@
                         <td v-if="item.transStatus==1">已划转</td>
                         <td v-if="item.transStatus==0">未划转</td>
                         <td v-if="item.transStatus!=0&&item.transStatus!=1">转黑名单</td>
-
+                        <td>{{item.ctime}}</td>
 
                         <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />

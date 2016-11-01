@@ -1,13 +1,13 @@
 <template>
     <create-model :param="createParam" v-if="createParam.show"></create-model>
-    <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
+    <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-    <div v-show="!changeParam.show">
+    <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">我的客户</div>
             <div class="right col-xs-8">

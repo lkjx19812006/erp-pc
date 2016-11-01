@@ -273,12 +273,15 @@ export default {
 }
 </script>
 <style scoped>
+
 .big-font {
     font-size: 36px;
 }
 
-.top-title span {
-    font-size: 28px;
+.top-title {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .edit-content {
@@ -288,16 +291,6 @@ export default {
 }
 .v-select{
     width: 90%;
-}
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 70px 30px;
 }
 .editsection {
     width: 100%;
@@ -326,12 +319,6 @@ export default {
 
 .editpage-input {
     margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
 }
 
 .edit-input {

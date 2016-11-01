@@ -8,9 +8,9 @@
             </p>
             <div class="editpage-input">
                 <label class="editlabel">请上传支付凭证</label>
-                <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-               <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-               <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+               <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+               <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
             </div>
             <div class="edit_footer">
                 <button type="button" class="btn btn-close"    @click="param.show = false">再想想</button>
@@ -54,6 +54,10 @@ export default {
     opacity: 0.5;
     background-color: #000;
     display: block;
+    z-index: 1115;
+}
+.modal_con{
+    z-index: 1116;
 }
 .big-font {
     font-size: 36px;

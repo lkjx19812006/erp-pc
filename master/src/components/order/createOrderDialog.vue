@@ -391,12 +391,15 @@ export default {
 }
 </script>
 <style scoped>
-.big-font {
-    font-size: 36px;
+.modal{
+  z-index: 1083
 }
-
-.top-title span {
-    font-size: 28px;
+.modal_con{
+  z-index: 1083
+}
+.top-title{
+  position: absolute;
+  width: 100%;
 }
 
 .edit-model {

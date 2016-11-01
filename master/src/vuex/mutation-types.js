@@ -45,6 +45,7 @@ export const ADD_CONTACT_DATA = 'ADD_CONTACT_DATA' //新增企业联系人
 export const UPDATE_CONTACT_DATA = 'UPDATE_CONTACT_DATA' //修改企业联系人
 export const DRUG_DETAIL_DATA = 'DRUG_DETAIL_DATA' //成分详细数据
 export const DELETE_CONTACT_DATA = 'DELETE_CONTACT_DATA' //删除企业联系人
+export const UPDATE_ENTERPRISE = 'UPDATE_ENTERPRISE' //修改企业联系备注
 
 export const CUSTOMER_DATA = 'CUSTOMER_DATA' //客户
 export const CUSTOMER_ADD_DATA = 'CUSTOMER_ADD_DATA' //新增客户

@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>编辑{{param.title}}</h3>
+            <h3>编辑{{param.name}}</h3>
         </div>
         <validator name="validation">
             <form novalidate>
@@ -14,8 +14,13 @@
                         <div class="editpage" v-cloak>
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.namelist}}<span class="system_danger" v-if="$validation.name.required">请输入{{param.namelist}}</span></label>
-                                    <input type="text" class="form-control edit-input" v-model="param.name" value="{{param.name}}" v-validate:name="['required']"/>
+                                    <label class="editlabel">联系方式 <span class="system_danger" v-if="$validation.tel.phone">请输入手机号</span></label>
+                                    <input type="text" class="form-control edit-input" v-model="param.tel" value="{{param.tel}}" v-validate:tel="['phone']"/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">备注</label>
+                                    <textarea class="form-control" rows="5" v-model="param.remark" value="{{param.remark}}" style="resize:none;"></textarea>
+                                    <!-- <input type="text" class="form-control edit-input" v-model="param.remark" value="{{param.remark}}" /> -->
                                 </div>
                             </div>
                         </div>
@@ -48,7 +53,7 @@ export default {
 }
 .modal_con{
     height: 350px;
-    width: 400px;
+    width: 450px;
      z-index: 1084
 }
 .top-title{

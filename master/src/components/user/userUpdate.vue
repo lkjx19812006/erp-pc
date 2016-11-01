@@ -24,10 +24,10 @@
                            <input type="text" class="form-control  edit-input" v-validate:fullname="{minlength:2}" v-model='param.fullname' value="{{initUserDetail.fullname}}"/>
                            <!-- <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{initUserDetail.fullname}}" /> -->
                        </div>
-                       <div class="editpage-input">
+                       <!-- <div class="editpage-input">
                            <label class="editlabel" for="system">昵称<span class="system_danger" v-if="$validation.nickname.required">昵称不能为空</span></label>
                            <input type="text" class="form-control  edit-input" v-validate:nickname="{required:true}" v-model='param.nickname' value="{{initUserDetail.nickname}}"/>
-                       </div>
+                       </div> -->
 
                      <div class="editpage-input">
 
@@ -95,7 +95,10 @@
                       </select>
                       <!--  <input type="text" v-model="param.userType" class="form-control edit-input" value="{{initUserDetail.userType}}" /> -->
                      </div>
-
+                     <div class="editpage-input">
+                       <label class="editlabel">备注</label>
+                       <input type="text" v-model='param.comment' class="form-control edit-input" value="{{initUserDetail.comment}}" />
+                     </div>
 
                    </div>
                    <div class="editpageright">
@@ -136,13 +139,6 @@
                        <label class="editlabel">主营业务</label>
                        <input type="text" v-model='param.bizMain' class="form-control edit-input" value="{{initUserDetail.busiType}}" />
                      </div>
-
-
-                     <div class="editpage-input">
-                       <label class="editlabel">备注</label>
-                       <input type="text" v-model='param.comment' class="form-control edit-input" value="{{initUserDetail.comment}}" />
-                     </div>
-
                    </div>
                </div>
 
@@ -206,8 +202,10 @@ export default {
     font-size: 36px;
 }
 
-.top-title span {
-    font-size: 28px;
+.top-title{
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .edit-content {
@@ -216,11 +214,6 @@ export default {
     border-bottom: 1px solid #ddd;
 }
 
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
@@ -255,13 +248,6 @@ export default {
 .editpage-input {
     margin-top: 15px;
 }
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
-}
-
 .edit-input {
     height: 36px;
     line-height: 36px;

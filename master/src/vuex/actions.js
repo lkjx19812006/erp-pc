@@ -801,6 +801,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
 export const orderCancle = ({ dispatch }, param,data) => { //订单取消状态
     console.log(param)
     console.log(data);
+   
     const body = {
        orderId:param.id,
        cancleCauses:param.cancleCauses
@@ -825,33 +826,32 @@ export const orderCancle = ({ dispatch }, param,data) => { //订单取消状态
     })
 }
 
-export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
+export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单支付状态
     console.log(param)
+    console.log(undelinePay)
    /* console.log(sub)
     if(param.payWay==0){
         sub.show=false;
+    }*/
+    undelinePay.images='';
+    if(undelinePay.image_f){
+        undelinePay.images+=undelinePay.image_f+','
     }
-    param.show=false;
-    return ;*/
-    param.images='';
-    if(param.image_f){
-        param.images+=param.image_f+','
-    }
-    if(param.image_s){param.images+=param.image_s+','}
-    if(param.image_t){param.images+=param.image_t};
+    if(undelinePay.image_s){undelinePay.images+=undelinePay.image_s+','}
+    if(undelinePay.image_t){undelinePay.images+=undelinePay.image_t};
     /*var ss= param.images;
     var sss = ss.split(",");//字符串转化为数组
     sss..toString()*/
     const body = {
-       orderId:param.id,
-       payWay:param.payWay
+       orderId:undelinePay.id,
+       payWay:undelinePay.payWay
     }
-    if(param.images){
-        body.images = param.images;
+    if(undelinePay.images){
+        body.images = undelinePay.images;
     }
     Vue.http({
         method: 'POST',
-        url: apiUrl.orderList + param.link,
+        url: apiUrl.orderList + undelinePay.link,
         emulateJSON: true,
         body:body,
         emulateJSON: false,
@@ -861,7 +861,9 @@ export const yankuanPayorder = ({ dispatch }, param) => { //订单支付状态
         }
     }).then((res) => {
         console.log('支付成功')
-        dispatch(types.ORDER_STATUS, res.json().result);
+        undelinePay.show = false;
+        param.show=false;
+        dispatch(types.ORDER_STATUS, undelinePay);
     }, (res) => {
         console.log('fail');
     })
@@ -1219,10 +1221,11 @@ export const getDistrictList = ({ dispatch }, param) => { //获取区的列表
 }
 
 export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
+    console.log(param)
     param.loading = true;
     Vue.http({
         method: "GET",
-        url: apiUrl.clientList + '/company/query?type=&name=&category=&province=&transform=&page=' + param.cur + '&pageSize=15',
+        url: apiUrl.clientList + '/company/query?type=&name=&city=&category=&province=&transform=&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -1243,7 +1246,7 @@ export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
     });
 }
 export const getCompanyData = ({ dispatch }, param) => { //企业搜索
-    param.loading = true;
+ param.loading = true;
   if(!param.cur){
     param.cur='';
   }
@@ -1266,15 +1269,20 @@ export const getCompanyData = ({ dispatch }, param) => { //企业搜索
         }else if(key=='category'){
             url +='&category='
         }
-        if(key=='conProvince'&&param[key]!==''){
-            url +='&province='+ param.conProvince
-        }else if(key=='conProvince'){
+        if(key=='province'&&param[key]!==''){
+            url +='&province='+ param.province
+        }else if(key=='province'){
             url +='&province='
         }
         if(key=='transform'&&param[key]!==''){
             url +='&transform='+ param.transform
         }else if(key=='transform'){
             url +='&transform='
+        }
+        if(key=='city'&&param[key]!=='' &&param[key]!==undefined){
+            url +='&city='+ param.city
+        }else if(key=='city'){
+            url +='&city='
         }
     }
     console.log(url);
@@ -1339,6 +1347,30 @@ export const getCompanyDetail = ({ dispatch }, param) => { //获取企业详情
         console.log('fail');
     });
 }
+export const updateEnterprise = ({ dispatch }, param) => { //修改企业电话备注
+    console.log(param)
+    const alterdata = {
+        tel: param.tel,
+        remark:param.remark,
+        id:param.id
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.enterpriseList,
+        emulateHTTP: false,
+        body: alterdata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        dispatch(types.UPDATE_ENTERPRISE, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 export const alterCompany = ({ dispatch }, param) => { //修改企业联系人
     const alterdata = {
         name: param.name,
@@ -1402,7 +1434,8 @@ export const createContact = ({ dispatch }, param) => { //新增企业联系人
         "phone": param.phone,
         "wechart": param.wechart,
         "email": param.email,
-        "main":param.main
+        "main":param.main,
+        "position":param.position
     }
     Vue.http({
         method: "POST",

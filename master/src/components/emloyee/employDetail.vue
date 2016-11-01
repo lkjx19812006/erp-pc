@@ -1,9 +1,10 @@
 <template>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <div class="breed_detail">
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con modal_overall" v-show="param.show">
         <div class="client-section clearfix" v-cloak>
-            <div @click="param.show=false" class="top-title">
-                <span class="glyphicon glyphicon-remove-circle" style="font-size:30px"></span>
+            <div  class="top-title">
+                <span class="glyphicon glyphicon-remove-circle" @click="param.show=false" style="font-size:28px"></span>
             </div>
             <validator name="validation">
                 <!-- <div  class="section_title clearfix">
@@ -219,11 +220,7 @@ label{
 input{
     font-size:12px;
 }
-.top-title{
-    width: 100%;
-    right: 0;
-    top:130px;
-}
+
 .section_title{
     padding-top:6px;
 }
@@ -331,7 +328,5 @@ input{
     
     height: 36px;
 }
-.glyphicon{
-    top: -58px;
-}
+
 </style>

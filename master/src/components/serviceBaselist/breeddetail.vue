@@ -2,7 +2,8 @@
     <createspec-model :param="specParam" v-if="specParam.show"></createspec-model>
     <updatebreed-model :param="breedlistParam" v-if="breedlistParam.show"></updatebreed-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
-    <div class="breed_detail">
+    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con modal_overall" v-show="param.show">
       <div class="cover_loading" v-if="param.id!=initBreedDetail.id">
         <pulse-loader :loading="true" :color="color" :size="size"></pulse-loader>
       </div>
@@ -464,23 +465,5 @@ export default {
 .panel-body ul li{
     padding: 10px;
 }
-.breed_action {
-    top:7px;
-    right: 25px;
-}
 
-.breed_action {
-    padding: 5px 0;
-}
-
-.breed_action dl {
-    margin-bottom: 0;
-}
-
-.breed_action dl dt {
-    display: block;
-    padding:0px 3px;
-    font-size: 14px;
-    cursor: pointer;
-}
 </style>

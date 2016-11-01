@@ -2,7 +2,8 @@
     <updatecompany-model :param="companylistParam" v-if="companylistParam.show"></updatecompany-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
-    <div class="breed_detail">
+    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container modal_con modal_overall" v-show="param.show">
       <div class="cover_loading" v-if="param.id!=initCompanyDetail.id">
         <pulse-loader :loading="true" :color="color" :size="size"></pulse-loader>
       </div>
@@ -57,7 +58,9 @@
                                tellist:'固话',
                                weblist:'微信',
                                mainlist:'主要联系人',
+                               positionlist:'职务',
                                name:'',
+                               position:'',
                                phone:'',
                                tel:'',
                                email:'',
@@ -80,6 +83,7 @@
                                             <th>邮箱</th>
                                             <th>微信</th>
                                             <th>主要联系人</th>
+                                            <th>职务</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -92,6 +96,7 @@
                                             <td>{{item.wechart}}</td>
                                             <td v-if="item.main==0">否</td>
                                             <td v-if="item.main==1">是</td>
+                                            <td>{{item.position}}</td>
                                             <td @click="contactShow($index)" v-if="!initCompanyDetail.customerId">
                                                 <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show" transition="expand">
@@ -359,7 +364,9 @@ export default {
 table{
   margin:0;
 }
-
+.modal_con{
+    width: 70%;
+}
 .table>tbody+tbody{
   border-top: 0;
 }
@@ -367,10 +374,7 @@ table{
 .table>tbody tr td{
   padding: 15px 0;
 }
-.top-title{
-    width: 100%;
-    right: 0;
-}
+
 .client-detailInfo img {
     width: 100px;
 }

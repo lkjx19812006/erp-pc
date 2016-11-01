@@ -135,10 +135,10 @@ export default{
 </script>
 <style scoped>
 .modal{
-	z-index: 1081;
+	z-index: 1111;
 }
 .modal_con{
-	z-index: 1082;
+	z-index: 1111;
 }
 .change_trans{
 	margin-top: 20px;
