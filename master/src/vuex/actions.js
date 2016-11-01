@@ -610,6 +610,8 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             number:data.goods[0].number
         }]
     }
+
+
     console.log(body);
     Vue.http({
         method: 'POST',
@@ -1623,7 +1625,8 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
         pinyin: data.pinyin,
         eName: data.eName,
         lName:data.lName,
-        icon: data.path
+        icon: data.path,
+        url:data.url
     }
 
     Vue.http({
@@ -2089,6 +2092,9 @@ export const getEmployeeList = ({ dispatch }, param) => {  //员工列表以及�
         if(seach=='orgId'&&param[seach]!==''){
             apiurl += '&org='+param.orgId
         }
+        if(seach=='orgCode'&&param[seach]!==''){
+            apiurl += '&orgCode='+param.orgCode
+        }
     }
     Vue.http({
         method:'GET',
@@ -2127,27 +2133,27 @@ export const getOrgList = ({ dispatch }, param) => {  //部门列表
                 org[i].show =false;
                 org[i].checked =false;
            }*/
-           
-          
+
+
            var arr = [];
            function getLeaf(tree,arr){     //获取树的叶子节点
                 if(tree.lowerList.length==0){
                     arr.push(tree);
-                    
+
                 }else{
                     for(var i=0;i<tree.lowerList.length;i++){
-                        getLeaf(tree.lowerList[i],arr);  
-                    } 
-                }  
+                        getLeaf(tree.lowerList[i],arr);
+                    }
+                }
            }
            getLeaf(org[0],arr);
-           
+
            if('list' in param&&param.list==true){
                 dispatch(types.ORG_DATA, arr);
            }else{
                 dispatch(types.ORG_DATA, org);
            }
-           
+
            param.loading = false;
         }, (res) => {
             console.log('fail');
@@ -2872,11 +2878,12 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
         }else if(search=='invoic'){
             url +='&invoic='
         }
-        if(search=='status'&&param[search]!==''){
-            url += '&status='+param.status
-        }else if(search=='status'){
-            url +='&status='
+        if(search=='validate'&&param[search]!==''){
+            url += '&validate='+param.validate
         }
+       if(search=='onSell'&&param[search]!==''){
+         url += '&onSell='+param.onSell
+       }
         if(search=='intl'&&param[search]!==''){
             url += '&intl='+param.intl
         }else if(search=='intl'){
@@ -2971,8 +2978,14 @@ export const getIntentionDetail = ({ dispatch }, param) => {  //意向详情
                 arr:arr,
                 show:false
             };
-            for (var i in result.msgs.arr) {
-                result.msgs.arr[i].show = false;
+            var arr = result.trackings;
+            result.trackings = null;
+            result.trackings = {
+              arr:arr,
+              show:false
+            };
+            for (var i in result.trackings.arr) {
+                result.trackings.arr[i].show = false;
             };
             dispatch(types.INTENTION_DETAIL_DATA, result);
             if(res.json().result.pics[0]){
@@ -3030,11 +3043,11 @@ export const getOfferList = ({ dispatch }, param) => {  //报价信息列表以�
 export const getMsgList = ({ dispatch }, param) => {  //留言信息列表以及搜索
     param.loading = true;
     var url = apiUrl.clientList+'/intention/msgs?'+'&page=' + param.cur + '&pageSize=15';
-    if('intentionId' in param&&param.intentionId!==''){
-        url += '&intentionId='+param.intentionId
+    if(param.fullName&&param.fullName!=''){
+        url += '&fullName='+param.fullName
     }
-    if('userId' in param&&param.userId!==''){
-        url += '&userId='+param.userId
+    if(param.phone&&param.phone!=''){
+        url += '&phone='+param.phone
     }
     Vue.http({
         method:'GET',
@@ -3121,8 +3134,11 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
         if(key=='source'&&param[key]!==''){
              url += '&source='+param[key];
         }
-        if(key=='busiType'&&param[key]!==''){
-             url += '&busiType='+param[key];
+        if(key=='bizMain'&&param[key]!==''){
+             url += '&bizMain='+param[key];
+        }
+        if(key=='bizType'&&param[key]!==''){
+        url += '&bizType='+param[key];
         }
         if(key=='audit'&&param[key]!==''){
              url += '&audit='+param[key];
@@ -3231,6 +3247,36 @@ export const getUserDetail = ({ dispatch }, param) => {  //会员详情
 
 export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信息
 
+  var bizCategory={
+      0:'其它',
+      1:'合作社',
+      2:'药商',
+      3:'药厂',
+      4:'个体户',
+      5:'药店',
+      6:'医院',
+      7:'贸易公司',
+      8:'零售商行',
+      9:'药农',
+      10:'介绍人',
+      11:'药贩子',
+      12:'产地药商',
+      13:'销地药商',
+      14:'养生诊所',
+      15:'化工厂',
+      16:'化妆品厂',
+      17:'提取物厂',
+      18:'食品厂',
+      19:'实验室',
+      20:'网上电商',
+      21:'中成药生产商',
+      22:'西药生产商',
+      23:'饮片厂'
+    }
+
+
+
+
     console.log(param);
     const updatedata = {
         id: param.id
@@ -3292,6 +3338,9 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
     if(param.userType){
         updatedata.userType = param.userType;
     }
+    if(param.bizMain){
+      updatedata.bizMain = param.bizMain;
+    }
     console.log(updatedata);
 
     Vue.http({
@@ -3306,6 +3355,7 @@ export const updateUserInfo = ({ dispatch }, param) => { //修改用户基本信
         }
     }).then((res) => {
         updatedata.index = param.index;
+      updatedata.bizTypeName=bizCategory[param.bizType];
         console.log(updatedata);
         dispatch(types.UPDATE_USER_DATA, updatedata);
     }, (res) => {
@@ -3458,7 +3508,14 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
 
 
 export const createEmploy = ({ dispatch }, param) => { //新增员工信息
-    console.log(param)
+    console.log(param);
+    if(param.entrydate){
+        console.log('dadda');
+        param.entrydate=param.entrydate.split(' ')[0] + ' 00:00:00';
+    }
+    if(param.leavedate){
+        param.leavedate=param.leavedate.split(' ')[0] + ' 00:00:00';
+    }
     const data1 = {
         "name":param.name,
         "ename":param.ename,
@@ -3496,6 +3553,13 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
 
 export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
     console.log(param)
+    if(param.entrydate){
+        console.log('dadda');
+        param.entrydate=param.entrydate.split(' ')[0] + ' 00:00:00';
+    }
+    if(param.leavedate){
+        param.leavedate=param.leavedate.split(' ')[0] + ' 00:00:00';
+    }
     const updatedata = {
         id:param.id,
         name:param.name,
@@ -3631,6 +3695,7 @@ export const createIntentionInfo = ({ dispatch }, param) => { //新增意向
          "duedate":param.duedate,
          "images":param.images,
          "inType":param.inType
+
     }
     console.log(data1);
     Vue.http({
@@ -3761,6 +3826,7 @@ export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信�
         }
     }).then((res) => {
         console.log('添加成功')
+        param.id=res.json().result.id;
         dispatch(types.ADD_TRACKING_DATA,param);
     }, (res) => {
         console.log('fail');

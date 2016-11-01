@@ -6,7 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>会员意向审核</h3>
+            <h3>意向审核</h3>
         </div>
         <div class="edit-model">
            <section class="editsection" v-cloak>
@@ -67,26 +67,26 @@ export default {
 
         pass: function(){
             if(this.param.key=='user'){   //客服审核意向(初审会员的意向)
-                this.param.validate = 1;     
+                this.param.validate = 1;
             }
             if(this.param.key=='employee'){    //业务员审核意向(部门意向)
-                this.param.validate = 2;  
+                this.param.validate = 2;
             }
             if(this.param.key=='org'){    //主管审核意向(部门意向)
-                this.param.validate = 3;  
+                this.param.validate = 3;
             }
-            
+
             this.batchUserIntentionAudit(this.param);
         },
         reject: function(){
             if(this.param.key=='user'){
-                this.param.validate = -1;   
+                this.param.validate = -1;
             }
-            if(this.param.key=='employee'){    
-                this.param.validate = -2;  
+            if(this.param.key=='employee'){
+                this.param.validate = -2;
             }
             if(this.param.key=='org'){
-                this.param.validate = -3;  
+                this.param.validate = -3;
             }
             this.batchUserIntentionAudit(this.param);
         },
@@ -99,8 +99,21 @@ export default {
 </script>
 <style scoped>
 
-
-
+.modal_con{
+    width:400px;
+    height:300px;
+    top:0;
+}
+.edit_footer{
+    position: absolute;
+    bottom: 0px;
+    width:400px;
+}
+.top-title{
+    width: 100%;
+    position: absolute;
+    top:0;
+}
 .big-font {
     font-size: 36px;
 }
@@ -115,7 +128,7 @@ export default {
 }
 
 .edit-content h3 {
-    font-size: 20px;
+    font-size: 15px;
     color: #fa6705;
     margin: 0;
 }
@@ -151,9 +164,6 @@ export default {
     width: 50%;
 }
 
-.editpage-input {
-    margin-top: 15px;
-}
 
 .editlabel {
     color: #333;
@@ -183,11 +193,6 @@ export default {
     margin-left: 10px;
     margin-top: 5px;
 }
-
-.edit_footer button {
-    margin-left: 15px;
-}
-
 .btn-confirm {
     background-color: #fa6705;
     color: #fff;

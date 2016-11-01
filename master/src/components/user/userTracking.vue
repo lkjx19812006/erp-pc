@@ -21,7 +21,7 @@
                 </div>
 
 
-                <div v-if="param.flag==0&&!param.customer" class="editpage-input">
+                <div v-if="param.flag==0&&!param.customer&&!param.bizType" class="editpage-input">
                   <label class="editlabel">业务类型</label>
                   <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType">
                     <option value="">请选择业务类型</option>
@@ -29,9 +29,17 @@
                   </select>
                 </div>
 
-                <div v-if="param.flag==0&&param.customer" class="editpage-input">
+                <div v-if="param.flag==0&&param.customer&&!param.bizType" class="editpage-input">
                   <label class="editlabel">业务类型</label>
                   <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType">
+                    <option value="">请选择业务类型</option>
+                    <option value="1">意向</option>
+                    <option value="2">订单</option>
+                  </select>
+                </div>
+                <div v-if="param.bizType" class="editpage-input">
+                  <label class="editlabel">业务类型</label>
+                  <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType" disabled=true>
                     <option value="">请选择业务类型</option>
                     <option value="1">意向</option>
                     <option value="2">订单</option>
@@ -248,6 +256,16 @@
         }else{
           this.param.bizType='';
         }
+      }
+    },
+    created(){
+      if(this.param.breedName){
+        this.intention.breedName=this.param.breedName;
+        this.intention.spec=this.param.spec;
+        this.intention.location=this.param.location;
+        this.intention.number=this.param.number;
+        this.intention.unit=this.param.unit;
+        this.intention.price=this.param.price;
       }
     }
   }

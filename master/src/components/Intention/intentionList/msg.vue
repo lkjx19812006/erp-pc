@@ -2,25 +2,27 @@
      <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
 	 <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">我的留言</div>
-            <div class="col-xs-5 my_order_search">
+            <div class="my_enterprise col-xs-2" style="font-size:14px">我的留言</div>
+            <div class="col-xs-4 my_order_search">
                <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" placeholder="按意向ID搜索" v-model="loadParam.intentionId"  @keyup.enter="searchMsg()">
+                   <input type="text" class="search_input" placeholder="会员名称" v-model="loadParam.fullName"  @keyup.enter="searchMsg()">
                </div>
-              <div class="ordertel_search clearfix">
+               <div class="ordertel_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" v-model="loadParam.userId" placeholder="按会员ID搜索" @keyup.enter="searchMsg()">
+                   <input type="text" class="search_input" v-model="loadParam.phone" placeholder="按会员手机" @keyup.enter="searchMsg()">
                </div>
-           </div> 
+               <button class="new_btn transfer" @click="searchMsg()">搜索</button>
+            </div>
             <div class="right col-xs-2">
-              <button class="new_btn transfer" @click="searchMsg()">搜索</button>
-                <!-- <button class="new_btn" @click="createIntention()">新建</button>  -->
+
+
             </div>
         </div>
         <div class="service-nav clearfix">
             <div class="my_order_search">
-               
+               <div class="filter_search clearfix">
+               </div>
            </div>
         </div>
         <div class="order_table">
@@ -29,10 +31,10 @@
             </div>
             <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
-                    <tr>  
-                        <th>
-                        	<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
-                        </th>
+                    <tr>
+                        <!-- <th>
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
+                        </th> -->
                         <!-- <th>意向ID</th>     -->
                         <th>留言会员</th>
                         <th>会员手机</th>
@@ -46,9 +48,9 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initMsgList">
-                         <td>
+                         <!-- <td>
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
-                        </td>
+                                                 </td> -->
                         <!-- <td>{{item.intentionId}}</td> -->
                         <td>{{item.fullname}}</td>
                         <td>{{item.phone}}</td>
@@ -84,11 +86,11 @@ import {
 } from '../../../vuex/getters'
 import {
 	getMsgList,
-	
-	
+
+
 } from '../../../vuex/actions'
 export default {
-    components: {   
+    components: {
         pagination,
         editmsgModel
     },
@@ -97,7 +99,7 @@ export default {
             initMsgList
         },
         actions: {
-            getMsgList,   
+            getMsgList,
         }
     },
     data() {
@@ -108,9 +110,9 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                intentionId:'',
-                userId:''
-            
+                fullName:'',
+                phone:''
+
             },
             chanceParam:{
                 show:false
@@ -128,7 +130,7 @@ export default {
     methods: {
         clickShow:function(index){
         	this.$store.state.table.basicBaseList.msgList[index].show=!this.$store.state.table.basicBaseList.msgList[index].show;
-        }, 
+        },
         searchMsg:function(){
             this.getMsgList(this.loadParam);
         },
@@ -144,22 +146,22 @@ export default {
             			_this.checked = false;
             		}
             	})
-            }	
-            
-           
+            }
+
+
         },
         checkedAll:function(){
    			this.checked = !this.checked;
    			if(this.checked){
    				this.$store.state.table.basicBaseList.msgList.forEach(function(item){
    					item.checked = true;
-   				})		
+   				})
    			}else{
    				this.$store.state.table.basicBaseList.msgList.forEach(function(item){
    					item.checked = false;
    				})
-   			}   	
-        },    
+   			}
+        },
     },
     events: {
         fresh: function(input) {
@@ -174,6 +176,15 @@ export default {
 }
 </script>
 <style scoped>
+.service-nav {
+    padding: 15px 30px 0 40px;
+}
+.order_table{
+    margin-top:-4px;
+}
+.my_enterprise{
+    padding:6px;
+}
 .breed_action {
     top: 33px;
     right: 106px;

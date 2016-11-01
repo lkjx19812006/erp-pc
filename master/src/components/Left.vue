@@ -20,7 +20,7 @@
                                 <div class="bleft">
                                     <img v-bind:src="sub.icon" height="15" width="15">
                                 </div>
-                                <span style="cursor:pointer;" class="{{$route.query.id==$index?'active_font':''}}">{{sub.cname}}</span>
+                                <span style="cursor:pointer;" class="{{$route.path==sub.url?'active_font':''}}">{{sub.cname}}</span>
                             </div>
                         </dd>
                     </dl>

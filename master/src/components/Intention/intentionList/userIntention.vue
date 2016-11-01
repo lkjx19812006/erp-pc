@@ -9,7 +9,7 @@
      <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
      <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
-     
+
    <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">会员意向</div>
@@ -22,11 +22,11 @@
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索">
                </div> -->
-           </div> 
+           </div>
             <div class="right">
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 <button class="new_btn transfer" @click="search()">搜索</button>
-                <button class="new_btn transfer" @click="intentionAudit()">审核</button> 
+                <button class="new_btn transfer" @click="intentionAudit()">审核</button>
                 <!-- <button class="new_btn" @click="createIntention({
                        show:true,
                        selectCustomer:true,
@@ -162,12 +162,12 @@
             </div>
             <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
-                    <tr>  
+                    <tr>
                         <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
                         <th>类型</th>
                         <th>特殊的</th>
-                        <th>客户名称</th>
-                        <th>客户手机号</th>
+                        <th>会员名称</th>
+                        <th>会员手机号</th>
                         <th>品种名称</th>
                         <th>资格资质</th>
                         <th>规格</th>
@@ -196,8 +196,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                 
-                    <tr v-for="item in initIntentionList" 
+
+                    <tr v-for="item in initIntentionList"
                         @click="match(item)"  style="cursor:pointer">
                          <td>
                             <label v-if="item.validate==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" >
@@ -209,8 +209,8 @@
                             <div v-if="item.especial==1&&item.type==0">紧急求购</div>
                             <div v-if="item.especial==1&&item.type==1">低价资源</div>
                         </td>
-                        <td>{{item.customerName}}</td>
-                        <td>{{item.customerPhone}}</td>
+                        <td>{{item.userFullname}}</td>
+                        <td>{{item.userPhone}}</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
@@ -247,7 +247,14 @@
                                 address:item.address,
                                 link:editintentInfo,
                                 url:'/intention/',
-                                key:'intentionList'
+                                key:'intentionList',
+                                image_f:'',
+                                image_s:'',
+                                image_t:'',
+                                image_f_show:'',
+                                image_s_show:'',
+                                image_t_show:'',
+                                duedate:item.duedate
                                 })">{{item.breedName}}
                         </td>
                         <td>{{item.qualification | qualify}}</td>
@@ -324,7 +331,14 @@
                                                validate:item.validate,
                                                link:editintentInfo,
                                                url:'/intention/',
-                                               key:'intentionList'
+                                               key:'intentionList',
+                                               image_f:'',
+                                               image_s:'',
+                                               image_t:'',
+                                               image_f_show:'',
+                                               image_s_show:'',
+                                               image_t_show:'',
+                                               duedate:item.duedate
                                                })">编辑</li>
                                    <li @click="specDelete({
                                                id:item.id,
@@ -368,7 +382,7 @@
                                                    wechart: ''
                                                   }
                                                 },item.show=false)">划转</li>
-                                   <li v-if="item.validate==0" @click="audit($index,item.id)">审核</li>          
+                                   <li v-if="item.validate==0" @click="audit($index,item.id)">审核</li>
                                </ul>
                            </div>
                        </td>
@@ -377,12 +391,12 @@
 
                 </tbody>
             </table>
-            
+
         </div>
-        <!-- <div v-if="supdemParam.breedId!=''&&initSupplyDemandList.length!=0" style="min-height:30px;max-height:200px;width:87%;overflow-y:auto;position:fixed;bottom:20px;left:250px;z-index:100"> 
+        <!-- <div v-if="supdemParam.breedId!=''&&initSupplyDemandList.length!=0" style="min-height:30px;max-height:200px;width:87%;overflow-y:auto;position:fixed;bottom:20px;left:250px;z-index:100">
           <table class="table table-hover table_color table-striped " v-cloak >
             <thead>
-                <tr>  
+                <tr>
                     <th>特殊的</th>
                     <th>客户名称</th>
                     <th>客户手机号</th>
@@ -410,7 +424,7 @@
                 </tr>
             </thead>
             <tbody>
-                 
+
                     <tr v-for="item in initSupplyDemandList">
                         <td>{{item.especial | chanceEspec}}</td>
                         <td>{{item.customerName}}</td>
@@ -444,10 +458,10 @@
                           <div v-if="item.onSell==2">下架</div>
                         </td>
                     </tr>
-        
-        
+
+
                 </tbody>
-          </table>    
+          </table>
         </div> -->
         <div class="base_pagination">
             <pagination :combination="loadParam"></pagination>
@@ -482,7 +496,7 @@ import {
   createIntentionInfo,
 } from '../../../vuex/actions'
 export default {
-    components: {   
+    components: {
         pagination,
         chancedetailModel,
         transferintentModel,
@@ -506,7 +520,7 @@ export default {
             intentionUpAndDown,
             deleteInfo,
             editintentInfo,
-            createIntentionInfo, 
+            createIntentionInfo,
         }
     },
     data() {
@@ -593,10 +607,10 @@ export default {
             }else{
               this.supdemParam.id = item.id;
               this.supdemParam.type = 1-item.type
-              this.supdemParam.breedId = item.breedId; 
+              this.supdemParam.breedId = item.breedId;
               this.getSupplyDemandList(this.supdemParam);
             }*/
-            
+
         },
         eventClick:function(sub){
             if(this.$store.state.table.basicBaseList.intentionList[sub].show){
@@ -629,16 +643,16 @@ export default {
                     if(item.validate==0){
                         item.checked = true;
                     }
-                })    
+                })
             }else{
                 this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
                   item.checked = false;
                 })
-            }     
+            }
         },
         intentionAudit:function(){
-            this.intentionAuditParam.arr = []; 
-            this.intentionAuditParam.indexs = []; 
+            this.intentionAuditParam.arr = [];
+            this.intentionAuditParam.indexs = [];
             for(var i=0;i<this.$store.state.table.basicBaseList.intentionList.length;i++){
                 if(this.$store.state.table.basicBaseList.intentionList[i].checked){
                     this.intentionAuditParam.arr.push(this.$store.state.table.basicBaseList.intentionList[i].id);
@@ -651,7 +665,7 @@ export default {
             }else{
                 console.log(this.intentionAuditParam.indexs);
                 this.intentionAuditParam.show = true;
-            }          
+            }
         },
         upOrDown:function(param){
             this.tipsParam.ids = [];
@@ -675,19 +689,19 @@ export default {
             }else{
               console.log('上下架');
                 this.intentionUpAndDown(this.tipsParam);
-            }  
-            
+            }
+
         },
         audit:function(index,id){   //单个意向审核
             this.intentionAuditParam.show = true;
-            this.intentionAuditParam.arr = []; 
-            this.intentionAuditParam.indexs = []; 
+            this.intentionAuditParam.arr = [];
+            this.intentionAuditParam.indexs = [];
             this.intentionAuditParam.arr.push(id);
             this.intentionAuditParam.indexs.push(index);
         },
         userToClient:function(item){
             console.log(item);
-            
+
             this.transferParam = item;
         },
         searchIntention:function(){
@@ -708,7 +722,7 @@ export default {
             this.loadParam.advance='';
             this.loadParam.customerName='';
             this.getIntentionList(this.loadParam);
-            
+
         },
         specDelete:function(initIntentionList){
           this.deleteParam = initIntentionList;

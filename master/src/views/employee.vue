@@ -1,16 +1,21 @@
 <template>
    <createemp-model :param="createParam" v-if="createParam.show"></createemp-model>
    <detailemp-model :param.sync="changeParam" v-if="changeParam.show"></detailemp-model>
+   <searchorg-model :param.sync="orgParam" v-if="orgParam.show"></searchorg-model>
     <div  class="myemploy" v-show="!changeParam.show">
         <div class="order_search">
             <div class="clear">
                 <div class="my_order col-xs-1" style="font-size:14px">员工列表</div>
                 <div class="col-xs-9 my_order_search">
-                    <div class="name_search clearfix" style="border:none; float:left;">
+                    <!-- <div class="name_search clearfix" style="border:none; float:left;">
                        <select  class="form-control" v-model="loadParam.orgId" @change="loadByCondition()">
                             <option selected value="">请选择业务员部门</option>
                             <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
                       </select>
+                    </div> -->
+                    <div class="name_search clearfix">
+                        <img src="../../static/images/search.png" height="24" width="24"  />
+                        <input type="text" class="search_input" v-model="loadParam.orgName"  placeholder="按部门搜索" readonly="readonly" @click="searchOrg()">
                     </div>
                     <div class="name_search clearfix">
                         <img src="../../static/images/search.png" height="24" width="24"  />
@@ -19,6 +24,9 @@
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
                         <input type="text" class="search_input" v-model="loadParam.mobile"  placeholder="按员工电话搜索">
+                    </div>
+                    <div class="name_search clearfix" style="margin-right:0px">
+                        <button class="new_btn " style="line-height:20px;" @click="rest()">清空条件</button>
                     </div>
                     <div class="name_search clearfix">
                         <button class="new_btn" @click="loadByCondition()">搜索</button>
@@ -184,6 +192,7 @@ import createempModel  from '../components/emloyee/createEmploy'
 import pagination from '../components/pagination'
 import filter from '../filters/filters'
 import detailempModel  from '../components/emloyee/employDetail'
+import searchorgModel  from '../components/emloyee/searchorg'
 import {
    getList,
    initEmployeeList,
@@ -199,7 +208,8 @@ export default {
     components:{
         pagination,
         createempModel,
-        detailempModel
+        detailempModel,
+        searchorgModel
     },
     data() {
         return {
@@ -212,7 +222,8 @@ export default {
                 all: 7,
                 name:'',
                 mobile:'',
-                orgId:''
+                orgId:'',
+                orgCode:''
             },
             createParam:{
                 show:false
@@ -222,6 +233,13 @@ export default {
             },
             deleteParam:{
                 show:false
+            },
+            orgParam:{
+                show:false,
+                orgid:'',
+                orgName:'',
+                orgcode:'',
+                all:true      //表示获取所有部门信息，而不是只有叶子信息
             }
         }
     },
@@ -246,6 +264,17 @@ export default {
         },
         loadByCondition:function(){
             this.getEmployeeList(this.loadParam);
+        },
+        rest:function(){
+            this.loadParam.name = '';
+            this.loadParam.mobile = '';
+            this.loadParam.orgId = '';
+            this.loadParam.orgName = '';
+            this.loadParam.orgCode = '';
+            this.getEmployeeList(this.loadParam);
+        },
+        searchOrg:function(){
+            this.orgParam.show = true;
         }
     },
     vuex: {
@@ -265,6 +294,10 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getEmployeeList(this.loadParam);
+        },
+        org:function(org){
+            this.loadParam.orgName = org.orgName;
+            this.loadParam.orgCode = org.orgcode;
         }
     },
     created() {

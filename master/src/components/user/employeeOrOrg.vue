@@ -8,33 +8,39 @@
 	    	<h4>划转</h4>
 	    	<div class="con_list">
 	    		<div class="change_trans">
-	    			<div class="tans_tab clearfix">
+	    			<!-- <div class="tans_tab clearfix"> -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn_shape" v-bind:class="{ 'btn-orange': isA}" @click="employee()">业务员</button>
+                        <button type="button" class="btn btn_shape" v-bind:class="{ 'btn-orange':!isA}" @click="department()">部门</button>
 	    				<!-- <a class="tabs" v-bind:class="{ 'tabs_active': isA&&isB, 'tab1': !isA }" @click="bindCustomer()">绑定客户</a> -->
-	    				<a class="tabs" v-bind:class="{ 'tabs_active': isA, 'tab1': isA }"  @click="employee()">业务员</a>
-	    				<a class="tabs" v-bind:class="{ 'tabs_active': !isA, 'tab1': isA }"  @click="department()">部门</a>
+	    				<!-- <a class="tabs" v-bind:class="{ 'tabs_active': isA, 'tab1': isA }"  @click="employee()">业务员</a>
+                        <a class="tabs" v-bind:class="{ 'tabs_active': !isA, 'tab1': isA }"  @click="department()">部门</a> -->
+
 	    			</div>
 	    		</div>
     			<div class="trans_service clearfix" v-show="currentView==1">
+
 					<!-- <div class="col-xs-4">
-						<select  class="form-control" v-model="employeeParam.orgId" @change="employSearch()">
-						                        <option selected value="">请选择业务员部门</option>
-						                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-						                  	</select>
-					</div> -->
+                        <select  class="form-control" v-model="loadParam.orgId" @change="employSearch()">
+                                                <option selected value="">请选择业务员部门</option>
+                                                  <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
+                                              </select>
+                    </div> -->
+                    <div style="margin-top:30px;margin-bottom:15px">
+                        <div class="col-xs-1 pull-left"></div>
+                        <div class="input-group col-xs-4 pull-left">
+                            <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
+                            <input type="text" class="form-control" v-model="loadParam.name" placeholder="请输入业务员名字" @keyup.enter="employSearch()">
 
-    				<div class="col-xs-8">
-		                <div class="name_search clearfix">
-		                    <img src="/static/images/search.png" height="24" width="24">
-		                    <input type="text" class="search_input" v-model="employeeParam.name" placeholder="请输入业务员名字" @keyup.enter="employSearch()">
-		                </div>
-		                <div class="name_search clearfix">
-		                    <img src="/static/images/search.png" height="24" width="24">
-		                    <input type="text" class="search_input" v-model="employeeParam.mobile" placeholder="请输入业务员手机号"  @keyup.enter="employSearch()">
-		                </div>
-
-
-		            </div>
-		            <table class="table table-hover table_head table-striped " v-cloak>
+                        </div>
+                        <div class="col-xs-1 pull-left"></div>
+                        <div class="input-group col-xs-4">
+                            <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
+                            <input type="text" class="form-control" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @keyup.enter="employSearch()">
+                        </div>
+                    </div>
+    				
+		            <table class="table table-hover table_head table-striped" style="width:95%;text-align:center" v-cloak>
 		                <thead>
 		                    <tr>
 		                        <th></th>
@@ -46,7 +52,7 @@
 		                <tbody>
 		                    <tr v-for="item in initEmployeeList">
 		                       <td  @click.stop="">
-		                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectEmployee($index)" ></label>
+		                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectEmployee($index)"></label>
 		                        </td>
 		                        <td>{{item.name}}</td>
 		                        <td>{{item.orgName}}</td>
@@ -55,6 +61,9 @@
 
 		                </tbody>
 		            </table>
+                    <div class="base_pagination">
+                        <pagination :combination="loadParam"></pagination>
+                    </div>
                     <div class="edit_footer">
                         <button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
                         <button type="button" class="btn btn-orange" @click="confirmEmp()">确定</button>
@@ -103,6 +112,7 @@
 	</div>
 </template>
 <script>
+import pagination from '../pagination'
 import {
     initCustomerlist,
     initEmployeeList,
@@ -116,7 +126,7 @@ import {
 } from '../../vuex/actions'
 export default{
 	components:{
-
+        pagination
 	},
 	props:['param'],
 	data(){
@@ -127,7 +137,7 @@ export default{
 			checked:false,
 			customerFlag:0,
             id: undefined, // Binded to component.
-			loadParam: {
+			orgParam: {
                   loading: true,
                   color: '#5dc596',
                   size: '15px',
@@ -135,7 +145,7 @@ export default{
                   all: 7
               },
 
-              employeeParam: {
+              loadParam: {
                   loading: true,
                   color: '#5dc596',
                   size: '15px',
@@ -181,8 +191,8 @@ export default{
 			this.isA=false;
 		},
 		employSearch:function(){
-        	/*this.getEmployOrgSearch(this.loadParam);*/
-        	this.getEmployeeList(this.employeeParam);
+        	/*this.getEmployOrgSearch(this.orgParam);*/
+        	this.getEmployeeList(this.loadParam);
         },
 		Partselected:function(){
 			this.checked=!this.checked;
@@ -274,7 +284,14 @@ export default{
         }
 
 	},
+
     events: {
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getEmployeeList(this.loadParam);
+            this.checked=false;
+
+        },
       treeview_click:function(param){
             console.log(param);
             if(param.children.length==0){
@@ -286,9 +303,9 @@ export default{
       }
     },
 	created() {
-      //this.getClientList(this.loadParam, this.loadParam.all);
-      this.getEmployeeList(this.employeeParam, this.employeeParam.all);
-      this.getOrgList(this.loadParam, this.loadParam.all);
+      //this.getClientList(this.orgParam, this.orgParam.all);
+      this.getEmployeeList(this.loadParam, this.loadParam.all);
+      this.getOrgList(this.orgParam, this.orgParam.all);
 
     }
 }
@@ -319,6 +336,12 @@ export default{
 }
 .con_trans{
 	margin-top: 40px;
+}
+.name_search{
+    margin-top:30px;
+}
+.btn_shape{
+    width:175px;
 }
 .tans_tab{
 	height: 40px;

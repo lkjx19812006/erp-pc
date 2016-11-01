@@ -31,7 +31,8 @@
 
                      <div class="editpage-input">
 
-                          <label class="editlabel" for="system">电话<span class="system_danger" v-if="$validation.tel.tel">格式不对</span></label>
+                          <label class="editlabel" for="system">固话
+                            <span class="system_danger" v-if="$validation.tel.tel">格式不对</span></label>
                           <input type="text" class="form-control  edit-input" v-validate:tel="['tel']" v-model='param.tel' value="{{initUserDetail.tel}}"/>
                      </div>
                      <div class="editpage-input">
@@ -130,6 +131,12 @@
                        </select>
                        <!--<input type="text" v-model="param.importance" class="form-control edit-input" value="{{initUserDetail.importance}}" />-->
                      </div>
+
+                     <div class="editpage-input">
+                       <label class="editlabel">主营业务</label>
+                       <input type="text" v-model='param.bizMain' class="form-control edit-input" value="{{initUserDetail.busiType}}" />
+                     </div>
+
 
                      <div class="editpage-input">
                        <label class="editlabel">备注</label>

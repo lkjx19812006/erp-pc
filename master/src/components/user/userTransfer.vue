@@ -23,7 +23,7 @@
             </div>
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                 <label class="editlabel" for="system">名称<span class="system_danger" v-if="$validation.name.minlength">请输入客户名且不少于两位</span></label>
+                 <label class="editlabel" >名称<span class="system_danger" v-if="$validation.name.minlength">请输入客户名且不少于两位</span></label>
                  <input type="text" id="username" class="form-control" v-model="param.name"
                        v-validate:name="{minlength:2}"/>
               </div>
@@ -68,7 +68,9 @@
 
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>分类</label>
+                <label>分类<span class="system_danger" v-if="$validation.classify.required">分类不能为空</span></label>
+                <input v-show="false" type="text" class="form-control" readonly="readonly"
+                       v-model="param.classify" v-validate:classify="['required']"  />
                 <select class="form-control edit-input" id="classify" v-model="param.classify">
                   <option value="1,'买'">买</option>
                   <option value="2,'卖'">卖</option>
@@ -77,11 +79,13 @@
 
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                <label>业务员/部门</label>
+                <label>业务员/部门<span class="system_danger" v-if="$validation.orgid.required">业务员/部门不能为空</span></label>
+                <input v-show="false" type="text" class="form-control" readonly="readonly"
+                       v-model="param.orgId" v-validate:orgid="['required']"  />
                 <input v-if="param.employeeId" type="text" class="form-control" readonly="readonly"
-                       v-model="param.employeeName" @click="selectParam.show=true"/>
+                       v-model="param.employeeName"  @click="selectParam.show=true" value="{{param.employeeName}}"/>
                 <input v-if="!param.employeeId" type="text" class="form-control" readonly="readonly" v-model="param.orgName"
-                       @click="selectParam.show=true"/>
+                       @click="selectParam.show=true" value="{{param.orgName}}" />
               </div>
             </div>
             <div class="clearfix">

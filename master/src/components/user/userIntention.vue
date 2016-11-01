@@ -12,9 +12,9 @@
         </div>
         <validator name="validation">
           <div class="edit-model">
-            <div class="cover_loading">
-              <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
-            </div>
+            <!--<div class="cover_loading">-->
+              <!--<pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>-->
+            <!--</div>-->
             <div class="cover_loading">
               <pulse-loader :loading="breedParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -169,8 +169,8 @@
                              :on-change="selectProvince"
                              :options="initCountrylist"
                              placeholder="国家"
-                             label="cname" 
-                             
+                             label="cname"
+
                             >
                            </v-select>
                          </div>
@@ -478,7 +478,8 @@ export default {
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
-          this.param.district = this.district.cname;
+          if(this.district.cname){this.param.district = this.district.cname;}
+          else{this.param.district ='';}
           this.param.show=false;
           this.createIntentionInfo(this.param);
         }

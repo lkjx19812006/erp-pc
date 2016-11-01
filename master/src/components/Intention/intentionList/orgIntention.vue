@@ -8,7 +8,7 @@
      <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
      <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
-     
+
    <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">部门意向</div>
@@ -21,7 +21,7 @@
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索">
                </div> -->
-           </div> 
+           </div>
             <div class="right">
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 <button class="new_btn transfer" @click="search()">搜索</button>
@@ -29,7 +29,7 @@
         </div>
         <div class="service-nav clearfix">
             <div class="my_order_search">
-               
+
            </div>
         </div>
         <div class="order_table">
@@ -38,8 +38,8 @@
             </div>
             <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
-                    <tr>  
-                        <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
+                    <tr>
+                        <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
                         <th>类型</th>
                         <th>特殊的</th>
                         <th>客户名称</th>
@@ -72,12 +72,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                 
-                    <tr v-for="item in initIntentionList" 
+
+                    <tr v-for="item in initIntentionList"
                         @click="match(item)"  style="cursor:pointer">
-                         <td>
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
-                        </td>
+                         <!--<td>-->
+                            <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
+                        <!--</td>-->
                         <td>{{item.type | chanceType}}</td>
                         <td>
                             <div v-if="item.especial==0">普通</div>
@@ -122,7 +122,14 @@
                                 address:item.address,
                                 link:editintentInfo,
                                 url:'/intention/',
-                                key:'intentionList'
+                                key:'intentionList',
+                                image_f:'',
+                                image_s:'',
+                                image_t:'',
+                                image_f_show:'',
+                                image_s_show:'',
+                                image_t_show:'',
+                                duedate:item.duedate
                                 })">{{item.breedName}}
                         </td>
                         <td>{{item.qualification | qualify}}</td>
@@ -199,7 +206,14 @@
                                                validate:item.validate,
                                                link:editintentInfo,
                                                url:'/intention/',
-                                               key:'intentionList'
+                                               key:'intentionList',
+                                               image_f:'',
+                                               image_s:'',
+                                               image_t:'',
+                                               image_f_show:'',
+                                               image_s_show:'',
+                                               image_t_show:'',
+                                               duedate:item.duedate
                                                })">编辑</li>
                                    <li @click="specDelete({
                                                id:item.id,
@@ -211,10 +225,10 @@
                                                url:'/intention/',
                                                key:'intentionList'
                                                })">删除</li>
-                                   <li v-if="(item.validate==0||item.validate==1)&&item.onSell==0&&item.especial==1" @click="audit($index,item.id)">审核</li>
+                                   <li v-if="item.validate==2" @click="audit($index,item.id)">审核</li>
                                    <!-- <li @click="up($index,item.id)">上架</li> -->
-                                   <li v-if="item.onSell==3&&item.type==1&&item.especial==1" @click="allowDown($index,item.id)">允许下架</li> 
-                                   <li v-if="item.onSell==3&&item.type==1&&item.especial==1" @click="rejectDown($index,item.id)">拒绝下架</li>          
+                                   <li v-if="item.onSell==3&&item.type==1&&item.especial==1" @click="allowDown($index,item.id)">允许下架</li>
+                                   <li v-if="item.onSell==3&&item.type==1&&item.especial==1" @click="rejectDown($index,item.id)">拒绝下架</li>
                                </ul>
                            </div>
                        </td>
@@ -223,12 +237,12 @@
 
                 </tbody>
             </table>
-            
+
         </div>
-        <!-- <div v-if="supdemParam.breedId!=''&&initSupplyDemandList.length!=0" style="min-height:30px;max-height:200px;width:87%;overflow-y:auto;position:fixed;bottom:20px;left:250px;z-index:100"> 
+        <!-- <div v-if="supdemParam.breedId!=''&&initSupplyDemandList.length!=0" style="min-height:30px;max-height:200px;width:87%;overflow-y:auto;position:fixed;bottom:20px;left:250px;z-index:100">
           <table class="table table-hover table_color table-striped " v-cloak >
             <thead>
-                <tr>  
+                <tr>
                     <th>特殊的</th>
                     <th>客户名称</th>
                     <th>客户手机号</th>
@@ -256,7 +270,7 @@
                 </tr>
             </thead>
             <tbody>
-                 
+
                     <tr v-for="item in initSupplyDemandList">
                         <td>{{item.especial | chanceEspec}}</td>
                         <td>{{item.customerName}}</td>
@@ -290,10 +304,10 @@
                           <div v-if="item.onSell==2">下架</div>
                         </td>
                     </tr>
-        
-        
+
+
                 </tbody>
-          </table>    
+          </table>
         </div> -->
         <div class="base_pagination">
             <pagination :combination="loadParam"></pagination>
@@ -326,7 +340,7 @@ import {
   createIntentionInfo,
 } from '../../../vuex/actions'
 export default {
-    components: {   
+    components: {
         pagination,
         chancedetailModel,
         transferintentModel,
@@ -349,7 +363,7 @@ export default {
             intentionUpAndDown,
             deleteInfo,
             editintentInfo,
-            createIntentionInfo, 
+            createIntentionInfo,
         }
     },
     data() {
@@ -434,10 +448,10 @@ export default {
             }else{
               this.supdemParam.id = item.id;
               this.supdemParam.type = 1-item.type
-              this.supdemParam.breedId = item.breedId; 
+              this.supdemParam.breedId = item.breedId;
               this.getSupplyDemandList(this.supdemParam);
             }*/
-            
+
         },
         eventClick:function(sub){
             if(this.$store.state.table.basicBaseList.intentionList[sub].show){
@@ -468,16 +482,16 @@ export default {
             if(this.checked){
                 this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
                   item.checked = true;
-                })    
+                })
             }else{
                 this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
                   item.checked = false;
                 })
-            }     
+            }
         },
         intentionAudit:function(){
-            this.intentionAuditParam.arr = []; 
-            this.intentionAuditParam.indexs = []; 
+            this.intentionAuditParam.arr = [];
+            this.intentionAuditParam.indexs = [];
             for(var i=0;i<this.$store.state.table.basicBaseList.intentionList.length;i++){
                 if(this.$store.state.table.basicBaseList.intentionList[i].checked){
                     this.intentionAuditParam.arr.push(this.$store.state.table.basicBaseList.intentionList[i].id);
@@ -489,12 +503,12 @@ export default {
                 this.tipsParam.show = true;
             }else{
                 this.intentionAuditParam.show = true;
-            }          
+            }
         },
         audit:function(index,id){   //单个意向审核
             this.intentionAuditParam.show = true;
-            this.intentionAuditParam.arr = []; 
-            this.intentionAuditParam.indexs = []; 
+            this.intentionAuditParam.arr = [];
+            this.intentionAuditParam.indexs = [];
             this.intentionAuditParam.arr.push(id);
             this.intentionAuditParam.indexs.push(index);
         },
@@ -520,8 +534,8 @@ export default {
             }else{
               console.log('上下架');
                 this.intentionUpAndDown(this.tipsParam);
-            }  
-            
+            }
+
         },
         up:function(index,id){
             this.tipsParam.ids = [];
@@ -559,7 +573,7 @@ export default {
                          this.intentionParam.id=this.initIntentionList[i].id;
                          this.intentionParam = this.initIntentionList[i];
                          this.intentionParam.show=true;
-                    }  
+                    }
                 }else if(this.intentionParam.id==""&&!this.initIntentionList[i].checked){
                     this.tipsParam.show= true;
                     this.tipsParam.name= '请先选择业务机会';
@@ -585,7 +599,7 @@ export default {
             this.loadParam.advance='';
             this.loadParam.customerName='';
             this.getIntentionList(this.loadParam);
-            
+
         },
         specDelete:function(initIntentionList){
           this.deleteParam = initIntentionList;

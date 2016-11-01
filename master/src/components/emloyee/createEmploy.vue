@@ -124,7 +124,8 @@ export default {
                 show:false,
                 orgName:'',
                 orgid:'',
-                orgcode:''
+                orgcode:'',
+                leaf:true   //只获取叶子节点
             },
             roleParam:{
                 pageSize:100,

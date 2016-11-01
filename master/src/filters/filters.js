@@ -305,11 +305,9 @@ Vue.filter('intentionAudit',function(val){      //意向审核
 		 return '客服审核不通过';
 	}
 	if(val==2){
-		 return '业务员审核通过';
+		 return '业务员申请审核';
 	}
-	if(val==-2){
-		 return '业务员审核不通过';
-	}
+
 	if(val==3){
 		 return '主管审核通过';
 	}
@@ -327,7 +325,7 @@ Vue.filter('date',function(val){      //将时间的时分秒去掉
 	}else{
 		return val;
 	}
-	
+
 })
 Vue.filter('orderstatus',function(val){     //订单状态
 	var val = val;

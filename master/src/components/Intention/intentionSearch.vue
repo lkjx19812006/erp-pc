@@ -16,15 +16,31 @@
                      <div class="client-detailInfo  col-xs-12">
                         <label>类型：</label>
                         <select type="text" class="form-control" v-model="param.type">
-                                <option value="">请选择类型</option>
+                                <option value="" selected>请选择类型</option>
                                 <option value="0">求购</option>
                                 <option value="1">供应</option>
                         </select>
                     </div>
+                    <div class="client-detailInfo  col-xs-12" v-show="param.type==1">
+                      <label>供应类型：</label>
+                      <select type="text" class="form-control" v-model="param.especial">
+                        <option value="" selected>请选择供应类型</option>
+                        <option value="0">普通供应</option>
+                        <option value="1">低价资源</option>
+                      </select>
+                    </div>
+                    <div class="client-detailInfo  col-xs-12" v-show="param.type==0">
+                      <label>求购类型：</label>
+                      <select type="text" class="form-control" v-model="param.especial">
+                        <option value="" selected>请选择求购类型</option>
+                        <option value="0">普通求购</option>
+                        <option value="1">紧急求购</option>
+                      </select>
+                    </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>是否提供发票：</label>
                         <select type="text" class="form-control" v-model="param.invoic">
-                                <option value="">请选择发票</option>
+                                <option value="" selected>请选择发票</option>
                                 <option value="0">无发票</option>
                                 <option value="1">普通发票</option>
                                 <option value="2">增值发票</option>
@@ -33,7 +49,7 @@
                     <div class="client-detailInfo  col-xs-12">
                         <label>是否上门看货：</label>
                         <select type="text" class="form-control" v-model="param.visit">
-                                <option value="">请选择</option>
+                                <option value="" selected>请选择</option>
                                 <option value="0">不看</option>
                                 <option value="1">会看</option>
                         </select>
@@ -41,23 +57,40 @@
                     <div class="client-detailInfo  col-xs-12">
                         <label>是否提供样品：</label>
                         <select type="text" class="form-control" v-model="param.sampling">
-                                <option value="">请选择样品</option>
+                                <option value="" selected>请选择样品</option>
                                 <option value="0">无</option>
                                 <option value="1">有</option>
                         </select>
                     </div>
                     <div class="client-detailInfo  col-xs-12">
-                        <label>选择状态：</label>
-                        <select type="text" class="form-control" v-model="param.status">
-                                <option value="">请选择状态</option>
-                                <option value="0">待审</option>
-                                <option value="1">通过</option>
+                        <label>选择审核状态：</label>
+                        <select type="text" class="form-control" v-model="param.validate">
+                                <option value="" selected>请选择审核状态</option>
+                                <option value="0">初始</option>
+                                <option value="1">客服审核通过</option>
+                                <option value="-1">客服审核不通过</option>
+                                <option value="2">业务员申请审核</option>
+                                <option value="3">业务主管审核通过</option>
+                                <option value="-3">业务主管审核不通过</option>
                         </select>
                     </div>
+                  <div class="client-detailInfo  col-xs-12">
+                    <label>选择上架状态：</label>
+                    <select type="text" class="form-control" v-model="param.onSell">
+                      <option value="" selected>请选择上架状态</option>
+                      <option value="0">初始</option>
+                      <option value="1">申请上架</option>
+                      <option value="2">上架</option>
+                      <option value="-2">上架失败</option>
+                      <option value="3">申请下架</option>
+                      <option value="4">下架</option>
+                      <option value="-4">下架失败</option>
+                    </select>
+                  </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>预付比例：</label>
                         <select type="text" class="form-control" v-model="param.advance">
-                                <option value="">请选择预付比例</option>
+                                <option value="" selected>请选择预付比例</option>
                                 <option value="0">0</option>
                                 <option value="1">100%</option>
                                 <option value="0.1">10%</option>
@@ -74,12 +107,12 @@
                     <div class="client-detailInfo  col-xs-12">
                         <label>是否是国际信息：</label>
                         <select type="text" class="form-control" v-model="param.intl">
-                                <option value="">通过国际搜索</option>
+                                <option value="" selected>通过国际搜索</option>
                                 <option value="0">国内</option>
                                 <option value="1">国际</option>
                         </select>
                     </div>
-                
+
                 </div>
             </section>
 

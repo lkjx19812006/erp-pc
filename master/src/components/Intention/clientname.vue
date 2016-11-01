@@ -33,10 +33,10 @@
 	                <thead>
 	                    <tr>
 	                    	<th></th>
-	                        <th>类型</th>
 	                        <th>客户名称</th>
 	                        <th>电话</th>
-	                        <th>分类</th>
+	                        <th>所在省</th>
+                            <th>所在市</th>
 	                    </tr>
 	                </thead>
 	                <tbody>
@@ -44,10 +44,10 @@
 	                    	<td  @click.stop="">
 	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.name,item.mainPhone)" ></label>
 	                        </td>
-	                        <td>{{item.type}}</td>
 	                        <td>{{item.name}}</td>
 	                        <td>{{item.mainPhone}}</td>
-	                        <td>{{item.classify}}</td>
+	                        <td>{{item.phoneProvince}}</td>
+                            <td>{{item.phoneCity}}</td>
 	                    </tr>
 	                </tbody>
 	            </table>
