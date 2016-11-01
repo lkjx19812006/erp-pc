@@ -75,7 +75,8 @@ export default {
                 keyName:'power',
                 mobile:'',
                 orgId:'',
-                url:'/sys/role/'
+                url:'/sys/role/',
+                total:0
             },
             createParam:{
                 show:false,

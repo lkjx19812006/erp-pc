@@ -109,6 +109,7 @@
           all: 7,
           name:'',
           type:'',
+          total:0,
           status:''/*,
           bizScope:'',
           provinceName:'',

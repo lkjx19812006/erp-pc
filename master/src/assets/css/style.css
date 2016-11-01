@@ -200,18 +200,14 @@ body {
     background-color: #fff;
 }
 
-.table-striped>thead>tr {
+.table_color>thead>tr {
     background-color: #004796;
     color: #fff;
 }
 
-.table-striped>tbody>tr:nth-of-type(odd) {
-    background-color: #fff;
-}
 
-.table-striped>tbody>tr:nth-of-type(even) {
-    background-color: #eee;
-}
+
+
 
 .table>tbody>tr>td,
 .table>tbody>tr>th,

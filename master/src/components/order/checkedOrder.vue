@@ -17,7 +17,7 @@
         </div>
         <table class="table table-hover table_color table-striped " v-cloak>
             <thead>
-                <tr>  
+                <tr>
                     <th>订单号</th>
                     <th>订单类别</th>
                     <th>订单来源</th>
@@ -130,13 +130,14 @@
                     orderStatus:'',
                     payWay:'',
                     clients:'',
-                    dataStatus:''
+                    dataStatus:'',
+                    total:0
                 },
                 dialogParam:{
                     show: false
                 },
                 updateParam: {
-                    show:false,   
+                    show:false,
                 },
                 detailParam: {
                     show:false
@@ -179,7 +180,7 @@
                     this.$store.state.table.basicBaseList.orderList[sub].show=!this.$store.state.table.basicBaseList.orderList[sub].show;
                 }else{
                      this.$store.state.table.basicBaseList.orderList[sub].show=true;
-                }    
+                }
             },
             newOrder:function(initOrderlist){
                  this.dialogParam=initOrderlist;
@@ -203,26 +204,16 @@
                 this.disposeParam = item;
                 this.disposeParam.show = true;
                 /*--采购状态type==0--*/
-                if(item.orderStatus==30&&item.type==0){ 
+                if(item.orderStatus==30&&item.type==0){
                     this.disposeParam.tips="订单买家已付款，商家正在核查！";
-                    /*this.disposeParam.Auditing = true;*/ 
+                    /*this.disposeParam.Auditing = true;*/
                 }
                 /*--销售状态type==1--*/
-                if(item.orderStatus==30&&item.type==1){ 
+                if(item.orderStatus==30&&item.type==1){
                     this.disposeParam.tips="订单买家已付款，商家正在核查,！";
                     this.disposeParam.Auditing = true;
                 }
             }
-        },
-         route: {
-            activate: function (transition) {
-              console.log('hook-example activated!')
-              transition.next()
-            },
-            deactivate: function (transition) {
-              console.log('hook-example deactivated!')
-              transition.next()
-          }
         },
         filter:(filter,{}),
         events: {

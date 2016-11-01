@@ -10,7 +10,7 @@
             </div>
             <p>物流单号：{{param.number}}</p>
             <p class="clearfix express_condition"><img src="/static/images/logistics.png" class="left" height="25" width="25" />物流情况：</p>
-            <div class="condition" v-for="item in initLogisticsDetail.data">  
+            <div class="condition" v-for="item in initLogisticsDetail.data">
                 <img src="/static/images/line.png" height="81" width="8"/>
                 <div class="logistics_condition">
                     <span>{{item.context}}</span>
@@ -25,11 +25,11 @@ import {
     initLogisticsDetail
 } from '../../vuex/getters'
 import {
-    
+
 } from '../../vuex/actions'
 export default {
     components: {
-        
+
     },
     props: ['param'],
     data() {
@@ -40,30 +40,21 @@ export default {
                 size: '15px',
                 show:false,
                 cur: 1,
-                all: 1
+                all: 1,
+                total:0
             }
-        } 
+        }
     },
     vuex:{
         getters:{
             initLogisticsDetail
         },
         actions:{
-            
+
         }
     },
     methods:{
 
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
-        }
     }
 }
 </script>

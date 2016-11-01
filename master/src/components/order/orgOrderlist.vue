@@ -21,7 +21,7 @@
         </div>
         <table class="table table-hover table_color table-striped " v-cloak>
             <thead>
-                <tr> 
+                <tr>
                     <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
                     <th>订单号</th>
                     <th>订单类别</th>
@@ -210,13 +210,13 @@
                     payWay:'',
                     clients:'',
                     dataStatus:'',
-                    aaa:'/order/sectionList'
+                    total:0
                 },
                 dialogParam:{
                     show: false
                 },
                 updateParam: {
-                    show:false,   
+                    show:false,
                 },
                 detailParam: {
                     show:false
@@ -242,7 +242,7 @@
                     ids:[],
                     description:'',
                     validate:'',
-                    title:"部门订单审核"                    
+                    title:"部门订单审核"
                 },
                 tipsParam:{
                     show:false,
@@ -274,7 +274,7 @@
                     this.$store.state.table.basicBaseList.orderList[sub].show=!this.$store.state.table.basicBaseList.orderList[sub].show;
                 }else{
                      this.$store.state.table.basicBaseList.orderList[sub].show=true;
-                }    
+                }
             },
             orgCheck:function(){
                 var _this = this;
@@ -306,7 +306,7 @@
                           if(item.validate==1){
                             _self.checked=item.checked;
                             _self.validate = item.validate;
-                          } 
+                          }
                         }
                       })
                     }
@@ -336,17 +336,7 @@
                 console.log(initOrderlist.goods)
                 this.dialogParam=initOrderlist;
             },
-            
-        },
-         route: {
-            activate: function (transition) {
-              console.log('hook-example activated!')
-              transition.next()
-            },
-            deactivate: function (transition) {
-              console.log('hook-example deactivated!')
-              transition.next()
-          }
+
         },
         filter:(filter,{}),
         events: {

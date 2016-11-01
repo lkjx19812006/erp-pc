@@ -83,15 +83,21 @@
                        <div class="editpage-input">
                          <label class="editlabel">包装<span class="system_danger" v-if="$validation.pack.required">包装不能为空</span></label>
                          <input type="text" v-show="false"  v-model="param.pack" v-validate:pack="{required:true}"  />
-                         <div type="text" class="edit-input" >
-                           <input-select
-                             :prevalue="param.pack"
-                             :value.sync="param.pack"
-                             :options="tag"
-                             placeholder="包装"
-                           >
-                           </input-select>
-                         </div>
+
+                         <select type="text" class="form-control edit-input" v-model="param.pack">
+                           <option value={{item}} v-for="item in tag">{{item}}</option>
+
+                         </select>
+
+                         <!--<div type="text" class="edit-input" >-->
+                           <!--<input-select-->
+                             <!--:prevalue="param.pack"-->
+                             <!--:value.sync="param.pack"-->
+                             <!--:options="tag"-->
+                             <!--placeholder="包装"-->
+                           <!--&gt;-->
+                           <!--</input-select>-->
+                         <!--</div>-->
                        </div>
                      </div>
 
@@ -394,7 +400,7 @@ export default {
             customerPhone:'',
             employeeId:''
           },
-          tag:['真空包装','瓦楞纸箱','编织袋','积压包'],
+          tag:['真空包装','瓦楞纸箱','编织袋','积压包','其它'],
             country:{
               cname:'',
             },

@@ -1,5 +1,5 @@
 <template>
-    
+
     <div class="service-nav clearfix">
         <div class="my_enterprise col-xs-1">提取物</div>
         <div>
@@ -59,7 +59,7 @@
 </template>
 <script>
 import pagination from '../../components/pagination'
-import filter from '../../filters/filters'	
+import filter from '../../filters/filters'
 import {
     initDrawlist
 } from '../../vuex/getters'
@@ -88,7 +88,8 @@ export default {
                 cur: 1,
                 all: 7,
                 name:'',
-                company:''
+                company:'',
+                total:0
             },
         }
     },

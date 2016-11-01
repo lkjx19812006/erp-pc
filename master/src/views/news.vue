@@ -53,7 +53,7 @@
                         <td  @click.stop="">
                             <!-- <label v-if="item.audit!=1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                             <label v-if="item.audit==1" class="checkbox_unselect"></label> -->
-                            <label v-if="item.audit==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
+                            <label v-if="item.audit!=2" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                         </td>
                         <td class="underline" @click="clickOn({
                                 id:item.id,
@@ -89,7 +89,8 @@
                         <td v-if="item.ctype==2">已认证</td>
                         <td v-if="item.ctype==3">认证失败</td>
                         <td v-if="item.transStatus==1">已划转</td>
-                        <td v-else>未划转</td>
+                        <td v-if="item.transStatus==0">未划转</td>
+                        <td v-if="item.transStatus!=0&&item.transStatus!=1">转黑名单</td>
 
 
                         <td @click.stop="eventClick($index)">
@@ -231,7 +232,8 @@ export default {
                 cur: 1,
                 all: 7,
                 city:'',
-                province:''
+                province:'',
+                total:0
             },
             tipsParam:{
                 show:false,

@@ -253,7 +253,9 @@ export default {
                 phoneCityName:'',
                 phoneProvinceName:'',
                 label:'',
-                creditLevel:''
+                creditLevel:'',
+                total:0
+
             },
             changeParam: {
                 show: false,

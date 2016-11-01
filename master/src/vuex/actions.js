@@ -224,6 +224,7 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
             }
             dispatch(types.ORDER_TABLE, orderList);
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -262,6 +263,7 @@ export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录�
             }
             dispatch(types.ORDER_PAY_DATA, orderList);
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -352,6 +354,7 @@ export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核
             }
             dispatch(types.ORDER_TABLE, orderList);
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -424,6 +427,7 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
         console.log(param.link);
         dispatch(types.ORDER_TABLE, orderList);
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -494,6 +498,7 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
         console.log('订单查询成功')
         dispatch(types.ORDER_TABLE, orderList);
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
         console.log(param.cur)
         param.loading = false;
     }, (res) => {
@@ -933,6 +938,7 @@ export const getSystemData = ({ dispatch }, param) => { //枚举类型
         }
         dispatch(types.SYSTEM_DATA, obj1);
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
         console.log(res.json().result)
         param.loading = false;
     }, (res) => {
@@ -958,6 +964,7 @@ export const getSystemSearch = ({ dispatch }, param) => { //搜索枚举类型
         }
         dispatch(types.SYSTEM_DATA, obj1);
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -1063,7 +1070,7 @@ export const getProvinceData = ({ dispatch }, param) => { //省市区列表
         dispatch(types.PROVINCE_DATA, obj);
         param.loading = false;
         param.all = res.json().result.pages;
-
+        param.total=res.json().result.total;
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -1090,6 +1097,7 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
         dispatch(types.COUNTRY_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
        if(param.country){
          for(var i in res.json().result){
            if(res.json().result[i].cname==param.country){
@@ -1131,7 +1139,7 @@ export const getProvinceList = ({ dispatch }, param) => { //获取省的列表
         dispatch(types.PROVINCE_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
-
+        param.total=res.json().result.total;
       if(param.province){
         for(var i in res.json().result){
           if(res.json().result[i].cname==param.province){
@@ -1167,6 +1175,7 @@ export const getCityList = ({ dispatch }, param) => { //获取市的列表
         dispatch(types.CITY_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
       if(param.city){
         for(var i in res.json().result){
           if(res.json().result[i].cname==param.city){
@@ -1202,6 +1211,7 @@ export const getDistrictList = ({ dispatch }, param) => { //获取区的列表
         dispatch(types.DISTRICT_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -1225,6 +1235,7 @@ export const getEnterpriseData = ({ dispatch }, param) => { // 企业列表
         }
         dispatch(types.SERVICE_ENTERPRISE, obj);
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -1282,6 +1293,7 @@ export const getCompanyData = ({ dispatch }, param) => { //企业搜索
         }
         dispatch(types.SERVICE_ENTERPRISE, obj);
          param.all = res.json().result.pages;
+         param.total=res.json().result.total;
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -1431,6 +1443,7 @@ export const getComponentData = ({ dispatch }, param) => { //成分
         var aa = res.json().result.list;
         dispatch(types.SERVICE_COMPONENT, aa);
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -1489,6 +1502,7 @@ export const getDrawData = ({ dispatch }, param) => { //提取物以及搜索
         var dd = res.json().result.list;
         dispatch(types.SERVICE_DRAW, dd);
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -1513,6 +1527,7 @@ export const getBreedData = ({ dispatch }, param) => { //药材
         }
         dispatch(types.BREED_DATA, breed);
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -1594,6 +1609,7 @@ export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
         }
         dispatch(types.BREED_DATA, breed);
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -1864,6 +1880,7 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
            }
             dispatch(types.CUSTOMER_DATA, client)
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
         }, (res) => {
             console.log('fail');
@@ -1900,6 +1917,7 @@ export const getProductList = ({ dispatch }, param) => {  //供应商产品列�
            }
             dispatch(types.PRODUCT_DATA, product)
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
         }, (res) => {
             console.log('fail');
@@ -1984,6 +2002,7 @@ export const getMyClientList = ({ dispatch }, param) => {  //业务员的(我的
            }
             dispatch(types.CUSTOMER_DATA, client);
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
         }, (res) => {
             console.log('fail');
@@ -2040,6 +2059,7 @@ export const getOrgClientList = ({ dispatch }, param) => {  //部门客户信息
            }
             dispatch(types.CUSTOMER_DATA, client);
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
         }, (res) => {
             console.log('fail');
@@ -2115,6 +2135,7 @@ export const getEmployeeList = ({ dispatch }, param) => {  //员工列表以及�
            }
             dispatch(types.EMPLOYEE_DATA, employ);
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
         }, (res) => {
             console.log('fail');
@@ -2192,6 +2213,7 @@ export const getRoleList = ({ dispatch }, param) => {  //获取角色列表
             }
             dispatch(types.ROLE_DATA, role)
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
         }, (res) => {
             console.log('fail');
@@ -2926,6 +2948,7 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
            }
             dispatch(types.INTENTION_LIST_DATA, intent);
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -3045,6 +3068,7 @@ export const getOfferList = ({ dispatch }, param) => {  //报价信息列表以�
            }
             dispatch(types.OFFER_LIST_DATA, offer);
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -3076,6 +3100,7 @@ export const getMsgList = ({ dispatch }, param) => {  //留言信息列表以及
            }
             dispatch(types.MSG_LIST_DATA, msg);
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -3189,6 +3214,7 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
         console.log(res.json().result.pages);
         dispatch(types.USER_DATA, user);
         param.all = res.json().result.pages;
+        param.total=res.json().result.total;
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -3452,6 +3478,7 @@ export const getFilesList = ({ dispatch }, param) => {  //供应商文件列表
            }
             dispatch(types.FILES_DATA_LIST, file);
             param.all = res.json().result.pages;
+            param.total=res.json().result.total;
             param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -3914,6 +3941,7 @@ export const baseGetData = ({ dispatch }, param) => { //查询认证信息
              }
         }
         param.all=json.list.result.pages;
+        param.total=res.json().result.total;
         console.log(json);
         dispatch(types.ABSTRACT_GET_DATA,json);
     }, (res) => {

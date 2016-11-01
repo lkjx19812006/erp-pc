@@ -223,7 +223,8 @@ export default {
                 name:'',
                 mobile:'',
                 orgId:'',
-                orgCode:''
+                orgCode:'',
+                total:0
             },
             createParam:{
                 show:false
@@ -243,7 +244,7 @@ export default {
             }
         }
     },
-    
+
     methods:{
         editData:function(sub,param){
             if(this.$store.state.table.basicBaseList[param.concrete][sub].show){
