@@ -3786,7 +3786,9 @@ export const createIntentionInfo = ({ dispatch }, param,tipParam) => { //新增�
         param.id=res.json().result.intentionId;
         param.validate = 0;
         param.checked = false;
-        tipParam.show = true;
+        if(tipParam){
+           tipParam.show = true; 
+        }
         dispatch(types.INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');
