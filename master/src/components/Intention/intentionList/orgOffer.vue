@@ -118,7 +118,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                link:'/intention/employee/offers',
+                link:'/intention/org/offers',
                 breedName:'',
                 spec:'',
                 fullname:'',
