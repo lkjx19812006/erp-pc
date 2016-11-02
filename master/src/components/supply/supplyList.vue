@@ -65,7 +65,7 @@
           <th>所属业务员</th>
           <th>负责人</th>
           <th>经营范围</th>
-          <th>电话</th>
+          <th>手机</th>
           <th>手机省</th>
           <th>手机市</th>
           <th>邮箱</th>
@@ -82,8 +82,8 @@
 
         </tr>
         <tr v-for="item in initCustomerlist">
-          <td>{{item.typeDesc}}</td>
-          <td>{{item.classifyDesc}}</td>
+          <td>{{item.type | customerType}}</td>
+          <td>{{item.classify | classify}}</td>
           <td>{{item.sourceType}}</td>
           <td>{{item.creditLevel}}</td>
           <td class="underline"  @click="clickOn({
@@ -175,6 +175,7 @@
   import deletebreedModel  from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
   import alterinfoModel  from '../clientRelate/clientUpdate'
   import searchModel  from  '../clientRelate/searchModel'
+  import filter from '../../filters/filters'
   import {
     initCustomerlist
   } from '../../vuex/getters'
@@ -313,7 +314,8 @@
     },
     created() {
       this.getClientList(this.loadParam);
-    }
+    },
+    filter: (filter,{})
   }
 </script>
 <style scoped>

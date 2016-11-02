@@ -220,13 +220,23 @@ Vue.filter('country', function(val){ //国家
 		return val;
 	}
 })
-Vue.filter('classify', function(val){ //国家
+Vue.filter('customerType', function(val){ //客户类型
 	var val = val;
 	if(val==0){
-		 return '买';
+		 return '个人';
 	}else if(val==1){
-		 return '卖';
+		 return '企业';
+	}else{
+		return val;
+	}
+})
+Vue.filter('classify', function(val){ //客户分类
+	var val = val;
+	if(val==1){
+		 return '买';
 	}else if(val==2){
+		 return '卖';
+	}else if(val==3){
 		return '买卖';
 	}else{
 		return val;

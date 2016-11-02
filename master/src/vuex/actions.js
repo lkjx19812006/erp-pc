@@ -1851,8 +1851,6 @@ export const specDel = ({ dispatch }, param) => { //删除药材相关信息
 export const getClientList = ({ dispatch }, param) => {  //客户信息列表与搜索
     param.loading = true;
     console.log(param);
-    console.log(param.phoneCityName);
-    console.log(param.phoneProvinceName);
     var clienturl = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
     for(var search in param){
         if(search=='name'&&param[search]!==''&&param[search]!='undefine'){
@@ -2300,6 +2298,9 @@ export const  saveCreate = ({ dispatch }, data) => { //新增客户列表
     }).then((res) => {
         console.log('添加成功')
         data.id=res.json().result.customerId;
+        data.mainPhone=data.contacts[0].phone;
+        data.phoneProvince=res.json().result.phoneProvince;
+        data.phoneCity=res.json().result.phoneCity;
         dispatch(types.CUSTOMER_ADD_DATA, data);
     }, (res) => {
         console.log('fail');
@@ -2360,6 +2361,8 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         }
     }).then((res) => {
         console.log('修改成功')
+        param.phoneProvince=res.json().result.phoneProvince;
+        param.phoneCity=res.json().result.phoneCity;
         dispatch(types.CUSTOMER_UPDATE_DATA, param);
     }, (res) => {
         console.log('fail');
