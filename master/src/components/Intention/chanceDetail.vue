@@ -206,9 +206,6 @@
                               </div>
                             </div>
                           </div>
-
-
-
                         </div>
                     </article>
                 </div>
@@ -224,10 +221,9 @@
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">类型</label>
-                                    <select  class="form-control edit-input"  v-model="param.type" disabled="disabled">
-                                            <option value="0">求购</option>
-                                            <option value="1">供应</option>
-                                    </select>
+                                    <input type="text" class="form-control edit-input"  v-if="param.type==0&&param.especial==1" value="紧急求购" disabled="disabled"/>
+                                    <input type="text" class="form-control edit-input"  v-if="param.type==1&&param.especial==1" value="低价资源" disabled="disabled"/>
+                                    <input type="text" class="form-control edit-input"  v-if="param.especial==0" value="普通" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12" >
@@ -235,22 +231,22 @@
                                     <input type="text" class="form-control edit-input"   v-model="param.breedName" value="{{param.breedName}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo  col-md-2 col-xs-12" >
+                                <div class="client-detailInfo col-md-2 col-xs-12">
+                                    <label class="editlabel">客户手机号</label>
+                                     <input type="text" class="form-control edit-input"  v-model="param.customerPhone" value="{{param.customerPhone}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
+                                <!-- <div class="client-detailInfo  col-md-2 col-xs-12" >
                                     <label class="editlabel">是否特殊</label>
                                     <select  class="form-control edit-input"  v-model="param.especial" disabled="disabled">
                                             <option value="0">普通</option>
                                             <option value="1">特殊</option>
                                     </select>
                                 </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
+                                <div class="client-detailInfo col-md-1 col-xs-12"></div> -->
                             </div>
 
-                            <div class="clearfix">
-                                <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">客户手机号</label>
-                                     <input type="text" class="form-control edit-input"  v-model="param.customerPhone" value="{{param.customerPhone}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
+                            <div class="clearfix"> 
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">国家</label>
                                     <input type="text" class="form-control edit-input"  v-model="param.country" value="{{param.country}}" disabled="disabled"/>
@@ -266,14 +262,15 @@
                                     <input type="text" class="form-control edit-input"  v-model="param.city" value="{{param.city}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                            </div>
-
-                            <div class="clearfix">
-                                <div class="client-detailInfo col-md-2 col-xs-12">
+                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">所在区</label>
                                      <input type="text" class="form-control edit-input"  v-model="param.district" value="{{param.district}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
+                            </div>
+
+                            <div class="clearfix">
+                               
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">数量</label>
                                     <input type="text" class="form-control edit-input"  v-model="param.number" value="{{param.number}}" disabled="disabled"/>
@@ -289,14 +286,15 @@
                                     <input type="text" class="form-control edit-input"   v-model="param.qualification" value="{{param.qualification}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                            </div>
-
-                            <div class="clearfix">
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">规格</label>
                                     <input type="text" class="form-control edit-input"   v-model="param.spec" value="{{param.spec}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
+                            </div>
+
+                            <div class="clearfix">
+                                
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">单位</label>
                                     <input type="text" class="form-control edit-input"   v-model="param.unit" value="{{param.unit}}" disabled="disabled"/>
@@ -312,10 +310,7 @@
                                     <input type="text" class="form-control edit-input"  v-model="param.advance" value="{{param.advance}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                            </div>
-
-                            <div class="clearfix">
-                                <div class="client-detailInfo col-md-2 col-xs-12">
+                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">发票</label>
                                    <select  class="form-control edit-input"  v-model="param.invoic" disabled="disabled">
                                         <option value="0">无发票</option>
@@ -324,6 +319,10 @@
                                     </select>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
+                            </div>
+
+                            <div class="clearfix">
+                               
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">上门看货</label>
                                     <select  class="form-control edit-input"  v-model="param.visit" disabled="disabled">
@@ -345,9 +344,6 @@
                                     </select>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                            </div>
-
-                            <div class="clearfix">
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">提供样品</label>
                                     <select  class="form-control edit-input"  v-model="param.sampling" disabled="disabled">
@@ -356,6 +352,10 @@
                                     </select>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
+                            </div>
+
+                            <div class="clearfix">
+                                
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">样品数量</label>
                                     <input type="text" class="form-control edit-input" v-model="param.sampleNumber" value="{{param.sampleNumber}}" disabled="disabled" />
@@ -371,14 +371,15 @@
                                     <input type="text" class="form-control edit-input" v-model="param.sampleAmount" value="{{param.sampleAmount}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                            </div>
-
-                            <div class="clearfix">
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">单价</label>
                                     <input type="text" class="form-control edit-input" v-model="param.price" value="{{param.price}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
+                            </div>
+
+                            <div class="clearfix">
+                                
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">状态</label>
                                     <select  class="form-control edit-input"  v-model="param.status" disabled="disabled">
@@ -628,9 +629,12 @@ section article {
 }
 .top-title{
   z-index: 100;
-  width: 100%;
+  width: 70%;
   right: 0;
-  top: 70px;
+  top: 91px;
+  position: fixed;
+  margin: auto;
+  left: 0;
 }
 
 .client-section {

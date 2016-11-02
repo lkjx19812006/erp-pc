@@ -439,7 +439,8 @@ export default {
                 status:'',
                 advance:'',
                 customerName:'',
-                total:0
+                total:0,
+                especial:''
             },
             supdemParam:{
                 show:false,
