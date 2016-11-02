@@ -383,6 +383,7 @@ export default {
     },
     created(){
         this.getCountryList(this.countryParam);
+        this.getProvinceList(this.countryParam);
         console.log(this.param);
         if(this.param.country){
           this.countryParam.country=this.param.country;

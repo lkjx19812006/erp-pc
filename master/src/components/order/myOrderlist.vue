@@ -30,6 +30,7 @@
                     org:this.initLogin.orgId,
                     district:'',
                     consigneeAddr:'',
+                    customerName:'',
                     comments:'',
                     incidentals:'',
                     incidentalsDesc:'',

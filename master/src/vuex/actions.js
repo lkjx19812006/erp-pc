@@ -584,6 +584,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         sample:data.sample,
         intl:data.intl,
         customer:data.customer,
+        customerName:data.customerName,
         incidentals:data.incidentals,
         incidentalsDesc:data.incidentalsDesc,
         preferential:data.preferential,
@@ -661,6 +662,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         province:param.province,
         city:param.city,
         district:param.district,
+        customerName:param.customerName,
         consigneeAddr:param.consigneeAddr,
         comments:param.comments,
         goods:[{
