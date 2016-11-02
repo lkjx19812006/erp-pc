@@ -168,7 +168,9 @@
                  <div class="editpage">
                      <div class="editpageleft">
                        <div class="editpage-input">
-                         <label class="editlabel">国家<span class="system_danger" v-if="!country.cname">请选择国家</span></label>
+
+                         <label class="editlabel">国家<span class="system_danger" v-if="$validation.country.required">请选择国家</span></label>
+                         <input type="text" v-show="false" v-model="country.cname" v-validate:country="['required']">
                          <div type="text" class="edit-input" >
                            <v-select
                              :debounce="250"
@@ -184,8 +186,9 @@
                        </div>
 
                          <div class="editpage-input">
-                             <label class="editlabel">省<span class="system_danger" v-if="!province.cname">请选择省</span></label>
+                             <label class="editlabel">省<span class="system_danger" v-if="$validation.province.required">请选择省</span></label>
                              <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                             <input type="text" v-show="false" v-model="province.cname" v-validate:province="['required']">
                            <div v-if="country.cname" type="text" class="edit-input">
                               <v-select
                                 :debounce="250"

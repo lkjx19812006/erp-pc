@@ -21,9 +21,9 @@
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">类型<span class="system_danger" v-if="$validation.type.required">请输入产品名称</span></label>
                                  <select  value="{{param.type}}" v-model="param.type" class="form-control" v-validate:type="['required']">
-                                    <option value="0">药材</option>
-                                    <option value="1">提取物</option>
-                                    <option value="2">饮片</option>
+                                    <option>药材</option>
+                                    <option>提取物</option>
+                                    <option>饮片</option>
                                 </select>
                             </div>
                         </div>
