@@ -1194,6 +1194,10 @@ export default {
           initBreedDetail.callback=function(){
             _self.param.show=false;
           }
+        }else{
+          initBreedDetail.callback=function(){
+            
+          }
         }
           this.deleteParam = initBreedDetail;
       },
