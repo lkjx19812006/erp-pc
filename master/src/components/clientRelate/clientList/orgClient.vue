@@ -98,8 +98,8 @@
                         <td  @click.stop="">
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
-                        <td>{{item.typeDesc}}</td>
-                        <td>{{item.classifyDesc}}</td>
+                        <td>{{item.type | customerType}}</td>
+                        <td>{{item.classify | classify}}</td>
                         <td>{{item.sourceType}}</td>
                         <td>{{item.creditLevel}}</td>
                         <td class="underline"  @click="clickOn({

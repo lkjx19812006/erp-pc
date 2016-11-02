@@ -44,9 +44,6 @@ Vue.validator('postcode', function (val) {    //邮编
 });
 
 Vue.validator('test', function (val) {    //邮编
-  var start="'img':'a,b,c'";
-  var end='';
-  end = start.replace(/:/g,":[").replace(/,/g,"','")+"]";
-  console.log(end);
-  return false;
+  console.log(val);
+  return true;
 });

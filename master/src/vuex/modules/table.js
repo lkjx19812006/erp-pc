@@ -919,10 +919,6 @@ const mutations = {
 
     },
     [CUSTOMER_ADD_DATA](state, data) { //新增客户
-
-
-
-
         state.basicBaseList.customerList.unshift({
           address:data.address,
           bizScope:data.bizScope,
@@ -938,10 +934,15 @@ const mutations = {
           id:data.id,
           mainBiz:data.mainBiz,
           mainEmail:data.email,
-          mainPhone:data.phone,
+          mainPhone:data.mainPhone,
+          phoneProvince:data.phoneProvince,
+          phoneCity:data.phoneCity,
           name:data.name,
           number:data.number,
+          employeeId:data.employeeId,
+          employeeName:data.employeeName,
           orgId:data.orgId,
+          orgName:data.orgName,
           principal:data.principal,
           province:data.province,
           provinceName:data.provinceName,
