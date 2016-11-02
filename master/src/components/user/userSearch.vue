@@ -33,7 +33,7 @@
                     </div>
                   <div class="client-detailInfo  col-xs-12">
                     <label>经营类型：</label>
-                    <select class="form-control edit-input"  v-model="param.busiType"  >
+                    <select class="form-control edit-input"  v-model="param.bizType"  >
                       <option value="" selected>请选择经营类型</option>
                       <option value="0">其它</option>
                       <option value="1">合作社</option>

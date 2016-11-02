@@ -2902,8 +2902,9 @@ export const transferInfo = ({ dispatch }, param) => { //客户部门划转信�
         orgId:param.orgId,
         customerIds:param.arr
     }
-    console.log(transferdata);
-    console.log(apiUrl.clientList + '/customer/customersTransferEmployee');
+    if(param.employeeId){
+      transferdata.employeeId=param.employeeId;
+    }
     Vue.http({
         method: 'POST',
         url: apiUrl.clientList + '/customer/customersTransferEmployee',
@@ -3212,8 +3213,8 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
         if(key=='bizMain'&&param[key]!==''){
              url += '&bizMain='+param[key];
         }
-        if(key=='busiType'&&param[key]!==''){
-        url += '&busiType='+param[key];
+        if(key=='bizType'&&param[key]!==''){
+        url += '&bizType='+param[key];
         }
         if(key=='audit'&&param[key]!==''){
              url += '&audit='+param[key];
