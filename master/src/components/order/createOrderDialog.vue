@@ -20,8 +20,8 @@
                   <div class="editpage">
                       <div class="editpageleft">
                           <div class="editpage-input">
-                              <label class="editlabel">订单类别</label>
-                              <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" >
+                              <label class="editlabel">订单类别 <span class="system_danger" v-if="$validation.name.required">请选择订单类别</span></label>
+                              <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" v-validate:name="['required']">
                                   <option value="0">采购</option>
                                   <option value="1">销售</option>
                               </select>
@@ -92,9 +92,13 @@
                           </div>
                       </div>
                       <div class="editpageright">
-                          <div class="editpage-input">
+                          <div class="editpage-input" v-if="param.key=='orders'">
+                              <label class="editlabel">选择客户<span class="system_danger" v-if="$validation.custname.required">请选择客户</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.customerName" id="custname"  v-validate:custname="['required']" value="{{param.customerName}}" disabled="true" @click="searchCustomer(param.customerName,param.customer)"/>
+                          </div>
+                          <div class="editpage-input" v-else>
                               <label class="editlabel">选择客户 <span class="system_danger" v-if="$validation.custname.required">请选择客户</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.customerName" id="custname"  v-validate:custname="['required']" value="{{param.customer}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
+                              <input type="text" class="form-control edit-input" v-model="param.customerName" id="custname"  v-validate:custname="['required']" value="{{param.customerName}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">是否国际</label>
@@ -379,6 +383,7 @@ export default {
     },
     created(){
         this.getCountryList(this.countryParam);
+        this.getProvinceList(this.countryParam);
         console.log(this.param);
         if(this.param.country){
           this.countryParam.country=this.param.country;
