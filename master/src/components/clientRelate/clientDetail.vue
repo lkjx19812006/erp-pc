@@ -1189,6 +1189,12 @@ export default {
       	this.labelParam = initBreedDetail;
       },
       specDelete:function(initBreedDetail){
+        var _self=this;
+        if(initBreedDetail.key='customerList'){
+          initBreedDetail.callback=function(){
+            _self.param.show=false;
+          }
+        }
           this.deleteParam = initBreedDetail;
       },
       clientTransferSupplier:function(initBreedDetail){
