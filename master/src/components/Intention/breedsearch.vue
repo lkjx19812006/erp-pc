@@ -18,11 +18,6 @@
 	                </div>
           <div class="name_search clearfix" style="border:none"> <input type="button" class="search_input btn btn-default"   height="24" width="24" value="查询" @click="employNameSearch()"></div>
 
-
-
-
-
-
 	            </div>
 	            <table class="table table-hover table_head table-striped " v-cloak>
 	                <thead>
@@ -119,13 +114,21 @@ export default{
 </script>
 <style scoped>
 .modal{
-	z-index: 1081;
+	z-index: 1085;
 }
 .modal_con{
-	z-index: 1082;
+	z-index: 1085;
 }
 .change_trans{
 	margin-top: 20px;
+}
+.top-title{
+	top:91px;
+	position: fixed;
+	right: 0;
+	width: 800px;
+	margin: auto;
+	left: 0;
 }
 .con_trans{
 	margin-top: 40px;

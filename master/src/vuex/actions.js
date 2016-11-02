@@ -3719,7 +3719,7 @@ export const editintentInfo = ({ dispatch }, param,tipParam) => { //修改意向
         }
     }).then((res) => {
         console.log('修改成功!!!!')
-        tipParam.show = true;
+        param.show = false;
         dispatch(types.UPDATA_INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -3786,7 +3786,7 @@ export const createIntentionInfo = ({ dispatch }, param,tipParam) => { //新增�
         param.id=res.json().result.intentionId;
         param.validate = 0;
         param.checked = false;
-        tipParam.show = true;
+        param.show = false; 
         dispatch(types.INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');

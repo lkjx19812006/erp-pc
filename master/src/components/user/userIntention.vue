@@ -501,18 +501,18 @@ export default {
           }else{
             this.param.district ='';
           }
-          this.tipParam.name = '新建意向成功';
+          //this.tipParam.name = '新建意向成功';
           //this.param.show=false;
-          this.createIntentionInfo(this.param,this.tipParam);
+          this.createIntentionInfo(this.param);
         }
         if(this.param.flag==1){
           this.param.country = this.country.cname;
           this.param.province = this.province.cname;
           this.param.city = this.city.cname;
           this.param.district = this.district.cname;
-          this.tipParam.name = '修改意向成功';
+          //this.tipParam.name = '修改意向成功';
           //this.param.show=false;
-          this.editintentInfo(this.param,this.tipParam);
+          this.editintentInfo(this.param);
         }
 
       },

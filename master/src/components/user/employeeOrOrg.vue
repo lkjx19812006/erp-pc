@@ -331,11 +331,11 @@ export default{
 </script>
 <style scoped>
 .modal {
-	z-index:1081;
+	z-index:1085;
 }
 .modal_con {
     width: 900px;
-    z-index: 1082;
+    z-index: 1085;
 }
 .top-title{
 	width: 900px;
