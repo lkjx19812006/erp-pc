@@ -339,7 +339,11 @@ export default{
 }
 .top-title{
 	width: 900px;
-	z-index: 1083
+	z-index: 1083;
+    position: fixed;
+    right: 0;
+    left: 0;
+    margin:auto;
 }
 .edit_footer{
 	width:900px;
