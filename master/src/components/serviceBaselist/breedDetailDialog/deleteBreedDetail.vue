@@ -6,7 +6,7 @@
             <p class="model-tips">是否确定删除此{{param.title}}的信息？</p>
             <div class="model-footer">
                 <button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-                <button type="button" class="btn btn-orange" @click="param.link(param,param.show=false)">删除</button>
+                <button type="button" class="btn btn-orange" @click="param.link(param,param.show=false),param.callback()">删除</button>
             </div>
         </div>
     </div>
