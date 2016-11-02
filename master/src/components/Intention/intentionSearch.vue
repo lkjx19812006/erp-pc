@@ -21,7 +21,7 @@
                                 <option value="1">供应</option>
                         </select>
                     </div>
-                    <div class="client-detailInfo  col-xs-12" v-show="param.type==1">
+                    <div class="client-detailInfo  col-xs-12" v-show="param.type==1&&param.type">
                       <label>供应类型：</label>
                       <select type="text" class="form-control" v-model="param.especial">
                         <option value="" selected>请选择供应类型</option>
@@ -29,7 +29,7 @@
                         <option value="1">低价资源</option>
                       </select>
                     </div>
-                    <div class="client-detailInfo  col-xs-12" v-show="param.type==0">
+                    <div class="client-detailInfo  col-xs-12" v-show="param.type==0&&param.type">
                       <label>求购类型：</label>
                       <select type="text" class="form-control" v-model="param.especial">
                         <option value="" selected>请选择求购类型</option>

@@ -39,7 +39,21 @@ export default {
 
                 if (input.files && input.files[0]) {
                     let file = input.files[0];
+                    let fileNameArr=file.name.split('.');
+                    _self.type=fileNameArr[fileNameArr.length-1];
+                  if(_self.type=='jpg'||_self.type=='bmp'||_self.type=='jpg'||_self.type=='jpeg'){
+                    _self.type='图片';
+                  }else if(_self.type=='pdf'){
+                    _self.type='PDF';
+                  }else if(_self.type=='doc'||_self.type=='docx'){
+                    _self.type='word';
+                  } else if(_self.type=='xls'||_self.type=='xlsx'){
+                    _self.type='excel';
+                  }else{
+                    _self.type='其它';
+                  }
                     console.log(file)
+
                     _self.fileName=file.name;
                     if(file.type.split('/')[0]=='image'){
 

@@ -10,15 +10,6 @@
         <div class="edit-model">
             <section class="editsection">
                 <div class="editpage-input">
-                    <label class="editlabel">文件类型</label>
-                    <select class="form-control"  v-model="param.fileType">
-                        <option value="image">图片</option>
-                        <option>pdf文件</option>
-                        <option>word</option>
-                        <option>excel</option>
-                    </select>
-                </div>
-                <div class="editpage-input">
                     <label class="editlabel">所属文件类别</label>
                     <select class="form-control"  v-model="param.bizType">
                         <option value="customer_license">客户文件</option>
@@ -28,14 +19,12 @@
                 <div class="editpage-input">
                     <label class="editlabel">描述说明</label>
                     <textarea style="width:100%;resize:none;border:1px solid #ddd;border-radius:5px;" rows="5" v-model="param.description">
-                        
+
                     </textarea>
                 </div>
                 <div class="editpage-input">
                     <label class="editlabel">新建文件</label>
-                    <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
-                   <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
-                   <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
+                    <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="param.fileType" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
                 </div>
             </section>
         </div>
@@ -59,21 +48,11 @@ export default {
                 qiniu:false
               },
               type:"image/*"
-            } 
+            }
     },
     vuex: {
         actions: {
-           
-        }
-    },
-    route: {
-        activate: function(transition) {
-            console.log('hook-example activated!')
-            transition.next()
-        },
-        deactivate: function(transition) {
-            console.log('hook-example deactivated!')
-            transition.next()
+
         }
     },
     events: {

@@ -851,7 +851,10 @@ const mutations = {
          data.arr.forEach(function(item){
            for(var i=0;i<state.basicBaseList.customerList.length;i++){
              if(state.basicBaseList.customerList[i].id == item){
-               state.basicBaseList.customerList.splice(i,1);
+               if(state.login.id!=item.employeeId){
+                 state.basicBaseList.customerList.splice(i,1);
+               }
+
              }
            }
          });
@@ -861,7 +864,9 @@ const mutations = {
          data.arr.forEach(function(item){
            for(var i=0;i<state.basicBaseList.customerList.length;i++){
              if(state.basicBaseList.customerList[i].id == item){
-               state.basicBaseList.customerList.splice(i,1);
+               if(state.login.orgId!=item.orgId){
+                 state.basicBaseList.customerList.splice(i,1);
+               }
              }
            }
          });
@@ -1412,7 +1417,8 @@ const mutations = {
             "bizId":data.bizId,
             "description":data.description,
             "show":false,
-            "id":data.id
+            "id":data.id,
+            "url":data.image_f_show
         })
     }
 

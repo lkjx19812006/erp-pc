@@ -189,7 +189,7 @@ import detailModel from '../../../components/clientRelate/clientDetail'
 import createModel  from '../../../components/user/userTransfer'
 import deletebreedModel  from '../../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import alterinfoModel  from '../../../components/clientRelate/clientUpdate'
-import transferModel   from '../../../components/clientRelate/clienttransfer'
+import transferModel   from '../../../components/user/employeeOrOrg'
 import tipsdialogModel  from '../../../components/tips/tipDialog'
 import searchModel  from  '../../../components/clientRelate/searchModel'
 import auditDialog from '../../../components/tips/auditDialog'
@@ -201,6 +201,7 @@ import {
     deleteInfo,
     alterInfo,
     saveCreate,
+  transferInfo,
   customerTransferBlacklist
 } from '../../../vuex/actions'
 
@@ -225,6 +226,7 @@ export default {
             deleteInfo,
             alterInfo,
             saveCreate,
+          transferInfo,
           customerTransferBlacklist
         }
     },
@@ -444,7 +446,14 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getClientList(this.loadParam);
-        }
+        },
+        selectEmpOrOrg: function (param) {
+        this.transferParam.employeeId = param.employeeId;
+        this.transferParam.employeeName = param.employeeName;
+        this.transferParam.orgId = param.orgId;
+        this.transferParam.orgName = param.orgName;
+        this.transferInfo(this.transferParam);
+      }
     },
     created() {
         this.getClientList(this.loadParam);
