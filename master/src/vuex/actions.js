@@ -808,7 +808,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
 export const orderCancle = ({ dispatch }, param,data) => { //订单取消状态
     console.log(param)
     console.log(data);
-   
+
     const body = {
        orderId:param.id,
        cancleCauses:param.cancleCauses
@@ -2909,8 +2909,9 @@ export const transferInfo = ({ dispatch }, param) => { //客户部门划转信�
         orgId:param.orgId,
         customerIds:param.arr
     }
-    console.log(transferdata);
-    console.log(apiUrl.clientList + '/customer/customersTransferEmployee');
+    if(param.employeeId){
+      transferdata.employeeId=param.employeeId;
+    }
     Vue.http({
         method: 'POST',
         url: apiUrl.clientList + '/customer/customersTransferEmployee',
@@ -2938,6 +2939,11 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
             url += '&type='+param.type
         }else if(search=='type'){
             url +='&type='
+        }
+        if(search=='especial'&&param[search]!==''){
+            url += '&especial='+param.especial
+        }else if(search=='especial'){
+            url +='&especial='
         }
         if(search=='invoic'&&param[search]!==''){
             url += '&invoic='+param.invoic
@@ -3214,8 +3220,8 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
         if(key=='bizMain'&&param[key]!==''){
              url += '&bizMain='+param[key];
         }
-        if(key=='busiType'&&param[key]!==''){
-        url += '&busiType='+param[key];
+        if(key=='bizType'&&param[key]!==''){
+        url += '&bizType='+param[key];
         }
         if(key=='audit'&&param[key]!==''){
              url += '&audit='+param[key];
@@ -3793,7 +3799,7 @@ export const createIntentionInfo = ({ dispatch }, param,tipParam) => { //新增�
         param.id=res.json().result.intentionId;
         param.validate = 0;
         param.checked = false;
-        param.show = false; 
+        param.show = false;
         dispatch(types.INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');

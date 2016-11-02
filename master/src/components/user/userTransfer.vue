@@ -72,9 +72,9 @@
                 <input v-show="false" type="text" class="form-control" readonly="readonly"
                        v-model="param.classify" v-validate:classify="['required']"  />
                 <select class="form-control edit-input" id="classify" v-model="param.classify">
-                  <option value="1,'买'">买</option>
-                  <option value="2,'卖'">卖</option>
-                  <option value="3,'买卖'">买卖</option>
+                  <option value="1,买">买</option>
+                  <option value="2,卖">卖</option>
+                  <option value="3,买卖">买卖</option>
                 </select>
 
               </div>
@@ -106,6 +106,7 @@
               </div>
               <div class="client-detailInfo pull-right col-md-6 col-xs-12" v-if="!param.countryId">
                 <label>所在国家</label>
+                <div  class="form-control" style="padding:0;border:none" >
                 <v-select
                   :debounce="250"
                   :value.sync="country"
@@ -115,6 +116,7 @@
                   label="cname"
                 >
                 </v-select>
+                  </div>
               </div>
 
             </div>
@@ -125,6 +127,7 @@
                 <label>所在省</label>
                 <input type="text" v-if="!country.id" class="form-control edit-input" disabled="disabled"
                        placeholder="请先选择一个国家"/>
+                <div  class="form-control" style="padding:0;border:none" >
                 <v-select
                   :debounce="250"
                   :value.sync="province"
@@ -135,12 +138,14 @@
                   v-if="country.id"
                 >
                 </v-select>
+                  </div>
               </div>
 
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                 <label>所在市</label>
                 <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled"
                        placeholder="请先选择一个省"/>
+                <div  class="form-control" style="padding:0;border:none" >
                 <v-select
                   :debounce="250"
                   :value.sync="city"
@@ -150,6 +155,7 @@
                   v-if="province.cname"
                 >
                 </v-select>
+                  </div>
               </div>
             </div>
 
@@ -249,7 +255,7 @@
   </div>
 </template>
 <script>
-  import selectModel  from './employeeOrOrg.vue'
+  import selectModel  from './employeeOrOrg'
   import vSelect from '../tools/vueSelect/components/Select'
 
   import {

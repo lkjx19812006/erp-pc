@@ -502,7 +502,7 @@ export default {
             this.param.district ='';
           }
           //this.tipParam.name = '新建意向成功';
-          //this.param.show=false;
+          this.param.show=false;
           this.createIntentionInfo(this.param);
         }
         if(this.param.flag==1){
@@ -511,7 +511,7 @@ export default {
           this.param.city = this.city.cname;
           this.param.district = this.district.cname;
           //this.tipParam.name = '修改意向成功';
-          //this.param.show=false;
+          this.param.show=false;
           this.editintentInfo(this.param);
         }
 
@@ -595,6 +595,11 @@ export default {
 .modal_con{
   z-index: 1084
 }
+
+.edit-model {
+  padding: 10px 30px 80px 30px;
+}
+
 .top-title{
     position: absolute;
     top: 0;

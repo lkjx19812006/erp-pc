@@ -268,12 +268,14 @@
     		                                     show:true,
                                              title:'新建文件',
                                              fileType:'',
-                                             bizType:'',
+                                             bizType:'customer_license',
                                              description:'',
                                              path:'',
                                              link:uploadFiles,
                                              url:'/customer/file/',
-    		                                     key:'files'
+    		                                     key:'files',
+    		                                     image_f_show:'',
+    		                                     image_f:''
                       											})">新建</button>
                           				</h4>
                               </div>
@@ -281,7 +283,7 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                       	<thead>
-                                      		<th>文件路径</th>
+                                      		<!--<th>文件路径</th>-->
                                       		<th>文件类型</th>
                                       		<th>所属文件</th>
                                           <th>描述</th>
@@ -290,11 +292,14 @@
 		                                    <tbody>
 		                                         <tr v-for="item in initClientDetail.files.arr">
 		                                            <!-- <td><img v-bind:src="item.path" /></td> -->
-                                                <td><img v-bind:src="item.path" v-if="item.fileType=='image'" style='float:left; margin-left:15px;' />
-                                                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'" style='float:left; margin-left:15px;'>
-                                                    <img  src="/static/images/word.png" v-if="item.fileType=='word'" style='float:left; margin-left:15px;'>
-                                                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'" style='float:left; margin-left:15px;'>
-		                                            <td>{{item.fileType}}</td>
+                                                <!--<td><img v-bind:src="item.url" v-if="item.fileType=='jpg'||item.fileType=='bmp'||item.fileType=='jpg'||item.fileType=='jpeg'" style='float:left; margin-left:15px;' />-->
+                                                    <!--<img  src="/static/images/pdf.png" v-if="item.fileType=='pdf'" style='float:left; margin-left:15px;'>-->
+                                                    <!--<img  src="/static/images/word.png" v-if="item.fileType=='doc'||item.fileType=='docx'" style='float:left; margin-left:15px;'>-->
+                                                    <!--<img  src="/static/images/excel.png" v-if="item.fileType=='xls'||item.fileType=='xlsx'" style='float:left; margin-left:15px;'>-->
+                                                <!--</td>-->
+		                                            <td>
+                                                  {{item.fileType}}
+                                                </td>
 		                                            <td>{{item.bizType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td  @click="clickShow($index,{
@@ -389,13 +394,21 @@
                                                             sampleNumber:item.sampleNumber,
                                                             sampleAmount:item.sampleAmount,
                                                             qualification:item.qualification,
-                                                            breedId:item.intentionParam,
+                                                            breedId:item.breedId,
                                                             pack:item.pack,
                                                             visit:item.visit,
                                                             duedate:item.duedate,
                                                             breedId:item.breedId,
+                                                            description:item.description,
+                                                            validate:item.validate,
                                                             inType:3,
-                                                            loading:false
+                                                            loading:false,
+                                                            image_f:'',
+                                                            image_s:'',
+                                                            image_t:'',
+                                                            image_f_show:'',
+                                                            image_s_show:'',
+                                                            image_t_show:''
                                                         })">编辑</dt>
                                                       </dl>
                                                   </div>
@@ -426,12 +439,12 @@
                                             intl:0,
                                             incidentals:'',
                                             incidentalsDesc:'',
-                                            preferential:'',   
-                                            preferentialDesc:'',  
-                                            currency:'人民币',     
-                                            consignee:'',    
+                                            preferential:'',
+                                            preferentialDesc:'',
+                                            currency:'人民币',
+                                            consignee:'',
                                             consigneePhone:'',
-                                            zipCode:'',     
+                                            zipCode:'',
                                             country:'',
                                             province:'',
                                             employee:initClientDetail.employeeId,
@@ -439,12 +452,12 @@
                                             city:'',
                                             district:'',
                                             consigneeAddr:'',
-                                            comments:'', 
-                                            sourceType:0,       
+                                            comments:'',
+                                            sourceType:0,
                                             goods:[{
-                                                sourceType:0,   
-                                                sourceId:'',    
-                                                title:'',       
+                                                sourceType:0,
+                                                sourceId:'',
+                                                title:'',
                                                 breedId:'',
                                                 brredName:'',
                                                 quality:'',
@@ -1241,32 +1254,39 @@ export default {
             breedName:'',
             price:'',
             unit:'',
-            especial:'',
+            especial:1,
             quality:'',
             spec:'',
             number:'',
             location:'',
-            type:'',
-            country:'',
+            type:0,
+            visit:0,
+            validate:0,
+            country:'中国',
             province:'',
             city:'',
             district:'',
             address:'',
-            invoic:'',
-            sampling:'',
+            invoic:0,
+            sampling:0,
             sampleUnit:'',
-            advance:'',
-            intl:'',
+            advance:0,
+            intl:0,
             sampleNumber:0,
             sampleAmount:0,
-            qualification:'',
+            pack:'',
+            qualification:'GMP',
             url:'/intention/',
             key:'client',
             image_f:'',
             image_s:'',
             image_t:'',
+            image_f_show:'',
+            image_s_show:'',
+            image_t_show:'',
             images:'',
-            inType:3
+            inType:3,
+            audit:0
         };
         this.intentionParam.show = true;
 

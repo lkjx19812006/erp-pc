@@ -72,7 +72,7 @@
         </div>
       <!--   <div class="service-nav clearfix">
           <div class="my_order_search">
-      
+
          </div>
       </div> -->
         <div class="order_table">
@@ -668,6 +668,9 @@ export default {
 }
 </script>
 <style scoped>
+  .edit-model {
+    padding: 10px 30px 80px 30px;
+  }
 .base_pagination{
   margin-bottom:250px;
 }
