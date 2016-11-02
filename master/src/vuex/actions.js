@@ -2493,11 +2493,12 @@ export const alterLabel = ({ dispatch }, param) => { //修改客户标签
     })
 }
 export const alterProduct = ({ dispatch }, param) => { //修改客户产品
-    /*console.log(param)*/
+    console.log(param);
     const updatedata = {
         type:param.type,
         name:param.name,
         breedId:param.breedId,
+        breedName:param.breedName,
         quality:param.quality,
         location:param.location,
         spec:param.spec,
@@ -2808,7 +2809,8 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
         "unit":param.unit,
         "duedate":param.duedate,
         "coa":param.coa,
-        "cid":param.cid
+        "cid":param.cid,
+        "breedName":param.breedName
     }
 
     Vue.http({

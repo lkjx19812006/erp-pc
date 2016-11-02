@@ -880,7 +880,7 @@
                                         	<thead>
                                         		<th>类型</th>
                                         		<th>名称</th>
-                                        		<th>品种ID</th>
+                                        		<th>品种名称</th>
                                         		<th>质量</th>
                                         		<th>产地</th>
                                         		<th>规格</th>
@@ -895,7 +895,7 @@
 		                                         <tr v-for="item in initClientDetail.products.arr">
 		                                            <td>{{item.type}}</td>
 		                                            <td>{{item.name}}</td>
-		                                            <td>{{item.breedId}}</td>
+		                                            <td>{{item.breedName}}</td>
 		                                            <td>{{item.quality}}</td>
 		                                            <td>{{item.location}}</td>
 		                                            <td>{{item.spec}}</td>
@@ -903,7 +903,8 @@
 		                                            <td>{{item.price}}</td>
 		                                            <td>{{item.unit}}</td>
 		                                            <td>{{item.duedate}}</td>
-		                                            <td>{{item.coa}}</td>
+		                                            <td v-if="item.coa==0">无</td>
+                                                <td v-if="item.coa==1">有</td>
 		                                            <td  @click="clickShow($index,{
 		                                            	concrete:'products'
 		                                            	})">
@@ -1198,7 +1199,7 @@ export default {
           }
         }else{
           initBreedDetail.callback=function(){
-            
+
           }
         }
           this.deleteParam = initBreedDetail;

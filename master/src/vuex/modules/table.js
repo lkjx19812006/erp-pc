@@ -1058,6 +1058,7 @@ const mutations = {
             "cid": data.cid,
             "id": data.id,
             "show": false,
+            "breedName":data.breedName
         })
     },
     [PRODUCT_DATA](state, data) { //供应商产品列表

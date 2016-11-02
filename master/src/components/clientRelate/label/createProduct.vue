@@ -20,7 +20,9 @@
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">类型</label>
                                  <select  value="{{param.type}}" v-model="param.type" class="form-control">
-                                    <option value="1" selected>可用</option>
+                                    <option value="药材" selected>药材</option>
+                                    <option value="提取物" >提取物</option>
+                                    <option value="饮片" >饮片</option>
                                 </select>
                                 <!-- <input type="text" id="usertype" class="form-control" v-model="param.type" v-validate:usertype="['required']" value="{{param.type}}"/> -->
                             </div>
@@ -75,9 +77,9 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">检测报告</label>
-                                <select  value="{{param.coa}}" v-model="param.coa" class="form-control">
+                                <select   v-model="param.coa" class="form-control">
                                     <option value="1">有</option>
-                                    <option value="0" selected>无</option>
+                                    <option value="0" >无</option>
                                 </select>
                                 <!-- <input type="text" class="form-control" v-model="param.coa" value="{{param.coa}}"/> -->
                             </div>
@@ -86,7 +88,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)" >保存</button>
+                    <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="save()" >保存</button>
                     <button type="button" class="btn btn-confirm" v-else disabled="true">保存</button>
                 </div>
             </form>
@@ -146,6 +148,15 @@ export default {
             let day = date.getDate()
             let str = `${year}/${month}/${day}`
             this.dateText = str.replace(/\b(\w)\b/g, "0$1")
+        },
+        save(){
+          console.log(this.initBreedlist);
+          for(var i in this.initBreedlist ){
+            if(this.initBreedlist[i].categoryId==this.param.breedId){
+              this.param.breedName=this.initBreedlist[i].breedName;
+            }
+          }
+          this.param.link(this.param,this.param.show = false);
         }
     },
     ready() {
