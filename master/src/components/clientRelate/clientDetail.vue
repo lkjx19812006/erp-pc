@@ -447,6 +447,7 @@
                                             zipCode:'',
                                             country:'',
                                             province:'',
+                                            customerName:initClientDetail.name,
                                             employee:initClientDetail.employeeId,
                                             org:initClientDetail.orgId,
                                             city:'',

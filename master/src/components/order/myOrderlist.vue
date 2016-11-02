@@ -139,6 +139,7 @@
                                         province:item.province,
                                         city:item.city,
                                         employee:item.employee,
+                                        customerName:item.customerName,
                                         org:item.org,
                                         district:item.district,
                                         orderStatus:item.orderStatus,
