@@ -28,9 +28,9 @@
 	                    </tr>
 	                </thead>
 	                <tbody>
-	                    <tr v-for="item in initBreedlist">
+	                    <tr v-for="item in initBreedlist"  @click="serviceselected($index,item.id,item.name)">
 	                    	<td  @click.stop="">
-	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.name)" ></label>
+	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  ></label>
 	                        </td>
 	                        <td>{{item.categoryName}}</td>
 	                        <td>{{item.name}}</td>
@@ -63,7 +63,8 @@ export default{
                 size: '15px',
                 cur: 1,
                 all: 7,
-                name:''
+                name:'',
+                total:0
             },
 			checked:false,
 			show:true

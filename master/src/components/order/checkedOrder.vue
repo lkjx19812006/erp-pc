@@ -71,14 +71,18 @@
                   <td v-if="item.payWay==3">药款支付</td>
                   <td v-if="item.payWay==null">其他</td>
                   <!-- <td v-if="item.payWay==''">其他</td> -->
-                  <td @click="editClick($index)">
+                  <td>
+                      <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="等待核查" alt="等待核查" @click="pendingOrder(item,$index)" /></a>
+                      <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.validate==2"><img src="/static/images/unorderStatus.png" height="18" width="18" title="暂无处理" alt="暂无处理" @click="pendingOrder(item,$index)" /></a>
+                  </td>
+                  <!-- <td @click="editClick($index)">
                       <img height="24" width="24" src="/static/images/default_arrow.png" />
                       <div class="component_action" v-show="item.show">
                            <ul>
                                 <li v-if="item.orderStatus==30&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li>
                            </ul>
                        </div>
-                  </td>
+                  </td> -->
                 </tr>
             </tbody>
         </table>

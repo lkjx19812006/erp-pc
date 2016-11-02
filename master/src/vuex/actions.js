@@ -773,8 +773,15 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     if(param.images){
         body.images = param.images;
     }
-    if(param.lcompanyId){
+    if(param.b){
+        var strs = param.b.split(",");
+        param.lcompanyId = strs[0];
         body.lcompanyId = param.lcompanyId;
+    }
+    if(param.b){
+        var strs = param.b.split(",");
+        param.name = strs[1];
+        body.name= param.name;
     }
     if(param.lcompanyNo){
         body.lcompanyNo = param.lcompanyNo;

@@ -430,7 +430,8 @@ export default {
                 location:'',
                 number:'',
                 unit:'',
-                price:''
+                price:'',
+                total:0
             },
             loadParam: {
                 loading: true,

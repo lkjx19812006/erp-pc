@@ -272,22 +272,22 @@ Vue.filter('onsell',function(val){      //意向上下架
 		 return '初始';
 	}
 	if(val==1){
-		 return '申请上架';
+		 return '申请上架中';
 	}
 	if(val==2){
-		 return '上架';
+		 return '已上架';
 	}
 	if(val==-2){
-		 return '上架失败';
+		 return '申请上架失败';
 	}
 	if(val==3){
-		 return '申请下架';
+		 return '申请下架中';
 	}
 	if(val==4){
-		 return '下架';
+		 return '已下架';
 	}
 	if(val==-4){
-		 return '下架失败';
+		 return '申请下架失败';
 	}else{
 		return '其他';
 	}

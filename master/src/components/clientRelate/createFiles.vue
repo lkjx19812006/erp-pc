@@ -31,11 +31,9 @@
                         
                     </textarea>
                 </div>
-                <div class="editpage-input">
+                <div class="editpage-input clearfix">
                     <label class="editlabel">新建文件</label>
                     <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
-                   <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
-                   <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
                 </div>
             </section>
         </div>

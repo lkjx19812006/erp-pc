@@ -11,11 +11,38 @@
             <form novalidate>
                 <div class="edit-model">
                     <section class="editsection">
-                        <div class="editpage" v-cloak>
+                        <div class="editpage" v-cloak v-if="param.judge=='specs'">
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.namelist}}<span class="system_danger" v-if="$validation.name.required">请输入{{param.namelist}}</span></label>
-                                    <input type="text" class="form-control edit-input" v-model="param.name" value="{{param.name}}" v-validate:name="['required']"/>
+                                <label class="editlabel">{{param.namelist}} <span class="system_danger" v-if="$validation.name.required">请输入{{param.namelist}}</span></label>
+                                    <input type="text" class="form-control edit-input" v-model="param.name" v-validate:name="['required']" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="editpage" v-cloak v-if="param.judge=='locals'">
+                            <div class="editpageleft">
+                                <div class="editpage-input">
+                                <label class="editlabel">{{param.namelist}} <span class="system_danger" v-if="$validation.name.required">请输入{{param.namelist}}</span></label>
+                                <select class="form-control edit-input" v-model="param.name" v-validate:name="['required']">
+                                    <option v-for="item in initProvince">{{item.cname}}</option>
+                                </select>
+                                    <!-- <input type="text" class="form-control edit-input" v-model="param.name" v-validate:name="['required']" /> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="editpage" v-cloak v-if="param.judge=='alias'">
+                            <div class="editpageleft">
+                                <div class="editpage-input">
+                                <label class="editlabel">{{param.namelist}} <span class="system_danger" v-if="$validation.name.required">请输入{{param.namelist}}</span></label>
+                                    <input type="text" class="form-control edit-input" v-model="param.name" v-validate:name="['required']" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="editpage" v-cloak v-if="param.judge=='units'">
+                            <div class="editpageleft">
+                                <div class="editpage-input">
+                                <label class="editlabel">{{param.namelist}} <span class="system_danger" v-if="$validation.name.required">请输入{{param.namelist}}</span></label>
+                                    <input type="text" class="form-control edit-input" v-model="param.name" v-validate:name="['required']" />
                                 </div>
                             </div>
                         </div>
@@ -31,6 +58,12 @@
     </div>
 </template>
 <script>
+import {
+    initProvince
+} from '../../../vuex/getters'
+import {
+    getProvinceList
+} from '../../../vuex/actions'
 export default {
     components: {
 
@@ -38,7 +71,26 @@ export default {
     props: ['param'],
     data() {
         return {
+            loadParam: {
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                show:false,
+                cur: 1,
+                all:1
+            },
         }
+    },
+    vuex:{
+        getters:{
+            initProvince
+        },
+        actions:{
+            getProvinceList
+        }
+    },
+    created(){
+        this.getProvinceList(this.loadParam)
     }
 }
 </script>

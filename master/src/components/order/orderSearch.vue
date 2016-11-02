@@ -64,8 +64,7 @@
                         <select v-model="param.dataStatus"  class="form-control">
                             <option value="">请选择数据状态</option>
                             <option value="0">无效</option>
-                            <option value="1">待审</option>
-                            <option value="2">审核通过</option>
+                            <option value="1">可用</option>
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">

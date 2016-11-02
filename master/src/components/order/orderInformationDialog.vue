@@ -301,7 +301,10 @@
                           </div>
                           <div class="editpage-input" v-else>
                               <label class="editlabel">商品产地 <span class="system_danger" v-if="$validation.location.required">请输入商品的产地</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].location" id="location" v-validate:location="['required']" value="{{param.goods[0].location}}"/>
+                             <!--  <input type="text" class="form-control edit-input" v-model="param.goods[0].location" id="location" v-validate:location="['required']" value="{{param.goods[0].location}}"/> -->
+                              <select class="form-control edit-input" v-model="param.goods[0].location" value="{{param.goods[0].location}}" id="location" v-validate:location="['required']">
+                                  <option v-for="item in initProvince">{{item.cname}}</option>
+                              </select>
                           </div>
                          
                       </div>

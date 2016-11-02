@@ -10,16 +10,16 @@
     			<div class="cover_loading">
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 	            </div>
-	            <div class="col-xs-4">
-		            <div class="name_search clearfix" style="border:none">
+	            <!-- <div class="col-xs-4">
+	            		            <div class="name_search clearfix" style="border:none">
 	                   <select  class="form-control" v-model="loadParam.type" @change="employNameSearch()">
 	                        <option selected value="">请选择客户类型</option>
 	                  	    <option value="0">个人</option>
 	                  	    <option value="1">企业</option>
 	                  </select> 
 	                </div>
-	            </div>
-				<div class="col-xs-8">
+	            </div> -->
+				<div class="col-xs-9 clearfix">
 	                <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
 	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入客户名字" @keyup.enter="employNameSearch()">
@@ -28,6 +28,8 @@
 	                    <img src="/static/images/search.png" height="24" width="24">
 	                    <input type="text" class="search_input" v-model="loadParam.phone" placeholder="请输入客户手机号"  @keyup.enter="employNameSearch()">
 	                </div>
+	                <button class="new_btn" @click="employNameSearch()">查询</button>
+	                <button class="new_btn transfer" @click="reset()">清除条件</button>
 	            </div>
 	            <table class="table table-hover table_head table-striped " v-cloak>
 	                <thead>
@@ -40,9 +42,9 @@
 	                    </tr>
 	                </thead>
 	                <tbody>
-	                    <tr v-for="item in initCustomerlist">
+	                    <tr v-for="item in initCustomerlist" @click="serviceselected($index,item.id,item.name,item.mainPhone)"> 
 	                    	<td  @click.stop="">
-	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.name,item.mainPhone)" ></label>
+	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   ></label>
 	                        </td>
 	                        <td>{{item.name}}</td>
 	                        <td>{{item.mainPhone}}</td>
@@ -80,7 +82,8 @@ export default{
                 name:'',
                 phone:'',
                 type:'',
-                employeeId:''
+                employeeId:'',
+                total:0
             },
 			checked:false,
 			show:true
@@ -115,6 +118,10 @@ export default{
 		},
 		employNameSearch: function() {
             this.getClientList(this.loadParam);
+        },
+        reset:function(){
+        	this.loadParam.name='';
+            this.loadParam.phone='';
         }
 	},
     events: {
@@ -138,11 +145,21 @@ export default{
 .modal_con{
 	z-index: 1085;
 }
+.top-title{
+	position: fixed;
+	margin: auto;
+	right: 0;
+	left: 0;
+	width: 800px;
+}
 .change_trans{
 	margin-top: 20px;
 }
 .con_trans{
 	margin-top: 40px;
+}
+.transfer{
+	margin-right: 7px;
 }
 .tans_tab{
 	height: 40px;

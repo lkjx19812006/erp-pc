@@ -1389,6 +1389,7 @@ const mutations = {
         state.basicBaseList.intentionDetail = data;
     },*/
     [PROVINCE_LIST](state,data){
+      console.log(data)
         state.locationList.provinceList = data;
     },
     [COUNTRY_LIST](state,data){

@@ -32,7 +32,8 @@
                                      namelist:'规格名称',
                                      link:createSpec,
                                      url:'/spec/',
-                                     key:'specs'
+                                     key:'specs',
+                                     judge:'specs'
                                      })">新建</button>
                             </h4>
                     </div>
@@ -58,6 +59,7 @@
                                                     link:alterSpec,
                                                     url:'/spec/',
                                                     key:'specs',
+                                                    judge:'specs',
                                                     breedId:item.breedId
                                                     },item.show=false)">编辑</dt>
                                             <dt @click="specDelete({
@@ -96,7 +98,8 @@
                                      namelist:'产地名称',
                                      link:createSpec,
                                      url:'/local/',
-                                     key:'locals'
+                                     key:'locals',
+                                     judge:'locals'
                                      })">新建</button>
                         </h4>
                     </div>
@@ -123,6 +126,7 @@
                                                     link:alterSpec,
                                                     url:'/local/',
                                                     key:'locals',
+                                                    judge:'locals',
                                                     breedId:item.breedId
                                                     },item.show=false)">编辑</dt>
                                                 <dt @click="specDelete({
@@ -161,7 +165,8 @@
                                      namelist:'别名名称',
                                      link:saveAlias,
                                      url:'/alias/',
-                                     key:'alias'
+                                     key:'alias',
+                                     judge:'alias'
                                      })">新建</button>
                             </h4>
                         </div>
@@ -187,6 +192,7 @@
                                                     link:alterAlias,
                                                     url:'/alias/',
                                                     key:'alias',
+                                                    judge:'alias',
                                                     breedId:item.breedId
                                                     },item.show=false)">编辑</dt>
                                                 <dt @click="specDelete({
@@ -225,7 +231,8 @@
                                      namelist:'单位名称',
                                      link:createSpec,
                                      url:'/unit/',
-                                     key:'units'
+                                     key:'units',
+                                     judge:'units'
                                      })">新建</button>
                             </h4>
                         </div>
@@ -253,6 +260,7 @@
                                                     link:alterSpec,
                                                     url:'/unit/',
                                                     key:'units',
+                                                    judge:'units',
                                                     breedId:item.breedId
                                                     },item.show=false)">编辑</dt>
                                                 <dt @click="specDelete({
@@ -432,9 +440,15 @@ export default {
 </script>
 <style scoped>
 .top-title{
-    width: 100%;
-    right: 0;
-    top:70px;
+        right: 0;
+    top: 91px;
+    position: fixed;
+    width: 70%;
+    margin: auto;
+    left: 0;
+}
+.client-section {
+    padding-top: 30px;
 }
 .breed_detail {
     position: absolute;

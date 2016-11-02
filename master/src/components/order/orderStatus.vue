@@ -57,7 +57,7 @@
                     orderStatus:'',
                     link:'/order/cancle',
                     callback:cancel
-                  })">取消</button>
+                  })">取消此订单</button>
             </div>
             <!-- 订单确认10 -->
             <div class="clearfix logical_color" v-if="param.sales">
@@ -148,8 +148,8 @@
               <div class="space_15 clearfix">
                 <div class="logical_color">
                   <span class="mui-pull-left">物流公司：</span> 
-                  <select v-model="uploadLogistic.lcompanyId">
-                    <option v-for="item in initExpresslist"  value="{{item.id}}">{{item.name}}</option>
+                  <select v-model="uploadLogistic.b">
+                    <option v-for="item in initExpresslist" value="{{item.id + ',' + item.name}}">{{item.name}}</option>
                   </select>
                 </div>
                 <div class="logical_color">
@@ -306,6 +306,7 @@ export default {
             type:"image/*",
             uploadLogistic:{
               images:'',
+              b:'',
               orderStatus:'',
               lcompanyId:'',
               lcompanyNo:'',
@@ -314,7 +315,8 @@ export default {
               link:'/order/send',
               image_f:'',
               image_s:'',
-              image_t:''
+              image_t:'',
+              name:''
             }
         }
     },
@@ -410,9 +412,13 @@ export default {
   z-index: 1112;
   width: 60%;
 }
+.top-title{
+   position: absolute;
+   right: 0
+}
 .order_contain{
   text-align: center;
-  padding:0 0 20px 0;
+  padding:20px 0 20px 0;
   font-size: 16px;
 }
 .logical_color{
