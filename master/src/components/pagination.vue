@@ -16,7 +16,7 @@
     <li class="disabled"><a>共<i>{{ combination.total }}</i>条</a></li>
     <li>
       <p style="float:left;line-height:1.42857143;color:#777;margin:8px 10px 0 10px">跳转到:</p>
-      <input  type=number  v-model="inpage" :value="page" style="position: relative;width:60px;margin:0 10px;float: left;padding: 6px 12px;margin-left: -1px;line-height: 1.42857143;color: #337ab7;text-decoration: none; background-color: #fff;border: 1px solid #ddd;"/>
+      <input  type="text"  v-model="inpage" :value="page" style="position: relative;width:60px;margin:0 10px;float: left;padding: 6px 12px;margin-left: -1px;line-height: 1.42857143;color: #337ab7;text-decoration: none; background-color: #fff;border: 1px solid #ddd;"/>
       <a v-on:click="combination.cur=page,pageClick()" class="btn">点击跳转</a>
     </li>
   </ul>
