@@ -801,7 +801,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
 export const orderCancle = ({ dispatch }, param,data) => { //订单取消状态
     console.log(param)
     console.log(data);
-   
+
     const body = {
        orderId:param.id,
        cancleCauses:param.cancleCauses
@@ -2932,6 +2932,11 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
         }else if(search=='type'){
             url +='&type='
         }
+        if(search=='especial'&&param[search]!==''){
+            url += '&especial='+param.especial
+        }else if(search=='especial'){
+            url +='&especial='
+        }
         if(search=='invoic'&&param[search]!==''){
             url += '&invoic='+param.invoic
         }else if(search=='invoic'){
@@ -3786,7 +3791,7 @@ export const createIntentionInfo = ({ dispatch }, param,tipParam) => { //新增�
         param.id=res.json().result.intentionId;
         param.validate = 0;
         param.checked = false;
-        param.show = false; 
+        param.show = false;
         dispatch(types.INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');

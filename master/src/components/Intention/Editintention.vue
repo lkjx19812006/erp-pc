@@ -201,7 +201,7 @@ export default {
     },
     vuex:{
         actions:{
-            
+
         }
     },
     methods:{
@@ -265,7 +265,7 @@ export default {
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
-    padding: 10px 30px 50px 30px;
+    padding: 10px 30px 80px 30px;
 }
 
 .editsection {

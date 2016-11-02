@@ -595,6 +595,11 @@ export default {
 .modal_con{
   z-index: 1084
 }
+
+.edit-model {
+  padding: 10px 30px 80px 30px;
+}
+
 .top-title{
     position: absolute;
     top: 0;
