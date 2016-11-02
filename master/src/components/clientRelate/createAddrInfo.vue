@@ -18,8 +18,12 @@
                                     <input type="text" class="form-control edit-input"  v-model="param.contactName" v-validate:name="{minlength:2}" />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel">{{param.typelist}}</label>
-                                    <input type="text" class="form-control edit-input"  v-model="param.type" />
+                                    <label class="editlabel">{{param.typelist}}<span class="system_danger" v-if="$validation.aa.required">请选择类型</span></label>
+                                    <!-- <input type="text" class="form-control edit-input"  v-model="param.type" /> -->
+                                    <select class="form-control edit-input" v-validate:aa="['required']" v-model="param.type" >
+                                       <option value="0">普通</option>
+                                       <option value="1">默认</option>
+                                    </select>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">{{param.phonelist}}<span class="system_danger" v-if="$validation.phone.phone">请输入有效的手机号码</span></label>
@@ -45,7 +49,7 @@
                                 <div class="editpage-input">
                                     <!-- <label class="editlabel">{{param.countylist}}</label>
                                     <input type="text" class="form-control edit-input"  id="country" v-model="param.country" v-validate:country="['required']" /> -->
-                                    <label class="editlabel">国家</label>
+                                    <label class="editlabel">国家 <span class="system_danger" v-if="!country.cname">请选择国家</span></label>
                                     <div type="text" class="edit-input">
                                         <v-select
                                            :debounce="250"
@@ -59,7 +63,7 @@
                                  <div class="editpage-input">
                                    <!--  <label class="editlabel">{{param.provicelist}}</label>
                                     <input type="text" class="form-control edit-input"  id="province" v-model="param.province" v-validate:province="['required']"/> -->
-                                    <label class="editlabel">省</label>
+                                    <label class="editlabel">省<span class="system_danger" v-if="!country.cname">请选择省</span></label>
                                     <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
                                     <div v-if="country.cname" type="text" class="edit-input">
                                         <v-select
@@ -74,7 +78,7 @@
                                  <div class="editpage-input">
                                     <!-- <label class="editlabel">{{param.citylist}}</label>
                                     <input type="text" class="form-control edit-input"  id="city" v-model="param.city" v-validate:city="['required']" /> -->
-                                    <label class="editlabel">市</label>
+                                    <label class="editlabel">市<span class="system_danger" v-if="!country.cname">请选择市</span></label>
                                     <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
                                     <div v-if="province.cname" type="text" class="edit-input">
                                        <v-select
@@ -89,7 +93,7 @@
                                 <div class="editpage-input">
                                     <!-- <label class="editlabel">{{param.distlist}}</label>
                                     <input type="text" class="form-control edit-input"  id="district" v-model="param.district" v-validate:district="['required']" /> -->
-                                    <label class="editlabel">区</label>
+                                    <label class="editlabel">区<span class="system_danger" v-if="!country.cname">请选择区</span></label>
                                     <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
                                     <div v-if="city.cname" type="text" class="edit-input">
                                         <v-select

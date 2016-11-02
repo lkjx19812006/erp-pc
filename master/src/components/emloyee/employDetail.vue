@@ -234,9 +234,6 @@ input{
     float: none;
     position: relative;
 }
-.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
-    background-color: #fff;
-}
 .panel-collapse{
     background-color: #fff;
 }

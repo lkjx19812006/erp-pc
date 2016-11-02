@@ -29,7 +29,7 @@
 	                </thead>
 	                <tbody>
 	                    <tr v-for="item in initBreedlist"  @click="serviceselected($index,item.id,item.name)">
-	                    	<td  @click.stop="">
+	                    	<td>
 	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  ></label>
 	                        </td>
 	                        <td>{{item.categoryName}}</td>

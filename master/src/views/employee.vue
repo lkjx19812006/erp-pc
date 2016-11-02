@@ -123,13 +123,7 @@
                     <td>{{item.entrydate | date}}</td>
                     <td>{{item.leavedate | date}}</td>
                     <td>{{item.level | levelstate}}</td>
-                    <td  @click="editData($index,{
-                            concrete:'employeeList'
-                            })">
-                      <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
-                       <div class="component_action" v-show='item.show' transition="expand">
-                          <ul>
-                              <li @click="modify({
+                    <td @click="modify({
                                  title:'编辑员工',
                                  sub:$index,
                                  id:item.id,
@@ -164,19 +158,8 @@
                                  link:updateEmploy,
                                  url:'/employee/',
                                  key:'employeeList'
-                                })">编辑</li>
-                             <!-- <li @click="specDelete({
-                                    id:item.id,
-                                    sub:$index,
-                                    show:true,
-                                    name:item.name,
-                                    title:'员工',
-                                    link:deleteInfo,
-                                    url:'/employee/',
-                                    key:'employeeList'
-                                    })">删除</li> -->
-                          </ul>
-                        </div>
+                                })">
+                        <a class="operate"><img src="/static/images/edit.png" height="18" width="19" alt="编辑" title="编辑"/></a>
                     </td>
                   </tr>
                 </tbody>

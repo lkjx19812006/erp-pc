@@ -91,7 +91,12 @@
                         <label>手机：</label>
                         <input type="text"  class="form-control" v-model="param.phone"  placeholder="按客户手机搜索"/>
                     </div>
-                    <div class="client-detailInfo  col-xs-6" @click="employee(param.employeeId,param.employeeName)">
+                    <div class="client-detailInfo  col-xs-6" @click="employee(param.employeeId,param.employeeName)" v-if="param.link=='/customer/employeeDistributed'" style="display:none;">
+                        <label>业务员ID：</label>
+                        <input type="text"  class="form-control" v-model="param.employeeName"   placeholder="按业务员ID搜索" disabled="disabled" />
+                        <!--<div class="empSearch" ><img src="/static/images/search.png" height="24" width="24"></div>-->
+                    </div>
+                     <div class="client-detailInfo  col-xs-6" @click="employee(param.employeeId,param.employeeName)" v-else>
                         <label>业务员ID：</label>
                         <input type="text"  class="form-control" v-model="param.employeeName"   placeholder="按业务员ID搜索" disabled="disabled" />
                         <!--<div class="empSearch" ><img src="/static/images/search.png" height="24" width="24"></div>-->

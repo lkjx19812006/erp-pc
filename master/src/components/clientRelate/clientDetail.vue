@@ -696,10 +696,12 @@
                                         	</thead>
 		                                    <tbody>
 		                                        <tr v-for="item in initClientDetail.addresses.arr">
-		                                            <td>{{item.type}}</td>
+		                                            <td v-if="item.type==0">普通</td>
+                                                <td v-if="item.type==1">默认</td>
 		                                            <td>{{item.contactName}}</td>
 		                                            <td>{{item.contactPhone}}</td>
-		                                            <td>{{item.sex}}</td>
+		                                            <td v-if="item.sex==0">男</td>
+                                                <td v-if="item.sex==1">女</td>
 		                                            <td>{{item.country}}</td>
 		                                            <td>{{item.province}}</td>
 		                                            <td>{{item.city}}</td>
@@ -1391,9 +1393,12 @@ section article {
 }
 .top-title{
   z-index: 100;
-  width: 100%;
+  width: 70%;
   right: 0;
-  top: 70px;
+  top: 91px;
+  position: fixed;
+  left: 0;
+  margin: auto;
 }
 .client-section {
     padding: 10px 5px 40px 5px;
