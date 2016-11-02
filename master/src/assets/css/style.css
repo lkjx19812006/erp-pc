@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-11-02 11:24:42
+* @Last Modified time: 2016-11-02 17:14:20
 */
 
 * {
@@ -373,7 +373,6 @@ body {
 .form-control {
     background-color: #fff !important;
 }
-
 .panel-name,
 .panel-job {
     width: 140px;

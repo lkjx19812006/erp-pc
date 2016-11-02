@@ -15,7 +15,11 @@
                             <div class="editpageleft">
                                 <div class="editpage-input">
                                     <label class="editlabel">{{param.typelist}}</label>
-                                    <input type="text" class="form-control edit-input"  v-model="param.type" value="{{param.type}}" />
+                                    <select class="form-control edit-input" v-validate:aa="['required']" v-model="param.type" value="{{param.type}}">
+                                       <option value="0">普通</option>
+                                       <option value="1">默认</option>
+                                    </select>
+                                    <!-- <input type="text" class="form-control edit-input"  v-model="param.type" value="{{param.type}}" /> -->
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">{{param.namelist}}<span class="system_danger" v-if="$validation.name.minlength">请输入姓名且不少于两位数</span></label>
