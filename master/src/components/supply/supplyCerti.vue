@@ -27,7 +27,7 @@
             <tr>
               <th>文件类型</th>
               <th>所属文件</th>
-              <th>路径</th>
+              <!--<th>路径</th>-->
               <th>描述</th>
               <th></th>
             </tr>
@@ -36,14 +36,14 @@
             <tr v-for="item in initFileslist">
               <td>{{item.fileType}}</td>
               <td>{{item.bizType}}</td>
-              <td>
-                    <img v-bind:src="item.path" v-if="item.fileType=='image'" />
-                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
-                    <img  src="/static/images/word.png" v-if="item.fileType=='word'">
-                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
-              </td>
+              <!--<td>-->
+                    <!--&lt;!&ndash;<img v-bind:src="item.path" v-if="item.fileType=='image'" />&ndash;&gt;-->
+                    <!--<img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">-->
+                    <!--<img  src="/static/images/word.png" v-if="item.fileType=='word'">-->
+                    <!--<img  src="/static/images/excel.png" v-if="item.fileType=='excel'">-->
+              <!--</td>-->
               <td>{{item.description}}</td>
-              <td @click.stop="eventClick($index)">
+              <td @click="showClick($index)">
                 <img height="24" width="24" src="/static/images/default_arrow.png" />
                 <div class="component_action" v-show="item.show">
                   <ul>
@@ -126,7 +126,7 @@
       }
     },
     methods: {
-      eventClick:function(id){
+      showClick:function(id){
         if(this.$store.state.table.basicBaseList.filesList[id].show){
           this.$store.state.table.basicBaseList.filesList[id].show = !this.$store.state.table.basicBaseList.filesList[id].show;
         }else{

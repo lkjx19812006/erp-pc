@@ -1,25 +1,32 @@
 <template>
     <div class="center_top light_bg mui-clearfix" v-bind:class="{'center_top':getMenu==240,'center_nav':getMenu==50}" transition="expand">
-        <div class="new_time left">最近登录时间:{{ initLogin.time }}</div>
-        <div class="right head_info clearfix">
+        <div class="new_time left">{{$t('static.login_time_recently')}}:{{ initLogin.time }}</div>
+      <div class="right head_info" style="margin-top:10px"> <language-model> </language-model></div>
+        <div class="right head_info clearfix" >
+
             <span style="float:left;margin:20px 10px 0 0 ">{{initLogin.name}}</span>
             <img src="/static/images/head.png" class="left" height="52" width="52" @click="show=!show"/>
             <div class="component_action" v-show="show">
               <ul>
                 <li @click="exit()">
-                  退出登录
+                  {{$t('static.logout')}}
                 </li>
               </ul>
             </div>
+
         </div>
     </div>
 </template>
 <script>
+  import languageModel from '../components/tools/language'
 import {
     getMenu,
     initLogin
 } from '../vuex/getters'
 export default {
+  components: {
+    languageModel
+  },
     data() {
             return {
                   show:false
@@ -84,5 +91,6 @@ export default {
   padding: 0;
   text-align: center;
   margin-top: 28px;
+  right:120px;
 }
 </style>

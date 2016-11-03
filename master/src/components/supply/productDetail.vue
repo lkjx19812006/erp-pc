@@ -15,7 +15,7 @@
                          <li>
                             <!-- <button type="button" class="btn btn-base"  @click="createOffer()">新建报价</button> -->
                         </li>
-                      
+
                     </ul>
                 </div>
             </nav>
@@ -26,7 +26,7 @@
                     <h4 class="section_title">产品相关</h4>
                     <article>
                         <div class="panel-group">
-                            
+
                           <div class="panel panel-default">
                               <div class="panel-heading" v-cloak>
                               <div class="cover_loading">
@@ -48,7 +48,7 @@
                                         <thead>
                                           <th>文件类型</th>
                                           <th>所属文件类型</th>
-                                          <th>路径</th>
+                                          <!--<th>路径</th>-->
                                           <th>描述</th>
                                           <!-- <th></th> -->
                                         </thead>
@@ -56,12 +56,12 @@
                                              <tr v-for="item in initProductDetail.filesList.arr">
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.bizType}}</td>
-                                                <td>
-                                                    <img v-if="item.fileType=='image'" :src="item.path"  />
-                                                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
-                                                    <img  src="/static/images/word.png" v-if="item.fileType=='word'">
-                                                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
-                                                </td>
+                                                <!--<td>-->
+                                                    <!--<img v-if="item.fileType=='image'" :src="item.path"  />-->
+                                                    <!--<img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">-->
+                                                    <!--<img  src="/static/images/word.png" v-if="item.fileType=='word'">-->
+                                                    <!--<img  src="/static/images/excel.png" v-if="item.fileType=='excel'">-->
+                                                <!--</td>-->
                                                 <td>{{item.description}}</td>
                                                 <!-- <td  @click="clickShow($index,{
                                                     concrete:'filesList'
@@ -78,7 +78,7 @@
                                     </table>
                                   </div>
                               </div>
-                          </div> 
+                          </div>
                         </div>
                     </article>
                 </div>
@@ -149,7 +149,7 @@
         </section>
     </div>
 </template>
-<script> 
+<script>
 /*import tipsdialogModel  from '../tipsDialog'
 import createorderModel  from './createOrder'*/
 
@@ -192,11 +192,11 @@ export default {
       },
      /* saveSucc:function(param){
            this.tipsParam.show= true;
-           this.editintentInfo(param); 
+           this.editintentInfo(param);
       },
-      
-      clickShow: function(index,param) {  
-          this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = !this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show; 
+
+      clickShow: function(index,param) {
+          this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = !this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show;
 
       },
       adopt:function(item){

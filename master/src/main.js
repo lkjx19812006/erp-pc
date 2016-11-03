@@ -7,6 +7,8 @@ import configRouter from './router'
 import VueAnimatedList from 'vue-animated-list'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import treeview from './components/tree/tree.vue'
+import VueI18n from './filters/i18n'
+
 
 
 
@@ -23,6 +25,7 @@ Vue.directive('echarts', require('./directives/echarts'));
 Vue.use(VueAnimatedList)
 Vue.use(VueRouter)
 Vue.use(VueResource)
+
 
 
 Vue.http.options.root = '/src/assets/data'
@@ -79,10 +82,9 @@ Vue.http.interceptors.push((request, next) => {
     if(response.json()&&response.json().code==100070){
         return  router.go({name: 'login'});
     }
-    // ...
-    // 请求发送后的处理逻辑
-    // ...
-    // 根据请求的状态，response参数会返回给successCallback或errorCallback
+
+    console.log(response.json());
+
     return response
   })
 })

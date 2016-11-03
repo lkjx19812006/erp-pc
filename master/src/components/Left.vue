@@ -39,11 +39,6 @@ import {
     menuBar
 } from '../vuex/actions'
 export default {
-    data() {
-            return {
-                msg: '左边'
-            }
-        },
         vuex: {
             getters: {
                 getList,

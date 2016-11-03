@@ -33,9 +33,9 @@
             <tr>
               <th>文件类型</th>
               <th>所属文件</th>
-              <th>路径</th>
+              <!--<th>路径</th>-->
               <th>描述</th>
-              <th>状态</th>
+              <!--<th>状态</th>-->
               <!-- <th></th> -->
             </tr>
         </thead>
@@ -43,19 +43,19 @@
           <tr v-for="item in initProductlist">
             <td>{{item.fileType}}</td>
             <td>{{item.bizType}}</td>
-            <td class="underline"  @click="clickOn({
-                               id:item.id,
-                               sub:$index,
-                               show:true,
-                               name:item.name
-                               })">
-                    <img v-bind:src="item.path" v-if="item.fileType=='image'" />
-                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
-                    <img  src="/static/images/word.png" v-if="item.fileType=='word'">
-                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
-            </td>
+            <!--<td class="underline"  @click="clickOn({-->
+                               <!--id:item.id,-->
+                               <!--sub:$index,-->
+                               <!--show:true,-->
+                               <!--name:item.name-->
+                               <!--})">-->
+                    <!--<img v-bind:src="item.path" v-if="item.fileType=='image'" />-->
+                    <!--<img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">-->
+                    <!--<img  src="/static/images/word.png" v-if="item.fileType=='word'">-->
+                    <!--<img  src="/static/images/excel.png" v-if="item.fileType=='excel'">-->
+            <!--</td>-->
             <td>{{item.description}}</td>
-            <td>{{item.status}}</td>
+            <!--<td>{{item.status}}</td>-->
             <!-- <td @click.stop="eventClick($index)">
               <img height="24" width="24" src="/static/images/default_arrow.png" />
               <div class="component_action" v-show="item.show">
