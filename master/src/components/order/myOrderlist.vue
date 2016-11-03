@@ -56,6 +56,7 @@
                     })">新建</button>
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
                 <button class="new_btn transfer" @click="orgCheck()">申请审核</button>
+                <button type="button" class="new_btn transfer"  @click="resetTime()">清空</button>
             </div>
         </div>
       </div>
@@ -109,7 +110,7 @@
                   <td>{{item.province}}</td>
                   <td>{{item.city}}</td>
                   <td>{{item.comments}}</td>
-                  <td v-if="item.clients==0" style="background:red;color:#fff">PC</td>
+                  <td v-if="item.clients===0" style="background:red;color:#fff">PC</td>
                   <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
                   <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
                   <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
@@ -557,6 +558,20 @@
                 if(item.orderStatus==70&&item.type==1){
                     this.disposeParam.tips="买家已收货，订单已完成！";
                 }
+            },
+            resetTime:function(){
+              this.loadParam.ctime = "";
+              this.loadParam.ftime = "";
+              this.loadParam.consigneePhone = "";
+              this.loadParam.consignee = "";
+              this.loadParam.orderStatus="";
+              this.loadParam.dataStatus="";
+              this.loadParam.no="";
+              this.loadParam.mode="";
+              this.loadParam.type="";
+              this.loadParam.clients="";
+              this.loadParam.payWay="";
+              this.getEmpolyeeOrder(this.loadParam)
             }
         },
         events: {

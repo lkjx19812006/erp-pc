@@ -566,12 +566,14 @@ const mutations = {
         }
         if(data.key == 'orderList'){
             console.log(data)
-            state.basicBaseList[data.key].unshift({
+           /* state.basicBaseList[data.key].unshift(data);*/
+           state.basicBaseList[data.key].unshift({
                 "type":data.type,
                 "sourceType":data.sourceType,
                 "sample":data.sample,
                 "intl":data.intl,
                 "customer":data.customer,
+                "customerName":data.customerName,
                 "incidentals":data.incidentals,
                 'incidentalsDesc':data.incidentalsDesc,
                 "preferential":data.preferential,
@@ -593,7 +595,7 @@ const mutations = {
                     "sourceId":data.goods[0].sourceId,
                     "title":data.goods[0].title,
                     "breedId":data.goods[0].breedId,
-                    "brredName":data.goods[0].breedName,
+                    "brredName":data.goods[0].brredName,
                     "quality":data.goods[0].quality,
                     'location':data.goods[0].location,
                     "spec":data.goods[0].spec,
@@ -604,19 +606,23 @@ const mutations = {
                 "show": false,
                 "no":data.no,
                 "id":data.id,
-                 "orderStatus":data.orderStatus,
+                "orderStatus":data.orderStatus,
                 "validate":data.validate,
-                "payWay":data.payWay
+                "payWay":data.payWay,
+                "checked":false,
+                "clients":data.clients
             });
         }
         if(data.key == 'orders'){
             console.log(data)
+             /*state.clientDetail[data.key].arr.unshift(data);*/
             state.clientDetail[data.key].arr.unshift({
                 "type":data.type,
                 "sourceType":data.sourceType,
                 "sample":data.sample,
                 "intl":data.intl,
                 "customer":data.customer,
+                "customerName":data.customerName,
                 "incidentals":data.incidentals,
                 'incidentalsDesc':data.incidentalsDesc,
                 "preferential":data.preferential,
@@ -638,7 +644,7 @@ const mutations = {
                     "sourceId":data.goods[0].sourceId,
                     "title":data.goods[0].title,
                     "breedId":data.goods[0].breedId,
-                    "brredName":data.goods[0].breedName,
+                    "brredName":data.goods[0].brredName,
                     "quality":data.goods[0].quality,
                     'location':data.goods[0].location,
                     "spec":data.goods[0].spec,
@@ -648,9 +654,12 @@ const mutations = {
                 }],
                 "show": false,
                 "no":data.no,
-                 "orderStatus":data.orderStatus,
+                "orderStatus":data.orderStatus,
                 "validate":data.validate,
-                "id":data.id
+                "payWay":data.payWay,
+                "id":data.id,
+                "checked":false,
+                "clients":data.clients
             });
         }
     },
@@ -700,12 +709,11 @@ const mutations = {
                   state.basicBaseList.orderList[i].payWay=data.payWay;
                   state.basicBaseList.orderList[i].lcompanyId=data.lcompanyId;
                   state.basicBaseList.orderList[i].logisticsNo=data.logisticsNo;
-
               }
           }
-       /* if(data.aaaa=='/order/payConfirm'){
-           state.basicBaseList.orderList.splice(data.sub, 1);
-        }*/
+       /* if(data.link=='/order/payConfirm'){
+             state.basicBaseList.orderList.splice(data.sub, 1);
+          }*/
     },
     [SYSTEM_DATA](state, data) { //枚举类型
       state.systemBaseList.enumlist = data;

@@ -171,7 +171,6 @@ export const freshPiecharts = ({ dispatch }, getPiechart) => {
 };
 
 export const getOrderList = ({ dispatch }, param) => { //全部订单列表以及订单搜索
-    console.log('ALLORDER');
     param.loading = true;
     var url = apiUrl.orderList+param.link+'?page=' + param.cur + '&pageSize=15';
     for(var key in param){
@@ -363,7 +362,6 @@ export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核
 }
 
 export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(我的订单)列表
-    console.log('MYORDER');
     console.log(param)
     //console.log(param.link)
     param.loading = true;
@@ -633,7 +631,9 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         console.log('添加成功')
         data.no=res.json().result.no;
         data.id=res.json().result.id;
+        data.clients=res.json().result.clients;
         data.validate=res.json().result.validate;
+        data.checked=false;
         dispatch(types.ORDER_ADD_DATA, data);
         data.show = false;
     }, (res) => {
@@ -800,7 +800,11 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
         }
     }).then((res) => {
         console.log('订单已处理')
-       
+        res.json().result.link = '';
+        res.json().result.link = param.link;
+        console.log(param.link)
+        console.log(res.json().result)
+        console.log(res.json().result.link)
         dispatch(types.ORDER_STATUS, res.json().result);
     }, (res) => {
         console.log('fail');

@@ -12,6 +12,7 @@
             <div class="right">
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
                 <button class="new_btn transfer" @click="orgCheck()">审核</button>
+                <button type="button" class="new_btn transfer"  @click="resetTime()">清空</button>
             </div>
         </div>
       </div>
@@ -280,6 +281,20 @@
                 }else{
                      this.$store.state.table.basicBaseList.orderList[sub].show=true;
                 }
+            },
+            resetTime:function(){
+              this.loadParam.ctime = "";
+              this.loadParam.ftime = "";
+              this.loadParam.consigneePhone = "";
+              this.loadParam.consignee = "";
+              this.loadParam.orderStatus="";
+              this.loadParam.dataStatus="";
+              this.loadParam.no="";
+              this.loadParam.mode="";
+              this.loadParam.type="";
+              this.loadParam.clients="";
+              this.loadParam.payWay="";
+              this.getOrgOrder(this.loadParam);
             },
             orgCheck:function(){
                 var _this = this;

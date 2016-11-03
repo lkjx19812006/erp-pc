@@ -9,6 +9,7 @@
             <div class="my_order col-xs-2">全部订单</div>
             <div class="right">
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
+                <button type="button" class="new_btn transfer"  @click="resetTime()">清空</button>
             </div>
         </div>
       </div>
@@ -251,6 +252,20 @@
             updateOrder:function(initOrderlist){
                 console.log(initOrderlist)
                 this.dialogParam=initOrderlist;
+            },
+            resetTime:function(){
+              this.loadParam.ctime = "";
+              this.loadParam.ftime = "";
+              this.loadParam.consigneePhone = "";
+              this.loadParam.consignee = "";
+              this.loadParam.orderStatus="";
+              this.loadParam.dataStatus="";
+              this.loadParam.no="";
+              this.loadParam.mode="";
+              this.loadParam.type="";
+              this.loadParam.clients="";
+              this.loadParam.payWay="";
+              this.getOrderList(this.loadParam);
             },
             pendingOrder:function(item,sub){
               console.log(item)
