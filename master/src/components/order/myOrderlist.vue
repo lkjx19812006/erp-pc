@@ -81,7 +81,7 @@
                     <th>订单状态</th>
                     <th>审核状态</th>
                     <th>支付方式</th>
-                    <th></th>
+                    <th>编辑</th>
                     <th></th>
                 </tr>
             </thead>
@@ -200,7 +200,53 @@
                      <img height="24" width="24" src="/static/images/default_arrow.png" />
                      <div class="component_action" v-show="item.show">
                           <ul>
-                              <li >编辑</li>
+                              <li @click="updateOrder({
+                                        sub:$index,
+                                        id:item.id,
+                                        show:true,
+                                        title1:'修改订单',
+                                        type:item.type,
+                                        sourceType:item.sourceType,
+                                        sample:item.sample,
+                                        intl:item.intl,
+                                        customer:item.customer,
+                                        currency:item.currency,
+                                        consignee:item.consignee,
+                                        consigneePhone:item.consigneePhone,
+                                        zipCode:item.zipCode,
+                                        country:item.country,
+                                        province:item.province,
+                                        city:item.city,
+                                        employee:item.employee,
+                                        customerName:item.customerName,
+                                        org:item.org,
+                                        district:item.district,
+                                        orderStatus:item.orderStatus,
+                                        consigneeAddr:item.consigneeAddr,
+                                        comments:item.comments,
+                                        incidentals:item.incidentals,
+                                        orderStatus:item.orderStatus,
+                                        incidentalsDesc:item.incidentalsDesc,
+                                        preferential:item.preferential,
+                                        preferentialDesc:item.preferentialDesc,
+                                        goods:[{
+                                                sourceType:item.goods[0].sourceType,
+                                                id:item.goods[0].id,
+                                                sourceId:item.goods[0].sourceId,
+                                                title:item.goods[0].title,
+                                                breedId:item.goods[0].breedId,
+                                                brredName:item.goods[0].brredName,
+                                                quality:item.goods[0].quality,
+                                                location:item.goods[0].location,
+                                                spec:item.goods[0].spec,
+                                                price:item.goods[0].price,
+                                                unit:item.goods[0].unit,
+                                                number:item.goods[0].number
+                                            }],
+                                        key:'orderList',
+                                        link:alterOrder,
+                                        url:'/order/'
+                                        })">编辑</li>
                                <li v-if="item.orderStatus==-1&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
                                <li v-if="item.orderStatus==-2&&item.type==0" @click="pendingOrder(item,$index)">订单已过期</li>
                                <li v-if="item.orderStatus==0&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>

@@ -164,7 +164,7 @@
                                         <a v-else ></a> 
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.payPics.arr.length!==null" v-show="initOrderDetail.payPics.show" v-cloak>
+                                <div class="panel-collapse" v-if="initOrderDetail.payPics.arr.length!==null" v-show="!initOrderDetail.payPics.show" v-cloak>
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
@@ -236,7 +236,7 @@
                                         <a v-else ></a> 
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-show="initOrderDetail.attachFiles.show">
+                                <div class="panel-collapse" v-show="!initOrderDetail.attachFiles.show">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
@@ -289,7 +289,7 @@
                                         <a v-else></a>
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.sendPics.arr.length!==null" v-show="initOrderDetail.sendPics.show">
+                                <div class="panel-collapse" v-if="initOrderDetail.sendPics.arr.length!==null" v-show="!initOrderDetail.sendPics.show">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
@@ -471,7 +471,7 @@ export default {
           enfoldment:function(param){
           	console.log(this.$store.state.table.orderDetail[param.crete])
             if(this.$store.state.table.orderDetail[param.crete].arr.length==0){
-                this.$store.state.table.orderDetail[param.crete].show=true;
+                this.$store.state.table.orderDetail[param.crete].show=false;
             } 
             this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
           },

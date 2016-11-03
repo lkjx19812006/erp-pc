@@ -87,7 +87,7 @@
                      <th>入职时间</th>
                      <th>离职时间</th>
                      <th>职级</th>
-                     <th></th>
+                     <th>编辑</th>
                   </tr>
                 </thead>
                 <tbody>

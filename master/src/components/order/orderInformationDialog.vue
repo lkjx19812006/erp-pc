@@ -277,7 +277,7 @@
                           </div>
                           <div class="editpage-input" v-else>
                               <label class="editlabel">订单商品药材品种名称 <span class="system_danger" v-if="$validation.breed.required">请输入商品的品种名称</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].brredName" id="breed" v-validate:breed="['required']" value="{{param.goods[0].brredName}}"  @click="searchBreed(param.brredName,param.breedId)" />
+                              <input type="text" class="form-control edit-input" v-model="param.goods[0].brredName" id="breed" v-validate:breed="['required']" value="{{param.goods[0].brredName}}"  @click="searchBreed(param.brredName,param.breedId)" readonly="true" />
                           </div>
                           <div class="editpage-input" v-if="param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2">
                               <label class="editlabel">商品数量  <span class="system_danger" v-if="$validation.number.quantity">请输入商品的数量</span></label>
@@ -477,8 +477,8 @@ export default {
     font-size: 36px;
 }
 .top-title{
-  position: absolute;
-  width: 100%;
+   position: fixed;
+  width: 800px;
 }
 
 .edit-model {
