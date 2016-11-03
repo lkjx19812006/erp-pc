@@ -703,6 +703,9 @@ const mutations = {
 
               }
           }
+       /* if(data.aaaa=='/order/payConfirm'){
+           state.basicBaseList.orderList.splice(data.sub, 1);
+        }*/
     },
     [SYSTEM_DATA](state, data) { //枚举类型
       state.systemBaseList.enumlist = data;

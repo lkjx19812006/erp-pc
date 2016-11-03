@@ -66,7 +66,7 @@
         <table class="table table-hover table_color table-striped " v-cloak>
             <thead>
                 <tr>
-                    <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
+                    <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
                     <th>订单号</th>
                     <th>订单类别</th>
                     <th>订单来源</th>
@@ -330,12 +330,17 @@
                     link:'/order/myList',
                     employee:this.initLogin.id,
                     org:this.initLogin.orgId,
+                    consignee:'',
                     consigneePhone:'',
                     type:'',
                     orderStatus:'',
                     payWay:'',
                     clients:'',
                     dataStatus:'',
+                    no:'',
+                    ctime:'',
+                    ftime:'',
+                    mode:'',
                     total:0
 
                 },
@@ -362,6 +367,7 @@
                     delivery:false
                 },
                 show:true,
+                checked:false,
                 auditParam:{
                     show:false,
                     indexs:[],
@@ -435,6 +441,7 @@
                     }
             },
             select:function(){
+              console.log(this.checked)
                   this.checked=!this.checked;
                   const checked=this.checked;
                   this.$store.state.table.basicBaseList.orderList.forEach(function(item){

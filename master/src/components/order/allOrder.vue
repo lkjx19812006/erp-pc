@@ -1,9 +1,9 @@
   <template>
    <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
-    <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
+    <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
-    <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
-    <div v-show="!detailParam.show&&!disposeParam.show">
+    <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
+    <div>
       <div class="order_search">
         <div class="clear">
             <div class="my_order col-xs-2">全部订单</div>
@@ -42,7 +42,7 @@
                   <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
-                                loading:false
+                                loading:false,
                                 orderStatus:item.orderStatus
                         })">{{item.no}}</a></td>
                   <td v-if="item.type==1">销售</td>
@@ -176,14 +176,18 @@
                     show:false,
                     cur: 1,
                     all: 1,
-                    consignee:'',
                     link:'/order/',
+                    consignee:'',
                     consigneePhone:'',
                     type:'',
                     orderStatus:'',
                     payWay:'',
                     clients:'',
                     dataStatus:'',
+                    no:'',
+                    ctime:'',
+                    ftime:'',
+                    mode:'',
                     total:0
                 },
                 dialogParam:{

@@ -135,24 +135,7 @@ export default {
     props: ['param'],
     data() {
         return {
-          loadParam: {
-                loading: true,
-                color: '#5dc596',
-                size: '15px',
-                cur: 1,
-                all: 7,
-                consignee:'',
-                consigneePhone:'',
-                type:'',
-                orderStatus:'',
-                payWay:'',
-                clients:'',
-                dataStatus:'',
-                no:'',
-                ctime:'',
-                ftime:'',
-                mode:''
-            }
+         
         }
     },
     vuex: {
@@ -186,6 +169,7 @@ export default {
             this.param.consigneePhone = "";
             this.param.consignee = "";
             this.param.orderStatus="";
+            this.param.dataStatus="";
             this.param.no="";
             this.param.mode="";
             this.param.type="";
@@ -204,9 +188,12 @@ export default {
     bottom: 125px
 }
 .top-title{
-    position: absolute;
-    width: 100%;
-    top: 0;
+    position: fixed;
+    width: 600px;
+    top: 91px;
+    margin: auto;
+    left: 0;
+    right: 0;
 }
 .edit_footer{
     width: 600px;

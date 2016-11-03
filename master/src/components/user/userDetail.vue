@@ -811,9 +811,12 @@ section article {
 }
 .top-title{
   z-index: 100;
-  width: 100%;
+  width:70%;
+  position: fixed;
   right: 0;
-  top: 70px;
+  top:91px;
+  left: 0;
+  margin: auto;
 }
 .client-section {
     padding: 10px 5px 40px 5px;
