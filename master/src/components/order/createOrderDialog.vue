@@ -22,7 +22,7 @@
                           <div class="editpage-input">
                               <label class="editlabel">订单类别 <span class="system_danger" v-if="$validation.type.required">请选择订单类别</span></label>
                               <input v-show="false"  v-model="param.type" v-validate:type="['required']"/>
-                              <select type="text" class="form-control edit-input" v-model="param.type"   >
+                              <select  class="form-control edit-input" v-model="param.type"   >
                                   <option value="0">采购</option>
                                   <option value="1">销售</option>
                               </select>
@@ -409,8 +409,8 @@ export default {
   top:45px;
 }
 .top-title{
-  position: absolute;
-  width: 100%;
+  position: fixed;
+  width: 800px;
 }
 
 .edit-model {
