@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-11-02 17:14:20
+* @Last Modified time: 2016-11-03 16:25:23
 */
 
 * {
@@ -354,9 +354,9 @@ body {
 }
 
 .panel-set {
-    overflow: hidden;
-    overflow-x: auto;
+    overflow: auto;
     padding: 4px;
+    max-height: 400px;
 }
 
 .panel-body ul {
