@@ -838,10 +838,6 @@ export const orderCancle = ({ dispatch }, param,data) => { //订单取消状态
 export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单支付状态
     console.log(param)
     console.log(undelinePay)
-   /* console.log(sub)
-    if(param.payWay==0){
-        sub.show=false;
-    }*/
     undelinePay.images='';
     if(undelinePay.image_f){
         undelinePay.images+=undelinePay.image_f+','
@@ -858,6 +854,10 @@ export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单�
     if(undelinePay.images){
         body.images = undelinePay.images;
     }
+
+    console.log(param)
+    console.log(undelinePay)
+
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + undelinePay.link,
@@ -872,7 +872,7 @@ export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单�
         console.log('支付成功')
         undelinePay.show = false;
         param.show=false;
-        dispatch(types.ORDER_STATUS, undelinePay);
+        dispatch(types.ORDER_STATUS, res.json().result);
     }, (res) => {
         console.log('fail');
     })

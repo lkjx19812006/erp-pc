@@ -94,6 +94,7 @@
                                 show:true,
                                 id:item.id,
                                 loading:false,
+                                orderStatus:item.orderStatus,
                                 contact:'/order/myList'
                         })">{{item.no }}</a></td>
                   <td v-if="item.type==1">销售</td>
@@ -120,8 +121,8 @@
                   <td v-if="item.payWay==1">支付宝</td>
                   <td v-if="item.payWay==2">平安支付</td>
                   <td v-if="item.payWay==3">药款支付</td>
-                  <td v-if="item.payWay==null">无</td>
-                  <td v-if="item.payWay===''">无</td>
+                  <td v-if="item.payWay==null">未支付</td>
+                  <td v-if="item.payWay===''">未支付</td>
                   <td @click="updateOrder({
                                         sub:$index,
                                         id:item.id,
@@ -168,29 +169,29 @@
                                         key:'orderList',
                                         link:alterOrder,
                                         url:'/order/'
-                                        })"><a class="operate"><img src="/static/images/edit.png" height="18" width="19" alt="编辑" title="编辑"/></a></td>
+                                        })"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a></td>
                   <td>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-1&&item.type==0&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="订单已取消" alt="订单已取消"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-2&&item.type==0"><img src="/static/images/orderStatus.png" height="18" width="18" title="订单已过期" alt="订单已过期"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==0&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="订单处理确定" alt="订单处理确定"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==20&&item.type==0&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="等待支付" alt="等待支付"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==0&&item.type==0&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="订单处理中" alt="订单处理中"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==0&&item.validate==2"><img src="/static/images/unorderStatus.png" height="18" width="18" title="等待财务核查" alt="等待财务核查" @click.stop=""/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="等待发货" alt="等待发货"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="等待收货" alt="等待收货"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==60&&item.type==0&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="已完成订单" alt="已完成订单"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==70&&item.type==0&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="已完成订单" alt="已完成订单"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-1&&item.type==0&&item.validate==2"><img src="/static/images/cancle.png" height="18" width="38" title="订单已取消" alt="订单已取消"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-2&&item.type==0"><img src="/static/images/deadline.png" height="18" width="38" title="订单已过期" alt="订单已过期"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==0&&item.validate==2"><img src="/static/images/unsure.png" height="20" width="39" title="订单待确定" alt="订单待确定"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==20&&item.type==0&&item.validate==2"><img src="/static/images/payorder.png" height="18" width="38" title="等待支付" alt="等待支付"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==0&&item.type==0&&item.validate==2"><img src="/static/images/handle.png" height="18" width="38" title="订单处理中" alt="订单处理中"/></a>
+                        <a class="operate"  v-if="item.orderStatus==30&&item.type==0&&item.validate==2"><img src="/static/images/unorderStatus.png" height="18" width="18" title="等待财务核查" alt="等待财务核查" /></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0&&item.validate==2"><img src="/static/images/deliver.png" height="18" width="38" title="等待发货" alt="等待发货"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0&&item.validate==2"><img src="/static/images/take.png" height="18" width="38" title="等待收货" alt="等待收货"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==60&&item.type==0&&item.validate==2"><img src="/static/images/finish.png" height="18" width="38" title="已完成订单" alt="已完成订单"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==70&&item.type==0&&item.validate==2"><img src="/static/images/finish.png" height="18" width="38" title="已完成订单" alt="已完成订单"/></a>
 
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-1&&item.type==1&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="订单已取消" alt="订单已取消"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-2&&item.type==1"><img src="/static/images/orderStatus.png" height="18" width="18" title="订单已过期" alt="订单已过期"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==0&&item.type==1&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="订单处理中" alt="订单处理中"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="订单处理确定" alt="订单处理确定"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==20&&item.type==1&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="等待支付" alt="等待支付"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1&&item.validate==2"><img src="/static/images/unorderStatus.png" height="18" width="18" title="等待财务核查" alt="等待财务核查" @click.stop=""/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="等待发货" alt="等待发货"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="等待收货" alt="等待收货"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==60&&item.type==1&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="已完成订单" alt="已完成订单"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==70&&item.type==1&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="已完成订单" alt="已完成订单"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-1&&item.type==1&&item.validate==2"><img src="/static/images/cancle.png" height="18" width="38" title="订单已取消" alt="订单已取消"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-2&&item.type==1"><img src="/static/images/deadline.png" height="18" width="38" title="订单已过期" alt="订单已过期"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==0&&item.type==1&&item.validate==2"><img src="/static/images/handle.png" height="18" width="38" title="订单处理中" alt="订单处理中"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1&&item.validate==2"><img src="/static/images/unsure.png" height="20" width="39" title="订单待确定" alt="订单待确定"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==20&&item.type==1&&item.validate==2"><img src="/static/images/payorder.png" height="18" width="38" title="等待支付" alt="等待支付"/></a>
+                        <a class="operate"  v-if="item.orderStatus==30&&item.type==1&&item.validate==2"><img src="/static/images/unorderStatus.png" height="18" width="18" title="等待财务核查" alt="等待财务核查" /></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.validate==2"><img src="/static/images/deliver.png" height="18" width="38" title="等待发货" alt="等待发货"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1&&item.validate==2"><img src="/static/images/take.png" height="18" width="38" title="等待收货" alt="等待收货"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==60&&item.type==1&&item.validate==2"><img src="/static/images/finish.png" height="18" width="38" title="已完成订单" alt="已完成订单"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==70&&item.type==1&&item.validate==2"><img src="/static/images/finish.png" height="18" width="38" title="已完成订单" alt="已完成订单"/></a>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="(item.type==1||item.type==0)&&item.validate==1"><img src="/static/images/unorderStatus.png" height="18" width="18" title="审核中" alt="审核中" @click.stop=""/></a>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="(item.type==1||item.type==0)&&item.validate==0"><img src="/static/images/unorderStatus.png" height="18" width="18" title="未申请审核" alt="未申请审核"  @click.stop=""/></a>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="(item.type==1||item.type==0)&&item.validate==-2"><img src="/static/images/unorderStatus.png" height="18" width="18" title="审核未通过" alt="审核未通过"  @click.stop=""/></a>

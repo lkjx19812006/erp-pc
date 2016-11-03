@@ -695,6 +695,7 @@ const mutations = {
         console.log(data)
           for(var i in  state.basicBaseList.orderList){
               if(state.basicBaseList.orderList[i].id==data.id){
+                console.log(data.orderStatus)
                   state.basicBaseList.orderList[i].orderStatus=data.orderStatus;
                   state.basicBaseList.orderList[i].payWay=data.payWay;
                   state.basicBaseList.orderList[i].lcompanyId=data.lcompanyId;

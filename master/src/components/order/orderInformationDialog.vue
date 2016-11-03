@@ -198,27 +198,13 @@
                               <label class="editlabel">订单状态</label>
                               <select  class="form-control edit-input" v-model="param.orderStatus"  v-if="param.orderStatus===0||param.orderStatus==10||param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true">
                                   <option value="0">订单生成</option>
-                                  <option value="10">订单处理中</option>
-                                  <option value="20">订单等待支付</option>
-                                  <option value="30">已支付，等待审核</option>
-                                  <option value="40">等待发货</option>
-                                  <option value="50">已发货，等待收货</option>
                                   <option value="60">订单已完成</option>
                                   <option value="70">订单已完成</option>
-                                  <option value="-1">订单已取消</option>
-                                  <option value="-2">订单过期</option>
                               </select>
                               <select  class="form-control edit-input" v-model="param.orderStatus"  v-else>
                                   <option value="0">订单生成</option>
-                                  <option value="10">订单处理中</option>
-                                  <option value="20">订单等待支付</option>
-                                  <option value="30">已支付，等待审核</option>
-                                  <option value="40">等待发货</option>
-                                  <option value="50">已发货，等待收货</option>
                                   <option value="60">订单已完成</option>
                                   <option value="70">订单已完成</option>
-                                  <option value="-1">订单已取消</option>
-                                  <option value="-2">订单过期</option>
                               </select>
                           </div>
                       </div>

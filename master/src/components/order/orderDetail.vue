@@ -137,7 +137,7 @@
                                     </div>
                                 </div>
                             </div>    
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" v-if="param.orderStatus>=30">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:'',
@@ -262,7 +262,7 @@
                                     </div>
                                 </div>
                             </div>    
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" v-if="param.orderStatus>=50">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:'',
@@ -506,6 +506,14 @@ export default {
     position: relative;
     background-color: #fff;
     padding: 20px;
+}
+.top-title{
+    position: fixed;
+    width: 70%;
+    right: 0;
+    left: 0;
+    margin: auto;
+    z-index: 1083
 }
 .modal_con{
     width: 70%;
