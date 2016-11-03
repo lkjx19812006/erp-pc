@@ -41,7 +41,8 @@
                   <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
-                                loading:false
+                                loading:false,
+                                orderStatus:item.orderStatus
                         })">{{item.no }}</a></td>
                   <td v-if="item.type==1">销售</td>
                   <td v-if="item.type==0">采购</td>

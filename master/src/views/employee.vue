@@ -164,7 +164,7 @@
                                  url:'/employee/',
                                  key:'employeeList'
                                 })">
-                        <a class="operate"><img src="/static/images/edit.png" height="18" width="19" alt="编辑" title="编辑"/></a>
+                        <a class="operate"><img src="/static/images/edit.png" height="18" width="30" alt="编辑" title="编辑"/></a>
                     </td>
                   </tr>
                 </tbody>

@@ -20,8 +20,9 @@
                   <div class="editpage">
                       <div class="editpageleft">
                           <div class="editpage-input">
-                              <label class="editlabel">订单类别</label>
-                              <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true">
+                              <label class="editlabel">订单类别 <span class="system_danger" v-if="$validation.type.required">请选择订单类别</span></label>
+                              <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
+                              <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true" >
                                   <option value="0">采购</option>
                                   <option value="1">销售</option>
                               </select>
@@ -198,27 +199,13 @@
                               <label class="editlabel">订单状态</label>
                               <select  class="form-control edit-input" v-model="param.orderStatus"  v-if="param.orderStatus===0||param.orderStatus==10||param.orderStatus==20||param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true">
                                   <option value="0">订单生成</option>
-                                  <option value="10">订单处理中</option>
-                                  <option value="20">订单等待支付</option>
-                                  <option value="30">已支付，等待审核</option>
-                                  <option value="40">等待发货</option>
-                                  <option value="50">已发货，等待收货</option>
                                   <option value="60">订单已完成</option>
                                   <option value="70">订单已完成</option>
-                                  <option value="-1">订单已取消</option>
-                                  <option value="-2">订单过期</option>
                               </select>
                               <select  class="form-control edit-input" v-model="param.orderStatus"  v-else>
                                   <option value="0">订单生成</option>
-                                  <option value="10">订单处理中</option>
-                                  <option value="20">订单等待支付</option>
-                                  <option value="30">已支付，等待审核</option>
-                                  <option value="40">等待发货</option>
-                                  <option value="50">已发货，等待收货</option>
                                   <option value="60">订单已完成</option>
                                   <option value="70">订单已完成</option>
-                                  <option value="-1">订单已取消</option>
-                                  <option value="-2">订单过期</option>
                               </select>
                           </div>
                       </div>
@@ -301,8 +288,8 @@
                           </div>
                           <div class="editpage-input" v-else>
                               <label class="editlabel">商品产地 <span class="system_danger" v-if="$validation.location.required">请输入商品的产地</span></label>
-                             <!--  <input type="text" class="form-control edit-input" v-model="param.goods[0].location" id="location" v-validate:location="['required']" value="{{param.goods[0].location}}"/> -->
-                              <select class="form-control edit-input" v-model="param.goods[0].location" value="{{param.goods[0].location}}" id="location" v-validate:location="['required']">
+                             <input v-show="false" type="text" class="form-control" v-model="param.goods[0].location" id="location" v-validate:location="['required']" readonly="readonly"/>
+                              <select class="form-control edit-input" v-model="param.goods[0].location" value="{{param.goods[0].location}}" >
                                   <option v-for="item in initProvince">{{item.cname}}</option>
                               </select>
                           </div>

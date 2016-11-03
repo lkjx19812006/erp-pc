@@ -50,6 +50,7 @@
                                 show:true,
                                 id:item.id,
                                 loading:false,
+                                orderStatus:item.orderStatus,
                                 contact:'/order/sectionList'
                         })">{{item.no }}</a></td>
                   <td v-if="item.type==1">销售</td>
@@ -78,7 +79,7 @@
                   <td v-if="item.payWay==1">支付宝</td>
                   <td v-if="item.payWay==2">平安支付</td>
                   <td v-if="item.payWay==3">药款支付</td>
-                  <td v-if="item.payWay==null">无</td>
+                  <td v-if="item.payWay==null">未支付</td>
                  <!--  <td @click="editClick($index)">
                      <img height="24" width="24" src="/static/images/default_arrow.png" />
                      <div class="component_action" v-show="item.show">
