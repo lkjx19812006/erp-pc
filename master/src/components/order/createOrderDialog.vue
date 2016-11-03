@@ -224,11 +224,10 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">商品产地 <span class="system_danger" v-if="$validation.location.required">请输入商品的产地</span></label>
-                            <input  v-show="false" v-model="param.goods[0].location" v-validate:location="['required']"/>
-                              <select class="form-control edit-input" v-model="param.goods[0].location"  >
+                            <!-- <input   v-model="param.goods[0].location" /> -->
+                              <select class="form-control edit-input" v-model="param.goods[0].location"  v-validate:location="['required']">
                                   <option v-for="item in initProvince">{{item.cname}}</option>
                               </select>
-                             <!--  <input type="text" class="form-control edit-input" v-model="param.goods[0].location" id="location" v-validate:location="['required']" value="{{param.goods[0].location}}"/> -->
                           </div>
 
                       </div>
@@ -242,7 +241,7 @@
       <div class="edit_footer">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
         <button type="button" class="btn  btn-confirm"  v-if="$validation.valid"  @click="confirm(param)">保存</button>
-        <button type="button" class="btn  btn-confirm" v-else disabled="true">保存</button>
+        <button type="button" class="btn  btn-confirm" v-else  disabled="true">保存</button>
       </div>
     </div>
 

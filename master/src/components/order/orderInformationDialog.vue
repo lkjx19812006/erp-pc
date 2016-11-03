@@ -21,7 +21,7 @@
                       <div class="editpageleft">
                           <div class="editpage-input">
                               <label class="editlabel">订单类别</label>
-                              <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true">
+                              <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true" >
                                   <option value="0">采购</option>
                                   <option value="1">销售</option>
                               </select>

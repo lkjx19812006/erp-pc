@@ -489,11 +489,13 @@
                                              <tr v-for="item in initClientDetail.orders.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
                                                 <td>{{item.no}}</td>
-                                                <td>{{item.sourceType}}</td>
+                                                <td v-if="item.sourceType==0">新建</td>
+                                                <td v-if="item.sourceType==1">意向</td>
+                                                <td v-if="item.sourceType==2">报价</td>
                                                 <td>{{item.consignee}}</td>
                                                 <td>{{item.consigneePhone}}</td>
                                                 <td>{{item.consigneeAddr}}</td>
-                                                <td>{{item.orderStatus}}</td>
+                                                <td>{{item.orderStatus | orderstatus}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1034,6 +1036,7 @@
 </template>
 <script>
 import pressImage from '../../components/imagePress'
+import filter from '../../filters/filters.js'
 import tipsdialogModel from '../tipsDialog'
 import createcustModel  from '../clientRelate/createClientDetail'
 import createaddrModel from '../clientRelate/createAddrInfo'
@@ -1074,6 +1077,7 @@ import {
 export default {
     components: {
         pressImage,
+        filter,
         createcustModel,
         deletebreedModel,
         updatecontactModel,
@@ -1337,7 +1341,7 @@ export default {
         this.orderParam = order;
       }
     },
-
+  filter:(filter,{}),
   created(){
     this.getClientDetail(this.param);
   }
