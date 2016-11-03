@@ -67,6 +67,7 @@
                         <select type="text" class="form-control" v-model="param.validate">
                                 <option value="" selected>请选择审核状态</option>
                                 <option value="0">初始</option>
+                                <option value="9">审核中</option>
                                 <option value="1">客服审核通过</option>
                                 <option value="-1">客服审核不通过</option>
                                 <option value="2">业务员申请审核</option>

@@ -87,6 +87,7 @@
                      <th>入职时间</th>
                      <th>离职时间</th>
                      <th>职级</th>
+                     <th>员工状态</th>
                      <th>编辑</th>
                   </tr>
                 </thead>
@@ -123,6 +124,10 @@
                     <td>{{item.entrydate | date}}</td>
                     <td>{{item.leavedate | date}}</td>
                     <td>{{item.level | levelstate}}</td>
+                    <td>
+                        <div v-if="item.status==0">离职</div>
+                        <div v-if="item.status==1">在职</div> 
+                    </td>
                     <td @click="modify({
                                  title:'编辑员工',
                                  sub:$index,

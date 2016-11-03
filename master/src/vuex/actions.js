@@ -2835,6 +2835,7 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
 }
 export const newProduct = ({ dispatch }, param) => { //新增供应商产品
     console.log(param);
+    return;
     const data = {
         "type":param.type,
         "name":param.name,

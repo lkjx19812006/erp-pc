@@ -109,6 +109,7 @@
                         <th>样品单位</th>
                         <th>样品价格</th>
                         <th>报价人数</th>
+                        <th>发布时间</th>
                         <th>审核状态</th>
                         <!-- <th>上下架</th> -->
                         <th></th>
@@ -119,7 +120,7 @@
                     <tr v-for="item in initIntentionList"
                         @click="match(item)"  style="cursor:pointer">
                          <td>
-                            <label v-if="item.validate==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" >
+                            <label v-if="item.validate==0||item.validate==9" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" >
                             </label>
                         </td>
                         <td>{{item.type | chanceType}}</td>
@@ -200,6 +201,7 @@
                         <td>{{item.sampleUnit}}</td>
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offerNumber}}</td>
+                        <td>{{item.ctime | date}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
                         <!-- <td>
                           <div>{{item.onSell | onsell}}</div>
@@ -303,7 +305,7 @@
                                                    wechart: ''
                                                   }
                                                 },item.show=false)">划转</li>
-                                   <li v-if="item.validate==0" @click="audit($index,item.id)">审核</li>
+                                   <li v-if="item.validate==0||item.validate==9" @click="audit($index,item.id)">审核</li>
                                </ul>
                            </div>
                        </td>
@@ -492,7 +494,7 @@ export default {
             this.checked = !this.checked;
             if(this.checked){
                 this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-                    if(item.validate==0){
+                    if(item.validate==0||item.validate==9){
                         item.checked = true;
                     }
                 })

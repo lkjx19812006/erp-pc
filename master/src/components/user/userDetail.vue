@@ -87,7 +87,7 @@
                                         <tbody>
                                             <tr v-for="item in initUserDetail.intention.arr">
                                                 <td  @click.stop="">
-                                                  <label v-if="item.validate==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index,item.id)" ></label>
+                                                  <label v-if="item.validate==0||item.validate==9" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index,item.id)" ></label>
                                                 </td>
                                                 <td>{{item.breedName}}</td>
                                                 <td>{{item.location}}</td>
@@ -106,6 +106,7 @@
                                                   <div v-if="item.validate==-1">审核不通过</div>
                                                   <div v-if="item.validate==0">初始</div>
                                                   <div v-if="item.validate==1">审核通过</div>
+                                                  <div v-if="item.validate==9">审核中</div>
                                                 </td>
                                                 <td>{{item.description}}</td>
 
@@ -597,7 +598,7 @@ export default {
         this.$store.state.table.userDetail.intention.checked = !this.$store.state.table.userDetail.intention.checked;
         if(this.$store.state.table.userDetail.intention.checked){
                 this.$store.state.table.userDetail.intention.arr.forEach(function(item){
-                  if(item.validate==0){
+                  if(item.validate==0||item.validate==9){
                     item.checked=true;
                   }else{
                     item.checked=false;

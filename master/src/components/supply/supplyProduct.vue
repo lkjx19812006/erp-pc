@@ -78,6 +78,7 @@
               <th>价格</th>
               <th>单位</th>
               <th>检测报告</th>
+              <th>创建时间</th>
               <th>价格过期时间</th>
               <th>备注</th>
               <th></th>
@@ -104,6 +105,7 @@
           <td>{{item.price}}</td>
           <td>{{item.unit}}</td>
           <td>{{item.coa}}</td>
+          <td>{{item.ctime}}</td>
           <td>{{item.duedate}}</td>
           <td>{{item.comments}}</td>
           <td @click.stop="eventClick($index)">

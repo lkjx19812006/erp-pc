@@ -15,7 +15,8 @@
                 <section class="editsection">
                     <div class="editpage-input">
                         <label class="editlabel">文件类型 <span class="system_danger" v-if="$validation.filetype.required">请选择上传文件类型</span></label>
-                        <select class="form-control"  v-model="param.fileType" id="filetype" v-validate:filetype="['required']">
+                        <input v-show="false" v-model="param.fileType" v-validate:filetype="['required']" />                        
+                        <select class="form-control"  v-model="param.fileType" id="filetype" >
                             <option value="image">图片</option>
                             <option>pdf文件</option>
                             <option>word</option>
@@ -23,8 +24,9 @@
                         </select>
                     </div>
                     <div class="editpage-input">
-                        <label class="editlabel">所属文件类别 <span class="system_danger" v-if="$validation.biztype.required">请选择上传文件类型</span></label>
-                        <select class="form-control"  v-model="param.bizType" id="biztype" v-validate:biztype="['required']">
+                        <label class="editlabel">所属文件类别<span class="system_danger" v-if="$validation.biztype.required">请选择上传文件类型</span></label>
+                        <input v-show="false" v-model="param.bizType" v-validate:biztype="['required']" /> 
+                        <select class="form-control"  v-model="param.bizType" id="biztype" @change="selectBizType()">
                             <option value="customer_license">客户文件</option>
                             <option value="product_license">产品文件</option>
                         </select>
@@ -91,6 +93,14 @@ export default {
         } 
     },
     methods:{
+        selectBizType:function(){
+           console.log('addad');
+           this.param.name = '';
+           if(this.param.bizType=='customer_license'){
+
+           }
+           if(this.param.bizType=='product_license'){} 
+        },
         selectSupply:function(bizId,name){
             this.supplyParam.show=true;
             if("id" in this.param){

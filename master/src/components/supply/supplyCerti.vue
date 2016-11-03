@@ -13,6 +13,7 @@
                                    bizType:'',
                                    description:'',
                                    path:'',
+                                   name:'',
                                    link:uploadCertificate,
                                    url:'/customer/file/'
                                   })">新建</button>
