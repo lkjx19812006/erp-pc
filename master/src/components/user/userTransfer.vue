@@ -30,7 +30,7 @@
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                 <label class="editlabel">类型</label>
                 <select class="form-control edit-input" v-model="param.type">
-                  <option value='0,个人'>个人</option>
+                  <option value='0,个人' selected>个人</option>
                   <option value='1,企业'>企业</option>
                 </select>
               </div>
@@ -58,7 +58,7 @@
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                 <label class="editlabel">类型</label>
                 <select class="form-control edit-input" v-model="param.category">
-                  <option value="HF">保健品厂</option>
+                  <option value="HF" selected>保健品厂</option>
                   <option value="MF">药厂</option>
                   <option value="CF">化妆品厂</option>
                   <option value="FF">食品厂</option>
@@ -72,7 +72,7 @@
                 <input v-show="false" type="text" class="form-control" readonly="readonly"
                        v-model="param.classify" v-validate:classify="['required']"  />
                 <select class="form-control edit-input" id="classify" v-model="param.classify">
-                  <option value="1,买">买</option>
+                  <option value="1,买" selected>买</option>
                   <option value="2,卖">卖</option>
                   <option value="3,买卖">买卖</option>
                 </select>
@@ -125,9 +125,9 @@
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                 <label>所在省</label>
-                <input type="text" v-if="!country.id" class="form-control edit-input" disabled="disabled"
+                <input type="text" v-if="!country.id" class="form-control edit-input " disabled="disabled"
                        placeholder="请先选择一个国家"/>
-                <div  class="form-control" style="padding:0;border:none" >
+                <div  class="form-control" style="padding:0;border:none" v-if="country.id">
                 <v-select
                   :debounce="250"
                   :value.sync="province"
@@ -135,7 +135,7 @@
                   :options="provinceArr"
                   placeholder="省"
                   label="cname"
-                  v-if="country.id"
+
                 >
                 </v-select>
                   </div>
@@ -143,16 +143,16 @@
 
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                 <label>所在市</label>
-                <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled"
+                <input type="text" v-if="!province.cname" class="form-control edit-input " disabled="disabled"
                        placeholder="请先选择一个省"/>
-                <div  class="form-control" style="padding:0;border:none" >
+                <div  class="form-control" style="padding:0;border:none"  v-if="province.cname">
                 <v-select
                   :debounce="250"
                   :value.sync="city"
                   :options="cityArr"
                   placeholder="市"
                   label="cname"
-                  v-if="province.cname"
+
                 >
                 </v-select>
                   </div>
@@ -173,12 +173,23 @@
 
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>备注</label>
-                <input type="text" class="form-control" v-model="param.comments"/>
+                <label>信用等级</label>
+                <select class="form-control edit-input"  v-model="param.creditLevel">
+                  <option value="1" selected>一星客户</option>
+                  <option value="2">二星客户</option>
+                  <option value="3">三星客户</option>
+                </select>
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                 <label>注册地址</label>
                 <input type="text" class="form-control" v-model="param.address"/>
+              </div>
+            </div>
+
+            <div class="clearfix">
+              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                <label>备注</label>
+                <input type="text" class="form-control" v-model="param.comments"/>
               </div>
             </div>
 
@@ -190,7 +201,7 @@
               </div>
               <div class="clearfix">
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                  <label class="editlabel" for="system">联系人名称<span class="system_danger" v-if="$validation.cname.minlength">请输入联系人姓名且至少两位</span></label>
+                  <label class="editlabel" >联系人名称<span class="system_danger" v-if="$validation.cname.minlength">请输入联系人姓名且至少两位</span></label>
                   <input type="text" class="form-control" v-validate:cname="{minlength:2}" v-model="contacts[0].name"/>
                 </div>
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">

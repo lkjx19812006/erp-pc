@@ -77,6 +77,10 @@
                                 <label class="editlabel">经营范围</label>
                                 <input type="text" v-model='param.bizScope' class="form-control edit-input" value="{{param.bizScope}}" />
                             </div>
+                          <div class="editpage-input">
+                            <label class="editlabel">备注</label>
+                            <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
+                          </div>
                         </div>
                         <div class="editpageright">
                             <div class="editpage-input">
@@ -109,14 +113,21 @@
                                 <label class="editlabel" for="system">邮箱<span class="system_danger" v-if="$validation.email.email">格式有误</span></label>
                                 <input type="text" v-model="param.email" class="form-control edit-input" v-validate:email="['email']" value="{{param.email}}" />
                             </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">备注</label>
-                                <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
-                            </div>
+
                             <div class="editpage-input">
                                 <label class="editlabel">注册地址</label>
                                 <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
                             </div>
+
+                          <div class="editpage-input">
+                            <label class="editlabel">信用等级</label>
+                            <select class="form-control edit-input"  v-model='param.creditLevel' >
+                              <option value="1">一星客户</option>
+                              <option value="2">二星客户</option>
+                              <option value="3">三星客户</option>
+                            </select>
+                          </div>
+
                         </div>
                     </div>
                 </section>
@@ -126,7 +137,7 @@
                 <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="confirm()">确定</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
             </div>
-            
+
         </validator>
 
     </div>

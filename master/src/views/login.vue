@@ -10,17 +10,19 @@
     <validator name="validation">
         <div class="container modal_con">
             <div class="model-header">
-                <div class="pull-left" style="font-size:16px;margin:10px">系统登录</div>
-                <div class="pull-right" style="font-size:16px;margin:10px;color:#FA6705">中文</div>
+                <div class="pull-left" style="font-size:16px;margin:10px">{{$t('static.systemlogin')}}</div>
+                <div class="pull-right" style="font-size:16px;margin:10px;color:#FA6705;width:100px">
+                  <language-model></language-model>
+                </div>
                 <div class="model-tips clearfix">
                     <div class="tips_name"></div>
                 </div>
                 <div class="client-detailInfo  col-xs-12" style="margin-top:30px">
-                    <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">用户名:</div>
+                    <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">{{$t('static.userName')}}:</div>
                     <input type="text" class="form-control" v-model="loginParam.no" v-validate:no="['required']" @keyup.enter="confirm()"/>
                 </div>
                 <div class="client-detailInfo  col-xs-12" style="margin-top:10px">
-                    <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">密&nbsp;&nbsp;&nbsp;&nbsp;码:</div>
+                    <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">{{$t('static.passWord')}}:</div>
                     <input type="password" class="form-control" v-model="loginParam.password" v-validate:password="['required']" @keyup.enter="confirm()"/>
                 </div>
 
@@ -28,12 +30,12 @@
                     <!-- <span class="pull-left" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="checked=!checked"></span>
                     <span class="pull-left">记住密码</span> -->
                     <!-- <span v-if="validation.valid" class="pull-left system_danger">请输入账号和密码</span> -->
-                    <button type="button" class="btn btn-default btn-close" v-if="$validation.valid" @click="confirm()">登录</button>
+                    <button type="button" class="btn btn-default btn-close" v-if="$validation.valid" @click="confirm()">{{$t('static.submit')}}</button>
                     <div v-else>
-                      <button type="button" class="btn btn-default btn-close" disabled="disabled">登录</button>
-                      <span class="pull-left system_danger">请输入账号和密码</span> 
+                      <button type="button" class="btn btn-default btn-close" disabled="disabled">{{$t('static.submit')}}</button>
+                      <span class="pull-left system_danger">{{$t('static.account_or_password')}}</span>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -42,10 +44,8 @@
 </template>
 
 <script>
-
+  import languageModel from '../components/tools/language'
   import tipsdialogModel  from '../components/tips/tipDialog'
-
-
 import {
 
 } from '../vuex/getters'
@@ -54,7 +54,8 @@ import {
 } from '../vuex/actions'
 export default {
     components: {
-      tipsdialogModel
+      tipsdialogModel,
+      languageModel
     },
     data() {
         return {
@@ -66,6 +67,7 @@ export default {
                 show:false,
                 alert:true
            },
+
            base64DecodeChars:[
               -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
               -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -92,7 +94,7 @@ export default {
               this.loginParam.loading=true;
               this.loginParam.loginCallback=this.loginCallback;
               this.login(this.loginParam);
-          }        
+          }
         },
         getCookie:function(name){          //获取cookie
             var search = name + "=" ;
@@ -171,11 +173,7 @@ export default {
     created(){
         this.loginParam.no = this.uncompile(this.getCookie('no'));
         this.loginParam.password = this.uncompile(this.getCookie('password'));
-    },
-    ready() {
-
-    },
-
+    }
 }
 </script>
 
@@ -195,7 +193,7 @@ export default {
         width: 200px;
     }
     .container{
-        height:247px;
+        height:255px;
         width:400px;
         border:1px solid #ddd;
 

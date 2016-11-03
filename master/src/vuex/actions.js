@@ -2292,7 +2292,8 @@ export const  saveCreate = ({ dispatch }, data) => { //新增客户列表
         "website":data.website,
         "orgId":data.orgId,
         "employeeId":data.employeeId,
-        "country":data.country
+        "country":data.country,
+        "creditLevel":data.creditLevel
     }
     if(data.supplier){
       Cdata.supplier=data.supplier;
@@ -2357,7 +2358,8 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         comments:param.comments,
         id: param.id,
         orgId:param.orgId,
-        employeeId:param.employeeId
+        employeeId:param.employeeId,
+        creditLevel:param.creditLevel
     }
     if(param.supplier){
       data.supplier=param.supplier;

@@ -964,7 +964,9 @@ const mutations = {
           type:data.type,
           typeDesc:data.typeDesc,
           show: false,
-          supplier:data.supplier
+          supplier:data.supplier,
+          checked:false,
+          creditLevel:data.creditLevel
         })
 
         console.log(data);

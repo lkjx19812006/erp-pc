@@ -20,7 +20,7 @@
           <th>类型</th>
           <th>分类</th>
           <th>客户来源</th>
-          <th>客户等级</th>
+          <th>客户信用等级</th>
           <th>客户名称</th>
           <th>分类码</th>
           <!-- <th>所属分类</th> -->
@@ -50,12 +50,16 @@
           <td>{{item.type | customerType}}</td>
           <td>{{item.classify | classify}}</td>
           <td>{{item.sourceType}}</td>
-          <td>{{item.creditLevel}}</td>
+          <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
+          <td v-if="item.creditLevel==1">一星客户</td>
+          <td v-if="item.creditLevel==2">二星客户</td>
+          <td v-if="item.creditLevel==3">三星客户</td>
           <td class="underline"  @click="clickOn({
                                 id:item.id,
                                 sub:$index,
                                 show:true,
                                 loading:true,
+                                creditLevel:item.creditLevel,
                                 name:item.name,
                                 link:alterInfo,
                                 url:'/customer/',
