@@ -995,6 +995,7 @@ const mutations = {
         }
     },
     [ALTER_PRODUCT_DATA](state, data) { //修改供应商产品
+      console.log(data)
         for (var i in data) {
             state.basicBaseList[data.headline][data.sub][i] = data[i];
         }

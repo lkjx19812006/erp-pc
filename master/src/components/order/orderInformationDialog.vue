@@ -20,7 +20,8 @@
                   <div class="editpage">
                       <div class="editpageleft">
                           <div class="editpage-input">
-                              <label class="editlabel">订单类别</label>
+                              <label class="editlabel">订单类别 <span class="system_danger" v-if="$validation.type.required">请选择订单类别</span></label>
+                              <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
                               <select type="text" class="form-control edit-input" v-model="param.type"  value="{{param.type}}" v-if="param.orderStatus==30||param.orderStatus==40||param.orderStatus==50||param.orderStatus==70||param.orderStatus==60||param.orderStatus==-1||param.orderStatus==-2" disabled="true" >
                                   <option value="0">采购</option>
                                   <option value="1">销售</option>
@@ -287,8 +288,8 @@
                           </div>
                           <div class="editpage-input" v-else>
                               <label class="editlabel">商品产地 <span class="system_danger" v-if="$validation.location.required">请输入商品的产地</span></label>
-                             <!--  <input type="text" class="form-control edit-input" v-model="param.goods[0].location" id="location" v-validate:location="['required']" value="{{param.goods[0].location}}"/> -->
-                              <select class="form-control edit-input" v-model="param.goods[0].location" value="{{param.goods[0].location}}" id="location" v-validate:location="['required']">
+                             <input v-show="false" type="text" class="form-control" v-model="param.goods[0].location" id="location" v-validate:location="['required']" readonly="readonly"/>
+                              <select class="form-control edit-input" v-model="param.goods[0].location" value="{{param.goods[0].location}}" >
                                   <option v-for="item in initProvince">{{item.cname}}</option>
                               </select>
                           </div>

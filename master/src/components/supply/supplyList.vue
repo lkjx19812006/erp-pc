@@ -92,7 +92,6 @@
                                 show:true,
                                 loading:false,
                                 name:item.name,
-                                link:alterInfo,
                                 url:'/customer/',
                                 key:'customerList'
                                 })"><!-- <img src="/static/images/compact.png" style='float:left;' /> -->{{item.name}}</td>
