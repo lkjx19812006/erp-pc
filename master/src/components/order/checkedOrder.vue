@@ -1,8 +1,8 @@
   <template>
-    <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
+    <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
-    <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
-    <div v-show="!detailParam.show&&!disposeParam.show">
+    <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
+    <div>
       <div class="order_search">
         <div class="clear">
             <div class="my_order col-xs-2">订单审核</div>
@@ -41,7 +41,8 @@
                   <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
-                                loading:false
+                                loading:false,
+                                orderStatus:item.orderStatus
                         })">{{item.no }}</a></td>
                   <td v-if="item.type==1">销售</td>
                   <td v-if="item.type==0">采购</td>
@@ -72,7 +73,7 @@
                   <td v-if="item.payWay==null">其他</td>
                   <!-- <td v-if="item.payWay==''">其他</td> -->
                   <td>
-                      <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1&&item.validate==2"><img src="/static/images/orderStatus.png" height="18" width="18" title="等待核查" alt="等待核查" @click="pendingOrder(item,$index)" /></a>
+                      <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1&&item.validate==2"><img src="/static/images/uncheck.png" height="18" width="38" title="等待核查" alt="等待核查" @click="pendingOrder(item,$index)" /></a>
                       <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.validate==2"><img src="/static/images/unorderStatus.png" height="18" width="18" title="暂无处理" alt="暂无处理" @click="pendingOrder(item,$index)" /></a>
                   </td>
                   <!-- <td @click="editClick($index)">
@@ -157,7 +158,8 @@
                     Auditing:false,
                     sendoff:false,
                     express:false,
-                    delivery:false
+                    delivery:false,
+                    aaaa:'/order/payConfirm'
                 },
                 show:true
             }

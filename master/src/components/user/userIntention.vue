@@ -32,13 +32,13 @@
                     <h4 style="display:inline">药材信息</h4>
                  </div>
 
-               <div class="editpage">
-               <div class="editpage-input" style="width:100%">
-                 <label class="editlabel">药材图片</label>
-                 <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-                 <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-                 <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-               </div>
+                 <div class="editpage">
+                   <div class="editpage-input" style="width:100%">
+                     <label class="editlabel">药材图片</label>
+                     <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+                     <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+                     <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+                   </div>
                  </div>
                  <div class="editpage">
 
@@ -566,6 +566,7 @@ export default {
         }
     },
     created(){
+      console.log(this.param.breedId)
       if(this.param.breedId){
         this.breedParam.breedName = this.param.breedName;
         this.breedParam.id = this.param.breedId;

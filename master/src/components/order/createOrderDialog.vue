@@ -21,7 +21,7 @@
                       <div class="editpageleft">
                           <div class="editpage-input">
                               <label class="editlabel">订单类别 <span class="system_danger" v-if="$validation.type.required">请选择订单类别</span></label>
-                              <input v-show="false"  v-model="param.type" v-validate:type="['required']"/>
+                              <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
                               <select  class="form-control edit-input" v-model="param.type"   >
                                   <option value="0">采购</option>
                                   <option value="1">销售</option>
@@ -106,8 +106,8 @@
                               </select>
                           </div>
                           <div class="editpage-input">
-                              <label class="editlabel">收货人电话 <span class="system_danger" v-if="$validation.phone.phone">请输入正确有效的手机号</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consigneePhone" id="phone" v-validate:phone="['phone']" value="{{param.consigneePhone}}"/>
+                              <label class="editlabel">收货人电话 <span class="system_danger" v-if="$validation.mobile.phone">请输入正确有效的手机号</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['phone']" value="{{param.consigneePhone}}"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">省</label>
@@ -160,17 +160,10 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">订单状态</label>
-                              <select  class="form-control edit-input" v-model="param.orderStatus"   >
+                              <select  class="form-control edit-input" v-model="param.orderStatus" >
                                   <option value="0" selected>订单生成</option>
-                                  <option value="10">订单处理中</option>
-                                  <option value="20">订单等待支付</option>
-                                  <option value="30">已支付，等待审核</option>
-                                  <option value="40">等待发货</option>
-                                  <option value="50">已发货，等待收货</option>
-                                  <option value="60">订单已完成</option>
+                                  <option value="60">已完成未评论</option>
                                   <option value="70">订单已完成</option>
-                                  <option value="-1">订单已取消</option>
-                                  <option value="-2">订单过期</option>
                               </select>
                           </div>
                       </div>
@@ -197,11 +190,11 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">商品单位 <span class="system_danger" v-if="$validation.unit.required">请输入商品的单位</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].unit"  v-validate:unit="['required']" value="{{param.goods[0].unit}}"/>
+                              <input type="text" class="form-control edit-input" v-model="param.goods[0].unit"  v-validate:unit="['required']" value="{{param.goods[0].unit}}"/> 
                           </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.money">请输入商品的价格</span></label>
-                              <input type="number" class="form-control edit-input" v-model="param.goods[0].price"  v-validate:price="['money']"  value="{{param.goods[0].price}}"/>
+                          <div class="editpage-input" style="width:80%">
+                              <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.money">请输入不超过小数点两位的数字</span></label>
+                              <input type="number" class="form-control edit-input" v-model="param.goods[0].price"  v-validate:price="['money']"  value="{{param.goods[0].price}}" style="display:-webkit-inline-box"/><span v-show="param.goods[0].unit">/{{param.goods[0].unit}}</span>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">商品质量 <span class="system_danger" v-if="$validation.qual.required">请输入商品的质量</span></label>
@@ -212,38 +205,47 @@
                       <div class="editpageright">
                           <div class="editpage-input">
                               <label class="editlabel">订单商品药材品种名称 <span class="system_danger" v-if="$validation.breed.required">请输入商品的品种名称</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].brredName"  v-validate:breed="['required']" value="{{param.goods[0].brredName}}"  @click="searchBreed(param.brredName,param.breedId)"/>
+                              <input type="text" class="form-control edit-input" v-model="param.goods[0].brredName"  v-validate:breed="['required']" value="{{param.goods[0].brredName}}"  @click="searchBreed(param.brredName,param.breedId)" readonly="true"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">商品数量  <span class="system_danger" v-if="$validation.number.quantity">请输入商品的数量</span></label>
                               <input type="number" class="form-control edit-input" v-model="param.goods[0].number"  v-validate:number="['quantity']" />
                           </div>
                           <div class="editpage-input">
-                              <label class="editlabel">商品规格 <span class="system_danger" v-if="$validation.spec.required">请输入商品的规格</span></label>
-                              <input type="text" class="form-control form-control edit-input" v-model="param.goods[0].spec"  v-validate:spec="['required']"  value="{{param.goods[0].spec}}"/>
+                              <label class="editlabel">商品规格 <span class="system_danger" v-if="$validation.spec.required">规格不能为空</span></label>
+                              <input type="text" class="form-control form-control edit-input" v-model="param.goods[0].spec"  v-validate:spec="['required']"  value="{{param.goods[0].spec}}"/> 
+                              <!-- <input type="text" v-show="!breedParam.id"  v-model="param.goods[0].spec" class="form-control edit-input" disabled="disabled" v-validate:spec="{required:true}" placeholder="请先选择一个品种"/>
+                                                           <div type="text" class="edit-input" v-if="breedParam.id">
+                               <input-select
+                                 :value.sync="param.goods[0].spec"
+                                 :prevalue="param.goods[0].spec"
+                                 :options="initBreedDetail.specs.arr"
+                                 placeholder="规格"
+                                 label="name"
+                               >
+                               </input-select>
+                                                           </div> -->
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">商品产地 <span class="system_danger" v-if="$validation.location.required">请输入商品的产地</span></label>
-                            <input  v-show="false" v-model="param.goods[0].location" v-validate:location="['required']"/>
+                            <input   v-model="param.goods[0].location" v-validate:location="['required']" v-show="false" type="text" class="form-control" readonly="readonly"/>
                               <select class="form-control edit-input" v-model="param.goods[0].location"  >
                                   <option v-for="item in initProvince">{{item.cname}}</option>
                               </select>
-                             <!--  <input type="text" class="form-control edit-input" v-model="param.goods[0].location" id="location" v-validate:location="['required']" value="{{param.goods[0].location}}"/> -->
+
                           </div>
 
                       </div>
                   </div>
               </div>
           </div>
-
+          <div class="edit_footer">
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+            <button type="button" class="btn  btn-confirm"  v-if="$validation.valid"  @click="confirm(param)">保存</button>
+            <button type="button" class="btn  btn-confirm" v-else  disabled="true">保存</button>
+          </div>
         </form>
-
       </validator>
-      <div class="edit_footer">
-        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-        <button type="button" class="btn  btn-confirm"  v-if="$validation.valid"  @click="confirm(param)">保存</button>
-        <button type="button" class="btn  btn-confirm" v-else disabled="true">保存</button>
-      </div>
     </div>
 
 </template>
@@ -256,12 +258,14 @@ import {
     initCountrylist,
     initProvince,
     initCitylist,
-    initDistrictlist
+    initDistrictlist,
+    initBreedDetail
 } from '../../vuex/getters'
 import {
     getCountryList,
     getProvinceList,
     getCityList,
+    getBreedDetail,
     getDistrictList
 } from '../../vuex/actions'
 export default {
@@ -290,7 +294,9 @@ export default {
             breedParam:{
                 show:false,
                 brredName:'',
-                breedId:''
+                breedId:'',
+                loading:false,
+                id:''
             },
             country:{
               cname:'',
@@ -312,11 +318,13 @@ export default {
             initProvince,
             initCitylist,
             initDistrictlist,
+            initBreedDetail
         },
         actions:{
             getCountryList,
             getProvinceList,
             getCityList,
+            getBreedDetail,
             getDistrictList
         }
     },
@@ -371,12 +379,14 @@ export default {
     events:{
         breed:function(breed){
             console.log(this.param.goods[0])
+            console.log(this.breedParam)
+            console.log(this.breedParam.id)
             this.param.goods[0].brredName = breed.breedName;
             this.param.goods[0].breedId = breed.breedId;
-           /* this.breedParam.breedName = breed.breedName;
+            this.breedParam.brredName = breed.breedName;
             this.breedParam.id = breed.breedId;
             this.breedParam.loading=true;
-            this.getBreedDetail(this.breedParam);*/
+            this.getBreedDetail(this.breedParam);
         },
         customer:function(customer){
             this.param.customerName = customer.customerName;

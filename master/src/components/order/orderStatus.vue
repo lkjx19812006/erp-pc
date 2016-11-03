@@ -384,7 +384,7 @@ export default {
                this.$broadcast('getImageData');
             }else if(payorder.payWay==3){    //药款支付
                this.yankuanPayorder(this.param,payorder);
-               console.log(this.param)
+               console.log(payorder)
                //this.param.show=false;
             }else {
                console.log('请选择支付方式');
@@ -413,8 +413,11 @@ export default {
   width: 60%;
 }
 .top-title{
-   position: absolute;
-   right: 0
+   position: fixed;
+   right: 0;
+   width: 60%;
+   margin: auto;
+   left: 0;
 }
 .order_contain{
   text-align: center;

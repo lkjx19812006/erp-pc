@@ -35,10 +35,11 @@
         </thead>
         <tbody>
           <tr v-for="item in initOrderPaylist">
-            <td v-if="item.payWay==0">线下打款</td>
+            <td v-if="item.payWay===0">线下打款</td>
             <td v-if="item.payWay==1">支付宝</td>
             <td v-if="item.payWay==2">平安支付</td>
             <td v-if="item.payWay==3">药款支付</td>
+            <td v-if="item.payWay==null">未支付</td>
             <td>{{item.orderNo}}</td>
             <td>{{item.payNo}}</td>
             <td>{{item.payStatus}}</td>

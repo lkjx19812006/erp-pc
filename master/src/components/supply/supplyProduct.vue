@@ -7,7 +7,7 @@
   <div v-show="!changeParam.show">
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">产品列表</div>
-      <div class="my_order_search  col-xs-7">
+      <div class="my_order_search  col-xs-8">
                <div class="filter_search clearfix">
                     <dl class="clearfix">
                         <dt>类型：</dt>
@@ -54,6 +54,10 @@
                                              duedate:'',
                                              coa:'',
                                              cid:'',
+                                             image_f:'',
+                                             image_s:'',
+                                             image_t:'',
+                                             images:'',
                                              link:newProduct,
                                              url:'/customer/product'
                                         })">新建</button>
@@ -69,7 +73,7 @@
         <thead>
             <tr>
               <th>产品类型</th>
-              <th>品种ID</th>
+              <th>品种名称</th>
               <th>产品名称</th>
               <th>产品质量</th>
               <th>产地</th>
@@ -78,6 +82,7 @@
               <th>价格</th>
               <th>单位</th>
               <th>检测报告</th>
+              <th>创建时间</th>
               <th>价格过期时间</th>
               <th>备注</th>
               <th></th>
@@ -89,7 +94,7 @@
             </tr>
         <tr v-for="item in initProductlist">
           <td>{{item.type}}</td>
-          <td>{{item.breedId}}</td>
+          <td>{{item.breedName}}</td>
           <td class="underline"  @click="clickOn({
                              id:item.id,
                              sub:$index,
@@ -104,6 +109,7 @@
           <td>{{item.price}}</td>
           <td>{{item.unit}}</td>
           <td>{{item.coa}}</td>
+          <td>{{item.ctime}}</td>
           <td>{{item.duedate}}</td>
           <td>{{item.comments}}</td>
           <td @click.stop="eventClick($index)">
@@ -118,6 +124,7 @@
                                title:'编辑产品',
                                type:item.type,
                                name:item.name,
+                               cName:item.cName,
                                breedId:item.breedId,
                                quality:item.quality,
                                location:item.location,
@@ -126,6 +133,12 @@
                                price:item.price,
                                unit:item.unit,
                                duedate:item.duedate,
+                               image_f:'',
+                               image_s:'',
+                               image_t:'',
+                               image_f_show:'',
+                               image_s_show:'',
+                               image_t_show:'',
                                coa:item.coa,
                                link:updateProduct,
                                url:'/customer/product',

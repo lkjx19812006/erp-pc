@@ -122,6 +122,7 @@
       	            		<th>样品单位</th>
       	            		<th>样品价格</th>
       	            		<th>报价人数</th>
+                        <th>发布时间</th>
       	            		<th>审核状态</th>
                         <th>上下架</th>
       	            		<th></th>
@@ -206,6 +207,7 @@
                         <td>{{item.sampleUnit}}</td>
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offerNumber}}</td>
+                        <td>{{item.ctime | date}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
                         <td>
                           <div>{{item.onSell | onsell}}</div>

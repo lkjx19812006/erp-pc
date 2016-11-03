@@ -20,21 +20,22 @@
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">类型</label>
                                  <select  value="{{param.type}}" v-model="param.type" class="form-control">
-                                    <option value="药材" selected>药材</option>
-                                    <option value="提取物" >提取物</option>
-                                    <option value="饮片" >饮片</option>
+                                    <option value="1" selected>可用</option>
                                 </select>
                                 <!-- <input type="text" id="usertype" class="form-control" v-model="param.type" v-validate:usertype="['required']" value="{{param.type}}"/> -->
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">品种类别 <span class="system_danger" v-if="$validation.breed.required">请选择品种类别</span></label>
-                              <input type="text" v-show="false" class="form-control" v-model="param.breedId" v-validate:breed="['required']"  />
+                                <!-- <label class="editlabel">品种类别 <span class="system_danger" v-if="$validation.breed.required">请选择品种类别</span></label>
+                                <input type="text" v-show="false" class="form-control" v-model="param.breedId" v-validate:breed="['required']"  />
                                 <select  v-model="param.breedId" class="form-control"  >
-                                    <option v-for="item in initBreedlist" value="{{item.id}}">{{item.categoryName}}</option>
-                                </select>
-                                <!-- <input type="text" id="breed" class="form-control" v-model="param.breedId" v-validate:breed="['required']" value="{{param.breedId}}" disabled="true"  @click="searchBreed(param.categoryName,param.breedId)"/> -->
+                                    <option v-for="item in initBreedlist" value="{{item.id}}">{{item.breedName}}</option>
+                                </select> -->
+
+                                <label class="editlabel">品种类别 <span class="system_danger" v-if="$validation.breed.required">请选择品种类别</span></label>
+                                <input type="text" class="form-control edit-input" v-model="param.breedName"  v-validate:breed="['required']" value="{{param.breedName}}"  @click="searchBreed()"/>
+                                    
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label class="editlabel">质量</label>
@@ -77,9 +78,9 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">检测报告</label>
-                                <select   v-model="param.coa" class="form-control">
+                                <select  value="{{param.coa}}" v-model="param.coa" class="form-control">
                                     <option value="1">有</option>
-                                    <option value="0" >无</option>
+                                    <option value="0" selected>无</option>
                                 </select>
                                 <!-- <input type="text" class="form-control" v-model="param.coa" value="{{param.coa}}"/> -->
                             </div>
@@ -88,7 +89,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="save()" >保存</button>
+                    <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)" >保存</button>
                     <button type="button" class="btn btn-confirm" v-else disabled="true">保存</button>
                 </div>
             </form>
@@ -97,6 +98,7 @@
 </template>
 <script>
 import calendar from '../../calendar/vue.datepicker'
+import searchbreedModel  from '../../Intention/breedsearch'
 import {
     initProvince,
     initBreedlist
@@ -107,7 +109,8 @@ import {
 } from '../../../vuex/actions'
 export default {
     components: {
-        calendar
+        calendar,
+        searchbreedModel
     },
     props: ['param'],
     data() {
@@ -149,15 +152,19 @@ export default {
             let str = `${year}/${month}/${day}`
             this.dateText = str.replace(/\b(\w)\b/g, "0$1")
         },
-        save(){
-          console.log(this.initBreedlist);
-          for(var i in this.initBreedlist ){
-            if(this.initBreedlist[i].categoryId==this.param.breedId){
-              this.param.breedName=this.initBreedlist[i].breedName;
-            }
-          }
-          this.param.link(this.param,this.param.show = false);
-        }
+        searchBreed:function(brredName,breedId){
+            this.breedParam.show=true;      
+        },
+    },
+    events:{
+        breed:function(breed){
+            this.param.breedName = breed.breedName;
+            this.param.breedId = breed.breedId;
+           /* this.breedParam.breedName = breed.breedName;
+            this.breedParam.id = breed.breedId;
+            this.breedParam.loading=true;
+            this.getBreedDetail(this.breedParam);*/
+        }   
     },
     ready() {
         this.createDateText()

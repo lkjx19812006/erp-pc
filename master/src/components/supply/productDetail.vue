@@ -92,8 +92,8 @@
                                      <input type="text" class="form-control edit-input"  value="{{initProductDetail.type}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                                    <label class="editlabel">品种ID</label>
-                                    <input type="text" class="form-control edit-input"   value="{{initProductDetail.breedId}}" disabled="disabled"/>
+                                    <label class="editlabel">品种名称</label>
+                                    <input type="text" class="form-control edit-input"   value="{{initProductDetail.breedName}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">

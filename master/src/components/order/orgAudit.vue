@@ -25,7 +25,12 @@
                </div>
            </section>
         </div>
-        <div class="edit_footer">
+        <div class="edit_footer" v-if="param.title=='申请订单审核'">
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+            <button type="button" class="btn  btn-confirm" @click="pass(param)">提交申请</button>
+            <button type="button" class="btn  btn-confirm" @click="reject(param)">取消订单</button>
+        </div>
+        <div class="edit_footer" v-else>
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <button type="button" class="btn  btn-confirm" @click="pass(param)">通过</button>
             <button type="button" class="btn  btn-confirm" @click="reject(param)">不通过</button>

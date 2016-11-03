@@ -323,6 +323,9 @@ Vue.filter('intentionAudit',function(val){      //意向审核
 	}
 	if(val==-3){
 		 return '主管审核不通过';
+	}
+	if(val==9){
+		 return '审核中';
 	}else{
 		return '其他';
 	}

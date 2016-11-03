@@ -695,6 +695,7 @@ const mutations = {
         console.log(data)
           for(var i in  state.basicBaseList.orderList){
               if(state.basicBaseList.orderList[i].id==data.id){
+                console.log(data.orderStatus)
                   state.basicBaseList.orderList[i].orderStatus=data.orderStatus;
                   state.basicBaseList.orderList[i].payWay=data.payWay;
                   state.basicBaseList.orderList[i].lcompanyId=data.lcompanyId;
@@ -702,6 +703,9 @@ const mutations = {
 
               }
           }
+       /* if(data.aaaa=='/order/payConfirm'){
+           state.basicBaseList.orderList.splice(data.sub, 1);
+        }*/
     },
     [SYSTEM_DATA](state, data) { //枚举类型
       state.systemBaseList.enumlist = data;
@@ -996,6 +1000,7 @@ const mutations = {
         }
     },
     [ALTER_PRODUCT_DATA](state, data) { //修改供应商产品
+      console.log(data)
         for (var i in data) {
             state.basicBaseList[data.headline][data.sub][i] = data[i];
         }

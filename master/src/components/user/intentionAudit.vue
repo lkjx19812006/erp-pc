@@ -27,6 +27,9 @@
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=pass,tipsParam.name='确认审核通过?'">通过</button>
             <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=reject,tipsParam.name='确认审核不通过?'">不通过</button>
+            <div v-if="param.key=='user'" style="display:inline-block">
+                <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=auditing,tipsParam.name='确认审核中?'">审核中</button>
+            </div>
         </div>
     </div>
 </template>
@@ -90,6 +93,10 @@ export default {
             }
             this.batchUserIntentionAudit(this.param);
         },
+        auditing:function(){
+            this.param.validate = 9;
+            this.batchUserIntentionAudit(this.param); 
+        },
     },
     created() {
 
@@ -98,8 +105,11 @@ export default {
 }
 </script>
 <style scoped>
-
+.modal{
+    z-index:1085;
+}
 .modal_con{
+    z-index:1086;
     width:400px;
     height:300px;
     top:0;
@@ -216,52 +226,3 @@ export default {
 }
 </style>
 
-<!-- <template>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container del_modal_con" v-show="param.show">
-        <div class="model-header">
-            <h4>会员意向审核</h4>
-            <p class="model-tips"></p>
-            <div class="model-footer">
-                <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=pass,tipsParam.name='确认审核通过?'">通过</button>
-                <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=reject,tipsParam.name='确认审核不通过?'">不通过</button>
-            </div>
-        </div>
-    </div>
-</template>
-<script>
-export default {
-    components: {
-
-    },
-    props: ['param'],
-    data() {
-        return {
-        }
-    }
-}
-</script>
-<style scoped>
-.modal {
-    opacity: 0.5;
-    background-color: #000;
-    display: block;
-}
-.big-font {
-    font-size: 36px;
-}
-.top-title {
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin-top: -28px;
-    margin-right: -22px;
-}
-
-.top-title span {
-    font-size: 30px;
-    color: #fff;
-}
-
-</style> -->
