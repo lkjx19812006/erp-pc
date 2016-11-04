@@ -100,8 +100,8 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">是否国际</label>
-                              <select type="text" class="form-control edit-input" v-model="param.intl">
-                                  <option value="0" selected>否</option>
+                              <select type="text" class="form-control edit-input" v-model="param.intl"  @change="selectBizType()">
+                                  <option value="0">否</option>
                                   <option value="1">是</option>
                               </select>
                           </div>
@@ -136,11 +136,30 @@
                                   </v-select>
                                </div>
                           </div>
-                          <div class="editpage-input">
+                          <div class="editpage-input" >
                               <label class="editlabel">货币类型</label>
-                               <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}">
+                               <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==0">
                                   <option value="0" selected>人民币</option>
                                  <!--  <option value="1">是</option> -->
+                              </select>
+                              <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==1">
+                                  <option value="0" selected>人民币</option>
+                                  <option value="1">美元</option>
+                                  <option value="2">欧元</option>
+                                  <option value="3">港币</option>
+                                  <option value="4">英镑</option>
+                                  <option value="5">日元</option>
+                                  <option value="6">韩元</option>
+                                  <option value="7">加元</option>
+                                  <option value="8">澳元</option>
+                                  <option value="9">瑞郎</option>
+                                  <option value="10">新加坡元</option>
+                                  <option value="11">马来西亚币</option>
+                                  <option value="12">印尼</option>
+                                  <option value="13">新西兰</option>
+                                  <option value="14">越南</option>
+                                  <option value="15">泰铢</option>
+                                  <option value="16">菲律宾</option>
                               </select>
                           </div>
                           <div class="editpage-input">
@@ -364,6 +383,14 @@ export default {
             /*if("employeeId" in this.param){
                 this.empNameParam.employeeId = this.param.employeeId;
             }*/
+        },
+        selectBizType:function(){
+           console.log('addad');
+           this.param.currency = '';
+           if(this.param.intl==0){
+
+           }
+           if(this.param.intl==1){} 
         },
         confirm:function(param){
             this.param.country = this.country.cname;

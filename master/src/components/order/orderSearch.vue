@@ -107,7 +107,7 @@
                         </mz-datepicker>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                         <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空</button>
+                         <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空搜索条件</button>
                     </div>
                 </div>
             </section>

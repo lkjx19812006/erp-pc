@@ -235,6 +235,7 @@
         this.createParam = initProductlist;
       },
       reset:function(){
+        console.log(this.loadParam.name)
         this.loadParam.name="";
         this.loadParam.type="";
         this.loadParam.status="";

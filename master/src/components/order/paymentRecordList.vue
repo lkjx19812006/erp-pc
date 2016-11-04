@@ -43,7 +43,7 @@
             <td>{{item.orderNo}}</td>
             <td>{{item.payNo}}</td>
             <td>{{item.payStatus}}</td>
-            <td>{{item.payFee}}</td>
+            <td>{{item.payFee | payfee}}</td>
           </tr>
         </tbody>
       </table>
@@ -55,6 +55,7 @@
 </template>
 <script>
   import pagination from '../pagination'
+  import filter from  '../../filters/filters'
   import detailModel from '../supply/productDetail'
   import {
     initOrderPaylist
@@ -66,7 +67,8 @@
   export default {
     components: {
       pagination,
-      detailModel
+      detailModel,
+      filter
     },
     vuex: {
       getters: {
@@ -111,6 +113,7 @@
         this.getOrderPayList(this.loadParam);
       }
     },
+    filter:(filter,{}),
     created() {
       this.getOrderPayList(this.loadParam);
     }

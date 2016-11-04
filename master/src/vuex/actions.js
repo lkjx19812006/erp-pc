@@ -691,8 +691,10 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         }
     }).then((res) => {
         console.log('修改成功')
-        dispatch(types.ORDER_UPDATE_DATA, param);
         param.show = false;
+        param.checked=false;
+        dispatch(types.ORDER_UPDATE_DATA, param);
+        
     }, (res) => {
         console.log('fail');
         param.show = false;
