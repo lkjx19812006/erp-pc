@@ -9,7 +9,7 @@
             <div class="my_order col-xs-2">全部订单</div>
             <div class="right">
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
-                <button type="button" class="new_btn transfer"  @click="resetTime()">清空搜索条件</button>
+                <button type="button" class="new_btn transfer"  @click="resetTime()">清空条件</button>
             </div>
         </div>
       </div>

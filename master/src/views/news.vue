@@ -7,7 +7,7 @@
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
 
-     <div  v-show="!changeParam.show">
+     <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">会员</div>
 

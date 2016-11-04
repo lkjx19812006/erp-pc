@@ -20,6 +20,7 @@
               </div>
               <div class="ordertel_search clearfix" style='border:0;'>
                   <button class="new_btn" @click="categoryNameSearch()">搜索</button>
+                  <button text="button" class="new_btn transfer" @click="reset()">清空条件</button>
               </div>
             </div>
             <div class="right col-xs-1">
@@ -179,6 +180,11 @@ export default {
         }
     },
     methods: {
+        reset:function(){
+            this.loadParam.name='';
+            this.loadParam.categoryId='';
+            this.getBreedData(this.loadParam)
+        },
         categoryNameSearch: function() {
             this.getBreedNameSearch(this.loadParam);
         },
@@ -220,16 +226,15 @@ export default {
 <style scoped>
 
 .ordertel_search > .new_btn{
-    width:50px;
     height: 30px;
-    padding:0;
+    padding:0 10px;
 }
 .breed_action {
     top: 33px;
     right:50px;
 }
 .transfer{
-    margin-left: 18px;
+    margin-right: 10px;
 }
 .ordertel_search{
   margin-right:3%;

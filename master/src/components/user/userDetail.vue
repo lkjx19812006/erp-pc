@@ -697,7 +697,6 @@ export default {
         },
         createIntention:function(){
           this.intentionParam={
-              validate:0,
               show:false,
               flag:0,   //0表示创建，1表示修改
               sub:'',
@@ -719,7 +718,7 @@ export default {
               location:'',
               type:0,
               visit:0,
-              validate:0,
+              validate:1,
               country:'中国',
               province:'',
               city:'',

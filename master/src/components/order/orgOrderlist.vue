@@ -12,7 +12,7 @@
             <div class="right">
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
                 <button class="new_btn transfer" @click="orgCheck()">审核</button>
-                <button type="button" class="new_btn transfer"  @click="resetTime()">清空搜索条件</button>
+                <button type="button" class="new_btn transfer"  @click="resetTime()">清空条件</button>
             </div>
         </div>
       </div>

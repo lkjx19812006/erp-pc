@@ -1381,7 +1381,7 @@ const mutations = {
         "images":data.images,
         "audit":data.audit,
         "checked":data.checked,
-        "validate":0,
+        "validate":1,
         "loading":true,
         "onSell":0
       };

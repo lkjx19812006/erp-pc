@@ -338,17 +338,16 @@ Vue.filter('date',function(val){      //将时间的时分秒去掉
 	}else{
 		return val;
 	}
-
 })
 
-/*Vue.filter('payfee',function(val){      //将金额保留小数点后两位
+Vue.filter('payfee',function(val){      //将金额保留小数点后两位
 	var val = val;
-	if(val===Math.round(val*100)/100){
+	if(val===val.substring(0,val.indexOf(".") + 3)){
 		return val;
 	}else{
-		return Math.round(val*100)/100;
+		return val.substring(0,val.indexOf(".") + 3);
 	}
-})*/
+})
 Vue.filter('orderstatus',function(val){     //订单状态
 	var val = val;
 	if(val==0){

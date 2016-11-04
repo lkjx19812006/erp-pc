@@ -13,6 +13,7 @@
             </div>
             <div class="name_search clearfix" style="border:none">
                 <button class="new_btn" style="height: 30px;padding: 0 10px;" @click="categoryNameSearch()">搜索</button>
+                <button class="new_btn" style="height: 30px;padding: 0 10px;margin-right:10px;" @click="reset()">清空条件</button>
             </div>
        </div>
     </div>
@@ -116,6 +117,11 @@ export default {
     methods:{
         categoryNameSearch:function(){
             this.getDrawData(this.loadParam);
+        },
+        reset:function(){
+            this.loadParam.name='';
+            this.loadParam.company='';
+            this.getDrawData(this.loadParam)
         }
     }
 }

@@ -12,11 +12,12 @@
               <option value="3">药款支付</option>
           </select>
       </div>
-      <div class="col-xs-2 clearfix">
+      <div class="left clearfix">
          <input type="text"  class="form-control" v-model="loadParam.orderNo" placeholder="请输入订单流水号查询" @keyUp.enter="searchProduct()" />
       </div>
-      <div class="col-xs-1">
+      <div class="left">
          <button class="new_btn transfer" @click="searchProduct()">搜索</button>
+         <button class="new_btn transfer" @click="reset()">清空条件</button>
      </div>
     </div>
     <div class="order_table">
@@ -105,6 +106,11 @@
       },
       searchProduct:function(){
            this.getOrderPayList(this.loadParam);
+      },
+      reset:function(){
+        this.loadParam.orderNo='';
+        this.loadParam.payWay='';
+        this.getOrderPayList(this.loadParam);
       }
     },
     events: {
@@ -134,6 +140,7 @@
   .my_order_search{
     width: 170px;
     float: left;
+    margin-right: 10px;
   }
   .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

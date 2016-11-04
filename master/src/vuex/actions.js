@@ -3797,7 +3797,8 @@ export const createIntentionInfo = ({ dispatch }, param,tipParam) => { //新增�
          "quality":param.quality,
          "duedate":param.duedate,
          "images":param.images,
-         "inType":param.inType
+         "inType":param.inType,
+         "validate":param.validate
 
     }
     console.log(data1);
@@ -3814,7 +3815,7 @@ export const createIntentionInfo = ({ dispatch }, param,tipParam) => { //新增�
     }).then((res) => {
         console.log('添加成功')
         param.id=res.json().result.intentionId;
-        param.validate = 0;
+        param.validate = 1;
         param.checked = false;
         param.show = false;
         param.ctime = today.toLocaleDateString();
