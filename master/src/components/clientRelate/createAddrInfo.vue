@@ -19,8 +19,8 @@
                                 </div>
                                  <div class="editpage-input">
                                     <label class="editlabel">{{param.typelist}}<span class="system_danger" v-if="$validation.aa.required">请选择类型</span></label>
-                                    <!-- <input type="text" class="form-control edit-input"  v-model="param.type" /> -->
-                                    <select class="form-control edit-input" v-validate:aa="['required']" v-model="param.type" >
+                                    <input type="text" class="form-control edit-input"  v-model="param.type" v-validate:aa="['required']" v-show="false"/> 
+                                    <select class="form-control edit-input"  v-model="param.type" >
                                        <option value="0">普通</option>
                                        <option value="1">默认</option>
                                     </select>

@@ -1845,6 +1845,7 @@ export const alterAlias = ({ dispatch }, param) => { //修改药材别名
     })
 }
 export const specDel = ({ dispatch }, param) => { //删除药材相关信息
+    console.log(param)
     Vue.http({
         method: 'DELETE',
         url: apiUrl.clientList + param.url + param.id,
