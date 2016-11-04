@@ -232,6 +232,7 @@
                                               number:item.number,
                                               unit:item.unit,
                                               price:item.price,
+                                              ctime:item.ctime,
                                               address:item.address,
                                               location:item.location,
                                               advance:item.advance,

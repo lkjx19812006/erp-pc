@@ -389,3 +389,19 @@ Vue.filter('Auditing',function(val){     //订单审核
 		 return '审核未通过';
 	}
 })
+
+Vue.filter('Currency',function(val){     //订单货币方式
+	var val = val;
+	if(val==0){
+		 return '人民币';
+	}
+	/*if(val==1){
+		 return '申请审核';
+	}
+	if(val==2){
+		 return '审核通过';
+	}
+	if(val==-2){
+		 return '审核未通过';
+	}*/
+})

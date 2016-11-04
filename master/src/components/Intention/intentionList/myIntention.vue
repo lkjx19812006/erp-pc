@@ -79,7 +79,8 @@
                        image_t:'',
                        images:'',
                        audit:0,
-                       onSell:0
+                       onSell:0,
+                       ctime:''
                        })">新建</button>
             </div>
         </div>
@@ -244,6 +245,7 @@
       				                                pack:item.pack,
       				                                intl:item.intl,
       				                                visit:item.visit,
+                                              ctime:item.ctime,
       				                                sampling:item.sampling,
       				                                sampleNumber:item.sampleNumber,
       				                                sampleUnit:item.sampleUnit,

@@ -180,6 +180,7 @@
                                                breedId:item.breedId,
                                               type:item.type,
                                               especial:item.especial,
+                                              ctime:item.ctime,
                                               quality:item.quality,
                                               qualification:item.qualification,
                                               spec:item.spec,

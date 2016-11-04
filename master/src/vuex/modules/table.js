@@ -1336,6 +1336,7 @@ const mutations = {
         }
       }else{
         console.log("意向列表页修改意向");
+        console.log(data.ctime)
         for (var i in state.basicBaseList.intentionList[data.sub]) {
           state.basicBaseList.intentionList[data.sub][i] = data[i];
         }
@@ -1374,6 +1375,7 @@ const mutations = {
         "location":data.location,
         "number":data.number,
         "quality":data.quality,
+         "ctime":data.ctime,
         "show":false,
         "duedate":data.duedate,
         "images":data.images,

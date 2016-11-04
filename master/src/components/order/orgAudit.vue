@@ -81,6 +81,11 @@ export default {
                 this.param.show=false;
                 this.batchOrgOrder(this.param);
             }
+            else if(this.param.validate==-2){
+                this.param.validate =1;
+                this.param.show=false;
+                this.batchOrgOrder(this.param);
+            }
         },
         reject: function(param){
             this.param.validate = -2;

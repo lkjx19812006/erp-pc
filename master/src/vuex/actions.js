@@ -614,8 +614,6 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             number:data.goods[0].number
         }]
     }
-
-
     console.log(body);
     Vue.http({
         method: 'POST',
@@ -632,6 +630,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         data.no=res.json().result.no;
         data.id=res.json().result.id;
         data.clients=res.json().result.clients;
+        data.payWay=res.json().result.payWay;
         data.validate=res.json().result.validate;
         data.checked=false;
         dispatch(types.ORDER_ADD_DATA, data);
@@ -3695,7 +3694,7 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
 }
 
 export const editintentInfo = ({ dispatch }, param,tipParam) => { //修改意向
-
+console.log(param.ctime)
   param.images='';
   if(param.image_f){param.images+=param.image_f+','}
   if(param.image_s){param.images+=param.image_s+','}
@@ -3747,6 +3746,7 @@ export const editintentInfo = ({ dispatch }, param,tipParam) => { //修改意向
     }).then((res) => {
         console.log('修改成功!!!!')
         param.show = false;
+        param.ctime=param.ctime;
         dispatch(types.UPDATA_INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -3760,7 +3760,7 @@ export const createIntentionInfo = ({ dispatch }, param,tipParam) => { //新增�
       if(param.image_f){param.images+=param.image_f+','}
       if(param.image_s){param.images+=param.image_s+','}
       if(param.image_t){param.images+=param.image_t};
-
+    var today=new Date();
     const data1 = {
         "userId":param.userId,
          "type":param.type,
@@ -3814,6 +3814,7 @@ export const createIntentionInfo = ({ dispatch }, param,tipParam) => { //新增�
         param.validate = 0;
         param.checked = false;
         param.show = false;
+        param.ctime = today.toLocaleDateString();
         dispatch(types.INTENTION_DATA, param);
     }, (res) => {
         console.log('fail');

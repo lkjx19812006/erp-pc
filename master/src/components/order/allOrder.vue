@@ -34,6 +34,7 @@
                     <th>客户端类型</th>
                     <th>订单状态</th>
                     <th>审核状态</th>
+                    <th>货币类型</th>
                     <th>支付方式</th>
                     <!-- <th></th> -->
                 </tr>
@@ -66,7 +67,7 @@
                   <td v-if="item.clients==null">未说明</td>
                   <td>{{item.orderStatus | orderstatus}}</td>
                   <td>{{item.validate | Auditing}}</td>
-
+                  <td>{{item.currency | Currency}}</td>
                   <td v-if="item.payWay===0">线下打款</td>
                   <td v-if="item.payWay==1">支付宝</td>
                   <td v-if="item.payWay==2">平安支付</td>
