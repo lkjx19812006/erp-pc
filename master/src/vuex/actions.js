@@ -694,7 +694,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         param.show = false;
         param.checked=false;
         dispatch(types.ORDER_UPDATE_DATA, param);
-        
+
     }, (res) => {
         console.log('fail');
         param.show = false;
@@ -3815,7 +3815,6 @@ export const createIntentionInfo = ({ dispatch }, param,tipParam) => { //新增�
     }).then((res) => {
         console.log('添加成功')
         param.id=res.json().result.intentionId;
-        param.validate = 1;
         param.checked = false;
         param.show = false;
         param.ctime = today.toLocaleDateString();

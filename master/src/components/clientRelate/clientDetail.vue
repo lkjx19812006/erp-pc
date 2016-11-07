@@ -454,7 +454,6 @@
                                             district:'',
                                             consigneeAddr:'',
                                             comments:'',
-                                            customerName:'',
                                             sourceType:0,
                                             goods:[{
                                                 sourceType:0,

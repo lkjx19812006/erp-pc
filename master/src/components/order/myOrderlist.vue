@@ -115,7 +115,7 @@
                   <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
                   <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
                   <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
-                  <td v-if="item.clients==null">未说明</td>
+                  <td v-if="item.clients!=0&&item.clients!=1&&item.clients!=2&&item.clients!=3"  style="background:#000;color:#fff">未说明</td>
                   <td>{{item.orderStatus | orderstatus}}</td>
                   <td>{{item.validate | Auditing}}</td>
                   <td>{{item.currency | Currency}}</td>
@@ -438,7 +438,7 @@
               /* _this.checked=false;*/
                 _this.auditParam.ids.push(id);
                 _this.auditParam.indexs.push(sub);
-                _this.auditParam.validate = validate;            
+                _this.auditParam.validate = validate;
                 if(this.auditParam.ids.length>0){
                     this.auditParam.show = true;
                     this.auditParam.title = '重新申请订单审核';

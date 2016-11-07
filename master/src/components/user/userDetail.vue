@@ -514,7 +514,7 @@ export default {
           key:'user',
           arr:[],
           indexs:[],
-          validate:0,
+          validate:1,
           description:''
         },
         detailParam:{
