@@ -1,5 +1,5 @@
 <template>
-  <div v-show="!changeParam.show">
+
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">药款转出</div>
     </div>
@@ -11,21 +11,22 @@
         <thead>
             <tr>
               <th>客户姓名</th>
-              <th>客户联系方式</th>
+              <th>银行卡号</th>
               <th>正常金额</th>
               <th>冻结金额</th>
-              <th>积分</th>
-              <th>信用</th>
+              <th>转出金额</th>
+              <th>申请时间</th>
             </tr>
         </thead>
         <tbody>
           <tr v-for="item in initRolloutlist">
-            <td>{{item.fileType}}</td>
-            <td>{{item.bizType}}</td>
-            <td>{{item}}</td>
-            <td>{{item.description}}</td>
-            <td>{{item.status}}</td>
-            <td>{{item}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.bank}}</td>
+            <td>{{item.normalMoney}}</td>
+            <td>{{item.freezeMoney}}</td>
+            <td v-if="item.rollOutMoney">{{item.rollOutMoney}}</td>
+            <td v-if="!item.rollOutMoney">0</td>
+            <td>{{item.ctime}}</td>
           </tr>
         </tbody>
       </table>
@@ -33,7 +34,7 @@
     <div class="base_pagination">
       <pagination :combination="loadParam"></pagination>
     </div>
-  </div>
+
 </template>
 <script>
   import pagination from '../pagination'
@@ -65,14 +66,11 @@
           size: '15px',
           cur: 1,
           all: 1,
-          link:'/customer/product/file',
+          link:'/money/rollOut',
           name:'',
           type:'',
           status:'',
           total:0
-        },
-        changeParam: {
-          show: false
         },
         checked:false
       }

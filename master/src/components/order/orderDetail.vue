@@ -20,27 +20,22 @@
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
                         <li>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！')" v-if="initOrderDetail.orderStatus==0&&initOrderDetail.type==0&&initOrderDetail.validate==2&&param.contact=='/order/myList'">订单生成</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！')" v-if="initOrderDetail.orderStatus==10&&initOrderDetail.type==0&&initOrderDetail.validate==2&&param.contact=='/order/myList'">等待处理</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！')" v-if="initOrderDetail.orderStatus==20&&initOrderDetail.type==0&&initOrderDetail.validate==2&&param.contact=='/order/myList'">等待支付</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！')" v-if="initOrderDetail.orderStatus==40&&initOrderDetail.type==0&&initOrderDetail.validate==2&&param.contact=='/order/myList'">等待卖家发货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.delivery=true)" v-if="initOrderDetail.orderStatus==50&&initOrderDetail.type==0&&initOrderDetail.validate==2&&param.contact=='/order/myList'">等待收货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==60&&initOrderDetail.type==0&&initOrderDetail.validate==2&&param.contact=='/order/myList'">已完成</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==70&&initOrderDetail.type==0&&initOrderDetail.validate==2&&param.contact=='/order/myList'">已完成</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已取消！')" v-if="initOrderDetail.orderStatus==-1&&initOrderDetail.type==0&&initOrderDetail.validate==2&&param.contact=='/order/myList'">已取消</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已过期！')" v-if="initOrderDetail.orderStatus==-2&&initOrderDetail.type==0&&param.contact=='/order/myList'">已过期</button>
+                            <!--<button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！')" v-if="initOrderDetail.orderStatus==0&&param.contact=='/order/myList'">订单生成</button>-->
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！')" v-if="(initOrderDetail.orderStatus==20||initOrderDetail.orderStatus==10)&&initOrderDetail.type==0&&param.contact=='/order/myList'">申请付款</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！')" v-if="initOrderDetail.orderStatus==40&&initOrderDetail.type==0&&param.contact=='/order/myList'">待卖家发货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.delivery=true)" v-if="initOrderDetail.orderStatus==50&&initOrderDetail.type==0&&param.contact=='/order/myList'">待收货</button>
+
                             <!-- 销售订单 -->
-                             <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！',param.handle=true)" v-if="initOrderDetail.orderStatus==0&&initOrderDetail.type==1&&initOrderDetail.validate==2&&param.contact=='/order/myList'">订单生成</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initOrderDetail.orderStatus==10&&initOrderDetail.type==1&&initOrderDetail.validate==2&&param.contact=='/order/myList'">等待处理</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initOrderDetail.orderStatus==20&&initOrderDetail.type==1&&initOrderDetail.validate==2&&param.contact=='/order/myList'">等待支付</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initOrderDetail.orderStatus==40&&initOrderDetail.type==1&&initOrderDetail.validate==2&&param.contact=='/order/myList'">等待卖家发货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initOrderDetail.orderStatus==50&&initOrderDetail.type==1&&initOrderDetail.validate==2&&param.contact=='/order/myList'">等待收货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==60&&initOrderDetail.type==1&&initOrderDetail.validate==2&&param.contact=='/order/myList'">已完成</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')" v-if="initOrderDetail.orderStatus==70&&initOrderDetail.type==1&&initOrderDetail.validate==2&&param.contact=='/order/myList'">已完成</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已取消！')" v-if="initOrderDetail.orderStatus==-1&&initOrderDetail.type==1&&initOrderDetail.validate==2&&param.contact=='/order/myList'">已取消</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已过期！')" v-if="initOrderDetail.orderStatus==-2&&initOrderDetail.type==1&&param.contact=='/order/myList'">已过期</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initOrderDetail.orderStatus==10&&initOrderDetail.type==1&&param.contact=='/order/myList'">等待处理</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initOrderDetail.orderStatus==20&&initOrderDetail.type==1&&param.contact=='/order/myList'">待客户付款</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initOrderDetail.orderStatus==40&&initOrderDetail.type==1&&param.contact=='/order/myList'">待发货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initOrderDetail.orderStatus==50&&initOrderDetail.type==1&&param.contact=='/order/myList'">待客户收货</button>
+
+                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus>=60">已完成</button>
+                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-1">已取消</button>
+                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-2">已过期</button>
                         </li>
-                    </ul> 
+                    </ul>
                 </div>
             </nav>
         </div>
@@ -59,9 +54,6 @@
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.goods.arr.length">
                                           商品订单列表（{{initOrderDetail.goods.arr.length}}）
-                                        </a>
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                          商品订单列表（0）
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
                                     </h4>
@@ -136,7 +128,7 @@
                                     </table>
                                     </div>
                                 </div>
-                            </div>    
+                            </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -161,11 +153,11 @@
                                             payPics:'',
                                             titles:'上传支付凭证'
                                             })"  v-if="(initOrderDetail.payPics.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">新建</button>
-                                        <button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>
+                                        <!--<button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>-->
                                         <a v-else></a>
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.payPics.arr.length!==null" v-show="!initOrderDetail.payPics.show" v-cloak>
+                                <div class="panel-collapse" v-if="initOrderDetail.payPics.arr.length&&!initOrderDetail.payPics.show" v-cloak>
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
@@ -187,29 +179,29 @@
                                     </table>
                                     </div>
                                 </div>
-                                 <div class="panel-collapse" v-else v-show="!initOrderDetail.payPics.show" v-cloak>
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>文件类型</th>
-                                            <th>文件来源</th>
-                                            <th>文件图片或路径</th>
-                                            <th>描述</th>
-                                          </thead>
-                                        <tbody>
-                                            <tr v-for="item in initOrderDetail.payPics.arr">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.bizType}}</td>
-                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
-                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
-                                                </td>
-                                                <td>{{item.description}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    </div>
-                                </div>
-                            </div>    
+                                 <!--<div class="panel-collapse" v-else v-show="!initOrderDetail.payPics.show" v-cloak>-->
+                                    <!--<div class="panel-body panel-set">-->
+                                        <!--<table class="table  contactSet">-->
+                                          <!--<thead>-->
+                                            <!--<th>文件类型</th>-->
+                                            <!--<th>文件来源</th>-->
+                                            <!--<th>文件图片或路径</th>-->
+                                            <!--<th>描述</th>-->
+                                          <!--</thead>-->
+                                        <!--<tbody>-->
+                                            <!--<tr v-for="item in initOrderDetail.payPics.arr">-->
+                                                <!--<td>{{item.fileType}}</td>-->
+                                                <!--<td>{{item.bizType}}</td>-->
+                                                <!--<td><img :src="item.path" v-if="item.fileType=='image'"/>-->
+                                                    <!--<img src="/static/images/pdf.png" height="20" width="20" v-else/>-->
+                                                <!--</td>-->
+                                                <!--<td>{{item.description}}</td>-->
+                                            <!--</tr>-->
+                                        <!--</tbody>-->
+                                    <!--</table>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -217,12 +209,12 @@
                                               crete:'attachFiles'
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.attachFiles.arr.length!==null">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" >
                                           上传附件（{{initOrderDetail.attachFiles.arr.length}}）
                                         </a>
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set " v-else>
-                                          上传附件（0）
-                                        </a>
+                                        <!--<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set " v-else>-->
+                                          <!--上传附件（0）-->
+                                        <!--</a>-->
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
                                             show:true,
                                             orderId:param.id,
@@ -234,7 +226,7 @@
                                             attachFiles:'',
                                             titles:'上传附件凭证'
                                             })" v-if="initOrderDetail.attachFiles.arr.length!==null&&param.contact=='/order/myList'">新建</button>
-                                        <a v-else ></a> 
+                                        <a v-else ></a>
                                     </h4>
                                 </div>
                                 <div class="panel-collapse" v-show="!initOrderDetail.attachFiles.show">
@@ -262,7 +254,7 @@
                                     </table>
                                     </div>
                                 </div>
-                            </div>    
+                            </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -284,14 +276,14 @@
                                             fileType:'image',
                                             bizType:'order_send',
                                             sendPics:'',
-                                            callback:uploadDocument,   
+                                            callback:uploadDocument,
                                             titles:'上传物流凭证'
                                             })" v-if="initOrderDetail.sendPics.arr.length!==null&&param.contact=='/order/myList'&&param.orderStatus>=50">新建</button>
-                                        <button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>
+                                        <!--<button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>-->
                                         <a v-else></a>
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.sendPics.arr.length!==null" v-show="!initOrderDetail.sendPics.show">
+                                <div class="panel-collapse" v-if="initOrderDetail.sendPics.arr.length!==null&&!initOrderDetail.sendPics.show" >
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
@@ -313,29 +305,29 @@
                                     </table>
                                     </div>
                                 </div>
-                                <div class="panel-collapse" v-else v-show="!initOrderDetail.sendPics.show">
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>文件类型</th>
-                                            <th>文件来源</th>
-                                            <th>文件图片或路径</th>
-                                            <th>描述</th>
-                                          </thead>
-                                        <tbody>
-                                            <tr v-for="item in initOrderDetail.sendPics.arr">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.bizType}}</td>
-                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
-                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
-                                                </td>
-                                                <td>{{item.description}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    </div>
-                                </div>
-                            </div>    
+                                <!--<div class="panel-collapse" v-else v-show="!initOrderDetail.sendPics.show">-->
+                                    <!--<div class="panel-body panel-set">-->
+                                        <!--<table class="table  contactSet">-->
+                                          <!--<thead>-->
+                                            <!--<th>文件类型</th>-->
+                                            <!--<th>文件来源</th>-->
+                                            <!--<th>文件图片或路径</th>-->
+                                            <!--<th>描述</th>-->
+                                          <!--</thead>-->
+                                        <!--<tbody>-->
+                                            <!--<tr v-for="item in initOrderDetail.sendPics.arr">-->
+                                                <!--<td>{{item.fileType}}</td>-->
+                                                <!--<td>{{item.bizType}}</td>-->
+                                                <!--<td><img :src="item.path" v-if="item.fileType=='image'"/>-->
+                                                    <!--<img src="/static/images/pdf.png" height="20" width="20" v-else/>-->
+                                                <!--</td>-->
+                                                <!--<td>{{item.description}}</td>-->
+                                            <!--</tr>-->
+                                        <!--</tbody>-->
+                                    <!--</table>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
                         </div>
                     </article>
                 </div>
@@ -356,11 +348,12 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>订单类别</label>
-                                    <input type="text" class="form-control"   value="{{initOrderDetail.type}}" disabled="disabled"/>
+                                    <input type="text" class="form-control"   value="{{type[initOrderDetail.type]}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>订单来源</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.sourceType}}" disabled="disabled"/>
+                                    <input type="text" class="form-control"  value="{{sourceType[initOrderDetail.sourceType]}}" disabled="disabled" v-if="sourceType[initOrderDetail.sourceType]"/>
+                                    <input type="text" class="form-control"  value="未说明" disabled="disabled" v-else/>
                                 </div>
                             </div>
                             <div class="clearfix">
@@ -402,7 +395,7 @@
                                     <label>备注</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.comments}}" disabled="disabled"/>
                                 </div>
-                            </div>    
+                            </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>杂费</label>
@@ -412,7 +405,7 @@
                                     <label>杂费说明</label>
                                     <input type="text" class="form-control" value="{{initOrderDetail.incidentalsDesc}}" disabled="disabled"/>
                                 </div>
-                            </div>               
+                            </div>
                         </div>
                     </article>
                 </div>
@@ -442,6 +435,16 @@ export default {
       return {
         trackingParam:{
           show:false
+        },
+        sourceType:{
+          0:'PC',
+          1:'android',
+          2:'wechart',
+          3:'ios'
+        },
+        type:{
+          0:'采购',
+          1:'销售'
         },
         show:true,
         credenceParam:{
@@ -474,7 +477,7 @@ export default {
           	console.log(this.$store.state.table.orderDetail[param.crete])
             if(this.$store.state.table.orderDetail[param.crete].arr.length==0){
                 this.$store.state.table.orderDetail[param.crete].show=false;
-            } 
+            }
             this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
           },
           createChance:function(item,index){
@@ -495,7 +498,7 @@ export default {
                 this.disposeParam = initOrderDetail;
                 this.disposeParam = this.param;
                 this.disposeParam.show = true;
-               
+
         }
     },
    created(){
