@@ -12,7 +12,7 @@
             <div class="right">
                 <button class="new_btn transfer" @click="createSearch()">搜索</button>
                 <button class="new_btn transfer" @click="orgCheck()">审核</button>
-                <button type="button" class="new_btn transfer"  @click="resetTime()">清空</button>
+                <button type="button" class="new_btn transfer"  @click="resetTime()">清空条件</button>
             </div>
         </div>
       </div>
@@ -38,6 +38,7 @@
                     <th>客户端类型</th>
                     <th>订单状态</th>
                     <th>审核状态</th>
+                    <th>货币类型</th>
                     <th>支付方式</th>
                     <!-- <th></th> -->
                 </tr>
@@ -69,13 +70,13 @@
                   <td>{{item.comments}}</td>
                   <td v-if="item.clients==0" style="background:red;color:#fff">PC</td>
                   <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
-                  <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
+                  <td v-if="item.clients==2" style="background:blue;color:#fff">weixin</td>
                   <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
-                  <td v-if="item.clients==null">未说明</td>
+                  <td v-if="item.clients!=0&&item.clients!=1&&item.clients!=2&&item.clients!=3"  style="background:#000;color:#fff">未说明</td>
 
                   <td>{{item.orderStatus | orderstatus}}</td>
                   <td>{{item.validate | Auditing}}</td>
-
+                  <td>{{item.currency | Currency}}</td>
                   <td v-if="item.payWay===0">线下打款</td>
                   <td v-if="item.payWay==1">支付宝</td>
                   <td v-if="item.payWay==2">平安支付</td>

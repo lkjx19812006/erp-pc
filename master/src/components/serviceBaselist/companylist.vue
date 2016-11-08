@@ -7,7 +7,7 @@
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">企业</div>
             <div class="my_order_search" style="float:right">
-                <a class="new_btn transfer"   @click="loadParam.show=true">查询</a>
+                <a class="new_btn transfer"   @click="loadParam.show=true">搜索</a>
                 <a class="new_btn transfer"   @click="resetCondition()">清空条件</a>
             </div>
         </div>

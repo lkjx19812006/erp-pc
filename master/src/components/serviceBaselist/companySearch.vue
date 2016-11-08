@@ -168,6 +168,10 @@ export default {
 }
 .top-title{
     width: 600px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 .edit_footer{
    width: 600px;
@@ -200,18 +204,6 @@ export default {
     border-bottom: 1px solid #ddd;
 }
 
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
-}
-
 .editsection {
     width: 100%;
     box-sizing: border-box;
@@ -239,12 +231,6 @@ export default {
 
 .editpage-input {
     margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
 }
 
 .edit-input {

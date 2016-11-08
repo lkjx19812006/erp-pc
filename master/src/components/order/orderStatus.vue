@@ -91,7 +91,7 @@
             </div>
             <!-- 订单财务审核 -->
             <div class="clearfix logical_color"  v-if="param.Auditing">
-                <img v-for="item in initOrderDetail.payPics.arr" class="col-xs-3" :src="item.path" alt="支付凭证"/>
+                <img v-for="item in initOrderDetail.payPics.arr" class="col-xs-3" v-bind:src="item.path" />
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
                     id:initOrderDetail.id,
                     show:true,

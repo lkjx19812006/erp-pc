@@ -28,21 +28,22 @@
                                                   <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
                                               </select>
                     </div> -->
-                    <div style="margin-top:30px;margin-bottom:15px">
-                        <div class="col-xs-1 pull-left"></div>
+                    <div style="margin:30px 10px 15px 10px" class="clearfix">
                         <div class="input-group col-xs-4 pull-left">
                             <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
                             <input type="text" class="form-control" v-model="loadParam.name" placeholder="请输入业务员名字" @keyup.enter="employSearch()">
 
                         </div>
                         <div class="col-xs-1 pull-left"></div>
-                        <div class="input-group col-xs-4" @click="treeParam.show=true">
+                        <div class="input-group col-xs-4 pull-left" @click="treeParam.show=true">
                           <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
-                          <input type="text" class="form-control"  value="{{treeParam.orgName}}" disabled=true placeholder="点击选择部门" >
+                          <input type="text" class="form-control"  placeholder="点击选择部门"   value="{{treeParam.orgName}}">
                             <!--<input type="button" class="form-control" value="根据部门查找" @click="treeParam.show=true"/>-->
-                        </div>
+                        </div> 
+                        <button type="button" class="new_btn" @click="reset()">清空条件</button>
+                        <button type="button" class="new_btn" style="margin-right:10px;" @click="employSearch()">搜索</button>
                     </div>
-
+                        
 		            <table class="table table-hover table_head table-striped" style="width:95%;text-align:center" v-cloak>
 		                <thead>
 		                    <tr>
@@ -185,14 +186,14 @@ export default{
 		}
 	},
 	methods:{
-    callback:function(){
-      console.log(this.treeParam);
-      if(this.treeParam.orgId){
-        this.loadParam.orgId=this.treeParam.orgId;
-        this.loadParam.orgName=this.treeParam.orgName;
-        this.employSearch();
-      }
-    },
+        callback:function(){
+          console.log(this.treeParam);
+          if(this.treeParam.orgId){
+            this.loadParam.orgId=this.treeParam.orgId;
+            this.loadParam.orgName=this.treeParam.orgName;
+            this.employSearch();
+          }
+        },
 		/*bindCustomer:function(){
 			this.currentView=1;
 			//this.isA=!this.isA;
@@ -204,6 +205,13 @@ export default{
 			//this.isA=!this.isA;
 			this.isA=true;
 		},
+        reset:function(){
+            this.loadParam.name="";
+            this.loadParam.orgId="";
+            this.treeParam.orgId="";
+            this.treeParam.orgName="";
+            this.getEmployeeList(this.loadParam);
+        },
 		department:function(){
 			this.currentView=2;
 			//this.isA=!this.isA;
@@ -347,6 +355,7 @@ export default{
 }
 .edit_footer{
 	width:900px;
+    z-index: 1000;
 }
 .trans_service{
 	margin-top: 10px;

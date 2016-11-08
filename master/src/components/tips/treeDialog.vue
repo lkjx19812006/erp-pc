@@ -46,7 +46,6 @@
   }
 </script>
 <style scoped>
-
   .modal {
     z-index:1088;
   }
@@ -56,7 +55,7 @@
   }
   .del_modal_con {
     position: fixed;
-    width: 426px;
+    width: 500px;
     right: 0;
     left: 0;
     height: 100%;

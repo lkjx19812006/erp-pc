@@ -14,21 +14,21 @@
                       </select>
                     </div> -->
                     <div class="name_search clearfix">
-                        <img src="../../static/images/search.png" height="24" width="24"  />
+                        <img src="/static/images/search.png" height="24" width="24"  />
                         <input type="text" class="search_input" v-model="loadParam.orgName"  placeholder="按部门搜索" readonly="readonly" @click="searchOrg()">
                     </div>
                     <div class="name_search clearfix">
-                        <img src="../../static/images/search.png" height="24" width="24"  />
+                        <img src="/static/images/search.png" height="24" width="24"  />
                         <input type="text" class="search_input" v-model="loadParam.name"  placeholder="按员工名字搜索">
                     </div>
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
                         <input type="text" class="search_input" v-model="loadParam.mobile"  placeholder="按员工电话搜索">
                     </div>
-                    <div class="name_search clearfix" style="margin-right:0px">
+                    <div class="name_search clearfix" style="margin-right:0px;border:none">
                         <button class="new_btn " style="line-height:20px;" @click="rest()">清空条件</button>
                     </div>
-                    <div class="name_search clearfix">
+                    <div class="name_search clearfix" style="border:none">
                         <button class="new_btn" @click="loadByCondition()">搜索</button>
                     </div>
                 </div>
@@ -320,26 +320,14 @@ export default {
     padding: 5px;
 }
 .name_search{
-    padding-left: 20px;
     position: relative;
-    border:none;
     display: inline-block;
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
-    margin-right: 7%;
 }
-.my_order_search .name_search .search_input{
-    padding-left: 20px;
-}
-.my_order_search .name_search > img{
-    width:24px;
-    height: 24px;
-    margin:2px 0 0 1px;
-    position:absolute;
-    left:20px;
-}
+
 .tel_search {
     margin-right: 0;
 }

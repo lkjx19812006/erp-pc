@@ -137,7 +137,7 @@
                                     </div>
                                 </div>
                             </div>    
-                            <div class="panel panel-default" v-if="param.orderStatus>=30">
+                            <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:'',
@@ -145,10 +145,10 @@
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.payPics.arr.length!==null">
-                                          支付凭证（{{initOrderDetail.payPics.arr.length}}）
+                                          支付凭证（{{initOrderDetail.payPics.arr.length}}）<span v-if="param.orderStatus<30&&param.contact=='/order/myList'" class="system_danger">您还没有支付，暂时不能新建支付凭证！</span>
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                          支付凭证（0）
+                                        支付凭证（0）<span class="system_danger" v-if="param.orderStatus<30&&param.contact=='/order/myList'">您的订单未发货，暂不能上传物流凭证！</span>
                                         </a>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
                                             show:true,
@@ -160,8 +160,9 @@
                                             bizType:'order_pay',
                                             payPics:'',
                                             titles:'上传支付凭证'
-                                            })"  v-if="initOrderDetail.payPics.arr.length!==null&&param.contact=='/order/myList'">新建</button>
-                                        <a v-else ></a> 
+                                            })"  v-if="(initOrderDetail.payPics.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">新建</button>
+                                        <button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>
+                                        <a v-else></a>
                                     </h4>
                                 </div>
                                 <div class="panel-collapse" v-if="initOrderDetail.payPics.arr.length!==null" v-show="!initOrderDetail.payPics.show" v-cloak>
@@ -262,7 +263,7 @@
                                     </div>
                                 </div>
                             </div>    
-                            <div class="panel panel-default" v-if="param.orderStatus>=50">
+                            <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:'',
@@ -270,10 +271,10 @@
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.sendPics.arr.length">
-                                          物流凭证（{{initOrderDetail.sendPics.arr.length}}）
+                                          物流凭证（{{initOrderDetail.sendPics.arr.length}}）<span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">您的订单未发货，暂不能上传物流凭证！</span>
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                          物流凭证（0）
+                                          物流凭证（0） <span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">您的订单未发货，暂不能上传物流凭证！</span>
                                         </a>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
                                             show:true,
@@ -285,7 +286,8 @@
                                             sendPics:'',
                                             callback:uploadDocument,   
                                             titles:'上传物流凭证'
-                                            })" v-if="initOrderDetail.sendPics.arr.length!==null&&param.contact=='/order/myList'">新建</button>
+                                            })" v-if="initOrderDetail.sendPics.arr.length!==null&&param.contact=='/order/myList'&&param.orderStatus>=50">新建</button>
+                                        <button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>
                                         <a v-else></a>
                                     </h4>
                                 </div>

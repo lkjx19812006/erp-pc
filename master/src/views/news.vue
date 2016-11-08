@@ -7,7 +7,7 @@
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
 
-     <div  v-show="!changeParam.show">
+     <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">会员</div>
 
@@ -360,7 +360,7 @@ export default {
           _self.checked=true;
           this.$store.state.table.basicBaseList.userList.forEach(function (item) {
             if(!item.checked){
-              if(item.audit==0) _self.checked=item.checked;
+              if(item.audit!=2) _self.checked=item.checked;
             }
           })
         }
@@ -369,7 +369,7 @@ export default {
       this.checked=!this.checked;
       const checked=this.checked;
       this.$store.state.table.basicBaseList.userList.forEach(function(item){
-        if(item.audit==0)item.checked=checked;
+        if(item.audit!=2)item.checked=checked;
       })
 
     },

@@ -338,7 +338,15 @@ Vue.filter('date',function(val){      //将时间的时分秒去掉
 	}else{
 		return val;
 	}
+})
 
+Vue.filter('payfee',function(val){      //将金额保留小数点后两位
+	var val = val;
+	if(val===val.substring(0,val.indexOf(".") + 3)){
+		return val;
+	}else{
+		return val.substring(0,val.indexOf(".") + 3);
+	}
 })
 Vue.filter('orderstatus',function(val){     //订单状态
 	var val = val;
@@ -388,4 +396,60 @@ Vue.filter('Auditing',function(val){     //订单审核
 	if(val==-2){
 		 return '审核未通过';
 	}
+})
+
+Vue.filter('Currency',function(val){     //订单货币方式
+	var val = val;
+	if(val==0){
+		 return 'CNY人民币';
+	}
+	if(val==1){
+		 return 'USD美元';
+	}
+	if(val==2){
+		 return 'EUR欧元';
+	}
+	if(val==3){
+		 return 'HKD港币';
+	}
+	if(val==4){
+		 return 'GBP英镑';
+	}
+	if(val==5){
+		 return 'JPY日元';
+	}
+	if(val==6){
+		 return 'KRW韩元';
+	}
+	if(val==7){
+		 return 'CAD加元';
+	}
+	if(val==8){
+		 return 'AUD澳元';
+	}
+	if(val==9){
+		 return 'CHF瑞郎';
+	}
+	if(val==10){
+		 return 'SGD新加坡元';
+	}
+	if(val==11){
+		 return 'MYR马来西亚币';
+	}
+	if(val==12){
+		 return 'IDR印尼';
+	}
+	if(val==13){
+		 return 'NZD新西兰';
+	}
+	if(val==14){
+		 return 'VND越南';
+	}
+	if(val==15){
+		 return 'THB泰铢';
+	}
+	if(val==16){
+		 return 'PHP菲律宾';
+	}
+
 })

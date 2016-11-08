@@ -119,19 +119,13 @@
                         </select>
                     </div>
                   <div class="client-detailInfo col-xs-6">
-                    <label>客户等级：</label>
+                    <label>客户信用等级：</label>
                     <select class="form-control"  v-model="param.creditLevel">
                       <option value="" selected>请选择等级</option>
-                      <option value="0">0</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
+                      <option value="0">暂无等级</option>
+                      <option value="1">一星客户</option>
+                      <option value="2">二星客户</option>
+                      <option value="3">三星客户</option>
                     </select>
                   </div>
                   <div class="client-detailInfo col-xs-6">

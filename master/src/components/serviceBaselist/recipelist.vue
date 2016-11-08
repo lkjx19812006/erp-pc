@@ -8,7 +8,8 @@
                     <img src="/static/images/search.png" height="24" width="24">
                     <input type="text" class="search_input" placeholder="按药品名称搜索" v-model="loadParam.name" >
                 </div>
-                 <a class="new_btn transfer"  @click="multiSearch()">查询</a>
+                 <a class="new_btn transfer"  @click="multiSearch()">搜索</a>
+                 <a class="new_btn transfer"  @click="reset()">清空条件</a>
             </div>
         </div>
         <div class="order_table">
@@ -110,6 +111,10 @@ export default {
         },
         multiSearch:function(){
             this.getComponentData(this.loadParam)
+        },
+        reset:function(){
+            this.loadParam.name='';
+            this.getComponentData(this.loadParam)
         }
     },
     events: {
@@ -126,5 +131,9 @@ export default {
     float:left;
     line-height: 28px;
     margin-right:0;
+}
+.transfer{
+    margin-right: 10px;
+    cursor: pointer;
 }
 </style>

@@ -172,7 +172,7 @@
 				                                                   url:'/customer/contact/',
 				                                                   key:'contacts',
 				                                                   headline:'clientDetail'
-				                                                   })">删除</dt>
+				                                                   },item.show=false)">删除</dt>
 				                                           </dl>
 				                                        </div>
 		                                            </td>
@@ -317,7 +317,7 @@
                                                                  url:'/customer/file/',
                                                                  key:'files',
                                                                  headline:'clientDetail'
-                                                                 })">删除</dt>
+                                                                 },item.show=false)">删除</dt>
                                                         </dl>
                                                     </div>
                                                 </td>
@@ -454,7 +454,6 @@
                                             district:'',
                                             consigneeAddr:'',
                                             comments:'',
-                                            customerName:'',
                                             sourceType:0,
                                             goods:[{
                                                 sourceType:0,
@@ -629,7 +628,7 @@
 				                                                   url:'/customer/remark/',
 				                                                   key:'remarks',
 				                                                   headline:'clientDetail'
-				                                                   })">删除</dt>
+				                                                   },item.show=false)">删除</dt>
 				                                           </dl>
 				                                        </div>
 		                                            </td>
@@ -706,6 +705,7 @@
 		                                            <td>{{item.contactPhone}}</td>
 		                                            <td v-if="item.sex==0">男</td>
                                                 <td v-if="item.sex==1">女</td>
+                                                <td v-if="item.sex==null">未说明</td>
 		                                            <td>{{item.country}}</td>
 		                                            <td>{{item.province}}</td>
 		                                            <td>{{item.city}}</td>
@@ -761,7 +761,7 @@
 				                                                   url:'/customer/deleteAddress/',
 				                                                   key:'addresses',
 				                                                   headline:'clientDetail'
-				                                                   })">删除</dt>
+				                                                   },item.show=false)">删除</dt>
 				                                           </dl>
 				                                        </div>
 		                                            </td>
@@ -836,7 +836,7 @@
 				                                                   url:'/customer/deleteLable/',
 				                                                   key:'labels',
 				                                                   headline:'clientDetail'
-				                                                   })">删除</dt>
+				                                                   },item.show=false)">删除</dt>
 				                                           </dl>
 				                                        </div>
 		                                            </td>
@@ -1201,7 +1201,7 @@ export default {
       },
       specDelete:function(initBreedDetail){
         var _self=this;
-        if(initBreedDetail.key='customerList'){
+        if(initBreedDetail.key=='customerList'){
           initBreedDetail.callback=function(){
             _self.param.show=false;
           }
@@ -1210,7 +1210,7 @@ export default {
 
           }
         }
-          this.deleteParam = initBreedDetail;
+        this.deleteParam = initBreedDetail;
       },
       clientTransferSupplier:function(initBreedDetail){
         console.log(initBreedDetail)

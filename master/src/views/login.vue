@@ -18,11 +18,11 @@
                     <div class="tips_name"></div>
                 </div>
                 <div class="client-detailInfo  col-xs-12" style="margin-top:30px">
-                    <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">{{$t('static.userName')}}:</div>
+                    <div class="pull-left col-xs-3" style="font-size:16px;">{{$t('static.userName')}}:</div>
                     <input type="text" class="form-control" v-model="loginParam.no" v-validate:no="['required']" @keyup.enter="confirm()"/>
                 </div>
                 <div class="client-detailInfo  col-xs-12" style="margin-top:10px">
-                    <div class="pull-left" style="font-size:16px;margin:7px 10px 7px 40px">{{$t('static.passWord')}}:</div>
+                    <div class="pull-left col-xs-3" style="font-size:16px;">{{$t('static.passWord')}}:</div>
                     <input type="password" class="form-control" v-model="loginParam.password" v-validate:password="['required']" @keyup.enter="confirm()"/>
                 </div>
 
@@ -193,7 +193,7 @@ export default {
         width: 200px;
     }
     .container{
-        height:255px;
+        height:247px;
         width:400px;
         border:1px solid #ddd;
 

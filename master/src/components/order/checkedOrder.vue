@@ -32,6 +32,7 @@
                     <th>客户端类型</th>
                     <th>订单状态</th>
                     <th>审核状态</th>
+                    <th>货币类型</th>
                     <th>支付方式</th>
                     <th></th>
                 </tr>
@@ -55,7 +56,7 @@
                   <td>{{item.country}}</td>
                   <td>{{item.province}}</td>
                   <td>{{item.city}}</td>
-                  <td>{{item.employee}}</td>
+                  <td>{{item.employeeName}}</td>
                   <td>{{item.comments}}</td>
                   <td v-if="item.clients==0" style="background:red;color:#fff">PC</td>
                   <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
@@ -66,6 +67,7 @@
                   <td v-if="item.orderStatus==30">已支付，等待审核</td>
                   <td v-if="item.orderStatus==40">已审核</td>
                   <td>{{item.validate | Auditing}}</td>
+                  <td>{{item.currency | Currency}}</td>
                   <td v-if="item.payWay==0">线下打款</td>
                   <td v-if="item.payWay==1">支付宝</td>
                   <td v-if="item.payWay==2">平安支付</td>
