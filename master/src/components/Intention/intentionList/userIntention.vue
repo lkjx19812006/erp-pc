@@ -386,15 +386,21 @@ export default {
                 cur: 1,
                 all: 7,
                 link:'/intention/user/list',
-                type:'',
-                invoic:'',
-                visit:'',
-                intl:'',
-                sampling:'',
-                status:'',
-                advance:'',
+                type:'',      //类型
+                especial:'',    //特殊
+                invoic:'',  //发票
+                visit:'',    //上门看货
+                sampling:'',   //样品
+                advance:'',  //预付比例
+                intl:'',  //是否国际
+                validate:'',  //审核状态
+                onSell:'', //审核状态
+                total:0,
+                breedId:'',
+                breedName:'',
                 customerName:'',
-                total:0
+                customerPhone:'',
+                location:''
             },
             supdemParam:{
                 show:false,
@@ -568,13 +574,19 @@ export default {
         },
         resetCondition:function(){
             this.loadParam.type='';
+            this.loadParam.especial='';
             this.loadParam.invoic='';
             this.loadParam.visit='';
             this.loadParam.intl='';
             this.loadParam.sampling='';
-            this.loadParam.status='';
+            this.loadParam.validate='';
+            this.loadParam.onSell='';
             this.loadParam.advance='';
             this.loadParam.customerName='';
+            this.loadParam.breedId='';
+            this.loadParam.breedName='';
+            this.loadParam.customerPhone='';
+            this.loadParam.location='';
             this.getIntentionList(this.loadParam);
 
         },

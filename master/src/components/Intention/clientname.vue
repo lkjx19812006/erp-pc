@@ -42,7 +42,7 @@
 	                    </tr>
 	                </thead>
 	                <tbody>
-	                    <tr v-for="item in initCustomerlist" @click="serviceselected($index,item.id,item.name,item.mainPhone)"> 
+	                    <tr v-for="item in initCustomerlist" @click="serviceselected($index,item.id,item.name,item.mainPhone,item.mainEmail)"> 
 	                    	<td>
 	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   ></label>
 	                        </td>
@@ -101,7 +101,7 @@ export default{
 		}
 	},
 	methods:{
-		serviceselected:function(sub,id,name,tel){
+		serviceselected:function(sub,id,name,tel,email){
 			this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
 			for(var key in this.initCustomerlist){
 				if(key!=sub){
@@ -113,6 +113,7 @@ export default{
 			this.param.customerId= id;
 			this.param.customerName = name;
 			this.param.customerPhone = tel;
+            this.param.email = email;
 			this.param.show=false;
 			this.$dispatch('customer',this.param);
 		},

@@ -20,6 +20,12 @@ export default {
     centertop,
     center
   },
+  events:{
+      lang:function(val){
+          console.log('主页切换语言：'+val);
+          this.$broadcast('changeLang',val);
+      }
+  },
   store
 }
 </script>

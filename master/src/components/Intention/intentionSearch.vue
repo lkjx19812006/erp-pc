@@ -1,4 +1,5 @@
 <template>
+    <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -13,7 +14,23 @@
             </div>
             <section class="editsection" v-cloak>
                 <div class="clearfix">
-                     <div class="client-detailInfo  col-xs-12">
+                    <div class="client-detailInfo  col-xs-12">
+                        <label>品种：</label>
+                        <input type="text" class="form-control" v-model="param.breedName" readonly="true" @click="breedSearch()" />
+                    </div>
+                    <div class="client-detailInfo  col-xs-12">
+                        <label>客户名：</label>
+                        <input type="text" class="form-control" v-model="param.customerName" />
+                    </div>
+                    <div class="client-detailInfo  col-xs-12">
+                        <label>手机：</label>
+                        <input type="text" class="form-control" v-model="param.customerPhone" />
+                    </div>  
+                    <div class="client-detailInfo  col-xs-12">
+                        <label>产地：</label>
+                        <input type="text" class="form-control" v-model="param.location" />
+                    </div>    
+                    <div class="client-detailInfo  col-xs-12">
                         <label>类型：</label>
                         <select type="text" class="form-control" v-model="param.type">
                                 <option value="" selected>请选择类型</option>
@@ -132,12 +149,13 @@
 <script>
 
 import calendar from '../calendar/vue.datepicker'
+import breedsearchModel from './breedsearch'
 import {
     getIntentionList
 } from '../../vuex/actions'
 export default {
     components: {
-
+        breedsearchModel
     },
     props: ['param'],
     data() {
@@ -157,7 +175,10 @@ export default {
                 show:false,
                 employeeId:'',
                 employeeName:''
-            }
+            },
+            breedSearchParam:{
+                show:false    
+            },
         }
     },
     vuex: {
@@ -169,9 +190,17 @@ export default {
         a:function(qq){
             this.loadParam.employeeId = qq.employeeId;
             this.loadParam.employeeName = qq.employeeName;
+        },
+        breed:function(breed){
+            this.param.breedId=breed.breedId;
+            this.param.breedName=breed.breedName;
+            console.log(this.param);
         }
     },
     methods:{
+        breedSearch:function(){
+            this.breedSearchParam.show = true;
+        },
         intentionSearch:function(param){
             this.param.cur = 1;
             console.log(this.param);

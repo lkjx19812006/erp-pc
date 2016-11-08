@@ -10,7 +10,8 @@
                     <div class="bleft">
                         <img v-bind:src="item.icon" height="21" width="21">
                     </div>
-                    <a >{{item.cname}}</a>
+                    <a v-if="lang=='en'">{{item.ename}}</a>
+                    <a v-if="lang=='zh_CN'">{{item.cname}}</a>
                 </div>
                 <div class="bshow" v-if="$route.path.split('?')[0]==item.url.split('?')[0]" transition="expand_trans">
                     <dl class="bshow_dl" clear>
@@ -20,7 +21,8 @@
                                 <div class="bleft">
                                     <img v-bind:src="sub.icon" height="15" width="15">
                                 </div>
-                                <span style="cursor:pointer;" class="{{$route.path==sub.url?'active_font':''}}">{{sub.cname}}</span>
+                                <span v-if="lang=='en'" style="cursor:pointer;" class="{{$route.path==sub.url?'active_font':''}}">{{sub.ename}}</span>
+                                <span v-if="lang=='zh_CN'" style="cursor:pointer;" class="{{$route.path==sub.url?'active_font':''}}">{{sub.cname}}</span>
                             </div>
                         </dd>
                     </dl>
@@ -30,6 +32,7 @@
     </div>
 </template>
 <script>
+import Vue from 'vue'
 import {
     getList,
     getMenu
@@ -39,7 +42,13 @@ import {
     menuBar
 } from '../vuex/actions'
 export default {
-        vuex: {
+        data() {
+            return {
+               lang: ''
+                
+            }
+        }, 
+        vuex: {   
             getters: {
                 getList,
                 getMenu
@@ -48,18 +57,27 @@ export default {
                 initList,
                 menuBar
             },
+            
         },
         created() {
+            this.lang = Vue.config.lang;
+        },
+        
+      events:{
+         changeLang:function(val){
+            console.log('接收广播：'+val);
+            this.lang = val;
+
+         }
+      },
+    methods: {
+        init_data: function(id) {
 
         },
-        methods: {
-            init_data: function(id) {
-
-            },
-            menu: function() {
-                this.menuBar();
-            },
-        }
+        menu: function() {
+            this.menuBar();
+        },
+    }
 }
 </script>
 <style scoped>

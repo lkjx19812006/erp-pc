@@ -81,6 +81,10 @@ export const INTENTION_DATA = 'INTENTION_DATA'  // 新增意向以及机会划�
 export const UPDATA_INTENTION_DATA = 'UPDATA_INTENTION_DATA' //修改意向
 export const INTENTION_OFFER_DETAIL = 'INTENTION_OFFER_DETAIL' //意向报价详情
 
+export const INTLINTENTION_LIST_DATA ='INTLINTENTION_LIST_DATA'  //国际意向数据列表
+export const UPDATA_INTLINTENTION_DATA ='UPDATA_INTLINTENTION_DATA'  //修改国际意向
+
+
 
 export const USER_DATA = 'USER_DATA'   //会员列表
 export const QUICK_EDIT = 'QUICK_EDIT'

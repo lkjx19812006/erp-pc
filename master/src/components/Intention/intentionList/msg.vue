@@ -2,7 +2,7 @@
      <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
 	 <div v-show="!chanceParam.show">
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2" style="font-size:14px">我的留言</div>
+            <div class="my_enterprise col-xs-2" style="font-size:14px">留言</div>
             <div class="col-xs-6 my_order_search">
                <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">

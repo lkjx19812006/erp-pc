@@ -59,6 +59,11 @@ export default (router) => router.map({
                     require(['./views/order_intent'], resolve)
                 }
             },
+            '/intl_intent': {
+                component: function(resolve) {
+                    require(['./views/intl_intention'], resolve)
+                }
+            },
             '/order': {
                 name:'order',
                 component: function(resolve) {

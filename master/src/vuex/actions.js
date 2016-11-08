@@ -2990,6 +2990,19 @@ export const getIntentionList = ({ dispatch }, param) => {  //意向信息列表
         }else if(search=='advance'){
             url +='&advance='
         }
+        if(search=='breedId'&&param[search]!==''){
+            url += '&breedId='+param.breedId
+        }
+        if(search=='customerName'&&param[search]!==''){
+            url += '&customerName='+param.customerName
+        }
+        if(search=='location'&&param[search]!==''){
+            url += '&location='+param.location
+        }
+        if(search=='customerPhone'&&param[search]!==''){
+            url += '&customerPhone='+param.customerPhone
+        }
+
     }
     Vue.http({
         method:'GET',
@@ -3216,6 +3229,115 @@ export const updateMsg = ({ dispatch }, param) => {  //修改留言信息
         console.log('fail');
     })
 }*/
+
+export const getIntlIntentionList = ({ dispatch }, param) => {  //国际意向信息列表以及搜索
+    param.loading = true;
+    console.log(param.link);
+    var url = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
+    if(param.employee!==''){
+        url += '&employee=' + param.employee;
+    } 
+    if(param.customerName!==''){
+        url += '&customerName=' + param.customerName;
+    }
+    if(param.customerEmail!==''){
+        url += '&customerEmail=' + param.customerEmail;
+    }
+    
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+           console.log('国际意向搜索成功');
+           var intent = res.json().result;
+           /*for (var i in intent){
+                intent[i].checked = false;
+                intent[i].show =false;
+           }*/
+           console.log(intent);
+            dispatch(types.INTLINTENTION_LIST_DATA, intent);
+            param.all = res.json().result.pages;
+            param.total=res.json().result.total;
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询国际意向信息
+    param.loading = true;
+    console.log(param.link);
+    var url = apiUrl.clientList+param.link+param.id;
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+           console.log('国际意向搜索成功');
+           var intent = res.json().result;
+           /*for (var i in intent){
+                intent[i].checked = false;
+                intent[i].show =false;
+           }*/
+           console.log(intent);
+            dispatch(types.UPDATA_INTLINTENTION_DATA, intent);
+            param.all = res.json().result.pages;
+            param.total=res.json().result.total;
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const createIntlIntention = ({ dispatch }, param) => { //新增国际意向
+
+    const data = {
+        customerId:param.customerId,
+        customerName:param.customerName,
+        //customerPhone:param.customerPhone,
+        customerEmail:param.customerEmail,
+        country:param.country,
+        province:param.province,
+        city:param.city,
+        district:param.district,
+        address:param.address,
+        duedate:param.duedate,
+        pack:param.pack,
+        items:param.items
+
+    }
+    
+    
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.url,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('添加成功')
+        /*param.id=res.json().result.intentionId;
+        param.validate = 0;
+        param.checked = false;*/
+        param.show = false;
+        dispatch(types.INTLINTENTION_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 
 export const getUserList = ({ dispatch }, param) => {  //会员信息列表
     param.loading = true;

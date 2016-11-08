@@ -16,6 +16,7 @@ var locales = {
       account_or_password:'请输入帐号或密码',
       logout:'退出登录',
       login_time_recently:'最近登录时间'
+      
     }
   },
   en: {

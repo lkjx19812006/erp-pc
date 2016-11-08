@@ -27,17 +27,17 @@ export default {
   components: {
     languageModel
   },
-    data() {
-            return {
-                  show:false
-            }
-        },
-        vuex: {
-            getters: {
-                getMenu,
-              initLogin
-            }
-        },
+  data() {
+      return {
+            show:false
+      }
+  },
+  vuex: {
+      getters: {
+        getMenu,
+        initLogin
+      }
+  },
   methods:{
     exit:function(){
       document.cookie = "no=;expires=" ;
@@ -47,7 +47,12 @@ export default {
       this.$route.router.go({name: 'login'});
 
     }
-  }
+  },
+  /*events:{
+      lang:function(val){
+          console.log('TOP切换语言：'+val);
+      }
+  }*/
 }
 </script>
 <style scoped>

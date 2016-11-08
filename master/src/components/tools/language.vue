@@ -18,6 +18,7 @@
       watch:{
         'language':function(val){
           Vue.config.lang = val;
+          this.$dispatch('lang',val);
         }
       },
     }

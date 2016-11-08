@@ -69,6 +69,8 @@ import {
    INTENTION_DATA,
    INTENTION_UP_DOWN,
    INTENTION_OFFER_DETAIL,
+   INTLINTENTION_LIST_DATA,
+   UPDATA_INTLINTENTION_DATA,
    PROVINCE_LIST,
    COUNTRY_LIST,
    CITY_LIST,
@@ -261,6 +263,9 @@ const state = {
         ],
         intentionList: [
             { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
+
+        ],
+        intlIntentionList:[
 
         ],
         supplyDemandList: [
@@ -1132,6 +1137,10 @@ const mutations = {
     [INTENTION_LIST_DATA](state, data) { //意向列表
         state.basicBaseList.intentionList = data;
     },
+    [INTLINTENTION_LIST_DATA](state, data) { //国际意向列表
+        state.basicBaseList.intlIntentionList = data;
+    },
+    
     [SUPPLY_DEMAND_DATA](state, data) { //供求匹配信息列表
         state.basicBaseList.supplyDemandList = data;
     },
@@ -1342,6 +1351,18 @@ const mutations = {
       }
 
     },
+
+    [UPDATA_INTLINTENTION_DATA](state,data){ //修改国际意向
+     
+        console.log("修改国际意向");
+        for (var i in state.basicBaseList.intlIntentionList[data.sub]) {
+          state.basicBaseList.intentionList[data.sub][i] = data[i];
+        }
+      
+
+    },
+
+    
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
       var temp = {
         "id":data.id,
