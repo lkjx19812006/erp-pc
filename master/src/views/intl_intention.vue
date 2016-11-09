@@ -9,12 +9,18 @@
         <org-intention></org-intention>
      </div>
 
+     <!-- 国际询价 -->
+     <div class="myOrder" v-if="$route.path.split('=')[1]==2">
+        <intl-inquire></intl-inquire>
+     </div>
+
      
 </template>
 <script>
 
 import myIntention from '../components/intlIntention/intentionList/myIntention.vue'
 import orgIntention from '../components/intlIntention/intentionList/orgIntention.vue'
+import intlInquire from '../components/intlIntention/intentionList/intlInquire.vue'
 import {
     
 } from '../vuex/getters'
@@ -24,7 +30,8 @@ import {
 export default {
     components: { 
         myIntention,
-        orgIntention 
+        orgIntention,
+        intlInquire
     }
 }
 </script>

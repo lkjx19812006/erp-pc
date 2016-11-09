@@ -3289,10 +3289,61 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询�
                 intent[i].checked = false;
                 intent[i].show =false;
            }*/
-           console.log(intent);
-            dispatch(types.UPDATA_INTLINTENTION_DATA, intent);
-            param.all = res.json().result.pages;
-            param.total=res.json().result.total;
+            
+            if(param.key=="intentionList"){    //意向列表编辑意向
+                intent.items.forEach(function(item){
+                    var temp = {
+                        id:item.id,
+                        breedId:item.breedId,
+                        breedName:item.breedName,
+                        qualification:item.qualification,
+                        quality:item.quality,
+                        location:item.location,
+                        spec:item.spec,
+                        number:item.number,
+                        unit:item.unit,
+                        pack:item.pack
+                    }
+                    param.items.push(temp);
+                })
+                param.pack = intent.pack,
+                param.duedate = intent.duedate,
+                console.log(intent.items);
+                dispatch(types.INTLINTENTION_DETAIL_DATA, intent);
+            }
+
+            if(param.key=="intentionDetail"){   //意向详情页时
+                
+                var inquires = intent.inquires;
+                intent.inquires = {};
+                intent.inquires.arr = inquires;
+                intent.inquires.show =false;
+
+                var offers = intent.offers;
+                intent.offers = {};
+                intent.offers.arr = [];
+                intent.offers.show = false;
+                //intent.offers.arr = offers;
+                
+                var files = intent.files;
+                intent.files = {};
+                intent.files.arr = [];
+                intent.files.show = false;
+
+                var offerFiles = intent.offerFiles;
+                intent.offerFiles = {};
+                intent.offerFiles.arr = [];
+                intent.offerFiles.show = false;
+
+                var items = intent.items;
+                intent.items = {};
+                intent.items.arr = [];
+                intent.items.show = false;
+                
+
+                dispatch(types.INTLINTENTION_DETAIL_DATA, intent);    
+            }
+            
             param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -3334,6 +3385,218 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
         /*param.id=res.json().result.intentionId;
         param.validate = 0;
         param.checked = false;*/
+        param.show = false;
+        dispatch(types.INTLINTENTION_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const deleteIntlIntention = ({ dispatch }, param) => { //删除国际意向
+
+    const data = {
+        id:param.id
+    }
+    Vue.http({
+        method: "PUT",
+        url: apiUrl.clientList + param.link + param.id,
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功!!!!')
+        
+        dispatch(types.UPDATA_INTLINTENTION_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const updateIntlIntention = ({ dispatch }, param,tipParam) => { //修改国际意向
+
+    const data = {
+        id:param.id,
+        pack:param.pack,
+        duedate:param.duedate,
+        items:param.items
+    };
+    Vue.http({
+        method: "PUT",
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功!!!!')
+        
+        dispatch(types.UPDATA_INTLINTENTION_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const getIntlIntentionInquireList = ({ dispatch }, param) => {  //国际意向询价列表
+    param.loading = true;
+    console.log(param.link);
+    var url = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
+    
+    
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+           console.log('国际意向询价搜索成功');
+           var inquire = res.json().result;
+           /*for (var i in intent){
+                intent[i].checked = false;
+                intent[i].show =false;
+           }*/
+            console.log(inquire);
+            dispatch(types.INTLINTENTION_INQUIRE_LIST_DATA, inquire);
+            param.all = res.json().result.pages;
+            param.total=res.json().result.total;
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向询价
+
+    const data = {
+        intentionId:param.intentionId,
+        inquireType:param.inquireType,
+        comment:param.comment
+    }
+    
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('询价成功')
+        /*param.id=res.json().result.intentionId;
+        param.validate = 0;
+        param.checked = false;*/
+        param.show = false;
+        dispatch(types.INTLINTENTION_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原材料报价
+
+    const data = {
+        id:param.id,
+        intentionId:param.intentionId,
+        inquireId:param.inquireId,
+        type:param.type,
+        currency:param.currency,
+        itemId:param.itemId,
+        itemName:param.itemName,
+        origPrice:param.origPrice,
+        price:param.price,
+        number:param.number,
+        unit:param.unit,
+        total:param.total,
+        comment:param.comment
+    }
+    
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('原材料报价成功')
+        /*param.id=res.json().result.intentionId;
+        param.validate = 0;
+        param.checked = false;*/
+        //param.show = false;
+        dispatch(types.INTLINTENTION_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const intlIntentionOtherOffer = ({ dispatch }, param) => { //国际意向其他报价
+
+    const data = {
+        id:param.id,
+        intentionId:param.intentionId,
+        inquireId:param.inquireId,
+        type:param.type,
+        currency:param.currency,
+        cost:param.cost,
+        costDesc:param.costDesc,
+        total:param.total,
+        comment:param.comment
+    }
+    
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('其他报价成功');
+        param.show = false;
+        dispatch(types.INTLINTENTION_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const intlIntentionAffirmOffer = ({ dispatch }, param) => { //国际意向确认报价
+
+    const data = {
+        id:'58228a6688e87dc057d5e969',
+        comment:'确认报价'
+        
+    }
+    
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('确认报价成功');
         param.show = false;
         dispatch(types.INTLINTENTION_DATA, param);
     }, (res) => {
@@ -3819,7 +4082,6 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
 }
 
 export const editintentInfo = ({ dispatch }, param,tipParam) => { //修改意向
-console.log(param.ctime)
   param.images='';
   if(param.image_f){param.images+=param.image_f+','}
   if(param.image_s){param.images+=param.image_s+','}

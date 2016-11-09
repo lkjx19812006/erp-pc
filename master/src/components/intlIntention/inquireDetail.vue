@@ -363,7 +363,8 @@ export default {
             offerParam:{
                 show:false,
                 link:'/intlIntention/itemOffer',
-                id:9,
+                items:[]
+                /*id:9,
                 intentionId:'58228a6688e87dc057d5e969',
                 inquireId:7,
                 type:0,
@@ -375,12 +376,13 @@ export default {
                 number:3,
                 unit:'kg',
                 total:9,
-                comment:'来来来'
+                comment:'来来来'*/
             },
             otherOfferParam:{
                 show:false,
                 link:'/intlIntention/otherOffer',
-                id:9,
+                items:'',
+                /*id:12,
                 intentionId:'58228a6688e87dc057d5e969',
                 inquireId:7,
                 type:1,
@@ -388,7 +390,7 @@ export default {
                 cost:2,
                 costDesc:'运费+小费',
                 total:2,
-                comment:'啦啦啦'
+                comment:'啦啦啦'*/
 
             }
             

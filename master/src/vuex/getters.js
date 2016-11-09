@@ -152,6 +152,11 @@ export const initIntlIntentionList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionList));
 }
 
+/*--国际意向询价信息--*/
+export const initIntlIntentionInquireList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionInquireList));
+}
+
 /*--供求意向匹配--*/
 export const initSupplyDemandList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.supplyDemandList));
@@ -170,7 +175,10 @@ export const initMsgList = (state) => {
 export const initIntentionDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionDetail));
 }
-
+/*--国际意向详情--*/
+export const initIntlIntentionDetail = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionDetail));
+}
 
 /*---会员信息---*/
 export const initUserList = (state) => {
