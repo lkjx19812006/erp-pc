@@ -21,19 +21,19 @@
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
                         <li>
                             <!--<button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！')" v-if="initOrderDetail.orderStatus==0&&param.contact=='/order/myList'">订单生成</button>-->
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！')" v-if="(initOrderDetail.orderStatus==20||initOrderDetail.orderStatus==10)&&initOrderDetail.type==0&&param.contact=='/order/myList'">申请付款</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！')" v-if="initOrderDetail.orderStatus==40&&initOrderDetail.type==0&&param.contact=='/order/myList'">待卖家发货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.delivery=true)" v-if="initOrderDetail.orderStatus==50&&initOrderDetail.type==0&&param.contact=='/order/myList'">待收货</button>
+                          <!--   <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！')" v-if="(initOrderDetail.orderStatus==20||initOrderDetail.orderStatus==10)&&param.contact=='/order/myList'">申请付款</button>
+                          <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！')" v-if="initOrderDetail.orderStatus==40&&param.contact=='/order/myList'">待卖家发货</button>
+                          <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.delivery=true)" v-if="initOrderDetail.orderStatus==50&&param.contact=='/order/myList'">待收货</button> -->
 
                             <!-- 销售订单 -->
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initOrderDetail.orderStatus==10&&initOrderDetail.type==1&&param.contact=='/order/myList'">等待处理</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initOrderDetail.orderStatus==20&&initOrderDetail.type==1&&param.contact=='/order/myList'">待客户付款</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initOrderDetail.orderStatus==40&&initOrderDetail.type==1&&param.contact=='/order/myList'">待发货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initOrderDetail.orderStatus==50&&initOrderDetail.type==1&&param.contact=='/order/myList'">待客户收货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initOrderDetail.orderStatus==10&&param.contact=='/order/myList'">等待处理</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initOrderDetail.orderStatus==20&&param.contact=='/order/myList'">待客户付款</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initOrderDetail.orderStatus==40&&param.contact=='/order/myList'">待发货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initOrderDetail.orderStatus==50&&param.contact=='/order/myList'">待客户收货</button>
 
-                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus>=60">已完成</button>
-                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-1">已取消</button>
-                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-2">已过期</button>
+                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus>=60"  @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')">已完成</button>
+                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-1" @click="pendingOrder(param,param.tips='订单已取消！')">已取消</button>
+                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-2" @click="pendingOrder(param,param.tips='订单已过期！')">已过期</button>
                         </li>
                     </ul>
                 </div>
@@ -137,7 +137,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.payPics.arr.length!==null">
-                                          支付凭证（{{initOrderDetail.payPics.arr.length}}）<span v-if="param.orderStatus<30&&param.contact=='/order/myList'" class="system_danger">您还没有支付，暂时不能新建支付凭证！</span>
+                                          支付凭证（{{initOrderDetail.payPics.arr.length}}）<span v-if="param.orderStatus<30&&param.contact=='/order/myList'" class="system_danger">您的订单还没有支付，暂时不能新建支付凭证！</span>
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                         支付凭证（0）<span class="system_danger" v-if="param.orderStatus<30&&param.contact=='/order/myList'">您的订单未发货，暂不能上传物流凭证！</span>
@@ -492,12 +492,11 @@ export default {
              this.credenceParam=initOrderDetail;
          },
         pendingOrder:function(initOrderDetail){
-              console.log(initOrderDetail)
-              console.log(this.param)
-              console.log(this.disposeParam)
-                this.disposeParam = initOrderDetail;
-                this.disposeParam = this.param;
-                this.disposeParam.show = true;
+            console.log(initOrderDetail)
+            console.log(this.disposeParam)
+            this.disposeParam = initOrderDetail;
+            /*this.disposeParam = this.param;*/
+            this.disposeParam.show = true;
 
         }
     },

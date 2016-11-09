@@ -79,10 +79,6 @@
                               <label class="editlabel">收货人详细地址 <span class="system_danger" v-if="$validation.addr.required">请输入收货人详细地址</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"    v-validate:addr="['required']" value="{{param.consigneeAdd}}" />
                           </div>
-                           <div class="editpage-input">
-                              <label class="editlabel">杂费</label>
-                              <input type="text" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}"/>
-                          </div>
                           <div class="editpage-input">
                               <label class="editlabel">优惠金额</label>
                               <input type="text" class="form-control edit-input" v-model="param.preferential" value="{{parampreferential}}"/>
@@ -90,6 +86,10 @@
                           <div class="editpage-input">
                               <label class="editlabel">优惠说明</label>
                               <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" value="{{param.preferentialDesc}}"/>
+                          </div>
+                          <div class="editpage-input">
+                              <label class="editlabel">备注</label>
+                              <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
                           </div>
                       </div>
                       <div class="editpageright">
@@ -170,9 +170,10 @@
                               </select>
                           </div>
                           <div class="editpage-input">
-                              <label class="editlabel">备注</label>
-                              <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
+                              <label class="editlabel">杂费</label>
+                              <input type="text" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}"/>
                           </div>
+                          
                           <div class="editpage-input">
                               <label class="editlabel">杂费说明</label>
                               <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>

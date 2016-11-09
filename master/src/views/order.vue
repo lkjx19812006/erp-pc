@@ -23,7 +23,7 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==5">
         <drugs-record></drugs-record>
     </div>
-    <!-- 药款转出记录 -->
+    <!-- 待支付订单 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==6">
       <order-pay></order-pay>
     </div>

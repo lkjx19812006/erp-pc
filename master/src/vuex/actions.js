@@ -2347,7 +2347,10 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         id: param.id,
         orgId:param.orgId,
         employeeId:param.employeeId,
-        creditLevel:param.creditLevel
+        creditLevel:param.creditLevel,
+        cityName:param.cityName,
+        countryName:param.countryName,
+        provinceName:param.provinceName
     }
     if(param.supplier){
       data.supplier=param.supplier;
@@ -2366,6 +2369,9 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         console.log('修改成功')
         param.phoneProvince=res.json().result.phoneProvince;
         param.phoneCity=res.json().result.phoneCity;
+        param.cityName=res.json().result.cityName;
+        param.countryName=res.json().result.countryName;
+        param.provinceName=res.json().result.provinceName;
         dispatch(types.CUSTOMER_UPDATE_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -3375,12 +3381,12 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res)=>{
+        console.log(res.json().result)
        var user = res.json().result.list;
        for (var i in user){
             user[i].checked = false;
             user[i].show =false;
        }
-        console.log('页数==');
         console.log(res.json().result.pages);
         dispatch(types.USER_DATA, user);
         param.all = res.json().result.pages;

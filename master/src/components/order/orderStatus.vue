@@ -68,25 +68,6 @@
                         link:'/order/confirm',
                         images:'',
                        },param.show=false)"  value="确定" />
-                 <!--  <input type="button" class="btn  btn-confirm  right"  @click="orderEdit({
-                       id:param.id,
-                       show:true,
-                       no:param.no,
-                       consignee:param.consignee,
-                       consigneePhone:param.consigneePhone,
-                       consigneeAddr:param.consigneeAddr,
-                       brredName:param.goods[0].brredName,
-                       price:param.goods[0].price,
-                       unit:param.goods[0].unit,
-                       number:param.goods[0].number,
-                       ctime:param.ctime,
-                       incidentals:param.incidentals,
-                       spec:param.goods[0].spec,
-                       location:param.goods[0].location,
-                       total:param.total,
-                       images:'',
-                       callback:alterOrder
-                      })"  value="编辑订单" /> -->
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
             <!-- 订单财务审核 -->
@@ -153,7 +134,7 @@
                     orderStatus:'',
                     images:'',
                     callback:underPay
-                    })"  value="上传支付凭证" />
+                    })"  value="申请核查" />
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
         </div>
@@ -412,9 +393,8 @@ export default {
         },
     },
     created() {
-        console.log(this.param);
         this.getExpressList(this.loadParam);
-        this.getOrderDetail(this.param)
+        this.getOrderDetail(this.loadParam);
     }
 }
 </script>

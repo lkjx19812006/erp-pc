@@ -5,7 +5,7 @@
     <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <div v-show="!detailParam.show&&!disposeParam.show">
+    <div>
       <div class="order_search">
         <div class="clear">
             <div class="my_order col-xs-2">部门订单</div>

@@ -8,7 +8,7 @@
      <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
 
-   <div v-show="!chanceParam.show">
+   <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">会员意向</div>
             <div class="col-xs-5 my_order_search">
@@ -309,14 +309,21 @@ export default {
                 cur: 1,
                 all: 7,
                 link:'/intention/resource/list',
-                type:'',
-                invoic:'',
-                visit:'',
-                intl:'',
-                sampling:'',
-                status:'',
-                advance:'',
-                customerName:''
+                type:'',      //类型
+                especial:'',    //特殊
+                invoic:'',  //发票
+                visit:'',    //上门看货
+                sampling:'',   //样品
+                advance:'',  //预付比例
+                intl:'',  //是否国际
+                validate:'',  //审核状态
+                onSell:'', //审核状态
+                total:0,
+                breedId:'',
+                breedName:'',
+                customerName:'',
+                customerPhone:'',
+                location:''
             },
             supdemParam:{
                 show:false,
@@ -484,13 +491,19 @@ export default {
         },
         resetCondition:function(){
             this.loadParam.type='';
+            this.loadParam.especial='';
             this.loadParam.invoic='';
             this.loadParam.visit='';
             this.loadParam.intl='';
             this.loadParam.sampling='';
-            this.loadParam.status='';
+            this.loadParam.validate='';
+            this.loadParam.onSell='';
             this.loadParam.advance='';
             this.loadParam.customerName='';
+            this.loadParam.breedId='';
+            this.loadParam.breedName='';
+            this.loadParam.customerPhone='';
+            this.loadParam.location='';
             this.getIntentionList(this.loadParam);
 
         },

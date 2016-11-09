@@ -16,6 +16,8 @@
               <th>冻结金额</th>
               <th>转出金额</th>
               <th>申请时间</th>
+              <th>状态</th>
+              <th></th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +29,8 @@
             <td v-if="item.rollOutMoney">{{item.rollOutMoney}}</td>
             <td v-if="!item.rollOutMoney">0</td>
             <td>{{item.ctime}}</td>
+            <td>{{item.status | drugsStatus}}</td>
+            <td><a class="operate"><img src="/static/images/unsure.png" height="18" width="38" title="药款转出处理" alt="药款转出处理"></a></td>
           </tr>
         </tbody>
       </table>
@@ -38,6 +42,7 @@
 </template>
 <script>
   import pagination from '../pagination'
+  import filter from '../../filters/filters'
   import {
     initRolloutlist
   } from '../../vuex/getters'
@@ -47,7 +52,8 @@
 
   export default {
     components: {
-      pagination
+      pagination,
+      filter
     },
     vuex: {
       getters: {
@@ -78,6 +84,7 @@
     methods: {
 
     },
+    filter: (filter,{}),
     events: {
       fresh: function(input) {
         this.loadParam.cur = input;

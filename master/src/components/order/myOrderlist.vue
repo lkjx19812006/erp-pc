@@ -90,7 +90,7 @@
             <tbody>
                 <tr v-for="item in initOrderlist"  v-cloak>
                   <td  @click.stop="">
-                    <label v-if="item.validate<=0&&item.orderStatus==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
+                    <label v-if="item.validate<=0&&(item.orderStatus==0||item.orderStatus==70)" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                   </td>
                   <td><a @click="clickOn({
                                 show:true,
@@ -150,6 +150,7 @@
                                         comments:item.comments,
                                         incidentals:item.incidentals,
                                         orderStatus:item.orderStatus,
+                                        validate:item.validate,
                                         incidentalsDesc:item.incidentalsDesc,
                                         preferential:item.preferential,
                                         preferentialDesc:item.preferentialDesc,
@@ -193,9 +194,6 @@
                         <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2"><img src="/static/images/reset.png" height="18" width="48" title="重新申请" alt="重新申请" /></a>
 
                   </td>
-                 <!--  <td v-if="(item.type==1||item.type==0)&&item.validate==-2">
-                    <a class="operate"  v-if="(item.type==1||item.type==0)&&item.validate==-2"><img src="/static/images/reset.png" height="18" width="48" title="重新申请" alt="重新申请"  @click.stop="orderCheck(item.id,$index)"/></a>
-                 </td> -->
                  <!--  <td @click="editClick($index)">
                      <img height="24" width="24" src="/static/images/default_arrow.png" />
                      <div class="component_action" v-show="item.show">

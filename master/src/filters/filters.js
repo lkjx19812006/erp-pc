@@ -398,6 +398,22 @@ Vue.filter('Auditing',function(val){     //订单审核
 	}
 })
 
+Vue.filter('drugsStatus',function(val){     //药款状态
+	var val = val;
+	if(val==0){
+		 return '初始状态';
+	}
+	if(val==1){
+		 return '申请审核';
+	}
+	if(val==2){
+		 return '正在转账';
+	}
+	if(val==3){
+		 return '转出成功';
+	}
+})
+
 Vue.filter('Currency',function(val){     //订单货币方式
 	var val = val;
 	if(val==0){
