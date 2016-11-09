@@ -37,7 +37,7 @@
               <div class="col-xs-6 pull-left">
                  <p><label>杂费：</label><span style="color:#fa6705">¥{{initOrderDetail.incidentals}}</span>（运费）</p>
                  <p><span  style="color:#fa6705">合计：¥{{initOrderDetail.total.toFixed(2)}}</span></p>
-              </div> 
+              </div>
             </div>
             <!-- 处理订单0 -->
             <div class="clearfix logical_color" v-if="param.handle">
@@ -68,25 +68,6 @@
                         link:'/order/confirm',
                         images:'',
                        },param.show=false)"  value="确定" />
-                 <!--  <input type="button" class="btn  btn-confirm  right"  @click="orderEdit({
-                       id:param.id,
-                       show:true,
-                       no:param.no,
-                       consignee:param.consignee,
-                       consigneePhone:param.consigneePhone,
-                       consigneeAddr:param.consigneeAddr,
-                       brredName:param.goods[0].brredName,
-                       price:param.goods[0].price,
-                       unit:param.goods[0].unit,
-                       number:param.goods[0].number,
-                       ctime:param.ctime,
-                       incidentals:param.incidentals,
-                       spec:param.goods[0].spec,
-                       location:param.goods[0].location,
-                       total:param.total,
-                       images:'',
-                       callback:alterOrder
-                      })"  value="编辑订单" /> -->
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
             <!-- 订单财务审核 -->
@@ -103,6 +84,22 @@
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
         </div>
+
+      <!-- 订单支付 -->
+      <div class="navbar-client" v-if="param.confirmReceipt">
+        <div class="clearfix logical_color">
+          <input type="button" class="btn  btn-confirm right"  @click="accept({
+                    id:initOrderDetail.id,
+                    show:true,
+                    link:'/order/payConfirm',
+                    orderStatus:'',
+                    images:'',
+                    sub:$index
+                    }),param.show = false"  value="客户确认收款" />
+          <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
+        </div>
+      </div>
+
         <!-- 订单支付 -->
         <div class="navbar-client" v-if="param.payment">
             <div class="message clearfix">
@@ -137,7 +134,7 @@
                     orderStatus:'',
                     images:'',
                     callback:underPay
-                    })"  value="支付" />
+                    })"  value="申请核查" />
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
         </div>
@@ -147,13 +144,13 @@
               <p class="order-message">物流信息</p>
               <div class="space_15 clearfix">
                 <div class="logical_color">
-                  <span class="mui-pull-left">物流公司：</span> 
+                  <span class="mui-pull-left">物流公司：</span>
                   <select v-model="uploadLogistic.b">
                     <option v-for="item in initExpresslist" value="{{item.id + ',' + item.name}}">{{item.name}}</option>
                   </select>
                 </div>
                 <div class="logical_color">
-                  <span class="mui-pull-left">物流单号：</span> 
+                  <span class="mui-pull-left">物流单号：</span>
                   <input type="number" placeholder="请输入运单号" v-model="uploadLogistic.lcompanyNo"/>
                 </div>
                 <div class="logical_color">
@@ -202,7 +199,7 @@
                   loading:true,
                   callback:logisticsInfo
                   })" value="查看物流" />
-                 
+
               </div>
           </div>
         </div>
@@ -232,14 +229,14 @@
                   loading:true,
                   callback:logisticsInfo
                   })"  value="查看物流" />
-                 
+
               </div>
           </div>
         </div>
 
     </div>
 </template>
-<script> 
+<script>
 import cancleModel from  '../order/cancleMsg'
 import undelineModel from  '../order/uploadPayment'
 /*import yaokuanModel from  '../order/orderpayPassword'*/
@@ -320,7 +317,7 @@ export default {
             }
         }
     },
-    
+
     vuex: {
         getters:{
             initExpresslist,
@@ -396,8 +393,8 @@ export default {
         },
     },
     created() {
-        this.getExpressList(this.loadParam); 
-        this.getOrderDetail(this.param)
+        this.getExpressList(this.loadParam);
+        this.getOrderDetail(this.loadParam);
     }
 }
 </script>
@@ -425,7 +422,7 @@ export default {
   font-size: 16px;
 }
 .logical_color{
-  margin-bottom: 10px;
+  margin: 10px 0 ;
 }
 .logical_color input{
   border: 1px solid #ddd;

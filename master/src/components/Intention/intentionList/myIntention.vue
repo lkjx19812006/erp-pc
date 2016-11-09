@@ -10,7 +10,7 @@
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      <audit-dialog :param.sync="auditParam" v-if="auditParam.show"></audit-dialog>
 
-	 <div v-show="!chanceParam.show">
+	 <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">我的意向</div>
             <div class="col-xs-5 my_order_search">

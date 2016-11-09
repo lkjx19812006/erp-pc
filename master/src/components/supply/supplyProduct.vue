@@ -62,7 +62,7 @@
                                              url:'/customer/product'
                                         })">新建</button>
         <button class="new_btn transfer"  @click="searchProduct()">搜索</button>
-        <button class="new_btn"  @click="reset()">清除搜索</button>
+        <button class="new_btn"  @click="reset()">清空条件</button>
       </div>
     </div>
     <div class="order_table">
@@ -235,10 +235,10 @@
         this.createParam = initProductlist;
       },
       reset:function(){
-        console.log(this.loadParam.name)
-        this.loadParam.name="";
-        this.loadParam.type="";
-        this.loadParam.status="";
+        this.loadParam.name = "";
+        this.loadParam.type = "";
+        this.loadParam.status = "";
+        this.getProductList(this.loadParam);
       },
       createSearch:function(){
         this.loadParam.show=true;

@@ -5,19 +5,19 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建订单</h3>
+            <h4>新建订单</h4>
         </div>
         <validator name="validation">
             <div class="edit-model">
                 <form name="editOrderinfo" action="javascript:void(0)">
                     <section class="editsection">
-                        <h3>订单信息</h3>
+                        <h5>订单信息</h5>
                         <div class="editpage">
                             <div class="editpageleft">
                                 <div class="editpage-input">
                                     <label class="editlabel">是否样品订单</label>
                                     <!-- <input type="text" class="edit-input" v-model="param.sample"/> -->
-                                    <select type="text" class="edit-input" v-model="param.sample">
+                                    <select type="text" class="form-control edit-input" v-model="param.sample">
                                         <option value="0">否</option>
                                         <option value="1">是</option>
                                     </select>
@@ -25,20 +25,20 @@
 
                                 <div class="editpage-input">
                                     <label class="editlabel">杂费</label>
-                                    <input type="text" class="edit-input" v-model="param.incidentals"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.incidentals"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">优惠金额</label>
-                                    <input type="text" class="edit-input" v-model="param.preferential"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.preferential"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">收货人</label>
-                                    <input type="text" class="edit-input" v-model="param.consignee"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.consignee"/>
                                 </div>
 
                                 <div class="editpage-input">
                                     <label class="editlabel">国家</label>
-                                    <div type="text" class="edit-input">
+                                    <div type="text" class="form-control edit-input">
                                         <v-select
                                            :debounce="250"
                                            :value.sync="country"
@@ -53,7 +53,7 @@
                                 <div class="editpage-input">
                                     <label class="editlabel">市</label>
                                     <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                                    <div v-if="province.cname" type="text" class="edit-input">
+                                    <div v-if="province.cname" type="text" class="form-control edit-input">
                                         <v-select
                                              :debounce="250"
                                              :value.sync="city"
@@ -67,11 +67,11 @@
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">收货人地址</label>
-                                    <input type="text" class="edit-input" v-model="param.consigneeAddr"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">货币类型</label>
-                                    <input type="text" class="edit-input" v-model="param.currency"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.currency"/>
                                 </div>
                                 <div class="editpage-input">
                                <label class="editlabel">备注</label>
@@ -82,22 +82,22 @@
                             <div class="editpageright">
                                 <div class="editpage-input">
                                     <label class="editlabel">是否国际</label>
-                                    <select type="text" class="edit-input" v-model="param.intl">
+                                    <select type="text" class="form-control edit-input" v-model="param.intl">
                                         <option value="0">否</option>
                                         <option value="1">是</option>
                                     </select>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">杂费说明</label>
-                                    <input type="text" class="edit-input" v-model="param.incidentalsDesc"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">优惠说明</label>
-                                    <input type="text" class="edit-input" v-model="param.preferentialDesc"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.preferentialDesc"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">收货人电话</label>
-                                    <input type="text" class="edit-input" v-model="param.consigneePhone"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.consigneePhone"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">省</label>
@@ -130,48 +130,48 @@
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">邮编<span class="system_danger" v-if="$validation.zipcode.postcode">请输入正确的邮编</span></label>
-                                    <input type="text" class="edit-input" v-model="param.zipCode" v-validate:zipcode="['postcode']"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:zipcode="['postcode']"/>
                                 </div>
 
                             </div>
 
                         </div>
-                        <h3>商品信息</h3>
+                        <h5>商品信息</h5>
                         <div class="editpage">
                             <div class="editpageleft">
                                 <div class="editpage-input">
                                     <label class="editlabel">商品标题</label>
-                                    <input type="text" class="edit-input" v-model="param.goods[0].title"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].title"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">产地</label>
-                                    <input type="text" class="edit-input" v-model="param.goods[0].location"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].location"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">单价<span class="system_danger" v-if="$validation.price.money">请输入不超过两位小数的数字</span></label>
-                                    <input type="text" class="edit-input" v-model="param.goods[0].price" v-validate:price="['money']"/>
+                                    <input type="text" class="form-control  edit-input" v-model="param.goods[0].price" v-validate:price="['money']"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">数量<span class="system_danger" v-if="$validation.number.quantity">请输入不超过四位小数的数字</span></label>
-                                    <input type="text" class="edit-input" v-validate:number="['quantity']" v-model="param.goods[0].number"/>
+                                    <input type="text" class="form-control edit-input" v-validate:number="['quantity']" v-model="param.goods[0].number"/>
                                 </div>
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input">
                                     <label class="editlabel">商品来源ID</label>
-                                    <input type="text" class="edit-input" v-model="param.goods[0].sourceId" disabled="true"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].sourceId" disabled="true"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">品质</label>
-                                    <input type="text" class="edit-input" v-model="param.goods[0].quality"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].quality"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">规格</label>
-                                    <input type="text" class="edit-input" v-model="param.goods[0].spec"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].spec"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">单位<span class="system_danger" v-if="$validation.unit.required">请输入单位</span></label>
-                                    <input type="text" class="edit-input" v-validate:unit="['required']" v-model="param.goods[0].unit"/>
+                                    <input type="text" class="form-control edit-input" v-validate:unit="['required']" v-model="param.goods[0].unit"/>
                                 </div>
 
                             </div>
@@ -294,30 +294,14 @@ export default {
 }
 </script>
 <style scoped>
-.big-font {
-    font-size: 36px;
-}
-
-.top-title span {
-    font-size: 28px;
-}
-
-.edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
+.top-title{
+  z-index: 100;
+  width:800px;
+  right: 0;
+  top: 91px;
+  position: fixed;
+  margin: auto;
+  left: 0;
 }
 
 .editsection {

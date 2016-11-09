@@ -9,7 +9,7 @@
      <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
 
-   <div v-show="!chanceParam.show">
+   <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">部门意向</div>
             <div class="col-xs-5 my_order_search">

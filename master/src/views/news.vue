@@ -221,7 +221,7 @@ export default {
                 fullname:'',
                 source:'',
                 bizMain:'',
-                busiType:'',
+                bizType:'',
                 phone:'',
                 startCtime:'',
                 endCtime:'',
@@ -338,17 +338,17 @@ export default {
         }
     },
     resetCondition:function(){
-        this.loadParam.fullname='';
-        this.loadParam.source='';
-        this.loadParam.bizMain='';
-        this.loadParam.busiType='';
-        this.loadParam.phone='';
-        this.loadParam.startCtime='';
-        this.loadParam.endCtime='';
-        this.loadParam.audit='';
-        this.loadParam.transform='';
-        this.loadParam.city='';
-        this.loadParam.province='';
+        this.loadParam.fullname="";
+        this.loadParam.source = "";
+        this.loadParam.bizMain ="";
+        this.loadParam.bizType ="";
+        this.loadParam.phone="";
+        this.loadParam.startCtime ="";
+        this.loadParam.endCtime = "";
+        this.loadParam.audit = "";
+        this.loadParam.transform = "";
+        this.loadParam.city = "";
+        this.loadParam.province = "";
         this.getUserList(this.loadParam);
     },
     onlyselected: function(index){

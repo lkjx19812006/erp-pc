@@ -6,7 +6,7 @@
     <!-- 部门订单 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==1">
         <org-order></org-order>
-    </div> 
+    </div>
     <!-- 全部订单列表 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==2">
         <all-order></all-order>
@@ -23,6 +23,10 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==5">
         <drugs-record></drugs-record>
     </div>
+    <!-- 待支付订单 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==6">
+      <order-pay></order-pay>
+    </div>
 </template>
 <script>
 import paymentRecord from '../components/order/paymentRecordList'
@@ -31,6 +35,7 @@ import employeeOrder from '../components/order/myOrderlist'
 import orgOrder  from  '../components/order/orgOrderlist'
 import orderReview  from  '../components/order/checkedOrder'
 import allOrder  from  '../components/order/allOrder'
+import orderPay from '../components/order/payOrder'
 export default {
     components: {
         paymentRecord,
@@ -38,26 +43,10 @@ export default {
         employeeOrder,
         orgOrder,
         orderReview,
-        allOrder
-    },
-    data() {
-        return {
-          
-        }
-    },
-    vuex: {
-       
-    },
-     route: {
-        activate: function (transition) {
-          console.log('hook-example activated!')
-          transition.next()
-        },
-        deactivate: function (transition) {
-          console.log('hook-example deactivated!')
-          transition.next()
-      }
+        allOrder,
+        orderPay
     }
+
 }
 </script>
 <style scoped>

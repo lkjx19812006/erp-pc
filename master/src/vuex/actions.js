@@ -269,32 +269,10 @@ export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录�
         param.loading = false;
     })
 }
-/*export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列表以及订单搜索
+
+export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列表以及订单搜索
     param.loading = true;
     var url = apiUrl.orderList+param.link+'?page=' + param.cur + '&pageSize=15';
-    for(var key in param){
-        if(key=='consignee'&&param[key]!=''){
-             url += '&consignee='+param[key];
-        }
-        if(key=='clients'&&param[key]!=''){
-          url += '&clients='+param[key];
-        }
-        if(key=='dataStatus'&&param[key]!=''){
-          url += '&dataStatus='+param[key];
-        }
-        if(key=='orderStatus'&&param[key]!=''){
-          url += '&orderStatus='+param[key];
-        }
-        if(key=='payWay'&&param[key]!=''){
-          url += '&payWay='+param[key];
-        }
-         if(key=='consigneePhone'&&param[key]!=''){
-          url += '&consigneePhone='+param[key];
-        }
-         if(key=='type'&&param[key]!=''){
-          url += '&type='+param[key];
-        }
-    }
     Vue.http({
         method:'GET',
         url:url,
@@ -306,15 +284,17 @@ export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录�
             var orderList = res.json().result.list;
             dispatch(types.ORDER_ROLLOUT_DATA, orderList);
             param.all = res.json().result.pages;
+            param.total = res.json().result.total;
             param.loading = false;
     }, (res) => {
         console.log('fail');
         param.loading = false;
     })
-}*/
+}
+
 export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核列表以及订单搜索
     param.loading = true;
-    var url = apiUrl.orderList+param.link+'?orderStatus=30&type=1&page=' + param.cur + '&pageSize=15';
+    var url = apiUrl.orderList+param.link+'?orderStatus='+param.orderStatus+'&type='+param.type+'&page=' + param.cur + '&pageSize=15';
     for(var key in param){
         if(key=='consignee'&&param[key]!=''){
              url += '&consignee='+param[key];
@@ -896,6 +876,9 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
         var orderDetail = res.json().result;
         console.log(orderDetail)
         var goods = orderDetail.goods;
+        if(!goods){
+          goods=[];
+        }
         orderDetail.goods={};
         orderDetail.goods.arr = goods;
         orderDetail.goods.show = true;
@@ -903,6 +886,9 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             orderDetail.goods.arr[i].show = false;
         }
         var payPics = orderDetail.payPics;
+        if(!payPics){
+          payPics=[];
+        }
         orderDetail.payPics={};
         orderDetail.payPics.arr = payPics;
         orderDetail.payPics.show = true;
@@ -937,6 +923,65 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
     })
 }
 
+export const getDrugsDetail = ({ dispatch }, param) => { //获取药材详情
+    console.log(param)
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.orderList + '/order/' + param.id,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var orderDetail = res.json().result;
+        console.log(orderDetail)
+        var goods = orderDetail.goods;
+        if(!goods){
+          goods=[];
+        }
+        orderDetail.goods={};
+        orderDetail.goods.arr = goods;
+        orderDetail.goods.show = true;
+        for (var i in orderDetail.goods.arr) {
+            orderDetail.goods.arr[i].show = false;
+        }
+        var payPics = orderDetail.payPics;
+        if(!payPics){
+          payPics=[];
+        }
+        orderDetail.payPics={};
+        orderDetail.payPics.arr = payPics;
+        orderDetail.payPics.show = true;
+        for (var i in orderDetail.payPics.arr) {
+            orderDetail.payPics.arr[i].show = false;
+        }
+        var sendPics = orderDetail.sendPics;
+        orderDetail.sendPics={};
+        orderDetail.sendPics.arr = sendPics;
+        orderDetail.sendPics.show = true;
+        for (var i in orderDetail.sendPics.arr) {
+            orderDetail.sendPics.arr[i].show = false;
+        }
+        var attachFiles = orderDetail.attachFiles;
+        orderDetail.attachFiles={};
+        orderDetail.attachFiles.arr = attachFiles;
+        orderDetail.attachFiles.show = true;
+        for (var i in orderDetail.attachFiles.arr) {
+            orderDetail.attachFiles.arr[i].show = false;
+        }
+        var logisticses = orderDetail.logisticses;
+        orderDetail.logisticses={};
+        orderDetail.logisticses.arr = logisticses;
+        orderDetail.logisticses.show = true;
+        for (var i in orderDetail.logisticses.arr) {
+            orderDetail.logisticses.arr[i].show = false;
+        }
+
+        dispatch(types.ORDER_DETAIL_DATA, orderDetail);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 export const getSystemData = ({ dispatch }, param) => { //枚举类型
     param.loading = true;
     Vue.http({
@@ -2361,7 +2406,10 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         id: param.id,
         orgId:param.orgId,
         employeeId:param.employeeId,
-        creditLevel:param.creditLevel
+        creditLevel:param.creditLevel,
+        cityName:param.cityName,
+        countryName:param.countryName,
+        provinceName:param.provinceName
     }
     if(param.supplier){
       data.supplier=param.supplier;
@@ -2380,6 +2428,9 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         console.log('修改成功')
         param.phoneProvince=res.json().result.phoneProvince;
         param.phoneCity=res.json().result.phoneCity;
+        param.cityName=res.json().result.cityName;
+        param.countryName=res.json().result.countryName;
+        param.provinceName=res.json().result.provinceName;
         dispatch(types.CUSTOMER_UPDATE_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -3238,14 +3289,14 @@ export const getIntlIntentionList = ({ dispatch }, param) => {  //国际意向�
     var url = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
     if(param.employee!==''){
         url += '&employee=' + param.employee;
-    } 
+    }
     if(param.customerName!==''){
         url += '&customerName=' + param.customerName;
     }
     if(param.customerEmail!==''){
         url += '&customerEmail=' + param.customerEmail;
     }
-    
+
     Vue.http({
         method:'GET',
         url:url,
@@ -3368,8 +3419,8 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
         items:param.items
 
     }
-    
-    
+
+
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,
@@ -3652,12 +3703,12 @@ export const getUserList = ({ dispatch }, param) => {  //会员信息列表
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res)=>{
+        console.log(res.json().result)
        var user = res.json().result.list;
        for (var i in user){
             user[i].checked = false;
             user[i].show =false;
        }
-        console.log('页数==');
         console.log(res.json().result.pages);
         dispatch(types.USER_DATA, user);
         param.all = res.json().result.pages;

@@ -1,3 +1,4 @@
+
 <template>
     <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
     <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
@@ -305,28 +306,7 @@
                                     </table>
                                     </div>
                                 </div>
-                                <!--<div class="panel-collapse" v-else v-show="!initOrderDetail.sendPics.show">-->
-                                    <!--<div class="panel-body panel-set">-->
-                                        <!--<table class="table  contactSet">-->
-                                          <!--<thead>-->
-                                            <!--<th>文件类型</th>-->
-                                            <!--<th>文件来源</th>-->
-                                            <!--<th>文件图片或路径</th>-->
-                                            <!--<th>描述</th>-->
-                                          <!--</thead>-->
-                                        <!--<tbody>-->
-                                            <!--<tr v-for="item in initOrderDetail.sendPics.arr">-->
-                                                <!--<td>{{item.fileType}}</td>-->
-                                                <!--<td>{{item.bizType}}</td>-->
-                                                <!--<td><img :src="item.path" v-if="item.fileType=='image'"/>-->
-                                                    <!--<img src="/static/images/pdf.png" height="20" width="20" v-else/>-->
-                                                <!--</td>-->
-                                                <!--<td>{{item.description}}</td>-->
-                                            <!--</tr>-->
-                                        <!--</tbody>-->
-                                    <!--</table>-->
-                                    <!--</div>-->
-                                <!--</div>-->
+                                
                             </div>
                         </div>
                     </article>
@@ -418,10 +398,10 @@ import trackingModel from '../order/ordergoods'
 import credenceModel from '../order/createcredence'
 import disposeModel  from  '../order/orderStatus'
 import {
-  initOrderDetail
+  initDrugsDetail
 } from '../../vuex/getters'
 import {
-  getOrderDetail,
+  getDrugsDetail,
   uploadDocument
 } from '../../vuex/actions'
 export default {
@@ -465,10 +445,10 @@ export default {
     },
     vuex:{
       getters:{
-        initOrderDetail
+        
       },
       actions:{
-        getOrderDetail,
+        
         uploadDocument
       }
     },
@@ -501,7 +481,7 @@ export default {
         }
     },
    created(){
-   	  this.getOrderDetail(this.param);
+   	  this.getDrugsDetail(this.param);
    }
 }
 </script>

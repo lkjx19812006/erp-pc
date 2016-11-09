@@ -329,9 +329,15 @@ const state = {
         }],
         orderPayList:[{
              "id": "580ebddddeb2e33b1ffb9495","payWay":"3","orderId":"57f88e6288e8bb85da01df9b","orderNo": "11111","payFee":"0"
-        }]
+        }],
+      orderRolloutList:{
+        list:[]
+      }
+
+
 
     },
+
 
     orderDetail: {"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
                   "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
@@ -341,17 +347,19 @@ const state = {
                   "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
                   "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":null,"ftime":null,"updater":null,
                   "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48",
-                  "goods":[{"id":"5726ea3bf22125bcdcff7821","orderId":"5726ea3bf22125bcdcff7820","sourceType":1,"sourceId":"23",
+                  "goods":{arr:[{"id":"5726ea3bf22125bcdcff7821","orderId":"5726ea3bf22125bcdcff7820","sourceType":1,"sourceId":"23",
                   "title":null,"breedId":1007,"brredName":null,"quality":null,"location":"上海","spec":"干货","price":100.000000,
                   "unit":"公斤","address":null,"pubdate":null,"duedate":null,"advance":1.000000,"invoic":null,"visit":0,"pack":null,
                   "image":"/productPic/20160502/q5c6xa7.jpg","description":null,"number":2,"amount":200.000000,"updater":null,
-                  "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48"}],"payPics": {arr: [],show: false},"sendPics":{arr: [],show: false},"attachFiles":{arr: [],show: false}},
+                  "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48"}],show:false},"payPics": {arr: [],show: false},"sendPics":{arr: [],show: false},"attachFiles":{arr: [],show: false}},
 
     locationList:{
-        provinceList: [
-            {"id": 248,"pid": 7, "path": ",1,7,248,","level": 3,"cname": "天津", "nameEn": "Tianjin","namePy": null, "code": "12","twoNumber": null,"number": null,"iso": null,"sortnum": 248, "show": true }
-        ]
-    },
+          provinceList: [
+              {"id": 248,"pid": 7, "path": ",1,7,248,","level": 3,"cname": "天津", "nameEn": "Tianjin","namePy": null, "code": "12","twoNumber": null,"number": null,"iso": null,"sortnum": 248, "show": true }
+          ]
+        },
+
+
     breedDetail: {
         "code": "232去",
         "icon": "http://p.ayxbk.com/images/thumb/4/4f/Bkg32.jpg/220px-Bkg32.jpg",
@@ -722,7 +730,6 @@ const mutations = {
         console.log(data)
           for(var i in  state.basicBaseList.orderList){
               if(state.basicBaseList.orderList[i].id==data.id){
-                console.log(data.orderStatus)
                   state.basicBaseList.orderList[i].orderStatus=data.orderStatus;
                   state.basicBaseList.orderList[i].payWay=data.payWay;
                   state.basicBaseList.orderList[i].lcompanyId=data.lcompanyId;
@@ -1153,10 +1160,12 @@ const mutations = {
     [INTLINTENTION_LIST_DATA](state, data) { //国际意向列表
         state.basicBaseList.intlIntentionList = data;
     },
+
     [INTLINTENTION_INQUIRE_LIST_DATA](state, data) { //国际意向询价列表
         console.log(state.basicBaseList.intlIntentionInquireList);
         state.basicBaseList.intlIntentionInquireList = data;
     },
+
     [SUPPLY_DEMAND_DATA](state, data) { //供求匹配信息列表
         state.basicBaseList.supplyDemandList = data;
     },
@@ -1370,17 +1379,17 @@ const mutations = {
     },
 
     [UPDATA_INTLINTENTION_DATA](state,data){ //修改国际意向
-     
+
         console.log("修改国际意向");
         console.log(data);
         for (var i in data) {
           state.basicBaseList.intlIntentionList[data.index][i] = data[i];
         }
-      
+
 
     },
 
-    
+
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
       var temp = {
         "id":data.id,

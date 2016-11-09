@@ -4,7 +4,7 @@
   <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
   <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
-  <div v-show="!changeParam.show">
+  <div>
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">供应商</div>
       <div class="right col-xs-4">
