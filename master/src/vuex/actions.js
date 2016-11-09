@@ -923,6 +923,65 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
     })
 }
 
+export const getDrugsDetail = ({ dispatch }, param) => { //获取药材详情
+    console.log(param)
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.orderList + '/order/' + param.id,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var orderDetail = res.json().result;
+        console.log(orderDetail)
+        var goods = orderDetail.goods;
+        if(!goods){
+          goods=[];
+        }
+        orderDetail.goods={};
+        orderDetail.goods.arr = goods;
+        orderDetail.goods.show = true;
+        for (var i in orderDetail.goods.arr) {
+            orderDetail.goods.arr[i].show = false;
+        }
+        var payPics = orderDetail.payPics;
+        if(!payPics){
+          payPics=[];
+        }
+        orderDetail.payPics={};
+        orderDetail.payPics.arr = payPics;
+        orderDetail.payPics.show = true;
+        for (var i in orderDetail.payPics.arr) {
+            orderDetail.payPics.arr[i].show = false;
+        }
+        var sendPics = orderDetail.sendPics;
+        orderDetail.sendPics={};
+        orderDetail.sendPics.arr = sendPics;
+        orderDetail.sendPics.show = true;
+        for (var i in orderDetail.sendPics.arr) {
+            orderDetail.sendPics.arr[i].show = false;
+        }
+        var attachFiles = orderDetail.attachFiles;
+        orderDetail.attachFiles={};
+        orderDetail.attachFiles.arr = attachFiles;
+        orderDetail.attachFiles.show = true;
+        for (var i in orderDetail.attachFiles.arr) {
+            orderDetail.attachFiles.arr[i].show = false;
+        }
+        var logisticses = orderDetail.logisticses;
+        orderDetail.logisticses={};
+        orderDetail.logisticses.arr = logisticses;
+        orderDetail.logisticses.show = true;
+        for (var i in orderDetail.logisticses.arr) {
+            orderDetail.logisticses.arr[i].show = false;
+        }
+
+        dispatch(types.ORDER_DETAIL_DATA, orderDetail);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 export const getSystemData = ({ dispatch }, param) => { //枚举类型
     param.loading = true;
     Vue.http({
