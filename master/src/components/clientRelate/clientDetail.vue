@@ -1241,9 +1241,15 @@
 	                                <input type="text" class="form-control" v-model='initClientDetail.address' value="{{initClientDetail.address}}" disabled="disabled" />
 	                            </div>
                             </div>
-                            <div class="client-detailInfo">
+                            <div class="clearfix">
+                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label>经营范围</label>
                                 <input type="text" class="form-control" v-model="initClientDetail.bizScope" value="{{initClientDetail.bizScope}}" disabled="disabled" />
+                              </div>
+                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label>注册时间</label>
+                                <input type="text" class="form-control" v-model="initClientDetail.ctime" value="{{initClientDetail.ctime}}" disabled="disabled" />
+                              </div>
                             </div>
                             <!-- <div class="client-detailInfo">
                                 <img class="left" src="/static/images/blackselect.png" height="28" width="28" />

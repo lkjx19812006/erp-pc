@@ -1070,7 +1070,7 @@ const mutations = {
         console.log(data.key);
         console.log(state.basicBaseList.filesList)
         if(data.key=='filesList'){
-             state.basicBaseList.filesList[data.sub].description = data.remark;
+             state.basicBaseList.filesList[data.sub].description = data.description;
         }else{
            for (var key in data) {
                 state[data.headline][data.key].arr[data.sub][key] = data[key];

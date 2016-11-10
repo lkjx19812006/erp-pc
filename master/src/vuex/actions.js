@@ -1952,21 +1952,27 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
         if(search=='creditLevel'&&param[search]!==''&&param[search]!='undefine'){
             clienturl += '&creditLevel='+param.creditLevel
         }
-        if(search=='city'&&param[search]!==''&&param[search]!==undefined){
+        if(search=='city'&&param[search]!==''&&param[search]!='undefined'){
             clienturl += '&city='+param.city
         }
-        if(search=='blacklist'&&param[search]!==''&&param[search]!==undefined){
+        if(search=='blacklist'&&param[search]!==''&&param[search]!='undefined'){
           clienturl += '&blacklist='+param.blacklist
         }
 
-      if(search=='label'&&param[search]!==''&&param[search]!==undefined){
+      if(search=='label'&&param[search]!==''&&param[search]!='undefined'){
         clienturl += '&label='+param.label
       }
-      if(search=='phoneCityName'&&param[search]!==''&&param[search]!==undefined){
+      if(search=='phoneCityName'&&param[search]!==''&&param[search]!='undefined'){
         clienturl += '&phoneCity='+param.phoneCityName
       }
-      if(search=='phoneProvinceName'&&param[search]!==''&&param[search]!==undefined){
+      if(search=='phoneProvinceName'&&param[search]!==''&&param[search]!='undefined'){
         clienturl += '&phoneProvince='+param.phoneProvinceName
+      }
+      if(search=='ctimeStart'&&param[search]!==''&&param[search]!='undefined'){
+        clienturl += '&ctimeStart='+param.ctimeStart
+      }
+      if(search=='ctimeEnd'&&param[search]!==''&&param[search]!='undefined'){
+        clienturl += '&ctimeEnd='+param.ctimeEnd
       }
     }
 
@@ -2520,11 +2526,24 @@ export const addrInfo = ({ dispatch }, param) => { //修改客户地址
 export const alterRemark = ({ dispatch }, param) => { //修改客户备注
     console.log(param)
     const updatedata = {
-        remark:param.remark,
         status:param.status,
         id:param.id,
         customerId:param.customerId,
     }
+    for(var key in param){
+        if(key=='remark'&&param[key]!=''){
+            updatedata.remark=param[key];
+        }
+        if(key=='description'&&param[key]!=''){
+            updatedata.description=param[key];
+        }
+    }
+   /* if(param.remark){
+        updatedata.remark = param.remark;
+    }
+    if(param.description){
+        updatedata.description = param.description;
+    }*/
     Vue.http({
         method: 'PUT',
         url: apiUrl.clientList + param.url,
@@ -3354,7 +3373,7 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询�
                 intent[i].checked = false;
                 intent[i].show =false;
            }*/
-            
+
             if(param.key=="intentionList"){    //意向列表编辑意向
                 intent.items.forEach(function(item){
                     var temp = {
@@ -3378,7 +3397,7 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询�
             }
 
             if(param.key=="intentionDetail"){   //意向详情页时
-                
+
                 var inquires = intent.inquires;
                 intent.inquires = {};
                 intent.inquires.arr = inquires;
@@ -3389,7 +3408,7 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询�
                 intent.offers.arr = [];
                 intent.offers.show = false;
                 //intent.offers.arr = offers;
-                
+
                 var files = intent.files;
                 intent.files = {};
                 intent.files.arr = [];
@@ -3404,11 +3423,11 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询�
                 intent.items = {};
                 intent.items.arr = [];
                 intent.items.show = false;
-                
 
-                dispatch(types.INTLINTENTION_DETAIL_DATA, intent);    
+
+                dispatch(types.INTLINTENTION_DETAIL_DATA, intent);
             }
-            
+
             param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -3474,7 +3493,7 @@ export const deleteIntlIntention = ({ dispatch }, param) => { //删除国际意�
         }
     }).then((res) => {
         console.log('修改成功!!!!')
-        
+
         dispatch(types.UPDATA_INTLINTENTION_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -3501,7 +3520,7 @@ export const updateIntlIntention = ({ dispatch }, param,tipParam) => { //修改�
         }
     }).then((res) => {
         console.log('修改成功!!!!')
-        
+
         dispatch(types.UPDATA_INTLINTENTION_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -3512,8 +3531,8 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => {  //国际�
     param.loading = true;
     console.log(param.link);
     var url = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
-    
-    
+
+
     Vue.http({
         method:'GET',
         url:url,
@@ -3546,7 +3565,7 @@ export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向询
         inquireType:param.inquireType,
         comment:param.comment
     }
-    
+
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.link,
@@ -3586,7 +3605,7 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
         total:param.total,
         comment:param.comment
     }
-    
+
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.link,
@@ -3622,7 +3641,7 @@ export const intlIntentionOtherOffer = ({ dispatch }, param) => { //国际意向
         total:param.total,
         comment:param.comment
     }
-    
+
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.link,
@@ -3647,9 +3666,9 @@ export const intlIntentionAffirmOffer = ({ dispatch }, param) => { //国际意�
     const data = {
         id:'58228a6688e87dc057d5e969',
         comment:'确认报价'
-        
+
     }
-    
+
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.link,

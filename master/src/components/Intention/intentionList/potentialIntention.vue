@@ -22,7 +22,7 @@
         </div>
         <div class="service-nav clearfix">
             <div class="my_order_search">
-               
+
            </div>
         </div>
         <div class="order_table">
@@ -65,8 +65,7 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="item in initIntentionList"
-                        @click="match(item)"  style="cursor:pointer">
+                    <tr v-for="item in initIntentionList">
                          <td>
                             <label v-if="item.validate==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" >
                             </label>
@@ -77,8 +76,6 @@
                             <div v-if="item.especial==1&&item.type==0">紧急求购</div>
                             <div v-if="item.especial==1&&item.type==1">低价资源</div>
                         </td>
-                        <td>{{item.customerName}}</td>
-                        <td>{{item.customerPhone}}</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
@@ -123,8 +120,9 @@
                                 image_s_show:'',
                                 image_t_show:'',
                                 duedate:item.duedate
-                                })">{{item.breedName}}
-                        </td>
+                                })">{{item.customerName}}</td>
+                        <td>{{item.customerPhone}}</td>
+                        <td @click="match(item)"  style="cursor:pointer;color:#fa6705">{{item.breedName}}</td>
                         <td>{{item.qualification | qualify}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.unit}}</td>
@@ -150,6 +148,7 @@
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offerNumber}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
+<<<<<<< HEAD
                         <td  @click.stop="modifyIntention({
                                               id:item.id,
                                               sub:$index,
@@ -162,6 +161,25 @@
                                               customerPhone:item.customerPhone,
                                               breedName:item.breedName,
                                               breedId:item.breedId,
+=======
+
+                        <td @click.stop="eventClick($index)">
+                           <img height="24" width="24" src="/static/images/default_arrow.png" />
+                           <div class="component_action" v-show="item.show">
+                               <ul>
+                                   <li @click="modifyIntention({
+                                               id:item.id,
+                                               sub:$index,
+                                               selectCustomer:false,
+                                               flag:1,
+                                               show:true,
+                                               loading:true,
+                                               title:'编辑',
+                                               customerName:item.customerName,
+                                               customerPhone:item.customerPhone,
+                                               breedName:item.breedName,
+                                               breedId:item.breedId,
+>>>>>>> dbd2a54048216f519ead2c92a6b410a054ab5590
                                               type:item.type,
                                               especial:item.especial,
                                               quality:item.quality,
@@ -374,7 +392,7 @@ export default {
             getIntentionList,
             getSupplyDemandList,
             intentionUpAndDown,
-            
+
         }
     },
     data() {
@@ -555,8 +573,9 @@ export default {
             this.intentionAuditParam.indexs.push(index);
         },
         userToClient:function(item){
-            console.log(item);
-
+            item.employeeId=this.$store.state.table.login.id;
+            item.employeeName=this.$store.state.table.login.name;
+            item.orgId=this.$store.state.table.login.orgId;
             this.transferParam = item;
         },
         searchIntention:function(){

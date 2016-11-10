@@ -41,16 +41,16 @@ export default {
                     let file = input.files[0];
                     let fileNameArr=file.name.split('.');
                     _self.type=fileNameArr[fileNameArr.length-1];
-                  if(_self.type=='jpg'||_self.type=='bmp'||_self.type=='jpg'||_self.type=='jpeg'){
-                    _self.type='图片';
+                  if(_self.type=='png'||_self.type=='bmp'||_self.type=='jpg'||_self.type=='jpeg'){
+                    _self.type='image';
                   }else if(_self.type=='pdf'){
-                    _self.type='PDF';
+                    _self.type='pdf';
                   }else if(_self.type=='doc'||_self.type=='docx'){
                     _self.type='word';
                   } else if(_self.type=='xls'||_self.type=='xlsx'){
                     _self.type='excel';
                   }else{
-                    _self.type='其它';
+                    _self.type='other';
                   }
                     console.log(file)
 
@@ -127,7 +127,7 @@ export default {
                 e.target.parentElement.reset();
                 this.close=false;
                 this.image="../../static/images/default_image.png";
-                this.$dispatch("getImageData", this.image);
+                this.$dispatch("getImageData",{result:{path:''}});
                 this.value='';
                 this.showurl='';
             },

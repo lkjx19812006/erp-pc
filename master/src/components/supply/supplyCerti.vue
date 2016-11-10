@@ -53,10 +53,10 @@
                          title:'备注',
                          labelist:'备注',
                          statuslist:'状态',
-                         remark:item.description,
+                         description:item.description,
                          status:item.status,
                          link:alterRemark,
-                         url:'/customer/remark',
+                         url:'/customer/updateFile',
                          key:'filesList'
                          })">
                  <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  />

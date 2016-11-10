@@ -70,8 +70,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initIntentionList"
-                        @click="match(item)"  style="cursor:pointer">
+
+                    <tr v-for="item in initIntentionList">
                          <td>
                             <label v-if="item.validate==0||item.validate==9" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" >
                             </label>
@@ -82,8 +82,6 @@
                             <div v-if="item.especial==1&&item.type==0">紧急求购</div>
                             <div v-if="item.especial==1&&item.type==1">低价资源</div>
                         </td>
-                        <td>{{item.userFullname}}</td>
-                        <td>{{item.userPhone}}</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
@@ -128,8 +126,9 @@
                                 image_s_show:'',
                                 image_t_show:'',
                                 duedate:item.duedate
-                                })">{{item.breedName}}
-                        </td>
+                                })">{{item.userFullname}}</td>
+                        <td>{{item.userPhone}}</td>
+                        <td @click="match(item)"  style="cursor:pointer;color:#fa6705">{{item.breedName}}</td>
                         <td>{{item.qualification | qualify}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.unit}}</td>

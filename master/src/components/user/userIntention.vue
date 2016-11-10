@@ -32,14 +32,14 @@
                     <h4 style="display:inline">药材信息</h4>
                  </div>
 
-                 <div class="editpage">
-                   <div class="editpage-input" style="width:100%">
+
+                   <div class="editpage-input clearfix" style="width:100%">
                      <label class="editlabel">药材图片</label>
-                     <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-                     <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-                     <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+                     <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:25%"></press-image>
+                     <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:25%"></press-image>
+                     <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:25%"></press-image>
                    </div>
-                 </div>
+
                  <div class="editpage">
 
                      <div class="editpageleft">
@@ -450,11 +450,11 @@ export default {
               all: 7,
               city:''
             },
+          type:"image/jpeg,image/jpg,image/png",
           imageParam:{
             url:'/crm/api/v1/file/',
             qiniu:false
-          },
-          type:"image/*"
+          }
         }
     },
     vuex: {
@@ -567,6 +567,7 @@ export default {
     },
     created(){
       console.log(this.param.breedId)
+
       if(this.param.breedId){
         this.breedParam.breedName = this.param.breedName;
         this.breedParam.id = this.param.breedId;

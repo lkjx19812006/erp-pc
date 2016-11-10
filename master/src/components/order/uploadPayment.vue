@@ -32,7 +32,7 @@ export default {
                 url:'/crm/api/v1/file/',
                 qiniu:false
             },
-            type:"image/*"
+            type:"image/jpeg,image/jpg,image/png",
         }
     },
     methods:{
