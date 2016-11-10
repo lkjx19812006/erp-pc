@@ -70,6 +70,8 @@ import {
    INTENTION_UP_DOWN,
    INTENTION_OFFER_DETAIL,
    INTLINTENTION_LIST_DATA,
+   INTLINTENTION_DETAIL_DATA,
+   INTLINTENTION_INQUIRE_LIST_DATA,
    UPDATA_INTLINTENTION_DATA,
    PROVINCE_LIST,
    COUNTRY_LIST,
@@ -270,6 +272,9 @@ const state = {
         intlIntentionList:[
 
         ],
+        intlIntentionInquireList:[
+            {"id":"7","intentionId":"58228a6688e87dc057d5e969","inquire":1,"inquireType":"FOB&CIF","comment":"卖报的小行家","ctime":"2016-11-09 10:31:51"}
+        ],
         supplyDemandList: [
             { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
 
@@ -284,6 +289,14 @@ const state = {
         intentionDetail:
             {"id":"1008","chanceId":"","userId":"","customerId":"36485","customerName":"刘振领","customerPhone":"17756736988","type":1,"especial":1,"breedId":2246,"breedName":"红枣","qualification":null,"quality":"各种规格，保证质量，量大从优","location":"新疆","spec":"选货","number":10000,"numberDesc":"","price":null,"origPrice":null,"priceDesc":"","unit":"63","province":null,"city":null,"district":null,"address":"安徽","pubdate":null,"duedate":null,"advance":0.000000,"invoic":0,"visit":0,"pack":null,"intl":0,"country":"中国","sampling":0,"cFlagsPath":"","sampleNumber":0,"sampleUnit":null,"sampleAmount":null,"onSell":3,"shelveTime":"2016-06-17 17:23","unshelveTime":null,"employee":null,"offer":0,"offerFalse":0,"offerNumber":0,"offerVprice":null,"offerTotal":0.000000,"status":1,"validate":1,"description":"买包子","updater":"100014","utime":"2016-07-12 19:38","creater":"100014","ctime":"2016-06-17 17:22",
               "pics":[],"ids":null,"images":null,"offers":{arr:[],show:false},"msgs":{arr:[],show:false},"trackings":{arr:[],show:false}},
+        intlIntentionDetail:{
+          "id":"5820437488e8b3568d9dd494","userId":null,"customerId":"844","customerName":"王建军中药材农民合作社","customerPhone":null,"customerEmail":"1","type":1,"especial":0,"names":",丁香,三颗针,人工牛黄","number":null,"country":"中国","province":"河北","city":"秦皇岛","district":"青龙满族自治县","address":"1","pubdate":null,"duedate":"2016-11-18 00:00","advance":1.000000,"pack":"12","intl":1,"cFlagsPath":null,"employee":null,"employeeName":null,"inquire":0,"inquireType":"FOB&CIF","inquireTime":1,"offerTime":1,
+          "validate":0,"status":1,"description":null,"inType":3,"updater":null,"utime":"2016-11-08 14:48","creater":null,"ctime":"2016-11-07 17:03",
+          "items":{"arr":[{"id":5,"intentionId":"5820437488e8b3568d9dd494","breedId":1003,"breedName":"丁香","qualification":"1","quality":"1","location":"1","spec":"1","number":1.000000,"unit":"1","price":null,"punit":null,"currency":null,"origPrice":null,"pack":"1","sampling":0,"snumber":null,"sunit":null,"samount":null,"status":1,"offerer":null,"offererName":null,"description":null,"iinquireTime":0,"again":0,"updater":null,"utime":null,"creater":null,"ctime":null,"offerAgain":null,"inquireId":null,"offerComment":null},
+          {"id":6,"intentionId":"5820437488e8b3568d9dd494","breedId":1015,"breedName":"三颗针","qualification":"3","quality":"2","location":"2","spec":"2","number":2.000000,"unit":"2","price":null,"punit":null,"currency":null,"origPrice":null,"pack":"2","sampling":0,"snumber":null,"sunit":null,"samount":null,"status":1,"offerer":null,"offererName":null,"description":null,"iinquireTime":0,"again":0,"updater":null,"utime":null,"creater":null,"ctime":null,"offerAgain":null,"inquireId":null,"offerComment":null},
+          {"id":7,"intentionId":"5820437488e8b3568d9dd494","breedId":1006,"breedName":"人工牛黄","qualification":"3","quality":"3","location":"3","spec":"3","number":3.000000,"unit":"3","price":null,"punit":null,"currency":null,"origPrice":null,"pack":"3","sampling":0,"snumber":null,"sunit":null,"samount":null,"status":1,"offerer":null,"offererName":null,"description":null,"iinquireTime":1,"again":0,"updater":null,"utime":null,"creater":null,"ctime":null,"offerAgain":null,"inquireId":null,"offerComment":null}],show:false},
+          "inquires":{arr:[{"id":6,"intentionId":"5820437488e8b3568d9dd494","inquire":1,"inquireType":"FOB&CIF","comment":"123456","status":1,"updater":null,"utime":null,"creater":null,"ctime":"2016-11-08 15:48"}],show:false},"files":{arr:[],show:false},"offerFiles":{"arr":[],show:false},"offers":{"arr":[],show:false}
+        },      
         employeeList: [{
             "id": 6,
             "name": "lm",
@@ -1193,6 +1206,11 @@ const mutations = {
         state.basicBaseList.intlIntentionList = data;
     },
 
+    [INTLINTENTION_INQUIRE_LIST_DATA](state, data) { //国际意向询价列表
+        console.log(state.basicBaseList.intlIntentionInquireList);
+        state.basicBaseList.intlIntentionInquireList = data;
+    },
+
     [SUPPLY_DEMAND_DATA](state, data) { //供求匹配信息列表
         state.basicBaseList.supplyDemandList = data;
     },
@@ -1408,8 +1426,9 @@ const mutations = {
     [UPDATA_INTLINTENTION_DATA](state,data){ //修改国际意向
 
         console.log("修改国际意向");
-        for (var i in state.basicBaseList.intlIntentionList[data.sub]) {
-          state.basicBaseList.intentionList[data.sub][i] = data[i];
+        console.log(data);
+        for (var i in data) {
+          state.basicBaseList.intlIntentionList[data.index][i] = data[i];
         }
 
 
@@ -1483,6 +1502,9 @@ const mutations = {
     },
     [INTENTION_DETAIL_DATA](state,data){
         state.basicBaseList.intentionDetail = data;
+    },
+    [INTLINTENTION_DETAIL_DATA](state,data){
+        state.basicBaseList.intlIntentionDetail = data;
     },
     /*[INTENTION_OFFER_DETAIL](state,data){
         state.basicBaseList.intentionDetail = data;

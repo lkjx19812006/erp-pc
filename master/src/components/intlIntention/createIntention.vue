@@ -287,8 +287,8 @@
                            <th>数量</th> 
                            <th>单位</th> 
                            <th>包装</th> 
-                           <!-- <th></th> 
-                           <th></th> -->
+                           <th></th> 
+                           <th></th>
                          </tr>
                      </thead>
                      <tbody>
@@ -301,17 +301,19 @@
                              <td>{{item.number}}</td>
                              <td>{{item.unit}}</td>
                              <td>{{item.pack}}</td>
-                             <!-- <td @click="">修改</td>
-                             <td>删除</td> -->
+                             <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>编辑</a></td>
+                             <td v-else>编辑</td>
+                             <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>删除</a></td>
+                             <td v-else>删除</td>
                          </tr>
                      </tbody>
                  </table>
                  <div style="padding-left:25%">
-                     <div style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showBreed()">添加药材信息</div>   
+                     <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed()">添加药材信息</div>   
                  </div>   
                   
                  <validator name="inner">   
-                     <div v-if="addParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
+                     <div v-if="addParam.show||updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
                            <div class="editpageleft">
                               <div class="editpage-input">
                                    <label class="editlabel" >品种名称<span class="system_danger" v-if="$inner.breedname.required">必填项</span></label>
@@ -357,84 +359,84 @@
                               </div>
 
                               <div style="margin-top:10px;text-align:right">
-                                  <button type="button" class="btn btn-confirm" @click="cancelBreed()">取消</button>
-                                  <button type="button" class="btn btn-confirm" v-if="$inner.valid" @click="addBreed()">保存</button>
+                                  <button type="button" class="btn btn-confirm">
+                                      <div v-if="breedInfo.status==1" @click="cancelAddBreed()">取消</div>
+                                      <div v-if="breedInfo.status==2" @click="cancelModifyBreed()">取消</div>
+                                  </button>
+                                  <button type="button" class="btn btn-confirm" v-if="$inner.valid">
+                                      <div v-if="breedInfo.status==1" @click="addBreed()">保存</div>
+                                      <div v-if="breedInfo.status==2" @click="modifyBreed()">保存</div>
+                                  </button>
                                   <button type="button" class="btn btn-confirm" v-else disabled="disabled">保存</button>
                                   
                               </div>
                               
                            </div>
                      </div>  
-                 </validator>  
-                 <!-- <div class="editpage">
-                       <div class="editpageleft">
-                          <div class="editpage-input">
-                               <label class="editlabel" >品种名称<span class="system_danger" v-if="$validation.breedname.required">必填项</span></label>
-                               <input type="text" v-model="param.items[0].breedName" class="form-control edit-input" v-validate:breedname="{required:true}"  @click="searchBreed()" readonly="true" />
-                          </div>
-                   
-                          <div class="editpage-input">
-                               <label class="editlabel" >质量要求<span class="system_danger" v-if="$validation.quality.required">必填项</span></label>
-                               <input type="text" v-model="param.items[0].quality" class="form-control edit-input" v-validate:quality="{required:true}" />
-                          </div>
-                   
-                          <div class="editpage-input">
-                               <label class="editlabel" >规格要求<span class="system_danger" v-if="$validation.spec.required">必填项</span></label>
-                               <input type="text" v-model="param.items[0].spec" class="form-control edit-input" v-validate:spec="{required:true}"/>
-                          </div>
-                          
-                          <div class="editpage-input">
-                               <label class="editlabel" >单位<span class="system_danger" v-if="$validation.unit.required">必填项</span></label>
-                               <input type="text" v-model="param.items[0].unit" class="form-control edit-input" v-validate:unit="{required:true}"/>
-                          </div>
-                   
-                       </div>
-                   
-                       <div class="editpageright">
-                          <div class="editpage-input">
-                               <label class="editlabel" >资质要求<span class="system_danger" v-if="$validation.qualification.required">必填项</span></label>
-                               <input type="text" v-model="param.items[0].qualification" class="form-control edit-input" v-validate:qualification="{required:true}"/>
-                          </div>
-                   
-                          <div class="editpage-input">
-                               <label class="editlabel" >产地要求<span class="system_danger" v-if="$validation.location.required">必填项</span></label>
-                               <input type="text" v-model="param.items[0].location" class="form-control edit-input" v-validate:location="{required:true}"/>
-                          </div>
-                   
-                          <div class="editpage-input">
-                               <label class="editlabel" >数量要求<span class="system_danger" v-if="$validation.number.required">必填项</span></label>
-                               <input type="text" v-model="param.items[0].number" class="form-control edit-input" v-validate:number="{required:true}" />
-                          </div>
-                   
-                          <div class="editpage-input">
-                               <label class="editlabel" >包装要求<span class="system_danger" v-if="$validation.pack0.required">必填项</span></label>
-                               <input type="text" v-model="param.items[0].pack" class="form-control edit-input" v-validate:pack0="{required:true}" />
-                          </div>
-                       
-                       </div>
-                   </div>   -->  
+                 </validator> 
 
-                 <!-- <div style="margin-top:25px">
-                    <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
-                    <h4 style="display:inline">商家信息</h4>
-                 </div>
-                 <div class="editpage">
-                     <div class="editpageleft">
-                          <div class="editpage-input">
-                             <label class="editlabel">资质证书</label>
-                            <select type="text" class="form-control edit-input" v-model="param.qualification" placeholder="请输入资质证书">
-                              <option value="GMP">GMP</option>
-                              <option value="GSP">GSP</option>
-                            </select>
-                         </div>
-                     </div>
-                 </div> -->
+                 <!-- <validator name="modify">   
+                     <div v-if="updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
+                           <div class="editpageleft">
+                              <div class="editpage-input">
+                                   <label class="editlabel" >品种名称<span class="system_danger" v-if="$modify.breedname1.required">必填项</span></label>
+                                   <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname1="{required:true}"  @click="searchBreed()" readonly="true" />
+                              </div>
+                       
+                              <div class="editpage-input">
+                                   <label class="editlabel" >质量要求<span class="system_danger" v-if="$modify.quality1.required">必填项</span></label>
+                                   <input type="text" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality1="{required:true}" />
+                              </div>
+                       
+                              <div class="editpage-input">
+                                   <label class="editlabel" >规格要求<span class="system_danger" v-if="$modify.spec1.required">必填项</span></label>
+                                   <input type="text" v-model="breedInfo.spec" class="form-control edit-input" v-validate:spec1="{required:true}"/>
+                              </div>
+                              
+                              <div class="editpage-input">
+                                   <label class="editlabel" >单位<span class="system_danger" v-if="$modify.unit1.required">必填项</span></label>
+                                   <input type="text" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit1="{required:true}"/>
+                              </div>
+                       
+                           </div>
+                       
+                           <div class="editpageright">
+                              <div class="editpage-input">
+                                   <label class="editlabel" >资质要求<span class="system_danger" v-if="$modify.qualification1.required">必填项</span></label>
+                                   <input type="text" v-model="breedInfo.qualification" class="form-control edit-input" v-validate:qualification1="{required:true}"/>
+                              </div>
+                       
+                              <div class="editpage-input">
+                                   <label class="editlabel" >产地要求<span class="system_danger" v-if="$modify.location1.required">必填项</span></label>
+                                   <input type="text" v-model="breedInfo.location" class="form-control edit-input" v-validate:location1="{required:true}"/>
+                              </div>
+                       
+                              <div class="editpage-input">
+                                   <label class="editlabel" >数量要求<span class="system_danger" v-if="$modify.number1.required">必填项</span></label>
+                                   <input type="text" v-model="breedInfo.number" class="form-control edit-input" v-validate:number1="{required:true}" />
+                              </div>
+                       
+                              <div class="editpage-input">
+                                   <label class="editlabel" >包装要求<span class="system_danger" v-if="$modify.pack1.required">必填项</span></label>
+                                   <input type="text" v-model="breedInfo.pack" class="form-control edit-input" v-validate:pack1="{required:true}" />
+                              </div>
+                 
+                              <div style="margin-top:10px;text-align:right">
+                                  <button type="button" class="btn btn-confirm" @click="cancelModifyBreed()">取消</button>
+                                  <button type="button" class="btn btn-confirm" v-if="$modify.valid" @click="modifyBreed()">保存</button>
+                                  <button type="button" class="btn btn-confirm" v-else disabled="disabled">保存</button>
+                                  
+                              </div>
+                              
+                           </div>
+                     </div>  
+                 </validator>  -->
 
              </section>
           </div>
           <div class="edit_footer">
               <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-              <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&$inner.valid&&param.items.length>0&&param.items[0].breedId!=''" @click="createOrUpdateIntlIntention()">确定</button>
+              <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&$inner.valid&&param.items.length>0&&param.items[param.items.length-1].breedId!=''" @click="createOrUpdateIntlIntention()">确定</button>
               <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
           </div>
         </validator>
@@ -494,7 +496,12 @@ export default {
             show:false,
             length:0
           },
-          breedInfo:{
+          updateParam:{
+            show:false,
+            index:0
+          },
+          breedInfo:{ 
+              status:0,   //自定义状态，表示编辑框的状态，0表示收起(起始)状态，1表示add，2表示update，add或update结束后将status置为0
               breedId:'',
               breedName:'',
               qualification:'',
@@ -597,8 +604,10 @@ export default {
                 this.empNameParam.employeeId = this.param.employeeId;
             }*/
       },
-      showBreed:function(){
+      showAddBreed:function(){
+
           if(this.param.items.length == 0||this.param.items[this.param.items.length-1].breedId != ''){
+              this.breedInfo.status = 1;    
               this.breedInfo.breedId='';
               this.breedInfo.breedName='';
               this.breedInfo.qualification='';
@@ -637,12 +646,50 @@ export default {
           this.param.items[this.param.items.length-1].pack = this.breedInfo.pack;
 
           console.log(this.param.items[this.param.items.length-1]);
+          this.breedInfo.status = 0;
           this.addParam.show = false; 
 
       },
-      cancelBreed:function(){
+      showModifyBreed:function(index){
+          this.breedInfo.status = 2;
+          this.updateParam.index = index;
+          this.breedInfo.breedId=this.param.items[index].breedId,
+          this.breedInfo.breedName=this.param.items[index].breedName,
+          this.breedInfo.qualification=this.param.items[index].qualification,
+          this.breedInfo.quality=this.param.items[index].quality,
+          this.breedInfo.location=this.param.items[index].location,
+          this.breedInfo.spec=this.param.items[index].spec,
+          this.breedInfo.number=this.param.items[index].number,
+          this.breedInfo.unit=this.param.items[index].unit,
+          this.breedInfo.pack=this.param.items[index].pack,
+        
+          this.updateParam.show = true;
+      },
+      modifyBreed:function(){
+          this.param.items[this.updateParam.index].breedId=this.breedInfo.breedId,
+          this.param.items[this.updateParam.index].breedName=this.breedInfo.breedName,
+          this.param.items[this.updateParam.index].qualification=this.breedInfo.qualification,
+          this.param.items[this.updateParam.index].quality=this.breedInfo.quality,
+          this.param.items[this.updateParam.index].location=this.breedInfo.location,
+          this.param.items[this.updateParam.index].spec=this.breedInfo.spec,
+          this.param.items[this.updateParam.index].number=this.breedInfo.number,
+          this.param.items[this.updateParam.index].unit=this.breedInfo.unit,
+          this.param.items[this.updateParam.index].pack=this.breedInfo.pack,
+          this.breedInfo.status = 0;
+          this.updateParam.show = false;
+      },
+      deleteBreed:function(index){
+         this.param.items.splice(index,1);
+      },
+
+      cancelAddBreed:function(){
           this.param.items.pop();
+          this.breedInfo.status = 0;
           this.addParam.show = false; 
+      },
+      cancelModifyBreed:function(){
+          this.breedInfo.status = 0;
+          this.updateParam.show = false; 
       },
       callback:function(){
           this.param.show=false;
@@ -653,7 +700,7 @@ export default {
         this.param.province = this.province.cname;
         this.param.city = this.city.cname;
         this.param.district = this.district.cname;
-
+        this.param.show = false;
         this.createIntlIntention(this.param);
         console.log(this.param);
         console.log(this.param.items);
@@ -861,4 +908,7 @@ export default {
     display: inline-block;
 }
 
+a{
+    cursor:pointer;
+}
 </style>
