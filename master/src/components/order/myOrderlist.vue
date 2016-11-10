@@ -117,7 +117,9 @@
                   <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
                   <td v-if="item.clients!=0&&item.clients!=1&&item.clients!=2&&item.clients!=3"  style="background:#000;color:#fff">未说明</td>
                   <td>{{item.orderStatus | orderstatus}}</td>
-                  <td>{{item.validate | Auditing}}</td>
+                  <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Auditing}}</td>
+                  <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
+                  <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
                   <td>{{item.currency | Currency}}</td>
                   <td v-if="item.payWay===0">线下打款</td>
                   <td v-if="item.payWay==1">支付宝</td>

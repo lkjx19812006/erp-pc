@@ -221,6 +221,9 @@ export default {
             this.updateParam=initEnterpriselist;
         },
         createCustomer:function(initEnterpriselist){
+          initEnterpriselist.employeeId=this.$store.state.table.login.id;
+          initEnterpriselist.employeeName=this.$store.state.table.login.name;
+          initEnterpriselist.orgId=this.$store.state.table.login.orgId;
             this.transferParam=initEnterpriselist;
 
             const obj={

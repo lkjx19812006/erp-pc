@@ -128,6 +128,22 @@
                       <option value="3">三星客户</option>
                     </select>
                   </div>
+
+                  <div class="client-detailInfo col-xs-6">
+                    <label>注册开始时间：</label>
+                    <mz-datepicker :time.sync="param.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
+                    </mz-datepicker>
+                  </div>
+                  <div class="client-detailInfo col-xs-6">
+                    <label>注册结束时间：</label>
+                    <mz-datepicker :time.sync="param.ctimeEnd" format="yyyy/MM/dd HH:mm:ss" class="a">
+                    </mz-datepicker>
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空</button>
+                  </div>
+
+
+
+
                   <div class="client-detailInfo col-xs-6">
                     <label>客户标签：</label>
                     <input type="text"  class="form-control" v-model="param.label"   placeholder="按会员标签搜索"  />
@@ -257,9 +273,11 @@ export default {
             if(this.province.cname){
                 this.getCityList(this.province);
             }
-
-
         },
+      resetTime:function(){
+        this.param.ctimeStart='';
+        this.param.ctimeEnd='';
+      },
       selectPhoneProvince:function(){
         this.phoneCity = '';
         this.param.phoneCity = '';
