@@ -50,7 +50,7 @@
                             <th>发布时间</th>
                             <th>审核状态</th>
                             <th>描述</th>
-                            <th></th>
+                            <th colspan="4">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,7 +90,7 @@
                             <!-- <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)">取消询价</div> -->
                             <div style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/edit.png" alt="编辑"  /></div>
                             <div style="display:inline-block;margin-right:7px" @click="deleteIntention(item.id,$index)"><img src="/static/images/del.png" alt="删除"  /></div>
-                            
+                            <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/quote.png" alt="确认报价"  /></div>
                         </td>
                         
 

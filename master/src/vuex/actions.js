@@ -291,7 +291,80 @@ export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列
         param.loading = false;
     })
 }
-
+export const getDrugsDetail = ({ dispatch }, param) => { //药款转出详情页面
+    param.loading = true;
+    var url = apiUrl.orderList+param.link+'?id='+param.moneyId+'&userId='+param.userId;
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+            var drugsDetail = res.json().result;
+            var moneyRollIns = drugsDetail.moneyRollIns;
+            if(!moneyRollIns){
+              moneyRollIns=[];
+            }
+            drugsDetail.moneyRollIns={};
+            drugsDetail.moneyRollIns.arr = moneyRollIns;
+            drugsDetail.moneyRollIns.show = true;
+            for (var i in drugsDetail.moneyRollIns.arr) {
+                drugsDetail.moneyRollIns.arr[i].show = false;
+            }
+            var moneyRollOuts = drugsDetail.moneyRollOuts;
+            if(!moneyRollOuts){
+              moneyRollOuts=[];
+            }
+            drugsDetail.moneyRollOuts={};
+            drugsDetail.moneyRollOuts.arr = moneyRollOuts;
+            drugsDetail.moneyRollOuts.show = true;
+            for (var i in drugsDetail.moneyRollOuts.arr) {
+                drugsDetail.moneyRollOuts.arr[i].show = false;
+            }
+            var moneyRecords = drugsDetail.moneyRecords;
+            if(!moneyRecords){
+              moneyRecords=[];
+            }
+            drugsDetail.moneyRecords={};
+            drugsDetail.moneyRecords.arr = moneyRecords;
+            drugsDetail.moneyRecords.show = true;
+            for (var i in drugsDetail.moneyRecords.arr) {
+                drugsDetail.moneyRecords.arr[i].show = false;
+            }
+            dispatch(types.ROLLOUT_DETAIL, drugsDetail);
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+export const outOfDrugs = ({ dispatch }, param) => { //药款转出财务操作
+    console.log(param)
+    const Drugsdata = {
+        id: param.id,
+        status:param.status
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.orderList + '/money/rollOutHandle',
+        emulateHTTP: false,
+        body: Drugsdata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With":"XMLHttpRequest",
+            'Content-Type':'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.show=false;
+        console.log("操作成功")
+        console.log(res.json().result)
+        dispatch(types.ROLLOUT_STATUS, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核列表以及订单搜索
     param.loading = true;
     var url = apiUrl.orderList+param.link+'?orderStatus='+param.orderStatus+'&type='+param.type+'&page=' + param.cur + '&pageSize=15';
@@ -923,65 +996,6 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
     })
 }
 
-export const getDrugsDetail = ({ dispatch }, param) => { //获取药材详情
-    console.log(param)
-    Vue.http({
-        method: 'GET',
-        url: apiUrl.orderList + '/order/' + param.id,
-        emulateJSON: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-    }).then((res) => {
-        var orderDetail = res.json().result;
-        console.log(orderDetail)
-        var goods = orderDetail.goods;
-        if(!goods){
-          goods=[];
-        }
-        orderDetail.goods={};
-        orderDetail.goods.arr = goods;
-        orderDetail.goods.show = true;
-        for (var i in orderDetail.goods.arr) {
-            orderDetail.goods.arr[i].show = false;
-        }
-        var payPics = orderDetail.payPics;
-        if(!payPics){
-          payPics=[];
-        }
-        orderDetail.payPics={};
-        orderDetail.payPics.arr = payPics;
-        orderDetail.payPics.show = true;
-        for (var i in orderDetail.payPics.arr) {
-            orderDetail.payPics.arr[i].show = false;
-        }
-        var sendPics = orderDetail.sendPics;
-        orderDetail.sendPics={};
-        orderDetail.sendPics.arr = sendPics;
-        orderDetail.sendPics.show = true;
-        for (var i in orderDetail.sendPics.arr) {
-            orderDetail.sendPics.arr[i].show = false;
-        }
-        var attachFiles = orderDetail.attachFiles;
-        orderDetail.attachFiles={};
-        orderDetail.attachFiles.arr = attachFiles;
-        orderDetail.attachFiles.show = true;
-        for (var i in orderDetail.attachFiles.arr) {
-            orderDetail.attachFiles.arr[i].show = false;
-        }
-        var logisticses = orderDetail.logisticses;
-        orderDetail.logisticses={};
-        orderDetail.logisticses.arr = logisticses;
-        orderDetail.logisticses.show = true;
-        for (var i in orderDetail.logisticses.arr) {
-            orderDetail.logisticses.arr[i].show = false;
-        }
-
-        dispatch(types.ORDER_DETAIL_DATA, orderDetail);
-    }, (res) => {
-        console.log('fail');
-    })
-}
 export const getSystemData = ({ dispatch }, param) => { //枚举类型
     param.loading = true;
     Vue.http({
@@ -2512,11 +2526,24 @@ export const addrInfo = ({ dispatch }, param) => { //修改客户地址
 export const alterRemark = ({ dispatch }, param) => { //修改客户备注
     console.log(param)
     const updatedata = {
-        remark:param.label,
         status:param.status,
         id:param.id,
         customerId:param.customerId,
     }
+    for(var key in param){
+        if(key=='remark'&&param[key]!=''){
+            updatedata.remark=param[key];
+        }
+        if(key=='description'&&param[key]!=''){
+            updatedata.description=param[key];
+        }
+    }
+   /* if(param.remark){
+        updatedata.remark = param.remark;
+    }
+    if(param.description){
+        updatedata.description = param.description;
+    }*/
     Vue.http({
         method: 'PUT',
         url: apiUrl.clientList + param.url,
@@ -2540,7 +2567,7 @@ export const alterLabel = ({ dispatch }, param) => { //修改客户标签
         label:param.label,
         status:param.status,
         id:param.id,
-        customerId:param.customerId,
+        customerId:param.customerId
     }
     Vue.http({
         method: 'POST',

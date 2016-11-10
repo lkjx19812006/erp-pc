@@ -20,7 +20,7 @@
                      <th>名称</th>
                      <th>备注</th>
                      <th>更新时间</th>
-                     <th></th>
+                     <th colspan="2">操作</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -28,14 +28,20 @@
                     <td>{{item.cname}}</td>
                     <td>{{item.remark}}</td>
                     <td>{{item.utime}}</td>
-                    <td  @click="item.show=!item.show">
-                      <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
+                    <td  @click="editData(item,$index)">
+                      <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                      </a>
+                      <!-- <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
                        <div class="component_action" v-show='item.show' transition="expand">
                           <ul>
                               <li @click="editData(item,$index)">编辑</li>
                              <li @click="showConfirm(item,$index)">删除</li>
                           </ul>
-                        </div>
+                        </div> -->
+                    </td>
+                    <td  @click="showConfirm(item,$index)">
+                      <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
+                      </a>
                     </td>
                   </tr>
                 </tbody>

@@ -179,6 +179,17 @@ Vue.filter('intlstata', function(val){ //是否国际
 		return '国际';
 	}
 })
+
+Vue.filter('coa', function(val){ //检测报告
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else if(val==0){
+		return '无';
+	}else if(val==1){
+		return '有';
+	}
+})
 Vue.filter('visitstate', function(val){ //是否上门看货
 	var val = val;
 	if(val==null){
@@ -413,7 +424,33 @@ Vue.filter('drugsStatus',function(val){     //药款状态
 		 return '转出成功';
 	}
 })
+Vue.filter('payType',function(val){     //药款支付状态
+	var val = val;
+	if(val==1){
+		 return '支付宝支付';
+	}
+	if(val==2){
+		 return '平安支付';
+	}
+	if(val==3){
+		 return '微信支付';
+	}
+})
 
+Vue.filter('linktype',function(val){     //药款关联类型
+	var val = val;
+	if(val==0){
+		 return '订单';
+	}
+	if(val==1){
+		 return '转入';
+	}
+	if(val==2){
+		 return '转出';
+	}else{
+		return '其他';
+	}
+})
 Vue.filter('Currency',function(val){     //订单货币方式
 	var val = val;
 	if(val==0){

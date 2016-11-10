@@ -7,7 +7,7 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-    <div v-show="!changeParam.show">
+    <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">所有客户</div>
             <div class="right col-xs-6">
@@ -53,8 +53,12 @@
                         <th>注册地址</th>
                         <th>创建时间</th>
                         <th style="min-width:200px">备注</th>
+<<<<<<< HEAD
+                        <th colspan="2">操作</th>
+=======
 
                         <th ></th>
+>>>>>>> dbd2a54048216f519ead2c92a6b410a054ab5590
                     </tr>
                 </thead>
                 <tbody>
@@ -98,7 +102,53 @@
                         <td>{{item.address}}</td>
                         <td>{{item.ctime}}</td>
                         <td >{{item.comments}}</td>
-                        <td @click.stop="eventClick($index)">
+                         <td  @click="modifyClient({
+                                                id:item.id,
+                                                sub:$index,
+                                                show:true,
+                                                name:item.name,
+                                                type:item.type,
+                                                typeDesc:item.type,
+                                                classifyDesc:item.classify,
+                                                classify:item.classify,
+                                                category:item.category,
+                                                principal:item.principal,
+                                                bizScope:item.bizScope,
+                                                mainPhone:item.mainPhone,
+                                                email:item.email,
+                                                country:item.country,
+                                                countryName:item.countryName,
+                                                province:item.province,
+                                                provinceName:item.provinceName,
+                                                city:item.city,
+                                                cityName:item.cityName,
+                                                address:item.address,
+                                                comments:item.comments,
+                                                creditLevel:item.creditLevel,
+                                                link:alterInfo,
+                                                url:'/customer/',
+                                                key:'customerList',
+                                                employeeId:item.employeeId,
+                                                employeeName:item.employeeName,
+                                                orgId:item.orgId
+                                                })">
+                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
+                            </a>
+                        </td>
+                        <td  @click="specDelete({
+                                                id:item.id,
+                                                sub:$index,
+                                                show:true,
+                                                name:item.name,
+                                                title:'客户',
+                                                link:deleteInfo,
+                                                url:'/customer/',
+                                                key:'customerList'
+                                                })">
+                            <a class="operate"><img src="/static/images/del.png" height="18" width="30"/>
+                            </a>
+                        </td>
+                        <!-- <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="component_action" v-show="item.show">
                                 <ul>
@@ -142,7 +192,7 @@
                                                 })">删除</li>
                                 </ul>
                             </div>
-                        </td>
+                        </td> -->
                     </tr>
                 </tbody>
             </table>

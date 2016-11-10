@@ -70,12 +70,15 @@ export default {
     z-index: 1083
 }
 .modal_con{
-    z-index: 1084
+    z-index: 1084;
+    width: 600px;
+    height: 600px;
 }
 .top-title {
     position: absolute;
     top: 0;
     right: 0;
+    width: 600px;
 }
 .edit-content {
     padding: 19px 10px;
@@ -86,7 +89,11 @@ export default {
     width: 100%;
     box-sizing: border-box;
 }
-
+.edit_footer{
+   width: 600px;
+   position: absolute;
+   bottom: 0
+}
 .edit_footer button {
     margin-left: 15px;
 }

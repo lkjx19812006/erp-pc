@@ -74,7 +74,7 @@
           <th>所在市</th>
           <th>注册地址</th>
           <th>备注</th>
-          <th></th>
+          <th colspan="2">操作</th>
         </tr>
         </thead>
         <tbody>
@@ -113,55 +113,103 @@
           <td>{{item.cityName}}</td>
           <td>{{item.address}}</td>
           <td>{{item.comments}}</td>
-          <td @click.stop="eventClick($index)">
-            <img height="24" width="24" src="/static/images/default_arrow.png" />
-            <div class="component_action" v-show="item.show">
-              <ul>
-                <li @click="modifyClient({
-                              id:item.id,
-                              sub:$index,
-                              show:true,
-                              name:item.name,
-                              type:item.type,
-                              typeDesc:item.typeDesc,
-                              classify:item.classify,
-                              classifyDesc:item.classify,
-                              category:item.category,
-                              principal:item.principal,
-                              bizScope:item.bizScope,
-                              mainPhone:item.mainPhone,
-                              email:item.email,
-                              province:item.province,
-                              city:item.city,
-                              address:item.address,
-                              country:item.country,
-                              comments:item.comments,
-                              countryName:item.countryName,
-                              provinceName:item.provinceName,
-                              cityName:item.cityName,
-                              employeeId:item.employeeId,
-                              employeeName:item.employeeName,
-                              orgName:item.orgName,
-                              orgId:item.orgId,
-                              creditLevel:item.creditLevel,
-                              link:alterInfo,
-                              url:'/customer/',
-                              key:'customerList',
-                              supplier:1
-                              })">编辑</li>
-                <li @click="specDelete({
-                            id:item.id,
-                            sub:$index,
-                            show:true,
-                            name:item.name,
-                            title:'供应商',
-                            link:deleteInfo,
-                            url:'/customer/',
-                            key:'customerList'
-                            })">删除</li>
-              </ul>
-            </div>
+          <td  @click="modifyClient({
+                      id:item.id,
+                      sub:$index,
+                      show:true,
+                      name:item.name,
+                      type:item.type,
+                      typeDesc:item.typeDesc,
+                      classify:item.classify,
+                      classifyDesc:item.classify,
+                      category:item.category,
+                      principal:item.principal,
+                      bizScope:item.bizScope,
+                      mainPhone:item.mainPhone,
+                      email:item.email,
+                      province:item.province,
+                      city:item.city,
+                      address:item.address,
+                      country:item.country,
+                      comments:item.comments,
+                      countryName:item.countryName,
+                      provinceName:item.provinceName,
+                      cityName:item.cityName,
+                      employeeId:item.employeeId,
+                      employeeName:item.employeeName,
+                      orgName:item.orgName,
+                      orgId:item.orgId,
+                      creditLevel:item.creditLevel,
+                      link:alterInfo,
+                      url:'/customer/',
+                      key:'customerList',
+                      supplier:1
+                      })">
+               <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+               </a>
           </td>
+          <td @click="specDelete({
+                        id:item.id,
+                        sub:$index,
+                        show:true,
+                        name:item.name,
+                        title:'供应商',
+                        link:deleteInfo,
+                        url:'/customer/',
+                        key:'customerList'
+                        })">
+             <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
+               </a>
+          </td>
+         <!--  <td @click.stop="eventClick($index)">
+           <img height="24" width="24" src="/static/images/default_arrow.png" />
+           <div class="component_action" v-show="item.show">
+             <ul>
+               <li @click="modifyClient({
+                             id:item.id,
+                             sub:$index,
+                             show:true,
+                             name:item.name,
+                             type:item.type,
+                             typeDesc:item.typeDesc,
+                             classify:item.classify,
+                             classifyDesc:item.classify,
+                             category:item.category,
+                             principal:item.principal,
+                             bizScope:item.bizScope,
+                             mainPhone:item.mainPhone,
+                             email:item.email,
+                             province:item.province,
+                             city:item.city,
+                             address:item.address,
+                             country:item.country,
+                             comments:item.comments,
+                             countryName:item.countryName,
+                             provinceName:item.provinceName,
+                             cityName:item.cityName,
+                             employeeId:item.employeeId,
+                             employeeName:item.employeeName,
+                             orgName:item.orgName,
+                             orgId:item.orgId,
+                             creditLevel:item.creditLevel,
+                             link:alterInfo,
+                             url:'/customer/',
+                             key:'customerList',
+                             supplier:1
+                             })">编辑</li>
+               <li @click="specDelete({
+                           id:item.id,
+                           sub:$index,
+                           show:true,
+                           name:item.name,
+                           title:'供应商',
+                           link:deleteInfo,
+                           url:'/customer/',
+                           key:'customerList'
+                           })">删除</li>
+             </ul>
+           </div>
+         </td> -->
         </tr>
         </tbody>
       </table>

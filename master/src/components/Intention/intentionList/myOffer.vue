@@ -42,7 +42,7 @@
                         <th>杂费</th>
                         <th>备注</th>
                         <th>是否已采纳</th>
-      	            	<th></th>
+      	            	  <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,16 +64,19 @@
                         <td>
                            <div v-if="item.orderTime==0">未采纳</div>
                            <div v-else>已采纳</div>
-
                         </td>
-                        <td @click.stop="clickShow($index)">
-                           <img height="24" width="24" src="/static/images/default_arrow.png" />
-                           <div class="component_action" v-show="item.show">
-                               <ul >
-                                   <li v-if="item.orderTime==0"  @click="adopt(item,$index)">采纳</li>
-                               </ul>
-                           </div>
-                       </td>
+                        <td  v-if="item.orderTime==0"  @click.stop="adopt(item,$index)">
+                               <a class="operate"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
+                               </a>
+                        </td>
+                       <!--  <td @click.stop="clickShow($index)">
+                          <img height="24" width="24" src="/static/images/default_arrow.png" />
+                          <div class="component_action" v-show="item.show">
+                              <ul >
+                                  <li v-if="item.orderTime==0"  @click="adopt(item,$index)">采纳</li>
+                              </ul>
+                          </div>
+                                              </td> -->
                     </tr>
                 </tbody>
             </table>

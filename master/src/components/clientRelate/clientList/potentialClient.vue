@@ -7,7 +7,7 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-    <div v-show="!changeParam.show">
+    <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">潜在客户</div>
             <div class="right">
@@ -53,7 +53,7 @@
                         <th>注册地址</th>
                         <th>创建时间</th>
                         <th style="min-width:200px">备注</th>
-                        <th></th>
+                        <th colspan="2">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,16 +97,14 @@
                         <td>{{item.address}}</td>
                         <td>{{item.ctime}}</td>
                         <td >{{item.comments}}</td>
-                        <td @click.stop="eventClick($index)">
-                            <img height="24" width="24" src="/static/images/default_arrow.png" />
-                            <div class="component_action" v-show="item.show">
-                                <ul>
-                                    <li @click="modifyClient({
+                         <td  @click="modifyClient({
                                                 id:item.id,
                                                 sub:$index,
                                                 show:true,
                                                 name:item.name,
                                                 type:item.type,
+                                                typeDesc:item.type,
+                                                classifyDesc:item.classify,
                                                 classify:item.classify,
                                                 category:item.category,
                                                 principal:item.principal,
@@ -128,8 +126,11 @@
                                                 employeeId:item.employeeId,
                                                 employeeName:item.employeeName,
                                                 orgId:item.orgId
-                                                })">编辑</li>
-                                    <li @click="specDelete({
+                                                })">
+                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
+                            </a>
+                        </td>
+                        <td  @click="specDelete({
                                                 id:item.id,
                                                 sub:$index,
                                                 show:true,
@@ -138,10 +139,55 @@
                                                 link:deleteInfo,
                                                 url:'/customer/',
                                                 key:'customerList'
-                                                })">删除</li>
-                                </ul>
-                            </div>
+                                                })">
+                            <a class="operate"><img src="/static/images/del.png" height="18" width="30"/>
+                            </a>
                         </td>
+                       <!--  <td @click.stop="eventClick($index)">
+                           <img height="24" width="24" src="/static/images/default_arrow.png" />
+                           <div class="component_action" v-show="item.show">
+                               <ul>
+                                   <li @click="modifyClient({
+                                               id:item.id,
+                                               sub:$index,
+                                               show:true,
+                                               name:item.name,
+                                               type:item.type,
+                                               classify:item.classify,
+                                               category:item.category,
+                                               principal:item.principal,
+                                               bizScope:item.bizScope,
+                                               mainPhone:item.mainPhone,
+                                               email:item.email,
+                                               country:item.country,
+                                               countryName:item.countryName,
+                                               province:item.province,
+                                               provinceName:item.provinceName,
+                                               city:item.city,
+                                               cityName:item.cityName,
+                                               address:item.address,
+                                               comments:item.comments,
+                                               creditLevel:item.creditLevel,
+                                               link:alterInfo,
+                                               url:'/customer/',
+                                               key:'customerList',
+                                               employeeId:item.employeeId,
+                                               employeeName:item.employeeName,
+                                               orgId:item.orgId
+                                               })">编辑</li>
+                                   <li @click="specDelete({
+                                               id:item.id,
+                                               sub:$index,
+                                               show:true,
+                                               name:item.name,
+                                               title:'客户',
+                                               link:deleteInfo,
+                                               url:'/customer/',
+                                               key:'customerList'
+                                               })">删除</li>
+                               </ul>
+                           </div>
+                       </td> -->
                     </tr>
                 </tbody>
             </table>

@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                                     <label class="editlabel">检测报告</label>
-                                    <input type="text" class="form-control edit-input"  v-model="initProductDetail.coa" value="{{initProductDetail.coa}}" disabled="disabled"/>
+                                    <input type="text" class="form-control edit-input"  value="{{initProductDetail.coa | coa}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">

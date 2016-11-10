@@ -60,7 +60,7 @@
                         <th>样品价格</th>
                         <th>报价人数</th>
                         <th>审核状态</th>
-                        <th></th>
+                        <th colspan="2">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -148,6 +148,20 @@
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offerNumber}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
+<<<<<<< HEAD
+                        <td  @click.stop="modifyIntention({
+                                              id:item.id,
+                                              sub:$index,
+                                              selectCustomer:false,
+                                              flag:1,
+                                              show:true,
+                                              loading:true,
+                                              title:'编辑',
+                                              customerName:item.customerName,
+                                              customerPhone:item.customerPhone,
+                                              breedName:item.breedName,
+                                              breedId:item.breedId,
+=======
 
                         <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
@@ -165,6 +179,7 @@
                                                customerPhone:item.customerPhone,
                                                breedName:item.breedName,
                                                breedId:item.breedId,
+>>>>>>> dbd2a54048216f519ead2c92a6b410a054ab5590
                                               type:item.type,
                                               especial:item.especial,
                                               quality:item.quality,
@@ -203,42 +218,125 @@
                                                image_s_show:'',
                                                image_t_show:'',
                                                duedate:item.duedate
-                                               })">编辑</li>
-                                   <li @click="userToClient({
-                                                  name:item.customerName,
-                                                  keyname:'transStatus',
-                                                  sub:$index,
-                                                  //userId:item.userId,
-                                                  main:1,
-                                                  province:'',
-                                                  phone:item.customerPhone,
-                                                  tel:item.userTel,
-                                                  email:item.userEmail,
-                                                  qq:item.userQq,
-                                                  type:0,
-                                                  fullname:item.userFullname,
-                                                  employeeId:'',
-                                                  employeeName:'',
-                                                  orgId:'',
-                                                  orgName:'',
-                                                  show:true,
-                                                  key:'userList',
-                                                  countryId:7,
-                                                  countryName:'中国',
-                                                  contact:{
-                                                   name: item.customerName,
-                                                   position: '',
-                                                   department: '',
-                                                   phone: item.customerPhone,
-                                                   tel: item.userTel,
-                                                   email: item.email,
-                                                   qq: item.userQq,
-                                                   wechart: ''
-                                                  }
-                                                },item.show=false)">划转</li>
-                               </ul>
-                           </div>
-                       </td>
+                                               })">
+                           <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                           </a>
+                        </td>
+                        <td @click.stop="userToClient({
+                                name:item.customerName,
+                                keyname:'transStatus',
+                                sub:$index,
+                                //userId:item.userId,
+                                main:1,
+                                province:'',
+                                phone:item.customerPhone,
+                                tel:item.userTel,
+                                email:item.userEmail,
+                                qq:item.userQq,
+                                type:0,
+                                fullname:item.userFullname,
+                                employeeId:'',
+                                employeeName:'',
+                                orgId:'',
+                                orgName:'',
+                                show:true,
+                                key:'userList',
+                                countryId:7,
+                                countryName:'中国',
+                                contact:{
+                                 name: item.customerName,
+                                 position: '',
+                                 department: '',
+                                 phone: item.customerPhone,
+                                 tel: item.userTel,
+                                 email: item.email,
+                                 qq: item.userQq,
+                                 wechart: ''
+                                }
+                              },item.show=false)">
+                            <a class="operate"><img src="/static/images/transfer.png" height="18" width="30"  alt="划转" title="划转"/>
+                            </a>
+                        </td>
+                      <!--   <td @click.stop="eventClick($index)">
+                         <img height="24" width="24" src="/static/images/default_arrow.png" />
+                         <div class="component_action" v-show="item.show">
+                             <ul>
+                                 <li @click="modifyIntention({
+                                             
+                                            type:item.type,
+                                            especial:item.especial,
+                                            quality:item.quality,
+                                            qualification:item.qualification,
+                                            spec:item.spec,
+                                            number:item.number,
+                                            unit:item.unit,
+                                            price:item.price,
+                                            address:item.address,
+                                            location:item.location,
+                                            advance:item.advance,
+                                            invoic:item.invoic,
+                                            visit:item.visit,
+                                            pack:item.pack,
+                                            intl:item.intl,
+                                            visit:item.visit,
+                                            sampling:item.sampling,
+                                            sampleNumber:item.sampleNumber,
+                                            sampleUnit:item.sampleUnit,
+                                            sampleAmount:item.sampleAmount,
+                                            offer:item.offer,
+                                            status:item.status,
+                                             country:item.country,
+                                             province:item.province,
+                                             city:item.city,
+                                             district:item.district,
+                                             address:item.address,
+                                             validate:item.validate,
+                                             link:editintentInfo,
+                                             url:'/intention/',
+                                             key:'intentionList',
+                                             image_f:'',
+                                             image_s:'',
+                                             image_t:'',
+                                             image_f_show:'',
+                                             image_s_show:'',
+                                             image_t_show:'',
+                                             duedate:item.duedate
+                                             })">编辑</li>
+                                 <li @click="userToClient({
+                                                name:item.customerName,
+                                                keyname:'transStatus',
+                                                sub:$index,
+                                                //userId:item.userId,
+                                                main:1,
+                                                province:'',
+                                                phone:item.customerPhone,
+                                                tel:item.userTel,
+                                                email:item.userEmail,
+                                                qq:item.userQq,
+                                                type:0,
+                                                fullname:item.userFullname,
+                                                employeeId:'',
+                                                employeeName:'',
+                                                orgId:'',
+                                                orgName:'',
+                                                show:true,
+                                                key:'userList',
+                                                countryId:7,
+                                                countryName:'中国',
+                                                contact:{
+                                                 name: item.customerName,
+                                                 position: '',
+                                                 department: '',
+                                                 phone: item.customerPhone,
+                                                 tel: item.userTel,
+                                                 email: item.email,
+                                                 qq: item.userQq,
+                                                 wechart: ''
+                                                }
+                                              },item.show=false)">划转</li>
+                             </ul>
+                         </div>
+                                             </td> -->
 
                     </tr>
 

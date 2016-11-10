@@ -52,8 +52,9 @@
                     <span class="system_danger" v-if="param.trackingWay=='qq'&&$validation.contactno.qq">请输入正确的qq号</span>
                     <span class="system_danger" v-if="param.trackingWay=='微信'&&$validation.contactno.wechart">请输入正确的微信号</span>
                     <span class="system_danger" v-if="param.trackingWay=='邮件'&&$validation.contactno.email">请输入正确的邮箱</span>
+                     <span class="system_danger" v-if="param.trackingWay=='固话'&&$validation.contactno.tel">请输入正确的电话</span>             
                   </label>
-                  <input type="text" v-model='param.contactNo' class="form-control edit-input" v-validate:contactno="['phone','qq','wechart','email']" value="{{param.contactNo}}"/>
+                   <input type="text" v-model='param.contactNo' class="form-control edit-input" v-validate:contactno="['phone','qq','wechart','email','tel']" value="{{param.contactNo}}"  placeholder='请先选择跟进方式'/>
                 </div>
               </div>
               <div class="editpageright">

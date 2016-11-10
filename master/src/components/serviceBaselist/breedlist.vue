@@ -40,18 +40,12 @@
                         <th>拼音</th>
                         <th>英文</th>
                         <th>拉丁文</th>
-                        <th></th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <thead class="space">
                     <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th colspan="7"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,12 +57,13 @@
                         <td>{{item.pinyin}}</td>
                         <td>{{item.eName}}</td>
                         <td>{{item.lName}}</td>
-                        <td @click.stop="eventClick($index)">
-                            <img height="24" width="24" src="/static/images/default_arrow.png" />
+                        <td @click="item.show=false,modifyBreed($index,item)">
+                          <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                            <!-- <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="breed_action" v-show="item.show">
                                 <ul>
                                     <li @click="item.show=false,modifyBreed($index,item)">编辑</li>
-                                    <!-- <li @click="specDelete({
+                                    <li @click="specDelete({
                                         id:item.id,
                                         sub:$index,
                                         show:true,
@@ -77,9 +72,9 @@
                                         link:deleteInfo,
                                         url:'/breed/',
                                         key:'breedList'
-                                        },item.show=false)">删除</li> -->
+                                        },item.show=false)">删除</li>
                                 </ul>
-                            </div>
+                            </div> -->
                         </td>
                     </tr>
                 </tbody>

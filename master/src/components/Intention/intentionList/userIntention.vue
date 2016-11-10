@@ -27,54 +27,8 @@
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 <button class="new_btn transfer" @click="search()">搜索</button>
                 <button class="new_btn transfer" @click="intentionAudit()">审核</button>
-                <!-- <button class="new_btn" @click="createIntention({
-                       show:true,
-                       selectCustomer:true,
-                       flag:0,
-                       employeeId:'100014',
-                       title:'新建',
-                       customerName:'',
-                       customerId:'',
-                       customerPhone:'',
-                       breedName:'',
-                       breedId:'',
-                       type:'',
-                       especial:'',
-                       qualification:'',
-                       quality:'',
-                       spec:'',
-                       number:'',
-                       unit:'',
-                       price:'',
-                       address:'',
-                       location:'',
-                       advance:'',
-                       invoic:'',
-                       visit:'',
-                       pack:'',
-                       intl:'',
-                       visit:'',
-                       sampling:'',
-                       sampleNumber:'',
-                       sampleUnit:'',
-                       sampleAmount:'',
-                       status:'',
-                       country:'',
-                       province:'',
-                       city:'',
-                       district:'',
-                       address:'',
-                       key:'intentionList',
-                       link:createIntentionInfo,
-                       url:'/intention/'
-                       })">新建</button>  -->
             </div>
         </div>
-      <!--   <div class="service-nav clearfix">
-          <div class="my_order_search">
-
-         </div>
-      </div> -->
         <div class="order_table">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -112,7 +66,7 @@
                         <th>发布时间</th>
                         <th>审核状态</th>
                         <!-- <th>上下架</th> -->
-                        <th></th>
+                        <th colspan="4">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -204,116 +158,118 @@
                         <!-- <td>
                           <div>{{item.onSell | onsell}}</div>
                         </td> -->
-                        <td @click.stop="eventClick($index)">
-                           <img height="24" width="24" src="/static/images/default_arrow.png" />
-                           <div class="component_action" v-show="item.show">
-                               <ul>
-                                   <li @click="modifyIntention({
-                                               id:item.id,
-                                               sub:$index,
-                                               selectCustomer:false,
-                                               flag:1,
-                                               show:true,
-                                               loading:true,
-                                               title:'编辑',
-                                               userFullname:item.userFullname,
-                                               userPhone:item.userPhone,
-                                               customerName:item.customerName,
-                                               customerPhone:item.customerPhone,
-                                               breedName:item.breedName,
-                                               breedId:item.breedId,
-                                              type:item.type,
-                                              especial:item.especial,
-                                              quality:item.quality,
-                                              qualification:item.qualification,
-                                              spec:item.spec,
-                                              number:item.number,
-                                              unit:item.unit,
-                                              price:item.price,
-                                              ctime:item.ctime,
-                                              address:item.address,
-                                              location:item.location,
-                                              advance:item.advance,
-                                              invoic:item.invoic,
-                                              visit:item.visit,
-                                              pack:item.pack,
-                                              intl:item.intl,
-                                              visit:item.visit,
-                                              sampling:item.sampling,
-                                              sampleNumber:item.sampleNumber,
-                                              sampleUnit:item.sampleUnit,
-                                              sampleAmount:item.sampleAmount,
-                                              offer:item.offer,
-                                              status:item.status,
-                                               country:item.country,
-                                               province:item.province,
-                                               city:item.city,
-                                               district:item.district,
-                                               address:item.address,
-                                               validate:item.validate,
-                                               link:editintentInfo,
-                                               url:'/intention/',
-                                               key:'intentionList',
-                                               image_f:'',
-                                               image_s:'',
-                                               image_t:'',
-                                               image_f_show:'',
-                                               image_s_show:'',
-                                               image_t_show:'',
-                                               duedate:item.duedate
-                                               })">编辑</li>
-                                   <li @click="specDelete({
-                                               id:item.id,
-                                               sub:$index,
-                                               show:true,
-                                               name:item.name,
-                                               title:'意向',
-                                               link:deleteInfo,
-                                               url:'/intention/',
-                                               key:'intentionList'
-                                               })">删除</li>
-                                   <li @click="userToClient({
-                                                  name:item.userFullname,
-                                                  keyname:'transStatus',
-                                                  sub:$index,
-                                                  userId:item.userId,
-                                                  main:1,
-                                                  province:'',
-                                                  phone:item.userPhone,
-                                                  tel:item.userTel,
-                                                  email:item.userEmail,
-                                                  qq:item.userQq,
-                                                  type:'',
-                                                  fullname:item.userFullname,
-                                                  employeeId:'',
-                                                  employeeName:'',
-                                                  orgId:'',
-                                                  orgName:'',
-                                                  show:true,
-                                                  key:'userList',
-                                                  countryId:7,
-                                                  countryName:'中国',
-                                                  contact:{
-                                                   name: item.userFullname,
-                                                   position: '',
-                                                   department: '',
-                                                   phone: item.userPhone,
-                                                   tel: item.userTel,
-                                                   email: item.email,
-                                                   qq: item.userQq,
-                                                   wechart: ''
-                                                  }
-                                                },item.show=false)">划转</li>
-                                   <li v-if="item.validate==0||item.validate==9" @click="audit($index,item.id)">审核</li>
-                               </ul>
-                           </div>
-                       </td>
-
+                        <td  @click.stop="modifyIntention({
+                              id:item.id,
+                              sub:$index,
+                              selectCustomer:false,
+                              flag:1,
+                              show:true,
+                              loading:true,
+                              title:'编辑',
+                              userFullname:item.userFullname,
+                              userPhone:item.userPhone,
+                              customerName:item.customerName,
+                              customerPhone:item.customerPhone,
+                              breedName:item.breedName,
+                              breedId:item.breedId,
+                              type:item.type,
+                              especial:item.especial,
+                              quality:item.quality,
+                              qualification:item.qualification,
+                              spec:item.spec,
+                              number:item.number,
+                              unit:item.unit,
+                              price:item.price,
+                              ctime:item.ctime,
+                              address:item.address,
+                              location:item.location,
+                              advance:item.advance,
+                              invoic:item.invoic,
+                              visit:item.visit,
+                              pack:item.pack,
+                              intl:item.intl,
+                              visit:item.visit,
+                              sampling:item.sampling,
+                              sampleNumber:item.sampleNumber,
+                              sampleUnit:item.sampleUnit,
+                              sampleAmount:item.sampleAmount,
+                              offer:item.offer,
+                              status:item.status,
+                               country:item.country,
+                               province:item.province,
+                               city:item.city,
+                               district:item.district,
+                               address:item.address,
+                               validate:item.validate,
+                               link:editintentInfo,
+                               url:'/intention/',
+                               key:'intentionList',
+                               image_f:'',
+                               image_s:'',
+                               image_t:'',
+                               image_f_show:'',
+                               image_s_show:'',
+                               image_t_show:'',
+                               duedate:item.duedate
+                               })">
+                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                            </a>
+                        </td>
+                        <td @click.stop="specDelete({
+                               id:item.id,
+                               sub:$index,
+                               show:true,
+                               name:item.name,
+                               title:'意向',
+                               link:deleteInfo,
+                               url:'/intention/',
+                               key:'intentionList'
+                               })">
+                            <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
+                            </a>
+                        </td>
+                        <td @click.stop="userToClient({
+                                name:item.userFullname,
+                                keyname:'transStatus',
+                                sub:$index,
+                                userId:item.userId,
+                                main:1,
+                                province:'',
+                                phone:item.userPhone,
+                                tel:item.userTel,
+                                email:item.userEmail,
+                                qq:item.userQq,
+                                type:'',
+                                fullname:item.userFullname,
+                                employeeId:'',
+                                employeeName:'',
+                                orgId:'',
+                                orgName:'',
+                                show:true,
+                                key:'userList',
+                                countryId:7,
+                                countryName:'中国',
+                                contact:{
+                                 name: item.userFullname,
+                                 position: '',
+                                 department: '',
+                                 phone: item.userPhone,
+                                 tel: item.userTel,
+                                 email: item.email,
+                                 qq: item.userQq,
+                                 wechart: ''
+                               }
+                              },item.show=false)">
+                            <a class="operate"><img src="/static/images/transfer.png" height="18" width="28"  alt="划转" title="划转"/>
+                            </a>
+                        </td>
+                        <td v-if="item.validate==0||item.validate==9" @click.stop="audit($index,item.id)">
+                           <a class="operate"><img src="/static/images/apply.png" height="18" width="47"  alt="审核" title="审核"/></a>
+                        </td>
+                        
                     </tr>
-
                 </tbody>
             </table>
-
         </div>
         <div class="base_pagination">
             <pagination :combination="loadParam"></pagination>
