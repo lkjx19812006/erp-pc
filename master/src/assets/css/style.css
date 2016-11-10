@@ -11,6 +11,9 @@
     border: 0;
 }
 
+
+
+
 html,
 body {
     height: 100%;
@@ -329,6 +332,10 @@ body {
     z-index: 1100;
     left: 0;
     right: 0
+}
+
+.top-title{
+  position: fixed;
 }
 
 
