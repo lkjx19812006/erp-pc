@@ -2520,7 +2520,7 @@ export const addrInfo = ({ dispatch }, param) => { //修改客户地址
 export const alterRemark = ({ dispatch }, param) => { //修改客户备注
     console.log(param)
     const updatedata = {
-        remark:param.label,
+        remark:param.remark,
         status:param.status,
         id:param.id,
         customerId:param.customerId,
@@ -2548,7 +2548,7 @@ export const alterLabel = ({ dispatch }, param) => { //修改客户标签
         label:param.label,
         status:param.status,
         id:param.id,
-        customerId:param.customerId,
+        customerId:param.customerId
     }
     Vue.http({
         method: 'POST',

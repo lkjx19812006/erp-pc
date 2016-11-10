@@ -1067,10 +1067,17 @@ const mutations = {
     },
     [UPDATE_LABEL_DETAIL](state, data) { //修改客户标签
         console.log(data);
-        for (var key in data) {
-            state[data.headline][data.key].arr[data.sub][key] = data[key];
+        console.log(data.key);
+        console.log(state.basicBaseList.filesList)
+        if(data.key=='filesList'){
+             state.basicBaseList.filesList[data.sub].description = data.remark;
+        }else{
+           for (var key in data) {
+                state[data.headline][data.key].arr[data.sub][key] = data[key];
+            }
+            state[data.headline][data.key].arr[data.sub].remark = data.remark;
         }
-        state[data.headline][data.key].arr[data.sub].remark = data.remark;
+       
     },
     [UPDATE_PRODUCT_DATA](state, data) { //修改客户产品
         for (var key in data) {

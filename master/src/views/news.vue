@@ -158,11 +158,11 @@
                             </a>
                         </td>
                         <td v-if="item.utype==1" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">
-                            <a class="operate"><img src="/static/images/transfer.png" height="18" width="30"/>
+                            <a class="operate"><img src="/static/images/Pcertification.png" height="18" width="47"/>
                             </a>
                         </td>
                         <td  v-if="item.ctype==1" @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)">
-                            <a class="operate"><img src="/static/images/transfer.png" height="18" width="30"/>
+                            <a class="operate"><img src="/static/images/Ecertification.png" height="18" width="48"/>
                             </a>
                         </td>
                         <!-- <td @click.stop="eventClick($index)">

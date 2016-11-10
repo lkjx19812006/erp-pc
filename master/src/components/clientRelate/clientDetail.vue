@@ -787,13 +787,13 @@
               						            	})">
                     										<img class="pull-left" src="/static/images/addr.png" height="30" width="26"  />
                     										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                    											收货地址（{{initClientDetail.addresses.arr.length}}）
+                    											地址（{{initClientDetail.addresses.arr.length}}）
                     										</a>
                     										<button type="button" class="btn btn-base pull-right" @click.stop="createAddr({
       		                                     customerId:param.id,
       		                                     id:param.id,
       		                                     show:true,
-      		                                     title:'收货地址',
+      		                                     title:'地址',
                                                typelist:'类型',
                                                namelist:'联系人姓名',
       		                                     phonelist:'联系人电话',
@@ -860,7 +860,7 @@
                                                            id:item.id,
                                                            customerId:item.customerId,
                                                            show:true,
-                                                           title:'收货地址',
+                                                           title:'地址',
                                                            typelist:'类型',
                                                            namelist:'联系人姓名',
                                                            phonelist:'联系人电话',
@@ -895,7 +895,7 @@
                                                            id:item.id,
                                                            sub:$index,
                                                            show:true,
-                                                           title:'收货地址',
+                                                           title:'地址',
                                                            link:addrDel,
                                                            url:'/customer/deleteAddress/',
                                                            key:'addresses',
@@ -996,7 +996,8 @@
                                         	</thead>
 		                                    <tbody>
 		                                        <tr v-for="item in initClientDetail.labels.arr">
-		                                            <td>{{item.label}}</td>
+		                                            <td v-if="item.label=='新手'" style="color:blue">{{item.label}}</td>
+                                                <td v-if="item.label=='老司机'" style="color:green">{{item.label}}</td>
                                                 <td   @click="updatelabel({
                                                            sub:$index,
                                                            id:item.id,
@@ -1171,54 +1172,10 @@
                                                              url:'/customer/file/',
                                                              key:'files'
                                                            })">
-                                                   <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
+                                                   <a class="operate"><img src="/static/images/uploadPro.png" height="18" width="67"/>
                                                    </a>
                                                 </td>
-		                                           <!--  <td  @click="clickShow($index,{
-                                                 concrete:'products'
-                                                 })">
-                                                 <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                                                                 <div class="breed_action" v-show="item.show" >
-                                                                                                  <dl>
-                                                                                                      <dt @click="newproduct({
-                                                                                                          sub:$index,
-                                                                                                          id:item.id,
-                                                                                                          cid:item.cid,
-                                                                                                          show:true,
-                                                                                                          title:'编辑产品',
-                                                                                                          type:item.type,
-                                                                                                          name:item.name,
-                                                                                                          breedId:item.breedId,
-                                                                                                          breedName:item.breedName,
-                                                                                                          quality:item.quality,
-                                                                                                          location:item.location,
-                                                                                                          spec:item.spec,
-                                                                                                          number:item.number,
-                                                                                                          price:item.price,
-                                                                                                          unit:item.unit,
-                                                                                                          duedate:item.duedate,
-                                                                                                          coa:item.coa,
-                                                                                                          link:alterProduct,
-                                                                                                          url:'/customer/product',
-                                                                                                          key:'products',
-                                                                                                          headline:'clientDetail'
-                                                                                                          })">编辑</dt>
-                                                                                                       <dt @click="createfiles({
-                                                                                                            bizId:param.id,
-                                                                                                            id:param.id,
-                                                                                                            show:true,
-                                                                                                            title:'新建产品文件',
-                                                                                                            fileType:'',
-                                                                                                            bizType:'',
-                                                                                                            description:'',
-                                                                                                            path:'',
-                                                                                                            link:uploadFiles,
-                                                                                                            url:'/customer/file/',
-                                                                                                            key:'files'
-                                                                                                          })">上传产品文件</dt>
-                                                                                                  </dl>
-                                                                                               </div>
-                                               </td> -->
+		                                           
 		                                        </tr>
 		                                    </tbody>
 		                                </table>

@@ -1,10 +1,11 @@
 <template>
   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
   <createfiles-model :param="cfilesParam" v-if="cfilesParam.show"></createfiles-model>
+  <updatelabel-model :param="updlabelParam" v-if="updlabelParam.show"></updatelabel-model>
   <div>
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">资质证书</div>
-      <div class="right col-xs-2">
+      <!-- <div class="right col-xs-2">
         <button class="new_btn transfer" @click="createfiles({
                                    bizId:'',
                                    show:true,
@@ -17,7 +18,7 @@
                                    link:uploadCertificate,
                                    url:'/customer/file/'
                                   })">新建</button>
-      </div>
+      </div> -->
     </div>
     <div class="order_table">
       <div class="cover_loading">
@@ -30,7 +31,7 @@
               <th>所属文件</th>
               <!--<th>路径</th>-->
               <th>描述</th>
-              <th>操作</th>
+              <th colspan="2">操作</th>
             </tr>
         </thead>
         <tbody>
@@ -44,6 +45,23 @@
                     <!--<img  src="/static/images/excel.png" v-if="item.fileType=='excel'">-->
               <!--</td>-->
               <td>{{item.description}}</td>
+              <td  @click="updatelabel({
+                         sub:$index,
+                         id:item.id,
+                         customerId:item.bizId,
+                         show:true,
+                         title:'备注',
+                         labelist:'备注',
+                         statuslist:'状态',
+                         remark:item.description,
+                         status:item.status,
+                         link:alterRemark,
+                         url:'/customer/remark',
+                         key:'filesList'
+                         })">
+                 <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  />
+                 </a>
+              </td>
               <td @click="specDelete({
                       id:item.id,
                       sub:$index,
@@ -57,23 +75,6 @@
                <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                </a>
               </td>
-              <!-- <td @click="showClick($index)">
-                <img height="24" width="24" src="/static/images/default_arrow.png" />
-                <div class="component_action" v-show="item.show">
-                  <ul>
-                    <li @click="specDelete({
-                                id:item.id,
-                                sub:$index,
-                                show:true,
-                                name:'资质证书',
-                                title:'资质证书',
-                                link:deleteInfo,
-                                url:'/customer/file/',
-                                key:'filesList'
-                            })">删除</li>
-                  </ul>
-                </div>
-              </td> -->
             </tr>
         </tbody>
       </table>
@@ -87,20 +88,23 @@
   import pagination from '../pagination'
   import deletebreedModel from  '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
   import createfilesModel from  '../supply/createFiles'
+  import updatelabelModel from  '../clientRelate/label/updatelebel'
   import {
     initFileslist
   } from '../../vuex/getters'
   import {
     getFilesList,
     deleteInfo,
-    uploadCertificate
+    uploadCertificate,
+    alterRemark
   } from '../../vuex/actions'
 
   export default {
     components: {
       pagination,
       deletebreedModel,
-      createfilesModel
+      createfilesModel,
+      updatelabelModel
     },
     vuex: {
       getters: {
@@ -109,7 +113,8 @@
       actions: {
         getFilesList,
         deleteInfo,
-        uploadCertificate
+        uploadCertificate,
+        alterRemark
       }
     },
     data() {
@@ -136,6 +141,9 @@
         },
         deleteParam:{
           show:false
+        },
+        updlabelParam:{
+          show:false
         }
       }
     },
@@ -154,6 +162,9 @@
         console.log(";;;")
          this.cfilesParam = initFileslist;
          this.$broadcast('getImageData');
+      },
+      updatelabel:function(initFileslist){
+         this.updlabelParam = initFileslist;
       }
     },
     events: {
