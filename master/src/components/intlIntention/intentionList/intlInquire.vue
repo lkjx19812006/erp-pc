@@ -2,6 +2,7 @@
      <inquire-model :param="inquireParam" v-if="inquireParam.show"></inquire-model>
      <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
      <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
+     <affirmoffer-model :param="affirmOfferParam" v-if="affirmOfferParam.show"></affirmoffer-model>
      <div v-show="!detailParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">国际意向询价</div>
@@ -11,7 +12,7 @@
             <div class="right">
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 <button class="new_btn transfer" @click="search()">搜索</button>
-                <button class="new_btn" @click="createIntention()">新建</button>
+               
             </div>
         </div>
         <div class="service-nav clearfix">
@@ -49,7 +50,7 @@
                         <!--</td>-->
                         <td>{{item.inquireType}}</td>
                         <td>{{item.intentionId}}</td>
-                        <td><a @click="clickOn(item.intentionId)">{{item.customerName}}</a></td>
+                        <td><a @click="clickOn(item.intentionId,item.id)">{{item.customerName}}</a></td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.country}}</td>
@@ -58,7 +59,8 @@
                         <td>{{item.district}}</td>
                         <td>{{item.ctime | date}}</td>
                         <td><a @click.stop="offer()">报价</a></td>
-                        <td>确认报价</td>
+                        <td><a @click.stop="confirmOffer(item.intentionId,$index)">确认报价</a></td>
+                        <!-- <td><div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/offer.png" alt="确认报价"  /></div></td> -->
 
                     </tr>
 
@@ -76,6 +78,7 @@ import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import offerModel from '../intlOffer'
 import detailModel from '../inquireDetail'
+import affirmofferModel from '../confirmOffer'
 
 import inquireModel from '../inquire'
 import {
@@ -92,7 +95,8 @@ export default {
         pagination,
         inquireModel,
         offerModel,
-        detailModel
+        detailModel,
+        affirmofferModel
     },
     vuex: {
         getters: {
@@ -123,12 +127,20 @@ export default {
                 customerEmail:''
                 
             },
-            
+            affirmOfferParam:{
+                show:false,
+                link:'/intlIntention/offer',
+                id:'',
+                index:'',
+                description:''
+
+            },
             detailParam:{
                 link:'/intlIntention/',
                 key:'intentionDetail',
                 show:false,
-                id:''
+                id:'',
+                inquireId:''
 
             },
            
@@ -183,18 +195,30 @@ export default {
         }
     },
     methods: {
-        clickOn:function(id){
+        clickOn:function(id,inquireId){
             this.detailParam.id = id;
+            this.detailParam.inquireId = inquireId;
+
             this.detailParam.show = true;
         },
+
         offer:function(){
             this.offerParam.show = true;
+        },
+
+        confirmOffer:function(intentionId,index){
+            console.log(intentionId);
+            this.affirmOfferParam.id = intentionId;
+            this.affirmOfferParam.index = index;
+            this.affirmOfferParam.show = true;
+            //this.intlIntentionAffirmOffer(this.affirmOfferParam);
         },
         search:function(){
           this.loadParam.loading = false;
           this.loadParam.show = true;
 
         },
+
         searchIntention:function(){
             this.getIntlIntentionList(this.loadParam);
         },

@@ -72,7 +72,9 @@ import {
    INTLINTENTION_LIST_DATA,
    INTLINTENTION_DETAIL_DATA,
    INTLINTENTION_INQUIRE_LIST_DATA,
+   ADD_INTLINTENTION_DATA,
    UPDATA_INTLINTENTION_DATA,
+   DELETE_INTLINTENTION_DATA,
    PROVINCE_LIST,
    COUNTRY_LIST,
    CITY_LIST,
@@ -1378,6 +1380,13 @@ const mutations = {
 
     },
 
+    [ADD_INTLINTENTION_DATA](state,data){ //修改国际意向
+
+        console.log("新增国际意向");
+        state.basicBaseList.intlIntentionList.unshift(data);
+        
+    },
+
     [UPDATA_INTLINTENTION_DATA](state,data){ //修改国际意向
 
         console.log("修改国际意向");
@@ -1389,6 +1398,11 @@ const mutations = {
 
     },
 
+    [DELETE_INTLINTENTION_DATA](state,data){ //删除国际意向
+
+        console.log("删除国际意向");
+        state.basicBaseList.intlIntentionList.splice(data.index,1);
+    },
 
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
       var temp = {
