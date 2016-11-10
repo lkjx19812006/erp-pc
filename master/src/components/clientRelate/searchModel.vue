@@ -134,7 +134,7 @@
                     <mz-datepicker :time.sync="param.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
                     </mz-datepicker>
                   </div>
-                  <div class="client-detailInfo col-xs-6">
+                  <div class="client-detailInfo col-xs-6" style="float:right">
                     <label>注册结束时间：</label>
                     <mz-datepicker :time.sync="param.ctimeEnd" format="yyyy/MM/dd HH:mm:ss" class="a">
                     </mz-datepicker>

@@ -67,18 +67,18 @@
                              <td>{{item.cost}}</td>
                              <td>{{item.costDesc}}</td>
                              <td>{{item.comment}}</td>
-                             <td @click="showModifyOffer($index)"><a>编辑</a></td>
+                             <td @click="showModifyOffer($index)"><a v-if="!addParam.show">编辑</a></td>
                              
                              
                          </tr>
                      </tbody>
                  </table>
-                <!--  <div style="padding-left:25%">
-                     <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed()">添加药材信息</div>   
-                 </div>   --> 
+                <div style="padding-left:25%">
+                     <div v-if="!updateParam.show" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddOffer()">添加其他报价</div>   
+                 </div> 
                   
                  <validator name="inner">   
-                     <div v-if="updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
+                     <div v-if="updateParam.show||addParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
                            <div class="editpageleft">
                               <div class="editpage-input">
                                    <label class="editlabel" >货币类型<span class="system_danger" v-if="$inner.currency.required">必填项</span></label>
@@ -108,7 +108,7 @@
                     
                                             
                               <div style="margin-top:10px;text-align:right">
-                                  <button type="button" class="btn btn-confirm" @click="updateParam.show=false">
+                                  <button type="button" class="btn btn-confirm" @click="updateParam.show=false,addParam.show=false">
                                       取消
                                   </button>
                                   <button type="button" class="btn btn-confirm" v-if="$inner.valid" @click="modifyOffer()">
@@ -145,7 +145,7 @@ import {
 import {
     
     getIntlIntentionDetail,
-    intlIntentionOffer
+    intlIntentionOtherOffer
 } from '../../vuex/actions'
 export default {
     components: {
@@ -164,7 +164,10 @@ export default {
               callback:this.callback
           },
           
-          
+          addParam:{
+            show:false,
+          },
+
           updateParam:{
             show:false,
             index:0
@@ -176,12 +179,8 @@ export default {
               inquireId:'',
               type:'',
               currency:'',
-              itemId:'',
-              itemName:'',
-              origPrice:'',
-              price:'',
-              number:'',
-              unit:'',
+              cost:'',
+              costDesc:'',
               total:'',
               comment:''
           },
@@ -203,11 +202,35 @@ export default {
         actions: {
           
           getIntlIntentionDetail,
-          intlIntentionOffer
+          intlIntentionOtherOffer
         }
     },
     methods: {
-      
+      showAddOffer:function(){
+          this.offerInfo.id='',
+          this.offerInfo.intentionId='',
+          this.offerInfo.inquireId='',
+          this.offerInfo.type='',
+          this.offerInfo.currency='',
+          
+          this.offerInfo.cost='',
+          this.offerInfo.costDesc='',
+
+          this.offerInfo.total='',
+          this.offerInfo.comment='',
+          this.param.items.push({
+              id:'',
+              intentionId:'',
+              inquireId:'',
+              inquireId:'',
+              type:'',
+              currency:'',
+              cost:'',
+              total:'',
+              comment:''
+          });
+          this.addParam.show = true;
+      },
       
       showModifyOffer:function(index){
           this.offerInfo.id=this.param.items[index].id,
@@ -237,13 +260,13 @@ export default {
           
           this.param.items[index].total=this.offerInfo.total,
           this.param.items[index].comment=this.offerInfo.comment, 
-          this.intlIntentionOffer(this.offerInfo);
+          this.intlIntentionOtherOffer(this.offerInfo);
           this.updateParam.show = false;
       },
       
 
       cancelModifyBreed:function(){
-  
+          this.param.items.pop();
           this.updateParam.show = false; 
       },
       
@@ -255,6 +278,7 @@ export default {
         
     },
     created(){
+      console.log(this.param);
       //在这里要有查询原材料报价的接口
       this.param.items = [{id:12,
                 intentionId:'58228a6688e87dc057d5e969',

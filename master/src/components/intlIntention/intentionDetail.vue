@@ -1,7 +1,7 @@
 <template>
     <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
     <otheroffer-model :param="otherOfferParam" v-if="otherOfferParam.show"></otheroffer-model>
-    
+    <inquireagain-model :param="inquireAgainParam" v-if="inquireAgainParam.show"></inquireagain-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show">
         <div class="top-title">
@@ -103,8 +103,8 @@
                                           <th>询价类型</th>
                                           <th>备注</th>
                                           <th>创建时间</th>
-                                          <th></th>
-                                          <th></th>
+                                          <!-- <th></th>
+                                          <th></th> -->
                                           
                                         </thead>
                                         <tbody>
@@ -113,8 +113,8 @@
                                                 <td>{{item.inquireType}}</td>
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td @click="offer()" style="cursor:pointer">原材料报价</td>
-                                                <td @click="otherOffer()" style="cursor:pointer">其他报价</td>
+                                                <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
+                                                <td @click="otherOffer()" style="cursor:pointer">其他报价</td> -->
                                                   
                                             </tr>
                                         </tbody>
@@ -140,29 +140,24 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>会员名</th>
-                                          <th>联系方式</th>
-                                          <th>单价</th>
+                                          <th>产品名</th>
+                                          <th>成本</th>
+                                          <th>报价</th>
                                           <th>数量</th>
                                           <th>单位</th>
-                                          <th>杂费</th>
-                                          <th>杂费说明</th>
-                                          
-                                          
+                                          <th></th>
+                                          <th></th> 
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.items.arr">
-                                                <td><img :src="item.path" /></td>
-                                                <td>{{item.userName}}</td>
-                                                <td>{{item.userPhone}}</td>
+                                                <td>{{item.breedName}}</td>
+                                                <td>{{item.origPrice}}</td>
                                                 <td>{{item.price}}</td>
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.unit}}</td>
-                                                <td>{{item.incidentals}}</td>
-                                                <td>{{item.incidentalsDesc}}</td>
-                                                
+                                                <td><a style="cursor:pointer" @click="inquireAgain(item,$index)">再次询价</a></td> 
+                                                <td></td>
                                             </tr>
-                                        </tbody>
                                     </table>
                                   </div>
                               </div>
@@ -186,25 +181,27 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>会员名</th>
+                                          <th>货币</th>
+                                          <th>费用</th>
+                                          <th>费用说明</th>
+                                          <th>总费用</th>
                                           <th>备注</th>
-                                          <th>回复</th>
-                                          <th>回复人</th>
-                                          <th></th>
-                                          <th></th>
-                                          <th></th>
+                                          <!-- <th></th>
+                                          <th></th> -->
+                                         
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.offers.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.fullname}}</td>
-                                                <td>{{item.comments}}</td>
-                                                <td>{{item.reply}}</td>
-                                                <td>{{item.replier}}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td  @click="clickShow($index,{
+                                                <td>{{item.currency}}</td>
+                                                <td>{{item.cost}}</td>
+                                                <td>{{item.costDesc}}</td>
+                                                <td>{{item.total}}</td>
+                                                <td>{{item.comment}}</td>
+                                                <!-- <td><a style="cursor:pointer" @click="editOtherOffer(item,$index)">编辑</a></td>
+                                                <td><a style="cursor:pointer" @click="delOtherOffer(item,$index)">删除</a></td> -->
+                                               
+                                                <!-- <td  @click="clickShow($index,{
                                                     concrete:'offers'
                                                     })">
                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
@@ -213,7 +210,7 @@
                                                             <dt @click="edit($index,item)">修改备注</dt>
                                                         </dl>
                                                     </div>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -338,6 +335,7 @@
 import filter from '../../filters/filters'
 import offerModel from './intlOffer'
 import otherofferModel from './otherOffer'
+import inquireagainModel from './inquireAgain'
 import{
     initIntlIntentionDetail,
     initLogin
@@ -350,7 +348,8 @@ export default {
     components: {
         filter,
         offerModel,
-        otherofferModel
+        otherofferModel,
+        inquireagainModel
     },
     data() {
         return {
@@ -359,6 +358,13 @@ export default {
                 loading: true,
                 color: '#5dc596',
                 size: '15px'
+            },
+            inquireAgainParam:{
+              show:false,
+              link:'/intlIntention/itemInquire',
+              itemId:'',
+              comment:'',
+
             },
             offerParam:{
                 show:false,
@@ -413,7 +419,13 @@ export default {
           }
           this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show;
       },
-     
+     inquireAgain:function(item,index){
+        console.log(item);
+        this.inquireAgainParam.itemId = item.id;
+        this.inquireAgainParam.show = true;
+
+     },
+
      offer:function(){
         this.offerParam.show = true;
      },

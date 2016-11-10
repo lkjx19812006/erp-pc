@@ -1,6 +1,9 @@
 <template>
     <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
+    <editoffer-model :param="editOfferParam" v-if="editOfferParam.show"></editoffer-model>
     <otheroffer-model :param="otherOfferParam" v-if="otherOfferParam.show"></otheroffer-model>
+    <editotheroffer-model :param="editOtherOfferParam" v-if="editOtherOfferParam.show"></editotheroffer-model>
+    <uploadfiles-model :param="uploadFilesParam" v-if="uploadFilesParam.show"></uploadfiles-model>
     
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show">
@@ -36,16 +39,16 @@
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">电话：18702961510</label>
+                                    <label class="editlabel">电话：{{initIntlIntentionDetail.customerPhone}}</label>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12" >
-                                    <label class="editlabel">QQ：857714244</label>
+                                    <label class="editlabel">邮箱：{{initIntlIntentionDetail.customerEmail}}</label>
                                     
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">邮箱：857714244@qq.com</label>
+                                    <label class="editlabel">国家：{{initIntlIntentionDetail.country}}</label>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 
@@ -53,21 +56,21 @@
 
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-2 col-xs-12">
-                                    <label class="editlabel">客户名称：刘振领</label>
+                                    <label class="editlabel">省：{{initIntlIntentionDetail.province}}</label>
                                      
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">电话：18702961510</label>
+                                    <label class="editlabel">市：{{initIntlIntentionDetail.city}}</label>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12" >
-                                    <label class="editlabel">QQ：857714244</label>
+                                    <label class="editlabel">区：{{initIntlIntentionDetail.district}}</label>
                                     
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">邮箱：857714244@qq.com</label>
+                                    <label class="editlabel">描述：{{initIntlIntentionDetail.description}}</label>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 
@@ -103,8 +106,8 @@
                                           <th>询价类型</th>
                                           <th>备注</th>
                                           <th>创建时间</th>
-                                          <th></th>
-                                          <th></th>
+                                          <!-- <th></th>
+                                          <th></th> -->
                                           
                                         </thead>
                                         <tbody>
@@ -113,8 +116,8 @@
                                                 <td>{{item.inquireType}}</td>
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td @click="offer()" style="cursor:pointer">原材料报价</td>
-                                                <td @click="otherOffer()" style="cursor:pointer">其他报价</td>
+                                                <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
+                                                <td @click="otherOffer()" style="cursor:pointer">其他报价</td> -->
                                                   
                                             </tr>
                                         </tbody>
@@ -133,34 +136,30 @@
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                         条目详情（{{initIntlIntentionDetail.items.arr.length}}）
                                       </a>
-                                      <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                      <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> --> 
                                 </h4>
                               </div>
                               <div  class="panel-collapse" v-show="initIntlIntentionDetail.items.show&&initIntlIntentionDetail.items.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>会员名</th>
-                                          <th>联系方式</th>
-                                          <th>单价</th>
+                                          <th>产品名</th>
+                                          <th>成本</th>
+                                          <th>报价</th>
                                           <th>数量</th>
                                           <th>单位</th>
-                                          <th>杂费</th>
-                                          <th>杂费说明</th>
-                                          
-                                          
+                                          <th></th> 
+                                          <th></th> 
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.items.arr">
-                                                <td><img :src="item.path" /></td>
-                                                <td>{{item.userName}}</td>
-                                                <td>{{item.userPhone}}</td>
+                                                <td>{{item.breedName}}</td>
+                                                <td>{{item.origPrice}}</td>
                                                 <td>{{item.price}}</td>
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.unit}}</td>
-                                                <td>{{item.incidentals}}</td>
-                                                <td>{{item.incidentalsDesc}}</td>
-                                                
+                                                <td><a style="cursor:pointer" @click="editOffer(item,$index)">编辑</a></td>
+                                                <td></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -178,7 +177,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           其他报价（{{initIntlIntentionDetail.offers.arr.length}}）
                                         </a>
-                                        <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                        <button type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">新建</button>
                                   </h4>
                               </div>
 
@@ -186,25 +185,27 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>会员名</th>
+                                          <th>货币</th>
+                                          <th>费用</th>
+                                          <th>费用说明</th>
+                                          <th>总费用</th>
                                           <th>备注</th>
-                                          <th>回复</th>
-                                          <th>回复人</th>
                                           <th></th>
                                           <th></th>
-                                          <th></th>
+                                         
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.offers.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.fullname}}</td>
-                                                <td>{{item.comments}}</td>
-                                                <td>{{item.reply}}</td>
-                                                <td>{{item.replier}}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td  @click="clickShow($index,{
+                                                <td>{{item.currency}}</td>
+                                                <td>{{item.cost}}</td>
+                                                <td>{{item.costDesc}}</td>
+                                                <td>{{item.total}}</td>
+                                                <td>{{item.comment}}</td>
+                                                <td><a style="cursor:pointer" @click="editOtherOffer(item,$index)">编辑</a></td>
+                                                <td><a style="cursor:pointer" @click="delOtherOffer(item,$index)">删除</a></td>
+                                               
+                                                <!-- <td  @click="clickShow($index,{
                                                     concrete:'offers'
                                                     })">
                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
@@ -213,7 +214,7 @@
                                                             <dt @click="edit($index,item)">修改备注</dt>
                                                         </dl>
                                                     </div>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -231,7 +232,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           原文件（{{initIntlIntentionDetail.files.arr.length}}）
                                         </a>
-                                        <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                        <button type="button" class="btn btn-base pull-right" @click.stop="uploadOriginalFiles()">上传</button> 
                                   </h4>
                               </div>
                               <div  class="panel-collapse" v-show="initIntlIntentionDetail.files.show&&initIntlIntentionDetail.files.arr.length>0">
@@ -283,7 +284,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           报价文件（{{initIntlIntentionDetail.offerFiles.arr.length}}）
                                         </a>
-                                        <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                        <button type="button" class="btn btn-base pull-right" @click.stop="uploadOfferFiles()">上传</button> 
                                   </h4>
                               </div>
                               <div  class="panel-collapse" v-show="initIntlIntentionDetail.offerFiles.show&&initIntlIntentionDetail.offerFiles.arr.length>0">
@@ -338,19 +339,26 @@
 import filter from '../../filters/filters'
 import offerModel from './intlOffer'
 import otherofferModel from './otherOffer'
+import editofferModel from './editOffer'
+import editotherofferModel from './editOtherOffer'
+import uploadfilesModel from './uploadFiles'
 import{
     initIntlIntentionDetail,
     initLogin
 } from '../../vuex/getters'
 import {
     editintentInfo,
-    getIntlIntentionDetail
+    getIntlIntentionDetail,
+    delIntlIntentionOtherOffer
 } from '../../vuex/actions'
 export default {
     components: {
         filter,
         offerModel,
-        otherofferModel
+        otherofferModel,
+        editofferModel,
+        editotherofferModel,
+        uploadfilesModel
     },
     data() {
         return {
@@ -378,10 +386,45 @@ export default {
                 total:9,
                 comment:'来来来'*/
             },
+            editOfferParam:{
+                show:false,
+                link:'/intlIntention/itemOffer',
+                /*id:'',
+                intentionId:'',
+                inquireId:'',
+                type:0,
+                currency:'',
+                itemId:'',
+                itemName:'',
+                origPrice:'',
+                price:'',
+                number:'',
+                unit:'',
+                total:'',
+                comment:''*/
+                id:9,
+                intentionId:'58228a6688e87dc057d5e969',
+                inquireId:7,
+                type:0,
+                currency:1,
+                itemId:8,
+                itemName:'一枝黄花',
+                origPrice:1,
+                price:3,
+                number:3,
+                unit:'kg',
+                total:9,
+                comment:'来来来'
+
+            },
             otherOfferParam:{
                 show:false,
                 link:'/intlIntention/otherOffer',
-                items:'',
+                items:[],
+                intentionId:this.param.id,
+                inquireId:this.param.inquireId,
+
+
                 /*id:12,
                 intentionId:'58228a6688e87dc057d5e969',
                 inquireId:7,
@@ -392,6 +435,37 @@ export default {
                 total:2,
                 comment:'啦啦啦'*/
 
+            },
+            editOtherOfferParam:{
+                show:false,
+                link:'/intlIntention/otherOffer',
+                index:'',
+                id:'',
+                intentionId:'',
+                inquireId:'',
+                type:1,
+                currency:'',
+                cost:'',
+                costDesc:'',
+                total:'',
+                comment:''
+            },
+            delOtherOfferParam:{
+                link:'/intlIntention/otherOffer',
+                id:'',
+                index:'',
+                type:''
+            },
+            uploadFilesParam:{
+                link:'/intlIntention/files',
+                show:false,
+                bizId:'',   //意向ID
+                category:'',   //上传类型 0/1 原附件/报价附件
+                path:'',
+                description:'',
+                fileType:'', 
+                image_f_show:''
+                
             }
             
         }
@@ -404,7 +478,8 @@ export default {
         },
         actions:{
             editintentInfo,
-            getIntlIntentionDetail
+            getIntlIntentionDetail,
+            delIntlIntentionOtherOffer
         }
     },
     methods: {
@@ -421,8 +496,75 @@ export default {
      },
      otherOffer:function(){
         this.otherOfferParam.show = true;
+     },
+     //编辑原材料报价
+     editOffer:function(item,index){
+
+        this.editOfferParam.index = index;
+        this.editOfferParam.show = true;
+     },
+     //上传原文件
+     uploadOriginalFiles:function(){
+        this.uploadFilesParam.bizId = this.param.id;  
+        this.uploadFilesParam.category = 0;
+        this.uploadFilesParam.path = '';
+        this.uploadFilesParam.description='';
+        this.uploadFilesParam.fileType='';
+        this.uploadFilesParam.image_f_show='';
+        this.uploadFilesParam.show = true;
+        console.log(this.uploadFilesParam);
+        
+     },
+     //上传报价文件
+     uploadOfferFiles:function(){
+        this.uploadFilesParam.bizId = this.param.id;  
+        this.uploadFilesParam.category = 1;
+        this.uploadFilesParam.path = '';
+        this.uploadFilesParam.description='';
+        this.uploadFilesParam.fileType='';
+        this.uploadFilesParam.image_f_show='';
+        this.uploadFilesParam.show = true;
+        console.log(this.uploadFilesParam);
+     },
+      //新建其他报价和编辑其他报价共用一个界面
+     addOtherOffer:function(){
+
+        console.log(this.param);
+        this.editOtherOfferParam.id='';
+        this.editOtherOfferParam.intentionId = this.param.id;
+        this.editOtherOfferParam.inquireId=this.param.inquireId;
+        this.editOtherOfferParam.type=1;
+        this.editOtherOfferParam.currency='';
+        this.editOtherOfferParam.cost='';
+        this.editOtherOfferParam.costDesc='';
+        this.editOtherOfferParam.total='';
+        this.editOtherOfferParam.comment='';
+        this.editOtherOfferParam.show = true;
+     },
+     editOtherOffer:function(item,index){
+        
+        this.editOtherOfferParam.id=item.id;
+        this.editOtherOfferParam.intentionId=item.intentionId;
+        this.editOtherOfferParam.inquireId=item.inquireId;
+        this.editOtherOfferParam.type=item.type;
+        this.editOtherOfferParam.currency=item.currency;
+        this.editOtherOfferParam.cost=item.cost;
+        this.editOtherOfferParam.costDesc=item.costDesc;
+        this.editOtherOfferParam.total=item.total;
+        this.editOtherOfferParam.comment=item.comment;
+        this.editOtherOfferParam.index = index;
+        this.editOtherOfferParam.show = true;
+
+     },
+     delOtherOffer:function(item,index){
+        this.delOtherOfferParam.id=item.id;
+        this.delOtherOfferParam.type=item.type;
+        this.delOtherOfferParam.index = index;
+        console.log(this.delOtherOfferParam);
+        this.delIntlIntentionOtherOffer(this.delOtherOfferParam);
+
+
      }
-      
      
       
     },

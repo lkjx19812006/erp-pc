@@ -4,6 +4,7 @@
      <create-model :param.sync="createParam" v-if="createParam.show"></create-model>
      <modify-model :param.sync="modifyParam" v-if="modifyParam.show"></modify-model>
      <inquire-model :param="inquireParam" v-if="inquireParam.show"></inquire-model>
+     
      <div v-show="!detailParam.show">
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">我的意向</div>
@@ -48,6 +49,7 @@
                             <th>报价次数</th>
                             <th>发布时间</th>
                             <th>审核状态</th>
+                            <th>描述</th>
                             <th colspan="4">操作</th>
                     </tr>
                 </thead>
@@ -80,9 +82,11 @@
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime | date}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
+                        <td>{{item.description}}</td>
                         <td>
                             <div v-if="item.inquire===0&&item.inquireTime===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquire.png" alt="询价" /></div>
-                            <div v-if="item.inquire===0&&item.inquireTime!==0" style="display:inline-block;margin-right:7px" @click="inquireAgain(item.id,item.inquireTime)"><img src="/static/images/inquire.png" alt="再次询价" /></div>
+                            <div v-if="item.inquire===0&&item.inquireTime!==0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquireAgain.png" alt="再次询价" /></div>
+                            <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)">取消询价</div>
                             <div style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/edit.png" alt="编辑"  /></div>
                             <div style="display:inline-block;margin-right:7px" @click="deleteIntention(item.id,$index)"><img src="/static/images/del.png" alt="删除"  /></div>
                             <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/quote.png" alt="确认报价"  /></div>
@@ -108,15 +112,18 @@ import detailModel from '../intentionDetail'
 import createModel from '../createIntention'
 import modifyModel from '../modifyIntention'
 import inquireModel from '../inquire'
+
+
 import {
     initIntlIntentionList
   
 } from '../../../vuex/getters'
 import {
-    getIntlIntentionList,
+    getEmpIntlIntentionList,
     intlIntentionInquire,
     deleteIntlIntention,
-    intlIntentionAffirmOffer
+    intlIntentionAffirmOffer,
+    cancelIntlIntentionInquire
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -125,7 +132,8 @@ export default {
         detailModel,
         createModel,
         modifyModel,
-        inquireModel
+        inquireModel,
+        
     },
     vuex: {
         getters: {
@@ -133,10 +141,11 @@ export default {
             
         },
         actions: {
-            getIntlIntentionList,
+            getEmpIntlIntentionList,
             intlIntentionInquire,
             deleteIntlIntention,
-            intlIntentionAffirmOffer
+            intlIntentionAffirmOffer,
+            cancelIntlIntentionInquire
             
         }
     },
@@ -182,8 +191,13 @@ export default {
                 show:false,
                 link:'/intlIntention/offer',
                 id:'',
-                comment:''
+                index:'',
+                description:''
 
+            },
+            cancelInquireParam:{
+                link:'/intlIntention/inquire',
+                id:''
             },
             tipsParam:{
                 show:false,
@@ -265,9 +279,12 @@ export default {
             this.inquireParam.show = true;
 
         },
-        confirmOffer:function(id,index){
-            this.intlIntentionAffirmOffer(this.affirmOfferParam);
+        cancelInquire:function(id){
+
+            this.cancelInquireParam.id = id;
+            this.cancelIntlIntentionInquire(this.cancelInquireParam);
         },
+        
         clickOn:function(id){
             this.detailParam.id = id;
             this.detailParam.show = true;
@@ -316,7 +333,7 @@ export default {
 
         },
         searchIntention:function(){
-            this.getIntlIntentionList(this.loadParam);
+            this.getEmpIntlIntentionList(this.loadParam);
         },
         resetCondition:function(){
             this.loadParam.employee='';
@@ -324,7 +341,7 @@ export default {
             this.loadParam.breedId='';
             this.loadParam.breedName='';
             this.loadParam.customerEmail='';
-            this.getIntlIntentionList(this.loadParam);
+            this.getEmpIntlIntentionList(this.loadParam);
         },
         
         createIntention:function(){
@@ -337,6 +354,8 @@ export default {
             this.deleteIntlIntention(this.deleteParam);  
         },
         modifyIntention:function(id,index){
+            console.log(id);
+            console.log(index);
               this.modifyParam.show = true;
               this.modifyParam.id = id;
               this.modifyParam.index = index;
@@ -359,11 +378,11 @@ export default {
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getIntlIntentionList(this.loadParam);
+            this.getEmpIntlIntentionList(this.loadParam);
         }
     },
     created() {
-        this.getIntlIntentionList(this.loadParam, this.loadParam.all);
+        this.getEmpIntlIntentionList(this.loadParam, this.loadParam.all);
     },
     filter: (filter,{})
 }
