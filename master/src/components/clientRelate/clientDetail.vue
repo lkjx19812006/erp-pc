@@ -646,7 +646,7 @@
               						            	})">
                     										<img class="pull-left" src="/static/images/addr.png" height="30" width="26"  />
                     										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                    											收货地址（{{initClientDetail.addresses.arr.length}}）
+                    											地址（{{initClientDetail.addresses.arr.length}}）
                     										</a>
                     										<button type="button" class="btn btn-base pull-right" @click.stop="createAddr({
       		                                     customerId:param.id,
@@ -1020,9 +1020,15 @@
 	                                <input type="text" class="form-control" v-model='initClientDetail.address' value="{{initClientDetail.address}}" disabled="disabled" />
 	                            </div>
                             </div>
-                            <div class="client-detailInfo">
+                            <div class="clearfix">
+                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label>经营范围</label>
                                 <input type="text" class="form-control" v-model="initClientDetail.bizScope" value="{{initClientDetail.bizScope}}" disabled="disabled" />
+                              </div>
+                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <label>注册时间</label>
+                                <input type="text" class="form-control" v-model="initClientDetail.ctime" value="{{initClientDetail.ctime}}" disabled="disabled" />
+                              </div>
                             </div>
                             <!-- <div class="client-detailInfo">
                                 <img class="left" src="/static/images/blackselect.png" height="28" width="28" />

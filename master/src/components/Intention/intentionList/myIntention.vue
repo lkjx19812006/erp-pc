@@ -131,8 +131,7 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="item in initIntentionList"
-                        @click="match(item)"  style="cursor:pointer">
+                    <tr v-for="item in initIntentionList">
                          <!--<td>-->
                             <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
                         <!--</td>-->
@@ -143,8 +142,6 @@
                             <div v-if="item.especial==1&&item.type==1">低价资源</div>
                         </td>
 
-                        <td>{{item.customerName}}</td>
-                        <td>{{item.customerPhone}}</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
@@ -182,8 +179,9 @@
                                 link:editintentInfo,
                                 url:'/intention/',
                                 key:'intentionList'
-                                })">{{item.breedName}}
-                        </td>
+                                })">{{item.customerName}}</td>
+                        <td>{{item.customerPhone}}</td>
+                        <td  @click="match(item)"  style="cursor:pointer;color:#fa6705">{{item.breedName}}</td>
                         <td>{{item.qualification | qualify}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.unit}}</td>
@@ -280,7 +278,7 @@
                                                key:'intentionList'
                                                })">删除</li>
                                    <li v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)">上架</li>
-                                   <li v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.especial==1&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2" @click="applyAudit($index,item.id)">申请审核</li >
+                                   <li v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2&&item.especial==1" @click="applyAudit($index,item.id)">申请审核</li >
                                    <li v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click="up($index,item.id,4)">下架</li>
                                    <li v-if="(item.onSell==-4||item.onSell==2)&&item.type==1&&item.especial==1" @click="up($index,item.id,3)">申请下架</li >
 

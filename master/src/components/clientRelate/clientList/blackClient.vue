@@ -35,6 +35,7 @@
           <th>所在省</th>
           <th>所在市</th>
           <th>注册地址</th>
+          <th>创建时间</th>
           <th style="min-width:200px">备注</th>
           <th ></th>
         </tr>
@@ -79,6 +80,7 @@
           <td>{{item.provinceName}}</td>
           <td>{{item.cityName}}</td>
           <td>{{item.address}}</td>
+          <td>{{item.ctime}}</td>
           <td >{{item.blackComments}}</td>
           <td >
           </td>

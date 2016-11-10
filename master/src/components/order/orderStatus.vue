@@ -300,7 +300,7 @@ export default {
             editorder:{
               show:false
             },
-            type:"image/*",
+          type:"image/jpeg,image/jpg,image/png",
             uploadLogistic:{
               images:'',
               b:'',
