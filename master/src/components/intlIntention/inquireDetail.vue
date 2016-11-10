@@ -92,7 +92,7 @@
                                             link:initIntlIntentionDetail.inquires,
                                             crete:'inquires'
                                             })">
-                                      <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
+                                      <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26"  />
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                         询价记录（{{initIntlIntentionDetail.inquires.arr.length}}）
                                       </a>
@@ -173,7 +173,7 @@
                                               link:initIntlIntentionDetail.offers,
                                               crete:'offers'
                                               })">
-                                        <img class="pull-left" src="/static/images/msg.png" height="29" width="26"  />
+                                        <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           其他报价（{{initIntlIntentionDetail.offers.arr.length}}）
                                         </a>
@@ -228,7 +228,7 @@
                                               link:initIntlIntentionDetail.files,
                                               crete:'files'
                                               })">
-                                        <img class="pull-left" src="/static/images/msg.png" height="29" width="26"  />
+                                        <img class="pull-left" src="/static/images/originalfile_icon.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           原文件（{{initIntlIntentionDetail.files.arr.length}}）
                                         </a>
@@ -280,7 +280,7 @@
                                               link:initIntlIntentionDetail.offerFiles,
                                               crete:'offerFiles'
                                               })">
-                                        <img class="pull-left" src="/static/images/msg.png" height="29" width="26"  />
+                                        <img class="pull-left" src="/static/images/offerfile_icon.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           报价文件（{{initIntlIntentionDetail.offerFiles.arr.length}}）
                                         </a>
