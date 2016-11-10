@@ -126,7 +126,7 @@
                         <th>发布时间</th>
       	            		<th>审核状态</th>
                         <th>上下架</th>
-      	            		<th></th>
+      	            		<th colspan="3">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -213,80 +213,163 @@
                         <td>
                           <div>{{item.onSell | onsell}}</div>
                         </td>
-                        <td @click.stop="eventClick($index)">
-                           <img height="24" width="24" src="/static/images/default_arrow.png" />
-                           <div class="component_action" v-show="item.show">
-                               <ul>
-                                   <li @click="modifyIntention({
-                                               id:item.id,
-                                               sub:$index,
-                                               selectCustomer:false,
-                                               flag:1,
-                                               show:true,
-                                               loading:true,
-                                               title:'编辑',
-                                               customerName:item.customerName,
-                                               customerPhone:item.customerPhone,
-                                               breedName:item.breedName,
-                                               breedId:item.breedId,
-      				                                type:item.type,
-      				                                especial:item.especial,
-      				                                quality:item.quality,
-      				                                qualification:item.qualification,
-      				                                spec:item.spec,
-      				                                number:item.number,
-      				                                unit:item.unit,
-      				                                price:item.price,
-      				                                address:item.address,
-      				                                location:item.location,
-      				                                advance:item.advance,
-      				                                invoic:item.invoic,
-      				                                visit:item.visit,
-      				                                pack:item.pack,
-      				                                intl:item.intl,
-      				                                visit:item.visit,
-                                              ctime:item.ctime,
-      				                                sampling:item.sampling,
-      				                                sampleNumber:item.sampleNumber,
-      				                                sampleUnit:item.sampleUnit,
-      				                                sampleAmount:item.sampleAmount,
-      				                                offer:item.offer,
-      				                                status:item.status,
-                                               country:item.country,
-                                               province:item.province,
-                                               city:item.city,
-                                               district:item.district,
-                                               address:item.address,
-                                               validate:item.validate,
-                                               link:editintentInfo,
-                                               url:'/intention/',
-                                               key:'intentionList',
-                                               image_f:'',
-                                               image_s:'',
-                                               image_t:'',
-                                               image_f_show:'',
-                                               image_s_show:'',
-                                               image_t_show:'',
-                                               duedate:item.duedate
-                                               })">编辑</li>
-                                   <li @click="specDelete({
-                                               id:item.id,
-                                               sub:$index,
-                                               show:true,
-                                               name:item.name,
-                                               title:'意向',
-                                               link:deleteInfo,
-                                               url:'/intention/',
-                                               key:'intentionList'
-                                               })">删除</li>
-                                   <li v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)">上架</li>
-                                   <li v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.especial==1&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2" @click="applyAudit($index,item.id)">申请审核</li >
-                                   <li v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click="up($index,item.id,4)">下架</li>
-                                   <li v-if="(item.onSell==-4||item.onSell==2)&&item.type==1&&item.especial==1" @click="up($index,item.id,3)">申请下架</li >
-
-                               </ul>
-                           </div>
-                       </td>
+                        <td   @click.stop="modifyIntention({
+                                   id:item.id,
+                                   sub:$index,
+                                   selectCustomer:false,
+                                   flag:1,
+                                   show:true,
+                                   loading:true,
+                                   title:'编辑',
+                                   customerName:item.customerName,
+                                   customerPhone:item.customerPhone,
+                                   breedName:item.breedName,
+                                   breedId:item.breedId,
+                                  type:item.type,
+                                  especial:item.especial,
+                                  quality:item.quality,
+                                  qualification:item.qualification,
+                                  spec:item.spec,
+                                  number:item.number,
+                                  unit:item.unit,
+                                  price:item.price,
+                                  address:item.address,
+                                  location:item.location,
+                                  advance:item.advance,
+                                  invoic:item.invoic,
+                                  visit:item.visit,
+                                  pack:item.pack,
+                                  intl:item.intl,
+                                  visit:item.visit,
+                                  ctime:item.ctime,
+                                  sampling:item.sampling,
+                                  sampleNumber:item.sampleNumber,
+                                  sampleUnit:item.sampleUnit,
+                                  sampleAmount:item.sampleAmount,
+                                  offer:item.offer,
+                                  status:item.status,
+                                   country:item.country,
+                                   province:item.province,
+                                   city:item.city,
+                                   district:item.district,
+                                   address:item.address,
+                                   validate:item.validate,
+                                   link:editintentInfo,
+                                   url:'/intention/',
+                                   key:'intentionList',
+                                   image_f:'',
+                                   image_s:'',
+                                   image_t:'',
+                                   image_f_show:'',
+                                   image_s_show:'',
+                                   image_t_show:'',
+                                   duedate:item.duedate
+                                   })">
+                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                            </a>
+                        </td>
+                        <td  @click.stop="specDelete({
+                               id:item.id,
+                               sub:$index,
+                               show:true,
+                               name:item.name,
+                               title:'意向',
+                               link:deleteInfo,
+                               url:'/intention/',
+                               key:'intentionList'
+                               })">
+                               <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
+                              </a>
+                        </td>
+                        <td v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click.stop="up($index,item.id,2)">
+                          <a class="operate"><img src="/static/images/grounding.png" height="18" width="28"  alt="上架" title="上架"/>
+                          </a>
+                        </td>
+                        <td v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.especial==1&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2" @click.stop="applyAudit($index,item.id)">
+                          <a class="operate"><img src="/static/images/apply.png" height="18" width="47"  alt="申请审核" title="申请审核"/>
+                          </a>
+                        </td>
+                        <td v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click.stop="up($index,item.id,4)">
+                          <a class="operate"><img src="/static/images/undercarriage.png" height="18" width="28"  alt="下架" title="下架"/>
+                          </a>
+                        </td>
+                        <td v-if="(item.onSell==-4||item.onSell==2)&&item.type==1&&item.especial==1" @click.stop="up($index,item.id,3)">
+                          <a class="operate"><img src="/static/images/applyunder.png" height="18" width="47"  alt="申请下架" title="申请下架"/>
+                          </a>
+                        </td>
+                       <!--  <td @click.stop="eventClick($index)">
+                          <div class="component_action" v-show="item.show">
+                              <ul>
+                                  <li @click="modifyIntention({
+                                             id:item.id,
+                                             sub:$index,
+                                             selectCustomer:false,
+                                             flag:1,
+                                             show:true,
+                                             loading:true,
+                                             title:'编辑',
+                                             customerName:item.customerName,
+                                             customerPhone:item.customerPhone,
+                                             breedName:item.breedName,
+                                             breedId:item.breedId,
+                                                                     type:item.type,
+                                                                     especial:item.especial,
+                                                                     quality:item.quality,
+                                                                     qualification:item.qualification,
+                                                                     spec:item.spec,
+                                                                     number:item.number,
+                                                                     unit:item.unit,
+                                                                     price:item.price,
+                                                                     address:item.address,
+                                                                     location:item.location,
+                                                                     advance:item.advance,
+                                                                     invoic:item.invoic,
+                                                                     visit:item.visit,
+                                                                     pack:item.pack,
+                                                                     intl:item.intl,
+                                                                     visit:item.visit,
+                                             ctime:item.ctime,
+                                                                     sampling:item.sampling,
+                                                                     sampleNumber:item.sampleNumber,
+                                                                     sampleUnit:item.sampleUnit,
+                                                                     sampleAmount:item.sampleAmount,
+                                                                     offer:item.offer,
+                                                                     status:item.status,
+                                              country:item.country,
+                                              province:item.province,
+                                              city:item.city,
+                                              district:item.district,
+                                              address:item.address,
+                                              validate:item.validate,
+                                              link:editintentInfo,
+                                              url:'/intention/',
+                                              key:'intentionList',
+                                              image_f:'',
+                                              image_s:'',
+                                              image_t:'',
+                                              image_f_show:'',
+                                              image_s_show:'',
+                                              image_t_show:'',
+                                              duedate:item.duedate
+                                              })">编辑</li>
+                                  <li @click="specDelete({
+                                              id:item.id,
+                                              sub:$index,
+                                              show:true,
+                                              name:item.name,
+                                              title:'意向',
+                                              link:deleteInfo,
+                                              url:'/intention/',
+                                              key:'intentionList'
+                                              })">删除</li>
+                                  <li v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)">上架</li>
+                                  <li v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.especial==1&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2" @click="applyAudit($index,item.id)">申请审核</li >
+                                  <li v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click="up($index,item.id,4)">下架</li>
+                                  <li v-if="(item.onSell==-4||item.onSell==2)&&item.type==1&&item.especial==1" @click="up($index,item.id,3)">申请下架</li >
+                       
+                              </ul>
+                          </div>
+                                              </td> -->
 
                     </tr>
 

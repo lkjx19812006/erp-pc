@@ -62,7 +62,9 @@ export const initOrderDetail = (state) => {
 export const initLogisticsDetail = (state) => { 
     return JSON.parse(JSON.stringify(state.table.logisticsDetail));
 }
-
+export const initDrugsDetail = (state) => { 
+    return JSON.parse(JSON.stringify(state.table.rolloutDetail));
+}
 
 /*--系统基础数据--*/
 export const initSystemlist = (state) => {

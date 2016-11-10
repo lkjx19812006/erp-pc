@@ -49,7 +49,7 @@
                  <th>名称</th>
                  <th>类型</th>
                  <th>描述</th>
-                 <th></th>
+                 <th colspan="2">操作</th>
               </tr>
             </thead>
             <tbody>
@@ -58,8 +58,8 @@
                 <td>{{item.name}}</td>
                 <td>{{item.type | enumlist }}</td>
                 <td>{{item.desc }}</td>
-                <td  @click="editData($index)">
-                  <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
+                <td  @click="modify($index)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                  <!-- <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
                    <div class="component_action" v-show='item.show' transition="expand">
                       <ul>
                           <li @click="modify($index)">编辑</li>
@@ -69,8 +69,15 @@
                                 show:true
                                 })">删除</li>
                       </ul>
-                    </div>
+                    </div> -->
                 </td>
+                 <td @click="del({
+                            sub:$index,
+                            id:item.id,
+                            show:true
+                            })">
+                    <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
+                 </td>
               </tr>
             </tbody>
           </table>
@@ -201,8 +208,7 @@ export default {
         }
     },
 
-    filter:(filter,{
-    })
+    filter:(filter,{})
 
 }
 </script>

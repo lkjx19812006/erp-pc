@@ -4,7 +4,7 @@
   <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
   <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
-  <div v-show="!changeParam.show">
+  <div>
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">产品列表</div>
       <div class="my_order_search  col-xs-8">
@@ -85,7 +85,7 @@
               <th>创建时间</th>
               <th>价格过期时间</th>
               <th>备注</th>
-              <th></th>
+              <th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -108,11 +108,42 @@
           <td>{{item.number}}</td>
           <td>{{item.price}}</td>
           <td>{{item.unit}}</td>
-          <td>{{item.coa}}</td>
+          <td>{{item.coa | coa}}</td>
           <td>{{item.ctime}}</td>
           <td>{{item.duedate}}</td>
           <td>{{item.comments}}</td>
-          <td @click.stop="eventClick($index)">
+          <td  @click="modifySupply({
+                   sub:$index,
+                   id:item.id,
+                   cid:item.cid,
+                   show:true,
+                   title:'编辑产品',
+                   type:item.type,
+                   name:item.name,
+                   cName:item.cName,
+                   breedId:item.breedId,
+                   quality:item.quality,
+                   location:item.location,
+                   spec:item.spec,
+                   number:item.number,
+                   price:item.price,
+                   unit:item.unit,
+                   duedate:item.duedate,
+                   image_f:'',
+                   image_s:'',
+                   image_t:'',
+                   image_f_show:'',
+                   image_s_show:'',
+                   image_t_show:'',
+                   coa:item.coa,
+                   link:updateProduct,
+                   url:'/customer/product',
+                   headline:'productList'
+                  })">
+               <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+               </a>
+          </td>
+          <!-- <td @click.stop="eventClick($index)">
             <img height="24" width="24" src="/static/images/default_arrow.png" />
             <div class="component_action" v-show="item.show">
               <ul>
@@ -146,7 +177,7 @@
                               })">编辑</li>
               </ul>
             </div>
-          </td>
+          </td> -->
         </tr>
         </tbody>
       </table>

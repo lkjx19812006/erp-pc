@@ -31,24 +31,12 @@
                         <th>注册地址</th>
                         <th>是否转为客户</th>
                         <th>备注</th>
-                        <th></th>
+                        <th colspan="2">操作</th>
                     </tr>
                 </thead>
                 <thead class="space">
                     <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th colspan="14"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,8 +54,18 @@
                         <td v-if="!item.transform">否</td>
                         <td v-if="item.transform">是</td>
                         <td>{{item.remark}}</td>
-                        <td>
-                          <div  @click="companyClick($index)">
+                        <td @click="updateCompany({
+                                        sub:$index,
+                                        show:true,
+                                        name:item.name,
+                                        url:'/company/',
+                                        key:'enterpriseList',
+                                        id:item.id,
+                                        tel:item.tel,
+                                        remark:item.remark,
+                                        link:updateEnterprise
+                                        })"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                          <!-- <div  @click="companyClick($index)">
                             <img height="24" width="24" src="../../../static/images/default_arrow.png" />
                             <div class="breed_action" v-show="item.show">
                                 <ul>
@@ -108,7 +106,32 @@
                                         })">编辑</li>
                                 </ul>
                             </div>
-                            </div>
+                            </div> -->
+                        </td>
+                        <td v-if="!item.transform" @click="createCustomer({
+                                        keyname:'transform',
+                                        sub:$index,
+                                        show:true,
+                                        key:'enterpriseList',
+                                        companyId:item.id,
+                                        category:item.type,
+                                        type:'1,企业',
+                                        name:item.name,
+                                        tel:item.tel,
+                                        principal:item.principal,
+                                        legalPerson:item.legalPerson,
+                                        bizScope:item.bizScope,
+                                        province:item.province,
+                                        number:item.number,
+                                        city:item.city,
+                                        address:item.address,
+                                        employeeId:'',
+                                        employeeName:'',
+                                        orgId:'',
+                                        orgName:'',
+                                        countryId:7,
+                                        countryName:'中国'
+                                        })"><a class="operate"><img src="/static/images/transfer.png" height="18" width="28"  alt="划转" title="划转"/></a>
                         </td>
                     </tr>
                 </tbody>

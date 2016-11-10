@@ -79,10 +79,11 @@
                                             <th>数量</th>
                                             <th>价格</th>
                                             <th>单位</th>
+                                            <th>详细地址</th>
                                             <th>意向类型</th>
                                             <th>审核状态</th>
                                             <th>审核备注</th>
-
+                                            <th>操作</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initUserDetail.intention.arr">
@@ -95,7 +96,7 @@
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
-
+                                                <td>{{item.address}}</td>
                                                 <td>
                                                   <div v-if="item.type==0">求购</div>
                                                   <div v-if="item.type==1">供应</div>
@@ -109,13 +110,7 @@
                                                   <div v-if="item.validate==9">审核中</div>
                                                 </td>
                                                 <td>{{item.description}}</td>
-
-                                                <td  @click="clickShow($index,{
-                                                  concrete:'intention'
-                                                  })">
-                                                  <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                <div class="breed_action" v-show="item.show">
-                                                       <dt @click="updateIntention(
+                                                <td  @click="updateIntention(
                                                             intentionParam.loading=true,
                                                             intentionParam.sub=$index,
                                                             intentionParam.id=item.id,
@@ -155,9 +150,58 @@
                                                             intentionParam.image_s_show='',
                                                             intentionParam.image_t_show='',
                                                             intentionParam.inType=2
-                                                        )">编辑</dt>
-                                                </div>
-                                                </td>
+                                                        )">
+                                                  <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
+                                                  </a>
+                                              </td>
+                                          <!--  <td  @click="clickShow($index,{
+                                            concrete:'intention'
+                                            })">
+                                            <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                            <div class="breed_action" v-show="item.show">
+                                                 <dt @click="updateIntention(
+                                                      intentionParam.loading=true,
+                                                      intentionParam.sub=$index,
+                                                      intentionParam.id=item.id,
+                                                      intentionParam.breedName=item.breedName,
+                                                      intentionParam.price=item.price,
+                                                      intentionParam.unit=item.unit,
+                                                      intentionParam.especial=item.especial,
+                                                      intentionParam.quality=item.quality,
+                                                      intentionParam.spec=item.spec,
+                                                      intentionParam.number=item.number,
+                                                      intentionParam.location=item.location,
+                                                      intentionParam.type=item.type,
+                                                      intentionParam.country=item.country,
+                                                      intentionParam.province=item.province,
+                                                      intentionParam.city=item.city,
+                                                      intentionParam.district=item.district,
+                                                      intentionParam.address=item.address,
+                                                      intentionParam.invoic=item.invoic,
+                                                      intentionParam.sampling=item.sampling,
+                                                      intentionParam.sampleUnit=item.sampleUnit,
+                                                      intentionParam.advance=item.advance,
+                                                      intentionParam.intl=item.intl,
+                                                      intentionParam.sampleNumber=item.sampleNumber,
+                                                      intentionParam.sampleAmount=item.sampleAmount,
+                                                      intentionParam.qualification=item.qualification,
+                                                      intentionParam.pack=item.pack,
+                                                      intentionParam.visit=item.visit,
+                                                      intentionParam.duedate=item.duedate,
+                                                      intentionParam.breedId=item.breedId,
+                                                      intentionParam.key='user',
+                                                      intentionParam.validate=item.validate,
+                                                      intentionParam.description=item.description,
+                                                      intentionParam.image_f='',
+                                                      intentionParam.image_s='',
+                                                      intentionParam.image_t='',
+                                                      intentionParam.image_f_show='',
+                                                      intentionParam.image_s_show='',
+                                                      intentionParam.image_t_show='',
+                                                      intentionParam.inType=2
+                                                  )">编辑</dt>
+                                          </div>
+                                          </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -291,14 +335,18 @@
                                               <td>{{item.trackingWay}}</td>
                                               <td>{{item.contactNo}}</td>
                                               <td>{{item.comments}}</td>
-                                              <td  @click="clickShow($index,{
-                                                concrete:'tracking'
-                                                })">
-                                                <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                              <div class="breed_action" v-show="item.show" >
-                                                  <dt @click="updateTracking(item,$index)">编辑</dt>
-                                              </div>
+                                              <td @click="updateTracking(item,$index)">
+                                                   <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
+                                                  </a>
                                               </td>
+                                             <!--  <td  @click="clickShow($index,{
+                                               concrete:'tracking'
+                                               })">
+                                               <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                             <div class="breed_action" v-show="item.show" >
+                                                 <dt @click="updateTracking(item,$index)">编辑</dt>
+                                             </div>
+                                             </td> -->
                                           </tr>
                                       </tbody>
                                   </table>

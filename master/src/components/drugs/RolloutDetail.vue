@@ -1,8 +1,6 @@
 
 <template>
-    <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
-    <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
-    <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
+    <drugs-model :param="disposeParam" v-if="disposeParam.show"></drugs-model>
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
 <!--     <div class="client_body" v-show="!disposeParam.show"> -->
@@ -17,24 +15,19 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <span class="navbar-brand navbar-name" href="#">{{initOrderDetail.no}}</span>
+                        <span class="navbar-brand navbar-name" href="#">{{initDrugsDetail.userName}}</span>
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
                         <li>
-                            <!--<button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！')" v-if="initOrderDetail.orderStatus==0&&param.contact=='/order/myList'">订单生成</button>-->
-                          <!--   <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！')" v-if="(initOrderDetail.orderStatus==20||initOrderDetail.orderStatus==10)&&param.contact=='/order/myList'">申请付款</button>
-                          <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！')" v-if="initOrderDetail.orderStatus==40&&param.contact=='/order/myList'">待卖家发货</button>
-                          <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.delivery=true)" v-if="initOrderDetail.orderStatus==50&&param.contact=='/order/myList'">待收货</button> -->
-
                             <!-- 销售订单 -->
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initOrderDetail.orderStatus==10&&param.contact=='/order/myList'">等待处理</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initOrderDetail.orderStatus==20&&param.contact=='/order/myList'">待客户付款</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initOrderDetail.orderStatus==40&&param.contact=='/order/myList'">待发货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initOrderDetail.orderStatus==50&&param.contact=='/order/myList'">待客户收货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initDrugsDetail.orderStatus==10&&param.contact=='/order/myList'">等待处理</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initDrugsDetail.orderStatus==20&&param.contact=='/order/myList'">待客户付款</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initDrugsDetail.orderStatus==40&&param.contact=='/order/myList'">待发货</button>
+                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initDrugsDetail.orderStatus==50&&param.contact=='/order/myList'">待客户收货</button>
 
-                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus>=60"  @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')">已完成</button>
-                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-1" @click="pendingOrder(param,param.tips='订单已取消！')">已取消</button>
-                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-2" @click="pendingOrder(param,param.tips='订单已过期！')">已过期</button>
+                            <button type="button" class="btn btn-base"  v-if="initDrugsDetail.orderStatus>=60"  @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')">已完成</button>
+                            <button type="button" class="btn btn-base"  v-if="initDrugsDetail.orderStatus==-1" @click="pendingOrder(param,param.tips='订单已取消！')">已取消</button>
+                            <button type="button" class="btn btn-base"  v-if="initDrugsDetail.orderStatus==-2" @click="pendingOrder(param,param.tips='订单已过期！')">已过期</button>
                         </li>
                     </ul>
                 </div>
@@ -43,45 +36,39 @@
         <section>
             <div class="client-section clearfix" >
                 <div class="col-md-8 client-detail">
-                    <h4 class="section_title">相关</h4>
+                    <h4 class="section_title">药款相关</h4>
                     <article>
                         <div class="panel-group">
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:'',
-                                              crete:'goods'
+                                              crete:'moneyRecords'
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.goods.arr.length">
-                                          商品订单列表（{{initOrderDetail.goods.arr.length}}）
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                          药款金额记录（{{initDrugsDetail.moneyRecords.arr.length}}）
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.goods.arr.length!==null" v-show="initOrderDetail.goods.show">
+                                <div class="panel-collapse" v-if="initDrugsDetail.moneyRecords.arr.length!=null" v-show="initDrugsDetail.moneyRecords.show">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>商品名称</th>
-                                            <th>产地</th>
-                                            <th>规格</th>
-                                            <th>数量</th>
-                                            <th>质量</th>
-                                            <th>价格</th>
-                                            <th>单位</th>
-                                            <th>总价</th>
+                                            <th>关联类型</th>
+                                            <th>来源</th>
+                                            <th>转出/转入金额</th>
+                                            <th>状态</th>
+                                            <th>创建时间</th>
                                           </thead>
                                         <tbody>
-                                            <tr v-for="item in initOrderDetail.goods.arr">
-                                                <td>{{item.brredName}}</td>
-                                                <td>{{item.location}}</td>
-                                                <td>{{item.spec}}</td>
-                                                <td>{{item.number}}</td>
-                                                <td>{{item.quality}}</td>
-                                                <td>{{item.price}}元</td>
-                                                <td>{{item.unit}}</td>
-                                                <td>{{item.amount}}元</td>
+                                            <tr v-for="item in initDrugsDetail.moneyRecords.arr">
+                                                <td>{{item.linkType | linktype}}</td>
+                                                <td>{{item.desc}}</td>
+                                                <td>{{item.amount}}</td>
+                                                <td>{{item.status | drugsStatus}}</td>
+                                                <td>{{item.createTime}}</td>
                                                <!--  <td  @click="clickShow($index,{
                                                      concrete:'goods'
                                                      })">
@@ -97,126 +84,68 @@
                                     </table>
                                     </div>
                                 </div>
-                                <div class="panel-collapse" v-else v-show="initOrderDetail.goods.show">
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>商品名称</th>
-                                            <th>产地</th>
-                                            <th>规格</th>
-                                            <th>数量</th>
-                                            <th>质量</th>
-                                            <th>价格</th>
-                                            <th>单位</th>
-                                            <th>总价</th>
-                                            <th>商品图片</th>
-                                          </thead>
-                                        <tbody>
-                                            <tr v-for="item in initOrderDetail.goods.arr">
-                                                <td>{{item.brredName}}</td>
-                                                <td>{{item.location}}</td>
-                                                <td>{{item.spec}}</td>
-                                                <td>{{item.number}}</td>
-                                                <td>{{item.quality}}</td>
-                                                <td>{{item.price}}元</td>
-                                                <td>{{item.unit}}</td>
-                                                <td>{{item.amount}}元</td>
-                                                <td>
-                                                    <img v-bind:src="item.image" />
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    </div>
-                                </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:'',
-                                              crete:'payPics'
+                                              crete:'moneyRollIns'
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.payPics.arr.length!==null">
-                                          支付凭证（{{initOrderDetail.payPics.arr.length}}）<span v-if="param.orderStatus<30&&param.contact=='/order/myList'" class="system_danger">您的订单还没有支付，暂时不能新建支付凭证！</span>
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left">
+                                          药款转入记录（{{initDrugsDetail.moneyRollIns.arr.length}}）
                                         </a>
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                        支付凭证（0）<span class="system_danger" v-if="param.orderStatus<30&&param.contact=='/order/myList'">您的订单未发货，暂不能上传物流凭证！</span>
-                                        </a>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
-                                            show:true,
-                                            orderId:initOrderDetail.id,
-                                            callback:uploadDocument,
-                                            link:'/order/attachSubmit/',
-                                            description:'',
-                                            fileType:'image',
-                                            bizType:'order_pay',
-                                            payPics:'',
-                                            titles:'上传支付凭证'
-                                            })"  v-if="(initOrderDetail.payPics.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">新建</button>
-                                        <!--<button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>-->
-                                        <a v-else></a>
+                                       <!--  <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
+                                           show:true,
+                                           orderId:initDrugsDetail.id,
+                                           callback:uploadDocument,
+                                           link:'/order/attachSubmit/',
+                                           description:'',
+                                           fileType:'image',
+                                           bizType:'order_pay',
+                                           payPics:'',
+                                           titles:'上传支付凭证'
+                                           })"  v-if="(initDrugsDetail.moneyRollIns.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">新建</button> -->
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.payPics.arr.length&&!initOrderDetail.payPics.show" v-cloak>
+                                <div class="panel-collapse" v-if="initDrugsDetail.moneyRollIns.arr.length&&!initDrugsDetail.moneyRollIns.show" v-cloak>
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>文件类型</th>
-                                            <th>文件来源</th>
-                                            <th>文件图片或路径</th>
-                                            <th>描述</th>
+                                            <th>支付类型</th>
+                                            <th>正常金额</th>
+                                            <th>冻结金额</th>
+                                            <th>转入金额</th>
+                                            <th>支付状态</th>
+                                            <th>状态</th>
+                                            <th>创建时间</th>
                                           </thead>
                                         <tbody>
-                                            <tr v-for="item in initOrderDetail.payPics.arr">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.bizType}}</td>
-                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
-                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
-                                                </td>
-                                                <td>{{item.description}}</td>
+                                            <tr v-for="item in initDrugsDetail.moneyRollIns.arr">
+                                                <td>{{item.payType | payType}}</td>
+                                                <td>{{item.normalMoney}}</td>
+                                                <td>{{item.freezeMoney}}</td>
+                                                <td>{{item.amount}}</td>
+                                                <td>{{item.payStatus}}</td>
+                                                <td>{{item.status | drugsStatus}}</td>
+                                                <td>{{item.createTime}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     </div>
                                 </div>
-                                 <!--<div class="panel-collapse" v-else v-show="!initOrderDetail.payPics.show" v-cloak>-->
-                                    <!--<div class="panel-body panel-set">-->
-                                        <!--<table class="table  contactSet">-->
-                                          <!--<thead>-->
-                                            <!--<th>文件类型</th>-->
-                                            <!--<th>文件来源</th>-->
-                                            <!--<th>文件图片或路径</th>-->
-                                            <!--<th>描述</th>-->
-                                          <!--</thead>-->
-                                        <!--<tbody>-->
-                                            <!--<tr v-for="item in initOrderDetail.payPics.arr">-->
-                                                <!--<td>{{item.fileType}}</td>-->
-                                                <!--<td>{{item.bizType}}</td>-->
-                                                <!--<td><img :src="item.path" v-if="item.fileType=='image'"/>-->
-                                                    <!--<img src="/static/images/pdf.png" height="20" width="20" v-else/>-->
-                                                <!--</td>-->
-                                                <!--<td>{{item.description}}</td>-->
-                                            <!--</tr>-->
-                                        <!--</tbody>-->
-                                    <!--</table>-->
-                                    <!--</div>-->
-                                <!--</div>-->
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:'',
-                                              crete:'attachFiles'
+                                              crete:'moneyRollOuts'
                                               })">
                                         <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" >
-                                          上传附件（{{initOrderDetail.attachFiles.arr.length}}）
+                                          药款转出记录（{{initDrugsDetail.moneyRollOuts.arr.length}}）
                                         </a>
-                                        <!--<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set " v-else>-->
-                                          <!--上传附件（0）-->
-                                        <!--</a>-->
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
+                                        <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
                                             show:true,
                                             orderId:param.id,
                                             link:'/order/attachSubmit/',
@@ -226,87 +155,75 @@
                                             bizType:'attach_files',
                                             attachFiles:'',
                                             titles:'上传附件凭证'
-                                            })" v-if="initOrderDetail.attachFiles.arr.length!==null&&param.contact=='/order/myList'">新建</button>
-                                        <a v-else ></a>
+                                            })" v-if="initDrugsDetail.moneyRollOuts.arr.length!==null&&param.contact=='/order/myList'">新建</button>
+                                        <a v-else ></a> -->
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-show="!initOrderDetail.attachFiles.show">
+                                <div class="panel-collapse" v-show="!initDrugsDetail.moneyRollOuts.show">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>文件类型</th>
-                                            <th>文件来源</th>
-                                            <th>文件图片或路径</th>
-                                            <th>描述</th>
+                                            <th>客户名称</th>
+                                            <th>银行卡号</th>
+                                            <th>正常金额</th>
+                                            <th>冻结金额</th>
+                                            <th>转出金额</th>
+                                            <th>状态</th>
+                                            <th>创建时间</th>
+                                            <th></th>
                                           </thead>
                                         <tbody>
-                                            <tr v-for="item in initOrderDetail.attachFiles.arr">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.bizType}}</td>
-                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
-                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
-                                                </td>
-                                                <td>{{item.description}}</td>
+                                            <tr v-for="item in initDrugsDetail.moneyRollOuts.arr">
+                                                <td>{{item.name}}</td>
+                                                <td>{{item.bank}}</td>
+                                                <td>{{item.normalMoney}}</td>
+                                                <td>{{item.freezeMoney}}</td>
+                                                <td>{{item.amount}}</td>
+                                                <td>{{item.status | drugsStatus}}</td>
+                                                <td>{{item.ctime}}</td>
                                                 <td>
-                                                    <img v-bind:src="item.image" />
+                                                	<a class="operate" v-if="item.status==0" @click="drugs({
+                                                		status:item.status,
+									                	id:item.id,
+									                	moneyId:item.moneyId,
+									                	userId:item.userId,
+                                                		show:false,
+                                                		sub:$index,
+                                                		key:'moneyRollOuts'
+                                                		})"><img src="/static/images/application.png" height="18" width="28" title="药款转出处理" alt="药款转出处理"></a>
+									                <a class="operate" v-if="item.status==1" @click="drugs({
+									                	status:item.status,
+									                	id:item.id,
+									                	moneyId:item.moneyId,
+									                	userId:item.userId,
+									                	show:false,
+                                                		sub:$index,
+                                                		key:'moneyRollOuts'
+									                	})"><img src="/static/images/Financial.png" height="18" width="48" title="转出审核" alt="转出审核"></a>
+									                <a class="operate" v-if="item.status==2" @click="drugs({
+									                	status:item.status,
+									                	id:item.id,
+									                	moneyId:item.moneyId,
+									                	userId:item.userId,
+									                	show:false,
+                                                		sub:$index,
+                                                		key:'moneyRollOuts'
+									                	})"><img src="/static/images/Financialtransfer.png" height="18" width="48" title="转账处理中" alt="转账处理中"></a>
+									                <a class="operate" v-if="item.status==3" @click="drugs({
+									                	status:item.status,
+									                	id:item.id,
+									                	moneyId:item.moneyId,
+									                	userId:item.userId,
+									                	show:false,
+                                                		sub:$index,
+                                                		key:'moneyRollOuts'
+									                	})"><img src="/static/images/Financialover.png" height="18" width="48" title="转出成功" alt="转出成功"></a>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:'',
-                                              crete:'sendPics'
-                                              })">
-                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.sendPics.arr.length">
-                                          物流凭证（{{initOrderDetail.sendPics.arr.length}}）<span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">您的订单未发货，暂不能上传物流凭证！</span>
-                                        </a>
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                          物流凭证（0） <span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">您的订单未发货，暂不能上传物流凭证！</span>
-                                        </a>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
-                                            show:true,
-                                            orderId:param.id,
-                                            link:'/order/attachSubmit/',
-                                            description:'',
-                                            fileType:'image',
-                                            bizType:'order_send',
-                                            sendPics:'',
-                                            callback:uploadDocument,
-                                            titles:'上传物流凭证'
-                                            })" v-if="initOrderDetail.sendPics.arr.length!==null&&param.contact=='/order/myList'&&param.orderStatus>=50">新建</button>
-                                        <!--<button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>-->
-                                        <a v-else></a>
-                                    </h4>
-                                </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.sendPics.arr.length!==null&&!initOrderDetail.sendPics.show" >
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>文件类型</th>
-                                            <th>文件来源</th>
-                                            <th>文件图片或路径</th>
-                                            <th>描述</th>
-                                          </thead>
-                                        <tbody>
-                                            <tr v-for="item in initOrderDetail.sendPics.arr">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.bizType}}</td>
-                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
-                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
-                                                </td>
-                                                <td>{{item.description}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    </div>
-                                </div>
-                                
                             </div>
                         </div>
                     </article>
@@ -317,75 +234,35 @@
                         <div class="edit-detail">
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>订单ID</label>
-                                    <input type="text" class="form-control" v-model="initOrderDetail.id" value="{{initOrderDetail.id}}" disabled="disabled" />
+                                    <label>会员名称</label>
+                                    <input type="text" class="form-control" v-model="initDrugsDetail.userName" value="{{initDrugsDetail.userName}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>订单号</label>
-                                    <input type="text" class="form-control" v-model="initOrderDetail.no" value="{{initOrderDetail.no}}" disabled="disabled"/>
+                                    <label>正常金额</label>
+                                    <input type="text" class="form-control" v-model="initDrugsDetail.credit" value="{{initDrugsDetail.credit}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>订单类别</label>
-                                    <input type="text" class="form-control"   value="{{type[initOrderDetail.type]}}" disabled="disabled"/>
+                                    <label>冻结金额</label>
+                                    <input type="text" class="form-control"   value="{{initDrugsDetail.freezeMoney}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>订单来源</label>
-                                    <input type="text" class="form-control"  value="{{sourceType[initOrderDetail.sourceType]}}" disabled="disabled" v-if="sourceType[initOrderDetail.sourceType]"/>
-                                    <input type="text" class="form-control"  value="未说明" disabled="disabled" v-else/>
+                                    <label>状态</label>
+                                    <input type="text" class="form-control"  value="{{initDrugsDetail.status | drugsStatus}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>收货人姓名</label>
-                                    <input type="text" class="form-control"  v-model="initOrderDetail.consignee" value="{{initOrderDetail.consignee}}" disabled="disabled"/>
+                                    <label>创建时间</label>
+                                    <input type="text" class="form-control"  v-model="initDrugsDetail.createTime" value="{{initDrugsDetail.createTime}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>收货人电话</label>
-                                    <input type="text" class="form-control" v-model="initOrderDetail.consigneePhone" value="{{initOrderDetail.consigneePhone}}" disabled="disabled"/>
+                                    <label>更新时间</label>
+                                    <input type="text" class="form-control" v-model="initDrugsDetail.updateTime" value="{{initDrugsDetail.updateTime}}" disabled="disabled"/>
                                 </div>
                             </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>国家</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.country}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>所在省</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.province}}" disabled="disabled"/>
-                                </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>所在市</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.city}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>邮政编码</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.zipCode}}" disabled="disabled"/>
-                                </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>收货人地址</label>
-                                    <input type="text" class="form-control" value="{{initOrderDetail.consigneeAddr}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>备注</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.comments}}" disabled="disabled"/>
-                                </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>杂费</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.incidentals}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>杂费说明</label>
-                                    <input type="text" class="form-control" value="{{initOrderDetail.incidentalsDesc}}" disabled="disabled"/>
-                                </div>
-                            </div>
+                            
                         </div>
                     </article>
                 </div>
@@ -394,91 +271,60 @@
        </div>
 </template>
 <script>
-import trackingModel from '../order/ordergoods'
-import credenceModel from '../order/createcredence'
-import disposeModel  from  '../order/orderStatus'
+import  drugsModel  from  '../drugs/drugsStatus'
 import {
   initDrugsDetail
 } from '../../vuex/getters'
 import {
-  getDrugsDetail,
-  uploadDocument
+  getDrugsDetail
 } from '../../vuex/actions'
 export default {
     components: {
-      trackingModel,
-      credenceModel,
-      disposeModel
+       drugsModel
     },
     props:['param'],
     data(){
       return {
-        trackingParam:{
-          show:false
-        },
-        sourceType:{
-          0:'PC',
-          1:'android',
-          2:'wechart',
-          3:'ios'
-        },
-        type:{
-          0:'采购',
-          1:'销售'
-        },
         show:true,
-        credenceParam:{
-           show:false
-        },
-        disposeParam:{ //订单处理各个状态
-            show:false,
-            sales:false,
-            handle:false,
-            payment:false,
-            Auditing:false,
-            sendoff:false,
-            express:false,
-            delivery:false,
-            tips:''
+        disposeParam:{
+          show:false,
+          title:'',
+          link:'/money/rollOutHandle'
         }
       }
     },
     vuex:{
       getters:{
-        
+        initDrugsDetail
       },
       actions:{
-        
-        uploadDocument
+        getDrugsDetail,
       }
     },
     methods:{
-          enfoldment:function(param){
-          	console.log(this.$store.state.table.orderDetail[param.crete])
-            if(this.$store.state.table.orderDetail[param.crete].arr.length==0){
-                this.$store.state.table.orderDetail[param.crete].show=false;
+         enfoldment:function(param){
+          	console.log(this.$store.state.table.rolloutDetail[param.crete])
+            if(this.$store.state.table.rolloutDetail[param.crete].arr.length==0){
+                this.$store.state.table.rolloutDetail[param.crete].show=false;
             }
-            this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
-          },
-          createChance:function(item,index){
-            console.log(item)
-                item.show=!item.show;
-                item.index = index;
-                this.trackingParam = item;
-                this.trackingParam.show = true;
-          },
-         createcredence:function(initOrderDetail){
-            console.log(initOrderDetail)
-             this.credenceParam=initOrderDetail;
-         },
-        pendingOrder:function(initOrderDetail){
-            console.log(initOrderDetail)
-            console.log(this.disposeParam)
-            this.disposeParam = initOrderDetail;
-            /*this.disposeParam = this.param;*/
-            this.disposeParam.show = true;
-
-        }
+            this.$store.state.table.rolloutDetail[param.crete].show = !this.$store.state.table.rolloutDetail[param.crete].show;
+        },
+        drugs:function(initDrugsDetail){
+	          this.disposeParam = initDrugsDetail;
+	          console.log(this.disposeParam)
+	          this.disposeParam.show = true;
+	          this.disposeParam.title = '药款转出操作';
+	          this.disposeParam.link = '/money/rollOutHandle';
+	          if(initDrugsDetail.status==0){
+	               this.disposeParam.tips='申请成功，请等待审核';
+	          }else if(initDrugsDetail.status==1){
+	               this.disposeParam.tips='审核通过，请等待转账';
+	          }else if(initDrugsDetail.status==2){
+	               this.disposeParam.tips='转账成功，操作完成';
+	          }else if(initDrugsDetail.status==3){
+	               this.disposeParam.tips='操作已完成，药款已转出';
+	          }
+	    }
     },
    created(){
    	  this.getDrugsDetail(this.param);

@@ -25,11 +25,11 @@
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=pass,tipsParam.name='确认审核通过?'">通过</button>
             <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=reject,tipsParam.name='确认审核不通过?'">不通过</button>
             <div v-if="param.key=='user'" style="display:inline-block">
                 <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=auditing,tipsParam.name='确认审核中?'">审核中</button>
             </div>
+            <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=pass,tipsParam.name='确认审核通过?'">通过</button>
         </div>
     </div>
 </template>

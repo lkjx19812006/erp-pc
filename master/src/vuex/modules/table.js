@@ -90,7 +90,9 @@ import {
    ORDER_ROLLOUT_DATA,
    EXPRESS_DETAIL_DATA,
    BATCH_ORG_ORDER,
-   UPDATE_ENTERPRISE
+   UPDATE_ENTERPRISE,
+   ROLLOUT_STATUS,
+   ROLLOUT_DETAIL
 
 } from '../mutation-types'
 
@@ -518,6 +520,20 @@ const state = {
             show: false
     }
   },
+  rolloutDetail:{
+      "moneyRecords":{
+         arr: [ ],
+        show: false
+      },
+      "moneyRollIns":{
+         arr: [ ],
+        show: false
+      },
+      "moneyRollOuts":{
+         arr: [ ],
+         show: false
+      }
+  },
   identify:{},
   trackingDetail:{}
 }
@@ -557,8 +573,37 @@ const mutations = {
     [ORDER_PAY_DATA](state,data){  //订单支付记录
         state.basicBaseList.orderPayList = data;
     },
-    [ORDER_ROLLOUT_DATA](state,data){ //药款到转出记录
+    [ORDER_ROLLOUT_DATA](state,data){ //药款转出记录
+       console.log(data)
         state.basicBaseList.orderRolloutList = data;
+    },
+    [ROLLOUT_DETAIL](state,data){ //药款转出详情
+        console.log(data)
+        state.rolloutDetail = data;
+    },
+    [ROLLOUT_STATUS](state,data){
+      console.log(data)
+        if(data.link=='/money/rollOutHandle'&&data.key=='moneyRollOuts'){
+          for(var i in  data){
+            if(i=="status"&&data[i]==1){
+                  state.rolloutDetail[data.key].arr[data.sub].status = "1";
+             }else if(i=="status"&&data[i]==2){
+                  state.rolloutDetail[data.key].arr[data.sub].status = "2";
+             }else if(i=="status"&&data[i]==3){
+                  state.rolloutDetail[data.key].arr[data.sub].status = "3";
+             }
+          }
+        }else{
+            for(var key in  data){
+               if(key=="status"&&data[key]==1){
+                    state.basicBaseList.orderRolloutList[data.sub].status = "1";
+               }else if(key=="status"&&data[key]==2){
+                    state.basicBaseList.orderRolloutList[data.sub].status = "2";
+               }else if(key=="status"&&data[key]==3){
+                    state.basicBaseList.orderRolloutList[data.sub].status = "3";
+               }
+            }
+        }
     },
     [ORDER_UPDATE_DATA](state,data){ //修改订单
         console.log(data)

@@ -84,7 +84,7 @@
                                             <th>微信</th>
                                             <th>主要联系人</th>
                                             <th>职务</th>
-                                            <th></th>
+                                            <th colspan="2">操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -97,8 +97,31 @@
                                             <td v-if="item.main==0">否</td>
                                             <td v-if="item.main==1">是</td>
                                             <td>{{item.position}}</td>
-                                            <td @click="contactShow($index)" v-if="!initCompanyDetail.customerId">
-                                                <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                            <td  v-if="!initCompanyDetail.customerId"  @click="updateCompany({
+                                                 sub:$index,
+                                                 id:item.id,
+                                                 show:true,
+                                                 cid:item.cid,
+                                                 title:'编辑联系人',
+                                                 namelist:'联系人名称',
+                                                 phonelist:'手机号',
+                                                 emaillist:'邮箱',
+                                                 tellist:'固话',
+                                                 weblist:'微信',
+                                                 mainlist:'主要联系人',
+                                                 name:item.name,
+                                                 phone:item.phone,
+                                                 tel:item.tel,
+                                                 email:item.email,
+                                                 wechart:item.wechart,
+                                                 link:alterCompany,
+                                                 url:'contract',
+                                                 key:'companyContacts',
+                                                 main:item.main
+                                                 },item.show=false)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                                               </td>
+                                            <td @click="contactDel({name:item.name,id:item.id,url:'contract',index:$index},item.show=false)" v-if="!initCompanyDetail.customerId"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
+                                                <!-- <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show" transition="expand">
                                                    <dl>
                                                        <dt @click="updateCompany({
@@ -125,7 +148,7 @@
                                                                },item.show=false)">编辑</dt>
                                                         <dt  @click="contactDel({name:item.name,id:item.id,url:'contract',index:$index},item.show=false)">删除</dt>
                                                    </dl>
-                                               </div>
+                                        </div> -->
                                             </td>
                                         </tr>
                                     </tbody>
@@ -425,7 +448,6 @@ table{
     color: #fa6705;
 }
 .contactSet>tbody>tr>td,.contactSet>thead>tr>th{
-    border-bottom: none;
     text-align: left;
 }
 .contact_img{

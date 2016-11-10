@@ -35,48 +35,49 @@
                                      key:'specs',
                                      judge:'specs'
                                      })">新建</button>
-                            </h4>
+                        </h4>
                     </div>
                     <div class="panel-collapse" v-show="initBreedDetail.specs.show">
                         <div class="panel-body panel-set">
-                            <ul class="clearfix" v-for="item in initBreedDetail.specs.arr">
-                                <li class="panel-name">
-                                    <label>规格名称：{{item.name}}</label>
-                                </li>
-                                <li @click="clickShow($index,{
-                                        concrete:'specs'
-                                        })">
-                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                    <div class="breed_action" v-show="item.show" transition="expand">
-                                        <dl>
-                                            <dt @click="updateSpec({
-                                                    sub:$index,
-                                                    id:item.id,
-                                                    show:true,
-                                                    title:'规格',
-                                                    namelist:'规格名称',
-                                                    name:item.name,
-                                                    link:alterSpec,
-                                                    url:'/spec/',
-                                                    key:'specs',
-                                                    judge:'specs',
-                                                    breedId:item.breedId
-                                                    },item.show=false)">编辑</dt>
-                                            <dt @click="specDelete({
-                                                    sub:$index,
-                                                    id:item.id,
-                                                    show:true,
-                                                    name:item.name,
-                                                    title:'规格',
-                                                    link:specDel,
-                                                    url:'/breed/spec/',
-                                                    key:'specs',
-                                                    headline:'breedDetail'
-                                                    },item.show=false)">删除</dt>
-                                        </dl>
-                                    </div>
-                                </li>
-                            </ul>
+                            <table class="table contactSet">
+                                <thead>
+                                    <tr>
+                                        <th>规格名称</th>
+                                        <th colspan="2">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in initBreedDetail.specs.arr">
+                                        <td>{{item.name}}</td>
+                                        <td @click="updateSpec({
+                                               sub:$index,
+                                               id:item.id,
+                                               show:true,
+                                               title:'规格',
+                                               namelist:'规格名称',
+                                               name:item.name,
+                                               link:alterSpec,
+                                               url:'/spec/',
+                                               key:'specs',
+                                               judge:'specs',
+                                               breedId:item.breedId
+                                               },item.show=false)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                                        </td>
+                                        <td @click="specDelete({
+                                               sub:$index,
+                                               id:item.id,
+                                               show:true,
+                                               name:item.name,
+                                               title:'规格',
+                                               link:specDel,
+                                               url:'/breed/spec/',
+                                               key:'specs',
+                                               headline:'breedDetail'
+                                               },item.show=false)"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -106,17 +107,17 @@
 
                         <div class="panel-collapse" v-show="!initBreedDetail.locals.show">
                             <div class="panel-body panel-set">
-                                <ul class="clearfix" v-for="item in initBreedDetail.locals.arr" v-cloak>
-                                    <li class="panel-name">
-                                        <label>产地名称：{{item.name}}</label>
-                                    </li>
-                                    <li @click="clickShow($index,{
-                                        concrete:'locals'
-                                        })">
-                                        <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                        <div class="breed_action" v-show="item.show" transition="expand">
-                                            <dl>
-                                                <dt @click="updateSpec({
+                                <table class="table contactSet">
+                                    <thead>
+                                        <tr>
+                                            <th>产地名称</th>
+                                            <th colspan="2">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="item in initBreedDetail.locals.arr">
+                                            <td>{{item.name}}</td>
+                                            <td @click="updateSpec({
                                                      sub:$index,
                                                     id:item.id,
                                                     show:true,
@@ -128,8 +129,9 @@
                                                     key:'locals',
                                                     judge:'locals',
                                                     breedId:item.breedId
-                                                    },item.show=false)">编辑</dt>
-                                                <dt @click="specDelete({
+                                                    },item.show=false)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                                            </td>
+                                            <td @click="specDelete({
                                                     sub:$index,
                                                     id:item.id,
                                                     show:true,
@@ -139,11 +141,11 @@
                                                     url:'/breed/local/',
                                                     key:'locals',
                                                      headline:'breedDetail'
-                                                    },item.show=false)">删除</dt>
-                                            </dl>
-                                        </div>
-                                    </li>
-                                </ul>
+                                                    },item.show=false)"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -172,17 +174,17 @@
                         </div>
                         <div  class="panel-collapse collapse in" v-show="!initBreedDetail.alias.show">
                             <div class="panel-body panel-set">
-                                <ul class="clearfix" v-for="item in initBreedDetail.alias.arr" v-cloak>
-                                    <li class="panel-name">
-                                        <label>别名：{{item.alias}}</label>
-                                    </li>
-                                    <li @click="clickShow($index,{
-                                        concrete:'alias'
-                                        })">
-                                        <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                        <div class="breed_action" v-show="item.show" transition="expand">
-                                            <dl>
-                                                <dt @click="updateSpec({
+                                <table class="table contactSet">
+                                    <thead>
+                                        <tr>
+                                            <th>别名</th>
+                                            <th colspan="2">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="item in initBreedDetail.alias.arr">
+                                            <td>{{item.alias}}</td>
+                                            <td @click="updateSpec({
                                                     sub:$index,
                                                     id:item.id,
                                                     show:true,
@@ -194,10 +196,11 @@
                                                     key:'alias',
                                                     judge:'alias',
                                                     breedId:item.breedId
-                                                    },item.show=false)">编辑</dt>
-                                                <dt @click="specDelete({
-                                                     sub:$index,
-                                                     id:item.id,
+                                                    },item.show=false)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                                            </td>
+                                            <td @click="specDelete({
+                                                    sub:$index,
+                                                    id:item.id,
                                                     show:true,
                                                     name:item.alias,
                                                     title:'别名',
@@ -205,11 +208,11 @@
                                                     url:'/breed/alias/',
                                                     key:'alias',
                                                      headline:'breedDetail'
-                                                    },item.show=false)">删除</dt>
-                                            </dl>
-                                        </div>
-                                    </li>
-                                </ul>
+                                                    },item.show=false)"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -238,19 +241,18 @@
                         </div>
                         <div  class="panel-collapse" v-show="!initBreedDetail.units.show">
                             <div class="panel-body panel-set">
-                                <ul class="clearfix" v-for="item in initBreedDetail.units.arr" v-cloak>
-                                    <li class="panel-name">
-                                        <label>单位名称：{{item.name}}</label>
-                                    </li>
-
-                                    <li @click="clickShow($index,{
-                                        concrete:'units'
-                                        })">
-                                        <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                        <div class="breed_action" v-show="item.show" transition="expand">
-                                            <dl>
-                                                <dt @click="updateSpec({
-                                                     sub:$index,
+                                <table class="table contactSet">
+                                    <thead>
+                                        <tr>
+                                            <th>单位名称</th>
+                                            <th colspan="2">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="item in initBreedDetail.units.arr">
+                                            <td>{{item.name}}</td>
+                                            <td @click="updateSpec({
+                                                    sub:$index,
                                                     id:item.id,
                                                     breedId:item.breedId,
                                                     show:true,
@@ -262,8 +264,9 @@
                                                     key:'units',
                                                     judge:'units',
                                                     breedId:item.breedId
-                                                    },item.show=false)">编辑</dt>
-                                                <dt @click="specDelete({
+                                                    },item.show=false)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                                            </td>
+                                            <td  @click="specDelete({
                                                     sub:$index,
                                                     id:item.id,
                                                     show:true,
@@ -273,11 +276,51 @@
                                                     url:'/breed/unit/',
                                                     key:'units',
                                                      headline:'breedDetail'
-                                                    },item.show=false)">删除</dt>
-                                            </dl>
-                                        </div>
-                                    </li>
-                                </ul>
+                                                    },item.show=false)"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                               <!--  <ul class="clearfix" v-for="item in initBreedDetail.units.arr" v-cloak>
+                                   <li class="panel-name">
+                                       <label>单位名称：{{item.name}}</label>
+                                   </li>
+                               
+                                   <li @click="clickShow($index,{
+                                       concrete:'units'
+                                       })">
+                                       <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                       <div class="breed_action" v-show="item.show" transition="expand">
+                                           <dl>
+                                               <dt @click="updateSpec({
+                                                    sub:$index,
+                                                   id:item.id,
+                                                   breedId:item.breedId,
+                                                   show:true,
+                                                   title:'单位',
+                                                   namelist:'单位名称',
+                                                   name:item.name,
+                                                   link:alterSpec,
+                                                   url:'/unit/',
+                                                   key:'units',
+                                                   judge:'units',
+                                                   breedId:item.breedId
+                                                   },item.show=false)">编辑</dt>
+                                               <dt @click="specDelete({
+                                                   sub:$index,
+                                                   id:item.id,
+                                                   show:true,
+                                                   name:item.name,
+                                                   title:'单位',
+                                                   link:specDel,
+                                                   url:'/breed/unit/',
+                                                   key:'units',
+                                                    headline:'breedDetail'
+                                                   },item.show=false)">删除</dt>
+                                           </dl>
+                                       </div>
+                                   </li>
+                               </ul> -->
                             </div>
                         </div>
                     </div>
@@ -457,7 +500,9 @@ export default {
     z-index: 10;
     height: 100%;
 }
-
+.contactSet thead{
+    color: #fa6705;
+}
 .client-detailInfo img {
     width: 100px;
 }
@@ -467,7 +512,6 @@ export default {
     border: 1px solid #ddd;
     color: #003077;
     margin-right: 5px;
-    font-size: 14px;
 }
 .panel-body ul{
     border-top:1px solid #ddd;

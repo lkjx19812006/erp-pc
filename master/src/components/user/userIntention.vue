@@ -605,9 +605,12 @@ export default {
 }
 
 .top-title{
-    position: absolute;
-    top: 0;
+    position: fixed;
+    top: 91px;
     right:0;
+    left: 0;
+    margin: auto;
+    width: 800px;
 }
 
 .edit-content {

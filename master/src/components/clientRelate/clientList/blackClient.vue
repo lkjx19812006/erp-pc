@@ -3,7 +3,7 @@
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
   <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-  <div v-show="!changeParam.show">
+  <div>
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">客户黑名单</div>
       <button class="new_btn transfer" @click="clientTransferWhite()">踢出黑名单</button>

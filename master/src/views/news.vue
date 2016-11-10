@@ -43,8 +43,7 @@
                         <th>企业认证</th>
                         <th>划转状态</th>
                         <th>注册时间</th>
-                        <th></th>
-
+                        <th colspan="3">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,8 +91,81 @@
                         <td v-if="item.transStatus==0">未划转</td>
                         <td v-if="item.transStatus!=0&&item.transStatus!=1">转黑名单</td>
                         <td>{{item.ctime}}</td>
-
-                        <td @click.stop="eventClick($index)">
+                        <td  @click="modifyUser({
+                                    loading:false,
+                                    id:item.id,
+                                    show:true,
+                                    userType:3,
+                                    link:alertInfo,
+                                    url:'/user/',
+                                    key:'userList',
+                                    index:$index,
+                                    nickname:'',
+                                    qq:'',
+                                    fullname:'',
+                                    email:'',
+                                    phone:'',
+                                    tel:'',
+                                    nickname:'',
+                                    company:'',
+                                    comment:'',
+                                    address:'',
+                                    idnumber:'',
+                                    bizType:'',
+                                    gender:'',
+                                    importance:'',
+                                    userType:'',
+                                    bizMain:'',
+                                    grade:item.grade
+                                    },item.show=false)">
+                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
+                            </a>
+                        </td>
+                        <td  v-if="item.transStatus==0"  @click="userToClient({
+                                    mainBiz:item.bizMain,
+                                    name:item.fullname,
+                                    keyname:'transStatus',
+                                    sub:$index,
+                                    userId:item.id,
+                                    province:'',
+                                    phone:item.phone,
+                                    tel:item.tel,
+                                    email:item.email,
+                                    qq:item.qq,
+                                    type:'0,个人',
+                                    classify:'',
+                                    fullname:item.fullname,
+                                    employeeId:'',
+                                    employeeName:'',
+                                    orgId:'',
+                                    orgName:'',
+                                    show:true,
+                                    key:'userList',
+                                    countryId:7,
+                                    countryName:'中国',
+                                    contact:{
+                                     name: item.fullname,
+                                     position: '',
+                                     department: '',
+                                     phone: item.phone,
+                                     tel: item.tel,
+                                     email: item.email,
+                                     qq: item.qq,
+                                     wechart: item.wechart
+                                     }
+                                    },item.show=false)">
+                            <a class="operate"><img src="/static/images/transfer.png" height="18" width="30"/>
+                            </a>
+                        </td>
+                        <td v-if="item.utype==1" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">
+                            <a class="operate"><img src="/static/images/transfer.png" height="18" width="30"/>
+                            </a>
+                        </td>
+                        <td  v-if="item.ctype==1" @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)">
+                            <a class="operate"><img src="/static/images/transfer.png" height="18" width="30"/>
+                            </a>
+                        </td>
+                        <!-- <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="component_action" v-show="item.show">
                                 <ul>
@@ -157,12 +229,12 @@
                                                  wechart: item.wechart
                                                 }
                                                 },item.show=false)">划转</li>
-                                    <!--<li @click="createIntention(item.show=false)">意向</li>-->
+                                    <li @click="createIntention(item.show=false)">意向</li>
                                     <li v-if="item.utype==1" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">个人认证</li>
                                     <li v-if="item.ctype==1" @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)">企业认证</li>
                                 </ul>
                             </div>
-                        </td>
+                        </td> -->
                     </tr>
                 </tbody>
             </table>

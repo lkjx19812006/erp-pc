@@ -30,7 +30,7 @@
               <th>所属文件</th>
               <!--<th>路径</th>-->
               <th>描述</th>
-              <th></th>
+              <th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -44,7 +44,20 @@
                     <!--<img  src="/static/images/excel.png" v-if="item.fileType=='excel'">-->
               <!--</td>-->
               <td>{{item.description}}</td>
-              <td @click="showClick($index)">
+              <td @click="specDelete({
+                      id:item.id,
+                      sub:$index,
+                      show:true,
+                      name:'资质证书',
+                      title:'资质证书',
+                      link:deleteInfo,
+                      url:'/customer/file/',
+                      key:'filesList'
+                    })">
+               <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
+               </a>
+              </td>
+              <!-- <td @click="showClick($index)">
                 <img height="24" width="24" src="/static/images/default_arrow.png" />
                 <div class="component_action" v-show="item.show">
                   <ul>
@@ -60,7 +73,7 @@
                             })">删除</li>
                   </ul>
                 </div>
-              </td>
+              </td> -->
             </tr>
         </tbody>
       </table>

@@ -38,7 +38,7 @@
 
                                 <div class="editpage-input">
                                     <label class="editlabel">国家</label>
-                                    <div type="text" class="form-control edit-input">
+                                    <div type="text" class="edit-input">
                                         <v-select
                                            :debounce="250"
                                            :value.sync="country"
@@ -53,7 +53,7 @@
                                 <div class="editpage-input">
                                     <label class="editlabel">市</label>
                                     <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                                    <div v-if="province.cname" type="text" class="form-control edit-input">
+                                    <div v-if="province.cname" type="text" class="edit-input">
                                         <v-select
                                              :debounce="250"
                                              :value.sync="city"

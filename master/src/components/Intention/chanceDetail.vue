@@ -59,7 +59,7 @@
                                           <th>杂费</th>
                                           <th>杂费说明</th>
                                           <th>是否已采纳</th>
-                                          <th></th>
+                                          <th>操作</th>
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntentionDetail.offers.arr">
@@ -76,15 +76,15 @@
                                                   <div v-else>已采纳</div>
 
                                                 </td>
-                                                <td v-if="item.orderTime==0"  @click="clickShow($index,{
-                                                    concrete:'offers'
-                                                    })">
-                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                <td v-if="item.orderTime==0"  @click="adopt(item,$index)">
+                                                     <a class="operate"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
+                                                    </a>
+                                                    <!-- <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                     <div class="files_action" v-show="item.show" >
                                                         <dl>
                                                             <dt @click="adopt(item,$index)">采纳</dt>
                                                         </dl>
-                                                    </div>
+                                                    </div> -->
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -128,16 +128,20 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td  @click="clickShow($index,{
-                                                    concrete:'msgs'
-                                                    })">
-                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="files_action" v-show="item.show" >
-                                                        <dl>
-                                                            <dt @click="edit($index,item)">修改备注</dt>
-                                                        </dl>
-                                                    </div>
+                                                <td @click="edit($index,item)">
+                                                  <a class="operate"><img src="/static/images/upremark.png" height="18" width="48"  alt="修改备注" title="修改备注"/>
+                                                    </a>
                                                 </td>
+                                               <!--  <td  @click="clickShow($index,{
+                                                   concrete:'msgs'
+                                                   })">
+                                                   <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                   <div class="files_action" v-show="item.show" >
+                                                       <dl>
+                                                           <dt @click="edit($index,item)">修改备注</dt>
+                                                       </dl>
+                                                   </div>
+                                               </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -174,32 +178,36 @@
                               <div class="panel-body panel-set">
                                 <table class="table contactSet">
                                   <thead>
-                                  <th>业务类型</th>
-                                  <th>跟进方式	</th>
-                                  <th>联系账号</th>
-                                  <th>备注</th>
-                                  <th>操作</th>
+                                    <th>业务类型</th>
+                                    <th>跟进方式	</th>
+                                    <th>联系账号</th>
+                                    <th>备注</th>
+                                    <th>操作</th>
                                   </thead>
                                   <tbody>
                                   <tr v-for="item in initIntentionDetail.trackings.arr">
                                     <!-- <td><img :src="item.path" /></td> -->
-                                    <td v-if="item.bizType==0">会员</td>
-                                    <td v-if="item.bizType==1">意向</td>
-                                    <td v-if="item.bizType==2">订单</td>
-                                    <td v-if="item.bizType!=0&&item.bizType!=1&&item.bizType!=2">会员</td>
-                                    <td>{{item.trackingWay}}</td>
-                                    <td>{{item.contactNo}}</td>
-                                    <td>{{item.comments}}</td>
-                                    <td  @click="clickShow($index,{
-                                                    concrete:'trackings'
-                                                    })">
-                                      <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                      <div class="files_action" v-show="item.show" >
-                                        <dl>
-                                          <dt @click="updateTracking(item,$index)">编辑</dt>
-                                        </dl>
-                                      </div>
-                                    </td>
+                                      <td v-if="item.bizType==0">会员</td>
+                                      <td v-if="item.bizType==1">意向</td>
+                                      <td v-if="item.bizType==2">订单</td>
+                                      <td v-if="item.bizType!=0&&item.bizType!=1&&item.bizType!=2">会员</td>
+                                      <td>{{item.trackingWay}}</td>
+                                      <td>{{item.contactNo}}</td>
+                                      <td>{{item.comments}}</td>
+                                      <td @click="updateTracking(item,$index)">
+                                        <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                                          </a>
+                                      </td>
+                                      <!-- <td  @click="clickShow($index,{
+                                                      concrete:'trackings'
+                                                      })">
+                                        <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                        <div class="files_action" v-show="item.show" >
+                                          <dl>
+                                            <dt @click="updateTracking(item,$index)">编辑</dt>
+                                          </dl>
+                                        </div>
+                                      </td> -->
                                   </tr>
                                   </tbody>
                                 </table>

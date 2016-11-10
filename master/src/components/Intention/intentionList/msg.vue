@@ -39,7 +39,7 @@
                         <th>留言信息</th>
                         <th>备注</th>
                         <th>回复</th>
-      	            	<th></th>
+      	            	<th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,14 +55,18 @@
                         <td>{{item.content}}</td>
                         <td>{{item.comments}}</td>
                         <td>{{item.reply}}</td>
-                        <td @click.stop="clickShow($index)">
-                           <img height="24" width="24" src="/static/images/default_arrow.png" />
-                           <div class="component_action" v-show="item.show">
-                               <ul>
-                                   <li @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments">编辑</li>
-                               </ul>
-                           </div>
-                       </td>
+                        <td  @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments">
+                           <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                           </a>
+                        </td>
+                       <!--  <td @click.stop="clickShow($index)">
+                          <img height="24" width="24" src="/static/images/default_arrow.png" />
+                          <div class="component_action" v-show="item.show">
+                              <ul>
+                                  <li @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments">编辑</li>
+                              </ul>
+                          </div>
+                                              </td> -->
                     </tr>
                 </tbody>
             </table>
