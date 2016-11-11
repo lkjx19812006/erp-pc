@@ -72,7 +72,7 @@
             </div>
             <!-- 订单财务审核 -->
             <div class="clearfix logical_color"  v-if="param.Auditing">
-                <img v-for="item in initOrderDetail.payPics.arr" class="col-xs-3" v-bind:src="item.path" />
+                <img v-for="item in initOrderDetail.payPics.arr" class="col-xs-3" v-bind:src="item.url" />
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
                     id:initOrderDetail.id,
                     show:true,
@@ -134,7 +134,7 @@
                     orderStatus:'',
                     images:'',
                     callback:underPay
-                    })"  value="申请核查" />
+                    })"  value="{{payName}}" />
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
             </div>
         </div>
@@ -180,7 +180,7 @@
                 </div>
                 <div class="logical_color clearfix">
                   <p>物流凭证：</p>
-                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.path"/>
+                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url"/>
                 </div>
               </div>
               <div class="order_info clearfix">
@@ -216,7 +216,7 @@
                 </div>
                 <div class="logical_color clearfix">
                   <p>物流凭证：</p>
-                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.path"/>
+                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url"/>
                 </div>
               </div>
               <div class="order_info clearfix">
@@ -300,6 +300,7 @@ export default {
             editorder:{
               show:false
             },
+            payName: "去支付",
           type:"image/jpeg,image/jpg,image/png",
             uploadLogistic:{
               images:'',
@@ -366,9 +367,11 @@ export default {
             if(payWay ==0){
               this.undelinePaySelect = true; //线下
               this.yaokuanPaySelected = false;
+              this.payName="申请审核";
             }else if(payWay ==3){
               this.yaokuanPaySelected = true; //药款
               this.undelinePaySelect = false;
+              this.payName="去支付";
             }
         },
         payOrder:function(payorder){

@@ -3614,13 +3614,13 @@ export const getIntlIntentionInquireDetail = ({ dispatch }, param) => {  //国�
            }*/
             /*var offers = inquire.offers;
             inquire.offers = {};
-            inquire.offers.arr = offers  
+            inquire.offers.arr = offers
             inquire.offers.show = false;
 
             var otherOffers = inquire.otherOffers;
             inquire.otherOffers = {};
-            inquire.otherOffers.arr = otherOffers  
-            inquire.otherOffers.show = false;  
+            inquire.otherOffers.arr = otherOffers
+            inquire.otherOffers.show = false;
 
             console.log(inquire);*/
             dispatch(types.INTLINTENTION_INQUIRE_DETAIL_DATA, inquire);
@@ -4245,9 +4245,15 @@ export const uploadCertificate = ({ dispatch }, param) => { //供应商新增文
 
 export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
     console.log('文件上传');
-    if(param.image_f){param.path+=param.image_f+','}
-    if(param.image_s){param.path+=param.image_s+','}
-    if(param.image_t){param.path+=param.image_t};
+    if(param.image_f){param.path=param.image_f;}
+    if(param.image_s&&param.path){param.path=param.path+','+param.image_s;}
+  else if(param.image_s&&!param.path){
+      param.path=param.image_s;
+    }
+    if(param.image_t&&param.path){param.path=param.path+','+param.image_t}
+    else if(param.image_t&&!param.path){
+      param.path=param.image_t;
+    }
     const data = {
         fileType:param.fileType,
         bizType:param.bizType,
