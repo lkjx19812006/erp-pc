@@ -309,7 +309,6 @@
                     										</a>
                     										<button type="button" class="btn btn-base pull-right" @click.stop="createfiles({
                       											 bizId:param.id,
-                                             id:param.id,
     		                                     show:true,
                                              title:'新建文件',
                                              fileType:'',
@@ -352,7 +351,7 @@
                                                            sub:$index,
                                                            show:true,
                                                            title:'文件',
-                                                           link:specDel,
+                                                           link:'specDel',
                                                            url:'/customer/file/',
                                                            key:'files',
                                                            headline:'clientDetail'
@@ -1160,12 +1159,11 @@
                                                    </a>
                                                 </td>
                                                 <td  @click="createfiles({
-                                                             bizId:param.id,
-                                                             id:param.id,
+                                                             bizId:item.id,
                                                              show:true,
                                                              title:'新建产品文件',
                                                              fileType:'',
-                                                             bizType:'',
+                                                             bizType:'product_license',
                                                              description:'',
                                                              path:'',
                                                              link:uploadFiles,
@@ -1175,7 +1173,7 @@
                                                    <a class="operate"><img src="/static/images/uploadPro.png" height="18" width="67"/>
                                                    </a>
                                                 </td>
-		                                           
+
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
