@@ -415,7 +415,7 @@ Vue.filter('drugsStatus',function(val){     //药款状态
 		 return '初始状态';
 	}
 	if(val==1){
-		 return '申请审核';
+		 return '正在审核';
 	}
 	if(val==2){
 		 return '正在转账';

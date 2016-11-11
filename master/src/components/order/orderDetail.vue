@@ -51,7 +51,7 @@
                                               link:'',
                                               crete:'goods'
                                               })">
-                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <img class="pull-left" src="/static/images/order.png" height="30" width="30" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.goods.arr.length">
                                           商品订单列表（{{initOrderDetail.goods.arr.length}}）
                                         </a>
@@ -135,7 +135,7 @@
                                               link:'',
                                               crete:'payPics'
                                               })">
-                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <img class="pull-left" src="/static/images/order.png" height="30" width="30" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.payPics.arr.length!==null">
                                           支付凭证（{{initOrderDetail.payPics.arr.length}}）<span v-if="param.orderStatus<30&&param.contact=='/order/myList'" class="system_danger">您的订单还没有支付，暂时不能新建支付凭证！</span>
                                         </a>
@@ -208,7 +208,7 @@
                                               link:'',
                                               crete:'attachFiles'
                                               })">
-                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <img class="pull-left" src="/static/images/order.png" height="30" width="30" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" >
                                           上传附件（{{initOrderDetail.attachFiles.arr.length}}）
                                         </a>
@@ -261,7 +261,7 @@
                                               link:'',
                                               crete:'sendPics'
                                               })">
-                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <img class="pull-left" src="/static/images/order.png" height="30" width="30" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.sendPics.arr.length">
                                           物流凭证（{{initOrderDetail.sendPics.arr.length}}）<span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">您的订单未发货，暂不能上传物流凭证！</span>
                                         </a>

@@ -210,7 +210,16 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">商品单位 <span class="system_danger" v-if="$validation.unit.required">请输入商品的单位</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.goods[0].unit"  v-validate:unit="['required']" value="{{param.goods[0].unit}}"/> 
+                              <input type="text" class="form-control edit-input" v-model="param.goods[0].unit"  v-validate:unit="['required']" v-show="!breedParam.id" value="{{param.goods[0].unit}}" disabled="disabled" placeholder="请先选择一个品种"/> 
+                                <div type="text" class="edit-input"  v-if="breedParam.id">
+                                    <input-select
+                                       :value.sync="param.goods[0].unit"
+                                       :prevalue="param.goods[0].unit"
+                                       :options="initBreedDetail.units.arr"
+                                       placeholder="单位"
+                                       label="name">
+                                    </input-select>
+                                </div>
                           </div>
                           <div class="editpage-input" style="width:80%">
                               <label class="editlabel">商品价格 <span class="system_danger" v-if="$validation.price.money">请输入不超过小数点两位的数字</span></label>
@@ -233,25 +242,33 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">商品规格 <span class="system_danger" v-if="$validation.spec.required">规格不能为空</span></label>
-                              <input type="text" class="form-control form-control edit-input" v-model="param.goods[0].spec"  v-validate:spec="['required']"  value="{{param.goods[0].spec}}"/> 
-                              <!-- <input type="text" v-show="!breedParam.id"  v-model="param.goods[0].spec" class="form-control edit-input" disabled="disabled" v-validate:spec="{required:true}" placeholder="请先选择一个品种"/>
-                                                           <div type="text" class="edit-input" v-if="breedParam.id">
-                               <input-select
-                                 :value.sync="param.goods[0].spec"
-                                 :prevalue="param.goods[0].spec"
-                                 :options="initBreedDetail.specs.arr"
-                                 placeholder="规格"
-                                 label="name"
-                               >
-                               </input-select>
-                                                           </div> -->
+                              <input type="text" class="form-control form-control edit-input" v-model="param.goods[0].spec"  v-validate:spec="['required']" v-show="!breedParam.id" value="{{param.goods[0].spec}}"/> 
+                                <div type="text" class="edit-input"  v-if="breedParam.id">
+                                    <input-select
+                                       :value.sync="param.goods[0].spec"
+                                       :prevalue="param.goods[0].spec"
+                                       :options="initBreedDetail.specs.arr"
+                                       placeholder="规格"
+                                       label="name"
+                                    >
+                                    </input-select>
+                                </div>
                           </div>
                           <div class="editpage-input">
-                              <label class="editlabel">商品产地 <span class="system_danger" v-if="$validation.location.required">请输入商品的产地</span></label>
-                            <input   v-model="param.goods[0].location" v-validate:location="['required']" v-show="false" type="text" class="form-control" readonly="readonly"/>
-                              <select class="form-control edit-input" v-model="param.goods[0].location"  >
+                              <label class="editlabel">商品产地 <span class="system_danger" v-if="$validation.location.required">产地不能为空</span></label>
+                             <input   v-model="param.goods[0].location" v-validate:location="['required']" v-show="!breedParam.id"  type="text" class="form-control"  disabled="disabled" placeholder="请先选择一个品种" />
+                                <div type="text" class="edit-input"  v-if="breedParam.id">
+                                     <input-select
+                                       :prevalue="param.goods[0].location"
+                                       :value.sync="param.goods[0].location"
+                                       :options="initBreedDetail.locals.arr"
+                                       placeholder="产地"
+                                       label="name">
+                                     </input-select>
+                                </div>
+                              <!-- <select class="form-control edit-input" v-model="param.goods[0].location"  >
                                   <option v-for="item in initProvince">{{item.cname}}</option>
-                              </select>
+                              </select> -->
 
                           </div>
 
@@ -273,6 +290,7 @@
 import vSelect from  '../tools/vueSelect/components/Select'
 import pressImage from '../imagePress'
 import searchcustomerModel  from '../Intention/clientname'
+import inputSelect from '../tools/vueSelect/components/inputselect'
 import searchbreedModel  from '../Intention/breedsearch'
 import {
     initCountrylist,
@@ -293,7 +311,8 @@ export default {
         vSelect,
         pressImage,
         searchcustomerModel,
-        searchbreedModel
+        searchbreedModel,
+        inputSelect
     },
     props: ['param'],
     data() {

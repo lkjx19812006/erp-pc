@@ -3,8 +3,8 @@
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show">
         <div class="client-section clearfix" v-cloak>
-            <div  class="top-title">
-                <span class="glyphicon glyphicon-remove-circle" @click="param.show=false" style="font-size:28px"></span>
+            <div  class="top-title" @click="param.show=false">
+                <span class="glyphicon glyphicon-remove-circle"  style="font-size:28px"></span>
             </div>
             <validator name="validation">
                 <!-- <div  class="section_title clearfix">
@@ -220,7 +220,14 @@ label{
 input{
     font-size:12px;
 }
-
+.top-title{
+    position: fixed;
+    width: 70%;
+    margin: auto;
+    right: 0;
+    left: 0;
+    cursor: pointer;
+}
 .section_title{
     padding-top:6px;
 }
