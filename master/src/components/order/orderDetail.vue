@@ -170,7 +170,7 @@
                                             <tr v-for="item in initOrderDetail.payPics.arr">
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.bizType}}</td>
-                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
+                                                <td><img :src="item.url" v-if="item.fileType=='image'"/>
                                                     <img src="/static/images/pdf.png" height="20" width="20" v-else/>
                                                 </td>
                                                 <td>{{item.description}}</td>
@@ -242,7 +242,7 @@
                                             <tr v-for="item in initOrderDetail.attachFiles.arr">
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.bizType}}</td>
-                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
+                                                <td><img :src="item.url" v-if="item.fileType=='image'"/>
                                                     <img src="/static/images/pdf.png" height="20" width="20" v-else/>
                                                 </td>
                                                 <td>{{item.description}}</td>
@@ -296,7 +296,7 @@
                                             <tr v-for="item in initOrderDetail.sendPics.arr">
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.bizType}}</td>
-                                                <td><img :src="item.path" v-if="item.fileType=='image'"/>
+                                                <td><img :src="item.url" v-if="item.fileType=='image'"/>
                                                     <img src="/static/images/pdf.png" height="20" width="20" v-else/>
                                                 </td>
                                                 <td>{{item.description}}</td>
