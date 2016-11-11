@@ -30,27 +30,27 @@
                 <thead>
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
-                        <th>类型</th>
-                            <th>特殊的</th>
-                            <th>客户名称</th>
-                            <th>客户手机号</th>
-                            <th>资格资质</th>
-                            <th>国家</th>
-                            <th>所在省</th>
-                            <th>所在市</th>
-                            <th>所在区</th>
-                            <th>交收地址</th>
-                            <th>预付比例</th>
-                            <th>发票</th>
-                            <th>上门看货</th>
-                            <th>包装</th>
-                            <th>是否国际</th>
-                            <th>询价次数</th>
-                            <th>报价次数</th>
-                            <th>发布时间</th>
-                            <th>审核状态</th>
-                            <th>描述</th>
-                            <th colspan="4">操作</th>
+                            <th>{{$t('static.type')}}</th>
+                            <th>{{$t('static.special')}}</th>
+                            <th>{{$t('static.client_name')}}</th>
+                            <th>{{$t('static.client_phone')}}</th>
+                            <th>{{$t('static.certificate')}}</th>
+                            <th>{{$t('static.country')}}</th>
+                            <th>{{$t('static.province')}}</th>
+                            <th>{{$t('static.city')}}</th>
+                            <th>{{$t('static.area')}}</th>
+                            <th>{{$t('static.dealing_address')}}</th>
+                            <th>{{$t('static.pre_payment')}}</th>
+                            <th>{{$t('static.invoice')}}</th>
+                            <th>{{$t('static.come_to_see_product')}}</th>
+                            <th>{{$t('static.packaging')}}</th>
+                            <th>{{$t('static.international')}}</th>
+                            <th>{{$t('static.Number_of_inquiries')}}</th>
+                            <th>{{$t('static.quotation_number')}}</th>
+                            <th>{{$t('static.issued_time')}}</th>
+                            <th>{{$t('static.review_status')}}</th>
+                            <th>{{$t('static.description')}}</th>
+                            <th colspan="4">{{$t('static.handle')}}</th>
                     </tr>
                 </thead>
                 <tbody>

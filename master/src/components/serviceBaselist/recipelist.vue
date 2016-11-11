@@ -6,7 +6,7 @@
             <div class="col-xs-4 my_order_search">
                 <div class="name_search clearfix">
                     <img src="/static/images/search.png" height="24" width="24">
-                    <input type="text" class="search_input" placeholder="按药品名称搜索" v-model="loadParam.name" >
+                    <input type="text" class="search_input" placeholder="按药品名称搜索" v-model="loadParam.name" @keyup.enter="multiSearch()">
                 </div>
                  <a class="new_btn transfer"  @click="multiSearch()">搜索</a>
                  <a class="new_btn transfer"  @click="reset()">清空条件</a>
