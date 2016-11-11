@@ -4391,6 +4391,7 @@ export const editintentInfo = ({ dispatch }, param,tipParam) => { //修改意向
       "quality":param.quality,
       "price":param.price,
       "province":param.province,
+      "onSell":param.onSell,
       "city":param.city,
       "district":param.district,
       "location":param.location,
