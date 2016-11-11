@@ -298,7 +298,7 @@ const state = {
           {"id":6,"intentionId":"5820437488e8b3568d9dd494","breedId":1015,"breedName":"三颗针","qualification":"3","quality":"2","location":"2","spec":"2","number":2.000000,"unit":"2","price":null,"punit":null,"currency":null,"origPrice":null,"pack":"2","sampling":0,"snumber":null,"sunit":null,"samount":null,"status":1,"offerer":null,"offererName":null,"description":null,"iinquireTime":0,"again":0,"updater":null,"utime":null,"creater":null,"ctime":null,"offerAgain":null,"inquireId":null,"offerComment":null},
           {"id":7,"intentionId":"5820437488e8b3568d9dd494","breedId":1006,"breedName":"人工牛黄","qualification":"3","quality":"3","location":"3","spec":"3","number":3.000000,"unit":"3","price":null,"punit":null,"currency":null,"origPrice":null,"pack":"3","sampling":0,"snumber":null,"sunit":null,"samount":null,"status":1,"offerer":null,"offererName":null,"description":null,"iinquireTime":1,"again":0,"updater":null,"utime":null,"creater":null,"ctime":null,"offerAgain":null,"inquireId":null,"offerComment":null}],show:false},
           "inquires":{arr:[{"id":6,"intentionId":"5820437488e8b3568d9dd494","inquire":1,"inquireType":"FOB&CIF","comment":"123456","status":1,"updater":null,"utime":null,"creater":null,"ctime":"2016-11-08 15:48"}],show:false},"files":{arr:[],show:false},"offerFiles":{"arr":[],show:false},"offers":{"arr":[],show:false}
-        },      
+        },
         employeeList: [{
             "id": 6,
             "name": "lm",
@@ -783,9 +783,13 @@ const mutations = {
                   state.basicBaseList.orderList[i].logisticsNo=data.logisticsNo;
               }
           }
-       /* if(data.link=='/order/payConfirm'){
-             state.basicBaseList.orderList.splice(data.sub, 1);
-          }*/
+        if(data.orderStatus==40||data.orderStatus==30){
+             for(var i=0;i<state.basicBaseList.orderList.length;i++){
+               if(state.basicBaseList.orderList[i].id==data.id){
+                 state.basicBaseList.orderList.splice(i,1);
+               }
+             }
+          }
     },
     [SYSTEM_DATA](state, data) { //枚举类型
       state.systemBaseList.enumlist = data;
@@ -1079,7 +1083,7 @@ const mutations = {
             }
             state[data.headline][data.key].arr[data.sub].remark = data.remark;
         }
-       
+
     },
     [UPDATE_PRODUCT_DATA](state, data) { //修改客户产品
         for (var key in data) {
@@ -1436,7 +1440,7 @@ const mutations = {
 
         console.log("新增国际意向");
         state.basicBaseList.intlIntentionList.unshift(data);
-        
+
     },
 
     [UPDATA_INTLINTENTION_DATA](state,data){ //修改国际意向
