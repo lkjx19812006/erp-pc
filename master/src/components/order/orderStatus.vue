@@ -394,7 +394,7 @@ export default {
     },
     created() {
         this.getExpressList(this.loadParam);
-        this.getOrderDetail(this.loadParam);
+        this.getOrderDetail(this.param);
     }
 }
 </script>

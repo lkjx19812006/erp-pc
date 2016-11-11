@@ -270,7 +270,7 @@
                         <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2"><img src="/static/images/reset.png" height="18" width="48" title="重新申请" alt="重新申请" /></a>
 
                   </td>
-               
+
                 </tr>
             </tbody>
         </table>
@@ -428,9 +428,6 @@
                 }
             },
             orderCheck:function(id,sub,validate){
-              console.log(id)
-              console.log(sub)
-              console.log(validate)
                 var _this = this;
                 _this.auditParam.ids = [];
                 _this.auditParam.indexs = [];

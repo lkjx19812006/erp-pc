@@ -3,26 +3,27 @@
   <div v-show="!changeParam.show">
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">产品文件列表</div>
-     <!--  <div class="right col-xs-2">
-       <button class="new_btn transfer" @click="createCustomer({
-                                            show:true,
-                                            title:'新建产品',
-                                            type:'',
-                                            name:'',
-                                            breedId:'',
-                                            quality:'',
-                                            location:'',
-                                            spec:'',
-                                            number:'',
-                                            price:'',
-                                            unit:'',
-                                            duedate:'',
-                                            coa:'',
-                                            cid:'',
-                                            link:newProduct,
-                                            url:'/customer/product'
-                                       })">新建</button>
-     </div> -->
+      <div class="my_order_search  col-xs-8">
+        <div class="filter_search clearfix">
+          <dl class="clearfix">
+            <dt>产品名称：</dt>
+            <dd>
+              <input type="text"  class="form-control" placeholder="按客户名称搜索" class="search_input"  v-model="loadParam.name" />
+            </dd>
+          </dl>
+          <dl class="clearfix">
+            <dt>描述：</dt>
+            <dd>
+              <input type="text"  class="form-control" placeholder="按描述搜索" class="search_input"  v-model="loadParam.description" />
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="right col-xs-3">
+        <button class="new_btn transfer"  @click="searchProduct()">搜索</button>
+        <button class="new_btn"  @click="reset()">清空条件</button>
+      </div>
+    </div>
     </div>
     <div class="order_table">
       <div class="cover_loading">
@@ -31,18 +32,22 @@
       <table class="table table-hover table_color table-striped " v-cloak>
         <thead>
             <tr>
+              <th>产品名称</th>
+
               <th>文件类型</th>
               <th>所属文件</th>
               <!--<th>路径</th>-->
               <th>描述</th>
               <!--<th>状态</th>-->
-              <!-- <th></th> -->
+               <th></th>
             </tr>
         </thead>
         <tbody>
           <tr v-for="item in initProductlist">
+            <td>{{item.name}}</td>
             <td>{{item.fileType}}</td>
-            <td>{{item.bizType}}</td>
+            <td>产品文件</td>
+            <!--<td v-if="item.bizType!='product_license'">客户文件</td>-->
             <!--<td class="underline"  @click="clickOn({-->
                                <!--id:item.id,-->
                                <!--sub:$index,-->
@@ -55,35 +60,7 @@
                     <!--<img  src="/static/images/excel.png" v-if="item.fileType=='excel'">-->
             <!--</td>-->
             <td>{{item.description}}</td>
-            <!--<td>{{item.status}}</td>-->
-            <!-- <td @click.stop="eventClick($index)">
-              <img height="24" width="24" src="/static/images/default_arrow.png" />
-              <div class="component_action" v-show="item.show">
-                <ul>
-                  <li @click="modifySupply({
-                                 sub:$index,
-                                 id:item.id,
-                                 cid:item.cid,
-                                 show:true,
-                                 title:'编辑产品',
-                                 type:item.type,
-                                 name:item.name,
-                                 breedId:item.breedId,
-                                 quality:item.quality,
-                                 location:item.location,
-                                 spec:item.spec,
-                                 number:item.number,
-                                 price:item.price,
-                                 unit:item.unit,
-                                 duedate:item.duedate,
-                                 coa:item.coa,
-                                 link:updateProduct,
-                                 url:'/customer/product',
-                                 headline:'productList'
-                                })">编辑</li>
-                </ul>
-              </div>
-            </td> -->
+            <td ><a href="/crm/api/v1/file/dowanloadFile?path={{item.path}}">下载</a></td>
           </tr>
         </tbody>
       </table>
@@ -100,7 +77,8 @@
     initProductlist
   } from '../../vuex/getters'
   import {
-    getProductList
+    getProductList,
+    loadFile
   } from '../../vuex/actions'
 
   export default {
@@ -113,7 +91,8 @@
         initProductlist
       },
       actions: {
-        getProductList
+        getProductList,
+        loadFile
       }
     },
     data() {
@@ -129,7 +108,9 @@
           name:'',
           type:'',
           status:'',
-          total:0
+          total:0,
+          name:'',
+          description:''
         },
         changeParam: {
           show: false
@@ -141,6 +122,19 @@
       clickOn: function(initProductlist) {
         this.changeParam = initProductlist;
        /* this.getProductDetail(this.changeParam);*/
+      },
+      searchProduct:function(){
+        this.loadParam.cur=1;
+        this.getProductList(this.loadParam);
+      },
+      reset:function(){
+        this.loadParam.name='';
+        this.loadParam.description='';
+        this.getProductList(this.loadParam);
+      },
+      load:function(item){
+        console.log(item);
+        this.loadFile(item);
       }
     },
     events: {
@@ -155,6 +149,17 @@
   }
 </script>
 <style scoped>
+  .filter_search dl dt{
+    font-size: 14px;
+    padding-top: 7px;
+  }
+  .search_input{
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+  .filter_search dl{
+    font-size: 14px;
+  }
   .breed_action {
     top: 33px;
     right: 106px;
