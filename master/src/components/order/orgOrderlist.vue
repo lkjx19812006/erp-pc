@@ -15,6 +15,81 @@
                 <button type="button" class="new_btn transfer"  @click="resetTime()">清空条件</button>
             </div>
         </div>
+        <div class="clear" style="margin-top:10px;">
+            <dl class="clear left transfer">
+               <dt class="left transfer marg_top">订单类别：</dt>
+               <dd class="left">
+                    <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
+                        <option value="">请选择订单类别</option>
+                        <option value="0">采购</option>
+                        <option value="1">销售</option>
+                    </select>
+               </dd>
+            </dl>
+            <dl class="clear left transfer">
+               <dt class="left transfer marg_top">订单数据状态：</dt>
+               <dd class="left">
+                     <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
+                            <option value="">请选择订单状态</option>
+                            <option value="0">订单生成</option>
+                            <option value="10">等待处理</option>
+                            <option value="20">等待支付</option>
+                            <option value="30">等待审核</option>
+                            <option value="40">等待发货</option>
+                            <option value="50">等待收货</option>
+                            <option value="60">已完成</option>
+                            <option value="70">已完成</option>
+                            <option value="-1">已取消</option>
+                            <option value="-2">已过期</option>
+                    </select>
+               </dd>
+            </dl>
+            <dl class="clear left transfer">
+               <dt class="left transfer marg_top">支付方式：</dt>
+               <dd class="left">
+                     <select v-model="loadParam.payWay"  class="form-control" @change="selectSearch()">
+                            <option value="">请选择支付方式</option>
+                            <option value="0">线下</option>
+                            <option value="1">支付宝</option>
+                            <option value="2">平安</option>
+                            <option value="3">药款</option>
+                    </select>
+               </dd>
+            </dl>
+            <dl class="clear left transfer">
+               <dt class="left transfer marg_top">订单数据状态：</dt>
+               <dd class="left">
+                     <select v-model="loadParam.dataStatus"  class="form-control" @change="selectSearch()">
+                        <option value="">请选择数据状态</option>
+                        <option value="0">无效</option>
+                        <option value="1">可用</option>
+                    </select>
+               </dd>
+            </dl>
+            <dl class="clear left transfer">
+               <dt class="left transfer marg_top">客户端来源：</dt>
+               <dd class="left">
+                     <select v-model="loadParam.clients"  class="form-control" @change="selectSearch()">
+                        <option value="">请选择客户端来源</option>
+                        <option value="0">pc</option>
+                        <option value="1">android</option>
+                        <option value="2">wechart</option>
+                        <option value="3">ios</option>
+                    </select>
+               </dd>
+            </dl>
+            <dl class="clear left transfer">
+               <dt class="left transfer marg_top">交易模式：</dt>
+               <dd class="left">
+                     <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
+                        <option value="">请选择交易模式</option>
+                        <option value="1">撮合</option>
+                        <option value="2">三方</option>
+                        <option value="3">自营</option>
+                    </select>
+               </dd>
+            </dl>
+        </div>
       </div>
       <div class="order_table">
         <div class="cover_loading">
@@ -278,6 +353,9 @@
             this.getOrgOrder(this.loadParam)
         },
         methods: {
+            selectSearch:function(){
+                this.getOrgOrder(this.loadParam)
+            },
             editClick: function(sub) {
                 if(this.$store.state.table.basicBaseList.orderList[sub].show){
                     this.$store.state.table.basicBaseList.orderList[sub].show=!this.$store.state.table.basicBaseList.orderList[sub].show;

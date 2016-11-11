@@ -8,20 +8,57 @@
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <div>
-        <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">所有客户</div>
-            <div class="right col-xs-6">
-                <button class="new_btn transfer" @click="clientTransfer({
-                    arr:[],
-                    name:'test',
-                    employeeId:'',
-                    orgId:'',
-                    show:true
-                    })">划转</button>
-              <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
-              <button class="new_btn transfer" @click="clientTransferSupplier()">提取供应商</button>
-              <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-              <button class="new_btn transfer" @click="createSearch()">搜索</button>
+        <div class="service-nav">
+            <div class="clearfix">
+                <div class="my_enterprise col-xs-1">所有客户</div>
+                <div class="right col-xs-6">
+                    <button class="new_btn transfer" @click="clientTransfer({
+                        arr:[],
+                        name:'test',
+                        employeeId:'',
+                        orgId:'',
+                        show:true
+                        })">划转</button>
+                  <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
+                  <button class="new_btn transfer" @click="clientTransferSupplier()">提取供应商</button>
+                  <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
+                  <button class="new_btn transfer" @click="createSearch()">搜索</button>
+                </div>
+            </div>
+            <div class="clear" style="margin-top:10px;">
+                        <dl class="clear left transfer">
+                           <dt class="left transfer marg_top">客户类型：</dt>
+                           <dd class="left">
+                                <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
+                                    <option value="">请选择类型</option>
+                                    <option value="0">个人</option>
+                                    <option value="1">企业</option>
+                                </select>
+                           </dd>
+                        </dl>
+                        <dl class="clear left transfer">
+                           <dt class="left transfer marg_top">客户分类：</dt>
+                           <dd class="left">
+                                 <select v-model="loadParam.classify"  class="form-control" @change="selectSearch()">
+                                    <option value="" selected>请选择分类</option>
+                                    <option value="1">买</option>
+                                    <option value="2">卖</option>
+                                    <option value="3">买卖</option>
+                                </select>
+                           </dd>
+                        </dl>
+                        <dl class="clear left transfer">
+                           <dt class="left transfer marg_top">客户信用等级：</dt>
+                           <dd class="left">
+                                 <select v-model="loadParam.creditLevel"  class="form-control" @change="selectSearch()">
+                                  <option value="" selected>请选择等级</option>
+                                  <option value="0">暂无等级</option>
+                                  <option value="1">一星客户</option>
+                                  <option value="2">二星客户</option>
+                                  <option value="3">三星客户</option>
+                                </select>
+                           </dd>
+                        </dl>
             </div>
         </div>
         <div class="order_table">
@@ -439,6 +476,9 @@ export default {
              })
            }
         },
+        selectSearch:function(){
+            this.getClientList(this.loadParam);
+        },
         onlyselected:function(sub,id){
 
             //this.id = id;
@@ -484,7 +524,7 @@ export default {
     right: 106px;
 }
 .transfer{
-    margin-left: 18px;
+    margin-right: 8px;
 }
 .table>tbody>tr>td{
     max-width: 300px;

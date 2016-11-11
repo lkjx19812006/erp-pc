@@ -1599,7 +1599,6 @@ export default {
     border: 1px solid #ddd;
     color: #003077;
     margin-right: 5px;
-    font-size: 14px;
 }
 
 section {

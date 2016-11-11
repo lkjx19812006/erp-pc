@@ -13,17 +13,17 @@
                             <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
                       </select>
                     </div> -->
+                    <!-- <div class="name_search clearfix">
+                        <img src="/static/images/search.png" height="24" width="24"  />
+                        <input type="text" class="search_input" v-model="loadParam.orgName"  placeholder="按部门搜索"  @keyup.enter="loadByCondition()">
+                    </div> -->
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24"  />
-                        <input type="text" class="search_input" v-model="loadParam.orgName"  placeholder="按部门搜索" readonly="readonly" @click="searchOrg()">
-                    </div>
-                    <div class="name_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="24"  />
-                        <input type="text" class="search_input" v-model="loadParam.name"  placeholder="按员工名字搜索">
+                        <input type="text" class="search_input" v-model="loadParam.name"  placeholder="按员工名字搜索" @keyup.enter="loadByCondition()">
                     </div>
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" class="search_input" v-model="loadParam.mobile"  placeholder="按员工电话搜索">
+                        <input type="text" class="search_input" v-model="loadParam.mobile"  placeholder="按员工电话搜索" @keyup.enter="loadByCondition()">
                     </div>
                     <div class="name_search clearfix" style="margin-right:0px;border:none">
                         <button class="new_btn " style="line-height:20px;" @click="rest()">清空条件</button>

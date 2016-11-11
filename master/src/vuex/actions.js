@@ -2526,9 +2526,7 @@ export const addrInfo = ({ dispatch }, param) => { //修改客户地址
 export const alterRemark = ({ dispatch }, param) => { //修改客户备注
     console.log(param)
     const updatedata = {
-        status:param.status,
-        id:param.id,
-        customerId:param.customerId,
+        id:param.id
     }
     for(var key in param){
         if(key=='remark'&&param[key]!=''){
@@ -2537,13 +2535,13 @@ export const alterRemark = ({ dispatch }, param) => { //修改客户备注
         if(key=='description'&&param[key]!=''){
             updatedata.description=param[key];
         }
+        if(key=='customerId'&&param[key]!=''){
+            updatedata.customerId=param[key];
+        }
+        if(key=='status'&&param[key]!=''){
+            updatedata.status=param[key];
+        }
     }
-   /* if(param.remark){
-        updatedata.remark = param.remark;
-    }
-    if(param.description){
-        updatedata.description = param.description;
-    }*/
     Vue.http({
         method: 'PUT',
         url: apiUrl.clientList + param.url,

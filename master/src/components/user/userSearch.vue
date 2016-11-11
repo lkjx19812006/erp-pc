@@ -20,11 +20,11 @@
                     <div class="client-detailInfo col-xs-12">
                         <label>来源：</label>
                         <select type="text" class="form-control" v-model="param.source">
-                                <option value="">请选择来源</option>
-                                <option value="0">PC</option>
-                                <option value="1">安卓</option>
-                                <option value="2">微信</option>
-                                <option value="3">IOS</option>
+                            <option value="">请选择来源</option>
+                            <option value="0">PC</option>
+                            <option value="1">安卓</option>
+                            <option value="2">微信</option>
+                            <option value="3">IOS</option>
                         </select>
                     </div>
                     <div class="client-detailInfo  col-xs-12">
@@ -113,22 +113,22 @@
                     <div class="client-detailInfo col-xs-12">
                         <label>审核状态：</label>
                         <select type="text" class="form-control" v-model="param.audit">
-                                <option value="">请选择审核状态</option>
-                                <option value="0">待审核</option>
-                                <option value="1">审核中</option>
-                                <option value="2">审核通过</option>
-                                <option value="3">审核不通过</option>
-                        </select>
+                            <option value="">请选择审核状态</option>
+                            <option value="0">待审核</option>
+                            <option value="1">审核中</option>
+                            <option value="2">审核通过</option>
+                            <option value="3">审核不通过</option>
+                      </select>
                     </div>
 
                     <div class="client-detailInfo col-xs-12">
-                    <label>划转状态：</label>
-                    <select type="text" class="form-control" v-model="param.transform">
-                      <option value="">请选择划转状态</option>
-                      <option value="0">待划转</option>
-                      <option value="1">已划转</option>
-                      <option value="2">转黑</option>
-                    </select>
+                      <label>划转状态：</label>
+                      <select type="text" class="form-control" v-model="param.transform">
+                        <option value="">请选择划转状态</option>
+                        <option value="0">待划转</option>
+                        <option value="1">已划转</option>
+                        <option value="2">转黑</option>
+                      </select>
                     </div>
                 </div>
             </section>
