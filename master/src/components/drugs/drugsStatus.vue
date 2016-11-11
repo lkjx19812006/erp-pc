@@ -51,15 +51,15 @@ export default {
         pass: function(param){
             console.log(this.param)
             if(this.param.status==0){
-                this.param.status = 1;
+                /*this.param.status = 1;*/
                 this.param.show = false;
                 this.outOfDrugs(this.param);
             }else if(this.param.status==1){
-                this.param.status = 2;
+                /*this.param.status = 2;*/
                 this.param.show = false;
                 this.outOfDrugs(this.param);
             }else if(this.param.status==2){
-                this.param.status =3;
+                /*this.param.status =3;*/
                 this.param.show = false;
                 this.outOfDrugs(this.param);
             }

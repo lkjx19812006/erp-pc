@@ -10,8 +10,8 @@
                
            </div>
             <div class="right">
-                <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-                <button class="new_btn transfer" @click="search()">搜索</button>
+               <!--  <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
+               <button class="new_btn transfer" @click="search()">搜索</button> -->
                
             </div>
         </div>
@@ -57,11 +57,11 @@
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.district}}</td>
-                        <td>{{item.ctime | date}}</td>
+                        <td>{{item.ctime | date}}{{item.inquire}}</td>
                         <!-- <td><a @click.stop="offer()">报价</a></td> -->
-                        <td><div style="display:inline-block" @click="offer()"><img src="/static/images/quote.png" alt="报价"  /></div></td>
+                        <!-- <td><div style="display:inline-block" @click="offer()"><img src="/static/images/quote.png" alt="报价"  /></div></td> -->
                         <!-- <td><a @click.stop="confirmOffer(item.intentionId,$index)">确认报价</a></td> -->
-                        <td><div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div></td>
+                        <td><div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div></td>
                     </tr>
 
                 </tbody>

@@ -1,5 +1,6 @@
 <template>
     <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
+    <inquireinfo-model :param="inquireInfoParam" v-if="inquireInfoParam.show"></inquireinfo-model>
     <editoffer-model :param="editOfferParam" v-if="editOfferParam.show"></editoffer-model>
     <otheroffer-model :param="otherOfferParam" v-if="otherOfferParam.show"></otheroffer-model>
     <editotheroffer-model :param="editOtherOfferParam" v-if="editOtherOfferParam.show"></editotheroffer-model>
@@ -87,44 +88,43 @@
                         <div class="panel-group">
                             
                           <div class="panel panel-default">
-                              <div class="panel-heading" v-cloak>
-                                <h4 class="panel-title clearfix" @click="enfoldment({
-                                            link:initIntlIntentionDetail.inquires,
-                                            crete:'inquires'
-                                            })">
-                                      <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26"  />
-                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                        询价记录（{{initIntlIntentionDetail.inquires.arr.length}}）
-                                      </a>
-                                      <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
-                                </h4>
-                              </div>
-                              <div  class="panel-collapse" v-show="initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
-                                 <div class="panel-body panel-set">
-                                      <table class="table contactSet">
-                                        <thead>
-                                          <th>询价类型</th>
-                                          <th>备注</th>
-                                          <th>创建时间</th>
-                                          <!-- <th></th>
-                                          <th></th> -->
-                                          
-                                        </thead>
-                                        <tbody>
-                                             <tr v-for="item in initIntlIntentionDetail.inquires.arr">
-                                                <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.inquireType}}</td>
-                                                <td>{{item.comment}}</td>
-                                                <td>{{item.ctime}}</td>
-                                                <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
-                                                <td @click="otherOffer()" style="cursor:pointer">其他报价</td> -->
-                                                  
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                  </div>
-                              </div>
-                          </div>      
+                                    <div class="panel-heading" v-cloak>
+                                      <h4 class="panel-title clearfix" @click="enfoldment({
+                                                  link:initIntlIntentionDetail.inquires,
+                                                  crete:'inquires'
+                                                  })">
+                                            <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26"  />
+                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                              询价记录（{{initIntlIntentionDetail.inquires.arr.length}}）
+                                            </a>
+                                            <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                      </h4>
+                                    </div>
+                                    <div  class="panel-collapse" v-show="initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
+                                       <div class="panel-body panel-set">
+                                            <table class="table contactSet">
+                                              <thead>
+                                                <th>询价类型</th>
+                                                <th>备注</th>
+                                                <th>创建时间</th>
+                                                <!-- <th></th>
+                                                <th></th> -->
+                                                
+                                              </thead>
+                                              <tbody>
+                                                   <tr v-for="item in initIntlIntentionDetail.inquires.arr">
+                                                      <td><a class="underline" @click="getInquireInfo(item.id)">{{item.inquireType}}</a></td>
+                                                      <td>{{item.comment}}</td>
+                                                      <td>{{item.ctime}}</td>
+                                                      <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
+                                                      <td @click="otherOffer()" style="cursor:pointer">其他报价</td> -->
+                                                        
+                                                  </tr>
+                                              </tbody>
+                                          </table>
+                                        </div>
+                                    </div>
+                                </div>       
 
                           <div class="panel panel-default">
                               <div class="panel-heading" v-cloak>
@@ -158,7 +158,7 @@
                                                 <td>{{item.price}}</td>
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.unit}}</td>
-                                                <td><a style="cursor:pointer" @click="editOffer(item,$index)">编辑</a></td>
+                                                <td><a style="cursor:pointer" @click="editOffer(item,$index)">报价</a></td>
                                                 <td></td>
                                             </tr>
                                         </tbody>
@@ -167,60 +167,59 @@
                               </div>
                           </div> 
 
-                          <div class="panel panel-default">
-                              <div class="panel-heading" v-cloak>
-                                  <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:initIntlIntentionDetail.offers,
-                                              crete:'offers'
-                                              })">
-                                        <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          其他报价（{{initIntlIntentionDetail.offers.arr.length}}）
-                                        </a>
-                                        <button type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">新建</button>
-                                  </h4>
-                              </div>
-
-                              <div  class="panel-collapse" v-show="initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0">
-                                 <div class="panel-body panel-set">
-                                      <table class="table contactSet">
-                                        <thead>
-                                          <th>货币</th>
-                                          <th>费用</th>
-                                          <th>费用说明</th>
-                                          <th>总费用</th>
-                                          <th>备注</th>
-                                          <th></th>
-                                          <th></th>
-                                         
-                                        </thead>
-                                        <tbody>
-                                             <tr v-for="item in initIntlIntentionDetail.offers.arr">
-                                                <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.currency}}</td>
-                                                <td>{{item.cost}}</td>
-                                                <td>{{item.costDesc}}</td>
-                                                <td>{{item.total}}</td>
-                                                <td>{{item.comment}}</td>
-                                                <td><a style="cursor:pointer" @click="editOtherOffer(item,$index)">编辑</a></td>
-                                                <td><a style="cursor:pointer" @click="delOtherOffer(item,$index)">删除</a></td>
-                                               
-                                                <!-- <td  @click="clickShow($index,{
-                                                    concrete:'offers'
-                                                    })">
-                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="files_action" v-show="item.show" >
-                                                        <dl>
-                                                            <dt @click="edit($index,item)">修改备注</dt>
-                                                        </dl>
-                                                    </div>
-                                                </td> -->
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                  </div>
-                              </div>
-                          </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" v-cloak>
+                                <h4 class="panel-title clearfix" @click="enfoldment({
+                                            link:initIntlIntentionDetail.offers,
+                                            crete:'offers'
+                                            })">
+                                      <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                        其他报价（{{initIntlIntentionDetail.offers.arr.length}}）
+                                      </a>
+                                      <button type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">新建</button>
+                                </h4>
+                            </div>
+                        
+                            <div  class="panel-collapse" v-show="initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0">
+                               <div class="panel-body panel-set">
+                                    <table class="table contactSet">
+                                      <thead>
+                                        <th>货币</th>
+                                        <th>费用</th>
+                                        <th>费用说明</th>
+                                        <th>总费用</th>
+                                        <th>备注</th>
+                                        <th></th>
+                                        <th></th>
+                                       
+                                      </thead>
+                                      <tbody>
+                                           <tr v-for="item in initIntlIntentionDetail.offers.arr">
+                                              <td>{{item.currency | Currency}}</td>
+                                              <td>{{item.cost}}</td>
+                                              <td>{{item.costDesc}}</td>
+                                              <td>{{item.total}}</td>
+                                              <td>{{item.comment}}</td>
+                                              <td><a style="cursor:pointer" @click="editOtherOffer(item,$index)">编辑</a></td>
+                                              <td><a style="cursor:pointer" @click="delOtherOffer(item,$index)">删除</a></td>
+                                             
+                                              <!-- <td  @click="clickShow($index,{
+                                                  concrete:'otherOffers'
+                                                  })">
+                                                  <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                  <div class="files_action" v-show="item.show" >
+                                                      <dl>
+                                                          <dt @click="edit($index,item)">修改备注</dt>
+                                                      </dl>
+                                                  </div>
+                                              </td> -->
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                </div>
+                            </div>
+                        </div> 
 
                           <div class="panel panel-default">
                               <div class="panel-heading" v-cloak>
@@ -239,41 +238,40 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>会员名</th>
-                                          <th>备注</th>
-                                          <th>回复</th>
-                                          <th>回复人</th>
+                                          <th>文件路径</th>
+                                          <th>文件类型</th>
+                                          <th>描述</th>
+                                          <th>创建时间</th>
                                           <th></th>
                                           <th></th>
                                           <th></th>
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.files.arr">
-                                                <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.fullname}}</td>
-                                                <td>{{item.comments}}</td>
-                                                <td>{{item.reply}}</td>
-                                                <td>{{item.replier}}</td>
+                                                <td>{{item.path}}</td>
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.description}}</td>
+                                                <td>{{item.ctime}}</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td  @click="clickShow($index,{
-                                                    concrete:'files'
-                                                    })">
-                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="files_action" v-show="item.show" >
-                                                        <dl>
-                                                            <dt @click="edit($index,item)">修改备注</dt>
-                                                        </dl>
-                                                    </div>
-                                                </td>
+                                               <!--  <td  @click="clickShow($index,{
+                                                   concrete:'files'
+                                                   })">
+                                                   <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                                   <div class="files_action" v-show="item.show" >
+                                                       <dl>
+                                                           <dt @click="edit($index,item)">修改备注</dt>
+                                                       </dl>
+                                                   </div>
+                                               </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
                                   </div>
                               </div>
                           </div>
-
+                          
                           <div class="panel panel-default">
                               <div class="panel-heading" v-cloak>
                                   <h4 class="panel-title clearfix" @click="enfoldment({
@@ -291,25 +289,24 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>会员名</th>
-                                          <th>备注</th>
-                                          <th>回复</th>
-                                          <th>回复人</th>
+                                          <th>文件路径</th>
+                                          <th>文件类型</th>
+                                          <th>描述</th>
+                                          <th>创建时间</th>
                                           <th></th>
                                           <th></th>
                                           <th></th>
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.offerFiles.arr">
-                                                <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.fullname}}</td>
-                                                <td>{{item.comments}}</td>
-                                                <td>{{item.reply}}</td>
-                                                <td>{{item.replier}}</td>
+                                               <td>{{item.path}}</td>
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.description}}</td>
+                                                <td>{{item.ctime}}</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td  @click="clickShow($index,{
+                                                <!-- <td  @click="clickShow($index,{
                                                     concrete:'offers'
                                                     })">
                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
@@ -318,14 +315,14 @@
                                                             <dt @click="edit($index,item)">修改备注</dt>
                                                         </dl>
                                                     </div>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
                                   </div>
                               </div>
                           </div>
-
+                          
                         </div>
                     </article>
                 </div>
@@ -337,6 +334,7 @@
 <script>
 
 import filter from '../../filters/filters'
+import inquireinfoModel from './inquireInfo'
 import offerModel from './intlOffer'
 import otherofferModel from './otherOffer'
 import editofferModel from './editOffer'
@@ -355,6 +353,7 @@ export default {
     components: {
         filter,
         offerModel,
+        inquireinfoModel,
         otherofferModel,
         editofferModel,
         editotherofferModel,
@@ -367,6 +366,11 @@ export default {
                 loading: true,
                 color: '#5dc596',
                 size: '15px'
+            },
+            inquireInfoParam:{
+                show:false,
+                link:'/intlIntention/inquire/',
+                id:''
             },
             offerParam:{
                 show:false,
@@ -402,19 +406,19 @@ export default {
                 unit:'',
                 total:'',
                 comment:''*/
-                id:9,
-                intentionId:'58228a6688e87dc057d5e969',
-                inquireId:7,
+                id:'',
+                intentionId:'',
+                inquireId:'',
                 type:0,
                 currency:1,
-                itemId:8,
-                itemName:'一枝黄花',
-                origPrice:1,
-                price:3,
-                number:3,
-                unit:'kg',
-                total:9,
-                comment:'来来来'
+                itemId:'',
+                itemName:'',
+                origPrice:'',
+                price:'',
+                number:'',
+                unit:'',
+                total:'',
+                comment:''
 
             },
             otherOfferParam:{
@@ -497,8 +501,29 @@ export default {
      otherOffer:function(){
         this.otherOfferParam.show = true;
      },
+     //获取询价详情
+     getInquireInfo:function(id){
+        console.log(id);
+        this.inquireInfoParam.id = id;
+        this.inquireInfoParam.show = true;
+
+     },
      //编辑原材料报价
      editOffer:function(item,index){
+        console.log(this.param);
+        this.editOfferParam.id = item.id;
+        this.editOfferParam.intentionId = item.intentionId;
+        this.editOfferParam.inquireId = item.inquireId;
+        this.editOfferParam.itemId = item.breedId;
+        this.editOfferParam.itemName = item.breedName;
+        this.editOfferParam.type = item.type;
+        this.editOfferParam.currency = item.currency;
+        this.editOfferParam.origPrice = item.origPrice;
+        this.editOfferParam.price = item.price;
+        this.editOfferParam.number = item.number;
+        this.editOfferParam.unit = item.unit;
+        this.editOfferParam.total = item.total;
+        this.editOfferParam.comment = item.comment;
 
         this.editOfferParam.index = index;
         this.editOfferParam.show = true;
@@ -569,6 +594,7 @@ export default {
       
     },
     created(){
+      console.log(this.param);
        this.getIntlIntentionDetail(this.param);
     },
     filter: (filter, {})

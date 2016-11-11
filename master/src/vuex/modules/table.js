@@ -72,6 +72,7 @@ import {
    INTLINTENTION_LIST_DATA,
    INTLINTENTION_DETAIL_DATA,
    INTLINTENTION_INQUIRE_LIST_DATA,
+   INTLINTENTION_INQUIRE_DETAIL_DATA,
    ADD_INTLINTENTION_DATA,
    UPDATA_INTLINTENTION_DATA,
    DELETE_INTLINTENTION_DATA,
@@ -294,10 +295,15 @@ const state = {
         intlIntentionDetail:{
           "id":"5820437488e8b3568d9dd494","userId":null,"customerId":"844","customerName":"王建军中药材农民合作社","customerPhone":null,"customerEmail":"1","type":1,"especial":0,"names":",丁香,三颗针,人工牛黄","number":null,"country":"中国","province":"河北","city":"秦皇岛","district":"青龙满族自治县","address":"1","pubdate":null,"duedate":"2016-11-18 00:00","advance":1.000000,"pack":"12","intl":1,"cFlagsPath":null,"employee":null,"employeeName":null,"inquire":0,"inquireType":"FOB&CIF","inquireTime":1,"offerTime":1,
           "validate":0,"status":1,"description":null,"inType":3,"updater":null,"utime":"2016-11-08 14:48","creater":null,"ctime":"2016-11-07 17:03",
-          "items":{"arr":[{"id":5,"intentionId":"5820437488e8b3568d9dd494","breedId":1003,"breedName":"丁香","qualification":"1","quality":"1","location":"1","spec":"1","number":1.000000,"unit":"1","price":null,"punit":null,"currency":null,"origPrice":null,"pack":"1","sampling":0,"snumber":null,"sunit":null,"samount":null,"status":1,"offerer":null,"offererName":null,"description":null,"iinquireTime":0,"again":0,"updater":null,"utime":null,"creater":null,"ctime":null,"offerAgain":null,"inquireId":null,"offerComment":null},
-          {"id":6,"intentionId":"5820437488e8b3568d9dd494","breedId":1015,"breedName":"三颗针","qualification":"3","quality":"2","location":"2","spec":"2","number":2.000000,"unit":"2","price":null,"punit":null,"currency":null,"origPrice":null,"pack":"2","sampling":0,"snumber":null,"sunit":null,"samount":null,"status":1,"offerer":null,"offererName":null,"description":null,"iinquireTime":0,"again":0,"updater":null,"utime":null,"creater":null,"ctime":null,"offerAgain":null,"inquireId":null,"offerComment":null},
-          {"id":7,"intentionId":"5820437488e8b3568d9dd494","breedId":1006,"breedName":"人工牛黄","qualification":"3","quality":"3","location":"3","spec":"3","number":3.000000,"unit":"3","price":null,"punit":null,"currency":null,"origPrice":null,"pack":"3","sampling":0,"snumber":null,"sunit":null,"samount":null,"status":1,"offerer":null,"offererName":null,"description":null,"iinquireTime":1,"again":0,"updater":null,"utime":null,"creater":null,"ctime":null,"offerAgain":null,"inquireId":null,"offerComment":null}],show:false},
-          "inquires":{arr:[{"id":6,"intentionId":"5820437488e8b3568d9dd494","inquire":1,"inquireType":"FOB&CIF","comment":"123456","status":1,"updater":null,"utime":null,"creater":null,"ctime":"2016-11-08 15:48"}],show:false},"files":{arr:[],show:false},"offerFiles":{"arr":[],show:false},"offers":{"arr":[],show:false}
+
+          "items":{"arr":[],show:false},
+          "inquires":{arr:[],show:false},"files":{arr:[],show:false},"offerFiles":{"arr":[],show:false},"offers":{"arr":[],show:false}
+        },
+        intlIntentionInquireDetail:{
+          "id":"5820437488e8b3568d9dd494","userId":null,"customerId":"844","customerName":"王建军中药材农民合作社","customerPhone":null,"customerEmail":"1","type":1,"especial":0,"names":",丁香,三颗针,人工牛黄","number":null,"country":"中国","province":"河北","city":"秦皇岛","district":"青龙满族自治县","address":"1","pubdate":null,"duedate":"2016-11-18 00:00","advance":1.000000,"pack":"12","intl":1,"cFlagsPath":null,"employee":null,"employeeName":null,"inquire":0,"inquireType":"FOB&CIF","inquireTime":1,"offerTime":1,
+          "validate":0,"status":1,"description":null,"inType":3,"updater":null,"utime":"2016-11-08 14:48","creater":null,"ctime":"2016-11-07 17:03",
+          "otherOffers":{"arr":[],show:false},
+          "inquires":{arr:[],show:false},"files":{arr:[],show:false},"offerFiles":{"arr":[],show:false},"offers":{"arr":[],show:false}
         },
         employeeList: [{
             "id": 6,
@@ -1530,6 +1536,10 @@ const mutations = {
     },
     [INTLINTENTION_DETAIL_DATA](state,data){
         state.basicBaseList.intlIntentionDetail = data;
+    },
+    [INTLINTENTION_INQUIRE_DETAIL_DATA](state,data){
+        console.log('table');
+        state.basicBaseList.intlIntentionInquireDetail = data;
     },
     /*[INTENTION_OFFER_DETAIL](state,data){
         state.basicBaseList.intentionDetail = data;
