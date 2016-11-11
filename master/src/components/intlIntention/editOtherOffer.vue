@@ -37,7 +37,26 @@
                        <div class="editpageleft">
                           <div class="editpage-input">
                                <label class="editlabel" >货币类型<span class="system_danger" v-if="$validation.currency.required">必填项</span></label>
-                               <input type="text" v-model="param.currency" class="form-control edit-input" v-validate:currency="{required:true}"/>
+                               <input v-show="false" type="text" v-model="param.currency" class="form-control edit-input" v-validate:currency="{required:true}"/>
+                               <select type="text" class="form-control edit-input" v-model="param.currency">
+                                 <option value="0">CNY人民币</option>
+                                 <option value="1">USD美元</option>
+                                 <option value="2">EUR欧元</option>
+                                 <option value="3">HKD港币</option>
+                                 <option value="4">GBP英镑</option>
+                                 <option value="5">JPY日元</option>
+                                 <option value="6">KRW韩元</option>
+                                 <option value="7">CAD加元</option>
+                                 <option value="8">AUD澳元</option>
+                                 <option value="9">CHF瑞郎</option>
+                                 <option value="10">SGD新加坡元</option>
+                                 <option value="11">MYR马来西亚币</option>
+                                 <option value="12">IDR印尼</option>
+                                 <option value="13">NZD新西兰</option>
+                                 <option value="14">VND越南</option>
+                                 <option value="15">THB泰铢</option>
+                                 <option value="16">PHP菲律宾</option>
+                               </select>
                           </div>
                           
                           <div class="editpage-input">

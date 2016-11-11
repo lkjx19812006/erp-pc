@@ -59,7 +59,7 @@
                         <td>{{item.district}}</td>
                         <td>{{item.ctime | date}}</td>
                         <!-- <td><a @click.stop="offer()">报价</a></td> -->
-                        <td><div style="display:inline-block" @click="offer()"><img src="/static/images/quote.png" alt="报价"  /></div></td>
+                        <!-- <td><div style="display:inline-block" @click="offer()"><img src="/static/images/quote.png" alt="报价"  /></div></td> -->
                         <!-- <td><a @click.stop="confirmOffer(item.intentionId,$index)">确认报价</a></td> -->
                         <td><div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div></td>
                     </tr>
@@ -136,7 +136,7 @@ export default {
 
             },
             detailParam:{
-                link:'/intlIntention/',
+                link:'/intlIntention/inquire/',
                 key:'intentionDetail',
                 show:false,
                 id:'',

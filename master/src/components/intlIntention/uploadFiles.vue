@@ -65,7 +65,7 @@ export default {
         save:function(){
             this.param.show = false;
             console.log(this.param);
-            //this.uploadIntlIntentionFiles(this.param);
+            this.uploadIntlIntentionFiles(this.param);
         }
         
     },
