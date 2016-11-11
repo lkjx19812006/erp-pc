@@ -514,8 +514,8 @@ export default {
         this.editOfferParam.id = item.id;
         this.editOfferParam.intentionId = item.intentionId;
         this.editOfferParam.inquireId = item.inquireId;
-        this.editOfferParam.itemId = item.itemId;
-        this.editOfferParam.itemName = item.itemName;
+        this.editOfferParam.itemId = item.breedId;
+        this.editOfferParam.itemName = item.breedName;
         this.editOfferParam.type = item.type;
         this.editOfferParam.currency = item.currency;
         this.editOfferParam.origPrice = item.origPrice;
