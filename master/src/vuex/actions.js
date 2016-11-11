@@ -126,6 +126,35 @@ export const login = ({ dispatch }, data) => { //登录
         data.loading=false;
     });
 }
+export const resetPawd = ({ dispatch }, data) => { //修改密码
+    console.log(data);
+    const body = {
+        no:data.no,
+        newPwd:data.newPwd,
+        oldPwd:data.oldPwd
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + '/employee/resetPassword',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json())
+        dispatch(types.PASSWORD_DATA, data);
+        if(res.json().code!=200){
+            data.callback(res.json().msg);
+        }
+        
+    }, (res) => {
+        console.log('fail');
+    })
+}
 
 export const initList = ({ dispatch }) => {
     Vue.http.get(apiUrl.list)

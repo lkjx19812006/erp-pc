@@ -30,10 +30,10 @@ export default {
 <style scoped>
 
 .del_modal_con{
-    z-index:1091;
+    z-index:1093;
 }
 .modal {
-    z-index:1090;
+    z-index:1092;
     opacity: 0.5;
     background-color: #000;
     display: block;
