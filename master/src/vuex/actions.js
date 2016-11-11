@@ -3582,7 +3582,7 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => {  //国际�
         }
     }).then((res)=>{
            console.log('国际意向询价搜索成功');
-           var inquire = res.json().result;
+           var inquire = res.json().result.list;
            /*for (var i in intent){
                 intent[i].checked = false;
                 intent[i].show =false;
@@ -3727,6 +3727,7 @@ export const intlIntentionItemInquire = ({ dispatch }, param) => { //国际意�
 
 export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原材料报价
     param.total = param.price*param.number;
+    console.log(param);
     const data = {
         id:param.id,
         intentionId:param.intentionId,
@@ -3739,7 +3740,7 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
         price:param.price,
         number:param.number,
         unit:param.unit,
-        stotal:param.total,
+        total:param.total,
         comment:param.comment
     }
 

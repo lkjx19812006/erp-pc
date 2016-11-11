@@ -510,13 +510,13 @@ export default {
      },
      //编辑原材料报价
      editOffer:function(item,index){
-        console.log(this.param);
-        this.editOfferParam.id = item.id;
+        console.log(item);
+        this.editOfferParam.id = item.offerId;    //?报价ID？？？没有
         this.editOfferParam.intentionId = item.intentionId;
         this.editOfferParam.inquireId = item.inquireId;
-        this.editOfferParam.itemId = item.breedId;
+        this.editOfferParam.itemId = item.id;
         this.editOfferParam.itemName = item.breedName;
-        this.editOfferParam.type = item.type;
+        this.editOfferParam.type = 0;    //0表示原材料报价
         this.editOfferParam.currency = item.currency;
         this.editOfferParam.origPrice = item.origPrice;
         this.editOfferParam.price = item.price;
