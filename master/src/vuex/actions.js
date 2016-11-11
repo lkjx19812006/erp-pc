@@ -3339,7 +3339,7 @@ export const getIntlIntentionList = ({ dispatch }, param) => {  //国际意向�
         }
     }).then((res)=>{
            console.log('国际意向搜索成功');
-           var intent = res.json().result;
+           var intent = res.json().result.list;
            /*for (var i in intent){
                 intent[i].checked = false;
                 intent[i].show =false;
@@ -3379,7 +3379,7 @@ export const getEmpIntlIntentionList = ({ dispatch }, param) => {  //业务员�
         }
     }).then((res)=>{
            console.log('国际意向搜索成功');
-           var intent = res.json().result;
+           var intent = res.json().result.list;
            /*for (var i in intent){
                 intent[i].checked = false;
                 intent[i].show =false;
@@ -3396,7 +3396,7 @@ export const getEmpIntlIntentionList = ({ dispatch }, param) => {  //业务员�
     })
 }
 
-export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询国际意向信息
+export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询国际意向详情
     param.loading = true;
     console.log(param.link);
     var url = apiUrl.clientList+param.link+param.id;
@@ -3446,28 +3446,18 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询�
 
                 var offers = intent.offers;
                 intent.offers = {};
-                intent.offers.arr = [{
-                    id:12,
-                    intentionId:'58228a6688e87dc057d5e969',
-                    inquireId:7,
-                    type:1,
-                    currency:1,
-                    cost:2,
-                    costDesc:'运费',
-                    total:'2',
-                    comment:'卖报小行家'
-                }];
+                intent.offers.arr = offers;
                 intent.offers.show = false;
                 //intent.offers.arr = offers;
 
                 var files = intent.files;
                 intent.files = {};
-                intent.files.arr = [];
+                intent.files.arr = files;
                 intent.files.show = false;
 
                 var offerFiles = intent.offerFiles;
                 intent.offerFiles = {};
-                intent.offerFiles.arr = [];
+                intent.offerFiles.arr = offerFiles;
                 intent.offerFiles.show = false;
 
                 var items = intent.items;
@@ -3609,6 +3599,46 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => {  //国际�
     })
 }
 
+export const getIntlIntentionInquireDetail = ({ dispatch }, param) => {  //国际意向询价详情
+    param.loading = true;
+    console.log(param.link);
+    var url = apiUrl.clientList+param.link + param.inquireId;
+
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+           console.log('国际意向询价详情');
+           var inquire = res.json().result;
+           /*for (var i in intent){
+                intent[i].checked = false;
+                intent[i].show =false;
+           }*/
+            var offers = inquire.offers;
+            inquire.offers = {};
+            inquire.offers.arr = offers  
+            inquire.offers.show = false;
+
+            var otherOffers = inquire.otherOffers;
+            inquire.otherOffers = {};
+            inquire.otherOffers.arr = otherOffers  
+            inquire.otherOffers.show = false;  
+
+            console.log(inquire);
+            dispatch(types.INTLINTENTION_INQUIRE_DETAIL_DATA, inquire);
+            param.all = res.json().result.pages;
+            param.total=res.json().result.total;
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向(再)询价
 
     const data = {
@@ -3671,7 +3701,7 @@ export const intlIntentionItemInquire = ({ dispatch }, param) => { //国际意�
 
     const data = {
         id:param.itemId,
-        comment:param.comment
+        description:param.description
     }
     
     Vue.http({
@@ -3697,7 +3727,7 @@ export const intlIntentionItemInquire = ({ dispatch }, param) => { //国际意�
 }
 
 export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原材料报价
-
+    param.total = param.price*param.number;
     const data = {
         id:param.id,
         intentionId:param.intentionId,
@@ -3710,7 +3740,7 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
         price:param.price,
         number:param.number,
         unit:param.unit,
-        total:param.total,
+        stotal:param.total,
         comment:param.comment
     }
 

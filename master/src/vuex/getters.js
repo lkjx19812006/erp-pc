@@ -181,6 +181,11 @@ export const initIntentionDetail = (state) => {
 export const initIntlIntentionDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionDetail));
 }
+/*--国际意向询价详情--*/
+export const initIntlIntentionInquireDetail = (state) => {
+    console.log('getters');
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionInquireDetail));
+}
 
 /*---会员信息---*/
 export const initUserList = (state) => {

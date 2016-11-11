@@ -193,7 +193,7 @@
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.offers.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.currency}}</td>
+                                                <td>{{item.currency | Currency}}</td>
                                                 <td>{{item.cost}}</td>
                                                 <td>{{item.costDesc}}</td>
                                                 <td>{{item.total}}</td>
@@ -235,34 +235,25 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>会员名</th>
-                                          <th>备注</th>
-                                          <th>回复</th>
-                                          <th>回复人</th>
+                                          <th>文件路径</th>
+                                          <th>文件类型</th>
+                                          <th>描述</th>
+                                          <th>创建时间</th>
                                           <th></th>
                                           <th></th>
-                                          <th></th>
+                                          
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.files.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.fullname}}</td>
-                                                <td>{{item.comments}}</td>
-                                                <td>{{item.reply}}</td>
-                                                <td>{{item.replier}}</td>
+                                                <td>{{item.path}}</td>
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.description}}</td>
+                                                <td>{{item.ctime}}</td>
                                                 <td></td>
                                                 <td></td>
-                                                <td></td>
-                                                <td  @click="clickShow($index,{
-                                                    concrete:'files'
-                                                    })">
-                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="files_action" v-show="item.show" >
-                                                        <dl>
-                                                            <dt @click="edit($index,item)">修改备注</dt>
-                                                        </dl>
-                                                    </div>
-                                                </td>
+                                                
+                                               
                                             </tr>
                                         </tbody>
                                     </table>
@@ -287,10 +278,10 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>会员名</th>
-                                          <th>备注</th>
-                                          <th>回复</th>
-                                          <th>回复人</th>
+                                          <th>文件路径</th>
+                                          <th>文件类型</th>
+                                          <th>描述</th>
+                                          <th>创建时间</th>
                                           <th></th>
                                           <th></th>
                                           <th></th>
@@ -298,14 +289,14 @@
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.offerFiles.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.fullname}}</td>
-                                                <td>{{item.comments}}</td>
-                                                <td>{{item.reply}}</td>
-                                                <td>{{item.replier}}</td>
+                                                <td>{{item.path}}</td>
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.description}}</td>
+                                                <td>{{item.ctime}}</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td  @click="clickShow($index,{
+                                                <!-- <td  @click="clickShow($index,{
                                                     concrete:'offers'
                                                     })">
                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
@@ -314,7 +305,7 @@
                                                             <dt @click="edit($index,item)">修改备注</dt>
                                                         </dl>
                                                     </div>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -363,7 +354,7 @@ export default {
               show:false,
               link:'/intlIntention/itemInquire',
               itemId:'',
-              comment:'',
+              description:'',
 
             },
             offerParam:{
