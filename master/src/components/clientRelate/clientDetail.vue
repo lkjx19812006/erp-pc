@@ -331,7 +331,7 @@
                                       		<th>文件类型</th>
                                       		<th>所属文件</th>
                                           <th>描述</th>
-                                      		<th>操作</th>
+                                      		<th colspan="2">操作</th>
                                       	</thead>
 		                                    <tbody>
 		                                         <tr v-for="item in initClientDetail.files.arr">
@@ -344,9 +344,11 @@
 		                                            <td>
                                                   {{item.fileType}}
                                                 </td>
-		                                            <td>{{item.bizType}}</td>
+		                                            <td v-if="item.bizType=='customer_license'">客户文件</td>
+                                                <td v-if="item.bizType=='product_license'">产品文件</td>
                                                 <td>{{item.description}}</td>
-                                                <td @click="specDelete({
+                                                <td >
+                                                     <a class="operate" @click="specDelete({
                                                            id:item.id,
                                                            sub:$index,
                                                            show:true,
@@ -355,10 +357,12 @@
                                                            url:'/customer/file/',
                                                            key:'files',
                                                            headline:'clientDetail'
-                                                           },item.show=false)">
-                                                     <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
+                                                           },item.show=false)"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                                                      </a>
+
+
                                                 </td>
+                                               <td> <a href="/crm/api/v1/file/dowanloadFile?path={{item.path}}">下载</a></td>
                                                 <!-- <td  @click="clickShow($index,{
                                                     concrete:'files'
                                                     })">
