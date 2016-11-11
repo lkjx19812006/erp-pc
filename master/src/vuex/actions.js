@@ -3600,7 +3600,7 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => {  //国际�
 export const getIntlIntentionInquireDetail = ({ dispatch }, param) => {  //国际意向询价详情
     param.loading = true;
     console.log(param.link);
-    var url = apiUrl.clientList+param.link + param.inquireId;
+    var url = apiUrl.clientList+param.link + param.id;
 
     Vue.http({
         method:'GET',
@@ -3616,7 +3616,7 @@ export const getIntlIntentionInquireDetail = ({ dispatch }, param) => {  //国�
                 intent[i].checked = false;
                 intent[i].show =false;
            }*/
-            var offers = inquire.offers;
+            /*var offers = inquire.offers;
             inquire.offers = {};
             inquire.offers.arr = offers  
             inquire.offers.show = false;
@@ -3626,10 +3626,10 @@ export const getIntlIntentionInquireDetail = ({ dispatch }, param) => {  //国�
             inquire.otherOffers.arr = otherOffers  
             inquire.otherOffers.show = false;  
 
-            console.log(inquire);
+            console.log(inquire);*/
             dispatch(types.INTLINTENTION_INQUIRE_DETAIL_DATA, inquire);
-            param.all = res.json().result.pages;
-            param.total=res.json().result.total;
+            /*param.all = res.json().result.pages;
+            param.total=res.json().result.total;*/
             param.loading = false;
     }, (res) => {
         console.log('fail');

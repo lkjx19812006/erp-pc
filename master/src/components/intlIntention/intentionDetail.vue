@@ -1,5 +1,6 @@
 <template>
     <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
+    <inquireinfo-model :param="inquireInfoParam" v-if="inquireInfoParam.show"></inquireinfo-model>
     <otheroffer-model :param="otherOfferParam" v-if="otherOfferParam.show"></otheroffer-model>
     <inquireagain-model :param="inquireAgainParam" v-if="inquireAgainParam.show"></inquireagain-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
@@ -36,16 +37,16 @@
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">电话：18702961510</label>
+                                    <label class="editlabel">电话：{{initIntlIntentionDetail.customerPhone}}</label>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12" >
-                                    <label class="editlabel">QQ：857714244</label>
+                                    <label class="editlabel">邮箱：{{initIntlIntentionDetail.customerEmail}}</label>
                                     
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">邮箱：857714244@qq.com</label>
+                                    <label class="editlabel">国家：{{initIntlIntentionDetail.country}}</label>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 
@@ -53,21 +54,21 @@
 
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-2 col-xs-12">
-                                    <label class="editlabel">客户名称：刘振领</label>
+                                    <label class="editlabel">省：{{initIntlIntentionDetail.province}}</label>
                                      
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">电话：18702961510</label>
+                                    <label class="editlabel">市：{{initIntlIntentionDetail.city}}</label>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12" >
-                                    <label class="editlabel">QQ：857714244</label>
+                                    <label class="editlabel">区：{{initIntlIntentionDetail.district}}</label>
                                     
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">邮箱：857714244@qq.com</label>
+                                    <label class="editlabel">描述：{{initIntlIntentionDetail.description}}</label>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 
@@ -110,7 +111,7 @@
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.inquires.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.inquireType}}</td>
+                                                <td><a class="underline" @click="getInquireInfo(item.id)">{{item.inquireType}}</a></td>
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
@@ -325,6 +326,7 @@
 
 import filter from '../../filters/filters'
 import offerModel from './intlOffer'
+import inquireinfoModel from './inquireInfo'
 import otherofferModel from './otherOffer'
 import inquireagainModel from './inquireAgain'
 import{
@@ -339,6 +341,7 @@ export default {
     components: {
         filter,
         offerModel,
+        inquireinfoModel,
         otherofferModel,
         inquireagainModel
     },
@@ -349,6 +352,11 @@ export default {
                 loading: true,
                 color: '#5dc596',
                 size: '15px'
+            },
+            inquireInfoParam:{
+                show:false,
+                link:'/intlIntention/inquire/',
+                id:''
             },
             inquireAgainParam:{
               show:false,
@@ -410,6 +418,13 @@ export default {
           }
           this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show;
       },
+      //获取询价详情
+     getInquireInfo:function(id){
+        console.log(id);
+        this.inquireInfoParam.id = id;
+        this.inquireInfoParam.show = true;
+
+     },
      inquireAgain:function(item,index){
         console.log(item);
         this.inquireAgainParam.itemId = item.id;

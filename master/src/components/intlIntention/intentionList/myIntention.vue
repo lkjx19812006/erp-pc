@@ -34,6 +34,7 @@
                             <th>{{$t('static.special')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.client_phone')}}</th>
+                            <th>商品条目</th>
                             <th>{{$t('static.certificate')}}</th>
                             <th>{{$t('static.country')}}</th>
                             <th>{{$t('static.province')}}</th>
@@ -65,8 +66,9 @@
                             <div v-if="item.especial==1&&item.type==0">紧急求购</div>
                             <div v-if="item.especial==1&&item.type==1">低价资源</div>
                         </td>
-                        <td class="underline" @click="clickOn(item.id)">{{item.customerName}}</td>
+                        <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
+                        <td class="underline" @click="clickOn(item.id)">{{item.names}}</td>
                         <td>{{item.qualification | qualify}}</td>
                         <td>{{item.country}}</td>
                         <td>{{item.province}}</td>
@@ -85,7 +87,7 @@
                         <td>{{item.description}}</td>
                         <td>
                             <div v-if="item.inquire===0&&item.inquireTime===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquire.png" alt="询价" /></div>
-                            <div v-if="item.inquire===0&&item.inquireTime!==0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquireAgain.png" alt="再次询价" /></div>
+                            <div v-if="item.inquire===4" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquireAgain.png" alt="再次询价" /></div>
                             <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)"><img src="/static/images/cancelInquire_icon.png" alt="取消询价" /></div>
                             <!-- <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)">取消询价</div> -->
                             <div style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/edit.png" alt="编辑"  /></div>
