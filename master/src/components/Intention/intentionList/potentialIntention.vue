@@ -7,18 +7,99 @@
      <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
      <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
-
    <div>
-        <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">会员意向</div>
-            <div class="col-xs-5 my_order_search">
-
-            </div>
-            <div class="right">
-                <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-                <button class="new_btn transfer" @click="search()">搜索</button>
-                <button class="new_btn transfer" @click="intentionAudit()">审核</button>
-            </div>
+        <div class="service-nav">
+          <div class="clearfix">
+              <div class="my_enterprise col-xs-2">会员意向</div>
+              <div class="right">
+                  <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
+                  <button class="new_btn transfer" @click="search()">搜索</button>
+                  <button class="new_btn transfer" @click="intentionAudit()">审核</button>
+              </div>
+          </div>
+          <div class="clear" style="margin-top:10px;">
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">类型：</dt>
+                 <dd class="left">
+                      <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
+                          <option value="" selected>请选择类型</option>
+                          <option value="0">求购</option>
+                          <option value="1">供应</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer" v-show="loadParam.type==1&&loadParam.type">
+                 <dt class="left transfer marg_top">供应类型：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
+                              <option value="" selected>请选择供应类型</option>
+                              <option value="0">普通供应</option>
+                              <option value="1">低价资源</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer" v-show="loadParam.type==0&&loadParam.type">
+                 <dt class="left transfer marg_top">求购类型：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
+                              <option value="" selected>请选择求购类型</option>
+                              <option value="0">普通求购</option>
+                              <option value="1">紧急求购</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">是否提供发票：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.invoic"  class="form-control" @change="selectSearch()">
+                                <option value="" selected>请选择发票</option>
+                                <option value="0">无发票</option>
+                                <option value="1">普通发票</option>
+                                <option value="2">增值发票</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">选择审核状态：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
+                          <option value="" selected>请选择审核状态</option>
+                          <option value="0">初始</option>
+                          <option value="9">审核中</option>
+                          <option value="1">客服审核通过</option>
+                          <option value="-1">客服审核不通过</option>
+                          <option value="2">业务员申请审核</option>
+                          <option value="3">业务主管审核通过</option>
+                          <option value="-3">业务主管审核不通过</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">选择上架状态：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.onSell"  class="form-control" @change="selectSearch()">
+                          <option value="" selected>请选择上架状态</option>
+                          <option value="0">初始</option>
+                          <option value="1">申请上架</option>
+                          <option value="2">上架</option>
+                          <option value="-2">上架失败</option>
+                          <option value="3">申请下架</option>
+                          <option value="4">下架</option>
+                          <option value="-4">下架失败</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">是否是国际信息：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.intl"  class="form-control" @change="selectSearch()">
+                          <option value="" selected>通过国际搜索</option>
+                          <option value="0">国内</option>
+                          <option value="1">国际</option>
+                      </select>
+                 </dd>
+              </dl>
+          </div>
         </div>
         <div class="service-nav clearfix">
             <div class="my_order_search">
@@ -148,20 +229,7 @@
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offerNumber}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
-<<<<<<< HEAD
-                        <td  @click.stop="modifyIntention({
-                                              id:item.id,
-                                              sub:$index,
-                                              selectCustomer:false,
-                                              flag:1,
-                                              show:true,
-                                              loading:true,
-                                              title:'编辑',
-                                              customerName:item.customerName,
-                                              customerPhone:item.customerPhone,
-                                              breedName:item.breedName,
-                                              breedId:item.breedId,
-=======
+
 
                         <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
@@ -179,7 +247,6 @@
                                                customerPhone:item.customerPhone,
                                                breedName:item.breedName,
                                                breedId:item.breedId,
->>>>>>> dbd2a54048216f519ead2c92a6b410a054ab5590
                                               type:item.type,
                                               especial:item.especial,
                                               quality:item.quality,
@@ -262,7 +329,7 @@
                          <div class="component_action" v-show="item.show">
                              <ul>
                                  <li @click="modifyIntention({
-                                             
+
                                             type:item.type,
                                             especial:item.especial,
                                             quality:item.quality,
@@ -613,6 +680,9 @@ export default {
         },
         createIntention:function(initIntentionList){
              this.createParam = initIntentionList;
+        },
+        selectSearch:function(){
+          this.getIntentionList(this.loadParam)
         }
     },
     events: {

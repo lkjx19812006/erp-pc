@@ -6,17 +6,85 @@
     <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
-
      <div>
-        <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">会员</div>
-
-            <div class="right col-xs-2">
-                <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
-                <button type="button" class="btn btn-default" height="24" width="24" @click="search()">搜索</button>
-                <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+        <div class="service-nav">
+            <div class="clearfix">
+                <div class="my_enterprise col-xs-1">会员</div>
+                <div class="right col-xs-2">
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="search()">搜索</button>
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+                </div>
             </div>
-
+            <div class="clear" style="margin-top:10px;">
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">来源：</dt>
+                   <dd class="left">
+                        <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
+                            <option value="">请选择来源</option>
+                            <option value="0">PC</option>
+                            <option value="1">安卓</option>
+                            <option value="2">微信</option>
+                            <option value="3">IOS</option>
+                        </select>
+                   </dd>
+                </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">经营类型：</dt>
+                   <dd class="left">
+                         <select v-model="loadParam.bizType"  class="form-control" @change="selectSearch()">
+                                  <option value="" selected>请选择经营类型</option>
+                                  <option value="0">其它</option>
+                                  <option value="1">合作社</option>
+                                  <option value="2">药商</option>
+                                  <option value="3">药厂</option>
+                                  <option value="4">个体户</option>
+                                  <option value="5">药店</option>
+                                  <option value="6">医院</option>
+                                  <option value="7">贸易公司</option>
+                                  <option value="8">零售商行</option>
+                                  <option value="9">药农</option>
+                                  <option value="10">介绍人</option>
+                                  <option value="11">药贩子</option>
+                                  <option value="12">产地药商</option>
+                                  <option value="13">销地药商</option>
+                                  <option value="14">养生诊所</option>
+                                  <option value="15">化工厂</option>
+                                  <option value="16">化妆品厂</option>
+                                  <option value="17">提取物厂</option>
+                                  <option value="18">食品厂</option>
+                                  <option value="19">实验室</option>
+                                  <option value="20">网上电商</option>
+                                  <option value="21">中成药生产商</option>
+                                  <option value="22">西药生产商</option>
+                                  <option value="23">饮片厂</option>
+                        </select>
+                   </dd>
+                </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">审核状态：</dt>
+                   <dd class="left">
+                        <select class="form-control" v-model="loadParam.audit" @change="selectSearch()">
+                            <option value="">请选择审核状态</option>
+                            <option value="0">待审核</option>
+                            <option value="1">审核中</option>
+                            <option value="2">审核通过</option>
+                            <option value="3">审核不通过</option>
+                        </select>
+                   </dd>
+                </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">划转状态：</dt>
+                   <dd class="left">
+                        <select class="form-control" v-model="loadParam.transform" @change="selectSearch()">
+                            <option value="">请选择划转状态</option>
+                            <option value="0">待划转</option>
+                            <option value="1">已划转</option>
+                            <option value="2">转黑</option>
+                        </select>
+                   </dd>
+                </dl>
+            </div>
         </div>
         <div class="order_table">
             <div class="cover_loading">
@@ -393,11 +461,13 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getUserList(this.loadParam);
-          this.checked=false;
-
+            this.checked=false;
         }
       },
   methods: {
+    selectSearch:function(){
+        this.getUserList(this.loadParam)
+    },
     clickOn: function(item) {
         this.changeParam = item;
         this.getUserDetail(this.changeParam);
@@ -554,6 +624,9 @@ export default {
     margin: auto;
     text-align: center;
     background-position: 5px;
+}
+.transfer{
+    margin-right: 8px;
 }
 .checkbox_select{
     background-image: url(../../static/images/selected.png);

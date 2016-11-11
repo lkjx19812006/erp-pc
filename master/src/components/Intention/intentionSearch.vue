@@ -222,13 +222,15 @@ export default {
 </script>
 <style scoped>
 .modal_con{
-
     width: 600px;
 }
 .top-title{
-    position: absolute;
-    width: 100%;
-    top: 0;
+    position: fixed;
+    width: 600px;
+    top: 91px;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 .edit_footer{
     position: fixed;
@@ -266,12 +268,6 @@ export default {
     border-bottom: 1px solid #ddd;
 }
 
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
@@ -306,13 +302,6 @@ export default {
 .editpage-input {
     margin-top: 15px;
 }
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
-}
-
 .edit-input {
     height: 36px;
     line-height: 36px;

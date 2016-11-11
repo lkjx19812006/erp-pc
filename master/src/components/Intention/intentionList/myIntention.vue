@@ -11,18 +11,9 @@
      <audit-dialog :param.sync="auditParam" v-if="auditParam.show"></audit-dialog>
 
 	 <div>
-        <div class="service-nav clearfix">
+        <div class="service-nav">
+          <div class="clearfix">
             <div class="my_enterprise col-xs-2">我的意向</div>
-            <div class="col-xs-5 my_order_search">
-               <!-- <div class="name_search clearfix">
-                   <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchIntention()">
-               </div>
-                             <div class="ordertel_search clearfix">
-                   <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" v-model="loadParam.name" placeholder="按客户名称搜索">
-               </div> -->
-           </div>
             <div class="right">
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 <button class="new_btn transfer" @click="search()">搜索</button>
@@ -83,6 +74,90 @@
                        ctime:''
                        })">新建</button>
             </div>
+          </div>
+          <div class="clear" style="margin-top:10px;">
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">类型：</dt>
+                 <dd class="left">
+                      <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
+                          <option value="" selected>请选择类型</option>
+                          <option value="0">求购</option>
+                          <option value="1">供应</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer" v-show="loadParam.type==1&&loadParam.type">
+                 <dt class="left transfer marg_top">供应类型：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
+                              <option value="" selected>请选择供应类型</option>
+                              <option value="0">普通供应</option>
+                              <option value="1">低价资源</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer" v-show="loadParam.type==0&&loadParam.type">
+                 <dt class="left transfer marg_top">求购类型：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
+                              <option value="" selected>请选择求购类型</option>
+                              <option value="0">普通求购</option>
+                              <option value="1">紧急求购</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">是否提供发票：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.invoic"  class="form-control" @change="selectSearch()">
+                                <option value="" selected>请选择发票</option>
+                                <option value="0">无发票</option>
+                                <option value="1">普通发票</option>
+                                <option value="2">增值发票</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">选择审核状态：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
+                          <option value="" selected>请选择审核状态</option>
+                          <option value="0">初始</option>
+                          <option value="9">审核中</option>
+                          <option value="1">客服审核通过</option>
+                          <option value="-1">客服审核不通过</option>
+                          <option value="2">业务员申请审核</option>
+                          <option value="3">业务主管审核通过</option>
+                          <option value="-3">业务主管审核不通过</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">选择上架状态：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.onSell"  class="form-control" @change="selectSearch()">
+                          <option value="" selected>请选择上架状态</option>
+                          <option value="0">初始</option>
+                          <option value="1">申请上架</option>
+                          <option value="2">上架</option>
+                          <option value="-2">上架失败</option>
+                          <option value="3">申请下架</option>
+                          <option value="4">下架</option>
+                          <option value="-4">下架失败</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">是否是国际信息：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.intl"  class="form-control" @change="selectSearch()">
+                          <option value="" selected>通过国际搜索</option>
+                          <option value="0">国内</option>
+                          <option value="1">国际</option>
+                      </select>
+                 </dd>
+              </dl>
+          </div>
         </div>
         <div class="service-nav clearfix">
             <div class="my_order_search">
@@ -211,165 +286,6 @@
                         <td>
                           <div>{{item.onSell | onsell}}</div>
                         </td>
-<<<<<<< HEAD
-                        <td   @click.stop="modifyIntention({
-                                   id:item.id,
-                                   sub:$index,
-                                   selectCustomer:false,
-                                   flag:1,
-                                   show:true,
-                                   loading:true,
-                                   title:'编辑',
-                                   customerName:item.customerName,
-                                   customerPhone:item.customerPhone,
-                                   breedName:item.breedName,
-                                   breedId:item.breedId,
-                                  type:item.type,
-                                  especial:item.especial,
-                                  quality:item.quality,
-                                  qualification:item.qualification,
-                                  spec:item.spec,
-                                  number:item.number,
-                                  unit:item.unit,
-                                  price:item.price,
-                                  address:item.address,
-                                  location:item.location,
-                                  advance:item.advance,
-                                  invoic:item.invoic,
-                                  visit:item.visit,
-                                  pack:item.pack,
-                                  intl:item.intl,
-                                  visit:item.visit,
-                                  ctime:item.ctime,
-                                  sampling:item.sampling,
-                                  sampleNumber:item.sampleNumber,
-                                  sampleUnit:item.sampleUnit,
-                                  sampleAmount:item.sampleAmount,
-                                  offer:item.offer,
-                                  status:item.status,
-                                   country:item.country,
-                                   province:item.province,
-                                   city:item.city,
-                                   district:item.district,
-                                   address:item.address,
-                                   validate:item.validate,
-                                   link:editintentInfo,
-                                   url:'/intention/',
-                                   key:'intentionList',
-                                   image_f:'',
-                                   image_s:'',
-                                   image_t:'',
-                                   image_f_show:'',
-                                   image_s_show:'',
-                                   image_t_show:'',
-                                   duedate:item.duedate
-                                   })">
-                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
-                            </a>
-                        </td>
-                        <td  @click.stop="specDelete({
-                               id:item.id,
-                               sub:$index,
-                               show:true,
-                               name:item.name,
-                               title:'意向',
-                               link:deleteInfo,
-                               url:'/intention/',
-                               key:'intentionList'
-                               })">
-                               <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
-                              </a>
-                        </td>
-                        <td v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click.stop="up($index,item.id,2)">
-                          <a class="operate"><img src="/static/images/grounding.png" height="18" width="28"  alt="上架" title="上架"/>
-                          </a>
-                        </td>
-                        <td v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.especial==1&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2" @click.stop="applyAudit($index,item.id)">
-                          <a class="operate"><img src="/static/images/apply.png" height="18" width="47"  alt="申请审核" title="申请审核"/>
-                          </a>
-                        </td>
-                        <td v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click.stop="up($index,item.id,4)">
-                          <a class="operate"><img src="/static/images/undercarriage.png" height="18" width="28"  alt="下架" title="下架"/>
-                          </a>
-                        </td>
-                        <td v-if="(item.onSell==-4||item.onSell==2)&&item.type==1&&item.especial==1" @click.stop="up($index,item.id,3)">
-                          <a class="operate"><img src="/static/images/applyunder.png" height="18" width="47"  alt="申请下架" title="申请下架"/>
-                          </a>
-                        </td>
-                       <!--  <td @click.stop="eventClick($index)">
-                          <div class="component_action" v-show="item.show">
-                              <ul>
-                                  <li @click="modifyIntention({
-                                             id:item.id,
-                                             sub:$index,
-                                             selectCustomer:false,
-                                             flag:1,
-                                             show:true,
-                                             loading:true,
-                                             title:'编辑',
-                                             customerName:item.customerName,
-                                             customerPhone:item.customerPhone,
-                                             breedName:item.breedName,
-                                             breedId:item.breedId,
-                                                                     type:item.type,
-                                                                     especial:item.especial,
-                                                                     quality:item.quality,
-                                                                     qualification:item.qualification,
-                                                                     spec:item.spec,
-                                                                     number:item.number,
-                                                                     unit:item.unit,
-                                                                     price:item.price,
-                                                                     address:item.address,
-                                                                     location:item.location,
-                                                                     advance:item.advance,
-                                                                     invoic:item.invoic,
-                                                                     visit:item.visit,
-                                                                     pack:item.pack,
-                                                                     intl:item.intl,
-                                                                     visit:item.visit,
-                                             ctime:item.ctime,
-                                                                     sampling:item.sampling,
-                                                                     sampleNumber:item.sampleNumber,
-                                                                     sampleUnit:item.sampleUnit,
-                                                                     sampleAmount:item.sampleAmount,
-                                                                     offer:item.offer,
-                                                                     status:item.status,
-                                              country:item.country,
-                                              province:item.province,
-                                              city:item.city,
-                                              district:item.district,
-                                              address:item.address,
-                                              validate:item.validate,
-                                              link:editintentInfo,
-                                              url:'/intention/',
-                                              key:'intentionList',
-                                              image_f:'',
-                                              image_s:'',
-                                              image_t:'',
-                                              image_f_show:'',
-                                              image_s_show:'',
-                                              image_t_show:'',
-                                              duedate:item.duedate
-                                              })">编辑</li>
-                                  <li @click="specDelete({
-                                              id:item.id,
-                                              sub:$index,
-                                              show:true,
-                                              name:item.name,
-                                              title:'意向',
-                                              link:deleteInfo,
-                                              url:'/intention/',
-                                              key:'intentionList'
-                                              })">删除</li>
-                                  <li v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)">上架</li>
-                                  <li v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.especial==1&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2" @click="applyAudit($index,item.id)">申请审核</li >
-                                  <li v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click="up($index,item.id,4)">下架</li>
-                                  <li v-if="(item.onSell==-4||item.onSell==2)&&item.type==1&&item.especial==1" @click="up($index,item.id,3)">申请下架</li >
-                       
-                              </ul>
-                          </div>
-                                              </td> -->
-=======
                         <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
@@ -444,7 +360,6 @@
                                </ul>
                            </div>
                        </td>
->>>>>>> dbd2a54048216f519ead2c92a6b410a054ab5590
 
                     </tr>
 
@@ -789,6 +704,9 @@ export default {
         auditCallback:function(){
           this.auditParam.description=this.auditParam.auditComment;
           this.batchUserIntentionAudit(this.auditParam);
+        },
+        selectSearch:function(){
+          this.getIntentionList(this.loadParam)
         }
     },
     events: {

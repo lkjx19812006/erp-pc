@@ -48,13 +48,11 @@
               <td  @click="updatelabel({
                          sub:$index,
                          id:item.id,
-                         customerId:item.bizId,
                          show:true,
                          title:'备注',
                          labelist:'备注',
                          statuslist:'状态',
                          description:item.description,
-                         status:item.status,
                          link:alterRemark,
                          url:'/customer/updateFile',
                          key:'filesList'

@@ -24,8 +24,8 @@
                     </div>
                     <div class="client-detailInfo  col-xs-6">
                         <label>所在省：</label>
-                      <div   class="form-control" style="padding:0;border:none;height:31px">
-                        <v-select
+                        <div   class="form-control" style="padding:0;border:none;height:31px">
+                          <v-select
                               :debounce="250"
                               :value.sync="province"
                               :on-change="selectProvince"
@@ -34,7 +34,6 @@
                               label="cname"
 
                          >
-
                             </v-select>
                         </div>
                     </div>

@@ -4,14 +4,40 @@
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <update-model :param="updateParam" v-if="updateParam.show"></update-model>
     <div>
-        <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">企业</div>
-            <div class="my_order_search" style="float:right">
-                <a class="new_btn transfer"   @click="loadParam.show=true">搜索</a>
-                <a class="new_btn transfer"   @click="resetCondition()">清空条件</a>
+        <div class="service-nav">
+            <div class="clearfix">
+                <div class="my_enterprise col-xs-1">企业</div>
+                <div class="my_order_search" style="float:right">
+                    <a class="new_btn transfer"   @click="loadParam.show=true">搜索</a>
+                    <a class="new_btn transfer"   @click="resetCondition()">清空条件</a>
+                </div>
+            </div>
+            <div class="clear" style="margin-top:10px;">
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">类别：</dt>
+                   <dd class="left">
+                        <select class="form-control" v-model="loadParam.conType" @change="selectSearch()">
+                            <option value="" selected>按类别搜索</option>
+                            <option value="MF">药厂</option>
+                            <option value="CF">化妆品厂</option>
+                            <option value="FF">食品厂</option>
+                            <option value="HF">保健品厂</option>
+                        </select>
+                   </dd>
+                </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">是否划转：</dt>
+                   <dd class="left">
+                         <select v-model="loadParam.transform"  class="form-control" @change="selectSearch()">
+                                <option value="" selected>根据客户划转</option>
+                                <option value=1>已划转</option>
+                                <option value=0>未划转</option>
+                                <option value="-2">已过期</option>
+                        </select>
+                   </dd>
+                </dl>
             </div>
         </div>
-
         <div class="order_table" v-cloak>
              <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -215,6 +241,9 @@ export default {
     },
 
     methods: {
+        selectSearch:function(){
+            this.getCompanyData(this.loadParam)
+        },
         companyDetail:function(id,index){
             this.companyParam.show = true;
             this.companyParam.id = id;

@@ -603,10 +603,39 @@
        * @return {array}
        */
       filteredOptions() {
-        let options = this.$options.filters.filterBy(this.options, this.search)
-        if (this.taggable && this.search.length && !this.optionExists(this.search)) {
-          options.unshift(this.search)
-        }
+        let _self=this;
+        let containArr=[];
+        let unContainArr=[];
+        this.options.forEach(function(item){
+
+          if(_self.label!='label'){
+
+            if(item[_self.label].indexOf(_self.search)){
+              containArr.push(item);
+            }else{
+              unContainArr.push(item);
+            }
+          }else{
+          
+            if(item.indexOf(_self.search)){
+              containArr.push(item);
+            }else{
+              unContainArr.push(item);
+            }
+          }
+
+        })
+
+        unContainArr.forEach(function(item){
+          containArr.unshift(item);
+        })
+
+        let options =containArr;
+
+//        let options = this.$options.filters.filterBy(this.options, this.search)
+//        if (this.taggable && this.search.length && !this.optionExists(this.search)) {
+//          options.unshift(this.search)
+//        }
         this.value=this.search;
 
         return options
