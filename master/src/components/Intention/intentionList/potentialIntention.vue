@@ -148,20 +148,7 @@
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offerNumber}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
-<<<<<<< HEAD
-                        <td  @click.stop="modifyIntention({
-                                              id:item.id,
-                                              sub:$index,
-                                              selectCustomer:false,
-                                              flag:1,
-                                              show:true,
-                                              loading:true,
-                                              title:'编辑',
-                                              customerName:item.customerName,
-                                              customerPhone:item.customerPhone,
-                                              breedName:item.breedName,
-                                              breedId:item.breedId,
-=======
+
 
                         <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
@@ -179,7 +166,6 @@
                                                customerPhone:item.customerPhone,
                                                breedName:item.breedName,
                                                breedId:item.breedId,
->>>>>>> dbd2a54048216f519ead2c92a6b410a054ab5590
                                               type:item.type,
                                               especial:item.especial,
                                               quality:item.quality,
@@ -262,7 +248,7 @@
                          <div class="component_action" v-show="item.show">
                              <ul>
                                  <li @click="modifyIntention({
-                                             
+
                                             type:item.type,
                                             especial:item.especial,
                                             quality:item.quality,

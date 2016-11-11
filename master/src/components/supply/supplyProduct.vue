@@ -39,28 +39,28 @@
                </div>
            </div>
       <div class="right col-xs-3">
-        <button class="new_btn transfer" @click="createCustomer({
-                                             show:true,
-                                             title:'新建产品',
-                                             type:'',
-                                             name:'',
-                                             breedId:'',
-                                             quality:'',
-                                             location:'',
-                                             spec:'',
-                                             number:'',
-                                             price:'',
-                                             unit:'',
-                                             duedate:'',
-                                             coa:'',
-                                             cid:'',
-                                             image_f:'',
-                                             image_s:'',
-                                             image_t:'',
-                                             images:'',
-                                             link:newProduct,
-                                             url:'/customer/product'
-                                        })">新建</button>
+        <!--<button class="new_btn transfer" @click="createCustomer({-->
+                                             <!--show:true,-->
+                                             <!--title:'新建产品',-->
+                                             <!--type:'',-->
+                                             <!--name:'',-->
+                                             <!--breedId:'',-->
+                                             <!--quality:'',-->
+                                             <!--location:'',-->
+                                             <!--spec:'',-->
+                                             <!--number:'',-->
+                                             <!--price:'',-->
+                                             <!--unit:'',-->
+                                             <!--duedate:'',-->
+                                             <!--coa:'',-->
+                                             <!--cid:'',-->
+                                             <!--image_f:'',-->
+                                             <!--image_s:'',-->
+                                             <!--image_t:'',-->
+                                             <!--images:'',-->
+                                             <!--link:newProduct,-->
+                                             <!--url:'/customer/product'-->
+                                        <!--})">新建</button>-->
         <button class="new_btn transfer"  @click="searchProduct()">搜索</button>
         <button class="new_btn"  @click="reset()">清空条件</button>
       </div>
