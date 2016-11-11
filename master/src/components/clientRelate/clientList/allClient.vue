@@ -53,12 +53,7 @@
                         <th>注册地址</th>
                         <th>创建时间</th>
                         <th style="min-width:200px">备注</th>
-<<<<<<< HEAD
                         <th colspan="2">操作</th>
-=======
-
-                        <th ></th>
->>>>>>> dbd2a54048216f519ead2c92a6b410a054ab5590
                     </tr>
                 </thead>
                 <tbody>

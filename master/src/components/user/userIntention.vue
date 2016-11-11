@@ -84,20 +84,20 @@
                          <label class="editlabel">包装<span class="system_danger" v-if="$validation.pack.required">包装不能为空</span></label>
                          <input type="text" v-show="false"  v-model="param.pack" v-validate:pack="{required:true}"  />
 
-                         <select type="text" class="form-control edit-input" v-model="param.pack">
-                           <option value={{item}} v-for="item in tag">{{item}}</option>
+                         <!--<select type="text" class="form-control edit-input" v-model="param.pack">-->
+                           <!--<option value={{item}} v-for="item in tag">{{item}}</option>-->
 
-                         </select>
+                         <!--</select>-->
 
-                         <!--<div type="text" class="edit-input" >-->
-                           <!--<input-select-->
-                             <!--:prevalue="param.pack"-->
-                             <!--:value.sync="param.pack"-->
-                             <!--:options="tag"-->
-                             <!--placeholder="包装"-->
-                           <!--&gt;-->
-                           <!--</input-select>-->
-                         <!--</div>-->
+                         <div type="text" class="edit-input" >
+                           <input-select
+                             :prevalue="param.pack"
+                             :value.sync="param.pack"
+                             :options="tag"
+                             placeholder="包装"
+                           >
+                           </input-select>
+                         </div>
                        </div>
                      </div>
 
