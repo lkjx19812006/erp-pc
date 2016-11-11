@@ -295,15 +295,16 @@ const state = {
         intlIntentionDetail:{
           "id":"5820437488e8b3568d9dd494","userId":null,"customerId":"844","customerName":"王建军中药材农民合作社","customerPhone":null,"customerEmail":"1","type":1,"especial":0,"names":",丁香,三颗针,人工牛黄","number":null,"country":"中国","province":"河北","city":"秦皇岛","district":"青龙满族自治县","address":"1","pubdate":null,"duedate":"2016-11-18 00:00","advance":1.000000,"pack":"12","intl":1,"cFlagsPath":null,"employee":null,"employeeName":null,"inquire":0,"inquireType":"FOB&CIF","inquireTime":1,"offerTime":1,
           "validate":0,"status":1,"description":null,"inType":3,"updater":null,"utime":"2016-11-08 14:48","creater":null,"ctime":"2016-11-07 17:03",
+
           "items":{"arr":[],show:false},
           "inquires":{arr:[],show:false},"files":{arr:[],show:false},"offerFiles":{"arr":[],show:false},"offers":{"arr":[],show:false}
-        }, 
+        },
         intlIntentionInquireDetail:{
           "id":"5820437488e8b3568d9dd494","userId":null,"customerId":"844","customerName":"王建军中药材农民合作社","customerPhone":null,"customerEmail":"1","type":1,"especial":0,"names":",丁香,三颗针,人工牛黄","number":null,"country":"中国","province":"河北","city":"秦皇岛","district":"青龙满族自治县","address":"1","pubdate":null,"duedate":"2016-11-18 00:00","advance":1.000000,"pack":"12","intl":1,"cFlagsPath":null,"employee":null,"employeeName":null,"inquire":0,"inquireType":"FOB&CIF","inquireTime":1,"offerTime":1,
           "validate":0,"status":1,"description":null,"inType":3,"updater":null,"utime":"2016-11-08 14:48","creater":null,"ctime":"2016-11-07 17:03",
           "otherOffers":{"arr":[],show:false},
           "inquires":{arr:[],show:false},"files":{arr:[],show:false},"offerFiles":{"arr":[],show:false},"offers":{"arr":[],show:false}
-        },      
+        },
         employeeList: [{
             "id": 6,
             "name": "lm",
@@ -788,9 +789,13 @@ const mutations = {
                   state.basicBaseList.orderList[i].logisticsNo=data.logisticsNo;
               }
           }
-       /* if(data.link=='/order/payConfirm'){
-             state.basicBaseList.orderList.splice(data.sub, 1);
-          }*/
+        if(data.orderStatus==40||data.orderStatus==30){
+             for(var i=0;i<state.basicBaseList.orderList.length;i++){
+               if(state.basicBaseList.orderList[i].id==data.id){
+                 state.basicBaseList.orderList.splice(i,1);
+               }
+             }
+          }
     },
     [SYSTEM_DATA](state, data) { //枚举类型
       state.systemBaseList.enumlist = data;
@@ -1084,7 +1089,7 @@ const mutations = {
             }
             state[data.headline][data.key].arr[data.sub].remark = data.remark;
         }
-       
+
     },
     [UPDATE_PRODUCT_DATA](state, data) { //修改客户产品
         for (var key in data) {
@@ -1441,7 +1446,7 @@ const mutations = {
 
         console.log("新增国际意向");
         state.basicBaseList.intlIntentionList.unshift(data);
-        
+
     },
 
     [UPDATA_INTLINTENTION_DATA](state,data){ //修改国际意向

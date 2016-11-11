@@ -23,7 +23,8 @@ const _listUrl={
 	breedList:ctx+'/breed',
 	categoryList:ctx+'/category/',
 	drugList:ctx+'/drug/',
-	file:ctx+'/file/'
+	file:ctx+'/file/',
+  loadUrl:ctx+'/file/dowanloadFile'
 };
 
 export default _listUrl;

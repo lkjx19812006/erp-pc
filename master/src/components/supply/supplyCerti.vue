@@ -4,21 +4,28 @@
   <updatelabel-model :param="updlabelParam" v-if="updlabelParam.show"></updatelabel-model>
   <div>
     <div class="service-nav clearfix">
-      <div class="my_enterprise col-xs-1">资质证书</div>
-      <!-- <div class="right col-xs-2">
-        <button class="new_btn transfer" @click="createfiles({
-                                   bizId:'',
-                                   show:true,
-                                   title:'新建资质证书',
-                                   fileType:'',
-                                   bizType:'',
-                                   description:'',
-                                   path:'',
-                                   name:'',
-                                   link:uploadCertificate,
-                                   url:'/customer/file/'
-                                  })">新建</button>
-      </div> -->
+      <div class="my_enterprise col-xs-1">客户文件列表</div>
+      <div class="my_order_search  col-xs-8">
+        <div class="filter_search clearfix">
+          <dl class="clearfix">
+            <dt>客户名称：</dt>
+            <dd>
+              <input type="text"  class="form-control" placeholder="按客户名称搜索" class="search_input"  v-model="loadParam.name" />
+            </dd>
+          </dl>
+          <dl class="clearfix">
+            <dt>描述：</dt>
+            <dd>
+              <input type="text"  class="form-control" placeholder="按描述搜索" class="search_input"  v-model="loadParam.description" />
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="right col-xs-3">
+        <button class="new_btn transfer"  @click="searchProduct()">搜索</button>
+        <button class="new_btn"  @click="reset()">清空条件</button>
+      </div>
+    </div>
     </div>
     <div class="order_table">
       <div class="cover_loading">
@@ -27,17 +34,19 @@
       <table class="table table-hover table_color table-striped " v-cloak>
         <thead>
             <tr>
+              <th>客户名称</th>
               <th>文件类型</th>
               <th>所属文件</th>
               <!--<th>路径</th>-->
               <th>描述</th>
-              <th colspan="2">操作</th>
+              <th colspan="3">操作</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="item in initFileslist">
+              <td>{{item.name}}</td>
               <td>{{item.fileType}}</td>
-              <td>{{item.bizType}}</td>
+              <td>客户文件</td>
               <!--<td>-->
                     <!--&lt;!&ndash;<img v-bind:src="item.path" v-if="item.fileType=='image'" />&ndash;&gt;-->
                     <!--<img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">-->
@@ -60,6 +69,7 @@
                  <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  />
                  </a>
               </td>
+              <td><a href="/crm/api/v1/file/dowanloadFile?path={{item.path}}">下载</a></td>
               <td @click="specDelete({
                       id:item.id,
                       sub:$index,
@@ -70,7 +80,9 @@
                       url:'/customer/file/',
                       key:'filesList'
                     })">
-               <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
+
+               <a class="operate">
+                 <img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                </a>
               </td>
             </tr>
@@ -127,7 +139,8 @@
           name:'',
           type:'',
           total:0,
-          status:''/*,
+          name:'',
+          description:''/*,
           bizScope:'',
           provinceName:'',
           province:'',
@@ -163,6 +176,15 @@
       },
       updatelabel:function(initFileslist){
          this.updlabelParam = initFileslist;
+      },
+      searchProduct:function(){
+        this.loadParam.cur=1;
+        this.getFilesList(this.loadParam);
+      },
+      reset:function(){
+        this.loadParam.name='';
+        this.loadParam.description='';
+        this.getFilesList(this.loadParam);
       }
     },
     events: {
@@ -177,6 +199,17 @@
   }
 </script>
 <style scoped>
+  .filter_search dl dt{
+    font-size: 14px;
+    padding-top: 7px;
+  }
+  .search_input{
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+  .filter_search dl{
+    font-size: 14px;
+  }
   .breed_action {
     top: 33px;
     right: 106px;
