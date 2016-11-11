@@ -4,10 +4,7 @@
      <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2" style="font-size:14px">部门报价</div>
-            <div class="col-xs-4 my_order_search">
-
-            </div>
-            <div class="right col-xs-2">
+            <div class="right">
               <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
               <button class="new_btn transfer" @click="searchOffer()">搜索</button>
               <!-- <button class="new_btn" @click="createIntention()">新建</button> -->
