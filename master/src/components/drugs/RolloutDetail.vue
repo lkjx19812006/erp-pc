@@ -17,19 +17,6 @@
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
                         <span class="navbar-brand navbar-name" href="#">{{initDrugsDetail.userName}}</span>
                     </div>
-                    <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
-                        <li>
-                            <!-- 销售订单 -->
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initDrugsDetail.orderStatus==10&&param.contact=='/order/myList'">等待处理</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initDrugsDetail.orderStatus==20&&param.contact=='/order/myList'">待客户付款</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initDrugsDetail.orderStatus==40&&param.contact=='/order/myList'">待发货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initDrugsDetail.orderStatus==50&&param.contact=='/order/myList'">待客户收货</button>
-
-                            <button type="button" class="btn btn-base"  v-if="initDrugsDetail.orderStatus>=60"  @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')">已完成</button>
-                            <button type="button" class="btn btn-base"  v-if="initDrugsDetail.orderStatus==-1" @click="pendingOrder(param,param.tips='订单已取消！')">已取消</button>
-                            <button type="button" class="btn btn-base"  v-if="initDrugsDetail.orderStatus==-2" @click="pendingOrder(param,param.tips='订单已过期！')">已过期</button>
-                        </li>
-                    </ul>
                 </div>
             </nav>
         </div>
@@ -69,16 +56,6 @@
                                                 <td>{{item.amount}}</td>
                                                 <td>{{item.status | drugsStatus}}</td>
                                                 <td>{{item.createTime}}</td>
-                                               <!--  <td  @click="clickShow($index,{
-                                                     concrete:'goods'
-                                                     })">
-                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                   <div class="breed_action" v-show="item.show">
-                                                       <dl>
-                                                          <dt @click="createChance(item,$index)">编辑</dt>
-                                                      </dl>
-                                                   </div>
-                                               </td>  -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -145,18 +122,6 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" >
                                           药款转出记录（{{initDrugsDetail.moneyRollOuts.arr.length}}）
                                         </a>
-                                        <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
-                                            show:true,
-                                            orderId:param.id,
-                                            link:'/order/attachSubmit/',
-                                            callback:uploadDocument,
-                                            description:'',
-                                            fileType:'image',
-                                            bizType:'attach_files',
-                                            attachFiles:'',
-                                            titles:'上传附件凭证'
-                                            })" v-if="initDrugsDetail.moneyRollOuts.arr.length!==null&&param.contact=='/order/myList'">新建</button>
-                                        <a v-else ></a> -->
                                     </h4>
                                 </div>
                                 <div class="panel-collapse" v-show="!initDrugsDetail.moneyRollOuts.show">
@@ -170,7 +135,7 @@
                                             <th>转出金额</th>
                                             <th>状态</th>
                                             <th>创建时间</th>
-                                            <th></th>
+                                            <th>操作</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initDrugsDetail.moneyRollOuts.arr">
@@ -182,24 +147,23 @@
                                                 <td>{{item.status | drugsStatus}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
-                                                	<a class="operate" v-if="item.status==0" @click="drugs({
-                                                		status:item.status,
-									                	id:item.id,
-									                	moneyId:item.moneyId,
-									                	userId:item.userId,
-                                                		show:false,
-                                                		sub:$index,
-                                                		key:'moneyRollOuts'
-                                                		})"><img src="/static/images/application.png" height="18" width="28" title="药款转出处理" alt="药款转出处理"></a>
-									                <a class="operate" v-if="item.status==1" @click="drugs({
-									                	status:item.status,
-									                	id:item.id,
-									                	moneyId:item.moneyId,
-									                	userId:item.userId,
-									                	show:false,
-                                                		sub:$index,
-                                                		key:'moneyRollOuts'
-									                	})"><img src="/static/images/Financial.png" height="18" width="48" title="转出审核" alt="转出审核"></a>
+                                                	<!-- <a class="operate" v-if="item.status==0" @click="drugs({
+                                                        status:item.status,
+                                                       tem.id,
+                                                        oneyId:item.moneyId,          
+                                                        show:false,
+                                                        sub:$index,
+                                                        key:'moneyRollOuts'
+                                                        })"><img src="/static/images/application.png" height="18" width="28" title="药款转出处理" alt="药款转出处理"></a>
+                                                                                                        <a class="operate" v-if="item.status==1" @click="drugs({
+                                                                                                            status:item.status,
+                                                                                                            id:item.id,
+                                                                                            Id,
+                                                                                                            userId:item.used,
+                                                                                                            show:false,
+                                                        sub:$index,
+                                                        key:'moneyRollOuts'
+                                                                                                            })"><img src="/static/images/Financial.png" height="18" width="48" title="转出审核" alt="转出审核"></a> -->
 									                <a class="operate" v-if="item.status==2" @click="drugs({
 									                	status:item.status,
 									                	id:item.id,

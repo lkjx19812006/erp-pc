@@ -360,6 +360,7 @@ export const outOfDrugs = ({ dispatch }, param) => { //药款转出财务操作
         param.show=false;
         console.log("操作成功")
         console.log(res.json().result)
+        param.status = res.json().result.status;
         dispatch(types.ROLLOUT_STATUS, param);
     }, (res) => {
         console.log('fail');
