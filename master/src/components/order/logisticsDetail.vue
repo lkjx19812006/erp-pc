@@ -103,9 +103,12 @@ export default {
     font-size: 18px;
     text-align: center;
 }
-.top-title span {
-    font-size: 30px;
-    color: #000;
+.top-title{
+    position: fixed;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 800px;
 }
 .editpage-input {
     margin-top: 15px;
