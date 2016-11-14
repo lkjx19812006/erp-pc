@@ -1511,7 +1511,7 @@ const mutations = {
 
     },
 
-    [ADD_INTLINTENTION_DATA](state,data){ //修改国际意向
+    [ADD_INTLINTENTION_DATA](state,data){ //新增国际意向
 
         console.log("新增国际意向");
         state.basicBaseList.intlIntentionList.unshift(data);

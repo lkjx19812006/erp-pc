@@ -147,6 +147,8 @@
                                           <th>报价</th>
                                           <th>数量</th>
                                           <th>单位</th>
+                                          <th>询价状态</th>
+                                          <th>报价状态</th>
                                           <th></th>
                                           <th></th> 
                                         </thead>
@@ -157,7 +159,9 @@
                                                 <td>{{item.price}}</td>
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.unit}}</td>
-                                                <td><a style="cursor:pointer" @click="inquireAgain(item,$index)"><img src="/static/images/inquireAgain.png" alt="再次询价" /></a></a></td> 
+                                                <td>{{item.again | requireAgain}}</td>
+                                                <td>{{item.offerAgain | offerAgain}}</td>
+                                                <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0"><img src="/static/images/inquireAgain.png" alt="再次询价" /></a></a></td> 
                                                 <td></td>
                                             </tr>
                                     </table>

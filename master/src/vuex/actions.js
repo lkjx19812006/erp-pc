@@ -3712,7 +3712,7 @@ export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向(�
 export const cancelIntlIntentionInquire = ({ dispatch }, param) => { //国际意向取消询价
 
     const data = {
-       id:param.id
+       intentionId:param.id
     }
 
     Vue.http({

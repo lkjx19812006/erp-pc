@@ -50,7 +50,7 @@
                          </div>
 
                          <div class="editpage-input" style="width:80%">
-                              <label class="editlabel" >单价<span class="system_danger" v-if="$validation.price.money">请输入不超过小数点两位的数字</span></label>
+                              <label class="editlabel">单价<span class="system_danger" v-if="$validation.price.money">请输入不超过小数点两位的数字</span></label>
                               <input type="text" v-model='param.price' v-validate:price="['money']" class="form-control edit-input" value="{{param.price}}"  style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
                          </div>
                          <div class="editpage-input">

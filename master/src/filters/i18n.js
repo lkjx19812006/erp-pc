@@ -36,7 +36,8 @@ var locales = {
       issued_time:'发布时间',
       review_status:'审核状态',
       description:'描述',
-      handle:'操作'
+      handle:'操作',
+      commodity_items:'商品条目'
     }
   },
   en: {
@@ -69,7 +70,8 @@ var locales = {
       issued_time:'Issued time',
       review_status:'Review status',
       description:'Description',
-      handle:'Handle'
+      handle:'Handle',
+      commodity_items:'Commodity items'
     }
   }
 }

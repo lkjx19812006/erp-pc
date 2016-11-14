@@ -23,17 +23,17 @@
 	                <thead>
 	                    <tr>
 	                    	<th></th>
-	                        <th>类别</th>
 	                        <th>品种名称</th>
+	                        <th>类别</th>
 	                    </tr>
 	                </thead>
 	                <tbody>
 	                    <tr v-for="item in initBreedlist"  @click="serviceselected($index,item.id,item.name)">
 	                    	<td>
 	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  ></label>
-	                        </td>
-	                        <td>{{item.categoryName}}</td>
+	                        </td>        
 	                        <td>{{item.name}}</td>
+	                        <td>{{item.categoryName}}</td>
 	                    </tr>
 	                </tbody>
 	            </table>
