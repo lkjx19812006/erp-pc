@@ -32,8 +32,8 @@
                               <label class="editlabel">来源类型</label>
                               <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" >
                                   <option value="0" selected>新建</option>
-                                  <option value="1">意向</option>
-                                  <option value="2">报价</option>
+                                  <!-- <option value="1">意向</option>
+                                  <option value="2">报价</option> -->
                               </select>
                               <!-- <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/> -->
                           </div>
@@ -200,14 +200,14 @@
                                <label class="editlabel">订单商品标题</label>
                               <input type="text" class="form-control edit-input" v-model="param.goods[0].title"  value="{{param.goods[0].title}}" />
                           </div>
-                          <div class="editpage-input">
+                          <!-- <div class="editpage-input">
                               <label class="editlabel">订单商品来源</label>
                               <select type="text" class="form-control edit-input" v-model="param.goods[0].sourceType"  value="{{param.goods[0].sourceType}}" >
                                   <option value="0" selected>新建</option>
                                   <option value="1">意向</option>
                                   <option value="2">报价</option>
                               </select>
-                          </div>
+                          </div> -->
                           <div class="editpage-input">
                               <label class="editlabel">商品单位 <span class="system_danger" v-if="$validation.unit.required">请输入商品的单位</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.goods[0].unit"  v-validate:unit="['required']" v-show="!breedParam.id" value="{{param.goods[0].unit}}" disabled="disabled" placeholder="请先选择一个品种"/> 

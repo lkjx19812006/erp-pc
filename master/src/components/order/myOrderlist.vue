@@ -38,7 +38,7 @@
                     payWay:'',
                     orderStatus:'',
                     goods:[{
-                            sourceType:'',
+                            sourceType:0,
                             sourceId:'',
                             title:'',
                             breedId:'',
@@ -231,7 +231,7 @@
                                         preferential:item.preferential,
                                         preferentialDesc:item.preferentialDesc,
                                         goods:[{
-                                                sourceType:item.goods[0].sourceType,
+                                                sourceType:0,
                                                 id:item.goods[0].id,
                                                 sourceId:item.goods[0].sourceId,
                                                 title:item.goods[0].title,

@@ -8,14 +8,14 @@
      
      <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">我的意向</div>
+            <div class="my_enterprise col-xs-2">{{$t('static.my_intention')}}</div>
             <div class="col-xs-5 my_order_search">
                
            </div>
             <div class="right">
-                <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-                <button class="new_btn transfer" @click="search()">搜索</button>
-                <button class="new_btn" @click="createIntention()">新建</button>
+                <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                <button class="new_btn transfer" @click="search()">{{$t('static.search')}}</button>
+                <button class="new_btn" @click="createIntention()">{{$t('static.new')}}</button>
             </div>
         </div>
         <div class="service-nav clearfix">
@@ -81,7 +81,7 @@
                         <td>{{item.visit | visitstate}}</td>
                         <td>{{item.pack}}</td>
                         <td>{{item.intl | intlstata}}</td>
-                        <td>{{item.inquire}}</td>
+                        <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime | date}}</td>
                         <td>{{item.validate | intentionAudit}}</td>

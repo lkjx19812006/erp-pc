@@ -6,7 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>意向搜索</h3>
+            <h3>{{$t('static.search')}}</h3>
         </div>
         <div class="edit-model">
             <div class="cover_loading">
@@ -159,18 +159,6 @@ export default {
 
 .top-title span {
     font-size: 28px;
-}
-
-.edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
 }
 
 .edit-model {

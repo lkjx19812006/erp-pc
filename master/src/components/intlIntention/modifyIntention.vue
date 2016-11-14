@@ -8,7 +8,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>修改国际意向</h3>
+            <h3>{{$t('static.revised_international_intention')}}</h3>
         </div>
         <validator name="validation">
           <div class="edit-model">
@@ -25,7 +25,7 @@
                      <div class="editpageleft">
 
                        <div class="editpage-input">
-                         <label class="editlabel">包装<span v-if="$validation.pack.required" class="system_danger">请输入包装要求</span></label>
+                         <label class="editlabel">{{$t('static.packaging')}}<span v-if="$validation.pack.required" class="system_danger">{{$t('static.enter_package')}}</span></label>
                          <input type="text" v-show="false" v-model='param.pack' v-validate:pack="['required']" class="form-control edit-input"  />
                          <div type="text" class="edit-input" >
                            <input-select
@@ -43,11 +43,11 @@
                      <div class="editpageright">
                       
                        <div class="editpage-input">
-                         <label class="editlabel">过期时间<span v-if="$validation.duedate.required" class="system_danger">请选择过期时间</span></label>
+                         <label class="editlabel">{{$t('static.deadline')}}<span v-if="$validation.duedate.required" class="system_danger">{{$t('static.choose_deadline')}}</span></label>
                          <input v-show="false" v-model="param.duedate" v-validate:duedate="['required']"/>
                          <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">
                          </mz-datepicker>
-                         <button type="button" class="btn btn-default" height="24" width="24" @click="reset()">清空</button>
+                         <button type="button" class="btn btn-default" height="24" width="24" @click="reset()">{{$t('static.clear_all')}}</button>
                        </div>
                        
                      </div>
@@ -57,7 +57,7 @@
 
                  <div style="margin-top:25px">
                     <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
-                    <h4 style="display:inline">药材信息</h4>
+                    <h4 style="display:inline">{{$t('static.medicinal_material_information')}}</h4>
                  </div>
                  
                  <table class="table table-hover table_color table-striped ">
@@ -93,53 +93,93 @@
                      </tbody>
                  </table>
                  <div style="padding-left:25%">
-                     <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed()">添加药材信息</div>   
+                     <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed()">{{$t('static.add_material_information')}}</div>   
                  </div>   
                   
                  <validator name="inner">   
                      <div v-if="addParam.show||updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
                            <div class="editpageleft">
                               <div class="editpage-input">
-                                   <label class="editlabel" >品种名称<span class="system_danger" v-if="$inner.breedname.required">必填项</span></label>
+                                   <label class="editlabel" >品种名称<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}"  @click="searchBreed()" readonly="true" />
                               </div>
                        
                               <div class="editpage-input">
-                                   <label class="editlabel" >质量要求<span class="system_danger" v-if="$inner.quality.required">必填项</span></label>
+                                   <label class="editlabel" >质量要求<span class="system_danger" v-if="$inner.quality.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" />
                               </div>
                        
                               <div class="editpage-input">
-                                   <label class="editlabel" >规格要求<span class="system_danger" v-if="$inner.spec.required">必填项</span></label>
-                                   <input type="text" v-model="breedInfo.spec" class="form-control edit-input" v-validate:spec="{required:true}"/>
+                                   <label class="editlabel" >规格要求<span class="system_danger" v-if="$inner.spec.required">{{$t('static.required')}}</span></label>
+                                   <input type="text" v-show="!breedParam.id" v-model="breedInfo.spec" class="form-control edit-input" v-validate:spec="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
+                                   <div type="text" class="edit-input" v-if="breedParam.id">
+                                       <input-select
+                                         :value.sync="breedInfo.spec"
+                                         :prevalue="breedInfo.spec"
+                                         :options="initBreedDetail.specs.arr"
+                                         placeholder="规格"
+                                         label="name"
+                                       >
+                                       </input-select>
+                                   </div>
                               </div>
                               
                               <div class="editpage-input">
-                                   <label class="editlabel" >单位<span class="system_danger" v-if="$inner.unit.required">必填项</span></label>
-                                   <input type="text" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}"/>
+                                   <label class="editlabel" >单位<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
+                                   <input type="text" v-show="!breedParam.id"  v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
+                                   <div type="text" class="edit-input" v-if="breedParam.id">
+                                       <input-select
+                                         :value.sync="breedInfo.unit"
+                                         :prevalue="breedInfo.unit"
+                                         :options="initBreedDetail.units.arr"
+                                         placeholder="单位"
+                                         label="name"
+                                       >
+                                       </input-select>
+                                   </div>
                               </div>
                        
                            </div>
                        
                            <div class="editpageright">
                               <div class="editpage-input">
-                                   <label class="editlabel" >资质要求<span class="system_danger" v-if="$inner.qualification.required">必填项</span></label>
+                                   <label class="editlabel" >资质要求<span class="system_danger" v-if="$inner.qualification.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.qualification" class="form-control edit-input" v-validate:qualification="{required:true}"/>
                               </div>
                        
                               <div class="editpage-input">
-                                   <label class="editlabel" >产地要求<span class="system_danger" v-if="$inner.location.required">必填项</span></label>
+                                   <label class="editlabel" >产地要求<span class="system_danger" v-if="$inner.location.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.location" class="form-control edit-input" v-validate:location="{required:true}"/>
                               </div>
                        
                               <div class="editpage-input">
-                                   <label class="editlabel" >数量要求<span class="system_danger" v-if="$inner.number.required">必填项</span></label>
-                                   <input type="text" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                   <label class="editlabel" >数量要求<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
+                                   <input type="text" v-show="!breedParam.id" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" disabled="disabled" placeholder="请先选择一个品种" />
+                                   <div type="text" class="edit-input" v-if="breedParam.id">
+                                       <input-select
+                                         :prevalue="breedInfo.location"
+                                         :value.sync="breedInfo.location"
+                                         :options="initBreedDetail.locals.arr"
+                                         placeholder="产地"
+                                         label="name"
+
+                                       >
+                                       </input-select>
+                                   </div>
                               </div>
                        
                               <div class="editpage-input">
-                                   <label class="editlabel" >包装要求<span class="system_danger" v-if="$inner.pack0.required">必填项</span></label>
-                                   <input type="text" v-model="breedInfo.pack" class="form-control edit-input" v-validate:pack0="{required:true}" />
+                                   <label class="editlabel" >包装要求<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
+                                   <input type="text" v-show="false" v-model="breedInfo.pack" class="form-control edit-input" v-validate:pack0="{required:true}" />
+                                   <div type="text" class="edit-input" >
+                                     <input-select
+                                       :prevalue="breedInfo.pack"
+                                       :value.sync="breedInfo.pack"
+                                       :options="tag"
+                                       placeholder="包装"
+                                     >
+                                     </input-select>
+                                   </div>
                               </div>
 
                               <div style="margin-top:10px;text-align:right">
@@ -163,22 +203,22 @@
                      <div v-if="updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
                            <div class="editpageleft">
                               <div class="editpage-input">
-                                   <label class="editlabel" >品种名称<span class="system_danger" v-if="$modify.breedname1.required">必填项</span></label>
+                                   <label class="editlabel" >品种名称<span class="system_danger" v-if="$modify.breedname1.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname1="{required:true}"  @click="searchBreed()" readonly="true" />
                               </div>
                        
                               <div class="editpage-input">
-                                   <label class="editlabel" >质量要求<span class="system_danger" v-if="$modify.quality1.required">必填项</span></label>
+                                   <label class="editlabel" >质量要求<span class="system_danger" v-if="$modify.quality1.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality1="{required:true}" />
                               </div>
                        
                               <div class="editpage-input">
-                                   <label class="editlabel" >规格要求<span class="system_danger" v-if="$modify.spec1.required">必填项</span></label>
+                                   <label class="editlabel" >规格要求<span class="system_danger" v-if="$modify.spec1.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.spec" class="form-control edit-input" v-validate:spec1="{required:true}"/>
                               </div>
                               
                               <div class="editpage-input">
-                                   <label class="editlabel" >单位<span class="system_danger" v-if="$modify.unit1.required">必填项</span></label>
+                                   <label class="editlabel" >单位<span class="system_danger" v-if="$modify.unit1.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit1="{required:true}"/>
                               </div>
                        
@@ -186,22 +226,22 @@
                        
                            <div class="editpageright">
                               <div class="editpage-input">
-                                   <label class="editlabel" >资质要求<span class="system_danger" v-if="$modify.qualification1.required">必填项</span></label>
+                                   <label class="editlabel" >资质要求<span class="system_danger" v-if="$modify.qualification1.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.qualification" class="form-control edit-input" v-validate:qualification1="{required:true}"/>
                               </div>
                        
                               <div class="editpage-input">
-                                   <label class="editlabel" >产地要求<span class="system_danger" v-if="$modify.location1.required">必填项</span></label>
+                                   <label class="editlabel" >产地要求<span class="system_danger" v-if="$modify.location1.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.location" class="form-control edit-input" v-validate:location1="{required:true}"/>
                               </div>
                        
                               <div class="editpage-input">
-                                   <label class="editlabel" >数量要求<span class="system_danger" v-if="$modify.number1.required">必填项</span></label>
+                                   <label class="editlabel" >数量要求<span class="system_danger" v-if="$modify.number1.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.number" class="form-control edit-input" v-validate:number1="{required:true}" />
                               </div>
                        
                               <div class="editpage-input">
-                                   <label class="editlabel" >包装要求<span class="system_danger" v-if="$modify.pack1.required">必填项</span></label>
+                                   <label class="editlabel" >包装要求<span class="system_danger" v-if="$modify.pack1.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="breedInfo.pack" class="form-control edit-input" v-validate:pack1="{required:true}" />
                               </div>
                  
