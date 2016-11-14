@@ -72,6 +72,7 @@ import {
    INTENTION_OFFER_DETAIL,
    INTLINTENTION_LIST_DATA,
    INTLINTENTION_DETAIL_DATA,
+   INQUIRE_DATA,
    INTLINTENTION_INQUIRE_LIST_DATA,
    INTLINTENTION_INQUIRE_DETAIL_DATA,
    ITEM_HISTORY_DATA,
@@ -1535,6 +1536,14 @@ const mutations = {
         console.log("删除国际意向");
         state.basicBaseList.intlIntentionList.splice(data.index,1);
     },
+
+    [INQUIRE_DATA](state,data){ //国际意向询价
+
+        console.log("国际意向(再)询价或取消报价");
+        state.basicBaseList.intlIntentionList[data.index].inquire = data.inquire;
+    },
+
+    
 
     [INTENTION_DATA](state, data) { //机会划转意向，新增意向
       var temp = {

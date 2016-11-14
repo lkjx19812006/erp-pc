@@ -87,9 +87,9 @@
                         <td>{{item.validate | intentionAudit}}</td>
                         <td>{{item.description}}</td>
                         <td>
-                            <div v-if="item.inquire===0&&item.inquireTime===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquire.png" alt="询价" /></div>
-                            <div v-if="item.inquire===3" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquireAgain.png" alt="再次询价" /></div>
-                            <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)"><img src="/static/images/cancelInquire_icon.png" alt="取消询价" /></div>
+                            <div v-if="item.inquire===0&&item.inquireTime===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/inquire.png" alt="询价" /></div>
+                            <div v-if="item.inquire===3" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/inquireAgain.png" alt="再次询价" /></div>
+                            <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id,$index)"><img src="/static/images/cancelInquire_icon.png" alt="取消询价" /></div>
                             <!-- <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)">取消询价</div> -->
                             <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/edit.png" alt="编辑"  /></div>
                             <div style="display:inline-block;margin-right:7px" @click="deleteIntention(item.id,$index)"><img src="/static/images/del.png" alt="删除"  /></div>
@@ -190,6 +190,8 @@ export default {
             inquireParam:{
                 show:false,
                 times:0,    //询价的次数
+                index:'',
+                inquire:'',
                 link:'',
                 intentionId:'',
                 inquireType:'',
@@ -207,6 +209,7 @@ export default {
                 show:false,
                 name:'确定取消询价?',
                 confirm:true,
+                inquire:'',
                 callback:this.confirmCancelInquire,
                 link:'/intlIntention/inquire',
                 id:'',
@@ -273,18 +276,20 @@ export default {
         }
     },
     methods: {
-        inquire:function(id,time){
+        inquire:function(id,index,time){
             console.log('inquire');
             this.inquireParam.link = '/intlIntention/inquire';
+            this.inquireParam.index = index;
             this.inquireParam.times = time;
             this.inquireParam.intentionId = id;
             this.inquireParam.inquireType = '';
             this.inquireParam.comment = '';
             this.inquireParam.show = true;
         },
-        inquireAgain:function(id,time){
+        inquireAgain:function(id,index,time){
             console.log('再次询价');
             this.inquireParam.link = '/intlIntention/itemInquire';
+            this.inquireParam.index = index;
             this.inquireParam.times = time;
             this.inquireParam.intentionId = id;
             this.inquireParam.inquireType = '';
@@ -292,9 +297,10 @@ export default {
             this.inquireParam.show = true;
 
         },
-        cancelInquire:function(id){
+        cancelInquire:function(id,index){
 
             this.cancelInquireParam.id = id;
+            this.cancelInquireParam.index = index;
             this.cancelInquireParam.show = true;
             //this.cancelIntlIntentionInquire(this.cancelInquireParam);
         },

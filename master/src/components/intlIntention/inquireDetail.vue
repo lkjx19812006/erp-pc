@@ -177,7 +177,7 @@
                                                     <div v-if="item.offerAgain==0">否</div>
                                                     <div v-else>是</div>
                                                 </td>
-                                                <td><a style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/quote.png" alt="报价" /></a></td>
+                                                <td><a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/quote.png" alt="报价" /></a></td>
                                                 <td></td>
                                             </tr>
                                         </tbody>

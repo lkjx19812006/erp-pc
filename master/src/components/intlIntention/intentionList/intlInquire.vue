@@ -38,6 +38,7 @@
                         <th>{{$t('static.city')}}</th>
                         <th>{{$t('static.area')}}</th>
                         <th>{{$t('static.create_time')}}</th>
+                        <th>{{$t('static.inquiry_state')}}</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -58,6 +59,7 @@
                         <td>{{item.city}}</td>
                         <td>{{item.district}}</td>
                         <td>{{item.ctime | date}}</td>
+                        <td>{{item.inquire | inquire}}</td>
                         <td><div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div></td>
                         <td></td>
                     </tr>

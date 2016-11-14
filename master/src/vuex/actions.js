@@ -3709,7 +3709,8 @@ export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向(�
         param.validate = 0;
         param.checked = false;*/
         param.show = false;
-        dispatch(types.INTLINTENTION_DATA, param);
+        param.inquire = 1;
+        dispatch(types.INQUIRE_DATA, param);
     }, (res) => {
         console.log('fail');
     })
@@ -3737,7 +3738,8 @@ export const cancelIntlIntentionInquire = ({ dispatch }, param) => { //国际意
         param.validate = 0;
         param.checked = false;*/
         param.show = false;
-        dispatch(types.INTLINTENTION_DATA, param);
+        param.inquire = 0;
+        dispatch(types.INQUIRE_DATA, param);
     }, (res) => {
         console.log('fail');
     })
