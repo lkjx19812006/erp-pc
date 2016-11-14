@@ -33,26 +33,26 @@
         <section>
             <div class="client-section clearfix" >
                 <div class="col-md-12">
-                    <h4 class="section_title">详情</h4>
+                    <h4 class="section_title">{{$t('static.details')}}</h4>
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-2 col-xs-12">
-                                    <label class="editlabel">客户名称：{{initIntlIntentionDetail.customerName}}</label>
+                                    <label class="editlabel">{{$t('static.client_name')}}：{{initIntlIntentionDetail.customerName}}</label>
                                      
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">电话：{{initIntlIntentionDetail.customerPhone}}</label>
+                                    <label class="editlabel">{{$t('static.client_phone')}}：{{initIntlIntentionDetail.customerPhone}}</label>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12" >
-                                    <label class="editlabel">邮箱：{{initIntlIntentionDetail.customerEmail}}</label>
+                                    <label class="editlabel">{{$t('static.client_email')}}：{{initIntlIntentionDetail.customerEmail}}</label>
                                     
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">国家：{{initIntlIntentionDetail.country}}</label>
+                                    <label class="editlabel">{{$t('static.country')}}：{{initIntlIntentionDetail.country}}</label>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 
@@ -60,21 +60,21 @@
 
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-2 col-xs-12">
-                                    <label class="editlabel">省：{{initIntlIntentionDetail.province}}</label>
+                                    <label class="editlabel">{{$t('static.province')}}：{{initIntlIntentionDetail.province}}</label>
                                      
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">市：{{initIntlIntentionDetail.city}}</label>
+                                    <label class="editlabel">{{$t('static.city')}}：{{initIntlIntentionDetail.city}}</label>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12" >
-                                    <label class="editlabel">区：{{initIntlIntentionDetail.district}}</label>
+                                    <label class="editlabel">{{$t('static.area')}}：{{initIntlIntentionDetail.district}}</label>
                                     
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">描述：{{initIntlIntentionDetail.description}}</label>
+                                    <label class="editlabel">{{$t('static.description')}}：{{initIntlIntentionDetail.description}}</label>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 
@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="col-md-11 client-detail">
-                    <h4 class="section_title">相关</h4>
+                    <h4 class="section_title">{{$t('static.related_information')}}</h4>
                     <article>
                         <div class="panel-group">
                             
@@ -98,7 +98,7 @@
                                                   })">
                                             <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26"  />
                                             <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                              询价记录（{{initIntlIntentionDetail.inquires.arr.length}}）
+                                              {{$t('static.inquiry_record')}}（{{initIntlIntentionDetail.inquires.arr.length}}）
                                             </a>
                                             <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                       </h4>
@@ -107,9 +107,10 @@
                                        <div class="panel-body panel-set">
                                             <table class="table contactSet">
                                               <thead>
-                                                <th>询价类型</th>
-                                                <th>备注</th>
-                                                <th>创建时间</th>
+                                                <th>{{$t('static.inquire_type')}}</th>
+                                                <th>{{$t('static.comment')}}</th>
+                                                <th>{{$t('static.create_time')}}</th>
+                                                <th>{{$t('static.inquiry_state')}}</th>
                                                 <!-- <th></th>
                                                 <th></th> -->
                                                 
@@ -119,6 +120,7 @@
                                                       <td><a class="underline" @click="getInquireInfo(item.id)">{{item.inquireType}}</a></td>
                                                       <td>{{item.comment}}</td>
                                                       <td>{{item.ctime}}</td>
+                                                      <td>{{item.inquire | inquire}}</td>
                                                       <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
                                                       <td @click="otherOffer()" style="cursor:pointer">其他报价</td> -->
                                                         
@@ -137,7 +139,7 @@
                                             })">
                                       <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                        条目详情（{{initIntlIntentionDetail.items.arr.length}}）
+                                        {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
                                       </a>
                                       <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> --> 
                                 </h4>
@@ -146,23 +148,35 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>产品名</th>
-                                          <th>成本</th>
-                                          <th>报价</th>
-                                          <th>数量</th>
-                                          <th>单位</th>
-                                          <th>备注</th>
+                                          <th>{{$t('static.breed')}}</th>
+                                          <th>{{$t('static.currency')}}</th>
+                                          <th>{{$t('static.cost')}}</th>
+                                          <th>{{$t('static.quoted_price')}}</th>
+                                          <th>{{$t('static.quantity')}}</th>
+                                          <th>{{$t('static.unit')}}</th>
+                                          <th>{{$t('static.comment')}}</th>
+                                          <th>再次询价</th>
+                                          <th>再次报价</th>
                                           <th></th> 
                                           <th></th> 
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.items.arr">
                                                 <td><a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a></td>
+                                                <td>{{item.offerCurrency | Currency}}</td>
                                                 <td>{{item.offerOrigPrice}}</td>
                                                 <td>{{item.offerPrice}}</td>
                                                 <td>{{item.offerNumber}}</td>
                                                 <td>{{item.offerUnit}}</td>
                                                 <td>{{item.offerComment}}</td>
+                                                <td>
+                                                    <div v-if="item.again==0">否</div>
+                                                    <div v-else>是</div>
+                                                </td>
+                                                <td>
+                                                    <div v-if="item.offerAgain==0">否</div>
+                                                    <div v-else>是</div>
+                                                </td>
                                                 <td><a style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/quote.png" alt="报价" /></a></td>
                                                 <td></td>
                                             </tr>
@@ -180,9 +194,9 @@
                                             })">
                                       <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                        其他报价（{{initIntlIntentionDetail.offers.arr.length}}）
+                                        {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
                                       </a>
-                                      <button type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">新建</button>
+                                      <button type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                 </h4>
                             </div>
                         
@@ -190,10 +204,10 @@
                                <div class="panel-body panel-set">
                                     <table class="table contactSet">
                                       <thead>
-                                        <th>货币</th>
-                                        <th>费用</th>
-                                        <th>费用说明</th>
-                                        <th>备注</th>
+                                        <th>{{$t('static.currency')}}</th>
+                                        <th>{{$t('static.expense')}}</th>
+                                        <th>{{$t('static.expense_explanation')}}</th>
+                                        <th>{{$t('static.comment')}}</th>
                                         <th></th>
                                         <th></th>
                                        
@@ -232,18 +246,18 @@
                                               })">
                                         <img class="pull-left" src="/static/images/originalfile_icon.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          原文件（{{initIntlIntentionDetail.files.arr.length}}）
+                                          {{$t('static.raw_material_file')}}（{{initIntlIntentionDetail.files.arr.length}}）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right" @click.stop="uploadOriginalFiles()">上传</button> 
+                                        <button type="button" class="btn btn-base pull-right" @click.stop="uploadOriginalFiles()">{{$t('static.upload')}}</button> 
                                   </h4>
                               </div>
                               <div  class="panel-collapse" v-show="initIntlIntentionDetail.files.show&&initIntlIntentionDetail.files.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>文件类型</th>
-                                          <th>描述</th>
-                                          <th>创建时间</th>
+                                          <th>{{$t('static.file_type')}}</th>
+                                          <th>{{$t('static.description')}}</th>
+                                          <th>{{$t('static.create_time')}}</th>
                                           <th></th>
                                           <th></th>
                                           <th></th>
@@ -281,18 +295,18 @@
                                               })">
                                         <img class="pull-left" src="/static/images/offerfile_icon.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          报价文件（{{initIntlIntentionDetail.offerFiles.arr.length}}）
+                                          {{$t('static.quotation_documents')}}（{{initIntlIntentionDetail.offerFiles.arr.length}}）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right" @click.stop="uploadOfferFiles()">上传</button> 
+                                        <button type="button" class="btn btn-base pull-right" @click.stop="uploadOfferFiles()">{{$t('static.upload')}}</button> 
                                   </h4>
                               </div>
                               <div  class="panel-collapse" v-show="initIntlIntentionDetail.offerFiles.show&&initIntlIntentionDetail.offerFiles.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>文件类型</th>
-                                          <th>描述</th>
-                                          <th>创建时间</th>
+                                          <th>{{$t('static.file_type')}}</th>
+                                          <th>{{$t('static.description')}}</th>
+                                          <th>{{$t('static.create_time')}}</th>
                                           <th></th>
                                           <th></th>
                                           <th></th>

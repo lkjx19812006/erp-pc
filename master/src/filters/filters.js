@@ -531,3 +531,21 @@ Vue.filter('Currency',function(val){     //订单货币方式
 	}
 
 })
+
+Vue.filter('inquire',function(val){      //国际意向询价状态
+	var val = val;
+	if(val===0){
+		return '初始';
+	}
+	if(val===1){
+		return '询价中';
+	}
+	if(val===2){
+		return '报价中';
+	}
+	if(val===3){
+		return '报价完成';
+	}
+
+
+})
