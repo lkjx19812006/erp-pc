@@ -3343,6 +3343,9 @@ export const getIntlIntentionList = ({ dispatch }, param) => {  //国际意向�
     param.loading = true;
     console.log(param.link);
     var url = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
+    if(param.breedName!==''){
+        url += '&names=' + param.breedName;
+    }
     if(param.employee!==''){
         url += '&employee=' + param.employee;
     }
@@ -3383,7 +3386,10 @@ export const getEmpIntlIntentionList = ({ dispatch }, param) => {  //业务员�
     param.loading = true;
     console.log(param.link);
     var url = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
-    /*if(param.employee!==''){
+    if(param.breedName!==''){
+        url += '&names=' + param.breedName;
+    }
+    if(param.employee!==''){
         url += '&employee=' + param.employee;
     }
     if(param.customerName!==''){
@@ -3391,7 +3397,7 @@ export const getEmpIntlIntentionList = ({ dispatch }, param) => {  //业务员�
     }
     if(param.customerEmail!==''){
         url += '&customerEmail=' + param.customerEmail;
-    }*/
+    }
 
     Vue.http({
         method:'GET',
@@ -3637,22 +3643,33 @@ export const getIntlIntentionInquireDetail = ({ dispatch }, param) => {  //国�
     }).then((res)=>{
            console.log('国际意向询价详情');
            var inquire = res.json().result;
-           /*for (var i in intent){
-                intent[i].checked = false;
-                intent[i].show =false;
-           }*/
-            /*var offers = inquire.offers;
-            inquire.offers = {};
-            inquire.offers.arr = offers
-            inquire.offers.show = false;
+           dispatch(types.INTLINTENTION_INQUIRE_DETAIL_DATA, inquire);
+            /*param.all = res.json().result.pages;
+            param.total=res.json().result.total;*/
+            param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
 
-            var otherOffers = inquire.otherOffers;
-            inquire.otherOffers = {};
-            inquire.otherOffers.arr = otherOffers
-            inquire.otherOffers.show = false;
-
-            console.log(inquire);*/
-            dispatch(types.INTLINTENTION_INQUIRE_DETAIL_DATA, inquire);
+export const getIntlItemHistory = ({ dispatch }, param) => {  //国际意向条目历史记录
+    param.loading = true;
+    console.log(param.link);
+    var url = apiUrl.clientList+param.link + '?id=' +param.id;
+    Vue.http({
+        method:'GET',
+        url:url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res)=>{
+           console.log('国际意向条目历史记录');
+           var itemHistory = res.json().result;
+           console.log(itemHistory);
+           
+            dispatch(types.ITEM_HISTORY_DATA, itemHistory);
             /*param.all = res.json().result.pages;
             param.total=res.json().result.total;*/
             param.loading = false;
@@ -3784,7 +3801,8 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
         param.validate = 0;
         param.checked = false;*/
         //param.show = false;
-        dispatch(types.INTLINTENTION_DATA, param);
+        
+        dispatch(types.ORIGIN_OFFER_DATA, param);
     }, (res) => {
         console.log('fail');
     })
@@ -3805,7 +3823,7 @@ export const intlIntentionOtherOffer = ({ dispatch }, param) => { //国际意向
     }
 
     data.total=data.cost;
-    if(param.id!==''){
+    if(param.id!==''){   //修改时param!==''
         data.id=param.id;
     }
 
@@ -3823,7 +3841,7 @@ export const intlIntentionOtherOffer = ({ dispatch }, param) => { //国际意向
     }).then((res) => {
         console.log('其他报价成功');
 
-        dispatch(types.INTLINTENTION_DATA, param);
+        dispatch(types.OTHER_OFFER_DATA, param);
     }, (res) => {
         console.log('fail');
     })
@@ -3846,9 +3864,9 @@ export const delIntlIntentionOtherOffer = ({ dispatch }, param) => { //删除国
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('删除成功!!!!')
+        console.log('删除其他报价成功!!!!')
 
-        dispatch(types.UPDATA_INTLINTENTION_DATA, param);
+        dispatch(types.DEL_OTHER_OFFER, param);
     }, (res) => {
         console.log('fail');
     })
@@ -3902,7 +3920,34 @@ export const uploadIntlIntentionFiles = ({ dispatch }, param) => { //上传国�
     }).then((res) => {
         console.log('上传意向文件成功');
         param.show = false;
-        dispatch(types.INTLINTENTION_DATA, param);
+        var file = res.json().result;
+        dispatch(types.UPLOAD_INTL_INTENT_FILE, file);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const delIntlIntentionFiles = ({ dispatch }, param) => { //删除国际意向文件
+    console.log(param);
+
+    const data = {
+        id:param.id
+    }
+    Vue.http({
+        method: "DELETE",
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('删除意向文件成功');
+        param.show = false;
+        var file = res.json().result;
+        dispatch(types.DEL_INTL_INTENT_FILE, param);
     }, (res) => {
         console.log('fail');
     })

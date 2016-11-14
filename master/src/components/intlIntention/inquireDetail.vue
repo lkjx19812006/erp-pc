@@ -1,10 +1,13 @@
 <template>
     <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
     <inquireinfo-model :param="inquireInfoParam" v-if="inquireInfoParam.show"></inquireinfo-model>
+    <itemhistory-model :param="itemHistoryParam" v-if="itemHistoryParam.show"></itemhistory-model>
     <editoffer-model :param="editOfferParam" v-if="editOfferParam.show"></editoffer-model>
     <otheroffer-model :param="otherOfferParam" v-if="otherOfferParam.show"></otheroffer-model>
     <editotheroffer-model :param="editOtherOfferParam" v-if="editOtherOfferParam.show"></editotheroffer-model>
+    <delotheroffer-model :param="delOtherOfferParam" v-if="delOtherOfferParam.show"></delotheroffer-model>
     <uploadfiles-model :param="uploadFilesParam" v-if="uploadFilesParam.show"></uploadfiles-model>
+    <delfile-model :param="delFileParam" v-if="delFileParam.show"></delfile-model>
     
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show">
@@ -148,17 +151,19 @@
                                           <th>报价</th>
                                           <th>数量</th>
                                           <th>单位</th>
+                                          <th>备注</th>
                                           <th></th> 
                                           <th></th> 
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.items.arr">
-                                                <td>{{item.breedName}}</td>
-                                                <td>{{item.origPrice}}</td>
-                                                <td>{{item.price}}</td>
-                                                <td>{{item.number}}</td>
-                                                <td>{{item.unit}}</td>
-                                                <td><a style="cursor:pointer" @click="editOffer(item,$index)">报价</a></td>
+                                                <td><a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a></td>
+                                                <td>{{item.offerOrigPrice}}</td>
+                                                <td>{{item.offerPrice}}</td>
+                                                <td>{{item.offerNumber}}</td>
+                                                <td>{{item.offerUnit}}</td>
+                                                <td>{{item.offerComment}}</td>
+                                                <td><a style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/quote.png" alt="报价" /></a></td>
                                                 <td></td>
                                             </tr>
                                         </tbody>
@@ -188,7 +193,6 @@
                                         <th>货币</th>
                                         <th>费用</th>
                                         <th>费用说明</th>
-                                        <th>总费用</th>
                                         <th>备注</th>
                                         <th></th>
                                         <th></th>
@@ -199,10 +203,9 @@
                                               <td>{{item.currency | Currency}}</td>
                                               <td>{{item.cost}}</td>
                                               <td>{{item.costDesc}}</td>
-                                              <td>{{item.total}}</td>
                                               <td>{{item.comment}}</td>
-                                              <td><a style="cursor:pointer" @click="editOtherOffer(item,$index)">编辑</a></td>
-                                              <td><a style="cursor:pointer" @click="delOtherOffer(item,$index)">删除</a></td>
+                                              <td><a style="cursor:pointer" @click="editOtherOffer(item,$index)"><img src="/static/images/edit.png" alt="编辑" /></a></td>
+                                              <td><a style="cursor:pointer" @click="delOtherOffer(item,$index)"><img src="/static/images/del.png" alt="删除" /></a></td>
                                              
                                               <!-- <td  @click="clickShow($index,{
                                                   concrete:'otherOffers'
@@ -238,7 +241,6 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>文件路径</th>
                                           <th>文件类型</th>
                                           <th>描述</th>
                                           <th>创建时间</th>
@@ -248,12 +250,11 @@
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.files.arr">
-                                                <td>{{item.path}}</td>
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td></td>
-                                                <td></td>
+                                                <td><a href="{{item.url}}" download=""><img src="/static/images/download.png" alt="下载" /></a></td>
+                                                <td><a @click="delFile(item,$index)"><img src="/static/images/del.png" alt="删除" /></a></td>
                                                 <td></td>
                                                <!--  <td  @click="clickShow($index,{
                                                    concrete:'files'
@@ -289,7 +290,6 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>文件路径</th>
                                           <th>文件类型</th>
                                           <th>描述</th>
                                           <th>创建时间</th>
@@ -299,12 +299,11 @@
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.offerFiles.arr">
-                                               <td>{{item.path}}</td>
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td></td>
-                                                <td></td>
+                                                <td><a href="{{item.url}}" download=""><img src="/static/images/download.png" alt="下载" /></a></td>
+                                                <td><a @click="delFile(item,$index)"><img src="/static/images/del.png" alt="删除" /></a></td>
                                                 <td></td>
                                                 <!-- <td  @click="clickShow($index,{
                                                     concrete:'offers'
@@ -335,11 +334,14 @@
 
 import filter from '../../filters/filters'
 import inquireinfoModel from './inquireInfo'
+import itemhistoryModel from './itemHistory'
 import offerModel from './intlOffer'
 import otherofferModel from './otherOffer'
 import editofferModel from './editOffer'
 import editotherofferModel from './editOtherOffer'
+import delotherofferModel from '../tips/tipDialog'
 import uploadfilesModel from './uploadFiles'
+import delfileModel from '../tips/tipDialog'
 import{
     initIntlIntentionDetail,
     initLogin
@@ -347,17 +349,21 @@ import{
 import {
     editintentInfo,
     getIntlIntentionDetail,
-    delIntlIntentionOtherOffer
+    delIntlIntentionOtherOffer,
+    delIntlIntentionFiles
 } from '../../vuex/actions'
 export default {
     components: {
         filter,
         offerModel,
         inquireinfoModel,
+        itemhistoryModel,
         otherofferModel,
         editofferModel,
         editotherofferModel,
-        uploadfilesModel
+        delotherofferModel,
+        uploadfilesModel,
+        delfileModel
     },
     data() {
         return {
@@ -371,6 +377,12 @@ export default {
                 show:false,
                 link:'/intlIntention/inquire/',
                 id:''
+            },
+            itemHistoryParam:{
+                show:false,
+                link:'/intlIntention/itemHistory',
+                id:''                               //意向明细ID
+
             },
             offerParam:{
                 show:false,
@@ -455,7 +467,11 @@ export default {
                 comment:''
             },
             delOtherOfferParam:{
+                show:false,
                 link:'/intlIntention/otherOffer',
+                name:'确认删除?',
+                callback:this.delConfirm,
+                confirm:true,
                 id:'',
                 index:'',
                 type:''
@@ -470,7 +486,17 @@ export default {
                 fileType:'', 
                 image_f_show:''
                 
-            }
+            },
+            delFileParam:{
+                show:false,
+                link:'/intlIntention/files',
+                name:'确认删除文件?',
+                callback:this.delFileConfirm,
+                confirm:true,
+                id:'',
+                category:'',
+                index:'', 
+            },
             
         }
     },
@@ -483,14 +509,15 @@ export default {
         actions:{
             editintentInfo,
             getIntlIntentionDetail,
-            delIntlIntentionOtherOffer
+            delIntlIntentionOtherOffer,
+            delIntlIntentionFiles
         }
     },
     methods: {
       
       enfoldment:function(param){
           if(this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length==0){
-                  this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show=true;
+              this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show=true;
           }
           this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show;
       },
@@ -508,8 +535,13 @@ export default {
         this.inquireInfoParam.show = true;
 
      },
+
+     getItemHistory:function(id){
+        this.itemHistoryParam.id = id;
+        this.itemHistoryParam.show = true;
+     },
      //编辑原材料报价
-     editOffer:function(item,index){
+     editOffer:function(item,index){                          
         console.log(item);
         this.editOfferParam.id = item.offerId;    //?报价ID？？？没有
         this.editOfferParam.intentionId = item.intentionId;
@@ -518,12 +550,12 @@ export default {
         this.editOfferParam.itemName = item.breedName;
         this.editOfferParam.type = 0;    //0表示原材料报价
         this.editOfferParam.currency = item.currency;
-        this.editOfferParam.origPrice = item.origPrice;
-        this.editOfferParam.price = item.price;
-        this.editOfferParam.number = item.number;
-        this.editOfferParam.unit = item.unit;
-        this.editOfferParam.total = item.total;
-        this.editOfferParam.comment = item.comment;
+        this.editOfferParam.origPrice = item.offerOrigPrice;
+        this.editOfferParam.price = item.offerPrice;
+        this.editOfferParam.number = item.offerNumber;
+        this.editOfferParam.unit = item.offerUnit;
+        //this.editOfferParam.total = item.total;
+        this.editOfferParam.comment = item.offerComment;
 
         this.editOfferParam.index = index;
         this.editOfferParam.show = true;
@@ -551,6 +583,16 @@ export default {
         this.uploadFilesParam.show = true;
         console.log(this.uploadFilesParam);
      },
+     delFile:function(item,index){
+        this.delFileParam.id = item.id;
+        this.delFileParam.category = item.category;
+        this.delFileParam.index = index;
+        this.delFileParam.show = true;
+     },
+     delFileConfirm:function(){
+        this.delIntlIntentionFiles(this.delFileParam);
+     },
+     
       //新建其他报价和编辑其他报价共用一个界面
      addOtherOffer:function(){
 
@@ -585,10 +627,11 @@ export default {
         this.delOtherOfferParam.id=item.id;
         this.delOtherOfferParam.type=item.type;
         this.delOtherOfferParam.index = index;
-        console.log(this.delOtherOfferParam);
+        this.delOtherOfferParam.show = true;
+
+     },
+     delConfirm:function(){
         this.delIntlIntentionOtherOffer(this.delOtherOfferParam);
-
-
      }
      
       

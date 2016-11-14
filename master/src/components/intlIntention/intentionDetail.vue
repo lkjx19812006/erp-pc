@@ -1,6 +1,7 @@
 <template>
     <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
     <inquireinfo-model :param="inquireInfoParam" v-if="inquireInfoParam.show"></inquireinfo-model>
+    <itemhistory-model :param="itemHistoryParam" v-if="itemHistoryParam.show"></itemhistory-model>
     <otheroffer-model :param="otherOfferParam" v-if="otherOfferParam.show"></otheroffer-model>
     <inquireagain-model :param="inquireAgainParam" v-if="inquireAgainParam.show"></inquireagain-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
@@ -151,12 +152,12 @@
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.items.arr">
-                                                <td>{{item.breedName}}</td>
+                                                <td><a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a></td>
                                                 <td>{{item.origPrice}}</td>
                                                 <td>{{item.price}}</td>
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.unit}}</td>
-                                                <td><a style="cursor:pointer" @click="inquireAgain(item,$index)">再次询价</a></td> 
+                                                <td><a style="cursor:pointer" @click="inquireAgain(item,$index)"><img src="/static/images/inquireAgain.png" alt="再次询价" /></a></a></td> 
                                                 <td></td>
                                             </tr>
                                     </table>
@@ -327,6 +328,7 @@
 import filter from '../../filters/filters'
 import offerModel from './intlOffer'
 import inquireinfoModel from './inquireInfo'
+import itemhistoryModel from './itemHistory'
 import otherofferModel from './otherOffer'
 import inquireagainModel from './inquireAgain'
 import{
@@ -342,6 +344,7 @@ export default {
         filter,
         offerModel,
         inquireinfoModel,
+        itemhistoryModel,
         otherofferModel,
         inquireagainModel
     },
@@ -357,6 +360,12 @@ export default {
                 show:false,
                 link:'/intlIntention/inquire/',
                 id:''
+            },
+            itemHistoryParam:{
+                show:false,
+                link:'/intlIntention/itemHistory',
+                id:''                               //意向明细ID
+
             },
             inquireAgainParam:{
               show:false,
@@ -424,6 +433,10 @@ export default {
         this.inquireInfoParam.id = id;
         this.inquireInfoParam.show = true;
 
+     },
+     getItemHistory:function(id){
+        this.itemHistoryParam.id = id;
+        this.itemHistoryParam.show = true;
      },
      inquireAgain:function(item,index){
         console.log(item);
