@@ -34,6 +34,7 @@
                             <th>{{$t('static.special')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.client_phone')}}</th>
+                            <th>客户邮箱</th>
                             <th>商品条目</th>
                             <th>{{$t('static.certificate')}}</th>
                             <th>{{$t('static.country')}}</th>
@@ -68,6 +69,7 @@
                         </td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
+                        <td>{{item.customerEmail}}</td>
                         <td class="underline" @click="clickOn(item.id)">{{item.names}}</td>
                         <td>{{item.qualification | qualify}}</td>
                         <td>{{item.country}}</td>

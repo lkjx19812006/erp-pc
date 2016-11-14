@@ -39,12 +39,13 @@
                            <th>报价</th>
                            <th>单位</th>
                            <th>数量</th> 
-                           <th>备注</th> 
+                           <th>备注</th>
+                           <th>创建时间</th> 
                            
                          </tr>
                      </thead>
                      <tbody>
-                         <tr v-for="item in initItemHistory.offers">
+                         <tr v-for="item in initItemHistory">
                              <td>{{item.itemName}}</td>
                              <td>{{item.currency | Currency}}</td>
                              <td>{{item.origPrice}}</td>
@@ -52,6 +53,7 @@
                              <td>{{item.unit}}</td>
                              <td>{{item.number}}</td>
                              <td>{{item.comment}}</td>
+                             <td>{{item.ctime}}</td>
                              
                              
                              

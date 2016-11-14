@@ -549,7 +549,7 @@ export default {
         this.editOfferParam.itemId = item.id;
         this.editOfferParam.itemName = item.breedName;
         this.editOfferParam.type = 0;    //0表示原材料报价
-        this.editOfferParam.currency = item.currency;
+        this.editOfferParam.currency = item.offerCurrency;
         this.editOfferParam.origPrice = item.offerOrigPrice;
         this.editOfferParam.price = item.offerPrice;
         this.editOfferParam.number = item.offerNumber;

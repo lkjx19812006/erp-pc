@@ -193,7 +193,7 @@ export default {
     },
     created(){
       //在这里要有查询原材料报价的接口
-      this.param.items = [{id:9,
+      /*this.param.items = [{id:9,
               intentionId:'58228a6688e87dc057d5e969',
               inquireId:7,
               type:0,
@@ -219,7 +219,7 @@ export default {
               unit:'kg',
               total:9,
               comment:'嘿嘿嘿'}
-            ]
+            ]*/
       
     }
 }

@@ -29,10 +29,10 @@
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
                         <th>询价类型</th>
-                        <th>意向ID</th>
+                        <th>品种名</th>
                         <th>客户名称</th>
-                        <th>客户手机</th>
                         <th>客户Email</th>
+                        <th>业务员</th>
                         <th>国家</th>
                         <th>省</th>
                         <th>市</th>
@@ -49,19 +49,17 @@
                             <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
                         <!--</td>-->
                         <td>{{item.inquireType}}</td>
-                        <td>{{item.intentionId}}</td>
-                        <td><a @click="clickOn(item.intentionId,item.id)">{{item.customerName}}</a></td>
-                        <td>{{item.customerPhone}}</td>
+                        <td><a @click="clickOn(item.intentionId,item.id)">{{item.names}}</a></td>
+                        <td>{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.district}}</td>
-                        <td>{{item.ctime | date}}{{item.inquire}}</td>
-                        <!-- <td><a @click.stop="offer()">报价</a></td> -->
-                        <!-- <td><div style="display:inline-block" @click="offer()"><img src="/static/images/quote.png" alt="报价"  /></div></td> -->
-                        <!-- <td><a @click.stop="confirmOffer(item.intentionId,$index)">确认报价</a></td> -->
+                        <td>{{item.ctime | date}}</td>
                         <td><div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div></td>
+                        <td></td>
                     </tr>
 
                 </tbody>

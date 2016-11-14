@@ -3,6 +3,7 @@
      <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
      <create-model :param.sync="createParam" v-if="createParam.show"></create-model>
      <modify-model :param.sync="modifyParam" v-if="modifyParam.show"></modify-model>
+     <cancelinquire-model :param="cancelInquireParam" v-if="cancelInquireParam.show"></cancelinquire-model>
      <inquire-model :param="inquireParam" v-if="inquireParam.show"></inquire-model>
      
      <div v-show="!detailParam.show">
@@ -34,6 +35,7 @@
                             <th>{{$t('static.special')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.client_phone')}}</th>
+                            <th>客户邮箱</th>
                             <th>商品条目</th>
                             <th>{{$t('static.certificate')}}</th>
                             <th>{{$t('static.country')}}</th>
@@ -68,6 +70,7 @@
                         </td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
+                        <td>{{item.customerEmail}}</td>
                         <td class="underline" @click="clickOn(item.id)">{{item.names}}</td>
                         <td>{{item.qualification | qualify}}</td>
                         <td>{{item.country}}</td>
@@ -114,6 +117,7 @@ import searchModel from '../intlIntentionSearch'
 import detailModel from '../intentionDetail'
 import createModel from '../createIntention'
 import modifyModel from '../modifyIntention'
+import cancelinquireModel from '../../tips/tipDialog'
 import inquireModel from '../inquire'
 
 
@@ -135,7 +139,9 @@ export default {
         detailModel,
         createModel,
         modifyModel,
+        cancelinquireModel,
         inquireModel,
+
         
     },
     vuex: {
@@ -199,8 +205,13 @@ export default {
 
             },
             cancelInquireParam:{
+                show:false,
+                name:'确定取消询价?',
+                confirm:true,
+                callback:this.confirmCancelInquire,
                 link:'/intlIntention/inquire',
-                id:''
+                id:'',
+                index:''
             },
             tipsParam:{
                 show:false,
@@ -285,7 +296,11 @@ export default {
         cancelInquire:function(id){
 
             this.cancelInquireParam.id = id;
-            this.cancelIntlIntentionInquire(this.cancelInquireParam);
+            this.cancelInquireParam.show = true;
+            //this.cancelIntlIntentionInquire(this.cancelInquireParam);
+        },
+        confirmCancelInquire:function(){
+           this.cancelIntlIntentionInquire(this.cancelInquireParam); 
         },
         
         clickOn:function(id){
