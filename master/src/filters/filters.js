@@ -452,6 +452,7 @@ Vue.filter('linktype',function(val){     //药款关联类型
 	}
 })
 
+
 Vue.filter('requireAgain',function(val){     //询价状态
 	var val = val;
 	if(val==0){

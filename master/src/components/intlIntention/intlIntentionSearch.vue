@@ -15,19 +15,19 @@
             <section class="editsection" v-cloak>
                 <div class="clearfix">
                     <div class="client-detailInfo  col-xs-12">
-                        <label>品种：</label>
+                        <label>{{$t('static.breed')}}：</label>
                         <input type="text" class="form-control" v-model="param.breedName" readonly="true" @click="breedSearch()" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
-                        <label>客户名：</label>
+                        <label>{{$t('static.client_name')}}：</label>
                         <input type="text" class="form-control" v-model="param.customerName" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
-                        <label>业务员名：</label>
+                        <label>{{$t('static.salesman')}}：</label>
                         <input type="text" class="form-control" v-model="param.employee" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
-                        <label>客户邮箱：</label>
+                        <label>{{$t('static.client_email')}}：</label>
                         <input type="text" class="form-control" v-model="param.customerEmail" />
                     </div>
                 </div>    

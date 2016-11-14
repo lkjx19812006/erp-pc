@@ -51,7 +51,7 @@
                             <th>{{$t('static.issued_time')}}</th>
                             <th>{{$t('static.review_status')}}</th>
                             <th>{{$t('static.description')}}</th>
-                            <th colspan="4">{{$t('static.handle')}}</th>
+                            <th>{{$t('static.inquiry_state')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,15 +85,16 @@
                         <td>{{item.ctime | date}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
                         <td>{{item.description}}</td>
-                        <td>
+                        <td>{{item.inquire | inquire}}</td>
+                        <!-- <td>
                             <div v-if="item.inquire===0&&item.inquireTime===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquire.png" alt="询价" /></div>
                             <div v-if="item.inquire===4" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquireAgain.png" alt="再次询价" /></div>
                             <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)"><img src="/static/images/cancelInquire_icon.png" alt="取消询价" /></div>
-                            <!-- <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)">取消询价</div> -->
+                            <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)">取消询价</div>
                             <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/edit.png" alt="编辑"  /></div>
                             <div style="display:inline-block;margin-right:7px" @click="deleteIntention(item.id,$index)"><img src="/static/images/del.png" alt="删除"  /></div>
-                            <!-- <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div> -->
-                        </td>
+                            <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div>
+                        </td> -->
                         
 
                     </tr>

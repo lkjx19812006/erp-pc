@@ -93,12 +93,16 @@ var locales = {
       currency:'货币类型',
       expense:'费用',
       expense_explanation:'费用说明',
+      all_in_cost:'总费用',
       file_type:'文件类型',
+      file_path:'文件路径',
+      inquiry_again:'再次询价',
       upload:'上传',
       specification:'规格',
       certificate:'资质证书',
       origin:'产地',
-      quality:'质量'
+      quality:'质量',
+      quote_again:'再次报价'
     }
   },
   en: {
@@ -174,7 +178,6 @@ var locales = {
       inquiry_record:'Inquiry record',
       inquiry_state:'inquiry state',
       raw_material_quotation:'Raw material quotation',
-      other_quotation:'Other quotation',
       file:'File',
       raw_material_file:'Raw material file',
       quotation_documents:'Quotation documents',
@@ -189,12 +192,16 @@ var locales = {
       currency:'Currency',
       expense:'Expense',
       expense_explanation:'Expense_explanation',
+      all_in_cost:'All-in cost',
+      file_path:'File path',
       file_type:'File type',
       upload:'Upload',
       specification:'Specification',
       certificate:'Certificate',
       origin:'Origin',
-      quality:'Quality'
+      quality:'Quality',
+      inquiry_again:'Inquiry again',
+      quote_again:'To quote again'
     }
   }
 }
