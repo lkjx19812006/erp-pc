@@ -183,8 +183,12 @@ export const initIntlIntentionDetail = (state) => {
 }
 /*--国际意向询价详情--*/
 export const initIntlIntentionInquireDetail = (state) => {
-    console.log('getters');
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionInquireDetail));
+}
+/*--国际意向条目历史报价记录--*/
+export const initItemHistory = (state) => {
+    console.log('getters');
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.itemHistory));
 }
 
 /*---会员信息---*/

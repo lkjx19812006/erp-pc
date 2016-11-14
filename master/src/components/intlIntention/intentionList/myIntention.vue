@@ -122,7 +122,7 @@ import {
   
 } from '../../../vuex/getters'
 import {
-    getEmpIntlIntentionList,
+    getIntlIntentionList,
     intlIntentionInquire,
     deleteIntlIntention,
     intlIntentionAffirmOffer,
@@ -144,7 +144,7 @@ export default {
             
         },
         actions: {
-            getEmpIntlIntentionList,
+            getIntlIntentionList,
             intlIntentionInquire,
             deleteIntlIntention,
             intlIntentionAffirmOffer,
@@ -336,7 +336,7 @@ export default {
 
         },
         searchIntention:function(){
-            this.getEmpIntlIntentionList(this.loadParam);
+            this.getIntlIntentionList(this.loadParam);
         },
         resetCondition:function(){
             this.loadParam.employee='';
@@ -344,7 +344,7 @@ export default {
             this.loadParam.breedId='';
             this.loadParam.breedName='';
             this.loadParam.customerEmail='';
-            this.getEmpIntlIntentionList(this.loadParam);
+            this.getIntlIntentionList(this.loadParam);
         },
         
         createIntention:function(){
@@ -381,11 +381,11 @@ export default {
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
-            this.getEmpIntlIntentionList(this.loadParam);
+            this.getIntlIntentionList(this.loadParam);
         }
     },
     created() {
-        this.getEmpIntlIntentionList(this.loadParam, this.loadParam.all);
+        this.getIntlIntentionList(this.loadParam, this.loadParam.all);
     },
     filter: (filter,{})
 }

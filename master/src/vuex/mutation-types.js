@@ -92,6 +92,12 @@ export const DELETE_INTLINTENTION_DATA ='DELETE_INTLINTENTION_DATA'  //删除国
 
 export const INTLINTENTION_INQUIRE_LIST_DATA ='INTLINTENTION_INQUIRE_LIST_DATA'  //国际意向询价列表
 export const INTLINTENTION_INQUIRE_DETAIL_DATA ='INTLINTENTION_INQUIRE_DETAIL_DATA'  //国际意向询价详情
+export const ITEM_HISTORY_DATA ='ITEM_HISTORY_DATA'  //国际意向条目历史记录
+export const ORIGIN_OFFER_DATA ='ORIGIN_OFFER_DATA'  //原材料报价
+export const OTHER_OFFER_DATA ='OTHER_OFFER_DATA'  //增（改）其他报价
+export const DEL_OTHER_OFFER ='DEL_OTHER_OFFER'  //删除其他报价
+export const UPLOAD_INTL_INTENT_FILE ='UPLOAD_INTL_INTENT_FILE'  //上传国际意向（原和其他）文件
+export const DEL_INTL_INTENT_FILE ='DEL_INTL_INTENT_FILE'  //删除国际意向（原和其他）文件
 
 export const USER_DATA = 'USER_DATA'   //会员列表
 export const QUICK_EDIT = 'QUICK_EDIT'

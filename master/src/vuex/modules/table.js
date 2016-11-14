@@ -73,9 +73,15 @@ import {
    INTLINTENTION_DETAIL_DATA,
    INTLINTENTION_INQUIRE_LIST_DATA,
    INTLINTENTION_INQUIRE_DETAIL_DATA,
+   ITEM_HISTORY_DATA,
    ADD_INTLINTENTION_DATA,
    UPDATA_INTLINTENTION_DATA,
    DELETE_INTLINTENTION_DATA,
+   ORIGIN_OFFER_DATA,
+   OTHER_OFFER_DATA,
+   DEL_OTHER_OFFER,
+   UPLOAD_INTL_INTENT_FILE,
+   DEL_INTL_INTENT_FILE,
    PROVINCE_LIST,
    COUNTRY_LIST,
    CITY_LIST,
@@ -304,6 +310,9 @@ const state = {
           "validate":0,"status":1,"description":null,"inType":3,"updater":null,"utime":"2016-11-08 14:48","creater":null,"ctime":"2016-11-07 17:03",
           "otherOffers":{"arr":[],show:false},
           "inquires":{arr:[],show:false},"files":{arr:[],show:false},"offerFiles":{"arr":[],show:false},"offers":{"arr":[],show:false}
+        },
+        itemHistory:{
+
         },
         employeeList: [{
             "id": 6,
@@ -1226,9 +1235,62 @@ const mutations = {
     },
 
     [INTLINTENTION_INQUIRE_LIST_DATA](state, data) { //国际意向询价列表
-        console.log(state.basicBaseList.intlIntentionInquireList);
+        
         state.basicBaseList.intlIntentionInquireList = data;
     },
+
+    [ORIGIN_OFFER_DATA](state, data) { //国际意向原材料报价
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerOrigPrice = data.origPrice;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerPrice = data.price;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerNumber = data.number;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerUnit = data.unit;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerComment = data.comment;
+    },
+
+    [OTHER_OFFER_DATA](state, data) { //增（改）国际意向其他报价
+        //如果data.id==''或data.index=='undefined'表示是增加其他报价，否则是修改
+        if(data.id==''){
+          //新建要补全信息
+          state.basicBaseList.intlIntentionDetail.offers.arr.unshift(data);
+        }else{
+          state.basicBaseList.intlIntentionDetail.offers.arr[data.index].currency = data.currency;
+          state.basicBaseList.intlIntentionDetail.offers.arr[data.index].cost = data.cost;
+          state.basicBaseList.intlIntentionDetail.offers.arr[data.index].costDesc = data.costDesc;
+          state.basicBaseList.intlIntentionDetail.offers.arr[data.index].comment = data.comment;
+        }
+        
+        
+    },
+
+    [DEL_OTHER_OFFER](state, data) { //删除国际意向其他报价
+        state.basicBaseList.intlIntentionDetail.offers.arr.splice(data.index,1);    
+    },
+
+    [UPLOAD_INTL_INTENT_FILE](state, data) { //上传国际意向文件
+      if(data.category==0){    //原文件
+        console.log('上传的原文件');
+        state.basicBaseList.intlIntentionDetail.files.arr.unshift(data);    
+      }else if(data.category==1){   //报价文件
+        console.log('上传的报价文件');
+        state.basicBaseList.intlIntentionDetail.offerFiles.arr.unshift(data);
+      }
+        
+    },
+
+    [DEL_INTL_INTENT_FILE](state, data) { //删除国际意向文件
+      console.log('删除文件');
+      if(data.category==0){
+          console.log('删除的原文件');
+          state.basicBaseList.intlIntentionDetail.files.arr.splice(data.index,1); 
+      }else if(data.category==1){
+          console.log('删除的报价文件');
+          state.basicBaseList.intlIntentionDetail.offerFiles.arr.splice(data.index,1); 
+      }
+          
+      
+    },
+
+   
 
     [SUPPLY_DEMAND_DATA](state, data) { //供求匹配信息列表
         state.basicBaseList.supplyDemandList = data;
@@ -1538,9 +1600,12 @@ const mutations = {
         state.basicBaseList.intlIntentionDetail = data;
     },
     [INTLINTENTION_INQUIRE_DETAIL_DATA](state,data){
-        console.log('table');
         state.basicBaseList.intlIntentionInquireDetail = data;
     },
+    [ITEM_HISTORY_DATA](state,data){
+        state.basicBaseList.itemHistory = data;
+    },
+    
     /*[INTENTION_OFFER_DETAIL](state,data){
         state.basicBaseList.intentionDetail = data;
     },*/
