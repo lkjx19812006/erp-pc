@@ -11,7 +11,7 @@
                     <input type="password" class="form-control" v-model="validate.oldPwd" placeholder="请输入原密码">
                 </div>
                 <div class="model-tips clearfix">
-                    <p class="system_danger" v-if="$validation.password.pwd">请输入6至12位的数字</p>
+                    <p class="system_danger" v-if="$validation.password.pwd">请输入6至12位的数字或字母</p>
                     <label class="left">新密码：</label>
                     <input type="password" class="form-control" v-validate:password="['pwd']" v-model="validate.newPwd"  placeholder="请输入新密码">
                 </div>
