@@ -2,21 +2,21 @@
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container del_modal_con" v-show="param.show">
         <div class="model-header">
-            <h4>友情提示</h4>
+            <h4>{{$t('static.friendly_warning')}}</h4>
             <div class="model-tips clearfix">
                 <img src="/static/images/bee.png"  class="pull-left" height="138" width="111"/>
                 <div class="tips_name">{{param.name}}</div>
 
             </div>
             <div class="model-footer" v-if="param.alert">
-                <input type="button" class="btn btn-close"  @click="param.show = false"  value="确定"/>
+                <input type="button" class="btn btn-close"  @click="param.show = false"  value="{{$t('static.confirm')}}"/>
             </div>
             <div class="model-footer" v-if="param.remain">
-                <input type="button" class="btn btn-close"  @click="param.callback()"  value="确定"/>
+                <input type="button" class="btn btn-close"  @click="param.callback()"  value="{{$t('static.confirm')}}"/>
             </div>
             <div class="model-footer" v-if="param.confirm">
-                <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                <input type="button" class="btn  btn-confirm"  @click="param.callback(),param.show = false" value="确定" />
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+                <input type="button" class="btn  btn-confirm"  @click="param.callback(),param.show = false" value="{{$t('static.confirm')}}" />
             </div>
         </div>
     </div>

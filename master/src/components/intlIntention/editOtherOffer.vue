@@ -6,7 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>原材料报价</h3>
+            <h3>{{$t('static.other_quotation')}}</h3>
         </div>
         <validator name="validation">
           <div class="edit-model">
@@ -36,7 +36,7 @@
                  <div v-if="true" class="editpage" >
                        <div class="editpageleft">
                           <div class="editpage-input">
-                               <label class="editlabel" >货币类型<span class="system_danger" v-if="$validation.currency.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.currency')}}<span class="system_danger" v-if="$validation.currency.required">{{$t('static.required')}}</span></label>
                                <input v-show="false" type="text" v-model="param.currency" class="form-control edit-input" v-validate:currency="{required:true}"/>
                                <select type="text" class="form-control edit-input" v-model="param.currency">
                                  <option value="0">CNY人民币</option>
@@ -60,7 +60,7 @@
                           </div>
                           
                           <div class="editpage-input">
-                               <label class="editlabel" >费用说明<span class="system_danger" v-if="$validation.costdesc.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.expense_explanation')}}<span class="system_danger" v-if="$validation.costdesc.required">{{$t('static.required')}}</span></label>
                                <input type="text" v-model="param.costDesc" class="form-control edit-input" v-validate:costdesc="{required:true}" />
                           </div>
                           
@@ -70,12 +70,12 @@
                        <div class="editpageright">
 
                           <div class="editpage-input">
-                               <label class="editlabel" >费用<span class="system_danger" v-if="$validation.cost.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.expense')}}<span class="system_danger" v-if="$validation.cost.required">{{$t('static.required')}}</span></label>
                                <input type="text" v-model="param.cost" class="form-control edit-input" v-validate:cost="{required:true}" />
                           </div>
                           
                           <div class="editpage-input">
-                               <label class="editlabel" >备注<span class="system_danger" v-if="$validation.comment.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.comment')}}<span class="system_danger" v-if="$validation.comment.required">{{$t('static.required')}}</span></label>
                                <input type="text" v-model="param.comment" class="form-control edit-input" v-validate:comment="{required:true}" />
                           </div>
                 
@@ -90,9 +90,9 @@
              </section>
           </div>
           <div class="edit_footer">
-              <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-              <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm()">确定</button>
-              <button type="button" class="btn  btn-confirm" v-else disabled='disabled'>确定</button>
+              <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+              <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm()">{{$t('static.confirm')}}</button>
+              <button type="button" class="btn  btn-confirm" v-else disabled='disabled'>{{$t('static.confirm')}}</button>
           </div>
         </validation>
     </div>

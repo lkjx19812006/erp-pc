@@ -20,20 +20,20 @@
                     </select>
                 </div> -->
                 <div class="editpage-input">
-                    <label class="editlabel">描述说明</label>
+                    <label class="editlabel">{{$t('static.description')}}</label>
                     <textarea style="width:100%;resize:none;border:1px solid #ddd;border-radius:5px;" rows="5" v-model="param.description">
 
                     </textarea>
                 </div>
                 <div class="editpage-input clearfix">
-                    <label class="editlabel">新建文件</label>
+                    <label class="editlabel">{{$t('static.file')}}</label>
                     <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="param.fileType" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
                 </div>
             </section>
         </div>
         <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <input type="button" class="btn btn-confirm" @click="save()" value="保存" />
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+            <input type="button" class="btn btn-confirm" @click="save()" value="{{$t('static.save')}}" />
         </div>
     </div>
 </template>

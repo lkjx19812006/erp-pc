@@ -28,16 +28,16 @@
                 <thead>
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
-                        <th>询价类型</th>
-                        <th>品种名</th>
-                        <th>客户名称</th>
-                        <th>客户Email</th>
-                        <th>业务员</th>
-                        <th>国家</th>
-                        <th>省</th>
-                        <th>市</th>
-                        <th>区</th>
-                        <th>创建时间</th>
+                        <th>{{$t('static.inquire_type')}}</th>
+                        <th>{{$t('static.commodity_items')}}</th>
+                        <th>{{$t('static.client_name')}}</th>
+                        <th>{{$t('static.client_email')}}</th>
+                        <th>{{$t('static.salesman')}}</th>
+                        <th>{{$t('static.country')}}</th>
+                        <th>{{$t('static.province')}}</th>
+                        <th>{{$t('static.city')}}</th>
+                        <th>{{$t('static.area')}}</th>
+                        <th>{{$t('static.create_time')}}</th>
                         <th></th>
                         <th></th>
                     </tr>

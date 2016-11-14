@@ -6,7 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>原材料报价</h3>
+            <h3>{{$t('static.raw_material_quotation')}}</h3>
         </div>
         <validator name="validation">
           <div class="edit-model">
@@ -33,22 +33,22 @@
                  <div v-if="true" class="editpage" >
                        <div class="editpageleft">
                           <div class="editpage-input">
-                               <label class="editlabel">品种名称</label>
+                               <label class="editlabel">{{$t('static.breed')}}</label>
                                <input type="text" v-model="param.itemName" class="form-control edit-input" disabled="true" />
                           </div>
                    
                           <div class="editpage-input">
-                               <label class="editlabel" >成本价格<span class="system_danger" v-if="$validation.origprice.required">必填项</span></label>
+                               <label class="editlabel">{{$t('static.cost')}}<span class="system_danger" v-if="$validation.origprice.required">必填项</span></label>
                                <input type="text" v-model="param.origPrice" class="form-control edit-input" v-validate:origprice="{required:true}"/>
                           </div>
                    
                           <div class="editpage-input">
-                               <label class="editlabel" >单位<span class="system_danger" v-if="$validation.unit.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$validation.unit.required">必填项</span></label>
                                <input type="text" v-model="param.unit" class="form-control edit-input" v-validate:unit="{required:true}"/>
                           </div>
 
                           <div class="editpage-input">
-                               <label class="editlabel" >备注<span class="system_danger" v-if="$validation.comment.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.comment')}}<span class="system_danger" v-if="$validation.comment.required">必填项</span></label>
                                <input type="text" v-model="param.comment" class="form-control edit-input" v-validate:comment="{required:true}" />
                           </div>
                           
@@ -56,7 +56,7 @@
                    
                        <div class="editpageright">
                           <div class="editpage-input">
-                               <label class="editlabel" >货币类型<span class="system_danger" v-if="$validation.currency.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.currency')}}<span class="system_danger" v-if="$validation.currency.required">必填项</span></label>
                                <input v-show="false" type="text" v-model="param.currency" class="form-control edit-input" v-validate:currency="{required:true}"/>
                                <select type="text" class="form-control edit-input" v-model="param.currency">
                                  <option value="0">CNY人民币</option>
@@ -80,12 +80,12 @@
                           </div>
 
                           <div class="editpage-input">
-                               <label class="editlabel" >报价<span class="system_danger" v-if="$validation.price.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.quoted_price')}}<span class="system_danger" v-if="$validation.price.required">必填项</span></label>
                                <input type="text" v-model="param.price" class="form-control edit-input" v-validate:price="{required:true}" />
                           </div>
                    
                           <div class="editpage-input">
-                               <label class="editlabel" >数量<span class="system_danger" v-if="$validation.number.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$validation.number.required">必填项</span></label>
                                <input type="text" v-model="param.number" class="form-control edit-input" v-validate:number="{required:true}"/>
                           </div>
                 
@@ -100,9 +100,9 @@
              </section>
           </div>
           <div class="edit_footer">
-              <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-              <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confrim()">确定</button>
-              <button type="button" class="btn  btn-confirm" v-else disabled="disabled">确定</button>
+              <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+              <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confrim()">{{$t('static.confirm')}}</button>
+              <button type="button" class="btn  btn-confirm" v-else disabled="disabled">{{$t('static.confirm')}}</button>
           </div>
         </validation>
     </div>
