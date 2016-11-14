@@ -684,7 +684,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         comments:data.comments,
         orderStatus:data.orderStatus,
         goods:[{
-            sourceType:data.goods[0].sourceType,
+            sourceType:0,
             sourceId:data.goods[0].sourceId,
             title:data.goods[0].title,
             breedId:data.goods[0].breedId,
@@ -748,7 +748,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         consigneeAddr:param.consigneeAddr,
         comments:param.comments,
         goods:[{
-            sourceType:param.goods[0].sourceType,
+            sourceType:0,
             id:param.goods[0].id,
             sourceId:param.goods[0].sourceId,
             title:param.goods[0].title,
@@ -3538,7 +3538,14 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
         param.checked = false;*/
         param.show = false;
         console.log(res.json());
-        dispatch(types.ADD_INTLINTENTION_DATA, res.json().result);
+        var object = res.json().result;
+        object.especial = 0;
+        object.advance = 1;
+        object.inquireTime = 0;
+        object.offerTime = 0;
+        object.validate = 0;
+        console.log(object);
+        dispatch(types.ADD_INTLINTENTION_DATA,object);
     }, (res) => {
         console.log('fail');
     })
@@ -3562,7 +3569,6 @@ export const deleteIntlIntention = ({ dispatch }, param) => { //删除国际意�
     }).then((res) => {
 
         console.log('删除成功!!!!')
-
         dispatch(types.DELETE_INTLINTENTION_DATA, param);
 
     }, (res) => {

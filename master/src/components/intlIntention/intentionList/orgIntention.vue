@@ -7,14 +7,14 @@
      
      <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">部门意向</div>
+            <div class="my_enterprise col-xs-2">{{$t('static.department_intention')}}</div>
             <div class="col-xs-5 my_order_search">
                
            </div>
             <div class="right">
-                <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-                <button class="new_btn transfer" @click="search()">搜索</button>
-                <button class="new_btn" @click="createIntention()">新建</button>
+                <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                <button class="new_btn transfer" @click="search()">{{$t('static.search')}}</button>
+                <!-- <button class="new_btn" @click="createIntention()">{{$t('static.new')}}</button> -->
             </div>
         </div>
         <div class="service-nav clearfix">
@@ -80,7 +80,7 @@
                         <td>{{item.visit | visitstate}}</td>
                         <td>{{item.pack}}</td>
                         <td>{{item.intl | intlstata}}</td>
-                        <td>{{item.inquire}}</td>
+                        <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime | date}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
@@ -90,7 +90,7 @@
                             <div v-if="item.inquire===4" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquireAgain.png" alt="再次询价" /></div>
                             <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)"><img src="/static/images/cancelInquire_icon.png" alt="取消询价" /></div>
                             <!-- <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)">取消询价</div> -->
-                            <div style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/edit.png" alt="编辑"  /></div>
+                            <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/edit.png" alt="编辑"  /></div>
                             <div style="display:inline-block;margin-right:7px" @click="deleteIntention(item.id,$index)"><img src="/static/images/del.png" alt="删除"  /></div>
                             <!-- <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div> -->
                         </td>

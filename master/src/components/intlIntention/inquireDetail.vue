@@ -194,9 +194,9 @@
                                             })">
                                       <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                        {{$t('static.other_quotation')}}（{{initIntlIntentionDetail.offers.arr.length}}）
+                                        {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
                                       </a>
-                                      <button type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">新建</button>
+                                      <button type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                 </h4>
                             </div>
                         

@@ -28,26 +28,30 @@
         <section>
             <div class="client-section clearfix" >
                 <div class="col-md-12">
-                    <h4 class="section_title">详情</h4>
+                    <h4 class="section_title">{{$t('static.detailed_information')}}</h4>
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-2 col-xs-12">
-                                    <label class="editlabel">客户名称：{{initIntlIntentionDetail.customerName}}</label>
+                                    <label class="editlabel">{{$t('static.client_name')}}：</label>
+                                    <span>{{initIntlIntentionDetail.customerName}}</span>
                                      
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">电话：{{initIntlIntentionDetail.customerPhone}}</label>
+                                    <label class="editlabel">{{$t('static.commodity_items')}}：</label>
+                                    <span>{{initIntlIntentionDetail.names}}</span>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12" >
-                                    <label class="editlabel">邮箱：{{initIntlIntentionDetail.customerEmail}}</label>
+                                    <label class="editlabel">{{$t('static.client_email')}}：</label>
+                                    <span>{{initIntlIntentionDetail.customerEmail}}</span>
                                     
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">国家：{{initIntlIntentionDetail.country}}</label>
+                                    <label class="editlabel">{{$t('static.country')}}：</label>
+                                    <span>{{initIntlIntentionDetail.country}}</span>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 
@@ -55,21 +59,25 @@
 
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-2 col-xs-12">
-                                    <label class="editlabel">省：{{initIntlIntentionDetail.province}}</label>
+                                    <label class="editlabel">{{$t('static.province')}}：</label>
+                                    <span>{{initIntlIntentionDetail.province}}</span>
                                      
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">市：{{initIntlIntentionDetail.city}}</label>
+                                    <label class="editlabel">{{$t('static.city')}}：</label>   
+                                    <span>{{initIntlIntentionDetail.city}}</span>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12" >
-                                    <label class="editlabel">区：{{initIntlIntentionDetail.district}}</label>
+                                    <label class="editlabel">{{$t('static.area')}}：</label>
+                                    <span>{{initIntlIntentionDetail.district}}</span>
                                     
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">描述：{{initIntlIntentionDetail.description}}</label>
+                                    <label class="editlabel">{{$t('static.description')}}：</label>
+                                    <span>{{initIntlIntentionDetail.description}}</span>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 
@@ -93,7 +101,7 @@
                                             })">
                                       <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26"  />
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                        询价记录（{{initIntlIntentionDetail.inquires.arr.length}}）
+                                       {{$t('static.inquiry_record')}}（{{initIntlIntentionDetail.inquires.arr.length}}）
                                       </a>
                                       <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                 </h4>
@@ -133,7 +141,7 @@
                                             })">
                                       <img class="pull-left" src="/static/images/offer.png" height="29" width="26"  />
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                        条目详情（{{initIntlIntentionDetail.items.arr.length}}）
+                                        {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
                                       </a>
                                       <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                 </h4>
@@ -177,7 +185,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          其他报价（{{initIntlIntentionDetail.offers.arr.length}}）
+                                          {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                   </h4>
@@ -232,7 +240,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/originalfile_icon.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          原文件（{{initIntlIntentionDetail.files.arr.length}}）
+                                          {{$t('static.original_file')}}（{{initIntlIntentionDetail.files.arr.length}}）
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                   </h4>
@@ -275,7 +283,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/offerfile_icon.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          报价文件（{{initIntlIntentionDetail.offerFiles.arr.length}}）
+                                          {{$t('static.quotation_file')}}（{{initIntlIntentionDetail.offerFiles.arr.length}}）
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                   </h4>
@@ -560,7 +568,9 @@ section article {
 .client-detailInfo {
     padding: 0 15px 14px 15px;
 }
-
+.client-detailInfo label{
+  display: inline-block;
+}
 .client-detailInfo img {
     margin-right: 8px;
 }

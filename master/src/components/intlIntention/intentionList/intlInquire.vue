@@ -5,7 +5,7 @@
      <affirmoffer-model :param="affirmOfferParam" v-if="affirmOfferParam.show"></affirmoffer-model>
      <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">国际意向询价</div>
+            <div class="my_enterprise col-xs-2">{{$t('static.International_intention_inquiry')}}</div>
             <div class="col-xs-5 my_order_search">
                
            </div>

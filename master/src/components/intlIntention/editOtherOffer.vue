@@ -6,7 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>{{$t('static.other_quotation')}}</h3>
+            <h3>{{$t('static.other_quotations')}}</h3>
         </div>
         <validator name="validation">
           <div class="edit-model">

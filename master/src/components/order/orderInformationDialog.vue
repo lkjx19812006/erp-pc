@@ -36,13 +36,13 @@
                               <label class="editlabel">来源类型</label>
                               <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" v-if="(param.validate==0||param.validate==-2)&&param.orderStatus==0" >
                                   <option value="0">新建</option>
-                                  <option value="1">意向</option>
-                                  <option value="2">报价</option>
+                                  <!-- <option value="1">意向</option>
+                                  <option value="2">报价</option> -->
                               </select>
                               <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" v-else   disabled="true">
                                   <option value="0">新建</option>
-                                  <option value="1">意向</option>
-                                  <option value="2">报价</option>
+                                  <!-- <option value="1">意向</option>
+                                  <option value="2">报价</option> -->
                               </select>
                               <!-- <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/> -->
                           </div>
@@ -248,14 +248,14 @@
                               <input type="text" class="form-control edit-input" v-model="param.goods[0].title"  value="{{param.goods[0].title}}"  v-if="(param.validate==0||param.validate==-2)&&param.orderStatus==0"  />
                                <input type="text" class="form-control edit-input" v-model="param.goods[0].title" disabled="true" value="{{param.goods[0].title}}"  v-else />
                           </div>
-                          <div class="editpage-input">
+                          <!-- <div class="editpage-input">
                               <label class="editlabel">订单商品来源</label>
                               <select type="text" class="form-control edit-input" v-model="param.goods[0].sourceType"  value="{{param.goods[0].sourceType}}"  disabled="true">
                                   <option value="0">新建</option>
                                   <option value="1">意向</option>
                                   <option value="2">报价</option>
                               </select>
-                          </div>
+                          </div> -->
                           <div class="editpage-input" v-if="(param.validate==0||param.validate==-2)&&param.orderStatus==0" >
                               <label class="editlabel">商品单位 <span class="system_danger" v-if="$validation.unit.required">请输入商品的单位</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.goods[0].unit"  v-validate:unit="['required']" v-show="!breedParam.id" value="{{param.goods[0].unit}}"  placeholder="请先选择一个品种"/> 
