@@ -265,10 +265,7 @@
                       </div>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-1"><img src="/static/images/cancle.png" height="18" width="38" title="订单已取消" alt="订单已取消"/></a>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-2"><img src="/static/images/deadline.png" height="18" width="38" title="订单已过期" alt="订单已过期"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.validate==1"><img src="/static/images/wait.png" height="18" width="37" title="审核中" alt="审核中" /></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.validate==0"><img src="/static/images/audited.png" height="18" width="34" title="未申请审核" alt="未申请审核"  /></a>
                         <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2"><img src="/static/images/reset.png" height="18" width="48" title="重新申请" alt="重新申请" /></a>
-
                   </td>
 
                 </tr>

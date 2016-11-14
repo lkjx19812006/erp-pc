@@ -1,6 +1,7 @@
 
 import {
    LOGIN_DATA,
+   PASSWORD_DATA,
    ORDER_TABLE,
    ORDER_ADD_DATA,
    ORDER_DETAIL_DATA,
@@ -569,7 +570,7 @@ const state = {
 }
 
 const mutations = {
-    [LOGIN_DATA](state, data) { //订单列表
+    [LOGIN_DATA](state, data) { //登录
         state.login = data;
     },
 
@@ -633,6 +634,12 @@ const mutations = {
                     state.basicBaseList.orderRolloutList[data.sub].status = "3";
                }
             }
+        }
+    },
+    [PASSWORD_DATA](state,data){ //修改登录密码
+      console.log(data)
+        for (var key in data) {
+            state.login[key] = data[key];
         }
     },
     [ORDER_UPDATE_DATA](state,data){ //修改订单

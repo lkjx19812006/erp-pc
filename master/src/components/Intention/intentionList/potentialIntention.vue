@@ -229,13 +229,7 @@
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.offerNumber}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
-
-
-                        <td @click.stop="eventClick($index)">
-                           <img height="24" width="24" src="/static/images/default_arrow.png" />
-                           <div class="component_action" v-show="item.show">
-                               <ul>
-                                   <li @click="modifyIntention({
+                        <td @click="modifyIntention({
                                                id:item.id,
                                                sub:$index,
                                                selectCustomer:false,
@@ -286,9 +280,12 @@
                                                image_t_show:'',
                                                duedate:item.duedate
                                                })">
-                           <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                            </a>
+                          
                         </td>
+
+                       
                         <td @click.stop="userToClient({
                                 name:item.customerName,
                                 keyname:'transStatus',

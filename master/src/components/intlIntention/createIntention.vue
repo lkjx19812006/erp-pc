@@ -25,141 +25,6 @@
                     <label class="editlabel">选择客户<span class="system_danger" v-if="$validation.name.required">请选择客户</label>
                     <input type="text" v-model='param.customerName' v-validate:name="['required']" class="form-control edit-input" style="width:95%" readonly="readonly" @click="searchCustomer()"/>
                  </div>
-
-                 <!-- <div style="margin-top:15px">
-                    <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
-                    <h4 style="display:inline">药材信息</h4>
-                 </div>
-                 
-                 <div class="editpage">
-                   <div class="editpage-input" style="width:100%">
-                     <label class="editlabel">药材图片</label>
-                     <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-                     <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-                     <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-                   </div>
-                 </div>
-                 <div class="editpage">
-                 
-                     <div class="editpageleft">
-                 
-                         <div class="editpage-input">
-                             <label class="editlabel" >品种名称<span class="system_danger" v-if="$validation.breedname.required">品种不能为空</span></label>
-                             <input type="text" v-model="param.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" value="{{param.breedName}}" @click="searchBreed(param.breedName,param.breedId)" readonly="true" />
-                         </div>
-                         
-                         <div class="editpage-input" style="width:80%">
-                              <label class="editlabel" >单价<span class="system_danger" v-if="$validation.price.money">请输入不超过小数点两位的数字</span></label>
-                              <input type="text" v-model='param.price' v-validate:price="['money']" class="form-control edit-input" value="{{param.price}}"  style="display:-webkit-inline-box"/><span v-show="param.unit">/{{param.unit}}</span>
-                         </div>
-                         <div class="editpage-input">
-                             <label class="editlabel">单位<span class="system_danger" v-if="$validation.unit.required">单位不能为空</span></label>
-                           <input type="text" v-show="!breedParam.id"  v-model="param.unit" v-validate:unit="{required:true}" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                           <div type="text" class="edit-input" v-if="breedParam.id">
-                             <input-select
-                               :value.sync="param.unit"
-                               :prevalue="param.unit"
-                               :options="initBreedDetail.units.arr"
-                               placeholder="单位"
-                               label="name"
-                             >
-                             </input-select>
-                           </div>
-                         </div>
-                         <div class="editpage-input">
-                             <label class="editlabel" >是否特殊</label>
-                              <select type="text" class="form-control edit-input" v-model="param.especial" >
-                                  <option value="0">普通</option>
-                                  <option value="1">特殊</option>
-                              </select>
-                         </div>
-                 
-                          <div class="editpage-input">
-                             <label class="editlabel">质量要求<span class="system_danger" v-if="$validation.quality.required">质量要求不能为空</span></label>
-                             <input type="text" v-model="param.quality" class="form-control edit-input" v-validate:quality="{required:true}" value="{{param.quality}}" />
-                                                   </div>
-                 
-                       <div class="editpage-input">
-                         <label class="editlabel">包装<span class="system_danger" v-if="$validation.pack.required">包装不能为空</span></label>
-                         <input type="text" v-show="false"  v-model="param.pack" v-validate:pack="{required:true}"  />
-                       
-                         <select type="text" class="form-control edit-input" v-model="param.pack">
-                           <option value={{item}} v-for="item in tag">{{item}}</option>
-                       
-                         </select>
-                 
-                         <div type="text" class="edit-input" >
-                           <input-select
-                             :prevalue="param.pack"
-                             :value.sync="param.pack"
-                             :options="tag"
-                             placeholder="包装"
-                           &gt;
-                           </input-select>
-                         </div>
-                       </div>
-                     </div>
-                 
-                     <div class="editpageright">
-                 
-                         <div class="editpage-input">
-                             <label class="editlabel">规格<span class="system_danger" v-if="$validation.spec.required">规格不能为空</span></label>
-                           <input type="text" v-show="!breedParam.id"  v-model="param.spec" class="form-control edit-input" disabled="disabled" v-validate:spec="{required:true}" />
-                           <div type="text" class="edit-input" v-if="breedParam.id">
-                             <input-select
-                               :value.sync="param.spec"
-                               :prevalue="param.spec"
-                               :options="initBreedDetail.specs.arr"
-                               placeholder="规格"
-                               label="name"
-                             >
-                             </input-select>
-                           </div>
-                         </div>
-                 
-                         <div class="editpage-input">
-                              <label class="editlabel" for="system">数量<span class="system_danger" v-if="$validation.number.quantity">请输入不超过小数点四位的数字</span></label>
-                             <input type="text" v-model="param.number" v-validate:number="['quantity']" class="form-control edit-input" value="{{param.number}}" />
-                         </div>
-                 
-                         <div class="editpage-input">
-                 
-                             <label class="editlabel">产地<span class="system_danger" v-if="$validation.location.required">产地不能为空</span></label>
-                           <input type="text" v-model="param.location" v-show="!breedParam.id"  v-validate:location="{required:true}" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                 
-                           <div type="text" class="edit-input" v-if="breedParam.id">
-                             <input-select
-                               :prevalue="param.location"
-                               :value.sync="param.location"
-                               :options="initBreedDetail.locals.arr"
-                               placeholder="产地"
-                               label="name"
-                 
-                             >
-                             </input-select>
-                           </div>
-                 
-                         </div>
-                 
-                         <div class="editpage-input">
-                             <label class="editlabel">意向类型</label>
-                             <select type="text" class="form-control edit-input" v-model="param.type">
-                                  <option value="0">求购</option>
-                                  <option value="1">供应</option>
-                             </select>
-                         </div>
-                 
-                       <div class="editpage-input">
-                         <label class="editlabel">上门看货</label>
-                         <select type="text" class="form-control edit-input" v-model="param.visit">
-                           <option value="0">否</option>
-                           <option value="1">会</option>
-                         </select>
-                       </div>
-                 
-                     </div>
-                 </div> -->
-
                  <div style="margin-top:25px">
                     <img src="/static/images/receiverinfo@2x.png" style="display:inline"/>
                     <h4 style="display:inline">交收信息</h4>
@@ -183,7 +48,6 @@
                              :options="initCountrylist"
                              placeholder="国家"
                              label="cname"
-
                             >
                            </v-select>
                          </div>
@@ -265,7 +129,6 @@
                          <input type="text" v-model='param.pack' v-validate:pack="['required']" class="form-control edit-input"  />
                        </div>
 
-
                      </div>
 
 
@@ -334,7 +197,6 @@
                                    <label class="editlabel" >单位<span class="system_danger" v-if="$inner.unit.required">必填项</span></label>
                                    <input type="text" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}"/>
                               </div>
-                       
                            </div>
                        
                            <div class="editpageright">
@@ -369,8 +231,7 @@
                                   </button>
                                   <button type="button" class="btn btn-confirm" v-else disabled="disabled">保存</button>
                                   
-                              </div>
-                              
+                              </div>  
                            </div>
                      </div>  
                  </validator> 
@@ -627,7 +488,6 @@ export default {
                   number:'',
                   unit:'',
                   pack:''
-
               });
               this.addParam.show = true;
           }  

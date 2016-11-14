@@ -126,6 +126,35 @@ export const login = ({ dispatch }, data) => { //登录
         data.loading=false;
     });
 }
+export const resetPawd = ({ dispatch }, data) => { //修改密码
+    console.log(data);
+    const body = {
+        no:data.no,
+        newPwd:data.newPwd,
+        oldPwd:data.oldPwd
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + '/employee/resetPassword',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json())
+        dispatch(types.PASSWORD_DATA, data);
+        if(res.json().code!=200){
+            data.callback(res.json().msg);
+        }
+        
+    }, (res) => {
+        console.log('fail');
+    })
+}
 
 export const initList = ({ dispatch }) => {
     Vue.http.get(apiUrl.list)
@@ -3614,8 +3643,7 @@ export const getIntlIntentionInquireDetail = ({ dispatch }, param) => {  //国�
     }).then((res)=>{
            console.log('国际意向询价详情');
            var inquire = res.json().result;
-           
-            dispatch(types.INTLINTENTION_INQUIRE_DETAIL_DATA, inquire);
+           dispatch(types.INTLINTENTION_INQUIRE_DETAIL_DATA, inquire);
             /*param.all = res.json().result.pages;
             param.total=res.json().result.total;*/
             param.loading = false;
@@ -3629,7 +3657,6 @@ export const getIntlItemHistory = ({ dispatch }, param) => {  //国际意向条�
     param.loading = true;
     console.log(param.link);
     var url = apiUrl.clientList+param.link + '?id=' +param.id;
-
     Vue.http({
         method:'GET',
         url:url,
@@ -4292,9 +4319,15 @@ export const uploadCertificate = ({ dispatch }, param) => { //供应商新增文
 
 export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
     console.log('文件上传');
-    if(param.image_f){param.path+=param.image_f+','}
-    if(param.image_s){param.path+=param.image_s+','}
-    if(param.image_t){param.path+=param.image_t};
+    if(param.image_f){param.path=param.image_f;}
+    if(param.image_s&&param.path){param.path=param.path+','+param.image_s;}
+  else if(param.image_s&&!param.path){
+      param.path=param.image_s;
+    }
+    if(param.image_t&&param.path){param.path=param.path+','+param.image_t}
+    else if(param.image_t&&!param.path){
+      param.path=param.image_t;
+    }
     const data = {
         fileType:param.fileType,
         bizType:param.bizType,
@@ -4441,6 +4474,7 @@ export const editintentInfo = ({ dispatch }, param,tipParam) => { //修改意向
       "quality":param.quality,
       "price":param.price,
       "province":param.province,
+      "onSell":param.onSell,
       "city":param.city,
       "district":param.district,
       "location":param.location,

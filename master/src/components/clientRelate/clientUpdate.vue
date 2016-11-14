@@ -32,7 +32,7 @@
                             </div>
                              <div class="editpage-input">
                                 <label  class="editlabel">所在国家</label>
-                                 <div type="text">
+                                 <div>
                                     <v-select
                                       :debounce="250"
                                       :value.sync="country"

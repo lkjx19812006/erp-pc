@@ -6,16 +6,16 @@
         </div>
         <div class="edit-content">
             <h3>匹配{{param.typeName}}信息</h3>
-           
+
         </div>
-        <div> 
+        <div>
           <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
           </div>
           <h2 v-if="initSupplyDemandList.length==0" align="center">无对应的{{param.typeName}}信息<h2>
           <table v-if="initSupplyDemandList.length>0" class="table table-hover table_color table-striped " v-cloak >
             <thead>
-                <tr>  
+                <tr>
                     <th>特殊的</th>
                     <th>客户名称</th>
                     <th>客户手机号</th>
@@ -44,7 +44,7 @@
                 </tr>
             </thead>
             <tbody>
-                 
+
                     <tr v-for="item in initSupplyDemandList">
                         <td>{{item.especial | chanceEspec}}</td>
                         <td>{{item.customerName}}</td>
@@ -80,7 +80,7 @@
 
 
                 </tbody>
-          </table>    
+          </table>
         </div>
     </div>
 </template>
@@ -90,11 +90,11 @@ import {
 } from '../../vuex/getters'
 import {
   getSupplyDemandList,
-  
+
 } from '../../vuex/actions'
 export default {
     components: {
-        
+
     },
     props: ['param'],
     data() {
@@ -118,11 +118,11 @@ export default {
         }
     },
     methods:{
-        
+
     },
-    
+
     events:{
-        
+
     },
     created(){
         console.log(this.param);
@@ -131,17 +131,17 @@ export default {
         this.getSupplyDemandList(this.loadParam);
 
     }
-    
+
 }
 </script>
 <style scoped>
 .modal_con {
-    width:98%;
+    width:80%;
 }
 .glyphicon {
     position:fixed;
     top:91px;
-    right:1%;
+    right:10%;
 }
 .big-font {
     font-size: 36px;
