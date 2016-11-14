@@ -24,7 +24,7 @@
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>{{$t('static.salesman')}}：</label>
-                        <input type="text" class="form-control" v-model="param.employee" />
+                        <input type="text" class="form-control" v-model="param.employeeName" />
                     </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>{{$t('static.client_email')}}：</label>

@@ -164,7 +164,7 @@ export default {
                 all: 7,
                 total:0,
                 link:'/intlIntention/',
-                employee:'',
+                employeeName:'',
                 breedId:'',
                 breedName:'',
                 customerName:'',
@@ -341,7 +341,7 @@ export default {
             this.getIntlIntentionList(this.loadParam);
         },
         resetCondition:function(){
-            this.loadParam.employee='';
+            this.loadParam.employeeName='';
             this.loadParam.customerName='';
             this.loadParam.breedId='';
             this.loadParam.breedName='';

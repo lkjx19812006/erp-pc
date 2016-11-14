@@ -3346,8 +3346,8 @@ export const getIntlIntentionList = ({ dispatch }, param) => {  //国际意向�
     if(param.breedName!==''){
         url += '&names=' + param.breedName;
     }
-    if(param.employee!==''){
-        url += '&employee=' + param.employee;
+    if(param.employeeName!==''){
+        url += '&employeeName=' + param.employeeName;
     }
     if(param.customerName!==''){
         url += '&customerName=' + param.customerName;
