@@ -186,10 +186,11 @@
                                     bizMain:'',
                                     grade:item.grade
                                     },item.show=false)">
-                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
-                            </a>
+                            <div class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
+                            </div>
                         </td>
-                        <td  v-if="item.transStatus==0"  @click="userToClient({
+                        <td>
+                            <div class="operate"  v-if="item.transStatus==0"  @click="userToClient({
                                     mainBiz:item.bizMain,
                                     name:item.fullname,
                                     keyname:'transStatus',
@@ -221,17 +222,16 @@
                                      qq: item.qq,
                                      wechart: item.wechart
                                      }
-                                    },item.show=false)">
-                            <a class="operate"><img src="/static/images/transfer.png" height="18" width="30"/>
-                            </a>
+                                    },item.show=false)"><img src="/static/images/transfer.png" height="18" width="30"/>
+                            </div>
                         </td>
-                        <td v-if="item.utype==1" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">
-                            <a class="operate"><img src="/static/images/Pcertification.png" height="18" width="47"/>
-                            </a>
+                        <td v-if="item.utype==1">
+                            <div class="operate"  @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)"><img src="/static/images/Pcertification.png" height="18" width="47"/>
+                            </div>
                         </td>
-                        <td  v-if="item.ctype==1" @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)">
-                            <a class="operate"><img src="/static/images/Ecertification.png" height="18" width="48"/>
-                            </a>
+                        <td v-if="item.ctype==1">
+                            <div class="operate"  @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)"><img src="/static/images/Ecertification.png" height="18" width="48"/>
+                            </div>
                         </td>
                         <!-- <td @click.stop="eventClick($index)">
                             <img height="24" width="24" src="/static/images/default_arrow.png" />

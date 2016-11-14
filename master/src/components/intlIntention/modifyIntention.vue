@@ -26,7 +26,16 @@
 
                        <div class="editpage-input">
                          <label class="editlabel">包装<span v-if="$validation.pack.required" class="system_danger">请输入包装要求</span></label>
-                         <input type="text" v-model='param.pack' v-validate:pack="['required']" class="form-control edit-input"  />
+                         <input type="text" v-show="false" v-model='param.pack' v-validate:pack="['required']" class="form-control edit-input"  />
+                         <div type="text" class="edit-input" >
+                           <input-select
+                             :prevalue="param.pack"
+                             :value.sync="param.pack"
+                             :options="tag"
+                             placeholder="包装"
+                           >
+                           </input-select>
+                         </div>
                        </div>
 
                      </div>

@@ -32,7 +32,7 @@
                                               link:'',
                                               crete:'moneyRecords'
                                               })">
-                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <img class="pull-left" src="/static/images/roll.png" height="26" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           药款金额记录（{{initDrugsDetail.moneyRecords.arr.length}}）
                                         </a>
@@ -53,7 +53,7 @@
                                             <tr v-for="item in initDrugsDetail.moneyRecords.arr">
                                                 <td>{{item.linkType | linktype}}</td>
                                                 <td>{{item.desc}}</td>
-                                                <td>{{item.amount}}</td>
+                                                <td>{{item.amount.toFixed(2)}}</td>
                                                 <td>{{item.status | drugsStatus}}</td>
                                                 <td>{{item.createTime}}</td>
                                             </tr>
@@ -68,7 +68,7 @@
                                               link:'',
                                               crete:'moneyRollIns'
                                               })">
-                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <img class="pull-left" src="/static/images/rollin.png" height="26" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left">
                                           药款转入记录（{{initDrugsDetail.moneyRollIns.arr.length}}）
                                         </a>
@@ -100,9 +100,9 @@
                                         <tbody>
                                             <tr v-for="item in initDrugsDetail.moneyRollIns.arr">
                                                 <td>{{item.payType | payType}}</td>
-                                                <td>{{item.normalMoney}}</td>
-                                                <td>{{item.freezeMoney}}</td>
-                                                <td>{{item.amount}}</td>
+                                                <td>{{item.normalMoney.toFixed(2)}}</td>
+                                                <td>{{item.freezeMoney.toFixed(2)}}</td>
+                                                <td>{{item.amount.toFixed(2)}}</td>
                                                 <td>{{item.payStatus}}</td>
                                                 <td>{{item.status | drugsStatus}}</td>
                                                 <td>{{item.createTime}}</td>
@@ -118,7 +118,7 @@
                                               link:'',
                                               crete:'moneyRollOuts'
                                               })">
-                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <img class="pull-left" src="/static/images/rollout.png" height="26" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" >
                                           药款转出记录（{{initDrugsDetail.moneyRollOuts.arr.length}}）
                                         </a>
@@ -141,9 +141,9 @@
                                             <tr v-for="item in initDrugsDetail.moneyRollOuts.arr">
                                                 <td>{{item.name}}</td>
                                                 <td>{{item.bank}}</td>
-                                                <td>{{item.normalMoney}}</td>
-                                                <td>{{item.freezeMoney}}</td>
-                                                <td>{{item.amount}}</td>
+                                                <td>{{item.normalMoney.toFixed(2)}}</td>
+                                                <td>{{item.freezeMoney.toFixed(2)}}</td>
+                                                <td>{{item.amount.toFixed(2)}}</td>
                                                 <td>{{item.status | drugsStatus}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>

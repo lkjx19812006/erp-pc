@@ -20,6 +20,7 @@ var locales = {
       special:'特殊的',
       client_name:'客户名称',
       client_phone:'客户手机号',
+      client_email:'客户邮箱',
       certificate:'资质证书',
       country:'国家',
       province:'所在省',
@@ -36,7 +37,8 @@ var locales = {
       issued_time:'发布时间',
       review_status:'审核状态',
       description:'描述',
-      handle:'操作'
+      handle:'操作',
+      commodity_items:'商品条目'
     }
   },
   en: {
@@ -53,6 +55,7 @@ var locales = {
       special:'Special',
       client_name:'Client name',
       client_phone:'Client phone',
+      client_email:'Client email',
       certificate:'Certificate',
       country:'Country',
       province:'Province',
@@ -69,7 +72,8 @@ var locales = {
       issued_time:'Issued time',
       review_status:'Review status',
       description:'Description',
-      handle:'Handle'
+      handle:'Handle',
+      commodity_items:'Commodity items'
     }
   }
 }

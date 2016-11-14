@@ -390,6 +390,11 @@ table{
 .modal_con{
     width: 70%;
 }
+.top-title{
+  width: 70%;
+  left: 0;
+  right: 0;
+}
 .table>tbody+tbody{
   border-top: 0;
 }

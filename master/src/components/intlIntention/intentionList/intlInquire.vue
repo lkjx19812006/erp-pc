@@ -3,7 +3,7 @@
      <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
      <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
      <affirmoffer-model :param="affirmOfferParam" v-if="affirmOfferParam.show"></affirmoffer-model>
-     <div v-show="!detailParam.show">
+     <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">国际意向询价</div>
             <div class="col-xs-5 my_order_search">
@@ -117,6 +117,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                total:0,
                 link:'/intlIntention/inquire',
                 employee:'',
                 breedId:'',

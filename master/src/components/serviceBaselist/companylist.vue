@@ -214,7 +214,8 @@ export default {
             },
             companyParam:{
                 id:'',
-                show:false
+                show:false,
+                loading:false
             },
             updateParam:{
                 show:false,
@@ -248,6 +249,7 @@ export default {
             this.companyParam.show = true;
             this.companyParam.id = id;
             this.companyParam.sub=index;
+            this.companyParam.loading = true;
             this.getCompanyDetail(this.companyParam);
         },
         multiSearch:function(){

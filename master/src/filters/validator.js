@@ -47,3 +47,9 @@ Vue.validator('test', function (val) {    //邮编
   console.log(val);
   return true;
 });
+
+Vue.validator('pwd', function (val) {    //密码
+  console.log(val);
+ /* return (/^[0-9A-Za-z]{6,}$/.test(val));*/
+ return (/^[\w]{6,12}$/.test(val));
+});

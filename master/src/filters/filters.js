@@ -451,6 +451,31 @@ Vue.filter('linktype',function(val){     //药款关联类型
 		return '其他';
 	}
 })
+
+Vue.filter('requireAgain',function(val){     //询价状态
+	var val = val;
+	if(val==0){
+		 return '请报价';
+	}
+	if(val==1){
+		 return '需要再次报价';
+	}else{
+		return val;
+	}
+})
+
+Vue.filter('offerAgain',function(val){     // 报价状态
+	var val = val;
+	if(val==0){
+		 return '未报价';
+	}
+	if(val==1){
+		 return '已经报价过';
+	}else{
+		return val;
+	}
+})
+
 Vue.filter('Currency',function(val){     //订单货币方式
 	var val = val;
 	if(val==0){

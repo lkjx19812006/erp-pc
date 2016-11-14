@@ -126,7 +126,16 @@
 
                        <div class="editpage-input">
                          <label class="editlabel">包装<span v-if="$validation.pack.required" class="system_danger">请输入包装要求</span></label>
-                         <input type="text" v-model='param.pack' v-validate:pack="['required']" class="form-control edit-input"  />
+                         <input type="text" v-show="false" v-model='param.pack' v-validate:pack="['required']" class="form-control edit-input"  />
+                         <div type="text" class="edit-input" >
+                           <input-select
+                             :prevalue="param.pack"
+                             :value.sync="param.pack"
+                             :options="tag"
+                             placeholder="包装"
+                           >
+                           </input-select>
+                         </div>
                        </div>
 
                      </div>
@@ -190,12 +199,32 @@
                        
                               <div class="editpage-input">
                                    <label class="editlabel" >规格要求<span class="system_danger" v-if="$inner.spec.required">必填项</span></label>
-                                   <input type="text" v-model="breedInfo.spec" class="form-control edit-input" v-validate:spec="{required:true}"/>
+                                   <input type="text" v-show="!breedParam.id" v-model="breedInfo.spec" class="form-control edit-input" v-validate:spec="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
+                                   <div type="text" class="edit-input" v-if="breedParam.id">
+                                       <input-select
+                                         :value.sync="breedInfo.spec"
+                                         :prevalue="breedInfo.spec"
+                                         :options="initBreedDetail.specs.arr"
+                                         placeholder="规格"
+                                         label="name"
+                                       >
+                                       </input-select>
+                                   </div>
                               </div>
                               
                               <div class="editpage-input">
                                    <label class="editlabel" >单位<span class="system_danger" v-if="$inner.unit.required">必填项</span></label>
-                                   <input type="text" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}"/>
+                                   <input type="text" v-show="!breedParam.id" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
+                                   <div type="text" class="edit-input" v-if="breedParam.id">
+                                       <input-select
+                                         :value.sync="breedInfo.unit"
+                                         :prevalue="breedInfo.unit"
+                                         :options="initBreedDetail.units.arr"
+                                         placeholder="单位"
+                                         label="name"
+                                       >
+                                       </input-select>
+                                   </div>
                               </div>
                            </div>
                        
@@ -207,7 +236,19 @@
                        
                               <div class="editpage-input">
                                    <label class="editlabel" >产地要求<span class="system_danger" v-if="$inner.location.required">必填项</span></label>
-                                   <input type="text" v-model="breedInfo.location" class="form-control edit-input" v-validate:location="{required:true}"/>
+                                   <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" v-validate:location="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
+                                   <div type="text" class="edit-input" v-if="breedParam.id">
+                                       <input-select
+                                         :prevalue="breedInfo.location"
+                                         :value.sync="breedInfo.location"
+                                         :options="initBreedDetail.locals.arr"
+                                         placeholder="产地"
+                                         label="name"
+
+                                       >
+                                       </input-select>
+                                   </div>
+
                               </div>
                        
                               <div class="editpage-input">
@@ -504,7 +545,6 @@ export default {
           this.param.items[this.param.items.length-1].number = this.breedInfo.number;
           this.param.items[this.param.items.length-1].unit = this.breedInfo.unit;
           this.param.items[this.param.items.length-1].pack = this.breedInfo.pack;
-
           console.log(this.param.items[this.param.items.length-1]);
           this.breedInfo.status = 0;
           this.addParam.show = false; 

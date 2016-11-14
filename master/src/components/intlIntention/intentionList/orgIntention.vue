@@ -5,7 +5,7 @@
      <modify-model :param.sync="modifyParam" v-if="modifyParam.show"></modify-model>
      <inquire-model :param="inquireParam" v-if="inquireParam.show"></inquire-model>
      
-     <div v-show="!detailParam.show">
+     <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">部门意向</div>
             <div class="col-xs-5 my_order_search">
@@ -33,9 +33,8 @@
                             <th>{{$t('static.type')}}</th>
                             <th>{{$t('static.special')}}</th>
                             <th>{{$t('static.client_name')}}</th>
-                            <th>{{$t('static.client_phone')}}</th>
-                            <th>客户邮箱</th>
-                            <th>商品条目</th>
+                            <th>{{$t('static.client_email')}}</th>
+                            <th>{{$t('static.commodity_items')}}</th>
                             <th>{{$t('static.certificate')}}</th>
                             <th>{{$t('static.country')}}</th>
                             <th>{{$t('static.province')}}</th>
@@ -68,7 +67,6 @@
                             <div v-if="item.especial==1&&item.type==1">低价资源</div>
                         </td>
                         <td>{{item.customerName}}</td>
-                        <td>{{item.customerPhone}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td class="underline" @click="clickOn(item.id)">{{item.names}}</td>
                         <td>{{item.qualification | qualify}}</td>
@@ -163,6 +161,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                total:0,
                 link:'/intlIntention/',
                 employee:'',
                 breedId:'',
