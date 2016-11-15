@@ -276,9 +276,13 @@ export default {
                 index:'',
                 duedate:'',
                 pack:'',
-                items:[
+                items:[     //存放商品条目
                     
-                ]
+                ],
+                itemsBack:[   //商品条目备份，用于与修改后的商品条目对照
+
+                ],
+
             },
             offerParam:{
                 show:false,
@@ -406,6 +410,7 @@ export default {
               this.modifyParam.id = id;
               this.modifyParam.index = index;
               this.modifyParam.items = [];
+              this.modifyParam.itemsBack = [];
         },
         applyAudit:function(index,id){
           this.auditParam.indexs = [];
