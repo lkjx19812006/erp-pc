@@ -290,6 +290,7 @@ export default {
     methods: {
         inquire:function(id,index,time){
             console.log('inquire');
+            console.log(time);
             this.inquireParam.link = '/intlIntention/inquire';
             this.inquireParam.index = index;
             this.inquireParam.inquireTime = time;
@@ -310,10 +311,11 @@ export default {
 
         },
         cancelInquire:function(id,index,time){
+            console.log('取消询价');
              console.log(time);   
             this.cancelInquireParam.id = id;
             this.cancelInquireParam.index = index;
-            this.inquireParam.inquireTime = time;
+            this.cancelInquireParam.inquireTime = time;
             this.cancelInquireParam.show = true;
             //this.cancelIntlIntentionInquire(this.cancelInquireParam);
         },

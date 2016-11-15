@@ -3686,7 +3686,7 @@ export const getIntlItemHistory = ({ dispatch }, param) => {  //国际意向条�
 }
 
 export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向(再)询价
-
+    console.log(param.inquireTime);
     const data = {
         intentionId:param.intentionId,
         inquireType:param.inquireType,
@@ -3741,7 +3741,7 @@ export const cancelIntlIntentionInquire = ({ dispatch }, param) => { //国际意
         param.checked = false;*/
         param.show = false;
         param.inquire = 0;
-        //param.inquireTime = param.inquireTime-1;
+        param.inquireTime = param.inquireTime-1;
         dispatch(types.INQUIRE_DATA, param);
     }, (res) => {
         console.log('fail');
