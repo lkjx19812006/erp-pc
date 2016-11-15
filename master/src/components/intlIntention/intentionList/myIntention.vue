@@ -52,7 +52,8 @@
                             <th>{{$t('static.issued_time')}}</th>
                             <th>{{$t('static.review_status')}}</th>
                             <th>{{$t('static.description')}}</th>
-                            <th colspan="4">{{$t('static.handle')}}</th>
+                            <th>{{$t('static.inquiry_state')}}</th>
+                            <th colspan="5">{{$t('static.handle')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,14 +87,24 @@
                         <td>{{item.ctime | date}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
                         <td>{{item.description}}</td>
+                        <td>{{item.inquire | inquire}}</td>
                         <td>
-                            <div v-if="item.inquire===0&&item.inquireTime===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/inquire.png" alt="询价" /></div>
-                            <div v-if="item.inquire===3" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/inquireAgain.png" alt="再次询价" /></div>
-                            <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id,$index)"><img src="/static/images/cancelInquire_icon.png" alt="取消询价" /></div>
-                            <!-- <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)">取消询价</div> -->
-                            <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/edit.png" alt="编辑"  /></div>
+
                             <div style="display:inline-block;margin-right:7px" @click="deleteIntention(item.id,$index)"><img src="/static/images/del.png" alt="删除"  /></div>
                             <!-- <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div> -->
+                        </td>
+                        <td v-if="item.inquire===0">
+                            <div  style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/inquire.png" alt="询价" /></div>
+                        </td>
+                        <td v-if="item.inquire===3">
+                            <div  style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/inquireAgain.png" alt="再次询价" /></div>
+                        </td>
+                        <td v-if="item.inquire===1">
+                            <div  style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id,$index,item.inquireTime)"><img src="/static/images/cancelInquire_icon.png" alt="取消询价" /></div>
+                        </td>
+                            <!-- <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)">取消询价</div> -->
+                        <td >
+                            <div v-if="item.inquire===0||item.inquire===3"  style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/edit.png" alt="编辑"  /></div>
                         </td>
                         
 
@@ -167,7 +178,7 @@ export default {
                 all: 7,
                 total:0,
                 link:'/intlIntention/by/employee',
-                employee:'',
+                employeeName:'',
                 breedId:'',
                 breedName:'',
                 customerName:'',
@@ -189,7 +200,7 @@ export default {
             },
             inquireParam:{
                 show:false,
-                times:0,    //询价的次数
+                inquireTime:'',    //询价的次数
                 index:'',
                 inquire:'',
                 link:'',
@@ -210,6 +221,7 @@ export default {
                 name:'确定取消询价?',
                 confirm:true,
                 inquire:'',
+                inquireTime:'',
                 callback:this.confirmCancelInquire,
                 link:'/intlIntention/inquire',
                 id:'',
@@ -280,7 +292,7 @@ export default {
             console.log('inquire');
             this.inquireParam.link = '/intlIntention/inquire';
             this.inquireParam.index = index;
-            this.inquireParam.times = time;
+            this.inquireParam.inquireTime = time;
             this.inquireParam.intentionId = id;
             this.inquireParam.inquireType = '';
             this.inquireParam.comment = '';
@@ -290,21 +302,23 @@ export default {
             console.log('再次询价');
             this.inquireParam.link = '/intlIntention/itemInquire';
             this.inquireParam.index = index;
-            this.inquireParam.times = time;
+            this.inquireParam.inquireTime = time;
             this.inquireParam.intentionId = id;
             this.inquireParam.inquireType = '';
             this.inquireParam.comment = '';
             this.inquireParam.show = true;
 
         },
-        cancelInquire:function(id,index){
-
+        cancelInquire:function(id,index,time){
+             console.log(time);   
             this.cancelInquireParam.id = id;
             this.cancelInquireParam.index = index;
+            this.inquireParam.inquireTime = time;
             this.cancelInquireParam.show = true;
             //this.cancelIntlIntentionInquire(this.cancelInquireParam);
         },
         confirmCancelInquire:function(){
+            console.log(this.cancelInquireParam);
            this.cancelIntlIntentionInquire(this.cancelInquireParam); 
         },
         
@@ -359,7 +373,7 @@ export default {
             this.getIntlIntentionList(this.loadParam);
         },
         resetCondition:function(){
-            this.loadParam.employee='';
+            this.loadParam.employeeName='';
             this.loadParam.customerName='';
             this.loadParam.breedId='';
             this.loadParam.breedName='';

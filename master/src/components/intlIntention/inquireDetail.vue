@@ -155,8 +155,8 @@
                                           <th>{{$t('static.quantity')}}</th>
                                           <th>{{$t('static.unit')}}</th>
                                           <th>{{$t('static.comment')}}</th>
-                                          <th>再次询价</th>
-                                          <th>再次报价</th>
+                                          <th>{{$t('static.inquiry_again')}}</th>
+                                          <th>{{$t('static.quote_again')}}</th>
                                           <th></th> 
                                           <th></th> 
                                         </thead>

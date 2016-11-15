@@ -3346,8 +3346,8 @@ export const getIntlIntentionList = ({ dispatch }, param) => {  //国际意向�
     if(param.breedName!==''){
         url += '&names=' + param.breedName;
     }
-    if(param.employee!==''){
-        url += '&employee=' + param.employee;
+    if(param.employeeName!==''){
+        url += '&employeeName=' + param.employeeName;
     }
     if(param.customerName!==''){
         url += '&customerName=' + param.customerName;
@@ -3710,6 +3710,7 @@ export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向(�
         param.checked = false;*/
         param.show = false;
         param.inquire = 1;
+        param.inquireTime ++;
         dispatch(types.INQUIRE_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -3717,7 +3718,8 @@ export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向(�
 }
 
 export const cancelIntlIntentionInquire = ({ dispatch }, param) => { //国际意向取消询价
-
+    console.log(param);
+    console.log(param.inquireTime);
     const data = {
        intentionId:param.id
     }
@@ -3739,6 +3741,7 @@ export const cancelIntlIntentionInquire = ({ dispatch }, param) => { //国际意
         param.checked = false;*/
         param.show = false;
         param.inquire = 0;
+        //param.inquireTime = param.inquireTime-1;
         dispatch(types.INQUIRE_DATA, param);
     }, (res) => {
         console.log('fail');

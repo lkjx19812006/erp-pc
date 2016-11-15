@@ -110,9 +110,9 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>询价类型</th>
-                                          <th>备注</th>
-                                          <th>创建时间</th>
+                                          <th>{{$t('static.inquire_type')}}</th>
+                                          <th>{{$t('static.comment')}}</th>
+                                          <th>{{$t('static.create_time')}}</th>
                                           <!-- <th></th>
                                           <th></th> -->
                                           
@@ -150,13 +150,13 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>产品名</th>
-                                          <th>成本</th>
-                                          <th>报价</th>
-                                          <th>数量</th>
-                                          <th>单位</th>
-                                          <th>询价状态</th>
-                                          <th>报价状态</th>
+                                          <th>{{$t('static.breed')}}</th>
+                                          <th>{{$t('static.cost')}}</th>
+                                          <th>{{$t('static.quoted_price')}}</th>
+                                          <th>{{$t('static.quantity')}}</th>
+                                          <th>{{$t('static.unit')}}</th>
+                                          <th>{{$t('static.inquiry_again')}}</th>
+                                          <th>{{$t('static.quote_again')}}</th>
                                           <th></th>
                                           <th></th> 
                                         </thead>
@@ -184,8 +184,11 @@
                                               crete:'offers'
                                               })">
                                         <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initIntlIntentionDetail.offers.arr.length">
                                           {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
+                                        </a>
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                          {{$t('static.other_quotations')}}（0）
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                   </h4>
@@ -195,11 +198,11 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>货币</th>
-                                          <th>费用</th>
-                                          <th>费用说明</th>
-                                          <th>总费用</th>
-                                          <th>备注</th>
+                                          <th>{{$t('static.currency')}}</th>
+                                          <th>{{$t('static.expense')}}</th>
+                                          <th>{{$t('static.expense_explanation')}}</th>
+                                          <th>{{$t('static.all_in_cost')}}</th>
+                                          <th>{{$t('static.comment')}}</th>
                                           <!-- <th></th>
                                           <th></th> -->
                                          
@@ -292,10 +295,10 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>文件路径</th>
-                                          <th>文件类型</th>
-                                          <th>描述</th>
-                                          <th>创建时间</th>
+                                          <th>{{$t('static.file_path')}}</th>
+                                          <th>{{$t('static.file_type')}}</th>
+                                          <th>{{$t('static.description')}}</th>
+                                          <th>{{$t('static.create_time')}}</th>
                                           <th></th>
                                           <th></th>
                                           <th></th>

@@ -1540,7 +1540,9 @@ const mutations = {
     [INQUIRE_DATA](state,data){ //国际意向询价
 
         console.log("国际意向(再)询价或取消报价");
+        console.log(data);
         state.basicBaseList.intlIntentionList[data.index].inquire = data.inquire;
+        state.basicBaseList.intlIntentionList[data.index].inquireTime = data.inquireTime;
     },
 
     
