@@ -3459,6 +3459,7 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询�
                         pack:item.pack
                     }
                     param.items.push(temp);
+                    param.itemsBack.push(temp);
                 })
                 param.pack = intent.pack,
                 param.duedate = intent.duedate,
@@ -3544,6 +3545,7 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
         object.inquireTime = 0;
         object.offerTime = 0;
         object.validate = 0;
+        object.inquire = 0;
         console.log(object);
         dispatch(types.ADD_INTLINTENTION_DATA,object);
     }, (res) => {

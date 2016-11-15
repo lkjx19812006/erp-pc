@@ -156,15 +156,16 @@
                                    <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-show="!breedParam.id" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" disabled="disabled" placeholder="请先选择一个品种" />
                                    <div type="text" class="edit-input" v-if="breedParam.id">
-                                       <input-select
-                                         :prevalue="breedInfo.location"
-                                         :value.sync="breedInfo.location"
-                                         :options="initBreedDetail.locals.arr"
-                                         placeholder="产地"
-                                         label="name"
-
-                                       >
-                                       </input-select>
+                                      <input type="text" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}"/>
+                                      <!--  <input-select
+                                        :prevalue="breedInfo.location"
+                                        :value.sync="breedInfo.location"
+                                        :options="initBreedDetail.locals.arr"
+                                        placeholder="产地"
+                                        label="name"
+                                      
+                                      >
+                                      </input-select> -->
                                    </div>
                               </div>
                        
@@ -521,9 +522,30 @@ export default {
       },
       createOrUpdateIntlIntention:function(){
         this.param.show = false;
-        this.updateIntlIntention(this.param);
-        console.log(this.param);
+        //将this.param.items补全
+        console.log(this.param.items.length);
+        console.log(this.param.itemsBack.length);
+        var temp=[];   //存放this.param.itemsBack中有，this.param.items中没有的
+        for(var i=0;i<this.param.itemsBack.length;i++){
+            var k = 0;
+            for(var j=0;j<this.param.items.length;j++){
+              if(this.param.itemsBack[i].id!=this.param.items[j].id){
+                  k++;
+              }
+              if(k==this.param.items.length){
+                this.param.itemsBack[i].status = 0;
+                temp.push(this.param.itemsBack[i]);
+              }
+            }
+        }
+        var _this = this;
+        console.log(temp);
+        temp.forEach(function(item){
+          _this.param.items.push(item);
+        })
         console.log(this.param.items);
+        this.updateIntlIntention(this.param);
+        
       },
       reset:function(){
         console.log(this.param.duedate)
@@ -575,7 +597,9 @@ export default {
         }
     },
     created(){
-
+      /*在编辑意向的时候，如果删除原先存在的条目，数据库中不会删除，需要将条目的status置为0,*/
+      console.log('商品数量');
+      console.log(this.param.items.length);
       this.getIntlIntentionDetail(this.param);
       if(this.param.breedId){
         this.breedParam.breedName = this.param.breedName;

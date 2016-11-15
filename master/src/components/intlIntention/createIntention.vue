@@ -27,7 +27,7 @@
                  </div>
                  <div style="margin-top:25px">
                     <img src="/static/images/receiverinfo@2x.png" style="display:inline"/>
-                    <h4 style="display:inline">{{$t('static.Delivery_information')}}</h4>
+                    <h4 style="display:inline">{{$t('static.delivery_information')}}</h4>
                  </div>
                  <div class="editpage">
                      <div class="editpageleft">

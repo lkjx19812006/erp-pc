@@ -190,7 +190,7 @@
                             </div>
                         </td>
                         <td>
-                            <div class="operate"  v-if="item.transStatus==0"  @click="userToClient({
+                            <div class="operate"  v-if="item.transStatus==0&&item.audit==2"  @click="userToClient({
                                     mainBiz:item.bizMain,
                                     name:item.fullname,
                                     keyname:'transStatus',
