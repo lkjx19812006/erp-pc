@@ -3932,7 +3932,7 @@ export const intlIntentionAffirmOffer = ({ dispatch }, param) => { //国际意�
     }).then((res) => {
         console.log('确认报价成功');
         param.show = false;
-        dispatch(types.INTLINTENTION_DATA, param);
+        dispatch(types.CONFIRM_OFFER, param);
     }, (res) => {
         console.log('fail');
     })
