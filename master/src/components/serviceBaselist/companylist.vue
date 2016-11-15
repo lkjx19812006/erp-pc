@@ -134,7 +134,7 @@
                             </div>
                             </div> -->
                         </td>
-                        <td v-if="!item.transform" @click="createCustomer({
+                        <td  ><a class="operate" @click="createCustomer({
                                         keyname:'transform',
                                         sub:$index,
                                         show:true,
@@ -157,7 +157,7 @@
                                         orgName:'',
                                         countryId:7,
                                         countryName:'中国'
-                                        })"><a class="operate"><img src="/static/images/transfer.png" height="18" width="28"  alt="划转" title="划转"/></a>
+                                        })" v-if="!item.transform"><img src="/static/images/transfer.png" height="18" width="28"  alt="划转" title="划转"/></a>
                         </td>
                     </tr>
                 </tbody>

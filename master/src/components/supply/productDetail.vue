@@ -280,10 +280,10 @@ section article {
     margin-top: 30px;
 }
 .top-title{
-  z-index: 100;
-  width: 100%;
+  width: 70%;
   right: 0;
-  top: 130px;
+  left: 0;
+  top: 91px;
 }
 .client-section {
     padding: 10px 5px 40px 5px;

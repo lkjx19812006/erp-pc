@@ -49,7 +49,7 @@
                                 <tbody>
                                     <tr v-for="item in initBreedDetail.specs.arr">
                                         <td>{{item.name}}</td>
-                                        <td @click="updateSpec({
+                                        <td ><a class="operate" @click="updateSpec({
                                                sub:$index,
                                                id:item.id,
                                                show:true,
@@ -61,9 +61,10 @@
                                                key:'specs',
                                                judge:'specs',
                                                breedId:item.breedId
-                                               },item.show=false)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
-                                        </td>
-                                        <td @click="specDelete({
+                                               },item.show=false)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                                       <!--  </td>
+                                       <td> -->
+                                        <a class="operate"  @click="specDelete({
                                                sub:$index,
                                                id:item.id,
                                                show:true,
@@ -117,7 +118,7 @@
                                     <tbody>
                                         <tr v-for="item in initBreedDetail.locals.arr">
                                             <td>{{item.name}}</td>
-                                            <td @click="updateSpec({
+                                            <td ><a class="operate" @click="updateSpec({
                                                      sub:$index,
                                                     id:item.id,
                                                     show:true,
@@ -129,9 +130,10 @@
                                                     key:'locals',
                                                     judge:'locals',
                                                     breedId:item.breedId
-                                                    },item.show=false)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
-                                            </td>
-                                            <td @click="specDelete({
+                                                    },item.show=false)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                                            <!-- </td>
+                                            <td > -->
+                                                <a class="operate" @click="specDelete({
                                                     sub:$index,
                                                     id:item.id,
                                                     show:true,
@@ -184,7 +186,7 @@
                                     <tbody>
                                         <tr v-for="item in initBreedDetail.alias.arr">
                                             <td>{{item.alias}}</td>
-                                            <td @click="updateSpec({
+                                            <td ><a class="operate" @click="updateSpec({
                                                     sub:$index,
                                                     id:item.id,
                                                     show:true,
@@ -196,9 +198,10 @@
                                                     key:'alias',
                                                     judge:'alias',
                                                     breedId:item.breedId
-                                                    },item.show=false)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
-                                            </td>
-                                            <td @click="specDelete({
+                                                    },item.show=false)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                                            <!-- </td>
+                                            <td> -->
+                                                <a class="operate"  @click="specDelete({
                                                     sub:$index,
                                                     id:item.id,
                                                     show:true,
@@ -251,7 +254,7 @@
                                     <tbody>
                                         <tr v-for="item in initBreedDetail.units.arr">
                                             <td>{{item.name}}</td>
-                                            <td @click="updateSpec({
+                                            <td><a class="operate"  @click="updateSpec({
                                                     sub:$index,
                                                     id:item.id,
                                                     breedId:item.breedId,
@@ -264,9 +267,10 @@
                                                     key:'units',
                                                     judge:'units',
                                                     breedId:item.breedId
-                                                    },item.show=false)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
-                                            </td>
-                                            <td  @click="specDelete({
+                                                    },item.show=false)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                                            <!-- </td>
+                                            <td> -->
+                                                <a class="operate" @click="specDelete({
                                                     sub:$index,
                                                     id:item.id,
                                                     show:true,

@@ -58,7 +58,7 @@
                 <td>{{item.name}}</td>
                 <td>{{item.type | enumlist }}</td>
                 <td>{{item.desc }}</td>
-                <td  @click="modify($index)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                <td ><a class="operate"  @click="modify($index)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
                   <!-- <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
                    <div class="component_action" v-show='item.show' transition="expand">
                       <ul>
@@ -70,13 +70,13 @@
                                 })">删除</li>
                       </ul>
                     </div> -->
-                </td>
-                 <td @click="del({
+                <!-- </td>
+                 <td > -->
+                    <a class="operate" @click="del({
                             sub:$index,
                             id:item.id,
                             show:true
-                            })">
-                    <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
+                            })"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
                  </td>
               </tr>
             </tbody>

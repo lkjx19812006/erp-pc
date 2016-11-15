@@ -1,6 +1,7 @@
 <template>
      <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
-	 <div v-show="!chanceParam.show">
+     <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
+	 <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2" style="font-size:14px">留言</div>
             <div class="col-xs-8 my_order_search">
@@ -50,7 +51,13 @@
                         <!-- <td>{{item.intentionId}}</td> -->
                         <td>{{item.fullname}}</td>
                         <td>{{item.phone}}</td>
-                        <td>{{item.customerName}}</td>
+                        <td class="underline"  @click="clickOn({
+                                 id:item.userId,
+                                 sub:$index,
+                                 show:true,
+                                 name:item.customerName,
+                                 loading:false
+                             })">{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.content}}</td>
                         <td>{{item.comments}}</td>
@@ -80,19 +87,20 @@
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import editmsgModel from '../editMsg'
+import detailModel from '../../user/userDetail'
 
 import {
 	initMsgList
 } from '../../../vuex/getters'
 import {
 	getMsgList,
-
-
+    getUserDetail
 } from '../../../vuex/actions'
 export default {
     components: {
         pagination,
-        editmsgModel
+        editmsgModel,
+        detailModel
     },
     vuex: {
         getters: {
@@ -100,6 +108,7 @@ export default {
         },
         actions: {
             getMsgList,
+            getUserDetail
         }
     },
     data() {
@@ -115,7 +124,7 @@ export default {
                 total:0
 
             },
-            chanceParam:{
+            changeParam:{
                 show:false
             },
             updateParam:{
@@ -163,6 +172,10 @@ export default {
    				})
    			}
         },
+        clickOn: function(initMsgList) {
+            this.changeParam = initMsgList;
+            this.getUserDetail(this.changeParam);
+        }
     },
     events: {
         fresh: function(input) {

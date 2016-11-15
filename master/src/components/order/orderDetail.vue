@@ -584,7 +584,10 @@ section article {
     position: relative;
     padding: 10px;
 }
-
+.table>tbody>tr>td img{
+    width: 100px;
+    margin: 0
+}
 .btn-orange {
     background-color: #fa6705;
     color: #fff;
