@@ -943,9 +943,6 @@ export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单�
         body.images = undelinePay.images;
     }
 
-    console.log(param)
-    console.log(undelinePay)
-
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + undelinePay.link,
@@ -2039,6 +2036,16 @@ export const getProductList = ({ dispatch }, param) => {  //供应商产品列�
     if(param.description){
       clienturl=clienturl+'&description='+param.description;
     }
+    if(param.type){
+      clienturl=clienturl+'&type='+param.type;
+    }
+    if(param.status){
+      clienturl=clienturl+'&status='+param.status;
+    }
+    if(param.cName){
+      clienturl=clienturl+'&cName='+param.cName;
+    }
+    
     Vue.http({
         method:'GET',
         url:clienturl,
@@ -3551,7 +3558,7 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
     })
 }
 
-export const deleteIntlIntention = ({ dispatch }, param) => { //删除国际意向
+/*export const deleteIntlIntention = ({ dispatch }, param) => { //删除国际意向
     console.log(param);
     const data = {
         id:param.id
@@ -3575,7 +3582,7 @@ export const deleteIntlIntention = ({ dispatch }, param) => { //删除国际意�
         console.log('fail');
     })
 }
-
+*/
 export const updateIntlIntention = ({ dispatch }, param,tipParam) => { //修改国际意向
 
     const data = {

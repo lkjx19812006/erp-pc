@@ -149,12 +149,7 @@
                        
                               <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.origin')}}<span class="system_danger" v-if="$inner.location.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="breedInfo.location" class="form-control edit-input" v-validate:location="{required:true}"/>
-                              </div>
-                       
-                              <div class="editpage-input">
-                                   <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-show="!breedParam.id" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" disabled="disabled" placeholder="请先选择一个品种" />
+                                   <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" v-validate:location="{required:true}" disabled="disabled" placeholder="请先选择一个品种" />
                                    <div type="text" class="edit-input" v-if="breedParam.id">
                                        <input-select
                                          :prevalue="breedInfo.location"
@@ -166,6 +161,11 @@
                                        >
                                        </input-select>
                                    </div>
+                              </div>
+                       
+                              <div class="editpage-input">
+                                   <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
+                                   <input type="text"  v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
                               </div>
                        
                               <div class="editpage-input">

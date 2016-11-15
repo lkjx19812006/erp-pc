@@ -54,7 +54,8 @@
                     <!--<img  src="/static/images/excel.png" v-if="item.fileType=='excel'">-->
               <!--</td>-->
               <td>{{item.description}}</td>
-              <td  @click="updatelabel({
+              <td  >
+                 <a class="operate" @click="updatelabel({
                          sub:$index,
                          id:item.id,
                          show:true,
@@ -65,12 +66,10 @@
                          link:alterRemark,
                          url:'/customer/updateFile',
                          key:'filesList'
-                         })">
-                 <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  />
+                         })"><img src="/static/images/edit.png" height="18" width="30"  />
                  </a>
-              </td>
-              <td><a href="/crm/api/v1/file/dowanloadFile?path={{item.path}}">下载</a></td>
-              <td @click="specDelete({
+                <a  class="operate" href="/crm/api/v1/file/dowanloadFile?path={{item.path}}"><img src="/static/images/upload.png" height="18" width="28"  /></a>
+                <a class="operate"  @click="specDelete({
                       id:item.id,
                       sub:$index,
                       show:true,
@@ -80,8 +79,6 @@
                       url:'/customer/file/',
                       key:'filesList'
                     })">
-
-               <a class="operate">
                  <img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                </a>
               </td>

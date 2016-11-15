@@ -203,7 +203,7 @@
                             <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
                             </a>
                         </td>
-                        <td  @click="specDelete({
+                        <!-- <td  @click="specDelete({
                                                 id:item.id,
                                                 sub:$index,
                                                 show:true,
@@ -215,7 +215,7 @@
                                                 })">
                             <a class="operate"><img src="/static/images/del.png" height="18" width="30"/>
                             </a>
-                        </td>
+                        </td> -->
                        <!--  <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
