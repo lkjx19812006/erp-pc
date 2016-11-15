@@ -1559,6 +1559,7 @@ const mutations = {
         console.log(data);
         state.basicBaseList.intlIntentionList[data.index].inquire = data.inquire;
         state.basicBaseList.intlIntentionList[data.index].inquireTime = data.inquireTime;
+        state.basicBaseList.intlIntentionList[data.index].inquireType = data.inquireType;
     },
 
     
