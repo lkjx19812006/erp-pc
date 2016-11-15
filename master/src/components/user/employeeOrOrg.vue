@@ -44,7 +44,7 @@
                         <button type="button" class="new_btn" style="margin-right:10px;" @click="employSearch()">搜索</button>
                     </div>
                         
-		            <table class="table table-hover table_head table-striped" style="width:95%;text-align:center" v-cloak>
+		            <table class="table table-hover table_head table-striped" style="text-align:center" v-cloak>
 		                <thead>
 		                    <tr>
 		                        <th></th>
@@ -431,7 +431,7 @@ export default{
 	margin-bottom: 20px;
 }
 .table_head>thead>tr{
-	background-color: #f5f5f5;
+	/* background-color: #f5f5f5; */
 	color: #333;
 	font-size: 18px;
 }

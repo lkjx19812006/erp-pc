@@ -39,7 +39,7 @@
               <!--<th>路径</th>-->
               <th>描述</th>
               <!--<th>状态</th>-->
-               <th></th>
+               <th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -60,7 +60,8 @@
                     <!--<img  src="/static/images/excel.png" v-if="item.fileType=='excel'">-->
             <!--</td>-->
             <td>{{item.description}}</td>
-            <td ><a href="/crm/api/v1/file/dowanloadFile?path={{item.path}}">下载</a></td>
+            <td ><a href="/crm/api/v1/file/dowanloadFile?path={{item.path}}"><img src="/static/images/upload.png" height="18" width="28"  /></a>
+               </td>
           </tr>
         </tbody>
       </table>

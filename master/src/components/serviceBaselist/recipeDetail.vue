@@ -132,9 +132,10 @@ export default {
     color: #fa6705;
 }
 .top-title{
-    width: 100%;
+    width: 70%;
     right: 0;
-    top:70px;
+    top:91px;
+    left: 0;
 }
 .breed_detail {
     position: absolute;

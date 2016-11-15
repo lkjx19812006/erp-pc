@@ -31,9 +31,15 @@
                         </dd>
                     </dl>
                     <dl class="clearfix">
-                        <dt>名称：</dt>
+                        <dt>产品名称：</dt>
                         <dd>
                             <input type="text"  class="form-control" placeholder="按产品名称全称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
+                        </dd>
+                    </dl>
+                    <dl class="clearfix">
+                        <dt>供应商名称：</dt>
+                        <dd>
+                            <input type="text"  class="form-control" placeholder="按供应商名称搜索" class="search_input"  v-model="loadParam.cName"  @keyup.enter="searchProduct()"/>
                         </dd>
                     </dl>
                </div>
@@ -74,6 +80,7 @@
             <tr>
               <th>产品类型</th>
               <th>品种名称</th>
+              <th>供应商名称</th>
               <th>产品名称</th>
               <th>产品质量</th>
               <th>产地</th>
@@ -95,6 +102,7 @@
         <tr v-for="item in initProductlist">
           <td>{{item.type}}</td>
           <td>{{item.breedName}}</td>
+          <td>{{item.cName}}</td>
           <td class="underline"  @click="clickOn({
                              id:item.id,
                              sub:$index,
@@ -235,6 +243,7 @@
           link:'/customer/product',
           name:'',
           type:'',
+          cName:'',
           total:0,
           status:''
         },
@@ -269,6 +278,7 @@
         this.loadParam.name = "";
         this.loadParam.type = "";
         this.loadParam.status = "";
+        this.loadParam.cName = "";
         this.getProductList(this.loadParam);
       },
       createSearch:function(){

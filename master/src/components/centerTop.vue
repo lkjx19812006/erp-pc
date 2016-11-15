@@ -11,7 +11,7 @@
             <div class="component_action" v-show="show">
               <ul>
                 <li @click="upwd()">
-                   修改密码
+                   {{$t('static.modify_password')}}
                 </li>
                 <li @click="exit()">
                   {{$t('static.logout')}}

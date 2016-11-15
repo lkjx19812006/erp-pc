@@ -806,6 +806,14 @@ const mutations = {
                   state.basicBaseList.orderList[i].logisticsNo=data.logisticsNo;
               }
           }
+        if(data.orderStatus==30&&(data.payWay==0||data.payWay==3)){
+          for(var i in  state.basicBaseList.orderList){
+              if(state.basicBaseList.orderList[i].id==data.id){
+                  state.basicBaseList.orderList[i].orderStatus=data.orderStatus;
+                  state.basicBaseList.orderList[i].payWay=data.payWay;
+              }
+          }
+        }
         if(data.orderStatus==40||data.orderStatus==30){
              for(var i=0;i<state.basicBaseList.orderList.length;i++){
                if(state.basicBaseList.orderList[i].id==data.id){
@@ -1531,11 +1539,11 @@ const mutations = {
 
     },
 
-    [DELETE_INTLINTENTION_DATA](state,data){ //删除国际意向
+   /* [DELETE_INTLINTENTION_DATA](state,data){ //删除国际意向
 
         console.log("删除国际意向");
         state.basicBaseList.intlIntentionList.splice(data.index,1);
-    },
+    },*/
 
     [INQUIRE_DATA](state,data){ //国际意向询价
 

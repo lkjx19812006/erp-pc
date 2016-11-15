@@ -1,5 +1,6 @@
 <template>
     <cancle-model :param="cancleReason" v-if="cancleReason.show"></cancle-model>
+    <alert-model :param="tipParam" v-if="tipParam.show"></alert-model>
     <undeline-model :param="undelinePay" v-if="undelinePay.show"></undeline-model>
     <logistics-model :param="logisticsDetail" v-if="logisticsDetail.show"></logistics-model>
     <editorder-model :param="editorder" v-if="editorder.show"></editorder-model>
@@ -72,7 +73,10 @@
             </div>
             <!-- 订单财务审核 -->
             <div class="clearfix logical_color"  v-if="param.Auditing">
-                <img v-for="item in initOrderDetail.payPics.arr" class="col-xs-3" v-bind:src="item.url" />
+               <div class="clearfix">
+                  <img v-for="item in initOrderDetail.payPics.arr" class="col-xs-3" v-bind:src="item.url" />
+               </div>
+                
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
                     id:initOrderDetail.id,
                     show:true,
@@ -243,6 +247,7 @@ import undelineModel from  '../order/uploadPayment'
 import pressImage from '../imagePress'
 import logisticsModel  from  '../order/logisticsDetail'
 import editorderModel  from  '../order/ordergoods'
+import alertModel from  '../tips/tipDialog'
 import {
   initExpresslist,
   initOrderDetail
@@ -262,7 +267,8 @@ export default {
         undelineModel,
         pressImage,
         logisticsModel,
-        editorderModel
+        editorderModel,
+        alertModel
     },
     props:['param'],
     data() {
@@ -314,6 +320,11 @@ export default {
               image_f:'',
               image_s:'',
               image_t:'',
+              name:''
+            },
+            tipParam:{
+              show:false,
+              alert:true,
               name:''
             }
         }
@@ -388,6 +399,9 @@ export default {
                //this.param.show=false;
             }else {
                console.log('请选择支付方式');
+                this.tipParam.show = true;
+                this.tipParam.name='请选择支付方式';
+                this.tipParam.alert=true;
             }
 
         },
@@ -406,10 +420,10 @@ export default {
   background-color: #f5f5f5;
 }
 .modal{
-  z-index: 1111;
+  z-index: 1100;
 }
 .modal_con{
-  z-index: 1112;
+  z-index: 1101;
   width: 60%;
 }
 .top-title{

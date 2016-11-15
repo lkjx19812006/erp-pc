@@ -1,6 +1,7 @@
 <template>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
+     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
      <create-model :param.sync="createParam" v-if="createParam.show"></create-model>
      <modify-model :param.sync="modifyParam" v-if="modifyParam.show"></modify-model>
      <cancelinquire-model :param="cancelInquireParam" v-if="cancelInquireParam.show"></cancelinquire-model>
@@ -90,7 +91,16 @@
                         <td>{{item.inquire | inquire}}</td>
                         <td>
 
-                            <div style="display:inline-block;margin-right:7px" @click="deleteIntention(item.id,$index)"><img src="/static/images/del.png" alt="删除"  /></div>
+                            <div style="display:inline-block;margin-right:7px" @click="deleteIntention({
+                                                id:item.id,
+                                                sub:$index,
+                                                show:true,
+                                                name:item.customerName,
+                                                title:'意向',
+                                                link:deleteInfo,
+                                                url:'/intlIntention/',
+                                                key:'intlIntentionList'
+                                                })"><img src="/static/images/del.png" alt="删除"  /></div>
                             <!-- <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div> -->
                         </td>
                         <td v-if="item.inquire===0">
@@ -123,6 +133,7 @@
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import searchModel from '../intlIntentionSearch'
+import deletebreedModel  from  '../../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import detailModel from '../intentionDetail'
 import createModel from '../createIntention'
 import modifyModel from '../modifyIntention'
@@ -137,7 +148,7 @@ import {
 import {
     getIntlIntentionList,
     intlIntentionInquire,
-    deleteIntlIntention,
+    deleteInfo,
     intlIntentionAffirmOffer,
     cancelIntlIntentionInquire
 } from '../../../vuex/actions'
@@ -150,8 +161,7 @@ export default {
         modifyModel,
         cancelinquireModel,
         inquireModel,
-
-        
+        deletebreedModel
     },
     vuex: {
         getters: {
@@ -161,7 +171,7 @@ export default {
         actions: {
             getIntlIntentionList,
             intlIntentionInquire,
-            deleteIntlIntention,
+            deleteInfo,
             intlIntentionAffirmOffer,
             cancelIntlIntentionInquire
             
@@ -236,9 +246,6 @@ export default {
             },
             deleteParam:{
                 show:false,
-                id:'',
-                index:'',
-                link:'/intlIntention/',
             },
             editParam:{
                 show:false,
@@ -391,10 +398,10 @@ export default {
 
             this.createParam.show = true;
         },
-        deleteIntention:function(id,index){
-            this.deleteParam.id = id;
-            this.deleteParam.index = index;
-            this.deleteIntlIntention(this.deleteParam);  
+        deleteIntention:function(getIntlIntentionList){
+            this.deleteParam = getIntlIntentionList;
+           /* this.deleteParam.index = index;
+            this.deleteIntlIntention(this.deleteParam);  */
         },
         modifyIntention:function(id,index){
             console.log(id);
