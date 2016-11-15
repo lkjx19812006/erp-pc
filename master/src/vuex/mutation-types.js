@@ -24,6 +24,7 @@ export const ROLLOUT_STATUS = 'ROLLOUT_STATUS' //药款财务审核
 export const ROLLOUT_DETAIL = 'ROLLOUT_DETAIL' //药款转出详情页面
 
 
+export const USER_TYPE = 'USER_TYPE' //数据类型
 export const SYSTEM_DATA = 'SYSTEM_DATA' //系统数据
 export const PROVINCE_DATA = 'PROVINCE_DATA' //省市区列表数据
 export const SERVICE_ENTERPRISE = 'SERVICE_ENTERPRISE' //业务企业数据

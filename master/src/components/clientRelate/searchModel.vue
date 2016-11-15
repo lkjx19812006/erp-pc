@@ -104,8 +104,7 @@
                         <label>客户类型：</label>
                         <select class="form-control" v-model="param.type">
                             <option value="">请选择类型</option>
-                            <option value="0">个人</option>
-                            <option value="1">企业</option>
+                            <option v-for="item in initUserType" value="{{item.id}}" >{{item.name}}</option>
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">
@@ -179,12 +178,14 @@ import searchempModel from '../../components/clientRelate/searchEmpInfo'
 import vSelect from '../tools/vueSelect/components/Select'
 import {
     initProvince,
-    initCitylist
+    initCitylist,
+    initUserType
 } from '../../vuex/getters'
 import {
     getProvinceList,
     getCityList,
-    getClientList
+    getClientList,
+    getUserTypeList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -240,12 +241,14 @@ export default {
     vuex: {
         getters: {
             initProvince,
-            initCitylist
+            initCitylist,
+            initUserType
         },
         actions: {
             getProvinceList,
             getCityList,
-            getClientList
+            getClientList,
+            getUserTypeList
         }
     },
     events:{
@@ -305,6 +308,7 @@ export default {
         this.param.cityName = '';
         //this.getClientList(this.loadParam);
         this.getProvinceList(this.provinceParam);
+        this.getUserTypeList(this.loadParam)
 
     }
 }

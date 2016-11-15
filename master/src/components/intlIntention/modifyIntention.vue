@@ -149,24 +149,24 @@
                        
                               <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.origin')}}<span class="system_danger" v-if="$inner.location.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" v-validate:location="{required:true}" disabled="disabled" placeholder="请先选择一个品种" />
-                                   <div type="text" class="edit-input" v-if="breedParam.id">
-                                      <input type="text" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}"/>
-                                      <!--  <input-select
-                                        :prevalue="breedInfo.location"
-                                        :value.sync="breedInfo.location"
-                                        :options="initBreedDetail.locals.arr"
-                                        placeholder="产地"
-                                        label="name"
-                                      
-                                      >
-                                      </input-select> -->
+                                   <input type="text" v-model="breedInfo.location" v-show="!breedParam.id" class="form-control edit-input" v-validate:location="{required:true}" disabled="disabled" placeholder="请先选择一个品种" />
+                                    <div type="text" class="edit-input" v-if="breedParam.id">
+                                       <input-select
+                                         :prevalue="breedInfo.location"
+                                         :value.sync="breedInfo.location"
+                                         :options="initBreedDetail.locals.arr"
+                                         placeholder="产地"
+                                         label="name"
+
+                                       >
+                                       </input-select>
                                    </div>
                               </div>
                        
                               <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
                                    <input type="text"  v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                  
                               </div>
                        
                               <div class="editpage-input">
@@ -451,7 +451,8 @@ export default {
                   spec:'',
                   number:'',
                   unit:'',
-                  pack:''
+                  pack:'',
+                  status:''
 
               });
               this.addParam.show = true;
@@ -469,6 +470,7 @@ export default {
           this.param.items[this.param.items.length-1].number = this.breedInfo.number;
           this.param.items[this.param.items.length-1].unit = this.breedInfo.unit;
           this.param.items[this.param.items.length-1].pack = this.breedInfo.pack;
+          this.param.items[this.param.items.length-1].status = 1;
 
           console.log(this.param.items[this.param.items.length-1]);
           this.breedInfo.status = 0;

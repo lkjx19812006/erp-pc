@@ -2025,7 +2025,28 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
             param.loading = false;
         })
 }
-
+export const getUserTypeList = ({ dispatch }, param) => {  //客户类型
+    param.loading = true;
+    console.log(param);
+    var clienturl = apiUrl.clientList+'/sys/enum/userType';
+    Vue.http({
+        method:'GET',
+        url:clienturl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+        }).then((res) => {
+           var product = res.json().result;
+            dispatch(types.USER_TYPE, product)
+            param.all = res.json().result.pages;
+            param.total=res.json().result.total;
+            param.loading = false;
+        }, (res) => {
+            console.log('fail');
+            param.loading = false;
+        })
+}
 export const getProductList = ({ dispatch }, param) => {  //供应商产品列表
     param.loading = true;
     console.log(param);
@@ -3463,7 +3484,8 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询�
                         spec:item.spec,
                         number:item.number,
                         unit:item.unit,
-                        pack:item.pack
+                        pack:item.pack,
+                        status:item.status
                     }
                     param.items.push(temp);
                     param.itemsBack.push(temp);
@@ -3605,7 +3627,7 @@ export const updateIntlIntention = ({ dispatch }, param,tipParam) => { //修改�
         }
     }).then((res) => {
         console.log('修改成功!!!!')
-
+        param.names = res.json().result.names;
         dispatch(types.UPDATA_INTLINTENTION_DATA, param);
     }, (res) => {
         console.log('fail');

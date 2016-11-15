@@ -105,7 +105,8 @@ import {
    BATCH_ORG_ORDER,
    UPDATE_ENTERPRISE,
    ROLLOUT_STATUS,
-   ROLLOUT_DETAIL
+   ROLLOUT_DETAIL,
+   USER_TYPE
 
 } from '../mutation-types'
 
@@ -351,10 +352,12 @@ const state = {
         orderPayList:[{
              "id": "580ebddddeb2e33b1ffb9495","payWay":"3","orderId":"57f88e6288e8bb85da01df9b","orderNo": "11111","payFee":"0"
         }],
-      orderRolloutList:{
-        list:[]
-      }
-
+        orderRolloutList:{
+          list:[]
+        },
+        userTypeList:[{
+          "name": "其它","id": 0
+        }]
 
 
     },
@@ -574,7 +577,9 @@ const mutations = {
     [LOGIN_DATA](state, data) { //登录
         state.login = data;
     },
-
+    [USER_TYPE](state,data){
+        state.basicBaseList.userTypeList = data;
+    },
     [ORDER_TABLE](state, data) { //订单列表
         state.basicBaseList.orderList = data;
     },

@@ -48,7 +48,7 @@
           <td  @click.stop="">
             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
           </td>
-          <td>{{item.type | customerType}}</td>
+          <td>{{item.typeDesc}}</td>
           <td>{{item.classify | classify}}</td>
           <td>{{item.sourceType}}</td>
           <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>

@@ -50,7 +50,7 @@
                             <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
                         <!--</td>-->
                         <td>{{item.inquireType}}</td>
-                        <td><a @click="clickOn(item.intentionId,item.id)">{{item.names}}</a></td>
+                        <td><a @click="clickOn(item.intentionId,item.id,$index)">{{item.names}}</a></td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
@@ -140,6 +140,7 @@ export default {
                 link:'/intlIntention/',
                 key:'intentionDetail',
                 show:false,
+                index:'',    //询价列表的索引
                 id:'',
                 inquireId:''
 
@@ -196,7 +197,7 @@ export default {
         }
     },
     methods: {
-        clickOn:function(id,inquireId){
+        clickOn:function(id,inquireId,index){
             this.detailParam.id = id;
             this.detailParam.inquireId = inquireId;
 

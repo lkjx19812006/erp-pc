@@ -43,6 +43,9 @@ export const getPiechart = (state) => {
     } ;
     return option;
 }
+export const initUserType = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.userTypeList));
+}
 /*---订单数据---*/
 export const initOrderlist = (state) => {
     return parseJson(state.table.basicBaseList.orderList);

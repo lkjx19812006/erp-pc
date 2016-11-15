@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="clear" style="margin-top:10px;">
-                        <dl class="clear left transfer">
+                        <!-- <dl class="clear left transfer">
                            <dt class="left transfer marg_top">客户类型：</dt>
                            <dd class="left">
                                 <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
@@ -35,7 +35,7 @@
                                     <option value="1">企业</option>
                                 </select>
                            </dd>
-                        </dl>
+                        </dl> -->
                         <dl class="clear left transfer">
                            <dt class="left transfer marg_top">客户分类：</dt>
                            <dd class="left">
@@ -101,7 +101,7 @@
                         <td  @click.stop="">
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
-                        <td>{{item.type | customerType}}</td>
+                        <td>{{item.typeDesc}}</td>
                         <td>{{item.classify | classify}}</td>
                         <td>{{item.sourceType}}</td>
                         <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
