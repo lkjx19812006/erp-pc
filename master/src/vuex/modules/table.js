@@ -1292,7 +1292,7 @@ const mutations = {
     },
 
     [CONFIRM_OFFER](state, data) { //确认报价
-        console.log(data.index);
+        //console.log(data.index);
         state.basicBaseList.intlIntentionInquireList[data.index].inquire = 3;   
     },
     
