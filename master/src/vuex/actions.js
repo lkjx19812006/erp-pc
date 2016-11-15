@@ -3851,7 +3851,6 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
 }
 
 export const intlIntentionOtherOffer = ({ dispatch }, param) => { //国际意向其他报价(添加或修改)
-
     const data = {
 
         intentionId:param.intentionId,
@@ -3882,7 +3881,7 @@ export const intlIntentionOtherOffer = ({ dispatch }, param) => { //国际意向
         }
     }).then((res) => {
         console.log('其他报价成功');
-
+        param.id = res.json().result.id;    
         dispatch(types.OTHER_OFFER_DATA, param);
     }, (res) => {
         console.log('fail');

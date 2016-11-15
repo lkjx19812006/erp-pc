@@ -419,6 +419,8 @@ export default {
             editOfferParam:{
                 show:false,
                 link:'/intlIntention/itemOffer',
+                index:'',     //条目的索引
+                lastIndex:'',   //列表页询价的索引
                 /*id:'',
                 intentionId:'',
                 inquireId:'',
@@ -557,6 +559,7 @@ export default {
      //编辑原材料报价
      editOffer:function(item,index){                          
         console.log(item);
+        
         this.editOfferParam.id = item.offerId;    //?报价ID？？？没有
         this.editOfferParam.intentionId = item.intentionId;
         this.editOfferParam.inquireId = item.inquireId;
@@ -571,7 +574,8 @@ export default {
         //this.editOfferParam.total = item.total;
         this.editOfferParam.comment = item.offerComment;
 
-        this.editOfferParam.index = index;
+        this.editOfferParam.lastIndex = this.param.index;    //列表页，询价的索引，报价后将inquire改为=2
+        this.editOfferParam.index = index;   //条目的索引
         this.editOfferParam.show = true;
      },
      //上传原文件

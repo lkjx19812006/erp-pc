@@ -32,7 +32,6 @@
                 <thead>
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
-                            <th>{{$t('static.type')}}</th>
                             <th>{{$t('static.special')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.client_email')}}</th>
@@ -54,16 +53,13 @@
                             <th>{{$t('static.review_status')}}</th>
                             <th>{{$t('static.description')}}</th>
                             <th>{{$t('static.inquiry_state')}}</th>
+                            <th>{{$t('static.inquiry_type')}}</th>
                             <th colspan="5">{{$t('static.handle')}}</th>
                     </tr>
                 </thead>
                 <tbody>
 
                     <tr v-for="item in initIntlIntentionList" style="cursor:pointer">
-                         <!--<td>-->
-                            <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
-                        <!--</td>-->
-                        <td>{{item.type | chanceType}}</td>
                         <td>
                             <div v-if="item.especial==0">普通</div>
                             <div v-if="item.especial==1&&item.type==0">紧急求购</div>
@@ -89,6 +85,7 @@
                         <td>{{item.validate | intentionAudit}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.inquire | inquire}}</td>
+                        <td>{{item.inquireType}}</td>
                         <td>
 
                             <div style="display:inline-block;margin-right:7px" @click="deleteIntention({

@@ -199,6 +199,7 @@ export default {
     methods: {
         clickOn:function(id,inquireId,index){
             this.detailParam.id = id;
+            this.detailParam.index = index;
             this.detailParam.inquireId = inquireId;
 
             this.detailParam.show = true;

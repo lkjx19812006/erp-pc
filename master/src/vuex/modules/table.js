@@ -1266,14 +1266,17 @@ const mutations = {
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerNumber = data.number;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerUnit = data.unit;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerComment = data.comment;
+        state.basicBaseList.intlIntentionInquireList[data.lastIndex].inquire = 2;   //原材料报价后将inquire置为2
     },
 
     [OTHER_OFFER_DATA](state, data) { //增（改）国际意向其他报价
-        //如果data.id==''或data.index=='undefined'表示是增加其他报价，否则是修改
-        if(data.id==''){
+        //如果data.index==''表示是增加其他报价，否则是修改
+        if(data.index===''){
           //新建要补全信息
+          console.log('新建其他报价');
           state.basicBaseList.intlIntentionDetail.offers.arr.unshift(data);
         }else{
+          console.log('修改其他报价');
           state.basicBaseList.intlIntentionDetail.offers.arr[data.index].currency = data.currency;
           state.basicBaseList.intlIntentionDetail.offers.arr[data.index].cost = data.cost;
           state.basicBaseList.intlIntentionDetail.offers.arr[data.index].costDesc = data.costDesc;

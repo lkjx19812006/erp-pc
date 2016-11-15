@@ -104,7 +104,8 @@ var locales = {
       certificate:'资质证书',
       origin:'产地',
       quality:'质量',
-      quote_again:'再次报价'
+      quote_again:'再次报价',
+      inquiry_type:'询价类型'
     }
   },
   en: {
@@ -205,7 +206,8 @@ var locales = {
       origin:'Origin',
       quality:'Quality',
       inquiry_again:'Inquiry again',
-      quote_again:'To quote again'
+      quote_again:'To quote again',
+      inquiry_type:'Inquiry type'
     }
   }
 }
