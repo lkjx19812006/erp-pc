@@ -24,6 +24,7 @@
                         <tr>
                             <th></th>
                             <th>品种名称</th>
+                            <th>English name</th>
                             <th>类别</th>
                         </tr>
                     </thead>
@@ -33,6 +34,7 @@
                                <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  ></label>
                             </td> 
                             <td>{{item.name}}</td>
+                            <td>{{item.eName}}</td>
                             <td>{{item.categoryName}}</td>
                         </tr>
                     </tbody>

@@ -1727,9 +1727,12 @@ export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
   if(!param.name){
     param.name='';
   }
+  if(!param.eName){
+    param.eName = '';
+  }
     Vue.http({
         method: 'GET',
-        url: apiUrl.breedList + '/' + '?category='+param.categoryId+'&breedName=' + param.name + '&page=' + param.cur + '&pageSize=15',
+        url: apiUrl.breedList + '/' + '?category='+param.categoryId+'&eName='+param.eName+'&breedName=' + param.name + '&page=' + param.cur + '&pageSize=15',
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"

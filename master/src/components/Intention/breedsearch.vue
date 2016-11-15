@@ -16,7 +16,12 @@
 	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入品种名称">
 
 	                </div>
-          <div class="name_search clearfix" style="border:none"> <input type="button" class="search_input btn btn-default"   height="24" width="24" value="查询" @click="employNameSearch()"></div>
+	                <div class="name_search clearfix">
+	                    <img src="/static/images/search.png" height="24" width="24">
+	                    <input type="text" class="search_input" v-model="loadParam.eName" placeholder="Please enter the name of the breed">
+
+	                </div>
+          			<div class="name_search clearfix" style="border:none"> <input type="button" class="search_input btn btn-default"   height="24" width="24" value="查询" @click="employNameSearch()"></div>
 
 	            </div>
 	            <table class="table table-hover table_head table-striped " v-cloak>
@@ -24,6 +29,7 @@
 	                    <tr>
 	                    	<th></th>
 	                        <th>品种名称</th>
+	                        <th>English name</th>
 	                        <th>类别</th>
 	                    </tr>
 	                </thead>
@@ -33,6 +39,7 @@
 	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  ></label>
 	                        </td>        
 	                        <td>{{item.name}}</td>
+	                        <td>{{item.eName}}</td>
 	                        <td>{{item.categoryName}}</td>
 	                    </tr>
 	                </tbody>
@@ -64,6 +71,7 @@ export default{
                 cur: 1,
                 all: 7,
                 name:'',
+                eName:'',
                 total:0
             },
 			checked:false,
