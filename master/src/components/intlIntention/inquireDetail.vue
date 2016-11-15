@@ -521,6 +521,7 @@ export default {
         getters:{
             initIntlIntentionDetail,
             initLogin
+            
         },
         actions:{
             editintentInfo,

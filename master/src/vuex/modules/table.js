@@ -82,6 +82,7 @@ import {
    ORIGIN_OFFER_DATA,
    OTHER_OFFER_DATA,
    DEL_OTHER_OFFER,
+   CONFIRM_OFFER,
    UPLOAD_INTL_INTENT_FILE,
    DEL_INTL_INTENT_FILE,
    PROVINCE_LIST,
@@ -1289,6 +1290,12 @@ const mutations = {
     [DEL_OTHER_OFFER](state, data) { //删除国际意向其他报价
         state.basicBaseList.intlIntentionDetail.offers.arr.splice(data.index,1);    
     },
+
+    [CONFIRM_OFFER](state, data) { //确认报价
+        console.log(data.index);
+        state.basicBaseList.intlIntentionInquireList[data.index].inquire = 3;   
+    },
+    
 
     [UPLOAD_INTL_INTENT_FILE](state, data) { //上传国际意向文件
       if(data.category==0){    //原文件
