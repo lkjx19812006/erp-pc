@@ -374,11 +374,13 @@ export default {
             },
             inquireInfoParam:{
                 show:false,
+                showCost:false,             //是否显示成本价,true显示,false不显示
                 link:'/intlIntention/inquire/',
                 id:''
             },
             itemHistoryParam:{
                 show:false,
+                showCost:false,             //是否显示成本价,true显示,false不显示
                 link:'/intlIntention/itemHistory',
                 id:''                               //意向明细ID
 
@@ -483,7 +485,7 @@ export default {
      inquireAgain:function(item,index){
         console.log(item);
         this.inquireAgainParam.itemId = item.id;
-        this.inquireAgainParam.index = item.index;
+        this.inquireAgainParam.index = index;
         this.inquireAgainParam.show = true;
 
      },

@@ -11,13 +11,13 @@
       <table class="table table-hover table_color table-striped " v-cloak>
         <thead>
             <tr>
-              <th>客户姓名</th>
-              <th>银行卡号</th>
-              <th>正常金额</th>
-              <th>冻结金额</th>
-              <th>转出金额</th>
-              <th>申请时间</th>
-              <th>状态</th>
+              <th>{{$t('static.client_name')}}</th>
+              <th>{{$t('static.account_number')}}</th>
+              <th>{{$t('static.normal_amount')}}</th>
+              <th>{{$t('static.freezing_amount')}}</th>
+              <th>{{$t('static.transfer_amount')}}</th>
+              <th>{{$t('static.application_time')}}</th>
+              <th>{{$t('static.status')}}</th>
               <th></th>
             </tr>
         </thead>
