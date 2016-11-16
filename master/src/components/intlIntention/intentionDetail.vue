@@ -95,7 +95,7 @@
                     <article>
                         <div class="panel-group">
                             
-                          <div class="panel panel-default">
+                          <div class="panel panel-default" >
                               <div class="panel-heading" v-cloak>
                                 <h4 class="panel-title clearfix" @click="enfoldment({
                                             link:initIntlIntentionDetail.inquires,

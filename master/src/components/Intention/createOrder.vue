@@ -32,8 +32,8 @@
                                     <input type="text" class="form-control edit-input" v-model="param.preferential"/>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">收货人</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.consignee"/>
+                                    <label class="editlabel">收货人姓名 <span class="system_danger" v-if="$validation.customer.required">必填项</span></label>
+                                    <input type="text" class="form-control edit-input" v-model="param.consignee" v-validate:customer="['required']"/>
                                 </div>
 
                                 <div class="editpage-input">
@@ -66,8 +66,8 @@
                                     </div>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">收货人地址</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"/>
+                                    <label class="editlabel">收货人地址 <span class="system_danger" v-if="$validation.addr.required">必填项</span></label>
+                                    <input type="text" class="form-control edit-input" v-model="param.consigneeAddr" v-validate:addr="['required']"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">货币类型</label>
@@ -96,8 +96,8 @@
                                     <input type="text" class="form-control edit-input" v-model="param.preferentialDesc"/>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">收货人电话</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.consigneePhone"/>
+                                    <label class="editlabel">收货人电话 <span class="system_danger" v-if="$validation.mobile.phone">必填项</span></label>
+                                    <input type="text" class="form-control edit-input" v-model="param.consigneePhone" v-validate:mobile="['phone']"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">省</label>
@@ -181,7 +181,7 @@
             </div>
             <div class="edit_footer">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm()">保存</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm(param.show=false)">保存</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="disabled">保存</button>
             </div>
         </validator>

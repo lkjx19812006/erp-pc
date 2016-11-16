@@ -285,63 +285,6 @@
                      </div>  
                  </validator> 
 
-                 <!-- <validator name="modify">   
-                     <div v-if="updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
-                           <div class="editpageleft">
-                              <div class="editpage-input">
-                                   <label class="editlabel" >品种名称<span class="system_danger" v-if="$modify.breedname1.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname1="{required:true}"  @click="searchBreed()" readonly="true" />
-                              </div>
-                       
-                              <div class="editpage-input">
-                                   <label class="editlabel" >质量要求<span class="system_danger" v-if="$modify.quality1.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality1="{required:true}" />
-                              </div>
-                       
-                              <div class="editpage-input">
-                                   <label class="editlabel" >规格要求<span class="system_danger" v-if="$modify.spec1.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="breedInfo.spec" class="form-control edit-input" v-validate:spec1="{required:true}"/>
-                              </div>
-                              
-                              <div class="editpage-input">
-                                   <label class="editlabel" >单位<span class="system_danger" v-if="$modify.unit1.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit1="{required:true}"/>
-                              </div>
-                       
-                           </div>
-                       
-                           <div class="editpageright">
-                              <div class="editpage-input">
-                                   <label class="editlabel" >资质要求<span class="system_danger" v-if="$modify.qualification1.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="breedInfo.qualification" class="form-control edit-input" v-validate:qualification1="{required:true}"/>
-                              </div>
-                       
-                              <div class="editpage-input">
-                                   <label class="editlabel" >产地要求<span class="system_danger" v-if="$modify.location1.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="breedInfo.location" class="form-control edit-input" v-validate:location1="{required:true}"/>
-                              </div>
-                       
-                              <div class="editpage-input">
-                                   <label class="editlabel" >数量要求<span class="system_danger" v-if="$modify.number1.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="breedInfo.number" class="form-control edit-input" v-validate:number1="{required:true}" />
-                              </div>
-                       
-                              <div class="editpage-input">
-                                   <label class="editlabel" >包装要求<span class="system_danger" v-if="$modify.pack1.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="breedInfo.pack" class="form-control edit-input" v-validate:pack1="{required:true}" />
-                              </div>
-                 
-                              <div style="margin-top:10px;text-align:right">
-                                  <button type="button" class="btn btn-confirm" @click="cancelModifyBreed()">取消</button>
-                                  <button type="button" class="btn btn-confirm" v-if="$modify.valid" @click="modifyBreed()">保存</button>
-                                  <button type="button" class="btn btn-confirm" v-else disabled="disabled">保存</button>
-                                  
-                              </div>
-                              
-                           </div>
-                     </div>  
-                 </validator>  -->
-
              </section>
           </div>
           <div class="edit_footer">

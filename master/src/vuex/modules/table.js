@@ -652,10 +652,11 @@ const mutations = {
     },
     [ORDER_UPDATE_DATA](state,data){ //修改订单
         console.log(data)
+        console.log(state.basicBaseList.orderList[data.index])
         for (var key in data) {
-            state.basicBaseList.orderList[data.sub][key] = data[key];
+            state.basicBaseList.orderList[data.index][key] = data[key];
         }
-        console.log(state.basicBaseList.orderList[data.sub]);
+        console.log(state.basicBaseList.orderList[data.index]);
     },
     [ORDER_ADD_DATA](state, data) {  //创建订单
         if(data.key == 'intentionDetail'){
@@ -693,19 +694,7 @@ const mutations = {
                 "district":data.district,
                 "consigneeAddr":data.consigneeAddr,
                 'comments':data.comments,
-                goods:[{
-                    "sourceType":data.goods[0].sourceType,
-                    "sourceId":data.goods[0].sourceId,
-                    "title":data.goods[0].title,
-                    "breedId":data.goods[0].breedId,
-                    "brredName":data.goods[0].brredName,
-                    "quality":data.goods[0].quality,
-                    'location':data.goods[0].location,
-                    "spec":data.goods[0].spec,
-                    "price":data.goods[0].price,
-                    "unit":data.goods[0].unit,
-                    "number":data.goods[0].number
-                }],
+                'goods':data.goods,
                 "show": false,
                 "no":data.no,
                 "id":data.id,
@@ -742,19 +731,7 @@ const mutations = {
                 "district":data.district,
                 "consigneeAddr":data.consigneeAddr,
                 'comments':data.comments,
-                goods:[{
-                    "sourceType":data.goods[0].sourceType,
-                    "sourceId":data.goods[0].sourceId,
-                    "title":data.goods[0].title,
-                    "breedId":data.goods[0].breedId,
-                    "brredName":data.goods[0].brredName,
-                    "quality":data.goods[0].quality,
-                    'location':data.goods[0].location,
-                    "spec":data.goods[0].spec,
-                    "price":data.goods[0].price,
-                    "unit":data.goods[0].unit,
-                    "number":data.goods[0].number
-                }],
+                'goods':data,goods,
                 "show": false,
                 "no":data.no,
                 "orderStatus":data.orderStatus,

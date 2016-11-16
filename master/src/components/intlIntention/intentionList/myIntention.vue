@@ -6,7 +6,7 @@
      <modify-model :param.sync="modifyParam" v-if="modifyParam.show"></modify-model>
      <cancelinquire-model :param="cancelInquireParam" v-if="cancelInquireParam.show"></cancelinquire-model>
      <inquire-model :param="inquireParam" v-if="inquireParam.show"></inquire-model>
-     
+     <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
      <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">{{$t('static.my_intention')}}</div>
@@ -100,6 +100,9 @@
                                                 })"><img src="/static/images/del.png" alt="删除"  /></div>
                             <!-- <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div> -->
                         </td>
+                        <td>
+                        <div style="display:inline-block;margin-right:7px"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" height="18" width="47" alt="生成订单" /></div>
+                        </td>
                         <td v-if="item.inquire===0">
                             <div  style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/inquire.png" alt="询价" /></div>
                         </td>
@@ -136,7 +139,7 @@ import createModel from '../createIntention'
 import modifyModel from '../modifyIntention'
 import cancelinquireModel from '../../tips/tipDialog'
 import inquireModel from '../inquire'
-
+import createorderModel from  '../../order/createOrderDialog'
 
 import {
     initIntlIntentionList
@@ -147,7 +150,9 @@ import {
     intlIntentionInquire,
     deleteInfo,
     intlIntentionAffirmOffer,
-    cancelIntlIntentionInquire
+    cancelIntlIntentionInquire,
+    createOrder,
+    initLogin
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -158,7 +163,8 @@ export default {
         modifyModel,
         cancelinquireModel,
         inquireModel,
-        deletebreedModel
+        deletebreedModel,
+        createorderModel
     },
     vuex: {
         getters: {
@@ -170,8 +176,9 @@ export default {
             intlIntentionInquire,
             deleteInfo,
             intlIntentionAffirmOffer,
-            cancelIntlIntentionInquire
-            
+            cancelIntlIntentionInquire,
+            createOrder,
+            initLogin
         }
     },
     data() {
@@ -199,6 +206,41 @@ export default {
                 show:false,
                 id:''
 
+            },
+            createOrderParam:{
+                show:false,
+                title1:'新建订单',
+                type:1,
+                sourceType:0,
+                sample:'',
+                intl:'',
+                customer:'',
+                currency:'',
+                consignee:'',
+                consigneePhone:'',
+                zipCode:'',
+                country:'',
+                province:'',
+                city:'',
+                email:'',
+                employee:this.initLogin.id,
+                org:this.initLogin.orgId,
+                district:'',
+                consigneeAddr:'',
+                customerName:'',
+                comments:'',
+                incidentals:'',
+                incidentalsDesc:'',
+                preferential:'',
+                preferentialDesc:'',
+                payWay:'',
+                orderStatus:'',
+                goods:[ //多个商品
+
+                ],
+                link:createOrder,
+                key:'orderList',
+                different:'国际'
             },
             intentionParam:{
                 show:false,
@@ -344,7 +386,18 @@ export default {
             }
         },
         detailClick:function(initIntentionList){
-            this.chanceParam = initIntentionList;
+            this.chanceParam = initIntentionList
+        },
+        newOrder:function(item,sub){
+            this.createOrderParam.show = true;
+            this.createOrderParam.customer = item.customerId;
+            this.createOrderParam.customerName = item.customerName;
+            this.createOrderParam.province = item.province;
+            this.createOrderParam.country = item.country;
+            this.createOrderParam.district = item.district;
+            this.createOrderParam.city = item.city;
+            this.createOrderParam.intl = item.intl;
+            this.createOrderParam.email = item.customerEmail;
         },
         onlyselected:function(sub,id){
             var _this = this;

@@ -1,5 +1,5 @@
   <template>
-    <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
+    <editorder-model :param.sync="dialogParam" v-if="dialogParam.show"></editorder-model>
     <createorder-model :param="createParam" v-if="createParam.show"></createorder-model>
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
@@ -10,49 +10,7 @@
         <div class="clear">
             <div class="my_order col-xs-2">我的订单</div>
             <div class="right">
-                <button class="new_btn" @click="newOrder({
-                    show:true,
-                    title1:'新建订单',
-                    type:'',
-                    sourceType:0,
-                    sample:'',
-                    intl:'',
-                    customer:'',
-                    currency:'',
-                    consignee:'',
-                    consigneePhone:'',
-                    zipCode:'',
-                    country:'',
-                    province:'',
-                    city:'',
-                    employee:this.initLogin.id,
-                    org:this.initLogin.orgId,
-                    district:'',
-                    consigneeAddr:'',
-                    customerName:'',
-                    comments:'',
-                    incidentals:'',
-                    incidentalsDesc:'',
-                    preferential:'',
-                    preferentialDesc:'',
-                    payWay:'',
-                    orderStatus:'',
-                    goods:[{
-                            sourceType:0,
-                            sourceId:'',
-                            title:'',
-                            breedId:'',
-                            brredName:'',
-                            quality:'',
-                            location:'',
-                            spec:'',
-                            price:'',
-                            unit:'',
-                            number:''
-                        }],
-                    key:'orderList',
-                    link:createOrder
-                    })">{{$t('static.new')}}</button>
+                <button class="new_btn" @click="newOrder()">{{$t('static.new')}}</button>
                 <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button>
                 <button class="new_btn transfer" @click="orgCheck()">{{$t('static.review_application')}}</button>
                 <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
@@ -201,53 +159,38 @@
                   <td v-if="item.payWay==3">药款支付</td>
                   <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">未支付</td>
                   <td @click="updateOrder({
-                                        sub:$index,
-                                        id:item.id,
-                                        show:true,
-                                        title1:'修改订单',
-                                        type:item.type,
-                                        sourceType:item.sourceType,
-                                        sample:item.sample,
-                                        intl:item.intl,
-                                        customer:item.customer,
-                                        currency:item.currency,
-                                        consignee:item.consignee,
-                                        consigneePhone:item.consigneePhone,
-                                        zipCode:item.zipCode,
-                                        country:item.country,
-                                        province:item.province,
-                                        city:item.city,
-                                        employee:item.employee,
-                                        customerName:item.customerName,
-                                        org:item.org,
-                                        district:item.district,
-                                        orderStatus:item.orderStatus,
-                                        consigneeAddr:item.consigneeAddr,
-                                        comments:item.comments,
-                                        incidentals:item.incidentals,
-                                        orderStatus:item.orderStatus,
-                                        validate:item.validate,
-                                        incidentalsDesc:item.incidentalsDesc,
-                                        preferential:item.preferential,
-                                        preferentialDesc:item.preferentialDesc,
-                                        goods:[{
-                                                sourceType:0,
-                                                id:item.goods[0].id,
-                                                sourceId:item.goods[0].sourceId,
-                                                title:item.goods[0].title,
-                                                breedId:item.goods[0].breedId,
-                                                brredName:item.goods[0].brredName,
-                                                quality:item.goods[0].quality,
-                                                location:item.goods[0].location,
-                                                spec:item.goods[0].spec,
-                                                price:item.goods[0].price,
-                                                unit:item.goods[0].unit,
-                                                number:item.goods[0].number
-                                            }],
-                                        key:'orderList',
-                                        link:alterOrder,
-                                        url:'/order/'
-                                        })"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a></td>
+                        show:true,
+                        id:item.id,
+                        index:$index,
+                        type:item.type,
+                        sourceType:0,
+                        sample:item.sample,
+                        intl:item.intl,
+                        customer:item.costomer,
+                        currency:item.currency,
+                        consignee:item.consignee,
+                        consigneePhone:item.consigneePhone,
+                        zipCode:item.zipCode,
+                        country:item.country,
+                        province:item.province,
+                        city:item.city,
+                        employee:item.employee,
+                        customerName:item.customerName,
+                        org:item.org,
+                        district:item.district,
+                        orderStatus:item.orderStatus,
+                        consigneeAddr:item.consigneeAddr,
+                        comments:item.comments,
+                        incidentals:item.incidentals,
+                        validate:item.validate,
+                        incidentalsDesc:item.incidentalsDesc,
+                        preferential:item.preferential,
+                        preferentialDesc:item.preferentialDesc,
+                        key:'orderList',
+                        link:alterOrder,
+                        url:'/order/',
+                        goods:item.goods,
+                        })"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a></td>
                   <td>
                       <div v-if="item.validate==2">
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="(item.orderStatus==20||item.orderStatus==10)&&item.type==0"><img src="/static/images/payorder.png" height="18" width="38" title="待财务付款" alt="待财务付款"/></a>
@@ -342,15 +285,42 @@
 
                 },
                 dialogParam:{
-                    show: false
+                  show: false,
                 },
-                createParam: {
+                createParam:{
                     show:false,
+                    title1:'新建订单',
+                    type:'',
+                    sourceType:0,
+                    sample:'',
+                    intl:'',
+                    customer:'',
+                    currency:'',
+                    consignee:'',
+                    consigneePhone:'',
+                    zipCode:'',
+                    country:'',
+                    province:'',
+                    city:'',
+                    employee:this.initLogin.id,
+                    org:this.initLogin.orgId,
+                    district:'',
+                    consigneeAddr:'',
+                    customerName:'',
+                    comments:'',
+                    incidentals:'',
+                    incidentalsDesc:'',
+                    preferential:'',
+                    preferentialDesc:'',
+                    payWay:'',
+                    orderStatus:'',
+                    goods:[ //多个商品
+
+                    ],
+                    link:createOrder,
+                    key:'orderList'
                 },
                 detailParam: {
-                    show:false
-                },
-                updateorderParam:{
                     show:false
                 },
                 disposeParam:{ //订单处理各个状态
@@ -463,8 +433,8 @@
                   })
 
             },
-            newOrder:function(initOrderlist){
-                 this.createParam=initOrderlist;
+            newOrder:function(){
+                 this.createParam.show = true;
             },
             createSearch:function(){
                  this.loadParam.show=true;
@@ -480,8 +450,10 @@
                 this.detailParam=initOrderlist;
             },
             updateOrder:function(initOrderlist){
-                console.log(initOrderlist)
-                console.log(initOrderlist.goods)
+                /*this.dialogParam.show = true;
+                this.dialogParam.id = id;
+                this.dialogParam.index = index;
+                this.dialogParam.goods = [];*/
                 this.dialogParam=initOrderlist;
             },
             pendingOrder:function(item,sub){

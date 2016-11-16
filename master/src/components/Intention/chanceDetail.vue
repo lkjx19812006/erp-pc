@@ -31,7 +31,7 @@
                     <article>
                         <div class="panel-group">
 
-                          <div class="panel panel-default">
+                          <div class="panel panel-default" v-if="param.type===0">
                               <div class="panel-heading" v-cloak>
                               <!-- <div class="cover_loading">
                                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
