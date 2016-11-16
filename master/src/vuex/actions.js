@@ -658,7 +658,7 @@ export const logisticsInfo = ({ dispatch }, param) => { //物流查看详情
     })
 }
 export const createOrder = ({ dispatch }, data) => { //创建订单
-    console.log(data);
+    console.log(data.goods);
     const body = {
         type:data.type,
         sourceType:data.sourceType,
