@@ -386,6 +386,7 @@ export default {
               show:false,
               link:'/intlIntention/itemInquire',
               itemId:'',
+              index:'',
               description:'',
 
             },
@@ -456,6 +457,7 @@ export default {
      inquireAgain:function(item,index){
         console.log(item);
         this.inquireAgainParam.itemId = item.id;
+        this.inquireAgainParam.index = item.index;
         this.inquireAgainParam.show = true;
 
      },

@@ -3797,12 +3797,12 @@ export const intlIntentionItemInquire = ({ dispatch }, param) => { //国际意�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('询价成功')
+        console.log('询价成功');
         /*param.id=res.json().result.intentionId;
         param.validate = 0;
         param.checked = false;*/
         param.show = false;
-        dispatch(types.INTLINTENTION_DATA, param);
+        dispatch(types.ITEM_INQUIRE, param);
     }, (res) => {
         console.log('fail');
     })

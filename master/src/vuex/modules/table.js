@@ -73,6 +73,7 @@ import {
    INTLINTENTION_LIST_DATA,
    INTLINTENTION_DETAIL_DATA,
    INQUIRE_DATA,
+   ITEM_INQUIRE,
    INTLINTENTION_INQUIRE_LIST_DATA,
    INTLINTENTION_INQUIRE_DETAIL_DATA,
    ITEM_HISTORY_DATA,
@@ -1267,6 +1268,7 @@ const mutations = {
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerNumber = data.number;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerUnit = data.unit;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerComment = data.comment;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerCurrency = data.currency;
         state.basicBaseList.intlIntentionInquireList[data.lastIndex].inquire = 2;   //原材料报价后将inquire置为2
     },
 
@@ -1567,6 +1569,14 @@ const mutations = {
         state.basicBaseList.intlIntentionList[data.index].inquire = data.inquire;
         state.basicBaseList.intlIntentionList[data.index].inquireTime = data.inquireTime;
         state.basicBaseList.intlIntentionList[data.index].inquireType = data.inquireType;
+    },
+
+    [ITEM_INQUIRE](state,data){ //条目再询价
+
+        console.log("条目再询价");
+        console.log(data);
+        
+        state.basicBaseList.intlIntentionList[data.index].again ++;
     },
 
     
