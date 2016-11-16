@@ -36,7 +36,12 @@
                   <p>下单时间：{{initOrderDetail.ctime}}</p>
               </div>
               <div class="col-xs-6 pull-left">
-                 <p><label>杂费：</label><span style="color:#fa6705">¥{{initOrderDetail.incidentals}}</span>（运费）</p>
+                 <div>
+                      <label>杂费：</label><span style="color:#fa6705">¥{{initOrderDetail.incidentals}}</span>（运费）<br>
+                      <label>杂费说明：</label><span style="color:#fa6705">{{initOrderDetail.incidentalsDesc}}</span><br>
+                      <label>优惠：</label><span style="color:#fa6705">¥{{initOrderDetail.preferential}}</span>
+                      <br><label>优惠说明：</label><span style="color:#fa6705">{{initOrderDetail.preferentialDesc}}</span>
+                 </div>
                  <p><span  style="color:#fa6705">合计：¥{{initOrderDetail.total.toFixed(2)}}</span></p>
               </div>
             </div>
@@ -495,11 +500,8 @@ export default {
   border-top: 1px solid #ddd;
   padding: 20px 0;
  }
-.order_info div:first-child{
-  border-right: 1px solid #ddd;
-}
 .order_info div:nth-child(2){
-  margin-top: 20px;
   padding-left: 13%;
+  border-left: 1px solid #ddd;
 }
 </style>

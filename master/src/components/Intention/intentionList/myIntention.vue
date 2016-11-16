@@ -371,49 +371,7 @@
                               <a class="operate"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架"/>
                                </a>
                         </td>
-                        <td  v-if="item.type==1"  @click.stop="newOrder({
-                                            show:true,
-                                            title1:'新建订单',
-                                            type:item.type,
-                                            sourceType:1,
-                                            sample:'',
-                                            intl:'',
-                                            customer:'',
-                                            currency:'',
-                                            consignee:'',
-                                            consigneePhone:'',
-                                            zipCode:'',
-                                            country:'',
-                                            province:'',
-                                            city:'',
-                                            employee:this.initLogin.id,
-                                            org:this.initLogin.orgId,
-                                            district:'',
-                                            consigneeAddr:'',
-                                            customerName:'',
-                                            comments:'',
-                                            incidentals:'',
-                                            incidentalsDesc:'',
-                                            preferential:'',
-                                            preferentialDesc:'',
-                                            payWay:'',
-                                            orderStatus:'',
-                                            goods:[{
-                                                    sourceType:1,
-                                                    sourceId:item.id,
-                                                    title:'',
-                                                    breedId:'',
-                                                    brredName:'',
-                                                    quality:'',
-                                                    location:'',
-                                                    spec:'',
-                                                    price:'',
-                                                    unit:'',
-                                                    number:''
-                                                }],
-                                            key:'orderList',
-                                            link:createOrder
-                                            })">
+                        <td  v-if="item.type==1"  @click.stop="newOrder(item,$index)">
                               <a class="operate"><img src="/static/images/adopt.png" height="18" width="47" alt="生成订单"/>
                                </a>
                         </td>
@@ -516,7 +474,7 @@ import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
 import searchModel from '../intentionSearch'
 import auditDialog from '../../tips/auditDialog'
-import createorderModel  from  '../../order/createOrderDialog'
+import createorderModel  from  '../createOrder'
 import {
 	initIntentionList,
   initSupplyDemandList,
@@ -529,7 +487,8 @@ import {
 	deleteInfo,
 	editintentInfo,
 	createIntentionInfo,
-  batchUserIntentionAudit
+  batchUserIntentionAudit,
+  createOrder
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -559,7 +518,8 @@ export default {
             deleteInfo,
             editintentInfo,
             createIntentionInfo,
-            batchUserIntentionAudit
+            batchUserIntentionAudit,
+            createOrder
         }
     },
     data() {
@@ -600,7 +560,44 @@ export default {
                 show:false
             },
             createOrderParam:{
-               show:false
+                show:false,
+                sub:'',
+                key:'intentionDetail',
+                type:'',
+                customer:'',
+                sample:0,
+                intl:0,
+                employee:this.initLogin.id,   //业务员ID
+                org:this.initLogin.orgId,    //部门ID
+                incidentals:'',
+                incidentalsDesc:'',
+                preferential:'',   //优惠金额
+                preferentialDesc:'',
+                currency:'',     //货币品种
+                consignee:'',    //收货人姓名
+                consigneePhone:'',
+                zipCode:'',     //邮编
+                country:'',
+                province:'',
+                city:'',
+                district:'',
+                consigneeAddr:'',
+                comments:'',
+                sourceType:1,    //来源类型(意向)
+                orderStatus:0,   //订单状态
+                goods:[{
+                  sourceType:1,   //商品来源类型(报价)
+                  sourceId:'',   //商品来源ID
+                  title:'',      //订单商品标题
+                  breedId:'',
+                  brredName:'',
+                  quality:'',
+                  location:'',
+                  spec:'',
+                  price:'',
+                  unit:'',
+                  number:''
+              }]
             },
             intentionParam:{
                 show:false,
@@ -778,8 +775,20 @@ export default {
             this.tipsParam.name = '申请下架成功';
             this.intentionUpAndDown(this.tipsParam);
         },
-        newOrder:function(initIntentionList){
-            this.createOrderParam=initIntentionList;
+        newOrder:function(item,sub){
+           this.createOrderParam.show = true;
+           this.createOrderParam.sub = sub;
+           console.log(this.createOrderParam.goods[0])
+           console.log(item)
+           this.createOrderParam.goods[0].sourceId= item.id;
+           this.createOrderParam.goods[0].spec = item.spec;
+           this.createOrderParam.goods[0].price = item.price;
+           this.createOrderParam.goods[0].unit = item.unit;
+           this.createOrderParam.goods[0].number = item.number;
+           this.createOrderParam.incidentals = item.incidentals;
+           this.createOrderParam.incidentalsDesc = item.incidentalsDesc;
+           this.createOrderParam.goods[0].quality = item.quality;
+           this.createOrderParam.goods[0].location = item.location;
         },
         clientTransfer:function(initIntentionList){
             this.intentionParam = initIntentionList;

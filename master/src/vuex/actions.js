@@ -683,19 +683,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         consigneeAddr:data.consigneeAddr,
         comments:data.comments,
         orderStatus:data.orderStatus,
-        goods:[{
-            sourceType:data.goods[0].sourceType,
-            sourceId:data.goods[0].sourceId,
-            title:data.goods[0].title,
-            breedId:data.goods[0].breedId,
-            brredName:data.goods[0].brredName,
-            quality:data.goods[0].quality,
-            location:data.goods[0].location,
-            spec:data.goods[0].spec,
-            price:data.goods[0].price,
-            unit:data.goods[0].unit,
-            number:data.goods[0].number
-        }]
+        goods:data.goods
     }
     console.log(body);
     Vue.http({
@@ -747,20 +735,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         customerName:param.customerName,
         consigneeAddr:param.consigneeAddr,
         comments:param.comments,
-        goods:[{
-            sourceType:0,
-            id:param.goods[0].id,
-            sourceId:param.goods[0].sourceId,
-            title:param.goods[0].title,
-            breedId:param.goods[0].breedId,
-            brredName:param.goods[0].brredName,
-            quality:param.goods[0].quality,
-            location:param.goods[0].location,
-            spec:param.goods[0].spec,
-            price:param.goods[0].price,
-            unit:param.goods[0].unit,
-            number:param.goods[0].number
-        }]
+        goods:param.goods
     }
     Vue.http({
         method: 'PUT',
