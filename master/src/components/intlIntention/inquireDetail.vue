@@ -156,7 +156,7 @@
                                           <th>{{$t('static.unit')}}</th>
                                           <th>{{$t('static.comment')}}</th>
                                           <th>{{$t('static.inquiry_again')}}</th>
-                                          <th>{{$t('static.quote_again')}}</th>
+                                          <!-- <th>{{$t('static.quote_again')}}</th> -->
                                           <th></th> 
                                           <th></th> 
                                         </thead>
@@ -170,14 +170,15 @@
                                                 <td>{{item.offerUnit}}</td>
                                                 <td>{{item.offerComment}}</td>
                                                 <td>
-                                                    <div v-if="item.again==0">否</div>
-                                                    <div v-else>是</div>
+                                                    {{item.again | requireAgain}}
                                                 </td>
-                                                <td>
+                                                <!-- <td>
                                                     <div v-if="item.offerAgain==0">否</div>
                                                     <div v-else>是</div>
+                                                </td> -->
+                                                <td>
+                                                    <a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2||(item.again==1)" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/quote.png" alt="报价" /></a>
                                                 </td>
-                                                <td><a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/quote.png" alt="报价" /></a></td>
                                                 <td></td>
                                             </tr>
                                         </tbody>
@@ -389,11 +390,13 @@ export default {
             },
             inquireInfoParam:{
                 show:false,
+                showCost:true,              //是否显示成本价,true显示,false不显示
                 link:'/intlIntention/inquire/',
                 id:''
             },
             itemHistoryParam:{
                 show:false,
+                showCost:true,             //是否显示成本价,true显示,false不显示
                 link:'/intlIntention/itemHistory',
                 id:''                               //意向明细ID
 

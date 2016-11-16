@@ -35,7 +35,7 @@
                          <tr>
                            <th>品种名称</th> 
                            <th>货币类型</th>
-                           <th>成本价格</th>
+                           <th v-if="param.showCost">成本价格</th>
                            <th>报价</th>
                            <th>单位</th>
                            <th>数量</th> 
@@ -48,7 +48,7 @@
                          <tr v-for="item in initItemHistory">
                              <td>{{item.itemName}}</td>
                              <td>{{item.currency | Currency}}</td>
-                             <td>{{item.origPrice}}</td>
+                             <td v-if="param.showCost">{{item.origPrice}}</td>
                              <td>{{item.price}}</td>
                              <td>{{item.unit}}</td>
                              <td>{{item.number}}</td>

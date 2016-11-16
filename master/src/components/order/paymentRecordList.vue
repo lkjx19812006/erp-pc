@@ -5,7 +5,7 @@
       <div class="my_enterprise col-xs-2">订单支付记录</div>
       <div class="my_order_search">
           <select  v-model="loadParam.payWay" class="form-control" @change="searchProduct()">
-              <option selected value="">请选择支付方式</option>
+              <option selected value="">{{$t('static.select_payment_method')}}</option>
               <option value="0">线下打款</option>
               <option value="1">支付宝</option>
               <option value="2">平安支付</option>
@@ -13,11 +13,11 @@
           </select>
       </div>
       <div class="left clearfix">
-         <input type="text"  class="form-control" v-model="loadParam.orderNo" placeholder="请输入订单流水号查询" @keyUp.enter="searchProduct()" />
+         <input type="text"  class="form-control" v-model="loadParam.orderNo" placeholder="{{$t('static.order_no')}}" @keyUp.enter="searchProduct()" />
       </div>
       <div class="left">
-         <button class="new_btn transfer" @click="searchProduct()">搜索</button>
-         <button class="new_btn transfer" @click="reset()">清空条件</button>
+         <button class="new_btn transfer" @click="searchProduct()">{{$t('static.search')}}</button>
+         <button class="new_btn transfer" @click="reset()">{{$t('static.clear_all')}}</button>
      </div>
     </div>
     <div class="order_table">
@@ -27,11 +27,11 @@
       <table class="table table-hover table_color table-striped " v-cloak>
         <thead>
             <tr>
-              <th>支付方式</th>
-              <th>订单流水号</th>
-              <th>支付流水号</th>
-              <th>交易状态</th>
-              <th>订单金额</th>
+              <th>{{$t('static.payment_method')}}</th>
+              <th>{{$t('static.order_no')}}</th>
+              <th>{{$t('static.pay_no')}}</th>
+              <th>{{$t('static.transaction_status')}}</th>
+              <th>{{$t('static.order_amount')}}</th>
             </tr>
         </thead>
         <tbody>

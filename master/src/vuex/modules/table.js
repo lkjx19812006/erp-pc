@@ -1576,7 +1576,7 @@ const mutations = {
         console.log("条目再询价");
         console.log(data);
         
-        state.basicBaseList.intlIntentionList[data.index].again ++;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].again = 1;
     },
 
     

@@ -52,68 +52,68 @@
                         }],
                     key:'orderList',
                     link:createOrder
-                    })">新建</button>
-                <button class="new_btn transfer" @click="createSearch()">搜索</button>
-                <button class="new_btn transfer" @click="orgCheck()">申请审核</button>
-                <button type="button" class="new_btn transfer"  @click="resetTime()">清空条件</button>
+                    })">{{$t('static.new')}}</button>
+                <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button>
+                <button class="new_btn transfer" @click="orgCheck()">{{$t('static.review_application')}}</button>
+                <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
             </div>
         </div>
         <div class="clear" style="margin-top:10px;">
             <dl class="clear left transfer">
-               <dt class="left transfer marg_top">订单类别：</dt>
+               <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
                <dd class="left">
                     <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                        <option value="">请选择订单类别</option>
-                        <option value="0">采购</option>
-                        <option value="1">销售</option>
+                        <option value="">{{$t('static.select_order_type')}}</option>
+                        <option value="0">{{$t('static.purchase')}}</option>
+                        <option value="1">{{$t('static.sell')}}</option>
                     </select>
                </dd>
             </dl>
             <dl class="clear left transfer">
-               <dt class="left transfer marg_top">订单数据状态：</dt>
+               <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
-                            <option value="">请选择订单状态</option>
-                            <option value="0">订单生成</option>
-                            <option value="10">等待处理</option>
-                            <option value="20">等待支付</option>
-                            <option value="30">等待审核</option>
-                            <option value="40">等待发货</option>
-                            <option value="50">等待收货</option>
-                            <option value="60">已完成</option>
-                            <option value="70">已完成</option>
-                            <option value="-1">已取消</option>
-                            <option value="-2">已过期</option>
+                            <option value="">{{$t('static.select_order_status')}}</option>
+                            <option value="0">{{$t('static.order_generation')}}</option>
+                            <option value="10">{{$t('static.pending')}}</option>
+                            <option value="20">{{$t('static.wait_for_payment')}}</option>
+                            <option value="30">{{$t('static.wait_for_audit')}}</option>
+                            <option value="40">{{$t('static.wait_for_delivery')}}</option>
+                            <option value="50">{{$t('static.wait_for_receiving')}}</option>
+                            <option value="60">{{$t('static.completed')}}</option>
+                            <option value="70">{{$t('static.completed')}}</option>
+                            <option value="-1">{{$t('static.canceled')}}</option>
+                            <option value="-2">{{$t('static.out_of_date')}}</option>
                     </select>
                </dd>
             </dl>
             <dl class="clear left transfer">
-               <dt class="left transfer marg_top">支付方式：</dt>
+               <dt class="left transfer marg_top">{{$t('static.payment_method')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.payWay"  class="form-control" @change="selectSearch()">
-                            <option value="">请选择支付方式</option>
-                            <option value="0">线下</option>
-                            <option value="1">支付宝</option>
+                            <option value="">{{$t('static.select_payment_method')}}</option>
+                            <option value="0">{{$t('static.offline')}}</option>
+                            <option value="1">{{$t('static.alipay')}}</option>
                             <option value="2">平安</option>
                             <option value="3">药款</option>
                     </select>
                </dd>
             </dl>
             <dl class="clear left transfer">
-               <dt class="left transfer marg_top">订单数据状态：</dt>
+               <dt class="left transfer marg_top">{{$t('static.order_validity')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.dataStatus"  class="form-control" @change="selectSearch()">
-                        <option value="">请选择数据状态</option>
-                        <option value="0">无效</option>
-                        <option value="1">可用</option>
+                        <option value="">{{$t('static.select_order_validity')}}</option>
+                        <option value="0">{{$t('static.available')}}</option>
+                        <option value="1">{{$t('static.useless')}}</option>
                     </select>
                </dd>
             </dl>
             <dl class="clear left transfer">
-               <dt class="left transfer marg_top">客户端来源：</dt>
+               <dt class="left transfer marg_top">{{$t('static.client_source')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.clients"  class="form-control" @change="selectSearch()">
-                        <option value="">请选择客户端来源</option>
+                        <option value="">{{$t('static.select_client_source')}}</option>
                         <option value="0">pc</option>
                         <option value="1">android</option>
                         <option value="2">wechart</option>
@@ -122,10 +122,10 @@
                </dd>
             </dl>
             <dl class="clear left transfer">
-               <dt class="left transfer marg_top">交易模式：</dt>
+               <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
-                        <option value="">请选择交易模式</option>
+                        <option value="">{{$t('static.select_trading_patterns')}}</option>
                         <option value="1">撮合</option>
                         <option value="2">三方</option>
                         <option value="3">自营</option>
@@ -142,22 +142,22 @@
             <thead>
                 <tr>
                     <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
-                    <th>订单号</th>
-                    <th>订单类别</th>
-                    <th>订单来源</th>
-                    <th>收货人名称</th>
-                    <th>收货人电话</th>
-                    <th>收货人地址</th>
-                    <th>国家</th>
-                    <th>所在省</th>
-                    <th>所在市</th>
-                    <th>备注</th>
-                    <th>客户端类型</th>
-                    <th>订单状态</th>
-                    <th>审核状态</th>
-                    <th>货币类型</th>
-                    <th>支付方式</th>
-                    <th>编辑</th>
+                    <th>{{$t('static.order_no')}}</th>
+                    <th>{{$t('static.order_type')}}</th>
+                    <th>{{$t('static.order_source')}}</th>
+                    <th>{{$t('static.consignee_name')}}</th>
+                    <th>{{$t('static.consignee_phone')}}</th>
+                    <th>{{$t('static.consignee_address')}}</th>
+                    <th>{{$t('static.country')}}</th>
+                    <th>{{$t('static.province')}}</th>
+                    <th>{{$t('static.city')}}</th>
+                    <th>{{$t('static.comment')}}</th>
+                    <th>{{$t('static.client_source')}}</th>
+                    <th>{{$t('static.order_status')}}</th>
+                    <th>{{$t('static.review_status')}}</th>
+                    <th>{{$t('static.currency')}}</th>
+                    <th>{{$t('static.payment_method')}}</th>
+                    <th>{{$t('static.edit')}}</th>
                     <th></th>
                 </tr>
             </thead>

@@ -18,22 +18,22 @@
         <table class="table table-hover table_color table-striped " v-cloak>
             <thead>
                 <tr>
-                    <th>订单号</th>
-                    <th>订单类别</th>
-                    <th>订单来源</th>
-                    <th>收货人名称</th>
-                    <th>收货人电话</th>
-                    <th>收货人地址</th>
-                    <th>国家</th>
-                    <th>所在省</th>
-                    <th>所在市</th>
-                    <th>业务员</th>
-                    <th>备注</th>
-                    <th>客户端类型</th>
-                    <th>订单状态</th>
-                    <th>审核状态</th>
-                    <th>货币类型</th>
-                    <th>支付方式</th>
+                    <th>{{$t('static.order_no')}}</th>
+                    <th>{{$t('static.order_type')}}</th>
+                    <th>{{$t('static.order_source')}}</th>
+                    <th>{{$t('static.consignee_name')}}</th>
+                    <th>{{$t('static.consignee_phone')}}</th>
+                    <th>{{$t('static.consignee_address')}}</th>
+                    <th>{{$t('static.country')}}</th>
+                    <th>{{$t('static.province')}}</th>
+                    <th>{{$t('static.city')}}</th>
+                    <th>{{$t('static.salesman')}}</th>
+                    <th>{{$t('static.comment')}}</th>
+                    <th>{{$t('static.client_source')}}</th>
+                    <th>{{$t('static.order_status')}}</th>
+                    <th>{{$t('static.review_status')}}</th>
+                    <th>{{$t('static.currency')}}</th>
+                    <th>{{$t('static.payment_method')}}</th>
                     <th></th>
                 </tr>
             </thead>
