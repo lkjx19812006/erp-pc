@@ -2,8 +2,10 @@
     <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
     <inquireinfo-model :param="inquireInfoParam" v-if="inquireInfoParam.show"></inquireinfo-model>
     <itemhistory-model :param="itemHistoryParam" v-if="itemHistoryParam.show"></itemhistory-model>
+    <uploadfiles-model :param="uploadFilesParam" v-if="uploadFilesParam.show"></uploadfiles-model>
     <otheroffer-model :param="otherOfferParam" v-if="otherOfferParam.show"></otheroffer-model>
     <inquireagain-model :param="inquireAgainParam" v-if="inquireAgainParam.show"></inquireagain-model>
+    <delfile-model :param="delFileParam" v-if="delFileParam.show"></delfile-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show">
         <div class="top-title">
@@ -151,7 +153,7 @@
                                       <table class="table contactSet">
                                         <thead>
                                           <th>{{$t('static.breed')}}</th>
-                                          <th>{{$t('static.cost')}}</th>
+                                          <!-- <th>{{$t('static.cost')}}</th> -->
                                           <th>{{$t('static.quoted_price')}}</th>
                                           <th>{{$t('static.quantity')}}</th>
                                           <th>{{$t('static.unit')}}</th>
@@ -163,7 +165,7 @@
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.items.arr">
                                                 <td><a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a></td>
-                                                <td>{{item.origPrice}}</td>
+                                                <!-- <td>{{item.origPrice}}</td> -->
                                                 <td>{{item.price}}</td>
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.unit}}</td>
@@ -245,17 +247,17 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           {{$t('static.original_file')}}（{{initIntlIntentionDetail.files.arr.length}}）
                                         </a>
-                                        <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                                        <button type="button" class="btn btn-base pull-right" @click.stop="uploadOriginalFiles()">{{$t('static.upload')}}</button>                                  
                                   </h4>
                               </div>
                               <div  class="panel-collapse" v-show="initIntlIntentionDetail.files.show&&initIntlIntentionDetail.files.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>文件路径</th>
-                                          <th>文件类型</th>
-                                          <th>描述</th>
-                                          <th>创建时间</th>
+                                          <!-- <th>{{$t('static.file_path')}}</th> -->
+                                          <th>{{$t('static.file_type')}}</th>
+                                          <th>{{$t('static.description')}}</th>
+                                          <th>{{$t('static.create_time')}}</th>
                                           <th></th>
                                           <th></th>
                                           
@@ -263,11 +265,13 @@
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.files.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.path}}</td>
+                                               <!--  <td v-if="item.fileType=='image'"><img :src="item.url"/></td>
+                                               <td v-else></td> -->
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td></td>
+                                                <td><a href="{{item.url}}" download=""><img src="/static/images/download.png" alt="下载" /></a></td>
+                                                <td><a @click="delFile(item,$index)"><img src="/static/images/del.png" alt="删除" /></a></td>
                                                 <td></td>
                                                 
                                                
@@ -295,7 +299,7 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>{{$t('static.file_path')}}</th>
+                                          <!-- <th>{{$t('static.file_path')}}</th> -->
                                           <th>{{$t('static.file_type')}}</th>
                                           <th>{{$t('static.description')}}</th>
                                           <th>{{$t('static.create_time')}}</th>
@@ -306,23 +310,15 @@
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.offerFiles.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.path}}</td>
+                                                <!-- <td v-if="item.fileType=='image'"><img :src="item.url"/></td>
+                                                <td v-else>{{item.url}}</td> -->
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
+                                                <td><a href="{{item.url}}" download=""><img src="/static/images/download.png" alt="下载" /></a></td>
+                                                <td><a @click="delFile(item,$index)"><img src="/static/images/del.png" alt="删除" /></a></td>
                                                 <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <!-- <td  @click="clickShow($index,{
-                                                    concrete:'offers'
-                                                    })">
-                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="files_action" v-show="item.show" >
-                                                        <dl>
-                                                            <dt @click="edit($index,item)">修改备注</dt>
-                                                        </dl>
-                                                    </div>
-                                                </td> -->
+                                               
                                             </tr>
                                         </tbody>
                                     </table>
@@ -346,13 +342,16 @@ import inquireinfoModel from './inquireInfo'
 import itemhistoryModel from './itemHistory'
 import otherofferModel from './otherOffer'
 import inquireagainModel from './inquireAgain'
+import uploadfilesModel from './uploadFiles'
+import delfileModel from '../tips/tipDialog'
 import{
     initIntlIntentionDetail,
     initLogin
 } from '../../vuex/getters'
 import {
     editintentInfo,
-    getIntlIntentionDetail
+    getIntlIntentionDetail,
+    delIntlIntentionFiles
 } from '../../vuex/actions'
 export default {
     components: {
@@ -361,7 +360,9 @@ export default {
         inquireinfoModel,
         itemhistoryModel,
         otherofferModel,
-        inquireagainModel
+        inquireagainModel,
+        uploadfilesModel,
+        delfileModel
     },
     data() {
         return {
@@ -420,7 +421,28 @@ export default {
                 total:2,
                 comment:'啦啦啦'
 
-            }
+            },
+            uploadFilesParam:{
+                link:'/intlIntention/files',
+                show:false,
+                bizId:'',   //意向ID
+                category:'',   //上传类型 0/1 原文件/报价附件
+                path:'',
+                description:'',
+                fileType:'', 
+                image_f_show:''
+            },
+             delFileParam:{
+                show:false,
+                link:'/intlIntention/files',
+                name:'确认删除文件?',
+                callback:this.delFileConfirm,
+                confirm:true,
+                id:'',
+                category:'',
+                index:'', 
+            },
+           
             
         }
     },
@@ -432,7 +454,8 @@ export default {
         },
         actions:{
             editintentInfo,
-            getIntlIntentionDetail
+            getIntlIntentionDetail,
+            delIntlIntentionFiles
         }
     },
     methods: {
@@ -454,6 +477,9 @@ export default {
         this.itemHistoryParam.id = id;
         this.itemHistoryParam.show = true;
      },
+      delFileConfirm:function(){
+                this.delIntlIntentionFiles(this.delFileParam);
+             },
      inquireAgain:function(item,index){
         console.log(item);
         this.inquireAgainParam.itemId = item.id;
@@ -461,15 +487,29 @@ export default {
         this.inquireAgainParam.show = true;
 
      },
-
+      delFile:function(item,index){
+        this.delFileParam.id = item.id;
+        this.delFileParam.category = item.category;
+        this.delFileParam.index = index;
+        this.delFileParam.show = true;
+     },
      offer:function(){
         this.offerParam.show = true;
      },
      otherOffer:function(){
         this.otherOfferParam.show = true;
+     },    
+     uploadOriginalFiles:function(){
+        this.uploadFilesParam.bizId = this.param.id;  
+        this.uploadFilesParam.category = 0;
+        this.uploadFilesParam.path = '';
+        this.uploadFilesParam.description='';
+        this.uploadFilesParam.fileType='';
+        this.uploadFilesParam.image_f_show='';
+        this.uploadFilesParam.show = true;
+        console.log(this.uploadFilesParam);
+        
      }
-      
-     
       
     },
     created(){

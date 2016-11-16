@@ -14,7 +14,7 @@
                     show:true,
                     title1:'新建订单',
                     type:'',
-                    sourceType:'',
+                    sourceType:0,
                     sample:'',
                     intl:'',
                     customer:'',

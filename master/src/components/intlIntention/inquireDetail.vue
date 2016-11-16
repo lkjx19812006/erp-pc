@@ -248,7 +248,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           {{$t('static.raw_material_file')}}（{{initIntlIntentionDetail.files.arr.length}}）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right" @click.stop="uploadOriginalFiles()">{{$t('static.upload')}}</button> 
+                                        <!-- <button type="button" class="btn btn-base pull-right" @click.stop="uploadOriginalFiles()">{{$t('static.upload')}}</button>  -->
                                   </h4>
                               </div>
                               <div  class="panel-collapse" v-show="initIntlIntentionDetail.files.show&&initIntlIntentionDetail.files.arr.length>0">
