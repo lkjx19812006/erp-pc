@@ -9,7 +9,7 @@
      <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      <audit-dialog :param.sync="auditParam" v-if="auditParam.show"></audit-dialog>
-
+     <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
 	 <div>
         <div class="service-nav">
           <div class="clearfix">
@@ -201,7 +201,7 @@
                         <th>发布时间</th>
       	            		<th>审核状态</th>
                         <th>上下架</th>
-      	            		<th colspan="3">操作</th>
+      	            		<th colspan="4">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -371,6 +371,52 @@
                               <a class="operate"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架"/>
                                </a>
                         </td>
+                        <td  v-if="item.type==1"  @click.stop="newOrder({
+                                            show:true,
+                                            title1:'新建订单',
+                                            type:item.type,
+                                            sourceType:1,
+                                            sample:'',
+                                            intl:'',
+                                            customer:'',
+                                            currency:'',
+                                            consignee:'',
+                                            consigneePhone:'',
+                                            zipCode:'',
+                                            country:'',
+                                            province:'',
+                                            city:'',
+                                            employee:this.initLogin.id,
+                                            org:this.initLogin.orgId,
+                                            district:'',
+                                            consigneeAddr:'',
+                                            customerName:'',
+                                            comments:'',
+                                            incidentals:'',
+                                            incidentalsDesc:'',
+                                            preferential:'',
+                                            preferentialDesc:'',
+                                            payWay:'',
+                                            orderStatus:'',
+                                            goods:[{
+                                                    sourceType:1,
+                                                    sourceId:item.id,
+                                                    title:'',
+                                                    breedId:'',
+                                                    brredName:'',
+                                                    quality:'',
+                                                    location:'',
+                                                    spec:'',
+                                                    price:'',
+                                                    unit:'',
+                                                    number:''
+                                                }],
+                                            key:'orderList',
+                                            link:createOrder
+                                            })">
+                              <a class="operate"><img src="/static/images/adopt.png" height="18" width="47" alt="生成订单"/>
+                               </a>
+                        </td>
                         <!-- <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">
@@ -470,10 +516,11 @@ import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
 import searchModel from '../intentionSearch'
 import auditDialog from '../../tips/auditDialog'
-
+import createorderModel  from  '../../order/createOrderDialog'
 import {
 	initIntentionList,
-  initSupplyDemandList
+  initSupplyDemandList,
+  initLogin
 } from '../../../vuex/getters'
 import {
 	getIntentionList,
@@ -496,12 +543,14 @@ export default {
         createintentModel,
         supdemModel,
         searchModel,
-        auditDialog
+        auditDialog,
+        createorderModel
     },
     vuex: {
         getters: {
             initIntentionList,
-            initSupplyDemandList
+            initSupplyDemandList,
+            initLogin
         },
         actions: {
             getIntentionList,
@@ -549,6 +598,9 @@ export default {
             },
             chanceParam:{
                 show:false
+            },
+            createOrderParam:{
+               show:false
             },
             intentionParam:{
                 show:false,
@@ -725,6 +777,9 @@ export default {
             this.tipsParam.onSell = 3;
             this.tipsParam.name = '申请下架成功';
             this.intentionUpAndDown(this.tipsParam);
+        },
+        newOrder:function(initIntentionList){
+            this.createOrderParam=initIntentionList;
         },
         clientTransfer:function(initIntentionList){
             this.intentionParam = initIntentionList;

@@ -684,7 +684,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         comments:data.comments,
         orderStatus:data.orderStatus,
         goods:[{
-            sourceType:0,
+            sourceType:data.goods[0].sourceType,
             sourceId:data.goods[0].sourceId,
             title:data.goods[0].title,
             breedId:data.goods[0].breedId,
