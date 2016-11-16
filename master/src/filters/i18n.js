@@ -59,6 +59,7 @@ var locales = {
       original_file:'原文件',
       quotation_file:'报价文件',
       required:'必填项',
+      postcodes:'邮编',
       new_international_intention:'新增国际意向',
       revised_international_intention:'修改国际意向',
       choose_client:'请选择客户',
@@ -68,6 +69,8 @@ var locales = {
       choose_area:'请选择地区',
       detailed_address:'详细地址',
       enter_address:'请输入详细地址',
+      enter_name:'请输入收货人姓名',
+      enter_phone:'请输入正确的手机号',
       delivery_information:'交收信息',
       medicinal_material_information:'药材信息',
       add_material_information:'添加药材信息',
@@ -163,6 +166,7 @@ var locales = {
       transfer_amount:'转出金额',
       application_time:'申请时间',
       status:'状态',
+      enter_code:'请输入正确的邮箱'
     }
   },
   en: {
@@ -173,6 +177,7 @@ var locales = {
       systemlogin:'System login',
       submit:'Submit',
       headline:'Headline',
+      enter_code:'Please enter the correct email address',
       change_order:'Change order',
       sundry_fees:'Sundry fees',
       discount_note:'Discount note',
@@ -181,6 +186,9 @@ var locales = {
       account_or_password:'Please enter account and password',
       logout:'Log out',
       new_order:'New order',
+      postcodes:'Postcodes',
+      enter_name:'Please enter the name of the consignee',
+      enter_phone:'Please enter the mobile of the consignee',
       sample_order :'Sample order',
       customer_info:'Customer information',
       modify_password:'Modify password',

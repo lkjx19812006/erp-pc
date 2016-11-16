@@ -19,7 +19,7 @@
                   <div class="editpage">
                       <div class="editpageleft">
                           <div class="editpage-input" v-if="param.different!='国际'">
-                              <label class="editlabel">订单类别 <span class="system_danger" v-if="$validation.type.required">请选择订单类别</span></label>
+                              <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
                               <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
                               <select  class="form-control edit-input" v-model="param.type"   >
                                   <option value="0">采购</option>
@@ -28,7 +28,7 @@
                               <!-- <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/> -->
                           </div>
                           <div class="editpage-input">
-                              <label class="editlabel">来源类型</label>
+                              <label class="editlabel">{{$t('static.order_source')}}</label>
                               <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" >
                                   <option value="0">新建</option>
                                   <option value="1">意向</option>
@@ -37,13 +37,17 @@
                               <!-- <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/> -->
                           </div>
                            <div class="editpage-input">
-                              <label class="editlabel">收货人姓名 <span class="system_danger" v-if="$validation.consignee.minlength">请输入收货人姓名且不少于两位数</span></label>
+                              <label class="editlabel">{{$t('static.consignee_name')}} <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}" v-validate:consignee="{minlength:2}" />
                           </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">邮箱 <span class="system_danger" v-if="$validation.you.email">请输入正确的邮箱</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.email"  v-validate:you="['email']" />
+                          <div class="editpage-input" v-if="param.different=='国际'">
+                              <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.mobile.email">{{$t('static.enter_email')}}</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.email"  v-validate:mobile="['email']" value="{{param.email}}"/>
                           </div>
+                          <!-- <div class="editpage-input">
+                              <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.you.email">请输入正确的邮箱</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.email"  v-validate:you="['email']" />
+                          </div> -->
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.country')}}</label>
                               <div type="text" class="edit-input">
@@ -73,13 +77,13 @@
                                   </v-select>
                               </div>
                           </div>
-
+                      
                           <div class="editpage-input">
-                              <label class="editlabel">邮编 <span class="system_danger" v-if="$validation.code.postcode">请输入正确的邮编</span></label>
+                              <label class="editlabel">{{$t('static.postcodes')}} <span class="system_danger" v-if="$validation.code.postcode">{{$t('static.enter_code')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:code="['postcode']" value="{{param.zipCode}}" />
                           </div>
                            <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">请输入收货人详细地址</span></label>
+                              <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">{{$t('static.enter_address')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"    v-validate:addr="['required']" value="{{param.consigneeAdd}}" />
                           </div>
                           <div class="editpage-input">
@@ -98,23 +102,19 @@
                       <div class="editpageright">
 
                           <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">请选择客户</span></label>
+                              <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.choose_client')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.customerName"   v-validate:custname="['required']" value="{{param.customerName}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
                           </div>
                           <div class="editpage-input">
-                              <label class="editlabel">是否国际</label>
+                              <label class="editlabel">{{$t('static.international')}}</label>
                               <select type="text" class="form-control edit-input" v-model="param.intl"  @change="selectBizType()">
                                   <option value="0">否</option>
                                   <option value="1">是</option>
                               </select>
                           </div>
                           <div class="editpage-input" >
-                              <label class="editlabel">收货人电话 <span class="system_danger" v-if="$validation.mobile.phone">请输入正确有效的手机号</span></label>
+                              <label class="editlabel">{{$t('static.consignee_phone')}}  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['phone']" value="{{param.consigneePhone}}"/>
-                          </div>
-                          <div class="editpage-input" v-if="param.difference=='国际'">
-                              <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.mobile.email">请输入正确有效的手机号</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.email"  v-validate:mobile="['email']" value="{{param.email}}"/>
                           </div>
                           
                           <div class="editpage-input">
@@ -187,7 +187,7 @@
                               <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
                           </div>
                           <div class="editpage-input">
-                              <label class="editlabel">订单状态</label>
+                              <label class="editlabel">{{$t('static.order_status')}}</label>
                               <select  class="form-control edit-input" v-model="param.orderStatus" >
                                   <option value="0" selected>订单生成</option>
                                   <option value="60">已完成未评论</option>
