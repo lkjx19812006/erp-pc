@@ -259,6 +259,13 @@ export default {
     },
     methods:{
         clientSearch:function(){
+            if(typeof this.param.city=='undefined'){
+                this.param.city = '';
+            }
+            if(typeof this.param.phoneCityName=='undefined'){
+                this.param.phoneCityName = '';
+            }
+            
               this.getClientList(this.param);
         },
         employee:function(employeeId,employeeName){
@@ -272,6 +279,7 @@ export default {
             this.param.cityName = '';
             this.param.province = this.province.id;
             this.param.provinceName = this.province.cname;
+            console.log(this.param.cityName);
             if(this.province.cname){
                 this.getCityList(this.province);
             }

@@ -10,13 +10,19 @@
           <dl class="clearfix">
             <dt>客户名称：</dt>
             <dd>
-              <input type="text"  class="form-control" placeholder="按客户名称搜索" class="search_input"  v-model="loadParam.name" />
+              <input type="text"  class="form-control" placeholder="按客户名称搜索" class="search_input"  v-model="loadParam.name" @keyup.enter="searchProduct()"/>
             </dd>
           </dl>
+          <!-- <dl class="clearfix">
+            <dt>客户名称：</dt>
+            <dd>
+              <input type="text"  class="form-control" placeholder="按客户名称搜索" class="search_input"  v-model="loadParam.cname" @keyup.enter="searchProduct()"/>
+            </dd>
+          </dl> -->
           <dl class="clearfix">
             <dt>描述：</dt>
             <dd>
-              <input type="text"  class="form-control" placeholder="按描述搜索" class="search_input"  v-model="loadParam.description" />
+              <input type="text"  class="form-control" placeholder="按描述搜索" class="search_input"  v-model="loadParam.description"  @keyup.enter="searchProduct()"/>
             </dd>
           </dl>
         </div>
@@ -34,10 +40,11 @@
       <table class="table table-hover table_color table-striped " v-cloak>
         <thead>
             <tr>
+              <th>文件名称</th>
               <th>客户名称</th>
               <th>文件类型</th>
               <th>所属文件</th>
-              <!--<th>路径</th>-->
+              <th>文件图片</th>
               <th>描述</th>
               <th colspan="3">操作</th>
             </tr>
@@ -45,14 +52,15 @@
         <tbody>
             <tr v-for="item in initFileslist">
               <td>{{item.name}}</td>
+              <td>{{item.cname}}</td>
               <td>{{item.fileType}}</td>
-              <td>客户文件</td>
-              <!--<td>-->
-                    <!--&lt;!&ndash;<img v-bind:src="item.path" v-if="item.fileType=='image'" />&ndash;&gt;-->
-                    <!--<img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">-->
-                    <!--<img  src="/static/images/word.png" v-if="item.fileType=='word'">-->
-                    <!--<img  src="/static/images/excel.png" v-if="item.fileType=='excel'">-->
-              <!--</td>-->
+              <td>{{item.bizType}}</td>
+              <td>
+                    <img :src="item.url" v-if="item.fileType=='image'" width="200" />
+                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf'">
+                    <img  src="/static/images/word.png" v-if="item.fileType=='word'">
+                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
+              </td>
               <td>{{item.description}}</td>
               <td  >
                  <a class="operate" @click="updatelabel({
@@ -137,6 +145,7 @@
           type:'',
           total:0,
           name:'',
+          cname:'',
           description:''/*,
           bizScope:'',
           provinceName:'',

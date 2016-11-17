@@ -95,7 +95,7 @@ var locales = {
       quoted_price:'报价',
       quantity:'数量',
       unit:'单位',
-      currency:'货币类型',
+      currency:'币种',
       expense:'费用',
       expense_explanation:'费用说明',
       all_in_cost:'总费用',

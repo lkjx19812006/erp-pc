@@ -11,67 +11,29 @@
            <section class="editsection" v-cloak>
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpage">
-               <div class="editpageleft">
-                    <div class="editpage-input">
+                  <div class="editpageleft">
+                      <div class="editpage-input">
                            <label class="editlabel">备注</label>
                            <input type="text" v-model='param.ucomment' class="form-control edit-input" value="{{param.ucomment}}" />
                        </div>
                        <div class="editpage-input">
                            <table class="table  contactSet">
-                                          <thead>
-                                            <th>文件类型</th>
-                                            <th>路径</th>
-                                            <th>描述<th>
-                                          </thead>
-                                        <tbody>
-                                            <tr v-for="item in initIdentify.files">
-                                                <td>{{item.fileType}}aasdasdasa</td>
-                                                <td><img v-bind:src="item.path" ></td>
-                                                <td>{{item.description}}</td>
+                                <thead>
+                                  <th>文件类型</th>
+                                  <th>路径</th>
+                                  <th>描述<th>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="item in initIdentify.files">
+                                        <td>{{item.fileType}}aasdasdasa</td>
+                                        <td><img v-bind:src="item.path" width="200"></td>
+                                        <td>{{item.description}}</td>
 
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    </tr>
+                                </tbody>
+                            </table>
                        </div>
-
-
-               </div>
-
-
-
-                   <!-- <div class="editpageleft">
-                       <div class="editpage-input">
-                           <label class="editlabel">姓名</label>
-                           <input type="text" v-model='param.fullname' class="form-control edit-input" value="{{param.fullname}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">昵称</label>
-                           <input type="text" v-model='param.nickname' class="form-control edit-input" value="{{param.nickname}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">电话</label>
-                            <input type="text" v-model='param.tel' class="form-control edit-input" value="{{param.phone}}" />
-                       </div>
-
-                   </div>
-                   <div class="editpageright">
-                       <div class="editpage-input">
-                           <label class="editlabel">邮箱</label>
-                           <input type="text" v-model='param.email' class="form-control edit-input" value="{{param.email}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">qq</label>
-                           <input type="text" v-model="param.qq" class="form-control edit-input" value="{{param.qq}}" />
-                       </div>
-                       <div class="editpage-input">
-                           <label class="editlabel">公司</label>
-                           <input type="text" v-model="param.company" class="form-control edit-input" value="{{param.company}}" />
-                       </div>
-
-                   </div> -->
-
-
-
+                  </div>
                </div>
            </section>
         </div>
@@ -112,31 +74,20 @@ export default {
 }
 </script>
 <style scoped>
+.modal{
+ z-index: 1083
+}
+.modal_con{
+  z-index: 1084;
+}
 .big-font {
     font-size: 36px;
 }
-.top-title span {
-    font-size: 28px;
+.top-title{
+  left: 0;
+  right: 0;
+  width: 800px;
 }
-
-.edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
-}
-
 .editsection {
     width: 100%;
     box-sizing: border-box;
@@ -165,13 +116,6 @@ export default {
 .editpage-input {
     margin-top: 15px;
 }
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
-}
-
 .edit-input {
     height: 36px;
     line-height: 36px;

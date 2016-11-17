@@ -104,13 +104,13 @@
 
                                                 <!-- <td>{{item.validate | intentionAudit}}</td> -->
                                                 <td>
-                                                  <div v-if="item.validate==-1">审核不通过</div>
+                                                  <div v-if="item.validate==-1" style="color:red">审核不通过</div>
                                                   <div v-if="item.validate==0">初始</div>
-                                                  <div v-if="item.validate==1">审核通过</div>
+                                                  <div v-if="item.validate==1" style="color:green;">审核通过</div>
                                                   <div v-if="item.validate==9">审核中</div>
                                                 </td>
                                                 <td>{{item.description}}</td>
-                                                <td  @click="updateIntention(
+                                                <td   @click="updateIntention(
                                                             intentionParam.loading=true,
                                                             intentionParam.sub=$index,
                                                             intentionParam.id=item.id,
@@ -151,7 +151,7 @@
                                                             intentionParam.image_t_show='',
                                                             intentionParam.inType=2
                                                         )">
-                                                  <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
+                                                  <a class="operate" v-if="item.validate==-1||item.validate==0"><img src="/static/images/edit.png" height="18" width="30"/>
                                                   </a>
                                               </td>
                                           <!--  <td  @click="clickShow($index,{
@@ -324,6 +324,8 @@
                                           <th>跟进方式</th>
                                           <th>联系账号</th>
                                           <th>备注</th>
+                                          <th>创建时间</th>
+                                          <th>修改时间</th>
                                           <th style="text-align:center">操作</th>
                                         </thead>
                                       <tbody>
@@ -335,6 +337,8 @@
                                               <td>{{item.trackingWay}}</td>
                                               <td>{{item.contactNo}}</td>
                                               <td>{{item.comments}}</td>
+                                              <td>{{item.ctime}}</td>
+                                              <td>{{item.utime}}</td>
                                               <td @click="updateTracking(item,$index)">
                                                    <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
                                                   </a>

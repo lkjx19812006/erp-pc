@@ -315,6 +315,7 @@
                                              bizType:'customer_license',
                                              description:'',
                                              path:'',
+                                             name:'',
                                              link:uploadFiles,
                                              url:'/customer/file/',
     		                                     key:'files',
@@ -327,9 +328,10 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                       	<thead>
-                                      		<!--<th>文件路径</th>-->
+                                      		<th>文件名称</th>
                                       		<th>文件类型</th>
                                       		<th>所属文件</th>
+                                          <th>文件路径</th>
                                           <th>描述</th>
                                       		<th colspan="2">操作</th>
                                       	</thead>
@@ -341,11 +343,18 @@
                                                     <!--<img  src="/static/images/word.png" v-if="item.fileType=='doc'||item.fileType=='docx'" style='float:left; margin-left:15px;'>-->
                                                     <!--<img  src="/static/images/excel.png" v-if="item.fileType=='xls'||item.fileType=='xlsx'" style='float:left; margin-left:15px;'>-->
                                                 <!--</td>-->
+                                                <td>{{item.name}}</td>
 		                                            <td>
                                                   {{item.fileType}}
                                                 </td>
 		                                            <td v-if="item.bizType=='customer_license'">客户文件</td>
                                                 <td v-if="item.bizType=='product_license'">产品文件</td>
+                                                <td>
+                                                    <img v-if="item.fileType=='image'" width="100" :src="item.url"  />
+                                                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
+                                                    <img  src="/static/images/word.png" v-if="item.fileType=='word'">
+                                                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
+                                                </td>
                                                 <td>{{item.description}}</td>
                                                 <td >
                                                      <a class="operate" @click="specDelete({
@@ -642,6 +651,7 @@
                                       <th>跟进方式</th>
                                       <th>联系账号</th>
                                       <th>备注</th>
+                                      <th>创建时间</th>
                                       <th style="text-align:center">操作</th>
                                       </thead>
  		                                    <tbody>
@@ -652,6 +662,7 @@
                                                <td>{{item.trackingWay}}</td>
                                                <td>{{item.contactNo}}</td>
                                                <td>{{item.comments}}</td>
+                                               <td>{{item.ctime}}</td>
                                                <td  @click="updateTracking(item,$index)">
                                                    <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
                                                    </a>

@@ -9,10 +9,10 @@
         </div>
         <div class="edit-model">
             <section class="editsection">
-                <!--<div class="editpage-input">-->
-                  <!--<label class="editlabel">文件名称</label>-->
-                  <!--<input type="text"  class="form-control" placeholder="文件名称" class="search_input"  v-model="param.name"  />-->
-                <!--</div>-->
+                <div class="editpage-input">
+                  <label class="editlabel">文件名称</label>
+                  <input type="text"  class="form-control" placeholder="文件名称" class="search_input"  v-model="param.name"  />
+                </div> 
                 <div class="editpage-input">
                     <label class="editlabel">所属文件类别</label>
                     <select class="form-control"  v-model="param.bizType" v-if="!param.bizType">

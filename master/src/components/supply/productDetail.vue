@@ -46,22 +46,23 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
+                                          <th>文件名称</th>
                                           <th>文件类型</th>
                                           <th>所属文件类型</th>
-                                          <!--<th>路径</th>-->
+                                          <!-- <th>文件路径</th> -->
                                           <th>描述</th>
-                                          <!-- <th></th> -->
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initProductDetail.filesList.arr">
+                                                <td>{{item.pname}}</td>
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.bizType}}</td>
-                                                <!--<td>-->
-                                                    <!--<img v-if="item.fileType=='image'" :src="item.path"  />-->
-                                                    <!--<img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">-->
-                                                    <!--<img  src="/static/images/word.png" v-if="item.fileType=='word'">-->
-                                                    <!--<img  src="/static/images/excel.png" v-if="item.fileType=='excel'">-->
-                                                <!--</td>-->
+                                                <!-- <td>
+                                                    <img v-if="item.fileType=='image'" :src="item.url"  />
+                                                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
+                                                    <img  src="/static/images/word.png" v-if="item.fileType=='word'">
+                                                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
+                                                </td> -->
                                                 <td>{{item.description}}</td>
                                                 <!-- <td  @click="clickShow($index,{
                                                     concrete:'filesList'
@@ -284,6 +285,7 @@ section article {
   right: 0;
   left: 0;
   top: 91px;
+  z-index: 1081;
 }
 .client-section {
     padding: 10px 5px 40px 5px;

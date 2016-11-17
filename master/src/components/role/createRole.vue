@@ -266,7 +266,11 @@ export default {
     color: #fa6705;
     margin: 0;
 }
-
+.top-title{
+    left: 0;
+    right: 0;
+    width: 800px;
+}
 .editsection {
     width: 100%;
     box-sizing: border-box;
