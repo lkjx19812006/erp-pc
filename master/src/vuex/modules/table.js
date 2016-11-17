@@ -1327,7 +1327,9 @@ const mutations = {
     [MSG_UPDATE_DATA](state, data) { //留言修改
         if(data.key=='msgList'){
             console.log('留言列表修改');
+            console.log(data.utime)
             state.basicBaseList.msgList[data.index].comments = data.comments;
+            state.basicBaseList.msgList[data.index].utime = data.utime;
         }
         if(data.key=='intentionDetail'){
             state.basicBaseList.intentionDetail.msgs.arr[data.index].comments = data.comments;
@@ -1673,6 +1675,7 @@ const mutations = {
             "bizType":data.bizType,
             "bizId":data.bizId,
             "description":data.description,
+            "name":data.name,
             "show":false,
             "id":data.id,
             "url":data.image_f_show

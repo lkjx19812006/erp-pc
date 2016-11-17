@@ -186,11 +186,13 @@
                         incidentalsDesc:item.incidentalsDesc,
                         preferential:item.preferential,
                         preferentialDesc:item.preferentialDesc,
+                        status:item.status,
                         key:'orderList',
                         link:alterOrder,
                         url:'/order/',
                         goods:item.goods,
-                        })"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a></td>
+                        goodsBack:[]
+                        },item.goods)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a></td>
                   <td>
                       <div v-if="item.validate==2">
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="(item.orderStatus==20||item.orderStatus==10)&&item.type==0"><img src="/static/images/payorder.png" height="18" width="38" title="待财务付款" alt="待财务付款"/></a>
@@ -318,7 +320,8 @@
 
                     ],
                     link:createOrder,
-                    key:'orderList'
+                    key:'orderList',
+                    
                 },
                 detailParam: {
                     show:false
@@ -449,12 +452,21 @@
                 console.log(initOrderlist);
                 this.detailParam=initOrderlist;
             },
-            updateOrder:function(initOrderlist){
+            updateOrder:function(initOrderlist,goods){
                 /*this.dialogParam.show = true;
                 this.dialogParam.id = id;
                 this.dialogParam.index = index;
                 this.dialogParam.goods = [];*/
                 this.dialogParam=initOrderlist;
+                var _this = this;
+                for(var i=0;i<goods.length;i++){
+                    this.dialogParam.goodsBack[i] = {};
+                    for(var key in goods[i]){
+                        this.dialogParam.goodsBack[i][key] = goods[i][key];
+                    }
+                }
+                
+
             },
             pendingOrder:function(item,sub){
                 item.show=!item.show;

@@ -224,7 +224,7 @@
                                 loading:true,
                                 customerName:item.customerName,
                                 customerPhone:item.customerPhone,
-                                breedName:item.breedName,
+                                brredName:item.breedName,
                                 type:item.type,
                                 especial:item.especial,
                                 qualification:item.qualification,
@@ -780,7 +780,10 @@ export default {
            this.createOrderParam.sub = sub;
            console.log(this.createOrderParam.goods[0])
            console.log(item)
+           this.createOrderParam.customer = item.customerId;
            this.createOrderParam.goods[0].sourceId= item.id;
+           this.createOrderParam.goods[0].brredName= item.breedName;
+           this.createOrderParam.goods[0].breedId= item.breedId;
            this.createOrderParam.goods[0].spec = item.spec;
            this.createOrderParam.goods[0].price = item.price;
            this.createOrderParam.goods[0].unit = item.unit;

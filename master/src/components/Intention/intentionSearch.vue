@@ -92,7 +92,7 @@
                                 <option value="-3">业务主管审核不通过</option>
                         </select>
                     </div>
-                  <div class="client-detailInfo  col-xs-12">
+                  <div class="client-detailInfo  col-xs-12" v-if="param.link!='/intention/user/list'">
                     <label>选择上架状态：</label>
                     <select type="text" class="form-control" v-model="param.onSell">
                       <option value="" selected>请选择上架状态</option>
@@ -217,6 +217,7 @@ export default {
     },
     created() {
         //this.getUserList(this.loadParam);
+        console.log(this.param)
     }
 }
 </script>

@@ -7,7 +7,7 @@
             <div class="col-xs-8 my_order_search">
                <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" placeholder="会员名称" v-model="loadParam.fullName"  @keyup.enter="searchMsg()">
+                   <input type="text" class="search_input" placeholder="留言会员名称" v-model="loadParam.fullName"  @keyup.enter="searchMsg()">
                </div>
                <div class="ordertel_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
@@ -36,11 +36,13 @@
                         <th>留言会员</th>
                         <th>会员手机</th>
                         <th>发布意向客户</th>
+                        <th>发布品种</th>
                         <th>客户手机</th>
                         <th>留言信息</th>
                         <th>备注</th>
                         <th>回复</th>
-      	            	<th>操作</th>
+                        <th>修改时间</th>
+      	            	  <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,19 +51,21 @@
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                                                  </td> -->
                         <!-- <td>{{item.intentionId}}</td> -->
-                        <td>{{item.fullname}}</td>
-                        <td>{{item.phone}}</td>
                         <td class="underline"  @click="clickOn({
                                  id:item.userId,
                                  sub:$index,
                                  show:true,
-                                 name:item.customerName,
+                                 name:item.fullname,
                                  loading:false
-                             })">{{item.customerName}}</td>
+                             })">{{item.fullname}}</td>
+                        <td>{{item.phone}}</td>
+                        <td>{{item.customerName}}</td>
+                        <td>{{item.breedName}}</td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.content}}</td>
                         <td>{{item.comments}}</td>
                         <td>{{item.reply}}</td>
+                        <td>{{item.utime}}</td>
                         <td  @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments">
                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                            </a>

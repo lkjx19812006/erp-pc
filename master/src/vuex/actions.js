@@ -658,7 +658,7 @@ export const logisticsInfo = ({ dispatch }, param) => { //物流查看详情
     })
 }
 export const createOrder = ({ dispatch }, data) => { //创建订单
-    console.log(data);
+    console.log(data.goods);
     const body = {
         type:data.type,
         sourceType:data.sourceType,
@@ -1932,29 +1932,29 @@ export const getClientList = ({ dispatch }, param) => {  //客户信息列表与
     console.log(param);
     var clienturl = apiUrl.clientList+param.link+'?&page=' + param.cur + '&pageSize=15';
     for(var search in param){
-        if(search=='name'&&param[search]!==''&&param[search]!='undefine'){
+        if(search=='name'&&param[search]!==''&&param[search]!='undefined'){
             clienturl += '&name='+param.name
         }
-        if(search=='type'&&param[search]!==''&&param[search]!='undefine'){
+        if(search=='type'&&param[search]!==''&&param[search]!='undefined'){
             clienturl += '&type='+param.type
         }
-        if(search=='classify'&&param[search]!==''&&param[search]!='undefine'){
+        if(search=='classify'&&param[search]!==''&&param[search]!='undefined'){
             clienturl += '&classify='+param.classify
         }
 
-        if(search=='phone'&&param[search]!==''&&param[search]!='undefine'){
+        if(search=='phone'&&param[search]!==''&&param[search]!='undefined'){
             clienturl += '&phone='+param.phone
         }
-        if(search=='employeeId'&&param[search]!==''&&param[search]!='undefine'){
+        if(search=='employeeId'&&param[search]!==''&&param[search]!='undefined'){
             clienturl += '&employeeId='+param.employeeId
         }
-        if(search=='bizScope'&&param[search]!=''&&param[search]!='undefine'){
+        if(search=='bizScope'&&param[search]!=''&&param[search]!='undefined'){
             clienturl += '&bizScope='+param.bizScope
         }
-        if(search=='province'&&param[search]!==''&&param[search]!='undefine'){
+        if(search=='province'&&param[search]!==''&&param[search]!='undefined'){
             clienturl += '&province='+param.province
         }
-        if(search=='creditLevel'&&param[search]!==''&&param[search]!='undefine'){
+        if(search=='creditLevel'&&param[search]!==''&&param[search]!='undefined'){
             clienturl += '&creditLevel='+param.creditLevel
         }
         if(search=='city'&&param[search]!==''&&param[search]!='undefined'){
@@ -3320,6 +3320,7 @@ export const updateMsg = ({ dispatch }, param) => {  //修改留言信息
         }
     }).then((res) => {
         console.log('修改成功')
+        param.utime = res.json().result.utime;
         dispatch(types.MSG_UPDATE_DATA, param);
         param.show = false;
 
@@ -3328,26 +3329,6 @@ export const updateMsg = ({ dispatch }, param) => {  //修改留言信息
         param.show = false;
     });
 }
-
-/*export const getOffersdetail = ({ dispatch }, param) => {  //意向报价详情
-    Vue.http({
-        method:'GET',
-        url:apiUrl.clientList+'/intention/offers/?intentionId='+param.id,
-        emulateJSON: true,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-    }).then((res)=>{
-        console.log(res.json().result)
-            var offer = res.json().result.list;
-            for(var i in offer){
-                offer[i].show=true;
-            }
-            dispatch(types.INTENTION_OFFER_DETAIL, offer);
-    }, (res) => {
-        console.log('fail');
-    })
-}*/
 
 export const getIntlIntentionList = ({ dispatch }, param) => {  //国际意向列表以及搜索
     param.loading = true;
@@ -4289,6 +4270,9 @@ export const getFilesList = ({ dispatch }, param) => {  //供应商文件列表
     if(param.description){
       url=url+'&description='+param.description;
     }
+    if(param.cname){
+      url=url+'&cname='+param.cname;
+    }
 
     Vue.http({
         method:'GET',
@@ -4356,7 +4340,8 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
         bizType:param.bizType,
         path:param.path,
         description:param.description,
-        bizId:param.bizId
+        bizId:param.bizId,
+        name:param.name
     }
     Vue.http({
         method: 'POST',

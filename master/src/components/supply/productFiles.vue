@@ -33,10 +33,9 @@
         <thead>
             <tr>
               <th>产品名称</th>
-
               <th>文件类型</th>
               <th>所属文件</th>
-              <!--<th>路径</th>-->
+              <th>文件图片</th>
               <th>描述</th>
               <!--<th>状态</th>-->
                <th>操作</th>
@@ -46,19 +45,14 @@
           <tr v-for="item in initProductlist">
             <td>{{item.name}}</td>
             <td>{{item.fileType}}</td>
-            <td>产品文件</td>
+            <td>{{item.bizType}}</td>
             <!--<td v-if="item.bizType!='product_license'">客户文件</td>-->
-            <!--<td class="underline"  @click="clickOn({-->
-                               <!--id:item.id,-->
-                               <!--sub:$index,-->
-                               <!--show:true,-->
-                               <!--name:item.name-->
-                               <!--})">-->
-                    <!--<img v-bind:src="item.path" v-if="item.fileType=='image'" />-->
-                    <!--<img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">-->
-                    <!--<img  src="/static/images/word.png" v-if="item.fileType=='word'">-->
-                    <!--<img  src="/static/images/excel.png" v-if="item.fileType=='excel'">-->
-            <!--</td>-->
+             <td>
+                    <img v-bind:src="item.url" v-if="item.fileType=='image'"  width="200" />
+                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
+                    <img  src="/static/images/word.png" v-if="item.fileType=='word'">
+                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
+            </td>
             <td>{{item.description}}</td>
             <td ><a href="/crm/api/v1/file/dowanloadFile?path={{item.path}}"><img src="/static/images/upload.png" height="18" width="28"  /></a>
                </td>

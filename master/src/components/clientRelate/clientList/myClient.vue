@@ -387,7 +387,8 @@ export default {
             show:false,
             title:'客户拉入黑名单备注',
             arr:[],
-            blacklist:1
+            blacklist:1,
+            callback:this.callback
           },
             checked:false
         }
