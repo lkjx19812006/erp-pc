@@ -34,6 +34,7 @@ import {
    CUSTOMER_ADD_DATA,
    CUSTOMER_DETAIL_DATA,
    CUSTOMER_BATCH_DELETE,
+   CUSTOMER_BATCH_SUPPLIER,
    UPDATE_CUSTOMER_DETAIL,
    CUSTOMER_UPDATE_DATA,
    UPDATE_ADDR_DETAIL,
@@ -1016,11 +1017,23 @@ const mutations = {
                 }
           }
         })
-      if(data.customerIds[0]==state.clientDetail.id){
-        state.clientDetail.blacklist=1-state.clientDetail.blacklist;
-      }
+
+        if(data.customerIds[0]==state.clientDetail.id){
+          state.clientDetail.blacklist=1-state.clientDetail.blacklist;
+        }
 
     },
+    [CUSTOMER_BATCH_SUPPLIER](state, data){
+        data.customerIds.forEach(function(item){
+          for(var i=0;i<state.basicBaseList.customerList.length;i++){
+                if(state.basicBaseList.customerList[i].id == item){
+                  state.basicBaseList.customerList[i].comments = data.blackComments;
+                  state.basicBaseList.customerList[i].supplier = 1;
+                }
+          }
+        })
+    },
+
     [CUSTOMER_ADD_DATA](state, data) { //新增客户
         state.basicBaseList.customerList.unshift({
           address:data.address,

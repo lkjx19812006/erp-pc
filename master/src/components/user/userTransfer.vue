@@ -1,5 +1,6 @@
 <template>
   <select-model :param="selectParam" v-if="selectParam.show"></select-model>
+  <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <div class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
   <div class="container modal_con">
 
@@ -258,7 +259,7 @@
         </div>
         <div class="edit_footer">
           <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-          <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="save(param.show = false)">确定</button>
+          <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="save()">确定</button>
           <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
         </div>
       </form>
@@ -267,6 +268,7 @@
 </template>
 <script>
   import selectModel  from './employeeOrOrg'
+  import tipsModel  from '../tips/tipDialog'
   import vSelect from '../tools/vueSelect/components/Select'
 
   import {
@@ -275,6 +277,7 @@
   export default {
     components: {
       selectModel,
+      tipsModel,
       vSelect
     },
     props: {
@@ -290,6 +293,12 @@
           employeeName: '',
           orgId: '',
           orgName: ''
+        },
+        tipsParam:{
+          show:false,
+          remain:true,
+          name:'划转成功',
+          callback:this.callback
         },
         contacts: [{
           name: null,
@@ -458,10 +467,14 @@
           this.param.country=this.country.id;
           this.param.countryName=this.country.cname;
         }
-        this.saveCreate(this.param);
+        this.saveCreate(this.param,this.tipsParam);
 
+      },
+      callback:function(){
+        this.param.show = false;
       }
     },
+
     events: {
       'selectEmpOrOrg': function (param) {
         this.param.employeeId = param.employeeId;

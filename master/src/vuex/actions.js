@@ -2236,6 +2236,7 @@ export const customerTransferBlacklist  = ({ dispatch }, param) => {
               }).then((res) => {
               param.loading = false;
               if(param.link=='/customer/transferBlacklist'){dispatch(types.CUSTOMER_BATCH_DELETE, param);}
+              if(param.link=='/customer/setSupplier'){dispatch(types.CUSTOMER_BATCH_SUPPLIER, param);}
               }, (res) => {
               param.loading = false;
                 console.log('fail');
@@ -2363,7 +2364,7 @@ export const getRoleList = ({ dispatch }, param) => {  //获取角色列表
         })
 }
 
-export const  saveCreate = ({ dispatch }, data) => { //新增客户列表
+export const  saveCreate = ({ dispatch }, data,tipsParam) => { //新增客户列表
     console.log('新增客户');
     console.log(data);
     const Cdata = {
@@ -2413,6 +2414,9 @@ export const  saveCreate = ({ dispatch }, data) => { //新增客户列表
         data.mainPhone=data.contacts[0].phone;
         data.phoneProvince=res.json().result.phoneProvince;
         data.phoneCity=res.json().result.phoneCity;
+        if('show' in tipsParam){
+            tipsParam.show = true;
+        }
         dispatch(types.CUSTOMER_ADD_DATA, data);
     }, (res) => {
         console.log('fail');

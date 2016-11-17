@@ -556,7 +556,6 @@ export default {
         this.alterParam = item;
     },
     userToClient:function(item){
-        console.log(item.main);
         this.transferParam = item;
     },
     createIntention:function(){

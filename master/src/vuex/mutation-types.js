@@ -68,6 +68,7 @@ export const FILE_DATA ='FILE_DATA'  // 新增客户文件
 export const ADD_CERTIFICATE_DATA ='ADD_CERTIFICATE_DATA'  // 新增供应商文件
 export const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA' // 修改客户产品
 export const CUSTOMER_BATCH_DELETE = 'CUSTOMER_BATCH_DELETE' //客户批量删除
+export const CUSTOMER_BATCH_SUPPLIER = 'CUSTOMER_BATCH_SUPPLIER' //客户批量提取为供应商
 export const ALTER_PRODUCT_DATA = 'ALTER_PRODUCT_DATA' // 修改供应商产品
 export const SUPPLY_PRODUCT_DATA = 'SUPPLY_PRODUCT_DATA' // 新增供应商产品
 export const PRODUCT_DATA = 'PRODUCT_DATA' // 供应商产品列表

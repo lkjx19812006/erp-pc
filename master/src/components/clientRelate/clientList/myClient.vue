@@ -123,6 +123,7 @@
                         <th>所在市</th>
                         <th>注册地址</th>
                         <th>创建时间</th>
+                        <th>是否供应商</th>
                         <th style="min-width:200px">备注</th>
                         <th colspan="2">操作</th>
                     </tr>
@@ -168,6 +169,10 @@
                         <td>{{item.cityName}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.ctime}}</td>
+                        <td>
+                          <div v-if="item.supplier==1">是</div>
+                          <div v-if="item.supplier==0">否</div>
+                        </td>
                         <td>{{item.comments}}</td>
                         <td  @click="modifyClient({
                                                 id:item.id,
