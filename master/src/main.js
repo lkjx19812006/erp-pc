@@ -8,6 +8,7 @@ import VueAnimatedList from 'vue-animated-list'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import treeview from './components/tree/tree.vue'
 import VueI18n from './filters/i18n'
+/*import alert from 'vue-strap/src/alert'*/
 
 
 
@@ -25,6 +26,7 @@ Vue.directive('echarts', require('./directives/echarts'));
 Vue.use(VueAnimatedList)
 Vue.use(VueRouter)
 Vue.use(VueResource)
+/*Vue.use(alert)*/
 
 
 

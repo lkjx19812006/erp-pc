@@ -163,7 +163,7 @@
                                           <thead>
                                             <th>文件类型</th>
                                             <th>文件来源</th>
-                                            <th>文件图片或路径</th>
+                                            <th>文件图片</th>
                                             <th>描述</th>
                                           </thead>
                                         <tbody>

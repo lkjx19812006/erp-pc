@@ -2,6 +2,7 @@
   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
   <createfiles-model :param="cfilesParam" v-if="cfilesParam.show"></createfiles-model>
   <updatelabel-model :param="updlabelParam" v-if="updlabelParam.show"></updatelabel-model>
+  <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
   <div>
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">客户文件列表</div>
@@ -56,7 +57,7 @@
               <td>{{item.fileType}}</td>
               <td>{{item.bizType}}</td>
               <td>
-                    <img :src="item.url" v-if="item.fileType=='image'" width="200" />
+                    <img  :src="item.url" v-if="item.fileType=='image'" width="200"  @click="clickBig(item.url)"/>
                     <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf'">
                     <img  src="/static/images/word.png" v-if="item.fileType=='word'">
                     <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
@@ -104,6 +105,7 @@
   import deletebreedModel from  '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
   import createfilesModel from  '../supply/createFiles'
   import updatelabelModel from  '../clientRelate/label/updatelebel'
+  import pictureModel  from '../tips/pictureDialog'
   import {
     initFileslist
   } from '../../vuex/getters'
@@ -119,7 +121,8 @@
       pagination,
       deletebreedModel,
       createfilesModel,
-      updatelabelModel
+      updatelabelModel,
+      pictureModel
     },
     vuex: {
       getters: {
@@ -161,6 +164,9 @@
         },
         updlabelParam:{
           show:false
+        },
+        pictureParam:{
+          show:false
         }
       }
     },
@@ -191,6 +197,10 @@
         this.loadParam.name='';
         this.loadParam.description='';
         this.getFilesList(this.loadParam);
+      },
+      clickBig:function(img){
+          this.pictureParam.show=true;
+          this.pictureParam.img = img;
       }
     },
     events: {

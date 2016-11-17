@@ -1,5 +1,6 @@
 <template>
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
+  <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
   <div v-show="!changeParam.show">
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">产品文件列表</div>
@@ -48,7 +49,7 @@
             <td>{{item.bizType}}</td>
             <!--<td v-if="item.bizType!='product_license'">客户文件</td>-->
              <td>
-                    <img v-bind:src="item.url" v-if="item.fileType=='image'"  width="200" />
+                    <img v-bind:src="item.url" v-if="item.fileType=='image'"  width="200" @click="clickBig(item.url)"/>
                     <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
                     <img  src="/static/images/word.png" v-if="item.fileType=='word'">
                     <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
@@ -68,6 +69,7 @@
 <script>
   import pagination from '../pagination'
   import detailModel from '../supply/productDetail'
+  import pictureModel from '../tips/pictureDialog'
   import {
     initProductlist
   } from '../../vuex/getters'
@@ -79,7 +81,8 @@
   export default {
     components: {
       pagination,
-      detailModel
+      detailModel,
+      pictureModel
     },
     vuex: {
       getters: {
@@ -110,6 +113,10 @@
         changeParam: {
           show: false
         },
+        pictureParam:{
+            show:false,
+            img:''
+        },
         checked:false
       }
     },
@@ -130,6 +137,10 @@
       load:function(item){
         console.log(item);
         this.loadFile(item);
+      },
+      clickBig:function(img){
+          this.pictureParam.show=true;
+          this.pictureParam.img = img;
       }
     },
     events: {
