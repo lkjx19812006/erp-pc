@@ -9,6 +9,7 @@
 	<createfiles-model :param="cfilesParam" v-if="cfilesParam.show"></createfiles-model>
 	<createtrack-model :param="ctrackParam" v-if="ctrackParam.show"></createtrack-model>
 	<createproduct-model :param="cproductParam" v-if="cproductParam.show"></createproduct-model>
+  <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
   <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
@@ -304,7 +305,7 @@
 		                                            <td v-if="item.bizType=='customer_license'">客户文件</td>
                                                 <td v-if="item.bizType=='product_license'">产品文件</td>
                                                 <td>
-                                                    <img v-if="item.fileType=='image'" width="100" :src="item.url"  />
+                                                    <img v-if="item.fileType=='image'" width="100" :src="item.url"  @click="clickBig(item.url)"/>
                                                     <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
                                                     <img  src="/static/images/word.png" v-if="item.fileType=='word'">
                                                     <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
@@ -784,58 +785,6 @@
                                                    <a class="operate"><img src="/static/images/del.png" height="18" width="30"/>
                                                    </a>
                                                 </td>
-		                                            <!-- <td  @click="clickShow($index,{
-                                                  concrete:'addresses'
-                                                  })">
-                                                  <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                                                                  <div class="breed_action" v-show="item.show" >
-                                                                                                   <dl>
-                                                                                                       <dt @click="updateAddr({
-                                                                                                           sub:$index,
-                                                                                                           id:item.id,
-                                                                                                           customerId:item.customerId,
-                                                                                                           show:true,
-                                                                                                           title:'收货地址',
-                                                                                                           typelist:'类型',
-                                                                                                           namelist:'联系人姓名',
-                                                                                                           phonelist:'联系人电话',
-                                                                                                           sexlist:'性别',
-                                                                                                           countylist:'国家',
-                                                                                                           provicelist:'所在省',
-                                                                                                           citylist:'所在市',
-                                                                                                           addr_detail:'地址',
-                                                                                                           distlist:'所在区域',
-                                                                                                           streetlist:'所在街道',
-                                                                                                           addr:'详细地址',
-                                                                                                           type:item.type,
-                                                                                                           contactName:item.contactName,
-                                                                                                           contactPhone:item.contactPhone,
-                                                                                                           sex:item.sex,
-                                                                                                           country:item.country,
-                                                                                                           province:item.province,
-                                                                                                           city:item.city,
-                                                                                                           district:item.district,
-                                                                                                           street:item.street,
-                                                                                                           detailAddr:item.detailAddr,
-                                                                                                           address:item.address,
-                                                                                                           link:addrInfo,
-                                                                                                           url:'/customer/updateAddress',
-                                                                                                           key:'addresses',
-                                                                                                           headline:'clientDetail'
-                                                                                                           })">编辑</dt>
-                                                                                                       <dt @click="specDelete({
-                                                                                                           id:item.id,
-                                                                                                           sub:$index,
-                                                                                                           show:true,
-                                                                                                           title:'收货地址',
-                                                                                                           link:addrDel,
-                                                                                                           url:'/customer/deleteAddress/',
-                                                                                                           key:'addresses',
-                                                                                                           headline:'clientDetail'
-                                                                                                           },item.show=false)">删除</dt>
-                                                                                                   </dl>
-                                                                                                </div>
-                                                </td> -->
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
@@ -1126,6 +1075,7 @@ import createproductModel from  '../clientRelate/label/createProduct'
 import intentionModel from  '../user/userIntention'
 import auditDialog from '../tips/auditDialog'
 import createorderModel  from  '../order/createOrderDialog'
+import pictureModel  from  '../tips/pictureDialog'
 import {
 	initClientDetail
 } from '../../vuex/getters'
@@ -1166,7 +1116,8 @@ export default {
         intentionModel,
         tipsdialogModel,
         auditDialog,
-        createorderModel
+        createorderModel,
+        pictureModel
     },
     props:['param'],
     data(){
@@ -1215,6 +1166,10 @@ export default {
     		cproductParam:{
     			show:false
     		},
+        pictureParam:{
+          show:false,
+          img:''
+        },
     		tipsParam:{
     			show:false
     		},
@@ -1259,6 +1214,10 @@ export default {
             }
             this.$store.state.table.clientDetail[param.crete].show = !this.$store.state.table.clientDetail[param.crete].show;
     	},
+      clickBig:function(img){
+          this.pictureParam.show=true;
+          this.pictureParam.img = img;
+      },
     	clickShow: function(id,param) {
           this.$store.state.table.clientDetail[param.concrete].arr[id].show = !this.$store.state.table.clientDetail[param.concrete].arr[id].show;
 

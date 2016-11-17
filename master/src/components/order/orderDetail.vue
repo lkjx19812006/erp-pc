@@ -2,6 +2,7 @@
     <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
     <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
+    <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
 <!--     <div class="client_body" v-show="!disposeParam.show"> -->
@@ -170,7 +171,7 @@
                                             <tr v-for="item in initOrderDetail.payPics.arr">
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.bizType}}</td>
-                                                <td><img :src="item.url" v-if="item.fileType=='image'"/>
+                                                <td><img :src="item.url" v-if="item.fileType=='image'" @click="clickBig(item.url)"/>
                                                     <img src="/static/images/pdf.png" height="20" width="20" v-else/>
                                                 </td>
                                                 <td>{{item.description}}</td>
@@ -242,7 +243,7 @@
                                             <tr v-for="item in initOrderDetail.attachFiles.arr">
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.bizType}}</td>
-                                                <td><img :src="item.url" v-if="item.fileType=='image'"/>
+                                                <td><img :src="item.url" v-if="item.fileType=='image'" @click="clickBig(item.url)"/>
                                                     <img src="/static/images/pdf.png" height="20" width="20" v-else/>
                                                 </td>
                                                 <td>{{item.description}}</td>
@@ -296,7 +297,7 @@
                                             <tr v-for="item in initOrderDetail.sendPics.arr">
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.bizType}}</td>
-                                                <td><img :src="item.url" v-if="item.fileType=='image'"/>
+                                                <td><img :src="item.url" v-if="item.fileType=='image'" @click="clickBig(item.url)"/>
                                                     <img src="/static/images/pdf.png" height="20" width="20" v-else/>
                                                 </td>
                                                 <td>{{item.description}}</td>
@@ -417,6 +418,7 @@
 import trackingModel from '../order/ordergoods'
 import credenceModel from '../order/createcredence'
 import disposeModel  from  '../order/orderStatus'
+import pictureModel  from  '../tips/pictureDialog'
 import {
   initOrderDetail
 } from '../../vuex/getters'
@@ -428,7 +430,8 @@ export default {
     components: {
       trackingModel,
       credenceModel,
-      disposeModel
+      disposeModel,
+      pictureModel 
     },
     props:['param'],
     data(){
@@ -460,6 +463,10 @@ export default {
             express:false,
             delivery:false,
             tips:''
+        },
+        pictureParam:{
+            show:false,
+            img:''
         }
       }
     },
@@ -491,6 +498,10 @@ export default {
             console.log(initOrderDetail)
              this.credenceParam=initOrderDetail;
          },
+         clickBig:function(img){
+              this.pictureParam.show=true;
+              this.pictureParam.img = img;
+          },
         pendingOrder:function(initOrderDetail){
             console.log(initOrderDetail)
             console.log(this.disposeParam)
