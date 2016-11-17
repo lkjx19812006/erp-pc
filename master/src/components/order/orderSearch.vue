@@ -43,7 +43,7 @@
                                 <option value="30">等待审核</option>
                                 <option value="40">等待发货</option>
                                 <option value="50">等待收货</option>
-                                <option value="60">已完成</option>
+                                <option value="60">待评价</option>
                                 <option value="70">已完成</option>
                                 <option value="-1">已取消</option>
                                 <option value="-2">已过期</option>

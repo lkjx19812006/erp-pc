@@ -174,53 +174,7 @@
                                                    <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                                                      </a>
                                                 </td>
-		                                            <!-- <td  @click="clickShow($index,{
-                                                  concrete:'contacts'
-                                                  })">
-                                                  <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                                                                <div class="breed_action" v-show="item.show">
-                                                                                                    <dl>
-                                                                                                       <dt @click="updateSpec({
-                                                                                                           sub:$index,
-                                                                                                           id:item.id,
-                                                                                                           show:true,
-                                                                                                           title:'联系人',
-                                                                                                           namelist:'联系人姓名',
-                                                                                                           job:'联系人职位',
-                                                                                                           parten:'联系人部门',
-                                                                                                           phonelist:'手机',
-                                                                                                           tellist:'电话',
-                                                                                                           emaillist:'邮箱',
-                                                                                                           QQ:'qq',
-                                                                                                           webchart:'微信',
-                                                                                                           name:item.name,
-                                                                                                           position:item.position,
-                                                                                                           department:item.department,
-                                                                                                           phone:item.phone,
-                                                                                                           tel:item.tel,
-                                                                                                           email:item.email,
-                                                                                                           qq:item.qq,
-                                                                                                           wechart:item.wechart,
-                                                                                                           main:item.main,
-                                                                                                           link:updateContact,
-                                                                                                           url:'/customer/contact',
-                                                                                                           key:'contacts',
-                                                                                                           headline:'clientDetail'
-                                                                                                           })">编辑</dt>
-                                                                                                       <dt @click="specDelete({
-                                                                                                           id:item.id,
-                                                                                                           sub:$index,
-                                                                                                           show:true,
-                                                                                                           name:item.name,
-                                                                                                           title:'联系人',
-                                                                                                           link:specDel,
-                                                                                                           url:'/customer/contact/',
-                                                                                                           key:'contacts',
-                                                                                                           headline:'clientDetail'
-                                                                                                           },item.show=false)">删除</dt>
-                                                                                                   </dl>
-                                                                                                </div>
-                                                </td> -->
+		                                          
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
@@ -477,59 +431,6 @@
                                                      <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
                                                      </a>
                                                 </td>
-                                                <!-- <td  @click="clickShow($index,{
-                                                  concrete:'intentions'
-                                                  })">
-                                                  <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                  <div class="breed_action" v-show="item.show">
-                                                     <dl>
-                                                       <dt @click="updateIntention({
-                                                            flag:1,
-                                                            show:true,
-                                                            sub:$index,
-                                                            key:'client',
-                                                            id:item.id,
-                                                            breedName:item.breedName,
-                                                            price:item.price,
-                                                            unit:item.unit,
-                                                            especial:item.especial,
-                                                            quality:item.quality,
-                                                            spec:item.spec,
-                                                            number:item.number,
-                                                            location:item.location,
-                                                            type:item.type,
-                                                            country:item.country,
-                                                            province:item.province,
-                                                            city:item.city,
-                                                            district:item.district,
-                                                            address:item.address,
-                                                            invoic:item.invoic,
-                                                            sampling:item.sampling,
-                                                            sampleUnit:item.sampleUnit,
-                                                            advance:item.advance,
-                                                            intl:item.intl,
-                                                            sampleNumber:item.sampleNumber,
-                                                            sampleAmount:item.sampleAmount,
-                                                            qualification:item.qualification,
-                                                            breedId:item.breedId,
-                                                            pack:item.pack,
-                                                            visit:item.visit,
-                                                            duedate:item.duedate,
-                                                            breedId:item.breedId,
-                                                            description:item.description,
-                                                            validate:item.validate,
-                                                            inType:3,
-                                                            loading:false,
-                                                            image_f:'',
-                                                            image_s:'',
-                                                            image_t:'',
-                                                            image_f_show:'',
-                                                            image_s_show:'',
-                                                            image_t_show:''
-                                                        })">编辑</dt>
-                                                      </dl>
-                                                  </div>
-                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -752,40 +653,6 @@
                                                            },item.show=false)"><img src="/static/images/del.png" height="18" width="30"/>
                                                    </a>
                                                 </td>
-		                                           <!--  <td  @click="clickShow($index,{
-                                                 concrete:'remarks'
-                                                 })">
-                                                 <img  src="/static/images/default_arrow.png" height="24" width="24"  style="margin-right:0" />
-                                                                                                 <div class="label_action" v-show="item.show" >
-                                                                                                  <dl>
-                                                                                                      <dt @click="updatelabel({
-                                                                                                          sub:$index,
-                                                                                                          id:item.id,
-                                                                                                          customerId:item.customerId,
-                                                                                                          show:true,
-                                                                                                          title:'备注',
-                                                                                                          labelist:'备注',
-                                                                                                          statuslist:'状态',
-                                                                                                          remark:item.remark,
-                                                                                                          status:item.status,
-                                                                                                          link:alterRemark,
-                                                                                                          url:'/customer/remark',
-                                                                                                          key:'remarks',
-                                                                                                          headline:'clientDetail'
-                                                                                                          })">编辑</dt>
-                                                                                                      <dt @click="specDelete({
-                                                                                                          id:item.id,
-                                                                                                          sub:$index,
-                                                                                                          show:true,
-                                                                                                          title:'备注',
-                                                                                                          link:specDel,
-                                                                                                          url:'/customer/remark/',
-                                                                                                          key:'remarks',
-                                                                                                          headline:'clientDetail'
-                                                                                                          },item.show=false)">删除</dt>
-                                                                                                  </dl>
-                                                                                               </div>
-                                               </td> -->
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
