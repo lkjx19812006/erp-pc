@@ -215,7 +215,7 @@
 
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="personalEnfoldment({id:initUserDetail.id})">
-                                        <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                        <img class="pull-left" src="/static/images/person.png" height="26" width="27" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           个人认证
                                         </a>
@@ -256,7 +256,7 @@
                             <div class="panel panel-default">
                               <div class="panel-heading" >
                                    <h4 class="panel-title clearfix" @click="companyEnfoldment({id:initUserDetail.id})">
-                                      <img class="pull-left" src="/static/images/chance.png" height="26" width="28" style="margin-top:4px;" />
+                                      <img class="pull-left" src="/static/images/company1.png" height="26" width="30" style="margin-top:4px;" />
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                         企业认证
                                       </a>
