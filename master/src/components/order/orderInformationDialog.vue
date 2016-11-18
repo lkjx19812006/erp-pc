@@ -105,8 +105,8 @@
                               </select>
                           </div>
                           <div class="editpage-input" >
-                              <label class="editlabel">{{$t('static.consignee_phone')}} <span class="system_danger" v-if="$validation.mobile.phone">请输入正确有效的手机号</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['phone']" value="{{param.consigneePhone}}"/>
+                              <label class="editlabel">{{$t('static.consignee_phone')}} <span class="system_danger" v-if="$validation.mobile.intlphone">请输入正确有效的手机号</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['intlphone']" value="{{param.consigneePhone}}"/>
                           </div>
                           <div class="editpage-input" v-if="param.difference=='意向'">
                               <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.mobile.email">请输入正确有效的手机号</span></label>

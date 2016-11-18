@@ -41,8 +41,8 @@
                               <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}" v-validate:consignee="{minlength:2}" />
                           </div>
                           <div class="editpage-input" v-if="param.different=='国际'">
-                              <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.mobile.email">{{$t('static.enter_email')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.email"  v-validate:mobile="['email']" value="{{param.email}}"/>
+                              <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.email.email">{{$t('static.enter_email')}}</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.email"  v-validate:email="['email']" value="{{param.email}}"/>
                           </div>
                           <!-- <div class="editpage-input">
                               <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.you.email">请输入正确的邮箱</span></label>
@@ -112,7 +112,11 @@
                                   <option value="1">是</option>
                               </select>
                           </div>
-                          <div class="editpage-input" >
+                          <div class="editpage-input"  v-if="param.different=='国际'">
+                              <label class="editlabel">{{$t('static.consignee_phone')}}  <span class="system_danger" v-if="$validation.intl.intlphone">{{$t('static.enter_phone')}}</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:intl="['intlphone']" value="{{param.consigneePhone}}"/>
+                          </div>
+                          <div class="editpage-input" v-else>
                               <label class="editlabel">{{$t('static.consignee_phone')}}  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['phone']" value="{{param.consigneePhone}}"/>
                           </div>
