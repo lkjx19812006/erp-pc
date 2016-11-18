@@ -89,12 +89,23 @@
                         <div class="edit-detail">
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">产品名称</label>
+                                     <input type="text" class="form-control edit-input"   value="{{initProductDetail.name}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label class="editlabel">产品类型</label>
                                      <input type="text" class="form-control edit-input"  value="{{initProductDetail.type}}" disabled="disabled"/>
                                 </div>
+                                
+                            </div>
+                             <div class="clearfix">
                                 <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                                     <label class="editlabel">品种名称</label>
                                     <input type="text" class="form-control edit-input"   value="{{initProductDetail.breedName}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                                    <label class="editlabel">产品质量</label>
+                                    <input type="text" class="form-control edit-input"  value="{{initProductDetail.quality}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
@@ -107,16 +118,7 @@
                                      <input type="text" class="form-control edit-input"  value="{{initProductDetail.number}}" disabled="disabled"/>
                                 </div>
                             </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label class="editlabel">产品名称</label>
-                                     <input type="text" class="form-control edit-input"   value="{{initProductDetail.name}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                                    <label class="editlabel">产品质量</label>
-                                    <input type="text" class="form-control edit-input"  value="{{initProductDetail.quality}}" disabled="disabled"/>
-                                </div>
-                            </div>
+                           
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label class="editlabel">规格</label>

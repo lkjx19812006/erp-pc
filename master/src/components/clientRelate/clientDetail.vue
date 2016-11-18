@@ -323,8 +323,6 @@
                                                            headline:'clientDetail'
                                                            },item.show=false)"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                                                      </a>
-                                                <!-- </td>
-                                                                                               <td>  -->
                                                <a class="operate" href="/crm/api/v1/file/dowanloadFile?path={{item.path}}"><img src="/static/images/upload.png" height="18" width="28"  /></a></td>
                                                 <!-- <td  @click="clickShow($index,{
                                                     concrete:'files'

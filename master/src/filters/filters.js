@@ -244,9 +244,9 @@ Vue.filter('customerType', function(val){ //客户类型
 Vue.filter('classify', function(val){ //客户分类
 	var val = val;
 	if(val==1){
-		 return '买';
+		 return '采购商';
 	}else if(val==2){
-		 return '卖';
+		 return '供应商';
 	}else if(val==3){
 		return '买卖';
 	}else{

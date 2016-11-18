@@ -781,6 +781,7 @@ export default {
            console.log(this.createOrderParam.goods[0])
            console.log(item)
            this.createOrderParam.customer = item.customerId;
+           this.createOrderParam.type = item.type;
            this.createOrderParam.goods[0].sourceId= item.id;
            this.createOrderParam.goods[0].brredName= item.breedName;
            this.createOrderParam.goods[0].breedId= item.breedId;

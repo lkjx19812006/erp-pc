@@ -1,6 +1,7 @@
 <template>
   <create-model :param="createParam" v-if="createParam.show"></create-model>
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
+  <supplydetail-model :param="supplyParam" v-if="supplyParam.show"></supplydetail-model>
   <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
   <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
@@ -79,8 +80,8 @@
         <thead>
             <tr>
               <th>产品类型</th>
-              <th>品种名称</th>
               <th>供应商名称</th>
+              <th>品种名称</th>
               <th>产品名称</th>
               <th>产品质量</th>
               <th>产地</th>
@@ -100,9 +101,17 @@
 
             </tr>
         <tr v-for="item in initProductlist">
-          <td>{{item.type}}</td>
+          <td>{{item.type}}</td>     
+          <td class="underline"  @click="supplyOn({
+                                id:item.cid,
+                                sub:$index,
+                                show:true,
+                                loading:false,
+                                name:item.cName,
+                                url:'/customer/',
+                                key:'customerList'
+                                })">{{item.cName}}</td>
           <td>{{item.breedName}}</td>
-          <td>{{item.cName}}</td>
           <td class="underline"  @click="clickOn({
                              id:item.id,
                              sub:$index,
@@ -201,6 +210,7 @@
   import createModel  from '../supply/createProduct'
   import alterinfoModel  from '../supply/createProduct'
   import searchModel  from  '../clientRelate/searchModel'
+  import supplydetailModel from  '../clientRelate/clientDetail'
   import {
     initProductlist
   } from '../../vuex/getters'
@@ -217,7 +227,8 @@
       detailModel,
       createModel,
       alterinfoModel,
-      searchModel
+      searchModel,
+      supplydetailModel
 
     },
     vuex: {
@@ -250,6 +261,9 @@
         changeParam: {
           show: false
         },
+        supplyParam: {
+          show: false
+        },
         createParam:{
           show: false
         },
@@ -270,6 +284,9 @@
       clickOn: function(initProductlist) {
         this.changeParam = initProductlist;
        /* this.getProductDetail(this.changeParam);*/
+      },
+      supplyOn:function(initProductlist){
+          this.supplyParam = initProductlist;
       },
       createCustomer:function(initProductlist){
         this.createParam = initProductlist;

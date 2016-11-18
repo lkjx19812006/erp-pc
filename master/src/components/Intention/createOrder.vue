@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h4>新建订单</h4>
+            <h5>新建订单</h5>
         </div>
         <validator name="validation">
             <div class="edit-model">
@@ -141,7 +141,8 @@
                             <div class="editpageleft">
                                 <div class="editpage-input">
                                     <label class="editlabel">商品标题</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].title"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].title" v-else/>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].title" value="{{param.goods[0].brredName}}" v-if="param.goods[0].title==''"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">产地</label>
@@ -158,8 +159,8 @@
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input">
-                                    <label class="editlabel">商品来源ID</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].sourceId" disabled="true"/>
+                                    <label class="editlabel">商品名称</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].brredName" disabled="true"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">品质</label>

@@ -14,25 +14,27 @@
                     <section class="editsection"  v-cloak>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">名称 <span class="system_danger" v-if="$validation.username.required">请输入名称</span></label>
+                                <label class="editlabel">产品名称 <span class="system_danger" v-if="$validation.username.required">请输入名称</span></label>
                                 <input type="text" id="username" class="form-control" v-model="param.name" v-validate:username="['required']" value="{{param.name}}" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">类型</label>
+                                <label class="editlabel">产品类型</label>
                                  <select  value="{{param.type}}" v-model="param.type" class="form-control">
-                                    <option value="1" selected>可用</option>
+                                    <option>药材</option>
+                                    <option>提取物</option>
+                                    <option>饮片</option>
                                 </select>
                                 <!-- <input type="text" id="usertype" class="form-control" v-model="param.type" v-validate:usertype="['required']" value="{{param.type}}"/> -->
                             </div>
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">品种类别 <span class="system_danger" v-if="$validation.breed.required">请选择品种类别</span></label>
+                                <label class="editlabel">品种名称 <span class="system_danger" v-if="$validation.breed.required">请选择品种</span></label>
                                 <input type="text" class="form-control" v-model="param.breedName"  v-validate:breed="['required']" value="{{param.breedName}}"  @click="searchBreed(param.breedName,param.breedId)"/>
                                     
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label class="editlabel">质量</label>
+                                <label class="editlabel">产品质量</label>
                                 <input type="text" class="form-control" v-model="param.quality" value="{{param.quality}}"/>
                             </div>
                         </div>
@@ -70,7 +72,7 @@
                         </div>
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">数量 <span class="system_danger" v-if="$validation.number.quantity">请输入数量</span></label>
+                                <label class="editlabel">数量（库存） <span class="system_danger" v-if="$validation.number.quantity">请输入数量</span></label>
                                 <input type="text" class="form-control" v-model="param.number" id="number" v-validate:number="['quantity']" value="{{param.number}}" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">

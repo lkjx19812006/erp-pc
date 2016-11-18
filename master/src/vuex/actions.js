@@ -685,6 +685,9 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         orderStatus:data.orderStatus,
         goods:data.goods
     }
+    if(data.email){
+        body.email = data.email;
+    }
     console.log(body);
     Vue.http({
         method: 'POST',
@@ -3418,8 +3421,8 @@ export const getEmpIntlIntentionList = ({ dispatch }, param) => {  //业务员�
 
 export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询国际意向详情
     param.loading = true;
-    console.log(param.link);
-    var url = apiUrl.clientList+param.link+param.id;
+    console.log(param);
+    var url = apiUrl.clientList+'/intlIntention/'+param.id;
     Vue.http({
         method:'GET',
         url:url,
@@ -3489,6 +3492,24 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => {  //按ID查询�
 
 
                 dispatch(types.INTLINTENTION_DETAIL_DATA, intent);
+            }
+            if(param.key=='orderList'){
+                /*param.goods = intent.items;*/
+                intent.items.forEach(function(item){
+                    var temp = {
+                        breedId:item.breedId,
+                        brredName:item.breedName,
+                        title:item.title,
+                        quality:item.quality,
+                        location:item.location,
+                        spec:item.spec,
+                        number:item.number,
+                        unit:item.unit,
+                        price:item.price,
+                        sourceType:1
+                    }
+                    param.goods.push(temp);
+                })
             }
 
             param.loading = false;

@@ -139,11 +139,11 @@ import createModel from '../createIntention'
 import modifyModel from '../modifyIntention'
 import cancelinquireModel from '../../tips/tipDialog'
 import inquireModel from '../inquire'
-import createorderModel from  '../../order/createOrderDialog'
+import createorderModel from '../createOrderDialog' 
 
 import {
-    initIntlIntentionList
-  
+    initIntlIntentionList,
+      initLogin
 } from '../../../vuex/getters'
 import {
     getIntlIntentionList,
@@ -152,7 +152,7 @@ import {
     intlIntentionAffirmOffer,
     cancelIntlIntentionInquire,
     createOrder,
-    initLogin
+
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -169,7 +169,7 @@ export default {
     vuex: {
         getters: {
             initIntlIntentionList,
-            
+            initLogin
         },
         actions: {
             getIntlIntentionList,
@@ -177,8 +177,8 @@ export default {
             deleteInfo,
             intlIntentionAffirmOffer,
             cancelIntlIntentionInquire,
-            createOrder,
-            initLogin
+            createOrder
+
         }
     },
     data() {
@@ -211,7 +211,7 @@ export default {
                 show:false,
                 title1:'新建订单',
                 type:1,
-                sourceType:0,
+                sourceType:1,
                 sample:'',
                 intl:'',
                 customer:'',
@@ -390,14 +390,18 @@ export default {
         },
         newOrder:function(item,sub){
             this.createOrderParam.show = true;
+            this.createOrderParam.employee = item.employee;
+            this.createOrderParam.id = item.id;
             this.createOrderParam.customer = item.customerId;
+            this.createOrderParam.org = this.initLogin.orgId;
+            this.createOrderParam.consigneeAddr = item.address;
             this.createOrderParam.customerName = item.customerName;
             this.createOrderParam.province = item.province;
             this.createOrderParam.country = item.country;
             this.createOrderParam.district = item.district;
             this.createOrderParam.city = item.city;
+            this.createOrderParam.consigneeAddr = item.address;
             this.createOrderParam.intl = item.intl;
-            this.createOrderParam.email = item.customerEmail;
         },
         onlyselected:function(sub,id){
             var _this = this;

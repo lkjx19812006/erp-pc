@@ -18,7 +18,7 @@
                   </div>
                   <div class="editpage">
                       <div class="editpageleft">
-                          <div class="editpage-input" v-if="param.different!='国际'">
+                          <div class="editpage-input">
                               <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
                               <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
                               <select  class="form-control edit-input" v-model="param.type"   >
@@ -39,11 +39,7 @@
                            <div class="editpage-input">
                               <label class="editlabel">{{$t('static.consignee_name')}} <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}" v-validate:consignee="{minlength:2}" />
-                          </div>
-                          <div class="editpage-input" v-if="param.different=='国际'">
-                              <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.email.email">{{$t('static.enter_email')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.email"  v-validate:email="['email']" value="{{param.email}}"/>
-                          </div>
+                          </div> 
                           <!-- <div class="editpage-input">
                               <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.you.email">请输入正确的邮箱</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.email"  v-validate:you="['email']" />
@@ -112,11 +108,7 @@
                                   <option value="1">是</option>
                               </select>
                           </div>
-                          <div class="editpage-input"  v-if="param.different=='国际'">
-                              <label class="editlabel">{{$t('static.consignee_phone')}}  <span class="system_danger" v-if="$validation.intl.intlphone">{{$t('static.enter_phone')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:intl="['intlphone']" value="{{param.consigneePhone}}"/>
-                          </div>
-                          <div class="editpage-input" v-else>
+                          <div class="editpage-input" >
                               <label class="editlabel">{{$t('static.consignee_phone')}}  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['phone']" value="{{param.consigneePhone}}"/>
                           </div>

@@ -44,7 +44,7 @@
         </thead>
         <tbody>
           <tr v-for="item in initProductlist">
-            <td>{{item.name}}</td>
+            <td >{{item.name}}</td>
             <td>{{item.fileType}}</td>
             <td>{{item.bizType}}</td>
             <!--<td v-if="item.bizType!='product_license'">客户文件</td>-->

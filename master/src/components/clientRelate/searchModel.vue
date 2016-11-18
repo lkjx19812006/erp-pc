@@ -111,8 +111,8 @@
                         <label>客户分类：</label>
                         <select class="form-control"  v-model="param.classify">
                             <option value="" selected>请选择分类</option>
-                            <option value="1">买</option>
-                            <option value="2">卖</option>
+                            <option value="1">采购商</option>
+                            <option value="2">供应商</option>
                             <option value="3">买卖</option>
                         </select>
                     </div>
