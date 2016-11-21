@@ -467,7 +467,6 @@ var locales = {
       validate_telephone:'Please enter correct telephone',
       validate_qq:'Please enter correct qq',
       validate_type:'Please select type',
-
       //client
     }
   }
