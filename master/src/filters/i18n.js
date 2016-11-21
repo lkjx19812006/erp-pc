@@ -507,7 +507,11 @@ var locales = {
       validate_telephone:'Please enter correct telephone',
       validate_qq:'Please enter correct qq',
       validate_type:'Please select type',
+<<<<<<< HEAD
 
+=======
+      //client
+>>>>>>> e2a184602526e4d2a2f34b2d95f8fb1d748dae32
     }
   }
 }
