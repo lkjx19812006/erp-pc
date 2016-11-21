@@ -6,7 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>询价信息</h3>
+            <h3>{{$t('static.inquiry_record')}}</h3>
         </div>
         <validator name="validation">
           <div class="edit-model">
@@ -17,30 +17,21 @@
               <pulse-loader :loading="breedParam.loading" :color="color" :size="size"></pulse-loader>
             </div> -->
              <section class="editsection" v-cloak>
-                 <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-
-                 <div class="editpage">
-                     
-
-
-                 </div>
-
+                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                 <div style="margin-top:25px">
                    <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
-                   <h4 style="display:inline">原材料报价</h4>
+                   <h4 style="display:inline">{{$t('static.raw_material_quotation')}}</h4>
                 </div> 
-                 
                  <table class="table table-hover table_color table-striped ">
                      <thead>
                          <tr>
-                           <th>品种名称</th> 
-                           <th>货币类型</th>
-                           <th v-if="param.showCost">成本价格</th>
-                           <th>报价</th>
-                           <th>单位</th>
-                           <th>数量</th> 
-                           <th>备注</th> 
-                           
+                           <th>{{$t('static.breed')}}</th> 
+                           <th>{{$t('static.currency')}}</th>
+                           <th v-if="param.showCost">{{$t('static.cost_price')}}</th>
+                           <th>{{$t('static.quoted_price')}}</th>
+                           <th>{{$t('static.unit')}}</th>
+                           <th>{{$t('static.quantity')}}</th> 
+                           <th>{{$t('static.comment')}}</th> 
                          </tr>
                      </thead>
                      <tbody>
@@ -52,9 +43,7 @@
                              <td>{{item.unit}}</td>
                              <td>{{item.number}}</td>
                              <td>{{item.comment}}</td>
-                             
-                             
-                             
+                                           
                          </tr>
                      </tbody>
                  </table>
@@ -63,18 +52,16 @@
                  </div>   --> 
                   <div style="margin-top:25px">
                    <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
-                   <h4 style="display:inline">其他报价</h4>
+                   <h4 style="display:inline">{{$t('static.other_quotations')}}</h4>
                 </div> 
                  
                  <table class="table table-hover table_color table-striped ">
                      <thead>
                          <tr>
-                           <th>费用</th> 
-                           <th>币种</th>
-                           <th>费用描述</th>
-                           <th>备注</th>
-                           
-                           
+                           <th>{{$t('static.expense')}}</th> 
+                           <th>{{$t('static.currency')}}</th>
+                           <th>{{$t('static.expense_explanation')}}</th>
+                           <th>{{$t('static.comment')}}</th>
                          </tr>
                      </thead>
                      <tbody>

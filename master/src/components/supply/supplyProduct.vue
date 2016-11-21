@@ -9,42 +9,42 @@
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">产品列表</div>
       <div class="my_order_search  col-xs-8">
-               <div class="filter_search clearfix">
-                    <dl class="clearfix">
-                        <dt>类型：</dt>
-                        <dd>
-                            <select class="form-control"  v-model="loadParam.type" @change="searchProduct()">
-                                <option value="">请选择类型</option>
-                                <option>药材</option>
-                                <option>提取物</option>
-                                <option>饮片</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>状态：</dt>
-                        <dd>
-                            <select class="form-control" v-model="loadParam.status" @change="searchProduct()">
-                                <option value="">请选择状态</option>
-                                <option value="0">无效</option>
-                                <option value="1">可用</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>产品名称：</dt>
-                        <dd>
-                            <input type="text"  class="form-control" placeholder="按产品名称全称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>供应商名称：</dt>
-                        <dd>
-                            <input type="text"  class="form-control" placeholder="按供应商名称搜索" class="search_input"  v-model="loadParam.cName"  @keyup.enter="searchProduct()"/>
-                        </dd>
-                    </dl>
-               </div>
+           <div class="filter_search clearfix">
+                <dl class="clearfix">
+                    <dt>类型：</dt>
+                    <dd>
+                        <select class="form-control"  v-model="loadParam.type" @change="searchProduct()">
+                            <option value="">请选择类型</option>
+                            <option>药材</option>
+                            <option>提取物</option>
+                            <option>饮片</option>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>状态：</dt>
+                    <dd>
+                        <select class="form-control" v-model="loadParam.status" @change="searchProduct()">
+                            <option value="">请选择状态</option>
+                            <option value="0">无效</option>
+                            <option value="1">可用</option>
+                        </select>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>产品名称：</dt>
+                    <dd>
+                        <input type="text"  class="form-control" placeholder="按产品名称全称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>供应商名称：</dt>
+                    <dd>
+                        <input type="text"  class="form-control" placeholder="按供应商名称搜索" class="search_input"  v-model="loadParam.cName"  @keyup.enter="searchProduct()"/>
+                    </dd>
+                </dl>
            </div>
+      </div>
       <div class="right col-xs-3">
         <!--<button class="new_btn transfer" @click="createCustomer({-->
                                              <!--show:true,-->
@@ -97,9 +97,6 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-
-            </tr>
         <tr v-for="item in initProductlist">
           <td>{{item.type}}</td>     
           <td class="underline"  @click="supplyOn({

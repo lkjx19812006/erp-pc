@@ -18,18 +18,6 @@
             </div> -->
              <section class="editsection" v-cloak>
                  <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-
-                 <div class="editpage">
-                     
-
-
-                 </div>
-
-               
-                 
-                 
-           
-                   
                  <div v-if="true" class="editpage" >
                        <div class="editpageleft">
                           <div class="editpage-input">

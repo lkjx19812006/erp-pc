@@ -6,7 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>条目历史报价</h3>
+            <h3>{{$t('static.historical_quotation')}}</h3>
         </div>
         <validator name="validation">
           <div class="edit-model">
@@ -18,13 +18,6 @@
             </div> -->
              <section class="editsection" v-cloak>
                  <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-
-                 <div class="editpage">
-                     
-
-
-                 </div>
-
                 <div style="margin-top:25px">
                    <!-- <img src="/static/images/sellerinfo@2x.png" style="display:inline"/> -->
                    <h4 style="display:inline"></h4>
@@ -33,14 +26,14 @@
                  <table class="table table-hover table_color table-striped ">
                      <thead>
                          <tr>
-                           <th>品种名称</th> 
-                           <th>货币类型</th>
-                           <th v-if="param.showCost">成本价格</th>
-                           <th>报价</th>
-                           <th>单位</th>
-                           <th>数量</th> 
-                           <th>备注</th>
-                           <th>创建时间</th> 
+                           <th>{{$t('static.breed')}}</th> 
+                           <th>{{$t('static.currency')}}</th>
+                           <th v-if="param.showCost">{{$t('static.cost_price')}}</th>
+                           <th>{{$t('static.quoted_price')}}</th>
+                           <th>{{$t('static.unit')}}</th>
+                           <th>{{$t('static.quantity')}}</th> 
+                           <th>{{$t('static.comment')}}</th> 
+                           <th>{{$t('static.create_time')}}</th> 
                            
                          </tr>
                      </thead>

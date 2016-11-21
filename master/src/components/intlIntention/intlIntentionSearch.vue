@@ -42,8 +42,8 @@
 
     </div>
     <div class="edit_footer">
-        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-        <input type="button" class="btn  btn-confirm"  @click="intentionSearch(param,param.show = false)" value="确定">
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+        <input type="button" class="btn  btn-confirm"  @click="intentionSearch(param,param.show = false)" value="{{$t('static.confirm')}}">
     </div>
 </template>
 <script>
