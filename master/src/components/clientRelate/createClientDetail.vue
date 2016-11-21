@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建{{param.title}}</h3>
+            <h3>新建联系人</h3>
         </div>
         <validator name="validation">
             <form novalidate>
@@ -14,23 +14,23 @@
                         <div class="editpage" v-cloak>
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel" for="system">{{param.namelist}}<span class="system_danger" v-if="$validation.name.minlength">请输入姓名且不少于两位数</span></label>
+                                    <label class="editlabel" for="system">{{$t('static.name')}}<span class="system_danger" v-if="$validation.name.minlength">{{$t('static.validate_name')}}</span></label>
                                     <input type="text" class="form-control edit-input" v-validate:name="{minlength:2}" v-model="param.name"  />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel">{{param.job}}</label>
+                                    <label class="editlabel">{{$t('static.position')}}</label>
                                     <input type="text" class="form-control edit-input" v-model="param.position" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel" for="system">{{param.phonelist}}<span class="system_danger" v-if="$validation.phone.phone">请输入正确的手机号</span></label>
+                                    <label class="editlabel" for="system">{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.phone.phone">{{$t('static.validate_cellphone')}}</span></label>
                                     <input type="text" class="form-control edit-input" v-validate:phone="['phone']" v-model="param.phone"  />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel" for="system">{{param.webchart}}<span class="system_danger" v-if="$validation.wechart.wechart">请输入正确的微信号</span></label>
+                                    <label class="editlabel" for="system">{{$t('static.wechat')}}<span class="system_danger" v-if="$validation.wechart.wechart">{{$t('static.validate_wechat')}}</span></label>
                                     <input type="text" class="form-control edit-input" v-validate:wechart="['wechart']" v-model="param.wechart" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">是否主要</label>
+                                    <label class="editlabel">{{$t('static.whether_main_contact')}}</label>
                                     <select class="form-control edit-input" v-model='param.main'>
                                          <option value="0">否</option>
                                          <option value="1">是</option>
@@ -39,19 +39,19 @@
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.parten}}</label>
+                                    <label class="editlabel">{{$t('static.department')}}</label>
                                     <input type="text" class="form-control edit-input"  id="department" v-model="param.department" />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel" for="system">{{param.tellist}}<span class="system_danger" v-if="$validation.tel.tel">请输入正确的电话</span></label>
+                                    <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.tel.tel">{{$t('static.validate_telephone')}}</span></label>
                                     <input type="text" class="form-control edit-input"  id="tel" v-validate:tel="['tel']" v-model="param.tel" />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel"><label class="editlabel" for="system">{{param.emaillist}}<span class="system_danger" v-if="$validation.email.email">请输入正确的邮箱</span></label></label>
+                                    <label class="editlabel"><label class="editlabel" for="system">{{$t('static.email')}}<span class="system_danger" v-if="$validation.email.email">{{$t('static.validate_email')}}</span></label></label>
                                     <input type="text" class="form-control edit-input" v-validate:email="['email']" id="email" v-model="param.email" />
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel"><label class="editlabel" for="system">{{param.QQ}}<span class="system_danger" v-if="$validation.qq.qq">请输入正确的qq号</span></label></label>
+                                    <label class="editlabel"><label class="editlabel" for="system">qq<span class="system_danger" v-if="$validation.qq.qq">{{$t('static.validate_qq')}}</span></label></label>
                                     <input type="text" class="form-control edit-input"  v-validate:qq="['qq']" v-model="param.qq" v-validate:qq="['required']" />
                                 </div>
                             </div>
@@ -60,9 +60,9 @@
                     </section>
                 </div>
                 <div class="edit_footer">
-                    <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">保存</button>
-                    <button type="button" class="btn  btn-confirm" v-else disabled="true">保存</button>
+                    <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">{{$t('static.save')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.save')}}</button>
                    
                 </div>
             </form>

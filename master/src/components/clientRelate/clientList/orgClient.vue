@@ -18,9 +18,9 @@
                         employeeId:'',
                         orgId:'',
                         show:true
-                        })">划转</button>
-                  <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
-                  <button class="new_btn transfer" @click="clientTransferSupplier()">提取供应商</button>
+                        })">{{$t("static.assigned_to_employee")}}</button>
+                  <button class="new_btn transfer" @click="clientTransferBlack()">{{$t("static.drag_into_blacklist")}}</button>
+                  <button class="new_btn transfer" @click="clientTransferSupplier()">{{$t("static.make_them_become_supplier")}}</button>
                   <button class="new_btn transfer" @click="createCustomer({
                                             show:true,
                                             loading:false,
@@ -55,9 +55,9 @@
                                                 }
                                             ],
                                             link:saveCreate,
-                                            })">新建</button>
-                    <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-                    <button class="new_btn transfer" @click="createSearch()">搜索</button>
+                                            })">{{$t("static.new")}}</button>
+                    <button class="new_btn transfer" @click="resetCondition()">{{$t("static.clear_all")}}</button>
+                    <button class="new_btn transfer" @click="createSearch()">{{$t("static.search")}}</button>
                 </div>
             </div>
             <div class="clear" style="margin-top:10px;">
@@ -72,25 +72,25 @@
                       </dd>
                    </dl> -->
                     <dl class="clear left transfer">
-                       <dt class="left transfer marg_top">客户分类：</dt>
+                       <dt class="left transfer marg_top">{{$t("static.customer_classification")}}：</dt>
                        <dd class="left">
                              <select v-model="loadParam.classify"  class="form-control" @change="selectSearch()">
-                                <option value="" selected>请选择分类</option>
-                                <option value="1">买</option>
-                                <option value="2">卖</option>
-                                <option value="3">买卖</option>
+                                <option value="" selected>{{$t("static.please_select")}}</option>
+                            <option value="1">{{$t("static.purchaser")}}</option>
+                            <option value="2">{{$t("static.supplier")}}</option>
+                            <option value="3">{{$t("static.purchaser_and_supplier")}}</option>
                             </select>
                        </dd>
                     </dl>
                     <dl class="clear left transfer">
-                       <dt class="left transfer marg_top">客户信用等级：</dt>
+                       <dt class="left transfer marg_top">{{$t("static.credit_rating")}}：</dt>
                        <dd class="left">
                              <select v-model="loadParam.creditLevel"  class="form-control" @change="selectSearch()">
-                              <option value="" selected>请选择等级</option>
-                              <option value="0">暂无等级</option>
-                              <option value="1">一星客户</option>
-                              <option value="2">二星客户</option>
-                              <option value="3">三星客户</option>
+                              <option value="" selected>{{$t("static.please_select")}}</option>
+                          <option value="0">{{$t("static.none")}}</option>
+                          <option value="1">{{$t("static.one_star")}}</option>
+                          <option value="2">{{$t("static.two_star")}}</option>
+                          <option value="3">{{$t("static.three_star")}}</option>
                             </select>
                        </dd>
                     </dl>
@@ -105,28 +105,28 @@
                     <tr>
                         <th>
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
-                        <th>类 型</th>
-                        <th>分 类</th>
-                        <th>客户来源</th>
-                        <th>客户信用等级</th>
-                        <th>客户名称</th>
-                        <th>分类码</th>
+                        <th>{{$t("static.type")}}</th>
+                        <th>{{$t("static.classification")}}</th>
+                        <th>{{$t("static.customer_source")}}</th>
+                        <th>{{$t("static.credit_rating")}}</th>
+                        <th>{{$t("static.client_name")}}</th>
+                        <th>{{$t("static.classification_code")}}</th>
                         <!-- <th>所属分类</th> -->
-                        <th>所属业务员</th>
-                        <th>负责人</th>
-                        <th style="min-width:120px;">经营范围</th>
-                        <th>手机</th>
-                        <th>手机省</th>
-                        <th>手机市</th>
-                        <th>邮 箱</th>
-                        <th>国 家</th>
-                        <th>所在省</th>
-                        <th>所在市</th>
-                        <th>注册地址</th>
-                        <th>创建时间</th>
-                        <th>是否供应商</th>
-                        <th style="min-width:200px">备注</th>
-                        <th colspan="2">操作</th>
+                        <th>{{$t("static.salesman")}}</th>
+                        <th>{{$t("static.principals")}}</th>
+                        <th style="min-width:120px;">{{$t("static.business_scope")}}</th>
+                        <th>{{$t("static.client_phone")}}</th>
+                        <th>{{$t("static.province_of_phone")}}</th>
+                        <th>{{$t("static.city_of_phone")}}</th>
+                        <th>{{$t("static.client_email")}}</th>
+                        <th>{{$t("static.country")}}</th>
+                        <th>{{$t("static.province")}}</th>
+                        <th>{{$t("static.city")}}</th>
+                        <th>{{$t("static.registered_address")}}</th>
+                        <th>{{$t("static.create_time")}}</th>
+                        <th>{{$t("static.whether_supplier")}}</th>
+                        <th style="min-width:200px">{{$t("static.comment")}}</th>
+                        <th colspan="2">{{$t("static.operation")}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -350,6 +350,8 @@ export default {
                 phoneProvinceName:'',
                 label:'',
                 creditLevel:'',
+                ctimeStart:'',
+                ctimeEnd:'',
                 total:0
 
             },

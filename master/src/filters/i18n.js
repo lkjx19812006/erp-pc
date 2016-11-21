@@ -222,6 +222,7 @@ var locales = {
       reason:'原因',
       recommend_drugs:'推荐已开通药款账户用户使用',
       recommend_line:'金额较大或企业账户',
+      upload_logistcs:'请上传物流单凭证照片',
     }
   },
   en: {
