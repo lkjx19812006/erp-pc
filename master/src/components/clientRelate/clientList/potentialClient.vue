@@ -132,7 +132,7 @@
                                                 employeeName:item.employeeName,
                                                 orgId:item.orgId
                                                 })">
-                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
+                            <a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" height="18" width="30"/>
                             </a>
                         </td>
                         <!-- <td  @click="specDelete({

@@ -19,19 +19,19 @@
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
                         <span class="navbar-brand navbar-name" href="#">{{initOrderDetail.no}}</span>
                     </div>
-                    <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
-                        <li>
-                            <!-- 销售订单 -->
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initOrderDetail.orderStatus==10&&param.contact=='/order/myList'">等待处理</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initOrderDetail.orderStatus==20&&param.contact=='/order/myList'">待客户付款</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initOrderDetail.orderStatus==40&&param.contact=='/order/myList'">待发货</button>
-                            <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initOrderDetail.orderStatus==50&&param.contact=='/order/myList'">待客户收货</button>
-
-                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus>=60"  @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')">已完成</button>
-                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-1" @click="pendingOrder(param,param.tips='订单已取消！')">已取消</button>
-                            <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-2" @click="pendingOrder(param,param.tips='订单已过期！')">已过期</button>
-                        </li>
-                    </ul>
+                   <!--  <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
+                       <li>
+                           <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！')" v-if="initOrderDetail.orderStatus==0&&param.contact=='/order/myList'">处理中</button>
+                           <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='{{$t('static.related_information')}}订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initOrderDetail.orderStatus==10&&param.contact=='/order/myList'">等待处理</button>
+                           <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initOrderDetail.orderStatus==20&&param.contact=='/order/myList'">待客户付款</button>
+                           <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initOrderDetail.orderStatus==40&&param.contact=='/order/myList'">待发货</button>
+                           <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initOrderDetail.orderStatus==50&&param.contact=='/order/myList'">待客户收货</button>
+                   
+                           <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus>=60"  @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')">已完成</button>
+                           <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-1" @click="pendingOrder(param,param.tips='订单已取消！')">已取消</button>
+                           <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-2" @click="pendingOrder(param,param.tips='订单已过期！')">已过期</button>
+                       </li>
+                   </ul> -->
                 </div>
             </nav>
         </div>

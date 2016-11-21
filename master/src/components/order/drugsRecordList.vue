@@ -18,7 +18,7 @@
               <th>{{$t('static.transfer_amount')}}</th>
               <th>{{$t('static.application_time')}}</th>
               <th>{{$t('static.status')}}</th>
-              <th></th>
+              <th>{{$t('static.handle')}}</th>
             </tr>
         </thead>
         <tbody>
@@ -40,10 +40,10 @@
             <td>{{item.ctime}}</td>
             <td>{{item.status | drugsStatus}}</td>
             <td>
-                <a class="operate" v-if="item.status==0" @click="drugs(item,$index)"><img src="/static/images/apply.png" height="18" width="47" /></a>
-                <a class="operate" v-if="item.status==1" @click="drugs(item,$index)"><img src="/static/images/Financial.png" height="18" width="48" title="转账处理中" alt="转账处理中"></a>
-                <a class="operate" v-if="item.status==2" @click="drugs(item,$index)"><img src="/static/images/Financialtransfer.png" height="18" width="48" title="转出成功" alt="转出成功"></a>
-                <a class="operate" v-if="item.status==3" @click="drugs(item,$index)"><img src="/static/images/Financialover.png" height="18" width="48" ></a>
+                <a class="operate" v-if="item.status==0" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_apply')}}.png" /></a>
+                <a class="operate" v-if="item.status==1" @click="drugs(item,$index)"><img src="/static/images/Financial.png" title="转账处理中" alt="转账处理中"></a>
+                <a class="operate" v-if="item.status==2" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_transfer')}}.png"  title="转出成功" alt="转出成功"></a>
+                <a class="operate" v-if="item.status==3" @click="drugs(item,$index)"><img src="/static/images/Financialover.png" ></a>
             </td>
           </tr>
         </tbody>

@@ -50,7 +50,7 @@
                                            show:true,
                                            link:'/customer/setSupplier',
                                            title:'客户提取为供应商备注'
-                                           })">提取为供应商</button>
+                                           })">{{$t('static.make_them_become_supplier')}}</button>
                         </li>
 
                       <li v-if="initClientDetail.blacklist==0">

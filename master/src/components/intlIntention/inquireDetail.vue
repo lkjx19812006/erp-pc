@@ -120,7 +120,10 @@
                                                       <td><a class="underline" @click="getInquireInfo(item.id)">{{item.inquireType}}</a></td>
                                                       <td>{{item.comment}}</td>
                                                       <td>{{item.ctime}}</td>
-                                                      <td>{{item.inquire | inquire}}</td>
+                                                      <td v-if="item.inquire==0">{{$t('static.inquire_type')}}</td>
+                                                      <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.initial')}}</td>
+                                                      <td v-if="item.inquire==2" style="color:#EE82EE">{{$t('static.inquiry')}}</td>
+                                                      <td v-if="item.inquire==3" style="color:#2E8B57">{{$t('static.quo_complete')}}</td>
                                                       <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
                                                       <td @click="otherOffer()" style="cursor:pointer">其他报价</td> -->
                                                         
@@ -177,7 +180,7 @@
                                                     <div v-else>是</div>
                                                 </td> -->
                                                 <td>
-                                                    <a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2||(item.again==1)" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/quote.png" alt="报价" /></a>
+                                                    <a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2||(item.again==1)" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" /></a>
                                                 </td>
                                                 <td></td>
                                             </tr>
@@ -219,8 +222,8 @@
                                               <td>{{item.cost}}</td>
                                               <td>{{item.costDesc}}</td>
                                               <td>{{item.comment}}</td>
-                                              <td><a style="cursor:pointer" @click="editOtherOffer(item,$index)"><img src="/static/images/edit.png" alt="编辑" /></a></td>
-                                              <td><a style="cursor:pointer" @click="delOtherOffer(item,$index)"><img src="/static/images/del.png" alt="删除" /></a></td>
+                                              <td><a style="cursor:pointer" @click="editOtherOffer(item,$index)"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑" /></a></td>
+                                              <td><a style="cursor:pointer" @click="delOtherOffer(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                              
                                               <!-- <td  @click="clickShow($index,{
                                                   concrete:'otherOffers'
@@ -268,8 +271,8 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td><a href="{{item.url}}" download=""><img src="/static/images/download.png" alt="下载" /></a></td>
-                                                <td><a @click="delFile(item,$index)"><img src="/static/images/del.png" alt="删除" /></a></td>
+                                                <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" alt="下载" /></a></td>
+                                                <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 <td></td>
                                                <!--  <td  @click="clickShow($index,{
                                                    concrete:'files'
@@ -317,8 +320,8 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td><a href="{{item.url}}" download=""><img src="/static/images/download.png" alt="下载" /></a></td>
-                                                <td><a @click="delFile(item,$index)"><img src="/static/images/del.png" alt="删除" /></a></td>
+                                                <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" alt="下载" /></a></td>
+                                                <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 <td></td>
                                                 <!-- <td  @click="clickShow($index,{
                                                     concrete:'offers'
