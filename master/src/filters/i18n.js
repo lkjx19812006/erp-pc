@@ -169,6 +169,8 @@ var locales = {
       application_time:'申请时间',
       status:'状态',
       enter_code:'请输入正确的邮箱',
+
+      
       //client
       drag_into_blacklist:'加入黑名单',
       out_of_blacklist:'移出黑名单',
