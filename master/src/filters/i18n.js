@@ -170,7 +170,7 @@ var locales = {
       status:'状态',
       enter_code:'请输入正确的邮箱',
 
-      
+      test:'测试',
       //client
       drag_into_blacklist:'加入黑名单',
       out_of_blacklist:'移出黑名单',
@@ -403,6 +403,10 @@ var locales = {
       transfer_amount:'Transfer amount',
       application_time:'Application time',
       status:'status',
+
+
+      
+      test:'test',
       //client
       drag_into_blacklist:'Drag into blacklist',
       out_of_blacklist:'Out of blacklist',
