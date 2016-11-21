@@ -468,8 +468,6 @@ var locales = {
       validate_qq:'Please enter correct qq',
       validate_type:'Please select type',
 
-
-
       //client
     }
   }
