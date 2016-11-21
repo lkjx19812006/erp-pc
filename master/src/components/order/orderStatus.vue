@@ -9,10 +9,10 @@
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
-        <div class="order_contain">订单状态</div>
+        <div class="order_contain">{{$t('static.order_status')}}</div>
         <div class="navbar-client" style="margin-top:0">
             <div class="message">
-               <p class="order-message">订单消息</p>
+               <p class="order-message">{{$t('static.order_message')}}</p>
                <p class="clearfix space_15">
                   <img src="/static/images/tips.png" height="30" width="30" class="left" />
                   <span class="tips">{{param.tips}}</span>
@@ -21,28 +21,28 @@
         </div>
         <div class="navbar-client">
             <div class="message clearfix">
-                <p class="order-message">订单信息</p>
+                <p class="order-message">{{$t('static.order_info')}}</p>
                 <div class="space_15 clearfix">
-                    <div class="left message_front" style="margin-top:5px;">订单号：{{initOrderDetail.no}}</div>
-                    <div class="left message_front"><img src="../../../static/images/contacter.png" height="30" width="23"  class="left"/><span class="tips">收件人：{{initOrderDetail.consignee}} | {{initOrderDetail.consigneePhone}}</span></div>
-                    <div class="left message_front"><img src="../../../static/images/address.png" class="left" height="34" width="24"  /><span class="tips">收件人地址：{{initOrderDetail.consigneeAddr}}</span></div>
+                    <div class="left message_front" style="margin-top:5px;">{{$t('static.order_no')}}：{{initOrderDetail.no}}</div>
+                    <div class="left message_front"><img src="../../../static/images/contacter.png" height="30" width="23"  class="left"/><span class="tips">{{$t('static.consignee')}}：{{initOrderDetail.consignee}} | {{initOrderDetail.consigneePhone}}</span></div>
+                    <div class="left message_front"><img src="../../../static/images/address.png" class="left" height="34" width="24"  /><span class="tips">{{$t('static.consignee_address')}}：{{initOrderDetail.consigneeAddr}}</span></div>
                 </div>
             </div>
             <div class="order_info clearfix">
-              <div class="col-xs-6 pull-left">
-                  <p>{{initOrderDetail.goods.arr[0].brredName}}</p>
-                  <p>{{initOrderDetail.goods.arr[0].price}}元/{{initOrderDetail.goods.arr[0].unit}}</p>
-                  <p>数量：{{initOrderDetail.goods.arr[0].number}}</p>
-                  <p>下单时间：{{initOrderDetail.ctime}}</p>
+              <div class="col-xs-6 pull-left" v-for="item in initOrderDetail.goods.arr">
+                  <p>{{item.brredName}}</p>
+                  <p>{{item.price}}元/{{item.unit}}</p>
+                  <p>{{$t('static.quantity')}}：{{item.number}}</p>
+                  <p>{{$t('static.order_time')}}：{{item.ctime}}</p>
               </div>
               <div class="col-xs-6 pull-left">
                  <div>
-                      <label>杂费：</label><span style="color:#fa6705">¥{{initOrderDetail.incidentals}}</span>（运费）<br>
-                      <label>杂费说明：</label><span style="color:#fa6705">{{initOrderDetail.incidentalsDesc}}</span><br>
-                      <label>优惠：</label><span style="color:#fa6705">¥{{initOrderDetail.preferential}}</span>
-                      <br><label>优惠说明：</label><span style="color:#fa6705">{{initOrderDetail.preferentialDesc}}</span>
+                      <label>{{$t('static.sundry_fees')}}：</label><span style="color:#fa6705">¥{{initOrderDetail.incidentals}}</span>（运费）<br>
+                      <label>{{$t('static.fee_explain')}}：</label><span style="color:#fa6705">{{initOrderDetail.incidentalsDesc}}</span><br>
+                      <label>{{$t('static.preferential')}}：</label><span style="color:#fa6705">¥{{initOrderDetail.preferential}}</span>
+                      <br><label>{{$t('static.discount_note')}}：</label><span style="color:#fa6705">{{initOrderDetail.preferentialDesc}}</span>
                  </div>
-                 <p><span  style="color:#fa6705">合计：¥{{initOrderDetail.total.toFixed(2)}}</span></p>
+                 <p><span  style="color:#fa6705">{{$t('static.total')}}：¥{{initOrderDetail.total.toFixed(2)}}</span></p>
               </div>
             </div>
             <!-- 处理订单0 -->
@@ -53,7 +53,7 @@
                     orderStatus:'',
                     link:'/order/handle',
                     images:''
-                   },param.show=false)"  value="接受订单" />
+                   },param.show=false)"  value="{{$t('static.take_order')}}" />
                 <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
                     id:initOrderDetail.id,
                     cancleCauses:'',
@@ -63,7 +63,7 @@
                     orderStatus:'',
                     link:'/order/cancle',
                     callback:cancel
-                  })">取消此订单</button>
+                  })">{{$t('static.cancel_order')}}</button>
             </div>
             <!-- 订单确认10 -->
             <div class="clearfix logical_color" v-if="param.sales">
@@ -73,8 +73,8 @@
                         orderStatus:'',
                         link:'/order/confirm',
                         images:'',
-                       },param.show=false)"  value="确定" />
-                <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
+                       },param.show=false)"  value="{{$t('static.confirm')}}" />
+                <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">{{$t('static.cancel')}}</button>
             </div>
             <!-- 订单财务审核 -->
             <div class="clearfix logical_color"  v-if="param.Auditing">
@@ -89,8 +89,8 @@
                     orderStatus:'',
                     images:'',
                     sub:$index
-                   },param.show=false)"  value="通过核查" />
-                <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
+                   },param.show=false)"  value="{{$t('static.pass_checked')}}" />
+                <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">{{$t('static.cancel')}}</button>
             </div>
         </div>
 
@@ -104,23 +104,23 @@
                     orderStatus:'',
                     images:'',
                     sub:$index
-                    }),param.show = false"  value="客户确认收款" />
-          <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
+                    }),param.show = false"  value="{{$t('static.confirm_accept')}}" />
+          <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">{{$t('static.cancel')}}</button>
         </div>
       </div>
 
         <!-- 订单支付 -->
         <div class="navbar-client" v-if="param.payment">
             <div class="message clearfix">
-                <p class="order-message">支付方式</p>
+                <p class="order-message">{{$t('static.payment_method')}}</p>
                 <div class="space_15 clearfix">
                     <div class="col-xs-6 clearfix"   @click="paychoice(3)">
                          <img src="/static/images/checked.png" v-if="yaokuanPaySelected" height="25" width="25"  class="left margin-10" />
                         <img src="/static/images/unchecked.png" height="25" width="25"  class="left margin-10" v-else/>
                          <img src="/static/images/drugs.png" height="39" width="50" class="left margin-10" />
                          <p>
-                            <span>药款支付</span><br>
-                            <span>推荐已开通药款账户用户使用</span>
+                            <span>{{$t('static.yaokuan')}}</span><br>
+                            <span>{{$t('static.recommend_drugs')}}</span>
                          </p>
                     </div>
                     <div class="col-xs-6 clearfix"  @click="paychoice(0)">
@@ -128,8 +128,8 @@
                          <img src="/static/images/unchecked.png" height="25" width="25"  class="left margin-10" v-else/>
                          <img src="/static/images/alipay.png" height="37" width="61" class="left margin-10" />
                          <p>
-                            <span>线下打款</span><br>
-                            <span>金额较大或企业账户</span>
+                            <span>{{$t('static.line_down')}}</span><br>
+                            <span>{{$t('static.recommend_line')}}</span>
                          </p>
                     </div>
                 </div>
@@ -144,26 +144,26 @@
                     images:'',
                     callback:underPay
                     })"  value="{{payName}}" />
-                <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">取消</button>
+                <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">{{$t('static.cancel')}}</button>
             </div>
         </div>
         <!-- 订单发货上传物流信息 -->
         <div class="navbar-client" v-if="param.sendoff">
           <div class="message clearfix">
-              <p class="order-message">物流信息</p>
+              <p class="order-message">{{$t('static.logistics_info')}}</p>
               <div class="space_15 clearfix">
                 <div class="logical_color">
-                  <span class="mui-pull-left">物流公司：</span>
+                  <span class="mui-pull-left">{{$t('static.logistics_company')}}：</span>
                   <select v-model="uploadLogistic.b">
                     <option v-for="item in initExpresslist" value="{{item.id + ',' + item.name}}">{{item.name}}</option>
                   </select>
                 </div>
                 <div class="logical_color">
-                  <span class="mui-pull-left">物流单号：</span>
+                  <span class="mui-pull-left">{{$t('static.logistics_no')}}：</span>
                   <input type="number" placeholder="请输入运单号" v-model="uploadLogistic.lcompanyNo"/>
                 </div>
                 <div class="logical_color">
-                  <label class="editlabel">请上传物流单凭证照片</label>
+                  <label class="editlabel">{{$t('static.upload_logistcs')}}</label>
                   <div class="clearfix">
                       <press-image :value.sync="uploadLogistic.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
                      <press-image :value.sync="uploadLogistic.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
@@ -173,22 +173,22 @@
               </div>
           </div>
           <div class="clearfix logical_color">
-              <input type="button" class="btn  btn-confirm right"  @click="accept(uploadLogistic,param.show=false)"  value="确认发货" />
+              <input type="button" class="btn  btn-confirm right"  @click="accept(uploadLogistic,param.show=false)"  value="{{$t('static.confirmation_delivery')}}" />
           </div>
         </div>
         <!-- 订单待收货查看物流 -->
         <div class="navbar-client" v-if="param.delivery">
           <div class="message clearfix">
-              <p class="order-message">物流信息</p>
+              <p class="order-message">{{$t('static.logistics_info')}}</p>
               <div class="space_15 clearfix">
                 <div class="logical_color">
-                  <span>物流公司：{{initOrderDetail.logisticses.arr[0].name}}</span>
+                  <span>{{$t('static.logistics_company')}}：{{initOrderDetail.logisticses.arr[0].name}}</span>
                 </div>
                 <div class="logical_color">
-                  <span>物流单号：{{initOrderDetail.logisticses.arr[0].number}}</span>
+                  <span>{{$t('static.logistics_no')}}：{{initOrderDetail.logisticses.arr[0].number}}</span>
                 </div>
                 <div class="logical_color clearfix">
-                  <p>物流凭证：</p>
+                  <p>{{$t('static.logistics')}}：</p>
                   <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url"/>
                 </div>
               </div>
@@ -198,7 +198,7 @@
                   show:true,
                   orderStatus:'',
                   link:'/order/receiveConfirm'
-                },param.show=false)"  value="确认收货" />
+                },param.show=false)"  value="{{$t('static.confirm_receipt')}}" />
                 <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
                   id:initOrderDetail.logisticses.arr[0].id,
                   lcompanyId:initOrderDetail.logisticses.arr[0].logistics,
@@ -207,7 +207,7 @@
                   show:true,
                   loading:true,
                   callback:logisticsInfo
-                  })" value="查看物流" />
+                  })" value="{{$t('static.view_logistics')}}" />
 
               </div>
           </div>
@@ -215,16 +215,16 @@
         <!-- 买家订单待收货查看物流 -->
         <div class="navbar-client" v-if="param.express">
           <div class="message clearfix">
-              <p class="order-message">物流信息</p>
+              <p class="order-message">{{$t('static.logistics_info')}}</p>
               <div class="space_15 clearfix">
                 <div class="logical_color">
-                  <span>物流公司：{{initOrderDetail.logisticses.arr[0].name}}</span>
+                  <span>{{$t('static.logistics_company')}}：{{initOrderDetail.logisticses.arr[0].name}}</span>
                 </div>
                 <div class="logical_color">
-                  <span>物流单号：{{initOrderDetail.logisticses.arr[0].number}}</span>
+                  <span>{{$t('static.logistics_no')}}：{{initOrderDetail.logisticses.arr[0].number}}</span>
                 </div>
                 <div class="logical_color clearfix">
-                  <p>物流凭证：</p>
+                  <p>{{$t('static.logistics')}}：</p>
                   <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url"/>
                 </div>
               </div>
@@ -237,7 +237,7 @@
                   show:true,
                   loading:true,
                   callback:logisticsInfo
-                  })"  value="查看物流" />
+                  })"  value="{{$t('static.view_logistics')}}" />
 
               </div>
           </div>
@@ -311,7 +311,7 @@ export default {
             editorder:{
               show:false
             },
-            payName: "去支付",
+            payName: "{{$t('static.to_pay')}}",
           type:"image/jpeg,image/jpg,image/png",
             uploadLogistic:{
               images:'',

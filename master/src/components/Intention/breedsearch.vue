@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 	    <div class="model-header">
-	    	<h4>品种信息</h4>
+	    	<h4>{{$t('static.breed')}}</h4>
 			<div class="trans_service clearfix">
     			<div class="cover_loading">
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -21,7 +21,7 @@
 	                    <input type="text" class="search_input" v-model="loadParam.eName" placeholder="Please enter the name of the breed">
 
 	                </div>
-          			<div class="name_search clearfix" style="border:none"> <input type="button" class="search_input btn btn-default"   height="24" width="24" value="查询" @click="employNameSearch()"></div>
+          			<div class="name_search clearfix" style="border:none"> <input type="button" class="search_input btn btn-default"   height="24" width="24" value="{{$t('static.search')}}" @click="employNameSearch()"></div>
 
 	            </div>
 	            <table class="table table-hover table_head table-striped " v-cloak>

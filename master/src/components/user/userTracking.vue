@@ -148,7 +148,7 @@
 
                 <div class="editpage-input">
                   <label class="editlabel">商品</label>
-                  <div  class="form-control edit-input" >{{intention.goods}}</div>
+                  <div  class="form-control edit-input" >{{intention.goods[0].brredName}}</div>
                 </div>
 
                 <div class="editpage-input">
@@ -354,14 +354,6 @@
 
   .edit-input:focus {
     border-color: #fa6705;
-  }
-
-  .addblack span {
-    color: #333;
-    font-size: 14px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 5px;
   }
 
   .edit_footer button {

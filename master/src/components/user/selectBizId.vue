@@ -65,7 +65,7 @@
             </td>
             <td>{{item.no}}</td>
             <td>{{item.amount}}</td>
-            <td>{{item.goods}}</td>
+            <td>{{item.goods[0].brredName}}</td>
             <td>{{item.ctime}}</td>
           </tr>
 
@@ -109,7 +109,8 @@ export default {
                 size: '15px',
                 customerId: this.param.userId,
                 cur: 1,
-                all: 7
+                all: 7,
+                link:'/order/'
           },
           intentionParam:{
                 loading: true,
@@ -181,8 +182,11 @@ export default {
 .modal_con{
   z-index: 1085;
 }
-.big-font {
-    font-size: 36px;
+
+.top-title{
+  left: 0;
+  right: 0;
+  width: 800px;
 }
 .top-title span {
     font-size: 28px;
@@ -198,13 +202,6 @@ export default {
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
@@ -238,12 +235,6 @@ export default {
 
 .editpage-input {
     margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
 }
 
 .edit-input {

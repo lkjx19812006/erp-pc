@@ -8,7 +8,7 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
       <div class="order_search">
         <div class="clear">
-            <div class="my_order col-xs-2">我的订单</div>
+            <div class="my_order col-xs-2">{{$t('static.my_orders')}}</div>
             <div class="right">
                 <button class="new_btn" @click="newOrder()">{{$t('static.new')}}</button>
                 <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button>
@@ -52,8 +52,8 @@
                             <option value="">{{$t('static.select_payment_method')}}</option>
                             <option value="0">{{$t('static.offline')}}</option>
                             <option value="1">{{$t('static.alipay')}}</option>
-                            <option value="2">平安</option>
-                            <option value="3">药款</option>
+                            <option value="2">{{$t('static.pingan')}}</option>
+                            <option value="3">{{$t('static.yaokuan')}}</option>
                     </select>
                </dd>
             </dl>
@@ -131,8 +131,8 @@
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'
                         })">{{item.no }}</a></td>
-                  <td v-if="item.type==1">销售</td>
-                  <td v-if="item.type==0">采购</td>
+                  <td v-if="item.type==1">{{$t('static.sell')}}</td>
+                  <td v-if="item.type==0">{{$t('static.purchase')}}</td>
                   <td v-if="item.sourceType==0">新建</td>
                   <td v-if="item.sourceType==1">意向</td>
                   <td v-if="item.sourceType==2">报价</td>
@@ -153,10 +153,10 @@
                   <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
                   <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
                   <td>{{item.currency | Currency}}</td>
-                  <td v-if="item.payWay===0">线下打款</td>
-                  <td v-if="item.payWay==1">支付宝</td>
-                  <td v-if="item.payWay==2">平安支付</td>
-                  <td v-if="item.payWay==3">药款支付</td>
+                  <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
+                  <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
+                  <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
+                  <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                   <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">未支付</td>
                   <td @click="updateOrder({
                         show:true,
@@ -192,7 +192,7 @@
                         url:'/order/',
                         goods:item.goods,
                         goodsBack:[]
-                        },item.goods)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a></td>
+                        },item.goods)"><a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" height="18" width="30"  alt="编辑" title="编辑"/></a></td>
                   <td>
                       <div v-if="item.validate==2">
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="(item.orderStatus==20||item.orderStatus==10)&&item.type==0"><img src="/static/images/payorder.png" height="18" width="38" title="待财务付款" alt="待财务付款"/></a>

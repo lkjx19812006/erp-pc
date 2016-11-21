@@ -2,7 +2,7 @@
     <drugs-model :param="detailParam" v-if="detailParam.show"></drugs-model>
     <state-model :param="disposeParam" v-if="disposeParam.show"></state-model>
     <div class="service-nav clearfix">
-      <div class="my_enterprise col-xs-1">药款转出</div>
+      <div class="my_enterprise col-xs-1">{{$t('static.rollout')}}</div>
     </div>
     <div class="order_table">
       <div class="cover_loading">

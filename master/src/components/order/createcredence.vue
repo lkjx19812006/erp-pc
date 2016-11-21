@@ -5,29 +5,29 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>{{param.titles}}</h3>
+            <h3>{{$t('static.upload')}}</h3>
         </div>
         <validator name="validation">
           <form novalidate>
             <div class="edit-model">
                 <section class="editsection clearfix">
                     <div class="editpage-input clearfix">
-                        <label class="editlabel">新建文件</label>
+                        <label class="editlabel">{{$t('static.file')}}</label>
                         <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
                        <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
                        <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
                     </div>
                     <div class="editpage-input">
-                        <label class="editlabel">描述说明</label>
+                        <label class="editlabel">{{$t('static.description')}}</label>
                         <textarea style="width:100%;resize:none;border:1px solid #ddd;border-radius:5px;" rows="5" v-model="param.description">
                         </textarea>
                     </div>
                 </section>
             </div>
             <div class="edit_footer">
-                <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                <input type="button" class="btn btn-confirm" v-if="$validation.valid" @click="param.callback(param,param.show = false)" value="提交" />
-                 <input type="button" class="btn btn-confirm" v-else disabled="true"  value="提交" />
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+                <input type="button" class="btn btn-confirm" v-if="$validation.valid" @click="param.callback(param,param.show = false)" value="{{$t('static.submit')}}" />
+                 <input type="button" class="btn btn-confirm" v-else disabled="true"  value="{{$t('static.submit')}}" />
             </div>
           </form>
         </validator>

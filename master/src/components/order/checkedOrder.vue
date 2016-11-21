@@ -5,7 +5,7 @@
     <div>
       <div class="order_search">
         <div class="clear">
-            <div class="my_order col-xs-2">订单审核</div>
+            <div class="my_order col-xs-2">{{$t('static.pay_confirm')}}</div>
            <!--  <div class="right">
                <button class="new_btn transfer" @click="createSearch()">搜索</button>
            </div> -->

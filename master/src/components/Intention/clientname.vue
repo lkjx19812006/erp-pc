@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 	    <div class="model-header">
-	    	<h4>客户信息</h4>
+	    	<h4>{{$t('static.customer_info')}}</h4>
 			<div class="trans_service clearfix">
     			<div class="cover_loading">
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -28,17 +28,17 @@
 	                    <img src="/static/images/search.png" height="24" width="24">
 	                    <input type="text" class="search_input" v-model="loadParam.phone" placeholder="请输入客户手机号"  @keyup.enter="employNameSearch()">
 	                </div>
-	                <button class="new_btn" @click="employNameSearch()">查询</button>
-	                <button class="new_btn transfer" @click="reset()">清除条件</button>
+	                <button class="new_btn" @click="employNameSearch()">{{$t('static.search')}}</button>
+	                <button class="new_btn transfer" @click="reset()">{{$t('static.clear_all')}}</button>
 	            </div>
 	            <table class="table table-hover table_head table-striped " v-cloak>
 	                <thead>
 	                    <tr>
 	                    	<th></th>
-	                        <th>客户名称</th>
-	                        <th>电话</th>
-	                        <th>所在省</th>
-                            <th>所在市</th>
+	                        <th>{{$t('static.client_name')}}</th>
+	                        <th>{{$t('static.client_phone')}}</th>
+	                        <th>{{$t('static.province')}}</th>
+                            <th>{{$t('static.city')}}</th>
 	                    </tr>
 	                </thead>
 	                <tbody>

@@ -17,8 +17,8 @@
            </section>
         </div>
         <div class="edit_footer" v-if="param.status!=3">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="pass(param)">确定</button>
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+            <button type="button" class="btn  btn-confirm" @click="pass(param)">{{$t('static.confirm')}}</button>
         </div> 
     </div>
 </template>

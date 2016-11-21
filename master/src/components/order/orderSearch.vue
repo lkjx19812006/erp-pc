@@ -5,8 +5,8 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>订单搜索</h3>
-        </div>
+            <h3>{{$t('static.search')}}</h3>
+        </div>                                                                                
         <div class="edit-model">
              <div class="cover_loading">
                 <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
@@ -14,63 +14,63 @@
             <section class="editsection" v-cloak>
                 <div class="clearfix">
                      <div class="client-detailInfo  col-xs-12">
-                        <label>名称：</label>
-                        <input type="text"  class="form-control" v-model="param.consignee"  placeholder="按收货人名称搜索"/>
+                        <label>{{$t('static.consignee_name')}}：</label>
+                        <input type="text"  class="form-control" v-model="param.consignee"  placeholder="{{$t('static.enter_name')}}"/>
                     </div>
                     <div class="client-detailInfo col-xs-12">
-                        <label>联系方式：</label>
-                        <input type="text"  class="form-control" v-model="param.consigneePhone"  placeholder="按收货人联系方式搜索"/>
+                        <label>{{$t('static.consignee_phone')}}：</label>
+                        <input type="text"  class="form-control" v-model="param.consigneePhone"  placeholder="{{$t('static.enter_phone')}}"/>
                     </div>
                     <div class="client-detailInfo col-xs-12">
-                        <label>订单流水号：</label>
-                        <input type="text"  class="form-control" v-model="param.no"  placeholder="按订单流水号搜索"/>
+                        <label>{{$t('static.order_no')}}：</label>
+                        <input type="text"  class="form-control" v-model="param.no"  placeholder="{{$t('static.enter_orderno')}}"/>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                        <label>订单类别</label>
+                        <label>{{$t('static.order_type')}}</label>
                         <select class="form-control" v-model="param.type">
-                            <option value="">请选择订单类别</option>
-                            <option value="0">采购</option>
-                            <option value="1">销售</option>
+                            <option value="">{{$t('static.select_order_type')}}</option>
+                            <option value="0">{{$t('static.purchase')}}</option>
+                            <option value="1">{{$t('static.sell')}}</option>
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                        <label>订单数据状态：</label>
+                        <label>{{$t('static.order_status')}}：</label>
                          <select v-model="param.orderStatus"  class="form-control">
-                                <option value="">请选择订单状态</option>
-                                <option value="0">订单生成</option>
-                                <option value="10">等待处理</option>
-                                <option value="20">等待支付</option>
-                                <option value="30">等待审核</option>
-                                <option value="40">等待发货</option>
-                                <option value="50">等待收货</option>
-                                <option value="60">待评价</option>
-                                <option value="70">已完成</option>
-                                <option value="-1">已取消</option>
-                                <option value="-2">已过期</option>
+                            <option value="">{{$t('static.select_order_status')}}</option>
+                            <option value="0">{{$t('static.order_generation')}}</option>
+                            <option value="10">{{$t('static.pending')}}</option>
+                            <option value="20">{{$t('static.wait_for_payment')}}</option>
+                            <option value="30">{{$t('static.wait_for_audit')}}</option>
+                            <option value="40">{{$t('static.wait_for_delivery')}}</option>
+                            <option value="50">{{$t('static.wait_for_receiving')}}</option>
+                            <!-- <option value="60">{{$t('static.completed')}}</option> -->
+                            <option value="70">{{$t('static.completed')}}</option>
+                            <option value="-1">{{$t('static.canceled')}}</option>
+                            <option value="-2">{{$t('static.out_of_date')}}</option>
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                        <label>支付方式：</label>
+                        <label>{{$t('static.payment_method')}}：</label>
                          <select v-model="param.payWay"  class="form-control">
-                                <option value="">请选择支付方式</option>
-                                <option value="0">线下</option>
-                                <option value="1">支付宝</option>
-                                <option value="2">平安</option>
-                                <option value="3">药款</option>
+                            <option value="">{{$t('static.select_payment_method')}}</option>
+                            <option value="0">{{$t('static.offline')}}</option>
+                            <option value="1">{{$t('static.alipay')}}</option>
+                            <option value="2">{{$t('static.pingan')}}</option>
+                            <option value="3">{{$t('static.yaokuan')}}</option>
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                        <label>订单数据状态：</label>
+                        <label>{{$t('static.order_validity')}}：</label>
                         <select v-model="param.dataStatus"  class="form-control">
-                            <option value="">请选择数据状态</option>
-                            <option value="0">无效</option>
-                            <option value="1">可用</option>
+                            <option value="">{{$t('static.select_order_validity')}}</option>
+                            <option value="0">{{$t('static.available')}}</option>
+                            <option value="1">{{$t('static.useless')}}</option>
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                        <label>客户端来源</label>
+                        <label>{{$t('static.client_source')}}：</label>
                         <select v-model="param.clients"  class="form-control">
-                            <option value="">请选择客户端来源</option>
+                            <option value="">{{$t('static.select_client_source')}}</option>
                             <option value="0">pc</option>
                             <option value="1">android</option>
                             <option value="2">wechart</option>
@@ -78,36 +78,36 @@
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                        <label>交易模式</label>
+                        <label>{{$t('static.trading_patterns')}}：</label>
                         <select v-model="param.mode"  class="form-control">
-                            <option value="">请选择交易模式</option>
+                            <option value="">{{$t('static.select_trading_patterns')}}</option>
                             <option value="1">撮合</option>
                             <option value="2">三方</option>
                             <option value="3">自营</option>
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6" v-if="param.link=='/order/'">
-                        <label>下单时间开始：</label>
+                        <label>{{$t('static.stime')}}：</label>
                         <mz-datepicker :time.sync="param.ctime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                     <div class="client-detailInfo col-xs-6" v-else>
-                        <label>下单时间开始：</label>
+                        <label>{{$t('static.stime')}}：</label>
                         <mz-datepicker :time.sync="param.ctime" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                     <div class="client-detailInfo col-xs-6" v-if="param.link=='/order/'">
-                        <label>下单时间结束：</label>
+                        <label>{{$t('static.endtime')}}：</label>
                         <mz-datepicker :time.sync="param.ftime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                     <div class="client-detailInfo col-xs-6" v-else>
-                        <label>下单时间结束：</label>
+                        <label>{{$t('static.endtime')}}：</label>
                         <mz-datepicker :time.sync="param.ftime" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                         <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空条件</button>
+                         <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">{{$t('static.clear_all')}}</button>
                     </div>
                 </div>
             </section>

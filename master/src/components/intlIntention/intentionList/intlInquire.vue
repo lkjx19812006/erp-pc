@@ -59,7 +59,10 @@
                         <td>{{item.city}}</td>
                         <td>{{item.district}}</td>
                         <td>{{item.ctime | date}}</td>
-                        <td>{{item.inquire | inquire}}</td>
+                        <td v-if="item.inquire==0">{{$t('static.inquire_type')}}</td>
+                        <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.initial')}}</td>
+                        <td v-if="item.inquire==2" style="color:#EE82EE">{{$t('static.inquiry')}}</td>
+                        <td v-if="item.inquire==3" style="color:#2E8B57">{{$t('static.quo_complete')}}</td>
                         <td><div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div></td>
                         <td></td>
                     </tr>

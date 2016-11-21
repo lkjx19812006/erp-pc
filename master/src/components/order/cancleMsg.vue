@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>  
         <div class="edit-content">
-            <h3>{{param.headline}}</h3>
+            <h3>{{$t('static.reason')}}</h3>
         </div>
         <div class="edit-model">
            <section class="editsection" v-cloak>
@@ -13,15 +13,15 @@
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpageleft">
                     <div class="editpage-input">
-                           <label class="editlabel">说明</label>
+                           <label class="editlabel">{{$t('static.reason')}}</label>
                            <textarea v-model='param.cancleCauses' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5"></textarea>
                     </div>
                </div>
            </section>
         </div>  
         <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="param.callback(param),param.show = false">保存</button>
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+            <button type="button" class="btn  btn-confirm" @click="param.callback(param),param.show = false">{{$t('static.save')}}</button>
             
         </div>
     </div>
@@ -85,13 +85,6 @@ export default {
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
@@ -148,13 +141,6 @@ export default {
     border-color: #fa6705;
 }
 
-.addblack span {
-    color: #333;
-    font-size: 14px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 5px;
-}
 
 .edit_footer button {
     margin-left: 15px;

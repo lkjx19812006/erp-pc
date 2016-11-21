@@ -23,7 +23,7 @@
         <section>
             <div class="client-section clearfix" >
                 <div class="col-md-8 client-detail">
-                    <h4 class="section_title">药款相关</h4>
+                    <h4 class="section_title">{{$t('static.related_information')}}</h4>
                     <article>
                         <div class="panel-group">
                             <div class="panel panel-default">
@@ -34,7 +34,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/roll.png" height="26" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          药款金额记录（{{initDrugsDetail.moneyRecords.arr.length}}）
+                                          {{$t('static.drugsrecord')}}（{{initDrugsDetail.moneyRecords.arr.length}}）
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
                                     </h4>
@@ -43,11 +43,11 @@
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>关联类型</th>
-                                            <th>来源</th>
-                                            <th>转出/转入金额</th>
-                                            <th>状态</th>
-                                            <th>创建时间</th>
+                                            <th>{{$t('static.link_types')}}</th>
+                                            <th>{{$t('static.order_source')}}</th>
+                                            <th>{{$t('static.out_instatus')}}</th>
+                                            <th>{{$t('static.status')}}</th>
+                                            <th>{{$t('static.create_time')}}</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initDrugsDetail.moneyRecords.arr">
@@ -70,7 +70,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/rollin.png" height="26" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left">
-                                          药款转入记录（{{initDrugsDetail.moneyRollIns.arr.length}}）
+                                          {{$t('static.rollin')}}（{{initDrugsDetail.moneyRollIns.arr.length}}）
                                         </a>
                                        <!--  <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
                                            show:true,
@@ -89,13 +89,13 @@
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>支付类型</th>
-                                            <th>正常金额</th>
-                                            <th>冻结金额</th>
-                                            <th>转入金额</th>
-                                            <th>支付状态</th>
-                                            <th>状态</th>
-                                            <th>创建时间</th>
+                                            <th>{{$t('static.payment_method')}}</th>
+                                            <th>{{$t('static.normal_amount')}}</th>
+                                            <th>{{$t('static.freezing_amount')}}</th>
+                                            <th>{{$t('static.roll_in')}}</th>
+                                            <th>{{$t('static.paystatus')}}</th>
+                                            <th>{{$t('static.status')}}</th>
+                                            <th>{{$t('static.create_time')}}</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initDrugsDetail.moneyRollIns.arr">
@@ -120,7 +120,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/rollout.png" height="26" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" >
-                                          药款转出记录（{{initDrugsDetail.moneyRollOuts.arr.length}}）
+                                          {{$t('static.rollout')}}（{{initDrugsDetail.moneyRollOuts.arr.length}}）
                                         </a>
                                     </h4>
                                 </div>
@@ -128,14 +128,14 @@
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>客户名称</th>
-                                            <th>银行卡号</th>
-                                            <th>正常金额</th>
-                                            <th>冻结金额</th>
-                                            <th>转出金额</th>
-                                            <th>状态</th>
-                                            <th>创建时间</th>
-                                            <th>操作</th>
+                                            <th>{{$t('static.client_name')}}</th>
+                                            <th>{{$t('static.account_number')}}</th>
+                                            <th>{{$t('static.normal_amount')}}</th>
+                                            <th>{{$t('static.freezing_amount')}}</th>
+                                            <th>{{$t('static.transfer_amount')}}</th>
+                                            <th>{{$t('static.status')}}</th>
+                                            <th>{{$t('static.create_time')}}</th>
+                                            <th>{{$t('static.handle')}}</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initDrugsDetail.moneyRollOuts.arr">
@@ -147,23 +147,6 @@
                                                 <td>{{item.status | drugsStatus}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
-                                                	<!-- <a class="operate" v-if="item.status==0" @click="drugs({
-                                                        status:item.status,
-                                                       tem.id,
-                                                        oneyId:item.moneyId,          
-                                                        show:false,
-                                                        sub:$index,
-                                                        key:'moneyRollOuts'
-                                                        })"><img src="/static/images/application.png" height="18" width="28" title="药款转出处理" alt="药款转出处理"></a>
-                                                                                                        <a class="operate" v-if="item.status==1" @click="drugs({
-                                                                                                            status:item.status,
-                                                                                                            id:item.id,
-                                                                                            Id,
-                                                                                                            userId:item.used,
-                                                                                                            show:false,
-                                                        sub:$index,
-                                                        key:'moneyRollOuts'
-                                                                                                            })"><img src="/static/images/Financial.png" height="18" width="48" title="转出审核" alt="转出审核"></a> -->
 									                <a class="operate" v-if="item.status==2" @click="drugs({
 									                	status:item.status,
 									                	id:item.id,
@@ -193,37 +176,38 @@
                     </article>
                 </div>
                 <div class="col-md-4" style="border-left: 1px solid #ddd;">
-                    <h4 class="section_title">详情</h4>
+                    <h4 class="section_title">{{$t('static.description')}}</h4>
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>会员名称</label>
+                                    <label>{{$t('static.client_name')}}</label>
                                     <input type="text" class="form-control" v-model="initDrugsDetail.userName" value="{{initDrugsDetail.userName}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>正常金额</label>
+                                    <label>{{$t('static.normal_amount')}}</label>
                                     <input type="text" class="form-control" v-model="initDrugsDetail.credit" value="{{initDrugsDetail.credit}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>冻结金额</label>
+                                    <label>{{$t('static.freezing_amount')}}</label>
                                     <input type="text" class="form-control"   value="{{initDrugsDetail.freezeMoney}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>状态</label>
+                                    <label>{{$t('static.status')}}</label>
                                     <input type="text" class="form-control"  value="{{initDrugsDetail.status | drugsStatus}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>创建时间</label>
-                                    <input type="text" class="form-control"  v-model="initDrugsDetail.createTime" value="{{initDrugsDetail.createTime}}" disabled="disabled"/>
+                                    <label>{{$t('static.transfer_amount')}}</label>
+                                    <input type="text" v-if="param.rollOutMoney" class="form-control"  v-model="initDrugsDetail.rollOutMoney" value="{{initDrugsDetail.rollOutMoney}}" disabled="disabled"/>
+                                <input type="text" class="form-control"  v-if="!param.rollOutMoney" value="0" disabled="disabled">
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>更新时间</label>
-                                    <input type="text" class="form-control" v-model="initDrugsDetail.updateTime" value="{{initDrugsDetail.updateTime}}" disabled="disabled"/>
+                                   <label>{{$t('static.create_time')}}</label>
+                                    <input type="text" class="form-control"  v-model="initDrugsDetail.createTime" value="{{initDrugsDetail.createTime}}" disabled="disabled"/>
                                 </div>
                             </div>
                             

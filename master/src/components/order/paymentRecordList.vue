@@ -2,14 +2,14 @@
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
   <div v-show="!changeParam.show">
     <div class="service-nav clearfix">
-      <div class="my_enterprise col-xs-2">订单支付记录</div>
+      <div class="my_enterprise col-xs-2">{{$t('static.payrecord')}}</div>
       <div class="my_order_search">
           <select  v-model="loadParam.payWay" class="form-control" @change="searchProduct()">
               <option selected value="">{{$t('static.select_payment_method')}}</option>
-              <option value="0">线下打款</option>
-              <option value="1">支付宝</option>
-              <option value="2">平安支付</option>
-              <option value="3">药款支付</option>
+              <option value="0">{{$t('static.line_down')}}</option>
+              <option value="1">{{$t('static.alipay')}}</option>
+              <option value="2">{{$t('static.pingan')}}</option>
+              <option value="3">{{$t('static.yaokuan')}}</option>
           </select>
       </div>
       <div class="left clearfix">
@@ -36,10 +36,10 @@
         </thead>
         <tbody>
           <tr v-for="item in initOrderPaylist">
-            <td v-if="item.payWay===0">线下打款</td>
-            <td v-if="item.payWay==1">支付宝</td>
-            <td v-if="item.payWay==2">平安支付</td>
-            <td v-if="item.payWay==3">药款支付</td>
+            <td v-if="item.payWay===0">{{$t('static.line_down')}}</td>
+            <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
+            <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
+            <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
             <td v-if="item.payWay==null">未支付</td>
             <td>{{item.orderNo}}</td>
             <td>{{item.payNo}}</td>

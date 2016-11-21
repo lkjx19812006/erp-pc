@@ -8,7 +8,7 @@
     <div>
       <div class="order_search">
         <div class="clear">
-            <div class="my_order col-xs-2">部门订单</div>
+            <div class="my_order col-xs-2">{{$t('static.department_orders')}}</div>
             <div class="right">
                 <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button>
                 <button class="new_btn transfer" @click="orgCheck()">{{$t('static.review')}}</button>

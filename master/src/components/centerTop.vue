@@ -88,7 +88,7 @@ export default {
     position: fixed;
     right: 0;
     white-space: nowrap;
-    left: 170px;
+    left:200px;
     box-shadow: 0px 2px 2px #999;
     z-index: 1000;
 }

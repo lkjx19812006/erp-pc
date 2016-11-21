@@ -118,7 +118,7 @@ export default {
 .left {
     height: 100%;
     position: fixed;
-    width: 170px;
+    width: 200px;
     overflow: hidden;
     white-space: nowrap;
     z-index: 999;
@@ -145,13 +145,13 @@ export default {
 
 .left_menu {
     font-size: 12px;
-    padding: 0 16px;
+    padding: 0 10px;
 }
 
 .left_menu li {
     margin-bottom: 10px;
     position: relative;
-  cursor:pointer;
+    cursor:pointer;
 }
 
 .menu_div {

@@ -23,7 +23,7 @@ export default {
     position: absolute;
     right: 0;
     top: 70px;
-    left: 170px;
+    left: 200px;
     white-space: nowrap;
    /*  min-width: 1500px; */
 }

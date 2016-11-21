@@ -6,10 +6,10 @@
     <div>
       <div class="order_search">
         <div class="clear">
-            <div class="my_order col-xs-2">全部订单</div>
+            <div class="my_order col-xs-2">{{$t('static.all_order')}}</div>
             <div class="right">
-                <button class="new_btn transfer" @click="createSearch()">搜索</button>
-                <button type="button" class="new_btn transfer"  @click="resetTime()">清空条件</button>
+                <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button>
+                <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
             </div>
         </div>
         <div class="clear" style="margin-top:10px;">

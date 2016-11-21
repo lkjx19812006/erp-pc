@@ -21,11 +21,6 @@
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
                         <li>
-                            <!--<button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！')" v-if="initOrderDetail.orderStatus==0&&param.contact=='/order/myList'">订单生成</button>-->
-                          <!--   <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！')" v-if="(initOrderDetail.orderStatus==20||initOrderDetail.orderStatus==10)&&param.contact=='/order/myList'">申请付款</button>
-                          <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！')" v-if="initOrderDetail.orderStatus==40&&param.contact=='/order/myList'">待卖家发货</button>
-                          <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.delivery=true)" v-if="initOrderDetail.orderStatus==50&&param.contact=='/order/myList'">待收货</button> -->
-
                             <!-- 销售订单 -->
                             <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initOrderDetail.orderStatus==10&&param.contact=='/order/myList'">等待处理</button>
                             <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initOrderDetail.orderStatus==20&&param.contact=='/order/myList'">待客户付款</button>
@@ -43,7 +38,7 @@
         <section>
             <div class="client-section clearfix" >
                 <div class="col-md-8 client-detail">
-                    <h4 class="section_title">相关</h4>
+                    <h4 class="section_title">{{$t('static.related_information')}}</h4>
                     <article>
                         <div class="panel-group">
                             <div class="panel panel-default">
@@ -54,7 +49,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/order.png" height="30" width="30" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.goods.arr.length">
-                                          商品订单列表（{{initOrderDetail.goods.arr.length}}）
+                                          {{$t('static.commodity_order')}}（{{initOrderDetail.goods.arr.length}}）
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
                                     </h4>
@@ -63,14 +58,14 @@
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>商品名称</th>
-                                            <th>产地</th>
-                                            <th>规格</th>
-                                            <th>数量</th>
-                                            <th>质量</th>
-                                            <th>价格</th>
-                                            <th>单位</th>
-                                            <th>总价</th>
+                                            <th>{{$t('static.breed')}}</th>
+                                            <th>{{$t('static.origin')}}</th>
+                                            <th>{{$t('static.specification')}}</th>
+                                            <th>{{$t('static.quantity')}}</th>
+                                            <th>{{$t('static.quality')}}</th>
+                                            <th>{{$t('static.price')}}</th>
+                                            <th>{{$t('static.unit')}}</th>
+                                            <th>{{$t('static.total')}}</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.goods.arr">
@@ -101,15 +96,14 @@
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>商品名称</th>
-                                            <th>产地</th>
-                                            <th>规格</th>
-                                            <th>数量</th>
-                                            <th>质量</th>
-                                            <th>价格</th>
-                                            <th>单位</th>
-                                            <th>总价</th>
-                                            <th>商品图片</th>
+                                            <th>{{$t('static.breed')}}</th>
+                                            <th>{{$t('static.origin')}}</th>
+                                            <th>{{$t('static.specification')}}</th>
+                                            <th>{{$t('static.quantity')}}</th>
+                                            <th>{{$t('static.quality')}}</th>
+                                            <th>{{$t('static.price')}}</th>
+                                            <th>{{$t('static.unit')}}</th>
+                                            <th>{{$t('static.total')}}</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.goods.arr">
@@ -121,9 +115,9 @@
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
                                                 <td>{{item.amount}}元</td>
-                                                <td>
+                                                <!-- <td>
                                                     <img v-bind:src="item.image" />
-                                                </td>
+                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -138,10 +132,10 @@
                                               })">
                                         <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.payPics.arr.length!==null">
-                                          支付凭证（{{initOrderDetail.payPics.arr.length}}）<span v-if="param.orderStatus<30&&param.contact=='/order/myList'" class="system_danger">您的订单还没有支付，暂时不能新建支付凭证！</span>
+                                          {{$t('static.pay_evidence')}}（{{initOrderDetail.payPics.arr.length}}）<span v-if="param.orderStatus<30&&param.contact=='/order/myList'" class="system_danger">{{$t('static.pay_tips')}}</span>
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                        支付凭证（0）<span class="system_danger" v-if="param.orderStatus<30&&param.contact=='/order/myList'">您的订单未发货，暂不能上传物流凭证！</span>
+                                        {{$t('static.pay_evidence')}}（0）<span class="system_danger" v-if="param.orderStatus<30&&param.contact=='/order/myList'">{{$t('static.pay_tips')}}</span>
                                         </a>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
                                             show:true,
@@ -153,7 +147,7 @@
                                             bizType:'order_pay',
                                             payPics:'',
                                             titles:'上传支付凭证'
-                                            })"  v-if="(initOrderDetail.payPics.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">新建</button>
+                                            })"  v-if="(initOrderDetail.payPics.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">{{$t('static.new')}}</button>
                                         <!--<button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>-->
                                         <a v-else></a>
                                     </h4>
@@ -162,10 +156,10 @@
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>文件类型</th>
-                                            <th>文件来源</th>
-                                            <th>文件图片</th>
-                                            <th>描述</th>
+                                            <th>{{$t('static.file_type')}}</th>
+                                            <th>{{$t('static.file_origin')}}</th>
+                                            <th>{{$t('static.file_path')}}</th>
+                                            <th>{{$t('static.description')}}</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.payPics.arr">
@@ -211,7 +205,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/appendix.png"  style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" >
-                                          上传附件（{{initOrderDetail.attachFiles.arr.length}}）
+                                          {{$t('static.upload_attachments')}}（{{initOrderDetail.attachFiles.arr.length}}）
                                         </a>
                                         <!--<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set " v-else>-->
                                           <!--上传附件（0）-->
@@ -226,7 +220,7 @@
                                             bizType:'attach_files',
                                             attachFiles:'',
                                             titles:'上传附件凭证'
-                                            })" v-if="initOrderDetail.attachFiles.arr.length!==null&&param.contact=='/order/myList'">新建</button>
+                                            })" v-if="initOrderDetail.attachFiles.arr.length!==null&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
                                         <a v-else ></a>
                                     </h4>
                                 </div>
@@ -234,10 +228,10 @@
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>文件类型</th>
-                                            <th>文件来源</th>
-                                            <th>文件图片或路径</th>
-                                            <th>描述</th>
+                                           <th>{{$t('static.file_type')}}</th>
+                                            <th>{{$t('static.file_origin')}}</th>
+                                            <th>{{$t('static.file_path')}}</th>
+                                            <th>{{$t('static.description')}}</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.attachFiles.arr">
@@ -264,10 +258,10 @@
                                               })">
                                         <img class="pull-left" src="/static/images/logist.png"  style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.sendPics.arr.length">
-                                          物流凭证（{{initOrderDetail.sendPics.arr.length}}）<span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">您的订单未发货，暂不能上传物流凭证！</span>
+                                          {{$t('static.logistics')}}（{{initOrderDetail.sendPics.arr.length}}）<span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">{{$t('static.logistics_tips')}}</span>
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                          物流凭证（0） <span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">您的订单未发货，暂不能上传物流凭证！</span>
+                                          {{$t('static.logistics')}}（0） <span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">{{$t('static.logistics_tips')}}</span>
                                         </a>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
                                             show:true,
@@ -279,7 +273,7 @@
                                             sendPics:'',
                                             callback:uploadDocument,
                                             titles:'上传物流凭证'
-                                            })" v-if="initOrderDetail.sendPics.arr.length!==null&&param.contact=='/order/myList'&&param.orderStatus>=50">新建</button>
+                                            })" v-if="initOrderDetail.sendPics.arr.length!==null&&param.contact=='/order/myList'&&param.orderStatus>=50">{{$t('static.new')}}</button>
                                         <!--<button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>-->
                                         <a v-else></a>
                                     </h4>
@@ -288,10 +282,10 @@
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>文件类型</th>
-                                            <th>文件来源</th>
-                                            <th>文件图片或路径</th>
-                                            <th>描述</th>
+                                            <th>{{$t('static.file_type')}}</th>
+                                            <th>{{$t('static.file_origin')}}</th>
+                                            <th>{{$t('static.file_path')}}</th>
+                                            <th>{{$t('static.description')}}</th>
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.sendPics.arr">
@@ -333,77 +327,77 @@
                     </article>
                 </div>
                 <div class="col-md-4" style="border-left: 1px solid #ddd;">
-                    <h4 class="section_title">详情</h4>
+                    <h4 class="section_title">{{$t('static.details')}}</h4>
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <!-- <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>订单ID</label>
                                     <input type="text" class="form-control" v-model="initOrderDetail.id" value="{{initOrderDetail.id}}" disabled="disabled" />
-                                </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>订单号</label>
+                                </div> -->
+                                <div class="client-detailInfo   col-xs-12">
+                                    <label>{{$t('static.order_no')}}</label>
                                     <input type="text" class="form-control" v-model="initOrderDetail.no" value="{{initOrderDetail.no}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>订单类别</label>
+                                    <label>{{$t('static.order_type')}}</label>
                                     <input type="text" class="form-control"   value="{{type[initOrderDetail.type]}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>订单来源</label>
+                                    <label>{{$t('static.order_source')}}</label>
                                     <input type="text" class="form-control"  value="{{sourceType[initOrderDetail.sourceType]}}" disabled="disabled" v-if="sourceType[initOrderDetail.sourceType]"/>
                                     <input type="text" class="form-control"  value="未说明" disabled="disabled" v-else/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>收货人姓名</label>
+                                    <label>{{$t('static.consignee_name')}}</label>
                                     <input type="text" class="form-control"  v-model="initOrderDetail.consignee" value="{{initOrderDetail.consignee}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>收货人电话</label>
+                                    <label>{{$t('static.consignee_phone')}}</label>
                                     <input type="text" class="form-control" v-model="initOrderDetail.consigneePhone" value="{{initOrderDetail.consigneePhone}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>国家</label>
+                                    <label>{{$t('static.country')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.country}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>所在省</label>
+                                    <label>{{$t('static.province')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.province}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>所在市</label>
+                                    <label>{{$t('static.city')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.city}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>邮政编码</label>
+                                    <label>{{$t('static.postcodes')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.zipCode}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>收货人地址</label>
+                                    <label>{{$t('static.detailed_address')}}</label>
                                     <input type="text" class="form-control" value="{{initOrderDetail.consigneeAddr}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>备注</label>
+                                    <label>{{$t('static.comment')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.comments}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>杂费</label>
+                                    <label>{{$t('static.sundry_fees')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.incidentals}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>杂费说明</label>
+                                    <label>{{$t('static.fee_explain')}}</label>
                                     <input type="text" class="form-control" value="{{initOrderDetail.incidentalsDesc}}" disabled="disabled"/>
                                 </div>
                             </div>
