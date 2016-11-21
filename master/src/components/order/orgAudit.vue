@@ -19,21 +19,21 @@
                         </span>
                     </div> -->
                     <div class="editpage-input">
-                           <label class="editlabel">备注</label>
+                           <label class="editlabel">{{$t('static.comment')}}</label>
                            <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none" rows="5" value="{{param.description}}"></textarea>
                     </div>
                </div>
            </section>
         </div>
         <div class="edit_footer" v-if="param.title=='申请订单审核'">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="pass(param)">提交申请</button>
-            <button type="button" class="btn  btn-confirm" @click="reject(param)">取消订单</button>
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+            <button type="button" class="btn  btn-confirm" @click="pass(param)">{{$t('static.applications')}}</button>
+            <button type="button" class="btn  btn-confirm" @click="reject(param)">{{$t('static.cancel_order')}}</button>
         </div>
         <div class="edit_footer" v-else>
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" @click="pass(param)">通过</button>
-            <button type="button" class="btn  btn-confirm" @click="reject(param)">不通过</button>
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+            <button type="button" class="btn  btn-confirm" @click="pass(param)">{{$t('static.pass')}}</button>
+            <button type="button" class="btn  btn-confirm" @click="reject(param)">{{$t('static.reject')}}</button>
         </div>
     </div>
 </template>

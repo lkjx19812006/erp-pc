@@ -298,6 +298,9 @@ var locales = {
       validate_telephone:'请输入正确的电话',
       validate_qq:'请输入正确的qq',
       validate_type:'请选择类型',
+      pass:'通过',
+      reject:'不通过',
+      applications:'提交申请',
       //client
     }
   },
@@ -592,7 +595,9 @@ var locales = {
       validate_telephone:'Please enter correct telephone',
       validate_qq:'Please enter correct qq',
       validate_type:'Please select type',
-
+      pass:'Pass',
+      reject:'Reject',
+      applications:'Submit applications'
     }
   }
 }
