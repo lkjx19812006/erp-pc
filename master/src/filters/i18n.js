@@ -441,8 +441,7 @@ var locales = {
       reason:'Reason',
       recommend_drugs:'The user account has been opened to recommend drugs',
       recommend_line:'Large amount or enterprise account',
-      upload_logistcs:'Please upload the logistics document photos'
-      //client
+      upload_logistcs:'Please upload the logistics document photos',
       drag_into_blacklist:'Drag into blacklist',
       out_of_blacklist:'Out of blacklist',
       make_them_become_supplier:'Make them become supplier',
