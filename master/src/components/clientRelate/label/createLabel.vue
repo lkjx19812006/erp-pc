@@ -12,16 +12,22 @@
                 <div class="edit-model">
                     <section class="editsection" v-cloak>
                         <div v-if="param.remark!==undefined" class="editpage-input">
-                            <label class="editlabel">{{param.labelist}}</label>
+                            <label class="editlabel">{{$t('static.comment')}}</label>
                             <input type="text" class="form-control edit-input"  id="label" v-model="param.remark" v-validate:label="['required']" />
-                        </div>
-                         <div v-if="param.label!==undefined" class="editpage-input">
-                            <label class="editlabel">{{param.labelist}}</label>
-                           <select  class="form-control" v-model="param.label" style="width:90%;">
-                               <option value="新手">新手</option>
-                               <option value="老司机">老司机</option>
-                           </select>
-                        </div>   
+                        </div>  
+                        <div v-if="param.label!==undefined" class="editpage-input">
+                           <label class="editlabel">{{$t('static.label')}}</label>
+                           <div type="text" class="edit-input" >
+                             <input-select
+                               :value.sync="param.label"
+                               :prevalue="param.label"
+                               :options="labels"
+                               placeholder="标签"
+                               label="name"
+                             >
+                             </input-select>
+                           </div>
+                         </div> 
                     </section>
                 </div>
                 <div class="edit_footer">
@@ -33,14 +39,15 @@
     </div>
 </template>
 <script>
+import inputSelect from '../../tools/vueSelect/components/inputselect'
 export default {
     components: {
-
+        inputSelect
     },
     props: ['param'],
     data() {
         return {
-          
+          labels:[],
         }
     },
     route: {
@@ -104,7 +111,7 @@ export default {
 }
 .edit-input {
     height: 36px;
-    line-height: 36px;
+    line-height: 20px;
     width: 90%;
     border: 1px solid #ddd;
     border-radius: 5px;

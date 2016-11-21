@@ -5,7 +5,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建客户{{param.title}}</h3>
+            <h3>新建客户地址</h3>
         </div>
         <validator name="validation">
             <form novalidate>
@@ -14,11 +14,11 @@
                         <div class="editpage" v-cloak>
                             <div class="editpageleft">
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.namelist}}<span class="system_danger" v-if="$validation.name.minlength">请输入姓名且不少于两位数</span></label>
+                                    <label class="editlabel">{{$t('static.name')}}<span class="system_danger" v-if="$validation.name.minlength">{{$t('static.validate_name')}}</span></label>
                                     <input type="text" class="form-control edit-input"  v-model="param.contactName" v-validate:name="{minlength:2}" />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel">{{param.typelist}}<span class="system_danger" v-if="$validation.aa.required">请选择类型</span></label>
+                                    <label class="editlabel">{{$t('static.type')}}<span class="system_danger" v-if="$validation.aa.required">{{$t('static.validate_type')}}</span></label>
                                     <input type="text" class="form-control edit-input"  v-model="param.type" v-validate:aa="['required']" v-show="false"/> 
                                     <select class="form-control edit-input"  v-model="param.type" >
                                        <option value="0">普通</option>
@@ -26,22 +26,22 @@
                                     </select>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.phonelist}}<span class="system_danger" v-if="$validation.phone.phone">请输入有效的手机号码</span></label>
+                                    <label class="editlabel">{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.phone.phone">{{$t('static.validate_cellphone')}}</span></label>
                                     <input type="text" class="form-control edit-input" v-model="param.contactPhone" v-validate:phone="['phone']" />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel">{{param.sexlist}}</label>
+                                    <label class="editlabel">{{$t('static.sex')}}</label>
                                     <select  class="form-control" v-model="param.sex" style="width:90%;">
                                         <option value="1">女</option>
                                         <option value="0">男</option>
                                     </select>
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel">{{param.addr}}</label>
+                                    <label class="editlabel">{{$t('static.address')}}</label>
                                     <input type="text" class="form-control edit-input"  v-model="param.address" />
                                 </div>
                                  <div class="editpage-input">
-                                    <label class="editlabel">{{param.streetlist}}</label>
+                                    <label class="editlabel">{{$t('static.street')}}</label>
                                     <input type="text" class="form-control edit-input" v-model="param.street" />
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                                 <div class="editpage-input">
                                     <!-- <label class="editlabel">{{param.countylist}}</label>
                                     <input type="text" class="form-control edit-input"  id="country" v-model="param.country" v-validate:country="['required']" /> -->
-                                    <label class="editlabel">国家 <span class="system_danger" v-if="!country.cname">请选择国家</span></label>
+                                    <label class="editlabel">{{$t('static.country')}} <span class="system_danger" v-if="!country.cname"></span></label>
                                     <div type="text" class="edit-input">
                                         <v-select
                                            :debounce="250"
@@ -63,8 +63,8 @@
                                  <div class="editpage-input">
                                    <!--  <label class="editlabel">{{param.provicelist}}</label>
                                     <input type="text" class="form-control edit-input"  id="province" v-model="param.province" v-validate:province="['required']"/> -->
-                                    <label class="editlabel">省<span class="system_danger" v-if="!country.cname">请选择省</span></label>
-                                    <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                                    <label class="editlabel">{{$t('static.province')}}<span class="system_danger" v-if="!country.cname"></span></label>
+                                    <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_country_first')}}" />
                                     <div v-if="country.cname" type="text" class="edit-input">
                                         <v-select
                                           :debounce="250"
@@ -78,8 +78,8 @@
                                  <div class="editpage-input">
                                     <!-- <label class="editlabel">{{param.citylist}}</label>
                                     <input type="text" class="form-control edit-input"  id="city" v-model="param.city" v-validate:city="['required']" /> -->
-                                    <label class="editlabel">市<span class="system_danger" v-if="!country.cname">请选择市</span></label>
-                                    <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                                    <label class="editlabel">{{$t('static.city')}}<span class="system_danger" v-if="!country.cname"></span></label>
+                                    <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_province_first')}}" />
                                     <div v-if="province.cname" type="text" class="edit-input">
                                        <v-select
                                          :debounce="250"
@@ -93,8 +93,8 @@
                                 <div class="editpage-input">
                                     <!-- <label class="editlabel">{{param.distlist}}</label>
                                     <input type="text" class="form-control edit-input"  id="district" v-model="param.district" v-validate:district="['required']" /> -->
-                                    <label class="editlabel">区<span class="system_danger" v-if="!country.cname">请选择区</span></label>
-                                    <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
+                                    <label class="editlabel">{{$t('static.area')}}<span class="system_danger" v-if="!country.cname"></span></label>
+                                    <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
                                     <div v-if="city.cname" type="text" class="edit-input">
                                         <v-select
                                             :debounce="250"
@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">{{param.addr_detail}}</label>
+                                    <label class="editlabel">{{$t('static.detailed_address')}}</label>
                                     <input type="text" class="form-control edit-input" v-model="param.detailAddr"  />
                                 </div>
                             </div>
@@ -114,9 +114,9 @@
                     </section>
                 </div>
                 <div class="edit_footer">
-                    <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid"  @click="param.link(param,param.show = false)">保存</button>
-                    <button type="button" class="btn  btn-confirm" v-else  disabled="true">保存</button>
+                    <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid"  @click="param.link(param,param.show = false)">{{$t('static.save')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.save')}}</button>
                 </div>
             </form>
         </validator>

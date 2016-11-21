@@ -40,7 +40,7 @@
                                                 link:deleteInfo,
                                                 url:'/customer/',
                                                 key:'customerList'
-                                                })">删除客户信息</button>
+                                                })">{{$t('static.del_client_info')}}</button>
                         </li>
 
                         <li v-if="initClientDetail.supplier!=1">
@@ -54,10 +54,10 @@
                         </li>
 
                       <li v-if="initClientDetail.blacklist==0">
-                        <button type="button" class="btn btn-base"  @click="clientTransferBlack()">加入黑名单</button>
+                        <button type="button" class="btn btn-base"  @click="clientTransferBlack()">{{$t('static.drag_into_blacklist')}}</button>
                       </li>
                       <li v-if="initClientDetail.blacklist==1">
-                        <button type="button" class="btn btn-base"  @click="clientTransferBlack()">踢出黑名单</button>
+                        <button type="button" class="btn btn-base"  @click="clientTransferBlack()">{{$t('static.out_of_blacklist')}}</button>
                       </li>
                     </ul>
                 </div>
@@ -66,7 +66,7 @@
         <section>
             <div class="client-section clearfix" >
                 <div class="col-md-8 client-detail">
-                    <h4 class="section_title">相关</h4>
+                    <h4 class="section_title">{{$t('static.related_information')}}</h4>
                     <article>
                         <div class="panel-group">
                             <div class="panel panel-default">
@@ -77,7 +77,7 @@
                   						            	})">
                   										<img class="pull-left" src="/static/images/contact.png" height="32" width="27"/>
                   										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                  											联系人（{{initClientDetail.contacts.arr.length}}）
+                  											{{$t('static.contact')}}（{{initClientDetail.contacts.arr.length}}）
                   										</a>
                   										<button type="button" class="btn btn-base pull-right"  @click.stop="createFormt({
       		                                     id:param.id,
@@ -104,22 +104,22 @@
       		                                     link:createCustomer,
       		                                     url:'/customer/contact',
       		                                     key:'contacts'
-      		                                     })">新建</button>
+      		                                     })">{{$t('static.new')}}</button>
                   									</h4>
                                 </div>
                                 <div class="panel-collapse" v-show="!initClientDetail.contacts.show&&initClientDetail.contacts.arr.length>0">
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                         	<thead>
-                                        		<th>联系人姓名</th>
-                                        		<th>联系人职位</th>
-                                        		<th>联系人部门</th>
-                                        		<th>手机</th>
-                                        		<th>电话</th>
-                                        		<th>邮箱</th>
+                                        		<th>{{$t('static.name')}}</th>
+                                        		<th>{{$t('static.position')}}</th>
+                                        		<th>{{$t('static.department')}}</th>
+                                        		<th>{{$t('static.cellphone')}}</th>
+                                        		<th>{{$t('static.telephone')}}</th>
+                                        		<th>{{$t('static.client_email')}}</th>
                                         		<th>qq</th>
-                                        		<th>微信</th>
-                                            <th colspan="2">操作</th>
+                                        		<th>{{$t('static.wechat')}}</th>
+                                            <th colspan="2">{{$t('static.operation')}}</th>
                                         	</thead>
 		                                    <tbody>
 		                                        <tr v-for="item in initClientDetail.contacts.arr">
@@ -260,7 +260,7 @@
                     						            	})">
                     										<img class="pull-left" src="/static/images/file.png" height="29" width="26"  />
                     										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                    											文件（{{initClientDetail.files.arr.length}}）
+                    											{{$t('static.file')}}（{{initClientDetail.files.arr.length}}）
                     										</a>
                     										<button type="button" class="btn btn-base pull-right" @click.stop="createfiles({
                       											 bizId:param.id,
@@ -276,19 +276,19 @@
     		                                     key:'files',
     		                                     image_f_show:'',
     		                                     image_f:''
-                      											})">新建</button>
+                      											})">{{$t('static.new')}}</button>
                           				</h4>
                               </div>
                               <div  class="panel-collapse" v-show="!initClientDetail.files.show&&initClientDetail.files.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                       	<thead>
-                                      		<th>文件名称</th>
-                                      		<th>文件类型</th>
-                                      		<th>所属文件</th>
-                                          <th>文件路径</th>
-                                          <th>描述</th>
-                                      		<th colspan="2">操作</th>
+                                      		<th>{{$t('static.filename')}}</th>
+                                      		<th>{{$t('static.file_type')}}</th>
+                                      		<!-- <th>所属文件</th> -->
+                                          <th>{{$t('static.preview')}}</th>
+                                          <th>{{$t('static.description')}}</th>
+                                      		<th colspan="2">{{$t('static.operation')}}</th>
                                       	</thead>
 		                                    <tbody>
 		                                         <tr v-for="item in initClientDetail.files.arr">
@@ -302,8 +302,8 @@
 		                                            <td>
                                                   {{item.fileType}}
                                                 </td>
-		                                            <td v-if="item.bizType=='customer_license'">客户文件</td>
-                                                <td v-if="item.bizType=='product_license'">产品文件</td>
+		                                            <!-- <td v-if="item.bizType=='customer_license'">客户文件</td> -->
+                                                <!-- <td v-if="item.bizType=='product_license'">产品文件</td> -->
                                                 <td>
                                                     <img v-if="item.fileType=='image'" width="100" :src="item.url"  @click="clickBig(item.url)"/>
                                                     <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
@@ -358,22 +358,22 @@
                                               })">
                                         <img class="pull-left" src="/static/images/intent.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          意向（{{initClientDetail.intentions.arr.length}}）
+                                          {{$t('static.intention')}}（{{initClientDetail.intentions.arr.length}}）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right" @click.stop="createIntention()">新建</button>
+                                        <button type="button" class="btn btn-base pull-right" @click.stop="createIntention()">{{$t('static.new')}}</button>
                                   </h4>
                               </div>
                               <div  class="panel-collapse" v-show="!initClientDetail.intentions.show&&initClientDetail.intentions.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                            <th>品种</th>
-                                            <th>产地</th>
-                                            <th>规格</th>
-                                            <th>数量</th>
-                                            <th>价格</th>
-                                            <th>单位</th>
-                                            <th>操作</th>
+                                            <th>{{$t('static.breed')}}</th>
+                                            <th>{{$t('static.origin')}}</th>
+                                            <th>{{$t('static.specification')}}</th>
+                                            <th>{{$t('static.quantity')}}</th>
+                                            <th>{{$t('static.price')}}</th>
+                                            <th>{{$t('static.unit')}}</th>
+                                            <th>{{$t('static.operation')}}</th>
                                         </thead>
                                         <tbody>
                                             <tr v-for="item in initClientDetail.intentions.arr">
@@ -445,7 +445,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/order.png" height="29" width="26"  />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                          订单（{{initClientDetail.orders.arr.length}}）
+                                          {{$t('static.order')}}（{{initClientDetail.orders.arr.length}}）
                                         </a>
                                         <button type="button" class="btn btn-base pull-right" @click.stop="newOrder({
                                             show:true,
@@ -487,19 +487,19 @@
                                               }],
                                             key:'orders',
                                             link:createOrder
-                                          })">新建</button>
+                                          })">{{$t('static.new')}}</button>
                                   </h4>
                               </div>
                               <div  class="panel-collapse" v-show="!initClientDetail.orders.show&&initClientDetail.orders.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>订单流水号</th>
-                                          <th>订单来源</th>
-                                          <th>收货人姓名</th>
-                                          <th>收货人手机号</th>
-                                          <th>收货人地址</th>
-                                          <th>订单状态</th>
+                                          <th>{{$t('static.order_no')}}</th>
+                                          <th>{{$t('static.order_source')}}</th>
+                                          <th>{{$t('static.consignee_name')}}</th>
+                                          <th>{{$t('static.consignee_phone')}}</th>
+                                          <th>{{$t('static.consignee_address')}}</th>
+                                          <th>{{$t('static.order_status')}}</th>
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initClientDetail.orders.arr">
@@ -526,7 +526,7 @@
                                               })">
                            										<img class="pull-left" src="/static/images/follow-up.png" height="30" width="30"  />
                            										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                           											跟进（{{initClientDetail.trackings.arr.length}}）
+                           											{{$t('static.tracking')}}（{{initClientDetail.trackings.arr.length}}）
                            										</a>
                                       <button type="button" class="btn btn-base pull-right" @click.stop="createTracking({
                                           objId:initClientDetail.id,
@@ -540,19 +540,19 @@
                                           show:true,
                                           customer:true,
                                           flag:0
-                                        })">新建</button>
+                                        })">{{$t('static.new')}}</button>
                            									</h4>
                                </div>
                                <div  class="panel-collapse" v-show="!initClientDetail.trackings.show">
                                   <div class="panel-body panel-set">
                                     <table class="table contactSet">
                                       <thead>
-                                      <th>业务类型</th>
-                                      <th>跟进方式</th>
-                                      <th>联系账号</th>
-                                      <th>备注</th>
-                                      <th>创建时间</th>
-                                      <th style="text-align:center">操作</th>
+                                      <th>{{$t('static.business_type')}}</th>
+                                      <th>{{$t('static.tracking_mode')}}</th>
+                                      <th>{{$t('static.contact_number')}}</th>
+                                      <th>{{$t('static.comment')}}</th>
+                                      <th>{{$t('static.create_time')}}</th>
+                                      <th style="text-align:center">{{$t('static.operation')}}</th>
                                       </thead>
  		                                    <tbody>
  		                                         <tr v-for="item in initClientDetail.trackings.arr">
@@ -592,7 +592,7 @@
                   						            	})">
                   										<img class="pull-left" src="/static/images/remark.png" height="30" width="27"  />
                   										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                  											备注（{{initClientDetail.remarks.arr.length}}）
+                  											{{$t('static.comment')}}（{{initClientDetail.remarks.arr.length}}）
                   										</a>
                   										<button type="button" class="btn btn-base pull-right" @click.stop="newlabel({
     		                                     customerId:param.id,
@@ -606,16 +606,16 @@
     		                                     link:createRemark,
     		                                     url:'/customer/remark',
     		                                     key:'remarks'
-    		                                     })">新建</button>
+    		                                     })">{{$t('static.new')}}</button>
                   									</h4>
                                 </div>
                                 <div  class="panel-collapse" v-show="!initClientDetail.remarks.show&&initClientDetail.remarks.arr.length>0">
                                    <div class="panel-body panel-set">
                                         <table class="table contactSet">
                                         	<thead>
-                                        		<th>备注</th>
-                                        		<th>状态</th>
-                                        		<th colspan="2">操作</th>
+                                        		<th>{{$t('static.comment')}}</th>
+                                        		<th>{{$t('static.status')}}</th>
+                                        		<th colspan="2">{{$t('static.operation')}}</th>
                                         	</thead>
 		                                    <tbody>
 		                                         <tr v-for="item in initClientDetail.remarks.arr">
@@ -666,7 +666,7 @@
               						            	})">
                     										<img class="pull-left" src="/static/images/addr.png" height="30" width="26"  />
                     										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                    											地址（{{initClientDetail.addresses.arr.length}}）
+                    											{{$t('static.address')}}（{{initClientDetail.addresses.arr.length}}）
                     										</a>
                     										<button type="button" class="btn btn-base pull-right" @click.stop="createAddr({
       		                                     customerId:param.id,
@@ -698,25 +698,25 @@
       		                                     link:createAddress,
       		                                     url:'/customer/insertAddress',
       		                                     key:'addresses'
-      		                                     })">新建</button>
+      		                                     })">{{$t('static.new')}}</button>
 								                	   </h4>
                                 </div>
                                 <div  class="panel-collapse" v-show="!initClientDetail.addresses.show&&initClientDetail.addresses.arr.length>0">
                                    <div class="panel-body panel-set">
                                         <table class="table contactSet">
                                         	<thead>
-                                        		<th>类型</th>
-                                        		<th>联系人姓名</th>
-                                        		<th>联系人手机</th>
-                                        		<th>性别</th>
-                                        		<th>国家</th>
-                                        		<th>所在省</th>
-                                        		<th>所在市</th>
-                                        		<th>所在区域</th>
-                                        		<th>所在街道</th>
-                                        		<th>地址</th>
-                                        		<th>详细地址</th>
-                                            <th colspan="2">操作</th>
+                                        		<th>{{$t('static.type')}}</th>
+                                        		<th>{{$t('static.name')}}</th>
+                                        		<th>{{$t('static.cellphone')}}</th>
+                                        		<th>{{$t('static.sex')}}</th>
+                                        		<th>{{$t('static.country')}}</th>
+                                        		<th>{{$t('static.province')}}</th>
+                                        		<th>{{$t('static.city')}}</th>
+                                        		<th>{{$t('static.area')}}</th>
+                                        		<th>{{$t('static.street')}}</th>
+                                        		<th>{{$t('static.address')}}</th>
+                                        		<th>{{$t('static.detailed_address')}}</th>
+                                            <th colspan="2">{{$t('static.operation')}}</th>
                                         	</thead>
 		                                    <tbody>
 		                                        <tr v-for="item in initClientDetail.addresses.arr">
@@ -797,7 +797,7 @@
                   						            	})">
                   										<img class="pull-left" src="/static/images/label.png" height="30" width="26"  />
                   										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                  											标签（{{initClientDetail.labels.arr.length}}）
+                  											{{$t('static.label')}}（{{initClientDetail.labels.arr.length}}）
                   										</a>
                   										<button type="button" class="btn btn-base pull-right" @click.stop="newlabel({
     		                                     customerId:param.id,
@@ -811,20 +811,19 @@
     		                                     link:createLabel,
     		                                     url:'/customer/insertLabel',
     		                                     key:'labels'
-    		                                     })">新建</button>
+    		                                     })">{{$t('static.new')}}</button>
                   									</h4>
                                 </div>
                                 <div  class="panel-collapse" v-show="!initClientDetail.labels.show&&initClientDetail.labels.arr.length>0">
                                    <div class="panel-body panel-set">
                                         <table class="table contactSet">
                                         	<thead>
-                                        		<th>标签</th>
-                                        		<th colspan="1">操作</th>
+                                        		<th>{{$t('static.label')}}</th>
+                                        		<th colspan="1">{{$t('static.operation')}}</th>
                                         	</thead>
 		                                    <tbody>
 		                                        <tr v-for="item in initClientDetail.labels.arr">
-		                                            <td v-if="item.label=='新手'" style="color:blue">{{item.label}}</td>
-                                                <td v-if="item.label=='老司机'" style="color:green">{{item.label}}</td>
+		                                            <td>{{item.label}}</td>
                                                 <td >
                                                    <a class="operate" @click="updatelabel({
                                                            sub:$index,
@@ -871,7 +870,7 @@
                   						            	})">
                   										<img class="pull-left" src="/static/images/product.png" height="27" width="27"  />
                   										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                  											产品（{{initClientDetail.products.arr.length}}）
+                  											{{$t('static.product')}}（{{initClientDetail.products.arr.length}}）
                   										</a>
                   										<button type="button" class="btn btn-base pull-right" @click.stop="newproduct({
     		                                     cid:param.id,
@@ -893,25 +892,25 @@
     		                                     link:createProduct,
     		                                     url:'/customer/product',
     		                                     key:'products'
-    		                                     })">新建</button>
+    		                                     })">{{$t('static.new')}}</button>
                   									</h4>
                                 </div>
                                 <div  class="panel-collapse" v-show="!initClientDetail.products.show&&initClientDetail.products.arr.length>0">
                                     <div class="panel-body panel-set">
                                          <table class="table contactSet">
                                         	<thead>
-                                        		<th>类型</th>
-                                        		<th>名称</th>
-                                        		<th>品种名称</th>
-                                        		<th>质量</th>
-                                        		<th>产地</th>
-                                        		<th>规格</th>
-                                        		<th>数量</th>
-                                        		<th>价格</th>
-                                        		<th>单位</th>
-                                        		<th>价格过期时间</th>
-                                        		<th>检测报告</th>
-                                        		<th colspan="2">操作</th>
+                                        		<th>{{$t('static.type')}}</th>
+                                        		<th>{{$t('static.name')}}</th>
+                                        		<th>{{$t('static.breed')}}</th>
+                                        		<th>{{$t('static.quality')}}</th>
+                                        		<th>{{$t('static.origin')}}</th>
+                                        		<th>{{$t('static.specification')}}</th>
+                                        		<th>{{$t('static.quantity')}}</th>
+                                        		<th>{{$t('static.price')}}</th>
+                                        		<th>{{$t('static.unit')}}</th>
+                                        		<th>{{$t('static.deadline')}}</th>
+                                        		<th>{{$t('static.test_report')}}</th>
+                                        		<th colspan="2">{{$t('static.operation')}}</th>
                                         	</thead>
 		                                    <tbody>
 		                                         <tr v-for="item in initClientDetail.products.arr">
@@ -980,67 +979,67 @@
                     </article>
                 </div>
                 <div class="col-md-4">
-                    <h4 class="section_title">详情</h4>
+                    <h4 class="section_title">{{$t('static.detailed_information')}}</h4>
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>名称</label>
+                                    <label>{{$t('static.name')}}</label>
                                     <input type="text" class="form-control" v-model="initClientDetail.name" value="{{initClientDetail.name}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>类型</label>
+                                    <label>{{$t('static.type')}}</label>
                                     <input v-if="initClientDetail.type==0" type="text" class="form-control"  value="个人" disabled="disabled" />
                                     <input v-if="initClientDetail.type==1" type="text" class="form-control"  value="企业" disabled="disabled" />
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>分类码</label>
+                                    <label>{{$t('static.classification_code')}}</label>
                                     <input type="text" class="form-control"  v-model="initClientDetail.category" value="{{initClientDetail.category}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>电话</label>
+                                    <label>{{$t('static.telephone')}}</label>
                                     <input type="text" class="form-control" v-model="initClientDetail.mainPhone" value="{{initClientDetail.mainPhone}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>负责人</label>
+                                    <label>{{$t('static.principals')}}</label>
                                     <input type="text" class="form-control" v-model="initClientDetail.principal" value="{{initClientDetail.principal}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>所在省</label>
+                                    <label>{{$t('static.province')}}</label>
                                     <input type="text" class="form-control" v-model="initClientDetail.provinceName" value="{{initClientDetail.provinceName}}" disabled="disabled" />
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>邮箱</label>
+                                    <label>{{$t('static.client_email')}}</label>
                                     <input type="text" class="form-control" v-model="initClientDetail.email" value="{{initClientDetail.email}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>所在市</label>
+                                    <label>{{$t('static.city')}}</label>
                                     <input type="text" class="form-control" v-model="initClientDetail.cityName" value="{{initClientDetail.cityName}}" disabled="disabled" />
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>备注</label>
+                                    <label>{{$t('static.comment')}}</label>
                                     <input type="text" class="form-control" v-model="initClientDetail.comments" value="{{initClientDetail.comments}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
-	                                <label>注册地址</label>
+	                                <label>{{$t('static.registered_address')}}</label>
 	                                <input type="text" class="form-control" v-model='initClientDetail.address' value="{{initClientDetail.address}}" disabled="disabled" />
 	                            </div>
                             </div>
                             <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>经营范围</label>
+                                <label>{{$t('static.business_scope')}}</label>
                                 <input type="text" class="form-control" v-model="initClientDetail.bizScope" value="{{initClientDetail.bizScope}}" disabled="disabled" />
                               </div>
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>注册时间</label>
+                                <label>{{$t('static.registered_time')}}</label>
                                 <input type="text" class="form-control" v-model="initClientDetail.ctime" value="{{initClientDetail.ctime}}" disabled="disabled" />
                               </div>
                             </div>

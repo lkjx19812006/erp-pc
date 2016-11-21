@@ -15,15 +15,15 @@
             <section class="editsection" v-cloak>
                 <div class="clearfix">
                      <div class="client-detailInfo  col-xs-12">
-                        <label>名称：</label>
-                        <input type="text"  class="form-control" v-model="param.name"  placeholder="按客户名称搜索"/>
+                        <label>{{$t('static.client_name')}}：</label>
+                        <input type="text"  class="form-control" v-model="param.name"  placeholder="{{$t('static.enter_client_name')}}"/>
                     </div>
                     <div class="client-detailInfo col-xs-12">
-                        <label>经营品种：</label>
-                        <input type="text"  class="form-control" v-model="param.bizScope"  placeholder="按客户经营的品种搜索"/>
+                        <label>{{$t('static.business_scope')}}：</label>
+                        <input type="text"  class="form-control" v-model="param.bizScope"  placeholder="{{$t('static.enter_business_scope')}}"/>
                     </div>
                     <div class="client-detailInfo  col-xs-6">
-                        <label>所在省：</label>
+                        <label>{{$t('static.province')}}：</label>
                         <div   class="form-control" style="padding:0;border:none;height:31px">
                           <v-select
                               :debounce="250"
@@ -38,8 +38,8 @@
                         </div>
                     </div>
                     <div class="client-detailInfo  col-xs-6">
-                        <label>所在市：</label>
-                        <input type="text" v-if="!province.cname" class="form-control" disabled="disabled" v-model="param.cityName" style="height:37px"  placeholder="请先选择一个省"/>
+                        <label>{{$t('static.city')}}：</label>
+                        <input type="text" v-if="!province.cname" class="form-control" disabled="disabled" v-model="param.cityName" style="height:37px"  placeholder="{{$t('static.select_province_first')}}"/>
                       <div v-if="province.cname"  class="form-control" style="padding:0;border:none;height:31px">
                             <v-select
                                      :debounce="250"
@@ -55,7 +55,7 @@
 
                     </div>
                   <div class="client-detailInfo  col-xs-6">
-                    <label>手机所在省：</label>
+                    <label>{{$t('static.province_of_phone')}}：</label>
                     <div   class="form-control" style="padding:0;border:none;height:31px">
                     <v-select
                       :debounce="250"
@@ -71,8 +71,8 @@
                     </div>
                   </div>
                   <div class="client-detailInfo  col-xs-6">
-                    <label>手机所在市：</label>
-                    <input type="text" v-if="!phoneProvince.cname" class="form-control" disabled="disabled" v-model="param.phoneCityName" style="height:37px"  placeholder="请先选择一个省"/>
+                    <label>{{$t('static.city_of_phone')}}：</label>
+                    <input type="text" v-if="!phoneProvince.cname" class="form-control" disabled="disabled" v-model="param.phoneCityName" style="height:37px"  placeholder="{{$t('static.select_province_first')}}"/>
                     <div v-if="phoneProvince.cname"  class="form-control" style="padding:0;border:none;height:31px">
                       <v-select
                         :debounce="250"
@@ -87,54 +87,54 @@
                     </div>
                   </div>
                     <div class="client-detailInfo col-xs-6">
-                        <label>手机：</label>
-                        <input type="text"  class="form-control" v-model="param.phone"  placeholder="按客户手机搜索"/>
+                        <label>{{$t('static.client_phone')}}：</label>
+                        <input type="text"  class="form-control" v-model="param.phone"  placeholder="{{$t('static.enter_client_phone')}}"/>
                     </div>
                     <div class="client-detailInfo  col-xs-6" @click="employee(param.employeeId,param.employeeName)" v-if="param.link=='/customer/employeeDistributed'" style="display:none;">
-                        <label>业务员ID：</label>
-                        <input type="text"  class="form-control" v-model="param.employeeName"   placeholder="按业务员ID搜索" disabled="disabled" />
+                        <label>{{$t('static.salesman')}}：</label>
+                        <input type="text"  class="form-control" v-model="param.employeeName"   placeholder="{{$t('static.select_salesman')}}" disabled="disabled" />
                         <!--<div class="empSearch" ><img src="/static/images/search.png" height="24" width="24"></div>-->
                     </div>
                      <div class="client-detailInfo  col-xs-6" @click="employee(param.employeeId,param.employeeName)" v-else>
-                        <label>业务员ID：</label>
-                        <input type="text"  class="form-control" v-model="param.employeeName"   placeholder="按业务员ID搜索" disabled="disabled" />
+                        <label>{{$t('static.salesman')}}：</label>
+                        <input type="text"  class="form-control" v-model="param.employeeName"   placeholder="{{$t('static.select_salesman')}}" disabled="disabled" />
                         <!--<div class="empSearch" ><img src="/static/images/search.png" height="24" width="24"></div>-->
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                        <label>客户类型：</label>
+                        <label>{{$t('static.client_type')}}：</label>
                         <select class="form-control" v-model="param.type">
-                            <option value="">请选择类型</option>
+                            <option value="">{{$t('static.please_select')}}</option>
                             <option v-for="item in initUserType" value="{{item.id}}" >{{item.name}}</option>
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">
-                        <label>客户分类：</label>
+                        <label>{{$t('static.customer_classification')}}：</label>
                         <select class="form-control"  v-model="param.classify">
-                            <option value="" selected>请选择分类</option>
-                            <option value="1">采购商</option>
-                            <option value="2">供应商</option>
-                            <option value="3">买卖</option>
+                            <option value="" selected>{{$t("static.please_select")}}</option>
+                            <option value="1">{{$t("static.purchaser")}}</option>
+                            <option value="2">{{$t("static.supplier")}}</option>
+                            <option value="3">{{$t("static.purchaser_and_supplier")}}</option>
                         </select>
                     </div>
                   <div class="client-detailInfo col-xs-6">
-                    <label>客户信用等级：</label>
+                    <label>{{$t("static.credit_rating")}}：</label>
                     <select class="form-control"  v-model="param.creditLevel">
-                      <option value="" selected>请选择等级</option>
-                      <option value="0">暂无等级</option>
-                      <option value="1">一星客户</option>
-                      <option value="2">二星客户</option>
-                      <option value="3">三星客户</option>
+                      <option value="" selected>{{$t("static.please_select")}}</option>
+                      <option value="0">{{$t("static.none")}}</option>
+                          <option value="1">{{$t("static.one_star")}}</option>
+                          <option value="2">{{$t("static.two_star")}}</option>
+                          <option value="3">{{$t("static.three_star")}}</option>
                     </select>
                   </div>
 
                   <div class="client-detailInfo col-xs-6">
-                    <label>注册开始时间：</label>
+                    <label>{{$t("static.registration_start_time")}}：</label>
                     <mz-datepicker :time.sync="param.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
                     </mz-datepicker>
                   </div>
                   <div class="client-detailInfo col-xs-6" style="float:right">
-                    <label>注册结束时间：</label>
-                    <mz-datepicker :time.sync="param.ctimeEnd" format="yyyy/MM/dd HH:mm:ss" class="a">
+                    <label>{{$t("static.registration_end_time")}}：</label>
+                    <mz-datepicker :time.sync="param.ctimeEnd" format="yyyy/MM/dd HH:mm:ss">
                     </mz-datepicker>
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空</button>
                   </div>
@@ -143,8 +143,8 @@
 
 
                   <div class="client-detailInfo col-xs-6">
-                    <label>客户标签：</label>
-                    <input type="text"  class="form-control" v-model="param.label"   placeholder="按会员标签搜索"  />
+                    <label>{{$t("static.client_label")}}：</label>
+                    <input type="text"  class="form-control" v-model="param.label" />
                   </div>
                     <!-- <div class="client-detailInfo col-xs-12">
                         <label>标签：</label>

@@ -5,16 +5,16 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>{{param.title}}</h3>
+            <h3>新建文件</h3>
         </div>
         <div class="edit-model">
             <section class="editsection">
                 <div class="editpage-input">
-                  <label class="editlabel">文件名称</label>
-                  <input type="text"  class="form-control" placeholder="文件名称" class="search_input"  v-model="param.name"  />
+                  <label class="editlabel">{{$t('static.filename')}}</label>
+                  <input type="text"  class="form-control" class="search_input"  v-model="param.name"  />
                 </div> 
                 <div class="editpage-input">
-                    <label class="editlabel">所属文件类别</label>
+                    <label class="editlabel">{{$t('static.file_type')}}</label>
                     <select class="form-control"  v-model="param.bizType" v-if="!param.bizType">
                         <option value="customer_license">客户文件</option>
                         <option value="product_license">产品文件</option>
@@ -25,20 +25,20 @@
                   </select>
                 </div>
                 <div class="editpage-input">
-                    <label class="editlabel">描述说明</label>
+                    <label class="editlabel">{{$t('static.description')}}</label>
                     <textarea style="width:100%;resize:none;border:1px solid #ddd;border-radius:5px;" rows="5" v-model="param.description">
 
                     </textarea>
                 </div>
                 <div class="editpage-input clearfix">
-                    <label class="editlabel">新建文件</label>
+                    <label class="editlabel">{{$t('static.file')}}</label>
                     <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="param.fileType" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
                 </div>
             </section>
         </div>
         <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <input type="button" class="btn btn-confirm" @click="param.link(param,param.show = false)" value="保存" />
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+            <button type="button" class="btn btn-confirm" @click="param.link(param,param.show = false)">{{$t('static.save')}}</button>
         </div>
     </div>
 </template>
