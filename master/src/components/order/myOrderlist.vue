@@ -192,25 +192,51 @@
                         url:'/order/',
                         goods:item.goods,
                         goodsBack:[]
-                        },item.goods)"><a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" height="18" width="30"  alt="编辑" title="编辑"/></a></td>
+                        },item.goods)"><a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png"   alt="编辑" title="编辑"/></a></td>
                   <td>
                       <div v-if="item.validate==2">
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="(item.orderStatus==20||item.orderStatus==10)&&item.type==0"><img src="/static/images/payorder.png" height="18" width="38" title="待财务付款" alt="待财务付款"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==0"><img src="/static/images/paid.png" height="18" width="37" title="待客户收款" alt="待客户收款" /></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0"><img src="/static/images/deliver.png" height="18" width="38" title="待客户发货" alt="待客户发货"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0"><img src="/static/images/take.png" height="18" width="38" title="待收货" alt="等待收货"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus >=60"><img src="/static/images/finish.png" height="18" width="38" title="已完成订单" alt="已完成订单"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="(item.orderStatus==20||item.orderStatus==10)&&item.type==0">
+                             <img src="/static/images/{{$t('static.img_payorder')}}.png"  title="待财务付款" alt="待财务付款"/>
+                        </a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==0">
+                              <img src="/static/images/{{$t('static.img_paid')}}.png"  title="待客户收款" alt="待客户收款" />
+                        </a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0">
+                            <img src="/static/images/{{$t('static.img_deliver')}}.png"  title="待客户发货" alt="待客户发货"/>
+                        </a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0">
+                            <img src="/static/images/{{$t('static.img_take')}}.png"  title="待收货" alt="等待收货"/>
+                        </a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus >=60">
+                           <img src="/static/images/{{$t('static.img_finish')}}.png"   title="已完成订单" alt="已完成订单"/>
+                        </a>
 
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1"><img src="/static/images/payorder.png" height="18" width="38" title="待客户付款" alt="待客户付款"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==20&&item.type==1"><img src="/static/images/collection.png" height="18" width="38" title="申请收款" alt="申请收款"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1">
+                            <img src="/static/images/{{$t('static.img_payorder')}}.png"  title="待客户付款" alt="待客户付款"/>
+                        </a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==20&&item.type==1">
+                            <img src="/static/images/{{$t('static.img_collection')}}.png"  title="申请收款" alt="申请收款"/>
+                        </a>
                         <!--<a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1"><img src="/static/images/uncheck.png" height="18" width="38" title="申请收款" alt="申请收款"/></a>-->
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==1"><img src="/static/images/deliver.png" height="18" width="38" title="待发货" alt="待发货"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1"><img src="/static/images/take.png" height="18" width="38" title="待客户收货" alt="待客户收货"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==0"><img src="/static/images/handle.png" height="18" width="38" title="订单待处理" alt="订单待处理"/></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==1">
+                             <img src="/static/images/{{$t('static.img_deliver')}}.png" title="待发货" alt="待发货"/>
+                        </a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1">
+                            <img src="/static/images/{{$t('static.img_take')}}.png"  title="待客户收货" alt="待客户收货"/>
+                        </a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==0">
+                            <img src="/static/images/{{$t('static.img_handle')}}.png"  title="订单待处理" alt="订单待处理"/>
+                        </a>
                       </div>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-1"><img src="/static/images/cancle.png" height="18" width="38" title="订单已取消" alt="订单已取消"/></a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-2"><img src="/static/images/deadline.png" height="18" width="38" title="订单已过期" alt="订单已过期"/></a>
-                        <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2"><img src="/static/images/reset.png" height="18" width="48" title="重新申请" alt="重新申请" /></a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-1">
+                             <img src="/static/images/{{$t('static.img_canceled')}}.png" title="订单已取消" alt="订单已取消"/>
+                        </a>
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-2">
+                            <img src="/static/images/{{$t('static.deadline')}}.png"  title="订单已过期" alt="订单已过期"/>
+                        </a>
+                        <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2">
+                            <img src="/static/images/{{$t('static.img_reset')}}.png"  title="重新申请" alt="重新申请" />
+                        </a>
                   </td>
 
                 </tr>

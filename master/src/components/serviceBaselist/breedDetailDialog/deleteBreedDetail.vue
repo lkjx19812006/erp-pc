@@ -2,11 +2,12 @@
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container del_modal_con" v-show="param.show">
         <div class="model-header">
-            <h4>删除{{param.title}}</h4>
-            <p class="model-tips">是否确定删除此{{param.title}}的信息？</p>
+            <h4 v-if="param.title=='意向'">{{$t('static.del_intent')}}</h4>
+            <h4 v-else>删除{{param.title}}</h4>
+            <p class="model-tips">{{$t('static.del_info')}}</p>
             <div class="model-footer">
-                <button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-                <button type="button" class="btn btn-orange" @click="param.link(param,param.show=false),param.callback()">删除</button>
+                <button type="button" class="btn btn-close"  @click="param.show = false">{{$t('static.cancel')}}</button>
+                <button type="button" class="btn btn-orange" @click="param.link(param,param.show=false),param.callback()">{{$t('static.del')}}</button>
             </div>
         </div>
     </div>

@@ -81,7 +81,7 @@
              </section>
           </div>
           <div class="edit_footer">
-              <button type="button" class="btn  btn-confirm" @click="param.show = false">确定</button>
+              <button type="button" class="btn  btn-confirm" @click="param.show = false">{{$t('static.confirm')}}</button>
           </div>
         </validator>
     </div>

@@ -311,7 +311,7 @@ export default {
             editorder:{
               show:false
             },
-            payName: "{{$t('static.to_pay')}}",
+            payName: "去支付",
           type:"image/jpeg,image/jpg,image/png",
             uploadLogistic:{
               images:'',

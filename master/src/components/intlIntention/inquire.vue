@@ -6,8 +6,8 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3 v-if="param.times==0">国际意向询价</h3>
-            <h3 v-if="param.times>0">国际意向再次询价</h3>
+            <h3 v-if="param.times==0">{{$t('static.International_intention_inquiry')}}</h3>
+            <h3 v-if="param.times>0">{{$t('static.intl_require')}}</h3>
         </div>
         <div class="edit-model">
            <section class="editsection" v-cloak>
@@ -15,7 +15,7 @@
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpageleft">
                     <div class="editpage-input">
-                        <label class="editlabel">询价类型</label>
+                        <label class="editlabel">{{$t('static.inquire_type')}}</label>
                         <select class="form-control edit-input" type="text" v-model="param.inquireType">
                             <option>FOB</option>
                             <option>CIF</option>
@@ -24,7 +24,7 @@
                         </select>
                     </div>
                     <div class="editpage-input">
-                       <label class="editlabel">备注</label>
+                       <label class="editlabel">{{$t('static.comment')}}</label>
                        <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
                        <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5"></textarea>
                     </div>
@@ -33,8 +33,8 @@
            </section>
         </div>
         <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show=false">取消</button>
-            <button type="button" class="btn  btn-confirm"  @click="confirm()">确定</button>
+            <button type="button" class="btn btn-default btn-close" @click="param.show=false">{{$t('static.cancel')}}</button>
+            <button type="button" class="btn  btn-confirm"  @click="confirm()">{{$t('static.confirm')}}</button>
         </div>
     </div>
 </template>

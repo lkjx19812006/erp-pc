@@ -70,14 +70,14 @@
           <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
           <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
           <td>{{item.currency | Currency}}</td>
-          <td v-if="item.payWay==0">线下打款</td>
-          <td v-if="item.payWay==1">支付宝</td>
-          <td v-if="item.payWay==2">平安支付</td>
-          <td v-if="item.payWay==3">药款支付</td>
+          <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
+          <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
+          <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
+          <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
           <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">其他</td>
           <!-- <td v-if="item.payWay==''">其他</td> -->
           <td>
-            <a class="operate" ><img src="/static/images/payorder.png" height="18" width="38" title="待付款" alt="待付款" @click="pendingOrder(item,$index)" /></a>
+            <a class="operate" ><img src="/static/images/{{$t('static.img_payorder')}}.png" title="待付款" alt="待付款" @click="pendingOrder(item,$index)" /></a>
 
           </td>
           <!-- <td @click="editClick($index)">

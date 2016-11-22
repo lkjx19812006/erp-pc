@@ -5,8 +5,10 @@
             <h4>{{$t('static.friendly_warning')}}</h4>
             <div class="model-tips clearfix">
                 <img src="/static/images/bee.png"  class="pull-left" height="138" width="111"/>
-                <div class="tips_name">{{param.name}}</div>
-
+                <div class="tips_name" v-if="param.name=='确定取消询价?'">{{$t('static.cancel_inquire')}}</div>
+                <!-- <div class="tips_name" v-if="param.name==='确认删除文件?'">{{$t('static.del_file')}}</div> -->
+                <div class="tips_name" v-if="param.name=='确认删除?'">{{$t('static.del_confirm')}}</div>
+                <div class="tips_name" v-else>{{param.name}}</div>
             </div>
             <div class="model-footer" v-if="param.alert">
                 <input type="button" class="btn btn-close"  @click="param.show = false"  value="{{$t('static.confirm')}}"/>

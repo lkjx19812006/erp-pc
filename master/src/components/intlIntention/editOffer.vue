@@ -26,17 +26,17 @@
                           </div>
                    
                           <div class="editpage-input">
-                               <label class="editlabel">{{$t('static.cost')}}<span class="system_danger" v-if="$validation.origprice.required">必填项</span></label>
+                               <label class="editlabel">{{$t('static.cost')}}<span class="system_danger" v-if="$validation.origprice.required">{{$t('static.required')}}</span></label>
                                <input type="text" v-model="param.origPrice" class="form-control edit-input" v-validate:origprice="{required:true}"/>
                           </div>
                    
                           <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$validation.unit.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$validation.unit.required">{{$t('static.required')}}</span></label>
                                <input type="text" v-model="param.unit" class="form-control edit-input" v-validate:unit="{required:true}"/>
                           </div>
 
                           <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.comment')}}<span class="system_danger" v-if="$validation.comment.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.comment')}}<span class="system_danger" v-if="$validation.comment.required">{{$t('static.required')}}</span></label>
                                <input type="text" v-model="param.comment" class="form-control edit-input" v-validate:comment="{required:true}" />
                           </div>
                           
@@ -44,7 +44,7 @@
                    
                        <div class="editpageright">
                           <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.currency')}}<span class="system_danger" v-if="$validation.currency.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.currency')}}<span class="system_danger" v-if="$validation.currency.required">{{$t('static.required')}}</span></label>
                                <input v-show="false" type="text" v-model="param.currency" class="form-control edit-input" v-validate:currency="{required:true}"/>
                                <select type="text" class="form-control edit-input" v-model="param.currency">
                                  <option value="0">CNY人民币</option>
@@ -68,12 +68,12 @@
                           </div>
 
                           <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.quoted_price')}}<span class="system_danger" v-if="$validation.price.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.quoted_price')}}<span class="system_danger" v-if="$validation.price.required">{{$t('static.required')}}</span></label>
                                <input type="text" v-model="param.price" class="form-control edit-input" v-validate:price="{required:true}" />
                           </div>
                    
                           <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$validation.number.required">必填项</span></label>
+                               <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$validation.number.required">{{$t('static.required')}}</span></label>
                                <input type="text" v-model="param.number" class="form-control edit-input" v-validate:number="{required:true}"/>
                           </div>
                 

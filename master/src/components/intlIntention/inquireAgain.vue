@@ -6,7 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>国际意向条目再次询价</h3>
+            <h3>{{$t('static.intl_require')}}</h3>
             
         </div>
         <div class="edit-model">
@@ -18,7 +18,7 @@
                        
                     </div>
                     <div class="editpage-input">
-                       <label class="editlabel">备注</label>
+                       <label class="editlabel">{{$t('static.comment')}}</label>
                        <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
                        <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5"></textarea>
                     </div>
@@ -27,8 +27,8 @@
            </section>
         </div>
         <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show=false">取消</button>
-            <button type="button" class="btn  btn-confirm"  @click="confirm()">确定</button>
+            <button type="button" class="btn btn-default btn-close" @click="param.show=false">{{$t('static.cancel')}}</button>
+            <button type="button" class="btn  btn-confirm"  @click="confirm()">{{$t('static.confirm')}}</button>
         </div>
     </div>
 </template>

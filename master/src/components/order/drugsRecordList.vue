@@ -41,9 +41,9 @@
             <td>{{item.status | drugsStatus}}</td>
             <td>
                 <a class="operate" v-if="item.status==0" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_apply')}}.png" /></a>
-                <a class="operate" v-if="item.status==1" @click="drugs(item,$index)"><img src="/static/images/Financial.png" title="转账处理中" alt="转账处理中"></a>
+                <a class="operate" v-if="item.status==1" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_Financial')}}.png" title="转账处理中" alt="转账处理中"></a>
                 <a class="operate" v-if="item.status==2" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_transfer')}}.png"  title="转出成功" alt="转出成功"></a>
-                <a class="operate" v-if="item.status==3" @click="drugs(item,$index)"><img src="/static/images/Financialover.png" ></a>
+                <a class="operate" v-if="item.status==3" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_Financialover')}}.png" ></a>
             </td>
           </tr>
         </tbody>

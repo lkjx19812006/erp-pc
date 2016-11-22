@@ -68,14 +68,16 @@
                   <td v-if="item.orderStatus==40">已审核</td>
                   <td>{{item.validate | Auditing}}</td>
                   <td>{{item.currency | Currency}}</td>
-                  <td v-if="item.payWay==0">线下打款</td>
-                  <td v-if="item.payWay==1">支付宝</td>
-                  <td v-if="item.payWay==2">平安支付</td>
-                  <td v-if="item.payWay==3">药款支付</td>
+                  <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
+                  <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
+                  <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
+                  <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                   <td v-if="item.payWay==null">其他</td>
                   <!-- <td v-if="item.payWay==''">其他</td> -->
                   <td>
-                      <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1"><img src="/static/images/uncheck.png" height="18" width="38" title="等待核查" alt="等待核查" @click="pendingOrder(item,$index)" /></a>
+                      <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1">
+                             <img src="/static/images/{{$t('static.img_uncheck')}}.png"  title="等待核查" alt="等待核查" @click="pendingOrder(item,$index)" />
+                      </a>
                       <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.validate==2"><img src="/static/images/unorderStatus.png" height="18" width="18" title="暂无处理" alt="暂无处理" @click="pendingOrder(item,$index)" /></a>
                   </td>
                   <!-- <td @click="editClick($index)">

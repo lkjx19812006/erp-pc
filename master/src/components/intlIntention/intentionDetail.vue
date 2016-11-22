@@ -171,7 +171,7 @@
                                                 <td>{{item.unit}}</td>
                                                 <td>{{item.again | requireAgain}}</td>
                                                 <td>{{item.offerAgain | offerAgain}}</td>
-                                                <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0"><img src="/static/images/inquireAgain.png" alt="再次询价" /></a></a></td> 
+                                                <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> 
                                                 <td></td>
                                             </tr>
                                     </table>
@@ -270,8 +270,8 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td><a href="{{item.url}}" download=""><img src="/static/images/download.png" alt="下载" /></a></td>
-                                                <td><a @click="delFile(item,$index)"><img src="/static/images/del.png" alt="删除" /></a></td>
+                                                <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
+                                                <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 <td></td>
                                                 
                                                
@@ -315,8 +315,8 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td><a href="{{item.url}}" download=""><img src="/static/images/download.png" alt="下载" /></a></td>
-                                                <td><a @click="delFile(item,$index)"><img src="/static/images/del.png" alt="删除" /></a></td>
+                                                <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
+                                                <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 <td></td>
                                                
                                             </tr>

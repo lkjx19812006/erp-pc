@@ -6,7 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>原材料报价</h3>
+            <h3>{{$t('static.raw_material_quotation')}}</h3>
         </div>
         <validator name="validation">
           <div class="edit-model">
@@ -18,45 +18,15 @@
             </div> -->
              <section class="editsection" v-cloak>
                  <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-
-                 <div class="editpage">
-                     <!-- <div class="editpageleft">
-                     
-                       <div class="editpage-input">
-                         <label class="editlabel">包装<span v-if="$validation.pack.required" class="system_danger">请输入包装要求</span></label>
-                         <input type="text" v-model='param.pack' v-validate:pack="['required']" class="form-control edit-input"  />
-                       </div>
-                     
-                     </div> -->
-
-                     <!-- <div class="editpageright">
-                      
-                       <div class="editpage-input">
-                         <label class="editlabel">过期时间<span v-if="$validation.duedate.required" class="system_danger">请选择过期时间</span></label>
-                         <input v-show="false" v-model="param.duedate" v-validate:duedate="['required']"/>
-                         <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">
-                         </mz-datepicker>
-                         <button type="button" class="btn btn-default" height="24" width="24" @click="reset()">清空</button>
-                       </div>
-                       
-                     </div> -->
-
-
-                 </div>
-
-                <!--  <div style="margin-top:25px">
-                   <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
-                   <h4 style="display:inline">药材信息</h4>
-                </div> -->
-                 
+                
                  <table class="table table-hover table_color table-striped ">
                      <thead>
                          <tr>
                             
-                           <th>货币类型</th>
-                           <th>费用</th>
-                           <th>费用说明</th>
-                           <th>备注</th> 
+                           <th>{{$t('static.currency')}}</th>
+                           <th>{{$t('static.expense')}}</th>
+                           <th>{{$t('static.expense_explanation')}}</th>
+                           <th>{{$t('static.comment')}}</th> 
                            <th></th> 
                          </tr>
                      </thead>
@@ -67,21 +37,21 @@
                              <td>{{item.cost}}</td>
                              <td>{{item.costDesc}}</td>
                              <td>{{item.comment}}</td>
-                             <td @click="showModifyOffer($index)"><a v-if="!addParam.show">编辑</a></td>
+                             <td @click="showModifyOffer($index)"><a v-if="!addParam.show">{{$t('static.edit')}}</a></td>
                              
                              
                          </tr>
                      </tbody>
                  </table>
                 <div style="padding-left:25%">
-                     <div v-if="!updateParam.show" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddOffer()">添加其他报价</div>   
+                     <div v-if="!updateParam.show" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddOffer()">{{$t('static.other_quotations')}}</div>   
                  </div> 
                   
                  <validator name="inner">   
                      <div v-if="updateParam.show||addParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
                            <div class="editpageleft">
                               <div class="editpage-input">
-                                   <label class="editlabel" >货币类型<span class="system_danger" v-if="$inner.currency.required">必填项</span></label>
+                                   <label class="editlabel" >{{$t('static.currency')}}<span class="system_danger" v-if="$inner.currency.required">{{$t('static.required')}}</span></label>
                                    <input v-show="false" type="text" v-model="offerInfo.currency" class="form-control edit-input" v-validate:currency="{required:true}"/>
                                    <select type="text" class="form-control edit-input" v-model="offerInfo.currency">
                                      <option value="0">CNY人民币</option>
@@ -105,7 +75,7 @@
                               </div>
                               
                               <div class="editpage-input">
-                                   <label class="editlabel" >费用说明<span class="system_danger" v-if="$inner.costdesc.required">必填项</span></label>
+                                   <label class="editlabel" >{{$t('static.expense_explanation')}}<span class="system_danger" v-if="$inner.costdesc.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="offerInfo.costDesc" class="form-control edit-input" v-validate:costdesc="{required:true}" />
                               </div>
                               
@@ -115,12 +85,12 @@
                            <div class="editpageright">
 
                               <div class="editpage-input">
-                                   <label class="editlabel" >费用<span class="system_danger" v-if="$inner.cost.required">必填项</span></label>
+                                   <label class="editlabel" >{{$t('static.expense')}}<span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="offerInfo.cost" class="form-control edit-input" v-validate:cost="{required:true}" />
                               </div>
                               
                               <div class="editpage-input">
-                                   <label class="editlabel" >备注<span class="system_danger" v-if="$inner.comment.required">必填项</span></label>
+                                   <label class="editlabel" >{{$t('static.comment')}}<span class="system_danger" v-if="$inner.comment.required">{{$t('static.required')}}</span></label>
                                    <input type="text" v-model="offerInfo.comment" class="form-control edit-input" v-validate:comment="{required:true}" />
                               </div>
                     
@@ -128,12 +98,12 @@
                                             
                               <div style="margin-top:10px;text-align:right">
                                   <button type="button" class="btn btn-confirm" @click="updateParam.show=false,addParam.show=false">
-                                      取消
+                                      {{$t('static.cancel')}}
                                   </button>
                                   <button type="button" class="btn btn-confirm" v-if="$inner.valid" @click="modifyOffer()">
-                                      保存
+                                      {{$t('static.save')}}
                                   </button>
-                                  <button type="button" class="btn btn-confirm" v-else disabled="disabled">保存</button>
+                                  <button type="button" class="btn btn-confirm" v-else disabled="disabled">{{$t('static.save')}}</button>
                                   
                               </div>
                               
@@ -146,8 +116,8 @@
              </section>
           </div>
           <div class="edit_footer">
-              <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-              <button type="button" class="btn  btn-confirm" @click="param.show = false">确定</button>
+              <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+              <button type="button" class="btn  btn-confirm" @click="param.show = false">{{$t('static.confirm')}}</button>
           </div>
         </validator>
     </div>
