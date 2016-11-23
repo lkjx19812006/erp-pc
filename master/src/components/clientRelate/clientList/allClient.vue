@@ -65,7 +65,7 @@
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table  data-toggle="table" data-height="268"  class="table table-hover table_color table-striped " v-cloak>
                 <thead>
                     <tr>
                         <th>
@@ -516,5 +516,9 @@ export default {
     margin: auto;
     text-align: center;
     background-position: 5px;
+}
+/* ---设置--- */
+.service-nav{
+
 }
 </style>
