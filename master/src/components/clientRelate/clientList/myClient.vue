@@ -6,7 +6,7 @@
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
-  <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+    <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <div>
         <div class="service-nav">
             <div class="clearfix">
@@ -207,19 +207,6 @@
                             <a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" height="18" width="30"/>
                             </a>
                         </td>
-                        <!-- <td  @click="specDelete({
-                                                id:item.id,
-                                                sub:$index,
-                                                show:true,
-                                                name:item.name,
-                                                title:'客户',
-                                                link:deleteInfo,
-                                                url:'/customer/',
-                                                key:'customerList'
-                                                })">
-                            <a class="operate"><img src="/static/images/del.png" height="18" width="30"/>
-                            </a>
-                        </td> -->
                        <!--  <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">

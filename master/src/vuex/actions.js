@@ -2324,6 +2324,7 @@ export const getOrgList = ({ dispatch }, param) => { //部门列表
 }
 
 export const getRoleList = ({ dispatch }, param) => { //获取角色列表
+    console.log(param)
     param.loading = true;
     if ('pageSize' in param) {
         var pageSize = param.pageSize;
@@ -2348,6 +2349,7 @@ export const getRoleList = ({ dispatch }, param) => { //获取角色列表
                 }
             }
         }
+        console.log('获取角色成功')
         dispatch(types.ROLE_DATA, role)
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
@@ -3064,19 +3066,13 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
     for (var search in param) {
         if (search == 'type' && param[search] !== '') {
             url += '&type=' + param.type
-        } else if (search == 'type') {
-            url += '&type='
-        }
+        } 
         if (search == 'especial' && param[search] !== '') {
             url += '&especial=' + param.especial
-        } else if (search == 'especial') {
-            url += '&especial='
-        }
+        } 
         if (search == 'invoic' && param[search] !== '') {
             url += '&invoic=' + param.invoic
-        } else if (search == 'invoic') {
-            url += '&invoic='
-        }
+        } 
         if (search == 'validate' && param[search] !== '') {
             url += '&validate=' + param.validate
         }
@@ -3085,24 +3081,16 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         }
         if (search == 'intl' && param[search] !== '') {
             url += '&intl=' + param.intl
-        } else if (search == 'intl') {
-            url += '&intl='
-        }
+        } 
         if (search == 'sampling' && param[search] !== '') {
             url += '&sampling=' + param.sampling
-        } else if (search == 'sampling') {
-            url += '&sampling='
-        }
+        } 
         if (search == 'visit' && param[search] !== '') {
             url += '&visit=' + param.visit
-        } else if (search == 'visit') {
-            url += '&visit='
-        }
+        } 
         if (search == 'advance' && param[search] !== '') {
             url += '&advance=' + param.advance
-        } else if (search == 'advance') {
-            url += '&advance='
-        }
+        } 
         if (search == 'breedId' && param[search] !== '') {
             url += '&breedId=' + param.breedId
         }
@@ -4738,7 +4726,7 @@ export const getAuthInfo = ({ dispatch }, param) => { //查询认证信息
 }
 
 
-export const baseGetData = ({ dispatch }, param) => { //查询认证信息
+export const baseGetData = ({ dispatch }, param) => { //查询权限
 
     Vue.http({
         method: 'GET',
@@ -4752,8 +4740,7 @@ export const baseGetData = ({ dispatch }, param) => { //查询认证信息
     }).then((res) => {
         param.loading = false;
         console.log(param);
-        console.log('查询成功')
-        console.log(res.json());
+        console.log('查询成功！')
         const json = {
             list: res.json(),
             name: param.keyName,
@@ -4779,7 +4766,7 @@ export const baseGetData = ({ dispatch }, param) => { //查询认证信息
     })
 }
 
-export const baseAddData = ({ dispatch }, param) => { //查询认证信息
+export const baseAddData = ({ dispatch }, param) => { //新增权限
 
     Vue.http({
         method: 'POST',
@@ -4810,7 +4797,7 @@ export const baseAddData = ({ dispatch }, param) => { //查询认证信息
     })
 }
 
-export const baseUpdateData = ({ dispatch }, param) => { //查询认证信息
+export const baseUpdateData = ({ dispatch }, param) => { //修改权限
     console.log(param.body);
     Vue.http({
         method: 'PUT',
@@ -4840,7 +4827,7 @@ export const baseUpdateData = ({ dispatch }, param) => { //查询认证信息
     })
 }
 
-export const baseDelData = ({ dispatch }, param) => { //查询认证信息
+export const baseDelData = ({ dispatch }, param) => { //删除权限信息
     Vue.http({
         method: 'DELETE',
         url: apiUrl.base + param.url + param.id,
@@ -4879,5 +4866,29 @@ export const loadFile = ({ dispatch }, param) => { //查询认证信息
 
     }, (res) => {
 
+    })
+}
+
+/*---二期开发---*/
+/*---我的客户统计---*/
+export const getClientcount = ({ dispatch }, initClientcount) => { //获取客户统计
+    if(initClientcount) initClientcount.loading= true;
+    Vue.http({
+        method: 'GET',
+        url:apiUrl.countList,
+        /*url: apiUrl.clientList + param.url + '?page=' + param.cur +'&pageSize=15',*/
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        /*initClientcount.loading = false;*/
+        console.log(res.data.results)
+        dispatch(types.MY_CLIENT_COUNT, res.data.results);
+    }, (res) => {
+        /*initClientcount.loading = false;*/
+        console.log('fail');
     })
 }

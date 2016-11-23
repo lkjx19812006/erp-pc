@@ -360,6 +360,7 @@
                                </a>
                         </td>
                         <td  v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2&&item.especial==1" @click="applyAudit($index,item.id)">
+                        
                               <a class="operate"><img src="/static/images/apply.png" height="18" width="47" alt="申请审核"/>
                                </a>
                         </td>

@@ -24,6 +24,7 @@ const _listUrl={
 	categoryList:ctx+'/category/',
 	drugList:ctx+'/drug/',
 	file:ctx+'/file/',
+	countList:local+'clientCount.json',
   loadUrl:ctx+'/file/dowanloadFile'
 };
 

@@ -138,3 +138,6 @@ export const ABSTRACT_ADD_DATA = 'ABSTRACT_ADD_DATA' //新增数据
 export const ADD_FILES_DATA = 'ADD_FILES_DATA' //新增上传文件
 export const FILES_DATA_LIST = 'FILES_DATA_LIST' //文件/资质证书列表
 
+export const MY_CLIENT_COUNT = 'MY_CLIENT_COUNT' //我的客户统计
+
+

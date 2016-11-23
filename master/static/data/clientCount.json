@@ -1,0 +1,8 @@
+{
+	"results":[
+			{"id":0,"name":"孙慧丽","type":"0","trad":"国内撮合","daycount":"0","month":"100","week":"20","total":"5000"},
+			{"id":1,"name":"于晓梅","type":"1","trad":"国内自营","daycount":"0","month":"100","week":"20","total":"5000"}
+			],
+	"msg":"success",
+	"code":200
+}

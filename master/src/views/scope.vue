@@ -1,6 +1,6 @@
 	<template>
-	<create-model :param.sync="createParam" v-if="createParam.show"></create-model>
-	<tip-model :param.sync="tipParam" v-if="tipParam.show"></tip-model>
+  	<create-model :param.sync="createParam" v-if="createParam.show"></create-model>
+  	<tip-model :param.sync="tipParam" v-if="tipParam.show"></tip-model>
 		 <div  class="myemploy" >
         <div class="order_search">
             <div class="clearfix">
