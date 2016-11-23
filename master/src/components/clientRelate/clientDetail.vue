@@ -989,8 +989,7 @@
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>{{$t('static.type')}}</label>
-                                    <input v-if="initClientDetail.type==0" type="text" class="form-control"  value="个人" disabled="disabled" />
-                                    <input v-if="initClientDetail.type==1" type="text" class="form-control"  value="企业" disabled="disabled" />
+                                    <input  type="text" class="form-control"  value="{{initClientDetail.typeDesc}}" disabled="disabled" />
                                 </div>
                             </div>
                             <div class="clearfix">

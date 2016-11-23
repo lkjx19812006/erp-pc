@@ -325,7 +325,10 @@ var locales = {
       reject:'不通过',
       applications:'提交申请',
       intl_require:'国际意向再次询价',
-      confirm_quotion:'确认报价'
+      confirm_quotion:'确认报价',
+      together:'撮合',
+      three_side:'三方',
+      self_support:'自营'
       //client
     }
   },
@@ -647,7 +650,10 @@ var locales = {
       reject:'Reject',
       applications:'Submit applications',
       intl_require:'International intention to re inquiry',
-      confirm_quotion:'Confirm quotation'
+      confirm_quotion:'Confirm quotation',
+      together:'Make a match',
+      three_side:'Three sides',
+      self_support:'Self mode'
     }
   }
 }

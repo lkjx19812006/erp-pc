@@ -51,8 +51,8 @@
                             <option value="">{{$t('static.select_payment_method')}}</option>
                             <option value="0">{{$t('static.offline')}}</option>
                             <option value="1">{{$t('static.alipay')}}</option>
-                            <option value="2">平安</option>
-                            <option value="3">药款</option>
+                            <option value="2">{{$t('static.pingan')}}</option>
+                            <option value="3">{{$t('static.yaokuan')}}</option>
                     </select>
                </dd>
             </dl>
@@ -83,9 +83,9 @@
                <dd class="left">
                      <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
                         <option value="">{{$t('static.select_trading_patterns')}}</option>
-                        <option value="1">撮合</option>
-                        <option value="2">三方</option>
-                        <option value="3">自营</option>
+                        <option value="1">{{$t('static.together')}}</option>
+                        <option value="2">{{$t('static.three_side')}}</option>
+                        <option value="3">{{$t('static.self_support')}}</option>
                     </select>
                </dd>
             </dl>

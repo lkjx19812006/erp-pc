@@ -22,10 +22,10 @@
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
                             <option value="">请选择来源</option>
-                            <option value="0">PC</option>
-                            <option value="1">安卓</option>
-                            <option value="2">微信</option>
-                            <option value="3">IOS</option>
+                            <option value="1">PC</option>
+                            <option value="2">安卓</option>
+                            <option value="3">微信</option>
+                            <option value="4">IOS</option>
                         </select>
                    </dd>
                 </dl>
@@ -138,11 +138,11 @@
                         <!--<td>{{item.qq}}</td>-->
                         <td>{{item.company}}</td>
                         <td>{{item.bizMain}}</td>
-                        <td v-if="item.source==0" style="background:red;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==1" style="background:green;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==2" style="background:blue;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==3" style="background:#444444;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==4" style="background:black;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==1" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==2" style="background:green;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==3" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==4" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
+                        <!-- <td v-if="item.source==4" style="background:#9966FF;color:#fff">{{item.sourceType}}</td> -->
                         <td v-if="!item.source" >其它</td>
                         <td>{{item.bizTypeName}}</td>
                         <td>{{item.province+item.city}}</td>

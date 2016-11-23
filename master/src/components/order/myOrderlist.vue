@@ -84,9 +84,9 @@
                <dd class="left">
                      <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
                         <option value="">{{$t('static.select_trading_patterns')}}</option>
-                        <option value="1">撮合</option>
-                        <option value="2">三方</option>
-                        <option value="3">自营</option>
+                        <option value="1">{{$t('static.together')}}</option>
+                        <option value="2">{{$t('static.three_side')}}</option>
+                        <option value="3">{{$t('static.self_support')}}</option>
                     </select>
                </dd>
             </dl>

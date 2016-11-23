@@ -81,9 +81,9 @@
                         <label>{{$t('static.trading_patterns')}}：</label>
                         <select v-model="param.mode"  class="form-control">
                             <option value="">{{$t('static.select_trading_patterns')}}</option>
-                            <option value="1">撮合</option>
-                            <option value="2">三方</option>
-                            <option value="3">自营</option>
+                            <option value="1">{{$t('static.together')}}</option>
+                            <option value="2">{{$t('static.three_side')}}</option>
+                            <option value="3">{{$t('static.self_support')}}</option>
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6" v-if="param.link=='/order/'">

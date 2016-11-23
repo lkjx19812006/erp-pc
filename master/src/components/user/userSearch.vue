@@ -21,10 +21,10 @@
                         <label>来源：</label>
                         <select type="text" class="form-control" v-model="param.source">
                             <option value="">请选择来源</option>
-                            <option value="0">PC</option>
-                            <option value="1">安卓</option>
-                            <option value="2">微信</option>
-                            <option value="3">IOS</option>
+                            <option value="1">PC</option>
+                            <option value="2">安卓</option>
+                            <option value="3">微信</option>
+                            <option value="4">IOS</option>
                         </select>
                     </div>
                     <div class="client-detailInfo  col-xs-12">

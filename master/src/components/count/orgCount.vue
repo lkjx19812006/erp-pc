@@ -78,6 +78,7 @@
 	                size: '15px',
 	                cur: 1,
 	                all: 7,
+	                origin:'部门',
 	                total:0
 	            },
 	            loadParam:{
