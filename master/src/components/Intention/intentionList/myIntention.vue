@@ -584,6 +584,7 @@ export default {
                 district:'',
                 consigneeAddr:'',
                 comments:'',
+                currency:'0',
                 sourceType:1,    //来源类型(意向)
                 orderStatus:0,   //订单状态
                 goods:[{
