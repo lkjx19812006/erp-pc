@@ -1259,7 +1259,8 @@ const mutations = {
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerUnit = data.unit;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerComment = data.comment;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerCurrency = data.currency;
-        state.basicBaseList.intlIntentionInquireList[data.lastIndex].inquire = 2;   //原材料报价后将inquire置为2
+        state.basicBaseList.intlIntentionInquireList[data.lastIndex].inquire = 2;  //原材料报价后将inquire置为2
+        /*state.basicBaseList.intlIntentionInquireList[data.lastIndex].again = 2; */ 
     },
 
     [OTHER_OFFER_DATA](state, data) { //增（改）国际意向其他报价

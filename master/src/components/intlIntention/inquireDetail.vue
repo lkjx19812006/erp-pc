@@ -427,19 +427,6 @@ export default {
                 link:'/intlIntention/itemOffer',
                 index:'',     //条目的索引
                 lastIndex:'',   //列表页询价的索引
-                /*id:'',
-                intentionId:'',
-                inquireId:'',
-                type:0,
-                currency:'',
-                itemId:'',
-                itemName:'',
-                origPrice:'',
-                price:'',
-                number:'',
-                unit:'',
-                total:'',
-                comment:''*/
                 id:'',
                 intentionId:'',
                 inquireId:'',
