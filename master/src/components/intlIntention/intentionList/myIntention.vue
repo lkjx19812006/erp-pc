@@ -32,7 +32,7 @@
                 <thead>
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
-                            <th>{{$t('static.special')}}</th>
+                            <th>{{$t('static.type')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.client_email')}}</th>
                             <th>{{$t('static.commodity_items')}}</th>
@@ -46,7 +46,7 @@
                             <th>{{$t('static.invoice')}}</th>
                             <th>{{$t('static.come_to_see_product')}}</th>
                             <th>{{$t('static.packaging')}}</th>
-                            <th>{{$t('static.international')}}</th>
+                            <!-- <th>{{$t('static.international')}}</th> -->
                             <th>{{$t('static.Number_of_inquiries')}}</th>
                             <th>{{$t('static.quotation_number')}}</th>
                             <th>{{$t('static.issued_time')}}</th>
@@ -61,7 +61,8 @@
 
                     <tr v-for="item in initIntlIntentionList" style="cursor:pointer">
                         <td>
-                            <div v-if="item.especial==0">普通</div>
+                            <div v-if="item.especial==0&&item.type==0">普通求购</div>
+                            <div v-if="item.especial==0&&item.type==1">普通供应</div>
                             <div v-if="item.especial==1&&item.type==0">紧急求购</div>
                             <div v-if="item.especial==1&&item.type==1">低价资源</div>
                         </td>
@@ -78,7 +79,7 @@
                         <td>{{item.invoic | invoicstate}}</td>
                         <td>{{item.visit | visitstate}}</td>
                         <td>{{item.pack}}</td>
-                        <td>{{item.intl | intlstata}}</td>
+                        <!-- <td>{{item.intl | intlstata}}</td> -->
                         <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime | date}}</td>

@@ -4873,12 +4873,12 @@ export const loadFile = ({ dispatch }, param) => { //查询认证信息
 /*---二期开发---*/
 /*---我的客户统计---*/
 export const getClientcount = ({ dispatch }, param) => { //获取客户统计
-    /*if(param) param.loading= true;*/
+    if(param) param.loading= true;
     /*console.log(param)*/
     Vue.http({
         method: 'GET',
-        url:apiUrl.countList,
-        /*url: apiUrl.clientList + param.link+'?countType=day',*/
+        /*url:apiUrl.countList,*/
+        url: apiUrl.clientList + param.link,
         emulateHTTP: false,
         emulateJSON: false,
         headers: {
@@ -4886,12 +4886,12 @@ export const getClientcount = ({ dispatch }, param) => { //获取客户统计
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-       /* param.loading = false;*/
+        param.loading = false;
         console.log(res.json().result)
-        var clientCount = res.data.results;
+        var clientCount = res.json().result;
         dispatch(types.MY_CLIENT_COUNT, clientCount);
     }, (res) => {
-        /*param.loading = false;*/
+        param.loading = false;
         console.log('fail');
     })
 }

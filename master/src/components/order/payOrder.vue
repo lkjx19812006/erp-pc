@@ -47,7 +47,7 @@
                         })">{{item.no }}</a></td>
           <td v-if="item.type==1">销售</td>
           <td v-if="item.type==0">采购</td>
-          <td v-if="item.sourceType==0">新建</td>
+          <td v-if="item.sourceType==0">交易员新建</td>
           <td v-if="item.sourceType==1">意向</td>
           <td v-if="item.sourceType==2">报价</td>
           <td>{{item.consignee}}</td>

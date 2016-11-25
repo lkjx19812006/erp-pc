@@ -109,9 +109,7 @@
                         <th>{{$t("static.customer_source")}}</th>
                         <th>{{$t("static.credit_rating")}}</th>
                         <th>{{$t("static.client_name")}}</th>
-                        <!-- <th>{{$t("static.classification_code")}}</th> -->
-                        <!-- <th>所属分类</th> -->
-                        <th>{{$t("static.salesman")}}</th>
+                        <!-- <th>{{$t("static.salesman")}}</th> -->
                         <th>{{$t("static.principals")}}</th>
                         <th style="min-width:120px;">{{$t("static.business_scope")}}</th>
                         <th>{{$t("static.client_phone")}}</th>
@@ -161,7 +159,7 @@
                                     <!-- 上面这个img显示新客户图标 -->
                         <!-- <td>{{item.category}}</td> -->
                         <!-- <td>{{item.classify | classify}}</td> -->
-                        <td>{{item.employeeName}}</td>
+                        <!-- <td>{{item.employeeName}}</td> -->
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
                         <td>{{item.mainPhone}}</td>
@@ -184,8 +182,8 @@
                                                 show:true,
                                                 name:item.name,
                                                 type:item.type,
-                                                typeDesc:item.type,
-                                                classifyDesc:item.classify,
+                                                typeDesc:item.typeDesc,
+                                                classifyDesc:item.classifyDesc,
                                                 classify:item.classify,
                                                 category:item.category,
                                                 principal:item.principal,

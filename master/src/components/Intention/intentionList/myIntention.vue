@@ -17,13 +17,6 @@
             <div class="right">
                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                 <button class="new_btn transfer" @click="search()">搜索</button>
-                <!-- <button class="new_btn transfer" @click="intentionAudit()">审核</button> -->
-               <!--  <button class="new_btn transfer" @click="upOrDown({
-                                                               onSell:2
-                                                             })">下架</button>
-               <button class="new_btn transfer" @click="upOrDown({
-                                                             onSell:1
-                                                           })">上架</button> -->
                 <button class="new_btn" @click="createIntention({
                        show:true,
                        selectCustomer:true,
@@ -77,10 +70,10 @@
           </div>
           <div class="clear" style="margin-top:10px;">
               <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">类型：</dt>
+                 <dt class="left transfer marg_top">意向类型：</dt>
                  <dd class="left">
                       <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                          <option value="" selected>请选择类型</option>
+                          <option value="" selected>全部</option>
                           <option value="0">求购</option>
                           <option value="1">供应</option>
                       </select>
@@ -90,7 +83,7 @@
                  <dt class="left transfer marg_top">供应类型：</dt>
                  <dd class="left">
                        <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
-                              <option value="" selected>请选择供应类型</option>
+                              <option value="" selected>全部</option>
                               <option value="0">普通供应</option>
                               <option value="1">低价资源</option>
                       </select>
@@ -100,17 +93,17 @@
                  <dt class="left transfer marg_top">求购类型：</dt>
                  <dd class="left">
                        <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
-                              <option value="" selected>请选择求购类型</option>
+                              <option value="" selected>全部</option>
                               <option value="0">普通求购</option>
                               <option value="1">紧急求购</option>
                       </select>
                  </dd>
               </dl>
               <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">是否提供发票：</dt>
+                 <dt class="left transfer marg_top">提供发票：</dt>
                  <dd class="left">
                        <select v-model="loadParam.invoic"  class="form-control" @change="selectSearch()">
-                                <option value="" selected>请选择发票</option>
+                                <option value="" selected>全部</option>
                                 <option value="0">无发票</option>
                                 <option value="1">普通发票</option>
                                 <option value="2">增值发票</option>
@@ -118,10 +111,10 @@
                  </dd>
               </dl>
               <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">选择审核状态：</dt>
+                 <dt class="left transfer marg_top">审核状态：</dt>
                  <dd class="left">
                        <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
-                          <option value="" selected>请选择审核状态</option>
+                          <option value="" selected>全部</option>
                           <option value="0">初始</option>
                           <option value="9">审核中</option>
                           <option value="1">客服审核通过</option>
@@ -133,10 +126,10 @@
                  </dd>
               </dl>
               <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">选择上架状态：</dt>
+                 <dt class="left transfer marg_top">上/下架状态：</dt>
                  <dd class="left">
                        <select v-model="loadParam.onSell"  class="form-control" @change="selectSearch()">
-                          <option value="" selected>请选择上架状态</option>
+                          <option value="" selected>全部</option>
                           <option value="0">初始</option>
                           <option value="1">申请上架</option>
                           <option value="2">上架</option>
@@ -147,16 +140,7 @@
                       </select>
                  </dd>
               </dl>
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">是否是国际信息：</dt>
-                 <dd class="left">
-                       <select v-model="loadParam.intl"  class="form-control" @change="selectSearch()">
-                          <option value="" selected>通过国际搜索</option>
-                          <option value="0">国内</option>
-                          <option value="1">国际</option>
-                      </select>
-                 </dd>
-              </dl>
+             
           </div>
         </div>
         <div class="order_table">
@@ -169,7 +153,6 @@
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
                         <th>类型</th>
-                        <th>特殊的</th>
                         <th>客户名称</th>
                         <th>客户手机号</th>
                         <th>品种名称</th>
@@ -179,21 +162,21 @@
                         <th>单价</th>
                         <th>产地</th>
                         <th>数量</th>
-                        <th>国家</th>
+                        <!-- <th>国家</th> -->
                         <th>所在省</th>
-                        <th>所在市</th>
-                        <th>所在区</th>
+                        <!-- <th>所在市</th>
+                        <th>所在区</th> -->
                         <th>交收地址</th>
-                        <th>预付比例</th>
+                        <!-- <th>预付比例</th>
                         <th>发票</th>
                         <th>上门看货</th>
                         <th>包装</th>
-                        <th>是否国际</th>
+                        <th>是否国际</th> -->
                         <th>提供样品</th>
                         <th>样品数量</th>
-                        <th>样品单位</th>
+                        <!-- <th>样品单位</th> -->
                         <th>样品价格</th>
-                        <th>报价人数</th>
+                        <!-- <th>报价人数</th> -->
                         <th>发布时间</th>
                         <th>审核状态</th>
                         <th>上下架</th>
@@ -205,9 +188,10 @@
                          <!--<td>-->
                             <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
                         <!--</td>-->
-                        <td>{{item.type | chanceType}}</td>
+                        <!-- <td>{{item.type | chanceType}}</td> -->
                         <td>
-                            <span v-if="item.especial==0">普通</span>
+                            <div v-if="item.especial==0&&item.type==0">普通求购</div>
+                            <div v-if="item.especial==0&&item.type==1">普通供应</div>
                             <span v-if="item.especial==1&&item.type==0">紧急求购</span>
                             <span v-if="item.especial==1&&item.type==1">低价资源</span>
                         </td>
@@ -258,24 +242,24 @@
                         <td>{{item.price}}</td>
                         <td>{{item.location}}</td>
                         <td>{{item.number}}</td>
-                        <td>{{item.country}}</td>
+                        <!-- <td>{{item.country}}</td> -->
                         <td>{{item.province}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.district}}</td>
+                        <!-- <td>{{item.city}}</td>
+                        <td>{{item.district}}</td> -->
                         <td>{{item.address}}</td>
-                        <td>{{item.advance}}</td>
+                        <!-- <td>{{item.advance}}</td>
                         <td>{{item.invoic | invoicstate}}</td>
                         <td>{{item.visit | visitstate}}</td>
                         <td>{{item.pack}}</td>
-                        <td>{{item.intl | intlstata}}</td>
+                        <td>{{item.intl | intlstata}}</td> -->
                         <td>
                             <div v-if="item.sampling==0">否</div>
                             <div v-if="item.sampling==1">是</div>
                         </td>
                         <td>{{item.sampleNumber}}</td>
-                        <td>{{item.sampleUnit}}</td>
+                        <!-- <td>{{item.sampleUnit}}</td> -->
                         <td>{{item.sampleAmount}}</td>
-                        <td>{{item.offerNumber}}</td>
+                        <!-- <td>{{item.offerNumber}}</td> -->
                         <td>{{item.ctime | date}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
                         <td>

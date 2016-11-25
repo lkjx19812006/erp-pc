@@ -30,7 +30,7 @@
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.order_source')}}</label>
                               <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" >
-                                  <option value="0">新建</option>
+                                  <option value="0">交易员新建</option>
                                   <option value="1">意向</option>
                                   <option value="2">报价</option> 
                               </select>

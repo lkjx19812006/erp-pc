@@ -33,10 +33,12 @@
                         <th>发布意向客户</th>
                         <th>客户手机</th>
                         <th>品种</th>
+                        <th>产地</th>
                         <th>单价</th>
                         <th>数量</th>
                         <th>总价</th>
                         <th>杂费</th>
+                        <th>杂费说明</th>
                         <th>备注</th>
                         <th>是否已采纳</th>
                         <th>操作</th>
@@ -53,10 +55,12 @@
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.breedName}}</td>
+                        <td>{{item.location}}</td>
                         <td>{{item.price}}</td>
                         <td>{{item.number}}</td>
                         <td>{{item.total}}</td>
                         <td>{{item.incidentals}}</td>
+                        <td>{{item.incidentalsDesc}}</td>
                         <td>{{item.comments}}</td>
                         <td>
                            <div v-if="item.orderTime==0">未采纳</div>

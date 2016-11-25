@@ -29,10 +29,6 @@
             <table class="table table-hover table_color table-striped " v-cloak>
                 <thead>
                     <tr>
-                        <!-- <th>
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
-                        </th> -->
-                        <!-- <th>意向ID</th>     -->
                         <th>留言会员</th>
                         <th>会员手机</th>
                         <th>发布意向客户</th>
@@ -47,10 +43,6 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initMsgList">
-                         <!-- <td>
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
-                                                 </td> -->
-                        <!-- <td>{{item.intentionId}}</td> -->
                         <td class="underline"  @click="clickOn({
                                  id:item.userId,
                                  sub:$index,
@@ -70,14 +62,6 @@
                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                            </a>
                         </td>
-                       <!--  <td @click.stop="clickShow($index)">
-                          <img height="24" width="24" src="/static/images/default_arrow.png" />
-                          <div class="component_action" v-show="item.show">
-                              <ul>
-                                  <li @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments">编辑</li>
-                              </ul>
-                          </div>
-                                              </td> -->
                     </tr>
                 </tbody>
             </table>

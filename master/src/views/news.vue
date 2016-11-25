@@ -21,7 +21,7 @@
                    <dt class="left transfer marg_top">来源：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
-                            <option value="">请选择来源</option>
+                            <option value="">全部</option>
                             <option value="1">PC</option>
                             <option value="2">安卓</option>
                             <option value="3">微信</option>
@@ -33,7 +33,7 @@
                    <dt class="left transfer marg_top">经营类型：</dt>
                    <dd class="left">
                          <select v-model="loadParam.bizType"  class="form-control" @change="selectSearch()">
-                                  <option value="" selected>请选择经营类型</option>
+                                  <option value="" selected>全部</option>
                                   <option value="0">其它</option>
                                   <option value="1">合作社</option>
                                   <option value="2">药商</option>
@@ -65,7 +65,7 @@
                    <dt class="left transfer marg_top">审核状态：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.audit" @change="selectSearch()">
-                            <option value="">请选择审核状态</option>
+                            <option value="">全部</option>
                             <option value="0">待审核</option>
                             <option value="1">审核中</option>
                             <option value="2">审核通过</option>
@@ -77,7 +77,7 @@
                    <dt class="left transfer marg_top">划转状态：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.transform" @change="selectSearch()">
-                            <option value="">请选择划转状态</option>
+                            <option value="">全部</option>
                             <option value="0">待划转</option>
                             <option value="1">已划转</option>
                             <option value="2">转黑</option>
