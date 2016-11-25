@@ -50,7 +50,7 @@
                             <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
                         <!--</td>-->
                         <td>{{item.inquireType}}</td>
-                        <td><a @click="clickOn(item.intentionId,item.id,$index)">{{item.names}}</a></td>
+                        <td><a class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.names}}</a></td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
