@@ -41,8 +41,8 @@
                            <dd class="left">
                                  <select v-model="loadParam.classify"  class="form-control" @change="selectSearch()">
                                     <option value="" selected>请选择分类</option>
-                                    <option value="1">买</option>
-                                    <option value="2">卖</option>
+                                    <option value="1">采购商</option>
+                                    <option value="2">供应商</option>
                                     <option value="3">买卖</option>
                                 </select>
                            </dd>
@@ -75,7 +75,7 @@
                         <th>客户来源</th>
                         <th>客户信用等级</th>
                         <th>客户名称</th>
-                        <th>分类码</th>
+                        <!-- <th>分类码</th> -->
                         <!-- <th>所属分类</th> -->
                         <th>所属业务员</th>
                         <th>负责人</th>
@@ -83,7 +83,7 @@
                         <th>手机</th>
                         <th>手机省</th>
                         <th>手机市</th>
-                        <th>邮箱</th>
+                        <!-- <th>邮箱</th> -->
                         <th>国家</th>
                         <th>所在省</th>
                         <th>所在市</th>
@@ -91,7 +91,7 @@
                         <th>创建时间</th>
                         <th>是否供应商</th>
                         <th style="min-width:200px">备注</th>
-                        <th colspan="2">操作</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -103,8 +103,12 @@
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
                         <td>{{item.typeDesc}}</td>
-                        <td>{{item.classify | classify}}</td>
-                        <td>{{item.sourceType}}</td>
+                        <td>{{item.classifyDesc | classify}}</td>
+                        <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='android'" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='ios'" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType!='pc'&&item.sourceType!='weixin'&&item.sourceType!='android'&&item.sourceType!='ios'" style="background:#fa6705;color:#fff">{{item.sourceType}}</td> 
                         <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
                         <td v-if="item.creditLevel==1">一星客户</td>
                         <td v-if="item.creditLevel==2">二星客户</td>
@@ -120,7 +124,7 @@
                                 key:'customerList'
                                 })"><!-- <img src="/static/images/newClient2.png" style='float:left;' v-if='item.status==0' /> -->{{item.name}}</td>
                                     <!-- 上面这个img显示新客户图标 -->
-                        <td>{{item.category}}</td>
+                        <!-- <td>{{item.category}}</td> -->
                         <!-- <td>{{item.classify | classify}}</td> -->
                         <td>{{item.employeeName}}</td>
                         <td>{{item.principal}}</td>
@@ -128,7 +132,7 @@
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}</td>
                         <td>{{item.phoneCity}}</td>
-                        <td>{{item.email}}</td>
+                        <!-- <td>{{item.email}}</td> -->
                         <td>{{item.countryName | country}}</td>
                         <td>{{item.provinceName}}</td>
                         <td>{{item.cityName}}</td>

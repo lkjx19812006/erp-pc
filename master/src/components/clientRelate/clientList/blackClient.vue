@@ -22,7 +22,7 @@
           <th>客户来源</th>
           <th>客户信用等级</th>
           <th>客户名称</th>
-          <th>分类码</th>
+          <!-- <th>分类码</th> -->
           <!-- <th>所属分类</th> -->
           <th>所属业务员</th>
           <th>负责人</th>
@@ -30,7 +30,7 @@
           <th>手机</th>
           <th>手机省</th>
           <th>手机市</th>
-          <th>邮箱</th>
+          <!-- <th>邮箱</th> -->
           <th>国家</th>
           <th>所在省</th>
           <th>所在市</th>
@@ -67,7 +67,7 @@
                                 key:'customerList'
                                 })">{{item.name}}</td>
           <!-- 上面这个img显示新客户图标 -->
-          <td>{{item.category}}</td>
+          <!-- <td>{{item.category}}</td> -->
           <!-- <td>{{item.classify | classify}}</td> -->
           <td>{{item.employeeName}}</td>
           <td>{{item.principal}}</td>
@@ -75,7 +75,7 @@
           <td>{{item.mainPhone}}</td>
           <td>{{item.phoneProvince}}</td>
           <td>{{item.phoneCity}}</td>
-          <td>{{item.email}}</td>
+          <!-- <td>{{item.email}}</td> -->
           <td>{{item.countryName | country}}</td>
           <td>{{item.provinceName}}</td>
           <td>{{item.cityName}}</td>

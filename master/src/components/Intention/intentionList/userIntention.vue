@@ -150,6 +150,8 @@
                          <td>
                             <label v-if="item.validate==0||item.validate==9" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" >
                             </label>
+                            <!-- <label v-else >—
+                            </label> -->
                         </td>
                         <td>{{item.type | chanceType}}</td>
                         <td>
@@ -650,9 +652,7 @@ export default {
   .edit-model {
     padding: 10px 30px 80px 30px;
   }
-.base_pagination{
-  margin-bottom:250px;
-}
+
 .breed_action {
     top: 33px;
     right: 106px;

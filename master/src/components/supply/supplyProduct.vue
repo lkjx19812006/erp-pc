@@ -89,7 +89,7 @@
               <th>数量（库存）</th>
               <th>价格</th>
               <th>单位</th>
-              <th>检测报告</th>
+              <!-- <th>检测报告</th> -->
               <th>创建时间</th>
               <th>价格过期时间</th>
               <th>备注</th>
@@ -122,7 +122,7 @@
           <td>{{item.number}}</td>
           <td>{{item.price}}</td>
           <td>{{item.unit}}</td>
-          <td>{{item.coa | coa}}</td>
+          <!-- <td>{{item.coa | coa}}</td> -->
           <td>{{item.ctime}}</td>
           <td>{{item.duedate}}</td>
           <td>{{item.comments}}</td>
@@ -143,6 +143,7 @@
                    price:item.price,
                    unit:item.unit,
                    duedate:item.duedate,
+                   comments:item.comments,
                    image_f:'',
                    image_s:'',
                    image_t:'',

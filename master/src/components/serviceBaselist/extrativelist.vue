@@ -28,18 +28,8 @@
                     <th>联系人</th>
                     <th>联系方式</th>
                     <th>公司名称</th>
-                    <th>email</th>
+                    <th>邮箱</th>
                     <th>主要成分</th>
-                </tr>
-            </thead>
-            <thead class="space">
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>

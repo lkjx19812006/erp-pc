@@ -2664,6 +2664,7 @@ export const updateProduct = ({ dispatch }, param) => { //修改供应商产品
         unit: param.unit,
         duedate: param.duedate,
         coa: param.coa,
+        comments:param.comments,
         cid: param.cid,
         id: param.id
     }
@@ -4871,12 +4872,13 @@ export const loadFile = ({ dispatch }, param) => { //查询认证信息
 
 /*---二期开发---*/
 /*---我的客户统计---*/
-export const getClientcount = ({ dispatch }, initClientcount) => { //获取客户统计
-    if(initClientcount) initClientcount.loading= true;
+export const getClientcount = ({ dispatch }, param) => { //获取客户统计
+    /*if(param) param.loading= true;*/
+    /*console.log(param)*/
     Vue.http({
         method: 'GET',
         url:apiUrl.countList,
-        /*url: apiUrl.clientList + param.url + '?page=' + param.cur +'&pageSize=15',*/
+        /*url: apiUrl.clientList + param.link+'?countType=day',*/
         emulateHTTP: false,
         emulateJSON: false,
         headers: {
@@ -4884,11 +4886,12 @@ export const getClientcount = ({ dispatch }, initClientcount) => { //获取客�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        /*initClientcount.loading = false;*/
-        console.log(res.data.results)
-        dispatch(types.MY_CLIENT_COUNT, res.data.results);
+       /* param.loading = false;*/
+        console.log(res.json().result)
+        var clientCount = res.data.results;
+        dispatch(types.MY_CLIENT_COUNT, clientCount);
     }, (res) => {
-        /*initClientcount.loading = false;*/
+        /*param.loading = false;*/
         console.log('fail');
     })
 }

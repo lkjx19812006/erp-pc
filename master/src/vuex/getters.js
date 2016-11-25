@@ -228,7 +228,6 @@ export const initSupply = (state) => {
 
 /*---我的客户统计---*/
 export const initClientcount = (state) => {
-  console.log(state.count.countList)
-  console.log(JSON.parse(JSON.stringify(state.count.countList)))
+    console.log(state.count)
   return JSON.parse(JSON.stringify(state.count.countList));
 }

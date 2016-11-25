@@ -49,7 +49,7 @@
             <td>{{item.bizType}}</td>
             <!--<td v-if="item.bizType!='product_license'">客户文件</td>-->
              <td>
-                    <img v-bind:src="item.url" v-if="item.fileType=='image'"  width="200" @click="clickBig(item.url)"/>
+                    <img v-bind:src="item.url" v-if="item.fileType=='image'"  style="max-width: 150px" @click="clickBig(item.url)"/>
                     <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
                     <img  src="/static/images/word.png" v-if="item.fileType=='word'">
                     <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">

@@ -28,8 +28,8 @@
                     <td>{{item.cname}}</td>
                     <td>{{item.remark}}</td>
                     <td>{{item.utime}}</td>
-                    <td  @click="editData(item,$index)">
-                      <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                    <td>
+                      <a class="operate" @click="editData(item,$index)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                       </a>
                       <!-- <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
                        <div class="component_action" v-show='item.show' transition="expand">
@@ -38,9 +38,7 @@
                              <li @click="showConfirm(item,$index)">删除</li>
                           </ul>
                         </div> -->
-                    </td>
-                    <td  @click="showConfirm(item,$index)">
-                      <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
+                      <a class="operate"  @click="showConfirm(item,$index)"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                       </a>
                     </td>
                   </tr>

@@ -243,11 +243,11 @@ Vue.filter('customerType', function(val){ //客户类型
 })
 Vue.filter('classify', function(val){ //客户分类
 	var val = val;
-	if(val==1){
+	if(val=='买'){
 		 return '采购商';
-	}else if(val==2){
+	}else if(val=='卖'){
 		 return '供应商';
-	}else if(val==3){
+	}else if(val=='买卖'){
 		return '买卖';
 	}else{
 		return val;

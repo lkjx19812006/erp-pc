@@ -796,9 +796,7 @@ export default {
 }
 </script>
 <style scoped>
-.base_pagination{
-  margin-bottom:250px;
-}
+
 .breed_action {
     top: 33px;
     right: 106px;

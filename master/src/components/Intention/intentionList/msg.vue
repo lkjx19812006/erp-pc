@@ -197,15 +197,8 @@ export default {
 .service-nav {
     padding: 15px 30px 0 40px;
 }
-.order_table{
-    margin-top:-4px;
-}
 .my_enterprise{
     padding:6px;
-}
-.breed_action {
-    top: 33px;
-    right: 106px;
 }
 .transfer{
     margin-left: 18px;
@@ -232,5 +225,6 @@ export default {
     text-align: center;
     background-position: 5px;
 }
+
 </style>
 

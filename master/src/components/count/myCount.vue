@@ -13,30 +13,26 @@
         <table class="table table-hover table_color table-striped " v-cloak>
             <thead>
                 <tr>
-                    <th>客户类型</th>
-                    <th>客户星级</th>
-                    <th>交易模式</th>
-                    <th>新增用户数</th>
-                    <th>复购用户数</th>
+                    <th>统计方式</th>
                     <th>日期</th>
                     <th>总数</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="item in initClientcount">
-                	<td>{{item.type}}</td>
-                	<td>{{item.name}}</td>
-                	<td>{{item.trad}}</td>
-                	<td>{{item.month}}</td>
-                	<td>{{item.week}}</td>
-                	<td></td>
-                	<td>{{item.total}}</td>
+                	<td>{{item.name }}</td>
+                	<td>{{item.date}}</td>
+                	<td>{{item.count}}</td>
                 </tr>
             </tbody>
         </table>
-    </div>
-    <div class="base_pagination">
-        <pagination :combination="loadParam"></pagination>
+        <div class="module clearfix">
+        	<div class="col-md-4 module_table">
+        			
+        	</div>
+        	<div class="col-md-4 module_table"></div>
+        	<div class="col-md-4 module_table"></div>
+        </div>
     </div>
 </template>
 <script>
@@ -62,8 +58,26 @@
 	                size: '15px',
 	                cur: 1,
 	                all: 7,
-	                total:0
-	            },
+	                total:0,
+	                link:'/count/getCustomerAdd',
+	                dayType:{
+	                	countType:"day",
+	                	date:''
+	                },
+	                weekType:{
+	                	countType:"week",
+	                	date:''
+	                },
+	                monthType:{
+	                	countType:"month",
+	                	date:''
+	                },
+	                yearType:{
+	                	countType:"year",
+	                	date:''
+	                },
+	            }
+
 	        }
 	    },
 	    methods:{
@@ -92,5 +106,11 @@
 	}
 </script>
 <style scoped>
-	
+	.module{
+		border: 1px solid red;
+	}
+	.module_table{
+		border: 1px solid #ddd;
+		max-height:500px; 
+	}
 </style>

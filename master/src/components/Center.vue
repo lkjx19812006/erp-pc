@@ -19,7 +19,7 @@ export default {
 </script>
 <style scoped>
 .center {
-    height: calc(100% - 130px);
+    height: calc(100% - 70px);
     position: absolute;
     right: 0;
     top: 70px;

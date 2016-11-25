@@ -159,27 +159,23 @@
               </dl>
           </div>
         </div>
-        <div class="service-nav clearfix">
-            <div class="my_order_search">
-
-           </div>
-        </div>
         <div class="order_table">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
+            
             <table class="table table-hover table_color table-striped " v-cloak>
-                <thead>
+              <thead>
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
                         <th>类型</th>
-      	            		<th>特殊的</th>
-      	            		<th>客户名称</th>
-      	            		<th>客户手机号</th>
-      	            		<th>品种名称</th>
-      	            		<th>资格资质</th>
-      	            		<th>规格</th>
-      	            		<th>单位</th>
+                        <th>特殊的</th>
+                        <th>客户名称</th>
+                        <th>客户手机号</th>
+                        <th>品种名称</th>
+                        <th>资格资质</th>
+                        <th>规格</th>
+                        <th>单位</th>
                         <th>单价</th>
                         <th>产地</th>
                         <th>数量</th>
@@ -187,34 +183,33 @@
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>所在区</th>
-	            		      <th>交收地址</th>
-      	            		<th>预付比例</th>
-      	            		<th>发票</th>
-      	            		<th>上门看货</th>
-      	            		<th>包装</th>
-      	            		<th>是否国际</th>
-      	            		<th>提供样品</th>
-      	            		<th>样品数量</th>
-      	            		<th>样品单位</th>
-      	            		<th>样品价格</th>
-      	            		<th>报价人数</th>
+                        <th>交收地址</th>
+                        <th>预付比例</th>
+                        <th>发票</th>
+                        <th>上门看货</th>
+                        <th>包装</th>
+                        <th>是否国际</th>
+                        <th>提供样品</th>
+                        <th>样品数量</th>
+                        <th>样品单位</th>
+                        <th>样品价格</th>
+                        <th>报价人数</th>
                         <th>发布时间</th>
-      	            		<th>审核状态</th>
+                        <th>审核状态</th>
                         <th>上下架</th>
-      	            		<th colspan="4">操作</th>
+                        <th colspan="4">操作</th>
                     </tr>
                 </thead>
                 <tbody>
-
                     <tr v-for="item in initIntentionList">
                          <!--<td>-->
                             <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
                         <!--</td>-->
                         <td>{{item.type | chanceType}}</td>
                         <td>
-                            <div v-if="item.especial==0">普通</div>
-                            <div v-if="item.especial==1&&item.type==0">紧急求购</div>
-                            <div v-if="item.especial==1&&item.type==1">低价资源</div>
+                            <span v-if="item.especial==0">普通</span>
+                            <span v-if="item.especial==1&&item.type==0">紧急求购</span>
+                            <span v-if="item.especial==1&&item.type==1">低价资源</span>
                         </td>
 
                         <td class="underline" @click.stop="detailClick({
@@ -376,90 +371,15 @@
                               <a class="operate"><img src="/static/images/adopt.png" height="18" width="47" alt="生成订单"/>
                                </a>
                         </td>
-                        <!-- <td @click.stop="eventClick($index)">
-                           <img height="24" width="24" src="/static/images/default_arrow.png" />
-                           <div class="component_action" v-show="item.show">
-                               <ul>
-                                   <li @click="modifyIntention({
-                                              id:item.id,
-                                              ub:$index,
-                                              selectCustomer:false,
-                                              flag:1,
-                                              show:true,
-                                              loading:true,
-                                              title:'编辑',
-                                              customerName:item.customerName,
-                                              customerPhone:item.customerPhone,
-                                              breedName:item.breedName,
-                                              breedId:item.breedId,
-                                                                      type:item.type,
-                                                                      especial:item.especial,
-                                                                      quality:item.quality,
-                                                                      qualification:item.qualification,
-                                                                      spec:item.spec,
-                                                                      number:item.number,
-                                                                      unit:item.unit,
-                                                                      price:item.price,
-                                                                      address:item.address,
-                                                                      location:item.location,
-                                                                      advance:item.advance,
-                                                                      invoic:item.invoic,
-                                                                      visit:item.visit,
-                                                                      pack:item.pack,
-                                                                      intl:item.intl,
-                                                                      visit:item.visit,
-                                              ctime:item.ctime,
-                                                                      sampling:item.sampling,
-                                                                      sampleNumber:item.sampleNumber,
-                                                                      sampleUnit:item.sampleUnit,
-                                                                      sampleAmount:item.sampleAmount,
-                                                                      offer:item.offer,
-                                                                      status:item.status,
-                                               country:item.country,
-                                               province:item.province,
-                                               city:item.city,
-                                               district:item.district,
-                                               address:item.address,
-                                               validate:item.validate,
-                                               link:editintentInfo,
-                                               url:'/intention/',
-                                               key:'intentionList',
-                                               image_f:'',
-                                               image_s:'',
-                                               image_t:'',
-                                               image_f_show:'',
-                                               image_s_show:'',
-                                               image_t_show:'',
-                                               duedate:item.duedate
-                                               })">编辑</li>
-                                   <li @click="specDelete({
-                                               id:item.id,
-                                               sub:$index,
-                                               show:true,
-                                               name:item.name,
-                                               title:'意向',
-                                               link:deleteInfo,
-                                               url:'/intention/',
-                                               key:'intentionList'
-                                               })">删除</li>
-                                   <li v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)">上架</li>
-                                   <li v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2&&item.especial==1" @click="applyAudit($index,item.id)">申请审核</li >
-                                   <li v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click="up($index,item.id,4)">下架</li>
-                                   <li v-if="(item.onSell==-4||item.onSell==2)&&item.type==1&&item.especial==1" @click="up($index,item.id,3)">申请下架</li >
-                        
-                               </ul>
-                           </div>
-                                               </td> -->
-
-                    </tr>
-
-                </tbody>
+                      </tr>
+                      
+                </tbody> 
             </table>
-
+            <div class="base_pagination">
+                <pagination :combination="loadParam"></pagination>
+            </div>
         </div>
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
+       
     </div>
 </template>
 <script>
@@ -875,11 +795,12 @@ export default {
     },
     filter: (filter,{})
 }
+
 </script>
 <style scoped>
-.base_pagination{
-  margin-bottom:250px;
-}
+  .edit-model {
+    padding: 10px 30px 80px 30px;
+  }
 .breed_action {
     top: 33px;
     right: 106px;
@@ -909,6 +830,74 @@ export default {
     text-align: center;
     background-position: 5px;
 }
+
+.order_table{
+  overflow: hidden;
+}
+      .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+          border-bottom: 1px solid #ddd; 
+          font-size: 12px;
+          position: relative;
+          text-align: center;
+          vertical-align: middle;
+          display: inline-block;
+          border: none;
+          width:70px;
+          min-width:70px;
+      }
+      .table>thead {
+           /* display: block;
+          z-index: 10;
+          width:100%;*/
+        }
+      .table>thead tr{
+          width: 100%;
+          display: block;
+           white-space: nowrap;
+      }
+      .table > tbody {
+         display:block; 
+         max-height:840px;
+         position: relative;
+         overflow-y: auto;
+         overflow-x: scroll;
+         /*padding-bottom: 50px;*/
+      }
+      .table-hover > tbody > tr:hover {
+          background-color: #99CCFF;
+      }
+      
+      .table_color {
+          background-color: #fff;
+      }
+      
+      .table_color>thead>tr {
+          background-color: #004796;
+          color: #fff;
+      }
+      
+      .table {
+          margin-bottom:0px;
+          position: relative;
+          overflow-x:scroll;
+      }
+      
+      .table>thead>tr>th {
+          border-bottom: 0;
+          font-weight: 100;
+      }
+      
+      .table>tbody>tr {
+          position: relative;
+          display: block;
+      }
+      
+      .table>tbody>tr>td {
+          /*max-width: 300px;*/
+          white-space: normal;
+          word-wrap: break-word;
+      }
+    
 
 </style>
 

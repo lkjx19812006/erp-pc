@@ -60,11 +60,6 @@
                         <th colspan="2">操作</th>
                     </tr>
                 </thead>
-                <thead class="space">
-                    <tr>
-                        <th colspan="14"></th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr v-for="item in initEnterpriselist">
                         <td>{{item.category | categorystate}}</td>

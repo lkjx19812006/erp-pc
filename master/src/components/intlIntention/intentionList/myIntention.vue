@@ -51,7 +51,7 @@
                             <th>{{$t('static.quotation_number')}}</th>
                             <th>{{$t('static.issued_time')}}</th>
                             <th>{{$t('static.review_status')}}</th>
-                            <th>{{$t('static.description')}}</th>
+                            <!-- <th>{{$t('static.description')}}</th> -->
                             <th>{{$t('static.inquiry_state')}}</th>
                             <th>{{$t('static.inquiry_type')}}</th>
                             <th colspan="5">{{$t('static.handle')}}</th>
@@ -83,7 +83,7 @@
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime | date}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
-                        <td>{{item.description}}</td>
+                        <!-- <td>{{item.description}}</td> -->
                         <td>{{item.inquire | inquire}}</td>
                         <td>{{item.inquireType}}</td>
                         <td>

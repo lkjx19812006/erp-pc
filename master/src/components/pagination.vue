@@ -25,7 +25,7 @@
 
 <style>
   .pagination{
-    margin-bottom: 5px;
+    margin-bottom:5px;
   }
 </style>
 <script>

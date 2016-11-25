@@ -18,15 +18,6 @@
                           <th>ISO编码</th>
                       </tr>
                   </thead>
-                  <thead class="space">
-                      <tr>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                          <th></th>
-                      </tr>
-                  </thead>
                   <tbody>
                       <tr v-for="item in initProvincelist" v-cloak>
                           <td>{{item.twoNumber | numberstate}}</td>

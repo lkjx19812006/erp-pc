@@ -15,8 +15,6 @@ const state = {
 }
 const mutations = {
     [MY_CLIENT_COUNT](state, data) { //我的客户统计
-        console.log("hihihi");
-        console.log(data);
       console.log(state.countList)
       state.countList = data;
     },

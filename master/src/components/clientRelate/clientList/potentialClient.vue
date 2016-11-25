@@ -38,7 +38,7 @@
                         <th>客户来源</th>
                         <th>客户信用等级</th>
                         <th>客户名称</th>
-                        <th>分类码</th>
+                        <!-- <th>分类码</th> -->
                         <!-- <th>所属分类</th> -->
                         <th>所属业务员</th>
                         <th>负责人</th>
@@ -46,7 +46,7 @@
                         <th>手机</th>
                         <th>手机省</th>
                         <th>手机市</th>
-                        <th>邮 箱</th>
+                        <!-- <th>邮 箱</th> -->
                         <th>国 家</th>
                         <th>所在省</th>
                         <th>所在市</th>
@@ -83,7 +83,7 @@
                                 key:'customerList'
                                 })">{{item.name}}</td>
                                     <!-- 上面这个img显示新客户图标 -->
-                        <td>{{item.category}}</td>
+                        <!-- <td>{{item.category}}</td> -->
                         <!-- <td>{{item.classify | classify}}</td> -->
                         <td>{{item.employeeName}}</td>
                         <td>{{item.principal}}</td>
@@ -91,7 +91,7 @@
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}</td>
                         <td>{{item.phoneCity}}</td>
-                        <td>{{item.email}}</td>
+                        <!-- <td>{{item.email}}</td> -->
                         <td>{{item.countryName | country}}</td>
                         <td>{{item.provinceName}}</td>
                         <td>{{item.cityName}}</td>
@@ -135,19 +135,6 @@
                             <a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" height="18" width="30"/>
                             </a>
                         </td>
-                        <!-- <td  @click="specDelete({
-                                                id:item.id,
-                                                sub:$index,
-                                                show:true,
-                                                name:item.name,
-                                                title:'客户',
-                                                link:deleteInfo,
-                                                url:'/customer/',
-                                                key:'customerList'
-                                                })">
-                            <a class="operate"><img src="/static/images/del.png" height="18" width="30"/>
-                            </a>
-                        </td> -->
                        <!--  <td @click.stop="eventClick($index)">
                            <img height="24" width="24" src="/static/images/default_arrow.png" />
                            <div class="component_action" v-show="item.show">

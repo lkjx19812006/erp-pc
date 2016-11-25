@@ -60,7 +60,7 @@
           <th>客户来源</th>
           <th>客户信用等级</th>
           <th>名称</th>
-          <th>分类码</th>
+          <!-- <th>分类码</th> -->
           <!-- <th>所属分类</th> -->
           <th>所属业务员</th>
           <th>负责人</th>
@@ -68,7 +68,7 @@
           <th>手机</th>
           <th>手机省</th>
           <th>手机市</th>
-          <th>邮箱</th>
+          <!-- <th>邮箱</th> -->
           <th>国家</th>
           <th>所在省</th>
           <th>所在市</th>
@@ -82,9 +82,13 @@
 
         </tr>
         <tr v-for="item in initCustomerlist">
-          <td>{{item.type | customerType}}</td>
-          <td>{{item.classify | classify}}</td>
-          <td>{{item.sourceType}}</td>
+          <td>{{item.typeDesc}}</td>
+          <td>{{item.classifyDesc | classify}}</td>
+          <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='android'" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='ios'" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType!='pc'&&item.sourceType!='weixin'&&item.sourceType!='android'&&item.sourceType!='ios'" style="background:#fa6705;color:#fff">{{item.sourceType}}</td> 
           <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
           <td v-if="item.creditLevel==1">一星客户</td>
           <td v-if="item.creditLevel==2">二星客户</td>
@@ -99,7 +103,7 @@
                                 key:'customerList'
                                 })"><!-- <img src="/static/images/compact.png" style='float:left;' /> -->{{item.name}}</td>
           <!-- 上面这个img显示新客户图标 -->
-          <td>{{item.category}}</td>
+          <!-- <td>{{item.category}}</td> -->
           <!-- <td>{{item.classify | classify}}</td> -->
           <td>{{item.employeeName}}</td>
           <td>{{item.principal}}</td>
@@ -107,7 +111,7 @@
           <td>{{item.mainPhone}}</td>
           <td>{{item.phoneProvince}}</td>
           <td>{{item.phoneCity}}</td>
-          <td>{{item.email}}</td>
+          <!-- <td>{{item.email}}</td> -->
           <td>{{item.countryName }}</td>
           <td>{{item.provinceName}}</td>
           <td>{{item.cityName}}</td>

@@ -43,11 +43,6 @@
                         <th>操作</th>
                     </tr>
                 </thead>
-                <thead class="space">
-                    <tr>
-                        <th colspan="7"></th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr v-for="item in initBreedlist">
                         <td>{{item.code | breedcode}}</td>

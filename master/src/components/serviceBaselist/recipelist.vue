@@ -19,25 +19,16 @@
             <table class="table table-hover table_color table-striped" v-cloak>
                 <thead>
                     <tr>
-                        <th>编 码</th>
+                        <!-- <th>编 码</th> -->
                         <th>药品名称</th>
                         <th>品种名称</th>
                         <th>含 量</th>
                         <th>单 位</th>
                     </tr>
                 </thead>
-                <thead class="space">
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr v-for="item in initConponentlist">
-                        <td>{{item.code | codestate}}</td>
+                        <!-- <td>{{item.code | codestate}}</td> -->
                         <td class="underline" @click="clickRecipe({
                             id:item.id,
                             code:item.code,

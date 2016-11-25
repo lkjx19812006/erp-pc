@@ -57,7 +57,7 @@
               <td>{{item.fileType}}</td>
               <td>{{item.bizType}}</td>
               <td>
-                    <img  :src="item.url" v-if="item.fileType=='image'" width="200"  @click="clickBig(item.url)"/>
+                    <img  :src="item.url" v-if="item.fileType=='image'" style="max-width: 150px" @click="clickBig(item.url)"/>
                     <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf'">
                     <img  src="/static/images/word.png" v-if="item.fileType=='word'">
                     <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
