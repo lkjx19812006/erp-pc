@@ -124,6 +124,7 @@ export default {
                 breedName:'',
                 spec:'',
                 fullname:'',
+                userPhone:'',
                 startTime:'',
                 endTime:'',
                 total:0

@@ -3219,6 +3219,9 @@ export const getOfferList = ({ dispatch }, param) => { //报价信息列表以�
     if ('breedName' in param && param.breedName !== '') {
         url += '&breedName=' + param.breedName
     }
+    if ('userPhone' in param && param.userPhone !== '') {
+        url += '&userPhone=' + param.userPhone
+    }
     if ('spec' in param && param.spec !== '') {
         url += '&spec=' + param.spec
     }
@@ -4878,7 +4881,7 @@ export const getClientcount = ({ dispatch }, param) => { //获取客户统计
     Vue.http({
         method: 'GET',
         /*url:apiUrl.countList,*/
-        url: apiUrl.clientList + param.link,
+        url: apiUrl.clientList + param.link+'?role=emp',
         emulateHTTP: false,
         emulateJSON: false,
         headers: {

@@ -30,7 +30,7 @@
             <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
                <dd class="left">
-                     <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
+                     <select    v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
                             <option value="">{{$t('static.please_select')}}</option>
                             <option value="0">{{$t('static.order_generation')}}</option>
                             <!-- <option value="10">{{$t('static.pending')}}</option> -->
