@@ -11,11 +11,11 @@
         </div> -->
       </div>
     </div>
-    <div class="order_table">
+    <div class="order_table" id="table_box">
       <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
       </div>
-      <table class="table table-hover table_color table-striped " v-cloak>
+      <table class="table table-hover table_color table-striped " v-cloak id="tab">
         <thead>
         <tr>
           <th>{{$t('static.order_no')}}</th>
@@ -103,6 +103,7 @@
   import searchModel from '../order/orderSearch'
   import disposeModel  from  '../order/orderStatus'
   import filter from '../../filters/filters'
+  import common from '../../common/common'
   import {
     getList,
     initOrderlist
@@ -220,6 +221,9 @@
       }
     },
     filter:(filter,{}),
+    ready(){
+      common('tab','table_box',1);
+    },
     events: {
       fresh: function(input) {
         this.loadParam.cur = input;

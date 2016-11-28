@@ -6,7 +6,6 @@
         </div>
         <div class="edit-content">
             <h3>匹配{{param.typeName}}信息</h3>
-
         </div>
         <div>
           <div class="cover_loading">
@@ -77,8 +76,6 @@
                           <div>{{item.onSell | onsell}}</div>
                         </td>
                     </tr>
-
-
                 </tbody>
           </table>
         </div>
@@ -148,18 +145,6 @@ export default {
 }
 .top-title span {
     font-size: 28px;
-}
-
-.edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
 }
 
 .edit-model {

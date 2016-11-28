@@ -40,7 +40,7 @@
                            <dt class="left transfer marg_top">客户分类：</dt>
                            <dd class="left">
                                  <select v-model="loadParam.classify"  class="form-control" @change="selectSearch()">
-                                    <option value="" selected>请选择分类</option>
+                                    <option value="" selected>全部</option>
                                     <option value="1">采购商</option>
                                     <option value="2">供应商</option>
                                     <option value="3">买卖</option>
@@ -51,7 +51,7 @@
                            <dt class="left transfer marg_top">客户信用等级：</dt>
                            <dd class="left">
                                  <select v-model="loadParam.creditLevel"  class="form-control" @change="selectSearch()">
-                                  <option value="" selected>请选择等级</option>
+                                  <option value="" selected>全部</option>
                                   <option value="0">暂无等级</option>
                                   <option value="1">一星客户</option>
                                   <option value="2">二星客户</option>
@@ -61,11 +61,11 @@
                         </dl>
             </div>
         </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table  data-toggle="table" data-height="268"  class="table table-hover table_color table-striped " v-cloak>
+            <table  data-toggle="table"   class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                         <th>
@@ -176,19 +176,6 @@
                             <a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" height="18" width="30"/>
                             </a>
                         </td>
-                        <!-- <td  @click="specDelete({
-                                                id:item.id,
-                                                sub:$index,
-                                                show:true,
-                                                name:item.name,
-                                                title:'客户',
-                                                link:deleteInfo,
-                                                url:'/customer/',
-                                                key:'customerList'
-                                                })">
-                            <a class="operate"><img src="/static/images/del.png" height="18" width="30"/>
-                            </a>
-                        </td> -->
                     </tr>
                 </tbody>
             </table>
@@ -209,6 +196,7 @@ import transferModel   from '../../../components/user/employeeOrOrg'
 import tipsdialogModel  from '../../../components/tips/tipDialog'
 import searchModel  from  '../../../components/clientRelate/searchModel'
 import auditDialog from '../../../components/tips/auditDialog'
+import common from '../../../common/common'
 import {
     initCustomerlist
 } from '../../../vuex/getters'
@@ -479,6 +467,9 @@ export default {
     },
     created() {
         this.getClientList(this.loadParam);
+    },
+    ready(){
+      common('tab','table_box',1);
     }
 }
 </script>

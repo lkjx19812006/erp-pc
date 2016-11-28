@@ -1451,6 +1451,7 @@ section article {
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
 	text-align: center;
+  width: 10%;
 }
 .edit-detail {
     border: 1px solid #ddd;

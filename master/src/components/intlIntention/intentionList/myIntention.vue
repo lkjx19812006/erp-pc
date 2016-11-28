@@ -19,16 +19,11 @@
                 <button class="new_btn" @click="createIntention()">{{$t('static.new')}}</button>
             </div>
         </div>
-        <div class="service-nav clearfix">
-            <div class="my_order_search">
-
-           </div>
-        </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
@@ -54,7 +49,7 @@
                             <!-- <th>{{$t('static.description')}}</th> -->
                             <th>{{$t('static.inquiry_state')}}</th>
                             <th>{{$t('static.inquiry_type')}}</th>
-                            <th colspan="5">{{$t('static.handle')}}</th>
+                            <th style="min-width: 310px;">{{$t('static.handle')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -88,7 +83,6 @@
                         <td>{{item.inquire | inquire}}</td>
                         <td>{{item.inquireType}}</td>
                         <td>
-
                             <div style="display:inline-block;margin-right:7px" @click="deleteIntention({
                                                 id:item.id,
                                                 sub:$index,
@@ -100,24 +94,14 @@
                                                 key:'intlIntentionList'
                                                 })"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除"  /></div>
                             <!-- <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div> -->
-                        </td>
-                        <td>
-                        <div style="display:inline-block;margin-right:7px"  @click.stop="newOrder(item,$index)"><img src="/static/images/{{$t('static.img_adopt')}}.png"  /></div>
-                        </td>
-                        <td v-if="item.inquire===0">
-                            <div  style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_inquire')}}.png" alt="询价" /></div>
-                        </td>
-                        <td v-if="item.inquire===3">
-                            <div  style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
-                        </td>
-                        <td v-if="item.inquire===1">
-                            <div  style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
+                            <div style="display:inline-block;margin-right:7px"  @click.stop="newOrder(item,$index)"><img src="/static/images/{{$t('static.img_adopt')}}.png"  /></div>
+                            <div v-if="item.inquire===0||item.inquire===3"  style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑"  /></div>
+                            <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_inquire')}}.png" alt="询价" /></div>
+                            <div v-if="item.inquire===3" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
+
+                            <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
                         </td>
                             <!-- <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)">取消询价</div> -->
-                        <td >
-                            <div v-if="item.inquire===0||item.inquire===3"  style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑"  /></div>
-                        </td>
-                        
 
                     </tr>
 
@@ -141,7 +125,7 @@ import modifyModel from '../modifyIntention'
 import cancelinquireModel from '../../tips/tipDialog'
 import inquireModel from '../inquire'
 import createorderModel from '../createOrderDialog' 
-
+import common from '../../../common/common'
 import {
     initIntlIntentionList,
       initLogin
@@ -337,6 +321,9 @@ export default {
               show:false
             }
         }
+    },
+    ready(){
+      common('tab','table_box',1);
     },
     methods: {
         inquire:function(id,index,time){

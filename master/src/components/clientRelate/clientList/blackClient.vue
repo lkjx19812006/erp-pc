@@ -8,11 +8,11 @@
       <div class="my_enterprise col-xs-1">客户黑名单</div>
       <button class="new_btn transfer" @click="clientTransferWhite()">踢出黑名单</button>
     </div>
-    <div class="order_table">
+    <div class="order_table" id="table_box">
       <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
       </div>
-      <table class="table table-hover table_color table-striped " v-cloak>
+      <table class="table table-hover table_color table-striped " v-cloak id="tab">
         <thead>
         <tr>
           <th>
@@ -37,7 +37,6 @@
           <th>注册地址</th>
           <th>创建时间</th>
           <th style="min-width:200px">备注</th>
-          <th ></th>
         </tr>
         </thead>
         <tbody>
@@ -86,8 +85,6 @@
           <td>{{item.address}}</td>
           <td>{{item.ctime}}</td>
           <td >{{item.blackComments}}</td>
-          <td >
-          </td>
         </tr>
         </tbody>
       </table>
@@ -104,6 +101,7 @@
   import searchModel  from  '../../../components/clientRelate/searchModel'
   import tipsdialogModel  from '../../../components/tipsDialog'
   import auditDialog from '../../../components/tips/auditDialog'
+  import common from '../../../common/common'
   import {
     initCustomerlist
   } from '../../../vuex/getters'
@@ -242,6 +240,9 @@
         this.loadParam.cur = input;
         this.getClientList(this.loadParam);
       }
+    },
+    ready(){
+      common('tab','table_box',1);
     },
     created() {
       this.getClientList(this.loadParam);

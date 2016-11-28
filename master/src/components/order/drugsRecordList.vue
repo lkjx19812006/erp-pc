@@ -4,11 +4,11 @@
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">{{$t('static.rollout')}}</div>
     </div>
-    <div class="order_table">
+    <div class="order_table" id="table_box">
       <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
       </div>
-      <table class="table table-hover table_color table-striped " v-cloak>
+      <table class="table table-hover table_color table-striped " v-cloak id="tab">
         <thead>
             <tr>
               <th>{{$t('static.client_name')}}</th>
@@ -59,6 +59,7 @@
   import stateModel  from  '../drugs/drugsStatus'
   import pagination from '../pagination'
   import filter from '../../filters/filters'
+  import common from '../../common/common'
   import {
     initRolloutlist
   } from '../../vuex/getters'
@@ -133,6 +134,9 @@
         }
     },
     filter: (filter,{}),
+    ready(){
+      common('tab','table_box',1);
+    },
     events: {
       fresh: function(input) {
         this.loadParam.cur = input;
@@ -151,10 +155,6 @@
   }
   .transfer{
     margin-left: 18px;
-  }
-  .table>tbody>tr>td{
-/*     max-width: 300px; */
-   /*  white-space: normal; */
   }
   .checkbox_unselect{
     background-image: url(/static/images/unselect.png);
@@ -177,5 +177,9 @@
     margin: auto;
     text-align: center;
     background-position: 5px;
+  }
+   #table_box  table th,#table_box  table td{
+    width: 212px;
+    min-width: 212px;
   }
 </style>

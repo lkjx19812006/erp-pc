@@ -17,7 +17,7 @@
                    <dt class="left transfer marg_top">类别：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.conType" @change="selectSearch()">
-                            <option value="" selected>按类别搜索</option>
+                            <option value="" selected>全部</option>
                             <option value="MF">药厂</option>
                             <option value="CF">化妆品厂</option>
                             <option value="FF">食品厂</option>
@@ -29,7 +29,7 @@
                    <dt class="left transfer marg_top">是否划转：</dt>
                    <dd class="left">
                          <select v-model="loadParam.transform"  class="form-control" @change="selectSearch()">
-                                <option value="" selected>根据客户划转</option>
+                                <option value="" selected>全部</option>
                                 <option value=1>已划转</option>
                                 <option value=0>未划转</option>
                                 <option value="-2">已过期</option>
@@ -38,11 +38,11 @@
                 </dl>
             </div>
         </div>
-        <div class="order_table" v-cloak>
+        <div class="order_table" v-cloak id="table_box">
              <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped">
+            <table class="table table-hover table_color table-striped" id="tab">
                 <thead>
                     <tr>
                         <th>分类码</th>
@@ -50,14 +50,14 @@
                         <th>企业名称</th>
                         <th>电 话</th>
                         <th>企业代表人</th>
-                        <th>经营范围</th>
+                        <th style="min-width: 250px;">经营范围</th>
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>业务员</th>
                         <th>注册地址</th>
                         <th>是否转为客户</th>
                         <th>备注</th>
-                        <th colspan="2">操作</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +67,7 @@
                         <td  class="underline"  @click="companyDetail(item.id,$index)">{{item.name}}</td>
                         <td>{{item.tel | telstate}}</td>
                         <td>{{item.principal}}</td>
-                        <td>{{item.bizScope}}</td>
+                        <td style="min-width: 250px;">{{item.bizScope}}</td>
                         <td>{{item.province}}</td>
                         <td>{{item.city}}</td>
                         <td>{{item.employeeName}}</td>
@@ -75,7 +75,8 @@
                         <td v-if="!item.transform">否</td>
                         <td v-if="item.transform">是</td>
                         <td>{{item.remark}}</td>
-                        <td @click="updateCompany({
+                        <td>
+                            <a class="operate" @click="updateCompany({
                                         sub:$index,
                                         show:true,
                                         name:item.name,
@@ -85,7 +86,7 @@
                                         tel:item.tel,
                                         remark:item.remark,
                                         link:updateEnterprise
-                                        })"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                                        })"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
                           <!-- <div  @click="companyClick($index)">
                             <img height="24" width="24" src="../../../static/images/default_arrow.png" />
                             <div class="breed_action" v-show="item.show">
@@ -128,8 +129,7 @@
                                 </ul>
                             </div>
                             </div> -->
-                        </td>
-                        <td  ><a class="operate" @click="createCustomer({
+                            <a class="operate" @click="createCustomer({
                                         keyname:'transform',
                                         sub:$index,
                                         show:true,
@@ -170,6 +170,7 @@ import detailModel  from '../serviceBaselist/companydetail'
 import transferModel  from '../user/userTransfer'
 import searchModel from './companySearch'
 import updateModel from '../serviceBaselist/breedDetailDialog/updateEnterprise'
+import common from '../../common/common'
 import {
     initEnterpriselist,
     initProvince
@@ -295,6 +296,9 @@ export default {
 
         }
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     filter: (filter, {}),
     created() {
         this.getEnterpriseData(this.loadParam)
@@ -316,5 +320,8 @@ export default {
 .transfer{
     margin-right:15px;
 }
-
+ #table_box  table th,#table_box  table td{
+    width: 121px;
+    min-width: 121px;
+}
 </style>

@@ -91,16 +91,11 @@
               </dl>
           </div>
         </div>
-        <div class="service-nav clearfix">
-            <div class="my_order_search">
-
-           </div>
-        </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                         <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
@@ -121,7 +116,7 @@
                         <th>样品数量</th>
                         <th>样品价格</th>
                         <th>审核状态</th>
-                        <th colspan="2">操作</th>
+                        <th style="min-width: 150px;">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -200,7 +195,8 @@
                         <td>{{item.sampleNumber}}</td>
                         <td>{{item.sampleAmount}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
-                        <td @click="modifyIntention({
+                        <td >
+                            <a class="operate" @click="modifyIntention({
                                                id:item.id,
                                                sub:$index,
                                                selectCustomer:false,
@@ -212,28 +208,28 @@
                                                customerPhone:item.customerPhone,
                                                breedName:item.breedName,
                                                breedId:item.breedId,
-                                              type:item.type,
-                                              especial:item.especial,
-                                              quality:item.quality,
-                                              qualification:item.qualification,
-                                              spec:item.spec,
-                                              number:item.number,
-                                              unit:item.unit,
-                                              price:item.price,
-                                              address:item.address,
-                                              location:item.location,
-                                              advance:item.advance,
-                                              invoic:item.invoic,
-                                              visit:item.visit,
-                                              pack:item.pack,
-                                              intl:item.intl,
-                                              visit:item.visit,
-                                              sampling:item.sampling,
-                                              sampleNumber:item.sampleNumber,
-                                              sampleUnit:item.sampleUnit,
-                                              sampleAmount:item.sampleAmount,
-                                              offer:item.offer,
-                                              status:item.status,
+                                               type:item.type,
+                                               especial:item.especial,
+                                               quality:item.quality,
+                                               qualification:item.qualification,
+                                               spec:item.spec,
+                                               number:item.number,
+                                               unit:item.unit,
+                                               price:item.price,
+                                               address:item.address,
+                                               location:item.location,
+                                               advance:item.advance,
+                                               invoic:item.invoic,
+                                               visit:item.visit,
+                                               pack:item.pack,
+                                               intl:item.intl,
+                                               visit:item.visit,
+                                               sampling:item.sampling,
+                                               sampleNumber:item.sampleNumber,
+                                               sampleUnit:item.sampleUnit,
+                                               sampleAmount:item.sampleAmount,
+                                               offer:item.offer,
+                                               status:item.status,
                                                country:item.country,
                                                province:item.province,
                                                city:item.city,
@@ -250,14 +246,9 @@
                                                image_s_show:'',
                                                image_t_show:'',
                                                duedate:item.duedate
-                                               })">
-                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                                               })"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                            </a>
-                          
-                        </td>
-
-                       
-                        <td @click.stop="userToClient({
+                            <a class="operate" @click.stop="userToClient({
                                 name:item.customerName,
                                 keyname:'transStatus',
                                 sub:$index,
@@ -288,90 +279,9 @@
                                  qq: item.userQq,
                                  wechart: ''
                                 }
-                              },item.show=false)">
-                            <a class="operate"><img src="/static/images/transfer.png" height="18" width="30"  alt="划转" title="划转"/>
+                              },item.show=false)"><img src="/static/images/transfer.png" height="18" width="30"  alt="划转" title="划转"/>
                             </a>
                         </td>
-                      <!--   <td @click.stop="eventClick($index)">
-                         <img height="24" width="24" src="/static/images/default_arrow.png" />
-                         <div class="component_action" v-show="item.show">
-                             <ul>
-                                 <li @click="modifyIntention({
-
-                                            type:item.type,
-                                            especial:item.especial,
-                                            quality:item.quality,
-                                            qualification:item.qualification,
-                                            spec:item.spec,
-                                            number:item.number,
-                                            unit:item.unit,
-                                            price:item.price,
-                                            address:item.address,
-                                            location:item.location,
-                                            advance:item.advance,
-                                            invoic:item.invoic,
-                                            visit:item.visit,
-                                            pack:item.pack,
-                                            intl:item.intl,
-                                            visit:item.visit,
-                                            sampling:item.sampling,
-                                            sampleNumber:item.sampleNumber,
-                                            sampleUnit:item.sampleUnit,
-                                            sampleAmount:item.sampleAmount,
-                                            offer:item.offer,
-                                            status:item.status,
-                                             country:item.country,
-                                             province:item.province,
-                                             city:item.city,
-                                             district:item.district,
-                                             address:item.address,
-                                             validate:item.validate,
-                                             link:editintentInfo,
-                                             url:'/intention/',
-                                             key:'intentionList',
-                                             image_f:'',
-                                             image_s:'',
-                                             image_t:'',
-                                             image_f_show:'',
-                                             image_s_show:'',
-                                             image_t_show:'',
-                                             duedate:item.duedate
-                                             })">编辑</li>
-                                 <li @click="userToClient({
-                                                name:item.customerName,
-                                                keyname:'transStatus',
-                                                sub:$index,
-                                                //userId:item.userId,
-                                                main:1,
-                                                province:'',
-                                                phone:item.customerPhone,
-                                                tel:item.userTel,
-                                                email:item.userEmail,
-                                                qq:item.userQq,
-                                                type:0,
-                                                fullname:item.userFullname,
-                                                employeeId:'',
-                                                employeeName:'',
-                                                orgId:'',
-                                                orgName:'',
-                                                show:true,
-                                                key:'userList',
-                                                countryId:7,
-                                                countryName:'中国',
-                                                contact:{
-                                                 name: item.customerName,
-                                                 position: '',
-                                                 department: '',
-                                                 phone: item.customerPhone,
-                                                 tel: item.userTel,
-                                                 email: item.email,
-                                                 qq: item.userQq,
-                                                 wechart: ''
-                                                }
-                                              },item.show=false)">划转</li>
-                             </ul>
-                         </div>
-                                             </td> -->
 
                     </tr>
 
@@ -395,7 +305,7 @@ import tipsdialogModel  from '../../tips/tipDialog'
 import supdemModel from '../supplyDemand'
 import transferModel  from '../../user/userTransfer'
 import searchModel from '../intentionSearch'
-
+import common from '../../../common/common'
 
 import {
   initIntentionList,
@@ -662,6 +572,9 @@ export default {
     created() {
         this.getIntentionList(this.loadParam, this.loadParam.all);
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     filter: (filter,{})
 }
 </script>
@@ -691,6 +604,5 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-
 </style>
 

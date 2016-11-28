@@ -17,16 +17,11 @@
                 <!-- <button class="new_btn" @click="createIntention()">{{$t('static.new')}}</button> -->
             </div>
         </div>
-        <div class="service-nav clearfix">
-            <div class="my_order_search">
-
-           </div>
-        </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
@@ -115,7 +110,7 @@ import detailModel from '../intentionDetail'
 import createModel from '../createIntention'
 import modifyModel from '../modifyIntention'
 import inquireModel from '../inquire'
-
+import common from '../../../common/common'
 
 import {
     initIntlIntentionList
@@ -262,6 +257,9 @@ export default {
               show:false
             }
         }
+    },
+    ready(){
+      common('tab','table_box',1);
     },
     methods: {
         inquire:function(id,time){

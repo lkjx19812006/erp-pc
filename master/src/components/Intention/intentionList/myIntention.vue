@@ -10,6 +10,7 @@
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      <audit-dialog :param.sync="auditParam" v-if="auditParam.show"></audit-dialog>
      <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
+     <sendapply-model :param="sampleOrderParam" v-if="sampleOrderParam.send"></sendapply-model>
 	 <div>
         <div class="service-nav">
           <div class="clearfix">
@@ -143,12 +144,12 @@
              
           </div>
         </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
             
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
               <thead>
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
@@ -180,7 +181,7 @@
                         <th>发布时间</th>
                         <th>审核状态</th>
                         <th>上下架</th>
-                        <th colspan="4">操作</th>
+                        <th style="min-width:250px">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -265,7 +266,8 @@
                         <td>
                           <div>{{item.onSell | onsell}}</div>
                         </td>
-                        <td  @click.stop="modifyIntention({
+                        <td >
+                               <a class="operate"  @click.stop="modifyIntention({
                                               id:item.id,
                                               sub:$index,
                                               selectCustomer:false,
@@ -317,11 +319,9 @@
                                                image_s_show:'',
                                                image_t_show:'',
                                                duedate:item.duedate
-                                               })">
-                               <a class="operate"><img src="/static/images/edit.png" height="18" width="28" />
+                                               })"><img src="/static/images/edit.png" height="18" width="28" />
                                </a>
-                        </td>
-                        <td  @click.stop="specDelete({
+                              <a class="operate" @click.stop="specDelete({
                                                id:item.id,
                                                sub:$index,
                                                show:true,
@@ -330,40 +330,31 @@
                                                link:deleteInfo,
                                                url:'/intention/',
                                                key:'intentionList'
-                                               })">
-                              <a class="operate"><img src="/static/images/del.png" height="18" width="28" alt="删除"/>
+                                               })"><img src="/static/images/del.png" height="18" width="28" alt="删除"/>
                                </a>
-                        </td>
-                        <td  v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)">
-                              <a class="operate"><img src="/static/images/grounding.png" height="18" width="28" alt="上架"/>
+                              <a class="operate" v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)"><img src="/static/images/grounding.png" height="18" width="28" alt="上架"/>
+                              </a>
+                              <a class="operate"  v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2&&item.especial==1" @click="applyAudit($index,item.id)"><img src="/static/images/apply.png" height="18" width="47" alt="申请审核"/>
                                </a>
-                        </td>
-                        <td  v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2&&item.especial==1" @click="applyAudit($index,item.id)">
-                        
-                              <a class="operate"><img src="/static/images/apply.png" height="18" width="47" alt="申请审核"/>
+                              <a class="operate" v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click="up($index,item.id,4)"><img src="/static/images/undercarriage.png" height="18" width="28"  alt="下架"/>
                                </a>
-                        </td>
-                        <td  v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click="up($index,item.id,4)">
-                              <a class="operate"><img src="/static/images/undercarriage.png" height="18" width="28"  alt="下架"/>
+                              <a class="operate" v-if="(item.onSell==-4||item.onSell==2)&&item.type==1&&item.especial==1" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架"/>
                                </a>
-                        </td>
-                        <td  v-if="(item.onSell==-4||item.onSell==2)&&item.type==1&&item.especial==1" @click="up($index,item.id,3)">
-                              <a class="operate"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架"/>
+                              <a class="operate" v-if="item.type==1"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" height="18" width="47" alt="生成订单"/>
                                </a>
-                        </td>
-                        <td  v-if="item.type==1"  @click.stop="newOrder(item,$index)">
-                              <a class="operate"><img src="/static/images/adopt.png" height="18" width="47" alt="生成订单"/>
-                               </a>
+                               <a v-if="item.sampling==1"  @click.stop="sengSample(item,$index)">寄样申请表</a>
+                            <!-- <a class="operate">
+                              <img src="/static/images/adopt.png" height="18" width="47" alt="生成订单"/>
+                             </a> -->
                         </td>
                       </tr>
                       
                 </tbody> 
             </table>
-            <div class="base_pagination">
-                <pagination :combination="loadParam"></pagination>
-            </div>
         </div>
-       
+        <div class="base_pagination">
+            <pagination :combination="loadParam"></pagination>
+        </div>
     </div>
 </template>
 <script>
@@ -380,6 +371,8 @@ import supdemModel from '../supplyDemand'
 import searchModel from '../intentionSearch'
 import auditDialog from '../../tips/auditDialog'
 import createorderModel  from  '../createOrder'
+import sendapplyModel from '../sendSampleapply'
+import common from '../../../common/common'
 import {
 	initIntentionList,
   initSupplyDemandList,
@@ -408,7 +401,8 @@ export default {
         supdemModel,
         searchModel,
         auditDialog,
-        createorderModel
+        createorderModel,
+        sendapplyModel
     },
     vuex: {
         getters: {
@@ -463,6 +457,22 @@ export default {
             },
             chanceParam:{
                 show:false
+            },
+            sampleOrderParam:{
+               send:false,
+               sub:'',
+               sampling:'',
+               sampleUnit:'',
+               sampleNumber:'',
+               sampleAmount:'',
+               customerName:'',
+               customerPhone:'',
+               breedName:'',
+               consignee:'',
+               consignee_Phone:'',
+               address:'',
+               comments:'',
+               employee:''
             },
             createOrderParam:{
                 show:false,
@@ -766,6 +776,19 @@ export default {
         },
         selectSearch:function(){
           this.getIntentionList(this.loadParam)
+        },
+        sengSample:function(item,sub){
+           this.sampleOrderParam.send = true;
+           this.sampleOrderParam.sub = sub;
+           this.sampleOrderParam.sampling = item.sampling;
+           this.sampleOrderParam.sampleUnit = item.sampleUnit;
+           this.sampleOrderParam.sampleNumber = item.sampleNumber;
+           this.sampleOrderParam.sampleAmount = item,sampleAmount;
+           this.sampleOrderParam.customerName = item.customerName;
+           this.sampleOrderParam.customerPhone = item.customerPhone;
+           this.sampleOrderParam.breedName = item.breedName;
+           this.sampleOrderParam.address = item.address;
+           this.sampleOrderParam.employee = item.employee;
         }
     },
     events: {
@@ -776,6 +799,9 @@ export default {
     },
     created() {
         this.getIntentionList(this.loadParam, this.loadParam.all);
+    },
+    ready(){
+      common('tab','table_box',1);
     },
     filter: (filter,{})
 }
@@ -814,6 +840,7 @@ export default {
     text-align: center;
     background-position: 5px;
 }
+
 
 
 </style>

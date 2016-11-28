@@ -4875,13 +4875,15 @@ export const loadFile = ({ dispatch }, param) => { //查询认证信息
 
 /*---二期开发---*/
 /*---我的客户统计---*/
-export const getClientcount = ({ dispatch }, param) => { //获取客户统计
+export const getClientcount = ({ dispatch }, param) => { //我的客户统计
     if(param) param.loading= true;
-    /*console.log(param)*/
+    var countUrl = apiUrl.clientList +'/count/getCustomerAdd?role=emp';
+    if(param.employeeId){
+        countUrl +=  '&employeeId=' + param.employeeId
+    }
     Vue.http({
         method: 'GET',
-        /*url:apiUrl.countList,*/
-        url: apiUrl.clientList + param.link+'?role=emp',
+        url: countUrl,
         emulateHTTP: false,
         emulateJSON: false,
         headers: {
@@ -4895,6 +4897,46 @@ export const getClientcount = ({ dispatch }, param) => { //获取客户统计
         dispatch(types.MY_CLIENT_COUNT, clientCount);
     }, (res) => {
         param.loading = false;
+        console.log('fail');
+    })
+}
+export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
+    if(param) param.loading= true;
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList +param.link,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        console.log(res.json().result)
+        var clientCount = res.json().result;
+        dispatch(types.MY_CLIENT_COUNT, clientCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
+export const getExportOrgcount = ({ dispatch }, param) => { //部门导出客户统计
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList +'/count/getCustomerAddReport?role=org',
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json().result)
+        var clientCount = res.json().result;
+        dispatch(types.MY_CLIENT_COUNT, clientCount);
+    }, (res) => {
         console.log('fail');
     })
 }

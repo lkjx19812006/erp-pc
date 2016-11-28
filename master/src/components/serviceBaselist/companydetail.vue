@@ -454,8 +454,10 @@ table{
 }
 .contactSet>tbody>tr>td,.contactSet>thead>tr>th{
     text-align: left;
+    width: 10%;
 }
 .contact_img{
     margin-right: 6px !important;
 }
+
 </style>

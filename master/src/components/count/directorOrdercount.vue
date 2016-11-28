@@ -95,7 +95,7 @@
 	        },
 	    },
 	    created() {
-	        this.getClientcount();
+	        this.getClientcount(this.loadParam);
 	        console.log(this.initClientcount)
 	    }
 	}

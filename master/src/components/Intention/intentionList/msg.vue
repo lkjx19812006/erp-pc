@@ -22,11 +22,11 @@
                </div>
            </div>
         </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                         <th>留言会员</th>
@@ -76,7 +76,7 @@ import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import editmsgModel from '../editMsg'
 import detailModel from '../../user/userDetail'
-
+import common from '../../../common/common'
 import {
 	initMsgList
 } from '../../../vuex/getters'
@@ -174,6 +174,9 @@ export default {
     created() {
         this.getMsgList(this.loadParam, this.loadParam.all);
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     filter: (filter,{})
 }
 </script>
@@ -209,6 +212,9 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-
+ #table_box  table th,#table_box  table td{
+    width: 170px;
+    min-width: 170px;
+}
 </style>
 

@@ -81,11 +81,11 @@
             </dl>
         </div>
       </div>
-      <div class="order_table">
+      <div class="order_table" id="table_box">
         <div class="cover_loading">
             <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
         </div>
-        <table class="table table-hover table_color table-striped " v-cloak>
+        <table class="table table-hover table_color table-striped " v-cloak id="tab">
             <thead>
                 <tr>
                     <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
@@ -237,6 +237,7 @@
     import tipsdialogModel  from '../tips/tipDialog'
     import auditModel  from '../order/orgAudit'
     import filter from '../../filters/filters'
+    import common from '../../common/common'
     import {
         getList,
         initOrderlist,
@@ -430,6 +431,9 @@
 
         },
         filter:(filter,{}),
+        ready(){
+          common('tab','table_box',1);
+        },
         events: {
             fresh: function(input) {
                 this.loadParam.cur = input;
@@ -475,14 +479,6 @@
         margin-top: 20px;
         position: relative;
     }
-
-    .order_table .table {
-        background: #fff;
-        position: relative;
-        margin-bottom: 10px;
-        border-top: 1px solid #ddd;
-    }
-
     .order_table .table > ul {
         position: relative;
         width: 100%;
@@ -509,56 +505,6 @@
 
     .order_table .table > ul >li img {
         margin: auto;
-    }
-
-    .order_action {
-        position: absolute;
-        right: 97px;
-        padding: 10px 0;
-        top: 32px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background: #fff;
-        z-index: 10;
-        min-width: 90px;
-        max-width: 200px;
-    }
-
-    .order_show {
-        position: absolute;
-        right: 20px;
-        padding: 10px 0;
-        top: 32px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background: #fff;
-        z-index: 10;
-        min-width: 90px;
-        max-width: 200px;
-        display: block;
-    }
-
-    .order_action ul,
-    .order_show ul {
-        margin-bottom: 0;
-    }
-
-    .order_action ul li a,
-    .order_show ul li a {
-        color: #003077;
-        padding: 5px 5px 5px 10px;
-        display: block;
-    }
-
-    .expand-transition {
-        transition: all .3s ease;
-        overflow: inherit;
-    }
-
-    .expand-enter,
-    .expand-leave {
-        opacity: 0;
-        height: 0;
     }
 
     .v-spinner {

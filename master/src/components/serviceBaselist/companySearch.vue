@@ -45,7 +45,7 @@
                     <div class="client-detailInfo col-xs-12">
                         <label>类别：</label>
                         <select class="form-control" v-model="param.conType">
-	                        <option value="" selected>按类别搜索</option>
+	                        <option value="" selected>全部</option>
 	                        <option value="MF">药厂</option>
 	                        <option value="CF">化妆品厂</option>
 	                        <option value="FF">食品厂</option>
@@ -55,7 +55,7 @@
                     <div class="client-detailInfo  col-xs-12">
                         <label>是否划转：</label>
                         <select class="form-control" v-model="param.transform">
-	                        <option value="" selected>根据客户划转</option>
+	                        <option value="" selected>全部</option>
 	                        <option value=1>已划转</option>
 	                        <option value=0>未划转</option>
                      </select>

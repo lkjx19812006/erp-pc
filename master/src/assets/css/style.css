@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-11-25 18:08:14
+* @Last Modified time: 2016-11-28 18:39:31
 */
 
 * {
@@ -244,7 +244,7 @@ body {
     color: #fa6705;
     font-size: 14px;
     display: inline-block;
-    margin: 0 5px;
+    margin: 6px;
 }
 
 .operate:hover {
@@ -255,6 +255,7 @@ body {
 .table {
     margin-bottom:20px;
     position: relative;
+    display: block;
     /* table-layout:fixed;*/
 } 
 
@@ -727,3 +728,31 @@ dl {
     text-align: center;
     background-position: 5px;
 }
+
+#table_box  table td {
+    height: 24px;
+    width: 100px;
+     min-width: 100px;
+    /** 固定单元格宽度，防止分离表头后，表头与数据行错位（缺点） */
+    line-height: 24px;
+    padding: 3px 5px;
+    word-break: break-all;
+    /** 设置当文本过长时换行 */
+}
+
+#table_box table th {
+    height: 24px;
+   min-width: 100px;
+    width: 100px;/** 不管是固定像素或是百分比，应与对应数据列的宽度一致 */
+    line-height: 24px;
+}
+
+#table_box {
+    height: 600px;
+    width: 100%;
+    overflow-y: auto;
+    position: relative;
+}
+
+
+

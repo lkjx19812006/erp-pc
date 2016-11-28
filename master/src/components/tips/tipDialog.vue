@@ -8,7 +8,7 @@
                 <div class="tips_name" v-if="param.name=='确定取消询价?'">{{$t('static.cancel_inquire')}}</div>
                 <!-- <div class="tips_name" v-if="param.name==='确认删除文件?'">{{$t('static.del_file')}}</div> -->
                 <div class="tips_name" v-if="param.name=='确认删除?'">{{$t('static.del_confirm')}}</div>
-                <div class="tips_name" v-else>{{param.name}}</div>
+                <div class="tips_name" v-if="param.name!='确定取消询价?'&&param.name!='确认删除?'">{{param.name}}</div>
             </div>
             <div class="model-footer" v-if="param.alert">
                 <input type="button" class="btn btn-close"  @click="param.show = false"  value="{{$t('static.confirm')}}"/>

@@ -89,8 +89,7 @@
 	        },
 	    },
 	    created() {
-	        this.getClientcount();
-	        console.log(this.initClientcount)
+	        this.getClientcount(this.loadParam);
 	    }
 	}
 </script>

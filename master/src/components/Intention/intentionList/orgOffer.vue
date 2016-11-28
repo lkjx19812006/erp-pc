@@ -17,11 +17,11 @@
                </div>
            </div>
         </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                         <!-- <th>
@@ -70,14 +70,6 @@
                                <a class="operate"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
                                </a>
                         </td>
-                       <!--  <td @click.stop="clickShow($index)">
-                          <img height="24" width="24" src="/static/images/default_arrow.png" />
-                          <div class="component_action" v-show="item.show">
-                              <ul>
-                                  <li v-if="item.orderTime==0" @click="adopt(item,$index)">采纳</li>
-                              </ul>
-                          </div>
-                                              </td> -->
                     </tr>
                 </tbody>
             </table>
@@ -92,6 +84,7 @@ import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import createorderModel  from '../createOrder'
 import searchModel  from '../offerSearch'
+import common  from '../../../common/common'
 import {
     initOfferList,
     initLogin
@@ -258,6 +251,9 @@ export default {
     created() {
         this.getOfferList(this.loadParam, this.loadParam.all);
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     filter: (filter,{})
 }
 </script>
@@ -299,6 +295,10 @@ export default {
     margin: auto;
     text-align: center;
     background-position: 5px;
+}
+ #table_box  table th,#table_box  table td{
+    width: 122px;
+    min-width: 122px;
 }
 </style>
 

@@ -14,7 +14,7 @@
                     <dt>类型：</dt>
                     <dd>
                         <select class="form-control"  v-model="loadParam.type" @change="searchProduct()">
-                            <option value="">请选择类型</option>
+                            <option value="">全部</option>
                             <option>药材</option>
                             <option>提取物</option>
                             <option>饮片</option>
@@ -25,7 +25,7 @@
                     <dt>状态：</dt>
                     <dd>
                         <select class="form-control" v-model="loadParam.status" @change="searchProduct()">
-                            <option value="">请选择状态</option>
+                            <option value="">全部</option>
                             <option value="0">无效</option>
                             <option value="1">可用</option>
                         </select>
@@ -72,11 +72,11 @@
         <button class="new_btn"  @click="reset()">清空条件</button>
       </div>
     </div>
-    <div class="order_table">
+    <div class="order_table" id="table_box">
       <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
       </div>
-      <table class="table table-hover table_color table-striped " v-cloak>
+      <table class="table table-hover table_color table-striped " v-cloak id="tab">
         <thead>
             <tr>
               <th>产品类型</th>
@@ -209,6 +209,7 @@
   import alterinfoModel  from '../supply/createProduct'
   import searchModel  from  '../clientRelate/searchModel'
   import supplydetailModel from  '../clientRelate/clientDetail'
+  import common from  '../../common/common'
   import {
     initProductlist
   } from '../../vuex/getters'
@@ -319,6 +320,9 @@
         this.getProductList(this.loadParam);
       }
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     created() {
       this.getProductList(this.loadParam);
     }
@@ -364,5 +368,9 @@
     margin: auto;
     text-align: center;
     background-position: 5px;
+  }
+   #table_box  table th,#table_box  table td{
+    width: 120px;
+    min-width:120px;
   }
 </style>

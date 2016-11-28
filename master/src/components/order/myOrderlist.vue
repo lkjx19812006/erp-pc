@@ -81,11 +81,11 @@
             </dl>
         </div>
       </div>
-      <div class="order_table">
+      <div class="order_table" id="table_box">
         <div class="cover_loading">
             <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
         </div>
-        <table class="table table-hover table_color table-striped " v-cloak>
+        <table class="table table-hover table_color table-striped " v-cloak id="tab">
             <thead>
                 <tr>
                     <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
@@ -105,7 +105,7 @@
                     <th>{{$t('static.currency')}}</th>
                     <th>{{$t('static.payment_method')}}</th>
                     <th>{{$t('static.edit')}}</th>
-                    <th></th>
+                    <th>{{$t('static.handle')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -248,6 +248,7 @@
     import disposeModel  from  '../order/orderStatus'
     import tipsdialogModel  from '../tips/tipDialog'
     import auditModel  from '../order/orgAudit'
+    import common from '../../common/common'
     import {
         getList,
         initOrderlist,
@@ -590,6 +591,9 @@
             }
         },
         filter:(filter,{}),
+        ready(){
+          common('tab','table_box',1);
+        },
         created() {
             this.getEmpolyeeOrder(this.loadParam)
             console.log(this.loadParam)

@@ -34,11 +34,11 @@
       </div>
     </div>
     </div>
-    <div class="order_table">
+    <div class="order_table" id="table_box">
       <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
       </div>
-      <table class="table table-hover table_color table-striped " v-cloak>
+      <table class="table table-hover table_color table-striped " v-cloak id="tab">
         <thead>
             <tr>
               <th>文件名称</th>
@@ -106,6 +106,7 @@
   import createfilesModel from  '../supply/createFiles'
   import updatelabelModel from  '../clientRelate/label/updatelebel'
   import pictureModel  from '../tips/pictureDialog'
+  import common from '../../common/common'
   import {
     initFileslist
   } from '../../vuex/getters'
@@ -209,6 +210,9 @@
         this.getFilesList(this.loadParam);
       }
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     created() {
       this.getFilesList(this.loadParam);
     }
@@ -233,10 +237,6 @@
   .transfer{
     margin-left: 18px;
   }
-  .table>tbody>tr>td{
-/*     max-width: 300px; */
-   /*  white-space: normal; */
-  }
   .checkbox_unselect{
     background-image: url(/static/images/unselect.png);
     display: inline-block;
@@ -258,5 +258,9 @@
     margin: auto;
     text-align: center;
     background-position: 5px;
+  }
+  #table_box  table th,#table_box  table td{
+     width: 245px;
+     min-width: 245px;
   }
 </style>

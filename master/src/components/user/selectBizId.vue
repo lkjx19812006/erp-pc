@@ -308,4 +308,8 @@ export default {
     text-align: center;
     background-position: 5px;
 }
+th,td{
+  width: 200px;
+  min-width: 200px;
+}
 </style>

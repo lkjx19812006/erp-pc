@@ -12,7 +12,6 @@ import VueI18n from './filters/i18n'
 
 
 
-
 require('./assets/css/style.css')
 require('./components/calendar/vue.datepicker.css')
 
