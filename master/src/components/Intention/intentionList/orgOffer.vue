@@ -310,8 +310,8 @@ export default {
     background-position: 5px;
 }
  #table_box  table th,#table_box  table td{
-    width: 122px;
-    min-width: 122px;
+  width: 190px;
+  min-width:190px;
 }
 </style>
 
