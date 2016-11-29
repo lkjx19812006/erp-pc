@@ -66,8 +66,11 @@
 	        	<span v-bind:class="{ 'date_active': !isA&&!isB&&!isC}" @click="clickmonth()">月</span>
 	        	<span v-bind:class="{ 'date_active': !isA&&!isB&&isC}" @click="clickyear()">年</span>
 	        </div>
-	        <div class="pull-right" style="margin-top:10px;">
-        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=org">导出客户统计</a>
+	        <div class="pull-right" style="margin-top:10px;" v-if="!loadParam.employeeId">
+        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=org">导出部门统计</a>
+        	</div>
+        	<div class="pull-right" style="margin-top:10px;" v-if="loadParam.employeeId">
+        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=emp&employeeId="+loadParam.employeeId>导出客户统计</a>
         	</div>
 	        <div class="count_select clearfix pull-right">
         		<label class="pull-left">业务员：</label>

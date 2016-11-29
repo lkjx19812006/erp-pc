@@ -34,54 +34,34 @@
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-2 col-xs-12">
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label class="editlabel">{{$t('static.client_name')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerName}}</span>
-                                     
                                 </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12">
+                                <div class="client-detailInfo col-md-6 col-xs-12">
                                     <label class="editlabel">{{$t('static.commodity_items')}}：</label>
                                     <span>{{initIntlIntentionDetail.names}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12" >
+                                <div class="client-detailInfo col-md-6 col-xs-12" >
                                     <label class="editlabel">{{$t('static.client_email')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerEmail}}</span>
-                                    
                                 </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12">
+                                <div class="client-detailInfo col-md-6 col-xs-12">
                                     <label class="editlabel">{{$t('static.country')}}：</label>
                                     <span>{{initIntlIntentionDetail.country}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                
-                            </div>
-
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-2 col-xs-12">
-                                    <label class="editlabel">{{$t('static.province')}}：</label>
-                                    <span>{{initIntlIntentionDetail.province}}</span>
-                                     
-                                </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12">
+                                <div class="client-detailInfo col-md-6 col-xs-12">
                                     <label class="editlabel">{{$t('static.city')}}：</label>   
                                     <span>{{initIntlIntentionDetail.city}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12" >
-                                    <label class="editlabel">{{$t('static.area')}}：</label>
-                                    <span>{{initIntlIntentionDetail.district}}</span>
-                                    
+                                <div class="client-detailInfo col-md-6 col-xs-12" >
+                                    <label class="editlabel">{{$t('static.quantity')}}：</label>
+                                    <span>{{initIntlIntentionDetail.number}}</span>   
                                 </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12">
+                                <div class="client-detailInfo col-md-6 col-xs-12">
                                     <label class="editlabel">{{$t('static.description')}}：</label>
                                     <span>{{initIntlIntentionDetail.description}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 
                             </div>
 
@@ -91,7 +71,7 @@
                 </div>
 
                 <div class="col-md-11 client-detail">
-                    <h4 class="section_title">相关</h4>
+                    <h4 class="section_title">{{$t('static.related_information')}}</h4>
                     <article>
                         <div class="panel-group">
                             
@@ -169,8 +149,11 @@
                                                 <td>{{item.price}}</td>
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.unit}}</td>
-                                                <td>{{item.again | requireAgain}}</td>
-                                                <td>{{item.offerAgain | offerAgain}}</td>
+                                                <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
+                                                <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
+                                                <td v-if="item.offerAgain==0">{{$t('static.not_quote')}}</td>
+                                                <td v-if="item.offerAgain==null">{{$t('static.not_quote')}}</td>
+                                                <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
                                                 <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> 
                                                 <td></td>
                                             </tr>

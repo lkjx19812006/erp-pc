@@ -22,9 +22,9 @@
                         <th>{{$t('static.client_email')}}</th>
                         <th>{{$t('static.salesman')}}</th>
                         <th>{{$t('static.country')}}</th>
-                        <th>{{$t('static.province')}}</th>
+                        <!-- <th>{{$t('static.province')}}</th> -->
                         <th>{{$t('static.city')}}</th>
-                        <th>{{$t('static.area')}}</th>
+                        <!-- <th>{{$t('static.area')}}</th> -->
                         <th>{{$t('static.create_time')}}</th>
                         <th>{{$t('static.inquiry_state')}}</th>
                         <th>{{$t('static.handle')}}</th>
@@ -42,9 +42,9 @@
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
-                        <td>{{item.province}}</td>
+                        <!-- <td>{{item.province}}</td> -->
                         <td>{{item.city}}</td>
-                        <td>{{item.district}}</td>
+                        <!-- <td>{{item.district}}</td> -->
                         <td>{{item.ctime | date}}</td>
                         <td v-if="item.inquire==0">{{$t('static.inquire_type')}}</td>
                         <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.initial')}}</td>
@@ -272,8 +272,8 @@ export default {
     background-position: 5px;
 }
  #table_box  table th,#table_box  table td{
-    min-width: 141px;
-    width: 141px;
+    min-width: 171px;
+    width: 171px;
 }
 </style>
 

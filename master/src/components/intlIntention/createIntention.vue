@@ -589,9 +589,15 @@ export default {
     },
     events:{
         breed:function(breed){
-            this.breedInfo.breedName = breed.breedName;
+           if(breed.eName==null){
+             this.breedInfo.breedName = breed.breedName;
+             this.breedParam.breedName = breed.breedName;
+          }else{
+            this.breedParam.breedName = breed.eName;
+            this.breedInfo.breedName = breed.eName;
+          } 
             this.breedInfo.breedId = breed.breedId;
-            this.breedParam.breedName = breed.breedName;
+            /*this.breedParam.breedName = breed.breedName;*/
             this.breedParam.id = breed.breedId;
             //this.breedParam.loading=true;
             //this.getBreedDetail(this.breedParam);
@@ -759,6 +765,18 @@ export default {
     display: inline-block;
 }
 
+.table>thead{
+  min-width: 100%;
+  width: 100%;
+  display: block;
+}
+.table>thead>tr{
+  width: 100%;
+  display: block;
+}
+th,td{
+  width: 90px;
+}
 a{
     cursor:pointer;
 }

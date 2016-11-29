@@ -18,7 +18,7 @@
         <table class="table table-hover table_color table-striped " v-cloak id="tab">
             <thead>
                 <tr>
-                    <th>{{$t('static.order_no')}}</th>
+                    <!-- <th>{{$t('static.order_no')}}</th>
                     <th>{{$t('static.order_type')}}</th>
                     <th>{{$t('static.order_source')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
@@ -33,13 +33,29 @@
                     <th>{{$t('static.order_status')}}</th>
                     <th>{{$t('static.review_status')}}</th>
                     <th>{{$t('static.currency')}}</th>
-                    <th>{{$t('static.payment_method')}}</th>
-                    <th style="width:200px;">{{$t('static.handle')}}</th>
+                    <th>{{$t('static.payment_method')}}</th> -->
+                      <th>{{$t('static.transcation')}}</th>
+                      <th>{{$t('static.order_type')}}</th>
+                      <th>{{$t('static.trading_patterns')}}</th>
+                      <th>{{$t('static.sample_order')}}</th>
+                      <th>{{$t('static.breed')}}</th>
+                      <th>{{$t('static.transcation_amount')}}</th>
+                      <th>{{$t('static.client_name')}}</th>
+                      <th>{{$t('static.supplier_name')}}</th>
+                      <th>{{$t('static.salesman')}}</th>
+                      <th>{{$t('static.consignee_name')}}</th>
+                      <th>{{$t('static.consignee_phone')}}</th>
+                      <th>{{$t('static.consignee_address')}}</th>
+                      <th>{{$t('static.payment_method')}}</th>
+                      <th>{{$t('static.order_status')}}</th>
+                      <th>{{$t('static.order_source')}}</th>
+                      <th>{{$t('static.review_status')}}</th>
+                      <th style="width:200px;">{{$t('static.handle')}}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="item in initOrderlist"  v-cloak>
-                  <td><a @click="clickOn({
+                  <!-- <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
                                 loading:false,
@@ -63,17 +79,50 @@
                   <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
                   <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
                   <td v-if="item.clients==null">未说明</td>
-
-                  <td v-if="item.orderStatus==30">已支付，等待审核</td>
-                  <td v-if="item.orderStatus==40">已审核</td>
+                  
+                  
                   <td>{{item.validate | Auditing}}</td>
                   <td>{{item.currency | Currency}}</td>
                   <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
                   <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
                   <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
                   <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
-                  <td v-if="item.payWay==null">其他</td>
-                  <!-- <td v-if="item.payWay==''">其他</td> -->
+                  <td v-if="item.payWay==null">其他</td> -->
+                  <td>{{item.ctime}}</td>
+                  <td v-if="item.type==1">{{$t('static.sell')}}</td>
+                  <td v-if="item.type==0">{{$t('static.purchase')}}</td>
+                  <td v-if="item.mode==1">{{$t('static.together')}}</td>
+                  <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
+                  <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
+                  <td v-if="item.sample==0">否</td>
+                  <td v-if="item.sample==1">是</td>
+                  <td>{{{item.goodsDesc}}</td>
+                  <td>{{item.total}}</td>
+                  <td><a @click="clickOn({
+                                show:true,
+                                id:item.id,
+                                loading:false,
+                                orderStatus:item.orderStatus,
+                                contact:'/order/myList'
+                        })">{{item.customerName}}</a></td>
+                  <td></td>
+                  <td>{{item.employeeName}}</td>
+                  <td>{{item.consignee}}</td>
+                  <td>{{item.consigneePhone}}</td>
+                  <td>{{item.consigneeAddr}}</td>
+                  <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
+                  <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
+                  <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
+                  <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
+                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">未支付</td>
+                  <td v-if="item.orderStatus==30">已支付，等待审核</td>
+                  <td v-if="item.orderStatus==40">已审核</td>
+                  <td v-if="item.sourceType==0">交易员新建</td>
+                  <td v-if="item.sourceType==1">意向</td>
+                  <td v-if="item.sourceType==2">报价</td>
+                  <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Auditing}}</td>
+                  <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
+                  <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
                   <td>
                       <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1">
                              <img src="/static/images/{{$t('static.img_uncheck')}}.png"  title="等待核查" alt="等待核查" @click="pendingOrder(item,$index)" />

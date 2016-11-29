@@ -582,9 +582,15 @@ export default {
     },
     events:{
         breed:function(breed){
-            this.breedInfo.breedName = breed.breedName;
+          if(breed.eName==null){
+             this.breedInfo.breedName = breed.breedName;
+             this.breedParam.breedName = breed.breedName;
+          }else{
+            this.breedParam.breedName = breed.eName;
+            this.breedInfo.breedName = breed.eName;
+          } 
             this.breedInfo.breedId = breed.breedId;
-            this.breedParam.breedName = breed.breedName;
+            
             this.breedParam.id = breed.breedId;
             //this.breedParam.loading=true;
             //this.getBreedDetail(this.breedParam);

@@ -33,19 +33,19 @@
                             <th>{{$t('static.commodity_items')}}</th>
                             <th>{{$t('static.certificate')}}</th>
                             <th>{{$t('static.country')}}</th>
-                            <th>{{$t('static.province')}}</th>
+                            <!-- <th>{{$t('static.province')}}</th> -->
                             <th>{{$t('static.city')}}</th>
-                            <th>{{$t('static.area')}}</th>
+                            <!-- <th>{{$t('static.area')}}</th> -->
                             <th>{{$t('static.dealing_address')}}</th>
                             <th>{{$t('static.pre_payment')}}</th>
-                            <th>{{$t('static.invoice')}}</th>
-                            <th>{{$t('static.come_to_see_product')}}</th>
+                            <!-- <th>{{$t('static.invoice')}}</th> -->
+                            <!-- <th>{{$t('static.come_to_see_product')}}</th> -->
                             <th>{{$t('static.packaging')}}</th>
                             <!-- <th>{{$t('static.international')}}</th> -->
                             <th>{{$t('static.Number_of_inquiries')}}</th>
                             <th>{{$t('static.quotation_number')}}</th>
                             <th>{{$t('static.issued_time')}}</th>
-                            <th>{{$t('static.review_status')}}</th>
+                            <!-- <th>{{$t('static.review_status')}}</th> -->
                             <!-- <th>{{$t('static.description')}}</th> -->
                             <th>{{$t('static.inquiry_state')}}</th>
                             <th>{{$t('static.inquiry_type')}}</th>
@@ -56,29 +56,37 @@
 
                     <tr v-for="item in initIntlIntentionList" style="cursor:pointer">
                         <td>
-                            <div v-if="item.especial==0&&item.type==0">普通求购</div>
-                            <div v-if="item.especial==0&&item.type==1">普通供应</div>
-                            <div v-if="item.especial==1&&item.type==0">紧急求购</div>
-                            <div v-if="item.especial==1&&item.type==1">低价资源</div>
+                            <div v-if="item.especial==0&&item.type==0">{{$t('static.common_purchase')}}</div>
+                            <div v-if="item.especial==0&&item.type==1">{{$t('static.common_supply')}}</div>
+                            <div v-if="item.especial==1&&item.type==0">{{$t('static.emergency')}}</div>
+                            <div v-if="item.especial==1&&item.type==1">{{$t('static.low_cost')}}</div>
                         </td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td class="underline" @click="clickOn(item.id)">{{item.names}}</td>
                         <td>{{item.qualification | qualify}}</td>
                         <td>{{item.country}}</td>
-                        <td>{{item.province}}</td>
+                        <!-- <td>{{item.province}}</td> -->
                         <td>{{item.city}}</td>
-                        <td>{{item.district}}</td>
+                        <!-- <td>{{item.district}}</td> -->
                         <td>{{item.address}}</td>
                         <td>{{item.advance}}</td>
-                        <td>{{item.invoic | invoicstate}}</td>
-                        <td>{{item.visit | visitstate}}</td>
-                        <td>{{item.pack}}</td>
+                        <!-- 发票<td v-if="item.invoic==0">{{$t('static.none')}}</td>
+                        <td v-if="item.invoic==1">{{$t('static.common_invoice')}}</td>
+                        <td v-if="item.invoic==2">{{$t('static.add_invoice')}}</td>
+                        <td v-if="item.invoic===null">{{$t('static.none')}}</td> -->
+                        <!-- <td>{{item.visit | visitstate}}</td> -->
+                        <td v-if="item.pack=='其它'">{{$t('static.other')}}</td>
+                        <td v-if="item.pack==''">{{$t('static.other')}}</td>
+                        <td v-if="item.pack=='积压包'">{{$t('static.pallets')}}</td>
+                        <td v-if="item.pack=='编织袋'">{{$t('static.bag')}}</td>
+                        <td v-if="item.pack=='瓦楞纸箱'">{{$t('static.box')}}</td>
+                        <td v-if="item.pack=='真空包装'">{{$t('static.packing')}}</td>
                         <!-- <td>{{item.intl | intlstata}}</td> -->
                         <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime | date}}</td>
-                        <td>{{item.validate | intentionAudit}}</td>
+                        <!-- <td>{{item.validate | intentionAudit}}</td> -->
                         <!-- <td>{{item.description}}</td> -->
                         <td>{{item.inquire | inquire}}</td>
                         <td>{{item.inquireType}}</td>
