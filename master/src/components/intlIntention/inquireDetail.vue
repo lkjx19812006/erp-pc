@@ -427,19 +427,6 @@ export default {
                 link:'/intlIntention/itemOffer',
                 index:'',     //条目的索引
                 lastIndex:'',   //列表页询价的索引
-                /*id:'',
-                intentionId:'',
-                inquireId:'',
-                type:0,
-                currency:'',
-                itemId:'',
-                itemName:'',
-                origPrice:'',
-                price:'',
-                number:'',
-                unit:'',
-                total:'',
-                comment:''*/
                 id:'',
                 intentionId:'',
                 inquireId:'',
@@ -745,6 +732,7 @@ section article {
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
   text-align: left;
+  width: 14%;
 }
 .edit-detail {
     border: 0px solid #ddd;

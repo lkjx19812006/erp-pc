@@ -989,14 +989,13 @@
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>{{$t('static.type')}}</label>
-                                    <input v-if="initClientDetail.type==0" type="text" class="form-control"  value="个人" disabled="disabled" />
-                                    <input v-if="initClientDetail.type==1" type="text" class="form-control"  value="企业" disabled="disabled" />
+                                    <input  type="text" class="form-control"  value="{{initClientDetail.typeDesc}}" disabled="disabled" />
                                 </div>
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>{{$t('static.classification_code')}}</label>
-                                    <input type="text" class="form-control"  v-model="initClientDetail.category" value="{{initClientDetail.category}}" disabled="disabled" />
+                                    <label>{{$t('static.classification')}}</label>
+                                    <input type="text" class="form-control"  value="{{initClientDetail.classify | classify}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>{{$t('static.telephone')}}</label>
@@ -1452,6 +1451,7 @@ section article {
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
 	text-align: center;
+  width: 10%;
 }
 .edit-detail {
     border: 1px solid #ddd;

@@ -17,20 +17,15 @@
                 <!-- <button class="new_btn" @click="createIntention()">{{$t('static.new')}}</button> -->
             </div>
         </div>
-        <div class="service-nav clearfix">
-            <div class="my_order_search">
-
-           </div>
-        </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
-                            <th>{{$t('static.special')}}</th>
+                            <th>{{$t('static.type')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.client_email')}}</th>
                             <th>{{$t('static.commodity_items')}}</th>
@@ -44,12 +39,11 @@
                             <th>{{$t('static.invoice')}}</th>
                             <th>{{$t('static.come_to_see_product')}}</th>
                             <th>{{$t('static.packaging')}}</th>
-                            <th>{{$t('static.international')}}</th>
                             <th>{{$t('static.Number_of_inquiries')}}</th>
                             <th>{{$t('static.quotation_number')}}</th>
                             <th>{{$t('static.issued_time')}}</th>
                             <th>{{$t('static.review_status')}}</th>
-                            <th>{{$t('static.description')}}</th>
+                            <!-- <th>{{$t('static.description')}}</th> -->
                             <th>{{$t('static.inquiry_state')}}</th>
                             <th>{{$t('static.inquiry_type')}}</th>
                     </tr>
@@ -61,7 +55,8 @@
                             <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
                         <!--</td>-->
                         <td>
-                            <div v-if="item.especial==0">普通</div>
+                            <div v-if="item.especial==0&&item.type==0">普通求购</div>
+                            <div v-if="item.especial==0&&item.type==1">普通供应</div>
                             <div v-if="item.especial==1&&item.type==0">紧急求购</div>
                             <div v-if="item.especial==1&&item.type==1">低价资源</div>
                         </td>
@@ -78,12 +73,11 @@
                         <td>{{item.invoic | invoicstate}}</td>
                         <td>{{item.visit | visitstate}}</td>
                         <td>{{item.pack}}</td>
-                        <td>{{item.intl | intlstata}}</td>
                         <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime | date}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
-                        <td>{{item.description}}</td>
+                        <!-- <td>{{item.description}}</td> -->
                         <td>{{item.inquire | inquire}}</td>
                         <td>{{item.inquireType}}</td>
                         <!-- <td>
@@ -116,7 +110,7 @@ import detailModel from '../intentionDetail'
 import createModel from '../createIntention'
 import modifyModel from '../modifyIntention'
 import inquireModel from '../inquire'
-
+import common from '../../../common/common'
 
 import {
     initIntlIntentionList
@@ -263,6 +257,9 @@ export default {
               show:false
             }
         }
+    },
+    ready(){
+      common('tab','table_box',1);
     },
     methods: {
         inquire:function(id,time){

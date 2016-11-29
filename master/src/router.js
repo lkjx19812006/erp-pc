@@ -33,10 +33,10 @@ export default (router) => router.map({
                     require(['./views/main'], resolve)
                 }
             },
-            '/change': {
-                name: 'change',
+            '/count': {
+                name: 'count',
                 component: function(resolve) {
-                    require(['./views/chance'], resolve)
+                    require(['./views/count'], resolve)
                 }
             },
             '/unclient': {

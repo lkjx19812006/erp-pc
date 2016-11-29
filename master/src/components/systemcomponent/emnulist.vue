@@ -38,18 +38,18 @@
             </div>
         </div>
     </div>
-    <div class="order_table">
+    <div class="order_table" id="table_box">
       <div class="cover_loading">
           <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
       </div>
-       <table class="table table-hover table_color table-striped"  v-cloak>
+       <table class="table table-hover table_color table-striped"  v-cloak id="tab">
           <thead>
               <tr>
                  <th>编码</th>
                  <th>名称</th>
                  <th>类型</th>
                  <th>描述</th>
-                 <th colspan="2">操作</th>
+                 <th>操作</th>
               </tr>
             </thead>
             <tbody>
@@ -92,7 +92,7 @@ import systemModel from '../systemcomponent/systemDataInfoDialog'
 import modifyModel from '../systemcomponent/systemUpdateInfo'
 import deleteModel from '../systemcomponent/systemDelInfo'
 import filter from '../../filters/filters'
-
+import common from '../../common/common'
 import {
     initSystemlist,
     initSearchlist
@@ -177,6 +177,9 @@ export default {
             getSystemSearch
         }
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     created() {
         this.getSystemData(this.loadParam,this.loadParam.all);
     },
@@ -207,7 +210,6 @@ export default {
             this.delParam.show=true;
         }
     },
-
     filter:(filter,{})
 
 }
@@ -289,61 +291,6 @@ export default {
 .order_table .table > ul >li img {
     margin: auto;
 }
-
-.order_action {
-    position: absolute;
-    right: 96px;
-    padding: 10px 0;
-    top: 32px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    background: #fff;
-    z-index: 10;
-    min-width: 90px;
-    max-width: 200px;
-}
-
-.order_show {
-    position: absolute;
-    right: 96px;
-    padding: 10px 0;
-    top: 32px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    background: #fff;
-    z-index: 10;
-    min-width: 90px;
-    max-width: 200px;
-    display: block;
-}
-
-.order_action ul,
-.order_show ul {
-    margin-bottom: 0;
-}
-
-.order_action ul li a,
-.order_show ul li a {
-    color: #003077;
-    padding: 5px 5px 5px 10px;
-    display: block;
-    cursor: pointer;
-}
-
-.expand-transition {
-    transition: all .3s ease;
-    overflow: inherit;
-}
-
-.expand-enter,
-.expand-leave {
-    opacity: 0;
-    height: 0;
-}
-
-.v-spinner {
-    text-align: center;
-}
 .order_pagination{
     margin: 0 auto;
     text-align: center;
@@ -391,5 +338,8 @@ export default {
    left: 0;
    right: 0
 }
-
+ #table_box  table th,#table_box  table td{
+    width: 340px;
+    min-width: 340px;
+}
 </style>

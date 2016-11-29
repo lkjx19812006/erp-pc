@@ -21,11 +21,11 @@
                    <dt class="left transfer marg_top">来源：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
-                            <option value="">请选择来源</option>
-                            <option value="0">PC</option>
-                            <option value="1">安卓</option>
-                            <option value="2">微信</option>
-                            <option value="3">IOS</option>
+                            <option value="">全部</option>
+                            <option value="1">PC</option>
+                            <option value="2">安卓</option>
+                            <option value="3">微信</option>
+                            <option value="4">IOS</option>
                         </select>
                    </dd>
                 </dl>
@@ -33,7 +33,7 @@
                    <dt class="left transfer marg_top">经营类型：</dt>
                    <dd class="left">
                          <select v-model="loadParam.bizType"  class="form-control" @change="selectSearch()">
-                                  <option value="" selected>请选择经营类型</option>
+                                  <option value="" selected>全部</option>
                                   <option value="0">其它</option>
                                   <option value="1">合作社</option>
                                   <option value="2">药商</option>
@@ -65,7 +65,7 @@
                    <dt class="left transfer marg_top">审核状态：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.audit" @change="selectSearch()">
-                            <option value="">请选择审核状态</option>
+                            <option value="">全部</option>
                             <option value="0">待审核</option>
                             <option value="1">审核中</option>
                             <option value="2">审核通过</option>
@@ -77,7 +77,7 @@
                    <dt class="left transfer marg_top">划转状态：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.transform" @change="selectSearch()">
-                            <option value="">请选择划转状态</option>
+                            <option value="">全部</option>
                             <option value="0">待划转</option>
                             <option value="1">已划转</option>
                             <option value="2">转黑</option>
@@ -86,11 +86,11 @@
                 </dl>
             </div>
         </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                         <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
@@ -111,7 +111,7 @@
                         <th>企业认证</th>
                         <th>划转状态</th>
                         <th>注册时间</th>
-                        <th colspan="3">操作</th>
+                        <th style="min-width: 230px;">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -138,11 +138,11 @@
                         <!--<td>{{item.qq}}</td>-->
                         <td>{{item.company}}</td>
                         <td>{{item.bizMain}}</td>
-                        <td v-if="item.source==0" style="background:red;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==1" style="background:green;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==2" style="background:blue;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==3" style="background:#444444;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==4" style="background:black;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==1" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==2" style="background:green;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==3" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==4" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
+                        <!-- <td v-if="item.source==4" style="background:#9966FF;color:#fff">{{item.sourceType}}</td> -->
                         <td v-if="!item.source" >其它</td>
                         <td>{{item.bizTypeName}}</td>
                         <td>{{item.province+item.city}}</td>
@@ -159,7 +159,8 @@
                         <td v-if="item.transStatus==0">未划转</td>
                         <td v-if="item.transStatus!=0&&item.transStatus!=1">转黑名单</td>
                         <td>{{item.ctime}}</td>
-                        <td  @click="modifyUser({
+                        <td  >
+                            <div class="operate" @click="modifyUser({
                                     loading:false,
                                     id:item.id,
                                     show:true,
@@ -185,11 +186,8 @@
                                     userType:'',
                                     bizMain:'',
                                     grade:item.grade
-                                    },item.show=false)">
-                            <div class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
+                                    },item.show=false)"><img src="/static/images/edit.png" height="18" width="30"/>
                             </div>
-                        </td>
-                        <td>
                             <div class="operate"  v-if="item.transStatus==0&&item.audit==2"  @click="userToClient({
                                     mainBiz:item.bizMain,
                                     name:item.fullname,
@@ -224,13 +222,10 @@
                                      }
                                     },item.show=false)"><img src="/static/images/transfer.png" height="18" width="30"/>
                             </div>
-                        </td>
-                        <td v-if="item.utype==1">
-                            <div class="operate"  @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)"><img src="/static/images/Pcertification.png" height="18" width="47"/>
+                            <div class="operate"  v-if="item.utype==1"  @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)"><img src="/static/images/Pcertification.png" height="18" width="47"/>
                             </div>
-                        </td>
-                        <td v-if="item.ctype==1">
-                            <div class="operate"  @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)"><img src="/static/images/Ecertification.png" height="18" width="48"/>
+
+                            <div class="operate" v-if="item.ctype==1"  @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)"><img src="/static/images/Ecertification.png" height="18" width="48"/>
                             </div>
                         </td>
                         <!-- <td @click.stop="eventClick($index)">
@@ -323,7 +318,7 @@ import auditModel  from '../components/user/userAudit'
 import detailModel from '../components/user/userDetail'
 import searchModel from '../components/user/userSearch'
 import intentionModel from  '../components/user/userIntention'
-
+import common from '../common/common'
 import pagination from '../components/pagination'
 import {
     getCount,
@@ -334,8 +329,6 @@ import {
 import {
     getUserList,
     getUserDetail,
-
-
 } from '../vuex/actions'
 
 
@@ -596,8 +589,10 @@ export default {
         this.intentionParam.show = true;
     }
 
-
   },
+  ready(){
+      common('tab','table_box',1);
+    },
   created() {
         this.getUserList(this.loadParam);
   }

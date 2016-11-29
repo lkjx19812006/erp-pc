@@ -27,11 +27,11 @@
                 <button class="new_btn" @click="createBreed('create')">新建</button>
             </div>
         </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped" v-cloak>
+            <table class="table table-hover table_color table-striped" v-cloak id="tab">
                 <thead>
                     <tr>
                         <th>编码</th>
@@ -41,11 +41,6 @@
                         <th>英文</th>
                         <th>拉丁文</th>
                         <th>操作</th>
-                    </tr>
-                </thead>
-                <thead class="space">
-                    <tr>
-                        <th colspan="7"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,6 +88,7 @@ import breedModel from '../../components/serviceBaseData/createBreedDialog'
 import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import breedreviseModel from '../../components/serviceBaseData/breedUpdate'
 import detailModel from '../../components/serviceBaselist/breeddetail'
+import common from '../../common/common'
 import {
     initBreedlist,
   initCategorylist
@@ -204,6 +200,9 @@ export default {
         this.$store.state.table.basicBaseList.breedList[sub].show=!this.$store.state.table.basicBaseList.breedList[sub].show;
       }
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
@@ -240,5 +239,9 @@ export default {
     position:absolute;
     padding:3px 14px;
     margin-top:0px;
+}
+ #table_box  table th,#table_box  table td{
+    width: 242px;
+    min-width: 242px;
 }
 </style>

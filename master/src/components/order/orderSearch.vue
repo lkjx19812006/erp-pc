@@ -38,7 +38,7 @@
                          <select v-model="param.orderStatus"  class="form-control">
                             <option value="">{{$t('static.select_order_status')}}</option>
                             <option value="0">{{$t('static.order_generation')}}</option>
-                            <option value="10">{{$t('static.pending')}}</option>
+                            <!-- <option value="10">{{$t('static.pending')}}</option> -->
                             <option value="20">{{$t('static.wait_for_payment')}}</option>
                             <option value="30">{{$t('static.wait_for_audit')}}</option>
                             <option value="40">{{$t('static.wait_for_delivery')}}</option>
@@ -59,14 +59,14 @@
                             <option value="3">{{$t('static.yaokuan')}}</option>
                         </select>
                     </div>
-                    <div class="client-detailInfo col-xs-6">
+                    <!-- <div class="client-detailInfo col-xs-6">
                         <label>{{$t('static.order_validity')}}：</label>
                         <select v-model="param.dataStatus"  class="form-control">
                             <option value="">{{$t('static.select_order_validity')}}</option>
                             <option value="0">{{$t('static.available')}}</option>
                             <option value="1">{{$t('static.useless')}}</option>
                         </select>
-                    </div>
+                    </div> -->
                     <div class="client-detailInfo col-xs-6">
                         <label>{{$t('static.client_source')}}：</label>
                         <select v-model="param.clients"  class="form-control">
@@ -81,9 +81,9 @@
                         <label>{{$t('static.trading_patterns')}}：</label>
                         <select v-model="param.mode"  class="form-control">
                             <option value="">{{$t('static.select_trading_patterns')}}</option>
-                            <option value="1">撮合</option>
-                            <option value="2">三方</option>
-                            <option value="3">自营</option>
+                            <option value="1">{{$t('static.together')}}</option>
+                            <option value="2">{{$t('static.three_side')}}</option>
+                            <option value="3">{{$t('static.self_support')}}</option>
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6" v-if="param.link=='/order/'">
@@ -106,7 +106,7 @@
                         <mz-datepicker :time.sync="param.ftime" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
-                    <div class="client-detailInfo col-xs-6">
+                    <div class="client-detailInfo pull-right col-xs-6">
                          <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">{{$t('static.clear_all')}}</button>
                     </div>
                 </div>

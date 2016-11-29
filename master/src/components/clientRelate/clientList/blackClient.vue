@@ -8,11 +8,11 @@
       <div class="my_enterprise col-xs-1">客户黑名单</div>
       <button class="new_btn transfer" @click="clientTransferWhite()">踢出黑名单</button>
     </div>
-    <div class="order_table">
+    <div class="order_table" id="table_box">
       <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
       </div>
-      <table class="table table-hover table_color table-striped " v-cloak>
+      <table class="table table-hover table_color table-striped " v-cloak id="tab">
         <thead>
         <tr>
           <th>
@@ -22,7 +22,7 @@
           <th>客户来源</th>
           <th>客户信用等级</th>
           <th>客户名称</th>
-          <th>分类码</th>
+          <!-- <th>分类码</th> -->
           <!-- <th>所属分类</th> -->
           <th>所属业务员</th>
           <th>负责人</th>
@@ -30,14 +30,13 @@
           <th>手机</th>
           <th>手机省</th>
           <th>手机市</th>
-          <th>邮箱</th>
+          <!-- <th>邮箱</th> -->
           <th>国家</th>
           <th>所在省</th>
           <th>所在市</th>
           <th>注册地址</th>
           <th>创建时间</th>
           <th style="min-width:200px">备注</th>
-          <th ></th>
         </tr>
         </thead>
         <tbody>
@@ -49,8 +48,12 @@
             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
           </td>
           <td>{{item.typeDesc}}</td>
-          <td>{{item.classify | classify}}</td>
-          <td>{{item.sourceType}}</td>
+          <td>{{item.classifyDesc | classify}}</td>
+          <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='android'" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='ios'" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType!='pc'&&item.sourceType!='weixin'&&item.sourceType!='android'&&item.sourceType!='ios'" style="background:#fa6705;color:#fff">{{item.sourceType}}</td> 
           <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
           <td v-if="item.creditLevel==1">一星客户</td>
           <td v-if="item.creditLevel==2">二星客户</td>
@@ -67,7 +70,7 @@
                                 key:'customerList'
                                 })">{{item.name}}</td>
           <!-- 上面这个img显示新客户图标 -->
-          <td>{{item.category}}</td>
+          <!-- <td>{{item.category}}</td> -->
           <!-- <td>{{item.classify | classify}}</td> -->
           <td>{{item.employeeName}}</td>
           <td>{{item.principal}}</td>
@@ -75,15 +78,13 @@
           <td>{{item.mainPhone}}</td>
           <td>{{item.phoneProvince}}</td>
           <td>{{item.phoneCity}}</td>
-          <td>{{item.email}}</td>
+          <!-- <td>{{item.email}}</td> -->
           <td>{{item.countryName | country}}</td>
           <td>{{item.provinceName}}</td>
           <td>{{item.cityName}}</td>
           <td>{{item.address}}</td>
           <td>{{item.ctime}}</td>
           <td >{{item.blackComments}}</td>
-          <td >
-          </td>
         </tr>
         </tbody>
       </table>
@@ -100,6 +101,7 @@
   import searchModel  from  '../../../components/clientRelate/searchModel'
   import tipsdialogModel  from '../../../components/tipsDialog'
   import auditDialog from '../../../components/tips/auditDialog'
+  import common from '../../../common/common'
   import {
     initCustomerlist
   } from '../../../vuex/getters'
@@ -238,6 +240,9 @@
         this.loadParam.cur = input;
         this.getClientList(this.loadParam);
       }
+    },
+    ready(){
+      common('tab','table_box',1);
     },
     created() {
       this.getClientList(this.loadParam);

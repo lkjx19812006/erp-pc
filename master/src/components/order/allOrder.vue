@@ -17,7 +17,7 @@
                <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
                <dd class="left">
                     <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                        <option value="">{{$t('static.select_order_type')}}</option>
+                        <option value="">{{$t('static.please_select')}}</option>
                         <option value="0">{{$t('static.purchase')}}</option>
                         <option value="1">{{$t('static.sell')}}</option>
                     </select>
@@ -27,14 +27,13 @@
                <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
-                            <option value="">{{$t('static.select_order_status')}}</option>
+                            <option value="">{{$t('static.please_select')}}</option>
                             <option value="0">{{$t('static.order_generation')}}</option>
-                            <option value="10">{{$t('static.pending')}}</option>
+                            <!-- <option value="10">{{$t('static.pending')}}</option> -->
                             <option value="20">{{$t('static.wait_for_payment')}}</option>
                             <option value="30">{{$t('static.wait_for_audit')}}</option>
                             <option value="40">{{$t('static.wait_for_delivery')}}</option>
                             <option value="50">{{$t('static.wait_for_receiving')}}</option>
-                            <option value="60">{{$t('static.completed')}}</option>
                             <option value="70">{{$t('static.completed')}}</option>
                             <option value="-1">{{$t('static.canceled')}}</option>
                             <option value="-2">{{$t('static.out_of_date')}}</option>
@@ -45,21 +44,11 @@
                <dt class="left transfer marg_top">{{$t('static.payment_method')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.payWay"  class="form-control" @change="selectSearch()">
-                            <option value="">{{$t('static.select_payment_method')}}</option>
+                            <option value="">{{$t('static.please_select')}}</option>
                             <option value="0">{{$t('static.offline')}}</option>
                             <option value="1">{{$t('static.alipay')}}</option>
-                            <option value="2">平安</option>
-                            <option value="3">药款</option>
-                    </select>
-               </dd>
-            </dl>
-            <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.order_validity')}}：</dt>
-               <dd class="left">
-                     <select v-model="loadParam.dataStatus"  class="form-control" @change="selectSearch()">
-                        <option value="">{{$t('static.select_order_validity')}}</option>
-                        <option value="0">{{$t('static.available')}}</option>
-                        <option value="1">{{$t('static.useless')}}</option>
+                            <option value="2">{{$t('static.pingan')}}</option>
+                            <option value="3">{{$t('static.yaokuan')}}</option>
                     </select>
                </dd>
             </dl>
@@ -67,7 +56,7 @@
                <dt class="left transfer marg_top">{{$t('static.client_source')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.clients"  class="form-control" @change="selectSearch()">
-                        <option value="">{{$t('static.select_client_source')}}</option>
+                        <option value="">{{$t('static.please_select')}}</option>
                         <option value="0">pc</option>
                         <option value="1">android</option>
                         <option value="2">wechart</option>
@@ -79,20 +68,20 @@
                <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
-                        <option value="">{{$t('static.select_trading_patterns')}}</option>
-                        <option value="1">撮合</option>
-                        <option value="2">三方</option>
-                        <option value="3">自营</option>
+                        <option value="">{{$t('static.please_select')}}</option>
+                        <option value="1">{{$t('static.together')}}</option>
+                        <option value="2">{{$t('static.three_side')}}</option>
+                        <option value="3">{{$t('static.self_support')}}</option>
                     </select>
                </dd>
             </dl>
         </div>
       </div>
-      <div class="order_table">
+      <div class="order_table" id="table_box">
           <div class="cover_loading">
               <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
           </div>
-        <table class="table table-hover table_color table-striped " v-cloak>
+        <table class="table table-hover table_color table-striped " v-cloak id="tab">
             <thead>
                 <tr>
                     <th>{{$t('static.order_no')}}</th>
@@ -124,7 +113,7 @@
                         })">{{item.no}}</a></td>
                   <td v-if="item.type==1">销售</td>
                   <td v-if="item.type==0">采购</td>
-                  <td v-if="item.sourceType==0">新建</td>
+                  <td v-if="item.sourceType==0">交易员新建</td>
                   <td v-if="item.sourceType==1">意向</td>
                   <td v-if="item.sourceType==2">报价</td>
                   <td>{{item.consignee}}</td>
@@ -224,6 +213,7 @@
     import deletebreedModel from  '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
     import disposeModel  from  '../order/orderStatus'
     import filter from '../../filters/filters'
+    import common from '../../common/common'
     import {
         getList,
         initOrderlist
@@ -436,6 +426,9 @@
             }
         },
         filter:(filter,{}),
+        ready(){
+          common('tab','table_box',1);
+        },
         created() {
             this.getOrderList(this.loadParam)
         },
@@ -457,14 +450,6 @@
         margin-top: 20px;
         position: relative;
     }
-
-    .order_table .table {
-        background: #fff;
-        position: relative;
-        margin-bottom: 10px;
-        border-top: 1px solid #ddd;
-    }
-
     .order_table .table > ul {
         position: relative;
         width: 100%;
@@ -493,60 +478,14 @@
         margin: auto;
     }
 
-    .order_action {
-        position: absolute;
-        right: 97px;
-        padding: 10px 0;
-        top: 32px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background: #fff;
-        z-index: 10;
-        min-width: 90px;
-        max-width: 200px;
-    }
-
-    .order_show {
-        position: absolute;
-        right: 20px;
-        padding: 10px 0;
-        top: 32px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background: #fff;
-        z-index: 10;
-        min-width: 90px;
-        max-width: 200px;
-        display: block;
-    }
-
-    .order_action ul,
-    .order_show ul {
-        margin-bottom: 0;
-    }
-
-    .order_action ul li a,
-    .order_show ul li a {
-        color: #003077;
-        padding: 5px 5px 5px 10px;
-        display: block;
-    }
-
-    .expand-transition {
-        transition: all .3s ease;
-        overflow: inherit;
-    }
-
-    .expand-enter,
-    .expand-leave {
-        opacity: 0;
-        height: 0;
-    }
-
     .v-spinner {
         text-align: center;
     }
     .order_pagination{
         text-align: center;
+    }
+     #table_box  table th,#table_box  table td{
+      width: 107px;
+      min-width: 107px;
     }
   </style>

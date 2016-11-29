@@ -19,10 +19,10 @@
           </div>
           <div class="clear" style="margin-top:10px;">
               <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">类型：</dt>
+                 <dt class="left transfer marg_top">意向类型：</dt>
                  <dd class="left">
                       <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                          <option value="" selected>请选择类型</option>
+                          <option value="" selected>全部</option>
                           <option value="0">求购</option>
                           <option value="1">供应</option>
                       </select>
@@ -32,7 +32,7 @@
                  <dt class="left transfer marg_top">供应类型：</dt>
                  <dd class="left">
                        <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
-                              <option value="" selected>请选择供应类型</option>
+                              <option value="" selected>全部</option>
                               <option value="0">普通供应</option>
                               <option value="1">低价资源</option>
                       </select>
@@ -42,17 +42,17 @@
                  <dt class="left transfer marg_top">求购类型：</dt>
                  <dd class="left">
                        <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
-                              <option value="" selected>请选择求购类型</option>
+                              <option value="" selected>全部</option>
                               <option value="0">普通求购</option>
                               <option value="1">紧急求购</option>
                       </select>
                  </dd>
               </dl>
               <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">是否提供发票：</dt>
+                 <dt class="left transfer marg_top">提供发票：</dt>
                  <dd class="left">
                        <select v-model="loadParam.invoic"  class="form-control" @change="selectSearch()">
-                                <option value="" selected>请选择发票</option>
+                                <option value="" selected>全部</option>
                                 <option value="0">无发票</option>
                                 <option value="1">普通发票</option>
                                 <option value="2">增值发票</option>
@@ -60,10 +60,10 @@
                  </dd>
               </dl>
               <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">选择审核状态：</dt>
+                 <dt class="left transfer marg_top">审核状态：</dt>
                  <dd class="left">
                        <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
-                          <option value="" selected>请选择审核状态</option>
+                          <option value="" selected>全部</option>
                           <option value="0">初始</option>
                           <option value="9">审核中</option>
                           <option value="1">客服审核通过</option>
@@ -75,10 +75,10 @@
                  </dd>
               </dl>
               <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">选择上架状态：</dt>
+                 <dt class="left transfer marg_top">上/下架状态：</dt>
                  <dd class="left">
                        <select v-model="loadParam.onSell"  class="form-control" @change="selectSearch()">
-                          <option value="" selected>请选择上架状态</option>
+                          <option value="" selected>全部</option>
                           <option value="0">初始</option>
                           <option value="1">申请上架</option>
                           <option value="2">上架</option>
@@ -89,33 +89,18 @@
                       </select>
                  </dd>
               </dl>
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">是否是国际信息：</dt>
-                 <dd class="left">
-                       <select v-model="loadParam.intl"  class="form-control" @change="selectSearch()">
-                          <option value="" selected>通过国际搜索</option>
-                          <option value="0">国内</option>
-                          <option value="1">国际</option>
-                      </select>
-                 </dd>
-              </dl>
           </div>
         </div>
-        <div class="service-nav clearfix">
-            <div class="my_order_search">
-
-           </div>
-        </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                         <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
                         <th>类型</th>
-                        <th>特殊的</th>
+                        <!-- <th>特殊的</th> -->
                         <th>客户名称</th>
                         <th>客户手机号</th>
                         <th>品种名称</th>
@@ -125,23 +110,13 @@
                         <th>单价</th>
                         <th>产地</th>
                         <th>数量</th>
-                        <th>国家</th>
                         <th>所在省</th>
-                        <th>所在市</th>
-                        <th>所在区</th>
                         <th>交收地址</th>
-                        <th>预付比例</th>
-                        <th>发票</th>
-                        <th>上门看货</th>
-                        <th>包装</th>
-                        <th>是否国际</th>
                         <th>提供样品</th>
                         <th>样品数量</th>
-                        <th>样品单位</th>
                         <th>样品价格</th>
-                        <th>报价人数</th>
                         <th>审核状态</th>
-                        <th colspan="2">操作</th>
+                        <th style="min-width: 150px;">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -151,9 +126,10 @@
                             <label v-if="item.validate==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" >
                             </label>
                         </td>
-                        <td>{{item.type | chanceType}}</td>
+                        <!-- <td>{{item.type | chanceType}}</td> -->
                         <td>
-                            <div v-if="item.especial==0">普通</div>
+                            <div v-if="item.especial==0&&item.type==0">普通求购</div>
+                            <div v-if="item.especial==0&&item.type==1">普通供应</div>
                             <div v-if="item.especial==1&&item.type==0">紧急求购</div>
                             <div v-if="item.especial==1&&item.type==1">低价资源</div>
                         </td>
@@ -210,26 +186,17 @@
                         <td>{{item.price}}</td>
                         <td>{{item.location}}</td>
                         <td>{{item.number}}</td>
-                        <td>{{item.country}}</td>
                         <td>{{item.province}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.district}}</td>
                         <td>{{item.address}}</td>
-                        <td>{{item.advance}}</td>
-                        <td>{{item.invoic | invoicstate}}</td>
-                        <td>{{item.visit | visitstate}}</td>
-                        <td>{{item.pack}}</td>
-                        <td>{{item.intl | intlstata}}</td>
                         <td>
                             <div v-if="item.sampling==0">否</div>
                             <div v-if="item.sampling==1">是</div>
                         </td>
                         <td>{{item.sampleNumber}}</td>
-                        <td>{{item.sampleUnit}}</td>
                         <td>{{item.sampleAmount}}</td>
-                        <td>{{item.offerNumber}}</td>
                         <td>{{item.validate | intentionAudit}}</td>
-                        <td @click="modifyIntention({
+                        <td >
+                            <a class="operate" @click="modifyIntention({
                                                id:item.id,
                                                sub:$index,
                                                selectCustomer:false,
@@ -241,28 +208,28 @@
                                                customerPhone:item.customerPhone,
                                                breedName:item.breedName,
                                                breedId:item.breedId,
-                                              type:item.type,
-                                              especial:item.especial,
-                                              quality:item.quality,
-                                              qualification:item.qualification,
-                                              spec:item.spec,
-                                              number:item.number,
-                                              unit:item.unit,
-                                              price:item.price,
-                                              address:item.address,
-                                              location:item.location,
-                                              advance:item.advance,
-                                              invoic:item.invoic,
-                                              visit:item.visit,
-                                              pack:item.pack,
-                                              intl:item.intl,
-                                              visit:item.visit,
-                                              sampling:item.sampling,
-                                              sampleNumber:item.sampleNumber,
-                                              sampleUnit:item.sampleUnit,
-                                              sampleAmount:item.sampleAmount,
-                                              offer:item.offer,
-                                              status:item.status,
+                                               type:item.type,
+                                               especial:item.especial,
+                                               quality:item.quality,
+                                               qualification:item.qualification,
+                                               spec:item.spec,
+                                               number:item.number,
+                                               unit:item.unit,
+                                               price:item.price,
+                                               address:item.address,
+                                               location:item.location,
+                                               advance:item.advance,
+                                               invoic:item.invoic,
+                                               visit:item.visit,
+                                               pack:item.pack,
+                                               intl:item.intl,
+                                               visit:item.visit,
+                                               sampling:item.sampling,
+                                               sampleNumber:item.sampleNumber,
+                                               sampleUnit:item.sampleUnit,
+                                               sampleAmount:item.sampleAmount,
+                                               offer:item.offer,
+                                               status:item.status,
                                                country:item.country,
                                                province:item.province,
                                                city:item.city,
@@ -279,14 +246,9 @@
                                                image_s_show:'',
                                                image_t_show:'',
                                                duedate:item.duedate
-                                               })">
-                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                                               })"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                            </a>
-                          
-                        </td>
-
-                       
-                        <td @click.stop="userToClient({
+                            <a class="operate" @click.stop="userToClient({
                                 name:item.customerName,
                                 keyname:'transStatus',
                                 sub:$index,
@@ -317,90 +279,9 @@
                                  qq: item.userQq,
                                  wechart: ''
                                 }
-                              },item.show=false)">
-                            <a class="operate"><img src="/static/images/transfer.png" height="18" width="30"  alt="划转" title="划转"/>
+                              },item.show=false)"><img src="/static/images/transfer.png" height="18" width="30"  alt="划转" title="划转"/>
                             </a>
                         </td>
-                      <!--   <td @click.stop="eventClick($index)">
-                         <img height="24" width="24" src="/static/images/default_arrow.png" />
-                         <div class="component_action" v-show="item.show">
-                             <ul>
-                                 <li @click="modifyIntention({
-
-                                            type:item.type,
-                                            especial:item.especial,
-                                            quality:item.quality,
-                                            qualification:item.qualification,
-                                            spec:item.spec,
-                                            number:item.number,
-                                            unit:item.unit,
-                                            price:item.price,
-                                            address:item.address,
-                                            location:item.location,
-                                            advance:item.advance,
-                                            invoic:item.invoic,
-                                            visit:item.visit,
-                                            pack:item.pack,
-                                            intl:item.intl,
-                                            visit:item.visit,
-                                            sampling:item.sampling,
-                                            sampleNumber:item.sampleNumber,
-                                            sampleUnit:item.sampleUnit,
-                                            sampleAmount:item.sampleAmount,
-                                            offer:item.offer,
-                                            status:item.status,
-                                             country:item.country,
-                                             province:item.province,
-                                             city:item.city,
-                                             district:item.district,
-                                             address:item.address,
-                                             validate:item.validate,
-                                             link:editintentInfo,
-                                             url:'/intention/',
-                                             key:'intentionList',
-                                             image_f:'',
-                                             image_s:'',
-                                             image_t:'',
-                                             image_f_show:'',
-                                             image_s_show:'',
-                                             image_t_show:'',
-                                             duedate:item.duedate
-                                             })">编辑</li>
-                                 <li @click="userToClient({
-                                                name:item.customerName,
-                                                keyname:'transStatus',
-                                                sub:$index,
-                                                //userId:item.userId,
-                                                main:1,
-                                                province:'',
-                                                phone:item.customerPhone,
-                                                tel:item.userTel,
-                                                email:item.userEmail,
-                                                qq:item.userQq,
-                                                type:0,
-                                                fullname:item.userFullname,
-                                                employeeId:'',
-                                                employeeName:'',
-                                                orgId:'',
-                                                orgName:'',
-                                                show:true,
-                                                key:'userList',
-                                                countryId:7,
-                                                countryName:'中国',
-                                                contact:{
-                                                 name: item.customerName,
-                                                 position: '',
-                                                 department: '',
-                                                 phone: item.customerPhone,
-                                                 tel: item.userTel,
-                                                 email: item.email,
-                                                 qq: item.userQq,
-                                                 wechart: ''
-                                                }
-                                              },item.show=false)">划转</li>
-                             </ul>
-                         </div>
-                                             </td> -->
 
                     </tr>
 
@@ -424,7 +305,7 @@ import tipsdialogModel  from '../../tips/tipDialog'
 import supdemModel from '../supplyDemand'
 import transferModel  from '../../user/userTransfer'
 import searchModel from '../intentionSearch'
-
+import common from '../../../common/common'
 
 import {
   initIntentionList,
@@ -691,17 +572,13 @@ export default {
     created() {
         this.getIntentionList(this.loadParam, this.loadParam.all);
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     filter: (filter,{})
 }
 </script>
 <style scoped>
-.base_pagination{
-  margin-bottom:250px;
-}
-.breed_action {
-    top: 33px;
-    right: 106px;
-}
 .transfer{
     margin-left: 18px;
 }
@@ -727,6 +604,5 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-
 </style>
 

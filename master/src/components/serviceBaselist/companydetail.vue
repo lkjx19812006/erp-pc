@@ -84,7 +84,6 @@
                                             <th>微信</th>
                                             <th>主要联系人</th>
                                             <th>职务</th>
-                                            <th colspan="2">操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -97,7 +96,7 @@
                                             <td v-if="item.main==0">否</td>
                                             <td v-if="item.main==1">是</td>
                                             <td>{{item.position}}</td>
-                                            <td  v-if="!initCompanyDetail.customerId"  @click="updateCompany({
+                                            <td><a class="operate" v-if="!initCompanyDetail.customerId"  @click="updateCompany({
                                                  sub:$index,
                                                  id:item.id,
                                                  show:true,
@@ -120,9 +119,8 @@
                                                  url:'contract',
                                                  key:'companyContacts',
                                                  main:item.main
-                                                 },item.show=false)"><a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
-                                               </td>
-                                            <td @click="contactDel({name:item.name,id:item.id,url:'contract',index:$index},item.show=false)" v-if="!initCompanyDetail.customerId"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
+                                                 },item.show=false)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                                            <a class="operate" @click="contactDel({name:item.name,id:item.id,url:'contract',index:$index},item.show=false)" v-if="!initCompanyDetail.customerId"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
                                                 <!-- <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show" transition="expand">
                                                    <dl>
@@ -456,8 +454,10 @@ table{
 }
 .contactSet>tbody>tr>td,.contactSet>thead>tr>th{
     text-align: left;
+    width: 10%;
 }
 .contact_img{
     margin-right: 6px !important;
 }
+
 </style>

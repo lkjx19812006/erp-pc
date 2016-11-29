@@ -209,4 +209,8 @@ export default{
 .base_pagination{
 	margin-top: 0;
 }
+th,td{
+	width: 200px;
+	min-width: 200px;
+}
 </style>

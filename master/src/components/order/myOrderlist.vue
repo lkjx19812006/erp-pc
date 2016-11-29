@@ -21,7 +21,7 @@
                <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
                <dd class="left">
                     <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                        <option value="">{{$t('static.select_order_type')}}</option>
+                        <option value="">{{$t('static.please_select')}}</option>
                         <option value="0">{{$t('static.purchase')}}</option>
                         <option value="1">{{$t('static.sell')}}</option>
                     </select>
@@ -30,15 +30,14 @@
             <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
                <dd class="left">
-                     <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
-                            <option value="">{{$t('static.select_order_status')}}</option>
+                     <select    v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
+                            <option value="">{{$t('static.please_select')}}</option>
                             <option value="0">{{$t('static.order_generation')}}</option>
-                            <option value="10">{{$t('static.pending')}}</option>
+                            <!-- <option value="10">{{$t('static.pending')}}</option> -->
                             <option value="20">{{$t('static.wait_for_payment')}}</option>
                             <option value="30">{{$t('static.wait_for_audit')}}</option>
                             <option value="40">{{$t('static.wait_for_delivery')}}</option>
                             <option value="50">{{$t('static.wait_for_receiving')}}</option>
-                            <!-- <option value="60">{{$t('static.completed')}}</option> -->
                             <option value="70">{{$t('static.completed')}}</option>
                             <option value="-1">{{$t('static.canceled')}}</option>
                             <option value="-2">{{$t('static.out_of_date')}}</option>
@@ -49,7 +48,7 @@
                <dt class="left transfer marg_top">{{$t('static.payment_method')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.payWay"  class="form-control" @change="selectSearch()">
-                            <option value="">{{$t('static.select_payment_method')}}</option>
+                            <option value="">{{$t('static.please_select')}}</option>
                             <option value="0">{{$t('static.offline')}}</option>
                             <option value="1">{{$t('static.alipay')}}</option>
                             <option value="2">{{$t('static.pingan')}}</option>
@@ -58,20 +57,10 @@
                </dd>
             </dl>
             <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.order_validity')}}：</dt>
-               <dd class="left">
-                     <select v-model="loadParam.dataStatus"  class="form-control" @change="selectSearch()">
-                        <option value="">{{$t('static.select_order_validity')}}</option>
-                        <option value="0">{{$t('static.available')}}</option>
-                        <option value="1">{{$t('static.useless')}}</option>
-                    </select>
-               </dd>
-            </dl>
-            <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.client_source')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.clients"  class="form-control" @change="selectSearch()">
-                        <option value="">{{$t('static.select_client_source')}}</option>
+                        <option value="">{{$t('static.please_select')}}</option>
                         <option value="0">pc</option>
                         <option value="1">android</option>
                         <option value="2">wechart</option>
@@ -83,25 +72,30 @@
                <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
-                        <option value="">{{$t('static.select_trading_patterns')}}</option>
-                        <option value="1">撮合</option>
-                        <option value="2">三方</option>
-                        <option value="3">自营</option>
+                        <option value="">{{$t('static.please_select')}}</option>
+                        <option value="1">{{$t('static.together')}}</option>
+                        <option value="2">{{$t('static.three_side')}}</option>
+                        <option value="3">{{$t('static.self_support')}}</option>
                     </select>
                </dd>
             </dl>
         </div>
       </div>
-      <div class="order_table">
+      <div class="order_table" id="table_box">
         <div class="cover_loading">
             <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
         </div>
-        <table class="table table-hover table_color table-striped " v-cloak>
+        <table class="table table-hover table_color table-striped " v-cloak id="tab">
             <thead>
                 <tr>
                     <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
-                    <th>{{$t('static.order_no')}}</th>
+                    <th>成交时间</th>
                     <th>{{$t('static.order_type')}}</th>
+                    <th>订单性质</th>
+                    <th>是否样品</th>
+                    <th>商品名称</th>
+                    
+                    <th>{{$t('static.order_no')}}</th>
                     <th>{{$t('static.order_source')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
                     <th>{{$t('static.consignee_phone')}}</th>
@@ -116,7 +110,7 @@
                     <th>{{$t('static.currency')}}</th>
                     <th>{{$t('static.payment_method')}}</th>
                     <th>{{$t('static.edit')}}</th>
-                    <th></th>
+                    <th>{{$t('static.handle')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -124,6 +118,16 @@
                   <td  @click.stop="">
                     <label v-if="item.validate<=0&&(item.orderStatus==0||item.orderStatus==70)" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                   </td>
+                  <td>{{item.ctime}}</td>
+                  <td v-if="item.type==1">{{$t('static.sell')}}</td>
+                  <td v-if="item.type==0">{{$t('static.purchase')}}</td>
+                  <td v-if="item.mode==1">{{$t('static.together')}}</td>
+                  <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
+                  <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
+                  <td v-if="item.sample==0">否</td>
+                  <td v-if="item.sample==1">是</td>
+                  <td>{{{item.goodsDesc}}</td>
+
                   <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
@@ -131,9 +135,7 @@
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'
                         })">{{item.no }}</a></td>
-                  <td v-if="item.type==1">{{$t('static.sell')}}</td>
-                  <td v-if="item.type==0">{{$t('static.purchase')}}</td>
-                  <td v-if="item.sourceType==0">新建</td>
+                  <td v-if="item.sourceType==0">交易员新建</td>
                   <td v-if="item.sourceType==1">意向</td>
                   <td v-if="item.sourceType==2">报价</td>
                   <td>{{item.consignee}}</td>
@@ -259,6 +261,7 @@
     import disposeModel  from  '../order/orderStatus'
     import tipsdialogModel  from '../tips/tipDialog'
     import auditModel  from '../order/orgAudit'
+    import common from '../../common/common'
     import {
         getList,
         initOrderlist,
@@ -601,6 +604,9 @@
             }
         },
         filter:(filter,{}),
+        ready(){
+          common('tab','table_box',1);
+        },
         created() {
             this.getEmpolyeeOrder(this.loadParam)
             console.log(this.loadParam)
@@ -623,7 +629,6 @@
         margin-right: 10px;
     }
     .order_table {
-        margin-top: 20px;
         position: relative;
     }
     .marg_top{

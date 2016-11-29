@@ -22,17 +22,13 @@
                </div>
            </div>
         </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <!-- <th>
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
-                        </th> -->
-                        <!-- <th>意向ID</th>     -->
                         <th>留言会员</th>
                         <th>会员手机</th>
                         <th>发布意向客户</th>
@@ -47,10 +43,6 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initMsgList">
-                         <!-- <td>
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
-                                                 </td> -->
-                        <!-- <td>{{item.intentionId}}</td> -->
                         <td class="underline"  @click="clickOn({
                                  id:item.userId,
                                  sub:$index,
@@ -70,14 +62,6 @@
                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                            </a>
                         </td>
-                       <!--  <td @click.stop="clickShow($index)">
-                          <img height="24" width="24" src="/static/images/default_arrow.png" />
-                          <div class="component_action" v-show="item.show">
-                              <ul>
-                                  <li @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments">编辑</li>
-                              </ul>
-                          </div>
-                                              </td> -->
                     </tr>
                 </tbody>
             </table>
@@ -92,7 +76,7 @@ import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import editmsgModel from '../editMsg'
 import detailModel from '../../user/userDetail'
-
+import common from '../../../common/common'
 import {
 	initMsgList
 } from '../../../vuex/getters'
@@ -190,6 +174,9 @@ export default {
     created() {
         this.getMsgList(this.loadParam, this.loadParam.all);
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     filter: (filter,{})
 }
 </script>
@@ -197,15 +184,8 @@ export default {
 .service-nav {
     padding: 15px 30px 0 40px;
 }
-.order_table{
-    margin-top:-4px;
-}
 .my_enterprise{
     padding:6px;
-}
-.breed_action {
-    top: 33px;
-    right: 106px;
 }
 .transfer{
     margin-left: 18px;
@@ -231,6 +211,10 @@ export default {
     margin: auto;
     text-align: center;
     background-position: 5px;
+}
+ #table_box  table th,#table_box  table td{
+    width: 170px;
+    min-width: 170px;
 }
 </style>
 

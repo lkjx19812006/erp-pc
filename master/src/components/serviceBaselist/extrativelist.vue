@@ -17,29 +17,19 @@
             </div>
        </div>
     </div>
-    <div class="order_table">
+    <div class="order_table" id="table_box">
         <div class="cover_loading">
             <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
         </div>
-        <table class="table table-hover table_color table-striped" v-cloak>
+        <table class="table table-hover table_color table-striped" v-cloak id="tab">
             <thead>
                 <tr>
                     <th>中文名</th>
                     <th>联系人</th>
                     <th>联系方式</th>
                     <th>公司名称</th>
-                    <th>email</th>
+                    <th>邮箱</th>
                     <th>主要成分</th>
-                </tr>
-            </thead>
-            <thead class="space">
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -61,6 +51,7 @@
 <script>
 import pagination from '../../components/pagination'
 import filter from '../../filters/filters'
+import common from '../../common/common'
 import {
     initDrawlist
 } from '../../vuex/getters'
@@ -114,6 +105,9 @@ export default {
         }
     },
     filter: (filter, {}),
+    ready(){
+      common('tab','table_box',1);
+    },
     methods:{
         categoryNameSearch:function(){
             this.getDrawData(this.loadParam);
@@ -129,5 +123,9 @@ export default {
 <style scoped>
 .name_search{
     margin-right: 3%;
+}
+ #table_box  table th,#table_box  table td{
+    width:285px;
+    min-width: 285px;
 }
 </style>

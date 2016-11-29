@@ -279,10 +279,10 @@ export default {
         },
 
         confirm:function(){
-            this.param.country = this.country.id;
-            this.param.province = this.province.id;
-            this.param.city = this.city.id;
-            this.param.district = this.district.id;
+            this.param.country = this.country.cname;
+            this.param.province = this.province.cname;
+            this.param.city = this.city.cname;
+            this.param.district = this.district.cname;
             console.log(this.param);
             this.createOrder(this.param);
 

@@ -161,7 +161,10 @@ export default {
 .breed_action dl {
     margin-bottom: 0;
 }
-
+.contactSet>tbody>tr>td,.contactSet>thead>tr>th{
+    text-align: left;
+    width: 10%;
+}
 .breed_action dl dt {
     display: block;
     padding: 3px 10px;

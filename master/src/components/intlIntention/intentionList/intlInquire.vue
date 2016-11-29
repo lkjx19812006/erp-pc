@@ -6,25 +6,13 @@
      <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">{{$t('static.International_intention_inquiry')}}</div>
-            <div class="col-xs-5 my_order_search">
-               
-           </div>
-            <div class="right">
-               <!--  <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-               <button class="new_btn transfer" @click="search()">搜索</button> -->
-               
-            </div>
+            
         </div>
-        <div class="service-nav clearfix">
-            <div class="my_order_search">
-
-           </div>
-        </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                         <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
@@ -39,8 +27,7 @@
                         <th>{{$t('static.area')}}</th>
                         <th>{{$t('static.create_time')}}</th>
                         <th>{{$t('static.inquiry_state')}}</th>
-                        <th></th>
-                        <th></th>
+                        <th>{{$t('static.handle')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +37,7 @@
                             <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
                         <!--</td>-->
                         <td>{{item.inquireType}}</td>
-                        <td><a @click="clickOn(item.intentionId,item.id,$index)">{{item.names}}</a></td>
+                        <td><a class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.names}}</a></td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
@@ -63,8 +50,9 @@
                         <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.initial')}}</td>
                         <td v-if="item.inquire==2" style="color:#EE82EE">{{$t('static.inquiry')}}</td>
                         <td v-if="item.inquire==3" style="color:#2E8B57">{{$t('static.quo_complete')}}</td>
-                        <td><div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div></td>
-                        <td></td>
+                        <td>
+                            <div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div>
+                        </td>
                     </tr>
 
                 </tbody>
@@ -82,7 +70,7 @@ import filter from '../../../filters/filters'
 import offerModel from '../intlOffer'
 import detailModel from '../inquireDetail'
 import affirmofferModel from '../confirmOffer'
-
+import common from '../../../common/common'
 import inquireModel from '../inquire'
 import {
     initIntlIntentionInquireList
@@ -199,6 +187,9 @@ export default {
             }
         }
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     methods: {
         clickOn:function(id,inquireId,index){
             this.detailParam.id = id;
@@ -211,7 +202,6 @@ export default {
         offer:function(){
             this.offerParam.show = true;
         },
-
         confirmOffer:function(intentionId,index){
             console.log(intentionId);
             this.affirmOfferParam.id = intentionId;
@@ -224,7 +214,6 @@ export default {
           this.loadParam.show = true;
 
         },
-
         searchIntention:function(){
             this.getIntlIntentionList(this.loadParam);
         },
@@ -235,8 +224,7 @@ export default {
             this.loadParam.breedName='';
             this.loadParam.customerEmail='';
             this.getIntlIntentionList(this.loadParam);
-        },
-        
+        }
     },
     events: {
         fresh: function(input) {
@@ -283,6 +271,9 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-
+ #table_box  table th,#table_box  table td{
+    min-width: 141px;
+    width: 141px;
+}
 </style>
 

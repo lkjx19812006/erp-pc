@@ -20,11 +20,11 @@
          <button class="new_btn transfer" @click="reset()">{{$t('static.clear_all')}}</button>
      </div>
     </div>
-    <div class="order_table">
+    <div class="order_table" id="table_box">
       <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
       </div>
-      <table class="table table-hover table_color table-striped " v-cloak>
+      <table class="table table-hover table_color table-striped " v-cloak id="tab">
         <thead>
             <tr>
               <th>{{$t('static.payment_method')}}</th>
@@ -58,6 +58,7 @@
   import pagination from '../pagination'
   import filter from  '../../filters/filters'
   import detailModel from '../supply/productDetail'
+  import common from '../../common/common'
   import {
     initOrderPaylist
   } from '../../vuex/getters'
@@ -120,6 +121,9 @@
       }
     },
     filter:(filter,{}),
+    ready(){
+        common('tab','table_box',1);
+      },
     created() {
       this.getOrderPayList(this.loadParam);
     }
@@ -133,10 +137,7 @@
   .transfer{
     margin-left: 18px;
   }
-  .table>tbody>tr>td{
-/*     max-width: 300px; */
-   /*  white-space: normal; */
-  }
+
   .my_order_search{
     width: 170px;
     float: left;
@@ -163,5 +164,9 @@
     margin: auto;
     text-align: center;
     background-position: 5px;
+  }
+   #table_box  table th,#table_box  table td{
+    width:340px;
+    min-width: 340px;
   }
 </style>

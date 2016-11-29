@@ -188,7 +188,7 @@ const state = {
 
 const mutations = {
 
-	 [ABSTRACT_GET_DATA](state, data) {
+	[ABSTRACT_GET_DATA](state, data) {
         console.log(data);
         if(data.name=='menu'){
             for(var i in data.list.result){
@@ -214,7 +214,7 @@ const mutations = {
         }
     },
 
-     [ABSTRACT_DELETE_DATA](state,data){
+    [ABSTRACT_DELETE_DATA](state,data){
     	state[data.name].list.result.list.splice(data.index,1);
     },
 

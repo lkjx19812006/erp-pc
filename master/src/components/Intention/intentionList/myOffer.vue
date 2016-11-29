@@ -17,11 +17,11 @@
                </div>
            </div>
         </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                        <!--  <th>
@@ -33,10 +33,12 @@
                         <th>发布意向客户</th>
                         <th>客户手机</th>
                         <th>品种</th>
+                        <th>产地</th>
                         <th>单价</th>
                         <th>数量</th>
                         <th>总价</th>
                         <th>杂费</th>
+                        <th>杂费说明</th>
                         <th>备注</th>
                         <th>是否已采纳</th>
       	            	  <th>操作</th>
@@ -44,26 +46,24 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initOfferList">
-                         <!-- <td  >
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)"></label>
-                                                 </td> -->
-                        <!-- <td>{{item.intentionId}}</td> -->
                         <td>{{item.userName}}</td>
                         <td>{{item.userPhone}}</td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.breedName}}</td>
+                        <td>{{item.location}}</td>
                         <td>{{item.price}}</td>
                         <td>{{item.number}}</td>
                         <td>{{item.total}}</td>
                         <td>{{item.incidentals}}</td>
+                        <td>{{item.incidentalsDesc}}</td>
                         <td>{{item.comments}}</td>
                         <td>
                            <div v-if="item.orderTime==0">未采纳</div>
                            <div v-else>已采纳</div>
                         </td>
-                        <td  v-if="item.orderTime==0"  @click.stop="adopt(item,$index)">
-                               <a class="operate"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
+                        <td    @click.stop="adopt(item,$index)">
+                              <a class="operate" v-if="item.orderTime==0"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
                                </a>
                         </td>
                        <!--  <td @click.stop="clickShow($index)">
@@ -89,6 +89,7 @@ import calendar from '../../calendar/vue.datepicker'
 import filter from '../../../filters/filters'
 import createorderModel  from '../createOrder'
 import searchModel  from '../offerSearch'
+import common from  '../../../common/common'
 import {
 	initOfferList,
     initLogin
@@ -124,6 +125,7 @@ export default {
                 breedName:'',
                 spec:'',
                 fullname:'',
+                userPhone:'',
                 startTime:'',
                 endTime:'',
                 total:0
@@ -256,6 +258,9 @@ export default {
     created() {
         this.getOfferList(this.loadParam, this.loadParam.all);
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     filter: (filter,{})
 }
 </script>
@@ -300,6 +305,10 @@ export default {
     margin: auto;
     text-align: center;
     background-position: 5px;
+}
+ #table_box  table th,#table_box  table td{
+  width: 122px;
+  min-width: 122px;
 }
 </style>
 

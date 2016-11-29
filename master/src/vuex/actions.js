@@ -2324,6 +2324,7 @@ export const getOrgList = ({ dispatch }, param) => { //部门列表
 }
 
 export const getRoleList = ({ dispatch }, param) => { //获取角色列表
+    console.log(param)
     param.loading = true;
     if ('pageSize' in param) {
         var pageSize = param.pageSize;
@@ -2348,6 +2349,7 @@ export const getRoleList = ({ dispatch }, param) => { //获取角色列表
                 }
             }
         }
+        console.log('获取角色成功')
         dispatch(types.ROLE_DATA, role)
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
@@ -2662,6 +2664,7 @@ export const updateProduct = ({ dispatch }, param) => { //修改供应商产品
         unit: param.unit,
         duedate: param.duedate,
         coa: param.coa,
+        comments:param.comments,
         cid: param.cid,
         id: param.id
     }
@@ -3215,6 +3218,9 @@ export const getOfferList = ({ dispatch }, param) => { //报价信息列表以�
     }
     if ('breedName' in param && param.breedName !== '') {
         url += '&breedName=' + param.breedName
+    }
+    if ('userPhone' in param && param.userPhone !== '') {
+        url += '&userPhone=' + param.userPhone
     }
     if ('spec' in param && param.spec !== '') {
         url += '&spec=' + param.spec
@@ -4724,7 +4730,7 @@ export const getAuthInfo = ({ dispatch }, param) => { //查询认证信息
 }
 
 
-export const baseGetData = ({ dispatch }, param) => { //查询认证信息
+export const baseGetData = ({ dispatch }, param) => { //查询权限
 
     Vue.http({
         method: 'GET',
@@ -4738,8 +4744,7 @@ export const baseGetData = ({ dispatch }, param) => { //查询认证信息
     }).then((res) => {
         param.loading = false;
         console.log(param);
-        console.log('查询成功')
-        console.log(res.json());
+        console.log('查询成功！')
         const json = {
             list: res.json(),
             name: param.keyName,
@@ -4765,7 +4770,7 @@ export const baseGetData = ({ dispatch }, param) => { //查询认证信息
     })
 }
 
-export const baseAddData = ({ dispatch }, param) => { //查询认证信息
+export const baseAddData = ({ dispatch }, param) => { //新增权限
 
     Vue.http({
         method: 'POST',
@@ -4796,7 +4801,7 @@ export const baseAddData = ({ dispatch }, param) => { //查询认证信息
     })
 }
 
-export const baseUpdateData = ({ dispatch }, param) => { //查询认证信息
+export const baseUpdateData = ({ dispatch }, param) => { //修改权限
     console.log(param.body);
     Vue.http({
         method: 'PUT',
@@ -4826,7 +4831,7 @@ export const baseUpdateData = ({ dispatch }, param) => { //查询认证信息
     })
 }
 
-export const baseDelData = ({ dispatch }, param) => { //查询认证信息
+export const baseDelData = ({ dispatch }, param) => { //删除权限信息
     Vue.http({
         method: 'DELETE',
         url: apiUrl.base + param.url + param.id,
@@ -4865,5 +4870,73 @@ export const loadFile = ({ dispatch }, param) => { //查询认证信息
 
     }, (res) => {
 
+    })
+}
+
+/*---二期开发---*/
+/*---我的客户统计---*/
+export const getClientcount = ({ dispatch }, param) => { //我的客户统计
+    if(param) param.loading= true;
+    var countUrl = apiUrl.clientList +'/count/getCustomerAdd?role=emp';
+    if(param.employeeId){
+        countUrl +=  '&employeeId=' + param.employeeId
+    }
+    Vue.http({
+        method: 'GET',
+        url: countUrl,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        console.log(res.json().result)
+        var clientCount = res.json().result;
+        dispatch(types.MY_CLIENT_COUNT, clientCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
+    if(param) param.loading= true;
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList +param.link,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        console.log(res.json().result)
+        var clientCount = res.json().result;
+        dispatch(types.MY_CLIENT_COUNT, clientCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
+export const getExportOrgcount = ({ dispatch }, param) => { //部门导出客户统计
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList +'/count/getCustomerAddReport?role=org',
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json().result)
+        var clientCount = res.json().result;
+        dispatch(types.MY_CLIENT_COUNT, clientCount);
+    }, (res) => {
+        console.log('fail');
     })
 }

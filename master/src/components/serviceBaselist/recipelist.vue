@@ -12,32 +12,23 @@
                  <a class="new_btn transfer"  @click="reset()">清空条件</a>
             </div>
         </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped" v-cloak>
+            <table class="table table-hover table_color table-striped" v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th>编 码</th>
+                        <!-- <th>编 码</th> -->
                         <th>药品名称</th>
                         <th>品种名称</th>
                         <th>含 量</th>
                         <th>单 位</th>
                     </tr>
                 </thead>
-                <thead class="space">
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr v-for="item in initConponentlist">
-                        <td>{{item.code | codestate}}</td>
+                        <!-- <td>{{item.code | codestate}}</td> -->
                         <td class="underline" @click="clickRecipe({
                             id:item.id,
                             code:item.code,
@@ -66,6 +57,7 @@
 import pagination from '../../components/pagination'
 import filter from '../../filters/filters'
 import detailModel from '../serviceBaselist/recipeDetail'
+import common from '../../common/common'
 import {
     initConponentlist
 } from '../../vuex/getters'
@@ -117,6 +109,9 @@ export default {
             this.getComponentData(this.loadParam)
         }
     },
+     ready(){
+      common('tab','table_box',1);
+    },
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
@@ -135,5 +130,9 @@ export default {
 .transfer{
     margin-right: 10px;
     cursor: pointer;
+}
+ #table_box  table th,#table_box  table td{
+    width: 428px;
+    min-width: 428px;
 }
 </style>

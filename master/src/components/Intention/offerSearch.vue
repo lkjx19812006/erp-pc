@@ -17,6 +17,10 @@
                         <label>名称:</label>
                         <input type="text"  class="form-control" v-model="param.fullname"  placeholder="按报价会员名称搜索"/>
                     </div>
+                    <div class="client-detailInfo  col-xs-12">
+                        <label>会员手机号:</label>
+                        <input type="text"  class="form-control" v-model="param.userPhone"  placeholder="按报价会员手机搜索"/>
+                    </div>
                     
                     <div class="client-detailInfo  col-xs-12">
                         <label>品种:</label>

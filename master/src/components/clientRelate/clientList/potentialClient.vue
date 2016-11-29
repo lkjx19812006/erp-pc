@@ -24,11 +24,11 @@
               <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
         </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                         <th>
@@ -38,7 +38,7 @@
                         <th>客户来源</th>
                         <th>客户信用等级</th>
                         <th>客户名称</th>
-                        <th>分类码</th>
+                        <!-- <th>分类码</th> -->
                         <!-- <th>所属分类</th> -->
                         <th>所属业务员</th>
                         <th>负责人</th>
@@ -46,7 +46,7 @@
                         <th>手机</th>
                         <th>手机省</th>
                         <th>手机市</th>
-                        <th>邮 箱</th>
+                        <!-- <th>邮 箱</th> -->
                         <th>国 家</th>
                         <th>所在省</th>
                         <th>所在市</th>
@@ -66,8 +66,12 @@
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
                         <td>{{item.typeDesc}}</td>
-                        <td>{{item.classify | classify}}</td>
-                        <td>{{item.sourceType}}</td>
+                        <td>{{item.classifyDesc | classify}}</td>
+                        <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='android'" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='ios'" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType!='pc'&&item.sourceType!='weixin'&&item.sourceType!='android'&&item.sourceType!='ios'" style="background:#fa6705;color:#fff">{{item.sourceType}}</td> 
                         <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
                         <td v-if="item.creditLevel==1">一星客户</td>
                         <td v-if="item.creditLevel==2">二星客户</td>
@@ -83,7 +87,7 @@
                                 key:'customerList'
                                 })">{{item.name}}</td>
                                     <!-- 上面这个img显示新客户图标 -->
-                        <td>{{item.category}}</td>
+                        <!-- <td>{{item.category}}</td> -->
                         <!-- <td>{{item.classify | classify}}</td> -->
                         <td>{{item.employeeName}}</td>
                         <td>{{item.principal}}</td>
@@ -91,7 +95,7 @@
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}</td>
                         <td>{{item.phoneCity}}</td>
-                        <td>{{item.email}}</td>
+                        <!-- <td>{{item.email}}</td> -->
                         <td>{{item.countryName | country}}</td>
                         <td>{{item.provinceName}}</td>
                         <td>{{item.cityName}}</td>
@@ -108,8 +112,8 @@
                                                 show:true,
                                                 name:item.name,
                                                 type:item.type,
-                                                typeDesc:item.type,
-                                                classifyDesc:item.classify,
+                                                typeDesc:item.typeDesc,
+                                                classifyDesc:item.classifyDesc,
                                                 classify:item.classify,
                                                 category:item.category,
                                                 principal:item.principal,
@@ -135,64 +139,6 @@
                             <a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" height="18" width="30"/>
                             </a>
                         </td>
-                        <!-- <td  @click="specDelete({
-                                                id:item.id,
-                                                sub:$index,
-                                                show:true,
-                                                name:item.name,
-                                                title:'客户',
-                                                link:deleteInfo,
-                                                url:'/customer/',
-                                                key:'customerList'
-                                                })">
-                            <a class="operate"><img src="/static/images/del.png" height="18" width="30"/>
-                            </a>
-                        </td> -->
-                       <!--  <td @click.stop="eventClick($index)">
-                           <img height="24" width="24" src="/static/images/default_arrow.png" />
-                           <div class="component_action" v-show="item.show">
-                               <ul>
-                                   <li @click="modifyClient({
-                                               id:item.id,
-                                               sub:$index,
-                                               show:true,
-                                               name:item.name,
-                                               type:item.type,
-                                               classify:item.classify,
-                                               category:item.category,
-                                               principal:item.principal,
-                                               bizScope:item.bizScope,
-                                               mainPhone:item.mainPhone,
-                                               email:item.email,
-                                               country:item.country,
-                                               countryName:item.countryName,
-                                               province:item.province,
-                                               provinceName:item.provinceName,
-                                               city:item.city,
-                                               cityName:item.cityName,
-                                               address:item.address,
-                                               comments:item.comments,
-                                               creditLevel:item.creditLevel,
-                                               link:alterInfo,
-                                               url:'/customer/',
-                                               key:'customerList',
-                                               employeeId:item.employeeId,
-                                               employeeName:item.employeeName,
-                                               orgId:item.orgId
-                                               })">编辑</li>
-                                   <li @click="specDelete({
-                                               id:item.id,
-                                               sub:$index,
-                                               show:true,
-                                               name:item.name,
-                                               title:'客户',
-                                               link:deleteInfo,
-                                               url:'/customer/',
-                                               key:'customerList'
-                                               })">删除</li>
-                               </ul>
-                           </div>
-                       </td> -->
                     </tr>
                 </tbody>
             </table>
@@ -214,6 +160,7 @@ import transferModel   from '../../../components/user/employeeOrOrg'
 import tipsdialogModel  from '../../../components/tips/tipDialog'
 import searchModel  from  '../../../components/clientRelate/searchModel'
 import auditDialog from '../../../components/tips/auditDialog'
+import common from '../../../common/common'
 import {
     initCustomerlist
 } from '../../../vuex/getters'
@@ -480,6 +427,9 @@ export default {
     },
     created() {
         this.getClientList(this.loadParam);
+    },
+    ready(){
+      common('tab','table_box',1);
     },
     filter:(filter,{})
 }

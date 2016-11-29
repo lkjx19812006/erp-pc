@@ -26,11 +26,11 @@
       </div>
     </div>
     </div>
-    <div class="order_table">
+    <div class="order_table" id="table_box">
       <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
       </div>
-      <table class="table table-hover table_color table-striped " v-cloak>
+      <table class="table table-hover table_color table-striped " v-cloak  id="tab">
         <thead>
             <tr>
               <th>产品名称</th>
@@ -49,7 +49,7 @@
             <td>{{item.bizType}}</td>
             <!--<td v-if="item.bizType!='product_license'">客户文件</td>-->
              <td>
-                    <img v-bind:src="item.url" v-if="item.fileType=='image'"  width="200" @click="clickBig(item.url)"/>
+                    <img v-bind:src="item.url" v-if="item.fileType=='image'"  style="max-width: 150px" @click="clickBig(item.url)"/>
                     <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
                     <img  src="/static/images/word.png" v-if="item.fileType=='word'">
                     <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
@@ -70,6 +70,7 @@
   import pagination from '../pagination'
   import detailModel from '../supply/productDetail'
   import pictureModel from '../tips/pictureDialog'
+  import common from '../../common/common'
   import {
     initProductlist
   } from '../../vuex/getters'
@@ -149,6 +150,9 @@
         this.getProductList(this.loadParam);
       }
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     created() {
       this.getProductList(this.loadParam);
     }
@@ -198,5 +202,9 @@
     margin: auto;
     text-align: center;
     background-position: 5px;
+  }
+   #table_box  table th,#table_box  table td{
+    width: 282px;
+    min-width: 282px;
   }
 </style>

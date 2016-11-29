@@ -1,5 +1,4 @@
 <template>
-   
     <div  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container del_modal_con" v-show="param.show">
         <div class="model-header">
@@ -61,12 +60,12 @@ export default {
     methods:{
         confirm:function(passwd){
             if(passwd.newPwd==passwd.resetPwd){
-                passwd.callback=this.callback;
-               
+               /* passwd.callback=this.callback;*/
                 passwd.callback=this.param.callback;
                 this.resetPawd(passwd);
                 this.param.show=false;
             }else if(passwd.newPwd==''||passwd.resetPwd==''){
+                console.log(this.param)
               this.param.callback('密码不能为空');
             }else{
                 this.param.callback('两次输入密码不一致');

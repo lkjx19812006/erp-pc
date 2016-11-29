@@ -6,7 +6,7 @@
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
-  <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+    <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <div>
         <div class="service-nav">
             <div class="clearfix">
@@ -95,11 +95,11 @@
                 </dl>
             </div>
         </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
                         <th>
@@ -109,15 +109,13 @@
                         <th>{{$t("static.customer_source")}}</th>
                         <th>{{$t("static.credit_rating")}}</th>
                         <th>{{$t("static.client_name")}}</th>
-                        <th>{{$t("static.classification_code")}}</th>
-                        <!-- <th>所属分类</th> -->
-                        <th>{{$t("static.salesman")}}</th>
+                        <!-- <th>{{$t("static.salesman")}}</th> -->
                         <th>{{$t("static.principals")}}</th>
                         <th style="min-width:120px;">{{$t("static.business_scope")}}</th>
                         <th>{{$t("static.client_phone")}}</th>
                         <th>{{$t("static.province_of_phone")}}</th>
                         <th>{{$t("static.city_of_phone")}}</th>
-                        <th>{{$t("static.client_email")}}</th>
+                        <!-- <th>{{$t("static.client_email")}}</th> -->
                         <th>{{$t("static.country")}}</th>
                         <th>{{$t("static.province")}}</th>
                         <th>{{$t("static.city")}}</th>
@@ -125,7 +123,7 @@
                         <th>{{$t("static.create_time")}}</th>
                         <th>{{$t("static.whether_supplier")}}</th>
                         <th style="min-width:200px">{{$t("static.comment")}}</th>
-                        <th colspan="2">{{$t("static.operation")}}</th>
+                        <th>{{$t("static.operation")}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -137,8 +135,12 @@
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
                         <td>{{item.typeDesc}}</td>
-                        <td>{{item.classify | classify}}</td>
-                        <td>{{item.sourceType}}</td>
+                        <td>{{item.classifyDesc | classify}}</td>
+                        <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='android'" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='ios'" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType!='pc'&&item.sourceType!='weixin'&&item.sourceType!='android'&&item.sourceType!='ios'" style="background:#fa6705;color:#fff">{{item.sourceType}}</td> 
                         <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
                         <td v-if="item.creditLevel==1">一星客户</td>
                         <td v-if="item.creditLevel==2">二星客户</td>
@@ -155,15 +157,15 @@
                                 })">{{item.name}}</td>
                                     <!-- <img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div> -->
                                     <!-- 上面这个img显示新客户图标 -->
-                        <td>{{item.category}}</td>
+                        <!-- <td>{{item.category}}</td> -->
                         <!-- <td>{{item.classify | classify}}</td> -->
-                        <td>{{item.employeeName}}</td>
+                        <!-- <td>{{item.employeeName}}</td> -->
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}</td>
                         <td>{{item.phoneCity}}</td>
-                        <td>{{item.email}}</td>
+                        <!-- <td>{{item.email}}</td> -->
                         <td>{{item.countryName | country}}</td>
                         <td>{{item.provinceName}}</td>
                         <td>{{item.cityName}}</td>
@@ -180,8 +182,8 @@
                                                 show:true,
                                                 name:item.name,
                                                 type:item.type,
-                                                typeDesc:item.type,
-                                                classifyDesc:item.classify,
+                                                typeDesc:item.typeDesc,
+                                                classifyDesc:item.classifyDesc,
                                                 classify:item.classify,
                                                 category:item.category,
                                                 principal:item.principal,
@@ -207,66 +209,6 @@
                             <a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" height="18" width="30"/>
                             </a>
                         </td>
-                        <!-- <td  @click="specDelete({
-                                                id:item.id,
-                                                sub:$index,
-                                                show:true,
-                                                name:item.name,
-                                                title:'客户',
-                                                link:deleteInfo,
-                                                url:'/customer/',
-                                                key:'customerList'
-                                                })">
-                            <a class="operate"><img src="/static/images/del.png" height="18" width="30"/>
-                            </a>
-                        </td> -->
-                       <!--  <td @click.stop="eventClick($index)">
-                           <img height="24" width="24" src="/static/images/default_arrow.png" />
-                           <div class="component_action" v-show="item.show">
-                               <ul>
-                                   <li @click="modifyClient({
-                                               id:item.id,
-                                               sub:$index,
-                                               show:true,
-                                               name:item.name,
-                                               type:item.type,
-                                               typeDesc:item.type,
-                                               classifyDesc:item.classify,
-                                               classify:item.classify,
-                                               category:item.category,
-                                               principal:item.principal,
-                                               bizScope:item.bizScope,
-                                               mainPhone:item.mainPhone,
-                                               email:item.email,
-                                               country:item.country,
-                                               countryName:item.countryName,
-                                               province:item.province,
-                                               provinceName:item.provinceName,
-                                               city:item.city,
-                                               cityName:item.cityName,
-                                               address:item.address,
-                                               comments:item.comments,
-                                               creditLevel:item.creditLevel,
-                                               link:alterInfo,
-                                               url:'/customer/',
-                                               key:'customerList',
-                                               employeeId:item.employeeId,
-                                               employeeName:item.employeeName,
-                                               orgId:item.orgId
-                                               })">编辑</li>
-                                   <li @click="specDelete({
-                                               id:item.id,
-                                               sub:$index,
-                                               show:true,
-                                               name:item.name,
-                                               title:'客户',
-                                               link:deleteInfo,
-                                               url:'/customer/',
-                                               key:'customerList'
-                                               })">删除</li>
-                               </ul>
-                           </div>
-                       </td> -->
                     </tr>
                 </tbody>
             </table>
@@ -288,6 +230,7 @@ import transferModel   from '../../../components/user/employeeOrOrg'
 import tipsdialogModel  from '../../../components/tips/tipDialog'
 import searchModel  from  '../../../components/clientRelate/searchModel'
 import auditDialog from '../../../components/tips/auditDialog'
+import common from '../../../common/common'
 import {
     initCustomerlist
 } from '../../../vuex/getters'
@@ -555,6 +498,9 @@ export default {
     },
     created() {
         this.getClientList(this.loadParam);
+    },
+    ready(){
+      common('tab','table_box',1);
     },
     filter:(filter,{})
 }

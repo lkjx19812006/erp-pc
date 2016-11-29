@@ -1,6 +1,6 @@
 	<template>
-	<create-model :param.sync="createParam" v-if="createParam.show"></create-model>
-	<tip-model :param.sync="tipParam" v-if="tipParam.show"></tip-model>
+  	<create-model :param.sync="createParam" v-if="createParam.show"></create-model>
+  	<tip-model :param.sync="tipParam" v-if="tipParam.show"></tip-model>
 		 <div  class="myemploy" >
         <div class="order_search">
             <div class="clearfix">
@@ -10,17 +10,17 @@
                 </div>
             </div>
         </div>
-        <div class="order_table">
+        <div class="order_table" id="table_box">
           <div class="cover_loading">
               <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
           </div>
-           <table class="table table-hover table_color table-striped"  v-cloak>
+           <table class="table table-hover table_color table-striped"  v-cloak id="tab">
               <thead>
                   <tr>
                      <th>名称</th>
                      <th>备注</th>
                      <th>更新时间</th>
-                     <th colspan="2">操作</th>
+                     <th style="width:150px;">操作</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -28,8 +28,8 @@
                     <td>{{item.cname}}</td>
                     <td>{{item.remark}}</td>
                     <td>{{item.utime}}</td>
-                    <td  @click="editData(item,$index)">
-                      <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                    <td>
+                      <a class="operate" @click="editData(item,$index)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                       </a>
                       <!-- <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
                        <div class="component_action" v-show='item.show' transition="expand">
@@ -38,9 +38,7 @@
                              <li @click="showConfirm(item,$index)">删除</li>
                           </ul>
                         </div> -->
-                    </td>
-                    <td  @click="showConfirm(item,$index)">
-                      <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
+                      <a class="operate"  @click="showConfirm(item,$index)"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                       </a>
                     </td>
                   </tr>
@@ -57,6 +55,7 @@
 import createModel  from '../components/role/createRole'
 import pagination from '../components/pagination'
 import tipModel  from '../components/tips/tipDialog'
+import common from '../common/common'
 import {
 
 } from '../vuex/getters'
@@ -149,9 +148,11 @@ export default {
             this.baseGetData(this.loadParam);
         }
     },
+    ready(){
+      common('tab','table_box',1);
+    },
     created() {
-
-    this.baseGetData(this.loadParam);
+      this.baseGetData(this.loadParam);
     }
 }
 </script>
@@ -162,23 +163,6 @@ export default {
 }
 .order_search {
     padding: 25px 30px 0 40px;
-}
-
-.name_search{
-    position: relative;
-    border:none;
-    display: inline-block;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    background: #fff;
-    height: 34px;
-    line-height: 32px;
-     margin-right: 7%;
-}
-.tel_search {
-    margin-right: 0;
 }
 .order_table {
     margin-top: 20px;
@@ -219,60 +203,6 @@ export default {
     margin: auto;
 }
 
-.order_action {
-    position: absolute;
-    right: 96px;
-    padding: 10px 0;
-    top: 32px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    background: #fff;
-    z-index: 10;
-    min-width: 90px;
-    max-width: 200px;
-}
-
-.order_show {
-    position: absolute;
-    right: 96px;
-    padding: 10px 0;
-    top: 32px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    background: #fff;
-    z-index: 10;
-    min-width: 90px;
-    max-width: 200px;
-    display: block;
-}
-
-.order_action ul,
-.order_show ul {
-    margin-bottom: 0;
-}
-
-.order_action ul li a,
-.order_show ul li a {
-    color: #003077;
-    padding: 5px 5px 5px 10px;
-    display: block;
-    cursor: pointer;
-}
-
-.expand-transition {
-    transition: all .3s ease;
-    overflow: inherit;
-}
-
-.expand-enter,
-.expand-leave {
-    opacity: 0;
-    height: 0;
-}
-
-.v-spinner {
-    text-align: center;
-}
 .order_pagination{
     margin: 0 auto;
     text-align: center;
@@ -293,13 +223,8 @@ export default {
     margin: auto;
     text-align: center;
 }
-.cover_loading{
-   text-align: center;
-   position: absolute;
-   top: 40%;
-   z-index: 1100;
-   left: 0;
-   right: 0
+ #table_box  table th,#table_box  table td{
+  width: 425px;
+  min-width: 425px;
 }
-
 </style>

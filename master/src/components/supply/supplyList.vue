@@ -48,11 +48,11 @@
         <button class="new_btn transfer" @click="createSearch()">搜索</button>
       </div>
     </div>
-    <div class="order_table">
+    <div class="order_table" id="table_box">
       <div class="cover_loading">
         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
       </div>
-      <table class="table table-hover table_color table-striped " v-cloak>
+      <table class="table table-hover table_color table-striped " v-cloak id="tab">
         <thead>
         <tr>
           <th>类型</th>
@@ -60,7 +60,7 @@
           <th>客户来源</th>
           <th>客户信用等级</th>
           <th>名称</th>
-          <th>分类码</th>
+          <!-- <th>分类码</th> -->
           <!-- <th>所属分类</th> -->
           <th>所属业务员</th>
           <th>负责人</th>
@@ -68,13 +68,13 @@
           <th>手机</th>
           <th>手机省</th>
           <th>手机市</th>
-          <th>邮箱</th>
+          <!-- <th>邮箱</th> -->
           <th>国家</th>
           <th>所在省</th>
           <th>所在市</th>
           <th>注册地址</th>
           <th>备注</th>
-          <th colspan="2">操作</th>
+          <th style="min-width:150px;">操作</th>
         </tr>
         </thead>
         <tbody>
@@ -82,9 +82,13 @@
 
         </tr>
         <tr v-for="item in initCustomerlist">
-          <td>{{item.type | customerType}}</td>
-          <td>{{item.classify | classify}}</td>
-          <td>{{item.sourceType}}</td>
+          <td>{{item.typeDesc}}</td>
+          <td>{{item.classifyDesc | classify}}</td>
+          <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='android'" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType=='ios'" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.sourceType!='pc'&&item.sourceType!='weixin'&&item.sourceType!='android'&&item.sourceType!='ios'" style="background:#fa6705;color:#fff">{{item.sourceType}}</td> 
           <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
           <td v-if="item.creditLevel==1">一星客户</td>
           <td v-if="item.creditLevel==2">二星客户</td>
@@ -99,7 +103,7 @@
                                 key:'customerList'
                                 })"><!-- <img src="/static/images/compact.png" style='float:left;' /> -->{{item.name}}</td>
           <!-- 上面这个img显示新客户图标 -->
-          <td>{{item.category}}</td>
+          <!-- <td>{{item.category}}</td> -->
           <!-- <td>{{item.classify | classify}}</td> -->
           <td>{{item.employeeName}}</td>
           <td>{{item.principal}}</td>
@@ -107,13 +111,14 @@
           <td>{{item.mainPhone}}</td>
           <td>{{item.phoneProvince}}</td>
           <td>{{item.phoneCity}}</td>
-          <td>{{item.email}}</td>
+          <!-- <td>{{item.email}}</td> -->
           <td>{{item.countryName }}</td>
           <td>{{item.provinceName}}</td>
           <td>{{item.cityName}}</td>
           <td>{{item.address}}</td>
           <td>{{item.comments}}</td>
-          <td  @click="modifyClient({
+          <td>
+               <a class="operate" @click="modifyClient({
                       id:item.id,
                       sub:$index,
                       show:true,
@@ -144,11 +149,9 @@
                       url:'/customer/',
                       key:'customerList',
                       supplier:1
-                      })">
-               <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                      })"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                </a>
-          </td>
-          <td @click="specDelete({
+               <a class="operate" @click="specDelete({
                         id:item.id,
                         sub:$index,
                         show:true,
@@ -157,59 +160,9 @@
                         link:deleteInfo,
                         url:'/customer/',
                         key:'customerList'
-                        })">
-             <a class="operate"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
+                        })"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                </a>
           </td>
-         <!--  <td @click.stop="eventClick($index)">
-           <img height="24" width="24" src="/static/images/default_arrow.png" />
-           <div class="component_action" v-show="item.show">
-             <ul>
-               <li @click="modifyClient({
-                             id:item.id,
-                             sub:$index,
-                             show:true,
-                             name:item.name,
-                             type:item.type,
-                             typeDesc:item.typeDesc,
-                             classify:item.classify,
-                             classifyDesc:item.classify,
-                             category:item.category,
-                             principal:item.principal,
-                             bizScope:item.bizScope,
-                             mainPhone:item.mainPhone,
-                             email:item.email,
-                             province:item.province,
-                             city:item.city,
-                             address:item.address,
-                             country:item.country,
-                             comments:item.comments,
-                             countryName:item.countryName,
-                             provinceName:item.provinceName,
-                             cityName:item.cityName,
-                             employeeId:item.employeeId,
-                             employeeName:item.employeeName,
-                             orgName:item.orgName,
-                             orgId:item.orgId,
-                             creditLevel:item.creditLevel,
-                             link:alterInfo,
-                             url:'/customer/',
-                             key:'customerList',
-                             supplier:1
-                             })">编辑</li>
-               <li @click="specDelete({
-                           id:item.id,
-                           sub:$index,
-                           show:true,
-                           name:item.name,
-                           title:'供应商',
-                           link:deleteInfo,
-                           url:'/customer/',
-                           key:'customerList'
-                           })">删除</li>
-             </ul>
-           </div>
-         </td> -->
         </tr>
         </tbody>
       </table>
@@ -227,6 +180,7 @@
   import alterinfoModel  from '../clientRelate/clientUpdate'
   import searchModel  from  '../clientRelate/searchModel'
   import filter from '../../filters/filters'
+  import common from '../../common/common'
   import {
     initCustomerlist
   } from '../../vuex/getters'
@@ -365,6 +319,9 @@
     },
     created() {
       this.getClientList(this.loadParam);
+    },
+    ready(){
+      common('tab','table_box',1);
     },
     filter: (filter,{})
   }

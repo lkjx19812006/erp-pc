@@ -112,6 +112,14 @@
                                 <button type="button" class="btn btn-default" height="24" width="24" @click="param.duedate=''">清空时间</button>
                             </div>
                         </div>
+                        <div class="clearfix">
+                            <div class="client-detailInfo col-xs-12">
+                                <label class="editlabel">备注</label>
+                                <textarea  value="{{param.comments}}" v-model="param.comments" class="form-control" style="resize:none;width:100%;" rows="5">
+                                </textarea>
+                                <!-- <input type="text" class="form-control" v-model="param.coa" value="{{param.coa}}"/> -->
+                            </div>
+                        </div>
                     </section>
                 </div>
                 <div class="edit_footer">
@@ -231,9 +239,10 @@ export default {
     border-bottom: 1px solid #ddd;
 }
 .top-title{
-    position: absolute;
-    top: 0;
+    position: fixed;
     right: 0;
+    left: 0;
+    width: 800px;
 }
 
 .edit-model {

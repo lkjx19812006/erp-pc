@@ -4,6 +4,7 @@ import category from './modules/category'
 import echarts from './modules/chart'
 import table from './modules/table'
 import tablelist from './modules/tablelist'
+import count from './modules/statistics'
 
 Vue.use(Vuex)
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     category,
     echarts,
     table,
-    tablelist
+    tablelist,
+    count
   }
 })

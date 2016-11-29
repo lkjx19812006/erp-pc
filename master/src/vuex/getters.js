@@ -216,25 +216,18 @@ export const initIdentify = (state) => {
     return parseJson(state.table.identify);
 }
 
-// /*---获取数据---*/
-// export const getData = (state,param) => {
-//     console.log(param);
-//     console.log(state);
-//     console.log("sdfsdf");
-//     return parseJson(state[param.name]);
-// }
-
- /*---修改跟进---*/
-/*export const initTrackingDetail = (state) => {
-    console.log('getter');
-    return parseJson(state.table.trackingDetail);
-}*/
 /*---获取省市区---*/
 export const initProvince = (state) => {
     return JSON.parse(JSON.stringify(state.table.locationList.provinceList));
 }
 
 export const initSupply = (state) => {
-
   return JSON.parse(JSON.stringify(state.table.basicBaseList.supplyList));
+}
+
+
+/*---我的客户统计---*/
+export const initClientcount = (state) => {
+    console.log(state.count)
+  return parseJson(state.count.countList);
 }
