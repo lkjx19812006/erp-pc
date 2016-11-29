@@ -89,8 +89,13 @@
             <thead>
                 <tr>
                     <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
-                    <th>{{$t('static.order_no')}}</th>
+                    <th>成交时间</th>
                     <th>{{$t('static.order_type')}}</th>
+                    <th>订单性质</th>
+                    <th>是否样品</th>
+                    <th>商品名称</th>
+                    
+                    <th>{{$t('static.order_no')}}</th>
                     <th>{{$t('static.order_source')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
                     <th>{{$t('static.consignee_phone')}}</th>
@@ -113,6 +118,16 @@
                   <td  @click.stop="">
                     <label v-if="item.validate<=0&&(item.orderStatus==0||item.orderStatus==70)" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                   </td>
+                  <td>{{item.ctime}}</td>
+                  <td v-if="item.type==1">{{$t('static.sell')}}</td>
+                  <td v-if="item.type==0">{{$t('static.purchase')}}</td>
+                  <td v-if="item.mode==1">{{$t('static.together')}}</td>
+                  <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
+                  <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
+                  <td v-if="item.sample==0">否</td>
+                  <td v-if="item.sample==1">是</td>
+                  <td>{{{item.goodsDesc}}</td>
+
                   <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
@@ -120,8 +135,6 @@
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'
                         })">{{item.no }}</a></td>
-                  <td v-if="item.type==1">{{$t('static.sell')}}</td>
-                  <td v-if="item.type==0">{{$t('static.purchase')}}</td>
                   <td v-if="item.sourceType==0">交易员新建</td>
                   <td v-if="item.sourceType==1">意向</td>
                   <td v-if="item.sourceType==2">报价</td>
