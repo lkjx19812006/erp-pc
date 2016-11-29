@@ -167,7 +167,7 @@
 
 
 
-                        <!-- <th>类型</th>
+                    <!-- <th>类型</th>
                         <th>客户名称</th>
                         <th>客户手机号</th>
                         <th>品种名称</th>
@@ -251,7 +251,7 @@
                         <td></td> 
 
 
-                        <!-- <td>
+                  <!-- <td>
                             <div v-if="item.especial==0&&item.type==0">普通求购</div>
                             <div v-if="item.especial==0&&item.type==1">普通供应</div>
                             <span v-if="item.especial==1&&item.type==0">紧急求购</span>
@@ -403,10 +403,7 @@
                                </a>
                               <a class="operate" v-if="item.type==1"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" height="18" width="47" alt="生成订单"/>
                                </a>
-                               <a v-if="item.sampling==1"  @click.stop="sengSample(item,$index)">寄样申请表</a>
-                            <!-- <a class="operate">
-                              <img src="/static/images/adopt.png" height="18" width="47" alt="生成订单"/>
-                             </a> -->
+                              <!--  <a v-if="item.sampling==1"  @click.stop="sengSample(item,$index)">寄样申请表</a> -->
                         </td>
                       </tr>
                       
@@ -901,8 +898,9 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-
-
-
+#table_box table th,#table_box table td{
+    width: 121px;
+    min-width: 121px;
+}
 </style>
 

@@ -119,7 +119,7 @@
                         <th>详细地址</th>
                         <th>主营产品</th> 
 
-                        <!-- <th>{{$t("static.type")}}</th>
+                    <!-- <th>{{$t("static.type")}}</th>
                         <th>{{$t("static.classification")}}</th>
                         <th>{{$t("static.customer_source")}}</th>
                         <th>{{$t("static.credit_rating")}}</th>
@@ -173,7 +173,7 @@
                         <td>{{item.address}}</td>
                         <td>{{item.bizScope}}</td>
 
-                        <!-- <td>{{item.typeDesc}}</td>
+                    <!-- <td>{{item.typeDesc}}</td>
                         <td>{{item.classifyDesc | classify}}</td>
                         <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
                         <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
@@ -582,5 +582,9 @@ export default {
     margin: auto;
     text-align: center;
     background-position: 5px;
+}
+#table_box table th,#table_box table td{
+    width: 115px;
+    min-width: 115px;
 }
 </style>

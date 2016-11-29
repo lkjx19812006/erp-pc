@@ -551,8 +551,8 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-/* ---设置--- */
-.service-nav{
-
+#table_box table th,#table_box table td{
+    width: 115px;
+    min-width: 115px;
 }
 </style>

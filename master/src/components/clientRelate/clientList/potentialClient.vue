@@ -512,4 +512,8 @@ export default {
     text-align: center;
     background-position: 5px;
 }
+#table_box table th,#table_box table td{
+    width: 115px;
+    min-width: 115px;
+}
 </style>

@@ -241,6 +241,7 @@
                                           <th>{{$t('static.file_type')}}</th>
                                           <th>{{$t('static.description')}}</th>
                                           <th>{{$t('static.create_time')}}</th>
+                                          <th>{{$t('static.file_path')}}</th>
                                           <th></th>
                                           <th></th>
                                           
@@ -253,6 +254,7 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
+                                                <td><img :src="item.url" style="max-width: 150px;" /></td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 <td></td>
@@ -286,7 +288,7 @@
                                           <th>{{$t('static.file_type')}}</th>
                                           <th>{{$t('static.description')}}</th>
                                           <th>{{$t('static.create_time')}}</th>
-                                          <th></th>
+                                          <th>{{$t('static.file_path')}}</th>
                                           <th></th>
                                           <th></th>
                                         </thead>
@@ -298,6 +300,7 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
+                                                <td><img :src="item.url" style="max-width: 150px;" /></td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 <td></td>
