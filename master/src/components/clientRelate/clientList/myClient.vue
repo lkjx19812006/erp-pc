@@ -104,25 +104,40 @@
                     <tr>
                         <th>
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
-                        <th>{{$t("static.type")}}</th>
+
+                        <th>所属业务员</th>
+                        <th>创建时间</th>
+                        <th>最近成交时间</th>
+                        <th>客户名称</th>
+                        <th>成交次数</th>
+                        <th>客户类型</th>
+                        <th>联系人</th>
+                        <th>联系人职位</th>
+                        <th>联系人电话</th>
+                        <th>手机归属地</th>
+                        <th>客户归属地</th>
+                        <th>详细地址</th>
+                        <th>主营产品</th> 
+
+                        <!-- <th>{{$t("static.type")}}</th>
                         <th>{{$t("static.classification")}}</th>
                         <th>{{$t("static.customer_source")}}</th>
                         <th>{{$t("static.credit_rating")}}</th>
                         <th>{{$t("static.client_name")}}</th>
-                        <!-- <th>{{$t("static.salesman")}}</th> -->
+                        <th>{{$t("static.salesman")}}</th>
                         <th>{{$t("static.principals")}}</th>
                         <th style="min-width:120px;">{{$t("static.business_scope")}}</th>
                         <th>{{$t("static.client_phone")}}</th>
                         <th>{{$t("static.province_of_phone")}}</th>
                         <th>{{$t("static.city_of_phone")}}</th>
-                        <!-- <th>{{$t("static.client_email")}}</th> -->
+                        <th>{{$t("static.client_email")}}</th>
                         <th>{{$t("static.country")}}</th>
                         <th>{{$t("static.province")}}</th>
                         <th>{{$t("static.city")}}</th>
                         <th>{{$t("static.registered_address")}}</th>
                         <th>{{$t("static.create_time")}}</th>
                         <th>{{$t("static.whether_supplier")}}</th>
-                        <th style="min-width:200px">{{$t("static.comment")}}</th>
+                        <th style="min-width:200px">{{$t("static.comment")}}</th> -->
                         <th>{{$t("static.operation")}}</th>
                     </tr>
                 </thead>
@@ -134,7 +149,31 @@
                         <td  @click.stop="">
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
+                        
+                        <td>{{item.employeeName}}</td>
+                        <td>{{item.ctime}}</td>
+                        <td>{{item.lastOrderTime}}</td>
+                        <td class="underline"  @click="clickOn({
+                                id:item.id,
+                                sub:$index,
+                                show:true,
+                                name:item.name,
+                                link:alterInfo,
+                                loading:true,
+                                url:'/customer/',
+                                key:'customerList'
+                                })">{{item.name}}</td>
+                        <td>{{item.orderTotal}}</td>
                         <td>{{item.typeDesc}}</td>
+                        <td>{{item.mainContact}}</td>
+                        <td></td>
+                        <td>{{item.mainPhone}}</td>
+                        <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
+                        <td>{{item.provinceName}}{{item.cityName}}</td>
+                        <td>{{item.address}}</td>
+                        <td>{{item.bizScope}}</td>
+
+                        <!-- <td>{{item.typeDesc}}</td>
                         <td>{{item.classifyDesc | classify}}</td>
                         <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
                         <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
@@ -155,17 +194,17 @@
                                 url:'/customer/',
                                 key:'customerList'
                                 })">{{item.name}}</td>
-                                    <!-- <img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div> -->
-                                    <!-- 上面这个img显示新客户图标 -->
-                        <!-- <td>{{item.category}}</td> -->
-                        <!-- <td>{{item.classify | classify}}</td> -->
-                        <!-- <td>{{item.employeeName}}</td> -->
+                                    <img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>
+                                    上面这个img显示新客户图标
+                        <td>{{item.category}}</td>
+                        <td>{{item.classify | classify}}</td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}</td>
                         <td>{{item.phoneCity}}</td>
-                        <!-- <td>{{item.email}}</td> -->
+                        <td>{{item.email}}</td>
                         <td>{{item.countryName | country}}</td>
                         <td>{{item.provinceName}}</td>
                         <td>{{item.cityName}}</td>
@@ -175,7 +214,7 @@
                           <div v-if="item.supplier==1">是</div>
                           <div v-if="item.supplier==0">否</div>
                         </td>
-                        <td>{{item.comments}}</td>
+                        <td>{{item.comments}}</td> -->
                         <td  @click="modifyClient({
                                                 id:item.id,
                                                 sub:$index,

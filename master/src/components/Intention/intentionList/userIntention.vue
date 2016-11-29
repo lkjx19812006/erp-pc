@@ -102,7 +102,21 @@
                 <thead>
                     <tr>
                         <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
-                        <th>意向类型</th>
+
+                        <th>发布时间</th>
+                        <th>客户名称</th>
+                        <th>主要联系人</th>
+                        <th>联系方式</th>
+                        <th>手机归属地</th>
+                        <th>意向商品</th>
+                        <th>商品产地</th>
+                        <th>商品规格</th>
+                        <th>商品数量</th>
+                        <th>剩余有效期</th>
+                        <th>客户备注</th>
+                        <th>意向来源</th>
+
+                        <!-- <th>意向类型</th>
                         <th>会员名称</th>
                         <th>会员手机号</th>
                         <th>品种名称</th>
@@ -114,17 +128,12 @@
                         <th>数量</th>
                         <th>所在省</th>
                         <th>交收地址</th>
-                        <!-- <th>预付比例</th>
-                        <th>发票</th> -->
-                        <!-- <th>包装</th> -->
                         <th>提供样品</th>
                         <th>样品数量</th>
-                        <!-- <th>样品单位</th> -->
                         <th>样品价格</th>
-<!--                         <th>报价人数</th> -->
                         <th>发布时间</th>
-                        <th>审核状态</th>
-                        <!-- <th>上下架</th> -->
+                        <th>审核状态</th> -->
+                        
                         <th style="min-width: 250px;">操作</th>
                     </tr>
                 </thead>
@@ -134,11 +143,66 @@
                          <td>
                             <label v-if="item.validate==0||item.validate==9" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" >
                             </label>
-                            <!-- <label v-else >—
-                            </label> -->
                         </td>
-                        <!-- <td>{{item.type | chanceType}}</td> -->
-                        <td>
+                     
+                        <td>{{item.ctime | date}}</td>
+                        <td class="underline" @click.stop="detailClick({
+                                id:item.id,
+                                sub:$index,
+                                show:true,
+                                loading:true,
+                                customerName:item.customerName,
+                                customerPhone:item.customerPhone,
+                                breedName:item.breedName,
+                                type:item.type,
+                                especial:item.especial,
+                                qualification:item.qualification,
+                                spec:item.spec,
+                                number:item.number,
+                                unit:item.unit,
+                                price:item.price,
+                                address:item.address,
+                                location:item.location,
+                                advance:item.advance,
+                                invoic:item.invoic,
+                                visit:item.visit,
+                                pack:item.pack,
+                                intl:item.intl,
+                                visit:item.visit,
+                                sampling:item.sampling,
+                                sampleNumber:item.sampleNumber,
+                                sampleUnit:item.sampleUnit,
+                                sampleAmount:item.sampleAmount,
+                                offer:item.offer,
+                                status:item.status,
+                                country:item.country,
+                                province:item.province,
+                                city:item.city,
+                                district:item.district,
+                                address:item.address,
+                                link:editintentInfo,
+                                url:'/intention/',
+                                key:'intentionList',
+                                image_f:'',
+                                image_s:'',
+                                image_t:'',
+                                image_f_show:'',
+                                image_s_show:'',
+                                image_t_show:'',
+                                duedate:item.duedate
+                                })">{{item.userFullname}}</td>
+                        <td>{{item.mainContact}}</td>
+                        <td>{{item.customerPhone}}</td>
+                        <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
+                        <td>{{item.breedName}}</td>
+                        <td>{{item.location}}</td>
+                        <td>{{item.spec}}</td>
+                        <td>{{item.number}}{{item.unit}}</td>
+                        <td></td>
+                        <td>{{item.description}}</td>
+                        <td></td> 
+
+                        <!-- <td>
                             <div v-if="item.especial==0&&item.type==0">普通求购</div>
                             <div v-if="item.especial==0&&item.type==1">普通供应</div>
                             <div v-if="item.especial==1&&item.type==0">紧急求购</div>
@@ -199,22 +263,14 @@
                         <td>{{item.number}}</td>
                         <td>{{item.province}}</td>
                         <td>{{item.address}}</td>
-                        <!-- <td>{{item.advance}}</td>
-                        <td>{{item.invoic | invoicstate}}</td> -->
-                        <!-- <td>{{item.pack}}</td> -->
                         <td>
                             <div v-if="item.sampling==0">否</div>
                             <div v-if="item.sampling==1">是</div>
                         </td>
                         <td>{{item.sampleNumber}}</td>
-                        <!-- <td>{{item.sampleUnit}}</td> -->
                         <td>{{item.sampleAmount}}</td>
-                        <!-- <td>{{item.offerNumber}}</td> -->
                         <td>{{item.ctime | date}}</td>
-                        <td>{{item.validate | intentionAudit}}</td>
-                        <!-- <td>
-                          <div>{{item.onSell | onsell}}</div>
-                        </td> -->
+                        <td>{{item.validate | intentionAudit}}</td> -->
                         <td>
                             <a class="operate" @click.stop="modifyIntention({
                                   id:item.id,

@@ -24,11 +24,25 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                       <!--  <th>
-                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
-                       </th> -->
-                        <!-- <th>意向ID</th> -->
-                        <th>报价会员</th>
+                       <th>报价时间</th>
+                       <th>所属交易员</th>
+                       <th>报价客户</th>
+                       <th>主要联系人</th>
+                       <th>联系方式</th>
+                       <th>报价价格</th>
+                       <th>库存</th>
+                       <th>报价备注</th>
+                       <th>需求商品</th>
+                       <th>需求产地</th>
+                       <th>需求规格</th>
+                       <th>需求数量</th>
+                       <th>需求备注</th>
+                       <th>意向客户</th>
+                       <th>意向客户联系人</th>
+                       <th>联系方式</th>
+
+                      
+                        <!-- <th>报价会员</th>
                         <th>会员手机</th>
                         <th>发布意向客户</th>
                         <th>客户手机</th>
@@ -40,13 +54,29 @@
                         <th>杂费</th>
                         <th>杂费说明</th>
                         <th>备注</th>
-                        <th>是否已采纳</th>
+                        <th>是否已采纳</th> -->
       	            	  <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in initOfferList">
-                        <td>{{item.userName}}</td>
+                        <td>{{item.otime | date}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{item.userPhone}}</td>
+                        <td>{{item.price}}</td>
+                        <td>{{item.number}}{{item.unit}}</td>
+                        <td>{{item.description}}</td>
+                        <td>{{item.breedName}}</td>
+                        <td>{{item.location}}</td>
+                        <td>{{item.spec}}</td>
+                        <td>{{item.number}}{{item.unit}}</td>
+                        <td>{{item.comments}}</td>
+                        <td>{{item.customerName}}</td>
+                        <td></td>
+                        <td>{{item.customerPhone}}</td>
+                        <!-- <td>{{item.userName}}</td>
                         <td>{{item.userPhone}}</td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
@@ -61,7 +91,7 @@
                         <td>
                            <div v-if="item.orderTime==0">未采纳</div>
                            <div v-else>已采纳</div>
-                        </td>
+                        </td> -->
                         <td    @click.stop="adopt(item,$index)">
                               <a class="operate" v-if="item.orderTime==0"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
                                </a>

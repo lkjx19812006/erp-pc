@@ -70,27 +70,42 @@
                     <tr>
                         <th>
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
-                        <th>类型</th>
+
+                        <th>所属业务员</th>
+                        <th>创建时间</th>
+                        <th>最近成交时间</th>
+                        <th>客户名称</th>
+                        <th>成交次数</th>
+                        <th>客户类型</th>
+                        <th>联系人</th>
+                        <th>联系人职位</th>
+                        <th>联系人电话</th>
+                        <th>手机归属地</th>
+                        <th>客户归属地</th>
+                        <th>详细地址</th>
+                        <th>主营产品</th> 
+
+                        <!-- <th>类型</th>
                         <th>分类</th>
                         <th>客户来源</th>
                         <th>客户信用等级</th>
                         <th>客户名称</th>
-                        <!-- <th>分类码</th> -->
-                        <!-- <th>所属分类</th> -->
+                        <th>分类码</th>
+                        <th>所属分类</th>
                         <th>所属业务员</th>
                         <th>负责人</th>
                         <th style="min-width:120px;">经营范围</th>
                         <th>手机</th>
                         <th>手机省</th>
                         <th>手机市</th>
-                        <!-- <th>邮箱</th> -->
+                        <th>邮箱</th>
                         <th>国家</th>
                         <th>所在省</th>
                         <th>所在市</th>
                         <th>注册地址</th>
                         <th>创建时间</th>
                         <th>是否供应商</th>
-                        <th style="min-width:200px">备注</th>
+                        <th style="min-width:200px">备注</th> -->
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -102,7 +117,31 @@
                         <td  @click.stop="">
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
+
+                        <td>{{item.employeeName}}</td>
+                        <td>{{item.ctime}}</td>
+                        <td>{{item.lastOrderTime}}</td>
+                        <td class="underline"  @click="clickOn({
+                                id:item.id,
+                                sub:$index,
+                                show:true,
+                                loading:true,
+                                name:item.name,
+                                link:alterInfo,
+                                url:'/customer/',
+                                key:'customerList'
+                                })">{{item.name}}</td>
+                        <td>{{item.orderTotal}}</td>
                         <td>{{item.typeDesc}}</td>
+                        <td>{{item.mainContact}}</td>
+                        <td></td>
+                        <td>{{item.mainPhone}}</td>
+                        <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
+                        <td>{{item.provinceName}}{{item.cityName}}</td>
+                        <td>{{item.address}}</td>
+                        <td>{{item.bizScope}}</td>
+
+                        <!-- <td>{{item.typeDesc}}</td>
                         <td>{{item.classifyDesc | classify}}</td>
                         <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
                         <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
@@ -122,17 +161,17 @@
                                 link:alterInfo,
                                 url:'/customer/',
                                 key:'customerList'
-                                })"><!-- <img src="/static/images/newClient2.png" style='float:left;' v-if='item.status==0' /> -->{{item.name}}</td>
-                                    <!-- 上面这个img显示新客户图标 -->
-                        <!-- <td>{{item.category}}</td> -->
-                        <!-- <td>{{item.classify | classify}}</td> -->
+                                })"><img src="/static/images/newClient2.png" style='float:left;' v-if='item.status==0' />{{item.name}}</td>
+                                    上面这个img显示新客户图标
+                        <td>{{item.category}}</td>
+                        <td>{{item.classify | classify}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.principal}}</td>
                         <td>{{item.bizScope}}</td>
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}</td>
                         <td>{{item.phoneCity}}</td>
-                        <!-- <td>{{item.email}}</td> -->
+                        <td>{{item.email}}</td>
                         <td>{{item.countryName | country}}</td>
                         <td>{{item.provinceName}}</td>
                         <td>{{item.cityName}}</td>
@@ -142,7 +181,7 @@
                           <div v-if="item.supplier==1">是</div>
                           <div v-if="item.supplier==0">否</div>
                         </td>
-                        <td >{{item.comments}}</td>
+                        <td >{{item.comments}}</td> -->
                          <td  @click="modifyClient({
                                                 id:item.id,
                                                 sub:$index,
