@@ -33,14 +33,7 @@
                         <th>报价价格</th>
                         <th>库存</th>
                         <th>报价备注</th>
-                        <th>需求商品</th>
-                        <th>需求产地</th>
-                        <th>需求规格</th>
-                        <th>需求数量</th>
-                        <th>需求备注</th>
-                        <th>意向客户</th>
-                        <th>意向客户联系人</th>
-                        <th>联系方式</th>    
+                        
 
                         <!-- <th>报价会员</th>
                         <th>会员手机</th>
@@ -63,20 +56,12 @@
                          
                         <td>{{item.otime | date}}</td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>{{item.userPhone}}</td>
+                        <td>{{item.customerName}}</td>
+                        <td>{{item.mainContact}}</td>
+                        <td>{{item.customerPhone}}</td>
                         <td>{{item.price}}</td>
                         <td>{{item.number}}{{item.unit}}</td>
                         <td>{{item.description}}</td>
-                        <td>{{item.breedName}}</td>
-                        <td>{{item.location}}</td>
-                        <td>{{item.spec}}</td>
-                        <td>{{item.number}}{{item.unit}}</td>
-                        <td>{{item.comments}}</td>
-                        <td>{{item.customerName}}</td>
-                        <td></td>
-                        <td>{{item.customerPhone}}</td>    
 
                         <!-- <td>{{item.userName}}</td>
                         <td>{{item.userPhone}}</td>
