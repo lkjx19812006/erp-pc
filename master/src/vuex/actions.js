@@ -3064,19 +3064,13 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
     for (var search in param) {
         if (search == 'type' && param[search] !== '') {
             url += '&type=' + param.type
-        } else if (search == 'type') {
-            url += '&type='
-        }
+        } 
         if (search == 'especial' && param[search] !== '') {
             url += '&especial=' + param.especial
-        } else if (search == 'especial') {
-            url += '&especial='
-        }
+        } 
         if (search == 'invoic' && param[search] !== '') {
             url += '&invoic=' + param.invoic
-        } else if (search == 'invoic') {
-            url += '&invoic='
-        }
+        } 
         if (search == 'validate' && param[search] !== '') {
             url += '&validate=' + param.validate
         }
@@ -3085,24 +3079,16 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         }
         if (search == 'intl' && param[search] !== '') {
             url += '&intl=' + param.intl
-        } else if (search == 'intl') {
-            url += '&intl='
-        }
+        } 
         if (search == 'sampling' && param[search] !== '') {
             url += '&sampling=' + param.sampling
-        } else if (search == 'sampling') {
-            url += '&sampling='
-        }
+        } 
         if (search == 'visit' && param[search] !== '') {
             url += '&visit=' + param.visit
-        } else if (search == 'visit') {
-            url += '&visit='
-        }
+        } 
         if (search == 'advance' && param[search] !== '') {
             url += '&advance=' + param.advance
-        } else if (search == 'advance') {
-            url += '&advance='
-        }
+        } 
         if (search == 'breedId' && param[search] !== '') {
             url += '&breedId=' + param.breedId
         }
