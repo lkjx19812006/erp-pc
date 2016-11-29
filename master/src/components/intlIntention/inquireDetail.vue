@@ -172,9 +172,8 @@
                                                 <td>{{item.offerNumber}}</td>
                                                 <td>{{item.offerUnit}}</td>
                                                 <td>{{item.offerComment}}</td>
-                                                <td>
-                                                    {{item.again | requireAgain}}
-                                                </td>
+                                                <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
+                                                <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
                                                 <!-- <td>
                                                     <div v-if="item.offerAgain==0">否</div>
                                                     <div v-else>是</div>

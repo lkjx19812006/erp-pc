@@ -84,7 +84,23 @@
         <table class="table table-hover table_color table-striped " v-cloak id="tab">
             <thead>
                 <tr>
-                    <th>{{$t('static.order_no')}}</th>
+                    <th>{{$t('static.transcation')}}</th>
+                    <th>{{$t('static.order_type')}}</th>
+                    <th>{{$t('static.trading_patterns')}}</th>
+                    <th>{{$t('static.sample_order')}}</th>
+                    <th>{{$t('static.breed')}}</th>
+                    <th>{{$t('static.transcation_amount')}}</th>
+                    <th>{{$t('static.client_name')}}</th>
+                    <th>{{$t('static.supplier_name')}}</th>
+                    <th>{{$t('static.salesman')}}</th>
+                    <th>{{$t('static.consignee_name')}}</th>
+                    <th>{{$t('static.consignee_phone')}}</th>
+                    <th>{{$t('static.consignee_address')}}</th>
+                    <th>{{$t('static.payment_method')}}</th>
+                    <th>{{$t('static.order_status')}}</th>
+                    <th>{{$t('static.order_source')}}</th>
+                    <th>{{$t('static.review_status')}}</th>
+                    <!-- <th>{{$t('static.order_no')}}</th>
                     <th>{{$t('static.order_type')}}</th>
                     <th>{{$t('static.order_source')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
@@ -99,103 +115,79 @@
                     <th>{{$t('static.order_status')}}</th>
                     <th>{{$t('static.review_status')}}</th>
                     <th>{{$t('static.currency')}}</th>
-                    <th>{{$t('static.payment_method')}}</th>
-                    <!-- <th></th> -->
+                    <th>{{$t('static.payment_method')}}</th> -->
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="item in initOrderlist"  v-cloak>
+                  <td>{{item.ctime}}</td>
+                  <td v-if="item.type==1">{{$t('static.sell')}}</td>
+                  <td v-if="item.type==0">{{$t('static.purchase')}}</td>
+                  <td v-if="item.mode==1">{{$t('static.together')}}</td>
+                  <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
+                  <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
+                  <td v-if="item.sample==0">否</td>
+                  <td v-if="item.sample==1">是</td>
+                  <td>{{{item.goodsDesc}}</td>
+                  <td>{{item.total}}</td>
                   <td><a @click="clickOn({
+                                show:true,
+                                id:item.id,
+                                loading:false,
+                                orderStatus:item.orderStatus,
+                                contact:'/order/myList'
+                        })">{{item.customerName}}</a></td>
+                  <td></td>
+                  <td>{{item.employeeName}}</td>
+                  <td>{{item.consignee}}</td>
+                  <td>{{item.consigneePhone}}</td>
+                  <td>{{item.consigneeAddr}}</td>
+                  <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
+                  <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
+                  <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
+                  <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
+                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">未支付</td>
+                  <td>{{item.orderStatus | orderstatus}}</td>
+                  <td v-if="item.sourceType==0">交易员新建</td>
+                  <td v-if="item.sourceType==1">意向</td>
+                  <td v-if="item.sourceType==2">报价</td>
+                  <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Auditing}}</td>
+                  <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
+                  <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
+                  <!-- <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
                                 loading:false,
                                 orderStatus:item.orderStatus
                         })">{{item.no}}</a></td>
-                  <td v-if="item.type==1">销售</td>
-                  <td v-if="item.type==0">采购</td>
-                  <td v-if="item.sourceType==0">交易员新建</td>
-                  <td v-if="item.sourceType==1">意向</td>
-                  <td v-if="item.sourceType==2">报价</td>
-                  <td>{{item.consignee}}</td>
-                  <td>{{item.consigneePhone}}</td>
-                  <td>{{item.consigneeAddr}}</td>
-                  <td>{{item.country}}</td>
-                  <td>{{item.province}}</td>
-                  <td>{{item.city}}</td>
-                  <td>{{item.employeeName}}</td>
-                  <td>{{item.comments}}</td>
-                  <td v-if="item.clients==0" style="background:red;color:#fff">PC</td>
-                  <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
-                  <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
-                  <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
-                  <td v-if="item.clients!=0&&item.clients!=1&&item.clients!=2&&item.clients!=3"  style="background:#000;color:#fff">未说明</td>
-                  <td>{{item.orderStatus | orderstatus}}</td>
-                  <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Auditing}}</td>
-                  <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
-                  <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
-                  <td>{{item.currency | Currency}}</td>
-                  <td v-if="item.payWay===0">线下打款</td>
-                  <td v-if="item.payWay==1">支付宝</td>
-                  <td v-if="item.payWay==2">平安支付</td>
-                  <td v-if="item.payWay==3">药款支付</td>
-                  <td v-if="item.payWay==null">未支付</td>
-                 <!--  <td @click="editClick($index)">
-                     <img height="24" width="24" src="/static/images/default_arrow.png" />
-                     <div class="component_action" v-show="item.show">
-                          <ul>
-                              <li @click="updateOrder({
-                                       sub:$index,
-                                       id:item.id,
-                                       show:true,
-                                       title1:'修改订单',
-                                       type:item.type,
-                                       sourceType:item.sourceType,
-                                       sample:item.sample,
-                                       intl:item.intl,
-                                       customer:item.customer,
-                                       currency:item.currency,
-                                       consignee:item.consignee,
-                                       consigneePhone:item.consigneePhone,
-                                       zipCode:item.zipCode,
-                                       country:item.country,
-                                       province:item.province,
-                                       city:item.city,
-                                       district:item.district,
-                                       consigneeAddr:item.consigneeAddr,
-                                       comments:item.comments,
-                                       orderStatus:item.orderStatus,
-                                       incidentals:item.incidentals,
-                                       incidentalsDesc:item.incidentalsDesc,
-                                       preferential:item.preferential,
-                                       preferentialDesc:item.preferentialDesc,
-                                       goods:item.goods,
-                                       key:'orderList',
-                                       link:alterOrder,
-                                       url:'/order/'
-                                       })">编辑</li>
-                               <li v-if="item.orderStatus==-1&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
-                               <li v-if="item.orderStatus==-2&&item.type==0" @click="pendingOrder(item,$index)">订单已过期</li>
-                               <li v-if="item.orderStatus==0&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">待处理订单</li>
-                               <li v-if="item.orderStatus==10&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>
-                               <li v-if="item.orderStatus==20&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">等待支付</li>
-                               <li v-if="item.orderStatus==30&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li>
-                               <li v-if="item.orderStatus==40&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">等待发货</li>
-                               <li v-if="item.orderStatus==50&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">等待收货</li>
-                               <li v-if="item.orderStatus==60&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
-                               <li v-if="item.orderStatus==70&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
-                               <li v-if="item.orderStatus==-1&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
-                               <li v-if="item.orderStatus==-2&&item.type==1" @click="pendingOrder(item,$index)">订单已过期</li>
-                               <li v-if="item.orderStatus==0&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">待处理订单</li>
-                               <li v-if="item.orderStatus==10&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>
-                               <li v-if="item.orderStatus==20&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待支付</li>
-                               <li v-if="item.orderStatus==30&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li>
-                               <li v-if="item.orderStatus==40&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">等待发货</li>
-                               <li v-if="item.orderStatus==50&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">等待收货</li>
-                               <li v-if="item.orderStatus==60&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
-                               <li v-if="item.orderStatus==70&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
-                          </ul>
-                      </div>
-                 </td> -->
+                        <td v-if="item.type==1">销售</td>
+                        <td v-if="item.type==0">采购</td>
+                        <td v-if="item.sourceType==0">交易员新建</td>
+                        <td v-if="item.sourceType==1">意向</td>
+                        <td v-if="item.sourceType==2">报价</td>
+                        <td>{{item.consignee}}</td>
+                        <td>{{item.consigneePhone}}</td>
+                        <td>{{item.consigneeAddr}}</td>
+                        <td>{{item.country}}</td>
+                        <td>{{item.province}}</td>
+                        <td>{{item.city}}</td>
+                        <td>{{item.employeeName}}</td>
+                        <td>{{item.comments}}</td>
+                        <td v-if="item.clients==0" style="background:red;color:#fff">PC</td>
+                        <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
+                        <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
+                        <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
+                        <td v-if="item.clients!=0&&item.clients!=1&&item.clients!=2&&item.clients!=3"  style="background:#000;color:#fff">未说明</td>
+                        <td>{{item.orderStatus | orderstatus}}</td>
+                        <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Auditing}}</td>
+                        <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
+                        <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
+                        <td>{{item.currency | Currency}}</td>
+                        <td v-if="item.payWay===0">线下打款</td>
+                        <td v-if="item.payWay==1">支付宝</td>
+                        <td v-if="item.payWay==2">平安支付</td>
+                        <td v-if="item.payWay==3">药款支付</td>
+                        <td v-if="item.payWay==null">未支付</td> -->
                 </tr>
             </tbody>
         </table>

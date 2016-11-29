@@ -590,7 +590,7 @@ export default {
         this.getIntlIntentionDetail(this.param);
         console.log(this.param);
          if(this.param.breedId){
-            this.breedParam.breedName = this.param.brredName;
+            this.breedParam.breedName = this.param.breedName;
             this.breedParam.id = this.param.breedId;
             this.getBreedDetail(this.breedParam);
             console.log(this.breedParam)
@@ -708,4 +708,5 @@ export default {
 .editpage-image{
     display: inline-block;
 }
+
 </style>

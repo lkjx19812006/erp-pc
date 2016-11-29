@@ -17,7 +17,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <span class="navbar-brand navbar-name" href="#">{{initOrderDetail.no}}</span>
+                        <span class="navbar-brand navbar-name" href="#">{{initOrderDetail.customerName}}</span>
                     </div>
                    <!--  <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
                        <li>
