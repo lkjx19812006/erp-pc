@@ -69,7 +69,7 @@
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.goods.arr">
-                                                <td>{{item.brredName}}</td>
+                                                <td>{{item.breedName}}</td>
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
                                                 <td>{{item.number}}</td>
@@ -345,58 +345,50 @@
                                     <label>{{$t('static.order_type')}}</label>
                                     <input type="text" class="form-control"   value="{{type[initOrderDetail.type]}}" disabled="disabled"/>
                                 </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>{{$t('static.order_source')}}</label>
-                                    <input type="text" class="form-control"  value="{{sourceType[initOrderDetail.sourceType]}}" disabled="disabled" v-if="sourceType[initOrderDetail.sourceType]"/>
-                                    <input type="text" class="form-control"  value="未说明" disabled="disabled" v-else/>
-                                </div>
+<!--                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+    <label>{{$t('static.order_source')}}</label>
+    <input type="text" class="form-control"  value="{{sourceType[initOrderDetail.sourceType]}}" disabled="disabled" v-if="sourceType[initOrderDetail.sourceType]"/>
+    <input type="text" class="form-control"  value="未说明" disabled="disabled" v-else/>
+</div>
                             </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <div class="clearfix"> -->
+                                <div class="client-detailInfo  col-md-6 col-xs-12">
                                     <label>{{$t('static.consignee_name')}}</label>
                                     <input type="text" class="form-control"  v-model="initOrderDetail.consignee" value="{{initOrderDetail.consignee}}" disabled="disabled"/>
                                 </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                <div class="client-detailInfo   col-md-6 col-xs-12">
                                     <label>{{$t('static.consignee_phone')}}</label>
                                     <input type="text" class="form-control" v-model="initOrderDetail.consigneePhone" value="{{initOrderDetail.consigneePhone}}" disabled="disabled"/>
                                 </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <div class="client-detailInfo  col-md-6 col-xs-12">
                                     <label>{{$t('static.country')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.country}}" disabled="disabled"/>
                                 </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                <div class="client-detailInfo   col-md-6 col-xs-12">
                                     <label>{{$t('static.province')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.province}}" disabled="disabled"/>
                                 </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <div class="client-detailInfo col-md-6 col-xs-12">
                                     <label>{{$t('static.city')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.city}}" disabled="disabled"/>
                                 </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                <div class="client-detailInfo   col-md-6 col-xs-12">
                                     <label>{{$t('static.postcodes')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.zipCode}}" disabled="disabled"/>
                                 </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <div class="client-detailInfo col-md-6 col-xs-12">
                                     <label>{{$t('static.detailed_address')}}</label>
                                     <input type="text" class="form-control" value="{{initOrderDetail.consigneeAddr}}" disabled="disabled"/>
                                 </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                <div class="client-detailInfo  col-md-6 col-xs-12">
                                     <label>{{$t('static.comment')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.comments}}" disabled="disabled"/>
                                 </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <div class="client-detailInfo  col-md-6 col-xs-12">
                                     <label>{{$t('static.sundry_fees')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.incidentals}}" disabled="disabled"/>
                                 </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                                <div class="client-detailInfo   col-md-6 col-xs-12">
                                     <label>{{$t('static.fee_explain')}}</label>
                                     <input type="text" class="form-control" value="{{initOrderDetail.incidentalsDesc}}" disabled="disabled"/>
                                 </div>

@@ -443,8 +443,7 @@ export default{
     height:500px;
     border:0px;
 }
-th,td{
-    width: 200px;
-    min-width: 200px;
+.table{
+    display: table;
 }
 </style>

@@ -22,8 +22,8 @@
                               <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
                               <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
                               <select  class="form-control edit-input" v-model="param.type"   >
-                                  <option value="0">采购</option>
-                                  <option value="1">销售</option>
+                                  <option value="0">{{$t('static.purchase')}}</option>
+                                  <option value="1">{{$t('static.sell')}}</option>
                               </select>
                               <!-- <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/> -->
                           </div>

@@ -12,7 +12,7 @@
       <span class="glyphicon glyphicon-remove-circle"></span>
     </div>
     <div class="edit-content">
-      <h3>新建客户</h3>
+        <h3>{{$t('static.new')}}</h3>
     </div>
     <validator name="validation">
       <form novalidate>
@@ -20,31 +20,31 @@
           <section class="editsection" v-cloak>
             <div style="margin-top:20px;margin-left:30px;margin-bottom:15px;">
                <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
-               <h5 style="display:inline">客户信息</h5>
+               <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
             </div>
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                 <label class="editlabel" >名称<span class="system_danger" v-if="$validation.name.minlength">请输入客户名且不少于两位</span></label>
+                 <label class="editlabel">{{$t('static.client_name')}}<span class="system_danger" v-if="$validation.name.minlength">{{$t('static.enter_client_name')}}</span></label>
                  <input type="text" id="username" class="form-control" v-model="param.name"
                        v-validate:name="{minlength:2}"/>
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                <label class="editlabel">类型</label>
+                <label class="editlabel">{{$t('static.type')}}</label>
                 <select class="form-control edit-input" v-model="param.type">
-                  <option value='0,个人' selected>个人</option>
-                  <option value='1,企业'>企业</option>
+                  <option value='0,个人' selected>{{$t('static.personal')}}</option>
+                  <option value='1,企业'>{{$t('static.enterprise')}}</option>
                 </select>
               </div>
             </div>
 
             <div class="clearfix" v-if="param.type=='1,企业'">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>法人<span class="system_danger" v-if="$validation.legalperson.minlength">请输入法人姓名(至少两位)</span></label>
+                <label>{{$t('static.legal')}} <span class="system_danger" v-if="$validation.legalperson.minlength">{{$t('static.required')}}</span></label>
                 <input type="text" id="legalPerson" class="form-control" v-model="param.legalPerson"
                        v-validate:legalperson="{minlength:2}"/>
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                <label class="editlabel">负责人<span class="system_danger" v-if="$validation.principal.minlength">请输入负责人姓名(至少两位)</span></label>
+                <label class="editlabel">{{$t('static.principals')}} <span class="system_danger" v-if="$validation.principal.minlength">{{$t('static.required')}}</span></label>
                 <input type="text" id="principal" class="form-control" v-model="param.principal"
                        v-validate:principal="{minlength:2}"/>
               </div>
@@ -52,35 +52,31 @@
 
             <div class="clearfix" v-if="param.type=='1,企业'">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>编码</label>
+                <label>{{$t('static.postcodes')}}</label>
                 <input type="text"  class="form-control" v-model="param.number"
                       />
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                 <label class="editlabel">类型</label>
                 <select class="form-control edit-input" v-model="param.category">
-                  <option value="HF" selected>保健品厂</option>
-                  <option value="MF">药厂</option>
-                  <option value="CF">化妆品厂</option>
-                  <option value="FF">食品厂</option>
+                    <option v-for="item in initUserType">{{item.name}}</option>
                 </select>
               </div>
             </div>
 
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>分类<span class="system_danger" v-if="$validation.classify.required">分类不能为空</span></label>
-                <input v-show="false" type="text" class="form-control" readonly="readonly"
-                       v-model="param.classify" v-validate:classify="['required']"  />
+                <label>{{$t('static.classification')}}<span class="system_danger" v-if="$validation.classify.required">{{$t('static.required')}}</span></label>
+                <input v-show="false" type="text" class="form-control" readonly="readonly" v-model="param.classify" v-validate:classify="['required']"  />
                 <select class="form-control edit-input" id="classify" v-model="param.classify">
-                  <option value="1,买" selected>买</option>
-                  <option value="2,卖">卖</option>
-                  <option value="3,买卖">买卖</option>
+                  <option value="1,买">{{$t("static.purchaser")}}</option>
+                  <option value="2,卖">{{$t("static.supplier")}}</option>
+                  <option value="3,买卖">{{$t("static.purchaser_and_supplier")}}</option>
                 </select>
 
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                <label>业务员/部门<span class="system_danger" v-if="$validation.orgid.required">业务员/部门不能为空</span></label>
+                <label>{{$t('static.deparment')}}<span class="system_danger" v-if="$validation.orgid.required">{{$t('static.required')}}</span></label>
                 <input v-show="false" type="text" class="form-control" readonly="readonly"
                        v-model="param.orgId" v-validate:orgid="['required']"  />
                 <input v-if="param.employeeId" type="text" class="form-control" readonly="readonly"
@@ -91,22 +87,22 @@
             </div>
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                 <label class="editlabel" for="system">电话<span class="system_danger" v-if="$validation.tel.tel">请输入正确的电话（例：021-60154155）</span></label>
+                 <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.tel.tel">{{$t('static.validate_telephone')}}（例：021-60154155）</span></label>
                  <input type="text" class="form-control" v-validate:tel="['tel']" v-model="param.tel" />
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                <label class="editlabel" for="system">邮箱<span class="system_danger" v-if="$validation.email.email">请输入正确的邮箱</span></label>
+                <label class="editlabel" for="system">{{$t('static.email')}}<span class="system_danger" v-if="$validation.email.email">{{$t('static.enter_email')}}</span></label>
                 <input type="email" class="form-control" v-validate:email="['email']" v-model="param.email"/>
               </div>
             </div>
 
             <div class="clearfix"  >
               <div class="client-detailInfo pull-left col-md-6 col-xs-12" >
-                <label>经营范围</label>
+                <label>{{$t('static.business_scope')}}</label>
                 <input type="text" class="form-control" v-model="param.bizScope"/>
               </div>
               <div class="client-detailInfo pull-right col-md-6 col-xs-12" v-if="!param.countryId">
-                <label>所在国家</label>
+                <label>{{$t('static.country')}}</label>
                 <div  class="form-control" style="padding:0;border:none" >
                 <v-select
                   :debounce="250"
@@ -125,7 +121,7 @@
 
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>所在省</label>
+                <label>{{$t('static.province')}}</label>
                 <input type="text" v-if="!country.id" class="form-control edit-input " disabled="disabled"
                        placeholder="请先选择一个国家"/>
                 <div  class="form-control" style="padding:0;border:none" v-if="country.id">
@@ -136,14 +132,13 @@
                   :options="provinceArr"
                   placeholder="省"
                   label="cname"
-
                 >
                 </v-select>
                   </div>
               </div>
 
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                <label>所在市</label>
+                <label>{{$t('static.city')}}</label>
                 <input type="text" v-if="!province.cname" class="form-control edit-input " disabled="disabled"
                        placeholder="请先选择一个省"/>
                 <div  class="form-control" style="padding:0;border:none"  v-if="province.cname">
@@ -162,11 +157,11 @@
 
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>主营业务</label>
+                <label>{{$t('static.main_product')}}</label>
                 <input type="text" class="form-control" v-model="param.mainBiz"/>
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                <label>网站</label>
+                <label>{{$t('static.website')}}</label>
                 <input type="text" class="form-control" v-model="param.website"/>
               </div>
             </div>
@@ -174,42 +169,41 @@
 
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>信用等级</label>
+                <label>{{$t('static.credit_rating')}}</label>
                 <select class="form-control edit-input"  v-model="param.creditLevel">
-                  <option value="1" selected>一星客户</option>
-                  <option value="2">二星客户</option>
-                  <option value="3">三星客户</option>
+                  <option value="1" selected>{{$t('static.one_star')}}</option>
+                  <option value="2">{{$t('static.two_star')}}</option>
+                  <option value="3">{{$t('static.three_star')}}</option>
                 </select>
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                <label>注册地址</label>
+                <label>{{$t('static.registered_address')}}</label>
                 <input type="text" class="form-control" v-model="param.address"/>
               </div>
             </div>
 
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                <label>备注</label>
+                <label>{{$t('static.comment')}}</label>
                 <input type="text" class="form-control" v-model="param.comments"/>
               </div>
             </div>
 
             <div v-if="contactshow">
-
               <div style="margin-top:25px;margin-left:30px;margin-bottom:15px;">
                 <img src="/static/images/contact@2x.png" style="display:inline"/>
-                <h5 style="display:inline">联系人</h5>
+                <h5 style="display:inline">{{$t('static.contact')}}</h5>
               </div>
               <div class="clearfix">
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                  <label class="editlabel" >联系人名称<span class="system_danger" v-if="$validation.cname.minlength">请输入联系人姓名且至少两位</span></label>
-                  <input type="text" class="form-control" v-validate:cname="{minlength:2}" v-model="contacts[0].name"/>
+                  <label class="editlabel">{{$t('static.name')}}<span class="system_danger" v-if="$validation.cname.minlength">{{$t('static.required')}}</span></label>
+                  <input type="text" class="form-control" v-validate:cname="{minlength:2}" v-model="contacts[0].mainContact"/>
                 </div>
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                  <label>是否主联系人</label>
+                  <label>{{$t('static.whether_main_contact')}}</label>
                   <select class="form-control edit-input" v-model='contacts[0].main'>
-                    <option value="1">是</option>
-                    <option value="0">否</option>
+                    <option value="1">{{$t('static.yes')}}</option>
+                    <option value="0">{{$t('static.no')}}</option>
 
                   </select>
                 </div>
@@ -217,39 +211,39 @@
               </div>
               <div class="clearfix">
                 <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
-                  <label>联系人部门</label>
+                  <label>{{$t('static.department')}}</label>
                   <input type="text" class="form-control" v-model="contacts[0].department"/>
                 </div>
                 <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                  <label>联系人职位</label>
+                  <label>{{$t('static.position')}}</label>
                   <input type="text" class="form-control" v-model="contacts[0].position"/>
                 </div>
 
               </div>
               <div class="clearfix">
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                  <label class="editlabel" for="system">手机<span class="system_danger" v-if="$validation.cphone.phone">请输入正确的手机</span></label>
+                  <label class="editlabel" for="system">{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.cphone.phone">{{$t('static.validate_cellphone')}}</span></label>
                   <input type="text" class="form-control" v-validate:cphone="['phone']" v-model="contacts[0].phone"/>
                 </div>
                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                  <label class="editlabel" for="system">固话<span class="system_danger" v-if="$validation.ctel.tel">请输入正确的电话，如021-23569847</span></label>
+                  <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.ctel.tel">{{$t('static.validate_telephone')}}，如（021-23569847）</span></label>
                   <input type="text" class="form-control" v-validate:ctel="['tel']" v-model="contacts[0].tel"/>
                 </div>
               </div>
               <div class="clearfix">
                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                  <label class="editlabel" for="system">邮箱<span class="system_danger" v-if="$validation.cemail.email">格式有误</span></label>
+                  <label class="editlabel" for="system">{{$t('static.email')}}<span class="system_danger" v-if="$validation.cemail.email">{{$t('static.validate_email')}}</span></label>
                   <input type="email" class="form-control" v-validate:cemail="['email']" v-model="contacts[0].email"/>
                 </div>
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                  <label class="editlabel" for="system">微信<span class="system_danger" v-if="$validation.cwechart.wechart">格式有误</span></label>
+                  <label class="editlabel" for="system">{{$t('static.wechat')}}<span class="system_danger" v-if="$validation.cwechart.wechart">{{$t('static.validate_wechat')}}</span></label>
                   <input type="text" class="form-control" v-validate:cwechart="['wechart']" v-model="contacts[0].wechart"/>
                 </div>
 
               </div>
               <div class="clearfix">
                 <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
-                  <label class="editlabel" for="system">qq<span class="system_danger" v-if="$validation.cqq.qq">格式有误</span></label>
+                  <label class="editlabel" for="system">QQ<span class="system_danger" v-if="$validation.cqq.qq">{{$t('static.validate_qq')}}</span></label>
                   <input type="text" class="form-control" v-validate:cqq="['qq']" v-model="contacts[0].qq"/>
                 </div>
               </div>
@@ -258,9 +252,9 @@
           </section>
         </div>
         <div class="edit_footer">
-          <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-          <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="save()">确定</button>
-          <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
+          <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+          <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="save()">{{$t('static.confirm')}}</button>
+          <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.confirm')}}</button>
         </div>
       </form>
     </validator>
@@ -270,9 +264,12 @@
   import selectModel  from './employeeOrOrg'
   import tipsModel  from '../tips/tipDialog'
   import vSelect from '../tools/vueSelect/components/Select'
-
   import {
-    saveCreate
+    initUserType
+  } from '../../vuex/getters'
+  import {
+    saveCreate,
+    getUserTypeList
   } from '../../vuex/actions'
   export default {
     components: {
@@ -282,11 +279,18 @@
     },
     props: {
       param: {},
-
-
     },
     data() {
       return {
+        loadParam:{
+            loading: true,
+            show:false,
+            color: '#5dc596',
+            size: '15px',
+            cur: 1,
+            all: 7,
+            total:0
+        },
         selectParam: {
           show: false,
           employeeId: '',
@@ -329,10 +333,12 @@
       }
     },
     vuex: {
-
+      getters:{
+        initUserType
+      },
       actions: {
         saveCreate,
-
+        getUserTypeList
       }
     },
     methods: {
@@ -507,10 +513,9 @@
         this.contacts[0].wechart=this.param.contact.wechart;
         this.contacts[0].main=1;
       }
-
-
-
+      this.getUserTypeList(this.loadParam);
     }
+
   }
 </script>
 <style scoped>

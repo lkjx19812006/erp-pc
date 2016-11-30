@@ -6,7 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>客户搜索</h3>
+            <h3>{{$t('static.search')}}</h3>
         </div>
         <div class="edit-model">
              <!-- <div class="cover_loading">
@@ -136,11 +136,8 @@
                     <label>{{$t("static.registration_end_time")}}：</label>
                     <mz-datepicker :time.sync="param.ctimeEnd" format="yyyy/MM/dd HH:mm:ss">
                     </mz-datepicker>
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">清空</button>
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetTime()">{{$t("static.clear_all")}}</button>
                   </div>
-
-
-
 
                   <div class="client-detailInfo col-xs-6">
                     <label>{{$t("static.client_label")}}：</label>
@@ -168,8 +165,8 @@
             </section>
         </div>
         <div class="edit_footer">
-            <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <input type="button" class="btn  btn-confirm"  @click="clientSearch(param.show = false)" value="确定">
+            <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t("static.cancel")}}</button>
+            <input type="button" class="btn  btn-confirm"  @click="clientSearch(param.show = false)" value="{{$t('static.confirm')}}">
         </div>
     </div>
 </template>
@@ -324,15 +321,15 @@ export default {
 <style scoped>
 .modal_con{
     /*max-height: 720px;*/
-    width: 600px;
+    width: 700px;
 }
 .top-title{
-    width: 600px;
+    width: 700px;
 }
 .edit_footer{
     position: fixed;
     bottom: 20px;
-    width: 600px;
+    width: 700px;
 }
 .empSearch{
     position: absolute;

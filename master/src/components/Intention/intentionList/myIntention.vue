@@ -152,6 +152,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
               <thead>
                     <tr>
+                        <th>类型</th>
                         <th>发布时间</th>
                         <th>客户名称</th>
                         <th>主要联系人</th>
@@ -167,7 +168,7 @@
 
 
 
-                    <!-- <th>类型</th>
+                    <!-- 
                         <th>客户名称</th>
                         <th>客户手机号</th>
                         <th>品种名称</th>
@@ -200,6 +201,12 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initIntentionList">
+                        <td>
+                            <div v-if="item.especial==0&&item.type==0">普通求购</div>
+                            <div v-if="item.especial==0&&item.type==1">普通供应</div>
+                            <span v-if="item.especial==1&&item.type==0">紧急求购</span>
+                            <span v-if="item.especial==1&&item.type==1">低价资源</span>
+                        </td>
                         <td>{{item.ctime | date}}</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
@@ -251,13 +258,7 @@
                         <td></td> 
 
 
-                  <!-- <td>
-                            <div v-if="item.especial==0&&item.type==0">普通求购</div>
-                            <div v-if="item.especial==0&&item.type==1">普通供应</div>
-                            <span v-if="item.especial==1&&item.type==0">紧急求购</span>
-                            <span v-if="item.especial==1&&item.type==1">低价资源</span>
-                        </td>
-                        
+                  <!-- 
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
@@ -326,7 +327,8 @@
                         <td>{{item.validate | intentionAudit}}</td>
                         <td>
                           <div>{{item.onSell | onsell}}</div>
-                        </td> -->
+                        </td> 
+                      -->
                         <td >
                                <a class="operate"  @click.stop="modifyIntention({
                                               id:item.id,
@@ -403,7 +405,7 @@
                                </a>
                               <a class="operate" v-if="item.type==1"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" height="18" width="47" alt="生成订单"/>
                                </a>
-                              <!--  <a v-if="item.sampling==1"  @click.stop="sengSample(item,$index)">寄样申请表</a> -->
+                              <!-- <a v-if="item.sampling==1"  @click.stop="sengSample(item,$index)">寄样申请表</a> -->
                         </td>
                       </tr>
                       
@@ -527,10 +529,18 @@ export default {
                customerPhone:'',
                breedName:'',
                consignee:'',
+               location:'',
+               ctime:'',
                consignee_Phone:'',
+               currency:0,
                address:'',
                comments:'',
-               employee:''
+               spec:'',
+               quality:'',
+               employee:this.initLogin.id,
+               goods:[ 
+
+                ],
             },
             createOrderParam:{
                 show:false,
@@ -841,12 +851,13 @@ export default {
            this.sampleOrderParam.sampling = item.sampling;
            this.sampleOrderParam.sampleUnit = item.sampleUnit;
            this.sampleOrderParam.sampleNumber = item.sampleNumber;
-           this.sampleOrderParam.sampleAmount = item,sampleAmount;
+           this.sampleOrderParam.sampleAmount = item.sampleAmount;
            this.sampleOrderParam.customerName = item.customerName;
            this.sampleOrderParam.customerPhone = item.customerPhone;
            this.sampleOrderParam.breedName = item.breedName;
            this.sampleOrderParam.address = item.address;
-           this.sampleOrderParam.employee = item.employee;
+           this.sampleOrderParam.location = item.location;
+           this.sampleOrderParam.ctime = item.ctime;
         }
     },
     events: {
@@ -856,7 +867,7 @@ export default {
         }
     },
     created() {
-        this.getIntentionList(this.loadParam, this.loadParam.all);
+        this.getIntentionList(this.loadParam);
     },
     ready(){
       common('tab','table_box',1);

@@ -8,7 +8,7 @@
     <delotheroffer-model :param="delOtherOfferParam" v-if="delOtherOfferParam.show"></delotheroffer-model>
     <uploadfiles-model :param="uploadFilesParam" v-if="uploadFilesParam.show"></uploadfiles-model>
     <delfile-model :param="delFileParam" v-if="delFileParam.show"></delfile-model>
-    
+    <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show">
         <div class="top-title">
@@ -259,7 +259,7 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td><img :src="item.url" style="max-width: 150px;" /></td>
+                                                <td><img :src="item.url" style="max-width: 150px;" @click="clickBig(item.url)"/></td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 <td></td>
@@ -300,6 +300,7 @@
                                           <th>{{$t('static.file_type')}}</th>
                                           <th>{{$t('static.description')}}</th>
                                           <th>{{$t('static.create_time')}}</th>
+                                          <th>{{$t('static.file_path')}}</th>
                                           <th></th>
                                           <th></th>
                                         </thead>
@@ -308,6 +309,12 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
+                                                 <td>
+                                                    <img :src="item.url" v-if="item.fileType=='image'" style="max-width: 150px;" @click="clickBig(item.url)"/>
+                                                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf'">
+                                                    <img  src="/static/images/word.png" v-if="item.fileType=='word'">
+                                                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
+                                                    </td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 <td></td>
@@ -337,7 +344,7 @@
     </div>
 </template>
 <script>
-
+import pictureModel from '../tips/pictureDialog'
 import filter from '../../filters/filters'
 import inquireinfoModel from './inquireInfo'
 import itemhistoryModel from './itemHistory'
@@ -369,7 +376,8 @@ export default {
         editotherofferModel,
         delotherofferModel,
         uploadfilesModel,
-        delfileModel
+        delfileModel,
+        pictureModel
     },
     data() {
         return {
@@ -463,6 +471,10 @@ export default {
                 total:'',
                 comment:''
             },
+            pictureParam:{
+               show:false,
+               img:''
+            },
             delOtherOfferParam:{
                 show:false,
                 link:'/intlIntention/otherOffer',
@@ -512,7 +524,10 @@ export default {
         }
     },
     methods: {
-      
+      clickBig:function(img){
+          this.pictureParam.show=true;
+          this.pictureParam.img = img;
+      },
       enfoldment:function(param){
           if(this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length==0){
               this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show=true;

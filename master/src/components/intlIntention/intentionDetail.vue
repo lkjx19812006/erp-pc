@@ -1,6 +1,7 @@
 <template>
     <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
     <inquireinfo-model :param="inquireInfoParam" v-if="inquireInfoParam.show"></inquireinfo-model>
+    <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <itemhistory-model :param="itemHistoryParam" v-if="itemHistoryParam.show"></itemhistory-model>
     <uploadfiles-model :param="uploadFilesParam" v-if="uploadFilesParam.show"></uploadfiles-model>
     <otheroffer-model :param="otherOfferParam" v-if="otherOfferParam.show"></otheroffer-model>
@@ -254,10 +255,9 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td><img :src="item.url" style="max-width: 150px;" /></td>
+                                                <td><img :src="item.url" style="max-width: 150px;"  @click="clickBig(item.url)"/></td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
-                                                <td></td>
                                                 
                                                
                                             </tr>
@@ -300,7 +300,7 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td><img :src="item.url" style="max-width: 150px;" /></td>
+                                                <td><img :src="item.url" style="max-width: 150px;" @click="clickBig(item.url)"/></td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 <td></td>
@@ -321,7 +321,7 @@
     </div>
 </template>
 <script>
-
+import pictureModel from '../tips/pictureDialog'
 import filter from '../../filters/filters'
 import offerModel from './intlOffer'
 import inquireinfoModel from './inquireInfo'
@@ -348,7 +348,8 @@ export default {
         otherofferModel,
         inquireagainModel,
         uploadfilesModel,
-        delfileModel
+        delfileModel,
+        pictureModel
     },
     data() {
         return {
@@ -370,6 +371,10 @@ export default {
                 link:'/intlIntention/itemHistory',
                 id:''                               //意向明细ID
 
+            },
+            pictureParam:{
+              show:false,
+              img:''
             },
             inquireAgainParam:{
               show:false,
@@ -447,7 +452,10 @@ export default {
         }
     },
     methods: {
-      
+      clickBig:function(img){
+          this.pictureParam.show=true;
+          this.pictureParam.img = img;
+      },
       enfoldment:function(param){
           if(this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length==0){
                   this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show=true;

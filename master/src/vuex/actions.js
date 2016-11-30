@@ -2367,7 +2367,7 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         "name": data.name,
         "type": data.type,
         "tel": data.tel,
-        "category": data.category,
+        "typeDesc": data.typeDesc,
         "classify": data.classify,
         "email": data.email,
         "userId": data.userId,
@@ -4918,25 +4918,6 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
         dispatch(types.MY_CLIENT_COUNT, clientCount);
     }, (res) => {
         param.loading = false;
-        console.log('fail');
-    })
-}
-
-export const getExportOrgcount = ({ dispatch }, param) => { //部门导出客户统计
-    Vue.http({
-        method: 'GET',
-        url: apiUrl.clientList +'/count/getCustomerAddReport?role=org',
-        emulateHTTP: false,
-        emulateJSON: false,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            'Content-Type': 'application/json;charset=UTF-8'
-        }
-    }).then((res) => {
-        console.log(res.json().result)
-        var clientCount = res.json().result;
-        dispatch(types.MY_CLIENT_COUNT, clientCount);
-    }, (res) => {
         console.log('fail');
     })
 }

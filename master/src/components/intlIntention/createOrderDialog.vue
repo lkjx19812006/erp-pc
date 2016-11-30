@@ -46,18 +46,19 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.city')}}</label>
-                              <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                              <div v-if="province.cname" type="text" class="edit-input">
-                                  <v-select
-                                       :debounce="250"
-                                       :value.sync="city"
-                                       :on-change="selectDistrict"
-                                       :options="initCitylist"
-                                       placeholder="市"
-                                       label="cname"
-                                  >
-                                  </v-select>
-                              </div>
+                              <input type="text" class="form-control edit-input" v-model="param.city" placeholder="{{$t('static.choose_city')}}">
+                             <!--  <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                             <div v-if="province.cname" type="text" class="edit-input">
+                                 <v-select
+                                      :debounce="250"
+                                      :value.sync="city"
+                                      :on-change="selectDistrict"
+                                      :options="initCitylist"
+                                      placeholder="市"
+                                      label="cname"
+                                 >
+                                 </v-select>
+                             </div> -->
                           </div>
                       
                           <div class="editpage-input">
@@ -76,19 +77,13 @@
                               <label class="editlabel">{{$t('static.discount_note')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" value="{{param.preferentialDesc}}"/>
                           </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.comment')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
-                          </div>
                       </div>
                       <div class="editpageright">
-
-                          
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.international')}}</label>
                               <select type="text" class="form-control edit-input" v-model="param.intl"  @change="selectBizType()">
-                                  <option value="0">否</option>
-                                  <option value="1">是</option>
+                                  <option value="0">{{$t('static.no')}}</option>
+                                  <option value="1">{{$t('static.yes')}}</option>
                               </select>
                           </div>
                           <div class="editpage-input"  v-if="param.different=='国际'">
@@ -100,21 +95,21 @@
                               <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['phone']" value="{{param.consigneePhone}}"/>
                           </div>
                           
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.province')}}</label>
-                              <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
-                              <div v-if="country.cname" type="text" class="edit-input">
-                                  <v-select
-                                    :debounce="250"
-                                    :value.sync="province"
-                                    :on-change="selectCity"
-                                    :options="initProvince"
-                                    placeholder="省"
-                                    label="cname">
-                                  </v-select>
-                              </div>
-                          </div>
-                           <div class="editpage-input">
+                         <!--  <div class="editpage-input">
+                             <label class="editlabel">{{$t('static.province')}}</label>
+                             <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.choose_country')}}" />
+                             <div v-if="country.cname" type="text" class="edit-input">
+                                 <v-select
+                                   :debounce="250"
+                                   :value.sync="province"
+                                   :on-change="selectCity"
+                                   :options="initProvince"
+                                   placeholder="省"
+                                   label="cname">
+                                 </v-select>
+                             </div>
+                         </div> -->
+                           <!-- <div class="editpage-input">
                               <label class="editlabel">{{$t('static.area')}}</label>
                               <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
                               <div v-if="city.cname" type="text" class="edit-input">
@@ -126,7 +121,7 @@
                                         label="cname">
                                   </v-select>
                                </div>
-                          </div>
+                                                     </div> -->
                           <div class="editpage-input" >
                               <label class="editlabel">{{$t('static.currency')}} </label>
                                <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==0">
@@ -156,8 +151,8 @@
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.sample_order')}}</label>
                               <select type="text" class="form-control edit-input" v-model="param.sample" value="{{param.sample}}" >
-                                  <option value="0" selected>否</option>
-                                  <option value="1">是</option>
+                                  <option value="0" selected>{{$t('static.no')}}</option>
+                                  <option value="1">{{$t('static.yes')}}</option>
                               </select>
                           </div>
                           <div class="editpage-input">
@@ -168,6 +163,10 @@
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.fee_explain')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
+                          </div>
+                          <div class="editpage-input">
+                              <label class="editlabel">{{$t('static.comment')}}</label>
+                              <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.order_status')}}</label>

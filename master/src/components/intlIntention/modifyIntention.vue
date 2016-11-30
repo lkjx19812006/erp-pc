@@ -22,9 +22,9 @@
                  <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
 
                  <div class="editpage">
-                     <div class="editpageleft">
+                     <div class="clearfix">
 
-                       <div class="editpage-input">
+                       <div class="editpage-input col-md-6">
                          <label class="editlabel">{{$t('static.packaging')}}<span v-if="$validation.pack.required" class="system_danger">{{$t('static.enter_package')}}</span></label>
                          <input type="text" v-show="false" v-model='param.pack' v-validate:pack="['required']" class="form-control edit-input"  />
                          <div type="text" class="edit-input" >
@@ -36,13 +36,8 @@
                            >
                            </input-select>
                          </div>
-                       </div>
-
-                     </div>
-
-                     <div class="editpageright">
-                      
-                       <div class="editpage-input">
+                       </div>              
+                       <div class="editpage-input col-md-6">
                          <label class="editlabel">{{$t('static.deadline')}}<span v-if="$validation.duedate.required" class="system_danger">{{$t('static.choose_deadline')}}</span></label>
                          <input v-show="false" v-model="param.duedate" v-validate:duedate="['required']"/>
                          <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">

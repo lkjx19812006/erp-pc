@@ -141,8 +141,9 @@
                             <div class="editpageleft">
                                 <div class="editpage-input">
                                     <label class="editlabel">商品标题</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].title" v-else/>
+                                    
                                     <input type="text" class="form-control edit-input" v-model="param.goods[0].title" value="{{param.goods[0].brredName}}" v-if="param.goods[0].title==''"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].title" v-else/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">产地</label>
@@ -160,7 +161,7 @@
                             <div class="editpageright">
                                 <div class="editpage-input">
                                     <label class="editlabel">商品名称</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].brredName" disabled="true"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].breedName" disabled="true"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">品质</label>

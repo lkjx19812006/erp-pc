@@ -43,7 +43,7 @@
                             <option value="30">{{$t('static.wait_for_audit')}}</option>
                             <option value="40">{{$t('static.wait_for_delivery')}}</option>
                             <option value="50">{{$t('static.wait_for_receiving')}}</option>
-                            <!-- <option value="60">{{$t('static.completed')}}</option> -->
+                            <option value="60">{{$t('static.awaiting_comment')}}</option>
                             <option value="70">{{$t('static.completed')}}</option>
                             <option value="-1">{{$t('static.canceled')}}</option>
                             <option value="-2">{{$t('static.out_of_date')}}</option>
@@ -71,10 +71,10 @@
                         <label>{{$t('static.client_source')}}：</label>
                         <select v-model="param.clients"  class="form-control">
                             <option value="">{{$t('static.select_client_source')}}</option>
-                            <option value="0">pc</option>
-                            <option value="1">android</option>
-                            <option value="2">wechart</option>
-                            <option value="3">ios</option>
+                            <option value="0">PC</option>
+                            <option value="1">Android</option>
+                            <option value="2">Wechat</option>
+                            <option value="3">IOS</option>
                         </select>
                     </div>
                     <div class="client-detailInfo col-xs-6">

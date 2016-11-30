@@ -32,15 +32,15 @@
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                          <li>
                             <button type="button" class="btn btn-base" @click="specDelete({
-                                                id:param.id,
-                                                sub:param.sub,
-                                                show:true,
-                                                name:param.name,
-                                                title:param.name,
-                                                link:deleteInfo,
-                                                url:'/customer/',
-                                                key:'customerList'
-                                                })">{{$t('static.del_client_info')}}</button>
+                                          id:param.id,
+                                          sub:param.sub,
+                                          show:true,
+                                          name:param.name,
+                                          title:param.name,
+                                          link:deleteInfo,
+                                          url:'/customer/',
+                                          key:'customerList'
+                                          })">{{$t('static.del_client_info')}}</button>
                         </li>
 
                         <li v-if="initClientDetail.supplier!=1">

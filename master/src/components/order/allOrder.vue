@@ -34,6 +34,7 @@
                             <option value="30">{{$t('static.wait_for_audit')}}</option>
                             <option value="40">{{$t('static.wait_for_delivery')}}</option>
                             <option value="50">{{$t('static.wait_for_receiving')}}</option>
+                            <option value="60">{{$t('static.awaiting_comment')}}</option>
                             <option value="70">{{$t('static.completed')}}</option>
                             <option value="-1">{{$t('static.canceled')}}</option>
                             <option value="-2">{{$t('static.out_of_date')}}</option>
@@ -49,18 +50,6 @@
                             <option value="1">{{$t('static.alipay')}}</option>
                             <option value="2">{{$t('static.pingan')}}</option>
                             <option value="3">{{$t('static.yaokuan')}}</option>
-                    </select>
-               </dd>
-            </dl>
-            <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.client_source')}}：</dt>
-               <dd class="left">
-                     <select v-model="loadParam.clients"  class="form-control" @change="selectSearch()">
-                        <option value="">{{$t('static.please_select')}}</option>
-                        <option value="0">pc</option>
-                        <option value="1">android</option>
-                        <option value="2">wechart</option>
-                        <option value="3">ios</option>
                     </select>
                </dd>
             </dl>
@@ -126,8 +115,8 @@
                   <td v-if="item.mode==1">{{$t('static.together')}}</td>
                   <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
                   <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
-                  <td v-if="item.sample==0">否</td>
-                  <td v-if="item.sample==1">是</td>
+                  <td v-if="item.sample==0">{{$t('static.no')}}</td>
+                  <td v-if="item.sample==1">{{$t('static.yes')}}</td>
                   <td>{{{item.goodsDesc}}</td>
                   <td>{{item.total}}</td>
                   <td><a @click="clickOn({
@@ -146,14 +135,15 @@
                   <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
                   <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
                   <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
-                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">未支付</td>
+                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">{{$t('static.none')}}</td>
                   <td>{{item.orderStatus | orderstatus}}</td>
-                  <td v-if="item.sourceType==0">交易员新建</td>
-                  <td v-if="item.sourceType==1">意向</td>
-                  <td v-if="item.sourceType==2">报价</td>
-                  <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Auditing}}</td>
-                  <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
-                  <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
+                  <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
+                  <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
+                  <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>
+                  <td v-if="item.validate==2" style="background:green;color:#fff">{{$t('static.approved')}}</td>
+                  <td v-if="item.validate==-2" style="background:red;color:#fff">{{$t('static.unapproved')}}</td>
+                  <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
+                  <td v-if="item.validate==1">{{$t('static.approving')}}</td>
                   <!-- <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
