@@ -697,22 +697,7 @@ export default {
     margin-left: 15px;
 }
 
-.btn-confirm {
-    background-color: #fa6705;
-    color: #fff;
-}
-
-.btn-close {
-    color: #fa6705;
-}
-.editpage_img{
-    width: 90%;
-}
-.editpage_img img{
-    display: inline-block;
-    background: #ccc;
-}
-.editpage-image{
-    display: inline-block;
+.table{
+  display: table;
 }
 </style>

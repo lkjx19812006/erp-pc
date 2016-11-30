@@ -163,26 +163,6 @@ export default {
     box-sizing: border-box;
 }
 
-.editpage {
-    display: -webkit-flex;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -ms-box-orient: horizontal;
-    box-orient: horizontal;
-}
-
-.editpageleft,
-.editpageright {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-    width: 50%;
-}
-
 .editpage-input {
     margin-top: 15px;
 }
@@ -193,21 +173,6 @@ export default {
     display: block;
 }
 
-.edit-input {
-    height: 36px;
-    line-height: 36px;
-    width: 90%;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-}
-
-.edit-input:focus {
-    border-color: #fa6705;
-}
-
 .addblack span {
     color: #333;
     font-size: 14px;
@@ -215,17 +180,7 @@ export default {
     margin-left: 10px;
     margin-top: 5px;
 }
-.editpage_img {
-    width: 90%;
-}
 
-.editpage_img img {
-    display: inline-block;
-    background: #ccc;
-}
-.editpage-image {
-    display: inline-block;
-}
 .checkbox_unselect{
     background-image: url(/static/images/unselect.png);
     display: inline-block;
@@ -241,6 +196,9 @@ export default {
 }
 .role{
     margin-right: 10px;
+}
+.table{
+  display: table;
 }
 </style>
 

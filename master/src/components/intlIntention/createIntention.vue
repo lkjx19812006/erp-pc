@@ -764,18 +764,8 @@ export default {
 .editpage-image {
     display: inline-block;
 }
-
-.table>thead{
-  min-width: 100%;
-  width: 100%;
-  display: block;
-}
-.table>thead>tr{
-  width: 100%;
-  display: block;
-}
-th,td{
-  width: 90px;
+.table{
+  display: table;
 }
 a{
     cursor:pointer;

@@ -4,6 +4,8 @@
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
+    <personalauth-model :param="personalParam" v-if="personalParam.show"></personalauth-model>
+   <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      <div>
@@ -320,6 +322,8 @@ import searchModel from '../components/user/userSearch'
 import intentionModel from  '../components/user/userIntention'
 import common from '../common/common'
 import pagination from '../components/pagination'
+import personalauthModel from  '../components/user/personalAuth' 
+import companyauthModel from '../components/user/companyAuth'
 import {
     getCount,
     initUserList,
@@ -343,7 +347,9 @@ export default {
         detailModel,
         searchModel,
         intentionModel,
-        auditModel
+        auditModel,
+        personalauthModel,
+        companyauthModel
     },
 	 data() {
         return {
@@ -432,7 +438,15 @@ export default {
             url:'/intention/',
             inType:2
         },
-          checked:false
+          checked:false,
+        personalParam:{
+          show:false,
+          utype:1
+        },
+        companyParam:{
+          show:false,
+          ctype:1
+        },
 
         }
     },
@@ -587,7 +601,21 @@ export default {
           inType:2
       };
         this.intentionParam.show = true;
-    }
+    },
+    personalAuth:function(item){
+      this.personalParam.show = true;
+      this.personalParam.id = item.id;
+      this.personalParam.index = item.index;
+      this.personalParam.ucomment = item.ucomment;
+      this.personalParam.utype = item.utype;
+    },
+    companyAuth:function(item){
+      this.companyParam.show = true;
+      this.companyParam.id = item.id;
+      this.companyParam.index = item.index;
+      this.companyParam.ccomment = item.ccomment;
+      this.companyParam.ctype = item.ctype;
+    },
 
   },
   ready(){

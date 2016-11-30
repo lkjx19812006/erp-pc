@@ -21,6 +21,14 @@
                     </div>
                 </section>
             </div>
+            <table class="table table-hover table_color table-striped ">
+                <thead>
+              		<tr></tr>
+                </thead>
+                <tbody>
+                	
+                </tbody>
+            </table>
 	    </div>
 	</div>
 </template>

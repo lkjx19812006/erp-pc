@@ -580,10 +580,11 @@ section article {
     margin-bottom: 0;
     cursor: pointer;
 }
-
+.table{
+  display: table;
+}
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
   text-align: left;
-  width: 14%;
 }
 .edit-detail {
     border: 0px solid #ddd;
@@ -608,29 +609,5 @@ section article {
 .client-detailInfo img {
     margin-right: 8px;
 }
-.btn-orange {
-    background-color: #fa6705;
-    color: #fff;
-    font-size: 18px;
-}
-.label_action{
-  position: absolute;
-  top:13px;
-  right: 32px;
-  border: 1px solid #ccc;
-    border-radius: 3px;
-    background: #fff;
-    z-index: 1000;
-    min-width: 90px;
-    cursor: pointer;
-    padding: 5px 10px;
-    max-width: 200px;
-}
-.client-editbtn {
-    text-align: right;
-    margin-top: 15px;
-}
-.client-image {
-    display: inline-block;
-}
+
 </style>

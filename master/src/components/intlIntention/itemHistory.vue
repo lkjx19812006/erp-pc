@@ -81,9 +81,6 @@
                     </tbody>
                 </table>
                   -->
-                
-                 
-
              </section>
           </div>
           <div class="edit_footer">
@@ -164,12 +161,7 @@ export default {
     },
     methods: {
       
-      
-      
-
-      
-      
-      
+   
 
     },
     events:{
@@ -308,7 +300,9 @@ export default {
 .editpage-image {
     display: inline-block;
 }
-
+.table{
+  display: table;
+}
 a{
     cursor:pointer;
 }

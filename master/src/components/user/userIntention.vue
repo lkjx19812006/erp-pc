@@ -29,7 +29,7 @@
 
                  <div style="margin-top:15px">
                     <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
-                    <h4 style="display:inline">药材信息</h4>
+                    <h5 style="display:inline">药材信息</h5>
                  </div>
 
 
@@ -163,7 +163,7 @@
 
                  <div style="margin-top:25px">
                     <img src="/static/images/receiverinfo@2x.png" style="display:inline"/>
-                    <h4 style="display:inline">交收信息</h4>
+                    <h5 style="display:inline">交收信息</h5>
                  </div>
                  <div class="editpage">
                      <div class="editpageleft">
@@ -321,7 +321,7 @@
                  </div>
                  <div style="margin-top:25px">
                     <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
-                    <h4 style="display:inline">商家信息</h4>
+                    <h5 style="display:inline">商家信息</h5>
                  </div>
                  <div class="editpage">
                      <div class="editpageleft">

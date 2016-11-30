@@ -17,18 +17,21 @@
                            <input type="text" v-model='param.ucomment' class="form-control edit-input" value="{{param.ucomment}}" />
                        </div>
                        <div class="editpage-input">
-                           <table class="table  contactSet">
+                           <table class="table  table_color contactSet">
                                 <thead>
-                                  <th>文件类型</th>
-                                  <th>路径</th>
-                                  <th>描述<th>
+                                    <th>名称</th>
+                                    <th>文件类型</th>
+                                    <th>预览</th>
+                                    <th>所属文件</th>
+                                    <th>描述<th>
                                 </thead>
                                 <tbody>
                                     <tr v-for="item in initIdentify.files">
-                                        <td>{{item.fileType}}aasdasdasa</td>
-                                        <td><img v-bind:src="item.path" width="200"></td>
+                                        <td>{{item.name}}</td>
+                                        <td>{{item.fileType}}</td>
+                                        <td><img :src="item.path" width="200"></td>
+                                        <td>{{item.bizType}}</td>
                                         <td>{{item.description}}</td>
-
                                     </tr>
                                 </tbody>
                             </table>

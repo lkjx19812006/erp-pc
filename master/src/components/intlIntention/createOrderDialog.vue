@@ -698,15 +698,7 @@ export default {
 .btn-close {
     color: #fa6705;
 }
-.editpage_img{
-    width: 90%;
+.table{
+  display: table;
 }
-.editpage_img img{
-    display: inline-block;
-    background: #ccc;
-}
-.editpage-image{
-    display: inline-block;
-}
-
 </style>
