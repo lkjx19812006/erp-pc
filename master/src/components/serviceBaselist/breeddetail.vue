@@ -527,8 +527,7 @@ export default {
 .panel-body ul li{
     padding: 10px;
 }
-.contactSet>tbody>tr>td,.contactSet>thead>tr>th{
-    text-align: left;
-    width: 10%;
+.table{
+    display: table;
 }
 </style>

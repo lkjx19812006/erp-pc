@@ -452,9 +452,8 @@ table{
 .contactSet>thead{
     color: #fa6705;
 }
-.contactSet>tbody>tr>td,.contactSet>thead>tr>th{
-    text-align: left;
-    width: 10%;
+.table{
+  display: table;
 }
 .contact_img{
     margin-right: 6px !important;
