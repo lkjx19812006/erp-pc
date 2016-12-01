@@ -54,7 +54,7 @@
                 <tbody>
                     <tr v-for="item in initOfferList">
                         <td>{{item.otime | date}}</td>
-                        <td></td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.mainContact}}</td>
                         <td>{{item.customerPhone}}</td>

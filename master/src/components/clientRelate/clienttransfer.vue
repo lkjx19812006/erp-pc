@@ -64,7 +64,7 @@
 	    				<div class="col-xs-8">
 			                <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">
-			                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" @keyup.enter="employNameSearch()">
+			                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="{{$t('static.enter_salesman')}}" @keyup.enter="employNameSearch()">
 			                </div>
 			                 <div class="name_search clearfix">
 			                    <img src="/static/images/search.png" height="24" width="24">

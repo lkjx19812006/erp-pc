@@ -215,7 +215,7 @@
                                 loading:true,
                                 customerName:item.customerName,
                                 customerPhone:item.customerPhone,
-                                brredName:item.breedName,
+                                breedName:item.breedName,
                                 type:item.type,
                                 especial:item.especial,
                                 qualification:item.qualification,
@@ -574,7 +574,7 @@ export default {
                   sourceId:'',   //商品来源ID
                   title:'',      //订单商品标题
                   breedId:'',
-                  brredName:'',
+                  breedName:'',
                   quality:'',
                   location:'',
                   spec:'',
@@ -767,7 +767,7 @@ export default {
            this.createOrderParam.customer = item.customerId;
            this.createOrderParam.type = item.type;
            this.createOrderParam.goods[0].sourceId= item.id;
-           this.createOrderParam.goods[0].brredName= item.breedName;
+           this.createOrderParam.goods[0].breedName= item.breedName;
            this.createOrderParam.goods[0].breedId= item.breedId;
            this.createOrderParam.goods[0].spec = item.spec;
            this.createOrderParam.goods[0].price = item.price;

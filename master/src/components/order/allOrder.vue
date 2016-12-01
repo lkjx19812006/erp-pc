@@ -117,7 +117,7 @@
                   <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
                   <td v-if="item.sample==0">{{$t('static.no')}}</td>
                   <td v-if="item.sample==1">{{$t('static.yes')}}</td>
-                  <td>{{{item.goodsDesc}}</td>
+                  <td>{{item.goodsDesc}}</td>
                   <td>{{item.total}}</td>
                   <td><a @click="clickOn({
                                 show:true,

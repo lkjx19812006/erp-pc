@@ -7,13 +7,6 @@
             <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
         </div>
         <div class="count_top">
-        	<div class="count_select clearfix">
-        		<label class="pull-left">业务员：</label>
-        		<select class="form-control pull-left" style="width:170px;" v-model="loadParam.employeeId" @change="selectSearch()">
-        			<option slected value="">全部</option>
-        			<option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
-        		</select>
-        	</div>
         	<table class="table table-hover table_color table-bordered table-striped " v-cloak>
 	            <thead>
 	                <tr style="background:none;color:#000">
@@ -215,7 +208,7 @@
 	} from '../../vuex/getters'
 	import {
 		getClientcount,
-		getEmployeeList,
+		getEmployeeCount,
 		getClientOrgcount,
 		getExportOrgcount
 	} from '../../vuex/actions'
@@ -279,7 +272,7 @@
 	        },
 	        actions: {
 	            getClientcount,
-	            getEmployeeList,
+	            getEmployeeCount,
 	            getClientOrgcount,
 	            getExportOrgcount
 	        }
@@ -292,7 +285,7 @@
 	    },
 	    created() {
 	        this.getClientOrgcount(this.loadParam);
-	        this.getEmployeeList(this.loadParam);
+	        this.getEmployeeCount(this.loadParam);
 	        console.log(this.initLogin);
 	        window.onload=function(){ 
 	        	console.log(document.getElementById('module_judge').style.maxHeight)

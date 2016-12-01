@@ -42,7 +42,7 @@
                                             orgName:'',
                                             contacts:[
                                                 {
-                                                    name:'',
+                                                    mainContact:'',
                                                     position:'',
                                                     department:'',
                                                     phone:'',

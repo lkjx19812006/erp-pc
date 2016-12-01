@@ -126,7 +126,8 @@
                     <td>{{item.level | levelstate}}</td>
                     <td>
                         <div v-if="item.status==0">离职</div>
-                        <div v-if="item.status==1">在职</div> 
+                        <div v-if="item.status==1">在职</div>
+                        <div v-if="item.status!=1&&item.status!=0">在职</div>  
                     </td>
                     <td @click="modify({
                                  title:'编辑员工',

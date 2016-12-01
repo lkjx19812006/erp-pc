@@ -10,18 +10,21 @@
     			<div class="cover_loading">
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 	            </div>
-				<div class="col-xs-8">
+				<div class="col-xs-12">
 	                <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入品种名称">
+	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入品种名称" @keyUp.enter="employNameSearch()">
 
 	                </div>
 	                <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.eName" placeholder="Please enter the name of the breed">
+	                    <input type="text" class=" search_input" v-model="loadParam.eName" placeholder="Please enter the name of the breed" @keyUp.enter="employNameSearch()">
 
 	                </div>
-          			<div class="name_search clearfix" style="border:none"> <input type="button" class="search_input btn btn-default"   height="24" width="24" value="{{$t('static.search')}}" @click="employNameSearch()"></div>
+          			<div class="name_search clearfix" style="border:none">
+          			 	<input type="button" class="search_input btn btn-default"   height="24" width="24" value="{{$t('static.search')}}" @click="employNameSearch()">
+          			 	<button type="button" class="search_input btn btn-default transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+          			</div>
 
 	            </div>
 	            <table class="table table-hover table_head table-striped " v-cloak>
@@ -109,6 +112,11 @@ export default{
 		},
 		employNameSearch: function() {
             this.getBreedNameSearch(this.loadParam);
+        },
+        resetTime:function(){
+        	this.loadParam.name='';
+        	this.loadParam.eName='';
+        	this.getBreedNameSearch(this.loadParam);
         }
 	},
     events: {
@@ -148,6 +156,9 @@ export default{
 	line-height: 40px;
 	border-bottom: 1px solid #fa6705;
 	text-align: left;
+}
+.transfer{
+	margin-left: 5px;
 }
 .tans_tab > .tabs{
 	width: 100px;
@@ -199,15 +210,14 @@ export default{
 	margin-bottom: 5px;
 }
 .table_head>thead>tr{
-	background-color: #f5f5f5;
-	color: #333;
+	background-color: #004796;
+	color: #fff;
 	font-size: 18px;
 }
 .base_pagination{
 	margin-top: 0;
 }
-th,td{
-	width: 200px;
-	min-width: 200px;
+.table{
+	display: table;
 }
 </style>

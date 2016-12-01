@@ -390,7 +390,7 @@
                           </div>
                           <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                  <label>qq</label>
+                                  <label>QQ</label>
                                   <input type="text" class="form-control"  value="{{initUserDetail.qq}}" disabled="disabled"/>
                               </div>
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">

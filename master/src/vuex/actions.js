@@ -1696,18 +1696,19 @@ export const getBreedDetail = ({ dispatch }, param) => { //获取药材详情
 export const getBreedNameSearch = ({ dispatch }, param) => { //药材搜索
     param.loading = true;
     console.log(param)
-    if (!param.categoryId) {
-        param.categoryId = '';
+    var breedUrl = apiUrl.breedList + '/' + '?&page=' + param.cur + '&pageSize=15';
+    if (param.categoryId) {
+        breedUrl +='&category=' + param.categoryId;
     }
-    if (!param.name) {
-        param.name = '';
+    if (param.name) {
+        breedUrl +='&breedName=' + param.name;
     }
-    if (!param.eName) {
-        param.eName = '';
+    if (param.eName) {
+        breedUrl +='&eName=' + param.eName;
     }
     Vue.http({
         method: 'GET',
-        url: apiUrl.breedList + '/' + '?category=' + param.categoryId + '&eName=' + param.eName + '&breedName=' + param.name + '&page=' + param.cur + '&pageSize=15',
+        url: breedUrl,
         emulateJSON: true,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
@@ -4390,7 +4391,6 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
         'status': param.status,
         'privilege': param.privilege
     }
-    console.log(data1);
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,
@@ -4402,7 +4402,8 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('添加成功')
+        console.log('添加成功');
+        param.status = 1;
         dispatch(types.ADD_EMPLOYEE_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -4919,5 +4920,45 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
     }, (res) => {
         param.loading = false;
         console.log('fail');
+    })
+}
+export const getEmployeeCount = ({ dispatch }, param) => { //部门统计员工列表以及搜索
+    param.loading = true;
+    var apiurl = apiUrl.clientList + '/employee/?' + '&page=' + param.cur + '&pageSize=50';
+    /*var apiurl = apiUrl.employeeList+'/?'+'&page=' + param.cur + '&pageSize=14';*/
+    for (var seach in param) {
+        if (seach == 'name' && param[seach] !== '') {
+            apiurl += '&name=' + param.name
+        }
+        if (seach == 'mobile' && param[seach] !== '') {
+            apiurl += '&phone=' + param.mobile
+        }
+        if (seach == 'orgId' && param[seach] !== '') {
+            apiurl += '&org=' + param.orgId
+        }
+        if (seach == 'orgCode' && param[seach] !== '') {
+            apiurl += '&orgCode=' + param.orgCode
+        }
+    }
+    Vue.http({
+        method: 'GET',
+        url: apiurl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var employ = res.json().result.list;
+        for (var i in employ) {
+            employ[i].show = false;
+            employ[i].checked = false;
+        }
+        dispatch(types.EMPLOYEE_DATA, employ);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
     })
 }

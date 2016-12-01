@@ -490,7 +490,7 @@ export default {
                   sourceId:'',   //商品来源ID
                   title:'',      //订单商品标题
                   breedId:this.initIntentionDetail.breedId,
-                  brredName:this.initIntentionDetail.breedName,
+                  breedName:this.initIntentionDetail.breedName,
                   quality:'',
                   location:'',
                   spec:'',

@@ -44,7 +44,7 @@
                     </select>
                </dd>
             </dl>
-            <dl class="clear left transfer">
+            <!-- <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.payment_method')}}：</dt>
                <dd class="left">
                      <select v-model="loadParam.payWay"  class="form-control" @change="selectSearch()">
@@ -55,7 +55,7 @@
                             <option value="3">{{$t('static.yaokuan')}}</option>
                     </select>
                </dd>
-            </dl>
+            </dl> -->
             <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
                <dd class="left">
@@ -109,7 +109,7 @@
                   <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
                   <td v-if="item.sample==0">{{$t('static.no')}}</td>
                   <td v-if="item.sample==1">{{$t('static.yes')}}</td>
-                  <td>{{{item.goodsDesc}}</td>
+                  <td>{{item.goodsDesc}}</td>
                   <td>{{item.total}}</td>
                   <td><a @click="clickOn({
                                 show:true,
