@@ -13,6 +13,8 @@
         {"id":10,"cname":"系统基础数据","icon":"/static/images/icon_base.png","url":"/home/base?id=0","show":"true","subcategory":[{"id":32,"cname":"枚举类型","icon":"/static/images/icon_order.png","url":"/home/base?id=0"},{"id":33,"cname":"省市区","icon":"/static/images/icon_order.png","url":"/home/base?id=1"}]},
         {"id":11,"cname":"业务基础数据","icon":"/static/images/icon_data.png","url":"/home/baseData?id=0","subcategory":[{"id":34,"cname":"企业","icon":"/static/images/icon_order.png","url":"/home/baseData?id=0"},{"id":35,"cname":"成分","icon":"/static/images/icon_order.png","url":"/home/baseData?id=1"},{"id":36,"cname":"提取物","icon":"/static/images/icon_order.png","url":"/home/baseData?id=2"},{"id":37,"cname":"药材","icon":"/static/images/icon_order.png","url":"/home/baseData?id=3"}]}
     ],
+    
+    "tabs":[{"id":12,"cname":"我的客户","url":"/home/client?id=0","top":true},{"id":13,"cname":"部门客户","url":"/home/client?id=1","top":true},{"id":14,"cname":"全部客户","url":"/home/client?id=2","top":true}],
     "msg":"success",
     "code":200
 }

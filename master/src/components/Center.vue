@@ -1,5 +1,4 @@
 <template>
-
     <div  v-bind:class="{'center':getMenu==240,'center_top':getMenu==50}" >
         <router-view></router-view>
     </div>
@@ -25,6 +24,7 @@ export default {
     top: 70px;
     left: 200px;
     white-space: nowrap;
+    /* overflow: hidden; */
 }
 .center_top{
     height: calc(100% - 130px);
@@ -32,5 +32,6 @@ export default {
     right: 0;
     top: 70px;
     left: 50px;
+    /*  overflow: hidden; */
 }
 </style>

@@ -703,7 +703,11 @@ const mutations = {
                 "validate":data.validate,
                 "payWay":data.payWay,
                 "checked":false,
-                "clients":data.clients
+                "clients":data.clients,
+                "sample": data.sample,
+                "goodsDesc":data.goodsDesc,
+                "total":data.total,
+                "ctime":data.ctime
             });
         }
         if(data.key == 'orders'){
@@ -740,7 +744,11 @@ const mutations = {
                 "payWay":data.payWay,
                 "id":data.id,
                 "checked":false,
-                "clients":data.clients
+                "clients":data.clients,
+                "sample": data.sample,
+                "goodsDesc":data.goodsDesc,
+                "ctime":data.ctime,
+                "total":data.total
             });
         }
     },

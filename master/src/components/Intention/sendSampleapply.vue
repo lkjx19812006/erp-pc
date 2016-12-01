@@ -1,4 +1,5 @@
 <template>
+	<searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
 	<div v-show="param.send"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
 	<div class="container modal_con" v-show="param.send">
         <div @click="param.send = false" class="top-title">
@@ -72,7 +73,7 @@
 	                             <div class="clearfix">
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
-	                                     <input type="text" v-model="breedInfo.brredName" class="form-control edit-input" v-validate:breedname="{required:true}"  @click="searchBreed()" readonly="true" />
+	                                     <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}"  @click="searchBreed()" readonly="true" />
 	                                </div>
 	                         
 	                                <div class="editpage-input col-md-6">
@@ -169,6 +170,7 @@
 </template>
 <script>
 import pagination from '../pagination'
+import searchbreedModel  from './breedsearch.vue'
 import {
     initCustomerlist
 } from '../../vuex/getters'
@@ -204,7 +206,7 @@ export default{
             breedInfo:{ 
               status:0,   //自定义状态，表示编辑框的状态，0表示收起(起始)状态，1表示add，2表示update，add或update结束后将status置为0
               breedId:'',
-              brredName:'',
+              breedName:'',
               title:'',
               quality:'',
               location:'',
@@ -225,7 +227,8 @@ export default{
 		}
 	},
 	components:{
-		pagination
+		pagination,
+		searchbreedModel
 	},
 	vuex:{
 		getters:{
@@ -259,11 +262,16 @@ export default{
         	this.loadParam.name='';
             this.loadParam.phone='';
         },
+	    searchBreed:function(breedName,breedId){
+            this.breedParam.show=true;
+            /*this.param.breedName = this.breedParam.breedName;
+            this.param.breedId = this.breedParam.breedId;*/
+     	},
         showModifyBreed:function(index){
           this.breedInfo.status = 2;
           this.updateParam.index = index;
           this.breedInfo.breedId=this.param.goods[index].breedId,
-          this.breedInfo.brredName=this.param.goods[index].brredName,
+          this.breedInfo.breedName=this.param.goods[index].breedName,
           this.breedInfo.title=this.param.goods[index].title,
           this.breedInfo.quality=this.param.goods[index].quality,
           this.breedInfo.location=this.param.goods[index].location,
@@ -282,7 +290,7 @@ export default{
           if(this.param.goods.length == 0||this.param.goods[this.param.goods.length-1].breedId != ''){
               this.breedInfo.status = 1;    
               this.breedInfo.breedId='';
-              this.breedInfo.brredName='';
+              this.breedInfo.breedName='';
               this.breedInfo.title='';
               this.breedInfo.quality='';
               this.breedInfo.location='';
@@ -290,11 +298,11 @@ export default{
               this.breedInfo.number='';
               this.breedInfo.unit='';
               this.breedInfo.price='';
-              this.breedInfo.sourceType=0;
+              this.breedInfo.sourceType=1;
               this.breedInfo.id='';
               this.param.goods.push({
                   breedId:'',
-                  brredName:'',
+                  breedName:'',
                   title:'',
                   quality:'',
                   location:'',
@@ -302,7 +310,7 @@ export default{
                   number:'',
                   unit:'',
                   price:'',
-                  sourceType:0,
+                  sourceType:1,
                   status:'',
                   id:''
               });
@@ -311,10 +319,24 @@ export default{
           
         },
 	},
+	events:{
+        breed:function(breed){
+            this.breedInfo.breedName = breed.breedName;
+            this.breedInfo.breedId = breed.breedId;
+            this.breedParam.breedName = breed.breedName;
+            this.breedParam.id = breed.breedId;
+        }
+    },
 	created(){
 		if("employeeId" in this.param){
-                this.loadParam.employeeId = this.param.employeeId;
+            this.loadParam.employeeId = this.param.employeeId;
         }
+        if(this.param.breedId){
+            this.breedParam.breedName = this.param.brredName;
+            this.breedParam.id = this.param.breedId;
+            this.getBreedDetail(this.breedParam);
+            console.log(this.breedParam)
+          }
         console.log(this.param)
 	}
 }

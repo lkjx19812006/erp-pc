@@ -142,7 +142,7 @@
                                 <div class="editpage-input">
                                     <label class="editlabel">商品标题</label>
                                     
-                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].title" value="{{param.goods[0].brredName}}" v-if="param.goods[0].title==''"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].title" value="{{param.goods[0].breedName}}" v-if="param.goods[0].title==''"/>
                                     <input type="text" class="form-control edit-input" v-model="param.goods[0].title" v-else/>
                                 </div>
                                 <div class="editpage-input">

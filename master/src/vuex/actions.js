@@ -704,6 +704,10 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         data.payWay = res.json().result.payWay;
         data.validate = res.json().result.validate;
         data.checked = false;
+        data.sample = res.json().result.sample;
+        data.goodsDesc = res.json().result.goodsDesc;
+        data.total = res.json().result.total;
+        data.ctime = new Date();
         dispatch(types.ORDER_ADD_DATA, data);
         data.show = false;
     }, (res) => {
@@ -3482,7 +3486,7 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
             intent.items.forEach(function(item) {
                 var temp = {
                     breedId: item.breedId,
-                    brredName: item.breedName,
+                    breedName: item.breedName,
                     title: item.title,
                     quality: item.quality,
                     location: item.location,

@@ -3,7 +3,6 @@
  <left></left>
  <centerTop></centerTop>
  <center></center>
-
 </template>
 
 <script>

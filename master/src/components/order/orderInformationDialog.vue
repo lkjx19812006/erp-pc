@@ -216,7 +216,7 @@
                       <tbody>
                          <tr v-for="item in param.goods">
                              <td>{{item.title}}</td>
-                             <td>{{item.brredName}}</td>
+                             <td>{{item.breedName}}</td>
                              <td>{{item.unit}}</td>
                              <td>{{item.price}}</td>
                              <td>{{item.quality}}</td>
@@ -239,7 +239,7 @@
                              <div class="editpageleft">
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-model="breedInfo.brredName" class="form-control edit-input" v-validate:breedname="{required:true}"  @click="searchBreed()" readonly="true" />
+                                     <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}"  @click="searchBreed()" readonly="true" />
                                 </div>
                          
                                 <div class="editpage-input">
@@ -393,7 +393,7 @@ export default {
             breedInfo:{ 
               status:0,   //自定义状态，表示编辑框的状态，0表示收起(起始)状态，1表示add，2表示update，add或update结束后将status置为0
               breedId:'',
-              brredName:'',
+              breedName:'',
               title:'',
               quality:'',
               location:'',
@@ -469,7 +469,7 @@ export default {
             }
 
         },
-        searchBreed:function(brredName,breedId){
+        searchBreed:function(breedName,breedId){
                 this.breedParam.show=true;
                 /*this.param.breedName = this.breedParam.breedName;
                 this.param.breedId = this.breedParam.breedId;*/
@@ -482,7 +482,7 @@ export default {
         },
         addBreed:function(){
           this.param.goods[this.param.goods.length-1].breedId = this.breedInfo.breedId;
-          this.param.goods[this.param.goods.length-1].brredName = this.breedInfo.brredName;
+          this.param.goods[this.param.goods.length-1].breedName = this.breedInfo.breedName;
           this.param.goods[this.param.goods.length-1].title = this.breedInfo.title;
           this.param.goods[this.param.goods.length-1].quality = this.breedInfo.quality;
           this.param.goods[this.param.goods.length-1].location = this.breedInfo.location;
@@ -501,7 +501,7 @@ export default {
           this.breedInfo.status = 2;
           this.updateParam.index = index;
           this.breedInfo.breedId=this.param.goods[index].breedId,
-          this.breedInfo.brredName=this.param.goods[index].brredName,
+          this.breedInfo.breedName=this.param.goods[index].breedName,
           this.breedInfo.title=this.param.goods[index].title,
           this.breedInfo.quality=this.param.goods[index].quality,
           this.breedInfo.location=this.param.goods[index].location,
@@ -517,7 +517,7 @@ export default {
           if(this.param.goods.length == 0||this.param.goods[this.param.goods.length-1].breedId != ''){
               this.breedInfo.status = 1;    
               this.breedInfo.breedId='';
-              this.breedInfo.brredName='';
+              this.breedInfo.breedName='';
               this.breedInfo.title='';
               this.breedInfo.quality='';
               this.breedInfo.location='';
@@ -529,7 +529,7 @@ export default {
               this.breedInfo.id='';
               this.param.goods.push({
                   breedId:'',
-                  brredName:'',
+                  breedName:'',
                   title:'',
                   quality:'',
                   location:'',
@@ -555,7 +555,7 @@ export default {
         },
         modifyBreed:function(){
           this.param.goods[this.updateParam.index].breedId=this.breedInfo.breedId,
-          this.param.goods[this.updateParam.index].brredName=this.breedInfo.brredName,
+          this.param.goods[this.updateParam.index].breedName=this.breedInfo.breedName,
           this.param.goods[this.updateParam.index].title=this.breedInfo.title,
           this.param.goods[this.updateParam.index].quality=this.breedInfo.quality,
           this.param.goods[this.updateParam.index].location=this.breedInfo.location,
@@ -612,7 +612,7 @@ export default {
     },
     events:{
         breed:function(breed){
-            this.breedInfo.brredName = breed.breedName;
+            this.breedInfo.breedName = breed.breedName;
             this.breedInfo.breedId = breed.breedId;
             this.breedParam.breedName = breed.breedName;
             this.breedParam.id = breed.breedId;
@@ -627,10 +627,9 @@ export default {
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
         console.log(this.param);
-        console.log(this.param.goods===this.param.goodsBack)
             
          if(this.param.breedId){
-            this.breedParam.breedName = this.param.brredName;
+            this.breedParam.breedName = this.param.breedName;
             this.breedParam.id = this.param.breedId;
             this.getBreedDetail(this.breedParam);
             console.log(this.breedParam)

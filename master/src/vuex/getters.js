@@ -15,6 +15,11 @@ export const getList = (state) => {
     return JSON.parse(JSON.stringify(state.category.list));
 }
 
+export const getTabs = (state) => {
+    console.log('getter-tabs');
+    return JSON.parse(JSON.stringify(state.category.tabs));
+}
+
 export const getCharList = (state) => {
     const option={
     	options:JSON.parse(JSON.stringify(state.echarts.barChartOption)),

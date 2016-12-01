@@ -203,9 +203,9 @@
                         <td>{{item.location}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.number}}{{item.unit}}</td>
-                        <td></td>
+                        <td>{{item.duedateDesc}}</td>
                         <td>{{item.description}}</td>
-                        <td></td> 
+                        <td>{{item.inTypeDesc}}</td>
 
                         <!-- <td>
                             <div v-if="item.especial==0&&item.type==0">普通求购</div>

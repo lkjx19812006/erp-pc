@@ -208,9 +208,9 @@
                         <td>{{item.location}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.number}}{{item.unit}}</td>
-                        <td></td>
+                        <td>{{item.duedateDesc}}</td>
                         <td>{{item.description}}</td>
-                        <td></td>
+                        <td>{{item.inTypeDesc}}</td>
 
                         <!-- <td>{{item.type | chanceType}}</td>
                         <td>
