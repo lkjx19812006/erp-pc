@@ -35,6 +35,7 @@
                         <th>需支付总金额</th>
                         <th>币种</th>
                         <th>收货人名称</th>
+                        <th>联系方式</th>
                         <th>收货地址</th>
                         <th>样品说明</th>
                         <th>审核状态</th>
@@ -51,16 +52,17 @@
                                  show:true,
                                  name:item.fullname,
                                  loading:false
-                             })">{{item.fullname}}</td>
-                        <td>{{item.phone}}</td>
-                        <td></td>
-                        <td>{{item.customerName}}</td>
-                        <td>{{item.breedName}}</td>
+                             })">{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
-                        <td>{{item.content}}</td>
+                        <td>{{item.total}}</td>
+                        <td>{{item.currency}}</td>
+                        <td>{{item.consignee}}</td>
+                        <td>{{item.consigneePhone}}</td>
+                        <td>{{item.address}}</td>
+                        <td>{{item.sampleDesc}}</td>
+                        <td>{{item.validate | Auditing}}</td>
                         <td>{{item.comments}}</td>
-                        <td>{{item.reply}}</td>
-                        <td>{{item.utime}}</td>
+                        <td>{{item.ctime}}</td>
                         <td  @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments">
                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                            </a>

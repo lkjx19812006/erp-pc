@@ -1,6 +1,7 @@
 <template>
      <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
      <create-model :param="createParam" v-if="createParam.send"></create-model>
+     <delete-model :param="delParam" v-if="delParam.show"></delete-model>
 	 <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise pull-left" style="font-size:14px">我的寄样申请</div>
@@ -34,8 +35,9 @@
                         <th>需支付总金额</th>
                         <th>币种</th>
                         <th>收货人名称</th>
+                        <th>联系方式</th>
                         <th>收货地址</th>
-                        <th>样品说明</th>
+                        <th>样品名称</th>
                         <th>审核状态</th>
                         <th>备注</th>
       	            	<th>创建时间</th>
@@ -45,22 +47,33 @@
                 <tbody>
                     <tr v-for="item in initSamplelist">
                         <td class="underline"  @click="clickOn({
-                                 id:item.userId,
+                                 id:item.id,
                                  sub:$index,
                                  show:true,
-                                 name:item.fullname,
+                                 name:item.customerName,
                                  loading:false
-                             })">{{item.fullname}}</td>
-                        <td>{{item.phone}}</td>
-                        <td>{{item.customerName}}</td>
-                        <td>{{item.breedName}}</td>
+                             })">{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
-                        <td>{{item.content}}</td>
+                        <td>{{item.total}}</td>
+                        <td>{{item.currency}}</td>
+                        <td>{{item.consignee}}</td>
+                        <td>{{item.consigneePhone}}</td>
+                        <td>{{item.address}}</td>
+                        <td>{{item.sampleDesc}}</td>
+                        <td>{{item.validate | Auditing}}</td>
                         <td>{{item.comments}}</td>
-                        <td>{{item.reply}}</td>
-                        <td>{{item.utime}}</td>
-                        <td  @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments">
-                           <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+                        <td>{{item.ctime}}</td>
+                        <td>
+                           <a class="operate"  @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments"><img src="/static/images/edit.png"  alt="编辑" title="编辑"/>
+                           <a class="operate"  @click="deleInfo({
+                                    sub:$index,
+                                    id:item.id,
+                                    show:true,
+                                    link:deleteInfo,
+                                    url:'/sample/',
+                                    key:'mySampleList'
+                                    })">
+                                <img src="/static/images/del.png" />
                            </a>
                         </td>
                     </tr>
@@ -76,21 +89,24 @@
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import createModel  from '../sendSampleapply'
-import detailModel from '../../user/userDetail'
+import detailModel from '../sampleDetail'
 import common from '../../../common/common'
+import deleteModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import {
 	initSamplelist,
     initLogin
 } from '../../../vuex/getters'
 import {
 	getSampleList,
-    getUserDetail
+    getSampleDetail,
+    deleteInfo
 } from '../../../vuex/actions'
 export default {
     components: {
         pagination,
         createModel,
-        detailModel
+        detailModel,
+        deleteModel
     },
     vuex: {
         getters: {
@@ -99,7 +115,8 @@ export default {
         },
         actions: {
             getSampleList,
-            getUserDetail
+            getSampleDetail,
+            deleteInfo
         }
     },
     data() {
@@ -113,29 +130,30 @@ export default {
                 customerName:'',
                 customerPhone:'',
                 total:0
-
+            },
+            delParam:{
+                show:false,
+                id:''
             },
             changeParam:{
                 show:false
             },
             createParam:{
                send:false,
-               sampling:'',
                customerName:'',
                customerPhone:'',
                customer:'',
                breedName:'',
                consignee:'',
-               ctime:'',
                consigneePhone:'',
-               currency:'中国',
+               currency:'1',
                address:'',
                comments:'',
                country:'',
                province:'',
                city:'',
                district:'',
-               total:0,
+               total:'',
                employee:this.initLogin.id,
                items:[ 
 
@@ -172,8 +190,6 @@ export default {
             		}
             	})
             }
-
-
         },
         checkedAll:function(){
    			this.checked = !this.checked;
@@ -189,8 +205,10 @@ export default {
         },
         clickOn: function(initSamplelist) {
             this.changeParam = initSamplelist;
-            this.getUserDetail(this.changeParam);
-        }
+        },
+        deleInfo:function(initSamplelist){
+              this.delParam = initSamplelist;
+        },
     },
     events: {
         fresh: function(input) {
@@ -240,8 +258,8 @@ export default {
     background-position: 5px;
 }
  #table_box  table th,#table_box  table td{
-    width: 170px;
-    min-width: 170px;
+    width: 141px;
+    min-width: 141px;
 }
 </style>
 

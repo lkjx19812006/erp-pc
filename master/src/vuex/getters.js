@@ -242,3 +242,7 @@ export const initOrgSample = (state) => {
     console.log(state.count)
   return parseJson(state.count.orgSampleList);
 }
+export const initgSampleDetail = (state) => {
+    console.log(state.count)
+  return parseJson(state.count.sampleDetail);
+}

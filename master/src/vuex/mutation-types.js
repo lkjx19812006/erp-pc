@@ -26,6 +26,8 @@ export const MY_SAMPLE_LIST = 'MY_SAMPLE_LIST' //我的寄样申请列表
 export const ADD_SAMPLE = 'ADD_SAMPLE' //新建寄样申请表
 export const UPDATE_SAMPLE = 'UPDATE_SAMPLE' //修改寄样申请表
 export const ORG_SAMPLE_LIST = 'ORG_SAMPLE_LIST' //部门寄样申请列表
+export const SAMPLE_DETAIL = 'SAMPLE_DETAIL' //寄样详情
+export const DELETE_DATA = 'DELETE_DATA' //删除信息
 
 
 export const USER_TYPE = 'USER_TYPE' //数据类型

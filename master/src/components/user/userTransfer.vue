@@ -87,7 +87,7 @@
             </div>
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                 <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.tel.tel">{{$t('static.validate_telephone')}}（例：021-60154155）</span></label>
+                 <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.tel.tel">{{$t('static.validate_telephone')}}</span></label>
                  <input type="text" class="form-control" v-validate:tel="['tel']" v-model="param.tel" />
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">

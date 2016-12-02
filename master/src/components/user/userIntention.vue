@@ -45,7 +45,7 @@
                      <div class="editpageleft">
 
                          <div class="editpage-input">
-                             <label class="editlabel" >品种名称<span class="system_danger" v-if="$validation.breedname.required">品种不能为空</span></label>
+                             <label class="editlabel">品种名称<span class="system_danger" v-if="$validation.breedname.required">品种不能为空</span></label>
                              <input type="text" v-model="param.breedName" class="form-control edit-input" v-validate:breedname="{required:true}" value="{{param.breedName}}" @click="searchBreed(param.breedName,param.breedId)" readonly="true" />
                          </div>
 

@@ -5002,6 +5002,33 @@ export const getSampleList = ({ dispatch }, param) => { //我的寄样申请列�
         param.loading = false;
     })
 }
+export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
+    param.loading = true;
+    var apiurl = apiUrl.commonList + '/sample/'+param.id;
+    Vue.http({
+        method: 'GET',
+        url: apiurl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj = res.json().result;
+        var arr = obj.items;
+        obj.items = {
+            arr: arr,
+            show: true
+        };
+        for (var i in obj.items.arr) {
+            obj.items.arr[i].show = false;
+        }
+        dispatch(types.SAMPLE_DETAIL,obj);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
 export const getOrgSampleList = ({ dispatch }, param) => { //部门寄样申请列表以及搜索
     param.loading = true;
     var apiurl = apiUrl.commonList + '/sample/list/org/?' + '&page=' + param.cur + '&pageSize=15';
@@ -5048,9 +5075,8 @@ export const createSample = ({ dispatch }, data) => { //新建寄样申请
        customerPhone:data.customerPhone,
        customer:data.customer,
        currency:data.currency,
-       address:data.address,
-       comments:data.comments,
-       /*total:data.total,*/
+       /*comments:data.comments,*/
+       total:data.total,
        employee:data.employee,
        country:data.country,
        province:data.province,
@@ -5058,11 +5084,8 @@ export const createSample = ({ dispatch }, data) => { //新建寄样申请
        district:data.district,
        items:data.items
     }
-    if(data.total===0){
-        for(var item in data.items){
-            console.log(item)
-            body.total += item.amount;
-        }
+    if(data.address==''){
+        body.address = data.country+','+data.province+','+data.city+','+data.district
     }
     if(data.consignee=='') {
         body.consignee = data.customerName;
@@ -5087,15 +5110,7 @@ export const createSample = ({ dispatch }, data) => { //新建寄样申请
         }
     }).then((res) => {
         console.log('添加成功')
-        data.no = res.json().result.no;
-        data.id = res.json().result.id;
-        data.clients = res.json().result.clients;
-        data.payWay = res.json().result.payWay;
         data.validate = res.json().result.validate;
-        data.checked = false;
-        data.sample = res.json().result.sample;
-        data.goodsDesc = res.json().result.goodsDesc;
-        data.total = res.json().result.total;
         data.ctime = new Date();
         dispatch(types.ADD_SAMPLE, data);
         data.show = false;
@@ -5148,5 +5163,23 @@ export const alterSample = ({ dispatch }, param) => { //修改寄样申请
     }, (res) => {
         console.log('fail');
         param.show = false;
+    });
+}
+export const deleteData = ({ dispatch }, param) => { //删除客户、药材信息
+    console.log(param)
+    Vue.http({
+        method: 'DELETE',
+        url: apiUrl.commonList + param.url + param.id,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('删除成功')
+        dispatch(types.DELETE_DATA, param);
+    }, (res) => {
+        console.log('fail');
     });
 }

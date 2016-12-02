@@ -3,7 +3,9 @@ import {
     MY_SAMPLE_LIST,
     ORG_SAMPLE_LIST,
     ADD_SAMPLE,
-    UPDATE_SAMPLE
+    UPDATE_SAMPLE,
+    SAMPLE_DETAIL,
+    DELETE_DATA
 } from '../mutation-types'
 
 const state = {
@@ -18,6 +20,10 @@ const state = {
     }],
     mySampleList:[],
     orgSampleList:[],
+    sampleDetail:{
+        arr: [],
+        show: true
+    },
 }
 const mutations = {
     [MY_CLIENT_COUNT](state, data) { //我的客户统计
@@ -30,17 +36,33 @@ const mutations = {
     [ORG_SAMPLE_LIST](state,data){ //部门寄样申请列表
         state.orgSampleList = data;
     },
-    [ADD_SAMPLE](state,date){
+    [ADD_SAMPLE](state,data){
+        console.log(data)
         state.mySampleList.unshift({  //新建寄样申请表
-            /*"type":data.type,
-            "sourceType":data.sourceType,
-            "sample":data.sample,
-            "intl":data.intl,*/
+           'customerName':data.customerName,
+           'customerPhone':data.customerPhone,
+           'customer':data.customer,
+           'currency':data.currency, 
+           'total':data.total,
+           'employee':data.employee,
+           'country':data.country,
+           'province':data.province,
+           'city':data.city,
+           'district':data.district,
+           'items':data.items,
+           'validate':data.validate,
+           'ctime':data.ctime
         })
     },
     [UPDATE_SAMPLE](state, data) { //修改寄样申请表
-            state.mySampleList[data.sub][key] = data[key];
-    }
+        state.mySampleList[data.sub][key] = data[key];
+    },
+    [SAMPLE_DETAIL](state,data){ //寄样详情
+        state.sampleDetail = data;
+    },
+    [DELETE_DATA](state,data) { //删除信息
+        state[data.key].splice(data.sub, 1);
+    },
 }
 export default {
     state,
