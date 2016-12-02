@@ -49,6 +49,10 @@ const mutations = {
            'province':data.province,
            'city':data.city,
            'district':data.district,
+           'sampleDesc':data.sampleDesc,
+           'consignee':data.consignee,
+           'consigneePhone':data.consigneePhone,
+           'address':data.address,
            'items':data.items,
            'validate':data.validate,
            'ctime':data.ctime

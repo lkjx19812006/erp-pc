@@ -317,7 +317,7 @@
                                                            sub:$index,
                                                            show:true,
                                                            title:'文件',
-                                                           link:'specDel',
+                                                           link:specDel,
                                                            url:'/customer/file/',
                                                            key:'files',
                                                            headline:'clientDetail'

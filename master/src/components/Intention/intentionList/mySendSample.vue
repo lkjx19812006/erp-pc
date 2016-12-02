@@ -2,6 +2,7 @@
      <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
      <create-model :param="createParam" v-if="createParam.send"></create-model>
      <delete-model :param="delParam" v-if="delParam.show"></delete-model>
+     <edit-model :param.sync="dialogParam" v-if="dialogParam.send"></edit-model>
 	 <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise pull-left" style="font-size:14px">我的寄样申请</div>
@@ -64,17 +65,19 @@
                         <td>{{item.comments}}</td>
                         <td>{{item.ctime}}</td>
                         <td>
-                           <a class="operate"  @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments"><img src="/static/images/edit.png"  alt="编辑" title="编辑"/>
-                           <a class="operate"  @click="deleInfo({
+                            <a class="operate"  @click="updateOrder(item.id,$index)">
+                                    <img src="/static/images/edit.png"  alt="编辑" title="编辑"/>
+                            </a>
+                            <a class="operate"  @click="deleInfo({
                                     sub:$index,
                                     id:item.id,
                                     show:true,
-                                    link:deleteInfo,
+                                    link:deleteData,
                                     url:'/sample/',
                                     key:'mySampleList'
                                     })">
                                 <img src="/static/images/del.png" />
-                           </a>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
@@ -92,6 +95,7 @@ import createModel  from '../sendSampleapply'
 import detailModel from '../sampleDetail'
 import common from '../../../common/common'
 import deleteModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
+import editModel from '../alterSample'
 import {
 	initSamplelist,
     initLogin
@@ -99,14 +103,16 @@ import {
 import {
 	getSampleList,
     getSampleDetail,
-    deleteInfo
+    deleteData,
+    updateSample
 } from '../../../vuex/actions'
 export default {
     components: {
         pagination,
         createModel,
         detailModel,
-        deleteModel
+        deleteModel,
+        editModel
     },
     vuex: {
         getters: {
@@ -116,7 +122,8 @@ export default {
         actions: {
             getSampleList,
             getSampleDetail,
-            deleteInfo
+            deleteData,
+            updateSample
         }
     },
     data() {
@@ -158,6 +165,28 @@ export default {
                items:[ 
 
                ],
+            },
+            dialogParam:{
+                send:false,
+                link:'/sample/',
+                key:'mySampleList',
+                id:'',
+                index:'',
+                customerName:'',
+                customerPhone:'',
+                consignee:'',
+                consigneePhone:'',
+                total:'',
+                country:'',
+                province:'',
+                city:'',
+                district:'',
+                items:[     //存放商品条目
+                    
+                ],
+                itemsBack:[   //商品条目备份，用于与修改后的商品条目对照
+
+                ],
             },
             checked:false
         }
@@ -209,6 +238,14 @@ export default {
         deleInfo:function(initSamplelist){
               this.delParam = initSamplelist;
         },
+        updateOrder:function(id,index){
+             console.log(this.dialogParam)
+              this.dialogParam.send = true;
+              this.dialogParam.id = id;
+              this.dialogParam.index = index;
+              this.dialogParam.items = [];
+              this.dialogParam.itemsBack = [];
+        },
     },
     events: {
         fresh: function(input) {
@@ -258,8 +295,8 @@ export default {
     background-position: 5px;
 }
  #table_box  table th,#table_box  table td{
-    width: 141px;
-    min-width: 141px;
+    width: 143px;
+    min-width: 143px;
 }
 </style>
 

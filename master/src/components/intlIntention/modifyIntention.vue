@@ -43,11 +43,8 @@
                          <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">
                          </mz-datepicker>
                          <button type="button" class="btn btn-default" height="24" width="24" @click="reset()">{{$t('static.clear_all')}}</button>
-                       </div>
-                       
+                       </div>                 
                      </div>
-
-
                  </div>
 
                  <div style="margin-top:25px">

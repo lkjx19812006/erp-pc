@@ -7,7 +7,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 	    <div class="model-header">
-	        <h4>填写寄样申请表</h4>
+	        <h4>修改寄样申请表</h4>
 		    <validator name="validation">
 		        <div class="edit-model">
 	        		<div>
@@ -235,9 +235,11 @@ import {
     initProvince,
     initCitylist,
     initDistrictlist,
+    initgSampleDetail
 } from '../../vuex/getters'
 import {
     getBreedDetail,
+    getSampleDetail,
     createSample,
     getCountryList,
     getProvinceList,
@@ -322,6 +324,7 @@ export default{
 		    initProvince,
 		    initCitylist,
 		    initDistrictlist,
+		    initgSampleDetail
 		},
 		actions:{
 			getBreedDetail,
@@ -330,6 +333,7 @@ export default{
             getProvinceList,
             getCityList,
             getDistrictList,
+            getSampleDetail
 		}
 	},
 	methods:{
@@ -494,6 +498,7 @@ export default{
         }
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
+        this.getSampleDetail(this.param);
         if(this.param.breedId){
             this.breedParam.breedName = this.param.brredName;
             this.breedParam.id = this.param.breedId;

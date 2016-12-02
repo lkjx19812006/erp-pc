@@ -28,6 +28,7 @@ export default {
 }
 .model-header img{
     margin: auto;
+    height: 600px;
 }
 .top-title{
     width: 60%;

@@ -226,7 +226,7 @@
                   <input type="text" class="form-control" v-validate:cphone="['phone']" v-model="contacts[0].phone"/>
                 </div>
                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                  <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.ctel.tel">{{$t('static.validate_telephone')}}，如（021-23569847）</span></label>
+                  <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.ctel.tel">{{$t('static.validate_telephone')}}）</span></label>
                   <input type="text" class="form-control" v-validate:ctel="['tel']" v-model="contacts[0].tel"/>
                 </div>
               </div>

@@ -3422,11 +3422,6 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
     }).then((res) => {
         console.log('国际意向搜索成功');
         var intent = res.json().result;
-        /*for (var i in intent){
-             intent[i].checked = false;
-             intent[i].show =false;
-        }*/
-
         if (param.key == "intentionList") { //意向列表编辑意向
             intent.items.forEach(function(item) {
                 var temp = {
@@ -3555,31 +3550,6 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
     })
 }
 
-/*export const deleteIntlIntention = ({ dispatch }, param) => { //删除国际意向
-    console.log(param);
-    const data = {
-        id:param.id
-    }
-    Vue.http({
-        method: "DELETE",
-        url: apiUrl.clientList + param.link + param.id,
-        emulateHTTP: false,
-        body: data,
-        emulateJSON: false,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            'Content-Type': 'application/json;charset=UTF-8'
-        }
-    }).then((res) => {
-
-        console.log('删除成功!!!!')
-        dispatch(types.DELETE_INTLINTENTION_DATA, param);
-
-    }, (res) => {
-        console.log('fail');
-    })
-}
-*/
 export const updateIntlIntention = ({ dispatch }, param, tipParam) => { //修改国际意向
 
     const data = {
@@ -5022,6 +4992,31 @@ export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
         for (var i in obj.items.arr) {
             obj.items.arr[i].show = false;
         }
+        if (param.key == "mySampleList") { //寄样列表编辑寄样信息
+            obj.items.forEach(function(item) {
+                var temp = {
+                    id: item.id,
+                    breedId: item.breedId,
+                    breedName: item.breedName,
+                    quality: item.quality,
+                    location: item.location,
+                    spec: item.spec,
+                    number: item.number,
+                    unit: item.unit,
+                }
+                param.items.push(temp);
+                param.itemsBack.push(temp);
+            })
+        }
+        param.customerName = obj.customerName,
+        param.customerPhone = obj.customerPhone,
+        param.consignee = obj.consignee;
+        param.consigneePhone = obj.consigneePhone;
+        param.total = obj.total;
+        param.country = obj.country;
+        param.province = obj.province;
+        param.city = obj.city;
+        param.district = obj.district;
         dispatch(types.SAMPLE_DETAIL,obj);
         param.loading = false;
     }, (res) => {
@@ -5112,6 +5107,8 @@ export const createSample = ({ dispatch }, data) => { //新建寄样申请
         console.log('添加成功')
         data.validate = res.json().result.validate;
         data.ctime = new Date();
+        data.sampleDesc = res.json().result.sampleDesc;
+        data.address = res.json().result.address;
         dispatch(types.ADD_SAMPLE, data);
         data.show = false;
     }, (res) => {
