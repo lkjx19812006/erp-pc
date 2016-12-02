@@ -31,7 +31,7 @@
                     <div style="margin:30px 10px 15px 10px" class="clearfix">
                         <div class="input-group col-xs-4 pull-left">
                             <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
-                            <input type="text" class="form-control" v-model="loadParam.name" placeholder="请输入业务员名字" @keyup.enter="employSearch()">
+                            <input type="text" class="form-control" v-model="loadParam.name" placeholder="{{$t('static.enter_salesman')}}" @keyup.enter="employSearch()">
 
                         </div>
                         <div class="col-xs-1 pull-left"></div>
@@ -40,8 +40,8 @@
                           <input type="text" class="form-control"  placeholder="点击选择部门"   value="{{treeParam.orgName}}">
                             <!--<input type="button" class="form-control" value="根据部门查找" @click="treeParam.show=true"/>-->
                         </div> 
-                        <button type="button" class="new_btn" @click="reset()">清空条件</button>
-                        <button type="button" class="new_btn" style="margin-right:10px;" @click="employSearch()">搜索</button>
+                        <button type="button" class="new_btn" @click="reset()">{{$t('static.clear_all')}}</button>
+                        <button type="button" class="new_btn" style="margin-right:10px;" @click="employSearch()">{{$t('static.search')}}</button>
                     </div>
                         
 		            <table class="table table-hover table_head table-striped" style="text-align:center" v-cloak>
@@ -443,8 +443,7 @@ export default{
     height:500px;
     border:0px;
 }
-th,td{
-    width: 200px;
-    min-width: 200px;
+.table{
+    display: table;
 }
 </style>

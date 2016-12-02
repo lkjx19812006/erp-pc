@@ -1,6 +1,7 @@
 <template>
     <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
     <inquireinfo-model :param="inquireInfoParam" v-if="inquireInfoParam.show"></inquireinfo-model>
+    <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <itemhistory-model :param="itemHistoryParam" v-if="itemHistoryParam.show"></itemhistory-model>
     <uploadfiles-model :param="uploadFilesParam" v-if="uploadFilesParam.show"></uploadfiles-model>
     <otheroffer-model :param="otherOfferParam" v-if="otherOfferParam.show"></otheroffer-model>
@@ -241,6 +242,7 @@
                                           <th>{{$t('static.file_type')}}</th>
                                           <th>{{$t('static.description')}}</th>
                                           <th>{{$t('static.create_time')}}</th>
+                                          <th>{{$t('static.file_path')}}</th>
                                           <th></th>
                                           <th></th>
                                           
@@ -253,9 +255,9 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
+                                                <td><img :src="item.url" style="max-width: 150px;"  @click="clickBig(item.url)"/></td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
-                                                <td></td>
                                                 
                                                
                                             </tr>
@@ -286,7 +288,7 @@
                                           <th>{{$t('static.file_type')}}</th>
                                           <th>{{$t('static.description')}}</th>
                                           <th>{{$t('static.create_time')}}</th>
-                                          <th></th>
+                                          <th>{{$t('static.file_path')}}</th>
                                           <th></th>
                                           <th></th>
                                         </thead>
@@ -298,6 +300,7 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
+                                                <td><img :src="item.url" style="max-width: 150px;" @click="clickBig(item.url)"/></td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 <td></td>
@@ -318,7 +321,7 @@
     </div>
 </template>
 <script>
-
+import pictureModel from '../tips/pictureDialog'
 import filter from '../../filters/filters'
 import offerModel from './intlOffer'
 import inquireinfoModel from './inquireInfo'
@@ -345,7 +348,8 @@ export default {
         otherofferModel,
         inquireagainModel,
         uploadfilesModel,
-        delfileModel
+        delfileModel,
+        pictureModel
     },
     data() {
         return {
@@ -367,6 +371,10 @@ export default {
                 link:'/intlIntention/itemHistory',
                 id:''                               //意向明细ID
 
+            },
+            pictureParam:{
+              show:false,
+              img:''
             },
             inquireAgainParam:{
               show:false,
@@ -444,7 +452,10 @@ export default {
         }
     },
     methods: {
-      
+      clickBig:function(img){
+          this.pictureParam.show=true;
+          this.pictureParam.img = img;
+      },
       enfoldment:function(param){
           if(this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length==0){
                   this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show=true;
@@ -577,10 +588,11 @@ section article {
     margin-bottom: 0;
     cursor: pointer;
 }
-
+.table{
+  display: table;
+}
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
   text-align: left;
-  width: 14%;
 }
 .edit-detail {
     border: 0px solid #ddd;
@@ -605,29 +617,5 @@ section article {
 .client-detailInfo img {
     margin-right: 8px;
 }
-.btn-orange {
-    background-color: #fa6705;
-    color: #fff;
-    font-size: 18px;
-}
-.label_action{
-  position: absolute;
-  top:13px;
-  right: 32px;
-  border: 1px solid #ccc;
-    border-radius: 3px;
-    background: #fff;
-    z-index: 1000;
-    min-width: 90px;
-    cursor: pointer;
-    padding: 5px 10px;
-    max-width: 200px;
-}
-.client-editbtn {
-    text-align: right;
-    margin-top: 15px;
-}
-.client-image {
-    display: inline-block;
-}
+
 </style>

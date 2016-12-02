@@ -7,13 +7,6 @@
             <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
         </div>
         <div class="count_top">
-        	<div class="count_select clearfix">
-        		<label class="pull-left">业务员：</label>
-        		<select class="form-control pull-left" style="width:170px;" v-model="loadParam.employeeId" @change="selectSearch()">
-        			<option slected value="">全部</option>
-        			<option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
-        		</select>
-        	</div>
         	<table class="table table-hover table_color table-bordered table-striped " v-cloak>
 	            <thead>
 	                <tr style="background:none;color:#000">
@@ -22,14 +15,15 @@
 	                    <th colspan="25">客户类型分类</th>
 	                </tr>
 	                <tr style="background:none;color:#000">
+	                	<th>其他</th>
 	                    <th>一星</th>
 	                    <th>二星</th>
 						<th>三星</th>
 						<th>其他</th>
 						<th>合作社</th>
 						<th>药商</th>
-						<th>个体户</th>
 						<th>药厂</th>
+						<th>个体户</th>
 						<th>药店</th>
 						<th>贸易公司</th>
 						<th>医院</th>
@@ -38,6 +32,7 @@
 						<th>介绍人</th>
 						<th>药贩子</th>
 						<th>产地药商</th>
+						<th>销地药商</th>
 						<th>养生诊所</th>
 						<th>化工厂</th>
 						<th>化妆品厂</th>
@@ -66,18 +61,29 @@
 	        	<span v-bind:class="{ 'date_active': !isA&&!isB&&!isC}" @click="clickmonth()">月</span>
 	        	<span v-bind:class="{ 'date_active': !isA&&!isB&&isC}" @click="clickyear()">年</span>
 	        </div>
-	        <div class="pull-right" style="margin-top:10px;" v-if="!loadParam.employeeId">
+	        <div class="pull-right" style="margin-top:10px;" v-if="!loadParam.employeeId&&!loadParam.date">
         		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=org">导出部门统计</a>
         	</div>
-        	<div class="pull-right" style="margin-top:10px;" v-if="loadParam.employeeId">
-        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=emp&employeeId="+loadParam.employeeId>导出客户统计</a>
+        	 <div class="pull-right" style="margin-top:10px;" v-if="!loadParam.employeeId&&loadParam.date">
+        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=org&amp;date={{loadParam.date}}">导出部门统计1</a>
+        	</div> 
+        	<div class="pull-right" style="margin-top:10px;" v-if="loadParam.employeeId&&!loadParam.date">
+        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=emp&amp;employeeId={{loadParam.employeeId}}">导出客户统计</a>
         	</div>
-	        <div class="count_select clearfix pull-right">
+        	<div class="pull-right" style="margin-top:10px;" v-if="loadParam.employeeId&&loadParam.date">
+        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=emp&employeeId={{loadParam.employeeId}}&date={{loadParam.date}}">导出客户统计1</a>
+        	</div>
+	        <div class="count_select clearfix pull-right" >
         		<label class="pull-left">业务员：</label>
         		<select class="form-control pull-left" style="width:170px;" v-model="loadParam.employeeId" @change="selectSearch()">
         			<option slected value="">全部</option>
         			<option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
         		</select>
+        	</div>
+        	<div class="count_select clearfix pull-right">
+        		<label class="pull-left">日期：</label>
+        		<mz-datepicker :time.sync="loadParam.date" format="yyyy-MM-dd">
+                </mz-datepicker>
         	</div>
         	
 	    </div>
@@ -194,6 +200,7 @@
     </div>
 </template>
 <script>
+	import vSelect from '../tools/vueSelect/components/Select'
 	import {
 		initClientcount,
 		initEmployeeList,
@@ -201,7 +208,7 @@
 	} from '../../vuex/getters'
 	import {
 		getClientcount,
-		getEmployeeList,
+		getEmployeeCount,
 		getClientOrgcount,
 		getExportOrgcount
 	} from '../../vuex/actions'
@@ -222,7 +229,8 @@
 	                total:0,
 	                link:'/count/getCustomerAdd?role=org',
 	                orgId:this.initLogin.orgId,
-	                employeeId:''
+	                employeeId:'',
+	                date:'',
 	            },
 	            isA:true,
 	            isB:false,
@@ -264,7 +272,7 @@
 	        },
 	        actions: {
 	            getClientcount,
-	            getEmployeeList,
+	            getEmployeeCount,
 	            getClientOrgcount,
 	            getExportOrgcount
 	        }
@@ -277,7 +285,7 @@
 	    },
 	    created() {
 	        this.getClientOrgcount(this.loadParam);
-	        this.getEmployeeList(this.loadParam);
+	        this.getEmployeeCount(this.loadParam);
 	        console.log(this.initLogin);
 	        window.onload=function(){ 
 	        	console.log(document.getElementById('module_judge').style.maxHeight)
@@ -288,6 +296,9 @@
 	}
 </script>
 <style scoped>
+	.table{
+		display: table;
+	}
 	.module{
 		position: relative;
 	}

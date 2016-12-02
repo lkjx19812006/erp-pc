@@ -273,9 +273,9 @@
                                   <div class="panel-body panel-set">
                                       <table class="table  contactSet">
                                         <thead>
-                                           <th>文件类型</th>
-                                          <th>路径</th>
-                                          <th>描述<th>
+                                            <th>文件类型</th>
+                                            <th>路径</th>
+                                            <th>描述<th>
                                         </thead>
                                         <tbody>
                                             <tr v-for="item in initIdentify.files">
@@ -390,7 +390,7 @@
                           </div>
                           <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                  <label>qq</label>
+                                  <label>QQ</label>
                                   <input type="text" class="form-control"  value="{{initUserDetail.qq}}" disabled="disabled"/>
                               </div>
                               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
@@ -883,7 +883,6 @@ section article {
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
   text-align: left;
-  width: 10%;
 }
 .edit-detail {
     border: 1px solid #ddd;
@@ -894,7 +893,9 @@ section article {
     position: relative;
     padding: 10px;
 }
-
+.table{
+  display: table;
+}
 .label_action{
   position: absolute;
   top:13px;

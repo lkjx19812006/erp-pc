@@ -102,7 +102,7 @@
                 <thead>
                     <tr>
                         <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
-
+                        <th>类型</th>
                         <th>发布时间</th>
                         <th>客户名称</th>
                         <th>主要联系人</th>
@@ -144,7 +144,12 @@
                             <label v-if="item.validate==0||item.validate==9" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" >
                             </label>
                         </td>
-                     
+                        <td>
+                            <div v-if="item.especial==0&&item.type==0">普通求购</div>
+                            <div v-if="item.especial==0&&item.type==1">普通供应</div>
+                            <span v-if="item.especial==1&&item.type==0">紧急求购</span>
+                            <span v-if="item.especial==1&&item.type==1">低价资源</span>
+                        </td>
                         <td>{{item.ctime | date}}</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
@@ -198,9 +203,9 @@
                         <td>{{item.location}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.number}}{{item.unit}}</td>
-                        <td></td>
+                        <td>{{item.duedateDesc}}</td>
                         <td>{{item.description}}</td>
-                        <td></td> 
+                        <td>{{item.inTypeDesc}}</td>
 
                         <!-- <td>
                             <div v-if="item.especial==0&&item.type==0">普通求购</div>
@@ -718,6 +723,9 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-
+#table_box table th,#table_box table td{
+    width: 116px;
+    min-width: 116px;
+}
 </style>
 

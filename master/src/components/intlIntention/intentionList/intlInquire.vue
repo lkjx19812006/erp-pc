@@ -51,7 +51,7 @@
                         <td v-if="item.inquire==2" style="color:#EE82EE">{{$t('static.inquiry')}}</td>
                         <td v-if="item.inquire==3" style="color:#2E8B57">{{$t('static.quo_complete')}}</td>
                         <td>
-                            <div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div>
+                            <div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
                         </td>
                     </tr>
 

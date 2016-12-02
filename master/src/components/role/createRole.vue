@@ -287,85 +287,10 @@ export default {
 .search_input{
     text-indent: 0px;
 }
-.edit-content h3 {
-    font-size: 18px;
-    color: #fa6705;
-    margin: 0;
-}
 .top-title{
     left: 0;
     right: 0;
     width: 800px;
-}
-.editsection {
-    width: 100%;
-    box-sizing: border-box;
-}
-.client-detailInfo label{
-    display: inline-block;
-}
-.editpage {
-    display: -webkit-flex;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -ms-box-orient: horizontal;
-    box-orient: horizontal;
-}
-
-.editpageleft,
-.editpageright {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-    width: 50%;
-    float: left;
-}
-.editpageleft{
-    border-right:1px solid #ddd; 
-}
-.editpageleft h4,
-.editpageright h4{
-    text-indent: 16px;
-}
-.editpage-input {
-    margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
-}
-
-.edit-input {
-    height: 36px;
-    line-height: 36px;
-    width: 90%;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-}
-
-.edit-input:focus {
-    border-color: #fa6705;
-}
-
-.addblack span {
-    color: #333;
-    font-size: 14px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 5px;
-}
-
-.edit_footer button {
-    margin-left: 15px;
 }
 
 .btn-confirm {
@@ -377,17 +302,6 @@ export default {
     color: #fa6705;
 }
 
-.editpage_img {
-    width: 90%;
-}
-
-.editpage_img img {
-    display: inline-block;
-    background: #ccc;
-}
-.editpage-image {
-    display: inline-block;
-}
 .checkbox_unselect{
     background-image: url(/static/images/unselect.png);
     display: inline-block;
@@ -403,6 +317,9 @@ export default {
 }
 .role{
     margin-right: 10px;
+}
+.table{
+    display: table;
 }
 .checkbox_select{
     background-image: url(/static/images/selected.png);

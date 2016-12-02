@@ -100,7 +100,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-
+                        <th>类型</th>
                         <th>发布时间</th>
                         <th>客户名称</th>
                         <th>主要联系人</th>
@@ -149,7 +149,12 @@
                 <tbody>
 
                     <tr v-for="item in initIntentionList">
-
+                        <td>
+                            <div v-if="item.especial==0&&item.type==0">普通求购</div>
+                            <div v-if="item.especial==0&&item.type==1">普通供应</div>
+                            <span v-if="item.especial==1&&item.type==0">紧急求购</span>
+                            <span v-if="item.especial==1&&item.type==1">低价资源</span>
+                        </td>
                         <td>{{item.ctime | date}}</td>
                         <td  class="underline" @click.stop="detailClick({
                                 id:item.id,
@@ -203,9 +208,9 @@
                         <td>{{item.location}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.number}}{{item.unit}}</td>
-                        <td></td>
+                        <td>{{item.duedateDesc}}</td>
                         <td>{{item.description}}</td>
-                        <td></td>
+                        <td>{{item.inTypeDesc}}</td>
 
                         <!-- <td>{{item.type | chanceType}}</td>
                         <td>
@@ -355,7 +360,7 @@
                                key:'intentionList'
                                })"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                                </a>
-                               <a class="operate" v-if="item.validate==2" @click.stop="audit($index,item.id)"><img src="/static/images/apply.png" height="18" width="47"  alt="审核" title="审核"/>
+                               <a class="operate" v-if="item.validate==2" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png"   alt="审核" title="审核"/>
                                </a>
                                <a class="operate" v-if="item.onSell==3&&item.type==1&&item.especial==1" @click.stop="allowDown($index,item.id)"><img src="/static/images/greendown.png" height="18" width="46"  alt="允许下架" title="允许下架"/>
                                </a>
@@ -734,6 +739,9 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-
+#table_box table th,#table_box table td{
+    width: 121px;
+    min-width: 121px;
+}
 </style>
 

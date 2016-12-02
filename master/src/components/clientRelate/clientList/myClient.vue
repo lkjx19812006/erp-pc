@@ -26,6 +26,7 @@
                                             loading:false,
                                             id:'',
                                             category:'',
+                                            typeDesc:'',
                                             type:'',
                                             name:'',
                                             mainPhone:'',
@@ -41,7 +42,7 @@
                                             orgName:'',
                                             contacts:[
                                                 {
-                                                    name:'',
+                                                    mainContact:'',
                                                     position:'',
                                                     department:'',
                                                     phone:'',
@@ -105,21 +106,21 @@
                         <th>
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
 
-                        <th>所属业务员</th>
-                        <th>创建时间</th>
-                        <th>最近成交时间</th>
-                        <th>客户名称</th>
-                        <th>成交次数</th>
-                        <th>客户类型</th>
-                        <th>联系人</th>
-                        <th>联系人职位</th>
-                        <th>联系人电话</th>
-                        <th>手机归属地</th>
-                        <th>客户归属地</th>
-                        <th>详细地址</th>
-                        <th>主营产品</th> 
-
-                        <!-- <th>{{$t("static.type")}}</th>
+                        <th>{{$t('static.salesman')}}</th>
+                        <th>{{$t('static.create_time')}}</th>
+                        <th>{{$t('static.recent_contact')}}</th>
+                        <th>{{$t('static.client_name')}}</th>
+                        <th>{{$t('static.transaction_num')}}</th>
+                        <th>{{$t('static.client_type')}}</th>
+                        <th>{{$t('static.contact')}}</th>
+                        <th>{{$t('static.position')}}</th>
+                        <th>{{$t('static.cellphone')}}</th>
+                        <th>{{$t('static.phone_origin')}}</th>
+                        <th>{{$t('static.client_origin')}}</th>
+                        <th>{{$t('static.detailed_address')}}</th>
+                        <th>{{$t('static.main_product')}}</th> 
+                        
+                    <!-- <th>{{$t("static.type")}}</th>
                         <th>{{$t("static.classification")}}</th>
                         <th>{{$t("static.customer_source")}}</th>
                         <th>{{$t("static.credit_rating")}}</th>
@@ -173,7 +174,7 @@
                         <td>{{item.address}}</td>
                         <td>{{item.bizScope}}</td>
 
-                        <!-- <td>{{item.typeDesc}}</td>
+                    <!-- <td>{{item.typeDesc}}</td>
                         <td>{{item.classifyDesc | classify}}</td>
                         <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
                         <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
@@ -582,5 +583,9 @@ export default {
     margin: auto;
     text-align: center;
     background-position: 5px;
+}
+#table_box table th,#table_box table td{
+    width: 115px;
+    min-width: 115px;
 }
 </style>

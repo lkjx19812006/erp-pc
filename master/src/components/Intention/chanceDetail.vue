@@ -3,6 +3,7 @@
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
   <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
   <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
+  <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show">
         <div class="top-title">
@@ -387,7 +388,6 @@
                             </div>
 
                             <div class="clearfix">
-                                
                                 <div class="client-detailInfo col-md-2 col-xs-12">
                                     <label class="editlabel">状态</label>
                                     <select  class="form-control edit-input"  v-model="param.status" disabled="disabled">
@@ -396,6 +396,10 @@
                                     </select>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
+                                <div class="client-detailInfo col-md-2 col-xs-12">
+                                    <label class="editlabel">预览</label>
+                                    <img v-for="item in initIntentionDetail.pics" :src="item.url"  width="150px;" @click="clickBig(item.url)"/>
+                                </div>
                             </div>
                         </div>
                     </article>
@@ -410,7 +414,7 @@ import filter from '../../filters/filters'
 import tipsdialogModel  from '../tipsDialog'
 import createorderModel  from './createOrder'
 import editmsgModel from './editMsg'
-
+import pictureModel from '../tips/pictureDialog'
 import{
     initIntentionDetail,
     initLogin
@@ -426,6 +430,7 @@ export default {
         createorderModel,
         editmsgModel,
         trackingModel,
+        pictureModel
     },
     data() {
         return {
@@ -449,6 +454,10 @@ export default {
             tipsParam:{
                 show:false,
                 name:'修改成功'
+            },
+            pictureParam:{
+              show:false,
+              img:''
             },
             orderParam:{
                 show:false,
@@ -481,7 +490,7 @@ export default {
                   sourceId:'',   //商品来源ID
                   title:'',      //订单商品标题
                   breedId:this.initIntentionDetail.breedId,
-                  brredName:this.initIntentionDetail.breedName,
+                  breedName:this.initIntentionDetail.breedName,
                   quality:'',
                   location:'',
                   spec:'',
@@ -524,6 +533,10 @@ export default {
       },
       clickShow: function(index,param) {
           this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show = !this.$store.state.table.basicBaseList.intentionDetail[param.concrete].arr[index].show;
+      },
+      clickBig:function(img){
+          this.pictureParam.show=true;
+          this.pictureParam.img = img;
       },
       adopt:function(item,index){
           console.log("创建订单");
@@ -658,10 +671,11 @@ section article {
     margin-bottom: 0;
     cursor: pointer;
 }
-
+.table{
+  display: table;
+}
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
   text-align: left;
-  width: 10%;
 }
 .edit-detail {
     border: 0px solid #ddd;

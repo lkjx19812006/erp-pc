@@ -213,6 +213,34 @@ Vue.filter('invoicstate', function(val){ //发票
 		return '增值发票';
 	}
 })
+Vue.filter('advanced', function(val){ //预付比例
+	var val = val;
+	if(val==null){
+		 return 'None';
+	}else if(val==0){
+		return 'None';
+	}else if(val==1){
+		return '100%';
+	}else if(val==0.1){
+		return '10%';
+	}else if(val==0.2){
+		return '20%';
+	}else if(val==0.3){
+		return '30%';
+	}else if(val==0.4){
+		return '40%';
+	}else if(val==0.5){
+		return '50%';
+	}else if(val==0.6){
+		return '60%';
+	}else if(val==0.7){
+		return '70%';
+	}else if(val==0.8){
+		return '80%';
+	}else if(val==0.9){
+		return '90%';
+	}
+})
 Vue.filter('status', function(val){ //业务机会状态
 	var val = val;
 	if(val==null){

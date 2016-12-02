@@ -20,7 +20,15 @@
                             <option>FOB</option>
                             <option>CIF</option>
                             <option>FOB&CIF</option>
-                            <option>其他</option>
+                            <option>EXW</option>
+                            <option>FCA</option>
+                            <option>FAS</option>
+                            <option>CPT</option>
+                            <option>CFR</option>
+                            <option>CIP</option>
+                            <option>DAT</option>
+                            <option>DAP</option>
+                            <option>DDP</option>
                         </select>
                     </div>
                     <div class="editpage-input">

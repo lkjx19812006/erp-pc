@@ -2,6 +2,7 @@ import {
     INCREMENT,
     DECREMENT,
     INIT_LIST,
+    INIT_TABS,
     MENU_BAR,
     FOLD
 } from '../mutation-types'
@@ -15,6 +16,7 @@ const state = {
     count: 0,
 
     list:categoryJson,
+    tabs:[],
     left: 240,
     expand:true
 }
@@ -33,6 +35,10 @@ const mutations = {
     [INIT_LIST](state,data) {
         state.list = data.menus;
     },
+    [INIT_TABS](state,data) {
+        state.tabs = data;
+    },
+    
     [MENU_BAR](state) {
         if (state.left == 240) {
             state.left = 50;

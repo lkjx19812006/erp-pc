@@ -31,12 +31,6 @@
                  </div>
                  <div class="editpage">
                      <div class="editpageleft">
-
-                      <!--  <div class="editpage-input">
-                        <label class="editlabel">手机<span v-if="$validation.phone.required" class="system_danger">请输入手机号</span></label>
-                        <input type="text" v-model='param.customerPhone' v-validate:phone="['required']" class="form-control edit-input"  />
-                      </div> -->
-
                        <div class="editpage-input">
                          <label class="editlabel">{{$t('static.country')}}<span class="system_danger" v-if="$validation.country.required">{{$t('static.choose_country')}}</span></label>
                          <input type="text" v-show="false" v-model="country.cname" v-validate:country="['required']">
@@ -52,27 +46,6 @@
                            </v-select>
                          </div>
                        </div>
-
-                         
-
-                       <div class="editpage-input">
-                         <label class="editlabel">{{$t('static.city')}}</label>
-                         <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.choose_province')}}" />
-                         <div v-if="province.cname" type="text" class="edit-input">
-                         <v-select
-                                   :debounce="250"
-                                   :value.sync="city"
-                                   :on-change="selectDistrict"
-                                   :options="initCitylist"
-                                   placeholder="市"
-                                   label="cname"
-                         >
-                         </v-select>
-                           </div>
-                       </div>
-
-                         
-
                        <div class="editpage-input">
                          <label class="editlabel">{{$t('static.detailed_address')}}<span v-if="$validation.address.required" class="system_danger">{{$t('static.enter_address')}}</span></label>
                          <input type="text" v-model='param.address' v-validate:address="['required']" class="form-control edit-input" value="{{param.address}}" />
@@ -87,8 +60,23 @@
                      </div>
 
                      <div class="editpageright">
-                       
                        <div class="editpage-input">
+                         <label class="editlabel">{{$t('static.city')}}</label>
+                         <input type="text"  class="form-control edit-input"  placeholder="{{$t('static.choose_province')}}" v-model="{{param.city}}" />
+                         <!-- <div v-if="province.cname" type="text" class="edit-input">
+                         <v-select
+                                   :debounce="250"
+                                   :value.sync="city"
+                                   :on-change="selectDistrict"
+                                   :options="initCitylist"
+                                   placeholder="市"
+                                   label="cname"
+                         >
+                         </v-select>
+                           </div> -->
+                       </div>
+
+                       <!-- <div class="editpage-input">
                            <label class="editlabel">{{$t('static.province')}}<span class="system_danger" v-if="$validation.province.required">{{$t('static.choose_province')}}</span></label>
                            <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.choose_country')}}" />
                            <input type="text" v-show="false" v-model="province.cname" v-validate:province="['required']">
@@ -100,11 +88,11 @@
                                 :options="initProvince"
                                 placeholder="省"
                                 label="cname">
-
+                       
                               </v-select>
                            </div>
                        </div>
-
+                       
                        <div class="editpage-input">
                            <label class="editlabel">{{$t('static.area')}}</label>
                            <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.choose_city')}}" />
@@ -118,7 +106,7 @@
                                >
                                </v-select>
                            </div>
-                       </div>
+                       </div> -->
                       <div class="editpage-input">
                          <label class="editlabel">{{$t('static.client_email')}}<span v-if="$validation.email.email" class="system_danger">{{$t('static.enter_email')}}</span></label>
                          <input type="text" v-model='param.customerEmail' v-validate:email="['email']" class="form-control edit-input"  />
@@ -764,18 +752,8 @@ export default {
 .editpage-image {
     display: inline-block;
 }
-
-.table>thead{
-  min-width: 100%;
-  width: 100%;
-  display: block;
-}
-.table>thead>tr{
-  width: 100%;
-  display: block;
-}
-th,td{
-  width: 90px;
+.table{
+  display: table;
 }
 a{
     cursor:pointer;

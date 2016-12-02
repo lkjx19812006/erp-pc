@@ -22,9 +22,9 @@
                  <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
 
                  <div class="editpage">
-                     <div class="editpageleft">
+                     <div class="clearfix">
 
-                       <div class="editpage-input">
+                       <div class="editpage-input col-md-6">
                          <label class="editlabel">{{$t('static.packaging')}}<span v-if="$validation.pack.required" class="system_danger">{{$t('static.enter_package')}}</span></label>
                          <input type="text" v-show="false" v-model='param.pack' v-validate:pack="['required']" class="form-control edit-input"  />
                          <div type="text" class="edit-input" >
@@ -36,13 +36,8 @@
                            >
                            </input-select>
                          </div>
-                       </div>
-
-                     </div>
-
-                     <div class="editpageright">
-                      
-                       <div class="editpage-input">
+                       </div>              
+                       <div class="editpage-input col-md-6">
                          <label class="editlabel">{{$t('static.deadline')}}<span v-if="$validation.duedate.required" class="system_danger">{{$t('static.choose_deadline')}}</span></label>
                          <input v-show="false" v-model="param.duedate" v-validate:duedate="['required']"/>
                          <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">
@@ -647,115 +642,13 @@ export default {
     left: 0;
 }
 
-.edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.editsection {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.editpage {
-    display: -webkit-flex;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -ms-box-orient: horizontal;
-    box-orient: horizontal;
-
-}
-
-.editpageleft,
-.editpageright {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-    width: 50%;
-}
-
-.editpagecenter{
-  -webkit-box-flex: 1;
-  -webkit-flex: auto;
-  -ms-flex: auto;
-  flex: auto;
-  width: 100%;
-}
-
-
-.editpage-input {
-    margin-top: 15px;
-}
-
-.edit-input {
-    height: 36px;
-    width: 90%;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-}
-
-.edit-input:focus {
-    border-color: #fa6705;
-}
-
-.addblack span {
-    color: #333;
-    font-size: 14px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 5px;
-}
-
-.edit_footer {
-    border-top: 1px solid #ddd;
-    text-align: right;
-    padding: 10px 20px;
-   /*  margin-top: 50px; */
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 50px;
-    width: 800px;
-    background: #fff;
-    margin: auto;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.edit_footer button {
-    margin-left: 15px;
-}
-
-.btn-confirm {
-    background-color: #fa6705;
-    color: #fff;
-}
-
 .btn-close {
     color: #fa6705;
 }
 
-.editpage_img {
-    width: 90%;
+.table{
+  display: table;
 }
-
-.editpage_img img {
-    display: inline-block;
-    background: #ccc;
-}
-
-.editpage-image {
-    display: inline-block;
-}
-
 a{
     cursor:pointer;
 }

@@ -69,11 +69,11 @@
                         <td>{{item.city}}</td>
                         <!-- <td>{{item.district}}</td> -->
                         <td>{{item.address}}</td>
-                        <td>{{item.advance}}</td>
+                        <td>{{item.advance | advanced}}</td>
                         <!-- <td>{{item.invoic | invoicstate}}</td>
                         <td>{{item.visit | visitstate}}</td> -->
                         <td v-if="item.pack=='其它'">{{$t('static.other')}}</td>
-                        <td v-if="item.pack==''">{{$t('static.other')}}</td>
+                        <td v-if="item.pack!='积压包'&&item.pack!='编织袋'&&item.pack!='瓦楞纸箱'&&item.pack!='真空包装'&&item.pack!='其它'">{{$t('static.other')}}</td>
                         <td v-if="item.pack=='积压包'">{{$t('static.pallets')}}</td>
                         <td v-if="item.pack=='编织袋'">{{$t('static.bag')}}</td>
                         <td v-if="item.pack=='瓦楞纸箱'">{{$t('static.box')}}</td>
@@ -83,7 +83,10 @@
                         <td>{{item.ctime | date}}</td>
                         <!-- <td>{{item.validate | intentionAudit}}</td> -->
                         <!-- <td>{{item.description}}</td> -->
-                        <td>{{item.inquire | inquire}}</td>
+                        <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
+                        <td v-if="item.inquire==1">{{$t('static.inquiry')}}</td>
+                        <td v-if="item.inquire==2">{{$t('static.quotation')}}</td>
+                        <td v-if="item.inquire==3">{{$t('static.quo_complete')}}</td>
                         <td>{{item.inquireType}}</td>
                         <!-- <td>
                             <div v-if="item.inquire===0&&item.inquireTime===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquire.png" alt="询价" /></div>
@@ -427,8 +430,8 @@ export default {
 }
 
 #table_box table th,#table_box table td{
-   min-width: 106px;
-    width: 106px;
+   min-width: 113px;
+    width: 113px;
 }
 </style>
 

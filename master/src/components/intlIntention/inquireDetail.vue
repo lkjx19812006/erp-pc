@@ -8,7 +8,7 @@
     <delotheroffer-model :param="delOtherOfferParam" v-if="delOtherOfferParam.show"></delotheroffer-model>
     <uploadfiles-model :param="uploadFilesParam" v-if="uploadFilesParam.show"></uploadfiles-model>
     <delfile-model :param="delFileParam" v-if="delFileParam.show"></delfile-model>
-    
+    <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show">
         <div class="top-title">
@@ -37,46 +37,35 @@
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-2 col-xs-12">
-                                    <label class="editlabel">{{$t('static.client_name')}}：{{initIntlIntentionDetail.customerName}}</label>
-                                     
+                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                    <label class="editlabel">{{$t('static.client_name')}}：</label>
+                                    <span>{{initIntlIntentionDetail.customerName}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">{{$t('static.client_phone')}}：{{initIntlIntentionDetail.customerPhone}}</label>
+                                <div class="client-detailInfo col-md-6 col-xs-12">
+                                    <label class="editlabel">{{$t('static.commodity_items')}}：</label>
+                                    <span>{{initIntlIntentionDetail.names}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12" >
-                                    <label class="editlabel">{{$t('static.client_email')}}：{{initIntlIntentionDetail.customerEmail}}</label>
-                                    
+                                <div class="client-detailInfo col-md-6 col-xs-12" >
+                                    <label class="editlabel">{{$t('static.client_email')}}：</label>
+                                    <span>{{initIntlIntentionDetail.customerEmail}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">{{$t('static.country')}}：{{initIntlIntentionDetail.country}}</label>
+                                <div class="client-detailInfo col-md-6 col-xs-12">
+                                    <label class="editlabel">{{$t('static.country')}}：</label>
+                                    <span>{{initIntlIntentionDetail.country}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
+                                <div class="client-detailInfo col-md-6 col-xs-12">
+                                    <label class="editlabel">{{$t('static.city')}}：</label>   
+                                    <span>{{initIntlIntentionDetail.city}}</span>
+                                </div>
+                                <div class="client-detailInfo col-md-6 col-xs-12" >
+                                    <label class="editlabel">{{$t('static.quantity')}}：</label>
+                                    <span>{{initIntlIntentionDetail.number}}</span>   
+                                </div>
+                                <div class="client-detailInfo col-md-6 col-xs-12">
+                                    <label class="editlabel">{{$t('static.description')}}：</label>
+                                    <span>{{initIntlIntentionDetail.description}}</span>
+                                </div>
                                 
-                            </div>
-
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-2 col-xs-12">
-                                    <label class="editlabel">{{$t('static.province')}}：{{initIntlIntentionDetail.province}}</label>
-                                     
-                                </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">{{$t('static.city')}}：{{initIntlIntentionDetail.city}}</label>
-                                </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12" >
-                                    <label class="editlabel">{{$t('static.area')}}：{{initIntlIntentionDetail.district}}</label>
-                                    
-                                </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12">
-                                    <label class="editlabel">{{$t('static.description')}}：{{initIntlIntentionDetail.description}}</label>
-                                </div>
-                                <div class="client-detailInfo col-md-1 col-xs-12"></div>
                                 
                             </div>
 
@@ -261,7 +250,7 @@
                                           <th>{{$t('static.file_type')}}</th>
                                           <th>{{$t('static.description')}}</th>
                                           <th>{{$t('static.create_time')}}</th>
-                                          <th></th>
+                                          <th>{{$t('static.file_path')}}</th>
                                           <th></th>
                                           <th></th>
                                         </thead>
@@ -270,6 +259,7 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
+                                                <td><img :src="item.url" style="max-width: 150px;" @click="clickBig(item.url)"/></td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 <td></td>
@@ -310,7 +300,7 @@
                                           <th>{{$t('static.file_type')}}</th>
                                           <th>{{$t('static.description')}}</th>
                                           <th>{{$t('static.create_time')}}</th>
-                                          <th></th>
+                                          <th>{{$t('static.file_path')}}</th>
                                           <th></th>
                                           <th></th>
                                         </thead>
@@ -319,6 +309,12 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
+                                                 <td>
+                                                    <img :src="item.url" v-if="item.fileType=='image'" style="max-width: 150px;" @click="clickBig(item.url)"/>
+                                                    <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf'">
+                                                    <img  src="/static/images/word.png" v-if="item.fileType=='word'">
+                                                    <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
+                                                    </td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_upload')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 <td></td>
@@ -348,7 +344,7 @@
     </div>
 </template>
 <script>
-
+import pictureModel from '../tips/pictureDialog'
 import filter from '../../filters/filters'
 import inquireinfoModel from './inquireInfo'
 import itemhistoryModel from './itemHistory'
@@ -380,7 +376,8 @@ export default {
         editotherofferModel,
         delotherofferModel,
         uploadfilesModel,
-        delfileModel
+        delfileModel,
+        pictureModel
     },
     data() {
         return {
@@ -474,6 +471,10 @@ export default {
                 total:'',
                 comment:''
             },
+            pictureParam:{
+               show:false,
+               img:''
+            },
             delOtherOfferParam:{
                 show:false,
                 link:'/intlIntention/otherOffer',
@@ -523,7 +524,10 @@ export default {
         }
     },
     methods: {
-      
+      clickBig:function(img){
+          this.pictureParam.show=true;
+          this.pictureParam.img = img;
+      },
       enfoldment:function(param){
           if(this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].arr.length==0){
               this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show=true;
@@ -731,7 +735,9 @@ section article {
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
   text-align: left;
-  width: 14%;
+}
+.table{
+  display: table;
 }
 .edit-detail {
     border: 0px solid #ddd;
@@ -750,7 +756,9 @@ section article {
 .client-detailInfo {
     padding: 0 15px 14px 15px;
 }
-
+.client-detailInfo label{
+  display: inline-block;
+}
 .client-detailInfo img {
     margin-right: 8px;
 }
@@ -759,24 +767,6 @@ section article {
     color: #fff;
     font-size: 18px;
 }
-.label_action{
-  position: absolute;
-  top:13px;
-  right: 32px;
-  border: 1px solid #ccc;
-    border-radius: 3px;
-    background: #fff;
-    z-index: 1000;
-    min-width: 90px;
-    cursor: pointer;
-    padding: 5px 10px;
-    max-width: 200px;
-}
-.client-editbtn {
-    text-align: right;
-    margin-top: 15px;
-}
-.client-image {
-    display: inline-block;
-}
+
+
 </style>

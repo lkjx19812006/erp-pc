@@ -7,92 +7,52 @@
             <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
         </div>
         <div class="clearfix">
-        	<div>
-	        	<table class="table table-hover table_color table-bordered table-striped " v-cloak>
-		            <thead>
-		                <tr style="background:none;color:#000">
-		                    <th rowspan="2">客户总数</th>
-		                    <th colspan="4">星级分类</th>
-		                    <th colspan="25">客户类型分类</th>
-		                </tr>
-		                <tr style="background:none;color:#000">
-		                	<th>其他</th>
-		                    <th>一星</th>
-		                    <th>二星</th>
-							<th>三星</th>
-							<th>其他</th>
-   							<th>合作社</th>
-   							<th>药商</th>
-   							<th>个体户</th>
-   							<th>药厂</th>
-   							<th>药店</th>
-   							<th>贸易公司</th>
-   							<th>医院</th>
-   							<th>零售商行</th>
-   							<th>药农</th>
-   							<th>介绍人</th>
-   							<th>药贩子</th>
-   							<th>产地药商</th>
-   							<th>养生诊所</th>
-   							<th>化工厂</th>
-   							<th>化妆品厂</th>
-   							<th>提取物厂</th>
-   							<th>食品厂</th>
-   							<th>实验室</th>
-   							<th>网上电商</th>
-   							<th>中成药生产商</th>
-   							<th>西药生产商</th>
-   							<th>饮片厂</th>
-		                </tr>
-		            </thead>
-		            <tbody>
-		                <tr >
-		                	<td>{{item.name }}</td>
-		                	<td v-for="item in initClientcount.level">{{item.count}}</td>
-		                	<td v-for="item in initClientcount.type">{{item.count}}</td>
-		                </tr>
-		            </tbody>
-		        </table>
-		    </div>
-		   <!--  <div class="pull-left">
-		       <table class="table table-hover table_color table-bordered  table-striped " v-cloak>
-		           <thead>
-		               <tr style="background:none;color:#000">
-		                   
-		               </tr>
-		               <tr style="background:none;color:#000">
-		               	
-		               </tr>
-		           </thead>
-		           <tbody>
-		               <tr >
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		   							<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		   							<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td>111</td>
-		               	<td></td>
-		               </tr>
-		           </tbody>
-		       </table> 
-		   </div> -->
+        	<table class="table table-hover table_color table-bordered table-striped " v-cloak>
+	            <thead>
+	                <tr style="background:none;color:#000">
+	                    <th rowspan="2">客户总数</th>
+	                    <th colspan="4">星级分类</th>
+	                    <th colspan="25">客户类型分类</th>
+	                </tr>
+	                <tr style="background:none;color:#000">
+	                	<th>其他</th>
+	                    <th>一星</th>
+	                    <th>二星</th>
+						<th>三星</th>
+						<th>其他</th>
+						<th>合作社</th>
+						<th>药商</th>
+						<th>药厂</th>
+						<th>个体户</th>
+						<th>药店</th>
+						<th>贸易公司</th>
+						<th>医院</th>
+						<th>零售商行</th>
+						<th>药农</th>
+						<th>介绍人</th>
+						<th>药贩子</th>
+						<th>产地药商</th>
+						<th>销地药商</th>
+						<th>养生诊所</th>
+						<th>化工厂</th>
+						<th>化妆品厂</th>
+						<th>提取物厂</th>
+						<th>食品厂</th>
+						<th>实验室</th>
+						<th>网上电商</th>
+						<th>中成药生产商</th>
+						<th>西药生产商</th>
+						<th>饮片厂</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr>
+	                	<td>{{item.name }}</td>
+	                	<td v-for="item in initClientcount.level">{{item.count}}</td>
+	                	<td v-for="item in initClientcount.type">{{item.count}}</td>
+	                </tr>
+	            </tbody>
+	        </table>
         </div>
         
         <div class="click_change">
@@ -291,6 +251,9 @@
 	}
 </script>
 <style scoped>
+	.table{
+		display: table;
+	}
 	.module{
 		position: relative;
 	}

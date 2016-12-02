@@ -54,7 +54,7 @@
                 <tbody>
                     <tr v-for="item in initOfferList">
                         <td>{{item.otime | date}}</td>
-                        <td></td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.mainContact}}</td>
                         <td>{{item.customerPhone}}</td>
@@ -175,14 +175,14 @@ export default {
                 district:'',
                 consigneeAddr:'',
                 comments:'',
-                sourceType:1,        //商品来源类型(意向)
+                sourceType:2,        //商品来源类型(意向)
                 orderStatus:0,   //订单状态
                 goods:[{
                   sourceType:2,   //商品来源类型(报价)
                   sourceId:'',    //商品来源ID
                   title:'',       //订单商品标题
                   breedId:'',
-                  brredName:'',
+                  breedName:'',
                   quality:'',
                   location:'',
                   spec:'',
@@ -238,13 +238,12 @@ export default {
         },
         adopt:function(item,index){
             console.log("创建订单");
-
             this.orderParam.show = true;
             this.orderParam.index = index;
             this.orderParam.customer = item.customerId;
             this.orderParam.incidentals = item.incidentals;
             this.orderParam.incidentalsDesc = item.incidentalsDesc;
-
+            this.orderParam.type = item.type;
             this.orderParam.goods[0].sourceId = item.id;
             this.orderParam.goods[0].breedId = item.breedId;
             this.orderParam.goods[0].breedName = item.breedName;
@@ -261,7 +260,6 @@ export default {
                 }
             }
             console.log(this.orderParam.goods[0]);
-            return ;
         }
 
     },
@@ -323,8 +321,8 @@ export default {
     background-position: 5px;
 }
  #table_box  table th,#table_box  table td{
-  width: 122px;
-  min-width: 122px;
+  width: 190px;
+  min-width:190px;
 }
 </style>
 

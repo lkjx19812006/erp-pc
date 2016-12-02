@@ -32,15 +32,15 @@
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                          <li>
                             <button type="button" class="btn btn-base" @click="specDelete({
-                                                id:param.id,
-                                                sub:param.sub,
-                                                show:true,
-                                                name:param.name,
-                                                title:param.name,
-                                                link:deleteInfo,
-                                                url:'/customer/',
-                                                key:'customerList'
-                                                })">{{$t('static.del_client_info')}}</button>
+                                          id:param.id,
+                                          sub:param.sub,
+                                          show:true,
+                                          name:param.name,
+                                          title:param.name,
+                                          link:deleteInfo,
+                                          url:'/customer/',
+                                          key:'customerList'
+                                          })">{{$t('static.del_client_info')}}</button>
                         </li>
 
                         <li v-if="initClientDetail.supplier!=1">
@@ -1451,7 +1451,6 @@ section article {
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
 	text-align: center;
-  width: 10%;
 }
 .edit-detail {
     border: 1px solid #ddd;
@@ -1462,7 +1461,9 @@ section article {
     position: relative;
     padding: 10px;
 }
-
+.table{
+  display: table;
+}
 .client-detailInfo {
     padding: 0 15px 14px 15px;
 }

@@ -10,7 +10,7 @@
    <div>
         <div class="service-nav">
           <div class="clearfix">
-              <div class="my_enterprise col-xs-2">会员意向</div>
+              <div class="my_enterprise col-xs-2">意向资源池</div>
               <div class="right">
                   <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                   <button class="new_btn transfer" @click="search()">搜索</button>

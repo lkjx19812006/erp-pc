@@ -1,7 +1,8 @@
 <template>
   <ul class='pagination'>
-    <li v-if="this.combination.cur>1" ><a v-on:click="combination.cur-- ,pageClick()"><span> 上一页 </span></a></li>
-    <li v-else class='disabled'><a><span> 上一页 </span></a></li>
+
+    <li v-if="this.combination.cur>1" ><a v-on:click="combination.cur-- ,pageClick()"><span> {{$t('static.previous_page')}} </span></a></li>
+    <li v-else class='disabled'><a><span> {{$t('static.previous_page')}} </span></a></li>
 
     <li v-if="indexs[0]>1" ><a v-on:click="combination.cur=1,pageClick()"><span> 1 </span></a></li>
     <li class="disabled" v-if="indexs[0]>2"><a>...</a></li>
@@ -11,13 +12,13 @@
     <li class="disabled" v-if="indexs[6]&&(indexs[6]<=combination.all-1)"><a>...</a></li>
     <li v-if="(indexs.length==7)&&(indexs[6]!=combination.all)" ><a v-on:click="combination.cur=combination.all,pageClick()"><span> {{combination.all}} </span></a></li>
 
-    <li v-if="this.combination.cur != this.combination.all" ><a v-on:click="combination.cur++,pageClick()"><span> 下一页 </span></a></li>
-    <li v-else class="disabled"><a><span> 下一页 </span></a></li>
-    <li class="disabled"><a>共<i>{{ combination.total }}</i>条</a></li>
+    <li v-if="this.combination.cur != this.combination.all" ><a v-on:click="combination.cur++,pageClick()"><span> {{$t('static.next_page')}} </span></a></li>
+    <li v-else class="disabled"><a><span> {{$t('static.next_page')}} </span></a></li>
+    <li class="disabled"><a>{{$t('static.altogether')}}<i>{{ combination.total }}</i>条</a></li>
     <li>
-      <p style="float:left;line-height:1.42857143;color:#777;margin:8px 10px 0 10px">跳转到:</p>
+      <p style="float:left;line-height:1.42857143;color:#777;margin:8px 10px 0 10px">{{$t('static.jump_to')}}:</p>
       <input  type="text"  v-model="inpage" :value="page" style="position: relative;width:60px;margin:0 10px;float: left;padding: 6px 12px;margin-left: -1px;line-height: 1.42857143;color: #337ab7;text-decoration: none; background-color: #fff;border: 1px solid #ddd;"/>
-      <a v-on:click="combination.cur=page,pageClick()" class="btn">点击跳转</a>
+      <a v-on:click="combination.cur=page,pageClick()" class="btn">{{$t('static.click_jump')}}</a>
     </li>
   </ul>
   <div style="float:left"></div>

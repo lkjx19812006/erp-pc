@@ -46,18 +46,19 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.city')}}</label>
-                              <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                              <div v-if="province.cname" type="text" class="edit-input">
-                                  <v-select
-                                       :debounce="250"
-                                       :value.sync="city"
-                                       :on-change="selectDistrict"
-                                       :options="initCitylist"
-                                       placeholder="市"
-                                       label="cname"
-                                  >
-                                  </v-select>
-                              </div>
+                              <input type="text" class="form-control edit-input" v-model="param.city" placeholder="{{$t('static.choose_city')}}">
+                             <!--  <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                             <div v-if="province.cname" type="text" class="edit-input">
+                                 <v-select
+                                      :debounce="250"
+                                      :value.sync="city"
+                                      :on-change="selectDistrict"
+                                      :options="initCitylist"
+                                      placeholder="市"
+                                      label="cname"
+                                 >
+                                 </v-select>
+                             </div> -->
                           </div>
                       
                           <div class="editpage-input">
@@ -76,19 +77,13 @@
                               <label class="editlabel">{{$t('static.discount_note')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" value="{{param.preferentialDesc}}"/>
                           </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.comment')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
-                          </div>
                       </div>
                       <div class="editpageright">
-
-                          
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.international')}}</label>
                               <select type="text" class="form-control edit-input" v-model="param.intl"  @change="selectBizType()">
-                                  <option value="0">否</option>
-                                  <option value="1">是</option>
+                                  <option value="0">{{$t('static.no')}}</option>
+                                  <option value="1">{{$t('static.yes')}}</option>
                               </select>
                           </div>
                           <div class="editpage-input"  v-if="param.different=='国际'">
@@ -100,21 +95,21 @@
                               <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['phone']" value="{{param.consigneePhone}}"/>
                           </div>
                           
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.province')}}</label>
-                              <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
-                              <div v-if="country.cname" type="text" class="edit-input">
-                                  <v-select
-                                    :debounce="250"
-                                    :value.sync="province"
-                                    :on-change="selectCity"
-                                    :options="initProvince"
-                                    placeholder="省"
-                                    label="cname">
-                                  </v-select>
-                              </div>
-                          </div>
-                           <div class="editpage-input">
+                         <!--  <div class="editpage-input">
+                             <label class="editlabel">{{$t('static.province')}}</label>
+                             <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.choose_country')}}" />
+                             <div v-if="country.cname" type="text" class="edit-input">
+                                 <v-select
+                                   :debounce="250"
+                                   :value.sync="province"
+                                   :on-change="selectCity"
+                                   :options="initProvince"
+                                   placeholder="省"
+                                   label="cname">
+                                 </v-select>
+                             </div>
+                         </div> -->
+                           <!-- <div class="editpage-input">
                               <label class="editlabel">{{$t('static.area')}}</label>
                               <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
                               <div v-if="city.cname" type="text" class="edit-input">
@@ -126,7 +121,7 @@
                                         label="cname">
                                   </v-select>
                                </div>
-                          </div>
+                                                     </div> -->
                           <div class="editpage-input" >
                               <label class="editlabel">{{$t('static.currency')}} </label>
                                <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==0">
@@ -156,8 +151,8 @@
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.sample_order')}}</label>
                               <select type="text" class="form-control edit-input" v-model="param.sample" value="{{param.sample}}" >
-                                  <option value="0" selected>否</option>
-                                  <option value="1">是</option>
+                                  <option value="0" selected>{{$t('static.no')}}</option>
+                                  <option value="1">{{$t('static.yes')}}</option>
                               </select>
                           </div>
                           <div class="editpage-input">
@@ -168,6 +163,10 @@
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.fee_explain')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
+                          </div>
+                          <div class="editpage-input">
+                              <label class="editlabel">{{$t('static.comment')}}</label>
+                              <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.order_status')}}</label>
@@ -203,7 +202,7 @@
                       <tbody>
                          <tr v-for="item in param.goods">
                              <td>{{item.title}}</td>
-                             <td>{{item.brredName}}</td>
+                             <td>{{item.breedName}}</td>
                              <td>{{item.unit}}</td>
                              <td>{{item.price}}</td>
                              <td>{{item.quality}}</td>
@@ -225,7 +224,7 @@
                              <div class="editpageleft">
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-model="breedInfo.brredName" class="form-control edit-input" v-validate:breedname="{required:true}"  @click="searchBreed()" readonly="true" />
+                                     <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}"  @click="searchBreed()" readonly="true" />
                                 </div>
                          
                                 <div class="editpage-input">
@@ -380,7 +379,7 @@ export default {
             breedInfo:{ 
               status:0,   //自定义状态，表示编辑框的状态，0表示收起(起始)状态，1表示add，2表示update，add或update结束后将status置为0
               breedId:'',
-              brredName:'',
+              breedName:'',
               title:'',
               quality:'',
               location:'',
@@ -457,7 +456,7 @@ export default {
             }
 
         },
-        searchBreed:function(brredName,breedId){
+        searchBreed:function(breedName,breedId){
                 this.breedParam.show=true;
                 /*this.param.breedName = this.breedParam.breedName;
                 this.param.breedId = this.breedParam.breedId;*/
@@ -470,7 +469,7 @@ export default {
         },
         addBreed:function(){
           this.param.goods[this.param.goods.length-1].breedId = this.breedInfo.breedId;
-          this.param.goods[this.param.goods.length-1].brredName = this.breedInfo.brredName;
+          this.param.goods[this.param.goods.length-1].breedName = this.breedInfo.breedName;
           this.param.goods[this.param.goods.length-1].title = this.breedInfo.title;
           this.param.goods[this.param.goods.length-1].quality = this.breedInfo.quality;
           this.param.goods[this.param.goods.length-1].location = this.breedInfo.location;
@@ -487,7 +486,7 @@ export default {
           this.breedInfo.status = 2;
           this.updateParam.index = index;
           this.breedInfo.breedId=this.param.goods[index].breedId,
-          this.breedInfo.brredName=this.param.goods[index].brredName,
+          this.breedInfo.breedName=this.param.goods[index].breedName,
           this.breedInfo.title=this.param.goods[index].title,
           this.breedInfo.quality=this.param.goods[index].quality,
           this.breedInfo.location=this.param.goods[index].location,
@@ -502,7 +501,7 @@ export default {
           if(this.param.goods.length == 0||this.param.goods[this.param.goods.length-1].breedId != ''){
               this.breedInfo.status = 1;    
               this.breedInfo.breedId='';
-              this.breedInfo.brredName='';
+              this.breedInfo.breedName='';
               this.breedInfo.title='';
               this.breedInfo.quality='';
               this.breedInfo.location='';
@@ -513,7 +512,7 @@ export default {
               this.breedInfo.sourceType=1;
               this.param.goods.push({
                   breedId:'',
-                  brredName:'',
+                  breedName:'',
                   title:'',
                   quality:'',
                   location:'',
@@ -537,7 +536,7 @@ export default {
         },
         modifyBreed:function(){
           this.param.goods[this.updateParam.index].breedId=this.breedInfo.breedId,
-          this.param.goods[this.updateParam.index].brredName=this.breedInfo.brredName,
+          this.param.goods[this.updateParam.index].breedName=this.breedInfo.breedName,
           this.param.goods[this.updateParam.index].title=this.breedInfo.title,
           this.param.goods[this.updateParam.index].quality=this.breedInfo.quality,
           this.param.goods[this.updateParam.index].location=this.breedInfo.location,
@@ -574,7 +573,7 @@ export default {
     },
     events:{
         breed:function(breed){
-            this.breedInfo.brredName = breed.breedName;
+            this.breedInfo.breedName = breed.breedName;
             this.breedInfo.breedId = breed.breedId;
             this.breedParam.breedName = breed.breedName;
             this.breedParam.id = breed.breedId;
@@ -698,15 +697,7 @@ export default {
 .btn-close {
     color: #fa6705;
 }
-.editpage_img{
-    width: 90%;
+.table{
+  display: table;
 }
-.editpage_img img{
-    display: inline-block;
-    background: #ccc;
-}
-.editpage-image{
-    display: inline-block;
-}
-
 </style>

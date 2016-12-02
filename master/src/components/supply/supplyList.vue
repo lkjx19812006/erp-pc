@@ -386,4 +386,8 @@
     text-align: center;
     background-position: 5px;
   }
+  #table_box table th,#table_box table td{
+    width: 118px;
+    min-width: 118px;
+}
 </style>
