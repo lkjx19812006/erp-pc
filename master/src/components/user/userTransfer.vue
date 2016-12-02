@@ -197,7 +197,7 @@
               <div class="clearfix">
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                   <label class="editlabel">{{$t('static.name')}}<span class="system_danger" v-if="$validation.cname.minlength">{{$t('static.required')}}</span></label>
-                  <input type="text" class="form-control" v-validate:cname="{minlength:2}" v-model="contacts[0].mainContact"/>
+                  <input type="text" class="form-control" v-validate:cname="{minlength:2}" v-model="contacts[0].name"/>
                 </div>
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                   <label>{{$t('static.whether_main_contact')}}</label>
@@ -301,7 +301,7 @@
         tipsParam:{
           show:false,
           remain:true,
-          name:'划转成功',
+          name:'创建成功',
           callback:this.callback
         },
         contacts: [{

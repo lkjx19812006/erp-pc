@@ -1,5 +1,6 @@
 <template>
 	<searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
+	<searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
 	<div v-show="param.send"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
 	<div class="container modal_con" v-show="param.send">
         <div @click="param.send = false" class="top-title">
@@ -12,24 +13,79 @@
 	                <section class="editsection clearfix">
 	                	<div class="client-detailInfo col-md-6 col-xs-12">
 	                        <label class="editlabel">客户名称 <span class="system_danger" v-if="$validation.customer.required">请输入客户名称</span></label>
-	                         <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customerName}}"  onlyready="true" v-validate:customer="['required']"/>
+	                         <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customerName}}" @click="searchCustomer(param.customerName,param.customer,param.customerPhone)" v-validate:customer="['required']"/>
 	                    </div>
 	                    <div class="client-detailInfo  col-md-6 col-xs-12">
 	                        <label class="editlabel">客户电话</label>
 	                        <input type="text" class="form-control edit-input" v-model="param.customerPhone" value="{{param.customerPhone}}"  />
 	                    </div>
 	                    <div class="client-detailInfo  col-md-6 col-xs-12">
-	                        <label class="editlabel">收货人姓名</label>
+	                        <label class="editlabel">收货人姓名（若为空则默认收货人为客户本人）</label>
 	                        <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}"  />
 	                    </div>
 	                    <div class="client-detailInfo  col-md-6 col-xs-12">
 	                        <label class="editlabel">收货人联系方式</label>
-	                        <input type="text" class="form-control edit-input" v-model="param.consignee_Phone" value="{{param.consignee_Phone}}"  />
+	                        <input type="text" class="form-control edit-input" v-model="param.consigneePhone" value="{{param.consigneePhone}}"  />
 	                    </div>
 	                    <div class="client-detailInfo  col-md-6 col-xs-12">
 	                        <label class="editlabel">收货地址 <span class="system_danger" v-if="$validation.address.required">必填项</span></label></label>
 	                        <input type="text" class="form-control edit-input" v-model="param.address" value="{{param.address}}" v-validate:address="['required']" />
 	                    </div>
+	                    <div class="client-detailInfo  col-md-6 col-xs-12">
+                              <label class="editlabel">{{$t('static.country')}}</label>
+                              <div type="text" class="edit-input">
+                                  <v-select
+                                     :debounce="250"
+                                     :value.sync="country"
+                                     :on-change="selectProvince"
+                                     :options="initCountrylist"
+                                     placeholder="国家"
+                                     label="cname"
+                                    >
+                                   </v-select>
+                             </div>
+                          </div>
+	                     <div class="client-detailInfo  col-md-6 col-xs-12">
+                              <label class="editlabel">{{$t('static.province')}}</label>
+                              <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                              <div v-if="country.cname" type="text" class="edit-input">
+                                  <v-select
+                                    :debounce="250"
+                                    :value.sync="province"
+                                    :on-change="selectCity"
+                                    :options="initProvince"
+                                    placeholder="省"
+                                    label="cname">
+                                  </v-select>
+                              </div>
+                          </div>
+                          <div class="client-detailInfo  col-md-6 col-xs-12">
+                              <label class="editlabel">{{$t('static.city')}}</label>
+                              <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                              <div v-if="province.cname" type="text" class="edit-input">
+                                  <v-select
+                                       :debounce="250"
+                                       :value.sync="city"
+                                       :on-change="selectDistrict"
+                                       :options="initCitylist"
+                                       placeholder="市"
+                                       label="cname"
+                                  >
+                                  </v-select>
+                              </div>
+                          </div>
+                          <div class="client-detailInfo  col-md-6 col-xs-12">
+                              <label class="editlabel">{{$t('static.area')}}</label>
+                              <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
+                              <div v-if="city.cname" type="text" class="edit-input">
+                                  <v-select
+                                        :debounce="250"
+                                        :value.sync="district"
+                                        :options="initDistrictlist"
+                                        placeholder="区"
+                                        label="cname">
+                                  </v-select>
+                               </div>
 	                </section>
 	                <div style="margin-top:20px;">
 	                    <h4 style="text-align: left">样品信息</h4>
@@ -49,15 +105,15 @@
 				              	</tr>
 			                </thead>
 			                <tbody>
-			                	<tr>
-				                	<td>{{param.breedName}}</td>
-				                	<td>{{param.quality}}</td>
-				                	<td>{{param.location}}</td>
-				                	<td>{{param.spec}}</td>
-				                	<td>{{param.sampleNumber}}</td>
-				                	<td>{{param.sampleUnit}}</td>
-				                	<td>{{param.sampleAmount.toFixed(2)}}</td>
-				                	<td>{{param.ctime}}</td>
+			                	<tr v-for="item in param.items">
+				                	<td>{{item.breedName}}</td>
+				                	<td>{{item.quality}}</td>
+				                	<td>{{item.location}}</td>
+				                	<td>{{item.spec}}</td>
+				                	<td>{{item.number}}</td>
+				                	<td>{{item.unit}}</td>
+				                	<td>{{item.amount}}</td>
+				                	<td>{{item.ctime}}</td>
 				                	<td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
 	                                <td v-else>{{$t('static.edit')}}</td>
 	                                <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
@@ -66,7 +122,7 @@
 			                </tbody>
 			            </table>
 			            <div style="padding-left:25%">
-	                       <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed()">添加样品信息</div>   
+	                       <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0;cursor:pointer" @click="showAddBreed()">添加样品信息</div>   
 	                    </div>
 	                    <validator name="inner">   
 	                       <div v-if="addParam.show||updateParam.show" class="editpage" style="border:1px solid #AAAAAA;padding:5px 10px;border-radius:5px;margin-top:25px">
@@ -161,7 +217,7 @@
 	            </div>
 	           	<div class="edit_footer">
 		            <button type="button" class="btn btn-default btn-close" @click="param.send = false">{{$t('static.cancel')}}</button>
-		            <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.goods.length>0"  @click="confirm()">{{$t('static.confirm')}}</button>
+		            <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.items.length>0"  @click="confirm()">{{$t('static.confirm')}}</button>
 		            <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.confirm')}}</button>
 		        </div>
 	        </validator>
@@ -170,32 +226,38 @@
 </template>
 <script>
 import pagination from '../pagination'
-import searchbreedModel  from './breedsearch.vue'
+import vSelect from   '../tools/vueSelect/components/Select'
+import inputSelect from '../tools/vueSelect/components/inputselect'
+import searchbreedModel  from './breedsearch'
+import searchcustomerModel  from '../Intention/clientname'
 import {
-    initCustomerlist
+    initCustomerlist,
+    initBreedDetail,
+    initCountrylist,
+    initProvince,
+    initCitylist,
+    initDistrictlist,
 } from '../../vuex/getters'
 import {
-    
+    getBreedDetail,
+    createSample,
+    getCountryList,
+    getProvinceList,
+    getCityList,
+    getDistrictList,
 } from '../../vuex/actions'
 export default{
 	props:['param'],
 	data(){
 		return {
-			loadParam: {
-                loading: true,
-                color: '#5dc596',
-                size: '15px',
-                cur: 1,
-                all: 7,
-                link:'/customer/employeeDistributed',
-                name:'',
-                phone:'',
-                type:'',
-                employeeId:'',
-                total:0
+			countryParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7
             },
-			checked:false,
-			show:true,
 			breedParam:{
                 show:false,
                 breedName:'',
@@ -214,6 +276,7 @@ export default{
               number:'',
               unit:'',
               price:'',
+              amount:'',
               id:''
             },
             addParam:{
@@ -224,21 +287,79 @@ export default{
               show:false,
               index:0
             },
+            empNameParam:{
+                show:false,
+                customer:'',
+                customerName:'',
+                customerPhone:''
+            },
+            country:{
+              cname:'',
+              id:'',
+            },
+            province:{
+              cname:'',
+              id:'',
+            },
+            city:{
+              cname:'',
+            },
+            district:{
+              cname:''
+            }
 		}
 	},
 	components:{
 		pagination,
-		searchbreedModel
+		searchbreedModel,
+		vSelect,
+		inputSelect,
+		searchcustomerModel
 	},
 	vuex:{
 		getters:{
-			initCustomerlist
+			initCustomerlist,
+			initBreedDetail,
+			initCountrylist,
+		    initProvince,
+		    initCitylist,
+		    initDistrictlist,
 		},
 		actions:{
-			
+			getBreedDetail,
+			createSample,
+			getCountryList,
+            getProvinceList,
+            getCityList,
+            getDistrictList,
 		}
 	},
 	methods:{
+		selectProvince:function(){
+            console.log('selectProvince');
+            this.province = '';
+            this.city = '';
+            this.district = '';
+            if(this.country!=''&&this.country!=null){
+              this.getProvinceList(this.country);
+            }
+        },
+
+        selectCity:function(){
+            this.city = '';
+            this.district = '';
+            if(this.province!=''&&this.province!=null){
+              this.getCityList(this.province);
+            }
+
+        },
+        selectDistrict:function(){
+            this.district = '';
+            if(this.city!=''&&this.city!=null){
+              this.getDistrictList(this.city);
+            }
+
+        },
 		serviceselected:function(sub,id,name,tel,email){
 			this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
 			for(var key in this.initCustomerlist){
@@ -258,6 +379,9 @@ export default{
 		employNameSearch: function() {
             this.getClientList(this.loadParam);
         },
+        searchCustomer:function(customerName,customer,customerPhone){
+            this.empNameParam.show=true;
+        },
         reset:function(){
         	this.loadParam.name='';
             this.loadParam.phone='';
@@ -270,24 +394,66 @@ export default{
         showModifyBreed:function(index){
           this.breedInfo.status = 2;
           this.updateParam.index = index;
-          this.breedInfo.breedId=this.param.goods[index].breedId,
-          this.breedInfo.breedName=this.param.goods[index].breedName,
-          this.breedInfo.title=this.param.goods[index].title,
-          this.breedInfo.quality=this.param.goods[index].quality,
-          this.breedInfo.location=this.param.goods[index].location,
-          this.breedInfo.spec=this.param.goods[index].spec,
-          this.breedInfo.number=this.param.goods[index].number,
-          this.breedInfo.unit=this.param.goods[index].unit,
-          this.breedInfo.price=this.param.goods[index].price,
-          this.breedInfo.sourceType=this.param.goods[index].sourceType,
-          this.breedInfo.id=this.param.goods[index].orderId,
+          this.breedInfo.breedId=this.param.items[index].breedId,
+          this.breedInfo.breedName=this.param.items[index].breedName,
+          this.breedInfo.title=this.param.items[index].title,
+          this.breedInfo.quality=this.param.items[index].quality,
+          this.breedInfo.location=this.param.items[index].location,
+          this.breedInfo.spec=this.param.items[index].spec,
+          this.breedInfo.number=this.param.items[index].number,
+          this.breedInfo.unit=this.param.items[index].unit,
+          this.breedInfo.price=this.param.items[index].amount/this.param.items[index].number,
+          /*this.breedInfo.sourceType=this.param.items[index].sourceType,*/
+          /*this.breedInfo.id=this.param.items[index].orderId,*/
           this.updateParam.show = true;
         },
         deleteBreed:function(index){
-           this.param.goods.splice(index,1);
+           this.param.items.splice(index,1);
+        },
+        cancelAddBreed:function(){
+            this.param.items.pop();
+            this.breedInfo.status = 0;
+            this.addParam.show = false; 
+        },
+        cancelModifyBreed:function(){
+          this.breedInfo.status = 0;
+          this.updateParam.show = false; 
+        },
+         modifyBreed:function(){
+          this.param.items[this.updateParam.index].breedId=this.breedInfo.breedId,
+          this.param.items[this.updateParam.index].breedName=this.breedInfo.breedName,
+          this.param.items[this.updateParam.index].title=this.breedInfo.title,
+          this.param.items[this.updateParam.index].quality=this.breedInfo.quality,
+          this.param.items[this.updateParam.index].location=this.breedInfo.location,
+          this.param.items[this.updateParam.index].spec=this.breedInfo.spec,
+          this.param.items[this.updateParam.index].number=this.breedInfo.number,
+          this.param.items[this.updateParam.index].unit=this.breedInfo.unit,
+          this.param.items[this.updateParam.index].price=this.breedInfo.price,
+          this.param.items[this.updateParam.index].amount=this.breedInfo.price*this.breedInfo.number,
+          /*this.param.items[this.updateParam.index].sourceType=this.breedInfo.sourceType,*/
+          this.param.items[this.updateParam.index].status=this.breedInfo.status,
+          /*this.param.items[this.updateParam.index].orderId=this.breedInfo.id,*/
+          this.breedInfo.status = 0;
+          this.updateParam.show = false;
+        },
+         addBreed:function(){
+          this.param.items[this.param.items.length-1].breedId = this.breedInfo.breedId;
+          this.param.items[this.param.items.length-1].breedName = this.breedInfo.breedName;
+          this.param.items[this.param.items.length-1].title = this.breedInfo.title;
+          this.param.items[this.param.items.length-1].quality = this.breedInfo.quality;
+          this.param.items[this.param.items.length-1].location = this.breedInfo.location;
+          this.param.items[this.param.items.length-1].spec = this.breedInfo.spec;
+          this.param.items[this.param.items.length-1].number = this.breedInfo.number;
+          this.param.items[this.param.items.length-1].unit = this.breedInfo.unit;
+          this.param.items[this.param.items.length-1].price = this.breedInfo.price;
+          this.param.items[this.param.items.length-1].amount = this.breedInfo.price*this.breedInfo.number;
+          /*this.param.items[this.param.items.length-1].sourceType = this.breedInfo.sourceType;*/
+          console.log(this.param.items[this.param.items.length-1]);
+          this.breedInfo.status = 0;
+          this.addParam.show = false; 
         },
         showAddBreed:function(){
-          if(this.param.goods.length == 0||this.param.goods[this.param.goods.length-1].breedId != ''){
+          if(this.param.items.length == 0||this.param.items[this.param.items.length-1].breedId != ''){
               this.breedInfo.status = 1;    
               this.breedInfo.breedId='';
               this.breedInfo.breedName='';
@@ -298,9 +464,9 @@ export default{
               this.breedInfo.number='';
               this.breedInfo.unit='';
               this.breedInfo.price='';
-              this.breedInfo.sourceType=1;
-              this.breedInfo.id='';
-              this.param.goods.push({
+              this.breedInfo.amount='';
+              /*this.breedInfo.sourceType=1;*/
+              this.param.items.push({
                   breedId:'',
                   breedName:'',
                   title:'',
@@ -309,34 +475,60 @@ export default{
                   spec:'',
                   number:'',
                   unit:'',
+                  amount:'',
                   price:'',
-                  sourceType:1,
-                  status:'',
-                  id:''
               });
               this.addParam.show = true;
           }  
           
         },
+        confirm:function(param){
+            this.param.country = this.country.cname;
+            this.param.province = this.province.cname;
+            this.param.city = this.city.cname;
+            this.param.district = this.district.cname;
+            this.param.send=false;
+            console.log(this.param);
+            this.createSample(this.param);
+        }
 	},
 	events:{
         breed:function(breed){
+        	console.log(breed)
             this.breedInfo.breedName = breed.breedName;
             this.breedInfo.breedId = breed.breedId;
             this.breedParam.breedName = breed.breedName;
             this.breedParam.id = breed.breedId;
+            console.log(this.breedParam.id)
+        },
+        customer:function(customer){
+            this.param.customerName = customer.customerName;
+            this.param.customer = customer.customerId;
+            this.param.customerPhone = customer.customerPhone;
         }
     },
 	created(){
 		if("employeeId" in this.param){
             this.loadParam.employeeId = this.param.employeeId;
         }
+        this.getCountryList(this.countryParam);
+        this.getProvinceList(this.countryParam);
         if(this.param.breedId){
             this.breedParam.breedName = this.param.brredName;
             this.breedParam.id = this.param.breedId;
             this.getBreedDetail(this.breedParam);
             console.log(this.breedParam)
-          }
+        }
+        if(this.param.country){
+          this.countryParam.country=this.param.country;
+          this.countryParam.province=this.param.province;
+          this.countryParam.city=this.param.city;
+          this.countryParam.district=this.param.district;
+          this.country.cname=this.param.country;
+          this.province.cname=this.param.province;
+          this.city.cname=this.param.city;
+          this.district.cname=this.param.district;
+        }
         console.log(this.param)
 	}
 }
@@ -371,6 +563,20 @@ export default{
 	border-bottom: 1px solid #fa6705;
 	text-align: left;
 }
+.edit-input {
+    height: 36px;
+    width: 90%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+}
+
+.edit-input:focus {
+    border-color: #fa6705;
+}
+
 .tans_tab > .tabs{
 	width: 100px;
 	display: inline-block;

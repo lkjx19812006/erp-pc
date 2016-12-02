@@ -10,7 +10,7 @@
 <script>
 import Vue from 'vue'
 import {
-    
+    getList
 } from '../../vuex/getters'
 import {
     
@@ -23,7 +23,7 @@ export default {
   data() {
       return {
      
-      	 callback:this.closeTab,
+      	 callback:this.pushTab,
          tabs:[{"id":12,"cname":"我的客户","url":"/home/client?id=0","top":true},{"id":13,"cname":"部门客户","url":"/home/client?id=1","top":true},{"id":14,"cname":"全部客户","url":"/home/client?id=2","top":true}]
          //tabs:[]
 
@@ -32,7 +32,7 @@ export default {
   },
   vuex: {
       getters: {
-        
+        getList
       },
       actions:{
         

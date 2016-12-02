@@ -141,10 +141,10 @@ export default{
 </script>
 <style scoped>
 .modal{
-	z-index: 1085;
+	z-index: 1086;
 }
 .modal_con{
-	z-index: 1085;
+	z-index: 1086;
 }
 .top-title{
 	position: fixed;

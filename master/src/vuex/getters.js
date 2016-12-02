@@ -15,10 +15,7 @@ export const getList = (state) => {
     return JSON.parse(JSON.stringify(state.category.list));
 }
 
-export const getTabs = (state) => {
-    console.log('getter-tabs');
-    return JSON.parse(JSON.stringify(state.category.tabs));
-}
+
 
 export const getCharList = (state) => {
     const option={
@@ -235,4 +232,13 @@ export const initSupply = (state) => {
 export const initClientcount = (state) => {
     console.log(state.count)
   return parseJson(state.count.countList);
+}
+/*--寄样申请列表--*/
+export const initSamplelist = (state) => {
+    console.log(state.count)
+  return parseJson(state.count.mySampleList);
+}
+export const initOrgSample = (state) => {
+    console.log(state.count)
+  return parseJson(state.count.orgSampleList);
 }

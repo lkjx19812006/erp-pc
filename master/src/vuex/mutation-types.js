@@ -1,7 +1,6 @@
 export const INCREMENT = 'INCREMENT'
 export const DECREMENT = 'DECREMENT'
 export const INIT_LIST = 'INIT_LIST'
-export const INIT_TABS = 'INIT_TABS'
 export const MENU_BAR = 'MENU_BAR' //菜单栏左滑
 export const CHANGE_CHARTS = 'CHANGE_CHARTS' //图表
 export const CHANGE_LINECHARTS = 'CHANGE_LINECHARTS' //折线图表
@@ -23,6 +22,10 @@ export const EXPRESS_DETAIL_DATA = 'EXPRESS_DETAIL_DATA' //订单物流详情
 export const BATCH_ORG_ORDER = 'BATCH_ORG_ORDER' //批量审核部门订单
 export const ROLLOUT_STATUS = 'ROLLOUT_STATUS' //药款财务审核
 export const ROLLOUT_DETAIL = 'ROLLOUT_DETAIL' //药款转出详情页面
+export const MY_SAMPLE_LIST = 'MY_SAMPLE_LIST' //我的寄样申请列表
+export const ADD_SAMPLE = 'ADD_SAMPLE' //新建寄样申请表
+export const UPDATE_SAMPLE = 'UPDATE_SAMPLE' //修改寄样申请表
+export const ORG_SAMPLE_LIST = 'ORG_SAMPLE_LIST' //部门寄样申请列表
 
 
 export const USER_TYPE = 'USER_TYPE' //数据类型

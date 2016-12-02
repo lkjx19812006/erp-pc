@@ -19,6 +19,7 @@ require('./components/calendar/vue.datepicker.css')
 
 Vue.component('PulseLoader',PulseLoader);
 Vue.component('treeview',treeview);
+Vue.component('tabs',tabs);
 
 Vue.directive('echarts', require('./directives/echarts'));
 
@@ -68,9 +69,6 @@ router.beforeEach(function ({ to, next }) {
         router.go({name: 'login'});
       }else{
         console.log(to);
-        console.log(tabs.data().tabs);
-         console.log(tabs.data());
-        //console.log(localStorage.menus);
         next();
       }
     }

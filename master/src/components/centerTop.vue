@@ -107,8 +107,7 @@ export default {
 </script>
 <style scoped>
 .center_top {
-    /* height: 88px; */
-    height: 70px; 
+    height: 84px;
     position: fixed;
     right: 0;
     white-space: nowrap;
