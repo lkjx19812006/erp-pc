@@ -57,11 +57,11 @@
                 <div class="clearfix col-md-11 col-xs-12">
                     <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                         <label class="editlabel">客户名称</label>
-                        <input type="text" class="form-control edit-input" v-model="initgSampleDetail.customName" value="{{initgSampleDetail.customName}}" disabled="disabled"/>
+                        <input type="text" class="form-control edit-input" v-model="initgSampleDetail.customerName" value="{{initgSampleDetail.customerName}}" disabled="disabled"/>
                     </div>
                     <div class="client-detailInfo pull-right col-md-6 col-xs-12">
                         <label class="editlabel">客户电话</label>
-                        <input type="text" class="form-control edit-input"  v-model="initgSampleDetail.customPhone" value="{{initgSampleDetail.customPhone}}" disabled="disabled"/>
+                        <input type="text" class="form-control edit-input"  v-model="initgSampleDetail.customerPhone" value="{{initgSampleDetail.customerPhone}}" disabled="disabled"/>
                     </div>
                 </div>
                 <div class="clearfix col-md-11 col-xs-12">

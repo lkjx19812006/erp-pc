@@ -2369,6 +2369,7 @@ export const getRoleList = ({ dispatch }, param) => { //获取角色列表
 export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列表
     console.log('新增客户');
     console.log(data);
+    console.log(data.supplier);
     const Cdata = {
         "name": data.name,
         "type": data.type,
@@ -2396,7 +2397,7 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         "country": data.country,
         "creditLevel": data.creditLevel
     }
-    if (data.supplier) {
+    if (data.supplier==1) {
         Cdata.supplier = data.supplier;
     }
     console.log(Cdata);
@@ -2416,6 +2417,7 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         data.mainPhone = data.contacts[0].phone;
         data.phoneProvince = res.json().result.phoneProvince;
         data.phoneCity = res.json().result.phoneCity;
+        data.ctime = new Date();
         if ('show' in tipsParam) {
             tipsParam.show = true;
         }
@@ -5054,7 +5056,7 @@ export const getOrgSampleList = ({ dispatch }, param) => { //部门寄样申请�
             orgsample[i].show = false;
             orgsample[i].checked = false;
         }
-        dispatch(types.MY_SAMPLE_LIST, orgsample);
+        dispatch(types.ORG_SAMPLE_LIST, orgsample);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;

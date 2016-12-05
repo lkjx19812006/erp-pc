@@ -42,7 +42,7 @@
                         <th>审核状态</th>
                         <th>备注</th>
       	            	<th>创建时间</th>
-                        <th>操作</th>
+                        <th style="min-width: 200px;">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,10 +65,10 @@
                         <td>{{item.comments}}</td>
                         <td>{{item.ctime}}</td>
                         <td>
-                            <a class="operate"  @click="updateOrder(item.id,$index)">
+                            <a class="operate" v-if="item.validate==0||item.validate==2"  @click="updateOrder(item.id,$index)">
                                     <img src="/static/images/edit.png"  alt="编辑" title="编辑"/>
                             </a>
-                            <a class="operate"  @click="deleInfo({
+                            <a class="operate" v-if="item.validate==0||item.validate==2"   @click="deleInfo({
                                     sub:$index,
                                     id:item.id,
                                     show:true,
@@ -77,6 +77,16 @@
                                     key:'mySampleList'
                                     })">
                                 <img src="/static/images/del.png" />
+                            </a>
+                            <a class="operate"  v-if="item.validate==0" @click="applyCheck({
+                                    sub:$index,
+                                    id:item.id,
+                                    show:true,
+                                    link:sampleApply,
+                                    url:'/sample/validate/apply/',
+                                    key:'mySampleList'
+                                    })">
+                                <img src="/static/images/apply.png" />
                             </a>
                         </td>
                     </tr>
@@ -104,7 +114,8 @@ import {
 	getSampleList,
     getSampleDetail,
     deleteData,
-    updateSample
+    updateSample,
+    sampleApply
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -123,7 +134,8 @@ export default {
             getSampleList,
             getSampleDetail,
             deleteData,
-            updateSample
+            updateSample,
+            sampleApply
         }
     },
     data() {
@@ -142,6 +154,10 @@ export default {
                 show:false,
                 id:''
             },
+            applyParam:{
+                show:false,
+                sample:''
+            },
             changeParam:{
                 show:false
             },
@@ -156,11 +172,11 @@ export default {
                currency:'1',
                address:'',
                comments:'',
-               country:'',
+               country:'中国',
                province:'',
                city:'',
                district:'',
-               total:'',
+               total:0,
                employee:this.initLogin.id,
                items:[ 
 
@@ -194,6 +210,9 @@ export default {
     methods: {
         clickShow:function(index){
         	this.$store.state.table.basicBaseList.msgList[index].show=!this.$store.state.table.basicBaseList.msgList[index].show;
+        },
+        applyCheck:function(initSamplelist){
+            this.applyParam = initSamplelist;
         },
         New:function(){
             this.createParam.send = true;

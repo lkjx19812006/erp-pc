@@ -47,10 +47,10 @@
                 <tbody>
                     <tr v-for="item in initOrgSample">
                         <td class="underline"  @click="clickOn({
-                                 id:item.userId,
+                                 id:item.id,
                                  sub:$index,
                                  show:true,
-                                 name:item.fullname,
+                                 name:item.customerName,
                                  loading:false
                              })">{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>

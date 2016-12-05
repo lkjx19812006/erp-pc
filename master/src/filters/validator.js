@@ -6,6 +6,8 @@ Vue.use(Validator)
 //表单验证
 Vue.validator('tel', function (val) {    //电话
  //return(/^((\+?86)|(\(\+86\)))?\d{3,4}-\d{7,8}(-\d{3,4})?$/.test(val)||(val===''));
+ var val=val.replace(/[-+ ]/g,'');
+
  return(/^\d{7,17}?$/.test(val)||(val===''));
   /*return (/^(0[0-9]{2,3}\-)?([2-9][0-9]{6,7})+(\-[0-9]{1,4})?$/.test(val)||(val===''))*/
 /*  return (/^(?:\(?[0\+]\d{2,3}\)?)[\s-]?(?:(?:\(0{1,3}\))?[0\d]{1,4})[\s-](?:[\d]{7,8}|[\d]{3,4}[\s-][\d]{3,4})?$/.test(val)||(val===''))*/
@@ -13,10 +15,12 @@ Vue.validator('tel', function (val) {    //电话
 });
 
 Vue.validator('phone', function (val) {    //手机
+  var val=val.replace(/[-+ ]/g,'');
   return(/^\d{7,17}?$/.test(val));
   /*return (/^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\d{8}$/.test(val));*/
 });
 Vue.validator('intlphone', function (val) {    //国际手机验证
+  var val=val.replace(/[-+ ]/g,'');
   return(/^\d{7,17}?$/.test(val));
   /*return (/^((\+[1-9]{1,4}[ \-]*)|(\([0-9]{2,3}\)[ \-]*)|([0-9]{2,4})[ \-]*)*?[0-9]{3,4}?[ \-]*[0-9]{3,4}?$/.test(val))*/
 });

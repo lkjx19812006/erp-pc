@@ -1078,7 +1078,8 @@ const mutations = {
           show: false,
           supplier:data.supplier,
           checked:false,
-          creditLevel:data.creditLevel
+          creditLevel:data.creditLevel,
+          ctime:data.ctime
         })
 
         console.log(data);

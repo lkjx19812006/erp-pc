@@ -173,7 +173,8 @@ export default {
     background: #f5f5f5;
 }
 .order_pagination{
-    
+    margin:auto;
+    text-align: center;
 }
 .order_table .table > ul >li img {
     margin: auto;

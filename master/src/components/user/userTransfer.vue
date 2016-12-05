@@ -68,7 +68,7 @@
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                 <label>{{$t('static.classification')}}<span class="system_danger" v-if="$validation.classify.required">{{$t('static.required')}}</span></label>
                 <input v-show="false" type="text" class="form-control" readonly="readonly" v-model="param.classify" v-validate:classify="['required']"  />
-                <select class="form-control edit-input" id="classify" v-model="param.classify">
+                <select class="form-control edit-input"  v-model="param.classify">
                   <option value="1,买">{{$t("static.purchaser")}}</option>
                   <option value="2,卖">{{$t("static.supplier")}}</option>
                   <option value="3,买卖">{{$t("static.purchaser_and_supplier")}}</option>
