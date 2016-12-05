@@ -237,6 +237,52 @@ const state = {
     } ,
 
     basicBaseList: {
+        //订单列表
+        myOrderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
+                "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
+                "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
+                "lcompanyName":null,"logisticsNo":null,"consignee":"测试","consigneePhone":"18505565316","zipCode":"000000",
+                "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
+                "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
+                "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
+                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
+                "payPics":null,"sendPics":null}],
+        orgOrderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
+                "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
+                "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
+                "lcompanyName":null,"logisticsNo":null,"consignee":"测试","consigneePhone":"18505565316","zipCode":"000000",
+                "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
+                "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
+                "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
+                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
+                "payPics":null,"sendPics":null}],
+        allOrderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
+                "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
+                "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
+                "lcompanyName":null,"logisticsNo":null,"consignee":"测试","consigneePhone":"18505565316","zipCode":"000000",
+                "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
+                "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
+                "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
+                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
+                "payPics":null,"sendPics":null}],
+        purchaseOrderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
+                "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
+                "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
+                "lcompanyName":null,"logisticsNo":null,"consignee":"测试","consigneePhone":"18505565316","zipCode":"000000",
+                "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
+                "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
+                "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
+                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
+                "payPics":null,"sendPics":null}],
+        sellOrderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
+                "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
+                "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
+                "lcompanyName":null,"logisticsNo":null,"consignee":"测试","consigneePhone":"18505565316","zipCode":"000000",
+                "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
+                "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
+                "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
+                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
+                "payPics":null,"sendPics":null}],
         orderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
                 "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
                 "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
@@ -246,6 +292,7 @@ const state = {
                 "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
                 "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
                 "payPics":null,"sendPics":null}],
+
         enterpriseList: [
             { "id": 0, "number": "00", "category": "0ww", "name": "上海ee冕冠", "tel": "13162875213", "legal_person": "卡卡", "principal": "来啦", "biz_scope": "包括很多、很多、、、", "province": "上海虹口区", "city": "虹口区", "address": "上海虹口江湾镇", "release_date": "2015-07-07", "due_date": "2018-07-07", "show": "true" },
             { "id": 1, "number": "11", "category": "3243", "name": "上海冕冠", "tel": "13162875213", "legal_person": "卡卡", "principal": "来啦", "biz_scope": "包括很多、很多、、、", "province": "上海虹口区", "city": "虹口区", "address": "上海虹口江湾镇", "release_date": "2015-07-07", "due_date": "2018-07-07", "show": "false" }
@@ -299,8 +346,30 @@ const state = {
         productList:[
              {"id": "442","cid": 1,"type": "1","name": "1111","breedId": 1111,"quality": "1111","location": "111","spec": "干","number": 1111,"price": 11,"unit": "1111","duedate": "2016-10-23 00:00","coa": 0,"comments": null,"status": 1,"show":true}
         ],
+        //产品文件列表
+        productList:[{bizId: "2",bizType: "product_license",breedId: 812,category: 0,cid: 27578,cname: null,coa: 0,comments: null,creater: "100014",ctime: "2016-12-05 14:43",description: "",fileType: "image",id: 10492,location: "山西",name: "测试",path: "/local/validate/58450c98f0682b631a31d502.png",pname: "22",quality: "",spec: "10:1（%）",status: 1,type: "提取物",updater: null,url: "http://192.168.1.248:70/img/local/validate/58450c98f0682b631a31d502.png",utime: null}],
+        //意向列表
+        userIntentionList: [
+            { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
+        ],
+        myIntentionList: [
+            { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
+        ],
+        orgIntentionList: [
+            { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
+        ],
+        unIntentionList: [
+            { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
+        ],
         intentionList: [
             { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
+
+        ],
+        //国际意向列表
+        myIntlIntentionList:[
+
+        ],
+        orgIntlIntentionList:[
 
         ],
         intlIntentionList:[
@@ -313,9 +382,15 @@ const state = {
             { "id": "1201608221917540470","customerId": "29565","customerName": "段飞","customerPhone": "15871287716","type": 1,"especial": 1,"breedId": 1174,"breedName": "艾叶","location": "湖北","spec": "全叶","unit": "63","province": "湖北","city": "孝感","district": "大悟县","address": "城区","invoic": 0,"visit": 0,"pack": "机压包","intl": 0,"country": "中国","offerTotal": 0,"status": 1, "show": true }
 
         ],
+        //报价列表
+        myOfferList:[
+            {"id":"163","intentionId":"57568d24a2ec516dc1d0f57c","userId":"3ed2a1d7dafe449eb5e631a46f20f713","customerId":null,"number":3000,"unit":"63","price":12.000000,"incidentals":1.000000,"incidentalsDesc":"含运费价格","total":36000.000000,"qualification":null,"quality":null,"location":null,"spec":null,"advance":null,"invoic":null,"visit":null,"pack":null,"sampling":null,"sampleNumber":null,"sampleUnit":null,"sampleAmount":null,"address":null,"comments":null,"otime":"2016-06-07 17:19","clients":null,"status":1,"description":"","updater":null,"utime":"2016-09-27 10:08","creater":null,"ctime":"2016-09-27 10:08"},
+        ],
+        orgOfferList:[
+            {"id":"163","intentionId":"57568d24a2ec516dc1d0f57c","userId":"3ed2a1d7dafe449eb5e631a46f20f713","customerId":null,"number":3000,"unit":"63","price":12.000000,"incidentals":1.000000,"incidentalsDesc":"含运费价格","total":36000.000000,"qualification":null,"quality":null,"location":null,"spec":null,"advance":null,"invoic":null,"visit":null,"pack":null,"sampling":null,"sampleNumber":null,"sampleUnit":null,"sampleAmount":null,"address":null,"comments":null,"otime":"2016-06-07 17:19","clients":null,"status":1,"description":"","updater":null,"utime":"2016-09-27 10:08","creater":null,"ctime":"2016-09-27 10:08"},
+        ],
         offerList:[
             {"id":"163","intentionId":"57568d24a2ec516dc1d0f57c","userId":"3ed2a1d7dafe449eb5e631a46f20f713","customerId":null,"number":3000,"unit":"63","price":12.000000,"incidentals":1.000000,"incidentalsDesc":"含运费价格","total":36000.000000,"qualification":null,"quality":null,"location":null,"spec":null,"advance":null,"invoic":null,"visit":null,"pack":null,"sampling":null,"sampleNumber":null,"sampleUnit":null,"sampleAmount":null,"address":null,"comments":null,"otime":"2016-06-07 17:19","clients":null,"status":1,"description":"","updater":null,"utime":"2016-09-27 10:08","creater":null,"ctime":"2016-09-27 10:08"},
-            {"id":"184","intentionId":"575d3527a2ec789e03ce62f1","userId":"6496e96c50774ca5a311ab02eb3f873e","customerId":null,"number":200,"unit":"63","price":30.000000,"incidentals":200.000000,"incidentalsDesc":"因为需要运费…","total":6000.000000,"qualification":null,"quality":null,"location":null,"spec":null,"advance":null,"invoic":null,"visit":null,"pack":null,"sampling":null,"sampleNumber":null,"sampleUnit":null,"sampleAmount":null,"address":null,"comments":null,"otime":"2016-06-12 18:20","clients":null,"status":1,"description":"","updater":null,"utime":"2016-09-27 10:08","creater":null,"ctime":"2016-09-27 10:08"}
         ],
         msgList:[
             {"id":1508,"intentionId":"f0d082de37ba4230880fe5ff06b0f647","userId":"b11741af0efc49ed815545c0d88ddc98","phone":null,"comments":"asdadasdasdadasd","reserve":null,"status":1,"ctime":"2016-09-01 17:53","reply":null,"replier":null,"rtime":null,"updater":null,"utime":null,"creater":null}
@@ -603,7 +678,7 @@ const mutations = {
         state.basicBaseList.userTypeList = data;
     },
     [ORDER_TABLE](state, data) { //订单列表
-        state.basicBaseList.orderList = data;
+        state.basicBaseList[data.key] = data;
     },
     [EXPRESS_DATA](state,data){ //物流列表
         state.basicBaseList.expressList = data;
@@ -613,19 +688,19 @@ const mutations = {
         state.logisticsDetail = data;
     },
     [BATCH_ORG_ORDER](state, data) { // 批量审核部门订单
-      console.log(data)
+      
         for(var i=0;i<data.indexs.length;i++){
            var k = data.indexs[i];
-           state.basicBaseList.orderList[k].checked = false;
+           state.basicBaseList[data.key][k].checked = false;
            for (var key in data) {
                     if(key=="validate"&&data[key]==2){
-                        state.basicBaseList.orderList[k].validate = "2";
+                        state.basicBaseList[data.key][k].validate = "2";
                     }else if(key=="validate"&&data[key]==-2){
-                        state.basicBaseList.orderList[k].validate = "-2";
+                        state.basicBaseList[data.key][k].validate = "-2";
                     }else if(key=="validate"&&data[key]==1){
-                        state.basicBaseList.orderList[k].validate = "1";
+                        state.basicBaseList[data.key][k].validate = "1";
                     }
-                    state.basicBaseList.orderList[k][key] = data[key];
+                    state.basicBaseList[data.key][k][key] = data[key];
                 }
         }
     },
@@ -633,7 +708,6 @@ const mutations = {
         state.basicBaseList.orderPayList = data;
     },
     [ORDER_ROLLOUT_DATA](state,data){ //药款转出记录
-       console.log(data)
         state.basicBaseList.orderRolloutList = data;
     },
     [ROLLOUT_DETAIL](state,data){ //药款转出详情
@@ -671,12 +745,10 @@ const mutations = {
         }
     },
     [ORDER_UPDATE_DATA](state,data){ //修改订单
-        console.log(data)
-        console.log(state.basicBaseList.orderList[data.index])
         for (var key in data) {
-            state.basicBaseList.orderList[data.index][key] = data[key];
+            state.basicBaseList.myOrderList[data.index][key] = data[key];
         }
-        console.log(state.basicBaseList.orderList[data.index]);
+        
     },
     [ORDER_ADD_DATA](state, data) {  //创建订单
         if(data.key == 'intentionDetail'){
@@ -684,11 +756,11 @@ const mutations = {
             state.basicBaseList.intentionDetail.offers.arr[data.index].orderTime++;
 
         }
-        if(data.key == 'offerList'){
+        if(data.key == 'myOfferList'||data.key == 'orgOfferList'){
             console.log('报价采纳报价');
-            state.basicBaseList.offerList[data.index].orderTime++;
+            state.basicBaseList[data.key][data.index].orderTime++;
         }
-        if(data.key == 'orderList'){
+        if(data.key == 'myOrderList'){
             console.log(data)
            /* state.basicBaseList[data.key].unshift(data);*/
            state.basicBaseList[data.key].unshift({
@@ -810,26 +882,26 @@ const mutations = {
     },
     [ORDER_STATUS](state,data){   //订单状态详情
         console.log(data)
-          for(var i in  state.basicBaseList.orderList){
-              if(state.basicBaseList.orderList[i].id==data.id){
-                  state.basicBaseList.orderList[i].orderStatus=data.orderStatus;
-                  state.basicBaseList.orderList[i].payWay=data.payWay;
-                  state.basicBaseList.orderList[i].lcompanyId=data.lcompanyId;
-                  state.basicBaseList.orderList[i].logisticsNo=data.logisticsNo;
+          for(var i in  state.basicBaseList[data.key]){
+              if(state.basicBaseList[data.key][i].id==data.id){
+                  state.basicBaseList[data.key][i].orderStatus=data.orderStatus;
+                  state.basicBaseList[data.key][i].payWay=data.payWay;
+                  state.basicBaseList[data.key][i].lcompanyId=data.lcompanyId;
+                  state.basicBaseList[data.key][i].logisticsNo=data.logisticsNo;
               }
           }
         if(data.orderStatus==30&&(data.payWay==0||data.payWay==3)){
-          for(var i in  state.basicBaseList.orderList){
-              if(state.basicBaseList.orderList[i].id==data.id){
-                  state.basicBaseList.orderList[i].orderStatus=data.orderStatus;
-                  state.basicBaseList.orderList[i].payWay=data.payWay;
+          for(var i in  state.basicBaseList[data.key]){
+              if(state.basicBaseList[data.key][i].id==data.id){
+                  state.basicBaseList[data.key][i].orderStatus=data.orderStatus;
+                  state.basicBaseList[data.key][i].payWay=data.payWay;
               }
           }
         }
         if(data.orderStatus==40||data.orderStatus==30){
-             for(var i=0;i<state.basicBaseList.orderList.length;i++){
-               if(state.basicBaseList.orderList[i].id==data.id){
-                 state.basicBaseList.orderList.splice(i,1);
+             for(var i=0;i<state.basicBaseList[data.key].length;i++){
+               if(state.basicBaseList[data.key][i].id==data.id){
+                 state.basicBaseList[data.key].splice(i,1);
                }
              }
           }
@@ -1039,9 +1111,9 @@ const mutations = {
     },
     [CUSTOMER_BATCH_DELETE](state, data){
         data.customerIds.forEach(function(item){
-          for(var i=0;i<state.basicBaseList.customerList.length;i++){
-                if(state.basicBaseList.customerList[i].id == item){
-                  state.basicBaseList.customerList.splice(i,1);
+          for(var i=0;i<state.basicBaseList[data.key].length;i++){
+                if(state.basicBaseList[data.key][i].id == item){
+                  state.basicBaseList[data.key].splice(i,1);
                 }
           }
         })
@@ -1053,10 +1125,10 @@ const mutations = {
     },
     [CUSTOMER_BATCH_SUPPLIER](state, data){
         data.customerIds.forEach(function(item){
-          for(var i=0;i<state.basicBaseList.customerList.length;i++){
-                if(state.basicBaseList.customerList[i].id == item){
-                  state.basicBaseList.customerList[i].comments = data.blackComments;
-                  state.basicBaseList.customerList[i].supplier = 1;
+          for(var i=0;i<state.basicBaseList[data.key].length;i++){
+                if(state.basicBaseList[data.key][i].id == item){
+                  state.basicBaseList[data.key][i].comments = data.blackComments;
+                  state.basicBaseList[data.key][i].supplier = 1;
                 }
           }
         })
@@ -1274,10 +1346,11 @@ const mutations = {
         state.basicBaseList.employeeList = data;
     },
     [INTENTION_LIST_DATA](state, data) { //意向列表
-        state.basicBaseList.intentionList = data;
+
+        state.basicBaseList[data.key] = data;
     },
     [INTLINTENTION_LIST_DATA](state, data) { //国际意向列表
-        state.basicBaseList.intlIntentionList = data;
+        state.basicBaseList[data.key] = data;
     },
 
     [INTLINTENTION_INQUIRE_LIST_DATA](state, data) { //国际意向询价列表
@@ -1353,7 +1426,7 @@ const mutations = {
         state.basicBaseList.supplyDemandList = data;
     },
     [OFFER_LIST_DATA](state, data) { //报价列表
-        state.basicBaseList.offerList = data;
+        state.basicBaseList[data.key] = data;
     },
     [MSG_LIST_DATA](state, data) { //留言列表
         state.basicBaseList.msgList = data;
@@ -1443,16 +1516,16 @@ const mutations = {
             }
         }
 
-        if(state.basicBaseList.intentionList.length>0){
+        if(state.basicBaseList[data.key].length>0){
             console.log("意向列表页审核意向");
             for(let i=0;i<data.indexs.length;i++){
               let k = data.indexs[i];
               if(data.validate==3){
-                state.basicBaseList.intentionList[k].onSell = 0 ;
+                state.basicBaseList[data.key][k].onSell = 0 ;
               }
-              state.basicBaseList.intentionList[k].validate = data.validate;
-              state.basicBaseList.intentionList[k].description = data.description;
-              state.basicBaseList.intentionList[k].checked = false;
+              state.basicBaseList[data.key][k].validate = data.validate;
+              state.basicBaseList[data.key][k].description = data.description;
+              state.basicBaseList[data.key][k].checked = false;
             }
         }
 
@@ -1556,8 +1629,8 @@ const mutations = {
       }else{
         console.log("意向列表页修改意向");
         console.log(data.ctime)
-        for (var i in state.basicBaseList.intentionList[data.sub]) {
-          state.basicBaseList.intentionList[data.sub][i] = data[i];
+        for (var i in state.basicBaseList[data.key][data.sub]) {
+          state.basicBaseList[data.key][data.sub][i] = data[i];
         }
       }
 
@@ -1574,9 +1647,8 @@ const mutations = {
     [UPDATA_INTLINTENTION_DATA](state,data){ //修改国际意向
 
         console.log("修改国际意向");
-        console.log(data);
         for (var i in data) {
-          state.basicBaseList.intlIntentionList[data.index][i] = data[i];
+          state.basicBaseList[data.key][data.index][i] = data[i];
         }
 
 
@@ -1592,9 +1664,9 @@ const mutations = {
 
         console.log("国际意向(再)询价或取消报价");
         console.log(data);
-        state.basicBaseList.intlIntentionList[data.index].inquire = data.inquire;
-        state.basicBaseList.intlIntentionList[data.index].inquireTime = data.inquireTime;
-        state.basicBaseList.intlIntentionList[data.index].inquireType = data.inquireType;
+        state.basicBaseList[data.key][data.index].inquire = data.inquire;
+        state.basicBaseList[data.key][data.index].inquireTime = data.inquireTime;
+        state.basicBaseList[data.key][data.index].inquireType = data.inquireType;
     },
 
     [ITEM_INQUIRE](state,data){ //条目再询价
@@ -1668,8 +1740,8 @@ const mutations = {
         console.log(data.indexs);
         for(let i=0;i<data.indexs.length;i++){
           let k = data.indexs[i];
-          state.basicBaseList.intentionList[k].onSell = data.onSell;
-          state.basicBaseList.intentionList[k].checked = false;
+          state.basicBaseList[data.key][k].onSell = data.onSell;
+          state.basicBaseList[data.key][k].checked = false;
         }
     },
     [INTENTION_DETAIL_DATA](state,data){

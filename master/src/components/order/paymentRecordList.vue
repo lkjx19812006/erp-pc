@@ -59,6 +59,7 @@
   import filter from  '../../filters/filters'
   import detailModel from '../supply/productDetail'
   import common from '../../common/common'
+  import changeMenu from '../../components/tools/tabs/tabs.js'
   import {
     initOrderPaylist
   } from '../../vuex/getters'
@@ -125,15 +126,7 @@
         common('tab','table_box',1);
       },
     created() {
-      
-      if(!this.$store.state.table.isTop){
-            console.log("刷新数据");
-            this.getOrderPayList(this.loadParam);
-        }else{
-            console.log("不刷新数据");
-            this.loadParam = JSON.parse(localStorage.payRecordParam);
-            this.$store.state.table.basicBaseList.orderPayList = JSON.parse(localStorage.payRecordList);
-        }
+      changeMenu(this.$store.state.table.isTop,this.getOrderPayList,this.loadParam,localStorage.payRecordParam); 
     }
   }
 </script>

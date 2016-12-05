@@ -9,10 +9,12 @@ function changeMenu(isTop,getMethod,param,storageParam) {   //
         getMethod(param);
     }else{
         console.log("不刷新数据");
-        for(var key in param){
-            param[key] = JSON.parse(storageParam)[key];
+        if(!!storageParam){
+            for(var key in param){
+                param[key] = JSON.parse(storageParam)[key];
+            }
         }
-        console.log(param);
+        
     }
 }
 

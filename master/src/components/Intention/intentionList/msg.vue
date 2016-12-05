@@ -77,6 +77,7 @@ import filter from '../../../filters/filters'
 import editmsgModel from '../editMsg'
 import detailModel from '../../user/userDetail'
 import common from '../../../common/common'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
 	initMsgList
 } from '../../../vuex/getters'
@@ -172,15 +173,7 @@ export default {
         }
     },
     created() {
-        
-        if(!this.$store.state.table.isTop){
-            console.log("刷新数据");
-            this.getMsgList(this.loadParam);
-        }else{
-            console.log("不刷新数据");
-            this.loadParam = JSON.parse(localStorage.msgParam);
-            this.$store.state.table.basicBaseList.msgList = JSON.parse(localStorage.msgList);
-        }
+        changeMenu(this.$store.state.table.isTop,this.getMsgList,this.loadParam,localStorage.msgParam); 
     },
     ready(){
       common('tab','table_box',1);

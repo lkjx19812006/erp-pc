@@ -106,7 +106,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in initOrderlist"  v-cloak>
+                <tr v-for="item in initMyOrderlist"  v-cloak>
                   <td  @click.stop="">
                     <label v-if="item.validate<=0&&(item.orderStatus==0||item.orderStatus==70)" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                   </td>
@@ -196,7 +196,7 @@
                         preferential:item.preferential,
                         preferentialDesc:item.preferentialDesc,
                         status:item.status,
-                        key:'orderList',
+                        key:'myOrderList',
                         link:alterOrder,
                         url:'/order/',
                         goods:item.goods,
@@ -269,9 +269,10 @@
     import tipsdialogModel  from '../tips/tipDialog'
     import auditModel  from '../order/orgAudit'
     import common from '../../common/common'
+    import changeMenu from '../../components/tools/tabs/tabs.js'
     import {
         getList,
-        initOrderlist,
+        initMyOrderlist,
         initLogin
     } from '../../vuex/getters'
     import {
@@ -306,6 +307,7 @@
                     all:1,
                     consignee:'',
                     link:'/order/myList',
+                    key:'myOrderList',
                     employee:this.initLogin.id,
                     org:this.initLogin.orgId,
                     consignee:'',
@@ -356,7 +358,7 @@
 
                     ],
                     link:createOrder,
-                    key:'orderList',
+                    key:'myOrderList',
                     
                 },
                 detailParam: {
@@ -371,7 +373,9 @@
                     sendoff:false,
                     express:false,
                     delivery:false,
-                    confirmReceipt:false
+                    confirmReceipt:false,
+                    key:'myOrderList'
+
                 },
                 show:true,
                 checked:false,
@@ -381,7 +385,8 @@
                     ids:[],
                     description:'',
                     validate:'',
-                    title:"申请订单审核"
+                    title:"申请订单审核",
+                    key:'myOrderList'
                 },
                 tipsParam:{
                     show:false,
@@ -393,7 +398,7 @@
         vuex: {
             getters: {
                 getList,
-                initOrderlist,
+                initMyOrderlist,
                 initLogin
             },
             actions: {
@@ -409,10 +414,10 @@
                 this.getEmpolyeeOrder(this.loadParam);
             },
             editClick: function(sub) {
-                if(this.$store.state.table.basicBaseList.orderList[sub].show){
-                    this.$store.state.table.basicBaseList.orderList[sub].show=!this.$store.state.table.basicBaseList.orderList[sub].show;
+                if(this.$store.state.table.basicBaseList.myOrderList[sub].show){
+                    this.$store.state.table.basicBaseList.myOrderList[sub].show=!this.$store.state.table.basicBaseList.myOrderList[sub].show;
                 }else{
-                     this.$store.state.table.basicBaseList.orderList[sub].show=true;
+                     this.$store.state.table.basicBaseList.myOrderList[sub].show=true;
                 }
             },
             orgCheck:function(){
@@ -420,11 +425,11 @@
                 _this.auditParam.ids = [];
                 _this.auditParam.indexs = [];
                _this.checked=false;
-                for(var i=0;i<this.initOrderlist.length;i++){
-                    if(this.$store.state.table.basicBaseList.orderList[i].checked){
-                        _this.auditParam.ids.push(this.$store.state.table.basicBaseList.orderList[i].id);
+                for(var i=0;i<this.initMyOrderlist.length;i++){
+                    if(this.$store.state.table.basicBaseList.myOrderList[i].checked){
+                        _this.auditParam.ids.push(this.$store.state.table.basicBaseList.myOrderList[i].id);
                         _this.auditParam.indexs.push(i);
-                        _this.auditParam.validate = this.$store.state.table.basicBaseList.orderList[i].validate;
+                        _this.auditParam.validate = this.$store.state.table.basicBaseList.myOrderList[i].validate;
                     }
                 }
                 if(this.auditParam.ids.length>0){
@@ -448,12 +453,12 @@
             },
             onlyselected: function(index){
                   const _self=this;
-                    this.$store.state.table.basicBaseList.orderList[index].checked=!this.$store.state.table.basicBaseList.orderList[index].checked;
+                    this.$store.state.table.basicBaseList.myOrderList[index].checked=!this.$store.state.table.basicBaseList.myOrderList[index].checked;
                     if(_self.checked){
                       _self.checked=false;
                     }else {
                       _self.checked=true;
-                      this.$store.state.table.basicBaseList.orderList.forEach(function (item) {
+                      this.$store.state.table.basicBaseList.myOrderList.forEach(function (item) {
                         if(!item.checked){
                           if(item.validate==0){
                             _self.checked=item.checked;
@@ -467,7 +472,7 @@
               console.log(this.checked)
                   this.checked=!this.checked;
                   const checked=this.checked;
-                  this.$store.state.table.basicBaseList.orderList.forEach(function(item){
+                  this.$store.state.table.basicBaseList.myOrderList.forEach(function(item){
                     if(item.validate==0)item.checked=checked;
                   })
 
@@ -484,16 +489,15 @@
                  console.log(this.loadParam.link)
                  console.log(this.loadParam)*/
             },
-            clickOn:function(initOrderlist){
-                console.log(initOrderlist);
-                this.detailParam=initOrderlist;
+            clickOn:function(param){
+                this.detailParam=param;
             },
-            updateOrder:function(initOrderlist,goods){
+            updateOrder:function(param,goods){
                 /*this.dialogParam.show = true;
                 this.dialogParam.id = id;
                 this.dialogParam.index = index;
                 this.dialogParam.goods = [];*/
-                this.dialogParam=initOrderlist;
+                this.dialogParam=param;
                 var _this = this;
                 for(var i=0;i<goods.length;i++){
                     this.dialogParam.goodsBack[i] = {};
@@ -508,6 +512,7 @@
                 item.show=!item.show;
                 item.sub = sub;
                 this.disposeParam = item;
+                this.disposeParam.key = "myOrderList";
                 this.disposeParam.show = true;
                 /*--采购状态type==0--*/
                 if(item.orderStatus==0&&item.type==0){
@@ -615,15 +620,16 @@
           common('tab','table_box',1);
         },
         created() {
-            
-            if(!this.$store.state.table.isTop){
+
+            changeMenu(this.$store.state.table.isTop,this.getEmpolyeeOrder,this.loadParam,localStorage.myOrderParam); 
+            /*if(!this.$store.state.table.isTop){
                 console.log("刷新数据");
                 this.getEmpolyeeOrder(this.loadParam);
             }else{
                 console.log("不刷新数据");
                 this.loadParam = JSON.parse(localStorage.myOrderParam);
                 this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.myOrderList);
-            }
+            }*/
             
             console.log(this.loadParam)
             console.log(this.loadParam.link)

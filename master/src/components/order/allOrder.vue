@@ -108,7 +108,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in initOrderlist"  v-cloak>
+                <tr v-for="item in initAllOrderlist"  v-cloak>
                   <td>{{item.ctime}}</td>
                   <td v-if="item.type==1">{{$t('static.sell')}}</td>
                   <td v-if="item.type==0">{{$t('static.purchase')}}</td>
@@ -196,9 +196,10 @@
     import disposeModel  from  '../order/orderStatus'
     import filter from '../../filters/filters'
     import common from '../../common/common'
+    import changeMenu from '../../components/tools/tabs/tabs.js'
     import {
         getList,
-        initOrderlist
+        initAllOrderlist
     } from '../../vuex/getters'
     import {
         getOrderList,
@@ -228,6 +229,7 @@
                     cur: 1,
                     all: 1,
                     link:'/order/',
+                    key:'allOrderList',
                     consignee:'',
                     consigneePhone:'',
                     type:'',
@@ -269,7 +271,7 @@
         vuex: {
             getters: {
                 getList,
-                initOrderlist
+                initAllOrderlist
             },
             actions: {
                 getOrderList,
@@ -284,10 +286,10 @@
                 this.getOrderList(this.loadParam);
             },
             editClick: function(sub) {
-                if(this.$store.state.table.basicBaseList.orderList[sub].show){
-                    this.$store.state.table.basicBaseList.orderList[sub].show=!this.$store.state.table.basicBaseList.orderList[sub].show;
+                if(this.$store.state.table.basicBaseList.allOrderList[sub].show){
+                    this.$store.state.table.basicBaseList.allOrderList[sub].show=!this.$store.state.table.basicBaseList.allOrderList[sub].show;
                 }else{
-                     this.$store.state.table.basicBaseList.orderList[sub].show=true;
+                     this.$store.state.table.basicBaseList.allOrderList[sub].show=true;
                 }
             },
             /*newOrder:function(initOrderlist){
@@ -298,13 +300,13 @@
                  this.loadParam.show=true;
                  this.loadParam.loading=false;
             },
-            clickOn:function(initOrderlist){
-                console.log(initOrderlist);
-                this.detailParam=initOrderlist;
+            clickOn:function(param){
+                
+                this.detailParam=param;
             },
-            updateOrder:function(initOrderlist){
-                console.log(initOrderlist)
-                this.dialogParam=initOrderlist;
+            updateOrder:function(param){
+             
+                this.dialogParam=param;
             },
             resetTime:function(){
               this.loadParam.ctime = "";
@@ -412,15 +414,15 @@
           common('tab','table_box',1);
         },
         created() {
-            
-            if(!this.$store.state.table.isTop){
+            changeMenu(this.$store.state.table.isTop,this.getOrderList,this.loadParam,localStorage.allOrderParam); 
+            /*if(!this.$store.state.table.isTop){
                 console.log("刷新数据");
                 this.getOrderList(this.loadParam);
             }else{
                 console.log("不刷新数据");
                 this.loadParam = JSON.parse(localStorage.allOrderParam);
                 this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.allOrderList);
-            }
+            }*/
         },
     }
   </script>

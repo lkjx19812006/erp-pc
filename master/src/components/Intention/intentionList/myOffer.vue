@@ -52,7 +52,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initOfferList">
+                    <tr v-for="item in initMyOfferList">
                         <td>{{item.otime | date}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.customerName}}</td>
@@ -78,9 +78,9 @@
                            <div v-if="item.orderTime==0">未采纳</div>
                            <div v-else>已采纳</div>
                         </td> -->
-                        <td    @click.stop="adopt(item,$index)">
-                              <a class="operate" v-if="item.orderTime==0"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
-                               </a>
+                        <td  @click.stop="adopt(item,$index)">
+                            <a class="operate" v-if="item.orderTime==0"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
+                             </a>
                         </td>
                        <!--  <td @click.stop="clickShow($index)">
                           <img height="24" width="24" src="/static/images/default_arrow.png" />
@@ -106,8 +106,9 @@ import filter from '../../../filters/filters'
 import createorderModel  from '../createOrder'
 import searchModel  from '../offerSearch'
 import common from  '../../../common/common'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
-	initOfferList,
+	initMyOfferList,
     initLogin
 } from '../../../vuex/getters'
 import {
@@ -121,7 +122,7 @@ export default {
     },
     vuex: {
         getters: {
-            initOfferList,
+            initMyOfferList,
             initLogin
         },
         actions: {
@@ -138,6 +139,7 @@ export default {
                 cur: 1,
                 all: 7,
                 link:'/intention/employee/offers',
+                key:'myOfferList',
                 breedName:'',
                 spec:'',
                 fullname:'',
@@ -154,7 +156,7 @@ export default {
             orderParam:{
                 index:'',
                 show:false,
-                key:'offerList',
+                key:'myOfferList',
                 type:'',
                 customer:'',
                 sample:0,
@@ -208,16 +210,16 @@ export default {
           this.getOfferList(this.loadParam);
         },
         clickShow:function(index){
-        	this.$store.state.table.basicBaseList.offerList[index].show=!this.$store.state.table.basicBaseList.offerList[index].show;
+        	this.$store.state.table.basicBaseList.myOfferList[index].show=!this.$store.state.table.basicBaseList.myOfferList[index].show;
         },
         onlyselected:function(index){
         	var _this = this;
-            this.$store.state.table.basicBaseList.offerList[index].checked=!this.$store.state.table.basicBaseList.offerList[index].checked;
-            if(!this.$store.state.table.basicBaseList.offerList[index].checked){
+            this.$store.state.table.basicBaseList.myOfferList[index].checked=!this.$store.state.table.basicBaseList.myOfferList[index].checked;
+            if(!this.$store.state.table.basicBaseList.myOfferList[index].checked){
             	this.checked = false;
             }else{
             	this.checked = true;
-            	this.$store.state.table.basicBaseList.offerList.forEach(function(item){
+            	this.$store.state.table.basicBaseList.myOfferList.forEach(function(item){
             		if(!item.checked){
             			_this.checked = false;
             		}
@@ -227,11 +229,11 @@ export default {
         checkedAll:function(){
    			this.checked = !this.checked;
    			if(this.checked){
-   				this.$store.state.table.basicBaseList.offerList.forEach(function(item){
+   				this.$store.state.table.basicBaseList.myOfferList.forEach(function(item){
    					item.checked = true;
    				})
    			}else{
-   				this.$store.state.table.basicBaseList.offerList.forEach(function(item){
+   				this.$store.state.table.basicBaseList.myOfferList.forEach(function(item){
    					item.checked = false;
    				})
    			}
@@ -270,15 +272,7 @@ export default {
         }
     },
     created() {
-        if(!this.$store.state.table.isTop){
-            console.log("刷新数据");
-            this.getOfferList(this.loadParam);
-        }else{
-            console.log("不刷新数据");
-            this.loadParam = JSON.parse(localStorage.myOfferParam);
-            this.$store.state.table.basicBaseList.offerList = JSON.parse(localStorage.myOfferList);
-        }
-        
+        changeMenu(this.$store.state.table.isTop,this.getOfferList,this.loadParam,localStorage.myOfferParam); 
     },
     ready(){
       common('tab','table_box',1);

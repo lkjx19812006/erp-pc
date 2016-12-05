@@ -183,6 +183,7 @@ import filter from '../filters/filters'
 import detailempModel  from '../components/emloyee/employDetail'
 import searchorgModel  from '../components/emloyee/searchorg'
 import common from '../common/common'
+import changeMenu from '../components/tools/tabs/tabs.js'
 import {
    getList,
    initEmployeeList,
@@ -298,15 +299,8 @@ export default {
         /*if (this.$route.query.id > this.getList[7].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
             this.$route.query.id = 0;
         }*/
+        changeMenu(this.$store.state.table.isTop,this.getEmployeeList,this.loadParam,localStorage.employeeParam); 
         
-        if(!this.$store.state.table.isTop){
-          console.log("刷新数据");
-          this.getEmployeeList(this.loadParam);
-        }else{
-          console.log("不刷新数据");
-          this.loadParam = JSON.parse(localStorage.employeeParam);
-          this.$store.state.table.basicBaseList.employeeList = JSON.parse(localStorage.employeeList);
-        }
         this.getOrgList(this.loadParam);
     },
     filter:(filter,{})

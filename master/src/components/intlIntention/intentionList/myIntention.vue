@@ -54,7 +54,7 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="item in initIntlIntentionList" style="cursor:pointer">
+                    <tr v-for="item in initMyIntlIntentionList" style="cursor:pointer">
                         <td>
                             <div v-if="item.especial==0&&item.type==0">{{$t('static.common_purchase')}}</div>
                             <div v-if="item.especial==0&&item.type==1">{{$t('static.common_supply')}}</div>
@@ -102,7 +102,7 @@
                                                 title:'意向',
                                                 link:deleteInfo,
                                                 url:'/intlIntention/',
-                                                key:'intlIntentionList'
+                                                key:'myIntlIntentionList'
                                                 })"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除"  /></div>
                             <!-- <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div> -->
                             <div style="display:inline-block;margin-right:7px"  @click.stop="newOrder(item,$index)"><img src="/static/images/{{$t('static.img_adopt')}}.png"  /></div>
@@ -137,9 +137,10 @@ import cancelinquireModel from '../../tips/tipDialog'
 import inquireModel from '../inquire'
 import createorderModel from '../createOrderDialog' 
 import common from '../../../common/common'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
-    initIntlIntentionList,
-      initLogin
+    initMyIntlIntentionList,
+    initLogin
 } from '../../../vuex/getters'
 import {
     getIntlIntentionList,
@@ -164,7 +165,7 @@ export default {
     },
     vuex: {
         getters: {
-            initIntlIntentionList,
+            initMyIntlIntentionList,
             initLogin
         },
         actions: {
@@ -188,6 +189,7 @@ export default {
                 all: 7,
                 total:0,
                 link:'/intlIntention/by/employee',
+                key:'myIntlIntentionList',
                 employeeName:'',
                 breedId:'',
                 breedName:'',
@@ -245,6 +247,7 @@ export default {
             },
             inquireParam:{
                 show:false,
+                key:'myIntlIntentionList',
                 inquireTime:'',    //询价的次数
                 index:'',
                 inquire:'',
@@ -269,6 +272,7 @@ export default {
                 inquireTime:'',
                 callback:this.confirmCancelInquire,
                 link:'/intlIntention/inquire',
+                key:'myIntlIntentionList',
                 id:'',
                 index:''
             },
@@ -306,7 +310,7 @@ export default {
             modifyParam:{
                 show:false,
                 link:'/intlIntention/',
-                key:'intentionList',
+                key:'myIntlIntentionList',
                 id:'',
                 index:'',
                 duedate:'',
@@ -418,10 +422,8 @@ export default {
 
             this.createParam.show = true;
         },
-        deleteIntention:function(getIntlIntentionList){
-            this.deleteParam = getIntlIntentionList;
-           /* this.deleteParam.index = index;
-            this.deleteIntlIntention(this.deleteParam);  */
+        deleteIntention:function(param){
+            this.deleteParam = param;
         },
         modifyIntention:function(id,index){
             console.log(id);
@@ -453,14 +455,8 @@ export default {
         }
     },
     created() {
-        if(!this.$store.state.table.isTop){
-            console.log("刷新数据");
-            this.getIntlIntentionList(this.loadParam);
-        }else{
-            console.log("不刷新数据");
-            this.loadParam = JSON.parse(localStorage.myIntlIntentionParam);
-            this.$store.state.table.basicBaseList.intlIntentionList = JSON.parse(localStorage.myIntlIntentionList);
-        }
+        changeMenu(this.$store.state.table.isTop,this.getIntlIntentionList,this.loadParam,localStorage.myIntlIntentionParam); 
+        
     },
     filter: (filter,{})
 }

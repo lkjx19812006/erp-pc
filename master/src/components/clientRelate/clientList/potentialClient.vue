@@ -301,6 +301,7 @@ export default {
             },
           auditParam:{
             link:'/customer/transferBlacklist',
+            key:'unCustomerList',
             show:false,
             title:'客户拉入黑名单备注',
             arr:[],

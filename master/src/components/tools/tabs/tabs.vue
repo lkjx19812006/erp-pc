@@ -10,7 +10,7 @@
 <script>
 import Vue from 'vue'
 import {
-    
+    getList
 } from '../../../vuex/getters'
 
 import {

@@ -72,6 +72,7 @@ import detailModel from '../inquireDetail'
 import affirmofferModel from '../confirmOffer'
 import common from '../../../common/common'
 import inquireModel from '../inquire'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
     initIntlIntentionInquireList
   
@@ -233,14 +234,8 @@ export default {
         }
     },
     created() {
-        if(!this.$store.state.table.isTop){
-            console.log("刷新数据");
-            this.getIntlIntentionInquireList(this.loadParam);
-        }else{
-            console.log("不刷新数据");
-            this.loadParam = JSON.parse(localStorage.intlInquireParam);
-            this.$store.state.table.basicBaseList.intlIntentionInquireList = JSON.parse(localStorage.intlInquireList);
-        }
+        changeMenu(this.$store.state.table.isTop,this.getIntlIntentionInquireList,this.loadParam,localStorage.intlInquireParam); 
+        
     },
     filter: (filter,{})
 }

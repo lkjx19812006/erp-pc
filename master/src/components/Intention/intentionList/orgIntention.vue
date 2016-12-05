@@ -148,7 +148,7 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="item in initIntentionList">
+                    <tr v-for="item in initOrgIntentionList">
                         <td>
                             <div v-if="item.especial==0&&item.type==0">普通求购</div>
                             <div v-if="item.especial==0&&item.type==1">普通供应</div>
@@ -192,7 +192,7 @@
                                 address:item.address,
                                 link:editintentInfo,
                                 url:'/intention/',
-                                key:'intentionList',
+                                key:'orgIntentionList',
                                 image_f:'',
                                 image_s:'',
                                 image_t:'',
@@ -339,7 +339,7 @@
                                                validate:item.validate,
                                                link:editintentInfo,
                                                url:'/intention/',
-                                               key:'intentionList',
+                                               key:'orgIntentionList',
                                                image_f:'',
                                                image_s:'',
                                                image_t:'',
@@ -357,7 +357,7 @@
                                title:'意向',
                                link:deleteInfo,
                                url:'/intention/',
-                               key:'intentionList'
+                               key:'orgIntentionList'
                                })"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                                </a>
                                <a class="operate" v-if="item.validate==2" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png"   alt="审核" title="审核"/>
@@ -392,8 +392,9 @@ import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
 import searchModel from '../intentionSearch'
 import common from  '../../../common/common'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
-  initIntentionList,
+  initOrgIntentionList,
   initSupplyDemandList
 } from '../../../vuex/getters'
 import {
@@ -419,7 +420,7 @@ export default {
     },
     vuex: {
         getters: {
-            initIntentionList,
+            initOrgIntentionList,
             initSupplyDemandList
         },
         actions: {
@@ -441,6 +442,7 @@ export default {
                 cur: 1,
                 all: 7,
                 link:'/intention/org/list',
+                key:'orgIntentionList',
                 type:'',      //类型
                 especial:'',    //特殊
                 invoic:'',  //发票
@@ -475,7 +477,7 @@ export default {
             },
             intentionAuditParam:{
                 show:false,
-                key:'org',
+                key:'orgIntentionList',
                 arr:[],
                 indexs:[],
                 validate:0,
@@ -483,6 +485,7 @@ export default {
             },
             tipsParam:{
                 show:false,
+                key:'orgIntentionList',
                 name:'',
                 ids:[],
                 index:[],
@@ -526,23 +529,23 @@ export default {
 
         },
         eventClick:function(sub){
-            if(this.$store.state.table.basicBaseList.intentionList[sub].show){
-                this.$store.state.table.basicBaseList.intentionList[sub].show = !this.$store.state.table.basicBaseList.intentionList[sub].show;
+            if(this.$store.state.table.basicBaseList.orgIntentionList[sub].show){
+                this.$store.state.table.basicBaseList.orgIntentionList[sub].show = !this.$store.state.table.basicBaseList.orgIntentionList[sub].show;
             }else{
-                this.$store.state.table.basicBaseList.intentionList[sub].show=true;
+                this.$store.state.table.basicBaseList.orgIntentionList[sub].show=true;
             }
         },
-        detailClick:function(initIntentionList){
-            this.chanceParam = initIntentionList;
+        detailClick:function(param){
+            this.chanceParam = param;
         },
         onlyselected:function(sub,id){
             var _this = this;
-            this.$store.state.table.basicBaseList.intentionList[sub].checked=!this.$store.state.table.basicBaseList.intentionList[sub].checked;
-            if(!this.$store.state.table.basicBaseList.intentionList[sub].checked){
+            this.$store.state.table.basicBaseList.orgIntentionList[sub].checked=!this.$store.state.table.basicBaseList.orgIntentionList[sub].checked;
+            if(!this.$store.state.table.basicBaseList.orgIntentionList[sub].checked){
                 this.checked = false;
             }else{
                 this.checked = true;
-                this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
+                this.$store.state.table.basicBaseList.orgIntentionList.forEach(function(item){
                     if(!item.checked){
                         _this.checked = false;
                     }
@@ -552,11 +555,11 @@ export default {
         checkedAll:function(){
             this.checked = !this.checked;
             if(this.checked){
-                this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
+                this.$store.state.table.basicBaseList.orgIntentionList.forEach(function(item){
                   item.checked = true;
                 })
             }else{
-                this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
+                this.$store.state.table.basicBaseList.orgIntentionList.forEach(function(item){
                   item.checked = false;
                 })
             }
@@ -564,9 +567,9 @@ export default {
         intentionAudit:function(){
             this.intentionAuditParam.arr = [];
             this.intentionAuditParam.indexs = [];
-            for(var i=0;i<this.$store.state.table.basicBaseList.intentionList.length;i++){
-                if(this.$store.state.table.basicBaseList.intentionList[i].checked){
-                    this.intentionAuditParam.arr.push(this.$store.state.table.basicBaseList.intentionList[i].id);
+            for(var i=0;i<this.$store.state.table.basicBaseList.orgIntentionList.length;i++){
+                if(this.$store.state.table.basicBaseList.orgIntentionList[i].checked){
+                    this.intentionAuditParam.arr.push(this.$store.state.table.basicBaseList.orgIntentionList[i].id);
                     this.intentionAuditParam.indexs.push(i);
                 }
             }
@@ -594,9 +597,9 @@ export default {
             if(param.onSell==2){
                 this.tipsParam.name = '意向下架成功';
             }
-            for(var i=0;i<this.initIntentionList.length;i++){
-                if(this.initIntentionList[i].checked){
-                    this.tipsParam.ids.push(this.initIntentionList[i].id);
+            for(var i=0;i<this.initOrgIntentionList.length;i++){
+                if(this.initOrgIntentionList[i].checked){
+                    this.tipsParam.ids.push(this.initOrgIntentionList[i].id);
                     this.tipsParam.indexs.push(i);
                 }
             }
@@ -636,17 +639,17 @@ export default {
             this.tipsParam.name = '意向下架失败';
             this.intentionUpAndDown(this.tipsParam);
         },
-        clientTransfer:function(initIntentionList){
-            this.intentionParam = initIntentionList;
-            console.log(this.initIntentionList)
-            for(var i in this.initIntentionList){
-                if(this.initIntentionList[i].checked){
-                    if(this.initIntentionList[i].checked==true){
-                         this.intentionParam.id=this.initIntentionList[i].id;
-                         this.intentionParam = this.initIntentionList[i];
+        clientTransfer:function(param){
+            this.intentionParam = param;
+            
+            for(var i in this.initOrgIntentionList){
+                if(this.initOrgIntentionList[i].checked){
+                    if(this.initOrgIntentionList[i].checked==true){
+                         this.intentionParam.id=this.initOrgIntentionList[i].id;
+                         this.intentionParam = this.initOrgIntentionList[i];
                          this.intentionParam.show=true;
                     }
-                }else if(this.intentionParam.id==""&&!this.initIntentionList[i].checked){
+                }else if(this.intentionParam.id==""&&!this.initOrgIntentionList[i].checked){
                     this.tipsParam.show= true;
                     this.tipsParam.name= '请先选择业务机会';
                     this.intentionParam.show=false;
@@ -679,15 +682,15 @@ export default {
             this.getIntentionList(this.loadParam);
 
         },
-        specDelete:function(initIntentionList){
-          this.deleteParam = initIntentionList;
+        specDelete:function(param){
+          this.deleteParam = param;
         },
-        modifyIntention:function(initIntentionList){
-          console.log(initIntentionList.unit);
-          this.createParam = initIntentionList;
+        modifyIntention:function(param){
+          
+          this.createParam = param;
         },
-        createIntention:function(initIntentionList){
-             this.createParam = initIntentionList;
+        createIntention:function(param){
+             this.createParam = param;
         },
         selectSearch:function(){
           this.getIntentionList(this.loadParam)
@@ -700,15 +703,8 @@ export default {
         }
     },
     created() {
-      if(!this.$store.state.table.isTop){
-            console.log("刷新数据");
-            this.getIntentionList(this.loadParam);
-        }else{
-            console.log("不刷新数据");
-            this.loadParam = JSON.parse(localStorage.orgIntentionParam);
-            this.$store.state.table.basicBaseList.intentionList = JSON.parse(localStorage.orgIntentionList);
-            //this.loadParam.loading = false;
-        }
+      changeMenu(this.$store.state.table.isTop,this.getIntentionList,this.loadParam,localStorage.orgIntentionParam);
+      
        
     },
     ready(){

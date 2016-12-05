@@ -342,6 +342,7 @@ export default {
               title:'客户拉入黑名单备注',
               arr:[],
               link:'/customer/transferBlacklist',
+              key:'allCustomerList',
               blacklist:1
             },
             checked:false

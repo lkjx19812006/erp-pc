@@ -52,9 +52,25 @@ export const initUserType = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.userTypeList));
 }
 /*---订单数据---*/
+export const initMyOrderlist = (state) => {
+    return parseJson(state.table.basicBaseList.myOrderList);
+}
+export const initOrgOrderlist = (state) => {
+    return parseJson(state.table.basicBaseList.orgOrderList);
+}
+export const initAllOrderlist = (state) => {
+    return parseJson(state.table.basicBaseList.allOrderList);
+}
+export const initSellOrderlist = (state) => {
+    return parseJson(state.table.basicBaseList.sellOrderList);
+}
+export const initPurchaseOrderlist = (state) => {
+    return parseJson(state.table.basicBaseList.purchaseOrderList);
+}
 export const initOrderlist = (state) => {
     return parseJson(state.table.basicBaseList.orderList);
 }
+
 export const initExpresslist = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.expressList));
 }
@@ -171,11 +187,30 @@ export const initRoleList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.roleList));
 }
 /*--意向信息--*/
+export const initUserIntentionList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.userIntentionList));
+}
+export const initMyIntentionList = (state) => {
+    console.log("hehehe ");
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.myIntentionList));
+}
+export const initOrgIntentionList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.orgIntentionList));
+}
+export const initUnIntentionList = (state) => {   //潜在意向，意向资源池
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.unIntentionList));
+}
 export const initIntentionList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intentionList));
 }
 
 /*--国际意向信息--*/
+export const initMyIntlIntentionList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.myIntlIntentionList));
+}
+export const initOrgIntlIntentionList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.orgIntlIntentionList));
+}
 export const initIntlIntentionList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.intlIntentionList));
 }
@@ -191,6 +226,12 @@ export const initSupplyDemandList = (state) => {
 }
 
 /*--报价信息--*/
+export const initMyOfferList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.myOfferList));
+}
+export const initOrgOfferList = (state) => {
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.orgOfferList));
+}
 export const initOfferList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.offerList));
 }
