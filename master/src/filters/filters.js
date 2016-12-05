@@ -423,6 +423,9 @@ Vue.filter('orderstatus',function(val){     //订单状态
 
 Vue.filter('Auditing',function(val){     //订单审核
 	var val = val;
+	if(val==null){
+		return '初始状态';
+	}
 	if(val==0){
 		 return '初始状态';
 	}

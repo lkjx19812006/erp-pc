@@ -68,7 +68,7 @@
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                 <label>{{$t('static.classification')}}<span class="system_danger" v-if="$validation.classify.required">{{$t('static.required')}}</span></label>
                 <input v-show="false" type="text" class="form-control" readonly="readonly" v-model="param.classify" v-validate:classify="['required']"  />
-                <select class="form-control edit-input" id="classify" v-model="param.classify">
+                <select class="form-control edit-input"  v-model="param.classify">
                   <option value="1,买">{{$t("static.purchaser")}}</option>
                   <option value="2,卖">{{$t("static.supplier")}}</option>
                   <option value="3,买卖">{{$t("static.purchaser_and_supplier")}}</option>
@@ -87,7 +87,7 @@
             </div>
             <div class="clearfix">
               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                 <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.tel.tel">{{$t('static.validate_telephone')}}（例：021-60154155）</span></label>
+                 <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.tel.tel">{{$t('static.validate_telephone')}}</span></label>
                  <input type="text" class="form-control" v-validate:tel="['tel']" v-model="param.tel" />
               </div>
               <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
@@ -197,7 +197,7 @@
               <div class="clearfix">
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                   <label class="editlabel">{{$t('static.name')}}<span class="system_danger" v-if="$validation.cname.minlength">{{$t('static.required')}}</span></label>
-                  <input type="text" class="form-control" v-validate:cname="{minlength:2}" v-model="contacts[0].mainContact"/>
+                  <input type="text" class="form-control" v-validate:cname="{minlength:2}" v-model="contacts[0].name"/>
                 </div>
                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                   <label>{{$t('static.whether_main_contact')}}</label>
@@ -226,7 +226,7 @@
                   <input type="text" class="form-control" v-validate:cphone="['phone']" v-model="contacts[0].phone"/>
                 </div>
                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                  <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.ctel.tel">{{$t('static.validate_telephone')}}，如（021-23569847）</span></label>
+                  <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.ctel.tel">{{$t('static.validate_telephone')}}）</span></label>
                   <input type="text" class="form-control" v-validate:ctel="['tel']" v-model="contacts[0].tel"/>
                 </div>
               </div>
@@ -301,7 +301,7 @@
         tipsParam:{
           show:false,
           remain:true,
-          name:'划转成功',
+          name:'创建成功',
           callback:this.callback
         },
         contacts: [{

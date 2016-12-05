@@ -25,7 +25,8 @@ const _listUrl={
 	drugList:ctx+'/drug/',
 	file:ctx+'/file/',
 	countList:local+'clientCount.json',
-  loadUrl:ctx+'/file/dowanloadFile'
+	commonList:ctx,
+    loadUrl:ctx+'/file/dowanloadFile'
 };
 
 export default _listUrl;

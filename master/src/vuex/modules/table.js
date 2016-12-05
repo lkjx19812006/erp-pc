@@ -1098,8 +1098,11 @@ const mutations = {
           show: false,
           supplier:data.supplier,
           checked:false,
-          creditLevel:data.creditLevel
+          creditLevel:data.creditLevel,
+          ctime:data.ctime
         };
+          
+
 
         if(!!data.key && data.key!="userList"){
           state.basicBaseList[data.key].unshift(temp);         //新增客户划转

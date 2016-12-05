@@ -163,6 +163,7 @@ export const initList = ({ dispatch }) => {
             console.log('fail');
         });
 };
+
 //柱状图
 export const freshCharts = ({ dispatch }, getCharList) => {
     if (getCharList) getCharList.load = true;
@@ -2432,6 +2433,7 @@ export const getRoleList = ({ dispatch }, param) => { //获取角色列表
 export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列表
     console.log('新增客户');
     console.log(data);
+    console.log(data.supplier);
     const Cdata = {
         "name": data.name,
         "type": data.type,
@@ -2459,7 +2461,7 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         "country": data.country,
         "creditLevel": data.creditLevel
     }
-    if (data.supplier) {
+    if (data.supplier==1) {
         Cdata.supplier = data.supplier;
     }
     console.log(Cdata);
@@ -2479,6 +2481,7 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         data.mainPhone = data.contacts[0].phone;
         data.phoneProvince = res.json().result.phoneProvince;
         data.phoneCity = res.json().result.phoneCity;
+        data.ctime = new Date();
         if ('show' in tipsParam) {
             tipsParam.show = true;
         }
@@ -3523,11 +3526,6 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
     }).then((res) => {
         console.log('国际意向搜索成功');
         var intent = res.json().result;
-        /*for (var i in intent){
-             intent[i].checked = false;
-             intent[i].show =false;
-        }*/
-
         if (param.key == "intentionList") { //意向列表编辑意向
             intent.items.forEach(function(item) {
                 var temp = {
@@ -3656,31 +3654,6 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
     })
 }
 
-/*export const deleteIntlIntention = ({ dispatch }, param) => { //删除国际意向
-    console.log(param);
-    const data = {
-        id:param.id
-    }
-    Vue.http({
-        method: "DELETE",
-        url: apiUrl.clientList + param.link + param.id,
-        emulateHTTP: false,
-        body: data,
-        emulateJSON: false,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            'Content-Type': 'application/json;charset=UTF-8'
-        }
-    }).then((res) => {
-
-        console.log('删除成功!!!!')
-        dispatch(types.DELETE_INTLINTENTION_DATA, param);
-
-    }, (res) => {
-        console.log('fail');
-    })
-}
-*/
 export const updateIntlIntention = ({ dispatch }, param, tipParam) => { //修改国际意向
 
     const data = {
@@ -5041,10 +5014,9 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
         console.log('fail');
     })
 }
-export const getEmployeeCount = ({ dispatch }, param) => { //部门统计员工列表以及搜索
+export const getEmployeeCount = ({ dispatch }, param) => { //部门获取员工列表以及搜索
     param.loading = true;
     var apiurl = apiUrl.clientList + '/employee/?' + '&page=' + param.cur + '&pageSize=50';
-    /*var apiurl = apiUrl.employeeList+'/?'+'&page=' + param.cur + '&pageSize=14';*/
     for (var seach in param) {
         if (seach == 'name' && param[seach] !== '') {
             apiurl += '&name=' + param.name
@@ -5068,10 +5040,6 @@ export const getEmployeeCount = ({ dispatch }, param) => { //部门统计员工�
         }
     }).then((res) => {
         var employ = res.json().result.list;
-        for (var i in employ) {
-            employ[i].show = false;
-            employ[i].checked = false;
-        }
         dispatch(types.EMPLOYEE_DATA, employ);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
@@ -5080,4 +5048,252 @@ export const getEmployeeCount = ({ dispatch }, param) => { //部门统计员工�
         console.log('fail');
         param.loading = false;
     })
+}
+
+export const getSampleList = ({ dispatch }, param) => { //我的寄样申请列表以及搜索
+    param.loading = true;
+    var apiurl = apiUrl.commonList + '/sample/list/employee/?' + '&page=' + param.cur + '&pageSize=15';
+    for (var seach in param) {
+        if (seach == 'customerName' && param[seach] !== '') {
+            apiurl += '&customerName=' + param.customerName
+        }
+        if (seach == 'customerPhone' && param[seach] !== '') {
+            apiurl += '&customerPhone=' + param.customerPhone
+        }
+       /* if (seach == 'orgId' && param[seach] !== '') {
+            apiurl += '&org=' + param.orgId
+        }
+        if (seach == 'orgCode' && param[seach] !== '') {
+            apiurl += '&orgCode=' + param.orgCode
+        }*/
+    }
+    Vue.http({
+        method: 'GET',
+        url: apiurl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var mysample = res.json().result.list;
+        for (var i in mysample) {
+            mysample[i].show = false;
+            mysample[i].checked = false;
+        }
+        dispatch(types.MY_SAMPLE_LIST, mysample);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
+    param.loading = true;
+    var apiurl = apiUrl.commonList + '/sample/'+param.id;
+    Vue.http({
+        method: 'GET',
+        url: apiurl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var obj = res.json().result;
+        var arr = obj.items;
+        obj.items = {
+            arr: arr,
+            show: true
+        };
+        for (var i in obj.items.arr) {
+            obj.items.arr[i].show = false;
+        }
+        if (param.key == "mySampleList") { //寄样列表编辑寄样信息
+            obj.items.forEach(function(item) {
+                var temp = {
+                    id: item.id,
+                    breedId: item.breedId,
+                    breedName: item.breedName,
+                    quality: item.quality,
+                    location: item.location,
+                    spec: item.spec,
+                    number: item.number,
+                    unit: item.unit,
+                }
+                param.items.push(temp);
+                param.itemsBack.push(temp);
+            })
+        }
+        param.customerName = obj.customerName,
+        param.customerPhone = obj.customerPhone,
+        param.consignee = obj.consignee;
+        param.consigneePhone = obj.consigneePhone;
+        param.total = obj.total;
+        param.country = obj.country;
+        param.province = obj.province;
+        param.city = obj.city;
+        param.district = obj.district;
+        dispatch(types.SAMPLE_DETAIL,obj);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+export const getOrgSampleList = ({ dispatch }, param) => { //部门寄样申请列表以及搜索
+    param.loading = true;
+    var apiurl = apiUrl.commonList + '/sample/list/org/?' + '&page=' + param.cur + '&pageSize=15';
+    for (var seach in param) {
+        if (seach == 'customerName' && param[seach] !== '') {
+            apiurl += '&customerName=' + param.customerName
+        }
+        if (seach == 'customerPhone' && param[seach] !== '') {
+            apiurl += '&customerPhone=' + param.customerPhone
+        }
+       /* if (seach == 'orgId' && param[seach] !== '') {
+            apiurl += '&org=' + param.orgId
+        }
+        if (seach == 'orgCode' && param[seach] !== '') {
+            apiurl += '&orgCode=' + param.orgCode
+        }*/
+    }
+    Vue.http({
+        method: 'GET',
+        url: apiurl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var orgsample = res.json().result.list;
+        for (var i in orgsample) {
+            orgsample[i].show = false;
+            orgsample[i].checked = false;
+        }
+        dispatch(types.ORG_SAMPLE_LIST, orgsample);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+export const createSample = ({ dispatch }, data) => { //新建寄样申请
+    console.log(data);
+    const body = {
+       customerName:data.customerName,
+       customerPhone:data.customerPhone,
+       customer:data.customer,
+       currency:data.currency,
+       /*comments:data.comments,*/
+       total:data.total,
+       employee:data.employee,
+       country:data.country,
+       province:data.province,
+       city:data.city,
+       district:data.district,
+       items:data.items
+    }
+    if(data.address==''){
+        body.address = data.country+','+data.province+','+data.city+','+data.district
+    }
+    if(data.consignee=='') {
+        body.consignee = data.customerName;
+    }else{
+        body.consignee = data.consignee;
+    }
+    if(data.consigneePhone==''){
+        body.consigneePhone = data.customerPhone
+    }else{
+        body.consigneePhone = data.consigneePhone;
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + '/sample/',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('添加成功')
+        data.validate = res.json().result.validate;
+        data.ctime = new Date();
+        data.sampleDesc = res.json().result.sampleDesc;
+        data.address = res.json().result.address;
+        dispatch(types.ADD_SAMPLE, data);
+        data.show = false;
+    }, (res) => {
+        console.log('fail');
+    });
+}
+export const alterSample = ({ dispatch }, param) => { //修改寄样申请
+    console.log(param);
+    const body = {
+        type: param.type,
+        id: param.id,
+        sourceType: param.sourceType,
+        sample: param.sample,
+        intl: param.intl,
+        customer: param.customer,
+        incidentals: param.incidentals,
+        incidentalsDesc: param.incidentalsDesc,
+        preferential: param.preferential,
+        preferentialDesc: param.preferentialDesc,
+        currency: param.currency,
+        consignee: param.consignee,
+        consigneePhone: param.consigneePhone,
+        zipCode: param.zipCode,
+        country: param.country,
+        province: param.province,
+        city: param.city,
+        district: param.district,
+        customerName: param.customerName,
+        consigneeAddr: param.consigneeAddr,
+        comments: param.comments,
+        goods: param.goods
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.commonList + '/sample/',
+        emulateHTTP: false,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('修改成功')
+        param.show = false;
+        param.checked = false;
+        dispatch(types.ORG_SAMPLE, param);
+
+    }, (res) => {
+        console.log('fail');
+        param.show = false;
+    });
+}
+export const deleteData = ({ dispatch }, param) => { //删除客户、药材信息
+    console.log(param)
+    Vue.http({
+        method: 'DELETE',
+        url: apiUrl.commonList + param.url + param.id,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('删除成功')
+        dispatch(types.DELETE_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    });
 }

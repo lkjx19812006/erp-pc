@@ -12,6 +12,7 @@ import Vue from 'vue'
 import {
     
 } from '../../../vuex/getters'
+
 import {
     
 } from '../../../vuex/actions'
@@ -27,7 +28,7 @@ export default {
   },
   vuex: {
       getters: {
-        
+        getList
       },
       actions:{
         

@@ -70,7 +70,6 @@ router.beforeEach(function ({ to, next }) {
         router.go({name: 'login'});
       }else{
         next();
-
       }
     }
 

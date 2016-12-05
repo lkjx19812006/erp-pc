@@ -43,6 +43,7 @@
                                             contacts:[
                                                 {
                                                     mainContact:'',
+                                                    name:'',
                                                     position:'',
                                                     department:'',
                                                     phone:'',

@@ -2,7 +2,6 @@ import {
     INCREMENT,
     DECREMENT,
     INIT_LIST,
-    INIT_TABS,
     MENU_BAR,
     FOLD
 } from '../mutation-types'
@@ -34,9 +33,6 @@ const mutations = {
 
     [INIT_LIST](state,data) {
         state.list = data.menus;
-    },
-    [INIT_TABS](state,data) {
-        state.tabs = data;
     },
     
     [MENU_BAR](state) {
