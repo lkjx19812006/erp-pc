@@ -337,7 +337,15 @@
             }
         },
         created() {
-            this.getOrgOrder(this.loadParam)
+            if(!this.$store.state.table.isTop){
+                console.log("刷新数据");
+                this.getOrgOrder(this.loadParam);
+            }else{
+                console.log("不刷新数据");
+                this.loadParam = JSON.parse(localStorage.orgOrderParam);
+                this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.orgOrderList);
+            }
+            
         },
         methods: {
             selectSearch:function(){

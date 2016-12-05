@@ -390,7 +390,15 @@ export default {
         }
     },
     created() {
-        this.getIntlIntentionList(this.loadParam, this.loadParam.all);
+        
+        if(!this.$store.state.table.isTop){
+            console.log("刷新数据");
+            this.getIntlIntentionList(this.loadParam);
+        }else{
+            console.log("不刷新数据");
+            this.loadParam = JSON.parse(localStorage.orgIntlIntentionParam);
+            this.$store.state.table.basicBaseList.intlIntentionList = JSON.parse(localStorage.orgIntlIntentionList);
+        }
     },
     filter: (filter,{})
 }

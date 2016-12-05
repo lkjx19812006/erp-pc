@@ -21,7 +21,10 @@
               </div>
           </div>
         </div>
-        <!-- <tabs-model></tabs-model> -->
+        <div>
+          <tabs-model></tabs-model>
+        </div>
+         
     </div>
 </template>
 <script>
@@ -29,12 +32,13 @@ import Vue from 'vue'
 import alertModel from './tips/tipDialog'
 import languageModel from '../components/tools/language'
 import passwordModel  from '../components/tips/updatePwd'
-import tabsModel  from '../components/tools/tabs'
+import tabsModel  from '../components/tools/tabs/tabs.vue'
 import {
     initLogin,
     getMenu,
     getList,
-    getTabs
+    getTabs,
+    
 } from '../vuex/getters'
 import {
     initList,

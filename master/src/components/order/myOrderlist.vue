@@ -615,7 +615,16 @@
           common('tab','table_box',1);
         },
         created() {
-            this.getEmpolyeeOrder(this.loadParam)
+            
+            if(!this.$store.state.table.isTop){
+                console.log("刷新数据");
+                this.getEmpolyeeOrder(this.loadParam);
+            }else{
+                console.log("不刷新数据");
+                this.loadParam = JSON.parse(localStorage.myOrderParam);
+                this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.myOrderList);
+            }
+            
             console.log(this.loadParam)
             console.log(this.loadParam.link)
             console.log(this.initLogin)

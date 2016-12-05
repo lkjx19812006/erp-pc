@@ -233,7 +233,14 @@
             }
         },
         created() {
-            this.getOrderCheckList(this.loadParam)
+            if(!this.$store.state.table.isTop){
+                console.log("刷新数据");
+                this.getOrderCheckList(this.loadParam);
+            }else{
+                console.log("不刷新数据");
+                this.loadParam = JSON.parse(localStorage.sellOrderParam);
+                this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.sellOrderCheckList);
+            }
         },
         methods: {
             editClick: function(sub) {

@@ -377,13 +377,7 @@ export default {
             this.detailParam.id = id;
             this.detailParam.show = true;
         },
-        eventClick:function(sub){
-            if(this.$store.state.table.basicBaseList.intentionList[sub].show){
-                this.$store.state.table.basicBaseList.intentionList[sub].show = !this.$store.state.table.basicBaseList.intentionList[sub].show;
-            }else{
-                this.$store.state.table.basicBaseList.intentionList[sub].show=true;
-            }
-        },
+        
         detailClick:function(initIntentionList){
             this.chanceParam = initIntentionList
         },
@@ -402,33 +396,6 @@ export default {
             this.createOrderParam.consigneeAddr = item.address;
             this.createOrderParam.intl = item.intl;
         },
-        onlyselected:function(sub,id){
-            var _this = this;
-            this.$store.state.table.basicBaseList.intentionList[sub].checked=!this.$store.state.table.basicBaseList.intentionList[sub].checked;
-            if(!this.$store.state.table.basicBaseList.intentionList[sub].checked){
-                this.checked = false;
-            }else{
-                this.checked = true;
-                this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-                    if(!item.checked){
-                        _this.checked = false;
-                    }
-                })
-            }
-        },
-        checkedAll:function(){
-                this.checked = !this.checked;
-                if(this.checked){
-                    this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-                        item.checked = true;
-                    })
-                }else{
-                    this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-                        item.checked = false;
-                    })
-                }
-        },
-        
         
         search:function(){
           this.loadParam.loading = false;
@@ -486,7 +453,14 @@ export default {
         }
     },
     created() {
-        this.getIntlIntentionList(this.loadParam, this.loadParam.all);
+        if(!this.$store.state.table.isTop){
+            console.log("刷新数据");
+            this.getIntlIntentionList(this.loadParam);
+        }else{
+            console.log("不刷新数据");
+            this.loadParam = JSON.parse(localStorage.myIntlIntentionParam);
+            this.$store.state.table.basicBaseList.intlIntentionList = JSON.parse(localStorage.myIntlIntentionList);
+        }
     },
     filter: (filter,{})
 }

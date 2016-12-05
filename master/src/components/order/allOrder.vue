@@ -412,7 +412,15 @@
           common('tab','table_box',1);
         },
         created() {
-            this.getOrderList(this.loadParam)
+            
+            if(!this.$store.state.table.isTop){
+                console.log("刷新数据");
+                this.getOrderList(this.loadParam);
+            }else{
+                console.log("不刷新数据");
+                this.loadParam = JSON.parse(localStorage.allOrderParam);
+                this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.allOrderList);
+            }
         },
     }
   </script>

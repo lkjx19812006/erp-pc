@@ -55,6 +55,7 @@
                                                 }
                                             ],
                                             link:saveCreate,
+                                            key:'orgCustomerList'
                                             })">{{$t("static.new")}}</button>
                     <button class="new_btn transfer" @click="resetCondition()">{{$t("static.clear_all")}}</button>
                     <button class="new_btn transfer" @click="createSearch()">{{$t("static.search")}}</button>
@@ -75,10 +76,10 @@
                        <dt class="left transfer marg_top">{{$t("static.customer_classification")}}：</dt>
                        <dd class="left">
                              <select v-model="loadParam.classify"  class="form-control" @change="selectSearch()">
-                                <option value="" selected>{{$t("static.please_select")}}</option>
-                            <option value="1">{{$t("static.purchaser")}}</option>
-                            <option value="2">{{$t("static.supplier")}}</option>
-                            <option value="3">{{$t("static.purchaser_and_supplier")}}</option>
+                                <option value="">{{$t("static.please_select")}}</option>
+                                <option value="1">{{$t("static.purchaser")}}</option>
+                                <option value="2">{{$t("static.supplier")}}</option>
+                                <option value="3">{{$t("static.purchaser_and_supplier")}}</option>
                             </select>
                        </dd>
                     </dl>
@@ -86,11 +87,11 @@
                        <dt class="left transfer marg_top">{{$t("static.credit_rating")}}：</dt>
                        <dd class="left">
                              <select v-model="loadParam.creditLevel"  class="form-control" @change="selectSearch()">
-                              <option value="" selected>{{$t("static.please_select")}}</option>
-                          <option value="0">{{$t("static.none")}}</option>
-                          <option value="1">{{$t("static.one_star")}}</option>
-                          <option value="2">{{$t("static.two_star")}}</option>
-                          <option value="3">{{$t("static.three_star")}}</option>
+                              <option value="">{{$t("static.please_select")}}</option>
+                              <option value="0">{{$t("static.none")}}</option>
+                              <option value="1">{{$t("static.one_star")}}</option>
+                              <option value="2">{{$t("static.two_star")}}</option>
+                              <option value="3">{{$t("static.three_star")}}</option>
                             </select>
                        </dd>
                     </dl>
@@ -148,7 +149,7 @@
                     <tr>
 
                     </tr>
-                    <tr v-for="item in initCustomerlist">
+                    <tr v-for="item in initOrgCustomerlist">
                         <td  @click.stop="">
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
@@ -164,7 +165,7 @@
                                 show:true,
                                 link:alterInfo,
                                 url:'/customer/',
-                                key:'customerList'
+                                key:'orgCustomerList'
                                 })">{{item.name}}</td>
                         <td>{{item.orderTotal}}</td>
                         <td>{{item.typeDesc}}</td>
@@ -243,7 +244,7 @@
                                                 creditLevel:item.creditLevel,
                                                 link:alterInfo,
                                                 url:'/customer/',
-                                                key:'customerList',
+                                                key:'orgCustomerList',
                                                 employeeId:item.employeeId,
                                                 employeeName:item.employeeName,
                                                 orgId:item.orgId
@@ -273,8 +274,9 @@ import tipsdialogModel  from '../../../components/tips/tipDialog'
 import searchModel  from  '../../../components/clientRelate/searchModel'
 import auditDialog from '../../../components/tips/auditDialog'
 import common from '../../../common/common'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
-    initCustomerlist
+    initOrgCustomerlist
 } from '../../../vuex/getters'
 import {
     getClientList,
@@ -299,7 +301,7 @@ export default {
     },
     vuex: {
         getters: {
-            initCustomerlist
+            initOrgCustomerlist
         },
         actions: {
             getClientList,
@@ -320,6 +322,7 @@ export default {
                 cur: 1,
                 all: 7,
                 link:'/customer/orgDistributed',
+                key:'orgCustomerList',
                 name:'',
                 phone:'',
                 employeeId:'',
@@ -383,8 +386,8 @@ export default {
         }
     },
     methods: {
-        clickOn: function(initCustomerlist) {
-            this.changeParam = initCustomerlist;
+        clickOn: function(param) {
+            this.changeParam = param;
         },
         createCustomer:function(info){
             this.createParam = info;
@@ -415,23 +418,23 @@ export default {
             this.getClientList(this.loadParam);
         },
         eventClick:function(id){
-            if(this.$store.state.table.basicBaseList.customerList[id].show){
-                this.$store.state.table.basicBaseList.customerList[id].show = !this.$store.state.table.basicBaseList.customerList[id].show;
+            if(this.$store.state.table.basicBaseList.orgCustomerList[id].show){
+                this.$store.state.table.basicBaseList.orgCustomerList[id].show = !this.$store.state.table.basicBaseList.orgCustomerList[id].show;
             }else{
-                this.$store.state.table.basicBaseList.customerList[id].show=true;
+                this.$store.state.table.basicBaseList.orgCustomerList[id].show=true;
             }
         },
-        specDelete:function(initCustomerlist){
-            this.deleteParam = initCustomerlist;
+        specDelete:function(param){
+            this.deleteParam = param;
         },
-        modifyClient:function(initCustomerlist){
-            this.alterParam =initCustomerlist;
+        modifyClient:function(param){
+            this.alterParam =param;
         },
-        clientTransfer:function(initCustomerlist){
+        clientTransfer:function(){
             this.transferParam.arr = [];
-            for(var i in this.initCustomerlist){
-                if(this.initCustomerlist[i].checked){
-                    this.transferParam.arr.push(this.initCustomerlist[i].id);
+            for(var i in this.initOrgCustomerlist){
+                if(this.initOrgCustomerlist[i].checked){
+                    this.transferParam.arr.push(this.initOrgCustomerlist[i].id);
                 }
             }
 
@@ -447,9 +450,9 @@ export default {
         this.auditParam.title="客户提取为供应商备注";
         this.auditParam.link='/customer/setSupplier';
         this.auditParam.arr=[];
-        for(var i in this.initCustomerlist){
-          if(this.initCustomerlist[i].checked){
-            this.auditParam.arr.push(this.initCustomerlist[i].id);
+        for(var i in this.initOrgCustomerlist){
+          if(this.initOrgCustomerlist[i].checked){
+            this.auditParam.arr.push(this.initOrgCustomerlist[i].id);
           }
         }
 
@@ -468,9 +471,9 @@ export default {
       clientTransferBlack:function(){
         this.auditParam.title="客户踢入黑名单备注";
         this.auditParam.arr=[];
-        for(var i in this.initCustomerlist){
-          if(this.initCustomerlist[i].checked){
-            this.auditParam.arr.push(this.initCustomerlist[i].id);
+        for(var i in this.initOrgCustomerlist){
+          if(this.initOrgCustomerlist[i].checked){
+            this.auditParam.arr.push(this.initOrgCustomerlist[i].id);
           }
         }
 
@@ -496,11 +499,11 @@ export default {
         checkedAll: function() {
            this.checked=!this.checked;
            if(this.checked){
-                 this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+                 this.$store.state.table.basicBaseList.orgCustomerList.forEach(function(item){
                     item.checked=true;
              })
            }else{
-                this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+                this.$store.state.table.basicBaseList.orgCustomerList.forEach(function(item){
                     item.checked=false;
              })
            }
@@ -510,12 +513,12 @@ export default {
             //this.id = id;
 
             const _this=this;
-            this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
-            if(!this.$store.state.table.basicBaseList.customerList[sub].checked){
+            this.$store.state.table.basicBaseList.orgCustomerList[sub].checked=!this.$store.state.table.basicBaseList.orgCustomerList[sub].checked;
+            if(!this.$store.state.table.basicBaseList.orgCustomerList[sub].checked){
               _this.checked=false;
             }else {
               _this.checked=true;
-              this.$store.state.table.basicBaseList.customerList.forEach(function (item) {
+              this.$store.state.table.basicBaseList.orgCustomerList.forEach(function (item) {
                 if(!item.checked){
                   _this.checked=false;
                 }
@@ -543,7 +546,7 @@ export default {
       }
     },
     created() {
-        this.getClientList(this.loadParam);
+        changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.orgClientParam);
     },
     ready(){
       common('tab','table_box',1);

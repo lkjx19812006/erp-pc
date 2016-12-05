@@ -262,7 +262,14 @@ export default {
         }
     },
     created() {
-        this.getOfferList(this.loadParam, this.loadParam.all);
+        if(!this.$store.state.table.isTop){
+            console.log("刷新数据");
+            this.getOfferList(this.loadParam);
+        }else{
+            console.log("不刷新数据");
+            this.loadParam = JSON.parse(localStorage.orgOfferParam);
+            this.$store.state.table.basicBaseList.offerList = JSON.parse(localStorage.orgOfferList);
+        }
     },
     ready(){
       common('tab','table_box',1);

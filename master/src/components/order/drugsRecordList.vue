@@ -144,7 +144,15 @@
       }
     },
     created() {
-      this.getRolloutList(this.loadParam);
+      
+      if(!this.$store.state.table.isTop){
+          console.log("刷新数据");
+          this.getRolloutList(this.loadParam);
+      }else{
+          console.log("不刷新数据");
+          this.loadParam = JSON.parse(localStorage.rollOutParam);
+          this.$store.state.table.basicBaseList.orderRolloutList = JSON.parse(localStorage.rollOutList);
+      }
     }
   }
 </script>

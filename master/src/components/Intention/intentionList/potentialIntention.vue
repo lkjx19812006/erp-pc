@@ -22,7 +22,7 @@
                  <dt class="left transfer marg_top">意向类型：</dt>
                  <dd class="left">
                       <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                          <option value="" selected>全部</option>
+                          <option value="">全部</option>
                           <option value="0">求购</option>
                           <option value="1">供应</option>
                       </select>
@@ -32,7 +32,7 @@
                  <dt class="left transfer marg_top">供应类型：</dt>
                  <dd class="left">
                        <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
-                              <option value="" selected>全部</option>
+                              <option value="">全部</option>
                               <option value="0">普通供应</option>
                               <option value="1">低价资源</option>
                       </select>
@@ -42,7 +42,7 @@
                  <dt class="left transfer marg_top">求购类型：</dt>
                  <dd class="left">
                        <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
-                              <option value="" selected>全部</option>
+                              <option value="">全部</option>
                               <option value="0">普通求购</option>
                               <option value="1">紧急求购</option>
                       </select>
@@ -52,7 +52,7 @@
                  <dt class="left transfer marg_top">提供发票：</dt>
                  <dd class="left">
                        <select v-model="loadParam.invoic"  class="form-control" @change="selectSearch()">
-                                <option value="" selected>全部</option>
+                                <option value="">全部</option>
                                 <option value="0">无发票</option>
                                 <option value="1">普通发票</option>
                                 <option value="2">增值发票</option>
@@ -63,7 +63,7 @@
                  <dt class="left transfer marg_top">审核状态：</dt>
                  <dd class="left">
                        <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
-                          <option value="" selected>全部</option>
+                          <option value="">全部</option>
                           <option value="0">初始</option>
                           <option value="9">审核中</option>
                           <option value="1">客服审核通过</option>
@@ -78,7 +78,7 @@
                  <dt class="left transfer marg_top">上/下架状态：</dt>
                  <dd class="left">
                        <select v-model="loadParam.onSell"  class="form-control" @change="selectSearch()">
-                          <option value="" selected>全部</option>
+                          <option value="">全部</option>
                           <option value="0">初始</option>
                           <option value="1">申请上架</option>
                           <option value="2">上架</option>
@@ -570,7 +570,14 @@ export default {
         }
     },
     created() {
-        this.getIntentionList(this.loadParam, this.loadParam.all);
+        if(!this.$store.state.table.isTop){
+            console.log("刷新数据");
+            this.getIntentionList(this.loadParam);
+        }else{
+            console.log("不刷新数据");
+            this.loadParam = JSON.parse(localStorage.potentialIntentionParam);
+            this.$store.state.table.basicBaseList.intentionList = JSON.parse(localStorage.potentialIntentionList);
+        }
     },
     ready(){
       common('tab','table_box',1);

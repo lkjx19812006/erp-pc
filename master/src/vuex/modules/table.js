@@ -204,6 +204,7 @@ function getCookie(name){          //获取cookie
 
 
 const state = {
+    isTop:false,    //用于判断是左侧列表还是上部列表
     login:{
         "id":uncompile(getCookie('id')),
         "name":uncompile(getCookie('name')),
@@ -272,11 +273,29 @@ const state = {
             ],
             show: true
         },
+        //客户列表
         customerList: [
-            { "id": 0, "type": 0,"typeDesc": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false },
-            { "id": 1, "type": 0,"typeDesc": 0, "name": "ddf", "category": "14frff555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false },
-            { "id": 2, "type": 1, "typeDesc": 0,"name": "ggg", "category": "gvgg", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": false, "checked": false }
+            { "id": 0, "type": 0,"typeDesc": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false }
         ],
+        myCustomerList: [
+            { "id": 0, "type": 0,"typeDesc": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false }
+        ],
+        orgCustomerList: [
+            { "id": 0, "type": 0,"typeDesc": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false }
+        ],
+        allCustomerList: [
+            { "id": 0, "type": 0,"typeDesc": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false }
+        ],
+        blackCustomerList: [
+            { "id": 0, "type": 0,"typeDesc": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false }
+        ],
+        unCustomerList: [
+            { "id": 0, "type": 0,"typeDesc": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false }
+        ],
+        supplyCustomerList: [
+            { "id": 0, "type": 0,"typeDesc": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false }
+        ],
+        //产品列表
         productList:[
              {"id": "442","cid": 1,"type": "1","name": "1111","breedId": 1111,"quality": "1111","location": "111","spec": "干","number": 1111,"price": 11,"unit": "1111","duedate": "2016-10-23 00:00","coa": 0,"comments": null,"status": 1,"show":true}
         ],
@@ -951,6 +970,7 @@ const mutations = {
         state.basicBaseList.drugList = data;
     },
     [CUSTOMER_DATA](state, data) { //客户列表
+        state.basicBaseList[data.key] = data;
         state.basicBaseList.customerList = data;
     },
     [CUSTOMER_DETAIL_DATA](state, data) { //客户详情
@@ -1043,7 +1063,7 @@ const mutations = {
     },
 
     [CUSTOMER_ADD_DATA](state, data) { //新增客户
-        state.basicBaseList.customerList.unshift({
+        var temp = {        
           address:data.address,
           bizScope:data.bizScope,
           category:data.category,
@@ -1079,19 +1099,21 @@ const mutations = {
           supplier:data.supplier,
           checked:false,
           creditLevel:data.creditLevel
-        })
+        };
 
-        console.log(data);
-      if(data.sub!='undefined'&&data.sub){
-        state.basicBaseList[data.key][data.sub][data.keyname]=1;
-      }
-      if(data.detail){
-        state[data.detail].customerId=data.id;
-      }
+        if(!!data.key && data.key!="userList"){
+          state.basicBaseList[data.key].unshift(temp);         //新增客户划转
+        }
+        
+        if(data.sub!='undefined'&&data.sub){    //会员列表页会员划转
+          state.basicBaseList[data.key][data.sub][data.keyname]=1;
+        }
+        if(data.detail){     //会员详情页会员划转
+          state[data.detail].customerId=data.id;
+        }
 
     },
     [CUSTOMER_UPDATE_DATA](state, data) { //修改客户列表信息
-        console.log(data)
         for (var key in data) {
             state.basicBaseList[data.key][data.sub][key] = data[key];
         }

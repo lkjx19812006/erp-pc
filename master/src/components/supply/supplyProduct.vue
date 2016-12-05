@@ -324,7 +324,16 @@
       common('tab','table_box',1);
     },
     created() {
-      this.getProductList(this.loadParam);
+      
+      if(!this.$store.state.table.isTop){
+            console.log("刷新数据");
+            this.getProductList(this.loadParam);
+        }else{
+            console.log("不刷新数据");
+            this.loadParam = JSON.parse(localStorage.productParam);
+            this.$store.state.table.basicBaseList.productList = JSON.parse(localStorage.productList);
+            //this.loadParam.loading = false;
+        }
     }
   }
 </script>

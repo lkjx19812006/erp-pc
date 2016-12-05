@@ -2,7 +2,7 @@
 	<div class="nav_tab">
         <ul class="nav nav-tabs" role="tablist"  >
           <li role="presentation" v-for="item in tabs">
-              <a  v-link="item.url" role="tab" data-toggle="tab" class="{{$route.path==item.url?'active_font':''}}">{{item.cname}}<span @click.stop="closeTab($index)" class="glyphicon glyphicon-remove"></span></a>
+              <a  v-link="item.url" role="tab" data-toggle="tab" class="{{$route.path==item.url?'active_font':''}}" @click="setIsTop()">{{item.cname}}<span @click.stop="closeTab($index)" class="glyphicon glyphicon-remove"></span></a>
           </li>
         </ul>
     </div>
@@ -11,10 +11,10 @@
 import Vue from 'vue'
 import {
     
-} from '../../vuex/getters'
+} from '../../../vuex/getters'
 import {
     
-} from '../../vuex/actions'
+} from '../../../vuex/actions'
 export default {
   components: {
     
@@ -22,12 +22,7 @@ export default {
   props:['param'],
   data() {
       return {
-     
-      	 callback:this.closeTab,
-         tabs:[{"id":12,"cname":"我的客户","url":"/home/client?id=0","top":true},{"id":13,"cname":"部门客户","url":"/home/client?id=1","top":true},{"id":14,"cname":"全部客户","url":"/home/client?id=2","top":true}]
-         //tabs:[]
-
-         
+        tabs:[]
       }
   },
   vuex: {
@@ -39,15 +34,30 @@ export default {
       }
   },
   methods:{
-    pushTab:function(){
-    	
+    setIsTop:function(){
+      this.$store.state.table.isTop = true;
     },
     closeTab:function(index){
       this.tabs.splice(index,1);
     }
   },
+
+  events:{
+    topTab:function(tab){
+      var arr = [];
+       for(var i = 0;i<this.tabs.length;i++){
+        
+          arr.push(this.tabs[i].id);
+       }
+       console.log(arr);
+       if(arr.indexOf(tab.id) == -1){
+          this.tabs.push(tab);
+       }
+       
+    }
+  },
   created(){
-    
+      
   }
   
 }
@@ -120,4 +130,5 @@ export default {
   margin-top: 28px;
   right:120px;
 }
+
 </style>

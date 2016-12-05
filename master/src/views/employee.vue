@@ -298,8 +298,16 @@ export default {
         /*if (this.$route.query.id > this.getList[7].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
             this.$route.query.id = 0;
         }*/
-        this.getEmployeeList(this.loadParam,this.loadParam.all);
-        this.getOrgList(this.loadParam,this.loadParam.all);
+        
+        if(!this.$store.state.table.isTop){
+          console.log("刷新数据");
+          this.getEmployeeList(this.loadParam);
+        }else{
+          console.log("不刷新数据");
+          this.loadParam = JSON.parse(localStorage.employeeParam);
+          this.$store.state.table.basicBaseList.employeeList = JSON.parse(localStorage.employeeList);
+        }
+        this.getOrgList(this.loadParam);
     },
     filter:(filter,{})
 }

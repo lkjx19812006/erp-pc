@@ -233,7 +233,14 @@ export default {
         }
     },
     created() {
-        this.getIntlIntentionInquireList(this.loadParam, this.loadParam.all);
+        if(!this.$store.state.table.isTop){
+            console.log("刷新数据");
+            this.getIntlIntentionInquireList(this.loadParam);
+        }else{
+            console.log("不刷新数据");
+            this.loadParam = JSON.parse(localStorage.intlInquireParam);
+            this.$store.state.table.basicBaseList.intlIntentionInquireList = JSON.parse(localStorage.intlInquireList);
+        }
     },
     filter: (filter,{})
 }

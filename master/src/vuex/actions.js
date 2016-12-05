@@ -251,6 +251,10 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+
+        localStorage.allOrderList = JSON.stringify(orderList);
+        localStorage.allOrderParam = JSON.stringify(param);
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -290,6 +294,10 @@ export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录�
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+
+        localStorage.payRecordList = JSON.stringify(orderList);
+        localStorage.payRecordParam = JSON.stringify(param);
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -312,6 +320,9 @@ export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+
+        localStorage.rollOutList = JSON.stringify(orderList);
+        localStorage.rollOutParam = JSON.stringify(param);  
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -435,6 +446,16 @@ export const getOrderCheckList = ({ dispatch }, param) => { //订单财务审核
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+        if(param.type==1){
+            localStorage.sellOrderCheckList = JSON.stringify(orderList);
+            localStorage.sellOrderCheckParam = JSON.stringify(param);  
+        }
+        if(param.type==0){
+            localStorage.purchaseOrderCheckList = JSON.stringify(orderList);
+            localStorage.purchaseOrderCheckParam = JSON.stringify(param);  
+        }
+          
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -507,6 +528,10 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+
+        localStorage.myOrderList = JSON.stringify(orderList);
+        localStorage.myOrderParam = JSON.stringify(param);
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -579,6 +604,9 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
         param.total = res.json().result.total;
         console.log(param.cur)
         param.loading = false;
+
+        localStorage.orgOrderList = JSON.stringify(orderList);
+        localStorage.orgOrderParam = JSON.stringify(param);
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -1999,10 +2027,33 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
             client[i].checked = false;
             client[i].show = false;
         }
+        client.key = param.key;
         dispatch(types.CUSTOMER_DATA, client)
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+
+        if(param.link=="/customer/employeeDistributed"){
+            localStorage.myClientParam = JSON.stringify(param);
+        }
+        if(param.link=="/customer/orgDistributed"){
+            localStorage.orgClientParam = JSON.stringify(param);
+        }
+        if(param.link=="/customer/"&&!param.blacklist){
+            localStorage.allClientParam = JSON.stringify(param);
+        }
+        if(param.link=="/customer/"&&param.blacklist){
+            localStorage.blackClientParam = JSON.stringify(param);
+        }
+        if(param.link=="/customer/undistributed"){
+            localStorage.unClientParam = JSON.stringify(param);
+        }
+        if(param.link=="/customer/suppliers"){
+            localStorage.supplyClientParam = JSON.stringify(param);
+        }
+        
+        
+        
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -2066,6 +2117,15 @@ export const getProductList = ({ dispatch }, param) => { //供应商产品列表
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+        if(param.link == '/customer/product'){
+            localStorage.productList = JSON.stringify(product);
+            localStorage.productParam = JSON.stringify(param);
+        }
+        if(param.link == '/customer/product/file'){
+            localStorage.productFileList = JSON.stringify(product);
+            localStorage.productFileParam = JSON.stringify(param);
+        }
+        
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -2284,6 +2344,10 @@ export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及�
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+
+        localStorage.employeeList = JSON.stringify(employ);
+        localStorage.employeeParam = JSON.stringify(param);
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -3130,6 +3194,23 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+        if(param.link == "/intention/user/list"){
+            localStorage.userIntentionList = JSON.stringify(intent);
+            localStorage.userIntentionParam = JSON.stringify(param);
+        }
+        if(param.link == "/intention/employee/list"){
+            localStorage.myIntentionList = JSON.stringify(intent);
+            localStorage.myIntentionParam = JSON.stringify(param);
+        }
+        if(param.link == "/intention/org/list"){
+            localStorage.orgIntentionList = JSON.stringify(intent);
+            localStorage.orgIntentionParam = JSON.stringify(param);
+        }
+        if(param.link == "/intention/resource/list"){
+            localStorage.potentialIntentionList = JSON.stringify(intent);
+            localStorage.potentialIntentionParam = JSON.stringify(param);
+        }
+        
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -3253,6 +3334,15 @@ export const getOfferList = ({ dispatch }, param) => { //报价信息列表以�
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+        if(param.link == "/intention/employee/offers"){
+            localStorage.myOfferList = JSON.stringify(offer);
+            localStorage.myOfferParam = JSON.stringify(param);
+        }
+        if(param.link == "/intention/org/offers"){
+            localStorage.orgOfferList = JSON.stringify(offer);
+            localStorage.orgOfferParam = JSON.stringify(param);
+        }
+        
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -3285,6 +3375,9 @@ export const getMsgList = ({ dispatch }, param) => { //留言信息列表以及�
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+
+        localStorage.msgList = JSON.stringify(msg);
+        localStorage.msgParam = JSON.stringify(param);
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -3357,7 +3450,16 @@ export const getIntlIntentionList = ({ dispatch }, param) => { //国际意向列
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
-        console.log(param);
+
+        if(param.link == "/intlIntention/by/employee"){
+            localStorage.myIntlIntentionList = JSON.stringify(intent);
+            localStorage.myIntlIntentionParam = JSON.stringify(param);
+        }
+        if(param.link == "/intlIntention/"){
+            localStorage.orgIntlIntentionList = JSON.stringify(intent);
+            localStorage.orgIntlIntentionParam = JSON.stringify(param);
+        }
+       
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -3631,6 +3733,10 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => { //国际�
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+
+        localStorage.intlInquireList = JSON.stringify(inquire);
+        localStorage.intlInquireParam = JSON.stringify(param);
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -4020,13 +4126,14 @@ export const getUserList = ({ dispatch }, param) => { //会员信息列表
             user[i].checked = false;
             user[i].show = false;
         }
-        console.log(res.json().result.pages);
+           
         dispatch(types.USER_DATA, user);
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
-    }, (res) => {
-        console.log('fail');
+        localStorage.userParam = JSON.stringify(param);
+    }, (res) => {        console.log('fail');
+
         param.loading = false;
     })
 }
@@ -4299,6 +4406,10 @@ export const getFilesList = ({ dispatch }, param) => { //供应商文件列表
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
+
+        localStorage.fileList = JSON.stringify(file);
+        localStorage.fileParam = JSON.stringify(param);
+        
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -4769,6 +4880,10 @@ export const baseGetData = ({ dispatch }, param) => { //查询权限
         param.total = res.json().result.total;
         console.log(json);
         dispatch(types.ABSTRACT_GET_DATA, json);
+
+        localStorage.scopeList = JSON.stringify(json);
+        localStorage.scopeParam = JSON.stringify(param);
+
     }, (res) => {
         param.loading = false;
         console.log('fail');

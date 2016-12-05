@@ -172,7 +172,15 @@ export default {
         }
     },
     created() {
-        this.getMsgList(this.loadParam, this.loadParam.all);
+        
+        if(!this.$store.state.table.isTop){
+            console.log("刷新数据");
+            this.getMsgList(this.loadParam);
+        }else{
+            console.log("不刷新数据");
+            this.loadParam = JSON.parse(localStorage.msgParam);
+            this.$store.state.table.basicBaseList.msgList = JSON.parse(localStorage.msgList);
+        }
     },
     ready(){
       common('tab','table_box',1);

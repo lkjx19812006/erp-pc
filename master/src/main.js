@@ -7,7 +7,7 @@ import configRouter from './router'
 import VueAnimatedList from 'vue-animated-list'
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 import treeview from './components/tree/tree.vue'
-import tabs from './components/tools/tabs.vue'
+import tabs from './components/tools/tabs/tabs.vue'
 import VueI18n from './filters/i18n'
 /*import alert from 'vue-strap/src/alert'*/
 
@@ -19,6 +19,7 @@ require('./components/calendar/vue.datepicker.css')
 
 Vue.component('PulseLoader',PulseLoader);
 Vue.component('treeview',treeview);
+Vue.component('tabs',tabs);
 
 Vue.directive('echarts', require('./directives/echarts'));
 
@@ -26,6 +27,7 @@ Vue.directive('echarts', require('./directives/echarts'));
 Vue.use(VueAnimatedList)
 Vue.use(VueRouter)
 Vue.use(VueResource)
+
 /*Vue.use(alert)*/
 
 Vue.http.options.root = '/src/assets/data'
@@ -67,11 +69,8 @@ router.beforeEach(function ({ to, next }) {
       if(!getCookie('no')){
         router.go({name: 'login'});
       }else{
-        console.log(to);
-        console.log(tabs.data().tabs);
-         console.log(tabs.data());
-        //console.log(localStorage.menus);
         next();
+
       }
     }
 

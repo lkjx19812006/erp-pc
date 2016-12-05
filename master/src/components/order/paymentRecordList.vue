@@ -5,7 +5,7 @@
       <div class="my_enterprise col-xs-2">{{$t('static.payrecord')}}</div>
       <div class="my_order_search">
           <select  v-model="loadParam.payWay" class="form-control" @change="searchProduct()">
-              <option selected value="">{{$t('static.select_payment_method')}}</option>
+              <option value="">{{$t('static.select_payment_method')}}</option>
               <option value="0">{{$t('static.line_down')}}</option>
               <option value="1">{{$t('static.alipay')}}</option>
               <option value="2">{{$t('static.pingan')}}</option>
@@ -125,7 +125,15 @@
         common('tab','table_box',1);
       },
     created() {
-      this.getOrderPayList(this.loadParam);
+      
+      if(!this.$store.state.table.isTop){
+            console.log("刷新数据");
+            this.getOrderPayList(this.loadParam);
+        }else{
+            console.log("不刷新数据");
+            this.loadParam = JSON.parse(localStorage.payRecordParam);
+            this.$store.state.table.basicBaseList.orderPayList = JSON.parse(localStorage.payRecordList);
+        }
     }
   }
 </script>

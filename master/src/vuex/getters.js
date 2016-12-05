@@ -2,6 +2,9 @@ const parseJson =(data) =>{
 return JSON.parse(JSON.stringify(data));
 }
 
+export const getIsTop = (state) => {
+    return state.isTop;
+};
 
 export const getCount = (state) => {
     return state.category.count
@@ -123,6 +126,24 @@ export const initDruglist = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.drugList));
 }
 /*---客户信息---*/
+export const initMyCustomerlist = (state) => {
+    return parseJson(state.table.basicBaseList.myCustomerList);
+}
+export const initOrgCustomerlist = (state) => {
+    return parseJson(state.table.basicBaseList.orgCustomerList);
+}
+export const initAllCustomerlist = (state) => {
+    return parseJson(state.table.basicBaseList.allCustomerList);
+}
+export const initBlackCustomerlist = (state) => {
+    return parseJson(state.table.basicBaseList.blackCustomerList);
+}
+export const initUnCustomerlist = (state) => {
+    return parseJson(state.table.basicBaseList.unCustomerList);
+}
+export const initSupplyCustomerlist = (state) => {
+    return parseJson(state.table.basicBaseList.supplyCustomerList);
+}
 export const initCustomerlist = (state) => {
     return parseJson(state.table.basicBaseList.customerList);
 }

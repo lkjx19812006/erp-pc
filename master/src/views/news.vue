@@ -35,7 +35,7 @@
                    <dt class="left transfer marg_top">经营类型：</dt>
                    <dd class="left">
                          <select v-model="loadParam.bizType"  class="form-control" @change="selectSearch()">
-                                  <option value="" selected>全部</option>
+                                  <option value="">全部</option>
                                   <option value="0">其它</option>
                                   <option value="1">合作社</option>
                                   <option value="2">药商</option>
@@ -321,6 +321,7 @@ import detailModel from '../components/user/userDetail'
 import searchModel from '../components/user/userSearch'
 import intentionModel from  '../components/user/userIntention'
 import common from '../common/common'
+import changeMenu from '../components/tools/tabs/tabs.js'
 import pagination from '../components/pagination'
 import personalauthModel from  '../components/user/personalAuth' 
 import companyauthModel from '../components/user/companyAuth'
@@ -328,6 +329,7 @@ import {
     getCount,
     initUserList,
     initUserDetail,
+    getIsTop
 
 } from '../vuex/getters'
 import {
@@ -456,6 +458,7 @@ export default {
             counterValue: getCount,
             initUserList,
             initUserDetail,
+            getIsTop
 
         },
         actions: {
@@ -620,9 +623,9 @@ export default {
   },
   ready(){
       common('tab','table_box',1);
-    },
+  },
   created() {
-        this.getUserList(this.loadParam);
+      changeMenu(this.$store.state.table.isTop,this.getUserList,this.loadParam,localStorage.userParam);   
   }
 
 

@@ -214,7 +214,16 @@
       common('tab','table_box',1);
     },
     created() {
-      this.getFilesList(this.loadParam);
+      
+      if(!this.$store.state.table.isTop){
+          console.log("刷新数据");
+          this.getFilesList(this.loadParam);
+      }else{
+          console.log("不刷新数据");
+          this.loadParam = JSON.parse(localStorage.fileParam);
+          this.$store.state.table.basicBaseList.filesList = JSON.parse(localStorage.fileList);
+          
+      }
     }
   }
 </script>

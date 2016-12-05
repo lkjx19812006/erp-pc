@@ -40,7 +40,7 @@
                            <dt class="left transfer marg_top">客户分类：</dt>
                            <dd class="left">
                                  <select v-model="loadParam.classify"  class="form-control" @change="selectSearch()">
-                                    <option value="" selected>全部</option>
+                                    <option value="">全部</option>
                                     <option value="1">采购商</option>
                                     <option value="2">供应商</option>
                                     <option value="3">买卖</option>
@@ -51,7 +51,7 @@
                            <dt class="left transfer marg_top">客户信用等级：</dt>
                            <dd class="left">
                                  <select v-model="loadParam.creditLevel"  class="form-control" @change="selectSearch()">
-                                  <option value="" selected>全部</option>
+                                  <option value="">全部</option>
                                   <option value="0">暂无等级</option>
                                   <option value="1">一星客户</option>
                                   <option value="2">二星客户</option>
@@ -113,7 +113,7 @@
                     <tr>
 
                     </tr>
-                    <tr v-for="item in initCustomerlist">
+                    <tr v-for="item in initAllCustomerlist">
                         <td  @click.stop="">
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
@@ -129,7 +129,7 @@
                                 name:item.name,
                                 link:alterInfo,
                                 url:'/customer/',
-                                key:'customerList'
+                                key:'allCustomerList'
                                 })">{{item.name}}</td>
                         <td>{{item.orderTotal}}</td>
                         <td>{{item.typeDesc}}</td>
@@ -207,7 +207,7 @@
                                                 creditLevel:item.creditLevel,
                                                 link:alterInfo,
                                                 url:'/customer/',
-                                                key:'customerList',
+                                                key:'allCustomerList',
                                                 employeeId:item.employeeId,
                                                 employeeName:item.employeeName,
                                                 orgId:item.orgId
@@ -236,8 +236,9 @@ import tipsdialogModel  from '../../../components/tips/tipDialog'
 import searchModel  from  '../../../components/clientRelate/searchModel'
 import auditDialog from '../../../components/tips/auditDialog'
 import common from '../../../common/common'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
-    initCustomerlist
+    initAllCustomerlist
 } from '../../../vuex/getters'
 import {
     getClientList,
@@ -262,7 +263,7 @@ export default {
     },
     vuex: {
         getters: {
-            initCustomerlist
+            initAllCustomerlist
         },
         actions: {
             getClientList,
@@ -283,6 +284,7 @@ export default {
                 cur: 1,
                 all: 7,
                 link:'/customer/',
+                key:'allCustomerList',
                 name:'',
                 phone:'',
                 employeeId:'',
@@ -346,8 +348,8 @@ export default {
         }
     },
     methods: {
-        clickOn: function(initCustomerlist) {
-            this.changeParam = initCustomerlist;
+        clickOn: function(param) {
+            this.changeParam = param;
 
         },
         createCustomer:function(info){
@@ -379,23 +381,23 @@ export default {
             this.getClientList(this.loadParam);
         },
         eventClick:function(id){
-            if(this.$store.state.table.basicBaseList.customerList[id].show){
-                this.$store.state.table.basicBaseList.customerList[id].show = !this.$store.state.table.basicBaseList.customerList[id].show;
+            if(this.$store.state.table.basicBaseList.allCustomerList[id].show){
+                this.$store.state.table.basicBaseList.allCustomerList[id].show = !this.$store.state.table.basicBaseList.allCustomerList[id].show;
             }else{
-                this.$store.state.table.basicBaseList.customerList[id].show=true;
+                this.$store.state.table.basicBaseList.allCustomerList[id].show=true;
             }
         },
-        specDelete:function(initCustomerlist){
-            this.deleteParam = initCustomerlist;
+        specDelete:function(param){
+            this.deleteParam = param;
         },
-        modifyClient:function(initCustomerlist){
-            this.alterParam =initCustomerlist;
+        modifyClient:function(param){
+            this.alterParam =param;
         },
         clientTransfer:function(){
             this.transferParam.arr = [];
-            for(var i in this.initCustomerlist){
-                if(this.initCustomerlist[i].checked){
-                    this.transferParam.arr.push(this.initCustomerlist[i].id);
+            for(var i in this.initAllCustomerlist){
+                if(this.initAllCustomerlist[i].checked){
+                    this.transferParam.arr.push(this.initAllCustomerlist[i].id);
                 }
             }
             if(this.transferParam.arr.length>0){
@@ -409,9 +411,9 @@ export default {
           this.auditParam.title="客户提取为供应商备注";
           this.auditParam.link='/customer/setSupplier';
           this.auditParam.arr=[];
-          for(var i in this.initCustomerlist){
-            if(this.initCustomerlist[i].checked){
-              this.auditParam.arr.push(this.initCustomerlist[i].id);
+          for(var i in this.initAllCustomerlist){
+            if(this.initAllCustomerlist[i].checked){
+              this.auditParam.arr.push(this.initAllCustomerlist[i].id);
             }
           }
 
@@ -431,9 +433,9 @@ export default {
           this.auditParam.title="客户踢入黑名单备注";
           this.auditParam.link='/customer/transferBlacklist';
           this.auditParam.arr=[];
-          for(var i in this.initCustomerlist){
-            if(this.initCustomerlist[i].checked){
-              this.auditParam.arr.push(this.initCustomerlist[i].id);
+          for(var i in this.initAllCustomerlist){
+            if(this.initAllCustomerlist[i].checked){
+              this.auditParam.arr.push(this.initAllCustomerlist[i].id);
             }
           }
 
@@ -458,11 +460,11 @@ export default {
         checkedAll: function() {
            this.checked=!this.checked;
            if(this.checked){
-                 this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+                 this.$store.state.table.basicBaseList.allCustomerList.forEach(function(item){
                     item.checked=true;
              })
            }else{
-                this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+                this.$store.state.table.basicBaseList.allCustomerList.forEach(function(item){
                     item.checked=false;
              })
            }
@@ -475,12 +477,12 @@ export default {
             //this.id = id;
 
             const _this=this;
-            this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
-            if(!this.$store.state.table.basicBaseList.customerList[sub].checked){
+            this.$store.state.table.basicBaseList.allCustomerList[sub].checked=!this.$store.state.table.basicBaseList.allCustomerList[sub].checked;
+            if(!this.$store.state.table.basicBaseList.allCustomerList[sub].checked){
               _this.checked=false;
             }else {
               _this.checked=true;
-              this.$store.state.table.basicBaseList.customerList.forEach(function (item) {
+              this.$store.state.table.basicBaseList.allCustomerList.forEach(function (item) {
                 if(!item.checked){
                   _this.checked=false;
                 }
@@ -505,7 +507,7 @@ export default {
       }
     },
     created() {
-        this.getClientList(this.loadParam);
+        changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.allClientParam);
     },
     ready(){
       common('tab','table_box',1);
