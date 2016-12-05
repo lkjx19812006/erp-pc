@@ -5,7 +5,9 @@ import {
     ADD_SAMPLE,
     UPDATE_SAMPLE,
     SAMPLE_DETAIL,
-    DELETE_DATA
+    DELETE_DATA,
+    APPLY_DATA,
+    UNIT_LIST
 } from '../mutation-types'
 
 const state = {
@@ -18,14 +20,21 @@ const state = {
         "week": "20",
         "total": "5000"
     }],
-    mySampleList:[],
+    mySampleList:[{
+        "send":true
+    }],
     orgSampleList:[],
     sampleDetail:{
         arr: [],
         show: true
     },
+    unitList:[],
 }
 const mutations = {
+    [UNIT_LIST](state,data){ //常用单位
+       console.log(state.unitList)
+       state.unitList = data;
+    },
     [MY_CLIENT_COUNT](state, data) { //我的客户统计
       console.log(state.countList)
       state.countList = data;
@@ -55,11 +64,15 @@ const mutations = {
            'address':data.address,
            'items':data.items,
            'validate':data.validate,
-           'ctime':data.ctime
+           'ctime':data.ctime,
+           'id':data.id
         })
     },
     [UPDATE_SAMPLE](state, data) { //修改寄样申请表
-        state.mySampleList[data.sub][key] = data[key];
+        console.log(data)
+        for(var key in data){
+            state.mySampleList[data.index][key] = data[key];
+        }   
     },
     [SAMPLE_DETAIL](state,data){ //寄样详情
         state.sampleDetail = data;
@@ -67,6 +80,25 @@ const mutations = {
     [DELETE_DATA](state,data) { //删除信息
         state[data.key].splice(data.sub, 1);
     },
+    [APPLY_DATA](state,data){ //审核寄样申请
+        console.log(data)
+        if(data.url=='/sample/validate/'){
+          for (var key in data) {
+                console.log(state.orgSampleList[data.sub])
+                state.orgSampleList[data.sub][key] = data[key];
+            }  
+         state.orgSampleList[data.sub].description = data.auditComment;
+        }
+        if(data.url=='/sample/validate/apply/'){
+            for (var key in data) {
+                console.log(state.mySampleList[data.sub])
+                state.mySampleList[data.sub][key] = data[key];
+            }
+            state.mySampleList[data.sub].description = data.auditComment;
+        }
+        
+        
+    }
 }
 export default {
     state,

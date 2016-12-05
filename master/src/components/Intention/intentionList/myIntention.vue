@@ -405,7 +405,7 @@
                                </a>
                               <a class="operate" v-if="item.type==1"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" height="18" width="47" alt="生成订单"/>
                                </a>
-                              <!-- <a v-if="item.sampling==1"  @click.stop="sengSample(item,$index)">寄样申请表</a> -->
+                              <a v-if="item.sampling==1"  @click.stop="sengSample(item,$index)">寄样申请表</a>
                         </td>
                       </tr>
                       
@@ -521,23 +521,19 @@ export default {
             sampleOrderParam:{
                send:false,
                sub:'',
-               sampling:'',
-               country:'',
+               country:'中国',
                province:'',
                city:'',
                district:'',
+               customer:'',
                customerName:'',
                customerPhone:'',
                breedName:'',
+               total:0,
                consignee:'',
-               location:'',
-               ctime:'',
-               consigneePhone:'',
-               currency:0,
                address:'',
-               comments:'',
-               spec:'',
-               quality:'',
+               consigneePhone:'',
+               currency:1,
                employee:this.initLogin.id,
                items:[ 
 
@@ -849,15 +845,14 @@ export default {
         sengSample:function(item,sub){
            this.sampleOrderParam.send = true;
            this.sampleOrderParam.sub = sub;
-           this.sampleOrderParam.sampling = item.sampling;
-           this.sampleOrderParam.sampleUnit = item.sampleUnit;
-           this.sampleOrderParam.sampleNumber = item.sampleNumber;
-           this.sampleOrderParam.sampleAmount = item.sampleAmount;
+           this.sampleOrderParam.customer = item.customerId; 
            this.sampleOrderParam.customerName = item.customerName;
            this.sampleOrderParam.customerPhone = item.customerPhone;
            this.sampleOrderParam.breedName = item.breedName;
-           this.sampleOrderParam.address = item.address;
-           this.sampleOrderParam.location = item.location;
+           this.sampleOrderParam.country = item.country;
+           this.sampleOrderParam.province = item.province;
+           this.sampleOrderParam.city = item.city;
+           this.sampleOrderParam.district = item.district;
            this.sampleOrderParam.ctime = item.ctime;
         }
     },

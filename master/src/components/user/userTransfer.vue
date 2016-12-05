@@ -265,7 +265,8 @@
   import tipsModel  from '../tips/tipDialog'
   import vSelect from '../tools/vueSelect/components/Select'
   import {
-    initUserType
+    initUserType,
+    
   } from '../../vuex/getters'
   import {
     saveCreate,
@@ -292,6 +293,7 @@
             total:0
         },
         selectParam: {
+          choice:'选择',
           show: false,
           employeeId: '',
           employeeName: '',
@@ -334,7 +336,7 @@
     },
     vuex: {
       getters:{
-        initUserType
+        initUserType,
       },
       actions: {
         saveCreate,
@@ -383,7 +385,6 @@
           emulateJSON: false,
           emulateHTTP: false
         }).then((res) => {
-
           _self.provinceArr=res.json().result;
           _self.provinceArr.forEach(function(item){
             if(_self.param.province&&_self.param.province.indexOf(item.cname) == 0 ){

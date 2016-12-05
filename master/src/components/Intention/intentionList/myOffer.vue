@@ -78,8 +78,8 @@
                            <div v-if="item.orderTime==0">未采纳</div>
                            <div v-else>已采纳</div>
                         </td> -->
-                        <td    @click.stop="adopt(item,$index)">
-                              <a class="operate" v-if="item.orderTime==0"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
+                        <td >
+                              <a class="operate" @click.stop="adopt(item,$index)" v-if="item.orderTime==0"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
                                </a>
                         </td>
                        <!--  <td @click.stop="clickShow($index)">

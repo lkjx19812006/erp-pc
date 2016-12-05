@@ -21,7 +21,6 @@
 				              		<th>规格</th>
 				              		<th>数量</th>
 				              		<th>单位</th>
-				              		<th>创建时间</th>
 				              		<th></th>
 				              		<th></th>
 				              	</tr>
@@ -34,7 +33,6 @@
 				                	<td>{{item.spec}}</td>
 				                	<td>{{item.number}}</td>
 				                	<td>{{item.cunit}}</td>
-				                	<td>{{item.ctime}}</td>
 				                	<td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
 	                                <td v-else>{{$t('static.edit')}}</td>
 	                                <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
@@ -75,7 +73,10 @@
 	                                
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
-	                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
+	                                     <select v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}" @change="test()">
+	                                     	<option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}</option>
+	                                     </select>
+	                                     <!-- <input type="text" v-show="!breedParam.id" v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
 	                                     <div type="text" class="edit-input" v-if="breedParam.id">
 	                                         <input-select
 	                                           :value.sync="breedInfo.cunit"
@@ -85,7 +86,7 @@
 	                                           label="name"
 	                                         >
 	                                         </input-select>
-	                                     </div>
+	                                     </div> -->
 	                                </div>                     
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.origin')}}<span class="system_danger" v-if="$inner.location.required">{{$t('static.required')}}</span></label>
@@ -215,7 +216,7 @@
 	            </div>
 	           	<div class="edit_footer">
 		            <button type="button" class="btn btn-default btn-close" @click="param.send = false">{{$t('static.cancel')}}</button>
-		            <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.items.length>0"  @click="confirm()">{{$t('static.confirm')}}</button>
+		            <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.items.length>0"  @click="createOrUpdateIntlIntention()">{{$t('static.confirm')}}</button>
 		            <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.confirm')}}</button>
 		        </div>
 	        </validator>
@@ -235,7 +236,8 @@ import {
     initProvince,
     initCitylist,
     initDistrictlist,
-    initgSampleDetail
+    initgSampleDetail,
+    initUnitlist
 } from '../../vuex/getters'
 import {
     getBreedDetail,
@@ -245,6 +247,8 @@ import {
     getProvinceList,
     getCityList,
     getDistrictList,
+    alterSample,
+    getUnitList
 } from '../../vuex/actions'
 export default{
 	props:['param'],
@@ -275,6 +279,7 @@ export default{
               spec:'',
               number:'',
               cunit:'',
+              unit:'',
               id:''
             },
             addParam:{
@@ -324,7 +329,8 @@ export default{
 		    initProvince,
 		    initCitylist,
 		    initDistrictlist,
-		    initgSampleDetail
+		    initgSampleDetail,
+		    initUnitlist
 		},
 		actions:{
 			getBreedDetail,
@@ -333,7 +339,9 @@ export default{
             getProvinceList,
             getCityList,
             getDistrictList,
-            getSampleDetail
+            getSampleDetail,
+            alterSample,
+            getUnitList
 		}
 	},
 	methods:{
@@ -360,24 +368,12 @@ export default{
             if(this.city!=''&&this.city!=null){
               this.getDistrictList(this.city);
             }
-
         },
-		serviceselected:function(sub,id,name,tel,email){
-			this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
-			for(var key in this.initCustomerlist){
-				if(key!=sub){
-					if(this.$store.state.table.basicBaseList.customerList[key].checked==true){
-						this.$store.state.table.basicBaseList.customerList[key].checked=false;
-					}
-				}
-			}
-			this.param.customerId= id;
-			this.param.customerName = name;
-			this.param.customerPhone = tel;
-            this.param.email = email;
-			this.param.show=false;
-			this.$dispatch('customer',this.param);
-		},
+        test:function(){
+        	console.log(this.breedInfo.cunit)
+        	/*this.breedInfo.unit = this.unit.unit;
+        	this.breedInfo.cunit = unit.cunit;*/
+        },
 		employNameSearch: function() {
             this.getClientList(this.loadParam);
         },
@@ -403,6 +399,7 @@ export default{
           this.breedInfo.spec=this.param.items[index].spec,
           this.breedInfo.number=this.param.items[index].number,
           this.breedInfo.cunit=this.param.items[index].cunit,
+          this.breedInfo.unit=this.param.items[index].unit,
           this.updateParam.show = true;
         },
         deleteBreed:function(index){
@@ -424,7 +421,8 @@ export default{
           this.param.items[this.updateParam.index].location=this.breedInfo.location,
           this.param.items[this.updateParam.index].spec=this.breedInfo.spec,
           this.param.items[this.updateParam.index].number=this.breedInfo.number,
-          this.param.items[this.updateParam.index].cunit=this.breedInfo.cunit,
+          this.param.items[this.updateParam.index].cunit=this.breedInfo.cunit.split(',')[1],
+          this.param.items[this.updateParam.index].unit=this.breedInfo.cunit.split(',')[0],
           /*this.param.items[this.updateParam.index].sourceType=this.breedInfo.sourceType,*/
           this.param.items[this.updateParam.index].status=this.breedInfo.status,
           /*this.param.items[this.updateParam.index].orderId=this.breedInfo.id,*/
@@ -438,8 +436,10 @@ export default{
           this.param.items[this.param.items.length-1].location = this.breedInfo.location;
           this.param.items[this.param.items.length-1].spec = this.breedInfo.spec;
           this.param.items[this.param.items.length-1].number = this.breedInfo.number;
-          this.param.items[this.param.items.length-1].cunit = this.breedInfo.cunit;
-          /*this.param.items[this.param.items.length-1].sourceType = this.breedInfo.sourceType;*/
+          this.param.items[this.param.items.length-1].cunit = this.breedInfo.cunit.split(',')[1];
+          this.param.items[this.param.items.length-1].unit = this.breedInfo.cunit.split(',')[0];
+          this.param.items[this.param.items.length-1].status = 1;
+
           console.log(this.param.items[this.param.items.length-1]);
           this.breedInfo.status = 0;
           this.addParam.show = false; 
@@ -454,6 +454,7 @@ export default{
               this.breedInfo.spec='';
               this.breedInfo.number='';
               this.breedInfo.cunit='';
+              this.breedInfo.unit='';
               this.param.items.push({
                   breedId:'',
                   breedName:'',
@@ -462,20 +463,39 @@ export default{
                   spec:'',
                   number:'',
                   cunit:'',
+                  unit:'',
+                  status:''
               });
               this.addParam.show = true;
           }  
           
         },
-        confirm:function(param){
-            this.param.country = this.country.cname;
-            this.param.province = this.province.cname;
-            this.param.city = this.city.cname;
-            this.param.district = this.district.cname;
-            this.param.send=false;
-            console.log(this.param);
-            this.createSample(this.param);
-        }
+        createOrUpdateIntlIntention:function(){
+	        this.param.send = false;
+	        //将this.param.items补全
+	        console.log(this.param.items.length);
+	        console.log(this.param.itemsBack.length);
+	        var temp=[];   //存放this.param.itemsBack中有，this.param.items中没有的
+	        for(var i=0;i<this.param.itemsBack.length;i++){
+	            var k = 0;
+	            for(var j=0;j<this.param.items.length;j++){
+	              if(this.param.itemsBack[i].id!=this.param.items[j].id){
+	                  k++;
+	              }
+	              if(k==this.param.items.length){
+	                this.param.itemsBack[i].status = 0;
+	                temp.push(this.param.itemsBack[i]);
+	              }
+	            }
+	        }
+	        var _this = this;
+	        console.log(temp);
+	        temp.forEach(function(item){
+	          _this.param.items.push(item);
+	        })
+	        console.log(this.param.items);
+	        this.alterSample(this.param);
+      },
 	},
 	events:{
         breed:function(breed){
@@ -499,6 +519,7 @@ export default{
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
         this.getSampleDetail(this.param);
+        this.getUnitList();
         if(this.param.breedId){
             this.breedParam.breedName = this.param.brredName;
             this.breedParam.id = this.param.breedId;

@@ -27,15 +27,15 @@
                               </select>
                               <!-- <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/> -->
                           </div>
-                          <div class="editpage-input">
+                          <!-- <div class="editpage-input" v-if="param.sourceType!=0">
                               <label class="editlabel">{{$t('static.order_source')}}</label>
                               <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" >
                                   <option value="0">交易员新建</option>
                                   <option value="1">意向</option>
                                   <option value="2">报价</option> 
                               </select>
-                              <!-- <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/> -->
-                          </div>
+                              <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/>
+                          </div> -->
                            <div class="editpage-input">
                               <label class="editlabel">{{$t('static.consignee_name')}} <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}" v-validate:consignee="{minlength:2}" />
@@ -94,6 +94,14 @@
                               <label class="editlabel">{{$t('static.comment')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
                           </div>
+                          <div class="editpage-input">
+                              <label class="editlabel">{{$t('static.order_status')}}</label>
+                              <select  class="form-control edit-input" v-model="param.orderStatus" >
+                                  <option value="0" selected>订单生成</option>
+                                  <option value="60">已完成未评论</option>
+                                  <option value="70">订单已完成</option>
+                              </select>
+                          </div>
                       </div>
                       <div class="editpageright">
 
@@ -104,8 +112,8 @@
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.international')}}</label>
                               <select type="text" class="form-control edit-input" v-model="param.intl"  @change="selectBizType()">
-                                  <option value="0">否</option>
-                                  <option value="1">是</option>
+                                  <option value="0">{{$t('static.no')}}</option>
+                                  <option value="1">{{$t('static.yes')}}</option>
                               </select>
                           </div>
                           <div class="editpage-input" >
@@ -167,13 +175,6 @@
                               </select>
                           </div>
                           <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.sample_order')}}</label>
-                              <select type="text" class="form-control edit-input" v-model="param.sample" value="{{param.sample}}" >
-                                  <option value="0" selected>否</option>
-                                  <option value="1">是</option>
-                              </select>
-                          </div>
-                          <div class="editpage-input">
                               <label class="editlabel">{{$t('static.sundry_fees')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}"/>
                           </div>
@@ -183,13 +184,13 @@
                               <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
                           </div>
                           <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.order_status')}}</label>
-                              <select  class="form-control edit-input" v-model="param.orderStatus" >
-                                  <option value="0" selected>订单生成</option>
-                                  <option value="60">已完成未评论</option>
-                                  <option value="70">订单已完成</option>
+                              <label class="editlabel">{{$t('static.sample_order')}}</label>
+                              <select type="text" class="form-control edit-input" v-model="param.sample" value="{{param.sample}}" >
+                                  <option value="0" selected>{{$t('static.no')}}</option>
+                                  <option value="1">{{$t('static.yes')}}</option>
                               </select>
                           </div>
+                          
                       </div>
                   </div>
               </section>

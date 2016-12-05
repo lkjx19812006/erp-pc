@@ -149,6 +149,7 @@
                   <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
                   <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
                   <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>
+                  <td v-if="item.sourceType==3">{{$t('static.sample_order')}}</td>
                   <td v-if="item.validate==2" style="background:green;color:#fff">{{$t('static.approved')}}</td>
                   <td v-if="item.validate==-2" style="background:red;color:#fff">{{$t('static.unapproved')}}</td>
                   <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
@@ -489,12 +490,11 @@
                 this.detailParam=initOrderlist;
             },
             updateOrder:function(initOrderlist,goods){
-                /*this.dialogParam.show = true;
-                this.dialogParam.id = id;
-                this.dialogParam.index = index;
-                this.dialogParam.goods = [];*/
                 this.dialogParam=initOrderlist;
                 var _this = this;
+                if(goods==null){
+                   goods=[];
+                }
                 for(var i=0;i<goods.length;i++){
                     this.dialogParam.goodsBack[i] = {};
                     for(var key in goods[i]){

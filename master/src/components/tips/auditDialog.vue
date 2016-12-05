@@ -21,13 +21,37 @@
         <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="不通过" />
         <input type="button" class="btn  btn-confirm"  @click="param.pass(),param.show = false" value="通过" />
       </div>
+      <div class="model-footer" v-if="param.key=='mySampleList'">
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+        <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.show = false" value="申请" />
+      </div>
+      <div class="model-footer" v-if="param.key=='orgSampleList'">
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+        <input type="button" class="btn  btn-confirm"  @click="refuse(param)" value="不通过" />
+        <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.show = false" value="通过" />
+      </div>
     </div>
   </div>
 </template>
 <script>
+  import {
+    sampleApply
+  } from '../../vuex/actions'
   export default {
-    props: ['param']
-
+    props: ['param'],
+    vuex:{
+      actions:{
+        sampleApply
+      }
+    },
+    methods:{
+       refuse:function(item){
+          console.log(item);
+          item.validate = 3;
+          item.show=false;
+          this.sampleApply(item);
+       }
+    }
   }
 </script>
 <style scoped>

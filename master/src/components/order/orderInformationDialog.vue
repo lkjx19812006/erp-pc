@@ -357,7 +357,8 @@ import {
     getBreedDetail,
     getDistrictList,
     createOrder,
-    alterOrder
+    alterOrder,
+    getOrderDetail
 } from '../../vuex/actions'
 export default {
     components: {
@@ -440,7 +441,8 @@ export default {
             getBreedDetail,
             getDistrictList,
             createOrder,
-            alterOrder
+            alterOrder,
+            getOrderDetail
         }
     },
     methods:{
@@ -627,7 +629,7 @@ export default {
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
         console.log(this.param);
-            
+         this.getOrderDetail(this.param);   
          if(this.param.breedId){
             this.breedParam.breedName = this.param.breedName;
             this.breedParam.id = this.param.breedId;

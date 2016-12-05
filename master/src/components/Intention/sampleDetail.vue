@@ -14,17 +14,17 @@
                 <div class="panel panel-default col-md-11 clearfix" style="padding:0;margin-top:10px;">
                       <div class="panel-heading" v-cloak>
                           <h4 class="panel-title clearfix" @click="enfoldment({
-                                      link:initgSampleDetail.items.arr,
+                                      link:initgSampleDetail.items,
                                       crete:'items'
                                       })">
                                 <img class="pull-left" src="/static/images/msg.png" height="29" width="26"  />
                                 <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                  样品（{{initgSampleDetail.items.arr.length}}）
+                                  样品（{{initgSampleDetail.items.length}}）
                                 </a>
                                 <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                           </h4>
                       </div>
-                      <div  class="panel-collapse" v-show="initgSampleDetail.items.show&&initgSampleDetail.items.arr.length>0">
+                      <div  class="panel-collapse" v-show="!initgSampleDetail.items.show||initgSampleDetail.items.length>0">
                             <div class="panel-body panel-set">
                                 <table class="table contactSet">
                                     <thead>
@@ -37,7 +37,7 @@
                                       <th></th>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="item in initgSampleDetail.items.arr">
+                                        <tr v-for="item in initgSampleDetail.items">
                                             <td>{{item.breedName}}</td>
                                             <td>{{item.location}}</td>
                                             <td>{{item.spec}}</td>
@@ -140,10 +140,13 @@ export default {
     },
     methods: {
         enfoldment:function(param){
-          if(this.$store.state.count.sampleDetail[param.crete].arr.length==0){
+            console.log(param)
+            console.log(this.$store.state.count.sampleDetail[param.crete])
+          if(this.$store.state.count.sampleDetail[param.crete].length==0){
                   this.$store.state.count.sampleDetail[param.crete].show=true;
           }
           this.$store.state.count.sampleDetail[param.crete].show = !this.$store.state.count.sampleDetail[param.crete].show;
+          console.log(this.$store.state.count.sampleDetail[param.crete].show)
       },
     },
     created(){

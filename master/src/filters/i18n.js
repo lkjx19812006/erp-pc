@@ -166,7 +166,7 @@ var locales = {
       inquiry_type:'询价类型',
       new_order:'新建订单',
       customer_info:'客户信息',
-      sample_order:'是否样品',
+      sample_order:'样品',
       sundry_fees:'杂费',
       fee_explain:'杂费说明',
       preferential:'优惠金额',
