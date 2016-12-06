@@ -350,7 +350,7 @@ export default {
             },
             createParam:{
                 show: false,
-                name:''
+                name:'',
             },
             searchParam:{
                 show:false
@@ -371,7 +371,8 @@ export default {
             },
             tipsParam:{
                 show:false,
-                name:'请先选择客户'
+                name:'请先选择客户',
+                alert:true
             },
           auditParam:{
             link:'/customer/transferBlacklist',

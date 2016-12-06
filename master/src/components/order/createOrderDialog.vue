@@ -52,24 +52,23 @@
                                      :value.sync="country"
                                      :on-change="selectProvince"
                                      :options="initCountrylist"
-                                     placeholder="国家"
+                                     placeholder="国家/Country"
                                      label="cname"
                                     >
                                    </v-select>
                              </div>
                           </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.city')}}</label>
-                              <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                              <div v-if="province.cname" type="text" class="edit-input">
+                           <div class="editpage-input">
+                              <label class="editlabel">{{$t('static.province')}}</label>
+                              <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                              <div v-if="country.cname" type="text" class="edit-input">
                                   <v-select
-                                       :debounce="250"
-                                       :value.sync="city"
-                                       :on-change="selectDistrict"
-                                       :options="initCitylist"
-                                       placeholder="市"
-                                       label="cname"
-                                  >
+                                    :debounce="250"
+                                    :value.sync="province"
+                                    :on-change="selectCity"
+                                    :options="initProvince"
+                                    placeholder="省/Province"
+                                    label="cname">
                                   </v-select>
                               </div>
                           </div>
@@ -120,21 +119,22 @@
                               <label class="editlabel">{{$t('static.consignee_phone')}}  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['phone']" value="{{param.consigneePhone}}"/>
                           </div>
-                          
                           <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.province')}}</label>
-                              <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
-                              <div v-if="country.cname" type="text" class="edit-input">
+                              <label class="editlabel">{{$t('static.city')}}</label>
+                              <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+                              <div v-if="province.cname" type="text" class="edit-input">
                                   <v-select
-                                    :debounce="250"
-                                    :value.sync="province"
-                                    :on-change="selectCity"
-                                    :options="initProvince"
-                                    placeholder="省"
-                                    label="cname">
+                                       :debounce="250"
+                                       :value.sync="city"
+                                       :on-change="selectDistrict"
+                                       :options="initCitylist"
+                                       placeholder="市/City"
+                                       label="cname"
+                                  >
                                   </v-select>
                               </div>
                           </div>
+                         
                            <div class="editpage-input">
                               <label class="editlabel">{{$t('static.area')}}</label>
                               <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
@@ -155,7 +155,7 @@
                                  <!--  <option value="1">是</option> -->
                               </select>
                               <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==1">
-                                  <option value="0" selected>CNY人民币</option>
+                                  <option value="0">CNY人民币</option>
                                   <option value="1">USD美元</option>
                                   <option value="2">EUR欧元</option>
                                   <option value="3">HKD港币</option>

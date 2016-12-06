@@ -77,16 +77,6 @@
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
                                                 <td>{{item.amount}}元</td>
-                                               <!--  <td  @click="clickShow($index,{
-                                                     concrete:'goods'
-                                                     })">
-                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                   <div class="breed_action" v-show="item.show">
-                                                       <dl>
-                                                          <dt @click="createChance(item,$index)">编辑</dt>
-                                                      </dl>
-                                                   </div>
-                                               </td>  -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -115,15 +105,13 @@
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
                                                 <td>{{item.amount}}元</td>
-                                                <!-- <td>
-                                                    <img v-bind:src="item.image" />
-                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({

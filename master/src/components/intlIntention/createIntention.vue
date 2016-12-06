@@ -40,7 +40,7 @@
                              :value.sync="country"
                              :on-change="selectProvince"
                              :options="initCountrylist"
-                             placeholder="国家"
+                             placeholder="国家/Country"
                              label="cname"
                             >
                            </v-select>
@@ -62,7 +62,7 @@
                      <div class="editpageright">
                        <div class="editpage-input">
                          <label class="editlabel">{{$t('static.city')}}</label>
-                         <input type="text"  class="form-control edit-input"  placeholder="{{$t('static.choose_province')}}" v-model="{{param.city}}" />
+                         <input type="text"  class="form-control edit-input"  placeholder="{{$t('static.choose_province')}}" v-model="param.city" />
                          <!-- <div v-if="province.cname" type="text" class="edit-input">
                          <v-select
                                    :debounce="250"
@@ -119,7 +119,7 @@
                              :prevalue="param.pack"
                              :value.sync="param.pack"
                              :options="tag"
-                             placeholder="包装"
+                             placeholder="包装/Packaging"
                            >
                            </input-select>
                          </div>
@@ -192,7 +192,7 @@
                                          :value.sync="breedInfo.spec"
                                          :prevalue="breedInfo.spec"
                                          :options="initBreedDetail.specs.arr"
-                                         placeholder="规格"
+                                         placeholder="规格/Specification"
                                          label="name"
                                        >
                                        </input-select>
@@ -207,7 +207,7 @@
                                          :value.sync="breedInfo.unit"
                                          :prevalue="breedInfo.unit"
                                          :options="initBreedDetail.units.arr"
-                                         placeholder="单位"
+                                         placeholder="单位/Unit"
                                          label="name"
                                        >
                                        </input-select>
@@ -229,7 +229,7 @@
                                          :prevalue="breedInfo.location"
                                          :value.sync="breedInfo.location"
                                          :options="initBreedDetail.locals.arr"
-                                         placeholder="产地"
+                                         placeholder="产地/Origin"
                                          label="name"
 
                                        >
@@ -240,7 +240,7 @@
                        
                               <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                   <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
                               </div>
                        
                               <div class="editpage-input">
@@ -251,7 +251,7 @@
                                          :prevalue="breedInfo.pack"
                                          :value.sync="breedInfo.pack"
                                          :options="tag"
-                                         placeholder="包装"
+                                         placeholder="包装/packaging"
                                        >
                                        </input-select>
                                    </div>
@@ -577,7 +577,7 @@ export default {
     },
     events:{
         breed:function(breed){
-           if(breed.eName==null){
+          if(breed.eName==null){
              this.breedInfo.breedName = breed.breedName;
              this.breedParam.breedName = breed.breedName;
           }else{

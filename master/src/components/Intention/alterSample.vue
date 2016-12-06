@@ -74,7 +74,7 @@
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
 	                                     <select v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}" @change="test()">
-	                                     	<option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}</option>
+	                                     	<option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}({{item.ename}})</option>
 	                                     </select>
 	                                     <!-- <input type="text" v-show="!breedParam.id" v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
 	                                     <div type="text" class="edit-input" v-if="breedParam.id">

@@ -38,7 +38,7 @@
                                      :value.sync="country"
                                      :on-change="selectProvince"
                                      :options="initCountrylist"
-                                     placeholder="国家"
+                                     placeholder="国家/country"
                                      label="cname"
                                     >
                                    </v-select>
@@ -125,27 +125,27 @@
                           <div class="editpage-input" >
                               <label class="editlabel">{{$t('static.currency')}} </label>
                                <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==0">
-                                  <option value="0" selected>人民币</option>
+                                  <option value="0" selected>CNY人民币</option>
                                  <!--  <option value="1">是</option> -->
                               </select>
                               <select type="text" class="form-control edit-input"  v-model="param.currency"   value="{{param.currency}}" v-if="param.intl==1">
-                                  <option value="0">人民币</option>
-                                  <option value="1" selected>美元</option>
-                                  <option value="2">欧元</option>
-                                  <option value="3">港币</option>
-                                  <option value="4">英镑</option>
-                                  <option value="5">日元</option>
-                                  <option value="6">韩元</option>
-                                  <option value="7">加元</option>
-                                  <option value="8">澳元</option>
-                                  <option value="9">瑞郎</option>
-                                  <option value="10">新加坡元</option>
-                                  <option value="11">马来西亚币</option>
-                                  <option value="12">印尼</option>
-                                  <option value="13">新西兰</option>
-                                  <option value="14">越南</option>
-                                  <option value="15">泰铢</option>
-                                  <option value="16">菲律宾</option>
+                                  <option value="0">CNY人民币</option>
+                                  <option value="1" selected>USD美元</option>
+                                  <option value="2">EUR欧元</option>
+                                  <option value="3">HKD港币</option>
+                                  <option value="4">GBP英镑</option>
+                                  <option value="5">JPY日元</option>
+                                  <option value="6">KRW韩元</option>
+                                  <option value="7">CAD加元</option>
+                                  <option value="8">AUD澳元</option>
+                                  <option value="9">CHF瑞郎</option>
+                                  <option value="10">SGD新加坡元</option>
+                                  <option value="11">MYR马来西亚币</option>
+                                  <option value="12">IDR印尼</option>
+                                  <option value="13">NZD新西兰</option>
+                                  <option value="14">VND越南</option>
+                                  <option value="15">THB泰铢</option>
+                                  <option value="16">PHP菲律宾</option>
                               </select>
                           </div>
                           <div class="editpage-input">
@@ -171,9 +171,9 @@
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.order_status')}}</label>
                               <select  class="form-control edit-input" v-model="param.orderStatus" >
-                                  <option value="0" selected>订单生成</option>
-                                  <option value="60">已完成未评论</option>
-                                  <option value="70">订单已完成</option>
+                                  <option value="0" selected>{{$t('static.create_order')}}</option>
+                                  <option value="60">{{$t('static.awaiting_comment')}}</option>
+                                  <option value="70">{{$t('static.order_over')}}</option>
                               </select>
                           </div>
                       </div>
@@ -240,7 +240,7 @@
                                            :value.sync="breedInfo.spec"
                                            :prevalue="breedInfo.spec"
                                            :options="initBreedDetail.specs.arr"
-                                           placeholder="规格"
+                                           placeholder="规格/Specification"
                                            label="name"
                                          >
                                          </input-select>
@@ -255,7 +255,7 @@
                                            :value.sync="breedInfo.unit"
                                            :prevalue="breedInfo.unit"
                                            :options="initBreedDetail.units.arr"
-                                           placeholder="单位"
+                                           placeholder="单位/unit"
                                            label="name"
                                          >
                                          </input-select>
@@ -266,7 +266,7 @@
                              <div class="editpageright">
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.headline')}}</label>
-                                     <input type="text" v-model="breedInfo.title" class="form-control edit-input" />
+                                     <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" />
                                 </div>
                          
                                 <div class="editpage-input">
@@ -277,7 +277,7 @@
                                            :prevalue="breedInfo.location"
                                            :value.sync="breedInfo.location"
                                            :options="initBreedDetail.locals.arr"
-                                           placeholder="产地"
+                                           placeholder="产地/origin"
                                            label="name"
 
                                          >
@@ -288,12 +288,12 @@
                          
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                     <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
                                 </div>
                          
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
-                                     <input type="text"  v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
+                                     <input type="number"  v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
                                 </div>
 
                                 <div style="margin-top:10px;text-align:right">
@@ -573,10 +573,18 @@ export default {
     },
     events:{
         breed:function(breed){
-            this.breedInfo.breedName = breed.breedName;
+          if(breed.eName==null){
+             this.breedInfo.breedName = breed.breedName;
+             this.breedParam.breedName = breed.breedName;
+          }else{
+            this.breedParam.breedName = breed.eName;
+            this.breedInfo.breedName = breed.eName;
+          } 
             this.breedInfo.breedId = breed.breedId;
-            this.breedParam.breedName = breed.breedName;
+            /*this.breedParam.breedName = breed.breedName;*/
             this.breedParam.id = breed.breedId;
+            //this.breedParam.loading=true;
+            //this.getBreedDetail(this.breedParam);
         },
         customer:function(customer){
             this.param.customerName = customer.customerName;

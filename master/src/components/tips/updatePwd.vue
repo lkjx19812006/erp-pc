@@ -66,7 +66,7 @@ export default {
                 this.param.show=false;
             }else if(passwd.newPwd==''||passwd.resetPwd==''){
                 console.log(this.param)
-              this.param.callback('密码不能为空');
+               this.param.callback('密码不能为空');
             }else{
                 this.param.callback('两次输入密码不一致');
             }

@@ -150,6 +150,7 @@ export const resetPawd = ({ dispatch }, data) => { //修改密码
 
     }, (res) => {
         console.log('fail');
+        data.callback(res.json().msg);
     })
 }
 
@@ -1029,6 +1030,13 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             orderDetail.logisticses.show = true;
             for (var i in orderDetail.logisticses.arr) {
                 orderDetail.logisticses.arr[i].show = false;
+            }
+            var stages = orderDetail.stages;
+            orderDetail.stages = {};
+            orderDetail.stages.arr = stages;
+            orderDetail.stages.show = true;
+            for (var i in orderDetail.stages.arr) {
+                orderDetail.stages.arr[i].show = false;
             }
         }
         if(param.key=='myOrderList'||param.key=='orgOrderList'||param.key=='allOrderList'||param.key=='sellOrderList'){
@@ -2458,7 +2466,6 @@ export const getRoleList = ({ dispatch }, param) => { //获取角色列表
 export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列表
     console.log('新增客户');
     console.log(data);
-    console.log(data.supplier);
     const Cdata = {
         "name": data.name,
         "type": data.type,
@@ -2502,6 +2509,8 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         }
     }).then((res) => {
         console.log('添加成功')
+        dispatch(types.CUSTOMER_ADD_DATA, data);
+        data.callback(res.json().msg);
         data.id = res.json().result.customerId;
         data.mainPhone = data.contacts[0].phone;
         data.phoneProvince = res.json().result.phoneProvince;
@@ -2510,7 +2519,6 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         if ('show' in tipsParam) {
             tipsParam.show = true;
         }
-        dispatch(types.CUSTOMER_ADD_DATA, data);
     }, (res) => {
         console.log('fail');
     })
