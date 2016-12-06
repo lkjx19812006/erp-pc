@@ -75,7 +75,7 @@
                 </select>
 
               </div>
-              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+              <div class="client-detailInfo  pull-right col-md-6 col-xs-12" >
                 <label>{{$t('static.deparment')}}<span class="system_danger" v-if="$validation.orgid.required">{{$t('static.required')}}</span></label>
                 <input v-show="false" type="text" class="form-control" readonly="readonly"
                        v-model="param.orgId" v-validate:orgid="['required']"  />

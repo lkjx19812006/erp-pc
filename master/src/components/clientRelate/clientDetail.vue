@@ -324,25 +324,6 @@
                                                            },item.show=false)"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                                                      </a>
                                                <a class="operate" href="/crm/api/v1/file/dowanloadFile?path={{item.path}}"><img src="/static/images/upload.png" height="18" width="28"  /></a></td>
-                                                <!-- <td  @click="clickShow($index,{
-                                                    concrete:'files'
-                                                    })">
-                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="files_action" v-show="item.show" >
-                                                        <dl>
-                                                            <dt @click="specDelete({
-                                                                 id:item.id,
-                                                                 sub:$index,
-                                                                 show:true,
-                                                                 title:'文件',
-                                                                 link:specDel,
-                                                                 url:'/customer/file/',
-                                                                 key:'files',
-                                                                 headline:'clientDetail'
-                                                                 },item.show=false)">删除</dt>
-                                                        </dl>
-                                                    </div>
-                                                </td> -->
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
@@ -995,7 +976,7 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>{{$t('static.classification')}}</label>
-                                    <input type="text" class="form-control"  value="{{initClientDetail.classify | classify}}" disabled="disabled" />
+                                    <input type="text" class="form-control"  value="{{initClientDetail.classifyDesc}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>{{$t('static.telephone')}}</label>

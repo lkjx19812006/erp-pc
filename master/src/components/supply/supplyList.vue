@@ -71,22 +71,23 @@
           <th>主营产品</th>
 
           <!-- <th>分类</th>
-          <th>客户来源</th>
-          <th>客户信用等级</th>
-          <th>分类码</th>
-          <th>所属分类</th>
-          
-          <th>负责人</th>
-          <th>经营范围</th>
-          <th>手机</th>
-          <th>手机省</th>
-          <th>手机市</th>
-          <th>邮箱</th>
-          <th>国家</th>
-          <th>所在省</th>
-          <th>所在市</th>
-          <th>注册地址</th>
-          <th>备注</th> -->
+            <th>客户来源</th>
+            <th>客户信用等级</th>
+            <th>分类码</th>
+            <th>所属分类</th>
+            
+            <th>负责人</th>
+            <th>经营范围</th>
+            <th>手机</th>
+            <th>手机省</th>
+            <th>手机市</th>
+            <th>邮箱</th>
+            <th>国家</th>
+            <th>所在省</th>
+            <th>所在市</th>
+            <th>注册地址</th>
+            <th>备注</th> 
+          -->
           <th style="min-width:150px;">操作</th>
         </tr>
         </thead>
@@ -119,31 +120,32 @@
 
 
           <!-- <td>{{item.classifyDesc | classify}}</td>
-          <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.sourceType=='android'" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.sourceType=='ios'" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.sourceType!='pc'&&item.sourceType!='weixin'&&item.sourceType!='android'&&item.sourceType!='ios'" style="background:#fa6705;color:#fff">{{item.sourceType}}</td> 
-          <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
-          <td v-if="item.creditLevel==1">一星客户</td>
-          <td v-if="item.creditLevel==2">二星客户</td>
-          <td v-if="item.creditLevel==3">三星客户</td>
-          
-          上面这个img显示新客户图标
-          <td>{{item.category}}</td>
-          <td>{{item.classify | classify}}</td>
-          
-          <td>{{item.principal}}</td>
-          <td>{{item.bizScope}}</td>
-          <td>{{item.mainPhone}}</td>
-          <td>{{item.phoneProvince}}</td>
-          <td>{{item.phoneCity}}</td>
-          <td>{{item.email}}</td>
-          <td>{{item.countryName }}</td>
-          <td>{{item.provinceName}}</td>
-          <td>{{item.cityName}}</td>
-          <td>{{item.address}}</td>
-          <td>{{item.comments}}</td> -->
+            <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
+                          <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
+                          <td v-if="item.sourceType=='android'" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
+                          <td v-if="item.sourceType=='ios'" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
+                          <td v-if="item.sourceType!='pc'&&item.sourceType!='weixin'&&item.sourceType!='android'&&item.sourceType!='ios'" style="background:#fa6705;color:#fff">{{item.sourceType}}</td> 
+            <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
+            <td v-if="item.creditLevel==1">一星客户</td>
+            <td v-if="item.creditLevel==2">二星客户</td>
+            <td v-if="item.creditLevel==3">三星客户</td>
+            
+            上面这个img显示新客户图标
+            <td>{{item.category}}</td>
+            <td>{{item.classify | classify}}</td>
+            
+            <td>{{item.principal}}</td>
+            <td>{{item.bizScope}}</td>
+            <td>{{item.mainPhone}}</td>
+            <td>{{item.phoneProvince}}</td>
+            <td>{{item.phoneCity}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.countryName }}</td>
+            <td>{{item.provinceName}}</td>
+            <td>{{item.cityName}}</td>
+            <td>{{item.address}}</td>
+            <td>{{item.comments}}</td> 
+          -->
           <td>
                <a class="operate" @click="modifyClient({
                       id:item.id,
