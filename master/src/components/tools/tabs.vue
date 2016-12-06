@@ -2,7 +2,7 @@
 	<div class="nav_tab">
         <ul class="nav nav-tabs" role="tablist"  >
           <li role="presentation" v-for="item in tabs">
-              <a  v-link="item.url" role="tab" data-toggle="tab" class="{{$route.path==item.url?'active_font':''}}">{{item.cname}}<span @click.stop="closeTab($index)" class="glyphicon glyphicon-remove"></span></a>
+              <div  v-link="item.url" role="tab" data-toggle="tab" class="{{$route.path==item.url?'active_font':''}}">{{item.cname}}<span @click.stop="closeTab($index)" class="glyphicon glyphicon-remove"></span></div>
           </li>
         </ul>
     </div>
@@ -74,8 +74,9 @@ export default {
 .nav_tab ul li{
   font-size: 14px;
 }
-.nav_tab ul li a{
+.nav_tab ul li div{
   color: #333;
+  padding:5px 8px;
 }
 .nav_tab ul li span:hover{
    transform: scale(1.2);
@@ -83,6 +84,14 @@ export default {
    -webkit-transform: scale(1.2);
    -ms-transform: scale(1.2);
    color: red;
+}
+.active_font {
+    background: #fff !important;
+    border-top: 1px solid #fa6705;
+}
+.v-link-active {
+     color: #333;
+    background: #aaa;
 }
 .center_nav {
     height:88px;

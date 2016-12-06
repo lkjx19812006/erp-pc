@@ -130,6 +130,7 @@ export default {
 .nav_tab ul li a{
   color: #333;
 }
+
 .nav_tab ul li span:hover{
    transform: scale(1.2);
    -moz-transform: scale(1.2);
