@@ -50,7 +50,7 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="item in initIntlIntentionList" style="cursor:pointer">
+                    <tr v-for="item in initOrgIntlIntentionList" style="cursor:pointer">
                          <!--<td>-->
                             <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
                         <!--</td>-->
@@ -117,9 +117,10 @@ import createModel from '../createIntention'
 import modifyModel from '../modifyIntention'
 import inquireModel from '../inquire'
 import common from '../../../common/common'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 
 import {
-    initIntlIntentionList
+    initOrgIntlIntentionList
   
 } from '../../../vuex/getters'
 import {
@@ -141,7 +142,7 @@ export default {
     },
     vuex: {
         getters: {
-            initIntlIntentionList,
+            initOrgIntlIntentionList,
             
         },
         actions: {
@@ -164,6 +165,7 @@ export default {
                 all: 7,
                 total:0,
                 link:'/intlIntention/',
+                key:'orgIntlIntentionList',
                 employeeName:'',
                 breedId:'',
                 breedName:'',
@@ -390,7 +392,8 @@ export default {
         }
     },
     created() {
-        this.getIntlIntentionList(this.loadParam, this.loadParam.all);
+        changeMenu(this.$store.state.table.isTop,this.getIntlIntentionList,this.loadParam,localStorage.orgIntlIntentionParam); 
+    
     },
     filter: (filter,{})
 }

@@ -77,6 +77,7 @@ import filter from '../../../filters/filters'
 import editmsgModel from '../editMsg'
 import detailModel from '../../user/userDetail'
 import common from '../../../common/common'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
 	initMsgList
 } from '../../../vuex/getters'
@@ -172,7 +173,7 @@ export default {
         }
     },
     created() {
-        this.getMsgList(this.loadParam, this.loadParam.all);
+        changeMenu(this.$store.state.table.isTop,this.getMsgList,this.loadParam,localStorage.msgParam); 
     },
     ready(){
       common('tab','table_box',1);

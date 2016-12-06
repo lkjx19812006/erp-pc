@@ -183,6 +183,7 @@ import filter from '../filters/filters'
 import detailempModel  from '../components/emloyee/employDetail'
 import searchorgModel  from '../components/emloyee/searchorg'
 import common from '../common/common'
+import changeMenu from '../components/tools/tabs/tabs.js'
 import {
    getList,
    initEmployeeList,
@@ -298,8 +299,9 @@ export default {
         /*if (this.$route.query.id > this.getList[7].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
             this.$route.query.id = 0;
         }*/
-        this.getEmployeeList(this.loadParam,this.loadParam.all);
-        this.getOrgList(this.loadParam,this.loadParam.all);
+        changeMenu(this.$store.state.table.isTop,this.getEmployeeList,this.loadParam,localStorage.employeeParam); 
+        
+        this.getOrgList(this.loadParam);
     },
     filter:(filter,{})
 }

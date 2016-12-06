@@ -107,6 +107,7 @@
   import updatelabelModel from  '../clientRelate/label/updatelebel'
   import pictureModel  from '../tips/pictureDialog'
   import common from '../../common/common'
+  import changeMenu from '../../components/tools/tabs/tabs.js'
   import {
     initFileslist
   } from '../../vuex/getters'
@@ -214,7 +215,8 @@
       common('tab','table_box',1);
     },
     created() {
-      this.getFilesList(this.loadParam);
+      changeMenu(this.$store.state.table.isTop,this.getFilesList,this.loadParam,localStorage.fileParam);
+     
     }
   }
 </script>

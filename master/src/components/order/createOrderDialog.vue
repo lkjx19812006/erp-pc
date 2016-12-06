@@ -244,7 +244,7 @@
                          
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.quality')}}<span class="system_danger" v-if="$inner.quality.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" />
+                                     <input type="number" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" />
                                 </div>
                          
                                 <div class="editpage-input">
@@ -308,7 +308,7 @@
                          
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
-                                     <input type="text"  v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
+                                     <input type="number"  v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
                                 </div>
 
                                 <div style="margin-top:10px;text-align:right">

@@ -72,6 +72,7 @@ import detailModel from '../inquireDetail'
 import affirmofferModel from '../confirmOffer'
 import common from '../../../common/common'
 import inquireModel from '../inquire'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
     initIntlIntentionInquireList
   
@@ -233,7 +234,8 @@ export default {
         }
     },
     created() {
-        this.getIntlIntentionInquireList(this.loadParam, this.loadParam.all);
+        changeMenu(this.$store.state.table.isTop,this.getIntlIntentionInquireList,this.loadParam,localStorage.intlInquireParam); 
+        
     },
     filter: (filter,{})
 }

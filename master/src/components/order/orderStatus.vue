@@ -9,7 +9,7 @@
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
-        <div class="order_contain">{{$t('static.order_status')}}</div>
+        <div class="order_contain">{{$t('static.order_status')}}{{param.key}}</div>
         <div class="navbar-client" style="margin-top:0">
             <div class="message">
                <p class="order-message">{{$t('static.order_message')}}</p>
@@ -52,6 +52,7 @@
                     show:true,
                     orderStatus:'',
                     link:'/order/handle',
+                    key:param.key,
                     images:''
                    },param.show=false)"  value="{{$t('static.take_order')}}" />
                 <button type="button" class="btn btn-default btn-close right"  @click="cancleBtn({
@@ -62,6 +63,7 @@
                     headline:'取消订单原因',
                     orderStatus:'',
                     link:'/order/cancle',
+                    key:param.key,
                     callback:cancel
                   })">{{$t('static.cancel_order')}}</button>
             </div>
@@ -72,6 +74,7 @@
                         show:true,
                         orderStatus:'',
                         link:'/order/confirm',
+                        key:param.key,
                         images:'',
                        },param.show=false)"  value="{{$t('static.confirm')}}" />
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">{{$t('static.cancel')}}</button>
@@ -86,6 +89,7 @@
                     id:initOrderDetail.id,
                     show:true,
                     link:'/order/payConfirm',
+                    key:param.key,
                     orderStatus:'',
                     images:'',
                     sub:$index
@@ -101,6 +105,7 @@
                     id:initOrderDetail.id,
                     show:true,
                     link:'/order/payConfirm',
+                    key:param.key,
                     orderStatus:'',
                     images:'',
                     sub:$index
@@ -139,6 +144,7 @@
                     id:initOrderDetail.id,
                     show:true,
                     link:'/order/pay',
+                    key:param.key,
                     payWay:'',
                     orderStatus:'',
                     images:'',
@@ -197,7 +203,8 @@
                   id:param.id,
                   show:true,
                   orderStatus:'',
-                  link:'/order/receiveConfirm'
+                  link:'/order/receiveConfirm',
+                  key:param.key
                 },param.show=false)"  value="{{$t('static.confirm_receipt')}}" />
                 <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
                   id:initOrderDetail.logisticses.arr[0].id,
@@ -234,6 +241,7 @@
                   lcompanyId:initOrderDetail.logisticses.arr[0].logistics,
                   lcompanyCode:initOrderDetail.logisticses.arr[0].code,
                   number:initOrderDetail.logisticses.arr[0].number,
+                  key:param.key,
                   show:true,
                   loading:true,
                   callback:logisticsInfo
@@ -286,6 +294,7 @@ export default {
             },
             cancleReason:{
                show:false,
+               key:this.param.key
             },
             undelinePaySelect:false,
             yaokuanPaySelected:false,
@@ -296,20 +305,24 @@ export default {
                id:'',
                link:'',
                payWay:'',
-               orderStatus:''
+               orderStatus:'',
+               key:this.param.key
             },
             payorder:{
               show:false,
+              key:this.param.key
             },
             imageParam:{
                 url:'/crm/api/v1/file/',
                 qiniu:false
             },
             logisticsDetail:{
-              show:false
+              show:false,
+              key:this.param.key
             },
             editorder:{
-              show:false
+              show:false,
+              key:this.param.key
             },
             payName: "去支付",
           type:"image/jpeg,image/jpg,image/png",
@@ -322,6 +335,7 @@ export default {
               id:this.param.id,
               show:true,
               link:'/order/send',
+              key:this.param.key,
               image_f:'',
               image_s:'',
               image_t:'',
@@ -361,24 +375,24 @@ export default {
             this.orderCancle(this.cancleReason,this.param);
         },
         accept:function(confirm){
-            console.log(confirm)
+          
             this.orderStatu(confirm)
         },
         confirmEdit:function(confirm){
-          console.log(confirm)
+          
             this.orderStatu(confirm)
         },
         orderEdit:function(edit){
-          console.log(edit)
+       
           this.editorder = edit;
         },
         Viewlogistics:function(logistics){
-          console.log(logistics)
+         
             this.logisticsDetail = logistics;
             this.logisticsInfo(this.logisticsDetail)
         },
         paychoice:function(payWay){
-            console.log(payWay)
+            
             this.payWay = payWay;
             if(payWay ==0){
               this.undelinePaySelect = true; //线下

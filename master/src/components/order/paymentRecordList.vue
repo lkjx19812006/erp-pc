@@ -5,7 +5,7 @@
       <div class="my_enterprise col-xs-2">{{$t('static.payrecord')}}</div>
       <div class="my_order_search">
           <select  v-model="loadParam.payWay" class="form-control" @change="searchProduct()">
-              <option selected value="">{{$t('static.select_payment_method')}}</option>
+              <option value="">{{$t('static.select_payment_method')}}</option>
               <option value="0">{{$t('static.line_down')}}</option>
               <option value="1">{{$t('static.alipay')}}</option>
               <option value="2">{{$t('static.pingan')}}</option>
@@ -59,6 +59,7 @@
   import filter from  '../../filters/filters'
   import detailModel from '../supply/productDetail'
   import common from '../../common/common'
+  import changeMenu from '../../components/tools/tabs/tabs.js'
   import {
     initOrderPaylist
   } from '../../vuex/getters'
@@ -125,7 +126,7 @@
         common('tab','table_box',1);
       },
     created() {
-      this.getOrderPayList(this.loadParam);
+      changeMenu(this.$store.state.table.isTop,this.getOrderPayList,this.loadParam,localStorage.payRecordParam); 
     }
   }
 </script>

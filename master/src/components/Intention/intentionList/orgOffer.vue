@@ -52,7 +52,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in initOfferList">
+                    <tr v-for="item in initOrgOfferList">
                          
                         <td>{{item.otime | date}}</td>
                         <td>{{item.employeeName}}</td>
@@ -98,8 +98,9 @@ import filter from '../../../filters/filters'
 import createorderModel  from '../createOrder'
 import searchModel  from '../offerSearch'
 import common  from '../../../common/common'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
-    initOfferList,
+    initOrgOfferList,
     initLogin
 } from '../../../vuex/getters'
 import {
@@ -113,7 +114,7 @@ export default {
     },
     vuex: {
         getters: {
-            initOfferList,
+            initOrgOfferList,
             initLogin
         },
         actions: {
@@ -129,6 +130,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                key:'orgOfferList',
                 link:'/intention/org/offers',
                 breedName:'',
                 spec:'',
@@ -145,7 +147,7 @@ export default {
             orderParam:{
                 show:false,
                 index:'',
-                key:'offerList',
+                key:'orgOfferList',
                 type:'',
                 customer:'',
                 sample:0,
@@ -199,16 +201,16 @@ export default {
           this.getOfferList(this.loadParam);
         },
         clickShow:function(index){
-            this.$store.state.table.basicBaseList.offerList[index].show=!this.$store.state.table.basicBaseList.offerList[index].show;
+            this.$store.state.table.basicBaseList.orgOfferList[index].show=!this.$store.state.table.basicBaseList.orgOfferList[index].show;
         },
         onlyselected:function(index){
             var _this = this;
-            this.$store.state.table.basicBaseList.offerList[index].checked=!this.$store.state.table.basicBaseList.offerList[index].checked;
-            if(!this.$store.state.table.basicBaseList.offerList[index].checked){
+            this.$store.state.table.basicBaseList.orgOfferList[index].checked=!this.$store.state.table.basicBaseList.orgOfferList[index].checked;
+            if(!this.$store.state.table.basicBaseList.orgOfferList[index].checked){
                 this.checked = false;
             }else{
                 this.checked = true;
-                this.$store.state.table.basicBaseList.offerList.forEach(function(item){
+                this.$store.state.table.basicBaseList.orgOfferList.forEach(function(item){
                     if(!item.checked){
                         _this.checked = false;
                     }
@@ -218,11 +220,11 @@ export default {
         checkedAll:function(){
             this.checked = !this.checked;
             if(this.checked){
-                this.$store.state.table.basicBaseList.offerList.forEach(function(item){
+                this.$store.state.table.basicBaseList.orgOfferList.forEach(function(item){
                     item.checked = true;
                 })
             }else{
-                this.$store.state.table.basicBaseList.offerList.forEach(function(item){
+                this.$store.state.table.basicBaseList.orgOfferList.forEach(function(item){
                     item.checked = false;
                 })
             }
@@ -262,7 +264,8 @@ export default {
         }
     },
     created() {
-        this.getOfferList(this.loadParam, this.loadParam.all);
+        changeMenu(this.$store.state.table.isTop,this.getOfferList,this.loadParam,localStorage.orgOfferParam); 
+        
     },
     ready(){
       common('tab','table_box',1);

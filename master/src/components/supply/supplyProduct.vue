@@ -210,6 +210,7 @@
   import searchModel  from  '../clientRelate/searchModel'
   import supplydetailModel from  '../clientRelate/clientDetail'
   import common from  '../../common/common'
+  import changeMenu from '../../components/tools/tabs/tabs.js'
   import {
     initProductlist
   } from '../../vuex/getters'
@@ -325,6 +326,17 @@
     },
     created() {
       this.getProductList(this.loadParam);
+      //changeMenu(this.$store.state.table.isTop,this.getProductList,this.loadParam,localStorage.productParam);
+
+      /*if(!this.$store.state.table.isTop){
+            console.log("刷新数据");
+            this.getProductList(this.loadParam);
+        }else{
+            console.log("不刷新数据");
+            this.loadParam = JSON.parse(localStorage.productParam);
+            //this.$store.state.table.basicBaseList.productList = JSON.parse(localStorage.productList);
+            //this.loadParam.loading = false;
+        }*/
     }
   }
 </script>

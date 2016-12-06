@@ -71,6 +71,7 @@
   import detailModel from '../supply/productDetail'
   import pictureModel from '../tips/pictureDialog'
   import common from '../../common/common'
+  import changeMenu from '../../components/tools/tabs/tabs.js'
   import {
     initProductlist
   } from '../../vuex/getters'
@@ -155,6 +156,17 @@
     },
     created() {
       this.getProductList(this.loadParam);
+      //changeMenu(this.$store.state.table.isTop,this.getProductList,this.loadParam,localStorage.productFileParam);
+      /*if(!this.$store.state.table.isTop){
+            console.log("刷新数据");
+            this.getProductList(this.loadParam);
+        }else{
+            console.log("不刷新数据");
+            this.loadParam = JSON.parse(localStorage.productFileParam);
+            this.$store.state.table.basicBaseList.productList = JSON.parse(localStorage.productFileList);
+            //this.loadParam.loading = false;
+        }*/
+      
     }
   }
 </script>

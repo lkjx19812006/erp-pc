@@ -21,7 +21,7 @@
                                         province:'',
                                         city:'',
                                         address:'',
-                                        employee:100004,
+                                        employee:'',
                                         employeeId:'',
                                         employeeName:'',
                                         orgId:'',
@@ -43,6 +43,7 @@
                                             }
                                         ],
                                         link:saveCreate,
+                                        key:'supplyCustomerList'
                                         })">新建</button>
         <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
         <button class="new_btn transfer" @click="createSearch()">搜索</button>
@@ -93,7 +94,7 @@
         <tr>
 
         </tr>
-        <tr v-for="item in initCustomerlist">
+        <tr v-for="item in initSupplyCustomerlist">
           <td>{{item.employeeName}}</td>
           <td>{{item.ctime}}</td>
           <td>{{item.lastOrderTime}}</td>
@@ -104,7 +105,7 @@
                                 loading:false,
                                 name:item.name,
                                 url:'/customer/',
-                                key:'customerList'
+                                key:'supplyCustomerList'
                                 })">{{item.name}}</td>
           <td>{{item.orderTotal}}</td>
           <td>{{item.typeDesc}}</td>
@@ -173,7 +174,7 @@
                       creditLevel:item.creditLevel,
                       link:alterInfo,
                       url:'/customer/',
-                      key:'customerList',
+                      key:'supplyCustomerList',
                       supplier:1
                       })"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                </a>
@@ -185,7 +186,7 @@
                         title:'供应商',
                         link:deleteInfo,
                         url:'/customer/',
-                        key:'customerList'
+                        key:'supplyCustomerList'
                         })"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                </a>
           </td>
@@ -207,8 +208,9 @@
   import searchModel  from  '../clientRelate/searchModel'
   import filter from '../../filters/filters'
   import common from '../../common/common'
+  import changeMenu from '../../components/tools/tabs/tabs.js'
   import {
-    initCustomerlist
+    initSupplyCustomerlist
   } from '../../vuex/getters'
   import {
     getClientList,
@@ -230,7 +232,7 @@
     },
     vuex: {
       getters: {
-        initCustomerlist
+        initSupplyCustomerlist
       },
       actions: {
         getClientList,
@@ -250,6 +252,7 @@
           cur: 1,
           all: 7,
           link:'/customer/suppliers',
+          key:'supplyCustomerList',
           name:'',
           phone:'',
           employeeId:'',
@@ -290,8 +293,8 @@
       }
     },
     methods: {
-      clickOn: function(initCustomerlist) {
-        this.changeParam = initCustomerlist;
+      clickOn: function(param) {
+        this.changeParam = param;
         this.getClientDetail(this.changeParam);
       },
       createCustomer:function(info){
@@ -321,17 +324,17 @@
             this.getClientList(this.loadParam);
         },
       eventClick:function(id){
-        if(this.$store.state.table.basicBaseList.customerList[id].show){
-          this.$store.state.table.basicBaseList.customerList[id].show = !this.$store.state.table.basicBaseList.customerList[id].show;
+        if(this.$store.state.table.basicBaseList.supplyCustomerList[id].show){
+          this.$store.state.table.basicBaseList.supplyCustomerList[id].show = !this.$store.state.table.basicBaseList.supplyCustomerList[id].show;
         }else{
-          this.$store.state.table.basicBaseList.customerList[id].show=true;
+          this.$store.state.table.basicBaseList.supplyCustomerList[id].show=true;
         }
       },
-      specDelete:function(initCustomerlist){
-        this.deleteParam = initCustomerlist;
+      specDelete:function(param){
+        this.deleteParam = param;
       },
-      modifyClient:function(initCustomerlist){
-        this.alterParam =initCustomerlist;
+      modifyClient:function(param){
+        this.alterParam =param;
       },
       searchClient:function(){
         this.getClientList(this.loadParam)
@@ -344,7 +347,7 @@
       }
     },
     created() {
-      this.getClientList(this.loadParam);
+      changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.supplyClientParam);
     },
     ready(){
       common('tab','table_box',1);

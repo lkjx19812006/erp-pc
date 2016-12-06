@@ -97,7 +97,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in initOrderlist"  v-cloak>
+                <tr v-for="item in initOrgOrderlist"  v-cloak>
                   <td  @click.stop="">
                     <label v-if="item.validate==1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                   </td>
@@ -235,9 +235,10 @@
     import auditModel  from '../order/orgAudit'
     import filter from '../../filters/filters'
     import common from '../../common/common'
+    import changeMenu from '../../components/tools/tabs/tabs.js'
     import {
         getList,
-        initOrderlist,
+        initOrgOrderlist,
         initLogin
     } from '../../vuex/getters'
     import {
@@ -271,6 +272,7 @@
                     all:1,
                     org:this.initLogin.orgId,
                     link:'/order/sectionList',
+                    key:'orgOrderList',
                     consignee:'',
                     consigneePhone:'',
                     type:'',
@@ -314,7 +316,8 @@
                     ids:[],
                     description:'',
                     validate:'',
-                    title:"部门订单审核"
+                    title:"部门订单审核",
+                    key:"orgOrderList"
                 },
                 tipsParam:{
                     show:false,
@@ -326,7 +329,7 @@
         vuex: {
             getters: {
                 getList,
-                initOrderlist,
+                initOrgOrderlist,
                 initLogin
             },
             actions: {
@@ -338,17 +341,26 @@
             }
         },
         created() {
-            this.getOrgOrder(this.loadParam)
+            changeMenu(this.$store.state.table.isTop,this.getOrgOrder,this.loadParam,localStorage.orgOrderParam); 
+            /*if(!this.$store.state.table.isTop){
+                console.log("刷新数据");
+                this.getOrgOrder(this.loadParam);
+            }else{
+                console.log("不刷新数据");
+                this.loadParam = JSON.parse(localStorage.orgOrderParam);
+                this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.orgOrderList);
+            }
+            */
         },
         methods: {
             selectSearch:function(){
                 this.getOrgOrder(this.loadParam)
             },
             editClick: function(sub) {
-                if(this.$store.state.table.basicBaseList.orderList[sub].show){
-                    this.$store.state.table.basicBaseList.orderList[sub].show=!this.$store.state.table.basicBaseList.orderList[sub].show;
+                if(this.$store.state.table.basicBaseList.orgOrderList[sub].show){
+                    this.$store.state.table.basicBaseList.orgOrderList[sub].show=!this.$store.state.table.basicBaseList.orgOrderList[sub].show;
                 }else{
-                     this.$store.state.table.basicBaseList.orderList[sub].show=true;
+                     this.$store.state.table.basicBaseList.orgOrderList[sub].show=true;
                 }
             },
             resetTime:function(){
@@ -370,11 +382,11 @@
                 _this.auditParam.ids = [];
                 _this.auditParam.indexs = [];
                _this.checked=false;
-                for(var i=0;i<this.initOrderlist.length;i++){
-                    if(this.$store.state.table.basicBaseList.orderList[i].checked){
-                        _this.auditParam.ids.push(this.$store.state.table.basicBaseList.orderList[i].id);
+                for(var i=0;i<this.initOrgOrderlist.length;i++){
+                    if(this.$store.state.table.basicBaseList.orgOrderList[i].checked){
+                        _this.auditParam.ids.push(this.$store.state.table.basicBaseList.orgOrderList[i].id);
                         _this.auditParam.indexs.push(i);
-                        _this.auditParam.validate = this.$store.state.table.basicBaseList.orderList[i].validate;
+                        _this.auditParam.validate = this.$store.state.table.basicBaseList.orgOrderList[i].validate;
                     }
                 }
                 if(this.auditParam.ids.length>0){
@@ -385,12 +397,12 @@
             },
             onlyselected: function(index){
                   const _self=this;
-                    this.$store.state.table.basicBaseList.orderList[index].checked=!this.$store.state.table.basicBaseList.orderList[index].checked;
+                    this.$store.state.table.basicBaseList.orgOrderList[index].checked=!this.$store.state.table.basicBaseList.orgOrderList[index].checked;
                     if(_self.checked){
                       _self.checked=false;
                     }else {
                       _self.checked=true;
-                      this.$store.state.table.basicBaseList.orderList.forEach(function (item) {
+                      this.$store.state.table.basicBaseList.orgOrderList.forEach(function (item) {
                         if(!item.checked){
                           if(item.validate==1){
                             _self.checked=item.checked;
@@ -403,27 +415,26 @@
             select:function(){
                   this.checked=!this.checked;
                   const checked=this.checked;
-                  this.$store.state.table.basicBaseList.orderList.forEach(function(item){
+                  this.$store.state.table.basicBaseList.orgOrderList.forEach(function(item){
                     if(item.validate==1)item.checked=checked;
                   })
 
             },
-            newOrder:function(initOrderlist){
-                 this.dialogParam=initOrderlist;
+            newOrder:function(param){
+                 this.dialogParam=param;
             },
             createSearch:function(){
                 console.log(this.loadParam)
                  this.loadParam.show=true;
                  this.loadParam.loading=false;
             },
-            clickOn:function(initOrderlist){
-                console.log(initOrderlist);
-                this.detailParam=initOrderlist;
+            clickOn:function(param){
+                
+                this.detailParam=param;
             },
-            updateOrder:function(initOrderlist){
-                console.log(initOrderlist)
-                console.log(initOrderlist.goods)
-                this.dialogParam=initOrderlist;
+            updateOrder:function(param){
+                
+                this.dialogParam=param;
             },
 
         },

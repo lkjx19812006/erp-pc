@@ -23,7 +23,11 @@ export default {
       lang:function(val){
           console.log('主页切换语言：'+val);
           this.$broadcast('changeLang',val);
-      }
+      },
+      tab:function(val){
+          console.log(val);
+          this.$broadcast('topTab',val);
+      },
   },
   store
 }

@@ -72,7 +72,10 @@
                         <td>{{item.consigneePhone}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.sampleDesc}}</td>
-                        <td>{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==0">{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==1" style="background:#9010ff;color:#fff">{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==3" tyle="background:red;color:#fff">{{item.validate | Audit}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.ctime}}</td>
                         <td>

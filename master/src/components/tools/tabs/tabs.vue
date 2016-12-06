@@ -2,7 +2,9 @@
 	<div class="nav_tab">
         <ul class="nav nav-tabs" role="tablist"  >
           <li role="presentation" v-for="item in tabs">
-              <div  v-link="item.url" role="tab" data-toggle="tab" class="{{$route.path==item.url?'active_font':''}}">{{item.cname}}<span @click.stop="closeTab($index)" class="glyphicon glyphicon-remove"></span></div>
+
+              <div  v-link="item.url" role="tab" data-toggle="tab" class="{{$route.path==item.url?'active_font':''}}" @click="setIsTop()">{{item.cname}}<span @click.stop="closeTab($index)" class="glyphicon glyphicon-remove" style="padding-left: 6px;"></span></div>
+
           </li>
         </ul>
     </div>
@@ -11,10 +13,11 @@
 import Vue from 'vue'
 import {
     getList
-} from '../../vuex/getters'
+} from '../../../vuex/getters'
+
 import {
     
-} from '../../vuex/actions'
+} from '../../../vuex/actions'
 export default {
   components: {
     
@@ -22,12 +25,7 @@ export default {
   props:['param'],
   data() {
       return {
-     
-      	 callback:this.pushTab,
-         tabs:[{"id":12,"cname":"我的客户","url":"/home/client?id=0","top":true},{"id":13,"cname":"部门客户","url":"/home/client?id=1","top":true},{"id":14,"cname":"全部客户","url":"/home/client?id=2","top":true}]
-         //tabs:[]
-
-         
+        tabs:[]
       }
   },
   vuex: {
@@ -39,15 +37,30 @@ export default {
       }
   },
   methods:{
-    pushTab:function(){
-    	
+    setIsTop:function(){
+      this.$store.state.table.isTop = true;
     },
     closeTab:function(index){
       this.tabs.splice(index,1);
     }
   },
+
+  events:{
+    topTab:function(tab){
+      var arr = [];
+       for(var i = 0;i<this.tabs.length;i++){
+        
+          arr.push(this.tabs[i].id);
+       }
+       console.log(arr);
+       if(arr.indexOf(tab.id) == -1){
+          this.tabs.push(tab);
+       }
+       
+    }
+  },
   created(){
-    
+      
   }
   
 }
@@ -70,9 +83,16 @@ export default {
 }
 .nav_tab ul{
   margin-bottom: 0px;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 35px;
 }
 .nav_tab ul li{
   font-size: 14px;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  white-space: nowrap;
+    text-overflow: ellipsis
 }
 .nav_tab ul li div{
   color: #333;
@@ -85,13 +105,12 @@ export default {
    -ms-transform: scale(1.2);
    color: red;
 }
-.active_font {
-    background: #fff !important;
-    border-top: 1px solid #fa6705;
+ .v-link-active{
+    background: #fff; 
 }
-.v-link-active {
+.active_font {
      color: #333;
-    background: #aaa;
+    background: #ccc !important;
 }
 .center_nav {
     height:88px;
@@ -129,4 +148,5 @@ export default {
   margin-top: 28px;
   right:120px;
 }
+
 </style>

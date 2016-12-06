@@ -58,7 +58,7 @@
         <tr>
 
         </tr>
-        <tr v-for="item in initCustomerlist">
+        <tr v-for="item in initBlackCustomerlist">
           <td  @click.stop="">
             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
           </td>
@@ -75,7 +75,7 @@
                 name:item.name,
                 link:alterInfo,
                 url:'/customer/',
-                key:'customerList'
+                key:'blackCustomerList'
                 })">{{item.name}}
           </td>
           <td>{{item.orderTotal}}</td>
@@ -143,8 +143,9 @@
   import tipsdialogModel  from '../../../components/tipsDialog'
   import auditDialog from '../../../components/tips/auditDialog'
   import common from '../../../common/common'
+  import changeMenu from '../../../components/tools/tabs/tabs.js'
   import {
-    initCustomerlist
+    initBlackCustomerlist
   } from '../../../vuex/getters'
   import {
     getClientList,
@@ -162,7 +163,7 @@
     },
     vuex: {
       getters: {
-        initCustomerlist
+        initBlackCustomerlist
       },
       actions: {
         getClientList,
@@ -179,6 +180,7 @@
           cur: 1,
           all: 7,
           link:'/customer/',
+          key:'blackCustomerList',
           name:'',
           phone:'',
           employeeId:'',
@@ -210,24 +212,25 @@
           title:'客户踢出黑名单备注',
           arr:[],
           blacklist:0,
-          link:'/customer/transferBlacklist'
+          link:'/customer/transferBlacklist',
+          key:'blackCustomerList',
         },
         checked:false
       }
     },
     methods: {
-      clickOn: function(initCustomerlist) {
-        this.changeParam = initCustomerlist;
+      clickOn: function(param) {
+        this.changeParam = param;
       },
 
       checkedAll: function() {
         this.checked=!this.checked;
         if(this.checked){
-          this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+          this.$store.state.table.basicBaseList.blackCustomerList.forEach(function(item){
             item.checked=true;
           })
         }else{
-          this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+          this.$store.state.table.basicBaseList.blackCustomerList.forEach(function(item){
             item.checked=false;
           })
         }
@@ -235,12 +238,12 @@
       onlyselected:function(sub,id){
 
         const _this=this;
-        this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
-        if(!this.$store.state.table.basicBaseList.customerList[sub].checked){
+        this.$store.state.table.basicBaseList.blackCustomerList[sub].checked=!this.$store.state.table.basicBaseList.blackCustomerList[sub].checked;
+        if(!this.$store.state.table.basicBaseList.blackCustomerList[sub].checked){
           _this.checked=false;
         }else {
           _this.checked=true;
-          this.$store.state.table.basicBaseList.customerList.forEach(function (item) {
+          this.$store.state.table.basicBaseList.blackCustomerList.forEach(function (item) {
             if(!item.checked){
               _this.checked=false;
             }
@@ -251,9 +254,9 @@
         this.getClientList(this.loadParam)
       },
       clientTransferWhite(){
-        for(var i in this.initCustomerlist){
-          if(this.initCustomerlist[i].checked){
-            this.auditParam.arr.push(this.initCustomerlist[i].id);
+        for(var i in this.initBlackCustomerlist){
+          if(this.initBlackCustomerlist[i].checked){
+            this.auditParam.arr.push(this.initBlackCustomerlist[i].id);
           }
         }
         if(this.auditParam.arr.length>0){
@@ -286,7 +289,7 @@
       common('tab','table_box',1);
     },
     created() {
-      this.getClientList(this.loadParam);
+      changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.blackClientParam);
     }
   }
 </script>

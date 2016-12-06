@@ -22,7 +22,7 @@
                  <dt class="left transfer marg_top">意向类型：</dt>
                  <dd class="left">
                       <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                          <option value="" selected>全部</option>
+                          <option value="">全部</option>
                           <option value="0">求购</option>
                           <option value="1">供应</option>
                       </select>
@@ -32,7 +32,7 @@
                  <dt class="left transfer marg_top">供应类型：</dt>
                  <dd class="left">
                        <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
-                              <option value="" selected>全部</option>
+                              <option value="">全部</option>
                               <option value="0">普通供应</option>
                               <option value="1">低价资源</option>
                       </select>
@@ -42,7 +42,7 @@
                  <dt class="left transfer marg_top">求购类型：</dt>
                  <dd class="left">
                        <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
-                              <option value="" selected>全部</option>
+                              <option value="">全部</option>
                               <option value="0">普通求购</option>
                               <option value="1">紧急求购</option>
                       </select>
@@ -52,7 +52,7 @@
                  <dt class="left transfer marg_top">提供发票：</dt>
                  <dd class="left">
                        <select v-model="loadParam.invoic"  class="form-control" @change="selectSearch()">
-                                <option value="" selected>全部</option>
+                                <option value="">全部</option>
                                 <option value="0">无发票</option>
                                 <option value="1">普通发票</option>
                                 <option value="2">增值发票</option>
@@ -63,7 +63,7 @@
                  <dt class="left transfer marg_top">审核状态：</dt>
                  <dd class="left">
                        <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
-                          <option value="" selected>全部</option>
+                          <option value="">全部</option>
                           <option value="0">初始</option>
                           <option value="9">审核中</option>
                           <option value="1">客服审核通过</option>
@@ -78,7 +78,7 @@
                  <dt class="left transfer marg_top">上/下架状态：</dt>
                  <dd class="left">
                        <select v-model="loadParam.onSell"  class="form-control" @change="selectSearch()">
-                          <option value="" selected>全部</option>
+                          <option value="">全部</option>
                           <option value="0">初始</option>
                           <option value="1">申请上架</option>
                           <option value="2">上架</option>
@@ -121,7 +121,7 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="item in initIntentionList">
+                    <tr v-for="item in initUnIntentionList">
                          <td>
                             <label v-if="item.validate==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" >
                             </label>
@@ -169,7 +169,7 @@
                                 address:item.address,
                                 link:editintentInfo,
                                 url:'/intention/',
-                                key:'intentionList',
+                                key:'unIntentionList',
                                 image_f:'',
                                 image_s:'',
                                 image_t:'',
@@ -238,7 +238,7 @@
                                                validate:item.validate,
                                                link:editintentInfo,
                                                url:'/intention/',
-                                               key:'intentionList',
+                                               key:'unIntentionList',
                                                image_f:'',
                                                image_s:'',
                                                image_t:'',
@@ -306,9 +306,10 @@ import supdemModel from '../supplyDemand'
 import transferModel  from '../../user/userTransfer'
 import searchModel from '../intentionSearch'
 import common from '../../../common/common'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 
 import {
-  initIntentionList,
+  initUnIntentionList,
   initSupplyDemandList
 } from '../../../vuex/getters'
 import {
@@ -330,7 +331,7 @@ export default {
     },
     vuex: {
         getters: {
-            initIntentionList,
+            initUnIntentionList,
             initSupplyDemandList
         },
         actions: {
@@ -350,6 +351,7 @@ export default {
                 cur: 1,
                 all: 7,
                 link:'/intention/resource/list',
+                key:'unIntentionList',
                 type:'',      //类型
                 especial:'',    //特殊
                 invoic:'',  //发票
@@ -388,12 +390,13 @@ export default {
             tipsParam:{
                 show:false,
                 alert:true,
+                key:'unIntentionList',
                 name:''
 
             },
             intentionAuditParam:{
                 show:false,
-                key:'user',
+                key:'unIntentionList',
                 arr:[],
                 indexs:[],
                 validate:0,
@@ -431,23 +434,23 @@ export default {
 
         },
         eventClick:function(sub){
-            if(this.$store.state.table.basicBaseList.intentionList[sub].show){
-                this.$store.state.table.basicBaseList.intentionList[sub].show = !this.$store.state.table.basicBaseList.intentionList[sub].show;
+            if(this.$store.state.table.basicBaseList.unIntentionList[sub].show){
+                this.$store.state.table.basicBaseList.unIntentionList[sub].show = !this.$store.state.table.basicBaseList.unIntentionList[sub].show;
             }else{
-                this.$store.state.table.basicBaseList.intentionList[sub].show=true;
+                this.$store.state.table.basicBaseList.unIntentionList[sub].show=true;
             }
         },
-        detailClick:function(initIntentionList){
-            this.chanceParam = initIntentionList;
+        detailClick:function(param){
+            this.chanceParam = param;
         },
         onlyselected:function(sub,id){
             var _this = this;
-            this.$store.state.table.basicBaseList.intentionList[sub].checked=!this.$store.state.table.basicBaseList.intentionList[sub].checked;
-            if(!this.$store.state.table.basicBaseList.intentionList[sub].checked){
+            this.$store.state.table.basicBaseList.unIntentionList[sub].checked=!this.$store.state.table.basicBaseList.unIntentionList[sub].checked;
+            if(!this.$store.state.table.basicBaseList.unIntentionList[sub].checked){
                 this.checked = false;
             }else{
                 this.checked = true;
-                this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
+                this.$store.state.table.basicBaseList.unIntentionList.forEach(function(item){
                     if(!item.checked&&item.validate==0){
                         _this.checked = false;
                     }
@@ -457,13 +460,13 @@ export default {
         checkedAll:function(){
             this.checked = !this.checked;
             if(this.checked){
-                this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
+                this.$store.state.table.basicBaseList.unIntentionList.forEach(function(item){
                     if(item.validate==0){
                         item.checked = true;
                     }
                 })
             }else{
-                this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
+                this.$store.state.table.basicBaseList.unIntentionList.forEach(function(item){
                   item.checked = false;
                 })
             }
@@ -471,9 +474,9 @@ export default {
         intentionAudit:function(){
             this.intentionAuditParam.arr = [];
             this.intentionAuditParam.indexs = [];
-            for(var i=0;i<this.$store.state.table.basicBaseList.intentionList.length;i++){
-                if(this.$store.state.table.basicBaseList.intentionList[i].checked){
-                    this.intentionAuditParam.arr.push(this.$store.state.table.basicBaseList.intentionList[i].id);
+            for(var i=0;i<this.$store.state.table.basicBaseList.unIntentionList.length;i++){
+                if(this.$store.state.table.basicBaseList.unIntentionList[i].checked){
+                    this.intentionAuditParam.arr.push(this.$store.state.table.basicBaseList.unIntentionList[i].id);
                     this.intentionAuditParam.indexs.push(i);
                 }
             }
@@ -495,9 +498,9 @@ export default {
             if(param.onSell==2){
                 this.tipsParam.name = '意向下架成功';
             }
-            for(var i=0;i<this.initIntentionList.length;i++){
-                if(this.initIntentionList[i].checked){
-                    this.tipsParam.ids.push(this.initIntentionList[i].id);
+            for(var i=0;i<this.initUnIntentionList.length;i++){
+                if(this.initUnIntentionList[i].checked){
+                    this.tipsParam.ids.push(this.initUnIntentionList[i].id);
                     this.tipsParam.indexs.push(i);
                 }
             }
@@ -549,15 +552,15 @@ export default {
             this.getIntentionList(this.loadParam);
 
         },
-        specDelete:function(initIntentionList){
-          this.deleteParam = initIntentionList;
+        specDelete:function(param){
+          this.deleteParam = param;
         },
-        modifyIntention:function(initIntentionList){
-          console.log(initIntentionList.unit);
-          this.createParam = initIntentionList;
+        modifyIntention:function(param){
+          
+          this.createParam = param;
         },
-        createIntention:function(initIntentionList){
-             this.createParam = initIntentionList;
+        createIntention:function(param){
+             this.createParam = param;
         },
         selectSearch:function(){
           this.getIntentionList(this.loadParam)
@@ -570,7 +573,8 @@ export default {
         }
     },
     created() {
-        this.getIntentionList(this.loadParam, this.loadParam.all);
+       changeMenu(this.$store.state.table.isTop,this.getIntentionList,this.loadParam,localStorage.potentialIntentionParam);
+        
     },
     ready(){
       common('tab','table_box',1);

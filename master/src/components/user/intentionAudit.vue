@@ -69,26 +69,26 @@ export default {
     methods: {
 
         pass: function(){
-            if(this.param.key=='user'){   //客服审核意向(初审会员的意向)
+            if(this.param.key=='userIntentionList'){   //客服审核意向(初审会员的意向)
                 this.param.validate = 1;
             }
-            if(this.param.key=='employee'){    //业务员审核意向(部门意向)
+            if(this.param.key=='myIntentionList'){    //业务员审核意向(部门意向)
                 this.param.validate = 2;
             }
-            if(this.param.key=='org'){    //主管审核意向(部门意向)
+            if(this.param.key=='orgIntentionList'){    //主管审核意向(部门意向)
                 this.param.validate = 3;
             }
 
             this.batchUserIntentionAudit(this.param);
         },
         reject: function(){
-            if(this.param.key=='user'){
+            if(this.param.key=='userIntentionList'){
                 this.param.validate = -1;
             }
-            if(this.param.key=='employee'){
+            if(this.param.key=='myIntentionList'){
                 this.param.validate = -2;
             }
-            if(this.param.key=='org'){
+            if(this.param.key=='orgIntentionList'){
                 this.param.validate = -3;
             }
             this.batchUserIntentionAudit(this.param);

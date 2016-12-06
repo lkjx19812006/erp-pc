@@ -53,7 +53,7 @@
 	                         
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.quality')}}<span class="system_danger" v-if="$inner.quality.required">{{$t('static.required')}}</span></label>
-	                                     <input type="text" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" />
+	                                     <input type="number" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" />
 	                                </div>
 	                         
 	                                <div class="editpage-input col-md-6">
@@ -202,6 +202,10 @@
                                   </v-select>
                                </div>
                            </div>
+                           <div class="client-detailInfo  col-md-6 col-xs-12">
+		                        <label class="editlabel">详细地址 </label></label>
+		                        <input type="text" class="form-control edit-input" v-model="param.address" value="{{param.address}}"  />
+		                    </div>
 	                </section>
 	                
 	            </div>

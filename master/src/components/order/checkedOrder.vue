@@ -54,7 +54,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in initOrderlist"  v-cloak>
+                <tr v-for="item in initSellOrderlist"  v-cloak>
                   <!-- <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
@@ -154,9 +154,10 @@
     import disposeModel  from  '../order/orderStatus'
     import filter from '../../filters/filters'
     import common from '../../common/common'
+    import changeMenu from '../../components/tools/tabs/tabs.js'
     import {
         getList,
-        initOrderlist
+        initSellOrderlist
     } from '../../vuex/getters'
     import {
         getOrderCheckList,
@@ -185,6 +186,7 @@
                     all: 1,
                     consignee:'',
                     link:'/order/',
+                    key:'sellOrderList',
                     consigneePhone:'',
                     orderStatus:'',
                     payWay:'',
@@ -215,7 +217,8 @@
                     sendoff:false,
                     express:false,
                     delivery:false,
-                    aaaa:'/order/payConfirm'
+                    aaaa:'/order/payConfirm',
+                    key:'sellOrderList'
                 },
                 show:true
             }
@@ -223,7 +226,7 @@
         vuex: {
             getters: {
                 getList,
-                initOrderlist
+                initSellOrderlist
             },
             actions: {
                 getOrderCheckList,
@@ -234,37 +237,44 @@
             }
         },
         created() {
-            this.getOrderCheckList(this.loadParam)
+            changeMenu(this.$store.state.table.isTop,this.getOrderCheckList,this.loadParam,localStorage.sellOrderCheckParam); 
+            /*if(!this.$store.state.table.isTop){
+                console.log("刷新数据");
+                this.getOrderCheckList(this.loadParam);
+            }else{
+                console.log("不刷新数据");
+                this.loadParam = JSON.parse(localStorage.sellOrderParam);
+                this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.sellOrderCheckList);
+            }*/
         },
         methods: {
             editClick: function(sub) {
-                if(this.$store.state.table.basicBaseList.orderList[sub].show){
-                    this.$store.state.table.basicBaseList.orderList[sub].show=!this.$store.state.table.basicBaseList.orderList[sub].show;
+                if(this.$store.state.table.basicBaseList.sellOrderList[sub].show){
+                    this.$store.state.table.basicBaseList.sellOrderList[sub].show=!this.$store.state.table.basicBaseList.sellOrderList[sub].show;
                 }else{
-                     this.$store.state.table.basicBaseList.orderList[sub].show=true;
+                     this.$store.state.table.basicBaseList.sellOrderList[sub].show=true;
                 }
             },
-            newOrder:function(initOrderlist){
-                 this.dialogParam=initOrderlist;
+            newOrder:function(param){
+                 this.dialogParam=param;
             },
             createSearch:function(){
                  this.loadParam.show=true;
                  this.loadParam.loading=false;
             },
-            clickOn:function(initOrderlist){
-                console.log(initOrderlist);
-                this.detailParam=initOrderlist;
+            clickOn:function(param){
+                this.detailParam=param;
             },
-            updateOrder:function(initOrderlist){
-                console.log(initOrderlist)
-                console.log(initOrderlist.goods)
-                this.dialogParam=initOrderlist;
+            updateOrder:function(param){
+                this.dialogParam=param;
             },
             pendingOrder:function(item,sub){
                 item.show=!item.show;
                 item.sub = sub;
                 this.disposeParam = item;
+                this.disposeParam.key = "sellOrderList";
                 this.disposeParam.show = true;
+
                 /*--采购状态type==0--*/
                 if(item.orderStatus==30&&item.type==0){
                     this.disposeParam.tips="订单买家已付款，商家正在核查！";

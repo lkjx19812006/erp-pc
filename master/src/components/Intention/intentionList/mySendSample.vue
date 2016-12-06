@@ -73,7 +73,10 @@
                         <td>{{item.consigneePhone}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.sampleDesc}}</td>
-                        <td>{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==0">{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==1" style="background:#9010ff;color:#fff">{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==3" tyle="background:red;color:#fff">{{item.validate | Audit}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.ctime}}</td>
                         <td style="text-align: left;">
@@ -225,6 +228,7 @@ export default {
                 consigneePhone:'',
                 total:'',
                 country:'',
+                address:'',
                 province:'',
                 city:'',
                 district:'',
@@ -291,11 +295,12 @@ export default {
         },
         updateOrder:function(id,index){
              console.log(this.dialogParam)
-              this.dialogParam.send = true;
+              /*this.dialogParam.send = true;*/
               this.dialogParam.id = id;
               this.dialogParam.index = index;
               this.dialogParam.items = [];
               this.dialogParam.itemsBack = [];
+              this.getSampleDetail(this.dialogParam);
         },
     },
     events: {

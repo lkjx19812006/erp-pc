@@ -6,7 +6,7 @@
         <ul class="left_menu">
             <!-- li左侧菜单列表循环 -->
             <li v-for="item in getList" transition="item">
-                <div v-link="item.url" class="menu_div" @click="init_data(item.id)">
+                <div v-link="item.url" class="menu_div" @click="init_data(item.id,item)">
                     <div class="bleft">
                         <img v-bind:src="item.icon" height="21" width="21">
                     </div>
@@ -15,10 +15,10 @@
                 </div>
                 <div class="bshow" v-if="$route.path.split('?')[0]==item.url.split('?')[0]" transition="expand_trans">
                     <dl class="bshow_dl" clear>
-                        <dd class="clear" v-for="sub in item.subcategory" v-link="sub.url" transition="item">
+                        <dd class="clear" v-for="sub in item.subcategory" v-link="sub.url" transition="item" @click="init_data(sub.id,sub)">
                             <i class="fold_line"></i>
                             <div class="fold_content" >
-                                <div class="bleft">
+                                <div class="bleft" >
                                     <img v-bind:src="sub.icon" height="15" width="15">
                                 </div>
                                 <span v-if="lang=='en'" style="cursor:pointer;" class="{{$route.path==sub.url?'active_font':''}}">{{sub.ename}}</span>
@@ -35,7 +35,8 @@
 import Vue from 'vue'
 import {
     getList,
-    getMenu
+    getMenu,
+    
 } from '../vuex/getters'
 import {
     initList,
@@ -51,7 +52,8 @@ export default {
         vuex: {   
             getters: {
                 getList,
-                getMenu
+                getMenu,
+                
             },
             actions: {
                 initList,
@@ -71,8 +73,17 @@ export default {
          }
       },
     methods: {
-        init_data: function(id) {
 
+        init_data: function(id,menu) {
+            this.$store.state.table.isTop = false;
+            var tab = '';
+            if(menu.subcategory.length>0){
+                tab = menu.subcategory[0];
+            }else{
+                tab = menu;  
+            }
+            
+            this.$dispatch("tab",tab);
         },
         menu: function() {
             this.menuBar();

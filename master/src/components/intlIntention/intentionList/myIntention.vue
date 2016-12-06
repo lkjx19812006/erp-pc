@@ -54,7 +54,7 @@
                 </thead>
                 <tbody>
 
-                    <tr v-for="item in initIntlIntentionList" style="cursor:pointer">
+                    <tr v-for="item in initMyIntlIntentionList" style="cursor:pointer">
                         <td>
                             <div v-if="item.especial==0&&item.type==0">{{$t('static.common_purchase')}}</div>
                             <div v-if="item.especial==0&&item.type==1">{{$t('static.common_supply')}}</div>
@@ -102,7 +102,7 @@
                                                 title:'意向',
                                                 link:deleteInfo,
                                                 url:'/intlIntention/',
-                                                key:'intlIntentionList'
+                                                key:'myIntlIntentionList'
                                                 })"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除"  /></div>
                             <!-- <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div> -->
                             <div style="display:inline-block;margin-right:7px"  @click.stop="newOrder(item,$index)"><img src="/static/images/{{$t('static.img_adopt')}}.png"  /></div>
@@ -137,9 +137,10 @@ import cancelinquireModel from '../../tips/tipDialog'
 import inquireModel from '../inquire'
 import createorderModel from '../createOrderDialog' 
 import common from '../../../common/common'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
-    initIntlIntentionList,
-      initLogin
+    initMyIntlIntentionList,
+    initLogin
 } from '../../../vuex/getters'
 import {
     getIntlIntentionList,
@@ -164,7 +165,7 @@ export default {
     },
     vuex: {
         getters: {
-            initIntlIntentionList,
+            initMyIntlIntentionList,
             initLogin
         },
         actions: {
@@ -188,6 +189,7 @@ export default {
                 all: 7,
                 total:0,
                 link:'/intlIntention/by/employee',
+                key:'myIntlIntentionList',
                 employeeName:'',
                 breedId:'',
                 breedName:'',
@@ -245,6 +247,7 @@ export default {
             },
             inquireParam:{
                 show:false,
+                key:'myIntlIntentionList',
                 inquireTime:'',    //询价的次数
                 index:'',
                 inquire:'',
@@ -269,6 +272,7 @@ export default {
                 inquireTime:'',
                 callback:this.confirmCancelInquire,
                 link:'/intlIntention/inquire',
+                key:'myIntlIntentionList',
                 id:'',
                 index:''
             },
@@ -306,7 +310,7 @@ export default {
             modifyParam:{
                 show:false,
                 link:'/intlIntention/',
-                key:'intentionList',
+                key:'myIntlIntentionList',
                 id:'',
                 index:'',
                 duedate:'',
@@ -377,13 +381,7 @@ export default {
             this.detailParam.id = id;
             this.detailParam.show = true;
         },
-        eventClick:function(sub){
-            if(this.$store.state.table.basicBaseList.intentionList[sub].show){
-                this.$store.state.table.basicBaseList.intentionList[sub].show = !this.$store.state.table.basicBaseList.intentionList[sub].show;
-            }else{
-                this.$store.state.table.basicBaseList.intentionList[sub].show=true;
-            }
-        },
+        
         detailClick:function(initIntentionList){
             this.chanceParam = initIntentionList
         },
@@ -402,33 +400,6 @@ export default {
             this.createOrderParam.consigneeAddr = item.address;
             this.createOrderParam.intl = item.intl;
         },
-        onlyselected:function(sub,id){
-            var _this = this;
-            this.$store.state.table.basicBaseList.intentionList[sub].checked=!this.$store.state.table.basicBaseList.intentionList[sub].checked;
-            if(!this.$store.state.table.basicBaseList.intentionList[sub].checked){
-                this.checked = false;
-            }else{
-                this.checked = true;
-                this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-                    if(!item.checked){
-                        _this.checked = false;
-                    }
-                })
-            }
-        },
-        checkedAll:function(){
-                this.checked = !this.checked;
-                if(this.checked){
-                    this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-                        item.checked = true;
-                    })
-                }else{
-                    this.$store.state.table.basicBaseList.intentionList.forEach(function(item){
-                        item.checked = false;
-                    })
-                }
-        },
-        
         
         search:function(){
           this.loadParam.loading = false;
@@ -451,10 +422,8 @@ export default {
 
             this.createParam.show = true;
         },
-        deleteIntention:function(getIntlIntentionList){
-            this.deleteParam = getIntlIntentionList;
-           /* this.deleteParam.index = index;
-            this.deleteIntlIntention(this.deleteParam);  */
+        deleteIntention:function(param){
+            this.deleteParam = param;
         },
         modifyIntention:function(id,index){
             console.log(id);
@@ -486,7 +455,8 @@ export default {
         }
     },
     created() {
-        this.getIntlIntentionList(this.loadParam, this.loadParam.all);
+        changeMenu(this.$store.state.table.isTop,this.getIntlIntentionList,this.loadParam,localStorage.myIntlIntentionParam); 
+        
     },
     filter: (filter,{})
 }

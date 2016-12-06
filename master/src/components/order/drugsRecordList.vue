@@ -60,6 +60,7 @@
   import pagination from '../pagination'
   import filter from '../../filters/filters'
   import common from '../../common/common'
+  import changeMenu from '../../components/tools/tabs/tabs.js'
   import {
     initRolloutlist
   } from '../../vuex/getters'
@@ -144,7 +145,15 @@
       }
     },
     created() {
-      this.getRolloutList(this.loadParam);
+      changeMenu(this.$store.state.table.isTop,this.getRolloutList,this.loadParam,localStorage.rollOutParam); 
+      /*if(!this.$store.state.table.isTop){
+          console.log("刷新数据");
+          this.getRolloutList(this.loadParam);
+      }else{
+          console.log("不刷新数据");
+          this.loadParam = JSON.parse(localStorage.rollOutParam);
+          this.$store.state.table.basicBaseList.orderRolloutList = JSON.parse(localStorage.rollOutList);
+      }*/
     }
   }
 </script>

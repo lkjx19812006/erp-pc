@@ -35,10 +35,10 @@
                                             province:'',
                                             city:'',
                                             address:'',
-                                            employee:100004,
-                                            employeeId:'',
-                                            employeeName:'',
-                                            orgId:'',
+                                            employee:'',
+                                            employeeId:this.initLogin.id,
+                                            employeeName:this.initLogin.name,
+                                            orgId:this.initLogin.orgId,
                                             orgName:'',
                                             contacts:[
                                                 {
@@ -55,6 +55,7 @@
                                                 }
                                             ],
                                             link:saveCreate,
+                                            key:'myCustomerList'
                                             })">{{$t("static.new")}}</button>
                     <button class="new_btn transfer" @click="resetCondition()">{{$t("static.clear_all")}}</button>
                     <button class="new_btn transfer" @click="createSearch()">{{$t("static.search")}}</button>
@@ -76,7 +77,7 @@
                    <dt class="left transfer marg_top">{{$t("static.customer_classification")}}：</dt>
                    <dd class="left">
                          <select v-model="loadParam.classify"  class="form-control" @change="selectSearch()">
-                            <option value="" selected>{{$t("static.please_select")}}</option>
+                            <option value="">{{$t("static.please_select")}}</option>
                             <option value="1">{{$t("static.purchaser")}}</option>
                             <option value="2">{{$t("static.supplier")}}</option>
                             <option value="3">{{$t("static.purchaser_and_supplier")}}</option>
@@ -87,7 +88,7 @@
                    <dt class="left transfer marg_top">{{$t("static.credit_rating")}}：</dt>
                    <dd class="left">
                          <select v-model="loadParam.creditLevel"  class="form-control" @change="selectSearch()">
-                          <option value="" selected>{{$t("static.please_select")}}</option>
+                          <option value="">{{$t("static.please_select")}}</option>
                           <option value="0">{{$t("static.none")}}</option>
                           <option value="1">{{$t("static.one_star")}}</option>
                           <option value="2">{{$t("static.two_star")}}</option>
@@ -147,7 +148,7 @@
                     <tr>
 
                     </tr>
-                    <tr v-for="item in initCustomerlist">
+                    <tr v-for="item in initMyCustomerlist">
                         <td  @click.stop="">
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
@@ -163,7 +164,7 @@
                                 link:alterInfo,
                                 loading:true,
                                 url:'/customer/',
-                                key:'customerList'
+                                key:'myCustomerList'
                                 })">{{item.name}}</td>
                         <td>{{item.orderTotal}}</td>
                         <td>{{item.typeDesc}}</td>
@@ -242,7 +243,7 @@
                                                 creditLevel:item.creditLevel,
                                                 link:alterInfo,
                                                 url:'/customer/',
-                                                key:'customerList',
+                                                key:'myCustomerList',
                                                 employeeId:item.employeeId,
                                                 employeeName:item.employeeName,
                                                 orgId:item.orgId
@@ -272,8 +273,10 @@ import tipsdialogModel  from '../../../components/tips/tipDialog'
 import searchModel  from  '../../../components/clientRelate/searchModel'
 import auditDialog from '../../../components/tips/auditDialog'
 import common from '../../../common/common'
+import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
-    initCustomerlist
+    initMyCustomerlist,
+    initLogin
 } from '../../../vuex/getters'
 import {
     getClientList,
@@ -298,7 +301,8 @@ export default {
     },
     vuex: {
         getters: {
-            initCustomerlist
+            initMyCustomerlist,
+            initLogin
         },
         actions: {
             getClientList,
@@ -319,6 +323,7 @@ export default {
                 cur: 1,
                 all: 7,
                 link:'/customer/employeeDistributed',
+                key:'myCustomerList',
                 name:'',
                 phone:'',
                 employeeId:'',
@@ -370,6 +375,7 @@ export default {
             },
           auditParam:{
             link:'/customer/transferBlacklist',
+            key:'myCustomerList',
             show:false,
             title:'客户拉入黑名单备注',
             arr:[],
@@ -383,8 +389,8 @@ export default {
         selectSearch:function(){
             this.getClientList(this.loadParam);
         },
-        clickOn: function(initCustomerlist) {
-            this.changeParam = initCustomerlist;
+        clickOn: function(param) {
+            this.changeParam = param;
         },
         createCustomer:function(info){
             this.createParam = info;
@@ -415,24 +421,24 @@ export default {
             this.getClientList(this.loadParam);
         },
         eventClick:function(id){
-            if(this.$store.state.table.basicBaseList.customerList[id].show){
-                this.$store.state.table.basicBaseList.customerList[id].show = !this.$store.state.table.basicBaseList.customerList[id].show;
+            if(this.$store.state.table.basicBaseList.myCustomerList[id].show){
+                this.$store.state.table.basicBaseList.myCustomerList[id].show = !this.$store.state.table.basicBaseList.myCustomerList[id].show;
             }else{
-                this.$store.state.table.basicBaseList.customerList[id].show=true;
+                this.$store.state.table.basicBaseList.myCustomerList[id].show=true;
             }
         },
-        specDelete:function(initCustomerlist){
-            this.deleteParam = initCustomerlist;
+        specDelete:function(param){
+            this.deleteParam = param;
         },
-        modifyClient:function(initCustomerlist){
-            this.alterParam =initCustomerlist;
+        modifyClient:function(param){
+            this.alterParam =param;
         },
-        clientTransfer:function(initCustomerlist){
+        clientTransfer:function(){
 
             this.transferParam.arr = [];
-            for(var i in this.initCustomerlist){
-                if(this.initCustomerlist[i].checked){
-                    this.transferParam.arr.push(this.initCustomerlist[i].id);
+            for(var i in this.initMyCustomerlist){
+                if(this.initMyCustomerlist[i].checked){
+                    this.transferParam.arr.push(this.initMyCustomerlist[i].id);
                 }
             }
 
@@ -447,9 +453,9 @@ export default {
         this.auditParam.title="客户提取为供应商备注";
         this.auditParam.link='/customer/setSupplier';
         this.auditParam.arr=[];
-        for(var i in this.initCustomerlist){
-          if(this.initCustomerlist[i].checked){
-            this.auditParam.arr.push(this.initCustomerlist[i].id);
+        for(var i in this.initMyCustomerlist){
+          if(this.initMyCustomerlist[i].checked){
+            this.auditParam.arr.push(this.initMyCustomerlist[i].id);
           }
         }
 
@@ -468,9 +474,9 @@ export default {
       clientTransferBlack:function(){
         this.auditParam.title="客户踢入黑名单备注";
         this.auditParam.arr=[];
-        for(var i in this.initCustomerlist){
-          if(this.initCustomerlist[i].checked){
-            this.auditParam.arr.push(this.initCustomerlist[i].id);
+        for(var i in this.initMyCustomerlist){
+          if(this.initMyCustomerlist[i].checked){
+            this.auditParam.arr.push(this.initMyCustomerlist[i].id);
           }
         }
 
@@ -496,11 +502,11 @@ export default {
         checkedAll: function() {
            this.checked=!this.checked;
            if(this.checked){
-                 this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+                 this.$store.state.table.basicBaseList.myCustomerList.forEach(function(item){
                     item.checked=true;
              })
            }else{
-                this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+                this.$store.state.table.basicBaseList.myCustomerList.forEach(function(item){
                     item.checked=false;
              })
            }
@@ -508,12 +514,12 @@ export default {
         onlyselected:function(sub,id){
             //this.id = id;
             const _this=this;
-            this.$store.state.table.basicBaseList.customerList[sub].checked=!this.$store.state.table.basicBaseList.customerList[sub].checked;
-            if(!this.$store.state.table.basicBaseList.customerList[sub].checked){
+            this.$store.state.table.basicBaseList.myCustomerList[sub].checked=!this.$store.state.table.basicBaseList.myCustomerList[sub].checked;
+            if(!this.$store.state.table.basicBaseList.myCustomerList[sub].checked){
               _this.checked=false;
             }else {
               _this.checked=true;
-              this.$store.state.table.basicBaseList.customerList.forEach(function (item) {
+              this.$store.state.table.basicBaseList.myCustomerList.forEach(function (item) {
                 if(!item.checked){
                   _this.checked=false;
                 }
@@ -538,7 +544,8 @@ export default {
       }
     },
     created() {
-        this.getClientList(this.loadParam);
+        changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.myClientParam);
+        console.log(this.initLogin)
     },
     ready(){
       common('tab','table_box',1);
