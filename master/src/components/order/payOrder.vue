@@ -123,6 +123,7 @@
           <td v-if="item.sourceType==0">交易员新建</td>
           <td v-if="item.sourceType==1">意向</td>
           <td v-if="item.sourceType==2">报价</td>
+          <td v-if="item.sourceType==3">{{$t('static.sample_order')}}</td>
           <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Auditing}}</td>
           <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
           <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>

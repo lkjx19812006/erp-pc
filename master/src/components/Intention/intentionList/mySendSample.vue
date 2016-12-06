@@ -54,7 +54,7 @@
                         <th>审核状态</th>
                         <th>备注</th>
       	            	<th>创建时间</th>
-                        <th style="min-width: 200px;">操作</th>
+                        <th style="min-width: 200px;text-align: left">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,7 +76,7 @@
                         <td>{{item.validate | Audit}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.ctime}}</td>
-                        <td>
+                        <td style="text-align: left;">
                             <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"  @click="updateOrder(item.id,$index)">
                                     <img src="/static/images/edit.png"  alt="编辑" title="编辑"/>
                             </a>

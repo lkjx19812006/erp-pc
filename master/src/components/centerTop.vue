@@ -21,7 +21,7 @@
               </div>
           </div>
         </div>
-        <!-- <tabs-model></tabs-model> -->
+        <tabs-model></tabs-model>
     </div>
 </template>
 <script>
