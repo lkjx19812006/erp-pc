@@ -53,7 +53,7 @@
 	                         
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.quality')}}<span class="system_danger" v-if="$inner.quality.required">{{$t('static.required')}}</span></label>
-	                                     <input type="number" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" />
+	                                     <input type="text" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" />
 	                                </div>
 	                         
 	                                <div class="editpage-input col-md-6">
@@ -97,7 +97,7 @@
 	                         
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-	                                     <input type="text" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+	                                     <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
 	                                </div>
 
 	                                <div class="pull-right col-md-6" style="margin-top:10px;text-align:right">

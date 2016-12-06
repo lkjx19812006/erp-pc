@@ -185,9 +185,9 @@
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.order_status')}}</label>
                               <select  class="form-control edit-input" v-model="param.orderStatus" >
-                                  <option value="0" selected>订单生成</option>
-                                  <option value="60">已完成未评论</option>
-                                  <option value="70">订单已完成</option>
+                                   <option value="0" selected>{{$t('static.create_order')}}</option>
+                                  <option value="60">{{$t('static.awaiting_comment')}}</option>
+                                  <option value="70">{{$t('static.order_over')}}</option>
                               </select>
                           </div>
                       </div>
@@ -244,7 +244,7 @@
                          
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.quality')}}<span class="system_danger" v-if="$inner.quality.required">{{$t('static.required')}}</span></label>
-                                     <input type="number" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" />
+                                     <input type="text" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" />
                                 </div>
                          
                                 <div class="editpage-input">
@@ -303,7 +303,7 @@
                          
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                     <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
                                 </div>
                          
                                 <div class="editpage-input">

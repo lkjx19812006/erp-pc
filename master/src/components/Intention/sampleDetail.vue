@@ -6,12 +6,12 @@
                 <span class="glyphicon glyphicon-remove-circle"  style="font-size:28px"></span>
             </div>
 
-            <div class="edit-left col-md-8 col-xs-12">
+            <div class="edit-left col-md-12 col-xs-12">
 
-                <div class="section_title clearfix col-md-11 col-xs-12">
+                <div class="section_title clearfix col-md-12 col-xs-12">
                     <span style="font-size:14px">基本信息</span>
                 </div>
-                <div class="panel panel-default col-md-11 clearfix" style="padding:0;margin-top:10px;">
+                <div class="panel panel-default col-md-12 clearfix" style="padding:0;margin-top:10px;">
                       <div class="panel-heading" v-cloak>
                           <h4 class="panel-title clearfix" @click="enfoldment({
                                       link:initgSampleDetail.items,
@@ -19,12 +19,12 @@
                                       })">
                                 <img class="pull-left" src="/static/images/msg.png" height="29" width="26"  />
                                 <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                  样品（{{initgSampleDetail.items.length}}）
+                                  样品（{{initgSampleDetail.items.arr.length}}）
                                 </a>
                                 <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                           </h4>
                       </div>
-                      <div  class="panel-collapse" v-show="!initgSampleDetail.items.show||initgSampleDetail.items.length>0">
+                      <div  class="panel-collapse" v-if="initgSampleDetail.items.arr.length!==null" v-show="initgSampleDetail.items.show">
                             <div class="panel-body panel-set">
                                 <table class="table contactSet">
                                     <thead>
@@ -37,7 +37,7 @@
                                       <th></th>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="item in initgSampleDetail.items">
+                                        <tr v-for="item in initgSampleDetail.items.arr">
                                             <td>{{item.breedName}}</td>
                                             <td>{{item.location}}</td>
                                             <td>{{item.spec}}</td>
@@ -54,7 +54,7 @@
                             </div>
                       </div>
                 </div>
-                <div class="clearfix col-md-11 col-xs-12">
+                <div class="clearfix col-md-12 col-xs-12">
                     <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                         <label class="editlabel">客户名称</label>
                         <input type="text" class="form-control edit-input" v-model="initgSampleDetail.customerName" value="{{initgSampleDetail.customerName}}" disabled="disabled"/>
@@ -64,7 +64,7 @@
                         <input type="text" class="form-control edit-input"  v-model="initgSampleDetail.customerPhone" value="{{initgSampleDetail.customerPhone}}" disabled="disabled"/>
                     </div>
                 </div>
-                <div class="clearfix col-md-11 col-xs-12">
+                <div class="clearfix col-md-12 col-xs-12">
                     <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                         <label class="editlabel">收货人名称</label>
                         <input type="text" class="form-control edit-input" v-model="initgSampleDetail.consignee" value="{{initgSampleDetail.consignee}}" disabled="disabled"/>
@@ -74,7 +74,7 @@
                          <input type="text" class="form-control edit-input" v-model="initgSampleDetail.consigneePhone" value="{{initgSampleDetail.consigneePhone}}" disabled="disabled"/>
                     </div>
                 </div>
-                <div class="clearfix col-md-11 col-xs-12">
+                <div class="clearfix col-md-12 col-xs-12">
                     <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                         <label class="editlabel">样品名称</label>
                          <input type="text" class="form-control edit-input" v-model="initgSampleDetail.sampleDesc" value="{{initgSampleDetail.sampleDesc}}" disabled="disabled"/>
@@ -84,7 +84,7 @@
                         <input type="text" class="form-control edit-input" v-model="initgSampleDetail.address" value="{{initgSampleDetail.address}}" disabled="disabled"/>
                     </div>
                 </div>
-                <div class="clearfix col-md-11 col-xs-12">
+                <div class="clearfix col-md-12 col-xs-12">
                     <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                         <label class="editlabel">总金额</label>
                          <input type="text" class="form-control edit-input"   v-model="initgSampleDetail.total" value="{{initgSampleDetail.total}}" disabled="disabled"/>
@@ -93,20 +93,20 @@
 
             </div>
 
-            <div class=" col-md-4 col-xs-12 pull-right">
-                     <span class="section_title clearfix col-md-12 col-xs-12" style="margin-top:15px;font-size:14px;">创建时间信息</span>
-            </div>
-            <div class="col-md-4 col-xs-12 pull-right">
-                <div class="edit-right clearfix">
-                    <div class="client-detailInfo pull-left col-md-11 col-xs-12">
-                        <label class="editlabel">创建时间</label>
-                        <div class="search_input">
-                            <mz-datepicker :time.sync="initgSampleDetail.ctime" format="yyyy-MM-dd HH:mm:ss">
-                            </mz-datepicker>
-                        </div>
-                    </div>
-                </div>
-            </div> 
+           <!--  <div class=" col-md-4 col-xs-12 pull-right">
+                    <span class="section_title clearfix col-md-12 col-xs-12" style="margin-top:15px;font-size:14px;">创建时间信息</span>
+           </div>
+           <div class="col-md-4 col-xs-12 pull-right">
+               <div class="edit-right clearfix">
+                   <div class="client-detailInfo pull-left col-md-11 col-xs-12">
+                       <label class="editlabel">创建时间</label>
+                       <div class="search_input">
+                           <mz-datepicker :time.sync="initgSampleDetail.ctime" format="yyyy-MM-dd HH:mm:ss">
+                           </mz-datepicker>
+                       </div>
+                   </div>
+               </div>
+           </div>  -->
 </template>
 <script>
 import filter from '../../filters/filters'
@@ -140,17 +140,15 @@ export default {
     },
     methods: {
         enfoldment:function(param){
-            console.log(param)
-            console.log(this.$store.state.count.sampleDetail[param.crete])
-          if(this.$store.state.count.sampleDetail[param.crete].length==0){
+          if(this.$store.state.count.sampleDetail[param.crete].arr.length==0){
                   this.$store.state.count.sampleDetail[param.crete].show=true;
           }
           this.$store.state.count.sampleDetail[param.crete].show = !this.$store.state.count.sampleDetail[param.crete].show;
-          console.log(this.$store.state.count.sampleDetail[param.crete].show)
       },
     },
     created(){
         this.getSampleDetail(this.param);
+        console.log(this.param)
     },
     filter: (filter, {})
 }
@@ -238,7 +236,6 @@ input{
 }
 
 .edit-left {
-    border-right: 1px solid #ddd;
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;

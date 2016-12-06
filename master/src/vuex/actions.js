@@ -986,68 +986,72 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
-        var orderDetail = res.json().result;
-        console.log(orderDetail)
-        var goods = orderDetail.goods;
-        if (!goods) {
-            goods = [];
-        }
-        orderDetail.goods = {};
-        orderDetail.goods.arr = goods;
-        orderDetail.goods.show = true;
-        for (var i in orderDetail.goods.arr) {
-            orderDetail.goods.arr[i].show = false;
-        }
-        orderDetail.goods.forEach(function(item) {
-            var temp = {
-                id: item.id,
-                breedId: item.breedId,
-                breedName: item.breedName,
-                quality: item.quality,
-                title:item.title,
-                location: item.location,
-                spec: item.spec,
-                number: item.number,
-                unit: item.unit,
-                price: item.price,
-                status:item.status,
-                sourceType:item.sourceType,
+         var orderDetail = res.json().result;
+         console.log(orderDetail)
+        if(param.key=='orderDetail'){
+            var goods = orderDetail.goods; 
+            if (!goods) {
+                goods = [];
             }
-            param.goods.push(temp);
-            param.goodsBack.push(temp);
-        })
-        var payPics = orderDetail.payPics;
-        if (!payPics) {
-            payPics = [];
+            orderDetail.goods = {};
+            orderDetail.goods.arr = goods;
+            orderDetail.goods.show = true;
+            for (var i in orderDetail.goods.arr) {
+                orderDetail.goods.arr[i].show = false;
+            }
+            var payPics = orderDetail.payPics;
+            if (!payPics) {
+                payPics = [];
+            }
+            orderDetail.payPics = {};
+            orderDetail.payPics.arr = payPics;
+            orderDetail.payPics.show = true;
+            for (var i in orderDetail.payPics.arr) {
+                orderDetail.payPics.arr[i].show = false;
+            }
+            var sendPics = orderDetail.sendPics;
+            orderDetail.sendPics = {};
+            orderDetail.sendPics.arr = sendPics;
+            orderDetail.sendPics.show = true;
+            for (var i in orderDetail.sendPics.arr) {
+                orderDetail.sendPics.arr[i].show = false;
+            }
+            var attachFiles = orderDetail.attachFiles;
+            orderDetail.attachFiles = {};
+            orderDetail.attachFiles.arr = attachFiles;
+            orderDetail.attachFiles.show = true;
+            for (var i in orderDetail.attachFiles.arr) {
+                orderDetail.attachFiles.arr[i].show = false;
+            }
+            var logisticses = orderDetail.logisticses;
+            orderDetail.logisticses = {};
+            orderDetail.logisticses.arr = logisticses;
+            orderDetail.logisticses.show = true;
+            for (var i in orderDetail.logisticses.arr) {
+                orderDetail.logisticses.arr[i].show = false;
+            }
         }
-        orderDetail.payPics = {};
-        orderDetail.payPics.arr = payPics;
-        orderDetail.payPics.show = true;
-        for (var i in orderDetail.payPics.arr) {
-            orderDetail.payPics.arr[i].show = false;
+        if(param.key=='myOrderList'||param.key=='orgOrderList'||param.key=='allOrderList'||param.key=='sellOrderList'){
+            orderDetail.goods.forEach(function(item) {
+                var temp = {
+                    id: item.id,
+                    breedId: item.breedId,
+                    breedName: item.breedName,
+                    quality: item.quality,
+                    title:item.title,
+                    location: item.location,
+                    spec: item.spec,
+                    number: item.number,
+                    unit: item.unit,
+                    price: item.price,
+                    status:item.status,
+                    sourceType:item.sourceType,
+                }
+                param.goods.push(temp);
+                param.goodsBack.push(temp);
+            })
         }
-        var sendPics = orderDetail.sendPics;
-        orderDetail.sendPics = {};
-        orderDetail.sendPics.arr = sendPics;
-        orderDetail.sendPics.show = true;
-        for (var i in orderDetail.sendPics.arr) {
-            orderDetail.sendPics.arr[i].show = false;
-        }
-        var attachFiles = orderDetail.attachFiles;
-        orderDetail.attachFiles = {};
-        orderDetail.attachFiles.arr = attachFiles;
-        orderDetail.attachFiles.show = true;
-        for (var i in orderDetail.attachFiles.arr) {
-            orderDetail.attachFiles.arr[i].show = false;
-        }
-        var logisticses = orderDetail.logisticses;
-        orderDetail.logisticses = {};
-        orderDetail.logisticses.arr = logisticses;
-        orderDetail.logisticses.show = true;
-        for (var i in orderDetail.logisticses.arr) {
-            orderDetail.logisticses.arr[i].show = false;
-        }
-
+        
         dispatch(types.ORDER_DETAIL_DATA, orderDetail);
     }, (res) => {
         console.log('fail');
@@ -5127,13 +5131,20 @@ export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
         }
     }).then((res) => {
         var obj = res.json().result;
-        var items = obj.items;
-        obj.items.arr = items;
-        obj.items.show = false;
-/*        for (var i in items) {
-            items[i].show = false;
-        };*/
-        if (param.key == "mySampleList") { //寄样列表编辑寄样信息
+        console.log(obj)
+        if(param.key=='sampleDetail'){
+             var items = obj.items;
+             if (!items) {
+                items = [];
+            }
+            obj.items = {};
+            obj.items.arr = items;
+            obj.items.show = true;
+            for (var i in obj.items.arr) {
+                obj.items.arr[i].show = false;
+            }
+        }
+        if (param.key == "samplelist") { //寄样列表编辑寄样信息
             obj.items.forEach(function(item) {
                 var temp = {
                     id: item.id,
@@ -5150,18 +5161,20 @@ export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
                 param.items.push(temp);
                 param.itemsBack.push(temp);
             })
+            param.customerName = obj.customerName,
+            param.customerPhone = obj.customerPhone,
+            param.consignee = obj.consignee;
+            param.consigneePhone = obj.consigneePhone;
+            param.total = obj.total;
+            param.country = obj.country;
+            param.address = obj.address;
+            param.province = obj.province;
+            param.city = obj.city;
+            param.district = obj.district;
+            param.send = true;
+            dispatch(types.SAMPLE_DETAIL,obj);
+            param.loading = false;
         }
-        param.customerName = obj.customerName,
-        param.customerPhone = obj.customerPhone,
-        param.consignee = obj.consignee;
-        param.consigneePhone = obj.consigneePhone;
-        param.total = obj.total;
-        param.country = obj.country;
-        param.address = obj.address;
-        param.province = obj.province;
-        param.city = obj.city;
-        param.district = obj.district;
-        param.send = true;
         dispatch(types.SAMPLE_DETAIL,obj);
         param.loading = false;
     }, (res) => {

@@ -100,12 +100,13 @@
           <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
           <td v-if="item.sample==0">否</td>
           <td v-if="item.sample==1">是</td>
-          <td>{{{item.goodsDesc}}</td>
+          <td>{{item.goodsDesc}}</td>
           <td>{{item.total}}</td>
           <td><a @click="clickOn({
                         show:true,
                         id:item.id,
                         loading:false,
+                        key:'orderDetail',
                         orderStatus:item.orderStatus,
                         contact:'/order/myList'
                 })">{{item.customerName}}</a></td>

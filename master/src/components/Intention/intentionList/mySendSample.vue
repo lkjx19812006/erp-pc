@@ -63,6 +63,7 @@
                                  id:item.id,
                                  sub:$index,
                                  show:true,
+                                 key:'sampleDetail',
                                  name:item.customerName,
                                  loading:false
                              })">{{item.customerName}}</td>
@@ -182,6 +183,7 @@ export default {
                 customerName:'',
                 customerPhone:'',
                 validate:'',
+                key:'samplelist',
                 total:0
             },
             delParam:{
@@ -295,7 +297,7 @@ export default {
         },
         updateOrder:function(id,index){
              console.log(this.dialogParam)
-              /*this.dialogParam.send = true;*/
+              this.dialogParam.send = true;
               this.dialogParam.id = id;
               this.dialogParam.index = index;
               this.dialogParam.items = [];

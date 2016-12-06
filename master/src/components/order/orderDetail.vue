@@ -48,7 +48,7 @@
                                               crete:'goods'
                                               })">
                                         <img class="pull-left" src="/static/images/order.png" height="30" width="30" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.goods.arr.length">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" >
                                           {{$t('static.commodity_order')}}（{{initOrderDetail.goods.arr.length}}）
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
@@ -107,7 +107,7 @@
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.goods.arr">
-                                                <td>{{item.brredName}}</td>
+                                                <td>{{item.breedName}}</td>
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
                                                 <td>{{item.number}}</td>

@@ -61,6 +61,7 @@
                                  id:item.id,
                                  sub:$index,
                                  show:true,
+                                 key:'sampleDetail',
                                  name:item.customerName,
                                  loading:false
                              })">{{item.customerName}}</td>
@@ -140,6 +141,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                key:'samplelist',
                 customerName:'',
                 customerPhone:'',
                 validate:'',
