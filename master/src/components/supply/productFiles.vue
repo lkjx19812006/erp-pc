@@ -155,7 +155,8 @@
       common('tab','table_box',1);
     },
     created() {
-      changeMenu(this.$store.state.table.isTop,this.getProductList,this.loadParam,localStorage.productFileParam);
+      this.getProductList(this.loadParam);
+      //changeMenu(this.$store.state.table.isTop,this.getProductList,this.loadParam,localStorage.productFileParam);
       /*if(!this.$store.state.table.isTop){
             console.log("刷新数据");
             this.getProductList(this.loadParam);
