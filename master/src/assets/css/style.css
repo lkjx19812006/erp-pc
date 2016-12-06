@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-12-02 18:00:40
+* @Last Modified time: 2016-12-05 18:27:28
 */
 
 * {
@@ -125,7 +125,9 @@ body {
 
 /*--搜索--*/
 
-.my_order_search {}
+.my_order_search {
+    margin-top:3px;
+}
 .myOrder{
     position: relative;
     height: 100%;
@@ -745,12 +747,19 @@ dl {
     width: 100px;/** 不管是固定像素或是百分比，应与对应数据列的宽度一致 */
     line-height: 24px;
 }
-
 #table_box {
-    height:480px;
+    height:530px;
     width: 100%;
     overflow-y: auto;
     position: relative;
+}
+@media screen  and (min-height:800px){
+    #table_box {
+        height:600px;
+        width: 100%;
+        overflow-y: auto;
+        position: relative;
+    }
 }
 
 

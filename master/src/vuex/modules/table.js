@@ -798,7 +798,8 @@ const mutations = {
                 "sample": data.sample,
                 "goodsDesc":data.goodsDesc,
                 "total":data.total,
-                "ctime":data.ctime
+                "ctime":data.ctime,
+                "mode":data.mode
             });
         }
         if(data.key == 'orders'){
@@ -839,7 +840,8 @@ const mutations = {
                 "sample": data.sample,
                 "goodsDesc":data.goodsDesc,
                 "ctime":data.ctime,
-                "total":data.total
+                "total":data.total,
+                "mode":data.mode
             });
         }
     },

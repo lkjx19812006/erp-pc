@@ -3,6 +3,7 @@
      <create-model :param="createParam" v-if="createParam.send"></create-model>
      <delete-model :param="delParam" v-if="delParam.show"></delete-model>
      <edit-model :param.sync="dialogParam" v-if="dialogParam.send"></edit-model>
+     <apply-model :param="applyParam" v-if="applyParam.show"></apply-model>
 	 <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise pull-left" style="font-size:14px">我的寄样申请</div>
@@ -21,6 +22,17 @@
                <div class="ordertel_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" v-model="loadParam.customerPhone" placeholder="按客户电话搜索" @keyup.enter="searchMsg()">
+               </div>
+               <div class="ordertel_search clearfix">
+                   <!-- <img src="/static/images/search.png" height="24" width="24"> -->
+                   <select class="form-control search_input" v-model="loadParam.validate" @change="searchMsg()">
+                        <option value="">全部</option>
+                        <option value="0">初始状态</option>
+                        <option value="1">申请审核</option>
+                        <option value="2">审核通过</option>
+                        <option value="3">审核未通过</option>
+                   </select>
+                   <!-- <input type="text" class="search_input" v-model="loadParam.validate" placeholder="按业务员名称搜索" @keyup.enter="searchMsg()"> -->
                </div>
            </div>
         </div>
@@ -61,14 +73,14 @@
                         <td>{{item.consigneePhone}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.sampleDesc}}</td>
-                        <td>{{item.validate | Auditing}}</td>
-                        <td>{{item.comments}}</td>
+                        <td>{{item.validate | Audit}}</td>
+                        <td>{{item.description}}</td>
                         <td>{{item.ctime}}</td>
                         <td>
-                            <a class="operate" v-if="item.validate==0||item.validate==2"  @click="updateOrder(item.id,$index)">
+                            <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"  @click="updateOrder(item.id,$index)">
                                     <img src="/static/images/edit.png"  alt="编辑" title="编辑"/>
                             </a>
-                            <a class="operate" v-if="item.validate==0||item.validate==2"   @click="deleInfo({
+                            <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"   @click="deleInfo({
                                     sub:$index,
                                     id:item.id,
                                     show:true,
@@ -83,10 +95,26 @@
                                     id:item.id,
                                     show:true,
                                     link:sampleApply,
+                                    title:'寄样申请',
+                                    auditComment:'',
+                                    validate:item.validate,
                                     url:'/sample/validate/apply/',
                                     key:'mySampleList'
                                     })">
                                 <img src="/static/images/apply.png" />
+                            </a>
+                            <a class="operate"  v-if="item.validate==3" @click="applyCheck({
+                                    sub:$index,
+                                    id:item.id,
+                                    show:true,
+                                    link:sampleApply,
+                                    title:'重新申请',
+                                    auditComment:'',
+                                    validate:item.validate,
+                                    url:'/sample/validate/apply/',
+                                    key:'mySampleList'
+                                    })">
+                                <img src="/static/images/reset.png" />
                             </a>
                         </td>
                     </tr>
@@ -106,6 +134,7 @@ import detailModel from '../sampleDetail'
 import common from '../../../common/common'
 import deleteModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import editModel from '../alterSample'
+import applyModel from '../../tips/auditDialog'
 import {
 	initSamplelist,
     initLogin
@@ -123,7 +152,8 @@ export default {
         createModel,
         detailModel,
         deleteModel,
-        editModel
+        editModel,
+        applyModel
     },
     vuex: {
         getters: {
@@ -148,6 +178,7 @@ export default {
                 all: 7,
                 customerName:'',
                 customerPhone:'',
+                validate:'',
                 total:0
             },
             delParam:{
@@ -223,6 +254,7 @@ export default {
         resetCondition:function(){
             this.loadParam.customerName = '';
             this.loadParam.customerPhone = '';
+            this.loadParam.validate = '';
             this.getSampleList(this.loadParam);
         },
         onlyselected:function(index){

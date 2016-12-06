@@ -440,6 +440,24 @@ Vue.filter('Auditing',function(val){     //订单审核
 	}
 })
 
+Vue.filter('Audit',function(val){     //寄样审核
+	var val = val;
+	if(val==null){
+		return '初始状态';
+	}
+	if(val==0){
+		 return '初始状态';
+	}
+	if(val==1){
+		 return '申请审核';
+	}
+	if(val==2){
+		 return '审核通过';
+	}
+	if(val==3){
+		 return '审核未通过';
+	}
+})
 Vue.filter('drugsStatus',function(val){     //药款状态
 	var val = val;
 	if(val==0){

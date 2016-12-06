@@ -1,24 +1,35 @@
 <template>
      <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
      <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
+     <audit-model :param="applyParam" v-if="applyParam.show"></audit-model>
 	 <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2" style="font-size:14px">部门寄样审核</div>
-            <div class="col-xs-8 my_order_search">
+            <div class="my_order_search pull-right">
+               <button class="new_btn transfer" @click="searchMsg()">搜索</button>
+               <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
+            </div>
+        </div>
+        <div class="service-nav clearfix" style="padding-top:10px;">
+            <div class="my_order_search">
                <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" placeholder="留言会员名称" v-model="loadParam.fullName"  @keyup.enter="searchMsg()">
+                   <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchMsg()">
                </div>
                <div class="ordertel_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" v-model="loadParam.phone" placeholder="按会员手机" @keyup.enter="searchMsg()">
+                   <input type="text" class="search_input" v-model="loadParam.customerPhone" placeholder="按客户电话搜索" @keyup.enter="searchMsg()">
                </div>
-               <button class="new_btn transfer" @click="searchMsg()">搜索</button>
-            </div>
-        </div>
-        <div class="service-nav clearfix">
-            <div class="my_order_search">
-               <div class="filter_search clearfix">
+               <div class="ordertel_search clearfix">
+                   <!-- <img src="/static/images/search.png" height="24" width="24"> -->
+                   <select class="form-control search_input" v-model="loadParam.validate" @change="searchMsg()">
+                        <option value="">全部</option>
+                        <option value="0">初始状态</option>
+                        <option value="1">申请审核</option>
+                        <option value="2">审核通过</option>
+                        <option value="3">审核未通过</option>
+                   </select>
+                   <!-- <input type="text" class="search_input" v-model="loadParam.validate" placeholder="按业务员名称搜索" @keyup.enter="searchMsg()"> -->
                </div>
            </div>
         </div>
@@ -33,7 +44,7 @@
                         <th>客户电话</th>
                         <th>所属业务员</th>
                         <th>需支付总金额</th>
-                        <th>币种</th>
+                        <!-- <th>币种</th> -->
                         <th>收货人名称</th>
                         <th>联系方式</th>
                         <th>收货地址</th>
@@ -54,18 +65,30 @@
                                  loading:false
                              })">{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.total}}</td>
-                        <td>{{item.currency}}</td>
+                        <!-- <td>{{item.currency}}</td> -->
                         <td>{{item.consignee}}</td>
                         <td>{{item.consigneePhone}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.sampleDesc}}</td>
-                        <td>{{item.validate | Auditing}}</td>
-                        <td>{{item.comments}}</td>
+                        <td>{{item.validate | Audit}}</td>
+                        <td>{{item.description}}</td>
                         <td>{{item.ctime}}</td>
-                        <td  @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments">
-                           <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
-                           </a>
+                        <td>
+                           <a class="operate"  v-if="item.validate==1" @click="applyCheck({
+                                    sub:$index,
+                                    id:item.id,
+                                    show:true,
+                                    title:'审核寄样',
+                                    link:sampleApply,
+                                    auditComment:'',
+                                    validate:item.validate,
+                                    url:'/sample/validate/',
+                                    key:'orgSampleList'
+                                    })">
+                                <img src="/static/images/orgcheck.png" />
+                            </a>
                         </td>
                     </tr>
                 </tbody>
@@ -80,20 +103,22 @@
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import editmsgModel from '../editMsg'
-import detailModel from '../../user/userDetail'
+import detailModel from '../sampleDetail'
 import common from '../../../common/common'
+import auditModel from '../../tips/auditDialog'
 import {
 	initOrgSample
 } from '../../../vuex/getters'
 import {
 	getOrgSampleList,
-    getUserDetail
+    sampleApply
 } from '../../../vuex/actions'
 export default {
     components: {
         pagination,
         editmsgModel,
-        detailModel
+        detailModel,
+        auditModel
     },
     vuex: {
         getters: {
@@ -101,7 +126,7 @@ export default {
         },
         actions: {
             getOrgSampleList,
-            getUserDetail
+            sampleApply
         }
     },
     data() {
@@ -112,10 +137,15 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
-                fullName:'',
-                phone:'',
+                customerName:'',
+                customerPhone:'',
+                validate:'',
                 total:0
 
+            },
+            applyParam:{
+                show:false,
+                sample:''
             },
             changeParam:{
                 show:false
@@ -135,6 +165,12 @@ export default {
         	this.$store.state.table.basicBaseList.msgList[index].show=!this.$store.state.table.basicBaseList.msgList[index].show;
         },
         searchMsg:function(){
+            this.getOrgSampleList(this.loadParam);
+        },
+        resetCondition:function(){
+            this.loadParam.customerName = '';
+            this.loadParam.customerPhone = '';
+            this.loadParam.validate = '';
             this.getOrgSampleList(this.loadParam);
         },
         onlyselected:function(index){
@@ -167,7 +203,11 @@ export default {
         },
         clickOn: function(initOrgSample) {
             this.changeParam = initOrgSample;
-            this.getUserDetail(this.changeParam);
+        },
+        applyCheck:function(initOrgSample){
+            console.log(initOrgSample)
+            initOrgSample.validate = 2;
+            this.applyParam = initOrgSample;
         }
     },
     events: {
@@ -218,8 +258,8 @@ export default {
     background-position: 5px;
 }
  #table_box  table th,#table_box  table td{
-    width: 170px;
-    min-width: 170px;
+    width: 141px;
+    min-width: 143px;
 }
 </style>
 

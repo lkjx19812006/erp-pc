@@ -21,7 +21,6 @@
 				              		<th>规格</th>
 				              		<th>数量</th>
 				              		<th>单位</th>
-				              		<th>创建时间</th>
 				              		<th></th>
 				              		<th></th>
 				              	</tr>
@@ -34,7 +33,6 @@
 				                	<td>{{item.spec}}</td>
 				                	<td>{{item.number}}</td>
 				                	<td>{{item.cunit}}</td>
-				                	<td>{{item.ctime}}</td>
 				                	<td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
 	                                <td v-else>{{$t('static.edit')}}</td>
 	                                <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
@@ -75,17 +73,10 @@
 	                                
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
-	                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
-	                                     <div type="text" class="edit-input" v-if="breedParam.id">
-	                                         <input-select
-	                                           :value.sync="breedInfo.cunit"
-	                                           :prevalue="breedInfo.cunit"
-	                                           :options="initBreedDetail.units.arr"
-	                                           placeholder="单位"
-	                                           label="name"
-	                                         >
-	                                         </input-select>
-	                                     </div>
+	                                     <!-- <input type="text"  /> -->
+	                                     <select v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}">
+	                                     	<option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}</option>
+	                                     </select>
 	                                </div>                     
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.origin')}}<span class="system_danger" v-if="$inner.location.required">{{$t('static.required')}}</span></label>
@@ -235,6 +226,7 @@ import {
     initProvince,
     initCitylist,
     initDistrictlist,
+    initUnitlist
 } from '../../vuex/getters'
 import {
     getBreedDetail,
@@ -243,6 +235,7 @@ import {
     getProvinceList,
     getCityList,
     getDistrictList,
+    getUnitList
 } from '../../vuex/actions'
 export default{
 	props:['param'],
@@ -273,6 +266,7 @@ export default{
               spec:'',
               number:'',
               cunit:'',
+              unit:'',
               id:''
             },
             addParam:{
@@ -322,6 +316,7 @@ export default{
 		    initProvince,
 		    initCitylist,
 		    initDistrictlist,
+		    initUnitlist
 		},
 		actions:{
 			getBreedDetail,
@@ -330,6 +325,7 @@ export default{
             getProvinceList,
             getCityList,
             getDistrictList,
+            getUnitList
 		}
 	},
 	methods:{
@@ -399,6 +395,7 @@ export default{
           this.breedInfo.spec=this.param.items[index].spec,
           this.breedInfo.number=this.param.items[index].number,
           this.breedInfo.cunit=this.param.items[index].cunit,
+          this.breedInfo.unit=this.param.items[index].unit,
           this.updateParam.show = true;
         },
         deleteBreed:function(index){
@@ -420,7 +417,8 @@ export default{
           this.param.items[this.updateParam.index].location=this.breedInfo.location,
           this.param.items[this.updateParam.index].spec=this.breedInfo.spec,
           this.param.items[this.updateParam.index].number=this.breedInfo.number,
-          this.param.items[this.updateParam.index].cunit=this.breedInfo.cunit,
+          this.param.items[this.updateParam.index].cunit=this.breedInfo.cunit.split(',')[1],
+          this.param.items[this.updateParam.index].unit=this.breedInfo.cunit.split(',')[0],
           /*this.param.items[this.updateParam.index].sourceType=this.breedInfo.sourceType,*/
           this.param.items[this.updateParam.index].status=this.breedInfo.status,
           /*this.param.items[this.updateParam.index].orderId=this.breedInfo.id,*/
@@ -434,7 +432,8 @@ export default{
           this.param.items[this.param.items.length-1].location = this.breedInfo.location;
           this.param.items[this.param.items.length-1].spec = this.breedInfo.spec;
           this.param.items[this.param.items.length-1].number = this.breedInfo.number;
-          this.param.items[this.param.items.length-1].cunit = this.breedInfo.cunit;
+          this.param.items[this.param.items.length-1].cunit = this.breedInfo.cunit.split(',')[1];
+          this.param.items[this.param.items.length-1].unit = this.breedInfo.cunit.split(',')[0];
           /*this.param.items[this.param.items.length-1].sourceType = this.breedInfo.sourceType;*/
           console.log(this.param.items[this.param.items.length-1]);
           this.breedInfo.status = 0;
@@ -450,6 +449,7 @@ export default{
               this.breedInfo.spec='';
               this.breedInfo.number='';
               this.breedInfo.cunit='';
+              this.breedInfo.unit='';
               this.param.items.push({
                   breedId:'',
                   breedName:'',
@@ -458,6 +458,7 @@ export default{
                   spec:'',
                   number:'',
                   cunit:'',
+                  unit:''
               });
               this.addParam.show = true;
           }  
@@ -494,6 +495,7 @@ export default{
         }
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
+        this.getUnitList();
         if(this.param.breedId){
             this.breedParam.breedName = this.param.brredName;
             this.breedParam.id = this.param.breedId;

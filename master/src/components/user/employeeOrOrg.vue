@@ -7,7 +7,8 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 	    <div class="model-header">
-	    	<h4>划转</h4>
+	    	<h4 v-if="param.choice=='选择'">选择业务员/部门</h4>
+            <h4 v-else>划转</h4>
 	    	<div class="con_list">
 	    		<div class="change_trans">
 	    			<!-- <div class="tans_tab clearfix"> -->
@@ -54,7 +55,7 @@
 		                    </tr>
 		                </thead>
 		                <tbody>
-		                    <tr v-for="item in initEmployeeList">
+		                    <tr v-for="item in initEmployeeList"  @click="selectEmployee($index)">
 		                       <td  @click.stop="">
 		                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectEmployee($index)"></label>
 		                        </td>
@@ -121,7 +122,8 @@ import treeDialog from '../tips/treeDialog'
 import {
     initCustomerlist,
     initEmployeeList,
-    initOrgList
+    initOrgList,
+    initLogin
 } from '../../vuex/getters'
 import {
     getClientList,
@@ -156,7 +158,7 @@ export default{
         size: '15px',
         name:'',
         mobile:'',
-        orgId:'',
+        orgId:this.initLogin.orgId,
         cur: 1,
         all: 7,
         total:''
@@ -176,7 +178,8 @@ export default{
 		getters:{
 			initCustomerlist,
 			initEmployeeList,
-			initOrgList
+			initOrgList,
+            initLogin
 		},
 		actions:{
 			getClientList,

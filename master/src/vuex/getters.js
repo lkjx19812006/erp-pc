@@ -289,7 +289,10 @@ export const initSupply = (state) => {
   return JSON.parse(JSON.stringify(state.table.basicBaseList.supplyList));
 }
 
-
+/*---常用单位列表---*/
+export const initUnitlist = (state) => {
+    return parseJson(state.count.unitList);
+}
 /*---我的客户统计---*/
 export const initClientcount = (state) => {
     console.log(state.count)
