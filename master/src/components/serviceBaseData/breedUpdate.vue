@@ -1,5 +1,4 @@
 <template>
-    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -14,33 +13,29 @@
                     <section class="editsection" v-cloak>
                         <input type="hidden"  class="form-control edit-input" value="{{categoryData.id}}" />
                         <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <div class="client-detailInfo col-md-6 col-xs-12">
                                 <label class="editlabel">编码 <span class="system_danger" v-if="$validation.code.required">请输入编码</span></label>
                                 <input type="text" v-model='categoryData.code' class="form-control edit-input" value="{{categoryData.code | breedcode}}" v-validate:code="['required']" />
                             </div>
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <div class="client-detailInfo  col-md-6 col-xs-12">
                                 <label class="editlabel">品种名称 <span class="system_danger" v-if="$validation.name.required">请输入品种名称</span></label>
                                 <input type="text" v-model='categoryData.name' class="form-control edit-input" value="{{categoryData.name}}" v-validate:name="['required']"/>
                             </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <div class="client-detailInfo  col-md-6 col-xs-12">
                                 <label class="editlabel">品种分类选择</label>
                                 <select class="form-control" v-model="categoryData.categoryId" style="width:90%;">
                                    <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                                  </select>
                             </div>
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <div class="client-detailInfo  col-md-6 col-xs-12">
                                 <label class="editlabel">品种名称拼音</label>
                                 <input type="text" v-model='categoryData.pinyin' class="form-control edit-input"  />
                             </div>
-                        </div>
-                         <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <div class="client-detailInfo  col-md-6 col-xs-12">
                                 <label class="editlabel">品种名称英文</label>
                                 <input type="text" v-model='categoryData.eName' class="form-control edit-input" />
                             </div>
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <div class="client-detailInfo  col-md-6 col-xs-12">
                                 <label class="editlabel">品种名称拉丁文</label>
                                 <input type="text" v-model='categoryData.lName' class="form-control edit-input"  />
                             </div>
@@ -60,7 +55,7 @@
             <div class="edit_footer">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                 <!-- <button type="button" class="btn  btn-confirm" @click="updateBreedInfo(categoryData,categoryData.sub=param.id,param.show = false)">确定</button> -->
-                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="tipsParam.show=true">确定</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm(categoryData)">确定</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="disabled">确定</button>
             </div>
         </validator>
@@ -68,7 +63,6 @@
 </template>
 <script>
 import pressImage from '../../components/imagePress'
-import tipsdialogModel  from '../tips/tipDialog'
 import filter from '../../filters/filters'
 import {
     initBreedlist,
@@ -83,7 +77,6 @@ export default {
     props: ['param'],
     components:{
         filter,
-        tipsdialogModel,
         pressImage
     },
     data() {
@@ -99,12 +92,6 @@ export default {
                 icon:this.initBreedlist[this.param.id].icon,
                 url:this.initBreedlist[this.param.id].url
             },
-            tipsParam: {
-                show:false,
-                confirm:true,
-                name:"确认修改信息?",
-                callback:this.confirm
-            }
         }
     },
     vuex: {
@@ -119,10 +106,11 @@ export default {
         }
     },
     methods: {
-      confirm:function(){
+      confirm:function(categoryData){
         this.param.show = false;
-        this.categoryData.sub=this.param.id;
-        this.updateBreedInfo(this.categoryData);
+        categoryData.sub=this.param.id;
+        categoryData.callback = this.param.callback;
+        this.updateBreedInfo(categoryData);
       }
     },
     filter:(filter,{}),
@@ -133,7 +121,7 @@ export default {
 </script>
 <style scoped>
 .modal_con{
-    max-height: 600px;
+    height: 600px;
     max-width: 600px;
 }
 .top-title {
@@ -141,29 +129,10 @@ export default {
     top: 0;
     width: 100%;
 }
-.big-font {
-    font-size: 36px;
-}
-.top-title span {
-    font-size: 28px;
-}
-
 .edit-content {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
 }
 
 .editsection {
@@ -231,7 +200,7 @@ export default {
     margin-top: 50px;
     position: absolute;
     width: 100%;
-    bottom: 10px;
+    bottom: 0px;
 }
 
 .edit_footer button {

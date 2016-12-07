@@ -3,6 +3,7 @@
     <detail-model  :param="companyParam" v-if="companyParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <update-model :param="updateParam" v-if="updateParam.show"></update-model>
+    <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <div>
         <div class="service-nav">
             <div class="clearfix">
@@ -86,49 +87,8 @@
                                         tel:item.tel,
                                         remark:item.remark,
                                         link:updateEnterprise
-                                        })"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
-                          <!-- <div  @click="companyClick($index)">
-                            <img height="24" width="24" src="../../../static/images/default_arrow.png" />
-                            <div class="breed_action" v-show="item.show">
-                                <ul>
-                                    <li v-if="!item.transform" @click="createCustomer({
-                                        keyname:'transform',
-                                        sub:$index,
-                                        show:true,
-                                        key:'enterpriseList',
-                                        companyId:item.id,
-                                        category:item.type,
-                                        type:'1,企业',
-                                        name:item.name,
-                                        tel:item.tel,
-                                        principal:item.principal,
-                                        legalPerson:item.legalPerson,
-                                        bizScope:item.bizScope,
-                                        province:item.province,
-                                        number:item.number,
-                                        city:item.city,
-                                        address:item.address,
-                                        employeeId:'',
-                                        employeeName:'',
-                                        orgId:'',
-                                        orgName:'',
-                                        countryId:7,
-                                        countryName:'中国'
-                                        })">划转</li>
-                                    <li @click="updateCompany({
-                                        sub:$index,
-                                        show:true,
-                                        name:item.name,
-                                        url:'/company/',
-                                        key:'enterpriseList',
-                                        id:item.id,
-                                        tel:item.tel,
-                                        remark:item.remark,
-                                        link:updateEnterprise
-                                        })">编辑</li>
-                                </ul>
-                            </div>
-                            </div> -->
+                                        })"><img src="/static/images/edit.png"   alt="编辑" title="编辑"/>
+                            </a>
                             <a class="operate" @click="createCustomer({
                                         keyname:'transform',
                                         sub:$index,
@@ -171,6 +131,7 @@ import transferModel  from '../user/userTransfer'
 import searchModel from './companySearch'
 import updateModel from '../serviceBaselist/breedDetailDialog/updateEnterprise'
 import common from '../../common/common'
+import tipsModel from '../../components/tips/tipDialog'
 import {
     initEnterpriselist,
     initProvince
@@ -189,7 +150,8 @@ export default {
         detailModel,
         transferModel,
         searchModel,
-        updateModel
+        updateModel,
+        tipsModel
     },
     data() {
         return {
@@ -207,6 +169,11 @@ export default {
                 transform:'',
                 city:'',
                 total:0
+            },
+            tipsParam:{
+                show:false,
+                alert:true,
+                name:''
             },
             companyParam:{
                 id:'',
@@ -269,6 +236,7 @@ export default {
         },
         updateCompany:function(initEnterpriselist){
             this.updateParam=initEnterpriselist;
+            this.updateParam.callback = this.callback;
         },
         createCustomer:function(initEnterpriselist){
           initEnterpriselist.employeeId=this.$store.state.table.login.id;
@@ -282,11 +250,17 @@ export default {
               '化妆品厂':"CF",
               '食品厂':"FF"
             }
-            this.transferParam.category=obj[this.transferParam.category];
-
+          this.transferParam.category=obj[this.transferParam.category];
           this.transferParam.show=true;
-            console.log(this.transferParam);
-        }
+          this.transferParam.callback = this.callback;
+          console.log(this.transferParam);
+        },
+        callback:function(title){
+            console.log(title)
+            this.tipsParam.show=true;
+            this.tipsParam.alert=true;
+            this.tipsParam.name=title;
+        },
     },
     events: {
         fresh: function(input) {

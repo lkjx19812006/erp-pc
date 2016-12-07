@@ -80,7 +80,7 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.preferential')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.preferential" value="{{parampreferential}}"/>
+                              <input type="number" class="form-control edit-input" v-model="param.preferential" value="{{parampreferential}}"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.discount_note')}}</label>
@@ -94,22 +94,22 @@
                       <div class="editpageright">
 
                           <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">请选择客户</span></label>
+                              <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.required')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.customerName"   v-validate:custname="['required']" value="{{param.customerName}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.international')}}</label>
                               <select type="text" class="form-control edit-input" v-model="param.intl"  @change="selectBizType()">
-                                  <option value="0">否</option>
-                                  <option value="1">是</option>
+                                  <option value="0">{{$t('static.no')}}</option>
+                                  <option value="1">{{$t('static.yes')}}</option>
                               </select>
                           </div>
                           <div class="editpage-input" >
-                              <label class="editlabel">{{$t('static.consignee_phone')}} <span class="system_danger" v-if="$validation.mobile.intlphone">请输入正确有效的手机号</span></label>
+                              <label class="editlabel">{{$t('static.consignee_phone')}} <span class="system_danger" v-if="$validation.mobile.intlphone">{{$t('static.enter_phone')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['intlphone']" value="{{param.consigneePhone}}"/>
                           </div>
                           <div class="editpage-input" v-if="param.difference=='意向'">
-                              <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.mobile.email">请输入正确有效的手机号</span></label>
+                              <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.mobile.email">{{$t('static.enter_phone')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.email"  v-validate:mobile="['email']" value="{{param.email}}"/>
                           </div>
                           
@@ -143,39 +143,39 @@
                           <div class="editpage-input" >
                               <label class="editlabel">{{$t('static.currency')}}</label>
                                <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==0">
-                                  <option value="0" selected>人民币</option>
+                                  <option value="0" selected>CNY人民币</option>
                                  <!--  <option value="1">是</option> -->
                               </select>
                               <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==1">
-                                  <option value="0" selected>人民币</option>
-                                  <option value="1">美元</option>
-                                  <option value="2">欧元</option>
-                                  <option value="3">港币</option>
-                                  <option value="4">英镑</option>
-                                  <option value="5">日元</option>
-                                  <option value="6">韩元</option>
-                                  <option value="7">加元</option>
-                                  <option value="8">澳元</option>
-                                  <option value="9">瑞郎</option>
-                                  <option value="10">新加坡元</option>
-                                  <option value="11">马来西亚币</option>
-                                  <option value="12">印尼</option>
-                                  <option value="13">新西兰</option>
-                                  <option value="14">越南</option>
-                                  <option value="15">泰铢</option>
-                                  <option value="16">菲律宾</option>
+                                  <option value="0">CNY人民币</option>
+                                  <option value="1">USD美元</option>
+                                  <option value="2">EUR欧元</option>
+                                  <option value="3">HKD港币</option>
+                                  <option value="4">GBP英镑</option>
+                                  <option value="5">JPY日元</option>
+                                  <option value="6">KRW韩元</option>
+                                  <option value="7">CAD加元</option>
+                                  <option value="8">AUD澳元</option>
+                                  <option value="9">CHF瑞郎</option>
+                                  <option value="10">SGD新加坡元</option>
+                                  <option value="11">MYR马来西亚币</option>
+                                  <option value="12">IDR印尼</option>
+                                  <option value="13">NZD新西兰</option>
+                                  <option value="14">VND越南</option>
+                                  <option value="15">THB泰铢</option>
+                                  <option value="16">PHP菲律宾</option>
                               </select>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.sample_order')}}</label>
                               <select type="text" class="form-control edit-input" v-model="param.sample" value="{{param.sample}}" >
-                                  <option value="0" selected>否</option>
-                                  <option value="1">是</option>
+                                  <option value="0" selected>{{$t('static.no')}}</option>
+                                  <option value="1">{{$t('static.yes')}}</option>
                               </select>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.sundry_fees')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}"/>
+                              <input type="number" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}"/>
                           </div>
                           
                           <div class="editpage-input">
@@ -608,6 +608,7 @@ export default {
               _this.param.goods.push(item);
             })
             console.log(this.param.goods);
+            this.param.callback=this.param.callback;
             this.alterOrder(this.param);
 
         }

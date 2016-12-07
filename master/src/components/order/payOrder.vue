@@ -2,6 +2,7 @@
   <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
   <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
   <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
+  <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <div>
     <div class="order_search">
       <div class="clear">
@@ -55,43 +56,6 @@
         </thead>
         <tbody>
         <tr v-for="item in initPurchaseOrderlist"  v-cloak v-show="item.orderStatus==20">
-          <!-- <td><a @click="clickOn({
-                                show:true,
-                                id:item.id,
-                                loading:false,
-                                orderStatus:item.orderStatus
-                        })">{{item.no }}</a></td>
-          <td v-if="item.type==1">销售</td>
-          <td v-if="item.type==0">采购</td>
-          <td v-if="item.sourceType==0">交易员新建</td>
-          <td v-if="item.sourceType==1">意向</td>
-          <td v-if="item.sourceType==2">报价</td>
-          <td>{{item.consignee}}</td>
-          <td>{{item.consigneePhone}}</td>
-          <td>{{item.consigneeAddr}}</td>
-          <td>{{item.country}}</td>
-          <td>{{item.province}}</td>
-          <td>{{item.city}}</td>
-          <td>{{item.employeeName}}</td>
-          <td>{{item.comments}}</td>
-          <td v-if="item.clients==0" style="background:red;color:#fff">PC</td>
-          <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
-          <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
-          <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
-          <td v-if="item.clients!=0&&item.clients!=1&&item.clients!=2&&item.clients!=3">未说明</td>
-          
-          <td>等待支付</td>
-          
-          <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Auditing}}</td>
-          <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
-          <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
-          <td>{{item.currency | Currency}}</td>
-          <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
-          <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
-          <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
-          <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
-          <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">其他</td> -->
-          <!-- <td v-if="item.payWay==''">其他</td> -->
           <td>{{item.ctime}}</td>
           <td v-if="item.type==1">{{$t('static.sell')}}</td>
           <td v-if="item.type==0">{{$t('static.purchase')}}</td>
@@ -156,6 +120,7 @@
   import filter from '../../filters/filters'
   import common from '../../common/common'
   import changeMenu from '../../components/tools/tabs/tabs.js'
+  import tipsModel from '../tips/tipDialog'
   import {
     getList,
     initPurchaseOrderlist
@@ -174,7 +139,8 @@
       detailModel,
       searchModel,
       disposeModel,
-      filter
+      filter,
+      tipsModel
     },
     data() {
       return {
@@ -207,6 +173,11 @@
           show:false
         },
         updateorderParam:{
+          show:false
+        },
+        tipsParam:{
+          name:'',
+          alert:true,
           show:false
         },
         disposeParam:{ //订单处理各个状态
@@ -280,8 +251,13 @@
         this.disposeParam.show = true;
         this.disposeParam.tips="订单审核通过，等待财务付款！";
         this.disposeParam.payment = true;
-
-      }
+        this.disposeParam.callback = this.orderBack;
+      },
+      orderBack:function(title){
+          this.tipsParam.show = true;
+          this.tipsParam.name=title;
+          this.tipsParam.alert=true;
+      },
     },
     filter:(filter,{}),
     ready(){

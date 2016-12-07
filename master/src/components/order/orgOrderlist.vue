@@ -395,6 +395,12 @@
                 }else{
                     this.tipsParam.show = true;
                 }
+                 _this.auditParam.callback = _this.applyBack;
+            },
+            applyBack:function(title){
+                this.tipsParam.show = true;
+                this.tipsParam.name=title;
+                this.tipsParam.alert=true;
             },
             onlyselected: function(index){
                   const _self=this;

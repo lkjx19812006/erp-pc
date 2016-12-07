@@ -3,6 +3,7 @@
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <breedrevise-model :param="reviseParam" v-if="reviseParam.show"></breedrevise-model>
     <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
+    <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-1">品种</div>
@@ -24,7 +25,7 @@
               </div>
             </div>
             <div class="right col-xs-1">
-                <button class="new_btn" @click="createBreed('create')">新建</button>
+                <button class="new_btn" @click="createBreed()">新建</button>
             </div>
         </div>
         <div class="order_table" id="table_box">
@@ -52,7 +53,7 @@
                         <td>{{item.pinyin}}</td>
                         <td>{{item.eName}}</td>
                         <td>{{item.lName}}</td>
-                        <td @click="item.show=false,modifyBreed($index,item)">
+                        <td @click="modifyBreed($index,item)">
                           <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                             <!-- <img height="24" width="24" src="/static/images/default_arrow.png" />
                             <div class="breed_action" v-show="item.show">
@@ -89,6 +90,7 @@ import deletebreedModel from '../serviceBaselist/breedDetailDialog/deleteBreedDe
 import breedreviseModel from '../../components/serviceBaseData/breedUpdate'
 import detailModel from '../../components/serviceBaselist/breeddetail'
 import common from '../../common/common'
+import tipsModel from '../../components/tips/tipDialog'
 import {
     initBreedlist,
   initCategorylist
@@ -108,7 +110,8 @@ export default {
         deletebreedModel,
         breedreviseModel,
         filter,
-        detailModel
+        detailModel,
+        tipsModel
     },
     data() {
         return {
@@ -126,9 +129,13 @@ export default {
                 show: false,
                 name: ''
             },
+            tipsParam:{
+                show:false,
+                alert:true,
+                name:''
+            },
             reviseParam: {
                 show: false,
-                id: ''
             },
             deleteParam: {
                 show: false,
@@ -179,9 +186,15 @@ export default {
         categoryNameSearch: function() {
             this.getBreedNameSearch(this.loadParam);
         },
-        createBreed: function(value) {
+        createBreed: function() {
             this.breedParam.show = true;
-            this.breedParam.name = value;
+            this.breedParam.callback = this.callback;
+        },
+        callback:function(title){
+            console.log(title)
+            this.tipsParam.show=true;
+            this.tipsParam.alert=true;
+            this.tipsParam.name=title;
         },
         editBreed: function(id) {
             this.changeParam.show = true;
@@ -191,12 +204,12 @@ export default {
         specDelete:function(initBreedlist){
             this.deleteParam = initBreedlist;
         },
-        modifyBreed: function(id) {
+        modifyBreed: function(id,item) {
             this.reviseParam.id = id;
             this.reviseParam.show = true;
+            this.reviseParam.callback = this.callback;
         },
       eventClick:function(sub){
-
         this.$store.state.table.basicBaseList.breedList[sub].show=!this.$store.state.table.basicBaseList.breedList[sub].show;
       }
     },

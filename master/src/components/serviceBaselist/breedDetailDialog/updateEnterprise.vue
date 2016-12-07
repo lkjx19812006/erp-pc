@@ -28,7 +28,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm()">保存</button>
                     <button type="button" class="btn  btn-confirm" v-else disabled="disabled">保存</button>
                 </div>
             </form>
@@ -44,6 +44,13 @@ export default {
     data() {
         return {
         }
+    },
+    methods:{
+        confirm:function(){
+            this.param.show = false;
+            this.param.callback=this.param.callback;
+            this.param.link(this.param);
+        }
     }
 }
 </script>
@@ -52,7 +59,7 @@ export default {
     z-index: 1083
 }
 .modal_con{
-    height: 350px;
+    height: 450px;
     width: 450px;
      z-index: 1084
 }
@@ -67,30 +74,10 @@ export default {
     width: 100%;
 }
 
-.big-font {
-    font-size: 36px;
-}
-
-.top-title span {
-    font-size: 28px;
-}
-
 .edit-content {
     padding: 19px 10px;
     text-align: center;
     border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
 }
 
 .editsection {
@@ -141,14 +128,6 @@ export default {
 
 .edit-input:focus {
     border-color: #fa6705;
-}
-
-.addblack span {
-    color: #333;
-    font-size: 14px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 5px;
 }
 
 .edit_footer button {

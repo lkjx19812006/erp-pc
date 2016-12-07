@@ -6,7 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>新建药材</h3>
+            <h4>新建药材</h4>
         </div>
         <validator name="validation">
             <form novalidate>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid"  @click="saveBreed(breedData,param.show = false)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid"  @click="saveInfo(breedData)">保存</button>
                     <button type="button" class="btn  btn-confirm" v-else disabled="disabled">保存</button>
                 </div>
             </form>
@@ -94,9 +94,7 @@ export default {
             },
             tipsParam: {
                 show:false,
-                confirm:true,
-                name:"确认保存药品信息?",
-                callback:this.confirm
+                confirm:true
             },
             file:{
                 url:'/crm/api/v1/file/',
@@ -113,10 +111,10 @@ export default {
         }
     },
     methods: {
-      confirm:function(){
+      saveInfo:function(breedData){
         this.param.show = false;
-
-        this.saveBreed(this.breedData);
+        breedData.callback = this.param.callback;
+        this.saveBreed(breedData);
       }
     }
 }
@@ -136,13 +134,6 @@ export default {
     bottom: 0;
     width: 100%;
 }
-.big-font {
-    font-size: 36px;
-}
-
-.top-title span {
-    font-size: 28px;
-}
 
 .edit-content {
     padding: 19px 10px;
@@ -150,11 +141,6 @@ export default {
     border-bottom: 1px solid #ddd;
 }
 
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
-}
 
 .editsection {
     width: 100%;
@@ -198,14 +184,6 @@ export default {
 
 .edit-input:focus {
     border-color: #fa6705;
-}
-
-.addblack span {
-    color: #333;
-    font-size: 14px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 5px;
 }
 .edit_footer button {
     margin-left: 15px;

@@ -16,7 +16,7 @@
       <form novalidate>
         <div class="edit-model">
           <section class="editsection" v-cloak>
-            <div style="margin-top:20px;margin-left:30px;margin-bottom:15px;">
+            <div style="margin-top:20px;margin-left:10px;margin-bottom:15px;">
                <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
                <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
             </div>
@@ -64,7 +64,7 @@
                   <option value="3,买卖">{{$t("static.purchaser_and_supplier")}}</option>
                 </select>
               </div>
-              <div class="client-detailInfo  col-md-6" v-if="param.supplier!=1">
+              <div v-if="param.supplier!=1" class="client-detailInfo  col-md-6" >
                 <label>{{$t('static.deparment')}}</label>
                 <input v-show="false" type="text" class="form-control" readonly="readonly"
                        v-model="param.orgId" />
@@ -73,7 +73,7 @@
                 <input v-if="!param.employeeId" type="text" class="form-control" readonly="readonly" v-model="param.orgName"
                        @click="selectParam.show=true" value="{{param.orgName}}" />
               </div>
-              <div class="client-detailInfo  col-md-6" v-if="param.supplier==1">
+              <div  v-if="param.supplier==1" class="client-detailInfo  col-md-6">
                 <label>{{$t('static.deparment')}}</label>
                 <input v-show="false" type="text" class="form-control" readonly="readonly"
                        v-model="param.orgId" />
@@ -96,15 +96,15 @@
               <div v-if="!param.countryId" class="client-detailInfo  col-md-6" >
                 <label>{{$t('static.country')}}</label>
                 <div  class="form-control" style="padding:0;border:none" >
-                <v-select
-                  :debounce="250"
-                  :value.sync="country"
-                  :on-change="selectProvince"
-                  :options="countryArr"
-                  placeholder="国家"
-                  label="cname"
-                >
-                </v-select>
+                    <v-select
+                      :debounce="250"
+                      :value.sync="country"
+                      :on-change="selectProvince"
+                      :options="countryArr"
+                      placeholder="国家"
+                      label="cname"
+                    >
+                    </v-select>
                   </div>
               </div>
               <div class="client-detailInfo  col-md-6">
@@ -127,7 +127,7 @@
                 <label>{{$t('static.city')}}</label>
                 <input type="text" v-if="!province.cname" class="form-control" disabled="disabled"
                        placeholder="请先选择一个省"/>
-                <div  class="form-control" style="padding:0;border:none"  v-if="province.cname">
+                  <div  class="form-control" style="padding:0;border:none"  v-if="province.cname">
                     <v-select
                       :debounce="250"
                       :value.sync="city"
@@ -142,6 +142,7 @@
                 <label>{{$t('static.main_product')}}</label>
                 <input type="text" class="form-control" v-model="param.mainBiz"/>
               </div>
+
               <div class="client-detailInfo  col-md-6" >
                 <label>{{$t('static.website')}}</label>
                 <input type="text" class="form-control" v-model="param.website"/>
@@ -271,7 +272,6 @@
           show:false,
           remain:true,
           name:'创建成功',
-          callback:this.callback
         },
         contacts: [{
           name: null,
@@ -446,9 +446,9 @@
         this.saveCreate(this.param,this.tipsParam);
 
       },
-      callback:function(){
+      /*callback:function(){
         this.param.show = false;
-      }
+      }*/
     },
 
     events: {
@@ -518,16 +518,6 @@
     -moz-box-orient: horizontal;
     -ms-box-orient: horizontal;
     box-orient: horizontal;
-  }
-
-  .editpageleft,
-  .editpageright {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-    width: 50%;
-    float: left;
   }
 
   .editpageleft {

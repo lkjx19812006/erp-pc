@@ -290,7 +290,9 @@ export default {
             loadParam: {
                 loading: true,
                 color: '#5dc596',
-                size: '15px'
+                size: '15px',
+                key:'orderDetail',
+                id:this.param.id,
             },
             cancleReason:{
                show:false,
@@ -325,7 +327,7 @@ export default {
               key:this.param.key
             },
             payName: "去支付",
-          type:"image/jpeg,image/jpg,image/png",
+           type:"image/jpeg,image/jpg,image/png",
             uploadLogistic:{
               images:'',
               b:'',
@@ -375,15 +377,15 @@ export default {
             this.orderCancle(this.cancleReason,this.param);
         },
         accept:function(confirm){
-          
-            this.orderStatu(confirm)
+            confirm.callback = this.param.callback;
+            this.orderStatu(confirm);
         },
         confirmEdit:function(confirm){
-          
+            confirm.callback = this.param.callback;
             this.orderStatu(confirm)
         },
         orderEdit:function(edit){
-       
+ 
           this.editorder = edit;
         },
         Viewlogistics:function(logistics){
@@ -413,6 +415,7 @@ export default {
                console.log(payorder)
                this.$broadcast('getImageData');
             }else if(payorder.payWay==3){    //药款支付
+               payorder.callback = this.param.callback;
                this.yankuanPayorder(this.param,payorder);
                console.log(payorder)
                //this.param.show=false;
@@ -422,7 +425,6 @@ export default {
                 this.tipParam.name='请选择支付方式';
                 this.tipParam.alert=true;
             }
-
         },
         underPay:function(){
             this.yankuanPayorder(this.param,this.undelinePay);
@@ -430,7 +432,7 @@ export default {
     },
     created() {
         this.getExpressList(this.loadParam);
-        this.getOrderDetail(this.param);
+        this.getOrderDetail(this.loadParam);
     }
 }
 </script>

@@ -86,6 +86,7 @@ export default {
                 this.param.show=false;
                 this.batchOrgOrder(this.param);
             }
+            this.param.callback = this.param.callback;
         },
         reject: function(param){
             this.param.validate = -2;
@@ -93,6 +94,7 @@ export default {
             console.log(this.param.ids);
             console.log(this.param.description);
             console.log(this.param.indexs);
+            this.param.callback = this.param.callback;
             this.batchOrgOrder(this.param);
         },
     },

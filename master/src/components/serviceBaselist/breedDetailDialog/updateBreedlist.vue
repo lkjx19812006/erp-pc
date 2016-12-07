@@ -99,7 +99,7 @@ export default {
     z-index: 1083
 }
 .modal_con{
-    height: 350px;
+    height: 500px;
     width: 400px;
      z-index: 1084
 }
@@ -109,37 +109,10 @@ export default {
     top: 0;
 }
 .edit_footer{
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    width: 100%;
+    width: 400px;
 }
-
-.big-font {
-    font-size: 36px;
-}
-
-.top-title span {
-    font-size: 28px;
-}
-
-.edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
-.edit-model {
-    overflow: hidden;
-    overflow-y: auto;
-    padding: 10px 30px 30px 30px;
-}
-
 .editsection {
     width: 100%;
     box-sizing: border-box;

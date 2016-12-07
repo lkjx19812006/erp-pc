@@ -61,8 +61,8 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="saveDataInfo(systemData,param.show = false)">保存</button>
-                    <button type="button" class="btn  btn-confirm" v-else @click="saveDataInfo(systemData,param.show = false)" disabled="disabled">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="saveInfo(systemData)">保存</button>
+                    <button type="button" class="btn  btn-confirm" v-else  disabled="disabled">保存</button>
                 </div>
             </form>
         </validator>
@@ -88,6 +88,13 @@ export default {
                 status: ''
             }
 
+        }
+    },
+    methods:{
+        saveInfo:function(systemData){
+            this.param.show = false;
+            systemData.callback = this.param.callback;
+            this.saveDataInfo(systemData);
         }
     },
     vuex: {

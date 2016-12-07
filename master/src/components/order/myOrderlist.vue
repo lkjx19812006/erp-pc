@@ -439,6 +439,12 @@
                 }else{
                     this.tipsParam.show = true;
                 }
+                _this.auditParam.callback = _this.applyBack;
+            },
+            applyBack:function(title){
+                this.tipsParam.show = true;
+                this.tipsParam.name=title;
+                this.tipsParam.alert=true;
             },
             orderCheck:function(id,sub,validate){
                 var _this = this;
@@ -452,6 +458,7 @@
                     this.auditParam.show = true;
                     this.auditParam.title = '重新申请订单审核';
                 }
+                _this.auditParam.callback = _this.applyBack;
             },
             onlyselected: function(index){
                   const _self=this;
@@ -484,7 +491,9 @@
                  this.createParam.callback = this.newBack;
             },
             newBack:function(title){
-
+              this.tipsParam.show = true;
+              this.tipsParam.name=title;
+              this.tipsParam.alert=true;
             },
             createSearch:function(){
                  this.loadParam.show=true;
@@ -500,7 +509,6 @@
             },
 
             updateOrder:function(param,goods){
-                
                 this.dialogParam=param;
                 var _this = this;
                 if(goods==null){
@@ -512,8 +520,12 @@
                         this.dialogParam.goodsBack[i][key] = goods[i][key];
                     }
                 }
-                
-
+                this.dialogParam.callback=this.updateBack;
+            },
+            updateBack:function(title){
+              this.tipsParam.show = true;
+              this.tipsParam.name=title;
+              this.tipsParam.alert=true;
             },
             pendingOrder:function(item,sub){
                 item.show=!item.show;
@@ -600,6 +612,12 @@
                 if(item.orderStatus==70&&item.type==1){
                     this.disposeParam.tips="订单已完成！";
                 }
+                this.disposeParam.callback = this.orderBack;
+            },
+            orderBack:function(title){
+                this.tipsParam.show = true;
+                this.tipsParam.name=title;
+                this.tipsParam.alert=true;
             },
             resetTime:function(){
               this.loadParam.ctime = "";

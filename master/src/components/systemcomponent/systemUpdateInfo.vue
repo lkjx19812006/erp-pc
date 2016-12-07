@@ -66,7 +66,7 @@
             </div>
             <div class="edit_footer">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="updateDataInfo(systemData,systemData.sub=param.id,param.show = false)">确定</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="updateDataInfo(systemData,systemData.sub=param.id,param.show = false,systemData.callback=param.callback)">确定</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="disabled">确定</button>
             </div>
         </validator>

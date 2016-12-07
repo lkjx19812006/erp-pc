@@ -88,7 +88,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn btn-confirm" v-if="$validation.valid"  @click="save(param,param.show = false)">保存</button>
+                    <button type="button" class="btn btn-confirm" v-if="$validation.valid"  @click="save()">保存</button>
                     <button type="button" class="btn btn-confirm" v-else v-else disabled="disabled">保存</button>
                 </div>
             </form>
@@ -163,8 +163,7 @@ export default {
             let str = `${year}/${month}/${day}`
             this.dateText = str.replace(/\b(\w)\b/g, "0$1")
         },
-        save:function(param){
-            console.log('确定');
+        save:function(){
             var temp = '';
             this.initRoleList.forEach(function(item){
                 if(item.checked){
@@ -172,9 +171,10 @@ export default {
                 }         
             })
             console.log(temp);
-            param.privilege = temp.substring(0,temp.length-1);
-            console.log(param.privilege);
-            this.param.link(param);
+            this.param.privilege = temp.substring(0,temp.length-1);
+            this.param.show = false
+            this.param.callback = this.param.callback;
+            this.param.link(this.param);
         },
         checked:function(item){
             if(item.checked){

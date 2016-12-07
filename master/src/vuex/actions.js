@@ -631,6 +631,7 @@ export const batchOrgOrder = ({ dispatch }, param) => { //批量审核部门的�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
+        param.callback(res.json().msg);
         param.show = false;
         param.description = "";
         OrgOrderdata.indexs = param.indexs;
@@ -783,6 +784,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         console.log('修改成功')
         param.show = false;
         param.checked = false;
+        param.callback(res.json().msg);
         dispatch(types.ORDER_UPDATE_DATA, param);
 
     }, (res) => {
@@ -921,8 +923,7 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
         var status = res.json().result;
         status.link = param.link;
         status.key = param.key;
-        
-        
+        param.callback(res.json().msg);
         dispatch(types.ORDER_STATUS, status);
     }, (res) => {
         console.log('fail');
@@ -996,6 +997,7 @@ export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单�
         param.show = false;
         var status = res.json().result;
         status.key = param.key;
+        param.callback(res.json().msg);
         dispatch(types.ORDER_STATUS, status);
     }, (res) => {
         console.log('fail');
@@ -1142,6 +1144,7 @@ export const getSystemSearch = ({ dispatch }, param) => { //搜索枚举类型
     });
 }
 export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
+    console.log(data)
     const body = {
         code: data.code,
         desc: data.desc,
@@ -1162,6 +1165,7 @@ export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
         }
     }).then((res) => {
         console.log('添加成功')
+        data.callback(res.json().msg);
         data.id = res.json().result.id;
         dispatch(types.ADD_DATA, data);
     }, (res) => {
@@ -1190,7 +1194,7 @@ export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-
+        param.callback(res.json().msg);
         dispatch(types.UPDATE_DATA, param);
         console.log('修改成功')
     }, (res) => {
@@ -1534,6 +1538,7 @@ export const updateEnterprise = ({ dispatch }, param) => { //修改企业电话�
         }
     }).then((res) => {
         console.log('修改成功')
+        param.callback(res.json().msg);
         dispatch(types.UPDATE_ENTERPRISE, param);
     }, (res) => {
         console.log('fail');
@@ -1863,7 +1868,8 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
     }).then((res) => {
         console.log('添加成功')
         data.id = res.json().result.id;
-        console.log(data)
+        console.log(data);
+        data.callback(res.json().msg);
         dispatch(types.ADD_BREED_DATA, data);
 
     }, (res) => {
@@ -1889,6 +1895,7 @@ export const createSpec = ({ dispatch }, param, id) => { //新增药材相关
         }
     }).then((res) => {
         console.log('添加成功')
+        param.callback(res.json().msg);
         param.id = res.json().result.id;
         param.breedId = id;
         dispatch(types.ADDSPEC_DATA, param);
@@ -1949,6 +1956,10 @@ export const updateBreedInfo = ({ dispatch }, param) => { //修改药材信息
         }
     }).then((res) => {
         console.log('修改成功')
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
+        
         dispatch(types.UPDATE_BREED_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -2360,7 +2371,9 @@ export const customerTransferBlacklist = ({ dispatch }, param) => {    //客户�
         param.loading = false;
         if (param.link == '/customer/transferBlacklist') { dispatch(types.CUSTOMER_BATCH_DELETE, param); }
         if (param.link == '/customer/setSupplier') { dispatch(types.CUSTOMER_BATCH_SUPPLIER, param); }
-        param.callback(res.json().msg)
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
     }, (res) => {
         param.loading = false;
         console.log('fail');
@@ -2535,7 +2548,9 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         }
     }).then((res) => {
         console.log('添加成功')
-        data.callback(res.json().msg);
+        if(data.callback){
+            data.callback(res.json().msg);
+        }
         dispatch(types.CUSTOMER_ADD_DATA, data);
         if(res.json().msg=='success'){
              data.transStatus = 1;
@@ -2612,7 +2627,10 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
     }).then((res) => {
         console.log('修改成功') 
         dispatch(types.CUSTOMER_UPDATE_DATA, param);
-        param.callback(res.json().msg);
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
+        
         param.phoneProvince = res.json().result.phoneProvince;
         param.phoneCity = res.json().result.phoneCity;
         param.cityName = res.json().result.cityName;
@@ -4546,6 +4564,7 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
     }).then((res) => {
         console.log('添加成功');
         param.status = 1;
+        param.callback(res.json().msg);
         dispatch(types.ADD_EMPLOYEE_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -4590,6 +4609,7 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
         }
     }).then((res) => {
         console.log('修改成功')
+        param.callback(res.json().msg);
         dispatch(types.UPDATE_EMPLOY_DATA, param);
     }, (res) => {
         console.log('fail');

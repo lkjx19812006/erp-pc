@@ -2,6 +2,7 @@
    <createemp-model :param="createParam" v-if="createParam.show"></createemp-model>
    <detailemp-model :param="changeParam" v-if="changeParam.show"></detailemp-model>
    <searchorg-model :param.sync="orgParam" v-if="orgParam.show"></searchorg-model>
+   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div  class="myemploy">
         <div class="order_search">
             <div class="clear">
@@ -184,6 +185,7 @@ import detailempModel  from '../components/emloyee/employDetail'
 import searchorgModel  from '../components/emloyee/searchorg'
 import common from '../common/common'
 import changeMenu from '../components/tools/tabs/tabs.js'
+import tipsdialogModel from '../components/tips/tipDialog'
 import {
    getList,
    initEmployeeList,
@@ -200,7 +202,8 @@ export default {
         pagination,
         createempModel,
         detailempModel,
-        searchorgModel
+        searchorgModel,
+        tipsdialogModel
     },
     data() {
         return {
@@ -226,6 +229,11 @@ export default {
             deleteParam:{
                 show:false
             },
+            tipsParam:{
+                show:false,
+                alert:true,
+                name:"",
+            },
             orgParam:{
                 show:false,
                 orgid:'',
@@ -246,10 +254,16 @@ export default {
         },
         newData:function(initEmployeeList){
             this.createParam=initEmployeeList;
-            //console.log(this.createParam.arr)
+            this.createParam.callback = this.callback;
+        },
+        callback:function(title){
+            this.tipsParam.show = true;
+            this.tipsParam.name=title;
+            this.tipsParam.alert=true;
         },
         modify:function(initEmployeeList){
             this.createParam=initEmployeeList;
+            this.createParam.callback = this.callback;
         },
         clickOn: function(initEmployeeList) {
             this.changeParam = initEmployeeList;

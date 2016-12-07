@@ -2,6 +2,7 @@
 	<delete-model :param="delParam" v-if="delParam.show"></delete-model>
     <modify-model :param="modifyParam" v-if="modifyParam.show"></modify-model>
     <system-model :param="dialogParam" v-if="dialogParam.show"></system-model>
+    <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	<div class="order_search">
         <div class="clear">
             <div class="my_order col-xs-2">枚举类型</div>
@@ -34,7 +35,7 @@
                 </div>
             </div>
             <div class="right col-xs-2">
-                <button class="new_btn" @click="newData('data')" data-toggle="modal" data-target="#myModal">新建</button>
+                <button class="new_btn" @click="newData()" data-toggle="modal" data-target="#myModal">新建</button>
             </div>
         </div>
     </div>
@@ -58,7 +59,7 @@
                 <td>{{item.name}}</td>
                 <td>{{item.type | enumlist }}</td>
                 <td>{{item.desc }}</td>
-                <td ><a class="operate"  @click="modify($index)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
+                <td ><a class="operate"  @click="modify(item,$index)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
                   <!-- <img height="24" width="24" src="/static/images/default_arrow.png" style="margin:auto"/>
                    <div class="component_action" v-show='item.show' transition="expand">
                       <ul>
@@ -93,6 +94,7 @@ import modifyModel from '../systemcomponent/systemUpdateInfo'
 import deleteModel from '../systemcomponent/systemDelInfo'
 import filter from '../../filters/filters'
 import common from '../../common/common'
+import tipsModel from '../tips/tipDialog'
 import {
     initSystemlist,
     initSearchlist
@@ -109,7 +111,8 @@ export default {
         pagination,
         modifyModel,
         deleteModel,
-        filter
+        filter,
+        tipsModel
     },
     data() {
         return {
@@ -124,11 +127,16 @@ export default {
             },
             dialogParam:{
                  show: false,
-                 name: 'data'
+                 name: ''
             },
             modifyParam:{
             	id:'',
             	show:false
+            },
+            tipsParam:{
+                show: false,
+                name: '',
+                alert:true
             },
             delParam:{
                 id:'',
@@ -194,15 +202,21 @@ export default {
                  this.$store.state.table.systemBaseList.enumlist[id].show=true;
             }
         },
-        newData:function(value){
-             this.dialogParam.name=value;
+        newData:function(){
              this.dialogParam.show=true;
              this.editmodel = false;
-        },
-        modify:function(id){
+             this.dialogParam.callback = this.callback;
+        },  
+        modify:function(item,id){
           	this.modifyParam.id=id;
             this.modifyParam.show=true;
             this.$broadcast('getParam');
+            this.modifyParam.callback = this.callback;
+        },
+        callback:function(title){
+            this.tipsParam.show=true;
+            this.tipsParam.name=title;
+            this.tipsParam.alert=true;
         },
         del:function(param){
             this.delParam.id=param.id;

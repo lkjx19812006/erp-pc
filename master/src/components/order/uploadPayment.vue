@@ -13,8 +13,8 @@
                <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
             </div>
             <div class="edit_footer">
-                <button type="button" class="btn btn-close"    @click="param.show = false">{{$t('static.cancel')}}</button>
-                <button type="button" class="btn btn-orange" @click="param.callback(param),param.show=false">{{$t('static.confirm_payment')}}</button>
+                <button type="button" class="btn btn-close"   @click="param.show = false">{{$t('static.cancel')}}</button>
+                <button type="button" class="btn btn-orange" @click="param.callback(param),param.callback = param.callback,param.show=false">{{$t('static.confirm_payment')}}</button>
             </div>
         </div>
     </div>

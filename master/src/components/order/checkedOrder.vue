@@ -2,6 +2,7 @@
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
+    <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <div>
       <div class="order_search">
         <div class="clear">
@@ -156,6 +157,7 @@
     import filter from '../../filters/filters'
     import common from '../../common/common'
     import changeMenu from '../../components/tools/tabs/tabs.js'
+    import tipsModel from '../tips/tipDialog'
     import {
         getList,
         initSellOrderlist
@@ -174,7 +176,8 @@
             detailModel,
             searchModel,
             disposeModel,
-            filter
+            filter,
+            tipsModel
         },
         data() {
             return {
@@ -208,6 +211,11 @@
                 },
                 updateorderParam:{
                     show:false
+                },
+                tipsParam:{
+                  name:'',
+                  alert:true,
+                  show:false
                 },
                 disposeParam:{ //订单处理各个状态
                     show:false,
@@ -286,7 +294,13 @@
                     this.disposeParam.tips="订单买家已付款，商家正在核查,！";
                     this.disposeParam.Auditing = true;
                 }
-            }
+                this.disposeParam.callback = this.orderBack;
+            },
+            orderBack:function(title){
+                this.tipsParam.show = true;
+                this.tipsParam.name=title;
+                this.tipsParam.alert=true;
+            },
         },
         filter:(filter,{}),
         ready(){
