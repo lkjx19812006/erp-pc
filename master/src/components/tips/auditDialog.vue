@@ -9,7 +9,7 @@
       </div>
       <div class="model-footer" v-if="param.confirm">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-        <input type="button" class="btn  btn-confirm"  @click="param.callback(),param.show = false" value="确定" />
+        <input type="button" class="btn  btn-confirm"  @click="confirm()" value="确定" />
       </div>
       <div class="model-footer" v-if="param.supplier">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
@@ -50,6 +50,11 @@
           item.validate = 3;
           item.show=false;
           this.sampleApply(item);
+       },
+       confirm:function(){
+        this.param.callback=this.param.callback;
+        this.param.callback(this.param);
+        this.param.show = false;
        }
     }
   }

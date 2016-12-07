@@ -12,9 +12,9 @@
             <div class="edit-model">
                 <section class="editsection clearfix">
                     <div class="editpage-input col-md-6">
-                        <label class="editlabel">分付阶段{{param.orderStatus}}</label>
+                        <label class="editlabel">分付阶段</label>
                         <select class="form-control" v-model="param.orderStatus">
-                        	<option v-if="param.orderStatus>=20&&param.orderStatus<60">合同签订后</option>
+                        	<option v-if="param.orderStatus>=0&&param.orderStatus<60">合同签订后</option>
                         	<option v-if="param.orderStatus==60" value="60">收货后</option>
                         	<option v-if="param.orderStatus==70" value="70">订单完成后</option>
                         </select>

@@ -851,6 +851,13 @@ const mutations = {
     },
     [ORDER_UPLOAD_DATA](state,data){ //新建订单详情凭证
         console.log(data);
+        if(data.amount){
+          state.orderDetail.stages.arr.unshift({ //分期付款
+                "orderId":data.orderId,
+                "description":data.description,
+                "show":false
+            })
+        }
         if(data.payPics){
             state.orderDetail.payPics.arr.unshift({
                 "orderId":data.orderId,

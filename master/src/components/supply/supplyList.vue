@@ -4,6 +4,7 @@
   <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
   <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
+  <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <div>
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">供应商</div>
@@ -211,6 +212,7 @@
   import filter from '../../filters/filters'
   import common from '../../common/common'
   import changeMenu from '../../components/tools/tabs/tabs.js'
+  import tipsModel from '../tips/tipDialog'
   import {
     initSupplyCustomerlist,
     initLogin
@@ -230,8 +232,8 @@
       createModel,
       deletebreedModel,
       alterinfoModel,
-      searchModel
-
+      searchModel,
+      tipsModel
     },
     vuex: {
       getters: {
@@ -293,6 +295,11 @@
           show:false,
           id:''
         },
+        tipsParam:{
+          show:false,
+          alert:true,
+          name:'',
+        },
         checked:false
       }
     },
@@ -303,7 +310,13 @@
       },
       createCustomer:function(info){
         this.createParam = info;
-        //this.createParam.name=value;
+        this.createParam.callback=this.valueback;
+      },
+      valueback:function(title){
+          console.log(title)
+          this.tipsParam.show = true;
+          this.tipsParam.name=title;
+          this.tipsParam.alert=true;
       },
       createSearch:function(){
         this.loadParam.show=true;

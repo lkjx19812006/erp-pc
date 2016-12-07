@@ -1,6 +1,7 @@
 <template>
      <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
      <search-model :param="loadParam" v-if="loadParam.show"></search-model>
+     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	 <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2" style="font-size:14px">我的报价</div>
@@ -32,23 +33,7 @@
                        <th>报价价格</th>
                        <th>库存</th>
                        <th>报价备注</th>
-                       
-
-                      
-                        <!-- <th>报价会员</th>
-                        <th>会员手机</th>
-                        <th>发布意向客户</th>
-                        <th>客户手机</th>
-                        <th>品种</th>
-                        <th>产地</th>
-                        <th>单价</th>
-                        <th>数量</th>
-                        <th>总价</th>
-                        <th>杂费</th>
-                        <th>杂费说明</th>
-                        <th>备注</th>
-                        <th>是否已采纳</th> -->
-      	            	  <th>操作</th>
+      	            	 <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,7 +47,7 @@
                         <td>{{item.number}}{{item.unit}}</td>
                         <td>{{item.description}}</td>
                         
-                        <!-- <td>{{item.userName}}</td>
+                  <!-- <td>{{item.userName}}</td>
                         <td>{{item.userPhone}}</td>
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerPhone}}</td>
@@ -77,20 +62,12 @@
                         <td>
                            <div v-if="item.orderTime==0">未采纳</div>
                            <div v-else>已采纳</div>
-                        </td> -->
-
+                        </td> 
+                  -->
                         <td >
-                              <a class="operate" @click.stop="adopt(item,$index)" v-if="item.orderTime==0"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
+                              <a class="operate" @click.stop="adopt(item,$index)" v-if="item.orderTime==0"><img src="/static/images/adopt.png"   alt="我要采纳" title="我要采纳"/>
                                </a>
                         </td>
-                       <!--  <td @click.stop="clickShow($index)">
-                          <img height="24" width="24" src="/static/images/default_arrow.png" />
-                          <div class="component_action" v-show="item.show">
-                              <ul >
-                                  <li v-if="item.orderTime==0"  @click="adopt(item,$index)">采纳</li>
-                              </ul>
-                          </div>
-                                              </td> -->
                     </tr>
                 </tbody>
             </table>
@@ -108,6 +85,7 @@ import createorderModel  from '../createOrder'
 import searchModel  from '../offerSearch'
 import common from  '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import tipsModel from '../../tips/tipDialog'
 import {
 	initMyOfferList,
     initLogin
@@ -119,7 +97,8 @@ export default {
     components: {
         pagination,
         createorderModel,
-        searchModel
+        searchModel,
+        tipsModel
     },
     vuex: {
         getters: {
@@ -149,7 +128,11 @@ export default {
                 endTime:'',
                 total:0
             },
-
+            tipsParam:{
+              name:'',
+              show:false,
+              alert:true
+            },
             offerParam:{
             	show:false,
             	id:''
@@ -256,14 +239,19 @@ export default {
             this.orderParam.goods[0].number = item.number;
             this.orderParam.goods[0].quality = item.quality;
             this.orderParam.goods[0].location = item.location;
-
             for(var key in this.orderParam){
                 if(this.orderParam[key]!=''){
                     console.log(key+'=='+this.orderParam[key]);
                 }
             }
             console.log(this.orderParam.goods[0]);
-        }
+            this.orderParam.callback = this.adoptback;
+        },
+        adoptback:function(title){
+          this.tipsParam.name=title;
+          this.tipsParam.alert=true;
+          this.tipsParam.show=true;
+        },
 
     },
     events: {

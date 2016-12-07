@@ -166,19 +166,13 @@ export default {
     props: ['param'],
     data() {
         return {
-          selectParam: {
-            show: false,
-            employeeId: '',
-            employeeName: '',
-            orgId: '',
-            orgName: ''
-          },
-            tipsParam:{
-                show:false,
-                confirm:true,
-                name:"确认修改信息?",
-                callback:this.alertInfo
-              },
+                selectParam: {
+                  show: false,
+                  employeeId: '',
+                  employeeName: '',
+                  orgId: '',
+                  orgName: ''
+                },
                 province: {
                   cname: ''
                 },
@@ -225,14 +219,10 @@ export default {
         actions: {
           getCountryList,
           getProvinceList,
-          getCityList
+          getCityList,
         }
     },
     methods: {
-        alertInfo: function(){
-            this.param.show = false;
-            this.param.link(this.param);
-        },
         selectProvince:function(){
             this.province = '';
             this.city = '';
@@ -259,8 +249,9 @@ export default {
         this.param.provinceName=this.province.cname;
         this.param.city=this.city.id;
         this.param.cityName=this.city.cname;
-        this.tipsParam.show=true
-
+        this.param.show=false;
+        this.param.callback=this.param.callback;
+        this.param.link(this.param);
       }
     },
     events: {

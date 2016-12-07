@@ -525,6 +525,12 @@ export default {
             item.employeeName=this.$store.state.table.login.name;
             item.orgId=this.$store.state.table.login.orgId;
             this.transferParam = item;
+            this.transferParam.callback = this.tansferback;
+        },
+        tansferback:function(title){
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.tipsParam.show = true;
         },
         searchIntention:function(){
             this.getIntentionList(this.loadParam);
@@ -555,9 +561,14 @@ export default {
         specDelete:function(param){
           this.deleteParam = param;
         },
-        modifyIntention:function(param){
-          
+        modifyIntention:function(param){  
           this.createParam = param;
+          this.createParam.callback = this.modifyback;
+        },
+        modifyback:function(title){
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.tipsParam.show = true;
         },
         createIntention:function(param){
              this.createParam = param;

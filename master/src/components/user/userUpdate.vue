@@ -146,7 +146,7 @@
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-            <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.userType=initUserDetail.userType,param.bizType=initUserDetail.bizType,tipsParam.show=true">确定</button>
+            <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm()">确定</button>
             <button type="button" class="btn  btn-confirm" v-else disabled="true">确定</button>
         </div>
         </validator>
@@ -186,10 +186,13 @@ export default {
         }
     },
     methods: {
-      alertInfo:function(){
+      confirm:function(){
+        this.param.userType=initUserDetail.userType;
+        this.param.bizType=initUserDetail.bizType;
         this.param.show = false;
+        this.param.callback = this.param.callback;
         this.updateUserInfo(this.param);
-      }
+      },
     },
     created(){
       this.getUserDetail(this.param);

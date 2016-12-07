@@ -476,6 +476,7 @@ export default{
             this.param.district = this.district.cname;
             this.param.send=false;
             console.log(this.param);
+            this.param.callback=this.param.callback;
             this.createSample(this.param);
         }
 	},

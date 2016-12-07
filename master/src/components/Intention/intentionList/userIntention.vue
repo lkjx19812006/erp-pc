@@ -116,7 +116,7 @@
                         <th>客户备注</th>
                         <th>意向来源</th>
 
-                        <!-- <th>意向类型</th>
+                    <!-- <th>意向类型</th>
                         <th>会员名称</th>
                         <th>会员手机号</th>
                         <th>品种名称</th>
@@ -206,76 +206,6 @@
                         <td>{{item.duedateDesc}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.inTypeDesc}}</td>
-
-                        <!-- <td>
-                            <div v-if="item.especial==0&&item.type==0">普通求购</div>
-                            <div v-if="item.especial==0&&item.type==1">普通供应</div>
-                            <div v-if="item.especial==1&&item.type==0">紧急求购</div>
-                            <div v-if="item.especial==1&&item.type==1">低价资源</div>
-                        </td>
-                        <td class="underline" @click.stop="detailClick({
-                                id:item.id,
-                                sub:$index,
-                                show:true,
-                                loading:true,
-                                customerName:item.customerName,
-                                customerPhone:item.customerPhone,
-                                breedName:item.breedName,
-                                type:item.type,
-                                especial:item.especial,
-                                qualification:item.qualification,
-                                spec:item.spec,
-                                number:item.number,
-                                unit:item.unit,
-                                price:item.price,
-                                address:item.address,
-                                location:item.location,
-                                advance:item.advance,
-                                invoic:item.invoic,
-                                visit:item.visit,
-                                pack:item.pack,
-                                intl:item.intl,
-                                visit:item.visit,
-                                sampling:item.sampling,
-                                sampleNumber:item.sampleNumber,
-                                sampleUnit:item.sampleUnit,
-                                sampleAmount:item.sampleAmount,
-                                offer:item.offer,
-                                status:item.status,
-                                country:item.country,
-                                province:item.province,
-                                city:item.city,
-                                district:item.district,
-                                address:item.address,
-                                link:editintentInfo,
-                                url:'/intention/',
-                                key:'intentionList',
-                                image_f:'',
-                                image_s:'',
-                                image_t:'',
-                                image_f_show:'',
-                                image_s_show:'',
-                                image_t_show:'',
-                                duedate:item.duedate
-                                })">{{item.userFullname}}</td>
-                        <td>{{item.userPhone}}</td>
-                        <td @click="match(item)"  style="cursor:pointer;color:#fa6705">{{item.breedName}}</td>
-                        <td>{{item.qualification | qualify}}</td>
-                        <td>{{item.spec}}</td>
-                        <td>{{item.unit}}</td>
-                        <td>{{item.price}}</td>
-                        <td>{{item.location}}</td>
-                        <td>{{item.number}}</td>
-                        <td>{{item.province}}</td>
-                        <td>{{item.address}}</td>
-                        <td>
-                            <div v-if="item.sampling==0">否</div>
-                            <div v-if="item.sampling==1">是</div>
-                        </td>
-                        <td>{{item.sampleNumber}}</td>
-                        <td>{{item.sampleAmount}}</td>
-                        <td>{{item.ctime | date}}</td>
-                        <td>{{item.validate | intentionAudit}}</td> -->
                         <td>
                             <a class="operate" @click.stop="modifyIntention({
                                   id:item.id,
@@ -633,6 +563,17 @@ export default {
         },
         userToClient:function(item){
             this.transferParam = item;
+            this.transferParam.callback = this.transferback;
+        },
+        transferback:function(title){
+          if(title=='success'){
+            this.tipsParam.name='划转成功';
+          }else{
+            this.tipsParam.name = title;
+          }
+            
+            this.tipsParam.alert = true;
+            this.tipsParam.show = true;
         },
         searchIntention:function(){
             this.getIntentionList(this.loadParam);
@@ -664,11 +605,13 @@ export default {
           this.deleteParam = param;
         },
         modifyIntention:function(param){
-         
-          this.createParam = param;
+            this.createParam = param;
+            this.createParam.callback = this.modifyback;
         },
-        createIntention:function(param){
-             this.createParam = param;
+        modifyback:function(title){
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.tipsParam.show = true;
         },
         selectSearch:function(){
           this.getIntentionList(this.loadParam);

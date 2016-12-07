@@ -506,6 +506,7 @@ export default {
           }
           //this.tipParam.name = '新建意向成功';
           this.param.show=false;
+          this.param.callback=this.param.callback;
           this.createIntentionInfo(this.param);
         }
         if(this.param.flag==1){
@@ -515,9 +516,10 @@ export default {
           this.param.district = this.district.cname;
           //this.tipParam.name = '修改意向成功';
           this.param.show=false;
+          this.param.callback=this.param.callback;
           this.editintentInfo(this.param);
         }
-
+        this.param.callback=this.param.callback;
       },
       reset:function(){
         console.log(this.param.duedate)

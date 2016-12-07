@@ -4,6 +4,7 @@
      <delete-model :param="delParam" v-if="delParam.show"></delete-model>
      <edit-model :param.sync="dialogParam" v-if="dialogParam.send"></edit-model>
      <apply-model :param="applyParam" v-if="applyParam.show"></apply-model>
+     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	 <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise pull-left" style="font-size:14px">我的寄样申请</div>
@@ -139,6 +140,7 @@ import common from '../../../common/common'
 import deleteModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import editModel from '../alterSample'
 import applyModel from '../../tips/auditDialog'
+import tipsModel from '../../tips/tipDialog'
 import {
 	initSamplelist,
     initLogin
@@ -157,7 +159,8 @@ export default {
         detailModel,
         deleteModel,
         editModel,
-        applyModel
+        applyModel,
+        tipsModel
     },
     vuex: {
         getters: {
@@ -196,6 +199,11 @@ export default {
             },
             changeParam:{
                 show:false
+            },
+            tipsParam:{
+              show:false,
+              name:'',
+              alert:true
             },
             createParam:{
                send:false,
@@ -253,6 +261,12 @@ export default {
         },
         New:function(){
             this.createParam.send = true;
+            this.createParam.callback = this.newcallback;
+        },
+        newcallback:function(title){
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.tipsParam.show = true;
         },
         searchMsg:function(){
             this.getSampleList(this.loadParam);
@@ -303,6 +317,12 @@ export default {
               this.dialogParam.items = [];
               this.dialogParam.itemsBack = [];
               this.getSampleDetail(this.dialogParam);
+              this.dialogParam.callback = this.updateback;
+        },
+        updateback:function(title){
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.tipsParam.show = true;
         },
     },
     events: {

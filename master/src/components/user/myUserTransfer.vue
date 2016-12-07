@@ -433,6 +433,8 @@
           this.param.country=this.country.id;
           this.param.countryName=this.country.cname;
         }
+        this.param.show=false;
+        this.param.callback = this.param.callback;
         this.saveCreate(this.param,this.tipsParam);
 
       },

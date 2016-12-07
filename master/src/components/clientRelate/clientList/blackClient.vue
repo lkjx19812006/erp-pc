@@ -32,7 +32,7 @@
           <th>详细地址</th>
           <th>主营产品</th> 
 
-          <!-- <th>类型</th>
+        <!-- <th>类型</th>
           <th>分类</th>
           <th>客户来源</th>
           <th>客户信用等级</th>
@@ -51,7 +51,8 @@
           <th>所在市</th>
           <th>注册地址</th>
           <th>创建时间</th>
-          <th style="min-width:200px">备注</th> -->
+          <th style="min-width:200px">备注</th>
+         -->
         </tr>
         </thead>
         <tbody>
@@ -276,8 +277,20 @@
         this.auditParam.customerIds=this.auditParam.arr;
         this.auditParam.arr=[];
         this.auditParam.auditComment='';
+        this.auditParam.callback = this.supplierback;
         this.customerTransferBlacklist(this.auditParam);
       },
+      supplierback:function(title){
+        console.log(title)
+        this.tipsParam.show = true;
+        if(title=='success'){
+          this.tipsParam.name = '移除黑名单成功';
+        }else{
+          this.tipsParam.name=title;
+        }
+        
+        this.tipsParam.alert=true;
+     },
     },
     events: {
       fresh: function(input) {

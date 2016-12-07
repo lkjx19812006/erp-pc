@@ -141,7 +141,7 @@
                         <td>{{item.address}}</td>
                         <td>{{item.bizScope}}</td>
 
-                        <!-- <td>{{item.typeDesc}}</td>
+                    <!-- <td>{{item.typeDesc}}</td>
                         <td>{{item.classifyDesc | classify}}</td>
                         <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
                         <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
@@ -181,7 +181,8 @@
                           <div v-if="item.supplier==1">是</div>
                           <div v-if="item.supplier==0">否</div>
                         </td>
-                        <td >{{item.comments}}</td> -->
+                        <td >{{item.comments}}</td> 
+                    -->
                          <td  @click="modifyClient({
                                                 id:item.id,
                                                 sub:$index,
@@ -355,7 +356,13 @@ export default {
         },
         createCustomer:function(info){
             this.createParam = info;
-            //this.createParam.name=value;
+            this.createParam.callback=this.valueback;
+        },
+        valueback:function(title){
+            console.log(title)
+            this.tipsParam.show = true;
+            this.tipsParam.name=title;
+            this.tipsParam.alert=true;
         },
         createSearch:function(){
             this.loadParam.show=true;
@@ -393,6 +400,13 @@ export default {
         },
         modifyClient:function(param){
             this.alterParam =param;
+            this.alterParam.callback = this.updateback;
+        },
+        updateback:function(title){
+            console.log(title)
+            this.tipsParam.show = true;
+            this.tipsParam.name=title;
+            this.tipsParam.alert=true;
         },
         clientTransfer:function(){
             this.transferParam.arr = [];
@@ -456,8 +470,15 @@ export default {
             this.auditParam.blackComments=this.auditParam.auditComment;
             this.auditParam.customerIds=this.auditParam.arr;
             this.auditParam.auditComment='';
+            this.param.callback = this.supplierback;
             this.customerTransferBlacklist(this.auditParam);
           },
+          supplierback:function(title){
+            console.log(title)
+            this.tipsParam.show = true;
+            this.tipsParam.name=title;
+            this.tipsParam.alert=true;
+         },
         checkedAll: function() {
            this.checked=!this.checked;
            if(this.checked){

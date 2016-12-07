@@ -58,6 +58,8 @@ export default {
     
     methods: {
         save:function(){
+            this.param.callback = this.param.callback;
+            this.param.show=false;
             this.updateMsg(this.param);
            
         } 

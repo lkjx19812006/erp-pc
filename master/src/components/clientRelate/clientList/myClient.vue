@@ -217,7 +217,8 @@
                           <div v-if="item.supplier==1">是</div>
                           <div v-if="item.supplier==0">否</div>
                         </td>
-                        <td>{{item.comments}}</td> -->
+                        <td>{{item.comments}}</td> 
+                    -->
                         <td  @click="modifyClient({
                                                 id:item.id,
                                                 sub:$index,
@@ -395,7 +396,13 @@ export default {
         },
         createCustomer:function(info){
             this.createParam = info;
-            //this.createParam.name=value;
+            this.createParam.callback=this.valueback;
+        },
+        valueback:function(title){
+            console.log(title)
+            this.tipsParam.show = true;
+            this.tipsParam.name=title;
+            this.tipsParam.alert=true;
         },
         createSearch:function(){
             this.loadParam.show=true;
@@ -432,74 +439,99 @@ export default {
             this.deleteParam = param;
         },
         modifyClient:function(param){
-            this.alterParam =param;
+            this.alterParam = param;
+            this.alterParam.callback = this.updateback;
+        },
+        updateback:function(title){
+            console.log(title)
+            this.tipsParam.show = true;
+            if(title=='success'){
+                this.tipsParam.name = '修改成功';
+            }else{
+                this.tipsParam.name=title;
+            }
+            this.tipsParam.alert=true;
         },
         clientTransfer:function(){
-
             this.transferParam.arr = [];
             for(var i in this.initMyCustomerlist){
                 if(this.initMyCustomerlist[i].checked){
                     this.transferParam.arr.push(this.initMyCustomerlist[i].id);
                 }
             }
-
             if(this.transferParam.arr.length>0){
                 this.transferParam.show=true;
             }else{
                 this.tipsParam.show=true;
                 this.tipsParam.alert=true;
             }
+            this.transferParam.callback=this.transferback;
         },
-      clientTransferSupplier:function(){
-        this.auditParam.title="客户提取为供应商备注";
-        this.auditParam.link='/customer/setSupplier';
-        this.auditParam.arr=[];
-        for(var i in this.initMyCustomerlist){
-          if(this.initMyCustomerlist[i].checked){
-            this.auditParam.arr.push(this.initMyCustomerlist[i].id);
-          }
-        }
+        transferback:function(title){
+            console.log(title)
+            this.tipsParam.show = true;
+            if(title=='success'){
+                this.tipsParam.name = '划转成功';
+            }else{
+                this.tipsParam.name=title;
+            }
+            
+            this.tipsParam.alert=true;
+        },
+        clientTransferSupplier:function(){
+            this.auditParam.title="客户提取为供应商备注";
+            this.auditParam.link='/customer/setSupplier';
+            this.auditParam.arr=[];
+            for(var i in this.initMyCustomerlist){
+              if(this.initMyCustomerlist[i].checked){
+                this.auditParam.arr.push(this.initMyCustomerlist[i].id);
+              }
+            }
 
-        if(this.auditParam.arr.length>0){
-          this.auditParam.show=true;
-          this.auditParam.confirm=true;
-          this.auditParam.callback=this.callback;
-        }else{
-          this.tipsParam.show=true;
-          this.tipsParam.alert=true;
-          this.tipsParam.name='请先选择客户';
-          this.tipsParam.confirm=false;
+            if(this.auditParam.arr.length>0){
+              this.auditParam.show=true;
+              this.auditParam.confirm=true;
+              this.auditParam.callback=this.callback;
+            }else{
+              this.tipsParam.show=true;
+              this.tipsParam.alert=true;
+              this.tipsParam.name='请先选择客户';
+              this.tipsParam.confirm=false;
+            }
+        },
+          clientTransferBlack:function(){
+            this.auditParam.title="客户踢入黑名单备注";
+            this.auditParam.arr=[];
+            for(var i in this.initMyCustomerlist){
+              if(this.initMyCustomerlist[i].checked){
+                this.auditParam.arr.push(this.initMyCustomerlist[i].id);
+              }
+            }
 
-        }
-      },
-      clientTransferBlack:function(){
-        this.auditParam.title="客户踢入黑名单备注";
-        this.auditParam.arr=[];
-        for(var i in this.initMyCustomerlist){
-          if(this.initMyCustomerlist[i].checked){
-            this.auditParam.arr.push(this.initMyCustomerlist[i].id);
-          }
-        }
-
-        if(this.auditParam.arr.length>0){
-          this.auditParam.show=true;
-          this.auditParam.confirm=true;
-          this.auditParam.callback=this.callback;
-        }else{
-          this.tipsParam.show=true;
-          this.tipsParam.alert=true;
-          this.tipsParam.name='请先选择客户';
-          this.tipsParam.confirm=false;
-
-        }
-
-      },
+            if(this.auditParam.arr.length>0){
+              this.auditParam.show=true;
+              this.auditParam.confirm=true;
+              this.auditParam.callback=this.callback;
+            }else{
+              this.tipsParam.show=true;
+              this.tipsParam.alert=true;
+              this.tipsParam.name='请先选择客户';
+              this.tipsParam.confirm=false;
+            }
+          },
       callback:function(){
         this.auditParam.blackComments=this.auditParam.auditComment;
         this.auditParam.customerIds=this.auditParam.arr;
         this.auditParam.auditComment='';
+        this.auditParam.callback = this.supplierback;
         this.customerTransferBlacklist(this.auditParam);
       },
+      supplierback:function(title){
+        console.log(title)
+        this.tipsParam.show = true;
+        this.tipsParam.name=title;
+        this.tipsParam.alert=true;
+     },
         checkedAll: function() {
            this.checked=!this.checked;
            if(this.checked){

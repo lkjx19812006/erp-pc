@@ -19,7 +19,7 @@
                     show:true
                     })">划转</button>
               <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
-              <button class="new_btn transfer" @click="clientTransferSupplier()">抽取供应商</button>
+              <button class="new_btn transfer" @click="clientTransferSupplier()">提取供应商</button>
               <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
               <button class="new_btn transfer" @click="createSearch()">搜索</button>
             </div>
@@ -316,7 +316,13 @@ export default {
         },
         createCustomer:function(info){
             this.createParam = info;
-            //this.createParam.name=value;
+            this.createParam.callback=this.valueback;
+        },
+        valueback:function(title){
+            console.log(title)
+            this.tipsParam.show = true;
+            this.tipsParam.name=title;
+            this.tipsParam.alert=true;
         },
         createSearch:function(){
             this.loadParam.show=true;
@@ -354,6 +360,17 @@ export default {
         },
         modifyClient:function(param){
             this.alterParam =param;
+            this.alterParam.callback = this.updateback;
+        },
+        updateback:function(title){
+            console.log(title)
+            this.tipsParam.show = true;
+            if(title=='success'){
+                this.tipsParam.name = '修改成功';
+            }else{
+                this.tipsParam.name=title;
+            }
+            this.tipsParam.alert=true;
         },
         clientTransfer:function(){
             this.transferParam.arr = [];
@@ -419,8 +436,15 @@ export default {
         this.auditParam.blackComments=this.auditParam.auditComment;
         this.auditParam.customerIds=this.auditParam.arr;
         this.auditParam.auditComment='';
+        this.param.callback = this.supplierback;
         this.customerTransferBlacklist(this.auditParam);
       },
+      supplierback:function(title){
+        console.log(title)
+        this.tipsParam.show = true;
+        this.tipsParam.name=title;
+        this.tipsParam.alert=true;
+     },
         checkedAll: function() {
            this.checked=!this.checked;
            if(this.checked){

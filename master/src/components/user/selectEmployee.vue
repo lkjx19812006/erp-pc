@@ -37,7 +37,9 @@
                         <button type="button" class="new_btn" @click="reset()">{{$t('static.clear_all')}}</button>
                         <button type="button" class="new_btn" style="margin-right:10px;" @click="employSearch()">{{$t('static.search')}}</button>
                     </div>
-                        
+                    <div class="cover_loading">
+                        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+                    </div>   
 		            <table class="table table-hover table_head table-striped" style="text-align:center" v-cloak>
 		                <thead>
 		                    <tr>

@@ -5,6 +5,7 @@
   <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
   <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
+  <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <div>
     <div class="service-nav clearfix">
       <div class="my_enterprise col-xs-1">产品列表</div>
@@ -211,6 +212,7 @@
   import supplydetailModel from  '../clientRelate/clientDetail'
   import common from  '../../common/common'
   import changeMenu from '../../components/tools/tabs/tabs.js'
+  import tipsModel from '../tips/tipDialog'
   import {
     initProductlist
   } from '../../vuex/getters'
@@ -228,7 +230,8 @@
       createModel,
       alterinfoModel,
       searchModel,
-      supplydetailModel
+      supplydetailModel,
+      tipsModel
 
     },
     vuex: {
@@ -273,6 +276,11 @@
         deleteParam:{
           show:false
         },
+        tipsParam:{
+          name:'',
+          alert:true,
+          show:false
+        },
         alterParam:{
           show:false,
           id:''
@@ -310,6 +318,12 @@
       },
       modifySupply:function(initProductlist){
         this.alterParam =initProductlist;
+        this.alterParam.callback = this.productback;
+      },
+      productback:function(title){
+          this.tipsParam.show = true;
+          this.tipsParam.name=title;
+          this.tipsParam.alert=true;
       },
       searchProduct:function(){
           this.getProductList(this.loadParam);
@@ -382,7 +396,7 @@
     background-position: 5px;
   }
    #table_box  table th,#table_box  table td{
-    width: 120px;
-    min-width:120px;
+    width: 121px;
+    min-width:121px;
   }
 </style>
