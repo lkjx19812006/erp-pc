@@ -5060,6 +5060,8 @@ export const getClientcount = ({ dispatch }, param) => { //我的客户统计
         param.loading = false;
         console.log(res.json().result)
         var clientCount = res.json().result;
+        
+        
         dispatch(types.MY_CLIENT_COUNT, clientCount);
     }, (res) => {
         param.loading = false;
@@ -5081,6 +5083,8 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
         param.loading = false;
         console.log(res.json().result)
         var clientCount = res.json().result;
+        
+        
         dispatch(types.MY_CLIENT_COUNT, clientCount);
     }, (res) => {
         param.loading = false;

@@ -11,7 +11,7 @@
 	            <thead>
 	                <tr style="background:none;color:#000">
 	                    <th rowspan="2">客户总数</th>
-	                    <th colspan="3">星级分类</th>
+	                    <th colspan="4">星级分类</th>
 	                    <th colspan="25">客户类型分类</th>
 	                </tr>
 	                <tr style="background:none;color:#000">
@@ -47,7 +47,7 @@
 	            </thead>
 	            <tbody>
 	                <tr >
-	                	<td>{{item.name }}</td>
+	                	<td>{{initClientcount.total }}</td>
 	                	<td v-for="item in initClientcount.level">{{item.count}}</td>
 		                <td v-for="item in initClientcount.type">{{item.count}}</td>
 	                </tr>
@@ -62,16 +62,16 @@
 	        	<span v-bind:class="{ 'date_active': !isA&&!isB&&isC}" @click="clickyear()">年</span>
 	        </div>
 	        <div class="pull-right" style="margin-top:10px;" v-if="!loadParam.employeeId&&!loadParam.date">
-        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=org">导出部门统计</a>
+        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=org">导出部门客户统计</a>
         	</div>
         	 <div class="pull-right" style="margin-top:10px;" v-if="!loadParam.employeeId&&loadParam.date">
-        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=org&amp;date={{loadParam.date}}">导出部门统计1</a>
+        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=org&amp;date={{loadParam.date}}">导出部门客户统计</a>
         	</div> 
         	<div class="pull-right" style="margin-top:10px;" v-if="loadParam.employeeId&&!loadParam.date">
-        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=emp&amp;employeeId={{loadParam.employeeId}}">导出客户统计</a>
+        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=emp&amp;employeeId={{loadParam.employeeId}}">导出业务员客户统计</a>
         	</div>
         	<div class="pull-right" style="margin-top:10px;" v-if="loadParam.employeeId&&loadParam.date">
-        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=emp&employeeId={{loadParam.employeeId}}&date={{loadParam.date}}">导出客户统计1</a>
+        		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=emp&employeeId={{loadParam.employeeId}}&date={{loadParam.date}}">导出业务员客户统计</a>
         	</div>
 	        <div class="count_select clearfix pull-right" >
         		<label class="pull-left">业务员：</label>
@@ -80,7 +80,7 @@
         			<option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
         		</select>
         	</div>
-        	<div class="count_select clearfix pull-right">
+        	<div class="count_select clearfix pull-right" style="margin-right:20px">
         		<label class="pull-left">日期：</label>
         		<mz-datepicker :time.sync="loadParam.date" format="yyyy-MM-dd">
                 </mz-datepicker>
@@ -380,4 +380,7 @@
 	.count_select select{
 		border: 1px solid #ddd;
 	}
+    .mz-datepicker-popup{
+        z-index:2000 !important;
+    }
 </style>
