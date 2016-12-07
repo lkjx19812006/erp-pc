@@ -5363,7 +5363,7 @@ export const alterSample = ({ dispatch }, param) => { //修改寄样申请
     }).then((res) => {
         console.log('修改成功')
         param.send = false;
-        param.callback(res.json().msg);
+        /*param.callback(res.json().msg);*/
         param.address = res.json().result.address;
         dispatch(types.UPDATE_SAMPLE, param);
     }, (res) => {
@@ -5409,6 +5409,7 @@ export const sampleApply = ({ dispatch }, param) => { //申请/审核 寄样申�
         }
     }).then((res) => {
         console.log('添加成功')
+        param.callback(res.json().msg);
         param.validate= res.json().result.validate; 
         param.description=res.json().result.description;
         dispatch(types.APPLY_DATA, param);

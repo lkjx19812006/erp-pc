@@ -481,6 +481,10 @@
             },
             newOrder:function(){
                  this.createParam.show = true;
+                 this.createParam.callback = this.newBack;
+            },
+            newBack:function(title){
+
             },
             createSearch:function(){
                  this.loadParam.show=true;

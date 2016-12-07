@@ -2,6 +2,7 @@
      <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
      <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
      <audit-model :param="applyParam" v-if="applyParam.show"></audit-model>
+     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	 <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2" style="font-size:14px">部门寄样审核</div>
@@ -110,6 +111,7 @@ import editmsgModel from '../editMsg'
 import detailModel from '../sampleDetail'
 import common from '../../../common/common'
 import auditModel from '../../tips/auditDialog'
+import tipsModel from '../../tips/tipDialog'
 import {
 	initOrgSample
 } from '../../../vuex/getters'
@@ -122,7 +124,8 @@ export default {
         pagination,
         editmsgModel,
         detailModel,
-        auditModel
+        auditModel,
+        tipsModel
     },
     vuex: {
         getters: {
@@ -154,6 +157,11 @@ export default {
             },
             changeParam:{
                 show:false
+            },
+            tipsParam:{
+              show:false,
+              name:'',
+              alert:true
             },
             updateParam:{
                 show:false,
@@ -213,7 +221,14 @@ export default {
             console.log(initOrgSample)
             initOrgSample.validate = 2;
             this.applyParam = initOrgSample;
-        }
+            this.applyParam.callback = this.applycallback;
+        },
+        applycallback:function(title){
+          console.log(title)
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.tipsParam.show = true;
+        },
     },
     events: {
         fresh: function(input) {

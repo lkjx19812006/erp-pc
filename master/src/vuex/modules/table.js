@@ -472,7 +472,9 @@ const state = {
                   "title":null,"breedId":1007,"brredName":null,"quality":null,"location":"上海","spec":"干货","price":100.000000,
                   "unit":"公斤","address":null,"pubdate":null,"duedate":null,"advance":1.000000,"invoic":null,"visit":0,"pack":null,
                   "image":"/productPic/20160502/q5c6xa7.jpg","description":null,"number":2,"amount":200.000000,"updater":null,
-                  "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48"}],show:false},"payPics": {arr: [],show: false},"sendPics":{arr: [],show: false},"attachFiles":{arr: [],show: false}},
+                  "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48"}],show:false},
+                  "payPics": {arr: [],show: false},"sendPics":{arr: [],show: false},"attachFiles":{arr: [],show: false},"stages":{arr: [],show: false}
+                },
 
     locationList:{
           provinceList: [

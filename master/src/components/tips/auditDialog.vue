@@ -23,12 +23,12 @@
       </div>
       <div class="model-footer" v-if="param.key=='mySampleList'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-        <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.show = false" value="申请" />
+        <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.callback = param.callback,param.show = false" value="申请" />
       </div>
       <div class="model-footer" v-if="param.key=='orgSampleList'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
         <input type="button" class="btn  btn-confirm"  @click="refuse(param)" value="不通过" />
-        <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.show = false" value="通过" />
+        <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.callback =param. callback,param.show = false" value="通过" />
       </div>
     </div>
   </div>

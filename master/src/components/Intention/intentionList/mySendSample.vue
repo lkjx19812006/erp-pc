@@ -258,6 +258,13 @@ export default {
         },
         applyCheck:function(initSamplelist){
             this.applyParam = initSamplelist;
+            this.applyParam.callback = this.applycallback;
+        },
+        applycallback:function(title){
+          console.log(title)
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.tipsParam.show = true;
         },
         New:function(){
             this.createParam.send = true;
