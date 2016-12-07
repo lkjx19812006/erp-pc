@@ -12,6 +12,9 @@
         <div class="top-title">
             <span class="glyphicon glyphicon-remove-circle"  @click="param.show=false" ></span>
         </div>
+        <div class="cover_loading">
+            <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+        </div>
         <div class="client_nav">
             <nav class="navbar navbar-client" role="navigation">
                 <div class="container-fluid">

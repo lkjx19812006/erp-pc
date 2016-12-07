@@ -13,7 +13,7 @@
 
         <div class="trans_service clearfix" v-show="param.bizType==1">
           <div class="cover_loading">
-            <pulse-loader :loading="intentionParam.loading" :color="color" :size="size"></pulse-loader>
+            <pulse-loader :loading="intentionParam.loading||orderParam.loading" :color="color" :size="size"></pulse-loader>
           </div>
                   <table class="table table-hover table_head table-striped "  v-cloak>
                       <thead>
@@ -104,7 +104,7 @@ export default {
     data() {
         return {
           orderParam:{
-                loading: true,
+                loading: false,
                 color: '#5dc596',
                 size: '15px',
                 customerId: this.param.userId,
@@ -113,7 +113,7 @@ export default {
                 link:'/order/'
           },
           intentionParam:{
-                loading: true,
+                loading: false,
                 color: '#5dc596',
                 size: '15px',
                 userId: this.param.userId,
@@ -160,10 +160,11 @@ export default {
     },
     events: {
     fresh: function(input) {
-      if(param.bizType==1){
+      if(this.param.bizType==1){
         this.intentionParam.cur = input;
-        this.getIntentionList(this.intentionParam);}
-      else if(param.bizType==2){
+        this.getIntentionList(this.intentionParam);
+      }
+      else if(this.param.bizType==2){
         this.orderParam.cur = input;
         this.getOrderList(this.orderParam);
       }

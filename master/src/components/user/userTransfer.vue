@@ -460,6 +460,7 @@
       }
     },
     created(){
+      
       if (this.param.companyId) {
         this.loading=true;
         this.getContacts('/crm/api/v1/company/' + this.param.companyId);

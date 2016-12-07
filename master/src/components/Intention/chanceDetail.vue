@@ -9,6 +9,9 @@
         <div class="top-title">
             <span class="glyphicon glyphicon-remove-circle"  @click="param.show=false" ></span>
         </div>
+         <div class="cover_loading">
+            <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+        </div>
         <div class="client_nav">
             <nav class="navbar navbar-client" role="navigation">
                 <div class="container-fluid">
@@ -34,9 +37,7 @@
 
                           <div class="panel panel-default" v-if="param.type===0">
                               <div class="panel-heading" v-cloak>
-                              <!-- <div class="cover_loading">
-                                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-                              </div> -->
+                             
                                 <h4 class="panel-title clearfix" @click="enfoldment({
                                             link:initIntentionDetail.offers,
                                             crete:'offers'
@@ -592,7 +593,7 @@ export default {
       }
     },
     created(){
-       this.getIntentionDetail(this.param,);
+       this.getIntentionDetail(this.param);
     },
     filter: (filter, {})
 }

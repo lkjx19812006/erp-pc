@@ -290,7 +290,7 @@ const state = {
                 "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
                 "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
                 "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
-                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
+                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":[{"breedName":"三七"}],
                 "payPics":null,"sendPics":null}],
 
         enterpriseList: [
@@ -680,7 +680,12 @@ const mutations = {
         state.basicBaseList.userTypeList = data;
     },
     [ORDER_TABLE](state, data) { //订单列表
-        state.basicBaseList[data.key] = data;
+        if(data.key){
+          state.basicBaseList[data.key] = data;
+        }else{
+          state.basicBaseList.orderList = data;
+        }
+        
     },
     [EXPRESS_DATA](state,data){ //物流列表
         state.basicBaseList.expressList = data;
@@ -1357,8 +1362,12 @@ const mutations = {
         state.basicBaseList.employeeList = data;
     },
     [INTENTION_LIST_DATA](state, data) { //意向列表
-
-        state.basicBaseList[data.key] = data;
+        if(data.key){
+            state.basicBaseList[data.key] = data;
+        }else{
+            state.basicBaseList.intentionList = data;
+        }
+        
     },
     [INTLINTENTION_LIST_DATA](state, data) { //国际意向列表
         state.basicBaseList[data.key] = data;

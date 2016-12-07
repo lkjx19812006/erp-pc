@@ -2,6 +2,9 @@
     <select-model :param="selectParam" v-if="selectParam.show"></select-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
+    <div class="cover_loading">
+        <pulse-loader :loading="countryParam.loading" :color="color" :size="size"></pulse-loader>
+    </div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -183,7 +186,7 @@ export default {
                   cname: ''
                 },
                 countryParam:{
-                  loading:true,
+                  loading:false,
                   show:false,
                   color: '#5dc596',
                   size: '15px',
@@ -191,7 +194,7 @@ export default {
                   all: 7
                 },
                 provinceParam:{
-                  loading:true,
+                  loading:false,
                   show:false,
                   color: '#5dc596',
                   size: '15px',
@@ -200,7 +203,7 @@ export default {
                   country:''
                 },
                 cityParam:{
-                  loading:true,
+                  loading:false,
                   show:false,
                   color: '#5dc596',
                   size: '15px',

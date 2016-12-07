@@ -148,7 +148,6 @@ export const resetPawd = ({ dispatch }, data) => { //修改密码
 
     }, (res) => {
         console.log('fail');
-        data.callback(res.json().msg);
     })
 }
 
@@ -253,7 +252,7 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         param.total = res.json().result.total;
         param.loading = false;
 
-        localStorage.allOrderList = JSON.stringify(orderList);
+        //localStorage.allOrderList = JSON.stringify(orderList);
         localStorage.allOrderParam = JSON.stringify(param);
 
     }, (res) => {
@@ -819,6 +818,7 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         if (param.image_t) { param.sendPics += param.image_t };
         console.log(param.sendPics)
     }
+
     const body = {
         orderId: param.orderId,
         description: param.description,
@@ -853,6 +853,7 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         param.show = false;
     });
 }
+
 export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分期
     const body = {
         orderId: param.orderId,
@@ -879,6 +880,7 @@ export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分
         console.log('fail');
     });
 }
+
 
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     console.log(param)
@@ -1005,7 +1007,7 @@ export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单�
 }
 
 export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
-    console.log(param)
+    param.loading =true;
     Vue.http({
         method: 'GET',
         url: apiUrl.orderList + '/order/' + param.id,
@@ -1086,9 +1088,10 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
                 param.goodsBack.push(temp);
             })
         }
-        
+        param.loading = false;
         dispatch(types.ORDER_DETAIL_DATA, orderDetail);
     }, (res) => {
+        param.loading = false;
         console.log('fail');
     })
 }
@@ -2383,7 +2386,7 @@ export const customerTransferBlacklist = ({ dispatch }, param) => {    //客户�
 
 
 export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及搜索
-    console.log(param.orgCode)
+    console.log(param)
     param.loading = true;
     var apiurl = apiUrl.clientList + '/employee/?' + '&page=' + param.cur + '&pageSize=14';
     /*var apiurl = apiUrl.employeeList+'/?'+'&page=' + param.cur + '&pageSize=14';*/
@@ -2505,6 +2508,7 @@ export const getRoleList = ({ dispatch }, param) => { //获取角色列表
 export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列表
     console.log('新增客户');
     console.log(data);
+    console.log(data.supplier);
     const Cdata = {
         "name": data.name,
         "type": data.type,
@@ -2560,9 +2564,11 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
             data.phoneCity = res.json().result.phoneCity;
             data.ctime = new Date();
         }
+
         if ('show' in tipsParam) {
             tipsParam.show = true;
         }
+        dispatch(types.CUSTOMER_ADD_DATA, data);
     }, (res) => {
         console.log('fail');
     })
@@ -3725,7 +3731,9 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
         object.offerTime = 0;
         object.validate = 0;
         object.inquire = 0;
-        console.log(object);
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
         dispatch(types.ADD_INTLINTENTION_DATA, object);
     }, (res) => {
         console.log('fail');
@@ -3751,7 +3759,10 @@ export const updateIntlIntention = ({ dispatch }, param, tipParam) => { //修改
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('修改成功!!!!')
+        console.log('修改成功!!!!');
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
         param.names = res.json().result.names;
         dispatch(types.UPDATA_INTLINTENTION_DATA, param);
     }, (res) => {
@@ -3870,6 +3881,9 @@ export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向(�
         param.show = false;
         param.inquire = 1;
         param.inquireTime++;
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
         dispatch(types.INQUIRE_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -4059,7 +4073,9 @@ export const intlIntentionAffirmOffer = ({ dispatch }, param) => { //国际意�
         }
     }).then((res) => {
         console.log('确认报价成功');
-        param.show = false;
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
         dispatch(types.CONFIRM_OFFER, param);
     }, (res) => {
         console.log('fail');
@@ -5081,7 +5097,6 @@ export const getClientcount = ({ dispatch }, param) => { //我的客户统计
         console.log(res.json().result)
         var clientCount = res.json().result;
         
-        
         dispatch(types.MY_CLIENT_COUNT, clientCount);
     }, (res) => {
         param.loading = false;
@@ -5195,6 +5210,7 @@ export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
         }
     }).then((res) => {
         var obj = res.json().result;
+
         console.log(obj)
         if(param.key=='sampleDetail'){
              var items = obj.items;
@@ -5211,6 +5227,7 @@ export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
             param.loading = false;
         }
         if (param.key == "samplelist") { //寄样列表编辑寄样信息
+
             obj.items.forEach(function(item) {
                 var temp = {
                     id: item.id,
@@ -5233,14 +5250,13 @@ export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
             param.consigneePhone = obj.consigneePhone;
             param.total = obj.total;
             param.country = obj.country;
-            param.address = obj.address;
             param.province = obj.province;
             param.city = obj.city;
             param.district = obj.district;
-            param.send = true;
             dispatch(types.SAMPLE_DETAIL,obj);
             param.loading = false;
         }
+
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -5300,8 +5316,8 @@ export const createSample = ({ dispatch }, data) => { //新建寄样申请
        district:data.district,
        items:data.items
     }
-    if(data.address){
-        body.address = data.country+','+data.province+','+data.city+','+data.district+','+data.address
+    if(data.address==''){
+        body.address = data.country+','+data.province+','+data.city+','+data.district
     }
     if(data.consignee=='') {
         body.consignee = data.customerName;
@@ -5357,8 +5373,8 @@ export const alterSample = ({ dispatch }, param) => { //修改寄样申请
        status:param.status,
        items:param.items
     }
-    if(param.address){
-        body.address = param.country+','+param.province+','+param.city+','+param.district+','+param.address
+    if(param.address==''){
+        body.address = param.country+','+param.province+','+param.city+','+param.district
     }
     if(param.consignee=='') {
         body.consignee = param.customerName;
@@ -5383,8 +5399,8 @@ export const alterSample = ({ dispatch }, param) => { //修改寄样申请
     }).then((res) => {
         console.log('修改成功')
         param.send = false;
-        /*param.callback(res.json().msg);*/
         param.address = res.json().result.address;
+
         dispatch(types.UPDATE_SAMPLE, param);
     }, (res) => {
         console.log('fail');

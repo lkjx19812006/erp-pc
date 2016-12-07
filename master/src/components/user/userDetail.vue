@@ -11,6 +11,9 @@
       <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
       </div>
+      <div class="cover_loading">
+          <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+      </div>
         <div class="client_nav">
             <nav class="navbar navbar-client" role="navigation">
                 <div class="container-fluid">
@@ -810,6 +813,10 @@ export default {
         }
 
     },
+ created(){
+  
+    this.getUserDetail(this.param);
+ }, 
  filter: (filter,{})
 
 }

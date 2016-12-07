@@ -104,7 +104,7 @@
                                 id:item.cid,
                                 sub:$index,
                                 show:true,
-                                loading:false,
+                                loading:true,
                                 name:item.cName,
                                 url:'/customer/',
                                 key:'customerList'
@@ -115,7 +115,7 @@
                              sub:$index,
                              show:true,
                              name:item.name,
-                             loading:false
+                             loading:true
                              })">{{item.name}}</td>
           <td>{{item.quality}}</td>
           <td>{{item.location}}</td>

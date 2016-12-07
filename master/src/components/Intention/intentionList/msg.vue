@@ -169,14 +169,14 @@ export default {
    				})
    			}
         },
+
         callback:function(title){
              this.tipsParam.name=title;
               this.tipsParam.alert=true;
               this.tipsParam.show=true;
         },
-        clickOn: function(initMsgList) {
-            this.changeParam = initMsgList;
-            this.getUserDetail(this.changeParam);
+        clickOn: function(param) {
+            this.changeParam = param;
         }
     },
     events: {

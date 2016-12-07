@@ -127,7 +127,8 @@
                         <td class="underline" @click="clickOn({
                                 id:item.id,
                                 sub:$index,
-                                show:true
+                                show:true,
+                                loading:true
                                 })">{{item.fullname}}</td>
                         <td>{{item.nickname}}</td>
                         <td v-if="item.grade==0">一星</td>
@@ -383,6 +384,7 @@ export default {
             },
             alterParam:{
                 show:false,
+                loading:true,
                 id:'',
                 name:''
             },
@@ -480,7 +482,7 @@ export default {
     },
     clickOn: function(item) {
         this.changeParam = item;
-        this.getUserDetail(this.changeParam);
+        //this.getUserDetail(this.changeParam);
     },
     eventClick:function(id){
         if(this.$store.state.table.basicBaseList.userList[id].show){
