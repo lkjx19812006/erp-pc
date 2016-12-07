@@ -22,9 +22,9 @@
                                         city:'',
                                         address:'',
                                         employee:'',
-                                        employeeId:'',
-                                        employeeName:'',
-                                        orgId:'',
+                                        employeeId:this.initLogin.id,
+                                        employeeName:this.initLogin.name,
+                                        orgId:this.initLogin.orgId,
                                         orgName:'',
                                         province:'',
                                         city:'',
@@ -212,7 +212,8 @@
   import common from '../../common/common'
   import changeMenu from '../../components/tools/tabs/tabs.js'
   import {
-    initSupplyCustomerlist
+    initSupplyCustomerlist,
+    initLogin
   } from '../../vuex/getters'
   import {
     getClientList,
@@ -234,7 +235,8 @@
     },
     vuex: {
       getters: {
-        initSupplyCustomerlist
+        initSupplyCustomerlist,
+        initLogin
       },
       actions: {
         getClientList,

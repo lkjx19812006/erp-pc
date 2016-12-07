@@ -270,7 +270,7 @@
                                            :value.sync="breedInfo.unit"
                                            :prevalue="breedInfo.unit"
                                            :options="initBreedDetail.units.arr"
-                                           placeholder="单位"
+                                           placeholder="单位/Unit"
                                            label="name"
                                          >
                                          </input-select>
@@ -292,13 +292,11 @@
                                            :prevalue="breedInfo.location"
                                            :value.sync="breedInfo.location"
                                            :options="initBreedDetail.locals.arr"
-                                           placeholder="产地"
+                                           placeholder="产地/Origin"
                                            label="name"
-
                                          >
                                          </input-select>
                                      </div>
-
                                 </div>
                          
                                 <div class="editpage-input">

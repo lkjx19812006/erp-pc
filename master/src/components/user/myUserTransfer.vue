@@ -26,7 +26,7 @@
                  <input type="text" id="username" class="form-control" v-model="param.name"
                        v-validate:name="{minlength:2}"/>
               </div>
-              <div  class="client-detailInfo   col-md-6">
+              <div class="client-detailInfo   col-md-6">
                 <label class="editlabel">{{$t('static.type')}}</label>
                 <select class="form-control " v-model="param.type">
                   <option value='0,个人' selected>{{$t('static.personal')}}</option>
@@ -38,7 +38,7 @@
                 <input type="text" id="legalPerson" class="form-control" v-model="param.legalPerson"
                        />
               </div>
-              <div v-if="param.type=='1,企业'" class="client-detailInfo   col-md-6">
+              <div  v-if="param.type=='1,企业'" class="client-detailInfo   col-md-6">
                 <label class="editlabel">{{$t('static.principals')}} <span class="system_danger" v-if="$validation.principal.minlength">{{$t('static.required')}}</span></label>
                 <input type="text" id="principal" class="form-control" v-model="param.principal"
                        v-validate:principal="{minlength:2}"/>
@@ -48,7 +48,7 @@
                 <input type="text"  class="form-control" v-model="param.number"
                       />
               </div>
-              <div  v-if="param.type=='1,企业'" class="client-detailInfo   col-md-6">
+              <div v-if="param.type=='1,企业'" class="client-detailInfo   col-md-6">
                 <label class="editlabel">类型</label>
                 <select class="form-control " v-model="param.category">
                     <option v-for="item in initUserType">{{item.name}}</option>
@@ -64,7 +64,7 @@
                   <option value="3,买卖">{{$t("static.purchaser_and_supplier")}}</option>
                 </select>
               </div>
-              <div class="client-detailInfo  col-md-6" v-if="param.supplier!=1">
+              <div class="client-detailInfo   col-md-6" v-if="param.supplier!=1">
                 <label>{{$t('static.deparment')}}</label>
                 <input v-show="false" type="text" class="form-control" readonly="readonly"
                        v-model="param.orgId" />
@@ -72,14 +72,6 @@
                        v-model="param.employeeName"  @click="selectParam.show=true" value="{{param.employeeName}}"/>
                 <input v-if="!param.employeeId" type="text" class="form-control" readonly="readonly" v-model="param.orgName"
                        @click="selectParam.show=true" value="{{param.orgName}}" />
-              </div>
-              <div class="client-detailInfo  col-md-6" v-if="param.supplier==1">
-                <label>{{$t('static.deparment')}}</label>
-                <input v-show="false" type="text" class="form-control" readonly="readonly"
-                       v-model="param.orgId" />
-                <input v-if="param.employeeId" type="text" class="form-control" readonly="readonly"
-                       v-model="param.employeeName"   value="{{param.employeeName}}"/>
-                <input v-if="!param.employeeId" type="text" class="form-control" readonly="readonly" v-model="param.orgName"  value="{{param.orgName}}" />
               </div>
               <div class="client-detailInfo  col-md-6">
                  <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.tel.tel">{{$t('static.validate_telephone')}}</span></label>
@@ -109,33 +101,34 @@
               </div>
               <div class="client-detailInfo  col-md-6">
                 <label>{{$t('static.province')}}</label>
-                <input type="text" v-if="!country.id" class="form-control" disabled="disabled"
+                <input type="text" v-if="!country.id" class="form-control  " disabled="disabled"
                        placeholder="请先选择一个国家"/>
-                  <div  class="form-control" style="padding:0;border:none" v-if="country.id">
-                    <v-select
-                      :debounce="250"
-                      :value.sync="province"
-                      :on-change="selectCity"
-                      :options="provinceArr"
-                      placeholder="省"
-                      label="cname"
-                    >
-                    </v-select>
+                <div  class="form-control" style="padding:0;border:none" v-if="country.id">
+                <v-select
+                  :debounce="250"
+                  :value.sync="province"
+                  :on-change="selectCity"
+                  :options="provinceArr"
+                  placeholder="省"
+                  label="cname"
+                >
+                </v-select>
                   </div>
               </div>
               <div class="client-detailInfo   col-md-6">
                 <label>{{$t('static.city')}}</label>
-                <input type="text" v-if="!province.cname" class="form-control" disabled="disabled"
+                <input type="text" v-if="!province.cname" class="form-control  " disabled="disabled"
                        placeholder="请先选择一个省"/>
                 <div  class="form-control" style="padding:0;border:none"  v-if="province.cname">
-                    <v-select
-                      :debounce="250"
-                      :value.sync="city"
-                      :options="cityArr"
-                      placeholder="市"
-                      label="cname"
-                    >
-                    </v-select>
+                <v-select
+                  :debounce="250"
+                  :value.sync="city"
+                  :options="cityArr"
+                  placeholder="市"
+                  label="cname"
+
+                >
+                </v-select>
                   </div>
               </div>
               <div class="client-detailInfo  col-md-6">
@@ -155,7 +148,7 @@
                   <option value="3">{{$t('static.three_star')}}</option>
                 </select>
               </div>
-              <div class="client-detailInfo  col-md-6">
+              <div class="client-detailInfo   col-md-6">
                 <label>{{$t('static.registered_address')}}</label>
                 <input type="text" class="form-control" v-model="param.address"/>
               </div>
@@ -183,7 +176,7 @@
                   </select>
                 </div>
 
-                <div class="client-detailInfo  col-md-6">
+                <div class="client-detailInfo   col-md-6">
                   <label>{{$t('static.department')}}</label>
                   <input type="text" class="form-control" v-model="contacts[0].department"/>
                 </div>
@@ -191,7 +184,7 @@
                   <label>{{$t('static.position')}}</label>
                   <input type="text" class="form-control" v-model="contacts[0].position"/>
                 </div>
-                <div class="client-detailInfo  col-md-6">
+                <div class="client-detailInfo col-md-6">
                   <label class="editlabel" for="system">{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.cphone.phone">{{$t('static.validate_cellphone')}}</span></label>
                   <input type="text" class="form-control" v-validate:cphone="['phone']" v-model="contacts[0].phone"/>
                 </div>
@@ -199,7 +192,7 @@
                   <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.ctel.tel">{{$t('static.validate_telephone')}}）</span></label>
                   <input type="text" class="form-control" v-validate:ctel="['tel']" v-model="contacts[0].tel"/>
                 </div>
-                <div class="client-detailInfo   col-md-6">
+                <div class="client-detailInfo  col-md-6">
                   <label class="editlabel" for="system">{{$t('static.email')}}<span class="system_danger" v-if="$validation.cemail.email">{{$t('static.validate_email')}}</span></label>
                   <input type="email" class="form-control" v-validate:cemail="['email']" v-model="contacts[0].email"/>
                 </div>
@@ -227,7 +220,7 @@
   </div>
 </template>
 <script>
-  import selectModel  from './employeeOrOrg'
+  import selectModel  from './selectEmployee'
   import tipsModel  from '../tips/tipDialog'
   import vSelect from '../tools/vueSelect/components/Select'
   import {
@@ -545,7 +538,6 @@
     font-size: 14px;
     display: block;
   }
-
 
   .addblack span {
     color: #333;

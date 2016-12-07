@@ -818,7 +818,6 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         if (param.image_t) { param.sendPics += param.image_t };
         console.log(param.sendPics)
     }
-
     const body = {
         orderId: param.orderId,
         description: param.description,
@@ -853,6 +852,7 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         param.show = false;
     });
 }
+
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     console.log(param)
     console.log("orderStatu");
@@ -2344,7 +2344,7 @@ export const customerTransferBlacklist = ({ dispatch }, param) => {    //客户�
 
 
 export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及搜索
-    console.log(param)
+    console.log(param.orgCode)
     param.loading = true;
     var apiurl = apiUrl.clientList + '/employee/?' + '&page=' + param.cur + '&pageSize=14';
     /*var apiurl = apiUrl.employeeList+'/?'+'&page=' + param.cur + '&pageSize=14';*/
@@ -2510,7 +2510,7 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
     }).then((res) => {
         console.log('添加成功')
         dispatch(types.CUSTOMER_ADD_DATA, data);
-        data.callback(res.json().msg);
+/*        data.callback(res.json().msg);*/
         data.id = res.json().result.customerId;
         data.mainPhone = data.contacts[0].phone;
         data.phoneProvince = res.json().result.phoneProvince;

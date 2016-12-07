@@ -976,7 +976,7 @@
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                     <label>{{$t('static.classification')}}</label>
-                                    <input type="text" class="form-control"  value="{{initClientDetail.classifyDesc}}" disabled="disabled" />
+                                    <input type="text" class="form-control"  value="{{initClientDetail.classifyDesc | classify}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>{{$t('static.telephone')}}</label>
