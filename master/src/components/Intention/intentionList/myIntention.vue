@@ -165,9 +165,7 @@
                         <th>剩余有效期</th>
                         <th>客户备注</th>
                         <th>意向来源</th>
-
-
-
+                        <th style="min-width:220px;text-align: left;">操作</th>
                     <!-- 
                         <th>客户名称</th>
                         <th>客户手机号</th>
@@ -196,7 +194,7 @@
                         <th>发布时间</th>
                         <th>审核状态</th>
                         <th>上下架</th> -->
-                        <th style="min-width:250px">操作</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -256,80 +254,7 @@
                         <td>{{item.duedateDesc}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.inTypeDesc}}</td> 
-
-
-                  <!-- 
-                        <td class="underline" @click.stop="detailClick({
-                                id:item.id,
-                                sub:$index,
-                                show:true,
-                                loading:true,
-                                customerName:item.customerName,
-                                customerPhone:item.customerPhone,
-                                brredName:item.breedName,
-                                type:item.type,
-                                especial:item.especial,
-                                qualification:item.qualification,
-                                spec:item.spec,
-                                number:item.number,
-                                unit:item.unit,
-                                price:item.price,
-                                address:item.address,
-                                location:item.location,
-                                advance:item.advance,
-                                invoic:item.invoic,
-                                visit:item.visit,
-                                pack:item.pack,
-                                intl:item.intl,
-                                visit:item.visit,
-                                sampling:item.sampling,
-                                sampleNumber:item.sampleNumber,
-                                sampleUnit:item.sampleUnit,
-                                sampleAmount:item.sampleAmount,
-                                offer:item.offer,
-                                status:item.status,
-                                country:item.country,
-                                province:item.province,
-                                city:item.city,
-                                district:item.district,
-                                address:item.address,
-                                link:editintentInfo,
-                                url:'/intention/',
-                                key:'intentionList'
-                                })">{{item.customerName}}</td>
-                        <td>{{item.customerPhone}}</td>
-                        <td  @click="match(item)"  style="cursor:pointer;color:#fa6705">{{item.breedName}}</td>
-                        <td>{{item.qualification | qualify}}</td>
-                        <td>{{item.spec}}</td>
-                        <td>{{item.unit}}</td>
-                        <td>{{item.price}}</td>
-                        <td>{{item.location}}</td>
-                        <td>{{item.number}}</td>
-                        <td>{{item.country}}</td>
-                        <td>{{item.province}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.district}}</td>
-                        <td>{{item.address}}</td>
-                        <td>{{item.advance}}</td>
-                        <td>{{item.invoic | invoicstate}}</td>
-                        <td>{{item.visit | visitstate}}</td>
-                        <td>{{item.pack}}</td>
-                        <td>{{item.intl | intlstata}}</td>
-                        <td>
-                            <div v-if="item.sampling==0">否</div>
-                            <div v-if="item.sampling==1">是</div>
-                        </td>
-                        <td>{{item.sampleNumber}}</td>
-                        <td>{{item.sampleUnit}}</td>
-                        <td>{{item.sampleAmount}}</td>
-                        <td>{{item.offerNumber}}</td>
-                        <td>{{item.ctime | date}}</td>
-                        <td>{{item.validate | intentionAudit}}</td>
-                        <td>
-                          <div>{{item.onSell | onsell}}</div>
-                        </td> 
-                      -->
-                        <td >
+                        <td style="text-align: left">
                                <a class="operate"  @click.stop="modifyIntention({
                                               id:item.id,
                                               sub:$index,
@@ -405,7 +330,9 @@
                                </a>
                               <a class="operate" v-if="item.type==1"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" height="18" width="47" alt="生成订单"/>
                                </a>
-                              <a v-if="item.sampling==1"  @click.stop="sengSample(item,$index)">寄样申请表</a>
+                              <a class="operate"  @click.stop="sengSample(item,$index)">
+                                  <img src="/static/images/sample.png"  alt="寄样申请"/>
+                              </a>
                         </td>
                       </tr>
                       

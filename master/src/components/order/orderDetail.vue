@@ -3,9 +3,9 @@
     <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
     <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
+    <divided-model :param="divideParam" v-if="divideParam.show"></divided-model>
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
-<!--     <div class="client_body" v-show="!disposeParam.show"> -->
       <div class="top-title">
             <span class="glyphicon glyphicon-remove-circle" @click="param.show=false"></span>
         </div>
@@ -48,7 +48,7 @@
                                               crete:'goods'
                                               })">
                                         <img class="pull-left" src="/static/images/order.png" height="30" width="30" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initOrderDetail.goods.arr.length">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" >
                                           {{$t('static.commodity_order')}}（{{initOrderDetail.goods.arr.length}}）
                                         </a>
                                         <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
@@ -77,16 +77,6 @@
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
                                                 <td>{{item.amount}}元</td>
-                                               <!--  <td  @click="clickShow($index,{
-                                                     concrete:'goods'
-                                                     })">
-                                                     <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                   <div class="breed_action" v-show="item.show">
-                                                       <dl>
-                                                          <dt @click="createChance(item,$index)">编辑</dt>
-                                                      </dl>
-                                                   </div>
-                                               </td>  -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -107,7 +97,7 @@
                                           </thead>
                                         <tbody>
                                             <tr v-for="item in initOrderDetail.goods.arr">
-                                                <td>{{item.brredName}}</td>
+                                                <td>{{item.breedName}}</td>
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
                                                 <td>{{item.number}}</td>
@@ -115,9 +105,66 @@
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
                                                 <td>{{item.amount}}元</td>
-                                                <!-- <td>
-                                                    <img v-bind:src="item.image" />
-                                                </td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" >
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:'',
+                                              crete:'stages'
+                                              })">
+                                        <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.stages.arr.length!==null">
+                                          分期付款{{initOrderDetail.orderStatus}}（{{initOrderDetail.stages.arr.length}}）<!-- <span class="system_danger">{{$t('static.pay_tips')}}</span> -->
+                                        </a>
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                        {{$t('static.pay_evidence')}}（0）
+                                        </a>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments({
+                                            show:true,
+                                            orderId:initOrderDetail.id,
+                                            link:dividedPayment,
+                                            url:'/order/attachSubmit/',
+                                            amount:'',
+                                            orderStatus:initOrderDetail.orderStatus,
+                                            ratio:'',
+                                            description:'',
+                                            rtime:''
+                                            })"  v-if="(initOrderDetail.stages.arr.length!==null&&param.contact=='/order/myList')">{{$t('static.new')}}</button>
+                                        <!--<button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>-->
+                                        <a v-else></a>
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse" v-if="initOrderDetail.stages.arr.length&&!initOrderDetail.stages.show" v-cloak>
+                                    <div class="panel-body panel-set">
+                                        <table class="table  contactSet">
+                                          <thead>
+                                            <th>订单类型</th>
+                                            <th>显示分期</th>
+                                            <th>分期金额</th>
+                                            <th>付款比例</th>
+                                            <th>说明</th>
+                                            <th>收付节点</th>
+                                            <th>收付状态</th>
+                                            <th>收/付款时间</th>
+                                            <th>审核状态</th>c
+                                          </thead>
+                                        <tbody>
+                                            <tr v-for="item in initOrderDetail.stages.arr">
+                                                <td>{{item.type}}</td>
+                                                <td>{{item.type}}</td>
+                                                <td>{{item.amount}}</td>
+                                                <td>{{item.ratio}}</td>
+                                                <td>{{item.description}}</td>
+                                                <td>{{item.orderStatus}}</td>
+                                                <td>{{item.pr}}</td>
+                                                <td>{{item.ptime}}</td>
+                                                <td>{{item.rtime}}</td>
+                                                <td>{{item.validate}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -345,13 +392,6 @@
                                     <label>{{$t('static.order_type')}}</label>
                                     <input type="text" class="form-control"   value="{{type[initOrderDetail.type]}}" disabled="disabled"/>
                                 </div>
-<!--                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-    <label>{{$t('static.order_source')}}</label>
-    <input type="text" class="form-control"  value="{{sourceType[initOrderDetail.sourceType]}}" disabled="disabled" v-if="sourceType[initOrderDetail.sourceType]"/>
-    <input type="text" class="form-control"  value="未说明" disabled="disabled" v-else/>
-</div>
-                            </div>
-                            <div class="clearfix"> -->
                                 <div class="client-detailInfo  col-md-6 col-xs-12">
                                     <label>{{$t('static.consignee_name')}}</label>
                                     <input type="text" class="form-control"  v-model="initOrderDetail.consignee" value="{{initOrderDetail.consignee}}" disabled="disabled"/>
@@ -405,19 +445,22 @@ import trackingModel from '../order/ordergoods'
 import credenceModel from '../order/createcredence'
 import disposeModel  from  '../order/orderStatus'
 import pictureModel  from  '../tips/pictureDialog'
+import dividedModel from './second_order/newDivided'
 import {
   initOrderDetail
 } from '../../vuex/getters'
 import {
   getOrderDetail,
-  uploadDocument
+  uploadDocument,
+  dividedPayment
 } from '../../vuex/actions'
 export default {
     components: {
       trackingModel,
       credenceModel,
       disposeModel,
-      pictureModel 
+      pictureModel,
+      dividedModel
     },
     props:['param'],
     data(){
@@ -453,6 +496,9 @@ export default {
         pictureParam:{
             show:false,
             img:''
+        },
+        divideParam:{
+           show:false
         }
       }
     },
@@ -462,7 +508,8 @@ export default {
       },
       actions:{
         getOrderDetail,
-        uploadDocument
+        uploadDocument,
+        dividedPayment
       }
     },
     methods:{
@@ -472,6 +519,10 @@ export default {
                 this.$store.state.table.orderDetail[param.crete].show=false;
             }
             this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
+          },
+          divided_payments:function(initOrderDetail){
+            console.log(initOrderDetail)
+              this.divideParam = initOrderDetail;
           },
           createChance:function(item,index){
             console.log(item)

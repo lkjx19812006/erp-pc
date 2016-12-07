@@ -136,32 +136,33 @@ export default{
 			isA:true,
 			checked:false,
 			customerFlag:0,
-      id: undefined, // Binded to component.
+           id: undefined, // Binded to component.
 			orgParam: {
-        loading: true,
-        color: '#5dc596',
-        size: '15px',
-        cur: 1,
-        all: 7,
-        total:''
-      },
-      loadParam: {
-        loading: true,
-        color: '#5dc596',
-        size: '15px',
-        name:'',
-        mobile:'',
-        orgId:this.initLogin.orgId,
-        cur: 1,
-        all: 7,
-        total:''
-      },
-      treeParam:{
-        show:false,
-        callback:this.callback,
-        orgId:'',
-        orgName:''
-      }
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7,
+                total:''
+              },
+              loadParam: {
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                name:'',
+                mobile:'',
+                orgCode:'0001002',
+                cur: 1,
+                all: 7,
+                total:''
+              },
+              treeParam:{
+                show:false,
+                callback:this.callback,
+                orgId:'',
+                orgName:'',
+                orgCode:'0001002',
+              }
 
 
 		}

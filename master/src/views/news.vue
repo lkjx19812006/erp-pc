@@ -5,7 +5,7 @@
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <intention-model :param="intentionParam" v-if="intentionParam.show"></intention-model>
     <personalauth-model :param="personalParam" v-if="personalParam.show"></personalauth-model>
-   <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
+    <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      <div>
@@ -206,7 +206,7 @@
                                     fullname:item.fullname,
                                     employeeId:'',
                                     employeeName:'',
-                                    orgId:'',
+                                    orgCode:0001002,
                                     orgName:'',
                                     show:true,
                                     key:'userList',
@@ -315,7 +315,7 @@
 import tipsdialogModel  from '../components/tips/tipDialog'
 import calendar from '../components/calendar/vue.datepicker'
 import alterinfoModel  from '../components/user/userUpdate'
-import transferModel  from '../components/user/userTransfer'
+import transferModel  from '../components/user/myUserTransfer'
 import auditModel  from '../components/user/userAudit'
 import detailModel from '../components/user/userDetail'
 import searchModel from '../components/user/userSearch'
@@ -399,7 +399,7 @@ export default {
                 name:'',
                 employeeId:'',
                 employeeName:'',
-                orgId:'',
+                orgCode:'0001002',
                 orgName:'',
                 province:'',
                 city:''

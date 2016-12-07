@@ -3,7 +3,7 @@
         <ul class="nav nav-tabs" role="tablist"  >
           <li role="presentation" v-for="item in tabs">
 
-              <div  v-link="item.url" role="tab" data-toggle="tab" class="{{$route.path==item.url?'active_font':''}}" @click="setIsTop()">{{item.cname}}<span @click.stop="closeTab($index)" class="glyphicon glyphicon-remove"></span></div>
+              <div  v-link="item.url" role="tab" data-toggle="tab" class="{{$route.path==item.url?'active_font':''}}" @click="setIsTop()">{{item.cname}}<span @click.stop="closeTab($index)" class="glyphicon glyphicon-remove" style="padding-left: 6px;"></span></div>
 
           </li>
         </ul>
@@ -83,11 +83,16 @@ export default {
 }
 .nav_tab ul{
   margin-bottom: 0px;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 35px;
 }
 .nav_tab ul li{
   font-size: 14px;
-      border-top: 1px solid #ddd;
-    border-right: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  white-space: nowrap;
+    text-overflow: ellipsis
 }
 .nav_tab ul li div{
   color: #333;

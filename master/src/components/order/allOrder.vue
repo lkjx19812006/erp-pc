@@ -123,6 +123,7 @@
                                 show:true,
                                 id:item.id,
                                 loading:false,
+                                 key:'orderDetail',
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'
                         })">{{item.customerName}}</a></td>

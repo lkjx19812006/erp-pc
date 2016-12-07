@@ -75,7 +75,7 @@
 	                                     <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
 	                                     <!-- <input type="text"  /> -->
 	                                     <select v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}">
-	                                     	<option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}</option>
+	                                     	<option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}({{item.ename}})</option>
 	                                     </select>
 	                                </div>                     
 	                                <div class="editpage-input col-md-6">
@@ -97,7 +97,7 @@
 	                         
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-	                                     <input type="text" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+	                                     <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
 	                                </div>
 
 	                                <div class="pull-right col-md-6" style="margin-top:10px;text-align:right">
@@ -201,6 +201,11 @@
                                         label="cname">
                                   </v-select>
                                </div>
+                           </div>
+                           <div class="client-detailInfo  col-md-6 col-xs-12">
+		                        <label class="editlabel">详细地址 </label></label>
+		                        <input type="text" class="form-control edit-input" v-model="param.address" value="{{param.address}}"  />
+		                    </div>
 	                </section>
 	                
 	            </div>

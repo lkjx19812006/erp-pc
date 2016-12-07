@@ -36,9 +36,9 @@
                                             city:'',
                                             address:'',
                                             employee:'',
-                                            employeeId:'',
-                                            employeeName:'',
-                                            orgId:'',
+                                            employeeId:this.initLogin.id,
+                                            employeeName:this.initLogin.name,
+                                            orgId:this.initLogin.orgId,
                                             orgName:'',
                                             contacts:[
                                                 {
@@ -275,7 +275,8 @@ import auditDialog from '../../../components/tips/auditDialog'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
-    initMyCustomerlist
+    initMyCustomerlist,
+    initLogin
 } from '../../../vuex/getters'
 import {
     getClientList,
@@ -300,7 +301,8 @@ export default {
     },
     vuex: {
         getters: {
-            initMyCustomerlist
+            initMyCustomerlist,
+            initLogin
         },
         actions: {
             getClientList,
@@ -348,7 +350,7 @@ export default {
             },
             createParam:{
                 show: false,
-                name:''
+                name:'',
             },
             searchParam:{
                 show:false
@@ -369,7 +371,8 @@ export default {
             },
             tipsParam:{
                 show:false,
-                name:'请先选择客户'
+                name:'请先选择客户',
+                alert:true
             },
           auditParam:{
             link:'/customer/transferBlacklist',
@@ -543,6 +546,7 @@ export default {
     },
     created() {
         changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.myClientParam);
+        console.log(this.initLogin)
     },
     ready(){
       common('tab','table_box',1);

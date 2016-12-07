@@ -150,6 +150,7 @@ export const resetPawd = ({ dispatch }, data) => { //修改密码
 
     }, (res) => {
         console.log('fail');
+        data.callback(res.json().msg);
     })
 }
 
@@ -817,7 +818,6 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         if (param.image_t) { param.sendPics += param.image_t };
         console.log(param.sendPics)
     }
-
     const body = {
         orderId: param.orderId,
         description: param.description,
@@ -852,6 +852,7 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         param.show = false;
     });
 }
+
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     console.log(param)
     console.log("orderStatu");
@@ -986,68 +987,79 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
-        var orderDetail = res.json().result;
-        console.log(orderDetail)
-        var goods = orderDetail.goods;
-        if (!goods) {
-            goods = [];
-        }
-        orderDetail.goods = {};
-        orderDetail.goods.arr = goods;
-        orderDetail.goods.show = true;
-        for (var i in orderDetail.goods.arr) {
-            orderDetail.goods.arr[i].show = false;
-        }
-        orderDetail.goods.forEach(function(item) {
-            var temp = {
-                id: item.id,
-                breedId: item.breedId,
-                breedName: item.breedName,
-                quality: item.quality,
-                title:item.title,
-                location: item.location,
-                spec: item.spec,
-                number: item.number,
-                unit: item.unit,
-                price: item.price,
-                status:item.status,
-                sourceType:item.sourceType,
+         var orderDetail = res.json().result;
+         console.log(orderDetail)
+        if(param.key=='orderDetail'){
+            var goods = orderDetail.goods; 
+            if (!goods) {
+                goods = [];
             }
-            param.goods.push(temp);
-            param.goodsBack.push(temp);
-        })
-        var payPics = orderDetail.payPics;
-        if (!payPics) {
-            payPics = [];
+            orderDetail.goods = {};
+            orderDetail.goods.arr = goods;
+            orderDetail.goods.show = true;
+            for (var i in orderDetail.goods.arr) {
+                orderDetail.goods.arr[i].show = false;
+            }
+            var payPics = orderDetail.payPics;
+            if (!payPics) {
+                payPics = [];
+            }
+            orderDetail.payPics = {};
+            orderDetail.payPics.arr = payPics;
+            orderDetail.payPics.show = true;
+            for (var i in orderDetail.payPics.arr) {
+                orderDetail.payPics.arr[i].show = false;
+            }
+            var sendPics = orderDetail.sendPics;
+            orderDetail.sendPics = {};
+            orderDetail.sendPics.arr = sendPics;
+            orderDetail.sendPics.show = true;
+            for (var i in orderDetail.sendPics.arr) {
+                orderDetail.sendPics.arr[i].show = false;
+            }
+            var attachFiles = orderDetail.attachFiles;
+            orderDetail.attachFiles = {};
+            orderDetail.attachFiles.arr = attachFiles;
+            orderDetail.attachFiles.show = true;
+            for (var i in orderDetail.attachFiles.arr) {
+                orderDetail.attachFiles.arr[i].show = false;
+            }
+            var logisticses = orderDetail.logisticses;
+            orderDetail.logisticses = {};
+            orderDetail.logisticses.arr = logisticses;
+            orderDetail.logisticses.show = true;
+            for (var i in orderDetail.logisticses.arr) {
+                orderDetail.logisticses.arr[i].show = false;
+            }
+            var stages = orderDetail.stages;
+            orderDetail.stages = {};
+            orderDetail.stages.arr = stages;
+            orderDetail.stages.show = true;
+            for (var i in orderDetail.stages.arr) {
+                orderDetail.stages.arr[i].show = false;
+            }
         }
-        orderDetail.payPics = {};
-        orderDetail.payPics.arr = payPics;
-        orderDetail.payPics.show = true;
-        for (var i in orderDetail.payPics.arr) {
-            orderDetail.payPics.arr[i].show = false;
+        if(param.key=='myOrderList'||param.key=='orgOrderList'||param.key=='allOrderList'||param.key=='sellOrderList'){
+            orderDetail.goods.forEach(function(item) {
+                var temp = {
+                    id: item.id,
+                    breedId: item.breedId,
+                    breedName: item.breedName,
+                    quality: item.quality,
+                    title:item.title,
+                    location: item.location,
+                    spec: item.spec,
+                    number: item.number,
+                    unit: item.unit,
+                    price: item.price,
+                    status:item.status,
+                    sourceType:item.sourceType,
+                }
+                param.goods.push(temp);
+                param.goodsBack.push(temp);
+            })
         }
-        var sendPics = orderDetail.sendPics;
-        orderDetail.sendPics = {};
-        orderDetail.sendPics.arr = sendPics;
-        orderDetail.sendPics.show = true;
-        for (var i in orderDetail.sendPics.arr) {
-            orderDetail.sendPics.arr[i].show = false;
-        }
-        var attachFiles = orderDetail.attachFiles;
-        orderDetail.attachFiles = {};
-        orderDetail.attachFiles.arr = attachFiles;
-        orderDetail.attachFiles.show = true;
-        for (var i in orderDetail.attachFiles.arr) {
-            orderDetail.attachFiles.arr[i].show = false;
-        }
-        var logisticses = orderDetail.logisticses;
-        orderDetail.logisticses = {};
-        orderDetail.logisticses.arr = logisticses;
-        orderDetail.logisticses.show = true;
-        for (var i in orderDetail.logisticses.arr) {
-            orderDetail.logisticses.arr[i].show = false;
-        }
-
+        
         dispatch(types.ORDER_DETAIL_DATA, orderDetail);
     }, (res) => {
         console.log('fail');
@@ -2332,7 +2344,7 @@ export const customerTransferBlacklist = ({ dispatch }, param) => {    //客户�
 
 
 export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及搜索
-    console.log(param)
+    console.log(param.orgCode)
     param.loading = true;
     var apiurl = apiUrl.clientList + '/employee/?' + '&page=' + param.cur + '&pageSize=14';
     /*var apiurl = apiUrl.employeeList+'/?'+'&page=' + param.cur + '&pageSize=14';*/
@@ -2454,7 +2466,6 @@ export const getRoleList = ({ dispatch }, param) => { //获取角色列表
 export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列表
     console.log('新增客户');
     console.log(data);
-    console.log(data.supplier);
     const Cdata = {
         "name": data.name,
         "type": data.type,
@@ -2498,6 +2509,8 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         }
     }).then((res) => {
         console.log('添加成功')
+        dispatch(types.CUSTOMER_ADD_DATA, data);
+/*        data.callback(res.json().msg);*/
         data.id = res.json().result.customerId;
         data.mainPhone = data.contacts[0].phone;
         data.phoneProvince = res.json().result.phoneProvince;
@@ -2506,7 +2519,6 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         if ('show' in tipsParam) {
             tipsParam.show = true;
         }
-        dispatch(types.CUSTOMER_ADD_DATA, data);
     }, (res) => {
         console.log('fail');
     })
@@ -5131,13 +5143,20 @@ export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
         }
     }).then((res) => {
         var obj = res.json().result;
-        var items = obj.items;
-        obj.items.arr = items;
-        obj.items.show = false;
-/*        for (var i in items) {
-            items[i].show = false;
-        };*/
-        if (param.key == "mySampleList") { //寄样列表编辑寄样信息
+        console.log(obj)
+        if(param.key=='sampleDetail'){
+             var items = obj.items;
+             if (!items) {
+                items = [];
+            }
+            obj.items = {};
+            obj.items.arr = items;
+            obj.items.show = true;
+            for (var i in obj.items.arr) {
+                obj.items.arr[i].show = false;
+            }
+        }
+        if (param.key == "samplelist") { //寄样列表编辑寄样信息
             obj.items.forEach(function(item) {
                 var temp = {
                     id: item.id,
@@ -5154,16 +5173,20 @@ export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
                 param.items.push(temp);
                 param.itemsBack.push(temp);
             })
+            param.customerName = obj.customerName,
+            param.customerPhone = obj.customerPhone,
+            param.consignee = obj.consignee;
+            param.consigneePhone = obj.consigneePhone;
+            param.total = obj.total;
+            param.country = obj.country;
+            param.address = obj.address;
+            param.province = obj.province;
+            param.city = obj.city;
+            param.district = obj.district;
+            param.send = true;
+            dispatch(types.SAMPLE_DETAIL,obj);
+            param.loading = false;
         }
-        param.customerName = obj.customerName,
-        param.customerPhone = obj.customerPhone,
-        param.consignee = obj.consignee;
-        param.consigneePhone = obj.consigneePhone;
-        param.total = obj.total;
-        param.country = obj.country;
-        param.province = obj.province;
-        param.city = obj.city;
-        param.district = obj.district;
         dispatch(types.SAMPLE_DETAIL,obj);
         param.loading = false;
     }, (res) => {
@@ -5225,8 +5248,8 @@ export const createSample = ({ dispatch }, data) => { //新建寄样申请
        district:data.district,
        items:data.items
     }
-    if(data.address==''){
-        body.address = data.country+','+data.province+','+data.city+','+data.district
+    if(data.address){
+        body.address = data.country+','+data.province+','+data.city+','+data.district+','+data.address
     }
     if(data.consignee=='') {
         body.consignee = data.customerName;
@@ -5281,8 +5304,8 @@ export const alterSample = ({ dispatch }, param) => { //修改寄样申请
        status:param.status,
        items:param.items
     }
-    if(param.address==''){
-        body.address = param.country+','+param.province+','+param.city+','+param.district
+    if(param.address){
+        body.address = param.country+','+param.province+','+param.city+','+param.district+','+param.address
     }
     if(param.consignee=='') {
         body.consignee = param.customerName;
@@ -5307,6 +5330,7 @@ export const alterSample = ({ dispatch }, param) => { //修改寄样申请
     }).then((res) => {
         console.log('修改成功')
         param.send = false;
+        param.address = res.json().result.address;
         dispatch(types.UPDATE_SAMPLE, param);
     }, (res) => {
         console.log('fail');

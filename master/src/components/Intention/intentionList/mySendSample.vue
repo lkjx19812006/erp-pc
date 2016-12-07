@@ -54,7 +54,7 @@
                         <th>审核状态</th>
                         <th>备注</th>
       	            	<th>创建时间</th>
-                        <th style="min-width: 200px;">操作</th>
+                        <th style="min-width: 200px;text-align: left">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,6 +63,7 @@
                                  id:item.id,
                                  sub:$index,
                                  show:true,
+                                 key:'sampleDetail',
                                  name:item.customerName,
                                  loading:false
                              })">{{item.customerName}}</td>
@@ -73,10 +74,13 @@
                         <td>{{item.consigneePhone}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.sampleDesc}}</td>
-                        <td>{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==0">{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==1" style="background:#9010ff;color:#fff">{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==3" tyle="background:red;color:#fff">{{item.validate | Audit}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.ctime}}</td>
-                        <td>
+                        <td style="text-align: left;">
                             <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"  @click="updateOrder(item.id,$index)">
                                     <img src="/static/images/edit.png"  alt="编辑" title="编辑"/>
                             </a>
@@ -179,6 +183,7 @@ export default {
                 customerName:'',
                 customerPhone:'',
                 validate:'',
+                key:'samplelist',
                 total:0
             },
             delParam:{
@@ -225,6 +230,7 @@ export default {
                 consigneePhone:'',
                 total:'',
                 country:'',
+                address:'',
                 province:'',
                 city:'',
                 district:'',
@@ -296,6 +302,7 @@ export default {
               this.dialogParam.index = index;
               this.dialogParam.items = [];
               this.dialogParam.itemsBack = [];
+              this.getSampleDetail(this.dialogParam);
         },
     },
     events: {

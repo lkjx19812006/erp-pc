@@ -96,12 +96,13 @@
                   <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
                   <td v-if="item.sample==0">否</td>
                   <td v-if="item.sample==1">是</td>
-                  <td>{{{item.goodsDesc}}</td>
+                  <td>{{item.goodsDesc}}</td>
                   <td>{{item.total}}</td>
                   <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
                                 loading:false,
+                                key:'orderDetail',
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'
                         })">{{item.customerName}}</a></td>
@@ -120,6 +121,7 @@
                   <td v-if="item.sourceType==0">交易员新建</td>
                   <td v-if="item.sourceType==1">意向</td>
                   <td v-if="item.sourceType==2">报价</td>
+                  <td v-if="item.sourceType==3">{{$t('static.sample_order')}}</td>
                   <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Auditing}}</td>
                   <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
                   <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>

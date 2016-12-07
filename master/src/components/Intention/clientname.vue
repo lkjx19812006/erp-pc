@@ -123,6 +123,7 @@ export default{
         reset:function(){
         	this.loadParam.name='';
             this.loadParam.phone='';
+            this.getClientList(this.loadParam);
         }
 	},
     events: {
@@ -225,8 +226,7 @@ export default{
 .base_pagination{
 	margin-top: 0;
 }
-th,td{
-	width: 160px;
-	min-width: 160px;
+table{
+	display: table;
 }
 </style>
