@@ -147,7 +147,7 @@
             <td>{{item.comments}}</td> 
           -->
           <td>
-               <a class="operate" @click="modifyClient({
+               <!-- <a class="operate" @click="modifyClient({
                       id:item.id,
                       sub:$index,
                       show:true,
@@ -179,7 +179,7 @@
                       key:'supplyCustomerList',
                       supplier:1
                       })"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
-               </a>
+               </a> -->
                <a class="operate" @click="specDelete({
                         id:item.id,
                         sub:$index,
@@ -394,7 +394,7 @@
     background-position: 5px;
   }
   #table_box table th,#table_box table td{
-    width: 118px;
-    min-width: 118px;
+    width: 119px;
+    min-width: 119px;
 }
 </style>
