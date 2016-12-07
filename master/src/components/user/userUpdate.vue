@@ -144,6 +144,9 @@
 
            </section>
         </div>
+        <div class="cover_loading">
+            <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+        </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
             <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.userType=initUserDetail.userType,param.bizType=initUserDetail.bizType,tipsParam.show=true">确定</button>
@@ -187,7 +190,8 @@ export default {
     },
     methods: {
       alertInfo:function(){
-        this.param.show = false;
+        //this.param.show = false;
+        this.param.loading = true;
         this.updateUserInfo(this.param);
       }
     },

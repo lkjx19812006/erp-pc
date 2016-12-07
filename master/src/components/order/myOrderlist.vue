@@ -123,7 +123,7 @@
                   <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
-                                loading:false,
+                                loading:true,
                                 key:'orderDetail',
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'

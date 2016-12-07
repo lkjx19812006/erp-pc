@@ -161,9 +161,8 @@ export default {
    				})
    			}
         },
-        clickOn: function(initMsgList) {
-            this.changeParam = initMsgList;
-            this.getUserDetail(this.changeParam);
+        clickOn: function(param) {
+            this.changeParam = param;
         }
     },
     events: {

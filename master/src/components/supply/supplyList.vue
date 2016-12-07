@@ -103,7 +103,7 @@
                                 id:item.id,
                                 sub:$index,
                                 show:true,
-                                loading:false,
+                                loading:true,
                                 name:item.name,
                                 url:'/customer/',
                                 key:'supplyCustomerList'
@@ -299,7 +299,7 @@
     methods: {
       clickOn: function(param) {
         this.changeParam = param;
-        this.getClientDetail(this.changeParam);
+        
       },
       createCustomer:function(info){
         this.createParam = info;

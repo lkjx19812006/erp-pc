@@ -1,7 +1,9 @@
 <template>
   <tree-dialog v-if="treeParam.show" :param="treeParam" ></tree-dialog>
 	 <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-
+     <div class="cover_loading">
+         <pulse-loader :loading="loadParam.loading||orgParam.loading" :color="color" :size="size"></pulse-loader>
+     </div>
 	 <div class="container modal_con" v-show="param.show">
        <div @click="param.show = false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -136,15 +138,15 @@ export default{
 			isA:true,
 			checked:false,
 			customerFlag:0,
-      id: undefined, // Binded to component.
+            id: undefined, // Binded to component.
 			orgParam: {
-        loading: true,
-        color: '#5dc596',
-        size: '15px',
-        cur: 1,
-        all: 7,
-        total:''
-      },
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7,
+                total:''
+            },
       loadParam: {
         loading: true,
         color: '#5dc596',
@@ -327,8 +329,8 @@ export default{
     },
 	created() {
       //this.getClientList(this.orgParam, this.orgParam.all);
-      this.getEmployeeList(this.loadParam, this.loadParam.all);
-      this.getOrgList(this.orgParam, this.orgParam.all);
+      this.getEmployeeList(this.loadParam);
+      this.getOrgList(this.orgParam);
 
     }
 }

@@ -4,7 +4,7 @@
   <div class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
   <div class="container modal_con">
     <div class="cover_loading">
-      <pulse-loader :loading="loading" :color="color" :size="size"></pulse-loader>
+      <pulse-loader :loading="loading||loadParam.loading" :color="color" :size="size"></pulse-loader>
     </div>
     <div @click="param.show=false" class="top-title">
       <span class="glyphicon glyphicon-remove-circle"></span>

@@ -202,6 +202,7 @@ export default {
                 link:'/intlIntention/',
                 key:'intentionDetail',
                 show:false,
+                loading:true,
                 id:''
 
             },
