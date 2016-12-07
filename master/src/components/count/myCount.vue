@@ -47,7 +47,7 @@
 	            </thead>
 	            <tbody>
 	                <tr>
-	                	<td>{{item.name }}</td>
+	                	<td>{{initClientcount.total }}</td>
 	                	<td v-for="item in initClientcount.level">{{item.count}}</td>
 	                	<td v-for="item in initClientcount.type">{{item.count}}</td>
 	                </tr>
