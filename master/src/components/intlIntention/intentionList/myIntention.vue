@@ -31,7 +31,7 @@
                             <th>{{$t('static.type')}}</th>
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.client_email')}}</th>
-                            <th>{{$t('static.commodity_items')}}</th>
+                            <th style="width:200px;min-width: 200px">{{$t('static.commodity_items')}}</th>
                             <th>{{$t('static.certificate')}}</th>
                             <th>{{$t('static.country')}}</th>
                             <!-- <th>{{$t('static.province')}}</th> -->
@@ -50,7 +50,7 @@
                             <!-- <th>{{$t('static.description')}}</th> -->
                             <th>{{$t('static.inquiry_state')}}</th>
                             <th>{{$t('static.inquiry_type')}}</th>
-                            <th style="min-width: 310px;">{{$t('static.handle')}}</th>
+                            <th style="min-width: 250px;">{{$t('static.handle')}}</th>
                     </tr>
                 </thead>
                 <tbody>
