@@ -158,8 +158,8 @@
                         <td v-if="item.ctype==1">申请认证</td>
                         <td v-if="item.ctype==2">已认证</td>
                         <td v-if="item.ctype==3">认证失败</td>
-                        <td v-if="item.transStatus==1">已划转</td>
-                        <td v-if="item.transStatus==0">未划转</td>
+                        <td v-if="item.transStatus==1" style="color:#fff;background:green">已划转</td>
+                        <td v-if="item.transStatus==0" style="color:#fff;background:#C71585">未划转</td>
                         <td v-if="item.transStatus!=0&&item.transStatus!=1">转黑名单</td>
                         <td>{{item.ctime}}</td>
                         <td  >
@@ -566,9 +566,21 @@ export default {
     },
     modifyUser:function(item){
         this.alterParam = item;
+        this.alterParam.callback = this.editback;
+    },
+    editback:function(title){
+        this.tipsParam.show = true;
+        this.tipsParam.name=title;
+        this.tipsParam.alert=true;
     },
     userToClient:function(item){
         this.transferParam = item;
+        this.transferParam.callback = this.transferback;
+    },
+    transferback:function(title){
+        this.tipsParam.show = true;
+        this.tipsParam.name=title;
+        this.tipsParam.alert=true;
     },
     createIntention:function(){
       this.intentionParam={

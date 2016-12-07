@@ -124,7 +124,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-                    <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show=false)">保存</button>
+                    <button type="button" class="btn btn-confirm" v-if="$validation.valid" @click="save()">保存</button>
                     <button type="button" class="btn btn-confirm" v-else disabled="true">保存</button>
                 </div>
             </form>
@@ -213,7 +213,11 @@ export default {
                 this.supplyParam.cid = this.param.id;
                 this.supplyParam.cName = this.param.cName;
             }
-
+        },
+        save:function(){
+            this.param.show=false;
+            this.param.callback = this.param.callback;
+            this.param.link(this.param);
         }
     },
     events:{

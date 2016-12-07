@@ -1,6 +1,7 @@
 <template>
      <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
      <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
+     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	 <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2" style="font-size:14px">留言</div>
@@ -58,7 +59,7 @@
                         <td>{{item.comments}}</td>
                         <td>{{item.reply}}</td>
                         <td>{{item.utime}}</td>
-                        <td  @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments">
+                        <td  @click="updateParam.id=item.id,updateParam.index=$index,updateParam.show=true,updateParam.comments=item.comments,updateParam.callback=callback">
                            <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                            </a>
                         </td>
@@ -75,6 +76,7 @@
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
 import editmsgModel from '../editMsg'
+import tipsModel from '../../tips/tipDialog'
 import detailModel from '../../user/userDetail'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
@@ -89,7 +91,8 @@ export default {
     components: {
         pagination,
         editmsgModel,
-        detailModel
+        detailModel,
+        tipsModel 
     },
     vuex: {
         getters: {
@@ -112,6 +115,11 @@ export default {
                 phone:'',
                 total:0
 
+            },
+            tipsParam:{
+              name:'',
+              show:false,
+              alert:true
             },
             changeParam:{
                 show:false
@@ -160,6 +168,12 @@ export default {
    					item.checked = false;
    				})
    			}
+        },
+
+        callback:function(title){
+             this.tipsParam.name=title;
+              this.tipsParam.alert=true;
+              this.tipsParam.show=true;
         },
         clickOn: function(param) {
             this.changeParam = param;

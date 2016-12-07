@@ -3,6 +3,7 @@
      <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
      <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
      <affirmoffer-model :param="affirmOfferParam" v-if="affirmOfferParam.show"></affirmoffer-model>
+     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
      <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">{{$t('static.International_intention_inquiry')}}</div>
@@ -46,10 +47,10 @@
                         <td>{{item.city}}</td>
                         <!-- <td>{{item.district}}</td> -->
                         <td>{{item.ctime | date}}</td>
-                        <td v-if="item.inquire==0">{{$t('static.inquire_type')}}</td>
-                        <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.initial')}}</td>
-                        <td v-if="item.inquire==2" style="color:#EE82EE">{{$t('static.inquiry')}}</td>
-                        <td v-if="item.inquire==3" style="color:#2E8B57">{{$t('static.quo_complete')}}</td>
+                        <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
+                        <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
+                        <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
+                        <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>
                             <div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
                         </td>
@@ -72,6 +73,7 @@ import detailModel from '../inquireDetail'
 import affirmofferModel from '../confirmOffer'
 import common from '../../../common/common'
 import inquireModel from '../inquire'
+import tipsModel  from '../../../components/tips/tipDialog'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
     initIntlIntentionInquireList
@@ -88,7 +90,8 @@ export default {
         inquireModel,
         offerModel,
         detailModel,
-        affirmofferModel
+        affirmofferModel,
+        tipsModel
     },
     vuex: {
         getters: {
@@ -123,6 +126,7 @@ export default {
             affirmOfferParam:{
                 show:false,
                 link:'/intlIntention/offer',
+                callback:this.offerCallback,
                 id:'',
                 index:'',
                 description:''
@@ -148,10 +152,9 @@ export default {
             },
             tipsParam:{
                 show:false,
-                name:'',
-                ids:[],
-                index:[],
-                onSell:0
+                name:'修改成功',
+                alert:true,
+
             },
           
             
@@ -225,6 +228,11 @@ export default {
             this.loadParam.breedName='';
             this.loadParam.customerEmail='';
             this.getIntlIntentionList(this.loadParam);
+        },
+        offerCallback:function(name){
+            this.tipsParam.show = true;
+            this.tipsParam.name=name;
+            this.tipsParam.alert=true;
         }
     },
     events: {

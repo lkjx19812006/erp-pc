@@ -114,7 +114,7 @@
                         <th>客户备注</th>
                         <th>意向来源</th>
 
-                        <!-- <th>类型</th>
+                      <!-- <th>类型</th>
                         <th>特殊的</th>
                         <th>客户名称</th>
                         <th>客户手机号</th>
@@ -212,7 +212,7 @@
                         <td>{{item.description}}</td>
                         <td>{{item.inTypeDesc}}</td>
 
-                        <!-- <td>{{item.type | chanceType}}</td>
+                  <!-- <td>{{item.type | chanceType}}</td>
                         <td>
                             <div v-if="item.especial==0&&item.type==0">普通求购</div>
                             <div v-if="item.especial==0&&item.type==1">普通供应</div>
@@ -294,7 +294,8 @@
                         <td>{{item.validate | intentionAudit}}</td>
                         <td>
                           <div>{{item.onSell | onsell}}</div>
-                        </td> -->
+                        </td> 
+                    -->
                         <td>
                               <a class="operate" @click.stop="modifyIntention({
                                               id:item.id,
@@ -686,11 +687,13 @@ export default {
           this.deleteParam = param;
         },
         modifyIntention:function(param){
-          
-          this.createParam = param;
+            this.createParam = param;
+            this.createParam.callback = this.modifyback;
         },
-        createIntention:function(param){
-             this.createParam = param;
+        modifyback:function(title){
+            this.tipsParam.name = title;
+            this.tipsParam.alert = true;
+            this.tipsParam.show = true;
         },
         selectSearch:function(){
           this.getIntentionList(this.loadParam)

@@ -1,9 +1,11 @@
 <template>
   <tree-dialog v-if="treeParam.show" :param="treeParam" ></tree-dialog>
 	 <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+
      <div class="cover_loading">
          <pulse-loader :loading="loadParam.loading||orgParam.loading" :color="color" :size="size"></pulse-loader>
      </div>
+
 	 <div class="container modal_con" v-show="param.show">
        <div @click="param.show = false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -39,7 +41,9 @@
                         <button type="button" class="new_btn" @click="reset()">{{$t('static.clear_all')}}</button>
                         <button type="button" class="new_btn" style="margin-right:10px;" @click="employSearch()">{{$t('static.search')}}</button>
                     </div>
-                        
+                    <div class="cover_loading">
+                        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+                    </div>    
 		            <table class="table table-hover table_head table-striped" style="text-align:center" v-cloak>
 		                <thead>
 		                    <tr>
@@ -296,6 +300,7 @@ export default{
             console.log(this.param);
             this.$dispatch('selectEmpOrOrg', this.param);
             this.param.show = false;
+            this.param.callback = this.param.callback;
 
         },
         confirmOrg:function(){

@@ -83,10 +83,10 @@
                         <td>{{item.ctime | date}}</td>
                         <!-- <td>{{item.validate | intentionAudit}}</td> -->
                         <!-- <td>{{item.description}}</td> -->
-                        <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
-                        <td v-if="item.inquire==1">{{$t('static.inquiry')}}</td>
-                        <td v-if="item.inquire==2">{{$t('static.quotation')}}</td>
-                        <td v-if="item.inquire==3">{{$t('static.quo_complete')}}</td>
+                        <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
+                        <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
+                        <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
+                        <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>{{item.inquireType}}</td>
                         <!-- <td>
                             <div v-if="item.inquire===0&&item.inquireTime===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquire.png" alt="询价" /></div>

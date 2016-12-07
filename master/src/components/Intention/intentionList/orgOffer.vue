@@ -1,6 +1,7 @@
 <template>
      <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
      <search-model :param="loadParam" v-if="loadParam.show"></search-model>
+     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
      <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2" style="font-size:14px">部门报价</div>
@@ -33,21 +34,6 @@
                         <th>报价价格</th>
                         <th>库存</th>
                         <th>报价备注</th>
-                        
-
-                        <!-- <th>报价会员</th>
-                        <th>会员手机</th>
-                        <th>发布意向客户</th>
-                        <th>客户手机</th>
-                        <th>品种</th>
-                        <th>产地</th>
-                        <th>单价</th>
-                        <th>数量</th>
-                        <th>总价</th>
-                        <th>杂费</th>
-                        <th>杂费说明</th>
-                        <th>备注</th>
-                        <th>是否已采纳</th> -->
                         <th></th>
                     </tr>
                 </thead>
@@ -62,23 +48,6 @@
                         <td>{{item.price}}</td>
                         <td>{{item.number}}{{item.unit}}</td>
                         <td>{{item.description}}</td>
-
-                        <!-- <td>{{item.userName}}</td>
-                        <td>{{item.userPhone}}</td>
-                        <td>{{item.customerName}}</td>
-                        <td>{{item.customerPhone}}</td>
-                        <td>{{item.breedName}}</td>
-                        <td>{{item.location}}</td>
-                        <td>{{item.price}}</td>
-                        <td>{{item.number}}</td>
-                        <td>{{item.total}}</td>
-                        <td>{{item.incidentals}}</td>
-                        <td>{{item.incidentalsDesc}}</td>
-                        <td>{{item.comments}}</td>
-                        <td>
-                           <div v-if="item.orderTime==0">未采纳</div>
-                           <div v-else>已采纳</div>
-                        </td> -->
                         <td>
                                <a class="operate" v-if="item.orderTime==0"  @click.stop="adopt(item,$index)"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
                                </a>
@@ -99,6 +68,7 @@ import createorderModel  from '../createOrder'
 import searchModel  from '../offerSearch'
 import common  from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import tipsModel from '../../tips/tipDialog'
 import {
     initOrgOfferList,
     initLogin
@@ -110,7 +80,8 @@ export default {
     components: {
         pagination,
         createorderModel,
-        searchModel
+        searchModel,
+        tipsModel 
     },
     vuex: {
         getters: {
@@ -139,7 +110,11 @@ export default {
                 endTime:'',
                 total:0
             },
-
+            tipsParam:{
+              name:'',
+              show:false,
+              alert:true
+            },
             offerParam:{
                 show:false,
                 id:''
@@ -253,7 +228,12 @@ export default {
                 }
             }
             console.log(this.orderParam.goods[0]);
-            return ;
+            this.orderParam.callback = this.adoptback;
+        },
+        adoptback:function(title){
+          this.tipsParam.name=title;
+          this.tipsParam.alert=true;
+          this.tipsParam.show=true;
         }
 
     },

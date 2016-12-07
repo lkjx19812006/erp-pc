@@ -13,9 +13,8 @@
 	            <div class="col-xs-4">
 		            <div class="name_search clearfix" style="border:none">
 	                   <select  class="form-control" v-model="loadParam.type" @change="employNameSearch()">
-	                        <option selected value="">请选择供应商类型</option>
-	                  	    <option value="0">个人</option>
-	                  	    <option value="1">企业</option>
+                            <option value="">{{$t('static.please_select')}}</option>
+                            <option v-for="item in initUserType" value="{{item.id}}" >{{item.name}}</option>
 	                  </select> 
 	                </div>
 	            </div>
@@ -44,10 +43,10 @@
 	                    	<td  @click.stop="">
 	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.name)" ></label>
 	                        </td>
-	                        <td>{{item.type}}</td>
+	                        <td>{{item.typeDesc}}</td>
 	                        <td>{{item.name}}</td>
 	                        <td>{{item.mainPhone}}</td>
-	                        <td>{{item.classify}}</td>
+	                        <td>{{item.classifyDesc | classify}}</td>
 	                    </tr>
 	                </tbody>
 	            </table>
@@ -61,10 +60,12 @@
 <script>
 import pagination from '../pagination'
 import {
-    initCustomerlist
+    initCustomerlist,
+    initUserType
 } from '../../vuex/getters'
 import {
-    getClientList
+    getClientList,
+    getUserTypeList
 } from '../../vuex/actions'
 export default{
 	props:['param'],
@@ -90,10 +91,12 @@ export default{
 	},
 	vuex:{
 		getters:{
-			initCustomerlist
+			initCustomerlist,
+			initUserType
 		},
 		actions:{
-			getClientList
+			getClientList,
+			getUserTypeList
 		}
 	},
 	methods:{
@@ -126,6 +129,7 @@ export default{
             this.loadParam.cid = this.param.id;
         }
 		this.getClientList(this.loadParam);
+		this.getUserTypeList(this.loadParam)
 	}
 }
 </script>
@@ -135,6 +139,11 @@ export default{
 }
 .modal_con{
 	z-index: 1085;
+}
+.top-title{
+	right: 0;
+	left: 0;
+	width: 800px;
 }
 .change_trans{
 	margin-top: 20px;
@@ -196,6 +205,7 @@ export default{
 }
 .table{
 	margin-bottom: 5px;
+	display: table;
 }
 .table_head>thead>tr{
 	background-color: #f5f5f5;

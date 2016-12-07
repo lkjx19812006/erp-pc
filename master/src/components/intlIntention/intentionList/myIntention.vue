@@ -7,6 +7,7 @@
      <cancelinquire-model :param="cancelInquireParam" v-if="cancelInquireParam.show"></cancelinquire-model>
      <inquire-model :param="inquireParam" v-if="inquireParam.show"></inquire-model>
      <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
+     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
      <div>
         <div class="service-nav clearfix">
             <div class="my_enterprise col-xs-2">{{$t('static.my_intention')}}</div>
@@ -88,10 +89,10 @@
                         <td>{{item.ctime | date}}</td>
                         <!-- <td>{{item.validate | intentionAudit}}</td> -->
                         <!-- <td>{{item.description}}</td> -->
-                        <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
-                        <td v-if="item.inquire==1">{{$t('static.inquiry')}}</td>
-                        <td v-if="item.inquire==2">{{$t('static.quotation')}}</td>
-                        <td v-if="item.inquire==3">{{$t('static.quo_complete')}}</td>
+                        <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
+                        <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
+                        <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
+                        <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>{{item.inquireType}}</td>
                         <td>
                             <div style="display:inline-block;margin-right:7px" @click="deleteIntention({
@@ -136,8 +137,10 @@ import modifyModel from '../modifyIntention'
 import cancelinquireModel from '../../tips/tipDialog'
 import inquireModel from '../inquire'
 import createorderModel from '../createOrderDialog' 
+import tipsModel  from '../../../components/tips/tipDialog'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+
 import {
     initMyIntlIntentionList,
     initLogin
@@ -150,6 +153,7 @@ import {
     cancelIntlIntentionInquire,
     createOrder,
 
+
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -161,7 +165,8 @@ export default {
         cancelinquireModel,
         inquireModel,
         deletebreedModel,
-        createorderModel
+        createorderModel,
+        tipsModel
     },
     vuex: {
         getters: {
@@ -208,6 +213,7 @@ export default {
             },
             createOrderParam:{
                 show:false,
+                callback:this.orderCallback,
                 title1:'新建订单',
                 type:1,
                 sourceType:1,
@@ -249,6 +255,7 @@ export default {
             inquireParam:{
                 show:false,
                 key:'myIntlIntentionList',
+                callback:this.inquireCallback,
                 inquireTime:'',    //询价的次数
                 index:'',
                 inquire:'',
@@ -279,10 +286,9 @@ export default {
             },
             tipsParam:{
                 show:false,
-                name:'',
-                ids:[],
-                index:[],
-                onSell:0
+                name:'修改成功',
+                alert:true,
+
             },
             deleteParam:{
                 show:false,
@@ -293,6 +299,7 @@ export default {
             createParam:{
                 show:false,
                 url:'/intlIntention/',
+                callback:this.createCallback,
                 customerId:'',
                 customerName:'',
                 customerPhone:'',
@@ -312,6 +319,7 @@ export default {
                 show:false,
                 link:'/intlIntention/',
                 key:'myIntlIntentionList',
+                callback:this.editCallback,
                 id:'',
                 index:'',
                 duedate:'',
@@ -427,8 +435,7 @@ export default {
             this.deleteParam = param;
         },
         modifyIntention:function(id,index){
-            console.log(id);
-            console.log(index);
+            
               this.modifyParam.show = true;
               this.modifyParam.id = id;
               this.modifyParam.index = index;
@@ -447,7 +454,28 @@ export default {
         auditCallback:function(){
           this.auditParam.description=this.auditParam.auditComment;
           this.batchUserIntentionAudit(this.auditParam);
-        }
+        },
+        createCallback:function(name){
+            this.tipsParam.show = true;
+            this.tipsParam.name=name;
+            this.tipsParam.alert=true;
+        },
+        editCallback:function(name){
+            this.tipsParam.show = true;
+            this.tipsParam.name=name;
+            this.tipsParam.alert=true;
+        },
+        inquireCallback:function(name){
+            this.tipsParam.show = true;
+            this.tipsParam.name=name;
+            this.tipsParam.alert=true;
+        },
+        orderCallback:function(name){
+            this.tipsParam.show = true;
+            this.tipsParam.name=name;
+            this.tipsParam.alert=true;
+        },
+
     },
     events: {
         fresh: function(input) {

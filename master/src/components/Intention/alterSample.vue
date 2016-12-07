@@ -496,6 +496,7 @@ export default{
 	          _this.param.items.push(item);
 	        })
 	        console.log(this.param.items);
+	        this.param.callback=this.param.callback;
 	        this.alterSample(this.param);
       },
 	},

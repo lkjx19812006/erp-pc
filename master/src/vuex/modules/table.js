@@ -290,7 +290,7 @@ const state = {
                 "country":"7","province":null,"city":null,"district":null,"employee":null,"orderStatus":0,"status":1,"visit":0,
                 "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
                 "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
-                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
+                "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":[{"breedName":"三七"}],
                 "payPics":null,"sendPics":null}],
 
         enterpriseList: [
@@ -472,7 +472,9 @@ const state = {
                   "title":null,"breedId":1007,"brredName":null,"quality":null,"location":"上海","spec":"干货","price":100.000000,
                   "unit":"公斤","address":null,"pubdate":null,"duedate":null,"advance":1.000000,"invoic":null,"visit":0,"pack":null,
                   "image":"/productPic/20160502/q5c6xa7.jpg","description":null,"number":2,"amount":200.000000,"updater":null,
-                  "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48"}],show:false},"payPics": {arr: [],show: false},"sendPics":{arr: [],show: false},"attachFiles":{arr: [],show: false}},
+                  "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48"}],show:false},
+                  "payPics": {arr: [],show: false},"sendPics":{arr: [],show: false},"attachFiles":{arr: [],show: false},"stages":{arr: [],show: false}
+                },
 
     locationList:{
           provinceList: [
@@ -678,7 +680,12 @@ const mutations = {
         state.basicBaseList.userTypeList = data;
     },
     [ORDER_TABLE](state, data) { //订单列表
-        state.basicBaseList[data.key] = data;
+        if(data.key){
+          state.basicBaseList[data.key] = data;
+        }else{
+          state.basicBaseList.orderList = data;
+        }
+        
     },
     [EXPRESS_DATA](state,data){ //物流列表
         state.basicBaseList.expressList = data;
@@ -851,6 +858,13 @@ const mutations = {
     },
     [ORDER_UPLOAD_DATA](state,data){ //新建订单详情凭证
         console.log(data);
+        if(data.amount){
+          state.orderDetail.stages.arr.unshift({ //分期付款
+                "orderId":data.orderId,
+                "description":data.description,
+                "show":false
+            })
+        }
         if(data.payPics){
             state.orderDetail.payPics.arr.unshift({
                 "orderId":data.orderId,
@@ -1348,8 +1362,12 @@ const mutations = {
         state.basicBaseList.employeeList = data;
     },
     [INTENTION_LIST_DATA](state, data) { //意向列表
-
-        state.basicBaseList[data.key] = data;
+        if(data.key){
+            state.basicBaseList[data.key] = data;
+        }else{
+            state.basicBaseList.intentionList = data;
+        }
+        
     },
     [INTLINTENTION_LIST_DATA](state, data) { //国际意向列表
         state.basicBaseList[data.key] = data;
