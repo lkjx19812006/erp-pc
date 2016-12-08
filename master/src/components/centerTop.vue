@@ -1,6 +1,7 @@
 <template>
     <alert-model :param="tipParam" v-if="tipParam.show"></alert-model> 
     <password-model :param="pwdParam" v-if="pwdParam.show"></password-model>
+    
     <div class="center_top light_bg mui-clearfix" v-bind:class="{'center_top':getMenu==240,'center_nav':getMenu==50}" transition="expand">
         <div class="title_top mui-clearfix">
           <div class="new_time left">{{$t('static.login_time_recently')}}:{{ initLogin.time }}</div>

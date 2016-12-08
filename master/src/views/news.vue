@@ -11,16 +11,25 @@
      <div>
         <div class="service-nav">
             <div class="clearfix">
-                <div class="my_enterprise col-xs-1">会员</div>
+               <!--  <div class="my_enterprise col-xs-1">会员</div> -->
                 <div class="right col-xs-2">
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="search()">搜索</button>
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+                    <!-- <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button> -->
                 </div>
+
+
             </div>
-            <div class="clear" style="margin-top:10px;">
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">来源：</dt>
+            <div class="clear" style="margin-top:3px;">
+                <dl class="clear left transfer col-xs-2" >
+                   <dt class="left transfer marg_top">会员名称：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.fullname" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer col-xs-2">
+                   <dt class="left transfer marg_top" style="letter-spacing:8px">来源：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
                             <option value="">全部</option>
@@ -31,7 +40,8 @@
                         </select>
                    </dd>
                 </dl>
-                <dl class="clear left transfer">
+
+                <dl class="clear left transfer col-xs-2">
                    <dt class="left transfer marg_top">经营类型：</dt>
                    <dd class="left">
                          <select v-model="loadParam.bizType"  class="form-control" @change="selectSearch()">
@@ -63,7 +73,37 @@
                         </select>
                    </dd>
                 </dl>
-                <dl class="clear left transfer">
+
+                <dd class="left" style="margin-left:20px">
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
+                    
+                </dd>
+
+            </div>
+    
+            <div class="clear" style="margin-top:3px;">
+                <dl class="clear left transfer col-xs-2">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >手机号：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+
+                
+                <dl class="clear left transfer col-xs-2">
+                   <dt class="left transfer marg_top">划转状态：</dt>
+                   <dd class="left">
+                        <select class="form-control" v-model="loadParam.transform" @change="selectSearch()">
+                            <option value="">全部</option>
+                            <option value="0">待划转</option>
+                            <option value="1">已划转</option>
+                            <option value="2">转黑</option>
+                        </select>
+                   </dd>
+                   
+                </dl>
+
+                <dl class="clear left transfer col-xs-2">
                    <dt class="left transfer marg_top">审核状态：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.audit" @change="selectSearch()">
@@ -75,18 +115,21 @@
                         </select>
                    </dd>
                 </dl>
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">划转状态：</dt>
-                   <dd class="left">
-                        <select class="form-control" v-model="loadParam.transform" @change="selectSearch()">
-                            <option value="">全部</option>
-                            <option value="0">待划转</option>
-                            <option value="1">已划转</option>
-                            <option value="2">转黑</option>
-                        </select>
-                   </dd>
-                </dl>
+
+                <dd class="left" style="margin-left:20px">
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+                   
+                </dd>
+                <dd class="pull-right" style="margin-right:20px">
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
+                </dd>
+
             </div>
+
+           <!--  <div class="right" style="margin-top:10px;">
+               <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
+           </div> -->
+                
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">
@@ -677,5 +720,12 @@ export default {
     margin: auto;
     text-align: center;
     background-position: 5px;
+}
+
+.service-nav {
+    padding: 23px 30px 0px 4px;
+}
+dl{
+    margin-bottom: 5px;
 }
 </style>

@@ -7,27 +7,141 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+    
     <div>
         <div class="service-nav">
             <div class="clearfix">
-                <div class="my_enterprise col-xs-1">我的客户</div>
+                <!-- <div class="my_enterprise col-xs-1">我的客户</div> -->
                 <div class="right col-xs-8">
-                    <button class="new_btn transfer" @click="clientTransfer({
+                  
+                </div>
+            </div>
+
+            <div class="clear" style="margin-top:3px;"> 
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t("static.client_name")}}：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t("static.province_of_phone")}}：</dt>
+                   <dd class="left">
+                        <select v-model="loadParam.phoneProvinceName"  class="form-control" @change="selectSearch()" >
+                            <option value="">全部</option>
+                            <option v-for="item in initProvince">{{item.cname}}</option>
+                        </select>
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t("static.client_type")}}：</dt>
+                   <dd class="left">
+                         <select v-model="loadParam.type"  class="form-control" @change="selectSearch()">
+                              <option value="">全部</option>
+                              <option value="0">其它</option>
+                              <option value="1">合作社</option>
+                              <option value="2">药商</option>
+                              <option value="3">药厂</option>
+                              <option value="4">个体户</option>
+                              <option value="5">药店</option>
+                              <option value="6">医院</option>
+                              <option value="7">贸易公司</option>
+                              <option value="8">零售商行</option>
+                              <option value="9">药农</option>
+                              <option value="10">介绍人</option>
+                              <option value="11">药贩子</option>
+                              <option value="12">产地药商</option>
+                              <option value="13">销地药商</option>
+                              <option value="14">养生诊所</option>
+                              <option value="15">化工厂</option>
+                              <option value="16">化妆品厂</option>
+                              <option value="17">提取物厂</option>
+                              <option value="18">食品厂</option>
+                              <option value="19">实验室</option>
+                              <option value="20">网上电商</option>
+                              <option value="21">中成药生产商</option>
+                              <option value="22">西药生产商</option>
+                              <option value="23">饮片厂</option>
+                        </select>
+                   </dd>
+                </dl>
+                
+                
+
+                <!-- <dl class="clear left transfer">
+                    <div class="client-detailInfo col-xs-6">
+                        <dt class="left transfer marg_top">{{$t("static.registration_start_time")}}：</dt>
+                        <mz-datepicker :time.sync="loadParam.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </dl> -->
+
+                
+                <dd class="left" style="margin-left:20px">
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">{{$t("static.search")}}</button>
+                </dd>
+            </div>
+
+            <div class="clear" style="margin-top:3px;"> 
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >{{$t("static.cellphone")}}：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t("static.credit_rating")}}：</dt>
+                   <dd class="left">
+                         <select v-model="loadParam.creditLevel"  class="form-control" @change="selectSearch()">
+                          <option value="">{{$t("static.please_select")}}</option>
+                          <option value="0">{{$t("static.none")}}</option>
+                          <option value="1">{{$t("static.one_star")}}</option>
+                          <option value="2">{{$t("static.two_star")}}</option>
+                          <option value="3">{{$t("static.three_star")}}</option>
+                        </select>
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t("static.business_scope")}}：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+                
+                <!-- <dl class="clear left transfer" style="margin-left: -33px;">
+                    <div class="client-detailInfo col-xs-6">
+                        <dt class="left transfer marg_top">{{$t("static.registration_end_time")}}：</dt>
+                        <mz-datepicker :time.sync="loadParam.ctimeEnd" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </dl> -->
+                
+                <dd class="left" style="margin-left:-13px" >
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">{{$t("static.clear_all")}}</button>
+                </dd>
+                
+                <dd class="pull-right" style="margin-right:20px">
+                  <button type="button" class="btn btn-default" @click="clientTransfer({
                         arr:[],
                         name:'test',
                         employeeId:'',
                         orgId:'',
                         show:true
                         })">{{$t("static.assigned_to_employee")}}</button>
-                  <button class="new_btn transfer" @click="clientTransferBlack()">{{$t("static.drag_into_blacklist")}}</button>
-                  <button class="new_btn transfer" @click="clientTransferSupplier()">{{$t("static.make_them_become_supplier")}}</button>
-                  <button class="new_btn transfer" @click="createCustomer({
+                  <button type="button" class="btn btn-default" @click="clientTransferBlack()">{{$t("static.drag_into_blacklist")}}</button>
+                  <button type="button" class="btn btn-default" @click="clientTransferSupplier()">{{$t("static.make_them_become_supplier")}}</button>
+                  <button type="button" class="btn btn-default" @click="createCustomer({
                                             show:true,
                                             loading:false,
                                             id:'',
                                             category:'',
                                             typeDesc:'',
-                                            type:'',
+                                            classify:'1,买',
+                                            type:0,
                                             name:'',
                                             mainPhone:'',
                                             principal:'',
@@ -57,45 +171,8 @@
                                             link:saveCreate,
                                             key:'myCustomerList'
                                             })">{{$t("static.new")}}</button>
-                    <button class="new_btn transfer" @click="resetCondition()">{{$t("static.clear_all")}}</button>
-                    <button class="new_btn transfer" @click="createSearch()">{{$t("static.search")}}</button>
+                </dd>
 
-                </div>
-            </div>
-            <div class="clear" style="margin-top:10px;">
-                <!-- <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">客户类型：</dt>
-                   <dd class="left">
-                        <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                            <option value="">请选择类型</option>
-                            <option value="0">个人</option>
-                            <option value="1">企业</option>
-                        </select>
-                   </dd>
-                </dl> -->
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">{{$t("static.customer_classification")}}：</dt>
-                   <dd class="left">
-                         <select v-model="loadParam.classify"  class="form-control" @change="selectSearch()">
-                            <option value="">{{$t("static.please_select")}}</option>
-                            <option value="1">{{$t("static.purchaser")}}</option>
-                            <option value="2">{{$t("static.supplier")}}</option>
-                            <option value="3">{{$t("static.purchaser_and_supplier")}}</option>
-                        </select>
-                   </dd>
-                </dl>
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">{{$t("static.credit_rating")}}：</dt>
-                   <dd class="left">
-                         <select v-model="loadParam.creditLevel"  class="form-control" @change="selectSearch()">
-                          <option value="">{{$t("static.please_select")}}</option>
-                          <option value="0">{{$t("static.none")}}</option>
-                          <option value="1">{{$t("static.one_star")}}</option>
-                          <option value="2">{{$t("static.two_star")}}</option>
-                          <option value="3">{{$t("static.three_star")}}</option>
-                        </select>
-                   </dd>
-                </dl>
             </div>
         </div>
         <div class="order_table" id="table_box">
@@ -167,9 +244,9 @@
                                 key:'myCustomerList'
                                 })">{{item.name}}</td>
                         <td>{{item.orderTotal}}</td>
-                        <td>{{item.typeDesc}}</td>
+                        <td>{{item.type | customerType}}</td>
                         <td>{{item.mainContact}}</td>
-                        <td></td>
+                        <td>{{item.mainPosition}}</td>
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
@@ -273,14 +350,17 @@ import transferModel   from '../../../components/user/employeeOrOrg'
 import tipsdialogModel  from '../../../components/tips/tipDialog'
 import searchModel  from  '../../../components/clientRelate/searchModel'
 import auditDialog from '../../../components/tips/auditDialog'
+import vSelect from '../../tools/vueSelect/components/Select'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
     initMyCustomerlist,
+    initProvince,
     initLogin
 } from '../../../vuex/getters'
 import {
     getClientList,
+    getProvinceList,
     deleteInfo,
     alterInfo,
     saveCreate,
@@ -298,15 +378,18 @@ export default {
         transferModel,
         tipsdialogModel,
         searchModel,
-      auditDialog
+        auditDialog,
+        vSelect
     },
     vuex: {
         getters: {
             initMyCustomerlist,
+            initProvince,
             initLogin
         },
         actions: {
             getClientList,
+            getProvinceList,
             deleteInfo,
             alterInfo,
             saveCreate,
@@ -344,6 +427,15 @@ export default {
                 ctimeStart:'',
                 ctimeEnd:'',
                 total:0
+            },
+            provinceParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7,
+              country:''
             },
             changeParam: {
                 show: false,
@@ -577,8 +669,9 @@ export default {
       }
     },
     created() {
+        this.getProvinceList(this.provinceParam);
         changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.myClientParam);
-        console.log(this.initLogin)
+        
     },
     ready(){
       common('tab','table_box',1);
@@ -628,5 +721,11 @@ export default {
 #table_box table th,#table_box table td{
     width: 115px;
     min-width: 115px;
+}
+.service-nav {
+    padding: 23px 30px 0px 4px;
+}
+dl{
+    margin-bottom: 5px;
 }
 </style>

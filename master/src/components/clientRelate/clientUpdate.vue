@@ -95,14 +95,14 @@
                                 </select>
                             </div>
 
-                            <div class="editpage-input" v-if="param.key=='myCustomerList'">
+                            <!-- <div class="editpage-input" v-if="param.key=='myCustomerList'">
                               <label>{{$t('static.deparment')}}</label>
                               <input v-if="param.employeeName" type="text" class="form-control edit-input" readonly="readonly"
                                      v-model="param.employeeName" @click="selectParam.show=true"/>
                               <input v-if="!param.employeeName" type="text" class="form-control edit-input" readonly="readonly" v-model="param.orgName" @click="selectParam.show=true"/>
-
+                            
                             </div>
-
+                             -->
                             <div class="editpage-input">
                                 <label class="editlabel">负责人</label>
                                 <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />

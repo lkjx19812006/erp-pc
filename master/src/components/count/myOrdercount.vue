@@ -51,8 +51,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in initClientcount">
-                    <th>马小林</th>
+                <tr v-for="item in initMyOrderCount">
+                    <th></th>
                 	<th>1</th>
                     <th>1</th>
                     <th>1</th>

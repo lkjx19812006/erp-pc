@@ -2539,7 +2539,7 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         "name": data.name,
         "type": data.type,
         "tel": data.tel,
-        "typeDesc": data.typeDesc,
+        //"typeDesc": data.typeDesc,
         "classify": data.classify,
         "email": data.email,
         "userId": data.userId,
@@ -2580,12 +2580,17 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         if(data.callback){
             data.callback(res.json().msg);
         }
-        data.transStatus = 1;
-        data.id = res.json().result.customerId;
-        data.mainPhone = data.contacts[0].phone;
-        data.phoneProvince = res.json().result.phoneProvince;
-        data.phoneCity = res.json().result.phoneCity;
-        data.ctime = new Date();
+        if(res.json().msg=='success'){
+            data.transStatus = 1;
+            data.id = res.json().result.customerId;
+            data.mainPhone = data.contacts[0].phone;
+            data.phoneProvince = res.json().result.phoneProvince;
+            data.phoneCity = res.json().result.phoneCity;
+            data.ctime = new Date();
+            data.orderTotal = 0;
+            data.mainContact = data.contacts[0].name;
+            data.mainPosition = data.contacts[0].position;
+        }
         if ('show' in tipsParam) {
             tipsParam.show = true;
         }
@@ -5183,6 +5188,31 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
         console.log('fail');
     })
 }
+
+export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交易统计)
+    if(param) param.loading= true;
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList +param.link,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        console.log(res.json().result)
+        var clientCount = res.json().result;
+        
+        
+        dispatch(types.MY_ORDER_COUNT, clientCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
 export const getEmployeeCount = ({ dispatch }, param) => { //部门获取员工列表以及搜索
     param.loading = true;
     var apiurl = apiUrl.clientList + '/employee/?' + '&page=' + param.cur + '&pageSize=50';

@@ -8,7 +8,7 @@
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <div>
     <div class="service-nav clearfix">
-      <div class="my_enterprise col-xs-1">产品列表</div>
+     <!--  <div class="my_enterprise col-xs-1">产品列表</div> -->
       <div class="my_order_search  col-xs-8">
            <div class="filter_search clearfix">
                 <dl class="clearfix">

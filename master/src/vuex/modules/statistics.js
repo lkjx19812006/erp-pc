@@ -1,5 +1,6 @@
 import {
     MY_CLIENT_COUNT,
+    MY_ORDER_COUNT,
     MY_SAMPLE_LIST,
     ORG_SAMPLE_LIST,
     ADD_SAMPLE,
@@ -21,6 +22,7 @@ const state = {
         "week": "20",
         "total": "5000"
     }],
+    myOrderList:{},
     mySampleList:[{
         "send":true
     }],
@@ -41,6 +43,10 @@ const mutations = {
     },
     [MY_CLIENT_COUNT](state, data) { //我的客户统计
       state.countList = data;
+    },
+    [MY_CLIENT_COUNT](state, data) { //我的订单统计
+      console.log("订单统计")
+      
     },
     [MY_SAMPLE_LIST](state,data){ //我的寄样申请列表
         state.mySampleList = data;

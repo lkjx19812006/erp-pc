@@ -5,7 +5,7 @@
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
   <div>
     <div class="service-nav clearfix">
-      <div class="my_enterprise col-xs-1">客户黑名单</div>
+      <!-- <div class="my_enterprise col-xs-1">客户黑名单</div> -->
       <button class="new_btn transfer" @click="clientTransferWhite()">踢出黑名单</button>
     </div>
     <div class="order_table" id="table_box">

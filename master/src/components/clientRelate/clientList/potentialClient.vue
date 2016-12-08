@@ -9,20 +9,135 @@
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">潜在客户</div>
+           <!--  <div class="my_enterprise col-xs-1">潜在客户</div> -->
             <div class="right">
-                <button class="new_btn transfer" @click="clientTransfer({
-                    arr:[],
-                    name:'test',
-                    employeeId:'',
-                    orgId:'',
-                    show:true
-                    })">划转</button>
-              <button class="new_btn transfer" @click="clientTransferBlack()">加入黑名单</button>
-              <button class="new_btn transfer" @click="clientTransferSupplier()">提取供应商</button>
-              <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-              <button class="new_btn transfer" @click="createSearch()">搜索</button>
+              
+              <!-- <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
+              <button class="new_btn transfer" @click="createSearch()">搜索</button> -->
             </div>
+
+            <div class="clear" style="margin-top:3px;"> 
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">客户名称：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">手机省：</dt>
+                   <dd class="left">
+                        <select v-model="loadParam.phoneProvinceName"  class="form-control" @change="selectSearch()" >
+                            <option value="">全部</option>
+                            <option v-for="item in initProvince">{{item.cname}}</option>
+                        </select>
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">客户类型：</dt>
+                   <dd class="left">
+                         <select v-model="loadParam.type"  class="form-control" @change="selectSearch()">
+                              <option value="">全部</option>
+                              <option value="0">其它</option>
+                              <option value="1">合作社</option>
+                              <option value="2">药商</option>
+                              <option value="3">药厂</option>
+                              <option value="4">个体户</option>
+                              <option value="5">药店</option>
+                              <option value="6">医院</option>
+                              <option value="7">贸易公司</option>
+                              <option value="8">零售商行</option>
+                              <option value="9">药农</option>
+                              <option value="10">介绍人</option>
+                              <option value="11">药贩子</option>
+                              <option value="12">产地药商</option>
+                              <option value="13">销地药商</option>
+                              <option value="14">养生诊所</option>
+                              <option value="15">化工厂</option>
+                              <option value="16">化妆品厂</option>
+                              <option value="17">提取物厂</option>
+                              <option value="18">食品厂</option>
+                              <option value="19">实验室</option>
+                              <option value="20">网上电商</option>
+                              <option value="21">中成药生产商</option>
+                              <option value="22">西药生产商</option>
+                              <option value="23">饮片厂</option>
+                        </select>
+                   </dd>
+                </dl>
+                
+                
+
+                <dl class="clear left transfer">
+                    <div class="client-detailInfo col-xs-6">
+                        <dt class="left transfer marg_top">注册起始时间：</dt>
+                        <mz-datepicker :time.sync="loadParam.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </dl>
+
+                
+                <dd class="left" style="margin-left:20px">
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
+                </dd>
+            </div>
+
+            <div class="clear" style="margin-top:3px;"> 
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >手机号：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">信用等级：</dt>
+                   <dd class="left">
+                         <select v-model="loadParam.creditLevel"  class="form-control" @change="selectSearch()">
+                          <option value="">全部</option>
+                          <option value="0">无</option>
+                          <option value="1">一星</option>
+                          <option value="2">两星</option>
+                          <option value="3">三星</option>
+                        </select>
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer" >
+                   <dt class="left transfer marg_top">经营范围：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+                
+                <dl class="clear left transfer" style="margin-left:-33px;">
+                    <div class="client-detailInfo col-xs-6">
+                        <dt class="left transfer marg_top">注册结束时间：</dt>
+                        <mz-datepicker :time.sync="loadParam.ctimeEnd" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </dl>
+                
+                <dd class="left" style="margin-left:20px">
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+                </dd>
+                
+                <dd class="pull-right" style="margin-right:20px"> 
+                    <button type="button" class="btn btn-default" @click="clientTransfer({
+                        arr:[],
+                        name:'test',
+                        employeeId:'',
+                        orgId:'',
+                        show:true
+                        })">划转</button>
+                    <button type="button" class="btn btn-default" @click="clientTransferBlack()">加入黑名单</button>
+                    <button type="button" class="btn btn-default" @click="clientTransferSupplier()">提取供应商</button>
+                </dd>
+
+            </div>
+
+
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">
@@ -202,10 +317,12 @@ import auditDialog from '../../../components/tips/auditDialog'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
-    initUnCustomerlist
+    initUnCustomerlist,
+    initProvince
 } from '../../../vuex/getters'
 import {
     getClientList,
+    getProvinceList,
     deleteInfo,
     alterInfo,
     saveCreate,
@@ -227,10 +344,12 @@ export default {
     },
     vuex: {
         getters: {
-            initUnCustomerlist
+            initUnCustomerlist,
+            initProvince
         },
         actions: {
             getClientList,
+            getProvinceList,
             deleteInfo,
             alterInfo,
             saveCreate,
@@ -267,6 +386,15 @@ export default {
                 creditLevel:'',
                 total:0
 
+            },
+            provinceParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7,
+              country:''
             },
             changeParam: {
                 show: false,
@@ -474,7 +602,7 @@ export default {
               })
             }
         },
-        searchClient:function(){
+        selectSearch:function(){
             this.getClientList(this.loadParam)
         }
     },
@@ -492,6 +620,7 @@ export default {
         }
     },
     created() {
+        this.getProvinceList(this.provinceParam);
         changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.unClientParam);
     },
     ready(){
@@ -506,7 +635,7 @@ export default {
     right: 106px;
 }
 .transfer{
-    margin-left: 18px;
+    margin-right: 8px;
 }
 .table>tbody>tr>td{
     max-width: 300px;
@@ -542,5 +671,11 @@ export default {
 #table_box table th,#table_box table td{
     width: 115px;
     min-width: 115px;
+}
+.service-nav {
+    padding: 23px 30px 0px 4px;
+}
+dl{
+    margin-bottom: 5px;
 }
 </style>
