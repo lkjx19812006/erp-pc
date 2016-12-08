@@ -6,42 +6,36 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h4>新建药材</h4>
+            <h3>新建药材</h3>
         </div>
         <validator name="validation">
             <form novalidate>
                 <div class="edit-model">
                     <section class="editsection" v-cloak>
                         <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label class="editlabel">编码 <span class="system_danger" v-if="$validation.code.required">请输入编码</span></label>
-                                <input type="text" v-model='breedData.code' class="form-control edit-input" v-validate:code="['required']" />
-                            </div>
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            
+                            <div class="client-detailInfo col-md-6">
                                 <label class="editlabel">品种名称 <span class="system_danger" v-if="$validation.name.required">请输入品种名称</span></label>
                                 <input type="text" v-model='breedData.name' class="form-control edit-input" v-validate:name="['required']"/>
                             </div>
-                        </div>
-                         <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+
+                            <div class="client-detailInfo col-md-6">
                                 <label class="editlabel">品种分类选择 <span class="system_danger" v-if="$validation.category.required">请选择品种分类</span></label>
-                                <select class="form-control" id="category" v-validate:category="['required']" v-model="breedData.categoryId" style="width:90%;">
+                                <select class="form-control edit-input" id="category" v-validate:category="['required']" v-model="breedData.categoryId" style="width:90%;">
                                    <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                                  </select>
                              </div>
 
-                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                             <div class="client-detailInfo col-md-6">
                                 <label class="editlabel">品种名称拼音</label>
                                 <input type="text" v-model='breedData.pinyin' class="form-control edit-input"/>
                             </div>
                           　
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <div class="client-detailInfo col-md-6">
                                 <label class="editlabel">品种名称英文</label>
                                 <input type="text" v-model='breedData.eName' class="form-control edit-input" />
                             </div>
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <div class="client-detailInfo col-md-6">
                                 <label class="editlabel">品种名称拉丁文</label>
                                 <input type="text" v-model='breedData.lName' class="form-control edit-input"  />
                             </div>

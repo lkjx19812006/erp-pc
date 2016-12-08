@@ -65,6 +65,7 @@ function getCookie(name){          //获取cookie
 router.beforeEach(function ({ to, next }) {
     if(to.name=="login"){
       next();
+      console.log(next)
     }else{
       if(!getCookie('no')){
         router.go({name: 'login'});

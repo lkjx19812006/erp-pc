@@ -62,7 +62,7 @@
                      <div class="editpageright">
                        <div class="editpage-input">
                          <label class="editlabel">{{$t('static.city')}}</label>
-                         <input type="text"  class="form-control edit-input"  placeholder="{{$t('static.choose_province')}}" v-model="param.city" />
+                         <input type="text"  class="form-control edit-input"  placeholder="{{$t('static.choose_city')}}" v-model="param.city" />
                          <!-- <div v-if="province.cname" type="text" class="edit-input">
                          <v-select
                                    :debounce="250"

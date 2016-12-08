@@ -32,7 +32,10 @@
                    
                           <div class="editpage-input">
                                <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$validation.unit.required">{{$t('static.required')}}</span></label>
-                               <input type="text" v-model="param.unit" class="form-control edit-input" v-validate:unit="{required:true}"/>
+                              <input v-show="false" type="text" v-model="param.unit" class="form-control edit-input" v-validate:unit="{required:true}"/>
+                               <select v-model="param.unit" class="form-control edit-input" >
+                                    <option v-for="item in initUnitlist">{{item.name}}({{item.ename}})</option>
+                               </select>
                           </div>
 
                           <div class="editpage-input">
@@ -76,15 +79,8 @@
                                <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$validation.number.required">{{$t('static.required')}}</span></label>
                                <input type="text" v-model="param.number" class="form-control edit-input" v-validate:number="{required:true}"/>
                           </div>
-                
-                          
-                          
                        </div>
                  </div>  
-                
-
-                 
-
              </section>
           </div>
           <div class="edit_footer">
@@ -101,11 +97,11 @@ import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipdialogModel from '../tips/tipDialog'
 import pressImage from '../imagePress'
 import {
-    
+    initUnitlist,
     initIntlIntentionDetail
 } from '../../vuex/getters'
 import {
-    
+    getUnitList,
     getIntlIntentionDetail,
     intlIntentionOffer
 } from '../../vuex/actions'
@@ -119,14 +115,17 @@ export default {
     props: ['param'],
     data() {
         return {
+          loadParam:{
+            loading:false,
+            size:'15px',
+            
+          },
           tipParam:{
               show:false,
               name:'',
               remain:true,
               callback:this.callback
           },
-          
-          
           updateParam:{
             show:false,
             index:0
@@ -159,11 +158,11 @@ export default {
     },
     vuex: {
        getters: {
-          
+          initUnitlist,
           initIntlIntentionDetail
         },
         actions: {
-          
+          getUnitList,
           getIntlIntentionDetail,
           intlIntentionOffer
         }
@@ -180,35 +179,7 @@ export default {
         
     },
     created(){
-      //在这里要有查询原材料报价的接口
-      /*this.param.items = [{id:9,
-              intentionId:'58228a6688e87dc057d5e969',
-              inquireId:7,
-              type:0,
-              currency:1,
-              itemId:8,
-              itemName:'一枝黄花',
-              origPrice:1,
-              price:3,
-              number:3,
-              unit:'kg',
-              total:9,
-              comment:'来来来'},
-              {id:10,
-              intentionId:'58228a6688e87dc057d5e969',
-              inquireId:7,
-              type:0,
-              currency:1,
-              itemId:8,
-              itemName:'丁公藤',
-              origPrice:1,
-              price:3,
-              number:3,
-              unit:'kg',
-              total:9,
-              comment:'嘿嘿嘿'}
-            ]*/
-      
+      this.getUnitList(this.loadParam);
     }
 }
 </script>

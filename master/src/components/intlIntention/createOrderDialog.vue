@@ -71,7 +71,7 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.preferential')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.preferential" value="{{parampreferential}}"/>
+                              <input type="number" class="form-control edit-input" v-model="param.preferential" value="{{parampreferential}}"/>
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.discount_note')}}</label>
@@ -157,7 +157,7 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.sundry_fees')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}"/>
+                              <input type="number" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}"/>
                           </div>
                           
                           <div class="editpage-input">

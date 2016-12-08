@@ -23,12 +23,12 @@
             <div class="clearfix">
               <div class="client-detailInfo col-md-6">
                  <label class="editlabel">{{$t('static.client_name')}}<span class="system_danger" v-if="$validation.name.minlength">{{$t('static.enter_client_name')}}</span></label>
-                 <input type="text" id="username" class="form-control" v-model="param.name"
+                 <input type="text"  class="form-control" v-model="param.name"
                        v-validate:name="{minlength:2}"/>
               </div>
               <div  class="client-detailInfo   col-md-6">
                 <label class="editlabel">{{$t('static.type')}}</label>
-                <select class="form-control " v-model="param.type">
+                <select class="form-control" v-model="param.type">
                   <option value='0,个人' selected>{{$t('static.personal')}}</option>
                   <option value='1,企业'>{{$t('static.enterprise')}}</option>
                 </select>
