@@ -5,7 +5,7 @@
   <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
   <div>
     <div class="service-nav clearfix">
-      <div class="my_enterprise col-xs-1">客户文件列表</div>
+      <!-- <div class="my_enterprise col-xs-1">客户文件列表</div> -->
       <div class="my_order_search  col-xs-8">
         <div class="filter_search clearfix">
           <dl class="clearfix">

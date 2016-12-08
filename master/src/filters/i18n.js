@@ -341,7 +341,7 @@ var locales = {
       name:'姓名',
       position:'职位',
       department:'部门',
-      cellphone:'手机',
+      cellphone:'手机号',
       telephone:'电话',
       email:'邮箱',
       wechat:'微信',

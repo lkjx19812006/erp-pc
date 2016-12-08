@@ -262,9 +262,53 @@ Vue.filter('country', function(val){ //国家
 Vue.filter('customerType', function(val){ //客户类型
 	var val = val;
 	if(val==0){
-		 return '个人';
+		 return '其他';
 	}else if(val==1){
-		 return '企业';
+		 return '合作社';
+	}else if(val==2){
+		 return '药商';
+	}else if(val==3){
+		 return '药厂';
+	}else if(val==4){
+		 return '个体户';
+	}else if(val==5){
+		 return '药店';
+	}else if(val==6){
+		 return '医院';
+	}else if(val==7){
+		 return '贸易公司';
+	}else if(val==8){
+		 return '零售商行';
+	}else if(val==9){
+		 return '药农';
+	}else if(val==10){
+		 return '介绍人';
+	}else if(val==11){
+		 return '药贩子';
+	}else if(val==12){
+		 return '产地药商';
+	}else if(val==13){
+		 return '销地药商';
+	}else if(val==14){
+		 return '养生诊所';
+	}else if(val==15){
+		 return '化工厂';
+	}else if(val==16){
+		 return '化妆品厂';
+	}else if(val==17){
+		 return '提取物厂';
+	}else if(val==18){
+		 return '食品厂';
+	}else if(val==19){
+		 return '实验室';
+	}else if(val==20){
+		 return '网上电商';
+	}else if(val==21){
+		 return '中成药生产商';
+	}else if(val==22){
+		 return '西成药生产商';
+	}else if(val==22){
+		 return '饮片厂';
 	}else{
 		return val;
 	}
@@ -311,7 +355,6 @@ Vue.filter('enumlist', function(val){ //国家
   }else{
     return val;
   }
-
 
 })
 

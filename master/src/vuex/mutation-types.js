@@ -146,5 +146,6 @@ export const ADD_FILES_DATA = 'ADD_FILES_DATA' //新增上传文件
 export const FILES_DATA_LIST = 'FILES_DATA_LIST' //文件/资质证书列表
 
 export const MY_CLIENT_COUNT = 'MY_CLIENT_COUNT' //我的客户统计
+export const MY_ORDER_COUNT = 'MY_ORDER_COUNT' //我的订单统计
 
 
