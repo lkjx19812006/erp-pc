@@ -23,65 +23,43 @@
                           <div class="editpage-input">
                                <label class="editlabel">{{$t('static.breed')}}</label>
                                <input type="text" v-model="param.itemName" class="form-control edit-input" disabled="true" />
+                          </div>  
+                          <div class="editpage-input" >
+                               <label class="editlabel">{{$t('static.cost')}}（{{param.currency | Currency}}）<span class="system_danger" v-if="$validation.origprice.required">{{$t('static.required')}}</span></label>
+                               <input type="number" v-model="param.origPrice" class="form-control edit-input" v-validate:origprice="{required:true}" />
                           </div>
-                   
                           <div class="editpage-input">
-                               <label class="editlabel">{{$t('static.cost')}}<span class="system_danger" v-if="$validation.origprice.required">{{$t('static.required')}}</span></label>
-                               <input type="text" v-model="param.origPrice" class="form-control edit-input" v-validate:origprice="{required:true}"/>
-                          </div>
-                   
-                          <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$validation.unit.required">{{$t('static.required')}}</span></label>
-                              <input v-show="false" type="text" v-model="param.unit" class="form-control edit-input" v-validate:unit="{required:true}"/>
-                               <select v-model="param.unit" class="form-control edit-input" >
-                                    <option v-for="item in initUnitlist">{{item.name}}({{item.ename}})</option>
+                               <label class="editlabel" >{{$t('static.currency')}}</label>
+                               <select type="text" class="form-control edit-input" v-model="param.currency">
+                                  <option  value="2" selected>USD（美元）</option>
+                                   <option v-for="item in initCurrencylist"  value="{{item.id}}">{{item.name}}（{{item.cname}}）</option>
                                </select>
                           </div>
-
+                       </div>
+                       <div class="editpageright">
+                          <div class="editpage-input" v-if="param.number==null">
+                               <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$validation.number.required">{{$t('static.required')}}</span></label>
+                               <p class="clearfix">
+                                  <input type="number" value="{{param.number}}" v-model="param.number" class="form-control edit-input" style="width:80%; float: left;" v-validate:number="{required:true}"/>（{{param.unit | Unit}}）
+                               </p>
+                          </div>
+                          <div class="editpage-input" v-if="param.number!=null">
+                               <label class="editlabel" >{{$t('static.quantity')}}（{{param.unit | Unit}}）<span class="system_danger" v-if="$validation.number.required">{{$t('static.required')}}</span></label>
+                                <input type="number" value="{{param.number}}" v-model="param.number" class="form-control edit-input"  v-validate:number="{required:true}" disabled="true" />
+                          </div>
                           <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.comment')}}<span class="system_danger" v-if="$validation.comment.required">{{$t('static.required')}}</span></label>
-                               <input type="text" v-model="param.comment" class="form-control edit-input" v-validate:comment="{required:true}" />
+                               <label class="editlabel" >{{$t('static.quoted_price')}}（{{param.currency | Currency}}）<span class="system_danger" v-if="$validation.price.required">{{$t('static.required')}}</span></label>
+                               <input type="number" v-model="param.price" class="form-control edit-input" v-validate:price="{required:true}" />
                           </div>
                           
-                       </div>
-                   
-                       <div class="editpageright">
-                          <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.currency')}}<span class="system_danger" v-if="$validation.currency.required">{{$t('static.required')}}</span></label>
-                               <input v-show="false" type="text" v-model="param.currency" class="form-control edit-input" v-validate:currency="{required:true}"/>
-                               <select type="text" class="form-control edit-input" v-model="param.currency">
-                                 <option value="0">CNY人民币</option>
-                                 <option value="1">USD美元</option>
-                                 <option value="2">EUR欧元</option>
-                                 <option value="3">HKD港币</option>
-                                 <option value="4">GBP英镑</option>
-                                 <option value="5">JPY日元</option>
-                                 <option value="6">KRW韩元</option>
-                                 <option value="7">CAD加元</option>
-                                 <option value="8">AUD澳元</option>
-                                 <option value="9">CHF瑞郎</option>
-                                 <option value="10">SGD新加坡元</option>
-                                 <option value="11">MYR马来西亚币</option>
-                                 <option value="12">IDR印尼</option>
-                                 <option value="13">NZD新西兰</option>
-                                 <option value="14">VND越南</option>
-                                 <option value="15">THB泰铢</option>
-                                 <option value="16">PHP菲律宾</option>
-                               </select>
-                          </div>
-
-                          <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.quoted_price')}}<span class="system_danger" v-if="$validation.price.required">{{$t('static.required')}}</span></label>
-                               <input type="text" v-model="param.price" class="form-control edit-input" v-validate:price="{required:true}" />
-                          </div>
-                   
-                          <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$validation.number.required">{{$t('static.required')}}</span></label>
-                               <input type="text" v-model="param.number" class="form-control edit-input" v-validate:number="{required:true}"/>
-                          </div>
-                       </div>
-                 </div>  
+                       </div> 
+                  </div> 
              </section>
+             <div class="col-md-12" style="padding:0;">
+                 <label class="editlabel" >{{$t('static.comment')}}</label>
+                 <!-- <input type="text" v-model="param.comment" class="form-control edit-input"  /> -->
+                 <textarea v-model="param.comment" rows="6" style="resize: none;border:1px solid #ddd;width:100%;"class="form-control"></textarea>
+            </div>
           </div>
           <div class="edit_footer">
               <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
@@ -98,12 +76,14 @@ import tipdialogModel from '../tips/tipDialog'
 import pressImage from '../imagePress'
 import {
     initUnitlist,
-    initIntlIntentionDetail
+    initIntlIntentionDetail,
+    initCurrencylist
 } from '../../vuex/getters'
 import {
     getUnitList,
     getIntlIntentionDetail,
-    intlIntentionOffer
+    intlIntentionOffer,
+    getCurrencyList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -159,19 +139,22 @@ export default {
     vuex: {
        getters: {
           initUnitlist,
-          initIntlIntentionDetail
+          initIntlIntentionDetail,
+          initCurrencylist
         },
         actions: {
           getUnitList,
           getIntlIntentionDetail,
-          intlIntentionOffer
+          intlIntentionOffer,
+          getCurrencyList
         }
     },
     methods: {
       
       confrim:function(){
+        this.param.callback=this.param.callback;
         this.param.show = false;
-          this.intlIntentionOffer(this.param);
+        this.intlIntentionOffer(this.param);
       }
   
     },
@@ -180,6 +163,7 @@ export default {
     },
     created(){
       this.getUnitList(this.loadParam);
+      this.getCurrencyList();
     }
 }
 </script>
@@ -188,7 +172,9 @@ export default {
   z-index: 1083
 }
 .modal_con{
-  z-index: 1084
+  z-index: 1084;
+  width: 662px;
+  height: 662px;
 }
 
 .edit-model {
@@ -199,8 +185,13 @@ export default {
     position: absolute;
     top: 0;
     right:0;
+    width: 662px;
 }
-
+.edit_footer{
+  position: absolute;
+  bottom:0;
+  width: 662px;
+}
 .edit-content {
     padding: 19px 10px;
     text-align: center;
@@ -266,26 +257,6 @@ export default {
     display: inline-block;
     margin-left: 10px;
     margin-top: 5px;
-}
-
-.edit_footer {
-    border-top: 1px solid #ddd;
-    text-align: right;
-    padding: 10px 20px;
-   /*  margin-top: 50px; */
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 50px;
-    width: 800px;
-    background: #fff;
-    margin: auto;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.edit_footer button {
-    margin-left: 15px;
 }
 
 .btn-confirm {

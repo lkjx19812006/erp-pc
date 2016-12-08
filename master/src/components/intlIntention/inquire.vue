@@ -9,17 +9,18 @@
             <h3 v-if="param.times==0">{{$t('static.International_intention_inquiry')}}</h3>
             <h3 v-if="param.times>0">{{$t('static.intl_require')}}</h3>
         </div>
+    <validator name="validation">
         <div class="edit-model">
            <section class="editsection" v-cloak>
                <div class="editpage">
                <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
                <div class="editpageleft">
                     <div class="editpage-input">
-                        <label class="editlabel">{{$t('static.inquire_type')}}</label>
-                        <select class="form-control edit-input" type="text" v-model="param.inquireType">
+                        <label class="editlabel">{{$t('static.inquire_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.required')}}</span></label>
+                        <input type="text" v-show="false" v-model="param.inquireType" class="form-control edit-input" v-validate:type="{required:true}" />
+                        <select class="form-control edit-input"  v-model="param.inquireType">
                             <option>FOB</option>
                             <option>CIF</option>
-                            <option>FOB&CIF</option>
                             <option>EXW</option>
                             <option>FCA</option>
                             <option>FAS</option>
@@ -42,8 +43,10 @@
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show=false">{{$t('static.cancel')}}</button>
-            <button type="button" class="btn  btn-confirm"  @click="confirm()">{{$t('static.confirm')}}</button>
+            <button type="button" class="btn  btn-confirm" v-if="$validation.valid"  @click="confirm()">{{$t('static.confirm')}}</button>
+            <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.confirm')}}</button>
         </div>
+    </validator>
     </div>
 </template>
 <script>

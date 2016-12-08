@@ -144,8 +144,9 @@ export const resetPawd = ({ dispatch }, data) => { //修改密码
     }).then((res) => {
         console.log(res.json())
         dispatch(types.PASSWORD_DATA, data);
-        data.callback(res.json().msg);
-
+        if(res.json().code==200){
+           data.callback(res.json().msg);
+        }
     }, (res) => {
         console.log('fail');
     })
@@ -635,7 +636,10 @@ export const batchOrgOrder = ({ dispatch }, param) => { //批量审核部门的�
         param.description = "";
         OrgOrderdata.indexs = param.indexs;
         OrgOrderdata.key = param.key;
-        dispatch(types.BATCH_ORG_ORDER, OrgOrderdata);
+        if(res.json().code==200){
+           dispatch(types.BATCH_ORG_ORDER, OrgOrderdata);
+        }
+        
     }, (res) => {
         console.log('fail');
     })
@@ -736,7 +740,10 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         data.total = res.json().result.total;
         data.ctime = new Date();
         data.mode = 3;
-        dispatch(types.ORDER_ADD_DATA, data);
+        if(res.json().code==200){
+           dispatch(types.ORDER_ADD_DATA, data);
+        }
+        
         data.show = false;
     }, (res) => {
         console.log('fail');
@@ -784,7 +791,10 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         param.show = false;
         param.checked = false;
         param.callback(res.json().msg);
-        dispatch(types.ORDER_UPDATE_DATA, param);
+        if(res.json().code==200){
+          dispatch(types.ORDER_UPDATE_DATA, param);
+        }
+        
 
     }, (res) => {
         console.log('fail');
@@ -926,7 +936,10 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
         status.link = param.link;
         status.key = param.key;
         param.callback(res.json().msg);
-        dispatch(types.ORDER_STATUS, status);
+        if(res.json().code==200){
+           dispatch(types.ORDER_STATUS, status);
+        }
+       
     }, (res) => {
         console.log('fail');
     })
@@ -1170,7 +1183,10 @@ export const saveDataInfo = ({ dispatch }, data) => { //新建枚举类型
         console.log('添加成功')
         data.callback(res.json().msg);
         data.id = res.json().result.id;
-        dispatch(types.ADD_DATA, data);
+        if(res.json().code==200){
+           dispatch(types.ADD_DATA, data);
+        }
+        
     }, (res) => {
         console.log('fail');
     });
@@ -1198,7 +1214,10 @@ export const updateDataInfo = ({ dispatch }, param) => { //修改枚举信息
         }
     }).then((res) => {
         param.callback(res.json().msg);
-        dispatch(types.UPDATE_DATA, param);
+        if(res.json().code==200){
+           dispatch(types.UPDATE_DATA, param);
+        }
+       
         console.log('修改成功')
     }, (res) => {
         console.log('fail');
@@ -1873,8 +1892,10 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
         data.id = res.json().result.id;
         console.log(data);
         data.callback(res.json().msg);
-        dispatch(types.ADD_BREED_DATA, data);
-
+        if(res.json().code==200){
+           dispatch(types.ADD_BREED_DATA, data);
+        }
+        
     }, (res) => {
         console.log('fail');
     });
@@ -1901,7 +1922,10 @@ export const createSpec = ({ dispatch }, param, id) => { //新增药材相关
         param.callback(res.json().msg);
         param.id = res.json().result.id;
         param.breedId = id;
-        dispatch(types.ADDSPEC_DATA, param);
+        if(res.json().code==200){
+            dispatch(types.ADDSPEC_DATA, param);
+        }
+       
         name = '';
     }, (res) => {
         console.log('fail');
@@ -1962,8 +1986,10 @@ export const updateBreedInfo = ({ dispatch }, param) => { //修改药材信息
         if(param.callback){
             param.callback(res.json().msg);
         }
+        if(res.json().code==200){
+            dispatch(types.UPDATE_BREED_DATA, param);
+        }
         
-        dispatch(types.UPDATE_BREED_DATA, param);
     }, (res) => {
         console.log('fail');
     })
@@ -2551,24 +2577,21 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('添加成功')
         if(data.callback){
             data.callback(res.json().msg);
         }
-        dispatch(types.CUSTOMER_ADD_DATA, data);
-        if(res.json().msg=='success'){
-             data.transStatus = 1;
-             data.id = res.json().result.customerId;
-            data.mainPhone = data.contacts[0].phone;
-            data.phoneProvince = res.json().result.phoneProvince;
-            data.phoneCity = res.json().result.phoneCity;
-            data.ctime = new Date();
-        }
-
+        data.transStatus = 1;
+        data.id = res.json().result.customerId;
+        data.mainPhone = data.contacts[0].phone;
+        data.phoneProvince = res.json().result.phoneProvince;
+        data.phoneCity = res.json().result.phoneCity;
+        data.ctime = new Date();
         if ('show' in tipsParam) {
             tipsParam.show = true;
         }
-        dispatch(types.CUSTOMER_ADD_DATA, data);
+        if(res.json().code==200){
+            dispatch(types.CUSTOMER_ADD_DATA, data);
+        }
     }, (res) => {
         console.log('fail');
     })
@@ -2632,7 +2655,6 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         }
     }).then((res) => {
         console.log('修改成功') 
-        dispatch(types.CUSTOMER_UPDATE_DATA, param);
         if(param.callback){
             param.callback(res.json().msg);
         }
@@ -2642,6 +2664,7 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         param.cityName = res.json().result.cityName;
         param.countryName = res.json().result.countryName;
         param.provinceName = res.json().result.provinceName;
+        dispatch(types.CUSTOMER_UPDATE_DATA, param);
     }, (res) => {
         console.log('fail');
     })
@@ -3696,7 +3719,7 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
     const data = {
         customerId: param.customerId,
         customerName: param.customerName,
-        //customerPhone:param.customerPhone,
+        customerPhone:param.customerPhone,
         customerEmail: param.customerEmail,
         country: param.country,
         province: param.province,
@@ -3718,12 +3741,11 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('添加成功')
-            /*param.id=res.json().result.intentionId;
-            param.validate = 0;
-            param.checked = false;*/
         param.show = false;
         console.log(res.json());
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
         var object = res.json().result;
         object.especial = 0;
         object.advance = 1;
@@ -3731,10 +3753,10 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
         object.offerTime = 0;
         object.validate = 0;
         object.inquire = 0;
-        if(param.callback){
-            param.callback(res.json().msg);
+        if(res.json().code==200){
+            dispatch(types.ADD_INTLINTENTION_DATA, object);
         }
-        dispatch(types.ADD_INTLINTENTION_DATA, object);
+        
     }, (res) => {
         console.log('fail');
     })
@@ -3875,15 +3897,12 @@ export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向(�
         }
     }).then((res) => {
         console.log('询价成功')
-            /*param.id=res.json().result.intentionId;
-            param.validate = 0;
-            param.checked = false;*/
-        param.show = false;
-        param.inquire = 1;
-        param.inquireTime++;
         if(param.callback){
             param.callback(res.json().msg);
         }
+        param.show = false;
+        param.inquire = 1;
+        param.inquireTime++;
         dispatch(types.INQUIRE_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -3981,12 +4000,13 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
         }
     }).then((res) => {
         console.log('原材料报价成功')
-            /*param.id=res.json().result.intentionId;
-            param.validate = 0;
-            param.checked = false;*/
-            //param.show = false;
-
-        dispatch(types.ORIGIN_OFFER_DATA, param);
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
+        if(res.json().code==200){
+            dispatch(types.ORIGIN_OFFER_DATA, param);
+        }
+        ;
     }, (res) => {
         console.log('fail');
     })
@@ -4009,8 +4029,6 @@ export const intlIntentionOtherOffer = ({ dispatch }, param) => { //国际意向
     if (param.id !== '') { //修改时param!==''
         data.id = param.id;
     }
-
-
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.link,
@@ -4023,8 +4041,13 @@ export const intlIntentionOtherOffer = ({ dispatch }, param) => { //国际意向
         }
     }).then((res) => {
         console.log('其他报价成功');
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
         param.id = res.json().result.id;
-        dispatch(types.OTHER_OFFER_DATA, param);
+        if(res.json().code==200){
+            dispatch(types.OTHER_OFFER_DATA, param);
+        }
     }, (res) => {
         console.log('fail');
     })
@@ -4072,11 +4095,12 @@ export const intlIntentionAffirmOffer = ({ dispatch }, param) => { //国际意�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('确认报价成功');
         if(param.callback){
             param.callback(res.json().msg);
         }
-        dispatch(types.CONFIRM_OFFER, param);
+        if(res.json().code==200){
+            dispatch(types.CONFIRM_OFFER, param);
+        }
     }, (res) => {
         console.log('fail');
     })
@@ -4103,10 +4127,15 @@ export const uploadIntlIntentionFiles = ({ dispatch }, param) => { //上传国�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('上传意向文件成功');
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
         param.show = false;
         var file = res.json().result;
-        dispatch(types.UPLOAD_INTL_INTENT_FILE, file);
+        if(res.json().code==200){
+            dispatch(types.UPLOAD_INTL_INTENT_FILE, file);
+        }
+        
     }, (res) => {
         console.log('fail');
     })
@@ -4581,7 +4610,10 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
         console.log('添加成功');
         param.status = 1;
         param.callback(res.json().msg);
-        dispatch(types.ADD_EMPLOYEE_DATA, param);
+        if(res.json().code==200){
+            dispatch(types.ADD_EMPLOYEE_DATA, param);
+        }
+        
     }, (res) => {
         console.log('fail');
     })
@@ -4626,7 +4658,9 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
     }).then((res) => {
         console.log('修改成功')
         param.callback(res.json().msg);
-        dispatch(types.UPDATE_EMPLOY_DATA, param);
+        if(res.json().code==200){
+            dispatch(types.UPDATE_EMPLOY_DATA, param);
+        }
     }, (res) => {
         console.log('fail');
     })
@@ -4687,7 +4721,10 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
         param.show = false;
         param.ctime = param.ctime;
         param.callback(res.json().msg);
-        dispatch(types.UPDATA_INTENTION_DATA, param);
+        if(res.json().code==200){
+            dispatch(types.UPDATA_INTENTION_DATA, param);
+        }
+        
     }, (res) => {
         console.log('fail');
     })
@@ -4756,7 +4793,10 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
         param.show = false;
         param.ctime = today.toLocaleDateString();
         param.callback(res.json().msg);
-        dispatch(types.INTENTION_DATA, param);
+        if(res.json().code==200){
+             dispatch(types.INTENTION_DATA, param);
+        }
+       
     }, (res) => {
         console.log('fail');
     })
@@ -5076,6 +5116,24 @@ export const getUnitList = ({ dispatch }, param) => { //常用单位接口
         console.log('fail');
     })
 }
+export const getCurrencyList = ({ dispatch }, param) => { //常用单位接口
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList +'/sys/enum/currency',
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var obj = res.json().result;
+        dispatch(types.CURRENCY_LIST,obj);
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 /*---我的客户统计---*/
 export const getClientcount = ({ dispatch }, param) => { //我的客户统计
     if(param) param.loading= true;
@@ -5096,7 +5154,6 @@ export const getClientcount = ({ dispatch }, param) => { //我的客户统计
         param.loading = false;
         console.log(res.json().result)
         var clientCount = res.json().result;
-        
         dispatch(types.MY_CLIENT_COUNT, clientCount);
     }, (res) => {
         param.loading = false;
@@ -5350,7 +5407,10 @@ export const createSample = ({ dispatch }, data) => { //新建寄样申请
         data.consigneePhone = res.json().result.consigneePhone;
         data.consignee = res.json().result.consignee;
         data.id = res.json().result.id;
-        dispatch(types.ADD_SAMPLE, data);
+        if(res.json().code==200){
+            dispatch(types.ADD_SAMPLE, data);
+        }
+        
         data.show = false;
     }, (res) => {
         console.log('fail');
@@ -5448,7 +5508,10 @@ export const sampleApply = ({ dispatch }, param) => { //申请/审核 寄样申�
         param.callback(res.json().msg);
         param.validate= res.json().result.validate; 
         param.description=res.json().result.description;
-        dispatch(types.APPLY_DATA, param);
+        if(res.json().code==200){
+           dispatch(types.APPLY_DATA, param);
+        }
+        
         /*param.show = false;*/
     }, (res) => {
         console.log('fail');

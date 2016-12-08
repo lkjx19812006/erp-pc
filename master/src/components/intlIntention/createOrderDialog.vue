@@ -20,7 +20,7 @@
                       <div class="editpageleft">
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.choose_client')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.customerName"   v-validate:custname="['required']" value="{{param.customerName}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
+                              <input type="text" class="form-control edit-input" v-model="param.customerName"   v-validate:custname="['required']" value="{{param.customerName}}" disabled="true" @click="searchCustomer(param.customerName,param.customer)"/>
                           </div>
                            <div class="editpage-input">
                               <label class="editlabel">{{$t('static.consignee_name')}} <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span></label>
@@ -46,19 +46,7 @@
                           </div>
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.city')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.city" placeholder="{{$t('static.choose_city')}}">
-                             <!--  <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                             <div v-if="province.cname" type="text" class="edit-input">
-                                 <v-select
-                                      :debounce="250"
-                                      :value.sync="city"
-                                      :on-change="selectDistrict"
-                                      :options="initCitylist"
-                                      placeholder="市"
-                                      label="cname"
-                                 >
-                                 </v-select>
-                             </div> -->
+                              <input type="text" class="form-control edit-input" v-model="param.city" placeholder="{{$t('static.city')}}">
                           </div>
                       
                           <div class="editpage-input">
@@ -79,13 +67,10 @@
                           </div>
                       </div>
                       <div class="editpageright">
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.international')}}</label>
-                              <select type="text" class="form-control edit-input" v-model="param.intl"  @change="selectBizType()">
-                                  <option value="0">{{$t('static.no')}}</option>
-                                  <option value="1">{{$t('static.yes')}}</option>
-                              </select>
-                          </div>
+                          <!-- <div class="editpage-input">
+                              <label class="editlabel">{{$t('static.client_phone')}} <span class="system_danger" v-if="$validation.custtel.required">{{$t('static.required')}}</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.customerPhone"   v-validate:custtel="['required']" value="{{param.customerPhone}}" disabled="true"/>
+                          </div> -->
                           <div class="editpage-input"  v-if="param.different=='国际'">
                               <label class="editlabel">{{$t('static.consignee_phone')}}  <span class="system_danger" v-if="$validation.intl.intlphone">{{$t('static.enter_phone')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:intl="['intlphone']" value="{{param.consigneePhone}}"/>
@@ -94,34 +79,7 @@
                               <label class="editlabel">{{$t('static.consignee_phone')}}  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['phone']" value="{{param.consigneePhone}}"/>
                           </div>
-                          
-                         <!--  <div class="editpage-input">
-                             <label class="editlabel">{{$t('static.province')}}</label>
-                             <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.choose_country')}}" />
-                             <div v-if="country.cname" type="text" class="edit-input">
-                                 <v-select
-                                   :debounce="250"
-                                   :value.sync="province"
-                                   :on-change="selectCity"
-                                   :options="initProvince"
-                                   placeholder="省"
-                                   label="cname">
-                                 </v-select>
-                             </div>
-                         </div> -->
-                           <!-- <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.area')}}</label>
-                              <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
-                              <div v-if="city.cname" type="text" class="edit-input">
-                                  <v-select
-                                        :debounce="250"
-                                        :value.sync="district"
-                                        :options="initDistrictlist"
-                                        placeholder="区"
-                                        label="cname">
-                                  </v-select>
-                               </div>
-                                                     </div> -->
+                        
                           <div class="editpage-input" >
                               <label class="editlabel">{{$t('static.currency')}} </label>
                                <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==0">
@@ -203,7 +161,7 @@
                          <tr v-for="item in param.goods">
                              <td>{{item.title}}</td>
                              <td>{{item.breedName}}</td>
-                             <td>{{item.unit}}</td>
+                             <td>{{item.unit | Unit}}</td>
                              <td>{{item.price}}</td>
                              <td>{{item.quality}}</td>
                              <td>{{item.number}}</td>
@@ -226,15 +184,21 @@
                                      <label class="editlabel" >{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
                                      <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}"  @click="searchBreed()" readonly="true" />
                                 </div>
-                         
+                                 <div class="editpage-input">
+                                     <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
+                                     <input type="text"  v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}"  v-show="false"/>
+                                     <select v-model="breedInfo.unit" class="form-control edit-input" >
+                                          <option v-for="item in initUnitlist" value="{{item.id}}">{{item.ename+'-'+item.name}}</option>
+                                     </select>
+                                </div>
                                 <div class="editpage-input">
-                                     <label class="editlabel" >{{$t('static.quality')}}<span class="system_danger" v-if="$inner.quality.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" />
+                                     <label class="editlabel" >{{$t('static.quality')}}</label>
+                                     <input type="text" v-model="breedInfo.quality" class="form-control edit-input"  />
                                 </div>
                          
                                 <div class="editpage-input">
-                                     <label class="editlabel" >{{$t('static.specification')}}<span class="system_danger" v-if="$inner.spec.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.spec" class="form-control edit-input" v-validate:spec="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
+                                     <label class="editlabel" >{{$t('static.specification')}}</label>
+                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.spec" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种"/>
                                      <div type="text" class="edit-input" v-if="breedParam.id">
                                          <input-select
                                            :value.sync="breedInfo.spec"
@@ -246,46 +210,11 @@
                                          </input-select>
                                      </div>
                                 </div>
-                                
-                                <div class="editpage-input">
-                                     <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
-                                     <div type="text" class="edit-input" v-if="breedParam.id">
-                                         <input-select
-                                           :value.sync="breedInfo.unit"
-                                           :prevalue="breedInfo.unit"
-                                           :options="initBreedDetail.units.arr"
-                                           placeholder="单位/unit"
-                                           label="name"
-                                         >
-                                         </input-select>
-                                     </div>
-                                </div>
+                               
                              </div>
                          
                              <div class="editpageright">
-                                <div class="editpage-input">
-                                     <label class="editlabel" >{{$t('static.headline')}}</label>
-                                     <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" />
-                                </div>
-                         
-                                <div class="editpage-input">
-                                     <label class="editlabel" >{{$t('static.origin')}}<span class="system_danger" v-if="$inner.location.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" v-validate:location="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
-                                     <div type="text" class="edit-input" v-if="breedParam.id">
-                                         <input-select
-                                           :prevalue="breedInfo.location"
-                                           :value.sync="breedInfo.location"
-                                           :options="initBreedDetail.locals.arr"
-                                           placeholder="产地/origin"
-                                           label="name"
-
-                                         >
-                                         </input-select>
-                                     </div>
-
-                                </div>
-                         
+                              
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
                                      <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
@@ -295,7 +224,25 @@
                                      <label class="editlabel" >{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
                                      <input type="number"  v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
                                 </div>
+                                <div class="editpage-input">
+                                     <label class="editlabel" >{{$t('static.headline')}}</label>
+                                     <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" />
+                                </div>
+                                <div class="editpage-input">
+                                     <label class="editlabel" >{{$t('static.origin')}}</label>
+                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input"  disabled="disabled" placeholder="请先选择一个品种"/>
+                                     <div type="text" class="edit-input" v-if="breedParam.id">
+                                         <input-select
+                                           :prevalue="breedInfo.location"
+                                           :value.sync="breedInfo.location"
+                                           :options="initBreedDetail.locals.arr"
+                                           placeholder="产地/origin"
+                                           label="name"
+                                         >
+                                         </input-select>
+                                     </div>
 
+                                </div>
                                 <div style="margin-top:10px;text-align:right">
                                     <button type="button" class="btn btn-confirm">
                                         <div v-if="breedInfo.status==1" @click="cancelAddBreed()">{{$t('static.cancel')}}</div>
@@ -334,7 +281,8 @@ import {
     initCitylist,
     initDistrictlist,
     initBreedDetail,
-    initIntlIntentionDetail
+    initIntlIntentionDetail,
+    initUnitlist,
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -343,6 +291,7 @@ import {
     getBreedDetail,
     getDistrictList,
     createOrder,
+    getUnitList,
     getIntlIntentionDetail
 } from '../../vuex/actions'
 export default {
@@ -418,7 +367,8 @@ export default {
             initCitylist,
             initDistrictlist,
             initBreedDetail,
-            initIntlIntentionDetail
+            initIntlIntentionDetail,
+            initUnitlist
         },
         actions:{
             getCountryList,
@@ -427,7 +377,8 @@ export default {
             getBreedDetail,
             getDistrictList,
             createOrder,
-            getIntlIntentionDetail
+            getIntlIntentionDetail,
+            getUnitList
         }
     },
     methods:{
@@ -595,6 +546,7 @@ export default {
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
         this.getIntlIntentionDetail(this.param);
+        this.getUnitList();
         console.log(this.param);
          if(this.param.breedId){
             this.breedParam.breedName = this.param.breedName;

@@ -30,6 +30,8 @@ export const SAMPLE_DETAIL = 'SAMPLE_DETAIL' //寄样详情
 export const DELETE_DATA = 'DELETE_DATA' //删除信息
 export const APPLY_DATA = 'APPLY_DATA' //申请寄样
 export const UNIT_LIST = 'UNIT_LIST' //常用单位
+export const CURRENCY_LIST = 'CURRENCY_LIST' //常用货币
+
 
 export const USER_TYPE = 'USER_TYPE' //数据类型
 export const SYSTEM_DATA = 'SYSTEM_DATA' //系统数据

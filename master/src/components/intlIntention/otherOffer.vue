@@ -75,8 +75,8 @@
                               </div>
                               
                               <div class="editpage-input">
-                                   <label class="editlabel" >{{$t('static.expense_explanation')}}<span class="system_danger" v-if="$inner.costdesc.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="offerInfo.costDesc" class="form-control edit-input" v-validate:costdesc="{required:true}" />
+                                   <label class="editlabel" >{{$t('static.expense_explanation')}}</label>
+                                   <input type="text" v-model="offerInfo.costDesc" class="form-control edit-input"  />
                               </div>
                               
                               
@@ -90,8 +90,8 @@
                               </div>
                               
                               <div class="editpage-input">
-                                   <label class="editlabel" >{{$t('static.comment')}}<span class="system_danger" v-if="$inner.comment.required">{{$t('static.required')}}</span></label>
-                                   <input type="text" v-model="offerInfo.comment" class="form-control edit-input" v-validate:comment="{required:true}" />
+                                   <label class="editlabel" >{{$t('static.comment')}}</label>
+                                   <input type="text" v-model="offerInfo.comment" class="form-control edit-input"  />
                               </div>
                     
                     

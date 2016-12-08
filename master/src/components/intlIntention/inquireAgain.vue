@@ -6,8 +6,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>{{$t('static.intl_require')}}</h3>
-            
+            <h3>{{$t('static.intl_require')}}</h3>     
         </div>
         <div class="edit-model">
            <section class="editsection" v-cloak>
@@ -52,7 +51,6 @@ export default {
                 show:false,
                 confirm:true,
                 name:"",
-                callback:''
 
           }
         }
@@ -70,6 +68,7 @@ export default {
         confirm: function(){
             console.log(this.param);
             this.param.show = false;
+            this.param.callback = this.param.callback;
             this.intlIntentionItemInquire(this.param);
         },
         

@@ -10,10 +10,6 @@
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
      <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">{{$t('static.my_intention')}}</div>
-            <div class="col-xs-5 my_order_search">
-               
-           </div>
             <div class="right">
                 <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
                 <button class="new_btn transfer" @click="search()">{{$t('static.search')}}</button>
@@ -32,16 +28,16 @@
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.client_email')}}</th>
                             <th style="width:200px;min-width: 200px">{{$t('static.commodity_items')}}</th>
-                            <th>{{$t('static.certificate')}}</th>
+                            <!-- <th>{{$t('static.certificate')}}</th> -->
                             <th>{{$t('static.country')}}</th>
                             <!-- <th>{{$t('static.province')}}</th> -->
                             <th>{{$t('static.city')}}</th>
                             <!-- <th>{{$t('static.area')}}</th> -->
                             <th>{{$t('static.dealing_address')}}</th>
-                            <th>{{$t('static.pre_payment')}}</th>
-                            <!-- <th>{{$t('static.invoice')}}</th> -->
-                            <!-- <th>{{$t('static.come_to_see_product')}}</th> -->
-                            <th>{{$t('static.packaging')}}</th>
+                            <!--<th>{{$t('static.pre_payment')}}</th>
+                             <th>{{$t('static.invoice')}}</th> -->
+                            <!-- <th>{{$t('static.come_to_see_product')}}</th> 
+                            <th>{{$t('static.packaging')}}</th>-->
                             <!-- <th>{{$t('static.international')}}</th> -->
                             <th>{{$t('static.Number_of_inquiries')}}</th>
                             <th>{{$t('static.quotation_number')}}</th>
@@ -65,28 +61,28 @@
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td class="underline" @click="clickOn(item.id)">{{item.names}}</td>
-                        <td>{{item.qualification | qualify}}</td>
+                        <!-- <td>{{item.qualification | qualify}}</td> -->
                         <td>{{item.country}}</td>
                         <!-- <td>{{item.province}}</td> -->
                         <td>{{item.city}}</td>
                         <!-- <td>{{item.district}}</td> -->
                         <td>{{item.address}}</td>
-                        <td>{{item.advance | advanced}}</td>
-                        <!-- 发票<td v-if="item.invoic==0">{{$t('static.none')}}</td>
+                        <!-- <td>{{item.advance | advanced}}</td>
+                        发票<td v-if="item.invoic==0">{{$t('static.none')}}</td>
                         <td v-if="item.invoic==1">{{$t('static.common_invoice')}}</td>
                         <td v-if="item.invoic==2">{{$t('static.add_invoice')}}</td>
                         <td v-if="item.invoic===null">{{$t('static.none')}}</td> -->
-                        <!-- <td>{{item.visit | visitstate}}</td> -->
+                        <!-- <td>{{item.visit | visitstate}}</td>
                         <td v-if="item.pack=='其它'">{{$t('static.other')}}</td>
                         <td v-if="item.pack!='积压包'&&item.pack!='编织袋'&&item.pack!='瓦楞纸箱'&&item.pack!='真空包装'&&item.pack!='其它'">{{$t('static.other')}}</td>
                         <td v-if="item.pack=='积压包'">{{$t('static.pallets')}}</td>
                         <td v-if="item.pack=='编织袋'">{{$t('static.bag')}}</td>
                         <td v-if="item.pack=='瓦楞纸箱'">{{$t('static.box')}}</td>
-                        <td v-if="item.pack=='真空包装'">{{$t('static.packing')}}</td>
+                        <td v-if="item.pack=='真空包装'">{{$t('static.packing')}}</td> -->
                         <!-- <td>{{item.intl | intlstata}}</td> -->
                         <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
-                        <td>{{item.ctime | date}}</td>
+                        <td>{{item.ctime}}</td>
                         <!-- <td>{{item.validate | intentionAudit}}</td> -->
                         <!-- <td>{{item.description}}</td> -->
                         <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
@@ -218,7 +214,7 @@ export default {
                 type:1,
                 sourceType:1,
                 sample:'',
-                intl:'',
+                intl:1,
                 customer:'',
                 currency:'',
                 consignee:'',
@@ -233,6 +229,7 @@ export default {
                 district:'',
                 consigneeAddr:'',
                 customerName:'',
+                customerPhone:'',
                 comments:'',
                 incidentals:'',
                 incidentalsDesc:'',
@@ -395,6 +392,7 @@ export default {
             this.chanceParam = initIntentionList
         },
         newOrder:function(item,sub){
+            console.log(item)
             this.createOrderParam.show = true;
             this.createOrderParam.employee = item.employee;
             this.createOrderParam.id = item.id;
@@ -402,6 +400,7 @@ export default {
             this.createOrderParam.org = this.initLogin.orgId;
             this.createOrderParam.consigneeAddr = item.address;
             this.createOrderParam.customerName = item.customerName;
+            this.createOrderParam.customerPhone = item.customerPhone;
             this.createOrderParam.province = item.province;
             this.createOrderParam.country = item.country;
             this.createOrderParam.district = item.district;
@@ -428,8 +427,8 @@ export default {
         },
         
         createIntention:function(){
-
             this.createParam.show = true;
+            this.createParam.callback = this.createCallback;
         },
         deleteIntention:function(param){
             this.deleteParam = param;
@@ -523,6 +522,9 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-
+#table_box table th,#table_box table td{
+    width: 117px;
+    min-width: 117px;
+}
 </style>
 
