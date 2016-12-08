@@ -111,7 +111,66 @@
                                     </div>
                                 </div>
                             </div>
-                            
+                            <div class="panel panel-default">
+                                <div class="panel-heading" >
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:'',
+                                              crete:'stages'
+                                              })">
+                                        <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.stages.arr.length!==null">
+                                          分期付款（{{initOrderDetail.stages.arr.length}}）<!-- <span class="system_danger">{{$t('static.pay_tips')}}</span> -->
+                                        </a>
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                        {{$t('static.pay_evidence')}}（0）
+                                        </a>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments({
+                                            show:true,
+                                            orderId:initOrderDetail.id,
+                                            link:dividedPayment,
+                                            url:'/order/attachSubmit/',
+                                            amount:'',
+                                            orderStatus:initOrderDetail.orderStatus,
+                                            ratio:'',
+                                            description:'',
+                                            rtime:''
+                                            })"  v-if="(initOrderDetail.stages.arr.length!==null&&param.contact=='/order/myList')">{{$t('static.new')}}</button>
+                                        <!--<button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>-->
+                                        <a v-else></a>
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse" v-if="initOrderDetail.stages.arr.length&&!initOrderDetail.stages.show" v-cloak>
+                                    <div class="panel-body panel-set">
+                                        <table class="table  contactSet">
+                                          <thead>
+                                            <th>订单类型</th>
+                                            <th>显示分期</th>
+                                            <th>分期金额</th>
+                                            <th>付款比例</th>
+                                            <th>说明</th>
+                                            <th>收付节点</th>
+                                            <th>收付状态</th>
+                                            <th>收/付款时间</th>
+                                            <th>审核状态</th>c
+                                          </thead>
+                                        <tbody>
+                                            <tr v-for="item in initOrderDetail.stages.arr">
+                                                <td>{{item.type}}</td>
+                                                <td>{{item.type}}</td>
+                                                <td>{{item.amount}}</td>
+                                                <td>{{item.ratio}}</td>
+                                                <td>{{item.description}}</td>
+                                                <td>{{item.orderStatus}}</td>
+                                                <td>{{item.pr}}</td>
+                                                <td>{{item.ptime}}</td>
+                                                <td>{{item.rtime}}</td>
+                                                <td>{{item.validate}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({

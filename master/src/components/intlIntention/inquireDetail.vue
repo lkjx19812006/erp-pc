@@ -192,6 +192,7 @@
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                         {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
                                       </a>
+                                      <span class="pull-right" style="color:#fa6705">{{$t('static.quotation_total')}}：{{initIntlIntentionDetail.offersTotal}}</span>
                                       <button v-if="initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                 </h4>
                             </div>
