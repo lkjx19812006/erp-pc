@@ -26,14 +26,14 @@
               <dl class="clear left transfer">
                  <dt class="left transfer marg_top" style="letter-spacing:3px" >会员名：</dt>
                  <dd class="left">
-                      <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                      <input type="text" class="form-control" v-model="loadParam.userName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                  </dd>
               </dl>
 
               <dl class="clear left transfer">
                  <dt class="left transfer marg_top" style="letter-spacing:3px" >会员手机：</dt>
                  <dd class="left">
-                      <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                      <input type="text" class="form-control" v-model="loadParam.userPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                  </dd>
               </dl>
 
@@ -154,7 +154,7 @@
                         <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
                         <th>类型</th>
                         <th>发布时间</th>
-                        <th>客户名称</th>
+                        <th>会员名称</th>
                         <th>主要联系人</th>
                         <th>联系方式</th>
                         <th>手机归属地</th>
@@ -452,6 +452,8 @@ export default {
                 total:0,
                 breedId:'',
                 breedName:'',
+                userName:'',
+                userPhone:'',
                 customerName:'',
                 customerPhone:'',
                 location:''
