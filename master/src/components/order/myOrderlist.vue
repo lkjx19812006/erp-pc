@@ -8,66 +8,65 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
       <div class="order_search">
         <div class="clear">
-            <div class="my_order col-xs-2">{{$t('static.my_orders')}}</div>
             <div class="right">
                 <button class="new_btn" @click="newOrder()">{{$t('static.new')}}</button>
-                <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button>
                 <button class="new_btn transfer" @click="orgCheck()">{{$t('static.review_application')}}</button>
-                <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+                <!-- <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+                <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
             </div>
-        </div>
-        <div class="clear" style="margin-top:10px;">
-            <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
-               <dd class="left">
-                    <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                        <option value="">{{$t('static.please_select')}}</option>
-                        <option value="0">{{$t('static.purchase')}}</option>
-                        <option value="1">{{$t('static.sell')}}</option>
-                    </select>
-               </dd>
-            </dl>
-            <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
-               <dd class="left">
-                     <select    v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
-                            <option value="">{{$t('static.please_select')}}</option>
-                            <option value="0">{{$t('static.create_order')}}</option>
-                            <option value="10">{{$t('static.order_procing')}}}</option>
-                            <option value="20">{{$t('static.waiting_order')}}</option>
-                            <option value="30">{{$t('static.awaiting_review')}}</option>
-                            <option value="40">{{$t('static.wait_ship')}}</option>
-                            <option value="50">{{$t('static.wait_receipt')}}</option>
-                            <option value="60">{{$t('static.awaiting_comment')}}</option>
-                            <option value="70">{{$t('static.order_over')}}</option>
-                            <option value="-1">{{$t('static.cancle_order')}}</option>
-                            <option value="-2">{{$t('static.expired_order')}}</option>
-                    </select>
-               </dd>
-            </dl>
-            <!-- <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.payment_method')}}：</dt>
-               <dd class="left">
-                     <select v-model="loadParam.payWay"  class="form-control" @change="selectSearch()">
-                            <option value="">{{$t('static.please_select')}}</option>
-                            <option value="0">{{$t('static.offline')}}</option>
-                            <option value="1">{{$t('static.alipay')}}</option>
-                            <option value="2">{{$t('static.pingan')}}</option>
-                            <option value="3">{{$t('static.yaokuan')}}</option>
-                    </select>
-               </dd>
-            </dl> -->
-            <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
-               <dd class="left">
-                     <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
-                        <option value="">{{$t('static.please_select')}}</option>
-                        <option value="1">{{$t('static.together')}}</option>
-                        <option value="2">{{$t('static.three_side')}}</option>
-                        <option value="3">{{$t('static.self_support')}}</option>
-                    </select>
-               </dd>
-            </dl>
+            <div class="left">
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
+                 <dd class="left">
+                      <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
+                          <option value="">{{$t('static.please_select')}}</option>
+                          <option value="0">{{$t('static.purchase')}}</option>
+                          <option value="1">{{$t('static.sell')}}</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
+                 <dd class="left">
+                       <select    v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
+                              <option value="">{{$t('static.please_select')}}</option>
+                              <option value="0">{{$t('static.create_order')}}</option>
+                              <option value="10">{{$t('static.order_procing')}}</option>
+                              <option value="20">{{$t('static.waiting_order')}}</option>
+                              <option value="30">{{$t('static.awaiting_review')}}</option>
+                              <option value="40">{{$t('static.wait_ship')}}</option>
+                              <option value="50">{{$t('static.wait_receipt')}}</option>
+                              <option value="60">{{$t('static.awaiting_comment')}}</option>
+                              <option value="70">{{$t('static.order_over')}}</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
+                          <option value="">{{$t('static.please_select')}}</option>
+                          <option value="1">{{$t('static.together')}}</option>
+                          <option value="2">{{$t('static.three_side')}}</option>
+                          <option value="3">{{$t('static.self_support')}}</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                 <dd class="left">
+                    <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
+                 <dd class="left">
+                    <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
+                 </dd>
+              </dl>
+              <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+                <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+            </div>
         </div>
       </div>
       <div class="order_table" id="table_box">
@@ -93,16 +92,7 @@
                     <th>{{$t('static.order_status')}}</th>
                     <th>{{$t('static.order_source')}}</th>
                     <th>{{$t('static.review_status')}}</th>
-                    <th>{{$t('static.edit')}}</th>
                     <th>{{$t('static.handle')}}</th> 
-
-                    <!-- <th>{{$t('static.order_no')}}</th>
-                    <th>{{$t('static.country')}}</th>
-                    <th>{{$t('static.province')}}</th>
-                    <th>{{$t('static.city')}}</th>
-                    <th>{{$t('static.comment')}}</th>
-                    <th>{{$t('static.client_source')}}</th>
-                    <th>{{$t('static.currency')}}</th>-->
                 </tr>
             </thead>
             <tbody>
@@ -169,7 +159,7 @@
                   <td v-if="item.clients!=0&&item.clients!=1&&item.clients!=2&&item.clients!=3"  style="background:#000;color:#fff">未说明</td>
                   <td>{{item.currency | Currency}}</td> -->
                   
-                  <td @click="updateOrder({
+                  <td><a class="operate" v-if="item.orderStatus<20"  @click="updateOrder({
                         show:true,
                         id:item.id,
                         index:$index,
@@ -203,8 +193,7 @@
                         url:'/order/',
                         goods:item.goods,
                         goodsBack:[]
-                        },item.goods)"><a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png"   alt="编辑" title="编辑"/></a></td>
-                  <td>
+                        },item.goods)"><img src="/static/images/{{$t('static.img_edit')}}.png"   alt="编辑" title="编辑"/></a>
                       <div v-if="item.validate==2">
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="(item.orderStatus==20||item.orderStatus==10)&&item.type==0">
                              <img src="/static/images/{{$t('static.img_payorder')}}.png"  title="待财务付款" alt="待财务付款"/>
@@ -319,6 +308,8 @@
                     payWay:'',
                     clients:'',
                     dataStatus:'',
+                    customerName:'',
+                    customerPhone:'',
                     no:'',
                     ctime:'',
                     ftime:'',
@@ -332,16 +323,16 @@
                 createParam:{
                     show:false,
                     title1:'新建订单',
-                    type:'',
+                    type:1,
                     sourceType:0,
-                    sample:'',
-                    intl:'',
+                    sample:0,
+                    intl:0,
                     customer:'',
                     currency:'',
                     consignee:'',
                     consigneePhone:'',
                     zipCode:'',
-                    country:'',
+                    country:'中国',
                     province:'',
                     city:'',
                     employee:this.initLogin.id,
@@ -349,6 +340,7 @@
                     district:'',
                     consigneeAddr:'',
                     customerName:'',
+                    customerPhone:'',
                     comments:'',
                     incidentals:'',
                     incidentalsDesc:'',
@@ -624,6 +616,8 @@
               this.loadParam.ftime = "";
               this.loadParam.consigneePhone = "";
               this.loadParam.consignee = "";
+              this.loadParam.customerPhone = "";
+              this.loadParam.customerName = "";
               this.loadParam.orderStatus="";
               this.loadParam.dataStatus="";
               this.loadParam.no="";
@@ -647,20 +641,6 @@
         created() {
 
             changeMenu(this.$store.state.table.isTop,this.getEmpolyeeOrder,this.loadParam,localStorage.myOrderParam); 
-            /*if(!this.$store.state.table.isTop){
-                console.log("刷新数据");
-                this.getEmpolyeeOrder(this.loadParam);
-            }else{
-                console.log("不刷新数据");
-                this.loadParam = JSON.parse(localStorage.myOrderParam);
-                this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.myOrderList);
-            }*/
-            
-            console.log(this.loadParam)
-            console.log(this.loadParam.link)
-            console.log(this.initLogin)
-            console.log(this.initLogin.no)
-            console.log(this.initLogin.orgId)
         }
     }
   </script>
@@ -670,7 +650,7 @@
         white-space: nowrap;
     }
     .order_search {
-        padding: 25px 30px 0 40px;
+        padding:35px 30px 0 40px;
     }
     .transfer{
         margin-right: 10px;

@@ -5,14 +5,7 @@
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
     <div>
       <div class="order_search">
-        <div class="clear">
-            <div class="my_order col-xs-2">{{$t('static.all_order')}}</div>
-            <div class="right">
-                <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button>
-                <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
-            </div>
-        </div>
-        <div class="clear" style="margin-top:10px;">
+          <div class="clear left">
             <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
                <dd class="left">
@@ -64,7 +57,21 @@
                     </select>
                </dd>
             </dl>
-        </div>
+             <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                 <dd class="left">
+                    <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
+                 <dd class="left">
+                    <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
+                 </dd>
+              </dl>
+              <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+                <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+          </div>
       </div>
       <div class="order_table" id="table_box">
           <div class="cover_loading">
@@ -417,15 +424,7 @@
         },
         created() {
             changeMenu(this.$store.state.table.isTop,this.getOrderList,this.loadParam,localStorage.allOrderParam); 
-            /*if(!this.$store.state.table.isTop){
-                console.log("刷新数据");
-                this.getOrderList(this.loadParam);
-            }else{
-                console.log("不刷新数据");
-                this.loadParam = JSON.parse(localStorage.allOrderParam);
-                this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.allOrderList);
-            }*/
-        },
+        }
     }
   </script>
   <style scoped>
@@ -434,7 +433,7 @@
         white-space: nowrap;
     }
     .order_search {
-        padding: 25px 30px 0 40px;
+        padding: 35px 30px 0 40px;
     }
     .transfer{
         margin-right: 20px;

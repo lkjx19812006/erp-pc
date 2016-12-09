@@ -1,10 +1,9 @@
 	<template>
   	<create-model :param.sync="createParam" v-if="createParam.show"></create-model>
   	<tip-model :param.sync="tipParam" v-if="tipParam.show"></tip-model>
-		 <div  class="myemploy" >
+		 <div  class="myemploy">
         <div class="order_search">
             <div class="clearfix">
-                <div class="my_order col-xs-1">角色列表</div>
                 <div class="right">
                     <button class="new_btn" @click="newData()">新建</button>
                 </div>

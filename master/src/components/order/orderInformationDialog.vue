@@ -11,186 +11,124 @@
         </div>
       <validator name="validation">
           <div class="edit-model">
+              <div class="clearfix">
+                  <div class="editpage-input col-md-6">
+                      <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
+                      <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
+                      <select  class="form-control edit-input" v-model="param.type"   >
+                          <option value="0">{{$t('static.purchase')}}</option>
+                          <option value="1">{{$t('static.sell')}}</option>
+                      </select>
+                  </div>
+                  <div class="editpage-input col-md-6">
+                      <label class="editlabel">{{$t('static.order_status')}}</label>
+                      <select  class="form-control edit-input" v-model="param.orderStatus" >
+                          <option value="0" selected>{{$t('static.create_order')}}</option>
+                          <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
+                          <option value="70">{{$t('static.order_over')}}</option>
+                      </select>
+                  </div>
+              </div>
               <section class="editsection">
                   <div style="margin-top:20px;">
                      <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
                      <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
                   </div>
-                  <div class="editpage">
-                      <div class="editpageleft">
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
-                              <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
-                              <select  class="form-control edit-input" v-model="param.type"   >
-                                  <option value="0">采购</option>
-                                  <option value="1">销售</option>
-                              </select>
-                              <!-- <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/> -->
-                          </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.order_source')}}</label>
-                              <select type="text" class="form-control edit-input" v-model="param.sourceType"  value="{{param.sourceType}}" >
-                                  <option value="0">交易员新建</option>
-                                  <option value="1">意向</option>
-                                  <option value="2">报价</option> 
-                              </select>
-                              <!-- <input type="text" class="form-control edit-input" v-model="param.sourceType" value="{{param.sourceType}}"/> -->
-                          </div>
-                           <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.consignee_name')}} <span class="system_danger" v-if="$validation.consignee.minlength">请输入收货人姓名且不少于两位数</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}" v-validate:consignee="{minlength:2}" />
-                          </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.country')}}</label>
-                              <div type="text" class="edit-input">
-                                  <v-select
-                                     :debounce="250"
-                                     :value.sync="country"
-                                     :on-change="selectProvince"
-                                     :options="initCountrylist"
-                                     placeholder="国家"
-                                     label="cname"
-                                    >
-                                   </v-select>
-                             </div>
-                          </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.city')}}</label>
-                              <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                              <div v-if="province.cname" type="text" class="edit-input">
-                                  <v-select
-                                       :debounce="250"
-                                       :value.sync="city"
-                                       :on-change="selectDistrict"
-                                       :options="initCitylist"
-                                       placeholder="市"
-                                       label="cname"
+                  <div class="clearfix">
+                        <div class="editpage-input col-md-4">
+                            <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.choose_client')}}</span></label>
+                            <input type="text" class="form-control edit-input" v-model="param.customerName"   v-validate:custname="['required']" value="{{param.customerName}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
+                        </div>
+                        <div class="editpage-input col-md-4">
+                            <label class="editlabel">{{$t('static.consignee_name')}} <!-- <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span> --></label>
+                            <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}"  />
+                        </div> 
+                        <div class="editpage-input col-md-4" >
+                            <label class="editlabel">{{$t('static.consignee_phone')}} <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
+                            <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  value="{{param.consigneePhone}}"/>
+                        </div>  
+                        <div class="editpage-input col-md-4">
+                            <label class="editlabel">{{$t('static.international')}}</label>
+                            <select type="text" class="form-control edit-input" v-model="param.intl"  @change="selectBizType()">
+                                <option value="0" selected="true">{{$t('static.no')}}</option>
+                                <option value="1">{{$t('static.yes')}}</option>
+                            </select>
+                        </div>
+                        <div class="editpage-input col-md-4" >
+                            <label class="editlabel">{{$t('static.currency')}}</label>
+                             <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==0">
+                                <option value="1" selected>CNY人民币</option>
+                               <!--  <option value="1">是</option> -->
+                            </select>
+                            <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==1">
+                                <option value="2" selected>USD美元</option>
+                                <option  v-for="item in initCurrencylist" value="{{item.id}}">{{item.name}}{{item.cname}}</option>
+                            </select>
+                        </div>
+                        <div class="editpage-input col-md-4">
+                            <label class="editlabel">{{$t('static.country')}}</label>
+                            <div type="text" class="edit-input">
+                                <v-select
+                                   :debounce="250"
+                                   :value.sync="country"
+                                   :on-change="selectProvince"
+                                   :options="initCountrylist"
+                                   placeholder="国家/Country"
+                                   label="cname"
                                   >
-                                  </v-select>
-                              </div>
-                          </div>
-
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.postcodes')}} <span class="system_danger" v-if="$validation.code.postcode">请输入正确的邮编</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:code="['postcode']" value="{{param.zipCode}}" />
-                          </div>
-                           <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">请输入收货人详细地址</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"    v-validate:addr="['required']" value="{{param.consigneeAdd}}" />
-                          </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.preferential')}}</label>
-                              <input type="number" class="form-control edit-input" v-model="param.preferential" value="{{parampreferential}}"/>
-                          </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.discount_note')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" value="{{param.preferentialDesc}}"/>
-                          </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.comment')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
-                          </div>
-                      </div>
-                      <div class="editpageright">
-
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.required')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.customerName"   v-validate:custname="['required']" value="{{param.customerName}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
-                          </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.international')}}</label>
-                              <select type="text" class="form-control edit-input" v-model="param.intl"  @change="selectBizType()">
-                                  <option value="0">{{$t('static.no')}}</option>
-                                  <option value="1">{{$t('static.yes')}}</option>
-                              </select>
-                          </div>
-                          <div class="editpage-input" >
-                              <label class="editlabel">{{$t('static.consignee_phone')}} <span class="system_danger" v-if="$validation.mobile.intlphone">{{$t('static.enter_phone')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['intlphone']" value="{{param.consigneePhone}}"/>
-                          </div>
-                          <div class="editpage-input" v-if="param.difference=='意向'">
-                              <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.mobile.email">{{$t('static.enter_phone')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.email"  v-validate:mobile="['email']" value="{{param.email}}"/>
-                          </div>
-                          
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.province')}}</label>
-                              <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
-                              <div v-if="country.cname" type="text" class="edit-input">
-                                  <v-select
-                                    :debounce="250"
-                                    :value.sync="province"
-                                    :on-change="selectCity"
-                                    :options="initProvince"
-                                    placeholder="省"
-                                    label="cname">
-                                  </v-select>
-                              </div>
-                          </div>
-                           <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.area')}}</label>
-                              <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
-                              <div v-if="city.cname" type="text" class="edit-input">
-                                  <v-select
-                                        :debounce="250"
-                                        :value.sync="district"
-                                        :options="initDistrictlist"
-                                        placeholder="区"
-                                        label="cname">
-                                  </v-select>
-                               </div>
-                          </div>
-                          <div class="editpage-input" >
-                              <label class="editlabel">{{$t('static.currency')}}</label>
-                               <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==0">
-                                  <option value="0" selected>CNY人民币</option>
-                                 <!--  <option value="1">是</option> -->
-                              </select>
-                              <select type="text" class="form-control edit-input"  v-model="param.currency"  value="{{param.currency}}" v-if="param.intl==1">
-                                  <option value="0">CNY人民币</option>
-                                  <option value="1">USD美元</option>
-                                  <option value="2">EUR欧元</option>
-                                  <option value="3">HKD港币</option>
-                                  <option value="4">GBP英镑</option>
-                                  <option value="5">JPY日元</option>
-                                  <option value="6">KRW韩元</option>
-                                  <option value="7">CAD加元</option>
-                                  <option value="8">AUD澳元</option>
-                                  <option value="9">CHF瑞郎</option>
-                                  <option value="10">SGD新加坡元</option>
-                                  <option value="11">MYR马来西亚币</option>
-                                  <option value="12">IDR印尼</option>
-                                  <option value="13">NZD新西兰</option>
-                                  <option value="14">VND越南</option>
-                                  <option value="15">THB泰铢</option>
-                                  <option value="16">PHP菲律宾</option>
-                              </select>
-                          </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.sample_order')}}</label>
-                              <select type="text" class="form-control edit-input" v-model="param.sample" value="{{param.sample}}" >
-                                  <option value="0" selected>{{$t('static.no')}}</option>
-                                  <option value="1">{{$t('static.yes')}}</option>
-                              </select>
-                          </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.sundry_fees')}}</label>
-                              <input type="number" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}"/>
-                          </div>
-                          
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.fee_explain')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
-                          </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.order_status')}}</label>
-                              <select  class="form-control edit-input" v-model="param.orderStatus" >
-                                   <option value="0" selected>{{$t('static.create_order')}}</option>
-                                  <option value="60">{{$t('static.awaiting_comment')}}</option>
-                                  <option value="70">{{$t('static.order_over')}}</option>
-                              </select>
-                          </div>
-                      </div>
+                                 </v-select>
+                           </div>
+                        </div>
+                        <div class="editpage-input col-md-4">
+                            <label class="editlabel">{{$t('static.province')}}</label>
+                            <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_country_first')}}" />
+                            <div v-if="country.cname" type="text" class="edit-input">
+                                <v-select
+                                  :debounce="250"
+                                  :value.sync="province"
+                                  :on-change="selectCity"
+                                  :options="initProvince"
+                                  placeholder="省/Province"
+                                  label="cname">
+                                </v-select>
+                            </div>
+                        </div>
+                        <div class="editpage-input col-md-4">
+                            <label class="editlabel">{{$t('static.city')}}</label>
+                            <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_province_first')}}" />
+                            <div v-if="province.cname" type="text" class="edit-input">
+                                <v-select
+                                     :debounce="250"
+                                     :value.sync="city"
+                                     :on-change="selectDistrict"
+                                     :options="initCitylist"
+                                     placeholder="市/City"
+                                     label="cname"
+                                >
+                                </v-select>
+                            </div>
+                        </div>
+                        <div class="editpage-input col-md-4">
+                            <label class="editlabel">{{$t('static.area')}}</label>
+                            <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.select_city_first')}}" />
+                            <div v-if="city.cname" type="text" class="edit-input">
+                                <v-select
+                                      :debounce="250"
+                                      :value.sync="district"
+                                      :options="initDistrictlist"
+                                      placeholder="区"
+                                      label="cname">
+                                </v-select>
+                             </div>
+                        </div>
+                        <div class="editpage-input col-md-8">
+                            <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">{{$t('static.enter_address')}}</span></label>
+                            <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"    v-validate:addr="['required']" value="{{param.consigneeAdd}}" />
+                        </div>
+                        <div class="editpage-input col-md-4">
+                            <label class="editlabel">{{$t('static.postcodes')}} <span class="system_danger" v-if="$validation.code.postcode">{{$t('static.enter_code')}}</span></label>
+                            <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:code="['postcode']" value="{{param.zipCode}}" />
+                        </div>     
                   </div>
               </section>
               <div>
@@ -217,7 +155,7 @@
                          <tr v-for="item in param.goods">
                              <td>{{item.title}}</td>
                              <td>{{item.breedName}}</td>
-                             <td>{{item.unit}}</td>
+                             <td>{{item.unit | Unit}}</td>
                              <td>{{item.price}}</td>
                              <td>{{item.quality}}</td>
                              <td>{{item.number}}</td>
@@ -241,15 +179,21 @@
                                      <label class="editlabel" >{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
                                      <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}"  @click="searchBreed()" readonly="true" />
                                 </div>
-                         
                                 <div class="editpage-input">
-                                     <label class="editlabel" >{{$t('static.quality')}}<span class="system_danger" v-if="$inner.quality.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" />
+                                       <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
+                                       <input type="text" v-show="false" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" />
+                                       <select  class="form-control edit-input"  v-model="breedInfo.unit">
+                                            <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}（{{item.ename}}）</option>
+                                       </select>
+                                  </div>
+                                <div class="editpage-input">
+                                     <label class="editlabel" >{{$t('static.quality')}}</label>
+                                     <input type="text" v-model="breedInfo.quality" class="form-control edit-input"  />
                                 </div>
                          
                                 <div class="editpage-input">
-                                     <label class="editlabel" >{{$t('static.specification')}}<span class="system_danger" v-if="$inner.spec.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.spec" class="form-control edit-input" v-validate:spec="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
+                                     <label class="editlabel" >{{$t('static.specification')}}</label>
+                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.spec" class="form-control edit-input"  disabled="disabled" placeholder="请先选择一个品种"/>
                                      <div type="text" class="edit-input" v-if="breedParam.id">
                                          <input-select
                                            :value.sync="breedInfo.spec"
@@ -261,46 +205,9 @@
                                          </input-select>
                                      </div>
                                 </div>
-                                
-                                <div class="editpage-input">
-                                     <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
-                                     <div type="text" class="edit-input" v-if="breedParam.id">
-                                         <input-select
-                                           :value.sync="breedInfo.unit"
-                                           :prevalue="breedInfo.unit"
-                                           :options="initBreedDetail.units.arr"
-                                           placeholder="单位"
-                                           label="name"
-                                         >
-                                         </input-select>
-                                     </div>
-                                </div>
                              </div>
                          
                              <div class="editpageright">
-                                <div class="editpage-input">
-                                     <label class="editlabel" >{{$t('static.headline')}}</label>
-                                     <input type="text" v-model="breedInfo.title" class="form-control edit-input" />
-                                </div>
-                         
-                                <div class="editpage-input">
-                                     <label class="editlabel" >{{$t('static.origin')}}<span class="system_danger" v-if="$inner.location.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" v-validate:location="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
-                                     <div type="text" class="edit-input" v-if="breedParam.id">
-                                         <input-select
-                                           :prevalue="breedInfo.location"
-                                           :value.sync="breedInfo.location"
-                                           :options="initBreedDetail.locals.arr"
-                                           placeholder="产地"
-                                           label="name"
-
-                                         >
-                                         </input-select>
-                                     </div>
-
-                                </div>
-                         
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
                                      <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
@@ -310,7 +217,24 @@
                                      <label class="editlabel" >{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
                                      <input type="number"  v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
                                 </div>
-
+                                <div class="editpage-input">
+                                     <label class="editlabel" >{{$t('static.headline')}}</label>
+                                     <input type="text" v-model="breedInfo.title" class="form-control edit-input" value="{{breedInfo.breedName}}"/>
+                                </div>
+                                <div class="editpage-input">
+                                     <label class="editlabel" >{{$t('static.origin')}}</label>
+                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input"  disabled="disabled" placeholder="请先选择一个品种"/>
+                                     <div type="text" class="edit-input" v-if="breedParam.id">
+                                         <input-select
+                                           :prevalue="breedInfo.location"
+                                           :value.sync="breedInfo.location"
+                                           :options="initBreedDetail.locals.arr"
+                                           placeholder="产地"
+                                           label="name"
+                                         >
+                                         </input-select>
+                                     </div>
+                                </div>
                                 <div style="margin-top:10px;text-align:right">
                                     <button type="button" class="btn btn-confirm">
                                         <div v-if="breedInfo.status==1" @click="cancelAddBreed()">{{$t('static.cancel')}}</div>
@@ -321,11 +245,37 @@
                                         <div v-if="breedInfo.status==2" @click="modifyBreed()">{{$t('static.save')}}</div>
                                     </button>
                                     <button type="button" class="btn btn-confirm" v-else disabled="disabled">{{$t('static.save')}}</button>
-                                    
                                 </div>  
                              </div>
                        </div>  
                     </validator> 
+              </div>
+              <div class="clearfix">
+                  <div style="margin-top:20px;">
+                     <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
+                     <h5 style="display:inline">{{$t('static.other_info')}}</h5>
+                  </div>
+                  <div class="editpage-input col-md-6">
+                      <label class="editlabel">{{$t('static.preferential')}}</label>
+                      <input type="number" class="form-control edit-input" v-model="param.preferential" value="{{parampreferential}}"/>
+                  </div>
+                  <div class="editpage-input col-md-6">
+                      <label class="editlabel">{{$t('static.discount_note')}}</label>
+                      <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" value="{{param.preferentialDesc}}"/>
+                  </div>
+                  <div class="editpage-input col-md-6">
+                      <label class="editlabel">{{$t('static.sundry_fees')}}</label>
+                      <input type="number" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}"/>
+                  </div>
+                  
+                  <div class="editpage-input col-md-6">
+                      <label class="editlabel">{{$t('static.fee_explain')}}</label>
+                      <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
+                  </div>
+                  <div class="editpage-input col-md-12">
+                      <label class="editlabel">{{$t('static.comment')}}</label>
+                      <textarea rows="5" class="form-control" v-model="param.comments" value="{{param.comments}}" style="resize: none;width:100%;"></textarea>
+                  </div>
               </div>
           </div>
           <div class="edit_footer">
@@ -348,7 +298,8 @@ import {
     initProvince,
     initCitylist,
     initDistrictlist,
-    initBreedDetail
+    initBreedDetail,
+    initCurrencylist
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -358,7 +309,8 @@ import {
     getDistrictList,
     createOrder,
     alterOrder,
-    getOrderDetail
+    getOrderDetail,
+    getCurrencyList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -432,7 +384,8 @@ export default {
             initProvince,
             initCitylist,
             initDistrictlist,
-            initBreedDetail
+            initBreedDetail,
+            initCurrencylist
         },
         actions:{
             getCountryList,
@@ -442,7 +395,8 @@ export default {
             getDistrictList,
             createOrder,
             alterOrder,
-            getOrderDetail
+            getOrderDetail,
+            getCurrencyList
         }
     },
     methods:{
@@ -629,6 +583,7 @@ export default {
     created(){
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
+        this.getCurrencyList();
         console.log(this.param);
          this.getOrderDetail(this.param);   
          if(this.param.breedId){

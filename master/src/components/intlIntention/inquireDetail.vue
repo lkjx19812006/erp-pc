@@ -61,12 +61,8 @@
                                 <div class="client-detailInfo col-md-4">
                                     <label class="editlabel">{{$t('static.address')}}：</label>
                                     <span>{{initIntlIntentionDetail.address}}</span>
-                                </div>
-                                
-                                
+                                </div>   
                             </div>
-
-                          
                         </div>
                     </article>
                 </div>
@@ -96,9 +92,9 @@
                                                 <th>{{$t('static.inquire_type')}}</th>
                                                 <th>{{$t('static.inquire_time')}}</th>
                                                 <th>{{$t('static.inquiry_state')}}</th>
-                                                <th>产品报价总额</th>
-                                                <th>其他报价总额</th>
-                                                <th>最终报价金额</th>
+                                                <th>{{$t('static.product_price')}}</th>
+                                                <th>{{$t('static.other_cost')}}</th>
+                                                <th>{{$t('static.total_cost')}}</th>
                                                 <th>{{$t('static.comment')}}</th>
                                                 <!-- <th></th>
                                                 <th></th> -->
@@ -192,7 +188,7 @@
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                         {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
                                       </a>
-                                      <span class="pull-right" style="color:#fa6705">{{$t('static.quotation_total')}}：{{initIntlIntentionDetail.offersTotal}}</span>
+                                      <span class="pull-right" style="color:#fa6705;line-height:27px;">{{$t('static.quotation_total')}}：{{initIntlIntentionDetail.offersTotal}}</span>
                                       <button v-if="initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                 </h4>
                             </div>

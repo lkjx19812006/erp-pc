@@ -698,8 +698,6 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         preferential: data.preferential,
         preferentialDesc: data.preferentialDesc,
         currency: data.currency,
-        consignee: data.consignee,
-        consigneePhone: data.consigneePhone,
         zipCode: data.zipCode,
         country: data.country,
         province: data.province,
@@ -707,13 +705,23 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         employee: data.employee,
         org: data.org,
         district: data.district,
-        consigneeAddr: data.consigneeAddr,
+        consigneeAddr:data.country+','+data.province+','+data.city+','+data.district+','+data.consigneeAddr,
         comments: data.comments,
         orderStatus: data.orderStatus,
         goods: data.goods
     }
     if (data.email) {
         body.email = data.email;
+    }
+    if(data.consignee==''){
+        body.consignee = data.customerName;
+    }else{
+       body.consignee = data.consignee; 
+    }
+    if(data.consigneePhone==''){
+        body.consigneePhone = data.customerPhone;
+    }else{
+        body.consigneePhone = data.consigneePhone;
     }
     console.log(body);
     Vue.http({
@@ -739,6 +747,9 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         data.goodsDesc = res.json().result.goodsDesc;
         data.total = res.json().result.total;
         data.ctime = new Date();
+        data.consignee = res.json().result.consignee;
+        data.consigneePhone = res.json().result.consigneePhone;
+        data.consigneeAddr = res.json().result.consigneeAddr;
         data.mode = 3;
         if(res.json().code==200){
            dispatch(types.ORDER_ADD_DATA, data);
@@ -3533,7 +3544,7 @@ export const updateMsg = ({ dispatch }, param) => { //修改留言信息
 
 export const getIntlIntentionList = ({ dispatch }, param) => { //国际意向列表以及搜索
     param.loading = true;
-    console.log(param.link);
+    console.log(param);
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     if (param.breedName !== '') {
         url += '&names=' + param.breedName;
@@ -3547,6 +3558,9 @@ export const getIntlIntentionList = ({ dispatch }, param) => { //国际意向列
     if (param.customerEmail !== '') {
         url += '&customerEmail=' + param.customerEmail;
     }
+    if (param.inquire !== '') {
+        url += '&inquire=' + param.inquire;
+    }
 
     Vue.http({
         method: 'GET',
@@ -3558,10 +3572,6 @@ export const getIntlIntentionList = ({ dispatch }, param) => { //国际意向列
     }).then((res) => {
         console.log('国际意向搜索成功');
         var intent = res.json().result.list;
-        /*for (var i in intent){
-             intent[i].checked = false;
-             intent[i].show =false;
-        }*/
         intent.key = param.key;
         dispatch(types.INTLINTENTION_LIST_DATA, intent);
         param.all = res.json().result.pages;
@@ -3583,7 +3593,7 @@ export const getIntlIntentionList = ({ dispatch }, param) => { //国际意向列
 
 export const getEmpIntlIntentionList = ({ dispatch }, param) => { //业务员国际意向列表以及搜索
     param.loading = true;
-    console.log(param.link);
+    console.log(param);
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     if (param.breedName !== '') {
         url += '&names=' + param.breedName;
@@ -3597,7 +3607,6 @@ export const getEmpIntlIntentionList = ({ dispatch }, param) => { //业务员国
     if (param.customerEmail !== '') {
         url += '&customerEmail=' + param.customerEmail;
     }
-
     Vue.http({
         method: 'GET',
         url: url,
@@ -3801,8 +3810,6 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => { //国际�
     param.loading = true;
     console.log(param.link);
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
-
-
     Vue.http({
         method: 'GET',
         url: url,
@@ -3813,10 +3820,6 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => { //国际�
     }).then((res) => {
         console.log('国际意向询价搜索成功');
         var inquire = res.json().result.list;
-        /*for (var i in intent){
-             intent[i].checked = false;
-             intent[i].show =false;
-        }*/
         console.log(inquire);
         dispatch(types.INTLINTENTION_INQUIRE_LIST_DATA, inquire);
         param.all = res.json().result.pages;
@@ -5125,7 +5128,7 @@ export const getUnitList = ({ dispatch }, param) => { //常用单位接口
         console.log('fail');
     })
 }
-export const getCurrencyList = ({ dispatch }, param) => { //常用单位接口
+export const getCurrencyList = ({ dispatch }, param) => { //常用货币接口
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList +'/sys/enum/currency',

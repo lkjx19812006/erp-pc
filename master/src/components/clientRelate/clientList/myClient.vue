@@ -10,13 +10,6 @@
     
     <div>
         <div class="service-nav">
-            <div class="clearfix">
-                <!-- <div class="my_enterprise col-xs-1">我的客户</div> -->
-                <div class="right col-xs-8">
-                  
-                </div>
-            </div>
-
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t("static.client_name")}}：</dt>
@@ -29,7 +22,7 @@
                    <dt class="left transfer marg_top">{{$t("static.province_of_phone")}}：</dt>
                    <dd class="left">
                         <select v-model="loadParam.phoneProvinceName"  class="form-control" @change="selectSearch()" >
-                            <option value="">全部</option>
+                            <option value="">{{$t("static.please_select")}}</option>
                             <option v-for="item in initProvince">{{item.cname}}</option>
                         </select>
                    </dd>
@@ -39,7 +32,7 @@
                    <dt class="left transfer marg_top">{{$t("static.client_type")}}：</dt>
                    <dd class="left">
                          <select v-model="loadParam.type"  class="form-control" @change="selectSearch()">
-                              <option value="">全部</option>
+                              <option value="">{{$t("static.please_select")}}</option>
                               <option value="0">其它</option>
                               <option value="1">合作社</option>
                               <option value="2">药商</option>

@@ -8,10 +8,10 @@
             <li v-for="item in getList" transition="item">
                 <div v-link="item.url" class="menu_div" @click="init_data(item.id,item)">
                     <div class="bleft">
-                        <img v-bind:src="item.icon" height="21" width="21">
+                        <img v-bind:src="item.icon" height="21" width="21" >
                     </div>
-                    <a v-if="lang=='en'">{{item.ename}}</a>
-                    <a v-if="lang=='zh_CN'">{{item.cname}}</a>
+                    <a v-if="lang=='en'" title="{{item.ename}}">{{item.ename}}</a>
+                    <a v-if="lang=='zh_CN'" title="{{item.cname}}">{{item.cname}}</a>
                 </div>
                 <div class="bshow" v-if="$route.path.split('?')[0]==item.url.split('?')[0]" transition="expand_trans">
                     <dl class="bshow_dl" clear>
@@ -21,8 +21,8 @@
                                 <div class="bleft" >
                                     <img v-bind:src="sub.icon" height="15" width="15">
                                 </div>
-                                <span v-if="lang=='en'" style="cursor:pointer;" class="{{$route.path==sub.url?'active_font':''}}">{{sub.ename}}</span>
-                                <span v-if="lang=='zh_CN'" style="cursor:pointer;" class="{{$route.path==sub.url?'active_font':''}}">{{sub.cname}}</span>
+                                <a v-if="lang=='en'" style="cursor:pointer;" class="{{$route.path==sub.url?'active_font':''}}" title="{{sub.ename}}">{{sub.ename}}</a>
+                                <a v-if="lang=='zh_CN'" style="cursor:pointer;" class="{{$route.path==sub.url?'active_font':''}}" title="{{sub.cname}}">{{sub.cname}}</a>
                             </div>
                         </dd>
                     </dl>
@@ -69,7 +69,6 @@ export default {
          changeLang:function(val){
             console.log('接收广播：'+val);
             this.lang = val;
-
          }
       },
     methods: {
@@ -208,7 +207,7 @@ export default {
 }*/
 
 .active_font {
-    color: #fa6705;
+    color: #fa6705 !important;
 }
 
 .v-link-active {

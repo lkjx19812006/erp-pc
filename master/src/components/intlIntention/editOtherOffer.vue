@@ -24,23 +24,7 @@
                                <label class="editlabel" >{{$t('static.currency')}}<span class="system_danger" v-if="$validation.currency.required">{{$t('static.required')}}</span></label>
                                <input v-show="false" type="text" v-model="param.currency" class="form-control edit-input" v-validate:currency="{required:true}"/>
                                <select type="text" class="form-control edit-input" v-model="param.currency">
-                                 <option value="0">CNY人民币</option>
-                                 <option value="1">USD美元</option>
-                                 <option value="2">EUR欧元</option>
-                                 <option value="3">HKD港币</option>
-                                 <option value="4">GBP英镑</option>
-                                 <option value="5">JPY日元</option>
-                                 <option value="6">KRW韩元</option>
-                                 <option value="7">CAD加元</option>
-                                 <option value="8">AUD澳元</option>
-                                 <option value="9">CHF瑞郎</option>
-                                 <option value="10">SGD新加坡元</option>
-                                 <option value="11">MYR马来西亚币</option>
-                                 <option value="12">IDR印尼</option>
-                                 <option value="13">NZD新西兰</option>
-                                 <option value="14">VND越南</option>
-                                 <option value="15">THB泰铢</option>
-                                 <option value="16">PHP菲律宾</option>
+                                 <option v-for="item in initCurrencylist"  value="{{item.id}}">{{item.name}}（{{item.cname}}）</option>
                                </select>
                           </div>
                           
@@ -87,11 +71,11 @@ import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipdialogModel from '../tips/tipDialog'
 import pressImage from '../imagePress'
 import {
-    
+    initCurrencylist,
     initIntlIntentionDetail
 } from '../../vuex/getters'
 import {
-    
+    getCurrencyList,
     getIntlIntentionDetail,
     intlIntentionOtherOffer
 } from '../../vuex/actions'
@@ -143,11 +127,11 @@ export default {
     },
     vuex: {
        getters: {
-          
+          initCurrencylist,
           initIntlIntentionDetail
         },
         actions: {
-          
+          getCurrencyList,
           getIntlIntentionDetail,
           intlIntentionOtherOffer
         }
@@ -166,6 +150,7 @@ export default {
     },
     created(){
       console.log(this.param);
+      this.getCurrencyList();
       //在这里要有查询原材料报价的接口
       this.param.items = [{id:12,
                 intentionId:'58228a6688e87dc057d5e969',

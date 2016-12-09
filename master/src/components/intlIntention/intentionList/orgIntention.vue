@@ -4,13 +4,45 @@
      <create-model :param.sync="createParam" v-if="createParam.show"></create-model>
      <modify-model :param.sync="modifyParam" v-if="modifyParam.show"></modify-model>
      <inquire-model :param="inquireParam" v-if="inquireParam.show"></inquire-model>
-     
+     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
      <div>
         <div class="service-nav clearfix">
-            <div class="right">
-                <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
-                <button class="new_btn transfer" @click="search()">{{$t('static.search')}}</button>
-                <!-- <button class="new_btn" @click="createIntention()">{{$t('static.new')}}</button> -->
+            <div class="clear left" >
+                  <dl class="clear left transfer">
+                     <dt class="left transfer marg_top">{{$t('static.breed')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
+                     </dd>
+                  </dl>
+                  <dl class="clear left transfer">
+                     <dt class="left transfer marg_top">{{$t('static.client_name')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.customerName" @keyup.enter="intentionSearch()"/>
+                     </dd>
+                  </dl>
+                  <dl class="clear left transfer" >
+                     <dt class="left transfer marg_top">{{$t('static.salesman')}}：</dt>
+                     <dd class="left">
+                          <input type="text" class="form-control" v-model="loadParam.employeeName" @keyup.enter="intentionSearch()"/>
+                     </dd>
+                  </dl>
+                  <dl class="clear left transfer">
+                     <dt class="left transfer marg_top">{{$t('static.client_email')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.customerEmail" @keyup.enter="intentionSearch()"/>
+                     </dd>
+                  </dl>
+                  <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                  <button class="new_btn transfer" @click="intentionSearch()">{{$t('static.search')}}</button>        
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="click_change pull-left">
+                <span class="date_active" v-bind:class="{ 'date_active': this.loadParam.inquire===''}" @click="clickday('')">{{$t('static.please_select')}}</span>
+                <span v-bind:class="{ 'date_active': this.loadParam.inquire===0}" @click="clickday(0)">{{$t('static.not_inquiry')}}</span>
+                <span v-bind:class="{ 'date_active':  this.loadParam.inquire===1}" @click="clickday(1)">{{$t('static.inquiry')}}</span>
+                <span v-bind:class="{ 'date_active':  this.loadParam.inquire===2}" @click="clickday(2)">{{$t('static.quotation')}}</span>
+                <span v-bind:class="{ 'date_active':  this.loadParam.inquire===3}" @click="clickday(3)">{{$t('static.quo_complete')}}</span>
             </div>
         </div>
         <div class="order_table" id="table_box">
@@ -20,85 +52,49 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <!--<th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>-->
-                            <th>{{$t('static.type')}}</th>
-                            <th>{{$t('static.client_name')}}</th>
-                            <th>{{$t('static.client_email')}}</th>
-                            <th>{{$t('static.commodity_items')}}</th>
-                            <!-- <th>{{$t('static.certificate')}}</th> -->
-                            <th>{{$t('static.country')}}</th>
-                            <!-- <th>{{$t('static.province')}}</th> -->
-                            <th>{{$t('static.city')}}</th>
-                            <!-- <th>{{$t('static.area')}}</th> -->
-                            <th>{{$t('static.dealing_address')}}</th>
-                            <!--<th>{{$t('static.pre_payment')}}</th>
-                             <th>{{$t('static.invoice')}}</th>
-                            <th>{{$t('static.come_to_see_product')}}</th>
-                            <th>{{$t('static.packaging')}}</th> -->
-                            <th>{{$t('static.Number_of_inquiries')}}</th>
-                            <th>{{$t('static.quotation_number')}}</th>
-                            <th>{{$t('static.issued_time')}}</th>
-                            <!-- <th>{{$t('static.review_status')}}</th> -->
-                            <!-- <th>{{$t('static.description')}}</th> -->
-                            <th>{{$t('static.inquiry_state')}}</th>
-                            <th>{{$t('static.inquiry_type')}}</th>
+                        <th>{{$t('static.type')}}</th>
+                        <th>{{$t('static.client_name')}}</th>
+                        <th>{{$t('static.client_email')}}</th>
+                        <th>{{$t('static.salesman')}}</th>
+                        <th style="width:146px;min-width: 146px;">{{$t('static.commodity_items')}}</th>
+                        <th>{{$t('static.country')}}</th>
+                        <th>{{$t('static.city')}}</th>
+                        <th>{{$t('static.dealing_address')}}</th>
+                        <th>{{$t('static.Number_of_inquiries')}}</th>
+                        <th>{{$t('static.quotation_number')}}</th>
+                        <th>{{$t('static.issued_time')}}</th>
+                        <th>{{$t('static.inquiry_state')}}</th>
+                        <th>{{$t('static.inquiry_type')}}</th>
                     </tr>
                 </thead>
                 <tbody>
-
                     <tr v-for="item in initOrgIntlIntentionList" style="cursor:pointer">
-                         <!--<td>-->
-                            <!--<label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>-->
-                        <!--</td>-->
                         <td>
                             <div v-if="item.especial==0&&item.type==0">{{$t('static.common_purchase')}}</div>
                             <div v-if="item.especial==0&&item.type==1">{{$t('static.common_supply')}}</div>
                             <div v-if="item.especial==1&&item.type==0">{{$t('static.emergency')}}</div>
                             <div v-if="item.especial==1&&item.type==1">{{$t('static.low_cost')}}</div>
                         </td>
-                        <td>{{item.customerName}}</td>
+                        <td class="underline" @click="clickOn(item.id)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
-                        <td class="underline" @click="clickOn(item.id)">{{item.names}}</td>
-                        <!-- <td>{{item.qualification | qualify}}</td> -->
+                        <td>{{item.employeeName}}</td>
+                        <td>{{item.names}}</td>
                         <td>{{item.country}}</td>
-                        <!-- <td>{{item.province}}</td> -->
                         <td>{{item.city}}</td>
-                        <!-- <td>{{item.district}}</td> -->
                         <td>{{item.address}}</td>
-                       <!-- <td>{{item.advance | advanced}}</td>
-                         <td>{{item.invoic | invoicstate}}</td>
-                        <td>{{item.visit | visitstate}}</td>
-                        <td v-if="item.pack=='其它'">{{$t('static.other')}}</td>
-                        <td v-if="item.pack!='积压包'&&item.pack!='编织袋'&&item.pack!='瓦楞纸箱'&&item.pack!='真空包装'&&item.pack!='其它'">{{$t('static.other')}}</td>
-                        <td v-if="item.pack=='积压包'">{{$t('static.pallets')}}</td>
-                        <td v-if="item.pack=='编织袋'">{{$t('static.bag')}}</td>
-                        <td v-if="item.pack=='瓦楞纸箱'">{{$t('static.box')}}</td>
-                        <td v-if="item.pack=='真空包装'">{{$t('static.packing')}}</td> -->
                         <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime | date}}</td>
-                        <!-- <td>{{item.validate | intentionAudit}}</td> -->
-                        <!-- <td>{{item.description}}</td> -->
                         <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
                         <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
                         <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>{{item.inquireType}}</td>
-                        <!-- <td>
-                            <div v-if="item.inquire===0&&item.inquireTime===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquire.png" alt="询价" /></div>
-                            <div v-if="item.inquire===4" style="display:inline-block;margin-right:7px" @click="inquire(item.id,item.inquireTime)"><img src="/static/images/inquireAgain.png" alt="再次询价" /></div>
-                            <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)"><img src="/static/images/cancelInquire_icon.png" alt="取消询价" /></div>
-                            <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)">取消询价</div>
-                            <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/edit.png" alt="编辑"  /></div>
-                            <div style="display:inline-block;margin-right:7px" @click="deleteIntention(item.id,$index)"><img src="/static/images/del.png" alt="删除"  /></div>
-                            <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div>
-                        </td> -->
                     </tr>
-
                 </tbody>
             </table>
-
         </div>
+        
         <div class="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
@@ -114,7 +110,7 @@ import modifyModel from '../modifyIntention'
 import inquireModel from '../inquire'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
-
+import breedsearchModel from '../breedsearch'
 import {
     initOrgIntlIntentionList
   
@@ -134,7 +130,7 @@ export default {
         createModel,
         modifyModel,
         inquireModel,
-        
+        breedsearchModel 
     },
     vuex: {
         getters: {
@@ -166,10 +162,13 @@ export default {
                 breedId:'',
                 breedName:'',
                 customerName:'',
-                customerEmail:''
+                customerEmail:'',
+                inquire:''
                 
             },
-            
+            breedSearchParam:{
+                show:false    
+            },
             detailParam:{
                 link:'/intlIntention/',
                 key:'intentionDetail',
@@ -267,6 +266,10 @@ export default {
       common('tab','table_box',1);
     },
     methods: {
+        clickday:function(inquire){
+            this.loadParam.inquire = inquire;
+            this.getIntlIntentionList(this.loadParam);
+        },
         inquire:function(id,time){
             console.log('inquire');
             this.inquireParam.link = '/intlIntention/inquire';
@@ -332,12 +335,16 @@ export default {
                     })
                 }
         },
-        
-        
         search:function(){
           this.loadParam.loading = false;
           this.loadParam.show = true;
 
+        },
+        breedSearch:function(){
+            this.breedSearchParam.show = true;
+        },
+        intentionSearch:function(){
+            this.getIntlIntentionList(this.loadParam);
         },
         searchIntention:function(){
             this.getIntlIntentionList(this.loadParam);
@@ -386,6 +393,15 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getIntlIntentionList(this.loadParam);
+        },
+        a:function(qq){
+            this.loadParam.employeeId = qq.employeeId;
+            this.loadParam.employeeName = qq.employeeName;
+        },
+        breed:function(breed){
+            this.loadParam.breedId=breed.breedId;
+            this.loadParam.breedName=breed.breedName;
+            console.log(this.loadParam);
         }
     },
     created() {
@@ -396,42 +412,34 @@ export default {
 }
 </script>
 <style scoped>
-.base_pagination{
-  margin-bottom:250px;
+.service-nav{
+    padding-left: 0;
+    padding-bottom: 10px;
 }
-.breed_action {
-    top: 33px;
-    right: 106px;
+.click_change{
+    text-align: left;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-right: none;
+    width: 569px;
+    line-height: 30px;
+}
+.click_change span{
+    padding:0 20px;
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    cursor: pointer;
+}
+.date_active{
+    background: #fa6705;
+    color: #fff;
 }
 .transfer{
     margin-left: 18px;
 }
-.checkbox_unselect{
-    background-image: url(/static/images/unselect.png);
-    display: inline-block;
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    background-size: 80%;
-    margin: auto;
-    text-align: center;
-    background-position: 5px;
-}
-.checkbox_select{
-    background-image: url(/static/images/selected.png);
-    display: inline-block;
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    background-size: 80%;
-    margin: auto;
-    text-align: center;
-    background-position: 5px;
-}
-
 #table_box table th,#table_box table td{
-   min-width: 142px;
-    width: 142px;
+   min-width: 131px;
+    width: 131px;
 }
 </style>
 

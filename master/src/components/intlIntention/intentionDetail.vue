@@ -95,9 +95,9 @@
                                           <th>{{$t('static.inquire_type')}}</th>
                                           <th>{{$t('static.inquire_time')}}</th>
                                           <th>{{$t('static.inquiry_state')}}</th>
-                                          <th>产品报价总额</th>
-                                          <th>其他报价总额</th>
-                                          <th>最终报价金额</th>
+                                          <th>{{$t('static.product_price')}}</th>
+                                          <th>{{$t('static.other_cost')}}</th>
+                                          <th>{{$t('static.total_cost')}}</th>
                                           <th>{{$t('static.comment')}}</th>
                                         </thead>
                                         <tbody>
