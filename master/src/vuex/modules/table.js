@@ -1385,11 +1385,10 @@ const mutations = {
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerOrigPrice = data.origPrice;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerPrice = data.price;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerNumber = data.number;
-        state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerUnit = data.unit;
+        /*state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerEUnit = data.unit;*/
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerComment = data.comment;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerCurrency = data.currency;
         state.basicBaseList.intlIntentionInquireList[data.lastIndex].inquire = 2;  //原材料报价后将inquire置为2
-        /*state.basicBaseList.intlIntentionInquireList[data.lastIndex].again = 2; */ 
     },
 
     [OTHER_OFFER_DATA](state, data) { //增（改）国际意向其他报价
@@ -1660,10 +1659,30 @@ const mutations = {
     },
 
     [ADD_INTLINTENTION_DATA](state,data){ //新增国际意向
-
-        console.log("新增国际意向");
         console.log(data)
-        state.basicBaseList.intlIntentionList.unshift(data);
+        state.basicBaseList.myIntlIntentionList.unshift({
+          'customerId': data.customerId,
+          'customerName': data.customerName,
+          'customerEmail': data.customerEmail,
+          'country': data.country,
+          'province': data.province,
+          'city': data.city,
+          'district': data.district,
+          'address': data.address,
+          'duedate': data.duedate,
+          'pack': data.pack,
+          'items': data.items,
+          'especial': data.especial,
+          'type':data.type,
+          'id':data.id,
+          'advance': data.advance,
+          'inquireTime': data.inquireTime,
+          'offerTime' : data.offerTime,
+          'validate' : data.validate,
+          'inquire' : data.inquire,
+          'names':data.names,
+          'ctime':data.ctime,
+        });
 
     },
 

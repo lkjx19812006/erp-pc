@@ -7,10 +7,6 @@
      
      <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">{{$t('static.department_intention')}}</div>
-            <div class="col-xs-5 my_order_search">
-               
-           </div>
             <div class="right">
                 <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
                 <button class="new_btn transfer" @click="search()">{{$t('static.search')}}</button>
@@ -29,16 +25,16 @@
                             <th>{{$t('static.client_name')}}</th>
                             <th>{{$t('static.client_email')}}</th>
                             <th>{{$t('static.commodity_items')}}</th>
-                            <th>{{$t('static.certificate')}}</th>
+                            <!-- <th>{{$t('static.certificate')}}</th> -->
                             <th>{{$t('static.country')}}</th>
                             <!-- <th>{{$t('static.province')}}</th> -->
                             <th>{{$t('static.city')}}</th>
                             <!-- <th>{{$t('static.area')}}</th> -->
                             <th>{{$t('static.dealing_address')}}</th>
-                            <th>{{$t('static.pre_payment')}}</th>
-                            <!-- <th>{{$t('static.invoice')}}</th>
-                            <th>{{$t('static.come_to_see_product')}}</th> -->
-                            <th>{{$t('static.packaging')}}</th>
+                            <!--<th>{{$t('static.pre_payment')}}</th>
+                             <th>{{$t('static.invoice')}}</th>
+                            <th>{{$t('static.come_to_see_product')}}</th>
+                            <th>{{$t('static.packaging')}}</th> -->
                             <th>{{$t('static.Number_of_inquiries')}}</th>
                             <th>{{$t('static.quotation_number')}}</th>
                             <th>{{$t('static.issued_time')}}</th>
@@ -63,21 +59,21 @@
                         <td>{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td class="underline" @click="clickOn(item.id)">{{item.names}}</td>
-                        <td>{{item.qualification | qualify}}</td>
+                        <!-- <td>{{item.qualification | qualify}}</td> -->
                         <td>{{item.country}}</td>
                         <!-- <td>{{item.province}}</td> -->
                         <td>{{item.city}}</td>
                         <!-- <td>{{item.district}}</td> -->
                         <td>{{item.address}}</td>
-                        <td>{{item.advance | advanced}}</td>
-                        <!-- <td>{{item.invoic | invoicstate}}</td>
-                        <td>{{item.visit | visitstate}}</td> -->
+                       <!-- <td>{{item.advance | advanced}}</td>
+                         <td>{{item.invoic | invoicstate}}</td>
+                        <td>{{item.visit | visitstate}}</td>
                         <td v-if="item.pack=='其它'">{{$t('static.other')}}</td>
                         <td v-if="item.pack!='积压包'&&item.pack!='编织袋'&&item.pack!='瓦楞纸箱'&&item.pack!='真空包装'&&item.pack!='其它'">{{$t('static.other')}}</td>
                         <td v-if="item.pack=='积压包'">{{$t('static.pallets')}}</td>
                         <td v-if="item.pack=='编织袋'">{{$t('static.bag')}}</td>
                         <td v-if="item.pack=='瓦楞纸箱'">{{$t('static.box')}}</td>
-                        <td v-if="item.pack=='真空包装'">{{$t('static.packing')}}</td>
+                        <td v-if="item.pack=='真空包装'">{{$t('static.packing')}}</td> -->
                         <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime | date}}</td>
@@ -178,6 +174,7 @@ export default {
                 link:'/intlIntention/',
                 key:'intentionDetail',
                 show:false,
+                loading:true,
                 id:''
 
             },
@@ -433,8 +430,8 @@ export default {
 }
 
 #table_box table th,#table_box table td{
-   min-width: 113px;
-    width: 113px;
+   min-width: 142px;
+    width: 142px;
 }
 </style>
 

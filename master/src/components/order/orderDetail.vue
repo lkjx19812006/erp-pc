@@ -119,7 +119,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.stages.arr.length!==null">
-                                          分期付款{{initOrderDetail.orderStatus}}（{{initOrderDetail.stages.arr.length}}）<!-- <span class="system_danger">{{$t('static.pay_tips')}}</span> -->
+                                          分期付款（{{initOrderDetail.stages.arr.length}}）<!-- <span class="system_danger">{{$t('static.pay_tips')}}</span> -->
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                         {{$t('static.pay_evidence')}}（0）

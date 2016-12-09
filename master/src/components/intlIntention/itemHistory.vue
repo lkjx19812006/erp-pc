@@ -31,7 +31,8 @@
                            <th v-if="param.showCost">{{$t('static.cost_price')}}</th>
                            <th>{{$t('static.quoted_price')}}</th>
                            <th>{{$t('static.unit')}}</th>
-                           <th>{{$t('static.quantity')}}</th> 
+                           <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
+                           <th>{{$t('static.quatation_name')}}</th> 
                            <th>{{$t('static.comment')}}</th> 
                            <th>{{$t('static.create_time')}}</th> 
                            
@@ -43,8 +44,9 @@
                              <td>{{item.currency | Currency}}</td>
                              <td v-if="param.showCost">{{item.origPrice}}</td>
                              <td>{{item.price}}</td>
-                             <td>{{item.unit}}</td>
-                             <td>{{item.number}}</td>
+                             <td>{{item.unit | Unit}}</td>
+                             <td>{{item.number}}（{{item.unit | Unit}}）</td>
+                             <td>{{item.offererName}}</td>
                              <td>{{item.comment}}</td>
                              <td>{{item.ctime}}</td>
                              

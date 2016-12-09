@@ -333,10 +333,6 @@
             <div class="col-md-4">
                 <h4 class="section_title">详情</h4>
                 <div class="edit-detail clearfix">
-                    <div class="client-detailInfo col-xs-12">
-                        <label>编号</label>
-                        <input type="text" class="form-control"  value="{{initBreedDetail.code}}" disabled="disabled" />
-                    </div>
                     <div class="client-detailInfo  col-xs-12">
                         <label>品种名称</label>
                         <input type="text" class="form-control" value="{{initBreedDetail.name}}" disabled="disabled" />

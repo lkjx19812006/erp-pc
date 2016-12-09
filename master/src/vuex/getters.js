@@ -293,6 +293,10 @@ export const initSupply = (state) => {
 export const initUnitlist = (state) => {
     return parseJson(state.count.unitList);
 }
+/*---常用货币列表---*/
+export const initCurrencylist = (state) => {
+    return parseJson(state.count.currencyList);
+}
 /*---我的客户统计---*/
 export const initClientcount = (state) => {
     console.log(state.count)

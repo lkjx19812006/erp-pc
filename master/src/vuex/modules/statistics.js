@@ -8,7 +8,8 @@ import {
     SAMPLE_DETAIL,
     DELETE_DATA,
     APPLY_DATA,
-    UNIT_LIST
+    UNIT_LIST,
+    CURRENCY_LIST
 } from '../mutation-types'
 
 const state = {
@@ -31,14 +32,16 @@ const state = {
         show: true
     },
     unitList:[],
+    currencyList:[],
 }
 const mutations = {
     [UNIT_LIST](state,data){ //常用单位
-       console.log(state.unitList)
        state.unitList = data;
     },
+    [CURRENCY_LIST](state,data){
+        state.currencyList = data;
+    },
     [MY_CLIENT_COUNT](state, data) { //我的客户统计
-      console.log(state.countList)
       state.countList = data;
     },
     [MY_ORDER_COUNT](state, data) { //我的订单统计

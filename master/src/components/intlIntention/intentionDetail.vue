@@ -7,6 +7,7 @@
     <otheroffer-model :param="otherOfferParam" v-if="otherOfferParam.show"></otheroffer-model>
     <inquireagain-model :param="inquireAgainParam" v-if="inquireAgainParam.show"></inquireagain-model>
     <delfile-model :param="delFileParam" v-if="delFileParam.show"></delfile-model>
+    <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show">
         <div class="top-title">
@@ -38,38 +39,33 @@
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <div class="client-detailInfo col-md-4">
                                     <label class="editlabel">{{$t('static.client_name')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerName}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-6 col-xs-12">
-                                    <label class="editlabel">{{$t('static.commodity_items')}}：</label>
-                                    <span>{{initIntlIntentionDetail.names}}</span>
+                                <div class="client-detailInfo col-md-4">
+                                    <label class="editlabel">{{$t('static.client_phone')}}：</label>
+                                    <span>{{initIntlIntentionDetail.customerPhone}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-6 col-xs-12" >
+                                <div class="client-detailInfo col-md-4" >
                                     <label class="editlabel">{{$t('static.client_email')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerEmail}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-6 col-xs-12">
+                                <div class="client-detailInfo col-md-4">
                                     <label class="editlabel">{{$t('static.country')}}：</label>
                                     <span>{{initIntlIntentionDetail.country}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-6 col-xs-12">
+                                <div class="client-detailInfo col-md-4">
                                     <label class="editlabel">{{$t('static.city')}}：</label>   
                                     <span>{{initIntlIntentionDetail.city}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-6 col-xs-12" >
-                                    <label class="editlabel">{{$t('static.quantity')}}：</label>
-                                    <span>{{initIntlIntentionDetail.number}}</span>   
-                                </div>
-                                <div class="client-detailInfo col-md-6 col-xs-12">
-                                    <label class="editlabel">{{$t('static.description')}}：</label>
-                                    <span>{{initIntlIntentionDetail.description}}</span>
+                                <div class="client-detailInfo col-md-4">
+                                    <label class="editlabel">{{$t('static.address')}}：</label>
+                                    <span>{{initIntlIntentionDetail.address}}</span>
                                 </div>
                                 
                             </div>
 
-                          
                         </div>
                     </article>
                 </div>
@@ -92,23 +88,31 @@
                                       <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                 </h4>
                               </div>
-                              <div  class="panel-collapse" v-show="initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
+                              <div  class="panel-collapse" v-show="!initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
                                           <th>{{$t('static.inquire_type')}}</th>
+                                          <th>{{$t('static.inquire_time')}}</th>
+                                          <th>{{$t('static.inquiry_state')}}</th>
+                                          <th>产品报价总额</th>
+                                          <th>其他报价总额</th>
+                                          <th>最终报价金额</th>
                                           <th>{{$t('static.comment')}}</th>
-                                          <th>{{$t('static.create_time')}}</th>
-                                          <!-- <th></th>
-                                          <th></th> -->
-                                          
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.inquires.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
                                                 <td><a class="underline" @click="getInquireInfo(item.id)">{{item.inquireType}}</a></td>
-                                                <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
+                                                <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
+                                                <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.inquiry')}}</td>
+                                                <td v-if="item.inquire==2" style="color:#EE82EE">{{$t('static.quotation')}}</td>
+                                                <td v-if="item.inquire==3" style="color:#2E8B57">{{$t('static.quo_complete')}}</td>
+                                                <td>{{item.productTotal}}</td>
+                                                <td>{{item.otherTotal}}</td>
+                                                <td>{{item.total}}</td>
+                                                <td>{{item.comment}}</td>
                                                 <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
                                                 <td @click="otherOffer()" style="cursor:pointer">其他报价</td> -->
                                                   
@@ -129,35 +133,38 @@
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                         {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
                                       </a>
+                                      <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：{{initIntlIntentionDetail.itemsTotal}}</span>
                                       <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                 </h4>
                               </div>
-                              <div  class="panel-collapse" v-show="initIntlIntentionDetail.items.show&&initIntlIntentionDetail.items.arr.length>0">
+                              <div  class="panel-collapse" v-show="!initIntlIntentionDetail.items.show&&initIntlIntentionDetail.items.arr.length>0">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
                                           <th>{{$t('static.breed')}}</th>
-                                          <!-- <th>{{$t('static.cost')}}</th> -->
+                                          <!-- <th>{{$t('static.currency')}}</th> -->
                                           <th>{{$t('static.quoted_price')}}</th>
-                                          <th>{{$t('static.quantity')}}</th>
-                                          <th>{{$t('static.unit')}}</th>
+                                          <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
+                                          <th>{{$t('static.quatation_name')}}</th>
                                           <th>{{$t('static.inquiry_again')}}</th>
                                           <th>{{$t('static.quote_again')}}</th>
+                                          <th>{{$t('static.quatiton_time')}}</th>
                                           <th></th>
                                           <th></th> 
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.items.arr">
                                                 <td><a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a></td>
-                                                <!-- <td>{{item.origPrice}}</td> -->
-                                                <td>{{item.price}}</td>
-                                                <td>{{item.number}}</td>
-                                                <td>{{item.unit}}</td>
+                                                <!-- <td>{{item.offerCurrency | Currency}}</td> -->
+                                                <td>{{item.offerPrice}}（{{item.offerEUnit}}）</td>
+                                                <td>{{item.number}}（{{item.unit | Unit}}）</td>
+                                                <td>{{item.offererName}}</td>
                                                 <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
                                                 <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
                                                 <td v-if="item.offerAgain==0">{{$t('static.not_quote')}}</td>
                                                 <td v-if="item.offerAgain==null">{{$t('static.not_quote')}}</td>
                                                 <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
+                                                <td>{{item.utime}}</td>
                                                 <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> 
                                                 <td></td>
                                             </tr>
@@ -179,6 +186,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                           {{$t('static.other_quotations')}}（0）
                                         </a>
+                                         <span class="pull-right" style="color:#fa6705">{{$t('static.quotation_total')}}：{{initIntlIntentionDetail.offersTotal}}</span>
                                         <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                   </h4>
                               </div>
@@ -192,8 +200,6 @@
                                           <th>{{$t('static.expense_explanation')}}</th>
                                           <th>{{$t('static.all_in_cost')}}</th>
                                           <th>{{$t('static.comment')}}</th>
-                                          <!-- <th></th>
-                                          <th></th> -->
                                          
                                         </thead>
                                         <tbody>
@@ -204,19 +210,6 @@
                                                 <td>{{item.costDesc}}</td>
                                                 <td>{{item.total}}</td>
                                                 <td>{{item.comment}}</td>
-                                                <!-- <td><a style="cursor:pointer" @click="editOtherOffer(item,$index)">编辑</a></td>
-                                                <td><a style="cursor:pointer" @click="delOtherOffer(item,$index)">删除</a></td> -->
-                                               
-                                                <!-- <td  @click="clickShow($index,{
-                                                    concrete:'offers'
-                                                    })">
-                                                    <img src="/static/images/default_arrow.png" height="24" width="24" />
-                                                    <div class="files_action" v-show="item.show" >
-                                                        <dl>
-                                                            <dt @click="edit($index,item)">修改备注</dt>
-                                                        </dl>
-                                                    </div>
-                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -306,7 +299,6 @@
                                                 <td><img :src="item.url" style="max-width: 150px;" @click="clickBig(item.url)"/></td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
-                                                <td></td>
                                                
                                             </tr>
                                         </tbody>
@@ -333,6 +325,7 @@ import otherofferModel from './otherOffer'
 import inquireagainModel from './inquireAgain'
 import uploadfilesModel from './uploadFiles'
 import delfileModel from '../tips/tipDialog'
+import tipsModel from '../tips/tipDialog'
 import{
     initIntlIntentionDetail,
     initLogin
@@ -352,7 +345,8 @@ export default {
         inquireagainModel,
         uploadfilesModel,
         delfileModel,
-        pictureModel
+        pictureModel,
+        tipsModel 
     },
     data() {
         return {
@@ -386,6 +380,11 @@ export default {
               index:'',
               description:'',
 
+            },
+            tipsParam:{
+                alert:true,
+                show:false,
+                name:''
             },
             offerParam:{
                 show:false,
@@ -437,9 +436,7 @@ export default {
                 id:'',
                 category:'',
                 index:'', 
-            },
-           
-            
+            } 
         }
     },
     props:['param'],
@@ -484,7 +481,7 @@ export default {
         this.inquireAgainParam.itemId = item.id;
         this.inquireAgainParam.index = index;
         this.inquireAgainParam.show = true;
-
+        this.inquireAgainParam.callback = this.inquireCallback;
      },
       delFile:function(item,index){
         this.delFileParam.id = item.id;
@@ -506,8 +503,14 @@ export default {
         this.uploadFilesParam.fileType='';
         this.uploadFilesParam.image_f_show='';
         this.uploadFilesParam.show = true;
+        this.uploadFilesParam.callback = this.inquireCallback;
         console.log(this.uploadFilesParam);
         
+     },
+     inquireCallback:function(title){
+        this.tipsParam.alert=true;
+        this.tipsParam.show=true;
+        this.tipsParam.name=title;
      }
       
     },
@@ -616,6 +619,9 @@ section article {
 }
 .client-detailInfo label{
   display: inline-block;
+}
+.client-detailInfo span{
+  white-space: normal;
 }
 .client-detailInfo img {
     margin-right: 8px;

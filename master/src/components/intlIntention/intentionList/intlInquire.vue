@@ -6,7 +6,6 @@
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
      <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2">{{$t('static.International_intention_inquiry')}}</div>
             
         </div>
         <div class="order_table" id="table_box">

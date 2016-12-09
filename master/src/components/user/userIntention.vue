@@ -55,17 +55,10 @@
                          </div>
                          <div class="editpage-input">
                              <label class="editlabel">单位<span class="system_danger" v-if="$validation.unit.required">单位不能为空</span></label>
-                           <input type="text" v-show="!breedParam.id"  v-model="param.unit" v-validate:unit="{required:true}" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-                           <div type="text" class="edit-input" v-if="breedParam.id">
-                             <input-select
-                               :value.sync="param.unit"
-                               :prevalue="param.unit"
-                               :options="initBreedDetail.units.arr"
-                               placeholder="单位"
-                               label="name"
-                             >
-                             </input-select>
-                           </div>
+                              <input type="text"  v-model="param.unit" class="form-control edit-input" v-validate:unit="{required:true}"  v-show="false"/>
+                               <select v-model="param.unit" class="form-control edit-input" >
+                                    <option v-for="item in initUnitlist">{{item.name}}（{{item.ename}}）</option>
+                               </select>
                          </div>
                          <div class="editpage-input">
                              <label class="editlabel" >是否特殊</label>
@@ -358,7 +351,8 @@ import {
     initCitylist,
     initDistrictlist,
     initBreedDetail,
-    initIntentionDetail
+    initIntentionDetail,
+    initUnitlist
 } from '../../vuex/getters'
 import {
     createIntentionInfo,
@@ -368,7 +362,8 @@ import {
     getCityList,
     getDistrictList,
     getBreedDetail,
-    getIntentionDetail
+    getIntentionDetail,
+    getUnitList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -464,7 +459,8 @@ export default {
           initCitylist,
           initDistrictlist,
           initBreedDetail,
-          initIntentionDetail
+          initIntentionDetail,
+          initUnitlist
         },
         actions: {
           createIntentionInfo,
@@ -474,7 +470,8 @@ export default {
           getCityList,
           getDistrictList,
           getBreedDetail,
-          getIntentionDetail
+          getIntentionDetail,
+          getUnitList
         }
     },
     methods: {
@@ -592,6 +589,7 @@ export default {
         this.district.cname=this.param.district;
       }
       this.getCountryList(this.countryParam);
+      this.getUnitList();
     }
 }
 </script>

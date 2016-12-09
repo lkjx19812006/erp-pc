@@ -5,24 +5,13 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>{{param.title}}</h3>
+            <h3>{{$t('static.upload')}}</h3>
         </div>
         <div class="edit-model">
             <section class="editsection">
-                <!-- <div class="editpage-input">
-                    <label class="editlabel">文件类型</label>
-                    <select class="form-control"  v-model="param.fileType">
-                        <option>img</option>
-                        <option>doc</option>
-                        <option>excel</option>
-                        <option>pdf</option>
-                        <option>other</option>
-                    </select>
-                </div> -->
                 <div class="editpage-input">
                     <label class="editlabel">{{$t('static.description')}}</label>
                     <textarea style="width:100%;resize:none;border:1px solid #ddd;border-radius:5px;" rows="5" v-model="param.description">
-
                     </textarea>
                 </div>
                 <div class="editpage-input clearfix">
@@ -64,7 +53,7 @@ export default {
     methods:{
         save:function(){
             this.param.show = false;
-            console.log(this.param);
+            this.param.callback = this.param.callback;
             this.uploadIntlIntentionFiles(this.param);
         }
         
@@ -84,12 +73,19 @@ export default {
     z-index: 1083
 }
 .modal_con{
-    z-index: 1084
+    z-index: 1084;
+    width: 600px;
+    height: 500px;
 }
 .top-title {
     position: absolute;
     top: 0;
     right: 0;
+}
+.edit_footer{
+    position: absolute;
+    bottom:0;
+    width: 600px;
 }
 .edit-content {
     padding: 19px 10px;

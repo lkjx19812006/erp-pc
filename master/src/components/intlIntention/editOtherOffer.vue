@@ -17,22 +17,7 @@
               <pulse-loader :loading="breedParam.loading" :color="color" :size="size"></pulse-loader>
             </div> -->
              <section class="editsection" v-cloak>
-                 <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-
-                 <div class="editpage">
-                     
-
-
-                 </div>
-
-                <!--  <div style="margin-top:25px">
-                   <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
-                   <h4 style="display:inline">药材信息</h4>
-                </div> -->
-                
-                
-                  
-                   
+                 <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />             
                  <div v-if="true" class="editpage" >
                        <div class="editpageleft">
                           <div class="editpage-input">
@@ -60,32 +45,31 @@
                           </div>
                           
                           <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.expense_explanation')}}<span class="system_danger" v-if="$validation.costdesc.required">{{$t('static.required')}}</span></label>
-                               <input type="text" v-model="param.costDesc" class="form-control edit-input" v-validate:costdesc="{required:true}" />
+                               <label class="editlabel" >{{$t('static.expense_explanation')}}<span class="system_danger" v-if="$validation.expense.required">{{$t('static.required')}}</span></label>
+                               <input type="text" v-show="false" v-model="param.costDesc" class="form-control edit-input" v-validate:expense="{required:true}" />
+                               <select v-model="param.costDesc" class="form-control edit-input">
+                                  <option>{{$t('static.sea_fee')}}</option>
+                                  <option>{{$t('static.air_fee')}}</option>
+                                  <option>{{$t('static.cour_fee')}}</option>
+                                  <option>{{$t('static.premium')}}</option>
+                                  <option>{{$t('static.other_fee')}}</option>
+                               </select>
                           </div>
-                          
-                          
                        </div>
                    
                        <div class="editpageright">
-
                           <div class="editpage-input">
                                <label class="editlabel" >{{$t('static.expense')}}<span class="system_danger" v-if="$validation.cost.required">{{$t('static.required')}}</span></label>
-                               <input type="text" v-model="param.cost" class="form-control edit-input" v-validate:cost="{required:true}" />
+                               <input type="number" v-model="param.cost" class="form-control edit-input" v-validate:cost="{required:true}" />
                           </div>
                           
                           <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.comment')}}<span class="system_danger" v-if="$validation.comment.required">{{$t('static.required')}}</span></label>
-                               <input type="text" v-model="param.comment" class="form-control edit-input" v-validate:comment="{required:true}" />
-                          </div>
-                
-                
-                          
+                               <label class="editlabel" >{{$t('static.comment')}}</label>
+                               <input type="text" v-model="param.comment" class="form-control edit-input"  />
+                          </div> 
                        </div>
                  </div>  
                 
-
-                 
 
              </section>
           </div>
@@ -125,7 +109,6 @@ export default {
               show:false,
               name:'',
               remain:true,
-              callback:this.callback
           },
           
           addParam:{
@@ -169,14 +152,13 @@ export default {
           intlIntentionOtherOffer
         }
     },
-    methods: {
-      
+    methods: { 
       confirm:function(){
+        console.log(this.param.callback)
         this.param.show = false;
-         this.intlIntentionOtherOffer(this.param);
+        this.param.callback = this.param.callback;
+        this.intlIntentionOtherOffer(this.param);
       }
-     
-      
 
     },
     events:{

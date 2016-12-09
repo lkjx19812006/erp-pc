@@ -571,55 +571,55 @@ Vue.filter('offerAgain',function(val){     // 报价状态
 
 Vue.filter('Currency',function(val){     //订单货币方式
 	var val = val;
-	if(val==0){
+	if(val==1||val==0){
 		 return 'CNY人民币';
 	}
-	if(val==1){
+	if(val==2){
 		 return 'USD美元';
 	}
-	if(val==2){
+	if(val==3){
 		 return 'EUR欧元';
 	}
-	if(val==3){
+	if(val==4){
 		 return 'HKD港币';
 	}
-	if(val==4){
+	if(val==5){
 		 return 'GBP英镑';
 	}
-	if(val==5){
+	if(val==6){
 		 return 'JPY日元';
 	}
-	if(val==6){
+	if(val==7){
 		 return 'KRW韩元';
 	}
-	if(val==7){
+	if(val==8){
 		 return 'CAD加元';
 	}
-	if(val==8){
+	if(val==9){
 		 return 'AUD澳元';
 	}
-	if(val==9){
+	if(val==10){
 		 return 'CHF瑞郎';
 	}
-	if(val==10){
+	if(val==11){
 		 return 'SGD新加坡元';
 	}
-	if(val==11){
+	if(val==12){
 		 return 'MYR马来西亚币';
 	}
-	if(val==12){
+	if(val==13){
 		 return 'IDR印尼';
 	}
-	if(val==13){
+	if(val==14){
 		 return 'NZD新西兰';
 	}
-	if(val==14){
+	if(val==15){
 		 return 'VND越南';
 	}
-	if(val==15){
+	if(val==16){
 		 return 'THB泰铢';
 	}
-	if(val==16){
+	if(val==17){
 		 return 'PHP菲律宾';
 	}
 
@@ -639,6 +639,56 @@ Vue.filter('inquire',function(val){      //国际意向询价状态
 	if(val===3){
 		return '报价完成';
 	}
+})
 
+Vue.filter('Unit',function(val){     //国际意向单位
+	var val = val;
+	if(val==71){
+		 return '吨（T）';
+	}
+	if(val==63){
+		 return '公斤（KG）';
+	}
+	if(val==1){
+		 return '斤（HKG）';
+	}
+	if(val==3){
+		 return '克（G）';
+	}
+	if(val==64){
+		 return '棵（Tree）';
+	}
+	if(val==69){
+		 return '朵（Flower）';
+	}
+	if(val==72){
+		 return '株（Plant）';
+	}
+	if(val==70){
+		 return '瓶（Bottle）';
+	}
+	if(val==73){
+		 return '只（Only）';
+	}
+	if(val==74){
+		 return '盒（Box）';
+	}
+	if(val==110){
+		 return '升（Liter）';
+	}
+	if(val==112){
+		 return '20尺柜（GP20T）';
+	}
+	if(val==113){
+		 return '40尺柜（GP40）';
+	}
+	if(val==114){
+		 return '40高柜（GP40HQ）';
+	}
+	if(val==10000){
+		 return '未设置（Not set）';
+	}else{
+		return val;
+	}
 
 })
