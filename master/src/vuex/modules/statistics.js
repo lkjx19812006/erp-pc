@@ -41,7 +41,7 @@ const mutations = {
       console.log(state.countList)
       state.countList = data;
     },
-    [MY_CLIENT_COUNT](state, data) { //我的订单统计
+    [MY_ORDER_COUNT](state, data) { //我的订单统计
       console.log("订单统计")
       
     },
