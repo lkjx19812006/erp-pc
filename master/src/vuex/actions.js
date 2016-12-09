@@ -1255,9 +1255,7 @@ export const deleteShowStatue = ({ dispatch }, param) => { //删除枚举
 };
 
 export const getProvinceData = ({ dispatch }, param) => { //省市区列表
-
     console.log(param);
-
     if (param.loading) param.loading = true;
     if (!param.cur) {
         param.cur = '';

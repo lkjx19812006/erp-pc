@@ -79,10 +79,7 @@ export default {
     created() {
         this.getProvinceData(this.loadParam,this.loadParam.all);
     },
-    methods: {
-
-    },
-     route: {
+/*     route: {
         activate: function (transition) {
           console.log('hook-example activated!')
           transition.next()
@@ -91,7 +88,7 @@ export default {
           console.log('hook-example deactivated!')
           transition.next()
       }
-    },
+    },*/
     ready(){
       common('tab','table_box',1);
     },

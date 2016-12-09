@@ -1,20 +1,20 @@
 <template>
-    <div class="myOrder" v-show="$route.path.split('=')[1]==0">
-         <enumlist></enumlist>
+    <div class="myOrder" v-if="$route.path.split('=')[1]==0">
+         <enumlist-model></enumlist-model>
     </div>
     <!-- begin省市区 -->
-     <div class="myOrder" v-show="$route.path.split('=')[1]==1">
-        <province></province>
+     <div class="myOrder" v-if="$route.path.split('=')[1]==1">
+        <province-model></province-model>
     </div>
 </template>
 <script>
-import enumlist from '../components/systemcomponent/emnulist'
-import province from '../components/systemcomponent/provincelist'
+import enumlistModel  from '../components/systemcomponent/emnulist'
+import provinceModel  from '../components/systemcomponent/provincelist'
 
 export default {
     components: {
-      enumlist,
-        province
+      enumlistModel,
+        provinceModel
     },
     data() {
         return {
