@@ -31,7 +31,7 @@
                           <div class="editpage-input">
                                <label class="editlabel" >{{$t('static.currency')}}</label>
                                <select type="text" class="form-control edit-input" v-model="param.currency">
-                                  <option  value="2" selected>USD（美元）</option>
+                                   <option  value="2" selected>USD（美元）</option>
                                    <option v-for="item in initCurrencylist"  value="{{item.id}}">{{item.name}}（{{item.cname}}）</option>
                                </select>
                           </div>

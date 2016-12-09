@@ -111,7 +111,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="panel panel-default">
+                            <!-- <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:'',
@@ -119,12 +119,12 @@
                                               })">
                                         <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.stages.arr.length!==null">
-                                          分期付款（{{initOrderDetail.stages.arr.length}}）<!-- <span class="system_danger">{{$t('static.pay_tips')}}</span> -->
+                                          分期付款（{{initOrderDetail.stages.arr.length}}）<span class="system_danger">{{$t('static.pay_tips')}}</span>
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                         {{$t('static.pay_evidence')}}（0）
                                         </a>
-                                        <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments({
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments({
                                             show:true,
                                             orderId:initOrderDetail.id,
                                             link:dividedPayment,
@@ -134,7 +134,7 @@
                                             ratio:'',
                                             description:'',
                                             rtime:''
-                                            })"  v-if="(initOrderDetail.stages.arr.length!==null&&param.contact=='/order/myList')">{{$t('static.new')}}</button> -->
+                                            })"  v-if="(initOrderDetail.stages.arr.length!==null&&param.contact=='/order/myList')">{{$t('static.new')}}</button>
                                         <a v-else></a>
                                     </h4>
                                 </div>
@@ -169,7 +169,7 @@
                                     </table>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({

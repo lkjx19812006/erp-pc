@@ -37,8 +37,8 @@
                 <tbody>
                     <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer">
                         <td>{{item.inquireType}}</td>
-                        <td><a class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.names}}</a></td>
-                        <td>{{item.customerName}}</td>
+                        <td>{{item.names}}</td>
+                        <td class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
@@ -77,8 +77,8 @@
                 <tbody>
                     <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer" v-if="item.inquire==0">
                         <td>{{item.inquireType}}</td>
-                        <td><a class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.names}}</a></td>
-                        <td>{{item.customerName}}</td>
+                        <td>{{item.names}}</td>
+                        <td class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
@@ -117,8 +117,8 @@
                 <tbody>
                     <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer" v-if="item.inquire==1">
                         <td>{{item.inquireType}}</td>
-                        <td><a class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.names}}</a></td>
-                        <td>{{item.customerName}}</td>
+                        <td>{{item.names}}</td>
+                        <td class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
@@ -157,8 +157,8 @@
                 <tbody>
                     <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer" v-if="item.inquire==2">
                         <td>{{item.inquireType}}</td>
-                        <td><a class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.names}}</a></td>
-                        <td>{{item.customerName}}</td>
+                        <td>{{item.names}}</td>
+                        <td class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
@@ -197,8 +197,8 @@
                 <tbody>
                     <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer" v-if="item.inquire==3">
                         <td>{{item.inquireType}}</td>
-                        <td><a class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.names}}</a></td>
-                        <td>{{item.customerName}}</td>
+                        <td>{{item.names}}</td>
+                        <td class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>

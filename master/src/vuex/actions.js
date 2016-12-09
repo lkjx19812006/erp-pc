@@ -3533,7 +3533,7 @@ export const updateMsg = ({ dispatch }, param) => { //修改留言信息
 
 export const getIntlIntentionList = ({ dispatch }, param) => { //国际意向列表以及搜索
     param.loading = true;
-    console.log(param.link);
+    console.log(param);
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     if (param.breedName !== '') {
         url += '&names=' + param.breedName;
@@ -3547,6 +3547,9 @@ export const getIntlIntentionList = ({ dispatch }, param) => { //国际意向列
     if (param.customerEmail !== '') {
         url += '&customerEmail=' + param.customerEmail;
     }
+    if (param.inquire !== '') {
+        url += '&inquire=' + param.inquire;
+    }
 
     Vue.http({
         method: 'GET',
@@ -3558,10 +3561,6 @@ export const getIntlIntentionList = ({ dispatch }, param) => { //国际意向列
     }).then((res) => {
         console.log('国际意向搜索成功');
         var intent = res.json().result.list;
-        /*for (var i in intent){
-             intent[i].checked = false;
-             intent[i].show =false;
-        }*/
         intent.key = param.key;
         dispatch(types.INTLINTENTION_LIST_DATA, intent);
         param.all = res.json().result.pages;
@@ -3583,7 +3582,7 @@ export const getIntlIntentionList = ({ dispatch }, param) => { //国际意向列
 
 export const getEmpIntlIntentionList = ({ dispatch }, param) => { //业务员国际意向列表以及搜索
     param.loading = true;
-    console.log(param.link);
+    console.log(param);
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     if (param.breedName !== '') {
         url += '&names=' + param.breedName;
@@ -3597,11 +3596,6 @@ export const getEmpIntlIntentionList = ({ dispatch }, param) => { //业务员国
     if (param.customerEmail !== '') {
         url += '&customerEmail=' + param.customerEmail;
     }
-    if (param.inquire !== '') {
-        url += '&inquire=' + param.inquire;
-    }
-
-
     Vue.http({
         method: 'GET',
         url: url,
@@ -3805,8 +3799,6 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => { //国际�
     param.loading = true;
     console.log(param.link);
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
-
-
     Vue.http({
         method: 'GET',
         url: url,
@@ -3817,10 +3809,6 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => { //国际�
     }).then((res) => {
         console.log('国际意向询价搜索成功');
         var inquire = res.json().result.list;
-        /*for (var i in intent){
-             intent[i].checked = false;
-             intent[i].show =false;
-        }*/
         console.log(inquire);
         dispatch(types.INTLINTENTION_INQUIRE_LIST_DATA, inquire);
         param.all = res.json().result.pages;
@@ -5125,7 +5113,7 @@ export const getUnitList = ({ dispatch }, param) => { //常用单位接口
         console.log('fail');
     })
 }
-export const getCurrencyList = ({ dispatch }, param) => { //常用单位接口
+export const getCurrencyList = ({ dispatch }, param) => { //常用货币接口
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList +'/sys/enum/currency',
