@@ -2075,6 +2075,7 @@ export const specDel = ({ dispatch }, param) => { //删除药材相关信息
 export const getClientList = ({ dispatch }, param) => { //客户信息列表与搜索
     param.loading = true;
     console.log(param);
+
     var clienturl = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     for (var search in param) {
         if (search == 'name' && param[search] !== '' && param[search] != 'undefined') {
@@ -3262,9 +3263,15 @@ export const transferInfo = ({ dispatch }, param) => { //客户部门划转信�
 
 export const getIntentionList = ({ dispatch }, param) => { //意向信息列表以及搜索
     param.loading = true;
-    console.log(param.link);
+    console.log(param);
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     for (var search in param) {
+        if (search == 'userName' && param[search] !== '') {
+            url += '&userName=' + param.userName
+        }
+        if (search == 'userPhone' && param[search] !== '') {
+            url += '&userPhone=' + param.userPhone
+        }
         if (search == 'type' && param[search] !== '') {
             url += '&type=' + param.type
         } 
