@@ -256,7 +256,7 @@
                     </div>
                     <div class="editpage-input col-md-6">
                         <label class="editlabel">{{$t('static.preferential')}}</label>
-                        <input type="number" class="form-control edit-input" v-model="param.preferential" value="{{parampreferential}}"/>
+                        <input type="number" class="form-control edit-input" v-model="param.preferential" value="{{param.preferential}}"/>
                     </div>
                     <div class="editpage-input col-md-6">
                         <label class="editlabel">{{$t('static.discount_note')}}</label>

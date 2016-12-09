@@ -61,10 +61,9 @@
                                             <th>{{$t('static.breed')}}</th>
                                             <th>{{$t('static.origin')}}</th>
                                             <th>{{$t('static.specification')}}</th>
-                                            <th>{{$t('static.quantity')}}</th>
+                                            <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                             <th>{{$t('static.quality')}}</th>
                                             <th>{{$t('static.price')}}</th>
-                                            <th>{{$t('static.unit')}}</th>
                                             <th>{{$t('static.total')}}</th>
                                           </thead>
                                         <tbody>
@@ -72,10 +71,9 @@
                                                 <td>{{item.breedName}}</td>
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
-                                                <td>{{item.number}}</td>
+                                                <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                 <td>{{item.quality}}</td>
-                                                <td>{{item.price}}元</td>
-                                                <td>{{item.unit}}</td>
+                                                <td>{{item.price}}元/{{item.unit | Unit}}</td>
                                                 <td>{{item.amount}}元</td>
                                             </tr>
                                         </tbody>
@@ -89,10 +87,9 @@
                                             <th>{{$t('static.breed')}}</th>
                                             <th>{{$t('static.origin')}}</th>
                                             <th>{{$t('static.specification')}}</th>
-                                            <th>{{$t('static.quantity')}}</th>
+                                            <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                             <th>{{$t('static.quality')}}</th>
                                             <th>{{$t('static.price')}}</th>
-                                            <th>{{$t('static.unit')}}</th>
                                             <th>{{$t('static.total')}}</th>
                                           </thead>
                                         <tbody>
@@ -100,10 +97,9 @@
                                                 <td>{{item.breedName}}</td>
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
-                                                <td>{{item.number}}</td>
+                                                <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                 <td>{{item.quality}}</td>
-                                                <td>{{item.price}}元</td>
-                                                <td>{{item.unit}}</td>
+                                                <td>{{item.price}}元/{{item.unit | Unit}}</td>
                                                 <td>{{item.amount}}元</td>
                                             </tr>
                                         </tbody>
@@ -220,7 +216,7 @@
                                     </table>
                                     </div>
                                 </div>
-                                 <!--<div class="panel-collapse" v-else v-show="!initOrderDetail.payPics.show" v-cloak>-->
+                                <!--<div class="panel-collapse" v-else v-show="!initOrderDetail.payPics.show" v-cloak>-->
                                     <!--<div class="panel-body panel-set">-->
                                         <!--<table class="table  contactSet">-->
                                           <!--<thead>-->
@@ -420,16 +416,24 @@
                                     <input type="text" class="form-control" value="{{initOrderDetail.consigneeAddr}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo  col-md-6 col-xs-12">
-                                    <label>{{$t('static.comment')}}</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.comments}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo  col-md-6 col-xs-12">
                                     <label>{{$t('static.sundry_fees')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.incidentals}}" disabled="disabled"/>
                                 </div>
                                 <div class="client-detailInfo   col-md-6 col-xs-12">
                                     <label>{{$t('static.fee_explain')}}</label>
                                     <input type="text" class="form-control" value="{{initOrderDetail.incidentalsDesc}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo  col-md-6 col-xs-12">
+                                    <label>{{$t('static.preferential')}}</label>
+                                    <input type="text" class="form-control"  value="{{initOrderDetail.preferential}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo   col-md-6 col-xs-12">
+                                    <label>{{$t('static.discount_note')}}</label>
+                                    <input type="text" class="form-control" value="{{initOrderDetail.preferentialDesc}}" disabled="disabled"/>
+                                </div>
+                                <div class="client-detailInfo  col-md-12">
+                                    <label>{{$t('static.comment')}}</label>
+                                    <input type="text" class="form-control"  value="{{initOrderDetail.comments}}" disabled="disabled"/>
                                 </div>
                             </div>
                         </div>

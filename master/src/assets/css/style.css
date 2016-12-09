@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2016-12-06 16:34:39
+* @Last Modified time: 2016-12-09 18:08:16
 */
 
 * {
@@ -121,8 +121,26 @@ body {
     left: 0;
     right: 0
 }
-
-
+/* .v-spinner{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: #000;
+    opacity: 0.3;
+}
+.v-pulse1,.v-pulse2,.v-pulse3{
+    position: absolute;
+    top:50%;
+    left: 49%;
+}
+.v-pulse2{
+left: 50%;
+}
+.v-pulse3{
+  left: 51%;  
+} */
 /*--搜索--*/
 
 .my_order_search {

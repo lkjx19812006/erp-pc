@@ -9,48 +9,43 @@
         </div>
         <validator name="validation">
             <div class="edit-model">
-
-                    <section class="editsection" v-cloak>
-                        <input type="hidden"  class="form-control edit-input" value="{{categoryData.id}}" />
-                        <div class="clearfix">
-                            <div class="client-detailInfo col-md-6 col-xs-12">
-                                <label class="editlabel">编码 <span class="system_danger" v-if="$validation.code.required">请输入编码</span></label>
-                                <input type="text" v-model='categoryData.code' class="form-control edit-input" value="{{categoryData.code | breedcode}}" v-validate:code="['required']" />
-                            </div>
-                            <div class="client-detailInfo  col-md-6 col-xs-12">
-                                <label class="editlabel">品种名称 <span class="system_danger" v-if="$validation.name.required">请输入品种名称</span></label>
-                                <input type="text" v-model='categoryData.name' class="form-control edit-input" value="{{categoryData.name}}" v-validate:name="['required']"/>
-                            </div>
-                            <div class="client-detailInfo  col-md-6 col-xs-12">
-                                <label class="editlabel">品种分类选择</label>
-                                <select class="form-control" v-model="categoryData.categoryId" style="width:90%;">
-                                   <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
-                                 </select>
-                            </div>
-                            <div class="client-detailInfo  col-md-6 col-xs-12">
-                                <label class="editlabel">品种名称拼音</label>
-                                <input type="text" v-model='categoryData.pinyin' class="form-control edit-input"  />
-                            </div>
-                            <div class="client-detailInfo  col-md-6 col-xs-12">
-                                <label class="editlabel">品种名称英文</label>
-                                <input type="text" v-model='categoryData.eName' class="form-control edit-input" />
-                            </div>
-                            <div class="client-detailInfo  col-md-6 col-xs-12">
-                                <label class="editlabel">品种名称拉丁文</label>
-                                <input type="text" v-model='categoryData.lName' class="form-control edit-input"  />
-                            </div>
+                <section class="editsection" v-cloak>
+                    <input type="hidden"  class="form-control edit-input" value="{{categoryData.id}}" />
+                    <div class="clearfix">
+                        <div class="client-detailInfo  col-md-6 col-xs-12">
+                            <label class="editlabel">品种名称 <span class="system_danger" v-if="$validation.name.required">请输入品种名称</span></label>
+                            <input type="text" v-model='categoryData.name' class="form-control edit-input" value="{{categoryData.name}}" v-validate:name="['required']"/>
                         </div>
-                      <div class="clearfix">
-                        <div class="editpage-input">
-                          　<label class="editlabel">修改图标</label>
-                          　<div class="editpage_img clearfix">
+                        <div class="client-detailInfo  col-md-6 col-xs-12">
+                            <label class="editlabel">品种分类选择</label>
+                            <select class="form-control edit-input" v-model="categoryData.categoryId" style="width:90%;">
+                               <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
+                             </select>
+                        </div>
+                        <div class="client-detailInfo  col-md-6 col-xs-12">
+                            <label class="editlabel">品种名称拼音</label>
+                            <input type="text" v-model='categoryData.pinyin' class="form-control edit-input"  />
+                        </div>
+                        <div class="client-detailInfo  col-md-6 col-xs-12">
+                            <label class="editlabel">品种名称英文</label>
+                            <input type="text" v-model='categoryData.eName' class="form-control edit-input" />
+                        </div>
+                        <div class="client-detailInfo  col-md-6 col-xs-12">
+                            <label class="editlabel">品种名称拉丁文</label>
+                            <input type="text" v-model='categoryData.lName' class="form-control edit-input" />
+                        </div>
+                    </div>
+                  <div class="clearfix">
+                    <div class="editpage-input">
+                      　<label class="editlabel">修改图标</label>
+                      　<div class="editpage_img clearfix">
                           <div class="editpage-image col-md-4">
                             <press-image :value.sync="categoryData.icon" :showurl.sync="categoryData.url" ></press-image>
                           </div>
-                          　</div>
-                          　</div>
-                      </div>
-                    </section>
+                      　</div>
+                    </div>
+                  </div>
+                </section>
             </div>
             <div class="edit_footer">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>

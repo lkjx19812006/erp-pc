@@ -187,9 +187,7 @@ export default {
     ready(){
       common('tab','table_box',1);
     },
-    created() {
-        this.getSystemData(this.loadParam,this.loadParam.all);
-    },
+    
     methods: {
         searchname: function() {
             this.getSystemSearch(this.loadParam);
@@ -223,8 +221,10 @@ export default {
             this.delParam.show=true;
         }
     },
-    filter:(filter,{})
-
+    filter:(filter,{}),
+    created() {
+        this.getSystemData(this.loadParam);
+    }
 }
 </script>
 <style scoped>

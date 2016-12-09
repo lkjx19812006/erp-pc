@@ -10,9 +10,6 @@
 <script>
 import enumlist from '../components/systemcomponent/emnulist'
 import province from '../components/systemcomponent/provincelist'
-import {
-    getList
-} from '../vuex/getters'
 
 export default {
     components: {
@@ -27,7 +24,7 @@ export default {
 
     vuex: {
         getters: {
-            getList
+           
         }
     },
     created() {
