@@ -6,18 +6,8 @@
     <div  class="myemploy">
         <div class="order_search">
             <div class="clear">
-                <div class="my_order col-xs-1" style="font-size:14px">员工列表</div>
+<!--                 <div class="my_order col-xs-1" style="font-size:14px">员工列表</div> -->
                 <div class="col-xs-9 my_order_search">
-                    <!-- <div class="name_search clearfix" style="border:none; float:left;">
-                       <select  class="form-control" v-model="loadParam.orgId" @change="loadByCondition()">
-                            <option selected value="">请选择业务员部门</option>
-                            <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-                      </select>
-                    </div> -->
-                    <!-- <div class="name_search clearfix">
-                        <img src="/static/images/search.png" height="24" width="24"  />
-                        <input type="text" class="search_input" v-model="loadParam.orgName"  placeholder="按部门搜索"  @keyup.enter="loadByCondition()">
-                    </div> -->
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24"  />
                         <input type="text" class="search_input" v-model="loadParam.name"  placeholder="按员工名字搜索" @keyup.enter="loadByCondition()">
@@ -327,7 +317,7 @@ export default {
     white-space: nowrap;
 }
 .order_search {
-    padding: 25px 30px 0 40px;
+    padding: 35px 30px 0 40px;
 }
 .transfer{
     margin-left: 18px;
@@ -351,7 +341,7 @@ export default {
 }
 
 .order_table {
-    margin-top: 20px;
+    margin-top: 0px;
     position: relative;
 }
 
@@ -371,10 +361,6 @@ export default {
 .order_pagination{
     margin: 0 auto;
     text-align: center;
-}
-
-.order_table {
-    margin-top: 10px;
 }
 
 .base_pagination{

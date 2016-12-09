@@ -8,65 +8,65 @@
     <div>
       <div class="order_search">
         <div class="clear">
-            <div class="my_order col-xs-2">{{$t('static.department_orders')}}</div>
             <div class="right">
-                <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button>
+                <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
                 <button class="new_btn transfer" @click="orgCheck()">{{$t('static.review')}}</button>
-                <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
             </div>
-        </div>
-        <div class="clear" style="margin-top:10px;">
-            <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
-               <dd class="left">
-                    <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                        <option value="">{{$t('static.please_select')}}</option>
-                        <option value="0">{{$t('static.purchase')}}</option>
-                        <option value="1">{{$t('static.sell')}}</option>
-                    </select>
-               </dd>
-            </dl>
-            <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
-               <dd class="left">
-                     <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
-                            <option value="">{{$t('static.please_select')}}</option>
-                            <option value="0">{{$t('static.order_generation')}}</option>
-                            <!-- <option value="10">{{$t('static.pending')}}</option> -->
-                            <option value="20">{{$t('static.wait_for_payment')}}</option>
-                            <option value="30">{{$t('static.wait_for_audit')}}</option>
-                            <option value="40">{{$t('static.wait_for_delivery')}}</option>
-                            <option value="50">{{$t('static.wait_for_receiving')}}</option>
-                            <option value="60">{{$t('static.awaiting_comment')}}</option>
-                            <option value="70">{{$t('static.completed')}}</option>
-                            <option value="-1">{{$t('static.canceled')}}</option>
-                            <option value="-2">{{$t('static.out_of_date')}}</option>
-                    </select>
-               </dd>
-            </dl>
-            <!-- <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.payment_method')}}：</dt>
-               <dd class="left">
-                     <select v-model="loadParam.payWay"  class="form-control" @change="selectSearch()">
-                            <option value="">{{$t('static.please_select')}}</option>
-                            <option value="0">{{$t('static.offline')}}</option>
-                            <option value="1">{{$t('static.alipay')}}</option>
-                            <option value="2">{{$t('static.pingan')}}</option>
-                            <option value="3">{{$t('static.yaokuan')}}</option>
-                    </select>
-               </dd>
-            </dl> -->
-            <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
-               <dd class="left">
-                     <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
-                        <option value="">{{$t('static.please_select')}}</option>
-                        <option value="1">{{$t('static.together')}}</option>
-                        <option value="2">{{$t('static.three_side')}}</option>
-                        <option value="3">{{$t('static.self_support')}}</option>
-                    </select>
-               </dd>
-            </dl>
+            <div class="clear left">
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
+                 <dd class="left">
+                      <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
+                          <option value="">{{$t('static.please_select')}}</option>
+                          <option value="0">{{$t('static.purchase')}}</option>
+                          <option value="1">{{$t('static.sell')}}</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
+                              <option value="">{{$t('static.please_select')}}</option>
+                              <option value="0">{{$t('static.order_generation')}}</option>
+                              <!-- <option value="10">{{$t('static.pending')}}</option> -->
+                              <option value="20">{{$t('static.wait_for_payment')}}</option>
+                              <option value="30">{{$t('static.wait_for_audit')}}</option>
+                              <option value="40">{{$t('static.wait_for_delivery')}}</option>
+                              <option value="50">{{$t('static.wait_for_receiving')}}</option>
+                              <option value="60">{{$t('static.awaiting_comment')}}</option>
+                              <option value="70">{{$t('static.completed')}}</option>
+                              <option value="-1">{{$t('static.canceled')}}</option>
+                              <option value="-2">{{$t('static.out_of_date')}}</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
+                 <dd class="left">
+                       <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
+                          <option value="">{{$t('static.please_select')}}</option>
+                          <option value="1">{{$t('static.together')}}</option>
+                          <option value="2">{{$t('static.three_side')}}</option>
+                          <option value="3">{{$t('static.self_support')}}</option>
+                      </select>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                 <dd class="left">
+                    <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
+                 <dd class="left">
+                    <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
+                 </dd>
+              </dl>
+              <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+                <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+            </div>
         </div>
       </div>
       <div class="order_table" id="table_box">
@@ -463,7 +463,7 @@
         white-space: nowrap;
     }
     .order_search {
-        padding: 25px 30px 0 40px;
+        padding: 35px 30px 0 40px;
     }
     .checkbox_unselect{
         background-image: url(/static/images/unselect.png);
@@ -491,7 +491,7 @@
         margin-right: 20px;
     }
     .order_table {
-        margin-top: 20px;
+        margin-top: 0px;
         position: relative;
     }
     .order_table .table > ul {

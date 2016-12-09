@@ -5,8 +5,7 @@
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	<div class="order_search">
         <div class="clear">
-            <div class="my_order col-xs-2">枚举类型</div>
-            <div class="col-xs-8 my_order_search">
+            <div class="my_order_search left">
                 <div class="name_search">
                     <select class="form-control"  v-model="loadParam.sel" @change="searchname(
                     )">

@@ -698,8 +698,6 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         preferential: data.preferential,
         preferentialDesc: data.preferentialDesc,
         currency: data.currency,
-        consignee: data.consignee,
-        consigneePhone: data.consigneePhone,
         zipCode: data.zipCode,
         country: data.country,
         province: data.province,
@@ -707,13 +705,23 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         employee: data.employee,
         org: data.org,
         district: data.district,
-        consigneeAddr: data.consigneeAddr,
+        consigneeAddr:data.country+','+data.province+','+data.city+','+data.district+','+data.consigneeAddr,
         comments: data.comments,
         orderStatus: data.orderStatus,
         goods: data.goods
     }
     if (data.email) {
         body.email = data.email;
+    }
+    if(data.consignee==''){
+        body.consignee = data.customerName;
+    }else{
+       body.consignee = data.consignee; 
+    }
+    if(data.consigneePhone==''){
+        body.consigneePhone = data.customerPhone;
+    }else{
+        body.consigneePhone = data.consigneePhone;
     }
     console.log(body);
     Vue.http({
@@ -739,6 +747,9 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         data.goodsDesc = res.json().result.goodsDesc;
         data.total = res.json().result.total;
         data.ctime = new Date();
+        data.consignee = res.json().result.consignee;
+        data.consigneePhone = res.json().result.consigneePhone;
+        data.consigneeAddr = res.json().result.consigneeAddr;
         data.mode = 3;
         if(res.json().code==200){
            dispatch(types.ORDER_ADD_DATA, data);

@@ -107,7 +107,6 @@ export default {
 .my_order {
     float: left;
     color: #fa6705;
-    font-size: 20px;
     padding: 0;
 }
 .name_search{

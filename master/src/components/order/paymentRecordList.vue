@@ -2,7 +2,6 @@
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
   <div v-show="!changeParam.show">
     <div class="service-nav clearfix">
-      <div class="my_enterprise col-xs-2">{{$t('static.payrecord')}}</div>
       <div class="my_order_search">
           <select  v-model="loadParam.payWay" class="form-control" @change="searchProduct()">
               <option value="">{{$t('static.select_payment_method')}}</option>
