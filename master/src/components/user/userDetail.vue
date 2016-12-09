@@ -526,6 +526,7 @@ export default {
           customerName:this.initUserDetail.fullname,
           //phone:this.initUserDetail.phone,
           customerPhone:this.initUserDetail.phone,
+          callback:'',
           id:'',
           breedId:'',
           breedName:'',
@@ -756,6 +757,7 @@ export default {
               flag:0,   //0表示创建，1表示修改
               sub:'',
               key:'user',
+              callback:this.intentionCallback,
               userId:this.initUserDetail.id,
               //fullname:this.initUserDetail.fullname,
               customerName:this.initUserDetail.fullname,
@@ -788,7 +790,7 @@ export default {
               intl:0,
               sampleNumber:0,
               sampleAmount:0,
-              qualification:'GMP',
+              qualification:'',
               url:'/intention/',
               image_f:'',
               image_s:'',
@@ -804,6 +806,12 @@ export default {
           console.log(this.intentionParam);
           this.intentionParam.flag = 1;
           this.intentionParam.show = true;
+        },
+
+        intentionCallback:function(title){
+            this.tipParam.show = true;
+            this.tipParam.name=title;
+            this.tipParam.alert=true;
         },
 
         getUserDetail:function(){

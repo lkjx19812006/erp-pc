@@ -1,7 +1,7 @@
 <template>
     <div>
       <select class="form-control edit-input" v-model="language"  style="width:100px">
-        <option value="zh_CN" selected>中文</option>
+        <option value="zh_CN">中文</option>
         <option value="en">English</option>
       </select>
     </div>
@@ -17,10 +17,20 @@
         },
       watch:{
         'language':function(val){
+          if(!val){
+            val = 'zh_CN';
+          }
           Vue.config.lang = val;
+          localStorage.lang = val;
           this.$dispatch('lang',val);
         }
       },
+      created(){
+            console.log(localStorage.lang);
+            if(localStorage.lang){
+              this.language = localStorage.lang;
+            }
+        }
     }
 </script>
 <style scoped>

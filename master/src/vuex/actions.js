@@ -4736,6 +4736,7 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
 }
 
 export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增意向
+    console.log(param);
     if (!param.images) {
         param.images = '';
     }
@@ -4793,11 +4794,14 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
         }
     }).then((res) => {
         console.log('添加成功')
+        if(param.callback){
+            console.log("有回调函数");
+            param.callback(res.json().msg);
+        } 
         param.id = res.json().result.intentionId;
         param.checked = false;
         param.show = false;
         param.ctime = today.toLocaleDateString();
-        param.callback(res.json().msg);
         if(res.json().code==200){
              dispatch(types.INTENTION_DATA, param);
         }

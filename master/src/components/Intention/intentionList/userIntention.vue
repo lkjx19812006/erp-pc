@@ -9,60 +9,59 @@
      <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
      <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
+     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
 
    <div>
         <div class="service-nav">
           <div class="clearfix">
-              <div class="my_enterprise col-xs-2">会员意向</div>
-              <div class="right">
+              <!--  <div class="my_enterprise col-xs-2">会员意向</div> -->
+              <!-- <div class="right">
                   <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
                   <button class="new_btn transfer" @click="search()">搜索</button>
                   <button class="new_btn transfer" @click="intentionAudit()">审核</button>
-              </div>
+              </div> -->
           </div>
-          <div class="clear" style="margin-top:10px;">
+          <div class="clear" style="margin-top:3px;">
+
               <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">意向类型：</dt>
+                 <dt class="left transfer marg_top" style="letter-spacing:3px" >会员名：</dt>
                  <dd class="left">
-                      <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                          <option value="">全部</option>
-                          <option value="0">求购</option>
-                          <option value="1">供应</option>
-                      </select>
+                      <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                  </dd>
               </dl>
-              <dl class="clear left transfer" v-show="loadParam.type==1&&loadParam.type">
-                 <dt class="left transfer marg_top">供应类型：</dt>
-                 <dd class="left">
-                       <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
-                              <option value="">全部</option>
-                              <option value="0">普通供应</option>
-                              <option value="1">低价资源</option>
-                      </select>
-                 </dd>
-              </dl>
-              <dl class="clear left transfer" v-show="loadParam.type==0&&loadParam.type">
-                 <dt class="left transfer marg_top">求购类型：</dt>
-                 <dd class="left">
-                       <select v-model="loadParam.especial"  class="form-control" @change="selectSearch()">
-                              <option value="">全部</option>
-                              <option value="0">普通求购</option>
-                              <option value="1">紧急求购</option>
-                      </select>
-                 </dd>
-              </dl>
+
               <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">发票提供：</dt>
+                 <dt class="left transfer marg_top" style="letter-spacing:3px" >会员手机：</dt>
                  <dd class="left">
-                       <select v-model="loadParam.invoic"  class="form-control" @change="selectSearch()">
-                                <option value="">全部</option>
-                                <option value="0">无发票</option>
-                                <option value="1">普通发票</option>
-                                <option value="2">增值发票</option>
-                      </select>
+                      <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                  </dd>
               </dl>
+
               <dl class="clear left transfer">
+                 <dt class="left transfer marg_top" style="letter-spacing:3px" >品种：</dt>
+                 <dd class="left">
+                      <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" placeholder="选择品种" @click="breedSearch()" >
+                 </dd>
+              </dl>
+
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top" style="letter-spacing:3px" >产地：</dt>
+                 <dd class="left">
+                      <input type="text" class="form-control" v-model="loadParam.location" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                 </dd>
+              </dl>
+              
+              <dl class="clear left transfer">
+                 <!-- <button class="new_btn transfer" @click="search()">搜索</button> -->
+                 <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
+                 <!-- <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button> -->
+              </dl>
+              
+
+              
+              
+              
+              <!-- <dl class="clear left transfer">
                  <dt class="left transfer marg_top">审核状态：</dt>
                  <dd class="left">
                        <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
@@ -76,8 +75,8 @@
                           <option value="-3">业务主管审核不通过</option>
                       </select>
                  </dd>
-              </dl>
-              <dl class="clear left transfer">
+              </dl> -->
+              <!-- <dl class="clear left transfer">
                  <dt class="left transfer marg_top">上/下架状态：</dt>
                  <dd class="left">
                        <select v-model="loadParam.onSell"  class="form-control" @change="selectSearch()">
@@ -91,8 +90,59 @@
                           <option value="-4">下架失败</option>
                       </select>
                  </dd>
-              </dl>
+              </dl> -->
           </div>
+
+          <div class="clear" style="margin-top:3px;">
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">意向类型：</dt>
+                 <div class="btn-group">
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===''&&this.loadParam.especial===''}" @click="selectType('','')">
+                        全部
+                     </button>
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0&&this.loadParam.especial===0}" @click="selectType(0,0)">
+                        普通求购
+                     </button>
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0&&this.loadParam.especial===1}" @click="selectType(0,1)">
+                        紧急求购
+                     </button>
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===1&&this.loadParam.especial===0}" @click="selectType(1,0)">
+                        普通供应
+                     </button>
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===1&&this.loadParam.especial===1}" @click="selectType(1,1)">
+                        低价资源
+                     </button>
+                 </div>
+              </dl>
+
+              <dl class="clear left transfer" style="margin-left:50px">
+                 <dt class="left transfer marg_top">审核状态：</dt>
+                 <div class="btn-group">
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===''}" @click="selectValidate('')">
+                        全部
+                     </button>
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===0}" @click="selectValidate(0)">
+                        待审核
+                     </button>
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===1}" @click="selectValidate(1)">
+                        审核通过
+                     </button>
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===-1}" @click="selectValidate(-1)">
+                        审核不通过
+                     </button>
+                 </div>
+              </dl>
+
+              <dl class="clear left transfer" style="margin-left:50px">
+                 
+                 <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+              </dl>
+
+              <dd class="pull-right" style="margin-right:20px">
+                  <button type="button" class="btn btn-default" height="24" width="24" @click="intentionAudit()">审核</button>
+              </dd>
+          </div>
+
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">
@@ -334,6 +384,7 @@ import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
 import transferModel  from '../../user/userTransfer'
 import searchModel from '../intentionSearch'
+import breedsearchModel from '../breedsearch'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 
@@ -361,7 +412,8 @@ export default {
         createintentModel,
         supdemModel,
         transferModel,
-        searchModel
+        searchModel,
+        breedsearchModel
     },
     vuex: {
         getters: {
@@ -396,7 +448,7 @@ export default {
                 advance:'',  //预付比例
                 intl:'',  //是否国际
                 validate:'',  //审核状态
-                onSell:'', //审核状态
+                onSell:'', //上架状态
                 total:0,
                 breedId:'',
                 breedName:'',
@@ -449,6 +501,9 @@ export default {
             offerParam:{
               show:false,
               id:''
+            },
+            breedSearchParam:{
+              show:false    
             },
             checked:false
         }
@@ -511,6 +566,18 @@ export default {
                   item.checked = false;
                 })
             }
+        },
+        breedSearch:function(){
+            this.breedSearchParam.show = true;
+        },
+        selectType:function(type,especial){
+            this.loadParam.type = type;
+            this.loadParam.especial = especial;
+            this.selectSearch();
+        },
+        selectValidate:function(validate){
+            this.loadParam.validate = validate;
+            this.selectSearch();
         },
         intentionAudit:function(){
             this.intentionAuditParam.arr = [];
@@ -621,6 +688,12 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getIntentionList(this.loadParam);
+        },
+        breed:function(breed){
+            this.loadParam.breedId=breed.breedId;
+            this.loadParam.breedName=breed.breedName;
+            this.selectSearch();
+            
         }
     },
     created() {
@@ -643,7 +716,7 @@ export default {
     right: 106px;
 }
 .transfer{
-    margin-left: 18px;
+    margin-right: 8px;
 }
 .checkbox_unselect{
     background-image: url(/static/images/unselect.png);
@@ -670,6 +743,12 @@ export default {
 #table_box table th,#table_box table td{
     width: 116px;
     min-width: 116px;
+}
+.service-nav {
+    padding: 23px 30px 0px 4px;
+}
+dl{
+    margin-bottom: 5px;
 }
 </style>
 
