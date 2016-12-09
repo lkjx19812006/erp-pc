@@ -3597,6 +3597,10 @@ export const getEmpIntlIntentionList = ({ dispatch }, param) => { //业务员国
     if (param.customerEmail !== '') {
         url += '&customerEmail=' + param.customerEmail;
     }
+    if (param.inquire !== '') {
+        url += '&inquire=' + param.inquire;
+    }
+
 
     Vue.http({
         method: 'GET',

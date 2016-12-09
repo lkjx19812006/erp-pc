@@ -124,7 +124,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                         {{$t('static.pay_evidence')}}（0）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments({
+                                        <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments({
                                             show:true,
                                             orderId:initOrderDetail.id,
                                             link:dividedPayment,
@@ -134,8 +134,7 @@
                                             ratio:'',
                                             description:'',
                                             rtime:''
-                                            })"  v-if="(initOrderDetail.stages.arr.length!==null&&param.contact=='/order/myList')">{{$t('static.new')}}</button>
-                                        <!--<button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>-->
+                                            })"  v-if="(initOrderDetail.stages.arr.length!==null&&param.contact=='/order/myList')">{{$t('static.new')}}</button> -->
                                         <a v-else></a>
                                     </h4>
                                 </div>
