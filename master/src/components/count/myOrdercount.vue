@@ -52,27 +52,27 @@
             </thead>
             <tbody>
                 <tr v-for="item in initMyOrderCount">
-                    <th></th>
-                	<th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
-                    <th>1</th>
+                    <th>{{$store.state.table.login.name}}</th>
+                	<th>{{item.saleAllOrderNumber}}</th>
+                    <th>{{item.saleAllOrderAmount}}</th>
+                    <th>{{item.saleAllOrderMoney}}元</th>
+                    <th>{{item.saleEndOrderNumber}}</th>
+                    <th>{{item.saleEndOrderAmount}}</th>
+                    <th>{{item.saleEndOrderMoney}}元</th>
+                    <th>{{item.saleIngOrderNumber}}</th>
+                    <th>{{item.saleIngOrderAmount}}</th>
+                    <th>{{item.saleIngOrderMoney}}元</th>
+                    <th>{{item.saleIngOrderUnpaid}}元</th>
+                    <th>{{item.buyAllOrderNumber}}</th>
+                    <th>{{item.buyAllOrderAmount}}</th>
+                    <th>{{item.buyAllOrderMoney}}元</th>
+                    <th>{{item.buyEndOrderNumber}}</th>
+                    <th>{{item.buyEndOrderAmount}}</th>
+                    <th>{{item.buyEndOrderMoney}}元</th>
+                    <th>{{item.buyIngOrderNumber}}</th>
+                    <th>{{item.buyIngOrderAmount}}</th>
+                    <th>{{item.buyIngOrderMoney}}元</th>
+                    <th>{{item.buyIngOrderUnpaid}}元</th>
                 </tr>
             </tbody>
         </table>
@@ -94,14 +94,15 @@
                 <th colspan="6">采购订单</th>
             </tr>
             <tr style="background:none;color:#000">
-                <th rowspan="2">业务员/部门</th>
+                <!-- <th rowspan="2">业务员/部门</th> -->
+                <th rowspan="2">时间</th>
                 <th colspan="3">新增汇总</th>
                 <th colspan="3">已完成</th>
                 <th colspan="3">新增汇总</th>
                 <th colspan="3">已完成</th>
                 
             </tr>
-            <tr style="background:none;color:#000">
+            <tr style="background:none;color:#000" >
                 <th>订单数</th>
                 <th>重量</th>
                 <th>订单金额</th>
@@ -116,38 +117,31 @@
                 <th>订单金额</th>
             </tr>
 
-            <tr>
-                <td>马小林</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
+            <tr v-for="item in initMyTimeOrderCount">
+                <td>
+                    <div v-if="timeParam.timeType=='day'">{{item.date}}</div>
+                    <div v-if="timeParam.timeType=='week'">{{item.date}}周</div>
+                    <div v-if="timeParam.timeType=='month'">{{item.date}}月</div>
+                    <div v-if="timeParam.timeType=='quarter'">{{item.date}}季度</div>
+                    <div v-if="timeParam.timeType=='year'">{{item.date}}年</div>
+                </td>
+                <td>{{item.saleAddOrderNumber}}</td>
+                <td>{{item.saleAddOrderAmount}}</td>
+                <td>{{item.saleAddOrderMoney}}元</td>
+                <td>{{item.saleEndOrderNumber}}</td>
+                <td>{{item.saleEndOrderAmount}}</td>
+                <td>{{item.saleEndOrderMoney}}元</td>
+                <td>{{item.buyAddOrderNumber}}</td>
+                <td>{{item.buyAddOrderAmount}}</td>
+                <td>{{item.buyAddOrderMoney}}元</td>
+                <td>{{item.buyEndOrderNumber}}</td>
+                <td>{{item.buyEndOrderAmount}}</td>
+                <td>{{item.buyEndOrderMoney}}元</td>
             </tr>  
 
         </table> 
         <div class="module_table" v-show="currentView==1">
-            <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-            </tr>    
+              
         </div>
 
         <div class="module_table" v-show="currentView==2">
@@ -172,10 +166,12 @@
 <script>
 	import searchModel from  './searchCount'
 	import {
-		initClientcount
+		initMyOrderCount,
+        initMyTimeOrderCount
 	} from '../../vuex/getters'
 	import {
-		getClientcount
+		getOrderCount,
+        getTimeOrderCount
 	} from '../../vuex/actions'
 	import pagination from  '../pagination'
 	export default {
@@ -187,13 +183,18 @@
 	        return {
 	            loadParam: {
 	                loading: true,
-	                show:false,
-	                color: '#5dc596',
-	                size: '15px',
-	                cur: 1,
-	                all: 7,
-	                total:0
+                    link:"/report/order/employee",
+                    key:"myOrderCount",
+                    focus:'all',    
+                    employeeId:this.$store.state.table.login.id
 	            },
+                timeParam: {
+                    loading: true,
+                    link:"/report/order/timeRange",
+                    timeType:"day",  
+                    objType:"employee" ,
+                    objId:this.$store.state.table.login.id, 
+                },
 	            searchParam:{
 	            	show:false
 	            },
@@ -211,17 +212,23 @@
             clickday:function(){
                 this.isA = true;
                 this.currentView = 1;
+                this.timeParam.timeType = "day";
+                this.getTimeOrderCount(this.timeParam);
             },
             clickweek:function(){
                 this.isB = true;
                 this.isA = false;
                 this.currentView = 2;
+                this.timeParam.timeType = "week";
+                this.getTimeOrderCount(this.timeParam);
             },
             clickmonth:function(){
                 this.isB = false;
                 this.isA = false;
                 this.isC = false;
                 this.currentView = 3;
+                this.timeParam.timeType = "month";
+                this.getTimeOrderCount(this.timeParam);
             },
             clickquarter:function(){
                 this.isB = false;
@@ -229,6 +236,8 @@
                 this.isC = true;
                 this.isD = true;
                 this.currentView = 4;
+                this.timeParam.timeType = "quarter";
+                this.getTimeOrderCount(this.timeParam);
             },
             clickyear:function(){
                 this.isB = false;
@@ -236,25 +245,27 @@
                 this.isC = true;
                 this.isD = false;
                 this.currentView = 5;
+                this.timeParam.timeType = "year";
+                this.getTimeOrderCount(this.timeParam);
             }
 
 	    },
 	    vuex: {
 	        getters: {
-	            initClientcount
+	            initMyOrderCount,
+                initMyTimeOrderCount
 	        },
 	        actions: {
-	            getClientcount
+	            getOrderCount,
+                getTimeOrderCount
 	        }
 	    },
 	    events: {
-	        fresh: function(input) {
-	            this.loadParam.cur = input;
-	            this.getClientcount(this.loadParam);
-	        },
+	        
 	    },
 	    created() {
-	        this.getClientcount(this.loadParam);
+	        this.getOrderCount(this.loadParam);
+            this.getTimeOrderCount(this.timeParam);
 	    }
 	}
 </script>
