@@ -164,6 +164,7 @@
                                             link:saveCreate,
                                             key:'myCustomerList'
                                             })">{{$t("static.new")}}</button>
+                  <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                 </dd>
 
             </div>

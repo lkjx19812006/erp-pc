@@ -423,7 +423,7 @@
         white-space: nowrap;
     }
     .order_search {
-        padding: 35px 30px 0 40px;
+        padding: 35px 10px 0 10px;
     }
     .transfer{
         margin-right: 20px;

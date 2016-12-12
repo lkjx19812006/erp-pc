@@ -134,6 +134,7 @@
                         })">{{$t("static.assigned_to_employee")}}</button>
                   <button type="button" class="btn btn-default" @click="clientTransferBlack()">{{$t("static.drag_into_blacklist")}}</button>
                   <button type="button" class="btn btn-default" @click="clientTransferSupplier()">{{$t("static.make_them_become_supplier")}}</button>
+                  <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                  
                 </dd>
 

@@ -158,7 +158,8 @@
                                         ],
                                         link:saveCreate,
                                         key:'supplyCustomerList'
-                                        })">新建</button>   
+                                        })">新建</button>  
+                    <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>                       
                 </dd>
 
             </div>
@@ -396,6 +397,8 @@
           phoneProvinceName:'',
           label:'',
           creditLevel:'',
+          ctimeStart:'',
+          ctimeEnd:'',
           total:0
 
         },
@@ -468,6 +471,8 @@
             this.loadParam.phoneProvinceName='';
             this.loadParam.label='';
             this.loadParam.creditLevel='';
+            this.loadParam.ctimeStart='';
+            this.loadParam.ctimeEnd='';
             this.getClientList(this.loadParam);
         },
       eventClick:function(id){
@@ -546,5 +551,8 @@
 }
 dl{
     margin-bottom: 5px;
+}
+.client-detailInfo{
+    padding: 0 15px 0px 15px;
 }
 </style>

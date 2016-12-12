@@ -65,7 +65,7 @@
                     <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
                  </dd>
               </dl>
-              <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+              <button type="button" class="new_btn"  @click="resetTime()">{{$t('static.clear_all')}}</button>
                 <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
             </div>
         </div>
@@ -651,7 +651,7 @@
         white-space: nowrap;
     }
     .order_search {
-        padding:35px 30px 0 40px;
+        padding:35px 10px 0 10px;
     }
     .transfer{
         margin-right: 10px;
