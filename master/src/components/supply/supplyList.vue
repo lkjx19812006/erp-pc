@@ -396,6 +396,8 @@
           phoneProvinceName:'',
           label:'',
           creditLevel:'',
+          ctimeStart:'',
+          ctimeEnd:'',
           total:0
 
         },
@@ -468,6 +470,8 @@
             this.loadParam.phoneProvinceName='';
             this.loadParam.label='';
             this.loadParam.creditLevel='';
+            this.loadParam.ctimeStart='';
+            this.loadParam.ctimeEnd='';
             this.getClientList(this.loadParam);
         },
       eventClick:function(id){

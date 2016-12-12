@@ -34,7 +34,7 @@
             <table class="table table-hover table_color table-striped" v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th>编码</th>
+                        <th>编码{{$t('static.new')}}</th>
                         <th>品种名称</th>
                         <th>品种类别</th>
                         <th>拼音</th>
