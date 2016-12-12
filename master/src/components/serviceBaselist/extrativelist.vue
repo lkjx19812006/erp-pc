@@ -1,8 +1,7 @@
 <template>
 
-    <div class="service-nav clearfix">
-        <div class="my_enterprise col-xs-1">提取物</div>
-        <div>
+    <div class="service-nav clearfix" style="padding-bottom:10px;">
+        <div class="left">
             <div class="name_search clearfix">
                 <img src="/static/images/search.png" height="24" width="24">
                 <input type="text" class="search_input" placeholder="按名称搜索" v-model="loadParam.name" @keyup.enter="categoryNameSearch()">
@@ -12,9 +11,12 @@
                 <input type="text" class="search_input" placeholder="按公司名称搜索" v-model="loadParam.company" @keyup.enter="categoryNameSearch()">
             </div>
             <div class="name_search clearfix" style="border:none">
-                <button class="new_btn" style="height: 30px;padding: 0 10px;" @click="categoryNameSearch()">搜索</button>
-                <button class="new_btn" style="height: 30px;padding: 0 10px;margin-right:10px;" @click="reset()">清空条件</button>
+            <button class="new_btn" style="height: 30px;padding: 0 10px;" @click="categoryNameSearch()">搜索</button>
+            <button class="new_btn" style="height: 30px;padding: 0 10px;margin-right:10px;" @click="reset()">清空条件</button>
             </div>
+       </div>
+       <div class="right">
+           <button class="btn btn-primary"  @click="categoryNameSearch()">刷新</button>
        </div>
     </div>
     <div class="order_table" id="table_box">

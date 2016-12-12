@@ -2,22 +2,27 @@
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
   <div v-show="!changeParam.show">
     <div class="service-nav clearfix">
-      <div class="my_order_search">
-          <select  v-model="loadParam.payWay" class="form-control" @change="searchProduct()">
-              <option value="">{{$t('static.select_payment_method')}}</option>
-              <option value="0">{{$t('static.line_down')}}</option>
-              <option value="1">{{$t('static.alipay')}}</option>
-              <option value="2">{{$t('static.pingan')}}</option>
-              <option value="3">{{$t('static.yaokuan')}}</option>
-          </select>
+      <div class="clearfix left" >
+        <div class="my_order_search">
+            <select  v-model="loadParam.payWay" class="form-control" @change="searchProduct()">
+                <option value="">{{$t('static.select_payment_method')}}</option>
+                <option value="0">{{$t('static.line_down')}}</option>
+                <option value="1">{{$t('static.alipay')}}</option>
+                <option value="2">{{$t('static.pingan')}}</option>
+                <option value="3">{{$t('static.yaokuan')}}</option>
+            </select>
+        </div>
+        <div class="left clearfix">
+           <input type="text"  class="form-control" v-model="loadParam.orderNo" placeholder="{{$t('static.order_no')}}" @keyUp.enter="searchProduct()" />
+        </div>
+        <div class="left">
+           <button class="new_btn transfer" @click="searchProduct()">{{$t('static.search')}}</button>
+           <button class="new_btn transfer" @click="reset()">{{$t('static.clear_all')}}</button>
+        </div>
       </div>
-      <div class="left clearfix">
-         <input type="text"  class="form-control" v-model="loadParam.orderNo" placeholder="{{$t('static.order_no')}}" @keyUp.enter="searchProduct()" />
+      <div class="clearfix right" >
+          <button class="btn btn-primary" @click="searchProduct()">{{$t('static.refresh')}}</button>
       </div>
-      <div class="left">
-         <button class="new_btn transfer" @click="searchProduct()">{{$t('static.search')}}</button>
-         <button class="new_btn transfer" @click="reset()">{{$t('static.clear_all')}}</button>
-     </div>
     </div>
     <div class="order_table" id="table_box">
       <div class="cover_loading">
@@ -137,7 +142,9 @@
   .transfer{
     margin-left: 18px;
   }
-
+  .service-nav{
+    padding-bottom:10px;
+  }
   .my_order_search{
     width: 170px;
     float: left;

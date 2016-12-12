@@ -5,11 +5,10 @@
     <update-model :param="updateParam" v-if="updateParam.show"></update-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <div>
-        <div class="service-nav">
+        <div class="service-nav" style="padding-bottom:5px;">
             <div class="clearfix">
-                <div class="my_order_search" style="float:right">
-                    <a class="new_btn transfer"   @click="loadParam.show=true">搜索</a>
-                    <a class="new_btn transfer"   @click="resetCondition()">清空条件</a>
+                <div class="pull-right" >
+                    <button class="btn btn-primary transfer"   @click="selectSearch()">刷新</button>
                 </div>
 
                 <dl class="clear left transfer">
@@ -35,6 +34,8 @@
                         </select>
                    </dd>
                 </dl>
+                <button class="btn btn-default transfer"   @click="selectSearch()">搜索</button>
+                <button class="btn btn-default transfer"   @click="resetCondition()">清空条件</button>
             </div>
         </div>
         <div class="order_table" v-cloak id="table_box">

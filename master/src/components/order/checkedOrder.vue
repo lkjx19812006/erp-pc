@@ -7,9 +7,9 @@
       <div class="order_search">
         <div class="clear">
             <div class="my_order col-xs-2">{{$t('static.pay_confirm')}}</div>
-           <!--  <div class="right">
-               <button class="new_btn transfer" @click="createSearch()">搜索</button>
-           </div> -->
+            <div class="right">
+                <button class="btn btn-primary transfer" @click="createSearch()">{{$t('static.refresh')}}</button>
+            </div>
         </div>
       </div>
       <div class="order_table" id="table_box">
@@ -268,8 +268,7 @@
                  this.dialogParam=param;
             },
             createSearch:function(){
-                 this.loadParam.show=true;
-                 this.loadParam.loading=false;
+                this.getOrderCheckList(this.loadParam);
             },
             clickOn:function(param){
                 this.detailParam=param;
@@ -326,7 +325,7 @@
         margin-right: 20px;
     }
     .order_table {
-        margin-top: 20px;
+        margin-top: 10px;
         position: relative;
     }
 

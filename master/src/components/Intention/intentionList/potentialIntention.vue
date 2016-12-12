@@ -10,14 +10,6 @@
      <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
    <div>
         <div class="service-nav">
-          <div class="clearfix">
-              <!-- <div class="my_enterprise col-xs-2">意向资源池</div> -->
-              <div class="right">
-                  <!-- <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-                  <button class="new_btn transfer" @click="search()">搜索</button> -->
-                  <!-- <button class="new_btn transfer" @click="intentionAudit()">审核</button> -->
-              </div>
-          </div>
           <div class="clear" style="margin-top:10px;">
               <dl class="clear left transfer">
                  <dt class="left transfer marg_top" style="letter-spacing:3px" >客户名：</dt>
@@ -48,6 +40,7 @@
               </dl>
               
               <dl class="clear left transfer">
+
                  <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
               </dl>
           </div>
@@ -96,13 +89,12 @@
                  <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
               </dl>
 
-              <dd class="pull-right" style="margin-right:20px">
-                  <button type="button" class="btn btn-default" height="24" width="24" @click="intentionAudit()">审核</button>
+              <dd class="pull-right" style="margin-right:10px">
+                  <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" @click="intentionAudit()">审核</button>
+                  <button type="button" class="btn btn-primary" height="24" width="24" @click="selectSearch()">刷新</button>
               </dd>
 
             </div>
-
-
 
 
         </div>
@@ -658,7 +650,7 @@ export default {
     background-position: 5px;
 }
 .service-nav {
-    padding: 23px 30px 0px 4px;
+    padding: 35px 10px 0px 4px;
 }
 dl{
     margin-bottom: 5px;

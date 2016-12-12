@@ -4,19 +4,37 @@
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	 <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2" style="font-size:14px">我的报价</div>
+            <div class="clear pull-left">
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">会员名：</dt>
+                 <dd class="left">
+                      <input type="text" class="form-control" v-model="loadParam.fullname" placeholder="按回车键搜索" @keyup.enter="offerSearch()">
+                 </dd>
+              </dl>
+
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top" >会员手机：</dt>
+                 <dd class="left">
+                      <input type="text" class="form-control" v-model="loadParam.userPhone" placeholder="按回车键搜索" @keyup.enter="offerSearch()">
+                 </dd>
+              </dl>
+
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top" >报价时间：</dt>
+                 <dd class="left">
+                      <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss" class="a">
+                      </mz-datepicker>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer">
+                 <button type="button" class="btn btn-default" height="24" width="24" @click="offerSearch()">搜索</button>
+                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
+              </dl>
+            </div>
             <div class="right">
-              <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-              <button class="new_btn transfer" @click="searchOffer()">搜索</button>
+              <button class="btn btn-primary" @click="offerSearch()">刷新</button>
               <!-- <button class="new_btn" @click="createIntention()">新建</button> -->
             </div>
-        </div>
-        <div class="service-nav clearfix">
-            <div class="my_order_search">
-               <div class="filter_search clearfix">
-
-               </div>
-           </div>
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">
@@ -185,6 +203,10 @@ export default {
         searchOffer:function(){
           this.loadParam.show = true;
         },
+        offerSearch:function(){
+            console.log(this.loadParam);
+            this.getOfferList(this.loadParam);
+        },
         resetCondition:function(){
           this.loadParam.breedName='';
           this.loadParam.spec='';
@@ -274,7 +296,7 @@ export default {
   margin-right: 1%;
 }
 .service-nav {
-    padding: 15px 30px 0 40px;
+    padding: 30px 20px 10px 40px;
 }
 .order_table{
     margin-top:-4px;

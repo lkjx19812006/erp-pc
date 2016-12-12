@@ -4,7 +4,11 @@
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
     <div>
-      <div class="order_search">
+      <div class="order_search clearfix">
+          <div class="right">
+                <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
+                <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+            </div>
           <div class="clear left">
             <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
@@ -29,18 +33,6 @@
                             <option value="50">{{$t('static.wait_for_receiving')}}</option>
                             <option value="60">{{$t('static.awaiting_comment')}}</option>
                             <option value="70">{{$t('static.completed')}}</option>
-                    </select>
-               </dd>
-            </dl>
-            <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.payment_method')}}：</dt>
-               <dd class="left">
-                     <select v-model="loadParam.payWay"  class="form-control" @change="selectSearch()">
-                            <option value="">{{$t('static.please_select')}}</option>
-                            <option value="0">{{$t('static.offline')}}</option>
-                            <option value="1">{{$t('static.alipay')}}</option>
-                            <option value="2">{{$t('static.pingan')}}</option>
-                            <option value="3">{{$t('static.yaokuan')}}</option>
                     </select>
                </dd>
             </dl>
@@ -437,10 +429,6 @@
         margin-right: 20px;
     }
 
-    .order_table {
-        margin-top: 20px;
-        position: relative;
-    }
     .order_table .table > ul {
         position: relative;
         width: 100%;

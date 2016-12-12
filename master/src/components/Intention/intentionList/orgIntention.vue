@@ -12,13 +12,6 @@
 
    <div>
         <div class="service-nav">
-          <div class="clearfix">
-              <!-- <div class="my_enterprise col-xs-2">部门意向</div> -->
-              <div class="right">
-                  <!-- <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-                  <button class="new_btn transfer" @click="search()">搜索</button> -->
-              </div>
-          </div>
 
           <div class="clear" style="margin-top:3px;">
               <dl class="clear left transfer">
@@ -98,7 +91,9 @@
               <dl class="clear left transfer" style="margin-left:50px">
                  <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
               </dl>
-
+              <dl class="clear pull-right">
+                 <button type="button" class="btn btn-primary"  @click="selectSearch()">刷新</button>
+              </dl>
             </div>
 
         </div>

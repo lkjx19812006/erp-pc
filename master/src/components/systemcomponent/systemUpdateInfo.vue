@@ -133,25 +133,6 @@ export default {
     bottom: 0;
     width: 100%;
 }
-.big-font {
-    font-size: 36px;
-}
-.top-title span {
-    font-size: 28px;
-}
-
-.edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 20px;
-    color: #fa6705;
-    margin: 0;
-}
-
 .edit-model {
     overflow: hidden;
     overflow-y: auto;

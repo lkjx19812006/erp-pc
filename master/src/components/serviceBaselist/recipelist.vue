@@ -2,14 +2,16 @@
     <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
     <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-1">成分</div>
-            <div class="col-xs-4 my_order_search">
-                <div class="name_search clearfix">
+            <div class="right">
+                 <button class="btn btn-primary transfer"  @click="multiSearch()">刷新</button>
+            </div>
+            <div class="left my_order_search">
+                <div class="name_search clearfix transfer">
                     <img src="/static/images/search.png" height="24" width="24">
                     <input type="text" class="search_input" placeholder="按药品名称搜索" v-model="loadParam.name" @keyup.enter="multiSearch()">
                 </div>
-                 <a class="new_btn transfer"  @click="multiSearch()">搜索</a>
-                 <a class="new_btn transfer"  @click="reset()">清空条件</a>
+                 <button class="new_btn"  @click="reset()">清空条件</button>
+                 <button class="new_btn transfer"  @click="multiSearch()">搜索</button>
             </div>
         </div>
         <div class="order_table" id="table_box">

@@ -10,7 +10,8 @@
         <div class="clear">
             <div class="right">
                 <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
-                <button class="new_btn transfer" @click="orgCheck()">{{$t('static.review')}}</button>
+                <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button>
+                <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
             </div>
             <div class="clear left">
               <dl class="clear left transfer">

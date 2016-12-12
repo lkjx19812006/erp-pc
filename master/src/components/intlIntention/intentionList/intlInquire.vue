@@ -15,6 +15,7 @@
             <span v-bind:class="{ 'date_active': !isA&&!isB&&!isC&&isD}" @click="clickyear()">{{$t('static.quotation')}}</span>
             <span v-bind:class="{ 'date_active': !isA&&!isB&&!isC&&!isD}" @click="clickfinish()">{{$t('static.quo_complete')}}</span>
         </div>
+         <button class="btn btn-primary pull-right" style="margin-right:20px" @click="intentionSearch()">{{$t('static.refresh')}}</button> 
         <div class="order_table" id="table_box" v-show="currentView==1">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -381,6 +382,9 @@ export default {
             this.detailParam.inquireId = inquireId;
 
             this.detailParam.show = true;
+        },
+        intentionSearch:function(){
+           this.getIntlIntentionInquireList(this.loadParam);
         },
         offer:function(){
             this.offerParam.show = true;

@@ -33,8 +33,9 @@
                     </select>
                 </div>
             </div>
-            <div class="right col-xs-2">
-                <button class="new_btn" @click="newData()" data-toggle="modal" data-target="#myModal">新建</button>
+            <div class="right">
+                <button class="btn btn-default" @click="newData()" type="button">新建</button>
+                <button class="btn btn-primary" @click="searchname()" type="button">刷新</button>
             </div>
         </div>
     </div>
@@ -267,7 +268,7 @@ export default {
 }
 
 .order_table {
-    margin-top: 20px;
+    margin-top: 10px;
     position: relative;
 }
 

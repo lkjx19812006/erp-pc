@@ -4,24 +4,18 @@
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	 <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2" style="font-size:14px">留言</div>
-            <div class="col-xs-8 my_order_search">
+            <div class="clearfix">
                <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" placeholder="留言会员名称" v-model="loadParam.fullName"  @keyup.enter="searchMsg()">
                </div>
-               <div class="ordertel_search clearfix">
+               <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" v-model="loadParam.phone" placeholder="按会员手机" @keyup.enter="searchMsg()">
                </div>
-               <button class="new_btn transfer" @click="searchMsg()">搜索</button>
+               <button class="new_btn pull-left" @click="searchMsg()">搜索</button>
+               <button class="btn  btn-primary pull-right transfer" @click="searchMsg()">刷新</button>
             </div>
-        </div>
-        <div class="service-nav clearfix">
-            <div class="my_order_search">
-               <div class="filter_search clearfix">
-               </div>
-           </div>
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">
@@ -196,13 +190,17 @@ export default {
 </script>
 <style scoped>
 .service-nav {
-    padding: 15px 30px 0 40px;
+    padding: 35px 0px 10px 40px;
+}
+.name_search{
+  float: left;
+  margin-right: 20px;
 }
 .my_enterprise{
     padding:6px;
 }
 .transfer{
-    margin-left: 18px;
+    margin-right: 18px;
 }
 .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

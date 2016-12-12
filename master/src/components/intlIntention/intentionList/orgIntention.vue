@@ -36,7 +36,7 @@
                   <button class="new_btn transfer" @click="intentionSearch()">{{$t('static.search')}}</button>        
             </div>
         </div>
-        <div class="clearfix">
+        <div class="clearfix" style="padding-right:10px">
             <div class="click_change pull-left">
                 <span class="date_active" v-bind:class="{ 'date_active': this.loadParam.inquire===''}" @click="clickday('')">{{$t('static.please_select')}}</span>
                 <span v-bind:class="{ 'date_active': this.loadParam.inquire===0}" @click="clickday(0)">{{$t('static.not_inquiry')}}</span>
@@ -44,6 +44,7 @@
                 <span v-bind:class="{ 'date_active':  this.loadParam.inquire===2}" @click="clickday(2)">{{$t('static.quotation')}}</span>
                 <span v-bind:class="{ 'date_active':  this.loadParam.inquire===3}" @click="clickday(3)">{{$t('static.quo_complete')}}</span>
             </div>
+             <button class="btn btn-primary pull-right transfer" @click="intentionSearch()">{{$t('static.refresh')}}</button> 
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">

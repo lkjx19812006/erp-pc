@@ -9,8 +9,9 @@
       <div class="order_search">
         <div class="clear">
             <div class="right">
-                <button class="new_btn" @click="newOrder()">{{$t('static.new')}}</button>
-                <button class="new_btn transfer" @click="orgCheck()">{{$t('static.review_application')}}</button>
+                <button class="btn btn-default transfer" @click="newOrder()">{{$t('static.new')}}</button>
+                <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review_application')}}</button>
+                <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                 <!-- <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
                 <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
             </div>

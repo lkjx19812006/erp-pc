@@ -14,62 +14,6 @@
      
 	 <div>
         <div class="service-nav">
-          <div class="clearfix">
-            <!-- <div class="my_enterprise col-xs-2">我的意向</div> -->
-            <div class="right">
-                <!-- <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-                <button class="new_btn transfer" @click="search()">搜索</button>
-                <button class="new_btn" @click="createIntention({
-                       show:true,
-                       selectCustomer:true,
-                       flag:0,
-                       employeeId:'100014',
-                       title:'新建',
-                       customerName:'',
-                       customerId:'',
-                       customerPhone:'',
-                       breedName:'',
-                       breedId:'',
-                       type:0,
-                       especial:1,
-                       validate:0,
-                       qualification:'',
-                       quality:'',
-                       spec:'',
-                       number:'',
-                       unit:'',
-                       price:'',
-                       address:'',
-                       location:'',
-                       advance:0,
-                       invoic:0,
-                       visit:'',
-                       pack:'',
-                       intl:0,
-                       visit:0,
-                       sampling:0,
-                       sampleNumber:0,
-                       sampleUnit:'',
-                       sampleAmount:0,
-                       country:'中国',
-                       province:'',
-                       city:'',
-                       district:'',
-                       address:'',
-                       key:'myIntentionList',
-                       link:createIntentionInfo,
-                       inType:3,
-                       url:'/intention/',
-                       image_f:'',
-                       image_s:'',
-                       image_t:'',
-                       images:'',
-                       audit:0,
-                       onSell:0,
-                       ctime:''
-                       })">新建</button> -->
-            </div>
-          </div>
 
           <div class="clear" style="margin-top:3px;">
               <dl class="clear left transfer">
@@ -151,9 +95,8 @@
                  <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
               </dl>
 
-              <dd class="pull-right" style="margin-right:20px">
-                  
-                  <button type="button" class="btn btn-default" height="24" width="24" class="new_btn" @click="createIntention({
+              <dd class="pull-right" style="margin-right:10px">
+                  <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" class="new_btn" @click="createIntention({
                        show:true,
                        selectCustomer:true,
                        flag:0,
@@ -202,6 +145,7 @@
                        onSell:0,
                        ctime:''
                        })">新建</button>
+                  <button type="button" class="btn btn-primary"  @click="selectSearch()">刷新</button>
               </dd>
             </div>
 
@@ -939,7 +883,7 @@ export default {
     min-width: 121px;
 }
 .service-nav {
-    padding: 23px 30px 0px 4px;
+    padding: 23px 10px 0px 4px;
 }
 dl{
     margin-bottom: 5px;

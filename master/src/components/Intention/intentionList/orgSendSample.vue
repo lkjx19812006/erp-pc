@@ -5,23 +5,19 @@
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	 <div>
         <div class="service-nav clearfix">
-            <div class="my_enterprise col-xs-2" style="font-size:14px">部门寄样审核</div>
             <div class="my_order_search pull-right">
-               <button class="new_btn transfer" @click="searchMsg()">搜索</button>
-               <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
+               <button class="btn btn-primary  transfer" @click="searchMsg()">刷新</button>
             </div>
-        </div>
-        <div class="service-nav clearfix" style="padding-top:10px;">
-            <div class="my_order_search">
+            <div class="clearfix  pull-left">
                <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchMsg()">
                </div>
-               <div class="ordertel_search clearfix">
+               <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" v-model="loadParam.customerPhone" placeholder="按客户电话搜索" @keyup.enter="searchMsg()">
                </div>
-               <div class="ordertel_search clearfix">
+               <div class="name_search clearfix">
                    <!-- <img src="/static/images/search.png" height="24" width="24"> -->
                    <select class="form-control search_input" v-model="loadParam.validate" @change="searchMsg()">
                         <option value="">全部</option>
@@ -32,6 +28,8 @@
                    </select>
                    <!-- <input type="text" class="search_input" v-model="loadParam.validate" placeholder="按业务员名称搜索" @keyup.enter="searchMsg()"> -->
                </div>
+               <button class="new_btn transfer" @click="searchMsg()">搜索</button>
+               <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
            </div>
         </div>
         <div class="order_table" id="table_box">
@@ -247,13 +245,17 @@ export default {
 </script>
 <style scoped>
 .service-nav {
-    padding: 15px 30px 0 40px;
+    padding-top:23px;
+    padding-bottom: 10px;
 }
 .my_enterprise{
     padding:6px;
 }
 .transfer{
     margin-left: 18px;
+}
+.name_search{
+    margin-right: 20px;
 }
 .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

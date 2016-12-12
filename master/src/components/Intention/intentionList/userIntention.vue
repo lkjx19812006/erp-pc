@@ -13,16 +13,7 @@
 
    <div>
         <div class="service-nav">
-          <div class="clearfix">
-              <!--  <div class="my_enterprise col-xs-2">会员意向</div> -->
-              <!-- <div class="right">
-                  <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-                  <button class="new_btn transfer" @click="search()">搜索</button>
-                  <button class="new_btn transfer" @click="intentionAudit()">审核</button>
-              </div> -->
-          </div>
           <div class="clear" style="margin-top:3px;">
-
               <dl class="clear left transfer">
                  <dt class="left transfer marg_top" style="letter-spacing:3px" >会员名：</dt>
                  <dd class="left">
@@ -56,41 +47,6 @@
                  <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
                  <!-- <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button> -->
               </dl>
-              
-
-              
-              
-              
-              <!-- <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">审核状态：</dt>
-                 <dd class="left">
-                       <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
-                          <option value="">全部</option>
-                          <option value="0">初始</option>
-                          <option value="9">审核中</option>
-                          <option value="1">客服审核通过</option>
-                          <option value="-1">客服审核不通过</option>
-                          <option value="2">业务员申请审核</option>
-                          <option value="3">业务主管审核通过</option>
-                          <option value="-3">业务主管审核不通过</option>
-                      </select>
-                 </dd>
-              </dl> -->
-              <!-- <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">上/下架状态：</dt>
-                 <dd class="left">
-                       <select v-model="loadParam.onSell"  class="form-control" @change="selectSearch()">
-                          <option value="">全部</option>
-                          <option value="0">初始</option>
-                          <option value="1">申请上架</option>
-                          <option value="2">上架</option>
-                          <option value="-2">上架失败</option>
-                          <option value="3">申请下架</option>
-                          <option value="4">下架</option>
-                          <option value="-4">下架失败</option>
-                      </select>
-                 </dd>
-              </dl> -->
           </div>
 
           <div class="clear" style="margin-top:3px;">
@@ -137,8 +93,10 @@
                  
                  <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
               </dl>
-
-              <dd class="pull-right" style="margin-right:20px">
+              <div class="clearfix pull-right">
+                  <button class="btn btn-primary  transfer" @click="selectSearch()">刷新</button>
+              </div>
+              <dd class="pull-right" style="margin-right:10px">
                   <button type="button" class="btn btn-default" height="24" width="24" @click="intentionAudit()">审核</button>
               </dd>
           </div>
@@ -747,7 +705,7 @@ export default {
     min-width: 116px;
 }
 .service-nav {
-    padding: 23px 30px 0px 4px;
+    padding: 23px 10px 0px 4px;
 }
 dl{
     margin-bottom: 5px;

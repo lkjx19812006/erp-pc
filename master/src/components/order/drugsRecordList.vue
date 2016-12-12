@@ -1,8 +1,9 @@
 <template>
     <drugs-model :param="detailParam" v-if="detailParam.show"></drugs-model>
     <state-model :param="disposeParam" v-if="disposeParam.show"></state-model>
-    <div class="service-nav clearfix">
-      <div class="my_enterprise col-xs-1">{{$t('static.rollout')}}</div>
+    <div class="service-nav clearfix" style="padding-bottom:10px">
+      <div class="my_enterprise left">{{$t('static.rollout')}}</div>
+      <div class="btn btn-primary pull-right" @click="refresh()">{{$t('static.refresh')}}</div>
     </div>
     <div class="order_table" id="table_box">
       <div class="cover_loading">
@@ -113,6 +114,9 @@
         clickOn:function(initRolloutlist){
            console.log(initRolloutlist)
            this.detailParam = initRolloutlist;
+        },
+        refresh:function(){
+            this.getRolloutList(this.loadParam);
         },
         drugs:function(item,sub){
           item.show=!item.show;

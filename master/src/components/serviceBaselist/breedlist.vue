@@ -5,11 +5,10 @@
     <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <div>
-        <div class="service-nav clearfix">
+        <div class="service-nav clearfix" style="padding-bottom:10px;">
             <div class="col-xs-9 my_order_search">
-               <div class="ordertel_search clearfix" style="border:none; float:left;width:180px" >
-
-                <select class="form-control" v-model="loadParam.categoryId" @change="categoryNameSearch()">
+              <div class="ordertel_search clearfix" style="sfloat:left;width:180px" >
+                <select class="form-control " v-model="loadParam.categoryId" @change="categoryNameSearch()">
                   <option value="" selected>按品种分类搜索</option>
                   <option  v-for="item in initCategorylist" value="{{item.id}}">{{item.name}}</option>
                 </select>
@@ -23,8 +22,9 @@
                   <button text="button" class="new_btn transfer" @click="reset()">清空条件</button>
               </div>
             </div>
-            <div class="right col-xs-1">
-                <button class="new_btn" @click="createBreed()">新建</button>
+            <div class="right">
+                <button class="btn btn-default" @click="createBreed()">新建</button>
+                <button class="btn btn-primary" @click="categoryNameSearch()">刷新</button>
             </div>
         </div>
         <div class="order_table" id="table_box">

@@ -7,7 +7,7 @@
         <div class="order_search">
             <div class="clear">
 <!--                 <div class="my_order col-xs-1" style="font-size:14px">员工列表</div> -->
-                <div class="col-xs-9 my_order_search">
+                <div class="left my_order_search">
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24"  />
                         <input type="text" class="search_input" v-model="loadParam.name"  placeholder="按员工名字搜索" @keyup.enter="loadByCondition()">
@@ -16,15 +16,16 @@
                         <img src="/static/images/search.png" height="24" width="24">
                         <input type="text" class="search_input" v-model="loadParam.mobile"  placeholder="按员工电话搜索" @keyup.enter="loadByCondition()">
                     </div>
-                    <div class="name_search clearfix" style="margin-right:0px;border:none">
+                    <div class="name_search clearfix" style="margin-right:10px;border:none">
                         <button class="new_btn " style="line-height:20px;" @click="rest()">清空条件</button>
                     </div>
                     <div class="name_search clearfix" style="border:none">
                         <button class="new_btn" @click="loadByCondition()">搜索</button>
                     </div>
                 </div>
-                <div class="right col-xs-1">
-                    <button class="new_btn transfer" @click="newData({
+                <div class="right">
+                    <button type="button" class="btn btn-primary pull-right transfer">刷新</button>
+                    <button class="btn btn-default pull-right " @click="newData({
                          title:'新建员工',
                          show:true,
                          name:'',
