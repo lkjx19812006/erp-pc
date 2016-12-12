@@ -11,7 +11,7 @@
         <div class="service-nav">
             <div class="clearfix">
                 <!-- <div class="my_enterprise col-xs-1">所有客户</div> -->
-                <div class="right col-xs-6">
+                <div class="right">
                   
                 </div>
             </div>
@@ -133,6 +133,7 @@
                         })">划转</button>
                   <button type="button" class="btn btn-default" @click="clientTransferBlack()">加入黑名单</button>
                   <button type="button" class="btn btn-default" @click="clientTransferSupplier()">提取供应商</button>
+                  <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                 </dd>
 
             </div>
@@ -676,5 +677,8 @@ export default {
 }
 dl{
     margin-bottom: 5px;
+}
+.client-detailInfo{
+    padding: 0 15px 0px 15px;
 }
 </style>

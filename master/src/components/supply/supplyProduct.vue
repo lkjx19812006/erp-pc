@@ -35,18 +35,23 @@
                 <dl class="clearfix">
                     <dt>产品名称：</dt>
                     <dd>
-                        <input type="text"  class="form-control" placeholder="按产品名称全称搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
+                        <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
                     </dd>
                 </dl>
                 <dl class="clearfix">
                     <dt>供应商名称：</dt>
                     <dd>
-                        <input type="text"  class="form-control" placeholder="按供应商名称搜索" class="search_input"  v-model="loadParam.cName"  @keyup.enter="searchProduct()"/>
+                        <input type="text"  class="form-control" placeholder="按回车搜索" class="search_input"  v-model="loadParam.cName"  @keyup.enter="searchProduct()"/>
                     </dd>
+                </dl>
+
+                <dl class="clearfix">
+                    <button class="btn btn-default transfer"  @click="searchProduct()">搜索</button>
+                    <button class="btn btn-default"  @click="reset()">清空条件</button>
                 </dl>
            </div>
       </div>
-      <div class="right col-xs-3">
+      <div class="right">
         <!--<button class="new_btn transfer" @click="createCustomer({-->
                                              <!--show:true,-->
                                              <!--title:'新建产品',-->
@@ -69,8 +74,7 @@
                                              <!--link:newProduct,-->
                                              <!--url:'/customer/product'-->
                                         <!--})">新建</button>-->
-        <button class="new_btn transfer"  @click="searchProduct()">搜索</button>
-        <button class="new_btn"  @click="reset()">清空条件</button>
+        <button class="btn btn-primary transfer"  @click="searchProduct()">刷新</button>
       </div>
     </div>
     <div class="order_table" id="table_box">
@@ -159,41 +163,7 @@
                <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                </a>
           </td>
-          <!-- <td @click.stop="eventClick($index)">
-            <img height="24" width="24" src="/static/images/default_arrow.png" />
-            <div class="component_action" v-show="item.show">
-              <ul>
-                <li @click="modifySupply({
-                               sub:$index,
-                               id:item.id,
-                               cid:item.cid,
-                               show:true,
-                               title:'编辑产品',
-                               type:item.type,
-                               name:item.name,
-                               cName:item.cName,
-                               breedId:item.breedId,
-                               quality:item.quality,
-                               location:item.location,
-                               spec:item.spec,
-                               number:item.number,
-                               price:item.price,
-                               unit:item.unit,
-                               duedate:item.duedate,
-                               image_f:'',
-                               image_s:'',
-                               image_t:'',
-                               image_f_show:'',
-                               image_s_show:'',
-                               image_t_show:'',
-                               coa:item.coa,
-                               link:updateProduct,
-                               url:'/customer/product',
-                               headline:'productList'
-                              })">编辑</li>
-              </ul>
-            </div>
-          </td> -->
+          
         </tr>
         </tbody>
       </table>
@@ -398,5 +368,11 @@
    #table_box  table th,#table_box  table td{
     width: 121px;
     min-width:121px;
+  }
+  .service-nav {
+    padding: 23px 30px 0px 4px;
+  }
+  dl{
+      margin-bottom: 5px;
   }
 </style>

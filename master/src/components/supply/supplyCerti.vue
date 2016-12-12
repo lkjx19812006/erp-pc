@@ -11,26 +11,23 @@
           <dl class="clearfix">
             <dt>客户名称：</dt>
             <dd>
-              <input type="text"  class="form-control" placeholder="按客户名称搜索" class="search_input"  v-model="loadParam.name" @keyup.enter="searchProduct()"/>
+              <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.name" @keyup.enter="searchProduct()"/>
             </dd>
           </dl>
-          <!-- <dl class="clearfix">
-            <dt>客户名称：</dt>
-            <dd>
-              <input type="text"  class="form-control" placeholder="按客户名称搜索" class="search_input"  v-model="loadParam.cname" @keyup.enter="searchProduct()"/>
-            </dd>
-          </dl> -->
           <dl class="clearfix">
             <dt>描述：</dt>
             <dd>
-              <input type="text"  class="form-control" placeholder="按描述搜索" class="search_input"  v-model="loadParam.description"  @keyup.enter="searchProduct()"/>
+              <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.description"  @keyup.enter="searchProduct()"/>
             </dd>
+          </dl>
+          <dl class="clearfix">
+            <button class="btn btn-default transfer"  @click="searchProduct()">搜索</button>
+            <button class="btn btn-default"  @click="reset()">清空条件</button>
           </dl>
         </div>
       </div>
       <div class="right col-xs-3">
-        <button class="new_btn transfer"  @click="searchProduct()">搜索</button>
-        <button class="new_btn"  @click="reset()">清空条件</button>
+        <button class="btn btn-primary pull-right"  @click="searchProduct()">刷新</button>
       </div>
     </div>
     </div>
@@ -264,5 +261,11 @@
   #table_box  table th,#table_box  table td{
      width: 245px;
      min-width: 245px;
+  }
+  .service-nav {
+    padding: 23px 30px 0px 4px;
+  }
+  dl{
+      margin-bottom: 5px;
   }
 </style>

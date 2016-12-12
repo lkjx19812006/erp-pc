@@ -17,9 +17,8 @@
                     <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button> -->
                 </div>
-
-
             </div>
+  
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer col-xs-2" >
                    <dt class="left transfer marg_top">会员名称：</dt>
@@ -120,11 +119,13 @@
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
                    
                 </dd>
-                <dd class="pull-right" style="margin-right:20px">
+                <dd class="pull-right" style="margin-right:20px;">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
+                    <button type="button" class="btn btn-primary" height="24" width="24" @click="selectSearch()">刷新</button>
                 </dd>
-
+                
             </div>
+
 
            <!--  <div class="right" style="margin-top:10px;">
                <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
