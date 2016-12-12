@@ -68,6 +68,7 @@ const mutations = {
            'city':data.city,
            'district':data.district,
            'sampleDesc':data.sampleDesc,
+           'comments':data.comments,
            'consignee':data.consignee,
            'consigneePhone':data.consigneePhone,
            'address':data.address,

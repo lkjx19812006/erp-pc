@@ -21,6 +21,7 @@
 				              		<th>规格</th>
 				              		<th>数量</th>
 				              		<th>单位</th>
+				              		<th>说明</th>
 				              		<th></th>
 				              		<th></th>
 				              	</tr>
@@ -33,6 +34,7 @@
 				                	<td>{{item.spec}}</td>
 				                	<td>{{item.number}}</td>
 				                	<td>{{item.cunit}}</td>
+				                	<td>{{item.description}}</td>
 				                	<td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
 	                                <td v-else>{{$t('static.edit')}}</td>
 	                                <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
@@ -50,27 +52,10 @@
 	                                     <label class="editlabel" >{{$t('static.breed')}}<span class="system_danger" v-if="$inner.breedname.required">{{$t('static.required')}}</span></label>
 	                                     <input type="text" v-model="breedInfo.breedName" class="form-control edit-input" v-validate:breedname="{required:true}"  @click="searchBreed()" readonly="true" />
 	                                </div>
-	                         
-	                                <div class="editpage-input col-md-6">
-	                                     <label class="editlabel" >{{$t('static.quality')}}<span class="system_danger" v-if="$inner.quality.required">{{$t('static.required')}}</span></label>
-	                                     <input type="text" v-model="breedInfo.quality" class="form-control edit-input" v-validate:quality="{required:true}" />
+	                         		<div class="editpage-input col-md-6">
+	                                     <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
+	                                     <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
 	                                </div>
-	                         
-	                                <div class="editpage-input col-md-6">
-	                                     <label class="editlabel" >{{$t('static.specification')}}<span class="system_danger" v-if="$inner.spec.required">{{$t('static.required')}}</span></label>
-	                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.spec" class="form-control edit-input" v-validate:spec="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
-	                                     <div type="text" class="edit-input" v-if="breedParam.id">
-	                                         <input-select
-	                                           :value.sync="breedInfo.spec"
-	                                           :prevalue="breedInfo.spec"
-	                                           :options="initBreedDetail.specs.arr"
-	                                           placeholder="规格"
-	                                           label="name"
-	                                         >
-	                                         </input-select>
-	                                     </div>
-	                                </div>
-	                                
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
 	                                     <select v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}" @change="test()">
@@ -87,10 +72,30 @@
 	                                         >
 	                                         </input-select>
 	                                     </div> -->
-	                                </div>                     
+	                                </div>      
 	                                <div class="editpage-input col-md-6">
-	                                     <label class="editlabel" >{{$t('static.origin')}}<span class="system_danger" v-if="$inner.location.required">{{$t('static.required')}}</span></label>
-	                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input" v-validate:location="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
+	                                     <label class="editlabel" >{{$t('static.quality')}}</label>
+	                                     <input type="text" v-model="breedInfo.quality" class="form-control edit-input"  />
+	                                </div>
+	                         
+	                                <div class="editpage-input col-md-6">
+	                                     <label class="editlabel" >{{$t('static.specification')}}</label>
+	                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.spec" class="form-control edit-input"  disabled="disabled" placeholder="请先选择一个品种"/>
+	                                     <div type="text" class="edit-input" v-if="breedParam.id">
+	                                         <input-select
+	                                           :value.sync="breedInfo.spec"
+	                                           :prevalue="breedInfo.spec"
+	                                           :options="initBreedDetail.specs.arr"
+	                                           placeholder="规格"
+	                                           label="name"
+	                                         >
+	                                         </input-select>
+	                                     </div>
+	                                </div>
+	                                        
+	                                <div class="editpage-input col-md-6">
+	                                     <label class="editlabel" >{{$t('static.origin')}}</label>
+	                                     <input type="text" v-show="!breedParam.id" v-model="breedInfo.location" class="form-control edit-input"  disabled="disabled" placeholder="请先选择一个品种"/>
 	                                     <div type="text" class="edit-input" v-if="breedParam.id">
 	                                         <input-select
 	                                           :prevalue="breedInfo.location"
@@ -98,17 +103,14 @@
 	                                           :options="initBreedDetail.locals.arr"
 	                                           placeholder="产地"
 	                                           label="name"
-
 	                                         >
 	                                         </input-select>
 	                                     </div>
-
 	                                </div>
-	                         
-	                                <div class="editpage-input col-md-6">
-	                                     <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-	                                     <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
-	                                </div>
+	                                <div class="client-detailInfo  col-md-12">
+				                        <label class="editlabel">说明</label></label>
+				                        <textarea class="form-control" v-model="breedInfo.description" value="{{breedInfo.description}}" style="resize:none; border:1px solid #ddd;" rows="5"></textarea>
+				                    </div>
 
 	                                <div class="pull-right col-md-6" style="margin-top:10px;text-align:right">
 	                                    <button type="button" class="btn btn-confirm">
@@ -215,6 +217,10 @@
                            <div class="client-detailInfo  col-md-6 col-xs-12">
 		                        <label class="editlabel">详细地址 </label></label>
 		                        <input type="text" class="form-control edit-input" v-model="param.address" value="{{param.address}}"  />
+		                   </div>
+		                    <div class="client-detailInfo  col-md-12">
+		                        <label class="editlabel">备注 </label></label>
+		                        <textarea class="form-control" v-model="param.comments" value="{{param.comments}}" style="resize:none; border:1px solid #ddd;" rows="5"></textarea>
 		                    </div>
 	                </section>
 	                
@@ -285,6 +291,7 @@ export default{
               number:'',
               cunit:'',
               unit:'',
+              description:'',
               id:''
             },
             addParam:{
@@ -402,6 +409,7 @@ export default{
           this.breedInfo.number=this.param.items[index].number,
           this.breedInfo.cunit=this.param.items[index].cunit,
           this.breedInfo.unit=this.param.items[index].unit,
+          this.breedInfo.description=this.param.items[index].description,
           this.updateParam.show = true;
         },
         deleteBreed:function(index){
@@ -422,6 +430,7 @@ export default{
           this.param.items[this.updateParam.index].quality=this.breedInfo.quality,
           this.param.items[this.updateParam.index].location=this.breedInfo.location,
           this.param.items[this.updateParam.index].spec=this.breedInfo.spec,
+          this.param.items[this.updateParam.index].description=this.breedInfo.description,
           this.param.items[this.updateParam.index].number=this.breedInfo.number,
           this.param.items[this.updateParam.index].cunit=this.breedInfo.cunit.split(',')[1],
           this.param.items[this.updateParam.index].unit=this.breedInfo.cunit.split(',')[0],
@@ -437,6 +446,7 @@ export default{
           this.param.items[this.param.items.length-1].quality = this.breedInfo.quality;
           this.param.items[this.param.items.length-1].location = this.breedInfo.location;
           this.param.items[this.param.items.length-1].spec = this.breedInfo.spec;
+          this.param.items[this.param.items.length-1].description = this.breedInfo.description;
           this.param.items[this.param.items.length-1].number = this.breedInfo.number;
           this.param.items[this.param.items.length-1].cunit = this.breedInfo.cunit.split(',')[1];
           this.param.items[this.param.items.length-1].unit = this.breedInfo.cunit.split(',')[0];
@@ -454,6 +464,7 @@ export default{
               this.breedInfo.quality='';
               this.breedInfo.location='';
               this.breedInfo.spec='';
+              this.breedInfo.description='';
               this.breedInfo.number='';
               this.breedInfo.cunit='';
               this.breedInfo.unit='';
@@ -466,6 +477,7 @@ export default{
                   number:'',
                   cunit:'',
                   unit:'',
+                  description:'',
                   status:''
               });
               this.addParam.show = true;

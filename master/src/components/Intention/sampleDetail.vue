@@ -33,6 +33,7 @@
                                       <th>规格</th>
                                       <th>质量</th>
                                       <th>单位</th>
+                                      <th>说明</th>
                                       <th>创建时间</th>
                                       <th></th>
                                     </thead>
@@ -43,6 +44,7 @@
                                             <td>{{item.spec}}</td>
                                             <td>{{item.quality}}</td>
                                             <td>{{item.cunit}}</td>
+                                            <td>{{item.description}}</td>
                                             <td>{{item.ctime}}</td>
                                             <!-- <td @click="edit($index,item)">
                                                                               <a class="operate"><img src="/static/images/upremark.png" height="18" width="48"  alt="修改备注" title="修改备注"/>
@@ -89,8 +91,12 @@
                         <label class="editlabel">总金额</label>
                          <input type="text" class="form-control edit-input"   v-model="initgSampleDetail.total" value="{{initgSampleDetail.total}}" disabled="disabled"/>
                     </div>
+                    <div class="client-detailInfo pull-right col-md-6 col-xs-12">
+                        <label class="editlabel">备注</label>
+                         <input type="text" class="form-control edit-input"   v-model="initgSampleDetail.comments" value="{{initgSampleDetail.total}}" disabled="disabled"/>
+                    </div>
                 </div>
-
+               
             </div>
 
            <!--  <div class=" col-md-4 col-xs-12 pull-right">

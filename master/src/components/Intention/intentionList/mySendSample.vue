@@ -7,9 +7,9 @@
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	 <div>
         <div class="service-nav clearfix">
-            <div class="my_order_search pull-right">
+            <div class="my_order_search pull-right"> 
+               <button class="btn btn-default transfer" @click="New()">新建</button>
                <button class="btn btn-primary  transfer" @click="searchMsg()">刷新</button>
-               <button class="new_btn transfer" @click="New()">新建</button>
             </div>
             <div class="clearfix col-md-6">
               <div class="my_order_search clearfix" >
@@ -54,7 +54,7 @@
                         <th>样品名称</th>
                         <th>审核状态</th>
                         <th>备注</th>
-      	            	<th>创建时间</th>
+      	            	  <th>创建时间</th>
                         <th style="min-width: 200px;text-align: left">操作</th>
                     </tr>
                 </thead>
@@ -79,11 +79,11 @@
                         <td v-if="item.validate==1" style="background:#9010ff;color:#fff">{{item.validate | Audit}}</td>
                         <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Audit}}</td>
                         <td v-if="item.validate==3" tyle="background:red;color:#fff">{{item.validate | Audit}}</td>
-                        <td>{{item.description}}</td>
+                        <td>{{item.comments}}</td>
                         <td>{{item.ctime}}</td>
                         <td style="text-align: left;">
                             <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"  @click="updateOrder(item.id,$index)">
-                                    <img src="/static/images/edit.png"  alt="编辑" title="编辑"/>
+                                  <img src="/static/images/edit.png"  alt="编辑" title="编辑"/>
                             </a>
                             <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"   @click="deleInfo({
                                     sub:$index,
@@ -146,7 +146,7 @@ import {
     initLogin
 } from '../../../vuex/getters'
 import {
-	getSampleList,
+	 getSampleList,
     getSampleDetail,
     deleteData,
     updateSample,
@@ -229,7 +229,7 @@ export default {
             dialogParam:{
                 send:false,
                 link:'/sample/',
-                key:'mySampleList',
+                key:'samplelist',
                 id:'',
                 index:'',
                 customerName:'',
@@ -241,6 +241,7 @@ export default {
                 address:'',
                 province:'',
                 city:'',
+                comments:'',
                 district:'',
                 items:[     //存放商品条目
                     
@@ -316,14 +317,12 @@ export default {
         deleInfo:function(initSamplelist){
               this.delParam = initSamplelist;
         },
-        updateOrder:function(id,index){
-             console.log(this.dialogParam)
+        updateOrder:function(item,index){
               this.dialogParam.send = true;
-              this.dialogParam.id = id;
+              this.dialogParam.id = item;
               this.dialogParam.index = index;
               this.dialogParam.items = [];
               this.dialogParam.itemsBack = [];
-              this.getSampleDetail(this.dialogParam);
               this.dialogParam.callback = this.updateback;
         },
         updateback:function(title){
