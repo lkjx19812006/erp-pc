@@ -28,7 +28,7 @@
                  <dd class="left">
                        <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
                               <option value="">{{$t('static.please_select')}}</option>
-                              <option value="0">{{$t('static.order_generation')}}</option>
+                              <option value="0">{{$t('static.create_order')}}</option>
                               <!-- <option value="10">{{$t('static.pending')}}</option> -->
                               <option value="20">{{$t('static.wait_for_payment')}}</option>
                               <option value="30">{{$t('static.wait_for_audit')}}</option>
@@ -36,8 +36,6 @@
                               <option value="50">{{$t('static.wait_for_receiving')}}</option>
                               <option value="60">{{$t('static.awaiting_comment')}}</option>
                               <option value="70">{{$t('static.completed')}}</option>
-                              <option value="-1">{{$t('static.canceled')}}</option>
-                              <option value="-2">{{$t('static.out_of_date')}}</option>
                       </select>
                  </dd>
               </dl>
