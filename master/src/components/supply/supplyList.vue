@@ -7,166 +7,149 @@
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <div>
     <div class="service-nav clearfix">
-      <!-- <div class="my_enterprise col-xs-1">供应商</div> -->
-      <div class="right col-xs-4">
-        
-      </div>
-      
       <div class="clear" style="margin-top:3px;"> 
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">客户名称：</dt>
-                   <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                   </dd>
-                </dl>
+          <dl class="clear left transfer">
+             <dt class="left transfer marg_top">客户名称：</dt>
+             <dd class="left">
+                  <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+             </dd>
+          </dl>
 
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">手机省：</dt>
-                   <dd class="left">
-                        <select v-model="loadParam.phoneProvinceName"  class="form-control" @change="selectSearch()" >
-                            <option value="">全部</option>
-                            <option v-for="item in initProvince">{{item.cname}}</option>
-                        </select>
-                   </dd>
-                </dl>
+          <dl class="clear left transfer">
+             <dt class="left transfer marg_top">手机省：</dt>
+             <dd class="left">
+                  <select v-model="loadParam.phoneProvinceName"  class="form-control" @change="selectSearch()" >
+                      <option value="">全部</option>
+                      <option v-for="item in initProvince">{{item.cname}}</option>
+                  </select>
+             </dd>
+          </dl>
 
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">客户类型：</dt>
-                   <dd class="left">
-                         <select v-model="loadParam.type"  class="form-control" @change="selectSearch()">
-                              <option value="">全部</option>
-                              <option value="0">其它</option>
-                              <option value="1">合作社</option>
-                              <option value="2">药商</option>
-                              <option value="3">药厂</option>
-                              <option value="4">个体户</option>
-                              <option value="5">药店</option>
-                              <option value="6">医院</option>
-                              <option value="7">贸易公司</option>
-                              <option value="8">零售商行</option>
-                              <option value="9">药农</option>
-                              <option value="10">介绍人</option>
-                              <option value="11">药贩子</option>
-                              <option value="12">产地药商</option>
-                              <option value="13">销地药商</option>
-                              <option value="14">养生诊所</option>
-                              <option value="15">化工厂</option>
-                              <option value="16">化妆品厂</option>
-                              <option value="17">提取物厂</option>
-                              <option value="18">食品厂</option>
-                              <option value="19">实验室</option>
-                              <option value="20">网上电商</option>
-                              <option value="21">中成药生产商</option>
-                              <option value="22">西药生产商</option>
-                              <option value="23">饮片厂</option>
-                        </select>
-                   </dd>
-                </dl>
-                
-                
+          <dl class="clear left transfer">
+             <dt class="left transfer marg_top">客户类型：</dt>
+             <dd class="left">
+                   <select v-model="loadParam.type"  class="form-control" @change="selectSearch()">
+                        <option value="">全部</option>
+                        <option value="0">其它</option>
+                        <option value="1">合作社</option>
+                        <option value="2">药商</option>
+                        <option value="3">药厂</option>
+                        <option value="4">个体户</option>
+                        <option value="5">药店</option>
+                        <option value="6">医院</option>
+                        <option value="7">贸易公司</option>
+                        <option value="8">零售商行</option>
+                        <option value="9">药农</option>
+                        <option value="10">介绍人</option>
+                        <option value="11">药贩子</option>
+                        <option value="12">产地药商</option>
+                        <option value="13">销地药商</option>
+                        <option value="14">养生诊所</option>
+                        <option value="15">化工厂</option>
+                        <option value="16">化妆品厂</option>
+                        <option value="17">提取物厂</option>
+                        <option value="18">食品厂</option>
+                        <option value="19">实验室</option>
+                        <option value="20">网上电商</option>
+                        <option value="21">中成药生产商</option>
+                        <option value="22">西药生产商</option>
+                        <option value="23">饮片厂</option>
+                  </select>
+             </dd>
+          </dl>
+          <dl class="clear left transfer">
+              <div class="client-detailInfo col-xs-6">
+                  <dt class="left transfer marg_top">注册开始时间：</dt>
+                  <mz-datepicker :time.sync="loadParam.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
+                  </mz-datepicker>
+              </div>
+          </dl>    
+          <dd class="left" style="margin-left:20px">
+              <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
+          </dd>
+      </div>
+      <div class="clear" style="margin-top:3px;"> 
+          <dl class="clear left transfer">
+             <dt class="left transfer marg_top" style="letter-spacing:3px" >手机号：</dt>
+             <dd class="left">
+                  <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+             </dd>
+          </dl>
 
-                <dl class="clear left transfer">
-                    <div class="client-detailInfo col-xs-6">
-                        <dt class="left transfer marg_top">注册开始时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </dl>
+          <dl class="clear left transfer">
+             <dt class="left transfer marg_top">信用等级：</dt>
+             <dd class="left">
+                   <select v-model="loadParam.creditLevel"  class="form-control" @change="selectSearch()">
+                    <option value="">全部</option>
+                    <option value="0">无</option>
+                    <option value="1">一星</option>
+                    <option value="2">两星</option>
+                    <option value="3">三星</option>
+                  </select>
+             </dd>
+          </dl>
 
-                
-                <dd class="left" style="margin-left:20px">
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
-                </dd>
-            </div>
-
-
-            <div class="clear" style="margin-top:3px;"> 
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top" style="letter-spacing:3px" >手机号：</dt>
-                   <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                   </dd>
-                </dl>
-
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">信用等级：</dt>
-                   <dd class="left">
-                         <select v-model="loadParam.creditLevel"  class="form-control" @change="selectSearch()">
-                          <option value="">全部</option>
-                          <option value="0">无</option>
-                          <option value="1">一星</option>
-                          <option value="2">两星</option>
-                          <option value="3">三星</option>
-                        </select>
-                   </dd>
-                </dl>
-
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">经营范围：</dt>
-                   <dd class="left">
-                        <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                   </dd>
-                </dl>
-                
-                <dl class="clear left transfer" style="margin-left:-33px;">
-                    <div class="client-detailInfo col-xs-6" >
-                        <dt class="left transfer marg_top">注册结束时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.ctimeEnd" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </dl>
-                
-                <dd class="left" style="margin-left:20px">
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
-                </dd>
-                
-                <dd class="pull-right" style="margin-right:20px"> 
-                    <button type="button" class="btn btn-default" @click="createCustomer({
-                                        show:true,
-                                        loading:false,
-                                        id:'',
-                                        category:'',
-                                        classify:'2,卖',
-                                        type:0,
-                                        name:'',
-                                        mainPhone:'',
-                                        principal:'',
-                                        bizScope:'',
-                                        province:'',
-                                        city:'',
-                                        address:'',
-                                        employee:'',
-                                        employeeId:this.initLogin.id,
-                                        employeeName:this.initLogin.name,
-                                        orgId:this.initLogin.orgId,
-                                        orgName:'',
-                                        province:'',
-                                        city:'',
-                                        supplier:1,
-                                        contacts:[
-                                            {
-                                                name:'',
-                                                position:'',
-                                                department:'',
-                                                phone:'',
-                                                tel:'',
-                                                email:'',
-                                                qq:'',
-                                                wechart:'',
-                                                main:'',
-                                            }
-                                        ],
-                                        link:saveCreate,
-                                        key:'supplyCustomerList'
-                                        })">新建</button>  
-                    <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>                       
-                </dd>
-
-            </div>
-
-
-
-
+          <dl class="clear left transfer">
+             <dt class="left transfer marg_top">经营范围：</dt>
+             <dd class="left">
+                  <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+             </dd>
+          </dl>
+          
+          <dl class="clear left transfer" style="margin-left:-33px;">
+              <div class="client-detailInfo col-xs-6" >
+                  <dt class="left transfer marg_top">注册结束时间：</dt>
+                  <mz-datepicker :time.sync="loadParam.ctimeEnd" format="yyyy/MM/dd HH:mm:ss">
+                  </mz-datepicker>
+              </div>
+          </dl>
+          
+          <dd class="left" style="margin-left:20px">
+              <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+          </dd>
+          
+          <dd class="pull-right" style="margin-right:20px"> 
+              <button type="button" class="btn btn-default" @click="createCustomer({
+                                  show:true,
+                                  loading:false,
+                                  id:'',
+                                  category:'',
+                                  classify:'2,卖',
+                                  type:0,
+                                  name:'',
+                                  mainPhone:'',
+                                  principal:'',
+                                  bizScope:'',
+                                  province:'',
+                                  city:'',
+                                  address:'',
+                                  employee:'',
+                                  employeeId:this.initLogin.id,
+                                  employeeName:this.initLogin.name,
+                                  orgId:this.initLogin.orgId,
+                                  orgName:'',
+                                  province:'',
+                                  city:'',
+                                  supplier:1,
+                                  contacts:[
+                                      {
+                                          name:'',
+                                          position:'',
+                                          department:'',
+                                          phone:'',
+                                          tel:'',
+                                          email:'',
+                                          qq:'',
+                                          wechart:'',
+                                          main:'',
+                                      }
+                                  ],
+                                  link:saveCreate,
+                                  key:'supplyCustomerList'
+                                  })">新建</button>  
+              <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>                       
+          </dd>
+      </div>
     </div>
     <div class="order_table" id="table_box">
       <div class="cover_loading">

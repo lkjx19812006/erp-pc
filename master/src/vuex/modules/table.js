@@ -210,7 +210,8 @@ const state = {
         "name":uncompile(getCookie('name')),
         "no":uncompile(getCookie('no')),
         "orgId":uncompile(getCookie('orgId')),
-        "time":getCookie('time')
+        "time":getCookie('time'),
+        "privilege":getCookie('privilege')
     },
     systemBaseList: {
         enumlist: [
@@ -675,6 +676,7 @@ const state = {
 
 const mutations = {
     [LOGIN_DATA](state, data) { //登录
+      console.log(data)
         state.login = data;
     },
     [USER_TYPE](state,data){

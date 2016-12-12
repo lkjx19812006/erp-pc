@@ -92,8 +92,7 @@ export const login = ({ dispatch }, data) => { //登录
             document.cookie = "orgId=" + compile(res.json().result.orgid) + ";expires=" + expire;
             document.cookie = "name=" + compile(res.json().result.name) + ";expires=" + expire;
             document.cookie = "time=" + lastTime + ";expires=" + expire;
-
-
+            document.cookie = "privilege=" + res.json().result.privilege + ";expires=" + expire;
             var result = res.json().result;
             result.time = lastTime;
 
@@ -3813,7 +3812,7 @@ export const updateIntlIntention = ({ dispatch }, param, tipParam) => { //修改
 
 export const getIntlIntentionInquireList = ({ dispatch }, param) => { //国际意向询价列表
     param.loading = true;
-    console.log(param.link);
+    console.log(param);
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     Vue.http({
         method: 'GET',
@@ -5382,7 +5381,8 @@ export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
                     number: item.number,
                     unit: item.unit,
                     cunit: item.cunit,
-                    status:item.status
+                    status:item.status,
+                    description:item.description
                 }
                 param.items.push(temp);
                 param.itemsBack.push(temp);
@@ -5395,7 +5395,9 @@ export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
             param.country = obj.country;
             param.province = obj.province;
             param.city = obj.city;
+            param.comments = obj.comments;
             param.district = obj.district;
+            param.address = obj.address;
             dispatch(types.SAMPLE_DETAIL,obj);
             param.loading = false;
         }
@@ -5452,6 +5454,7 @@ export const createSample = ({ dispatch }, data) => { //新建寄样申请
        customer:data.customer,
        currency:data.currency,
        total:data.total,
+       comments:data.comments,
        employee:data.employee,
        country:data.country,
        province:data.province,
@@ -5514,6 +5517,7 @@ export const alterSample = ({ dispatch }, param) => { //修改寄样申请
        employee:param.employee,
        country:param.country,
        province:param.province,
+       comments:param.comments,
        city:param.city,
        district:param.district,
        status:param.status,
@@ -5544,10 +5548,13 @@ export const alterSample = ({ dispatch }, param) => { //修改寄样申请
         }
     }).then((res) => {
         console.log('修改成功')
+        param.callback(res.json().msg);
         param.send = false;
         param.address = res.json().result.address;
-
-        dispatch(types.UPDATE_SAMPLE, param);
+        if(res.json().code==200){
+            dispatch(types.UPDATE_SAMPLE, param);
+        }
+       
     }, (res) => {
         console.log('fail');
         param.send = false;

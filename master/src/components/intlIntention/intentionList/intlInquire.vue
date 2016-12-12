@@ -50,7 +50,7 @@
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
                         <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>
-                            <div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
+                            <div v-if="item.inquire==2&&privilege==true" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
                         </td>
                     </tr>
                 </tbody>
@@ -90,7 +90,7 @@
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
                         <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>
-                            <div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
+                            <div v-if="item.inquire==2&&privilege==true" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
                         </td>
                     </tr>
                 </tbody>
@@ -130,7 +130,7 @@
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
                         <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>
-                            <div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
+                            <div v-if="item.inquire==2&&privilege==true" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
                         </td>
                     </tr>
                 </tbody>
@@ -170,7 +170,7 @@
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
                         <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>
-                            <div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
+                            <div v-if="item.inquire==2&&privilege==true" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
                         </td>
                     </tr>
                 </tbody>
@@ -210,7 +210,7 @@
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
                         <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>
-                            <div v-if="item.inquire==2" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
+                            <div v-if="item.inquire==2&&privilege==true" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
                         </td>
                     </tr>
                 </tbody>
@@ -232,8 +232,8 @@ import inquireModel from '../inquire'
 import tipsModel  from '../../../components/tips/tipDialog'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
-    initIntlIntentionInquireList
-  
+    initIntlIntentionInquireList,
+    initLogin
 } from '../../../vuex/getters'
 import {
     getIntlIntentionInquireList,
@@ -251,7 +251,8 @@ export default {
     },
     vuex: {
         getters: {
-            initIntlIntentionInquireList 
+            initIntlIntentionInquireList,
+            initLogin
         },
         actions: {
             getIntlIntentionInquireList,
@@ -333,6 +334,7 @@ export default {
                 id:'',
                 items:[],
             },
+            privilege:/31/.test(this.initLogin.privilege),//判断是否为供应部主管
             checked:false,
             auditParam:{
               title:'意向申请审核备注',
@@ -426,7 +428,9 @@ export default {
     },
     created() {
         changeMenu(this.$store.state.table.isTop,this.getIntlIntentionInquireList,this.loadParam,localStorage.intlInquireParam); 
-        
+         console.log(this.initLogin.privilege)
+
+        console.log(/31/.test(this.initLogin.privilege))
     },
     filter: (filter,{})
 }
