@@ -99,7 +99,7 @@ export default {
     z-index: 1083
 }
 .modal_con{
-    height: 500px;
+    height: 400px;
     width: 400px;
      z-index: 1084
 }
@@ -109,7 +109,7 @@ export default {
     top: 0;
 }
 .edit_footer{
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 400px;
 }

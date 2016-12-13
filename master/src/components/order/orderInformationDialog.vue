@@ -299,7 +299,8 @@ import {
     initCitylist,
     initDistrictlist,
     initBreedDetail,
-    initCurrencylist
+    initCurrencylist,
+    initUnitlist
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -310,7 +311,8 @@ import {
     createOrder,
     alterOrder,
     getOrderDetail,
-    getCurrencyList
+    getCurrencyList,
+    getUnitList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -385,7 +387,8 @@ export default {
             initCitylist,
             initDistrictlist,
             initBreedDetail,
-            initCurrencylist
+            initCurrencylist,
+            initUnitlist
         },
         actions:{
             getCountryList,
@@ -396,7 +399,8 @@ export default {
             createOrder,
             alterOrder,
             getOrderDetail,
-            getCurrencyList
+            getCurrencyList,
+            getUnitList
         }
     },
     methods:{
@@ -494,7 +498,7 @@ export default {
                   unit:'',
                   price:'',
                   sourceType:0,
-                  status:'',
+                  status:1,
                   id:''
               });
               this.addParam.show = true;
@@ -520,7 +524,7 @@ export default {
           this.param.goods[this.updateParam.index].unit=this.breedInfo.unit,
           this.param.goods[this.updateParam.index].price=this.breedInfo.price,
           this.param.goods[this.updateParam.index].sourceType=this.breedInfo.sourceType,
-          this.param.goods[this.updateParam.index].status=this.breedInfo.status,
+          /*this.param.goods[this.updateParam.index].status=this.breedInfo.status,*/
           this.param.goods[this.updateParam.index].orderId=this.breedInfo.id,
           this.breedInfo.status = 0;
           this.updateParam.show = false;
@@ -584,8 +588,9 @@ export default {
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
         this.getCurrencyList();
+        this.getUnitList();
         console.log(this.param);
-         this.getOrderDetail(this.param);   
+         //.getOrderDetail(this.param);   
          if(this.param.breedId){
             this.breedParam.breedName = this.param.breedName;
             this.breedParam.id = this.param.breedId;
@@ -602,6 +607,7 @@ export default {
           this.city.cname=this.param.city;
           this.district.cname=this.param.district;
         }
+
     }
 }
 </script>

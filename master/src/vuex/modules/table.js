@@ -755,6 +755,7 @@ const mutations = {
         }
     },
     [ORDER_UPDATE_DATA](state,data){ //修改订单
+      console.log(data)
         for (var key in data) {
             state.basicBaseList.myOrderList[data.index][key] = data[key];
         }
@@ -856,17 +857,12 @@ const mutations = {
         }
     },
     [ORDER_DETAIL_DATA](state, data) {//订单详情
-        console.log(data);
         state.orderDetail = data;
     },
     [ORDER_UPLOAD_DATA](state,data){ //新建订单详情凭证
         console.log(data);
-        if(data.amount){
-          state.orderDetail.stages.arr.unshift({ //分期付款
-                "orderId":data.orderId,
-                "description":data.description,
-                "show":false
-            })
+        if(data.stages){
+          state.orderDetail.stages.arr =  data.stages;//分期付款
         }
         if(data.payPics){
             state.orderDetail.payPics.arr.unshift({

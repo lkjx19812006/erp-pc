@@ -26,6 +26,21 @@ Vue.filter('numberstate', function(val){
 		return val;
 	}
 });
+Vue.filter('orderDescript', function(val){
+	var val = val;
+	if(val==null){
+		 return '无';
+	}else if(val==20){
+		return '合同签订后';
+	}else if(val==60){
+		return '确认收货后';
+	}else if(val==70){
+		return  '订单完成后';
+	}else {
+		return val;
+	}
+});
+
 Vue.filter('iconstate', function(val){
 	var val = val;
 	if(val==null){
