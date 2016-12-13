@@ -155,8 +155,8 @@
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
-                                                    <a class="operate" v-if="item.validate==0" @click="applyInfo($index,item.id)"> 
-                                                    <img src="/static/images/apply.png"  style="width:47px" />
+                                                    <!-- <a class="operate" v-if="item.validate==0" @click="applyInfo($index,item.id)"> 
+                                                    <img src="/static/images/apply.png"  style="width:47px" /> -->
                                                     </a>
                                                 </td>
                                             </tr>
@@ -215,28 +215,6 @@
                                     </table>
                                     </div>
                                 </div>
-                                <!--<div class="panel-collapse" v-else v-show="!initOrderDetail.payPics.show" v-cloak>-->
-                                    <!--<div class="panel-body panel-set">-->
-                                        <!--<table class="table  contactSet">-->
-                                          <!--<thead>-->
-                                            <!--<th>文件类型</th>-->
-                                            <!--<th>文件来源</th>-->
-                                            <!--<th>文件图片或路径</th>-->
-                                            <!--<th>描述</th>-->
-                                          <!--</thead>-->
-                                        <!--<tbody>-->
-                                            <!--<tr v-for="item in initOrderDetail.payPics.arr">-->
-                                                <!--<td>{{item.fileType}}</td>-->
-                                                <!--<td>{{item.bizType}}</td>-->
-                                                <!--<td><img :src="item.path" v-if="item.fileType=='image'"/>-->
-                                                    <!--<img src="/static/images/pdf.png" height="20" width="20" v-else/>-->
-                                                <!--</td>-->
-                                                <!--<td>{{item.description}}</td>-->
-                                            <!--</tr>-->
-                                        <!--</tbody>-->
-                                    <!--</table>-->
-                                    <!--</div>-->
-                                <!--</div>-->
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
@@ -545,11 +523,12 @@ export default {
                 this.auditParam.show=true;
           },
           divided_payments:function(id,total,stages){
+            console.log(stages)
               console.log(this.initOrderDetail)
               this.divideParam.show = true;
               this.divideParam.id = id;
               this.divideParam.total = total;
-              this.divideParam.stages = stages;
+              /*this.divideParam.stages = stages;*/
               this.divideParam.callback = this.callback;
               console.log(this.divideParam)
           },

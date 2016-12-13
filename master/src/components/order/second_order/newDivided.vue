@@ -257,6 +257,7 @@
         },
         created(){
             console.log(this.param)
+            console.log(this.param.stages)
            /* this.getOrderDetail(this.param);*/
 
         }
