@@ -141,7 +141,7 @@
                     <tr>
                         <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
                         <th>姓名</th>
-                        <th>昵称</th>
+                        <!-- <th>昵称</th> -->
                         <th>等级</th>
                         <th>手机</th>
                         <th>手机归属地</th>
@@ -156,8 +156,9 @@
                         <th>个人认证</th>
                         <th>企业认证</th>
                         <th>划转状态</th>
+                        <th>所属业务员</th>
                         <th>注册时间</th>
-                        <th style="min-width: 230px;">操作</th>
+                        <th style="min-width: 130px;">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -174,7 +175,7 @@
                                 show:true,
                                 loading:true
                                 })">{{item.fullname}}</td>
-                        <td>{{item.nickname}}</td>
+                        <!-- <td>{{item.nickname}}</td> -->
                         <td v-if="item.grade==0">一星</td>
                         <td v-if="item.grade==1">二星</td>
                         <td v-if="item.grade==2">三星</td>
@@ -205,8 +206,9 @@
                         <td v-if="item.transStatus==1" style="color:#fff;background:green">已划转</td>
                         <td v-if="item.transStatus==0" style="color:#fff;background:#C71585">未划转</td>
                         <td v-if="item.transStatus!=0&&item.transStatus!=1">转黑名单</td>
+                        <td>{{item.employeeName}}</td>
                         <td>{{item.ctime}}</td>
-                        <td  >
+                        <td>
                             <div class="operate" @click="modifyUser({
                                     loading:false,
                                     id:item.id,

@@ -5212,6 +5212,13 @@ export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交
     if(param.orgId&&param.orgId!==''){
         url += "&orgId=" + param.orgId;
     }
+    if(param.objType&&param.objType!==''){
+        url += "&objType=" + param.objType;
+    }
+    if(param.objId&&param.objId!==''){
+        url += "&objId=" + param.objId;
+    }
+
 
     Vue.http({
         method: 'GET',

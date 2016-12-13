@@ -55,12 +55,30 @@
 	        </table>
         </div>
         
+        <!-- <div class="click_change">
+            <span class="date_active" v-bind:class="{ 'date_active': currentView==1}" @click="clickChange(1)">日</span>
+            <span v-bind:class="{ 'date_active': currentView==2}" @click="clickChange(2)">周</span>
+            <span v-bind:class="{ 'date_active': currentView==3}" @click="clickChange(3)">月</span>
+            <span v-bind:class="{ 'date_active': currentView==4}" @click="clickChange(4)">年</span>
+        </div> -->
+
         <div class="click_change">
-        	<span class="date_active" v-bind:class="{ 'date_active': isA}" @click="clickday()">日</span>
-        	<span v-bind:class="{ 'date_active': !isA&&isB}" @click="clickweek()">周</span>
-        	<span v-bind:class="{ 'date_active': !isA&&!isB&&!isC}" @click="clickmonth()">月</span>
-        	<span v-bind:class="{ 'date_active': !isA&&!isB&&isC}" @click="clickyear()">年</span>
-        </div>
+            <div class="btn-group" >
+                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': currentView==1}" @click="clickChange(1)">
+                    日
+                 </button>
+                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': currentView==2}" @click="clickChange(2)">
+                    周
+                 </button>
+                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': currentView==3}" @click="clickChange(3)">
+                    月
+                 </button>
+                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': currentView==4}" @click="clickChange(4)">
+                    年
+                 </button>
+             </div>
+         </div>
+
         <div class="module clear">
         	<div class="module_table" v-show="currentView==1">
         		<div class="module_thead  clearfix" >
@@ -196,34 +214,13 @@
 	                all: 7,
 	                total:0
 	            },
-	            isA:true,
-	            isB:false,
-	            isC:false,
 	            currentView:1
 	        }
 	    },
 	    methods:{
-	    	clickday:function(){
-	    		this.isA = true;
-	    		this.currentView = 1;
-	    	},
-	    	clickweek:function(){
-	    		this.isB = true;
-	    		this.isA = false;
-	    		this.currentView = 2;
-	    	},
-	    	clickmonth:function(){
-	    		this.isB = false;
-	    		this.isA = false;
-	    		this.isC = false;
-	    		this.currentView = 3;
-	    	},
-	    	clickyear:function(){
-	    		this.isB = false;
-	    		this.isA = false;
-	    		this.isC = true;
-	    		this.currentView = 4;
-	    	}
+            clickChange:function(currentView){
+                 this.currentView = currentView;   
+            }
 	    },
 	    vuex: {
 	        getters: {
@@ -259,7 +256,6 @@
 	}
 	.module_table{
 		border: 1px solid #ddd;
-		max-height:400px; 
 		padding: 0;
 		position: absolute;
 		width: 100%;
@@ -311,6 +307,7 @@
 		width: 224px;
 		line-height: 30px;
 		margin-top: 20px;
+        border-top:0px solid #ddd;
 	}
 	.click_change span{
 		padding:0 20px;
@@ -322,4 +319,7 @@
 		background: #fa6705;
 		color: #fff;
 	}
+    .btn-warning {
+        background-color: #fa6705;
+    }
 </style>

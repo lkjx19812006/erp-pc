@@ -55,12 +55,30 @@
 	        </table>
         </div>
         <div class="clearfix">
-	        <div class="click_change pull-left">
-	        	<span class="date_active" v-bind:class="{ 'date_active': isA}" @click="clickday()">日</span>
-	        	<span v-bind:class="{ 'date_active': !isA&&isB}" @click="clickweek()">周</span>
-	        	<span v-bind:class="{ 'date_active': !isA&&!isB&&!isC}" @click="clickmonth()">月</span>
-	        	<span v-bind:class="{ 'date_active': !isA&&!isB&&isC}" @click="clickyear()">年</span>
-	        </div>
+
+	        <!-- <div class="click_change pull-left">
+                <span class="date_active" v-bind:class="{ 'date_active': currentView==1}" @click="clickChange(1)">日</span>
+                            <span v-bind:class="{ 'date_active': currentView==2}" @click="clickChange(2)">周</span>
+                            <span v-bind:class="{ 'date_active': currentView==3}" @click="clickChange(3)">月</span>
+                            <span v-bind:class="{ 'date_active': currentView==4}" @click="clickChange(4)">年</span>
+            </div> -->
+
+            <div class="btn-group pull-left" style="margin-top:20px">
+                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': currentView==1}" @click="clickChange(1)">
+                    日
+                 </button>
+                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': currentView==2}" @click="clickChange(2)">
+                    周
+                 </button>
+                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': currentView==3}" @click="clickChange(3)">
+                    月
+                 </button>
+                 <button type="button" class="btn btn-default" style="width:50px" v-bind:class="{ 'btn-warning': currentView==4}" @click="clickChange(4)">
+                    年
+                 </button>
+             </div>
+
+
 	        <div class="pull-right" style="margin-top:10px;" v-if="!loadParam.employeeId&&!loadParam.date">
         		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=org">导出部门客户统计</a>
         	</div>
@@ -239,6 +257,9 @@
 	        }
 	    },
 	    methods:{
+            clickChange:function(currentView){
+                 this.currentView = currentView;   
+            },
 	    	clickday:function(){
 	    		this.isA = true;
 	    		this.currentView = 1;
@@ -304,7 +325,6 @@
 	}
 	.module_table{
 		border: 1px solid #ddd;
-		max-height:400px; 
 		padding: 0;
 		position: absolute;
 		width: 100%;
@@ -382,5 +402,8 @@
 	}
     .mz-datepicker-popup{
         z-index:2000 !important;
+    }
+    .btn-warning {
+        background-color: #fa6705;
     }
 </style>
