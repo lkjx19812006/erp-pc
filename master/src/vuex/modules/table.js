@@ -862,6 +862,7 @@ const mutations = {
     [ORDER_UPLOAD_DATA](state,data){ //新建订单详情凭证
         console.log(data);
         if(data.stages){
+          console.log(state.orderDetail.stages.arr)
           state.orderDetail.stages.arr =  data.stages;//分期付款
         }
         if(data.payPics){

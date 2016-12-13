@@ -122,7 +122,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                         {{$t('static.pay_evidence')}}（0）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="(initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2||initOrderDetail.orderStatus<20))">{{$t('static.new')}}</button>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="(initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2||initOrderDetail.orderStatus<20))">{{$t('static.new')}}/{{$t('static.edit')}}</button>
                                         <a v-else></a>
                                     </h4>
                                 </div>
@@ -528,7 +528,7 @@ export default {
               this.divideParam.show = true;
               this.divideParam.id = id;
               this.divideParam.total = total;
-              /*this.divideParam.stages = stages;*/
+              this.divideParam.stages = stages.arr;
               this.divideParam.callback = this.callback;
               console.log(this.divideParam)
           },

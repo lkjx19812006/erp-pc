@@ -876,9 +876,28 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
 
 export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分期
     console.log(param)
+    const stages = [];
+    for(var i=0;i< param.stages.length;i++){
+        var temp = {};
+        temp = {
+            id:param.stages[i].id,
+            amount:param.stages[i].amount,
+            comment:param.stages[i].comment,
+            creater:param.stages[i].creater,
+            description:param.stages[i].description,
+            orderId:param.stages[i].orderId,
+            orderStatus:param.stages[i].orderStatus,
+            ratio:param.stages[i].ratio,
+            status:param.stages[i].status,
+            type:param.stages[i].type,
+            validate:param.stages[i].validate
+        };
+        stages.push(temp);
+
+    }
     const body = {
         id: param.id,
-        stages:param.stages
+        stages:stages
     }
     Vue.http({
         method: 'POST',
@@ -900,7 +919,6 @@ export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分
         }
         
         dispatch(types.ORDER_UPLOAD_DATA, param);
-        param.show = false;
     }, (res) => {
         console.log('fail'); 
     });
