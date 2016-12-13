@@ -302,6 +302,19 @@ export const initClientcount = (state) => {
     console.log(state.count)
   return parseJson(state.count.countList);
 }
+/*---订单统计---*/
+export const initMyOrderCount = (state) => {
+  return parseJson(state.count.myOrderCount);
+}
+export const initOrgOrderCount = (state) => {
+  return parseJson(state.count.orgOrderCount);
+}
+export const initMyTimeOrderCount = (state) => {  //时间维度
+  return parseJson(state.count.myTimeOrderCount);
+}
+export const initOrgOrderSortCount = (state) => {
+  return parseJson(state.count.orgOrderSortCount);
+}
 /*--寄样申请列表--*/
 export const initSamplelist = (state) => {
     console.log(state.count)

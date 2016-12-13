@@ -5207,9 +5207,27 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
 
 export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交易统计)
     if(param) param.loading= true;
+    var url = apiUrl.clientList +param.link +'?';
+    if(param.focus&&param.focus!==''){
+        url += "&focus=" + param.focus;
+    }
+    if(param.employeeId&&param.employeeId!==''){
+        url += "&employeeId=" + param.employeeId;
+    }
+    if(param.orgId&&param.orgId!==''){
+        url += "&orgId=" + param.orgId;
+    }
+    if(param.objType&&param.objType!==''){
+        url += "&objType=" + param.objType;
+    }
+    if(param.objId&&param.objId!==''){
+        url += "&objId=" + param.objId;
+    }
+
+
     Vue.http({
         method: 'GET',
-        url: apiUrl.clientList +param.link,
+        url: url ,
         emulateHTTP: false,
         emulateJSON: false,
         headers: {
@@ -5219,10 +5237,43 @@ export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交
     }).then((res) => {
         param.loading = false;
         console.log(res.json().result)
-        var clientCount = res.json().result;
+        var orderCount = res.json().result;
+        orderCount.key = param.key;
+        dispatch(types.MY_ORDER_COUNT, orderCount);
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
+
+export const getTimeOrderCount = ({ dispatch }, param) => { //我的订单统计(时间维度:日周月季年)
+    if(param) param.loading= true;
+    var url = apiUrl.clientList +param.link +'?';
+    if(param.timeType&&param.timeType!==''){
+        url += "&timeType=" + param.timeType;
+    }
+    if(param.objType&&param.objType!==''){
+        url += "&objType=" + param.objType;
+    }
+    if(param.objId&&param.objId!==''){
+        url += "&objId=" + param.objId;
+    }
+    
+    Vue.http({
+        method: 'GET',
+        url: url ,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        console.log(res.json().result)
+        var orderCount = res.json().result;
         
-        
-        dispatch(types.MY_ORDER_COUNT, clientCount);
+        dispatch(types.MY_TIME_ORDER_COUNT, orderCount);
     }, (res) => {
         param.loading = false;
         console.log('fail');

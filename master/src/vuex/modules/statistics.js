@@ -1,6 +1,7 @@
 import {
     MY_CLIENT_COUNT,
     MY_ORDER_COUNT,
+    MY_TIME_ORDER_COUNT,
     MY_SAMPLE_LIST,
     ORG_SAMPLE_LIST,
     ADD_SAMPLE,
@@ -22,7 +23,14 @@ const state = {
         "week": "20",
         "total": "5000"
     }],
-    myOrderList:{},
+    //我的交易统计(总)
+    myOrderCount:[],
+    //我的交易统计(时间维度:日周月季年)
+    myTimeOrderCount:[],
+    //部门交易统计(总)
+    orgOrderCount:[],
+    //部门交易分类统计(客户类型,客户所在地,品种,产地等方式)
+    orgOrderSortCount:[],
     mySampleList:[{
         "send":true
     }],
@@ -45,8 +53,10 @@ const mutations = {
       state.countList = data;
     },
     [MY_ORDER_COUNT](state, data) { //我的订单统计
-      console.log("订单统计")
-      
+      state[data.key] = data;
+    },
+    [MY_TIME_ORDER_COUNT](state, data) { //我的订单统计(时间维度)
+      state.myTimeOrderCount = data;
     },
     [MY_SAMPLE_LIST](state,data){ //我的寄样申请列表
         state.mySampleList = data;

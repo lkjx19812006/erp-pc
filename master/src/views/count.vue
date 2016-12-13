@@ -17,7 +17,7 @@
 	    </div>
 	    <!-- 订单部门统计 -->
 	    <div class="myOrder" v-if="$route.path.split('=')[1]==3">
-	        <department-count></department-count>
+	        <orgorder-count></orgorder-count>
 	    </div>
 	    <!-- 全部订单统计 -->
 	    <div class="myOrder" v-if="$route.path.split('=')[1]==5">
@@ -28,14 +28,14 @@
 		import personalCount  from  '../components/count/myCount'
 		import orgCount from '../components/count/orgCount'
 		import orderCount from  '../components/count/myOrdercount'
-		import departmentCount from  '../components/count/directorOrdercount'
+		import orgorderCount from  '../components/count/orgOrdercount'
 		import allCount from '../components/count/allClientCount'
 		import allorderCount  from  '../components/count/allOrderCount'
 		export default {
 		    components: {
 		        personalCount,
 		        orgCount,
-		        departmentCount,
+		        orgorderCount,
 		        orderCount,
 		        allCount,
 		        allorderCount
