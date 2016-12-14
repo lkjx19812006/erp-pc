@@ -69,7 +69,6 @@
             <th>账号</th>
             <th>付款时间</th>
             <th>备注</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -86,7 +85,6 @@
             <td>{{item.payNumber}}</td>
             <td>{{item.ctime}}</td>
             <td>{{item.comment}}</td>
-            <td></td>
           </tr>
         </tbody>
       </table>

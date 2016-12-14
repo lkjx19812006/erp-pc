@@ -154,7 +154,7 @@
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
-                                                    <a class="operate" v-if="item.validate==0" @click="applyInfo({
+                                                    <!-- <a class="operate" v-if="item.validate==0" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,
@@ -174,7 +174,7 @@
                                                             link:paymentAudit
                                                         })"> 
                                                     <img src="/static/images/apply.png"  style="width:47px" />
-                                                    </a>
+                                                    </a> -->
                                                 </td>
                                             </tr>
                                          </tbody>
