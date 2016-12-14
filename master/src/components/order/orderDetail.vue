@@ -449,6 +449,7 @@ import credenceModel from '../order/createcredence'
 import disposeModel  from  '../order/orderStatus'
 import pictureModel  from  '../tips/pictureDialog'
 import dividedModel from './second_order/newDivided'
+import filter from '../../filters/filters'
 import {
   initOrderDetail
 } from '../../vuex/getters'
@@ -463,7 +464,8 @@ export default {
       credenceModel,
       disposeModel,
       pictureModel,
-      dividedModel
+      dividedModel,
+      filter
     },
     props:['param'],
     data(){
@@ -551,6 +553,7 @@ export default {
 
         }
     },
+    filter:(filter,{}),
    created(){
    	  this.getOrderDetail(this.param);
    }

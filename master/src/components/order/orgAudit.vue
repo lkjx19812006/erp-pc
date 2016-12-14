@@ -28,12 +28,12 @@
         <div class="edit_footer" v-if="param.title=='申请订单审核'">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
             <button type="button" class="btn  btn-confirm" @click="pass(param)">{{$t('static.applications')}}</button>
-            <button type="button" class="btn  btn-confirm" @click="reject(param)">{{$t('static.cancel_order')}}</button>
+            <!-- <button type="button" class="btn  btn-confirm" @click="reject(param)">{{$t('static.cancel_order')}}</button> -->
         </div>
         <div class="edit_footer" v-else>
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
             <button type="button" class="btn  btn-confirm" @click="pass(param)">{{$t('static.pass')}}</button>
-            <button type="button" class="btn  btn-confirm" @click="reject(param)">{{$t('static.reject')}}</button>
+            <!-- <button type="button" class="btn  btn-confirm" @click="reject(param)">{{$t('static.reject')}}</button> -->
         </div>
     </div>
 </template>
@@ -43,7 +43,7 @@ import {
 } from '../../vuex/getters'
 import {
    /* auditQuickEdit,*/
-    batchOrgOrder
+    orgOrderAudit
 } from '../../vuex/actions'
 export default {
     components: {
@@ -61,7 +61,7 @@ export default {
         },
         actions: {
             /*auditQuickEdit,*/
-            batchOrgOrder
+            orgOrderAudit
         }
     },
     methods: {
@@ -71,22 +71,9 @@ export default {
             }
         },*/
         pass: function(param){
-            console.log(this.param)
-            if(this.param.validate==0){
-                this.param.validate = 1;
-                this.param.show=false;
-                this.batchOrgOrder(this.param);
-            }else if(this.param.validate==1){
-                this.param.validate = 2;
-                this.param.show=false;
-                this.batchOrgOrder(this.param);
-            }
-            else if(this.param.validate==-2){
-                this.param.validate =1;
-                this.param.show=false;
-                this.batchOrgOrder(this.param);
-            }
-            this.param.callback = this.param.callback;
+            this.param.show = false;
+            this.orgOrderAudit(this.param);
+            
         },
         reject: function(param){
             this.param.validate = -2;
@@ -95,7 +82,7 @@ export default {
             console.log(this.param.description);
             console.log(this.param.indexs);
             this.param.callback = this.param.callback;
-            this.batchOrgOrder(this.param);
+            this.orgOrderAudit(this.param);
         },
     },
     /*created() {
