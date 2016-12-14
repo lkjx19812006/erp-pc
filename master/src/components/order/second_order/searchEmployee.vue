@@ -1,150 +1,296 @@
 <template>
-	<div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-	<div class="container modal_con" v-show="param.show">
-        <div @click="param.show = false" class="top-title">
+  <tree-dialog v-if="treeParam.show" :param="treeParam" ></tree-dialog>
+	 <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+     <div class="cover_loading">
+         <pulse-loader :loading="loadParam.loading||orgParam.loading" :color="color" :size="size"></pulse-loader>
+     </div>
+
+	 <div class="container modal_con" v-show="param.show">
+       <div @click="param.show = false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 	    <div class="model-header">
-	    	<h4>业务员信息</h4>
-			<div class="trans_service clearfix">
-    			<div class="cover_loading">
-	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-	            </div>
-	            <div class="col-xs-4">
-		            <div class="name_search clearfix" style="border:none">
-	                   <select  class="form-control" v-model="loadParam.orgId" @change="employNameSearch()">
-	                        <option selected value="">请选择业务员部门</option>
-	                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-	                  </select> 
-	                </div>
-	            </div>
-				<div class="col-xs-8">
-	                <div class="name_search clearfix">
-	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" @change="employNameSearch()">
-	                </div>
-	                 <div class="name_search clearfix">
-	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @change="employNameSearch()">
-	                </div>
-	            </div>
-	            <table class="table table-hover table_head table-striped " v-cloak>
-	                <thead>
-	                    <tr>
-	                        <th></th>
-	                        <th>姓名</th>
-	                        <th>部门</th>
-	                        <th>手机号</th>
-	                    </tr>
-	                </thead>
-	                <tbody>
-	                    <tr v-for="item in initEmployeeList" @click="serviceselected($index,item.id,item.name)">
-	                       <td >
-	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"></label>
-	                        </td>
-	                        <td>{{item.name}}</td>
-	                        <td>{{item.orgName}}</td>
-	                        <td>{{item.mobile}}</td>
-	                    </tr>
-	                </tbody>
-	            </table>
-		        <!-- <div class="edit_footer">
-		    		<button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
-		    		<input  type="button" class="btn btn-orange" @click="selected(param,param.show=false)" value="确定"/>
-		    	</div> -->
-			</div>
-			<div class="base_pagination">
-	            <pagination :combination="loadParam"></pagination>
-	        </div>
+            <h4>业务员</h4>
+	    	<div class="con_list">
+    			<div class="trans_service clearfix" v-show="currentView==1">
+                    <div style="margin:30px 10px 15px 10px" class="clearfix">
+                        <div class="input-group col-xs-4 pull-left" @click="treeParam.show=true">
+                            <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
+                            <input type="text" class="form-control"  placeholder="点击选择部门"   value="{{treeParam.orgName}}">
+                            <!--<input type="button" class="form-control" value="根据部门查找" @click="treeParam.show=true"/>-->
+                        </div> 
+                        <div class="col-xs-1 pull-left"></div>
+                        <div class="input-group col-xs-4 pull-left">
+                            <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
+                            <input type="text" class="form-control" v-model="loadParam.name" placeholder="{{$t('static.enter_salesman')}}" @keyup.enter="employSearch()">
+
+                        </div>
+                        <button type="button" class="new_btn" @click="reset()">{{$t('static.clear_all')}}</button>
+                        <button type="button" class="new_btn" style="margin-right:10px;" @click="employSearch()">{{$t('static.search')}}</button>
+                    </div>
+                    <div class="cover_loading">
+                        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+                    </div>    
+		            <table class="table table-hover table_color table-striped" style="text-align:center" v-cloak>
+		                <thead>
+		                    <tr>
+		                        <th></th>
+		                        <th>姓名</th>
+		                        <th>部门</th>
+		                        <th>手机</th>
+		                    </tr>
+		                </thead>
+		                <tbody>
+		                    <tr v-for="item in initEmployeeList"  @click="selectEmployee($index,item)">
+		                       <td  @click.stop="">
+		                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectEmployee($index,item)"></label>
+		                        </td>
+		                        <td>{{item.name}}</td>
+		                        <td>{{item.orgName}}</td>
+		                        <td>{{item.mobile}}</td>
+		                    </tr>
+
+		                </tbody>
+		            </table>
+                    <div class="base_pagination">
+                        <pagination :combination="loadParam"></pagination>
+                    </div>
+                    <div class="edit_footer">
+                        <button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
+                        <button type="button" class="btn btn-orange" @click="confirmEmp()">确定</button>
+                    </div>
+    			</div>
+
+	    	</div>
 	    </div>
 	</div>
 </template>
 <script>
 import pagination from '../../pagination'
+import treeDialog from '../../tips/treeDialog'
 import {
+    initCustomerlist,
     initEmployeeList,
-    initOrgList
+    initOrgList,
+    initLogin
 } from '../../../vuex/getters'
 import {
+    getClientList,
     getEmployeeList,
-    transferInfo,
-    getOrgList
+    getOrgList,
+
 } from '../../../vuex/actions'
 export default{
+	components:{
+        pagination,
+        treeDialog
+	},
 	props:['param'],
 	data(){
 		return {
-			loadParam: {
+			currentView:1,
+			isA:true,
+			checked:false,
+			customerFlag:0,
+            id: undefined, // Binded to component.
+			orgParam: {
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
                 all: 7,
-                name:'',
+                total:''
+            },
+              loadParam: {
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
                 mobile:'',
                 orgId:this.$store.state.table.login.orgId,
-            },
-			checked:false,
-			show:true
+                cur: 1,
+                all: 7,
+                total:'',
+                name:''
+              },
+              treeParam:{
+                show:false,
+                callback:this.callback,
+                orgId:'',
+                orgName:''
+              }
+
 		}
 	},
-	components:{
-		pagination
-	},
+
 	vuex:{
 		getters:{
+			initCustomerlist,
 			initEmployeeList,
-			initOrgList
+			initOrgList,
+            initLogin
 		},
 		actions:{
+			getClientList,
 			getEmployeeList,
-			transferInfo,
-			getOrgList
+			getOrgList,
+
 		}
 	},
 	methods:{
-		serviceselected:function(sub,id,name){
-			this.$store.state.table.basicBaseList.employeeList[sub].checked=!this.$store.state.table.basicBaseList.employeeList[sub].checked;
+        callback:function(){
+          console.log(this.treeParam);
+          if(this.treeParam.orgId){
+            this.loadParam.orgId=this.treeParam.orgId;
+            this.loadParam.orgName=this.treeParam.orgName;
+            this.employSearch();
+          }
+        },
+		employee:function(){
+			this.currentView=1;
+			//this.isA=!this.isA;
+			this.isA=true;
+		},
+        reset:function(){
+            this.loadParam.name="";
+            this.loadParam.orgId="";
+            this.treeParam.orgId="";
+            this.treeParam.orgName="";
+            this.getEmployeeList(this.loadParam);
+        },
+		department:function(){
+			this.currentView=2;
+			//this.isA=!this.isA;
+			this.isA=false;
+		},
+		employSearch:function(){
+        	/*this.getEmployOrgSearch(this.orgParam);*/
+        	this.getEmployeeList(this.loadParam);
+        },
+		Partselected:function(){
+			this.checked=!this.checked;
+           if(this.checked){
+                 this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+                    item.checked=true;
+             })
+           }else{
+                this.$store.state.table.basicBaseList.customerList.forEach(function(item){
+                    item.checked=false;
+             })
+           }
+		},
+
+		selectEmployee:function(id,item){
+			this.$store.state.table.basicBaseList.employeeList[id].checked=!this.$store.state.table.basicBaseList.employeeList[id].checked;
 			for(var key in this.initEmployeeList){
-				if(key!=sub){
+				if(key!=id){
 					if(this.$store.state.table.basicBaseList.employeeList[key].checked==true){
 						this.$store.state.table.basicBaseList.employeeList[key].checked=false;
 					}
 				}
 			}
-			this.param.employeeId = id;
-			this.param.employeeName = name;
-			this.param.show=false;
-			this.$dispatch('a',this.param);
+            console.log(item)
+            console.log(this.treeParam.orgName)
+            this.treeParam.orgName = item.orgName;
+            this.loadParam.name = item.name;
 		},
-		employNameSearch: function() {
-            this.getEmployeeList(this.loadParam);
+		selectDepartment:function(id){
+			this.$store.state.table.basicBaseList.orgList[id].checked=!this.$store.state.table.basicBaseList.orgList[id].checked;
+			for(var key in this.initOrgList){
+				if(key!=id){
+					if(this.$store.state.table.basicBaseList.orgList[key].checked==true){
+						this.$store.state.table.basicBaseList.orgList[key].checked=false;
+					}
+
+				}
+			}
+
+		},
+        confirmEmp:function(){
+            console.log('选业务员');
+            console.log(this.param);
+            this.param.employeeId = '';
+            this.param.employeeName = '';
+            this.param.orgId = '';
+            this.param.orgName = '';
+            for(var key in this.initEmployeeList){
+                if(this.$store.state.table.basicBaseList.employeeList[key].checked == true){
+                    this.param.employeeId = this.$store.state.table.basicBaseList.employeeList[key].id;
+                    this.param.employeeName = this.$store.state.table.basicBaseList.employeeList[key].name;
+                    this.param.orgId = this.$store.state.table.basicBaseList.employeeList[key].orgid;
+                    this.param.orgName = this.$store.state.table.basicBaseList.employeeList[key].orgName;
+                }
+            }
+            console.log(this.param);
+            this.$dispatch('selectEmpOrOrg', this.param);
+            this.param.show = false;
+            this.param.callback = this.param.callback;
+
         }
+
 	},
+
     events: {
-	    fresh: function(input) {
-	        this.loadParam.cur = input;
-	        this.getEmployeeList(this.loadParam);
-	    }
+        fresh: function(input) {
+            this.loadParam.cur = input;
+            this.getEmployeeList(this.loadParam);
+            this.checked=false;
+
+        },
+        treeview_click:function(param){
+            console.log(param);
+            if(param.children.length==0){
+                console.log(param.value);
+                console.log(param.label);
+                this.param.orgId = param.value;
+                this.param.orgName = param.label;
+            }
+      }
     },
-	created(){
-		this.getEmployeeList(this.loadParam);
-		this.getOrgList(this.loadParam);
-	}
+	created() {
+      //this.getClientList(this.orgParam, this.orgParam.all);
+      this.getEmployeeList(this.loadParam);
+      this.getOrgList(this.orgParam);
+      console.log(this.$store.state.table.login);
+    }
 }
 </script>
 <style scoped>
-.modal{
-	z-index: 1111;
+.modal {
+	z-index:1085;
 }
-.modal_con{
-	z-index: 1111;
+.modal_con {
+    width: 900px;
+    z-index: 1085;
+}
+.top-title{
+	width: 900px;
+	z-index: 1083;
+    position: fixed;
+    right: 0;
+    left: 0;
+    margin:auto;
+}
+.edit_footer{
+	width:900px;
+    z-index: 1000;
+}
+.trans_service{
+	margin-top: 10px;
+}
+.con_list{
+	position: relative;
 }
 .change_trans{
 	margin-top: 20px;
 }
 .con_trans{
 	margin-top: 40px;
+}
+.name_search{
+    margin-top:30px;
+}
+.btn_shape{
+    width:175px;
 }
 .tans_tab{
 	height: 40px;
@@ -155,7 +301,7 @@ export default{
 .tans_tab > .tabs{
 	width: 100px;
 	display: inline-block;
-	font-size:16px;
+	font-size:14px;
 	text-align: center;
 	background-color: #f5f5f5;
 	color: #333;
@@ -165,6 +311,12 @@ export default{
 	cursor: pointer;
 }
 .tans_tab .tabs_active{
+	background-color: #fff;
+	color: #fa6705;
+	border: 1px solid #fa6705;
+	border-bottom: 0;
+}
+.tans_tab .tabs_active_1{
 	background-color: #fff;
 	color: #fa6705;
 	border: 1px solid #fa6705;
@@ -192,25 +344,23 @@ export default{
     text-align: center;
     background-position: 5px;
 }
-.trans_service{
-	margin-top: 20px;
-}
 .trans_service .col-xs-8{
 	margin-bottom: 20px;
 }
-.table{
-	margin-bottom: 5px;
-}
 .table_head>thead>tr{
-	background-color: #f5f5f5;
+	/* background-color: #f5f5f5; */
 	color: #333;
 	font-size: 18px;
 }
-.base_pagination{
-	margin-top: 0;
+
+.trans_parten{
+    text-align: left;
 }
-th,td{
-	width: 200px;
-	min-width: 200px;
+.treeview{
+    height:500px;
+    border:0px;
+}
+.table{
+    display: table;
 }
 </style>
