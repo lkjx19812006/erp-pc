@@ -861,6 +861,13 @@ const mutations = {
     },
     [ORDER_UPLOAD_DATA](state,data){ //新建订单详情凭证
         console.log(data);
+        console.log(data.titles)
+        console.log(data.sub)
+        if(data.titles=='申请分期审核'){
+          console.log(data.validate)
+             console.log(state.orderDetail.stages.arr[data.sub])
+             state.orderDetail.stages.arr[data.sub].validate=  data.validate;
+        }
         if(data.stages){
           console.log(state.orderDetail.stages.arr)
           state.orderDetail.stages.arr =  data.stages;//分期付款
@@ -1578,12 +1585,11 @@ const mutations = {
             "position": data.position,
             "mobile": data.mobile,
             "extno": data.extno,
-            "level": data.level,
             "entrydate": data.entrydate,
             "leavedate": data.leavedate,
             "orgid": data.orgid,
             "orgcode": data.orgcode,
-            "status": data.status,
+            "leave": data.leave,
             "privilege": data.privilege
         })
     },

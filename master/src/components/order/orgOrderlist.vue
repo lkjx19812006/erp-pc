@@ -116,7 +116,7 @@
                                 loading:false,
                                  key:'orderDetail',
                                 orderStatus:item.orderStatus,
-                                contact:'/order/myList'
+                                contact:''
                         })">{{item.customerName}}</a></td>
                   <td></td>
                   <td>{{item.employeeName}}</td>

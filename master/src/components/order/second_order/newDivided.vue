@@ -256,15 +256,15 @@
             }
         },
         created(){
-            console.log(this.param.stages)
-            if(this.param.stages.length>0){
+            console.log(this.param.stages.length)
+            /*if(this.param.stages.length>0){
                 for(var i=0;i < this.param.stages.length;i++){
                     this.sum +=parseFloat(this.param.stages[i].amount);
                     this.scale +=parseInt(this.param.stages[i].ratio*10);
                 }
-            }
+            }*/
             console.log(this.sum)
-           /* this.getOrderDetail(this.param);*/
+            console.log(this.param.total)
 
         }
 	}

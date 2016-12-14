@@ -146,7 +146,6 @@
                                             <tr v-for="item in initOrderDetail.stages.arr">
                                                 <td v-if="item.type==0">付款</td>
                                                 <td v-if="item.type==1">收款</td>
-                                                <!-- <td>第{{item.id}}期</td> -->
                                                 <td colspan="6">{{item.orderStatus | orderDescript}}支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}押金）</td>
                                                 <td>{{item.description}}</td>
                                                 <td v-if="item.validate==0">未审核</td>
@@ -155,8 +154,26 @@
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
-                                                    <!-- <a class="operate" v-if="item.validate==0" @click="applyInfo($index,item.id)"> 
-                                                    <img src="/static/images/apply.png"  style="width:47px" /> -->
+                                                    <a class="operate" v-if="item.validate==0" @click="applyInfo({
+                                                            show:true,
+                                                            sub:$index,
+                                                            bizId:item.orderId,
+                                                            bizSubId:item.id,
+                                                            payWay:'',
+                                                            payName:'',
+                                                            paySubName:'',
+                                                            payUserName:'',
+                                                            payNumber:'',
+                                                            comment:'',
+                                                            image_f:'',
+                                                            image_s:'',
+                                                            image_t:'',
+                                                            images:'',
+                                                            url:'/fund/createByOrderStages',
+                                                            titles:'申请分期审核',
+                                                            link:paymentAudit
+                                                        })"> 
+                                                    <img src="/static/images/apply.png"  style="width:47px" />
                                                     </a>
                                                 </td>
                                             </tr>
@@ -434,7 +451,8 @@ import {
 import {
   getOrderDetail,
   uploadDocument,
-  dividedPayment
+  dividedPayment,
+  paymentAudit
 } from '../../vuex/actions'
 export default {
     components: {
@@ -508,7 +526,8 @@ export default {
       actions:{
         getOrderDetail,
         uploadDocument,
-        dividedPayment
+        dividedPayment,
+        paymentAudit
       }
     },
     methods:{
@@ -519,8 +538,10 @@ export default {
             }
             this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
           },
-          applyInfo:function(index,id){
+          applyInfo:function(item){
                 this.auditParam.show=true;
+                this.auditParam = item;
+                this.auditParam.callback = this.callback;
           },
           divided_payments:function(id,total,stages){
             console.log(stages)

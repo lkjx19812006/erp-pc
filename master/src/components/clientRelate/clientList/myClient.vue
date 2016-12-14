@@ -118,13 +118,13 @@
                 </dd>
                 
                 <dd class="pull-right" style="margin-right:20px">
-                  <button type="button" class="btn btn-default" @click="clientTransfer({
+                  <!-- <button type="button" class="btn btn-default" @click="clientTransfer({
                         arr:[],
                         name:'test',
                         employeeId:'',
                         orgId:'',
                         show:true
-                        })">{{$t("static.assigned_to_employee")}}</button>
+                        })">{{$t("static.assigned_to_employee")}}</button> -->
                   <button type="button" class="btn btn-default" @click="clientTransferBlack()">{{$t("static.drag_into_blacklist")}}</button>
                   <button type="button" class="btn btn-default" @click="clientTransferSupplier()">{{$t("static.make_them_become_supplier")}}</button>
                   <button type="button" class="btn btn-default" @click="createCustomer({

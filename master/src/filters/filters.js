@@ -26,6 +26,17 @@ Vue.filter('numberstate', function(val){
 		return val;
 	}
 });
+Vue.filter('leaveTime', function(val){
+	var val = val;
+	if(val==1){
+		 return '在职';
+	}else if(val==0){
+		 return '离职';
+	}else{
+		return val;
+	}
+});
+
 Vue.filter('orderDescript', function(val){
 	var val = val;
 	if(val==null){

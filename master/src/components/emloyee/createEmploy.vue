@@ -59,12 +59,15 @@
                             </div>
                         </div>
                         <div class="clearfix">
-                            <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
-                                <label>{{param.levellist}}</label>
-                                <input type="text" class="form-control" v-model="param.level" />
+                            <div class="client-detailInfo   col-md-6 col-xs-12" v-if="param.title=='编辑员工'">
+                                <label>是否在职</label>
+                                <select class="form-control" v-model="param.leave" value="{{param.leave}}">
+                                    <option value="1">在职</option>
+                                    <option value="0">离职</option>
+                                </select>
                             </div>
-                            <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                                <label>{{param.leave}}</label>
+                            <div class="client-detailInfo  col-md-6 col-xs-12">
+                                <label>离职日期</label>
                                  <div class="search_input">
                                     <mz-datepicker :time.sync="param.leavedate"  format="yyyy-MM-dd">
                                     </mz-datepicker>
@@ -97,7 +100,7 @@
 </template>
 <script>
 import calendar from '../calendar/vue.datepicker'
-import orgsearchModel from '../emloyee/searchorg'
+import orgsearchModel from  '../emloyee/searchorg'
 import {
     initRoleList
 } from '../../vuex/getters'
@@ -221,18 +224,9 @@ export default {
 .search_input{
     float: none;
 }
-.edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
+
 .search_input{
     text-indent: 0px;
-}
-.edit-content h3 {
-    font-size: 18px;
-    color: #fa6705;
-    margin: 0;
 }
 
 .editsection {

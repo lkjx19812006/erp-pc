@@ -6,7 +6,6 @@
     <div  class="myemploy">
         <div class="order_search">
             <div class="clear">
-<!--                 <div class="my_order col-xs-1" style="font-size:14px">员工列表</div> -->
                 <div class="left my_order_search">
                     <div class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24"  />
@@ -23,8 +22,21 @@
                         <button class="new_btn" @click="loadByCondition()">搜索</button>
                     </div>
                 </div>
-                <div class="right">
-                    <button type="button" class="btn btn-primary pull-right transfer">刷新</button>
+            </div>
+            <div class="clear">
+                <dl class="clear left">
+                  <dt class="left marg_top">是否在职：</dt>
+                  <div class="btn-group">
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.leave==1}" @click="selectType(1)">
+                        在职
+                     </button>
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.leave==0}" @click="selectType(0)">
+                        离职
+                     </button>
+                  </div>
+               </dl>
+               <div class="right">
+                    <button type="button" class="btn btn-primary pull-right transfer" @click="loadByCondition()">刷新</button>
                     <button class="btn btn-default pull-right " @click="newData({
                          title:'新建员工',
                          show:true,
@@ -95,7 +107,7 @@
                                  privilege:item.privilege,
                                  orgid:item.orgid,
                                  orgcode:item.orgcode,
-                                 status:item.status,
+                                 leave:item.leave,
                                  orgName:item.orgName,
                                  position:item.position,
                                  mobile:item.mobile,
@@ -117,9 +129,9 @@
                     <td>{{item.leavedate | date}}</td>
                     <td>{{item.level | levelstate}}</td>
                     <td>
-                        <div v-if="item.status==0">离职</div>
-                        <div v-if="item.status==1">在职</div>
-                        <div v-if="item.status!=1&&item.status!=0">在职</div>  
+                        <div v-if="item.leave==0">离职</div>
+                        <div v-if="item.leave==1">在职</div>
+                        <div v-if="item.leave!=1&&item.leave!=0">在职</div>  
                     </td>
                     <td @click="modify({
                                  title:'编辑员工',
@@ -132,7 +144,7 @@
                                  privilege:item.privilege,
                                  orgid:item.orgid,
                                  orgcode:item.orgcode,
-                                 status:item.status,
+                                 leave:item.leave,
                                  orgName:item.orgName,
                                  position:item.position,
                                  mobile:item.mobile,
@@ -151,11 +163,11 @@
                                  orgiid:'部门编号',
                                  statuslist:'状态',
                                  entry:'入职时间',
-                                 leave:'离职时间',
+                                 leaveTime:'离职时间',
                                  levellist:'职级',
                                  link:updateEmploy,
                                  url:'/employee/',
-                                 key:'employeeList'
+                                 key:'employeeList',
                                 })">
                         <a class="operate"><img src="/static/images/edit.png" height="18" width="30" alt="编辑" title="编辑"/></a>
                     </td>
@@ -169,7 +181,7 @@
     </div>
 </template>
 <script>
-import createempModel  from '../components/emloyee/createEmploy'
+import createempModel  from  '../components/emloyee/createEmploy'
 import pagination from '../components/pagination'
 import filter from '../filters/filters'
 import detailempModel  from '../components/emloyee/employDetail'
@@ -209,6 +221,7 @@ export default {
                 mobile:'',
                 orgId:'',
                 orgCode:'',
+                leave:1,
                 total:0
             },
             createParam:{
@@ -242,6 +255,11 @@ export default {
             }else{
                 this.$store.state.table.basicBaseList[param.concrete][sub].show = true;
             }
+        },
+        selectType:function(leave){
+            console.log(leave)
+            this.loadParam.leave = leave;
+            this.getEmployeeList(this.loadParam);
         },
         newData:function(initEmployeeList){
             this.createParam=initEmployeeList;
