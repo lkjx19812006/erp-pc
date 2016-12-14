@@ -508,14 +508,25 @@ export default {
                     this.transferParam.arr.push(this.initUnCustomerlist[i].id);
                 }
             }
-
             if(this.transferParam.arr.length>0){
                 this.transferParam.show=true;
+                this.transferParam.callback = this.transferback;
             }else{
                 this.tipsParam.show=true;
                 this.tipsParam.alert=true;
             }
 
+        },
+        transferback:function(title){
+            console.log(title)
+            this.tipsParam.show = true;
+            if(title=='success'){
+                this.tipsParam.name = '划转成功';
+            }else{
+                this.tipsParam.name=title;
+            }
+            
+            this.tipsParam.alert=true;
         },
       clientTransferSupplier:function(){
         this.auditParam.title="客户提取为供应商备注";

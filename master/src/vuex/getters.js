@@ -82,6 +82,7 @@ export const initOrderlist = (state) => {
     return parseJson(state.table.basicBaseList.orderList);
 }
 
+
 export const initExpresslist = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.expressList));
 }
@@ -338,4 +339,11 @@ export const initOrgSample = (state) => {
 export const initgSampleDetail = (state) => {
     console.log(state.count)
   return parseJson(state.count.sampleDetail);
+}
+/*--订单资金记录--*/
+export const initMyFundList = (state) => {
+  return parseJson(state.count.myFundlist);
+}
+export const initOrgFundList = (state) => {
+  return parseJson(state.count.orgFundlist);
 }

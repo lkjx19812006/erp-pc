@@ -128,8 +128,6 @@
                   <button type="button" class="btn btn-default" @click="clientTransfer({
                         arr:[],
                         name:'test',
-                        employeeId:'',
-                        orgId:'',
                         show:true
                         })">{{$t("static.assigned_to_employee")}}</button>
                   <button type="button" class="btn btn-default" @click="clientTransferBlack()">{{$t("static.drag_into_blacklist")}}</button>
@@ -513,11 +511,13 @@ export default {
 
             if(this.transferParam.arr.length>0){
                 this.transferParam.show=true;
+                this.transferParam.callback=this.transferback;
             }else{
                 this.tipsParam.show=true;
                 this.tipsParam.alert=true;
             }
 
+            console.log(this.transferParam)
         },
       clientTransferSupplier:function(){
         this.auditParam.title="客户提取为供应商备注";
@@ -563,6 +563,17 @@ export default {
         }
 
       },
+      transferback:function(title){
+            console.log(title)
+            this.tipsParam.show = true;
+            if(title=='success'){
+                this.tipsParam.name = '划转成功';
+            }else{
+                this.tipsParam.name=title;
+            }
+            
+            this.tipsParam.alert=true;
+        },
       callback:function(){
         this.auditParam.blackComments=this.auditParam.auditComment;
         this.auditParam.customerIds=this.auditParam.arr;
@@ -618,11 +629,11 @@ export default {
             this.getClientList(this.loadParam);
         },
         selectEmpOrOrg: function (param) {
-        this.transferParam.employeeId = param.employeeId;
-        this.transferParam.employeeName = param.employeeName;
-        this.transferParam.orgId = param.orgId;
-        this.transferParam.orgName = param.orgName;
-        this.transferInfo(this.transferParam);
+          this.transferParam.employeeId = param.employeeId;
+          this.transferParam.employeeName = param.employeeName;
+          this.transferParam.orgId = param.orgId;
+          this.transferParam.orgName = param.orgName;
+          this.transferInfo(this.transferParam);
       }
     },
     created() {

@@ -772,6 +772,7 @@ const mutations = {
         }
     },
     [ORDER_UPDATE_DATA](state,data){ //修改订单
+      console.log(data)
         for (var key in data) {
             state.basicBaseList.myOrderList[data.index][key] = data[key];
         }
@@ -873,17 +874,20 @@ const mutations = {
         }
     },
     [ORDER_DETAIL_DATA](state, data) {//订单详情
-        console.log(data);
         state.orderDetail = data;
     },
     [ORDER_UPLOAD_DATA](state,data){ //新建订单详情凭证
         console.log(data);
-        if(data.amount){
-          state.orderDetail.stages.arr.unshift({ //分期付款
-                "orderId":data.orderId,
-                "description":data.description,
-                "show":false
-            })
+        console.log(data.titles)
+        console.log(data.sub)
+        if(data.titles=='申请分期审核'){
+          console.log(data.validate)
+             console.log(state.orderDetail.stages.arr[data.sub])
+             state.orderDetail.stages.arr[data.sub].validate=  data.validate;
+        }
+        if(data.stages){
+          console.log(state.orderDetail.stages.arr)
+          state.orderDetail.stages.arr =  data.stages;//分期付款
         }
         if(data.payPics){
             state.orderDetail.payPics.arr.unshift({
@@ -1598,12 +1602,11 @@ const mutations = {
             "position": data.position,
             "mobile": data.mobile,
             "extno": data.extno,
-            "level": data.level,
             "entrydate": data.entrydate,
             "leavedate": data.leavedate,
             "orgid": data.orgid,
             "orgcode": data.orgcode,
-            "status": data.status,
+            "leave": data.leave,
             "privilege": data.privilege
         })
     },

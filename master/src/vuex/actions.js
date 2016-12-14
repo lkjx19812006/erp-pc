@@ -86,7 +86,7 @@ export const login = ({ dispatch }, data) => { //登录
             var no = compile(data.no);
 
             var lastTime = getNowFormatDate();
-            var expire = new Date((new Date()).getTime() + 24 * 3600000); //得到的时间与真实时间差了8小时,cookie将在1小时后过期
+            var expire = new Date((new Date()).getTime() + 24 * 3600000); //得到的时间与真实时间差了8小时,cookie将在24小时后过期
             document.cookie = "no=" + no + ";expires=" + expire;
             document.cookie = "id=" + compile(res.json().result.id) + ";expires=" + expire;
             document.cookie = "orgId=" + compile(res.json().result.orgid) + ";expires=" + expire;
@@ -96,7 +96,16 @@ export const login = ({ dispatch }, data) => { //登录
             var result = res.json().result;
             result.time = lastTime;
 
-            dispatch(types.LOGIN_DATA, result);
+            var loginInfo={
+                id:result.id,
+                name:result.name,
+                no:result.no,
+                orgId:result.orgid,
+                time:result.time,
+                privilege:result.privilege
+            }
+
+            dispatch(types.LOGIN_DATA, loginInfo);
             dispatch(types.INIT_LIST, result);
             //本地存储左侧菜单
             console.log(result.menus);
@@ -995,12 +1004,29 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
 }
 
 export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分期
+    console.log(param)
+    const stages = [];
+    for(var i=0;i< param.stages.length;i++){
+        var temp = {};
+        temp = {
+            id:param.stages[i].id,
+            amount:param.stages[i].amount,
+            comment:param.stages[i].comment,
+            creater:param.stages[i].creater,
+            description:param.stages[i].description,
+            orderId:param.stages[i].orderId,
+            orderStatus:param.stages[i].orderStatus,
+            ratio:param.stages[i].ratio,
+            status:param.stages[i].status,
+            type:param.stages[i].type,
+            validate:param.stages[i].validate
+        };
+        stages.push(temp);
+
+    }
     const body = {
-        orderId: param.orderId,
-        description: param.description,
-        amount: param.amount,
-        ratio: param.ratio,
-        orderStatus:param.orderStatus
+        id: param.id,
+        stages:stages
     }
     Vue.http({
         method: 'POST',
@@ -1014,13 +1040,75 @@ export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分
         }
     }).then((res) => {
         console.log('添加成功')
-        dispatch(types.ORDER_UPLOAD_DATA, param);
-        param.show = false;
+        param.callback(res.json().msg);
+        for(var i in res.json().result){
+            param.stages[i].type = res.json().result[i].type;
+            param.stages[i].ctime = res.json().result[i].ctime;
+            param.stages[i].validate = res.json().result[i].validate;
+        }
+        if(res.json().code==200){
+            dispatch(types.ORDER_UPLOAD_DATA, param);
+        }
     }, (res) => {
-        console.log('fail');
+        console.log('fail'); 
     });
 }
 
+export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
+    console.log(param)
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t }
+    var ss= param.images;
+    var sss = ss.split(",");//字符串转化为数组
+    sss.toString();
+    console.log(sss)
+    const body = {
+        bizId: param.bizId,
+        bizSubId:param.bizSubId,
+        payWay:param.payWay,
+        payUserName:param.payUserName,
+        payNumber:param.payNumber,
+        comment:param.comment
+    }
+    if(param.payName&&param.payName!=''){
+        body.payName = param.payName;
+    }
+    if(param.paySubName&&param.paySubName!=''){
+        body.paySubName = param.paySubName;
+    }
+    if (param.images) {
+        body.images = sss;
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+        /*for(var i in res.json().result){
+            param.stages[i].type = res.json().result[i].type;
+            param.stages[i].ctime = res.json().result[i].ctime;
+            param.stages[i].validate = res.json().result[i].validate;
+        }*/
+        if(res.json().msg=='已申请审核'){
+            param.validate = 1;
+            dispatch(types.ORDER_UPLOAD_DATA, param);
+        }
+        
+    }, (res) => {
+        console.log('fail'); 
+    });
+}
 
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     console.log(param)
@@ -2557,6 +2645,9 @@ export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及�
         }
         if (seach == 'orgCode' && param[seach] !== '') {
             apiurl += '&orgCode=' + param.orgCode
+        }
+        if (seach == 'leave' && param[seach] !== '') {
+            apiurl += '&leave=' + param.leave
         }
     }
     Vue.http({
@@ -4720,12 +4811,11 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
         'position': param.position,
         "mobile": param.mobile,
         "extno": param.extno,
-        "level": param.level,
+        "leave": param.leave,
         'entrydate': param.entrydate,
         "leavedate": param.leavedate,
         "orgid": param.orgid,
         "orgcode": param.orgcode,
-        'status': param.status,
         'privilege': param.privilege
     }
     Vue.http({
@@ -4740,7 +4830,7 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
         }
     }).then((res) => {
         console.log('添加成功');
-        param.status = 1;
+        param.leave = 1;
         param.callback(res.json().msg);
         if(res.json().code==200){
             dispatch(types.ADD_EMPLOYEE_DATA, param);
@@ -4769,12 +4859,11 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
         position: param.position,
         mobile: param.mobile,
         extno: param.extno,
-        level: param.level,
+        leave: param.leave,
         entrydate: param.entrydate,
         leavedate: param.leavedate,
         orgid: param.orgid,
         orgcode: param.orgcode,
-        status: param.status,
         privilege: param.privilege
     }
     Vue.http({
@@ -5736,4 +5825,85 @@ export const sampleApply = ({ dispatch }, param) => { //申请/审核 寄样申�
     }, (res) => {
         console.log('fail');
     });
+}
+export const getMyFundList = ({ dispatch }, param) => { //个人资金记录以及搜索
+    param.loading = true;
+    var apiurl = apiUrl.commonList + '/fund/employee/?' + 'page=' + param.cur + '&pageSize=15';
+    for (var seach in param) {
+        if (seach == 'amount' && param[seach] !== '') {
+            apiurl += '&amount=' + param.amount
+        }
+        if (seach == 'payName' && param[seach] !== '') {
+            apiurl += '&payName=' + param.payName
+        }
+        if (seach == 'payUserName' && param[seach] !== '') {
+            apiurl += '&payUserName=' + param.payUserName
+        }
+        if (seach == 'payNumber' && param[seach] !== '') {
+            apiurl += '&payNumber=' + param.payNumber
+        }
+        if (seach == 'type' && param[seach] !== '') {
+            apiurl += '&type=' + param.type
+        }
+    }
+    Vue.http({
+        method: 'GET',
+        url: apiurl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var orgsample = res.json().result.list;
+        param.loading = false;
+        dispatch(types.MY_FUND_LIST, orgsample);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        localStorage.myFundParam = JSON.stringify(param);
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+export const getOrgFundList = ({ dispatch }, param) => { //部门资金记录以及搜索
+    param.loading = true;
+    var apiurl = apiUrl.commonList + '/fund/org/?' + 'page=' + param.cur + '&pageSize=15';
+    for (var seach in param) {
+        if (seach == 'amount' && param[seach] !== '') {
+            apiurl += '&amount=' + param.amount
+        }
+        if (seach == 'payName' && param[seach] !== '') {
+            apiurl += '&payName=' + param.payName
+        }
+        if (seach == 'employee' && param[seach] !== '') {
+            apiurl += '&employee=' + param.employee
+        }
+        if (seach == 'payUserName' && param[seach] !== '') {
+            apiurl += '&payUserName=' + param.payUserName
+        }
+        if (seach == 'payNumber' && param[seach] !== '') {
+            apiurl += '&payNumber=' + param.payNumber
+        }
+        if (seach == 'type' && param[seach] !== '') {
+            apiurl += '&type=' + param.type
+        }
+    }
+    Vue.http({
+        method: 'GET',
+        url: apiurl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var orgsample = res.json().result.list;
+        param.loading = false;
+        dispatch(types.ORG_FUND_LIST, orgsample);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        localStorage.orgFundParam = JSON.stringify(param);
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
 }

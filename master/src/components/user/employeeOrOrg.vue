@@ -14,37 +14,37 @@
 	    	<h4 v-if="param.choice=='选择'">选择业务员/部门</h4>
             <h4 v-else>划转</h4>
 	    	<div class="con_list">
-	    		<div class="change_trans">
-	    			<!-- <div class="tans_tab clearfix"> -->
-                    <div class="btn-group">
-                        <button type="button" class="btn btn_shape" v-bind:class="{ 'btn-orange': isA}" @click="employee()">业务员</button>
-                        <button type="button" class="btn btn_shape" v-bind:class="{ 'btn-orange':!isA}" @click="department()">部门</button>
-	    				<!-- <a class="tabs" v-bind:class="{ 'tabs_active': isA&&isB, 'tab1': !isA }" @click="bindCustomer()">绑定客户</a> -->
-	    				<!-- <a class="tabs" v-bind:class="{ 'tabs_active': isA, 'tab1': isA }"  @click="employee()">业务员</a>
-                        <a class="tabs" v-bind:class="{ 'tabs_active': !isA, 'tab1': isA }"  @click="department()">部门</a> -->
-
-	    			</div>
-	    		</div>
+	    		<!-- <div class="change_trans">
+                    <div class="tans_tab clearfix">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn_shape" v-bind:class="{ 'btn-orange': isA}" @click="employee()">业务员</button>
+                                        <button type="button" class="btn btn_shape" v-bind:class="{ 'btn-orange':!isA}" @click="department()">部门</button>
+                        <a class="tabs" v-bind:class="{ 'tabs_active': isA&&isB, 'tab1': !isA }" @click="bindCustomer()">绑定客户</a>
+                        <a class="tabs" v-bind:class="{ 'tabs_active': isA, 'tab1': isA }"  @click="employee()">业务员</a>
+                                        <a class="tabs" v-bind:class="{ 'tabs_active': !isA, 'tab1': isA }"  @click="department()">部门</a>
+                
+                    </div>
+                </div> -->
     			<div class="trans_service clearfix" v-show="currentView==1">
                     <div style="margin:30px 10px 15px 10px" class="clearfix">
+                        <div class="input-group col-xs-4 pull-left" @click="treeParam.show=true">
+                            <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
+                            <input type="text" class="form-control"  placeholder="点击选择部门"   value="{{treeParam.orgName}}">
+                            <!--<input type="button" class="form-control" value="根据部门查找" @click="treeParam.show=true"/>-->
+                        </div> 
+                        <div class="col-xs-1 pull-left"></div>
                         <div class="input-group col-xs-4 pull-left">
                             <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
                             <input type="text" class="form-control" v-model="loadParam.name" placeholder="{{$t('static.enter_salesman')}}" @keyup.enter="employSearch()">
 
                         </div>
-                        <div class="col-xs-1 pull-left"></div>
-                        <div class="input-group col-xs-4 pull-left" @click="treeParam.show=true">
-                          <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
-                          <input type="text" class="form-control"  placeholder="点击选择部门"   value="{{treeParam.orgName}}">
-                            <!--<input type="button" class="form-control" value="根据部门查找" @click="treeParam.show=true"/>-->
-                        </div> 
                         <button type="button" class="new_btn" @click="reset()">{{$t('static.clear_all')}}</button>
                         <button type="button" class="new_btn" style="margin-right:10px;" @click="employSearch()">{{$t('static.search')}}</button>
                     </div>
                     <div class="cover_loading">
                         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
                     </div>    
-		            <table class="table table-hover table_head table-striped" style="text-align:center" v-cloak>
+		            <table class="table table-hover table_color table-striped" style="text-align:center" v-cloak>
 		                <thead>
 		                    <tr>
 		                        <th></th>
@@ -54,9 +54,9 @@
 		                    </tr>
 		                </thead>
 		                <tbody>
-		                    <tr v-for="item in initEmployeeList"  @click="selectEmployee($index)">
+		                    <tr v-for="item in initEmployeeList"  @click="selectEmployee($index,item)">
 		                       <td  @click.stop="">
-		                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectEmployee($index)"></label>
+		                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectEmployee($index,item)"></label>
 		                        </td>
 		                        <td>{{item.name}}</td>
 		                        <td>{{item.orgName}}</td>
@@ -73,26 +73,8 @@
                         <button type="button" class="btn btn-orange" @click="confirmEmp()">确定</button>
                     </div>
     			</div>
-	    		<div class="con_trans">
-	    			<div class="trans_parten" v-show="currentView==2">
-	    				<!-- <table class="table table-hover table_head table-striped " v-cloak>
-                                                    <thead>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th>部门名称</th>
-
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="item in initOrgList">
-                                                           <td  @click.stop="">
-                                                                <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectDepartment($index)" ></label>
-                                                            </td>
-                                                            <td>{{item.name}}</td>
-
-                                                        </tr>
-                                                    </tbody>
-                                                </table>  -->
+	    		<!-- <div class="con_trans">
+                    <div class="trans_parten" v-show="currentView==2">
                         <div>
                             <treeview :value.sync="id"
                                 :model="initOrgList"
@@ -106,12 +88,10 @@
                             <button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
                             <button type="button" class="btn btn-orange" @click="confirmOrg()">确定</button>
                         </div>
-	    			</div>
-
-	    		</div>
+                    </div>
+                </div> -->
 
 	    	</div>
-
 	    </div>
 	</div>
 </template>
@@ -151,24 +131,23 @@ export default{
                 all: 7,
                 total:''
             },
-      loadParam: {
-        loading: true,
-        color: '#5dc596',
-        size: '15px',
-        name:'',
-        mobile:'',
-        orgId:this.initLogin.orgId,
-        cur: 1,
-        all: 7,
-        total:''
-      },
-      treeParam:{
-        show:false,
-        callback:this.callback,
-        orgId:'',
-        orgName:''
-      }
-
+              loadParam: {
+                loading: true,
+                color: '#5dc596',
+                size: '15px',
+                mobile:'',
+                orgId:this.$store.state.table.login.orgId,
+                cur: 1,
+                all: 7,
+                total:'',
+                name:''
+              },
+              treeParam:{
+                show:false,
+                callback:this.callback,
+                orgId:'',
+                orgName:''
+              }
 
 		}
 	},
@@ -236,17 +215,19 @@ export default{
            }
 		},
 
-		selectEmployee:function(id){
+		selectEmployee:function(id,item){
 			this.$store.state.table.basicBaseList.employeeList[id].checked=!this.$store.state.table.basicBaseList.employeeList[id].checked;
 			for(var key in this.initEmployeeList){
 				if(key!=id){
 					if(this.$store.state.table.basicBaseList.employeeList[key].checked==true){
 						this.$store.state.table.basicBaseList.employeeList[key].checked=false;
 					}
-
 				}
 			}
-
+            console.log(item)
+            console.log(this.treeParam.orgName)
+            this.treeParam.orgName = item.orgName;
+            this.loadParam.name = item.name;
 		},
 		selectDepartment:function(id){
 			this.$store.state.table.basicBaseList.orgList[id].checked=!this.$store.state.table.basicBaseList.orgList[id].checked;
@@ -260,7 +241,7 @@ export default{
 			}
 
 		},
-		confirm:function(){
+		/*confirm:function(){
 			this.param.employeeId = '';
 			this.param.employeeName = '';
 			this.param.orgId = '';
@@ -282,9 +263,10 @@ export default{
 			this.$dispatch('selectEmpOrOrg', this.param);
 			this.param.show = false;
 
-		},
+		},*/
         confirmEmp:function(){
             console.log('选业务员');
+            console.log(this.param);
             this.param.employeeId = '';
             this.param.employeeName = '';
             this.param.orgId = '';
@@ -322,7 +304,7 @@ export default{
             this.checked=false;
 
         },
-      treeview_click:function(param){
+        treeview_click:function(param){
             console.log(param);
             if(param.children.length==0){
                 console.log(param.value);
@@ -336,7 +318,7 @@ export default{
       //this.getClientList(this.orgParam, this.orgParam.all);
       this.getEmployeeList(this.loadParam);
       this.getOrgList(this.orgParam);
-
+      console.log(this.$store.state.table.login);
     }
 }
 </script>

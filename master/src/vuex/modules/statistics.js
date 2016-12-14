@@ -10,7 +10,9 @@ import {
     DELETE_DATA,
     APPLY_DATA,
     UNIT_LIST,
-    CURRENCY_LIST
+    CURRENCY_LIST,
+    MY_FUND_LIST,
+    ORG_FUND_LIST
 } from '../mutation-types'
 
 const state = {
@@ -41,6 +43,8 @@ const state = {
     },
     unitList:[],
     currencyList:[],
+    myFundlist:[],
+    orgFundlist:[],
 }
 const mutations = {
     [UNIT_LIST](state,data){ //常用单位
@@ -63,6 +67,12 @@ const mutations = {
     },
     [ORG_SAMPLE_LIST](state,data){ //部门寄样申请列表
         state.orgSampleList = data;
+    },
+    [MY_FUND_LIST](state,data){ //我的资金记录
+      state.myFundlist = data;
+    },
+    [ORG_FUND_LIST](state,data){ //我的资金记录
+      state.orgFundlist = data;
     },
     [ADD_SAMPLE](state,data){
         console.log(data)

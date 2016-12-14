@@ -55,8 +55,8 @@
                              <input type="text" class="form-control edit-input"   v-model="param.extno" value="{{param.extno}}" disabled="disabled"/>
                         </div>
                         <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                            <label class="editlabel">职级</label>
-                            <input type="text" class="form-control edit-input"  v-model="param.level" value="{{param.level | levelstate}}" disabled="disabled"/>
+                            <label class="editlabel">是否在职</label>
+                            <input type="text" class="form-control edit-input"  v-model="param.leave" value="{{param.leave | leaveTime}}" disabled="disabled"/>
                         </div>
                     </div>
                     <!-- <div class="clearfix col-md-10 col-xs-12">

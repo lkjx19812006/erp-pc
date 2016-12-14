@@ -4,6 +4,8 @@
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
     <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <divided-model :param="divideParam" v-if="divideParam.show"></divided-model>
+    <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
+    <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
       <div class="top-title">
@@ -107,7 +109,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="panel panel-default">
+                            <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:'',
@@ -115,57 +117,71 @@
                                               })">
                                         <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.stages.arr.length!==null">
-                                          分期付款（{{initOrderDetail.stages.arr.length}}）<span class="system_danger">{{$t('static.pay_tips')}}</span>
+                                          分期付款（{{initOrderDetail.stages.arr.length}}）
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                         {{$t('static.pay_evidence')}}（0）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments({
-                                            show:true,
-                                            orderId:initOrderDetail.id,
-                                            link:dividedPayment,
-                                            url:'/order/attachSubmit/',
-                                            amount:'',
-                                            orderStatus:initOrderDetail.orderStatus,
-                                            ratio:'',
-                                            description:'',
-                                            rtime:''
-                                            })"  v-if="(initOrderDetail.stages.arr.length!==null&&param.contact=='/order/myList')">{{$t('static.new')}}</button>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="(initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2||initOrderDetail.orderStatus<20))">{{$t('static.new')}}/{{$t('static.edit')}}</button>
                                         <a v-else></a>
                                     </h4>
                                 </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.stages.arr.length&&!initOrderDetail.stages.show" v-cloak>
+                                <div class="panel-collapse" v-if="initOrderDetail.stages.arr.length&&initOrderDetail.stages.show" v-cloak>
                                     <div class="panel-body panel-set">
                                         <table class="table  contactSet">
                                           <thead>
-                                            <th>订单类型</th>
-                                            <th>显示分期</th>
-                                            <th>分期金额</th>
-                                            <th>付款比例</th>
-                                            <th>说明</th>
-                                            <th>收付节点</th>
-                                            <th>收付状态</th>
-                                            <th>收/付款时间</th>
-                                            <th>审核状态</th>c
+                                            <th>分期类型</th>
+                                            <!-- <th>分期期数</th> -->
+                                            <th colspan="6">分期说明</th>
+                                            <!-- <th>付款比例</th>
+                                            
+                                            <th>分期支付时间</th>-->
+                                            <th>分期原因</th> 
+                                            <th>审核状态</th>
+                                            <th>申请备注</th>
+                                            <th>创建时间</th>
+                                            <th></th>
                                           </thead>
-                                        <tbody>
+                                          <tbody>
                                             <tr v-for="item in initOrderDetail.stages.arr">
-                                                <td>{{item.type}}</td>
-                                                <td>{{item.type}}</td>
-                                                <td>{{item.amount}}</td>
-                                                <td>{{item.ratio}}</td>
+                                                <td v-if="item.type==0">付款</td>
+                                                <td v-if="item.type==1">收款</td>
+                                                <td colspan="6">{{item.orderStatus | orderDescript}}支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}押金）</td>
                                                 <td>{{item.description}}</td>
-                                                <td>{{item.orderStatus}}</td>
-                                                <td>{{item.pr}}</td>
-                                                <td>{{item.ptime}}</td>
-                                                <td>{{item.rtime}}</td>
-                                                <td>{{item.validate}}</td>
+                                                <td v-if="item.validate==0">未审核</td>
+                                                <td v-if="item.validate==1">已申请</td>
+                                                <td v-if="item.validate==2">已到账</td>
+                                                <td>{{item.comment}}</td>
+                                                <td>{{item.ctime}}</td>
+                                                <td>
+                                                    <a class="operate" v-if="item.validate==0" @click="applyInfo({
+                                                            show:true,
+                                                            sub:$index,
+                                                            bizId:item.orderId,
+                                                            bizSubId:item.id,
+                                                            payWay:'',
+                                                            payName:'',
+                                                            paySubName:'',
+                                                            payUserName:'',
+                                                            payNumber:'',
+                                                            comment:'',
+                                                            image_f:'',
+                                                            image_s:'',
+                                                            image_t:'',
+                                                            images:'',
+                                                            url:'/fund/createByOrderStages',
+                                                            titles:'申请分期审核',
+                                                            link:paymentAudit
+                                                        })"> 
+                                                    <img src="/static/images/apply.png"  style="width:47px" />
+                                                    </a>
+                                                </td>
                                             </tr>
-                                        </tbody>
+                                         </tbody>
                                     </table>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -216,28 +232,6 @@
                                     </table>
                                     </div>
                                 </div>
-                                <!--<div class="panel-collapse" v-else v-show="!initOrderDetail.payPics.show" v-cloak>-->
-                                    <!--<div class="panel-body panel-set">-->
-                                        <!--<table class="table  contactSet">-->
-                                          <!--<thead>-->
-                                            <!--<th>文件类型</th>-->
-                                            <!--<th>文件来源</th>-->
-                                            <!--<th>文件图片或路径</th>-->
-                                            <!--<th>描述</th>-->
-                                          <!--</thead>-->
-                                        <!--<tbody>-->
-                                            <!--<tr v-for="item in initOrderDetail.payPics.arr">-->
-                                                <!--<td>{{item.fileType}}</td>-->
-                                                <!--<td>{{item.bizType}}</td>-->
-                                                <!--<td><img :src="item.path" v-if="item.fileType=='image'"/>-->
-                                                    <!--<img src="/static/images/pdf.png" height="20" width="20" v-else/>-->
-                                                <!--</td>-->
-                                                <!--<td>{{item.description}}</td>-->
-                                            <!--</tr>-->
-                                        <!--</tbody>-->
-                                    <!--</table>-->
-                                    <!--</div>-->
-                                <!--</div>-->
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
@@ -378,7 +372,7 @@
                                     <input type="text" class="form-control" v-model="initOrderDetail.id" value="{{initOrderDetail.id}}" disabled="disabled" />
                                 </div> -->
                                 <div class="client-detailInfo   col-xs-12">
-                                    <label>{{$t('static.order_no')}}</label>
+                                    <label>{{$t('static.order_no')}} </label>
                                     <input type="text" class="form-control" v-model="initOrderDetail.no" value="{{initOrderDetail.no}}" disabled="disabled"/>
                                 </div>
                             </div>
@@ -450,13 +444,17 @@ import disposeModel  from  '../order/orderStatus'
 import pictureModel  from  '../tips/pictureDialog'
 import dividedModel from './second_order/newDivided'
 import filter from '../../filters/filters'
+import tipsModel  from  '../tips/tipDialog'
+import auditModel from './second_order/orderAudit'
+
 import {
   initOrderDetail
 } from '../../vuex/getters'
 import {
   getOrderDetail,
   uploadDocument,
-  dividedPayment
+  dividedPayment,
+  paymentAudit
 } from '../../vuex/actions'
 export default {
     components: {
@@ -465,7 +463,10 @@ export default {
       disposeModel,
       pictureModel,
       dividedModel,
-      filter
+      filter,
+      tipsModel,
+      auditModel 
+
     },
     props:['param'],
     data(){
@@ -502,8 +503,23 @@ export default {
             show:false,
             img:''
         },
+        tipsParam:{
+            show:false,
+            alert:true,
+            name:''
+        },
         divideParam:{
-           show:false
+            show:false,
+            loading:true,
+            id:'',
+            link:dividedPayment,
+            url:'/order/updateStages/',
+            stages:[],
+            orderStatus:''
+        },
+        auditParam:{
+            show:false,
+            id:''
         }
       }
     },
@@ -514,7 +530,8 @@ export default {
       actions:{
         getOrderDetail,
         uploadDocument,
-        dividedPayment
+        dividedPayment,
+        paymentAudit
       }
     },
     methods:{
@@ -525,9 +542,20 @@ export default {
             }
             this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
           },
-          divided_payments:function(initOrderDetail){
-            console.log(initOrderDetail)
-              this.divideParam = initOrderDetail;
+          applyInfo:function(item){
+                this.auditParam.show=true;
+                this.auditParam = item;
+                this.auditParam.callback = this.callback;
+          },
+          divided_payments:function(id,total,stages){
+            console.log(stages)
+              console.log(this.initOrderDetail)
+              this.divideParam.show = true;
+              this.divideParam.id = id;
+              this.divideParam.total = total;
+              this.divideParam.stages = stages.arr;
+              this.divideParam.callback = this.callback;
+              console.log(this.divideParam)
           },
           createChance:function(item,index){
             console.log(item)
@@ -551,11 +579,17 @@ export default {
             /*this.disposeParam = this.param;*/
             this.disposeParam.show = true;
 
+        },
+        callback:function(title){
+          this.tipsParam.show = true;
+          this.tipsParam.name=title;
+          this.tipsParam.alert=true;
         }
     },
     filter:(filter,{}),
    created(){
    	  this.getOrderDetail(this.param);
+
    }
 }
 </script>

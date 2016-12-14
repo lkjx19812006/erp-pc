@@ -509,6 +509,7 @@ export default {
             }
             if(this.transferParam.arr.length>0){
                 this.transferParam.show=true;
+                this.transferParam.callback = this.transferback;
             }else{
                 this.tipsParam.alert=true;
                 this.tipsParam.show=true;
@@ -557,6 +558,17 @@ export default {
             this.tipsParam.confirm=false;
 
           }
+        },
+        transferback:function(title){
+            console.log(title)
+            this.tipsParam.show = true;
+            if(title=='success'){
+                this.tipsParam.name = '划转成功';
+            }else{
+                this.tipsParam.name=title;
+            }
+            
+            this.tipsParam.alert=true;
         },
           callback:function(){
             this.auditParam.blackComments=this.auditParam.auditComment;
