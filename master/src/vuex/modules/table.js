@@ -2,6 +2,8 @@
 import {
    LOGIN_DATA,
    PASSWORD_DATA,
+   BACKLOG_TABLE,
+   FLOW_RECORD_TABLE,
    ORDER_TABLE,
    ORDER_ADD_DATA,
    ORDER_DETAIL_DATA,
@@ -105,6 +107,7 @@ import {
    ORDER_PAY_DATA,
    ORDER_ROLLOUT_DATA,
    EXPRESS_DETAIL_DATA,
+   ORG_ORDER_AUDIT,
    BATCH_ORG_ORDER,
    UPDATE_ENTERPRISE,
    ROLLOUT_STATUS,
@@ -238,6 +241,10 @@ const state = {
     } ,
 
     basicBaseList: {
+        //待办事项列表
+        backlogList:[],
+        //流程记录
+        flowRecord:[],
         //订单列表
         myOrderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
                 "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
@@ -676,9 +683,16 @@ const state = {
 
 const mutations = {
     [LOGIN_DATA](state, data) { //登录
-      console.log(data)
+        console.log(data)
         state.login = data;
     },
+    [BACKLOG_TABLE](state,data){
+        state.basicBaseList.backlogList = data;
+    },
+    [FLOW_RECORD_TABLE](state,data){
+        state.basicBaseList.flowRecord = data;
+    },
+
     [USER_TYPE](state,data){
         state.basicBaseList.userTypeList = data;
     },
@@ -696,6 +710,9 @@ const mutations = {
     [EXPRESS_DETAIL_DATA](state,data){  //物流详情
       console.log(data)
         state.logisticsDetail = data;
+    },
+    [ORG_ORDER_AUDIT](state, data) {   //审核部门订单(个人)
+        state.basicBaseList[data.key][data.index].validate = 1;
     },
     [BATCH_ORG_ORDER](state, data) { // 批量审核部门订单
       

@@ -5,6 +5,9 @@ export const MENU_BAR = 'MENU_BAR' //菜单栏左滑
 export const CHANGE_CHARTS = 'CHANGE_CHARTS' //图表
 export const CHANGE_LINECHARTS = 'CHANGE_LINECHARTS' //折线图表
 export const CHANGE_PIECHARTS = 'CHANGE_PIECHARTS' //饼状图
+export const BACKLOG_TABLE = 'BACKLOG_TABLE' //待办事项
+export const FLOW_RECORD_TABLE = 'FLOW_RECORD_TABLE' //待办事项
+
 
 export const LOGIN_DATA = 'LOGIN_DATA' //登录成功后返回信息
 export const PASSWORD_DATA = 'PASSWORD_DATA' //修改密码成功后返回信息
@@ -19,6 +22,7 @@ export const ORDER_UPLOAD_DATA = 'ORDER_UPLOAD_DATA' //订单详情上传凭证
 export const ORDER_PAY_DATA = 'ORDER_PAY_DATA' //订单支付记录
 export const ORDER_ROLLOUT_DATA = 'ORDER_ROLLOUT_DATA' //订单药款转出记录
 export const EXPRESS_DETAIL_DATA = 'EXPRESS_DETAIL_DATA' //订单物流详情
+export const ORG_ORDER_AUDIT = 'ORG_ORDER_AUDIT' //审核部门订单(单个)
 export const BATCH_ORG_ORDER = 'BATCH_ORG_ORDER' //批量审核部门订单
 export const ROLLOUT_STATUS = 'ROLLOUT_STATUS' //药款财务审核
 export const ROLLOUT_DETAIL = 'ROLLOUT_DETAIL' //药款转出详情页面

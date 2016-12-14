@@ -443,8 +443,10 @@ import credenceModel from '../order/createcredence'
 import disposeModel  from  '../order/orderStatus'
 import pictureModel  from  '../tips/pictureDialog'
 import dividedModel from './second_order/newDivided'
+import filter from '../../filters/filters'
 import tipsModel  from  '../tips/tipDialog'
 import auditModel from './second_order/orderAudit'
+
 import {
   initOrderDetail
 } from '../../vuex/getters'
@@ -461,8 +463,10 @@ export default {
       disposeModel,
       pictureModel,
       dividedModel,
+      filter,
       tipsModel,
       auditModel 
+
     },
     props:['param'],
     data(){
@@ -582,6 +586,7 @@ export default {
           this.tipsParam.alert=true;
         }
     },
+    filter:(filter,{}),
    created(){
    	  this.getOrderDetail(this.param);
 

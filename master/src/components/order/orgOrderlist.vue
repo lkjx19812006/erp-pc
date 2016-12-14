@@ -10,7 +10,7 @@
         <div class="clear">
             <div class="right">
                 <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
-                <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button>
+                <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button> -->
                 <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
             </div>
             <div class="clear left">
@@ -75,7 +75,7 @@
         <table class="table table-hover table_color table-striped " v-cloak id="tab">
             <thead>
                 <tr>
-                    <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
+                    <!-- <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th> -->
                     <th>{{$t('static.transcation')}}</th>
                     <th>{{$t('static.order_type')}}</th>
                     <th>{{$t('static.trading_patterns')}}</th>
@@ -87,7 +87,7 @@
                     <th>{{$t('static.salesman')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
                     <th>{{$t('static.consignee_phone')}}</th>
-                    <th>{{$t('static.consignee_address')}}</th>
+                    <th style="width:300px">{{$t('static.consignee_address')}}</th>
                     <th>{{$t('static.payment_method')}}</th>
                     <th>{{$t('static.order_status')}}</th>
                     <th>{{$t('static.order_source')}}</th>
@@ -97,9 +97,9 @@
             </thead>
             <tbody>
                 <tr v-for="item in initOrgOrderlist"  v-cloak>
-                  <td  @click.stop="">
+                  <!-- <td  @click.stop="">
                     <label v-if="item.validate==1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
-                  </td>
+                  </td> -->
                   <td>{{item.ctime}}</td>
                   <td v-if="item.type==1">{{$t('static.sell')}}</td>
                   <td v-if="item.type==0">{{$t('static.purchase')}}</td>

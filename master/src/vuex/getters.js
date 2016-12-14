@@ -48,6 +48,17 @@ export const getPiechart = (state) => {
     } ;
     return option;
 }
+/*---待办事项---*/
+export const initBacklogList = (state) => { 
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.backlogList));
+}
+
+/*---流程记录---*/
+export const initFlowRecord = (state) => { 
+    console.log("流程记录");
+    return JSON.parse(JSON.stringify(state.table.basicBaseList.flowRecord));
+}
+
 export const initUserType = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.userTypeList));
 }

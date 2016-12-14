@@ -204,6 +204,93 @@ export const freshPiecharts = ({ dispatch }, getPiechart) => {
         });
 };
 
+//获取待办事项
+export const getBacklogList = ({ dispatch }, param) => {
+    param.loading = true;
+    var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
+    
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var backlogList = res.json().result;
+        dispatch(types.BACKLOG_TABLE, backlogList);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+
+        //localStorage.BacklogParam = JSON.stringify(param);
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+//获取流程记录
+export const getFlowRecord = ({ dispatch }, param) => {
+    param.loading = true;
+    var url = apiUrl.orderList + param.link + '?&bizType=' + param.bizType + '&bizId=' + param.bizId;
+    
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var flowRecord = res.json().result;
+        dispatch(types.FLOW_RECORD_TABLE, flowRecord);
+        param.loading = false;
+
+        //localStorage.BacklogParam = JSON.stringify(param);
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+
+//审核流程(完成任务)
+export const finishFlow = ({ dispatch }, param) => {
+    param.loading = true;
+    var body = {
+        taskId:param.taskId,
+        result:param.result,
+        description:param.auditComment
+    }
+    
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + '/flow/',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        //var flowRecord = res.json().result;
+        /*var flowRecord = [1,2,3];
+        dispatch(types.FLOW_RECORD_TABLE, flowRecord);*/
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
+        param.loading = false;
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const getOrderList = ({ dispatch }, param) => { //全部订单列表以及订单搜索
     param.loading = true;
     var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
@@ -617,6 +704,39 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
         param.loading = false;
     })
 }
+
+export const orgOrderAudit = ({ dispatch }, param) => { //审核部门的订单（单个）
+    const data = {
+        id: param.id,
+    }
+    if (param.description) {
+        data.description = param.description;
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.userList + '/order/validate',
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+        param.show = false;
+        param.description = "";
+        data.index = param.index;
+        data.key = param.key;
+        if(res.json().code==200){
+           dispatch(types.ORG_ORDER_AUDIT, data);
+        }
+        
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
 export const batchOrgOrder = ({ dispatch }, param) => { //批量审核部门的订单
     const OrgOrderdata = {
         ids: param.ids,

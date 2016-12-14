@@ -10,7 +10,7 @@
         <div class="clear">
             <div class="right">
                 <button class="btn btn-default transfer" @click="newOrder()">{{$t('static.new')}}</button>
-                <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review_application')}}</button>
+                <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review_application')}}</button> -->
                 <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                 <!-- <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
                 <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
@@ -77,7 +77,7 @@
         <table class="table table-hover table_color table-striped " v-cloak id="tab">
             <thead>
                 <tr>
-                    <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
+                    <!-- <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th> -->
                     <th>{{$t('static.transcation')}}</th>
                     <th>{{$t('static.order_type')}}</th>
                     <th>{{$t('static.trading_patterns')}}</th>
@@ -88,7 +88,7 @@
                     <th>{{$t('static.supplier_name')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
                     <th>{{$t('static.consignee_phone')}}</th>
-                    <th>{{$t('static.consignee_address')}}</th>
+                    <th style="width:300px">{{$t('static.consignee_address')}}</th>
                     <th>{{$t('static.payment_method')}}</th>
                     <th>{{$t('static.order_status')}}</th>
                     <th>{{$t('static.order_source')}}</th>
@@ -98,9 +98,9 @@
             </thead>
             <tbody>
                 <tr v-for="item in initMyOrderlist"  v-cloak>
-                  <td  @click.stop="">
+                  <!-- <td  @click.stop="">
                     <label v-if="item.validate<=0&&(item.orderStatus==0||item.orderStatus==70)" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
-                  </td>
+                  </td> -->
                   <td>{{item.ctime}}</td>
                   <td v-if="item.type==1">{{$t('static.sell')}}</td>
                   <td v-if="item.type==0">{{$t('static.purchase')}}</td>
@@ -235,9 +235,12 @@
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-2">
                             <img src="/static/images/{{$t('static.deadline')}}.png"  title="订单已过期" alt="订单已过期"/>
                         </a>
+                        <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)">
+                            <img src="/static/images/apply.png"  title="申请审核" alt="申请审核" />
+                        </a>
                         <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2">
                             <img src="/static/images/{{$t('static.img_reset')}}.png"  title="重新申请" alt="重新申请" />
-                        </a>
+                        </a> 
                   </td>
 
                 </tr>
@@ -376,8 +379,10 @@
                 checked:false,
                 auditParam:{
                     show:false,
-                    indexs:[],
-                    ids:[],
+                    indexs:[],  //批量审核使用,暂停用
+                    ids:[],   //批量审核使用,暂停用
+                    id:'',
+                    index:'',
                     description:'',
                     validate:'',
                     title:"申请订单审核",
@@ -415,7 +420,7 @@
                      this.$store.state.table.basicBaseList.myOrderList[sub].show=true;
                 }
             },
-            orgCheck:function(){
+            /*orgCheck:function(){   //批量审核，停用
                 var _this = this;
                 _this.auditParam.ids = [];
                 _this.auditParam.indexs = [];
@@ -433,25 +438,25 @@
                     this.tipsParam.show = true;
                 }
                 _this.auditParam.callback = _this.applyBack;
-            },
+            },*/
             applyBack:function(title){
                 this.tipsParam.show = true;
                 this.tipsParam.name=title;
                 this.tipsParam.alert=true;
             },
-            orderCheck:function(id,sub,validate){
-                var _this = this;
-                _this.auditParam.ids = [];
-                _this.auditParam.indexs = [];
-              /* _this.checked=false;*/
-                _this.auditParam.ids.push(id);
-                _this.auditParam.indexs.push(sub);
-                _this.auditParam.validate = validate;
-                if(this.auditParam.ids.length>0){
-                    this.auditParam.show = true;
+            orderCheck:function(id,index,validate){ 
+                
+                this.auditParam.id = id;
+                this.auditParam.index = index;
+                this.auditParam.validate = validate;
+                this.auditParam.show = true;
+                if(validate == 0){
+                    this.auditParam.title = '申请订单审核';
+                }
+                if(validate == -2){
                     this.auditParam.title = '重新申请订单审核';
                 }
-                _this.auditParam.callback = _this.applyBack;
+                this.auditParam.callback = this.applyBack;
             },
             onlyselected: function(index){
                   const _self=this;
