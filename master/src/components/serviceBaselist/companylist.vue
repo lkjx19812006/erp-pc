@@ -112,7 +112,7 @@
                                         orgName:'',
                                         countryId:7,
                                         countryName:'中国'
-                                        })" v-if="!item.transform"><img src="/static/images/transfer.png" height="18" width="28"  alt="划转" title="划转"/></a>
+                                        })" v-if="!item.transform"><img src="/static/images/convert.png" height="18" width="28"  alt="提取" title="划转"/></a>
                         </td>
                     </tr>
                 </tbody>

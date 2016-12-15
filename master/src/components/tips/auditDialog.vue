@@ -21,6 +21,13 @@
         <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="不通过" />
         <input type="button" class="btn  btn-confirm"  @click="param.pass(),param.show = false" value="通过" />
       </div>
+
+      <div class="model-footer" v-if="param.taskKey=='employee_handle'">
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+        <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="重新申请" />
+        <input type="button" class="btn  btn-confirm"  @click="param.pass(),param.show = false" value="取消订单" />
+      </div>
+
       <div class="model-footer" v-if="param.key=='mySampleList'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
         <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.show = false" value="申请" />

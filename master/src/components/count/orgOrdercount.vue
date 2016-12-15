@@ -9,7 +9,7 @@
         <table class="table table-hover table_color table-bordered table-striped " v-cloak>
             <thead>
                 <tr style="background:none;color:#000">
-                    <th rowspan="1">个人隐藏</th>
+                    <th rowspan="1"></th>
                     <th colspan="12">销售订单</th>
                     <th colspan="12">采购订单</th>
                 </tr>
@@ -44,7 +44,7 @@
                     <th>订单数</th>
                     <th>重量</th>
                     <th>订单金额</th>
-                    <th>应收账款</th>
+                    <th>应付账款</th>
                 </tr>
             </thead>
             <tbody>
