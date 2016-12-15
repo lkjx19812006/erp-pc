@@ -347,3 +347,11 @@ export const initMyFundList = (state) => {
 export const initOrgFundList = (state) => {
   return parseJson(state.count.orgFundlist);
 }
+export const initFundDetail= (state) => {
+  return parseJson(state.count.fundDetail);
+}
+export const initFinanceList= (state) => { //财务资金审核
+  return parseJson(state.count.financeList); 
+}
+
+

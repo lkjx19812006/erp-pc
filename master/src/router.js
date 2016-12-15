@@ -20,7 +20,7 @@ export default (router) => router.map({
         subRoutes: {
           '/': {
             component: function(resolve) {
-              require(['./views/message'], resolve)
+              require(['./views/main'], resolve)
             }
           },
             '/*any': {

@@ -150,7 +150,8 @@
                                                 <td>{{item.description}}</td>
                                                 <td v-if="item.validate==0">未审核</td>
                                                 <td v-if="item.validate==1">已申请</td>
-                                                <td v-if="item.validate==2">已到账</td>
+                                                <td v-if="item.validate==2" style="background:green;color:#fff">审核通过</td>
+                                                <td v-if="item.validate==3" style="background:red;color:#fff">审核未通过</td>
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
@@ -175,10 +176,31 @@
                                                         })"> 
                                                     <img src="/static/images/apply.png"  style="width:47px" />
                                                     </a>
+                                                    <a class="operate" v-if="item.validate==3&&initOrderDetail.orderStatus>=20" @click="applyInfo({
+                                                            show:true,
+                                                            sub:$index,
+                                                            bizId:item.orderId,
+                                                            bizSubId:item.id,
+                                                            payWay:'',
+                                                            payName:'',
+                                                            paySubName:'',
+                                                            payUserName:'',
+                                                            payNumber:'',
+                                                            comment:'',
+                                                            image_f:'',
+                                                            image_s:'',
+                                                            image_t:'',
+                                                            images:'',
+                                                            url:'/fund/createByOrderStages',
+                                                            titles:'重新申请审核',
+                                                            link:paymentAudit
+                                                        })"> 
+                                                        <img src="/static/images/reset.png"  style="width:47px" />
+                                                    </a>
                                                 </td>
                                             </tr>
                                          </tbody>
-                                    </table>
+                                      </table>
                                     </div>
                                 </div>
                             </div>

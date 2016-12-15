@@ -1069,13 +1069,33 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     var sss = ss.split(",");//字符串转化为数组
     sss.toString();
     console.log(sss)
-    const body = {
-        bizId: param.bizId,
-        bizSubId:param.bizSubId,
-        payWay:param.payWay,
-        payUserName:param.payUserName,
-        payNumber:param.payNumber,
-        comment:param.comment
+    const body = {};
+    if(param.id&&param.id!=''){
+        body.id = param.id;
+    }
+    if(param.validate&&param.validate!=''){
+        body.validate = param.validate;
+    }
+    if(param.description&&param.description!=''){
+        body.description = param.description;
+    }
+    if(param.comment&&param.comment!=''){
+        body.comment = param.comment;
+    }
+    if(param.payNumber&&param.payNumber!=''){
+        body.payNumber = param.payNumber;
+    }
+    if(param.bizSubId&&param.bizSubId!=''){
+        body.bizSubId = param.bizSubId;
+    }
+    if(param.payUserName&&param.payUserName!=''){
+        body.payUserName = param.payUserName;
+    }
+    if(param.payWay&&param.payWay!=''){
+        body.payWay = param.payWay;
+    }
+    if(param.bizId&&param.bizId!=''){
+        body.bizId = param.bizId;
     }
     if(param.payName&&param.payName!=''){
         body.payName = param.payName;
@@ -1098,14 +1118,12 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
         }
     }).then((res) => {
         param.callback(res.json().msg);
-        /*for(var i in res.json().result){
-            param.stages[i].type = res.json().result[i].type;
-            param.stages[i].ctime = res.json().result[i].ctime;
-            param.stages[i].validate = res.json().result[i].validate;
-        }*/
         if(res.json().msg=='已申请审核'){
             param.validate = 1;
             dispatch(types.ORDER_UPLOAD_DATA, param);
+        }
+        if(param.titles=='分期审核'){
+            dispatch(types.FINANCE_LIST, param);
         }
         
     }, (res) => {
@@ -5823,8 +5841,6 @@ export const sampleApply = ({ dispatch }, param) => { //申请/审核 寄样申�
         if(res.json().code==200){
            dispatch(types.APPLY_DATA, param);
         }
-        
-        /*param.show = false;*/
     }, (res) => {
         console.log('fail');
     });
@@ -5848,6 +5864,9 @@ export const getMyFundList = ({ dispatch }, param) => { //个人资金记录以�
         if (seach == 'type' && param[seach] !== '') {
             apiurl += '&type=' + param.type
         }
+        if (seach == 'validate' && param[seach] !== ''){
+            apiurl += '&validate=' + param.validate
+        }
     }
     Vue.http({
         method: 'GET',
@@ -5863,6 +5882,48 @@ export const getMyFundList = ({ dispatch }, param) => { //个人资金记录以�
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         localStorage.myFundParam = JSON.stringify(param);
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+export const getFinanceList = ({ dispatch }, param) => { //财务资金审核以及搜索
+    param.loading = true;
+    var apiurl = apiUrl.commonList + '/fund/?' + 'page=' + param.cur + '&pageSize=15';
+    for (var seach in param) {
+        if (seach == 'amount' && param[seach] !== '') {
+            apiurl += '&amount=' + param.amount
+        }
+        if (seach == 'payName' && param[seach] !== '') {
+            apiurl += '&payName=' + param.payName
+        }
+        if (seach == 'payUserName' && param[seach] !== '') {
+            apiurl += '&payUserName=' + param.payUserName
+        }
+        if (seach == 'payNumber' && param[seach] !== '') {
+            apiurl += '&payNumber=' + param.payNumber
+        }
+        if (seach == 'type' && param[seach] !== '') {
+            apiurl += '&type=' + param.type
+        }
+        if (seach == 'validate' && param[seach] !== '') {
+            apiurl += '&validate=' + param.validate
+        }
+    }
+    Vue.http({
+        method: 'GET',
+        url: apiurl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var orgsample = res.json().result.list;
+        param.loading = false;
+        dispatch(types.FINANCE_LIST, orgsample);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        localStorage.myFinanceParam = JSON.stringify(param);
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -5890,6 +5951,9 @@ export const getOrgFundList = ({ dispatch }, param) => { //部门资金记录以
         if (seach == 'type' && param[seach] !== '') {
             apiurl += '&type=' + param.type
         }
+        if (seach == 'validate' && param[seach] !== ''){
+            apiurl += '&validate=' + param.validate
+        }
     }
     Vue.http({
         method: 'GET',
@@ -5909,4 +5973,23 @@ export const getOrgFundList = ({ dispatch }, param) => { //部门资金记录以
         console.log('fail');
         param.loading = false;
     })
+}
+export const getFundDetail = ({ dispatch }, param) => { //获取供应商产品详情
+    console.log(param)
+    param.loading = true;
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList + '/fund/' + param.id,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        param.loading = false;
+        var product = res.json().result;
+        dispatch(types.FUND_DETAIL_DATA, product);
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    });
 }

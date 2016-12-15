@@ -35,6 +35,10 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==8">
       <org-fund></org-fund>
     </div>
+    <!-- 财务资金记录 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==9">
+      <finance-model></finance-model>
+    </div>
 </template>
 <script>
 import paymentRecord from '../components/order/paymentRecordList'
@@ -46,6 +50,7 @@ import allOrder  from  '../components/order/allOrder'
 import orderPay from '../components/order/payOrder'
 import myFund from '../components/order/myFundRecord'
 import orgFund from '../components/order/orgFundRecord'
+import financeModel  from '../components/order/financeOrderList'
 export default {
     components: {
         paymentRecord,
@@ -56,7 +61,8 @@ export default {
         allOrder,
         orderPay,
         myFund,
-        orgFund
+        orgFund,
+        financeModel
     }
 
 }
