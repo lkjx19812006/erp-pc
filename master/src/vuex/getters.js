@@ -172,6 +172,10 @@ export const initSupplyCustomerlist = (state) => {
 export const initCustomerlist = (state) => {
     return parseJson(state.table.basicBaseList.customerList);
 }
+/*---客户通话记录---*/
+export const initCallRecordList = (state) => {
+    return parseJson(state.table.basicBaseList.callRecordList);
+}
 /*供应商产品列表以及详情*/
 export const initProductlist = (state) => {
     return parseJson(state.table.basicBaseList.productList);

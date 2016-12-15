@@ -248,13 +248,9 @@
                                     tel:item.tel,
                                     email:item.email,
                                     qq:item.qq,
-                                    type:'0,个人',
-                                    classify:'',
+                                    type:0,
+                                    classify:0,
                                     fullname:item.fullname,
-                                    employeeId:'',
-                                    employeeName:'',
-                                    orgCode:0001002,
-                                    orgName:'',
                                     show:true,
                                     key:'userList',
                                     countryId:7,
@@ -269,7 +265,7 @@
                                      qq: item.qq,
                                      wechart: item.wechart
                                      }
-                                    },item.show=false)"><img src="/static/images/transfer.png" height="18" width="30"/>
+                                    },item.show=false)"><img src="/static/images/convert.png" height="18" width="30"/>
                             </div>
                             <div class="operate"  v-if="item.utype==1"  @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)"><img src="/static/images/Pcertification.png" height="18" width="47"/>
                             </div>
@@ -362,7 +358,7 @@
 import tipsdialogModel  from '../components/tips/tipDialog'
 import calendar from '../components/calendar/vue.datepicker'
 import alterinfoModel  from '../components/user/userUpdate'
-import transferModel  from '../components/user/myUserTransfer'
+import transferModel  from '../components/user/userTransfer'
 import auditModel  from '../components/user/userAudit'
 import detailModel from '../components/user/userDetail'
 import searchModel from '../components/user/userSearch'
@@ -445,10 +441,10 @@ export default {
                 show:false,
                 id:'',
                 name:'',
-                employeeId:'',
+                /*employeeId:'',
                 employeeName:'',
                 orgCode:'0001002',
-                orgName:'',
+                orgName:'',*/
                 province:'',
                 city:''
             },

@@ -20,6 +20,10 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==4">
         <black-client></black-client>
     </div>
+    <!-- 客户通话记录 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==5">
+        <call-record></call-record>
+    </div>
 
 </template>
 <script>
@@ -28,13 +32,15 @@ import orgClient from '../components/clientRelate/clientList/orgClient'
 import allClient from '../components/clientRelate/clientList/allClient'
 import potentialClient from '../components/clientRelate/clientList/potentialClient'
 import blackClient from '../components/clientRelate/clientList/blackClient'
+import callRecord from '../components/clientRelate/clientList/callRecord'
 export default {
     components: {
         myClient,
         orgClient,
         allClient,
         potentialClient,
-        blackClient
+        blackClient,
+        callRecord
     }
 
 }

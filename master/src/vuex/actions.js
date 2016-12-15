@@ -2398,6 +2398,54 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         param.loading = false;
     })
 }
+
+export const getCallRecordList = ({ dispatch }, param) => { //客户通话记录列表与搜索
+    param.loading = true;
+    console.log(param);
+    var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
+    for (var search in param) {
+        if (search == 'customerPhone' && param[search] !== '') {
+            url += '&customerPhone=' + param.customerPhone
+        }
+        if (search == 'seat' && param[search] !== '') {
+            url += '&seat=' + param.seat
+        }
+        if (search == 'employeeNo' && param[search] !== '') {
+            url += '&employeeNo=' + param.employeeNo
+        }
+        if (search == 'startTime' && param[search] !== '') {
+            url += '&startTime=' + param.startTime
+        }
+        if (search == 'endTime' && param[search] !== '') {
+            url += '&endTime=' + param.endTime
+        }
+    }
+
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var callRecord = res.json().result.list;
+
+        dispatch(types.CALL_RECORD_DATA, callRecord);
+
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+
+        localStorage.callRecordParam = JSON.stringify(param);
+        
+        
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const getUserTypeList = ({ dispatch }, param) => { //客户类型
     param.loading = true;
     console.log(param);

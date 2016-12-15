@@ -35,14 +35,15 @@
                 <div class="employee_message_view" v-for="item in initBacklogList">
                     <div class="message_view_left">
                          <span></span>
-                         <p>您有一条“{{item.taskDesc}}”任务</p>
+                         <p>{{item.taskDesc}}</p>
                          <time>2016-07-25 12:23:36</time>
                     </div>
                     <div class="message_view_right" v-if="item.bizType=='order_validate'">
                         <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
                         <a @click="showOrderDetail(item.bizId)">详情</a>
                         <a @click="showRecord(item)">记录</a>
-                        <a @click="showAudit(item.taskId)">审核</a>
+                        <a v-if="item.taskKey!='employee_handle'" @click="showAudit(item)">审核</a>
+                        <a v-else @click="showAudit(item)">重新申请</a>
                         
                     </div>
                 </div>
@@ -107,6 +108,7 @@ export default {
                     link:'/flow/',
                     title:'审核订单',
                     audit:true,
+                    taskKey:'',
                     taskId:'',
                     result:'',
                     auditComment:'',
@@ -146,8 +148,17 @@ export default {
                 this.recordParam.bizId = item.bizId;
                 this.recordParam.show = true;
             },
-            showAudit:function(taskId){
-                this.auditParam.taskId = taskId;
+            showAudit:function(item){
+                if(item.taskKey=='employee_handle'){
+                    this.auditParam.audit = false;
+                    this.auditParam.title = '重新申请审核';
+
+                }else{
+                    this.auditParam.audit = true;
+                    this.auditParam.title = '审核订单';
+                }
+                this.auditParam.taskKey = item.taskKey;
+                this.auditParam.taskId = item.taskId;
                 this.auditParam.show = true;
             },
             pass:function(){
@@ -161,6 +172,8 @@ export default {
             callback:function(name){
                 this.tipParam.show = true;
                 this.tipParam.name = name;
+                //审核完成后刷新页面
+                this.getBacklogList(this.loadParam);
             }
 
 

@@ -106,6 +106,7 @@ const state = {
             trigger: 'item'
         },
         calculable: true,
+        //折线的颜色
         color: ['#3399FF'],
         legend: {
             data: ['Growth', '个人业绩'],

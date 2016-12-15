@@ -112,7 +112,8 @@ import {
    UPDATE_ENTERPRISE,
    ROLLOUT_STATUS,
    ROLLOUT_DETAIL,
-   USER_TYPE
+   USER_TYPE,
+   CALL_RECORD_DATA
 
 } from '../mutation-types'
 
@@ -350,6 +351,8 @@ const state = {
         supplyCustomerList: [
             { "id": 0, "type": 0,"typeDesc": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false }
         ],
+        //客户通话记录
+        callRecordList:[],
         //产品列表
         productList:[
              {"id": "442","cid": 1,"type": "1","name": "1111","breedId": 1111,"quality": "1111","location": "111","spec": "干","number": 1111,"price": 11,"unit": "1111","duedate": "2016-10-23 00:00","coa": 0,"comments": null,"status": 1,"show":true}
@@ -1785,9 +1788,9 @@ const mutations = {
         "onSell":0
       };
 
-        if(data.key=="intentionList"){
+        if(data.key=="myIntentionList"){
             console.log("意向列表页添加意向");
-            state.basicBaseList.intentionList.unshift(temp);
+            state.basicBaseList.myIntentionList.unshift(temp);
         }
         if(data.key=="user"){
           console.log("会员详情页添加意向");
@@ -1849,7 +1852,11 @@ const mutations = {
             "id":data.id,
             "url":data.image_f_show
         })
-    }
+    },
+    [CALL_RECORD_DATA](state,data){
+        state.basicBaseList.callRecordList = data;
+    },
+    
 
 
 }
