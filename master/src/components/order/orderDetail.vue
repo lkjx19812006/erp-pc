@@ -109,79 +109,79 @@
                                     </div>
                                 </div>
                             </div>
-                           <!--  <div class="panel panel-default">
-                               <div class="panel-heading" >
-                                   <h4 class="panel-title clearfix" @click="enfoldment({
-                                             link:'',
-                                             crete:'stages'
-                                             })">
-                                       <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
-                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.stages.arr.length!==null">
-                                         分期付款（{{initOrderDetail.stages.arr.length}}）
-                                       </a>
-                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                       {{$t('static.pay_evidence')}}（0）
-                                       </a>
-                                       <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="(initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2||initOrderDetail.orderStatus<20))">{{$t('static.new')}}/{{$t('static.edit')}}</button>
-                                       <a v-else></a>
-                                   </h4>
-                               </div>
-                               <div class="panel-collapse" v-if="initOrderDetail.stages.arr.length&&initOrderDetail.stages.show" v-cloak>
-                                   <div class="panel-body panel-set">
-                                       <table class="table  contactSet">
-                                         <thead>
-                                           <th>分期类型</th>
-                                           <th>分期期数</th>
-                                           <th colspan="6">分期说明</th>
-                                           <th>付款比例</th>
-                                           
-                                           <th>分期支付时间</th>
-                                           <th>分期原因</th> 
-                                           <th>审核状态</th>
-                                           <th>申请备注</th>
-                                           <th>创建时间</th>
-                                           <th></th>
-                                         </thead>
-                                         <tbody>
-                                           <tr v-for="item in initOrderDetail.stages.arr">
-                                               <td v-if="item.type==0">付款</td>
-                                               <td v-if="item.type==1">收款</td>
-                                               <td colspan="6">{{item.orderStatus | orderDescript}}支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}押金）</td>
-                                               <td>{{item.description}}</td>
-                                               <td v-if="item.validate==0">未审核</td>
-                                               <td v-if="item.validate==1">已申请</td>
-                                               <td v-if="item.validate==2">已到账</td>
-                                               <td>{{item.comment}}</td>
-                                               <td>{{item.ctime}}</td>
-                                               <td>
-                                                   <a class="operate" v-if="item.validate==0" @click="applyInfo({
-                                                           show:true,
-                                                           sub:$index,
-                                                           bizId:item.orderId,
-                                                           bizSubId:item.id,
-                                                           payWay:'',
-                                                           payName:'',
-                                                           paySubName:'',
-                                                           payUserName:'',
-                                                           payNumber:'',
-                                                           comment:'',
-                                                           image_f:'',
-                                                           image_s:'',
-                                                           image_t:'',
-                                                           images:'',
-                                                           url:'/fund/createByOrderStages',
-                                                           titles:'申请分期审核',
-                                                           link:paymentAudit
-                                                       })"> 
-                                                   <img src="/static/images/apply.png"  style="width:47px" />
-                                                   </a>
-                                               </td>
-                                           </tr>
-                                        </tbody>
-                                   </table>
-                                   </div>
-                               </div>
-                           </div> -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading" >
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                              link:'',
+                                              crete:'stages'
+                                              })">
+                                        <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.stages.arr.length!==null">
+                                          分期付款（{{initOrderDetail.stages.arr.length}}）
+                                        </a>
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                        {{$t('static.pay_evidence')}}（0）
+                                        </a>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="(initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2||initOrderDetail.orderStatus<20))">{{$t('static.new')}}/{{$t('static.edit')}}</button>
+                                        <a v-else></a>
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse" v-if="initOrderDetail.stages.arr.length&&initOrderDetail.stages.show" v-cloak>
+                                    <div class="panel-body panel-set">
+                                        <table class="table  contactSet">
+                                          <thead>
+                                            <th>分期类型</th>
+                                            <!-- <th>分期期数</th> -->
+                                            <th colspan="6">分期说明</th>
+                                            <!-- <th>付款比例</th>
+                                            
+                                            <th>分期支付时间</th>-->
+                                            <th>分期原因</th> 
+                                            <th>审核状态</th>
+                                            <th>申请备注</th>
+                                            <th>创建时间</th>
+                                            <th></th>
+                                          </thead>
+                                          <tbody>
+                                            <tr v-for="item in initOrderDetail.stages.arr">
+                                                <td v-if="item.type==0">付款</td>
+                                                <td v-if="item.type==1">收款</td>
+                                                <td colspan="6">{{item.orderStatus | orderDescript}}支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
+                                                <td>{{item.description}}</td>
+                                                <td v-if="item.validate==0">未审核</td>
+                                                <td v-if="item.validate==1">已申请</td>
+                                                <td v-if="item.validate==2">已到账</td>
+                                                <td>{{item.comment}}</td>
+                                                <td>{{item.ctime}}</td>
+                                                <td>
+                                                    <a class="operate" v-if="item.validate==0&&initOrderDetail.orderStatus>=20" @click="applyInfo({
+                                                            show:true,
+                                                            sub:$index,
+                                                            bizId:item.orderId,
+                                                            bizSubId:item.id,
+                                                            payWay:'',
+                                                            payName:'',
+                                                            paySubName:'',
+                                                            payUserName:'',
+                                                            payNumber:'',
+                                                            comment:'',
+                                                            image_f:'',
+                                                            image_s:'',
+                                                            image_t:'',
+                                                            images:'',
+                                                            url:'/fund/createByOrderStages',
+                                                            titles:'申请分期审核',
+                                                            link:paymentAudit
+                                                        })"> 
+                                                    <img src="/static/images/apply.png"  style="width:47px" />
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                         </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({

@@ -61,7 +61,7 @@
               <th>账号</th>
               <th>付款时间</th>
               <th>备注</th>
-              <th></th>
+              <th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -77,7 +77,13 @@
             <td>{{item.payNumber}}</td>
             <td>{{item.ctime}}</td>
             <td>{{item.comment}}</td>
-            <td></td>
+            <td v-if="item.type==1">
+              <a class="operate">核查收款</a>
+            </td>
+            <td v-if="item.type==0">
+              <a class="operate">申请支付</a>
+              <a class="operate">确认收款</a>
+            </td>
           </tr>
         </tbody>
       </table>

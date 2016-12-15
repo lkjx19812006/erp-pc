@@ -878,8 +878,6 @@ const mutations = {
     },
     [ORDER_UPLOAD_DATA](state,data){ //新建订单详情凭证
         console.log(data);
-        console.log(data.titles)
-        console.log(data.sub)
         if(data.titles=='申请分期审核'){
           console.log(data.validate)
              console.log(state.orderDetail.stages.arr[data.sub])

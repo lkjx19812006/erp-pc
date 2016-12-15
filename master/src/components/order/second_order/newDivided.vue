@@ -11,7 +11,7 @@
           <form novalidate>
             <div class="edit-model">
                 <div>
-                    <h4 style="text-align: left;font-size: 14px;">分期信息</h4>
+                    <h4 style="text-align: left;font-size: 14px;">分期信息<span class="system_danger"> 请将所有的分期填写完整才可以提交哦</span></h4>
                     <table class="table table-hover table_color table-striped ">
                         <thead>
                             <tr>
@@ -57,8 +57,8 @@
                                 </div>
                                 <div class="editpage-input col-md-6">
                                      <label class="editlabel">分期比例<span class="system_danger" v-if="breedInfo.ratio==''">{{$t('static.required')}}</span>
-                                     <span class="system_danger" v-if="(breedInfo.ratio)*10 > 10-scale">分期比例不能超过100%</span></label>
-                                     <select v-model="breedInfo.ratio" class="form-control edit-input" v-validate:ratio="{required:true}">
+                                     <span class="system_danger" v-if="((breedInfo.ratio)*10) > (10-scale)">分期比例不能超过100%</span></label>
+                                     <select v-model="breedInfo.ratio" class="form-control edit-input" v-validate:ratio="{required:true}" @change="calculate()">
                                         <option  value="1">全额付款</option>
                                         <option  value="0.1">10%</option>
                                         <option  value="0.2">20%</option>
@@ -75,7 +75,7 @@
                                      <label class="editlabel" >分期金额 <span class="system_danger" v-if="breedInfo.amount==''">{{$t('static.required')}}</span>
                                      <span class="system_danger" v-if="breedInfo.amount>(param.total-sum)">不能超过订单总金额</span></label>
                                      <input type="number" v-if="breedInfo.ratio==1" v-model="breedInfo.amount" value="{{param.total}}" class="form-control edit-input"   />
-                                     <input type="number" v-else v-model="breedInfo.amount=breedInfo.ratio*param.total"  value="{{breedInfo.amount}}" class="form-control edit-input" v-validate:amount="{required:true}"  />
+                                     <input type="number" v-else v-model="breedInfo.amount"  value="{{breedInfo.amount}}" class="form-control edit-input" v-validate:amount="{required:true}"  />
                                 </div>
                                 
                                 <div class="editpage-input col-md-6">
@@ -87,8 +87,8 @@
                                      <textarea class="form-control" v-model="breedInfo.description" value="{{breedInfo.description}}" style="resize:none; border:1px solid #ddd;" rows="5" v-validate:description="{required:true}"></textarea>
                                 </div>  
                                 <div class="client-detailInfo  col-md-12">
-                                    <label class="editlabel">申请备注 <span class="system_danger" v-if="$inner.comment.required">{{$t('static.required')}}</span></label>
-                                    <textarea class="form-control" v-model="breedInfo.comment" value="{{breedInfo.comment}}" style="resize:none; border:1px solid #ddd;" rows="5" v-validate:comment="{required:true}"></textarea>
+                                    <label class="editlabel">申请备注</label>
+                                    <textarea class="form-control" v-model="breedInfo.comment" value="{{breedInfo.comment}}" style="resize:none; border:1px solid #ddd;" rows="5" ></textarea>
                                 </div>
                                     
                                 <div class="pull-right col-md-6" style="margin-top:10px;text-align:right">
@@ -111,7 +111,7 @@
                 </div>
             </div>
             <div class="edit_footer">
-                <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+                <button type="button" class="btn btn-default btn-close" @click="closeInfo()">{{$t('static.cancel')}}</button>
                 <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.stages.length>0&&sum == param.total"  @click="confirm()">{{$t('static.confirm')}}</button>
                 <!-- <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.stages.length>0&&this.sum!=this.param.total"  disabled="true">总金额不对</button> -->
                 <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.confirm')}}</button>
@@ -174,14 +174,25 @@
               this.breedInfo.comment=this.param.stages[index].comment;
               /*this.breedInfo.extral=this.param.stages[index].extral;*/
               this.updateParam.show = true;
-              for(var i=0;i < this.param.stages.length;i++){
-                 this.sum -=parseFloat(this.param.stages[i].amount);
-                 this.scale -=parseInt(this.param.stages[i].ratio*10);
-              }
+              this.sum -=parseFloat(this.param.stages[index].amount);
+              this.scale -=parseInt(this.param.stages[index].ratio*10);
               console.log(this.sum)
+              console.log(this.scale)
+            },
+            calculate:function(){
+                console.log(this.scale)
+                this.breedInfo.amount = this.breedInfo.ratio*this.param.total;
+                console.log(((this.breedInfo.ratio)*10) >= (10-this.scale))
+                console.log((this.breedInfo.ratio)*10)
+                console.log(10-this.scale)
+                console.log(this.scale)
             },
             deleteBreed:function(index){
-               this.param.stages.splice(index,1);
+                this.sum -=parseFloat(this.param.stages[index].amount);
+                this.scale -=parseInt(this.param.stages[index].ratio*10);
+                console.log(this.sum)
+                console.log(this.scale)
+                this.param.stages.splice(index,1);
             },
             cancelAddBreed:function(){
                 this.param.stages.pop();
@@ -192,7 +203,18 @@
               this.breedInfo.status = 0;
               this.updateParam.show = false; 
             },
-             modifyBreed:function(){
+            closeInfo:function(){
+                if(this.breedInfo.status==1){
+                    this.param.stages.pop();
+                    this.breedInfo.status = 0;
+                    this.addParam.show = false;  
+                }else if(this.breedInfo.status==2){
+                    this.breedInfo.status = 0;
+                    this.updateParam.show = false;
+                }
+                this.param.show=false;
+            },
+            modifyBreed:function(){
               this.param.stages[this.updateParam.index].amount=this.breedInfo.amount;
               this.param.stages[this.updateParam.index].ratio=this.breedInfo.ratio;
               this.param.stages[this.updateParam.index].description=this.breedInfo.description;
@@ -222,6 +244,7 @@
             },
             showAddBreed:function(){
                 this.sum=0;
+                this.scale=0;
               if(this.param.stages.length == 0 ||this.param.stages[this.param.stages.length-1].amount <=this.param.total){
                   this.breedInfo.status = 1;    
                   this.breedInfo.amount='';
@@ -256,14 +279,15 @@
             }
         },
         created(){
-            console.log(this.param.stages.length)
-            /*if(this.param.stages.length>0){
+            console.log(this.param.stages)
+            if(this.param.stages.length>0){
                 for(var i=0;i < this.param.stages.length;i++){
                     this.sum +=parseFloat(this.param.stages[i].amount);
                     this.scale +=parseInt(this.param.stages[i].ratio*10);
                 }
-            }*/
+            }
             console.log(this.sum)
+            console.log(this.scale)
             console.log(this.param.total)
 
         }

@@ -402,6 +402,9 @@ export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录�
 export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列表以及订单搜索
     param.loading = true;
     var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
+    if(param.bank&&param.bank!=""){
+         url += '&bank=' + param.bank;
+    }
     Vue.http({
         method: 'GET',
         url: url,

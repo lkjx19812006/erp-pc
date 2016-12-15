@@ -413,7 +413,7 @@ var locales = {
       headline:'Headline',
       cost_price:'Non-profit product cost',
       historical_quotation:'Historical quotation',
-      enter_code:'Please enter the correct email address',
+      enter_code:'Please enter a valid zip code',
       change_order:'Change order',
       sundry_fees:'Extra cost',
       yes:'Yes',

@@ -2,8 +2,17 @@
     <drugs-model :param="detailParam" v-if="detailParam.show"></drugs-model>
     <state-model :param="disposeParam" v-if="disposeParam.show"></state-model>
     <div class="service-nav clearfix" style="padding-bottom:10px">
-      <div class="my_enterprise left">{{$t('static.rollout')}}</div>
-      <div class="btn btn-primary pull-right" @click="refresh()">{{$t('static.refresh')}}</div>
+     <!--  <div class="left">
+       <dl class="clear left">
+          <dt class="left  marg_top">银行名称：</dt>
+          <dd class="left">
+               <input type="text"  class="form-control" v-model="loadParam.bank"  @keyup.enter="selectSearch()"/>
+          </dd>
+       </dl>
+        <button type="button" class="new_btn transfer pull-left"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+       <button class="new_btn transfer pull-left" @click="selectSearch()">{{$t('static.search')}}</button>
+     </div> -->
+      <div class="btn btn-primary pull-right" @click="selectSearch()">{{$t('static.refresh')}}</div>
     </div>
     <div class="order_table" id="table_box">
       <div class="cover_loading">
@@ -97,6 +106,7 @@
           name:'',
           type:'',
           status:'',
+          bank:'',
           total:0
         },
         checked:false,
@@ -115,8 +125,12 @@
            console.log(initRolloutlist)
            this.detailParam = initRolloutlist;
         },
-        refresh:function(){
+        selectSearch:function(){
             this.getRolloutList(this.loadParam);
+        },
+        resetTime:function(){
+          this.loadParam.bank="";
+          this.getRolloutList(this.loadParam);
         },
         drugs:function(item,sub){
           item.show=!item.show;
