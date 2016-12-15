@@ -25,7 +25,7 @@
             </div>
             <div class="clear">
                 <dl class="clear left">
-                  <dt class="left marg_top">是否在职：</dt>
+<!--                   <dt class="left marg_top">是否在职：</dt> -->
                   <div class="btn-group">
                      <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.leave==1}" @click="selectType(1)">
                         在职

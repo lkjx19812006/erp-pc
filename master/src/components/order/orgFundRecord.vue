@@ -69,7 +69,6 @@
             <th>账号</th>
             <th>付款时间</th>
             <th>备注</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -86,7 +85,6 @@
             <td>{{item.payNumber}}</td>
             <td>{{item.ctime}}</td>
             <td>{{item.comment}}</td>
-            <td></td>
           </tr>
         </tbody>
       </table>
@@ -137,7 +135,9 @@
           payUserName:'',
           payNumber:'',
           payWay:'',
-          total:0
+          total:0,
+          employee:'',
+          employeeName:''
         },
         employeeParam:{
           show:false,
@@ -163,6 +163,8 @@
         this.loadParam.payUserName='';
         this.loadParam.payNumber='';
         this.loadParam.payWay='';
+        this.loadParam.employeeName='';
+        this.loadParam.employee='';
         this.getOrgFundList(this.loadParam);
       },
       employeeSearch:function(employee,employeeName){
@@ -173,6 +175,11 @@
       fresh: function(input) {
         this.loadParam.cur = input;
         this.getOrgFundList(this.loadParam);
+      },
+      selectEmpOrOrg:function(item){
+        console.log(item)
+        this.loadParam.employeeName = item.employeeName;
+        this.loadParam.employee = item.employeeId;
       }
     },
     ready(){

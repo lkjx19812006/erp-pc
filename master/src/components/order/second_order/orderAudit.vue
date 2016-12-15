@@ -37,18 +37,16 @@
                        <input type="text" v-validate:payname="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
                        <select class="form-control edit-input" v-model="param.payName">
                             <option>中国银行</option>
-                            <option>支付宝</option>
-                            <option>Wechat</option>
-                            <option>药款支付</option>
+                            <option>招商银行</option>
+                            <option>广发银行</option>
+                            <option>建设银行</option>
                        </select>
                     </div>
                     <div class="editpage-input col-md-6"  v-if="param.payWay==2">
-                       <label class="editlabel">银行支行 </label>
+                       <label class="editlabel">银行支行</label>
                        <select class="form-control edit-input" v-model="param.paySubName">
                             <option>虹口支行</option>
-                            <option>支付宝</option>
-                            <option>Wechat</option>
-                            <option>药款支付</option>
+                            <option>杨浦支行</option>
                        </select>
                     </div>
                     <div class="editpage-input col-md-6" >

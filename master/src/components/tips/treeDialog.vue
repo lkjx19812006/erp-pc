@@ -68,7 +68,7 @@
     z-index: 1083
   }
   .edit_footer{
-    width:416px;
+    width:490px;
     position: relative;
     bottom: 0;
   }

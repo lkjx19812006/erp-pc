@@ -146,7 +146,7 @@
                                             <tr v-for="item in initOrderDetail.stages.arr">
                                                 <td v-if="item.type==0">付款</td>
                                                 <td v-if="item.type==1">收款</td>
-                                                <td colspan="6">{{item.orderStatus | orderDescript}}支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}押金）</td>
+                                                <td colspan="6">{{item.orderStatus | orderDescript}}支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
                                                 <td>{{item.description}}</td>
                                                 <td v-if="item.validate==0">未审核</td>
                                                 <td v-if="item.validate==1">已申请</td>
@@ -154,7 +154,7 @@
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
-                                                    <a class="operate" v-if="item.validate==0" @click="applyInfo({
+                                                    <a class="operate" v-if="item.validate==0&&initOrderDetail.orderStatus>=20" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,
