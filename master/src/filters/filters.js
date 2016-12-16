@@ -18,6 +18,25 @@ Vue.filter('telstate', function(val){
 	}
 });
 
+Vue.filter('payMent', function(val){
+	var val = val;
+	if(val==0){
+		 return '付款';
+	}else if(val==1){
+		return '收款'
+	}else{
+		return val;
+	}
+});
+Vue.filter('bizType', function(val){
+	var val = val;
+	if(val=='order'){
+		 return '订单';
+	}else{
+		return val;
+	}
+});
+
 Vue.filter('numberstate', function(val){
 	var val = val;
 	if(val==null){

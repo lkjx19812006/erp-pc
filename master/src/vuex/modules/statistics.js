@@ -12,7 +12,9 @@ import {
     UNIT_LIST,
     CURRENCY_LIST,
     MY_FUND_LIST,
-    ORG_FUND_LIST
+    ORG_FUND_LIST,
+    FUND_DETAIL_DATA,
+    FINANCE_LIST
 } from '../mutation-types'
 
 const state = {
@@ -45,6 +47,8 @@ const state = {
     currencyList:[],
     myFundlist:[],
     orgFundlist:[],
+    fundDetail:[],
+    financeList:[]
 }
 const mutations = {
     [UNIT_LIST](state,data){ //常用单位
@@ -126,8 +130,20 @@ const mutations = {
             }
             state.mySampleList[data.sub].description = data.auditComment;
         }
-        
-        
+    },
+    [FUND_DETAIL_DATA](state,data){
+      state.fundDetail = data;
+    },
+    [FINANCE_LIST](state,data){
+      console.log(data)
+        if(data.titles=='分期审核'){
+            console.log(data)
+            console.log(state.financeList[data.sub])
+            state.financeList[data.sub].validate =  data.validate;
+            state.financeList[data.sub].pr =  data.pr;
+        }else{
+          state.financeList = data;
+        }
     }
 }
 export default {

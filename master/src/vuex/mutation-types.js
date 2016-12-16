@@ -157,6 +157,8 @@ export const MY_ORDER_COUNT = 'MY_ORDER_COUNT' //我的订单统计
 export const MY_TIME_ORDER_COUNT = 'MY_TIME_ORDER_COUNT' //我的订单统计(时间维度)
 export const MY_FUND_LIST = 'MY_FUND_LIST'  //我的资金记录
 export const ORG_FUND_LIST = 'ORG_FUND_LIST'  //部门资金记录
+export const FUND_DETAIL_DATA = 'FUND_DETAIL_DATA'  //资金记录详情
+export const FINANCE_LIST = 'FINANCE_LIST'  //财务资金审核
 
 
 
