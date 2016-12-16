@@ -708,7 +708,7 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
     })
 }
 
-export const orgOrderAudit = ({ dispatch }, param) => { //审核部门的订单（单个）
+export const orgOrderAudit = ({ dispatch }, param) => { //订单申请审核（单个）
     const data = {
         id: param.id,
     }
@@ -718,6 +718,38 @@ export const orgOrderAudit = ({ dispatch }, param) => { //审核部门的订单�
     Vue.http({
         method: 'PUT',
         url: apiUrl.userList + '/order/validate',
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+        param.show = false;
+        param.description = "";
+        data.index = param.index;
+        data.key = param.key;
+        if(res.json().code==200){
+           dispatch(types.ORG_ORDER_AUDIT, data);
+        }
+        
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const orderApplyAuditAgain = ({ dispatch }, param) => { //订单重新申请审核（单个）
+    const data = {
+        id: param.id,
+    }
+    if (param.description) {
+        data.description = param.description;
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.userList + '/order/repeatValidate',
         emulateHTTP: false,
         body: data,
         emulateJSON: false,
