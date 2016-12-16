@@ -11,6 +11,48 @@
             <div class="edit-model">
                 <form name="editOrderinfo" action="javascript:void(0)">
                     <section class="editsection">
+                        <h5>商品信息</h5>
+                        <div class="editpage">
+                            <div class="editpageleft">
+                                <div class="editpage-input">
+                                    <label class="editlabel">商品标题</label>
+                                    
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].title" value="{{param.goods[0].breedName}}" v-if="param.goods[0].title==''"/>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].title" v-else/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">产地</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].location"/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">单价<span class="system_danger" v-if="$validation.price.money">请输入不超过两位小数的数字</span></label>
+                                    <input type="text" class="form-control  edit-input" v-model="param.goods[0].price" v-validate:price="['money']"/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">数量<span class="system_danger" v-if="$validation.number.quantity">请输入不超过四位小数的数字</span></label>
+                                    <input type="text" class="form-control edit-input" v-validate:number="['quantity']" v-model="param.goods[0].number"/>
+                                </div>
+                            </div>
+                            <div class="editpageright">
+                                <div class="editpage-input">
+                                    <label class="editlabel">商品名称</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].breedName" disabled="true"/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">品质</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].quality"/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">规格</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].spec"/>
+                                </div>
+                                <div class="editpage-input">
+                                    <label class="editlabel">单位<span class="system_danger" v-if="$validation.unit.required">请输入单位</span></label>
+                                    <input type="text" class="form-control edit-input" v-validate:unit="['required']" v-model="param.goods[0].unit"/>
+                                </div>
+
+                            </div>
+                        </div>
                         <h5>订单信息</h5>
                         <div class="editpage">
                             <div class="editpageleft">
@@ -24,12 +66,20 @@
                                 </div>
 
                                 <div class="editpage-input">
-                                    <label class="editlabel">杂费</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.incidentals"/>
+                                    <label class="editlabel">{{$t('static.sundry_fees')}}：</label>
+                                    <div class="clearfix">
+                                      <button class="btn btn-default left" style="font-size: 16px" @click="addIncidentals()">+</button>
+                                      <input type="number" class="edit-input" v-model="param.incidentals" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" value="{{param.incidentals}}" @keyup=""/>
+                                      <button class="btn btn-default left" style="font-size: 16px" @click="subduction()">-</button>
+                                    </div>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">优惠金额</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.preferential"/>
+                                    <label class="editlabel">{{$t('static.preferential')}}：</label>
+                                    <div class="clearfix">
+                                      <button class="btn btn-default left" style="font-size: 16px" @click="addCompute()">+</button>
+                                      <input type="number" class="edit-input" v-model="param.preferential" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" value="{{param.preferential}}"/>
+                                      <button class="btn btn-default left" style="font-size: 16px" @click="reduce()">-</button>
+                                    </div>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">收货人姓名 <span class="system_danger" v-if="$validation.customer.required">必填项</span></label>
@@ -74,10 +124,9 @@
                                     <input type="text" class="form-control edit-input" v-model="param.currency"/>
                                 </div>
                                 <div class="editpage-input">
-                               <label class="editlabel">备注</label>
-                               <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
-                               <textarea v-model='param.comments' class="form-control" style="width:190%;overflow:auto;word-break:break-all" rows="5"></textarea>
-                        </div>
+                                       <label class="editlabel">备注</label>
+                                       <textarea v-model='param.comments' class="form-control" style="width:190%;overflow:auto;word-break:break-all" rows="5"></textarea>
+                                </div>
                             </div>
                             <div class="editpageright">
                                 <div class="editpage-input">
@@ -132,52 +181,14 @@
                                     <label class="editlabel">邮编<span class="system_danger" v-if="$validation.zipcode.postcode">请输入正确的邮编</span></label>
                                     <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:zipcode="['postcode']"/>
                                 </div>
-
+                                <div class="editpage-input">
+                                    <label class="editlabel">总价</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.total" value="{{param.total}}" readonly="true" />
+                                </div>
                             </div>
 
                         </div>
-                        <h5>商品信息</h5>
-                        <div class="editpage">
-                            <div class="editpageleft">
-                                <div class="editpage-input">
-                                    <label class="editlabel">商品标题</label>
-                                    
-                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].title" value="{{param.goods[0].breedName}}" v-if="param.goods[0].title==''"/>
-                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].title" v-else/>
-                                </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">产地</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].location"/>
-                                </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">单价<span class="system_danger" v-if="$validation.price.money">请输入不超过两位小数的数字</span></label>
-                                    <input type="text" class="form-control  edit-input" v-model="param.goods[0].price" v-validate:price="['money']"/>
-                                </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">数量<span class="system_danger" v-if="$validation.number.quantity">请输入不超过四位小数的数字</span></label>
-                                    <input type="text" class="form-control edit-input" v-validate:number="['quantity']" v-model="param.goods[0].number"/>
-                                </div>
-                            </div>
-                            <div class="editpageright">
-                                <div class="editpage-input">
-                                    <label class="editlabel">商品名称</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].breedName" disabled="true"/>
-                                </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">品质</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].quality"/>
-                                </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">规格</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.goods[0].spec"/>
-                                </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">单位<span class="system_danger" v-if="$validation.unit.required">请输入单位</span></label>
-                                    <input type="text" class="form-control edit-input" v-validate:unit="['required']" v-model="param.goods[0].unit"/>
-                                </div>
-
-                            </div>
-                        </div>
+                        
                     </section>
                 </form>
             </div>
@@ -233,6 +244,8 @@ export default {
             district:{
               cname:''
             },
+            saith:0, //点击按钮计算
+            sum:0, //点击按钮计算
         }
     },
     vuex: {
@@ -262,7 +275,53 @@ export default {
             }
 
         },
-
+         addCompute:function(){ //优惠增加
+          var saith = 0;
+          if(this.param.preferential&&this.param.preferential!=''){
+             saith=parseFloat(this.param.preferential);
+             saith +=1;
+             this.param.preferential = saith;
+          }else{
+             this.param.preferential=0;
+             saith=parseFloat(this.param.preferential);
+             saith +=1;
+             this.param.preferential = saith;
+          }
+        },
+        reduce:function(){ //优惠减少
+          var saith = 0;
+          if(this.param.preferential&&this.param.preferential!=''&&this.param.preferential>0){
+             saith=parseFloat(this.param.preferential);
+             saith = (saith*1000 - 1000)/1000;
+             this.param.preferential = saith;
+          }else{
+             this.param.preferential=0;
+          }
+          
+        },
+        addIncidentals:function(){ //杂费增加
+          var saith = 0;
+          if(this.param.incidentals&&this.param.incidentals!=''){
+             saith=parseFloat(this.param.incidentals);
+             saith +=1;
+             this.param.incidentals = saith;
+          }else{
+             this.param.incidentals=0;
+             saith=parseFloat(this.param.incidentals);
+             saith +=1;
+             this.param.incidentals = saith;
+          }
+        },
+        subduction:function(){ //杂费减少
+          var saith = 0;
+          if(this.param.incidentals&&this.param.incidentals!=''&&this.param.incidentals>0){
+             saith=parseFloat(this.param.incidentals);
+             saith = (saith*1000 - 1000)/1000;
+             this.param.incidentals = saith;
+          }else{
+             this.param.incidentals=0;
+          }
+        },
         selectCity:function(){
             this.city = '';
             this.district = '';
@@ -278,7 +337,9 @@ export default {
             }
 
         },
-
+        changeTotal:function(){
+            this.param.total = (parseFloat(this.param.goods[0].price*this.param.goods[0].number)*100+parseFloat(this.param.incidentals)*100 - parseFloat(this.param.preferential)*100)/100;
+        },
         confirm:function(){
             this.param.country = this.country.cname;
             this.param.province = this.province.cname;
@@ -290,9 +351,17 @@ export default {
 
         }
     },
+    watch:{
+        'param.incidentals':'changeTotal',
+        'param.preferential':'changeTotal',
+        'param.goods[0].price':'changeTotal',
+        'param.goods[0].number':'changeTotal',
+    },
+   
     created(){
         this.getCountryList(this.countryParam);
         console.log(this.param);
+        this.param.total = (parseFloat(this.param.goods[0].price*this.param.goods[0].number)*100+parseFloat(this.param.incidentals)*100 - parseFloat(this.param.preferential)*100)/100;
     }
 }
 </script>

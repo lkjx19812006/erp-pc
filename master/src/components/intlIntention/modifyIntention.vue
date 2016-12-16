@@ -29,7 +29,7 @@
                          :prevalue="param.pack"
                          :value.sync="param.pack"
                          :options="tag"
-                         placeholder="包装"
+                         placeholder="包装/Packaging"
                        >
                        </input-select>
                      </div>
@@ -110,7 +110,7 @@
                                          :value.sync="breedInfo.spec"
                                          :prevalue="breedInfo.spec"
                                          :options="initBreedDetail.specs.arr"
-                                         placeholder="规格"
+                                         placeholder="规格/Specification"
                                          label="name"
                                        >
                                        </input-select>
@@ -141,7 +141,7 @@
                                          :prevalue="breedInfo.location"
                                          :value.sync="breedInfo.location"
                                          :options="initBreedDetail.locals.arr"
-                                         placeholder="产地"
+                                         placeholder="产地/Origin"
                                          label="name"
                                        >
                                        </input-select>
@@ -156,7 +156,7 @@
                                        :prevalue="breedInfo.pack"
                                        :value.sync="breedInfo.pack"
                                        :options="tag"
-                                       placeholder="包装"
+                                       placeholder="包装/Packaging"
                                      >
                                      </input-select>
                                    </div>
@@ -325,7 +325,7 @@ export default {
             customerPhone:'',
             employeeId:''
           },
-          tag:['真空包装','瓦楞纸箱','编织袋','积压包','其它'],
+          tag:['真空包装/Vacuum packaging','瓦楞纸箱/Box','编织袋/Woven bag','积压包/Pallets','其它/Other'],
             country:{
               cname:'',
             },

@@ -117,7 +117,7 @@
                                               })">
                                         <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.stages.arr.length!==null">
-                                          分期付款（{{initOrderDetail.stages.arr.length}}）
+                                          {{$t('static.installment')}}（{{initOrderDetail.stages.arr.length}}）
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                         {{$t('static.pay_evidence')}}（0）
@@ -137,9 +137,9 @@
                                             
                                             <th>分期支付时间</th>-->
                                             <th>分期原因</th> 
-                                            <th>审核状态</th>
+                                            <th>{{$t('static.review_status')}}</th>
                                             <th>申请备注</th>
-                                            <th>创建时间</th>
+                                            <th>{{$t('static.create_time')}}</th>
                                             <th></th>
                                           </thead>
                                           <tbody>
@@ -148,10 +148,10 @@
                                                 <td v-if="item.type==1">收款</td>
                                                 <td colspan="6">{{item.orderStatus | orderDescript}}支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
                                                 <td>{{item.description}}</td>
-                                                <td v-if="item.validate==0">未审核</td>
-                                                <td v-if="item.validate==1">已申请</td>
-                                                <td v-if="item.validate==2" style="background:green;color:#fff">审核通过</td>
-                                                <td v-if="item.validate==3" style="background:red;color:#fff">审核未通过</td>
+                                                <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
+                                                <td v-if="item.validate==1">{{$t('static.applied')}}</td>
+                                                <td v-if="item.validate==2" style="background:green;color:#fff">{{$t('static.approved')}}</td>
+                                                <td v-if="item.validate==3" style="background:red;color:#fff">{{$t('static.unapproved')}}</td>
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
@@ -176,7 +176,7 @@
                                                         })"> 
                                                     <img src="/static/images/apply.png"  style="width:47px" />
                                                     </a>
-                                                    <a class="operate" v-if="item.validate==3&&initOrderDetail.orderStatus>=20" @click="applyInfo({
+                                                    <a class="operate" v-if="item.validate==3&&initOrderDetail.orderStatus>=0" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,

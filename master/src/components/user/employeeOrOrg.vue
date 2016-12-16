@@ -55,7 +55,7 @@
 		                </thead>
 		                <tbody>
 		                    <tr v-for="item in initEmployeeList"  @click="selectEmployee($index,item)">
-		                       <td  @click.stop="">
+		                       <td>
 		                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="selectEmployee($index,item)"></label>
 		                        </td>
 		                        <td>{{item.name}}</td>
@@ -70,7 +70,8 @@
                     </div>
                     <div class="edit_footer">
                         <button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
-                        <button type="button" class="btn btn-orange" @click="confirmEmp()">确定</button>
+                        <button type="button"  class="btn btn-orange" v-if="param.employeeId==''" @click="confirmEmp()" disabled="true">确定</button>
+                        <button type="button"  class="btn btn-orange" v-else  @click="confirmEmp()" >确定</button>
                     </div>
     			</div>
 	    		<!-- <div class="con_trans">
@@ -140,7 +141,8 @@ export default{
                 cur: 1,
                 all: 7,
                 total:'',
-                name:''
+                name:'',
+                no:''
               },
               treeParam:{
                 show:false,
@@ -175,12 +177,6 @@ export default{
             this.employSearch();
           }
         },
-		/*bindCustomer:function(){
-			this.currentView=1;
-			//this.isA=!this.isA;
-			this.isA=true;
-			this.isB=true;
-		},*/
 		employee:function(){
 			this.currentView=1;
 			//this.isA=!this.isA;
@@ -217,6 +213,11 @@ export default{
 
 		selectEmployee:function(id,item){
 			this.$store.state.table.basicBaseList.employeeList[id].checked=!this.$store.state.table.basicBaseList.employeeList[id].checked;
+            if(this.$store.state.table.basicBaseList.employeeList[id].checked==true){
+                this.param.employeeId = item.id;
+            }else if(this.$store.state.table.basicBaseList.employeeList[id].checked==false){
+                this.param.employeeId = '';
+            }
 			for(var key in this.initEmployeeList){
 				if(key!=id){
 					if(this.$store.state.table.basicBaseList.employeeList[key].checked==true){
@@ -224,10 +225,9 @@ export default{
 					}
 				}
 			}
-            console.log(item)
-            console.log(this.treeParam.orgName)
             this.treeParam.orgName = item.orgName;
             this.loadParam.name = item.name;
+           
 		},
 		selectDepartment:function(id){
 			this.$store.state.table.basicBaseList.orgList[id].checked=!this.$store.state.table.basicBaseList.orgList[id].checked;
@@ -236,10 +236,8 @@ export default{
 					if(this.$store.state.table.basicBaseList.orgList[key].checked==true){
 						this.$store.state.table.basicBaseList.orgList[key].checked=false;
 					}
-
 				}
 			}
-
 		},
 		/*confirm:function(){
 			this.param.employeeId = '';
@@ -265,7 +263,6 @@ export default{
 
 		},*/
         confirmEmp:function(){
-            console.log('选业务员');
             console.log(this.param);
             this.param.employeeId = '';
             this.param.employeeName = '';
@@ -292,7 +289,6 @@ export default{
             console.log(this.param);
             this.$dispatch('selectEmpOrOrg', this.param);
             this.param.show = false;
-
         }
 
 	},
@@ -318,7 +314,11 @@ export default{
       //this.getClientList(this.orgParam, this.orgParam.all);
       this.getEmployeeList(this.loadParam);
       this.getOrgList(this.orgParam);
-      console.log(this.$store.state.table.login);
+      if(this.param.employeeId){
+            this.loadParam.name= this.param.employeeName;
+            console.log(this.loadParam.name)
+            console.log(this.param.employeeName)
+      }
     }
 }
 </script>

@@ -833,6 +833,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         country: data.country,
         province: data.province,
         city: data.city,
+         total: data.total,
         employee: data.employee,
         org: data.org,
         district: data.district,
@@ -911,6 +912,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         zipCode: param.zipCode,
         country: param.country,
         province: param.province,
+        total: data.total,
         city: param.city,
         district: param.district,
         customerName: param.customerName,
@@ -2486,6 +2488,9 @@ export const getProductList = ({ dispatch }, param) => { //供应商产品列表
     }
     if (param.cName) {
         clienturl = clienturl + '&cName=' + param.cName;
+    }
+    if (param.breedId) {
+        clienturl = clienturl + '&breedId=' + param.breedId;
     }
 
     Vue.http({

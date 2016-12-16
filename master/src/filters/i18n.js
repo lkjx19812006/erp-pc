@@ -71,6 +71,7 @@ var locales = {
       approved:'审核通过',
       unapproved:'审核不通过',
       approving:'审核中',
+      applied:'已申请',
       wait_approval:'未审核',
       create_order:'新的订单',
       order_procing:'订单处理中',
@@ -401,6 +402,7 @@ var locales = {
       transcation_amount:'成交金额',
       wait_payment:'待支付',
       //client
+      installment:'分期付款',
     }
   },
   en: {
@@ -485,6 +487,7 @@ var locales = {
       approved:'Approved',
       unapproved:'Audit not passed',
       approving:'Under review',
+      applied:'Under review',
       wait_approval:'Waiting for an approval',
       create_order:'New Order',
       order_procing:'Order review',
@@ -796,6 +799,7 @@ var locales = {
       transcation:'Transaction time',
       transcation_amount:'Transaction amount',
       wait_payment:'Waiting to pay',
+      installment:'Installment payment'
     }
   }
 }

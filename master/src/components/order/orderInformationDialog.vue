@@ -256,22 +256,34 @@
                      <h5 style="display:inline">{{$t('static.other_info')}}</h5>
                   </div>
                   <div class="editpage-input col-md-6">
-                      <label class="editlabel">{{$t('static.preferential')}}</label>
-                      <input type="number" class="form-control edit-input" v-model="param.preferential" value="{{param.preferential}}"/>
-                  </div>
-                  <div class="editpage-input col-md-6">
-                      <label class="editlabel">{{$t('static.discount_note')}}</label>
-                      <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" value="{{param.preferentialDesc}}"/>
-                  </div>
-                  <div class="editpage-input col-md-6">
-                      <label class="editlabel">{{$t('static.sundry_fees')}}</label>
-                      <input type="number" class="form-control edit-input" v-model="param.incidentals" value="{{param.incidentals}}"/>
-                  </div>
-                  
-                  <div class="editpage-input col-md-6">
-                      <label class="editlabel">{{$t('static.fee_explain')}}</label>
-                      <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
-                  </div>
+                        <label class="editlabel left">{{$t('static.preferential')}}：</label>
+                        <div class="clearfix left">
+                          <button class="btn btn-default left" style="font-size: 16px" @click="addCompute()">+</button>
+                          <input type="number" class="edit-input" v-model="param.preferential" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" value="{{param.preferential}}"/>
+                          <button class="btn btn-default right" style="font-size: 16px" @click="reduce()">-</button>
+                        </div>
+                    </div>
+                   
+                    <div class="editpage-input col-md-6">
+                        <label class="editlabel left">{{$t('static.sundry_fees')}}：</label>
+                        <div class="clearfix left">
+                          <button class="btn btn-default left" style="font-size: 16px" @click="addIncidentals()">+</button>
+                          <input type="number" class="edit-input" v-model="param.incidentals" style="width:60%;display:inline-block;float:left;border:none;text-align: center;" value="{{param.incidentals}}" @keyup=""/>
+                          <button class="btn btn-default right" style="font-size: 16px" @click="subduction()">-</button>
+                        </div>
+                    </div>
+                    <div class="editpage-input col-md-6">
+                       <label class="editlabel">{{$t('static.discount_note')}}</label>
+                       <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" value="{{param.preferentialDesc}}"/>
+                   </div>
+                    <div class="editpage-input col-md-6">
+                       <label class="editlabel">{{$t('static.fee_explain')}}</label>
+                       <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
+                   </div>
+                    <div class="editpage-input col-md-6">
+                        <label class="editlabel">总价</label>
+                        <input type="text" class="form-control edit-input" v-model="param.total" readonly="true" />
+                    </div>
                   <div class="editpage-input col-md-12">
                       <label class="editlabel">{{$t('static.comment')}}</label>
                       <textarea rows="5" class="form-control" v-model="param.comments" value="{{param.comments}}" style="resize: none;width:100%;"></textarea>
@@ -377,7 +389,10 @@ export default {
             },
             district:{
               cname:''
-            }
+            },
+            saith:0, //点击按钮计算
+            sum:0, //点击按钮计算
+            altogether:0, //所有商品的总金额
         }
     },
     vuex: {
@@ -413,7 +428,53 @@ export default {
               this.getProvinceList(this.country);
             }
         },
-
+        addCompute:function(){ //优惠增加
+          var saith = 0;
+          if(this.param.preferential&&this.param.preferential!=''){
+             saith=parseFloat(this.param.preferential);
+             saith +=1;
+             this.param.preferential = saith;
+          }else{
+             this.param.preferential=0;
+             saith=parseFloat(this.param.preferential);
+             saith +=1;
+             this.param.preferential = saith;
+          }
+        },
+        reduce:function(){ //优惠减少
+          var saith = 0;
+          if(this.param.preferential&&this.param.preferential!=''&&this.param.preferential>0){
+             saith=parseFloat(this.param.preferential);
+             saith = (saith*1000 - 1000)/1000;
+             this.param.preferential = saith;
+          }else{
+             this.param.preferential=0;
+          }
+          
+        },
+        addIncidentals:function(){ //杂费增加
+          var saith = 0;
+          if(this.param.incidentals&&this.param.incidentals!=''){
+             saith=parseFloat(this.param.incidentals);
+             saith +=1;
+             this.param.incidentals = saith;
+          }else{
+             this.param.incidentals=0;
+             saith=parseFloat(this.param.incidentals);
+             saith +=1;
+             this.param.incidentals = saith;
+          }
+        },
+        subduction:function(){ //杂费减少
+          var saith = 0;
+          if(this.param.incidentals&&this.param.incidentals!=''&&this.param.incidentals>0){
+             saith=parseFloat(this.param.incidentals);
+             saith = (saith*1000 - 1000)/1000;
+             this.param.incidentals = saith;
+          }else{
+             this.param.incidentals=0;
+          }
+        },
         selectCity:function(){
             this.city = '';
             this.district = '';
@@ -456,6 +517,8 @@ export default {
           console.log(this.param.goods[this.param.goods.length-1]);
           this.breedInfo.status = 0;
           this.addParam.show = false; 
+           this.altogether += (parseFloat(this.param.goods[this.param.goods.length-1].price)*parseFloat(this.param.goods[this.param.goods.length-1].number)*100)/100
+          console.log(this.altogether)
         },
         showModifyBreed:function(index){
           this.breedInfo.status = 2;
@@ -472,6 +535,7 @@ export default {
           this.breedInfo.sourceType=this.param.goods[index].sourceType,
           this.breedInfo.id=this.param.goods[index].orderId,
           this.updateParam.show = true;
+          this.altogether -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.price);
         },
         showAddBreed:function(){
           if(this.param.goods.length == 0||this.param.goods[this.param.goods.length-1].breedId != ''){
@@ -506,6 +570,7 @@ export default {
           
         },
         deleteBreed:function(index){
+          this.altogether -=parseFloat(this.param.goods[index].number)*parseFloat(this.param.goods[index].price)
            this.param.goods.splice(index,1);
         },
         cancelAddBreed:function(){
@@ -528,6 +593,10 @@ export default {
           this.param.goods[this.updateParam.index].orderId=this.breedInfo.id,
           this.breedInfo.status = 0;
           this.updateParam.show = false;
+          console.log(this.param.goods[this.updateParam.index].price)
+          console.log(this.param.goods[this.updateParam.index].number)
+          this.altogether += (parseFloat(this.param.goods[this.updateParam.index].number)*parseFloat(this.param.goods[this.updateParam.index].price)*100)/100
+          console.log(this.altogether)
         },
         cancelModifyBreed:function(){
           this.breedInfo.status = 0;
@@ -569,7 +638,15 @@ export default {
             this.param.callback=this.param.callback;
             this.alterOrder(this.param);
 
+        },
+        changeTotal:function(){
+            this.param.total = (parseFloat(this.altogether)*100+parseFloat(this.param.incidentals)*100 - parseFloat(this.param.preferential)*100)/100;
         }
+    },
+    watch:{
+        'param.incidentals':'changeTotal',
+        'param.preferential':'changeTotal',
+        'altogether':'changeTotal',
     },
     events:{
         breed:function(breed){
@@ -607,7 +684,11 @@ export default {
           this.city.cname=this.param.city;
           this.district.cname=this.param.district;
         }
-
+        if(this.param.goods.length>0){
+            for(var i=0;i < this.param.goods.length;i++){
+                this.altogether +=parseFloat(this.param.goods[i].number)*parseFloat(this.param.goods[i].price);
+            }
+        }
     }
 }
 </script>
