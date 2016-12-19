@@ -92,7 +92,7 @@
                     <th>{{$t('static.order_status')}}</th>
                     <th>{{$t('static.order_source')}}</th>
                     <th>{{$t('static.review_status')}}</th>
-                    <!-- <th></th> -->
+                    <th></th> 
                 </tr>
             </thead>
             <tbody>
@@ -215,6 +215,9 @@
                           </ul>
                       </div>
                  </td> -->
+                 <td><a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
+                     <img src="/static/images/orgcheck.png"  title="审核" alt="审核" />
+                 </a></td>
                 </tr>
             </tbody>
         </table>
@@ -232,7 +235,7 @@
     import deletebreedModel from  '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
     import disposeModel  from  '../order/orderStatus'
     import tipsdialogModel  from '../tips/tipDialog'
-    import auditModel  from '../order/orgAudit'
+    import auditModel  from '../../components/tips/auditDialog'
     import filter from '../../filters/filters'
     import common from '../../common/common'
     import changeMenu from '../../components/tools/tabs/tabs.js'
@@ -246,7 +249,8 @@
         alterOrder,
         createOrder,
         orderStatu,
-        getOrderDetail
+        getOrderDetail,
+        orderOrgAudit
     } from '../../vuex/actions'
 
     export default {
@@ -312,13 +316,19 @@
                 checked:false,
                 auditParam:{
                     show:false,
-                    indexs:[],
-                    ids:[],
-                    description:'',
+                    audit:true,
+                    indexs:[],    //批量审核使用,暂停用
+                    ids:[],       //批量审核使用,暂停用
+                    id:'',
+                    index:'',
+                    auditComment:'',
                     validate:'',
                     title:"部门订单审核",
-                    key:"orgOrderList"
+                    key:"orgOrderList",
+                    pass:this.auditPass,
+                    reject:this.auditReject,
                 },
+                
                 tipsParam:{
                     show:false,
                     alert:true,
@@ -337,7 +347,8 @@
                 alterOrder,
                 createOrder,
                 orderStatu,
-                getOrderDetail
+                getOrderDetail,
+                orderOrgAudit
             }
         },
         created() {
@@ -377,7 +388,7 @@
               this.loadParam.payWay="";
               this.getOrgOrder(this.loadParam);
             },
-            orgCheck:function(){
+            /*orgCheck:function(){
                 var _this = this;
                 _this.auditParam.ids = [];
                 _this.auditParam.indexs = [];
@@ -395,11 +406,29 @@
                     this.tipsParam.show = true;
                 }
                  _this.auditParam.callback = _this.applyBack;
-            },
+            },*/
             applyBack:function(title){
                 this.tipsParam.show = true;
                 this.tipsParam.name=title;
                 this.tipsParam.alert=true;
+                this.getOrgOrder(this.loadParam);
+            },
+            orderCheck:function(id,index){ 
+                
+                this.auditParam.id = id;
+                this.auditParam.index = index;
+                
+                this.auditParam.show = true;
+                this.auditParam.title = '审核订单';
+                this.auditParam.callback = this.applyBack;
+            },
+            auditPass:function(){
+                this.auditParam.validate = 1; 
+                this.orderOrgAudit(this.auditParam);             
+            },
+            auditReject:function(){
+                this.auditParam.validate = 0;  
+                this.orderOrgAudit(this.auditParam);
             },
             onlyselected: function(index){
                   const _self=this;

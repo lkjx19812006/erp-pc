@@ -264,7 +264,7 @@
                         <td>{{item.inTypeDesc}}</td> 
                         <td>{{item.onSell | onsell}}</td>
                         <td style="text-align: left">
-                               <a class="operate" v-if="item.onSell!=2"  @click.stop="modifyIntention({
+                               <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4"  @click.stop="modifyIntention({
                                               id:item.id,
                                               sub:$index,
                                               selectCustomer:false,
@@ -318,7 +318,7 @@
                                                duedate:item.duedate
                                                })"><img src="/static/images/edit.png" height="18" width="28" alt="编辑"/>
                                </a>
-                              <a class="operate" v-if="item.onSell!=2" @click.stop="specDelete({
+                              <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" @click.stop="specDelete({
                                                id:item.id,
                                                sub:$index,
                                                show:true,
@@ -329,8 +329,9 @@
                                                key:'myIntentionList'
                                                })"><img src="/static/images/del.png" height="18" width="28" alt="删除"/>
                                </a>
-                               <a class="operate" v-if="(item.onSell===0||item.onSell==-2||item.onSell==4)&&item.especial==1" @click="up($index,item.id,1)" >申请上架
-                               </a>
+                               <!-- <a class="operate" v-if="(item.onSell===0||item.onSell==-2||item.onSell==4)&&item.especial==1" @click="up($index,item.id,1)" >申请上架
+                               </a> -->
+                               <a v-if="(item.onSell===0||item.onSell==-2||item.onSell==4)&&item.especial==1"><button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;margin-top:-22px;color:#fa6705" @click="up($index,item.id,1)">申请上架</button></a> 
                               <!-- <a class="operate" v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)"><img src="/static/images/grounding.png" height="18" width="28" alt="上架"/>
                               </a> -->
                               <!-- <a class="operate"  v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2&&item.especial==1" @click="applyAudit($index,item.id)"><img src="/static/images/apply.png" height="18" width="47" alt="申请审核"/>

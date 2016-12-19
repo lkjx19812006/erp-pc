@@ -3,6 +3,8 @@
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
+    <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div>
       <div class="order_search clearfix">
           <div class="right">
@@ -102,6 +104,7 @@
                     <th>{{$t('static.review_status')}}</th>
                     <th>{{$t('static.currency')}}</th>
                     <th>{{$t('static.payment_method')}}</th> -->
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -143,6 +146,9 @@
                   <td v-if="item.validate==-2" style="background:red;color:#fff">{{$t('static.unapproved')}}</td>
                   <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                   <td v-if="item.validate==1">{{$t('static.approving')}}</td>
+                  <td><a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
+                     <img src="/static/images/orgcheck.png"  title="审核" alt="审核" />
+                 </a></td>
                   <!-- <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
@@ -193,6 +199,8 @@
     import searchModel from '../order/orderSearch'
     import deletebreedModel from  '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
     import disposeModel  from  '../order/orderStatus'
+    import tipsdialogModel  from '../tips/tipDialog'
+    import auditModel  from '../../components/tips/auditDialog'
     import filter from '../../filters/filters'
     import common from '../../common/common'
     import changeMenu from '../../components/tools/tabs/tabs.js'
@@ -205,7 +213,8 @@
         alterOrder,
         createOrder,
         orderStatu,
-        getOrderDetail
+        getOrderDetail,
+        orderOrgAudit
     } from '../../vuex/actions'
 
     export default {
@@ -216,7 +225,9 @@
             detailModel,
             searchModel,
             deletebreedModel,
-            disposeModel
+            disposeModel,
+            tipsdialogModel,
+            auditModel
         },
         data() {
             return {
@@ -264,6 +275,26 @@
                     express:false,
                     delivery:false
                 },
+                auditParam:{
+                    show:false,
+                    audit:true,
+                    indexs:[],    //批量审核使用,暂停用
+                    ids:[],       //批量审核使用,暂停用
+                    id:'',
+                    index:'',
+                    auditComment:'',
+                    validate:'',
+                    title:"部门订单审核",
+                    key:"orgOrderList",
+                    pass:this.auditPass,
+                    reject:this.auditReject,
+                },
+                
+                tipsParam:{
+                    show:false,
+                    alert:true,
+                    name:"请选择要审核的订单"
+                },
                 show:true
             }
         },
@@ -277,7 +308,8 @@
                 alterOrder,
                 createOrder,
                 orderStatu,
-                getOrderDetail
+                getOrderDetail,
+                orderOrgAudit
             }
         },
         methods: {
@@ -320,6 +352,29 @@
               this.loadParam.clients="";
               this.loadParam.payWay="";
               this.getOrderList(this.loadParam);
+            },
+            applyBack:function(title){
+                this.tipsParam.show = true;
+                this.tipsParam.name=title;
+                this.tipsParam.alert=true;
+                this.getOrderList(this.loadParam);
+            },
+            orderCheck:function(id,index){ 
+                
+                this.auditParam.id = id;
+                this.auditParam.index = index;
+                
+                this.auditParam.show = true;
+                this.auditParam.title = '审核订单';
+                this.auditParam.callback = this.applyBack;
+            },
+            auditPass:function(){
+                this.auditParam.validate = 1; 
+                this.orderOrgAudit(this.auditParam);             
+            },
+            auditReject:function(){
+                this.auditParam.validate = 0;  
+                this.orderOrgAudit(this.auditParam);
             },
             pendingOrder:function(item,sub){
               console.log(item)
@@ -465,6 +520,6 @@
     }
      #table_box  table th,#table_box  table td{
       width: 107px;
-      min-width: 107px;
+      min-width: 100px;
     }
   </style>

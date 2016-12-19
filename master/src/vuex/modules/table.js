@@ -715,7 +715,8 @@ const mutations = {
         state.logisticsDetail = data;
     },
     [ORG_ORDER_AUDIT](state, data) {   //审核部门订单(个人)
-        state.basicBaseList[data.key][data.index].validate = 1;
+        console.log(data);
+        state.basicBaseList[data.key][data.index].validate = data.validate;
     },
     [BATCH_ORG_ORDER](state, data) { // 批量审核部门订单
       

@@ -731,6 +731,7 @@ export const orgOrderAudit = ({ dispatch }, param) => { //订单申请审核（�
         param.description = "";
         data.index = param.index;
         data.key = param.key;
+        data.validate = 1;
         if(res.json().code==200){
            dispatch(types.ORG_ORDER_AUDIT, data);
         }
@@ -763,6 +764,41 @@ export const orderApplyAuditAgain = ({ dispatch }, param) => { //订单重新申
         param.description = "";
         data.index = param.index;
         data.key = param.key;
+        data.validate = 1;
+        if(res.json().code==200){
+           dispatch(types.ORG_ORDER_AUDIT, data);
+        }
+        
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const orderOrgAudit = ({ dispatch }, param) => { //订单部门主管审核（单个）
+    const data = {
+        id: param.id,
+        validate:param.validate
+    }
+    if (param.auditComment) {
+        data.description = param.auditComment;
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.userList + '/order/flowValidate',
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+        param.show = false;
+        param.description = "";
+        data.index = param.index;
+        data.key = param.key;
+        data.validate = param.validate;
         if(res.json().code==200){
            dispatch(types.ORG_ORDER_AUDIT, data);
         }
