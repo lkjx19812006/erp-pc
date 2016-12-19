@@ -18,7 +18,7 @@
         <div class="track-rcol">
             <div class="track-list">
                 <ul>
-                    <li class="node-icon" v-for="item in initFlowRecord" v-if="$index==0" style="border-left-color:#fff;padding-top:0">
+                    <li class="node-icon" v-for="item in initFlowRecord" v-if="$index==0&$index!=initFlowRecord.length-1" style="border-left-color:#fff;padding-top:0">
                         <i class="node-icon"></i>
                         <span class="time">{{item.ctimeStr}} </span>
                         <span class="txt"> {{item.description}}！</span>

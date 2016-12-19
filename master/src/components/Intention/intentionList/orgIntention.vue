@@ -9,6 +9,7 @@
      <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
+     <onsell-model :param="onSellParam" v-if="onSellParam.show"></onsell-model>
 
    <div>
         <div class="service-nav">
@@ -117,6 +118,7 @@
                         <th>剩余有效期</th>
                         <th>客户备注</th>
                         <th>意向来源</th>
+                        <th>上架状态</th>
 
                       <!-- <th>类型</th>
                         <th>特殊的</th>
@@ -215,6 +217,7 @@
                         <td>{{item.duedateDesc}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.inTypeDesc}}</td>
+                        <td>{{item.onSell | onsell}}</td>
 
                   <!-- <td>{{item.type | chanceType}}</td>
                         <td>
@@ -301,7 +304,7 @@
                         </td> 
                     -->
                         <td>
-                              <a class="operate" @click.stop="modifyIntention({
+                              <a class="operate" v-if="item.onSell!=2" @click.stop="modifyIntention({
                                               id:item.id,
                                               sub:$index,
                                               selectCustomer:false,
@@ -354,7 +357,7 @@
                                                duedate:item.duedate
                                                })"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                               </a>
-                              <a class="operate" @click.stop="specDelete({
+                              <a class="operate" v-if="item.onSell!=2" @click.stop="specDelete({
                                id:item.id,
                                sub:$index,
                                show:true,
@@ -365,11 +368,12 @@
                                key:'orgIntentionList'
                                })"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
                                </a>
-                               <a class="operate" v-if="item.validate==2" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png"   alt="审核" title="审核"/>
+                               <!-- <a class="operate" v-if="item.validate==2" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png"   alt="审核" title="审核"/>
+                               </a> -->
+                               <a class="operate" v-if="item.onSell==1&&item.especial==1" @click.stop="upAudit($index,item.id)">上架审核
                                </a>
-                               <a class="operate" v-if="item.onSell==3&&item.type==1&&item.especial==1" @click.stop="allowDown($index,item.id)"><img src="/static/images/greendown.png" height="18" width="46"  alt="允许下架" title="允许下架"/>
-                               </a>
-                               <a class="operate" v-if="item.onSell==3&&item.type==1&&item.especial==1" @click.stop="rejectDown($index,item.id)"><img src="/static/images/refressdown.png" height="18" width="47"  alt="拒绝下架" title="拒绝下架"/>
+                               
+                               <a class="operate" v-if="item.onSell==3&&item.especial==1" @click.stop="downAudit($index,item.id)">下架审核
                                </a>
                         </td>
 
@@ -397,6 +401,7 @@ import createintentModel from '../../user/userIntention'
 import supdemModel from '../supplyDemand'
 import searchModel from '../intentionSearch'
 import breedsearchModel from '../breedsearch'
+import onsellModel from '../../../components/tips/auditDialog'
 import common from  '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
@@ -424,6 +429,7 @@ export default {
         supdemModel,
         searchModel,
         breedsearchModel,
+        onsellModel
     },
     vuex: {
         getters: {
@@ -513,6 +519,13 @@ export default {
             },
             breedSearchParam:{
               show:false
+            },
+            onSellParam:{
+              show:false,
+              audit:true,
+              title:'',
+              pass:'',
+              reject:'',
             },
             checked:false
         }
@@ -643,22 +656,48 @@ export default {
             this.tipsParam.name = '意向上架成功';
             this.intentionUpAndDown(this.tipsParam);
         },
-        allowDown:function(index,id){
+        upAudit:function(index,id){
+          this.tipsParam.ids = [];
+          this.tipsParam.indexs = [];
+          this.tipsParam.ids.push(id);
+          this.tipsParam.indexs.push(index);
+
+          this.onSellParam.title = '意向上架审核',
+          this.onSellParam.pass = this.allowUp,
+          this.onSellParam.reject = this.rejectUp,
+          this.onSellParam.show = true;
+        },
+        allowUp:function(){
+            this.tipsParam.onSell = 2;
+            this.tipsParam.name = '意向上架成功';
+            this.intentionUpAndDown(this.tipsParam);
+        },
+        rejectUp:function(){
+            this.tipsParam.onSell = -2;
+            this.tipsParam.name = '拒绝上架';
+            this.intentionUpAndDown(this.tipsParam);
+        },
+        downAudit:function(index,id){
             this.tipsParam.ids = [];
             this.tipsParam.indexs = [];
             this.tipsParam.ids.push(id);
             this.tipsParam.indexs.push(index);
+
+            this.onSellParam.title = '意向下架审核',
+            this.onSellParam.pass = this.allowDown,
+            this.onSellParam.reject = this.rejectDown,
+            this.onSellParam.show = true;
+
+        },
+        allowDown:function(){
+            
             this.tipsParam.onSell = 4;
             this.tipsParam.name = '意向下架成功';
             this.intentionUpAndDown(this.tipsParam);
         },
-        rejectDown:function(index,id){
-            this.tipsParam.ids = [];
-            this.tipsParam.indexs = [];
-            this.tipsParam.ids.push(id);
-            this.tipsParam.indexs.push(index);
-            this.tipsParam.onSell = -4;
-            this.tipsParam.name = '意向下架失败';
+        rejectDown:function(){
+            this.tipsParam.onSell = 2;
+            this.tipsParam.name = '拒绝下架';
             this.intentionUpAndDown(this.tipsParam);
         },
         clientTransfer:function(param){
@@ -776,7 +815,7 @@ export default {
 }
 #table_box table th,#table_box table td{
     width: 121px;
-    min-width: 121px;
+    min-width: 110px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;

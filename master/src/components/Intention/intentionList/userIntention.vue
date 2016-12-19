@@ -109,7 +109,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
+                        <th><!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> --></th>
                         <th>类型</th>
                         <th>发布时间</th>
                         <th>会员名称</th>
@@ -317,7 +317,7 @@
                               },item.show=false)">
                                  <img src="/static/images/transfer.png" height="18" width="28"  alt="划转" title="划转"/>
                             </a>
-                           <a class="operate" v-if="item.validate==0||item.validate==9" @click.stop="audit($index,item.id)"><img src="/static/images/apply.png" height="18" width="47"  alt="审核" title="审核"/></a>
+                           <a class="operate" v-if="item.validate==0||item.validate==9" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png" height="18" width="28"  alt="审核" title="审核"/></a>
                         </td>
                         
                     </tr>
