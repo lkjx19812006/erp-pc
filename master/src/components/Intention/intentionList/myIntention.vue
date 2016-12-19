@@ -172,6 +172,7 @@
                         <th>剩余有效期</th>
                         <th>客户备注</th>
                         <th>意向来源</th>
+                        <th>上架状态</th>
                         <th style="min-width:220px;text-align: left;">操作</th>
                     <!-- 
                         <th>客户名称</th>
@@ -261,8 +262,9 @@
                         <td>{{item.duedateDesc}}</td>
                         <td>{{item.description}}</td>
                         <td>{{item.inTypeDesc}}</td> 
+                        <td>{{item.onSell | onsell}}</td>
                         <td style="text-align: left">
-                               <a class="operate"  @click.stop="modifyIntention({
+                               <a class="operate" v-if="item.onSell!=2"  @click.stop="modifyIntention({
                                               id:item.id,
                                               sub:$index,
                                               selectCustomer:false,
@@ -314,9 +316,9 @@
                                                image_s_show:'',
                                                image_t_show:'',
                                                duedate:item.duedate
-                                               })"><img src="/static/images/edit.png" height="18" width="28" />
+                                               })"><img src="/static/images/edit.png" height="18" width="28" alt="编辑"/>
                                </a>
-                              <a class="operate" @click.stop="specDelete({
+                              <a class="operate" v-if="item.onSell!=2" @click.stop="specDelete({
                                                id:item.id,
                                                sub:$index,
                                                show:true,
@@ -327,15 +329,17 @@
                                                key:'myIntentionList'
                                                })"><img src="/static/images/del.png" height="18" width="28" alt="删除"/>
                                </a>
-                              <a class="operate" v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)"><img src="/static/images/grounding.png" height="18" width="28" alt="上架"/>
+                               <a class="operate" v-if="(item.onSell===0||item.onSell==-2||item.onSell==4)&&item.especial==1" @click="up($index,item.id,1)" >申请上架
+                               </a>
+                              <!-- <a class="operate" v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)"><img src="/static/images/grounding.png" height="18" width="28" alt="上架"/>
+                              </a> -->
+                              <!-- <a class="operate"  v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2&&item.especial==1" @click="applyAudit($index,item.id)"><img src="/static/images/apply.png" height="18" width="47" alt="申请审核"/>
+                               </a> -->
+                              <!-- <a class="operate" v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click="up($index,item.id,4)"><img src="/static/images/undercarriage.png" height="18" width="28"  alt="下架"/>
+                               </a> -->
+                              <a class="operate" v-if="item.onSell==2&&item.especial==1" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架"/>
                               </a>
-                              <a class="operate"  v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2&&item.especial==1" @click="applyAudit($index,item.id)"><img src="/static/images/apply.png" height="18" width="47" alt="申请审核"/>
-                               </a>
-                              <a class="operate" v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click="up($index,item.id,4)"><img src="/static/images/undercarriage.png" height="18" width="28"  alt="下架"/>
-                               </a>
-                              <a class="operate" v-if="(item.onSell==-4||item.onSell==2)&&item.type==1&&item.especial==1" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架"/>
-                               </a>
-                              <a class="operate" v-if="item.type==1"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png"  alt="生成订单"/>
+                              <a class="operate" v-if="item.type==1"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" alt="生成订单"/>
                                </a>
                               <a class="operate"  @click.stop="sengSample(item,$index)">
                                   <img src="/static/images/sample.png"  alt="寄样申请"/>
@@ -881,7 +885,7 @@ export default {
 }
 #table_box table th,#table_box table td{
     width: 121px;
-    min-width: 121px;
+    min-width: 110px;
 }
 .service-nav {
     padding: 23px 10px 0px 4px;

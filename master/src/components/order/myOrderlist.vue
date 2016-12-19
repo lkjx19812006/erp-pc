@@ -239,9 +239,10 @@
                         <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)">
                             <img src="/static/images/apply.png"  title="申请审核" alt="申请审核" />
                         </a>
-                        <!-- <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2">
+                        <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2">
                             <img src="/static/images/{{$t('static.img_reset')}}.png"  title="重新申请" alt="重新申请" />
-                        </a> -->
+                        </a>  
+
                   </td>
 
                 </tr>
