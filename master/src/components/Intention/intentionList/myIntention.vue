@@ -339,7 +339,7 @@
                                </a> -->
                               <a class="operate" v-if="item.onSell==2&&item.especial==1" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架"/>
                               </a>
-                              <a class="operate" v-if="item.type==1"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" height="18" width="47" alt="生成订单"/>
+                              <a class="operate" v-if="item.type==1"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" alt="生成订单"/>
                                </a>
                               <a class="operate"  @click.stop="sengSample(item,$index)">
                                   <img src="/static/images/sample.png"  alt="寄样申请"/>
@@ -490,11 +490,11 @@ export default {
                 intl:0,
                 employee:this.initLogin.id,   //业务员ID
                 org:this.initLogin.orgId,    //部门ID
-                incidentals:'',
+                incidentals:0,
                 incidentalsDesc:'',
-                preferential:'',   //优惠金额
+                preferential:0,   //优惠金额
                 preferentialDesc:'',
-                currency:'',     //货币品种
+                currency:1,     //货币品种
                 consignee:'',    //收货人姓名
                 consigneePhone:'',
                 zipCode:'',     //邮编
@@ -504,7 +504,8 @@ export default {
                 district:'',
                 consigneeAddr:'',
                 comments:'',
-                currency:'0',
+                total:0,
+                currency:1,
                 sourceType:1,    //来源类型(意向)
                 orderStatus:0,   //订单状态
                 goods:[{
@@ -516,9 +517,9 @@ export default {
                   quality:'',
                   location:'',
                   spec:'',
-                  price:'',
+                  price:0,
                   unit:'',
-                  number:''
+                  number:0
               }]
             },
             intentionParam:{
@@ -717,7 +718,6 @@ export default {
         newOrder:function(item,sub){
            this.createOrderParam.show = true;
            this.createOrderParam.sub = sub;
-           console.log(this.createOrderParam.goods[0])
            console.log(item)
            this.createOrderParam.customer = item.customerId;
            this.createOrderParam.type = item.type;
@@ -728,10 +728,11 @@ export default {
            this.createOrderParam.goods[0].price = item.price;
            this.createOrderParam.goods[0].unit = item.unit;
            this.createOrderParam.goods[0].number = item.number;
-           this.createOrderParam.incidentals = item.incidentals;
-           this.createOrderParam.incidentalsDesc = item.incidentalsDesc;
            this.createOrderParam.goods[0].quality = item.quality;
            this.createOrderParam.goods[0].location = item.location;
+           this.createOrderParam.total = 0;
+           this.createOrderParam.callback = this.createback;
+           console.log(this.createOrderParam)
         },
         clientTransfer:function(param){
             this.intentionParam = param;

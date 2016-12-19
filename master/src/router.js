@@ -19,8 +19,8 @@ export default (router) => router.map({
         auth: true,
         subRoutes: {
           '/': {
-            component: function(resolve) {
-              require(['./views/main'], resolve)
+            component: function(resolve) { //登录之后显示的
+              require(['./views/message'], resolve)
             }
           },
             '/*any': {

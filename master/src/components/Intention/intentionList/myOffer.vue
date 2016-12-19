@@ -165,17 +165,18 @@ export default {
                 intl:0,
                 employee:this.initLogin.id,   //业务员ID
                 org:this.initLogin.orgId,    //部门ID
-                incidentals:'',
+                incidentals:0,
                 incidentalsDesc:'',
-                preferential:'',   //优惠金额
+                preferential:0,   //优惠金额
                 preferentialDesc:'',
-                currency:'',     //货币品种
+                currency:1,     //货币品种
                 consignee:'',    //收货人姓名
                 consigneePhone:'',
                 zipCode:'',     //邮编
                 country:'',
                 province:'',
                 city:'',
+                total:0,
                 district:'',
                 consigneeAddr:'',
                 comments:'',

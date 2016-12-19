@@ -189,6 +189,7 @@
                         preferential:item.preferential,
                         preferentialDesc:item.preferentialDesc,
                         status:item.status,
+                        total:item.total,
                         key:'myOrderList',
                         link:alterOrder,
                         url:'/order/',
@@ -241,6 +242,7 @@
                         <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2">
                             <img src="/static/images/{{$t('static.img_reset')}}.png"  title="重新申请" alt="重新申请" />
                         </a>  
+
                   </td>
 
                 </tr>
@@ -346,11 +348,12 @@
                     customerName:'',
                     customerPhone:'',
                     comments:'',
-                    incidentals:'',
+                    incidentals:0,
                     incidentalsDesc:'',
-                    preferential:'',
+                    preferential:0,
                     preferentialDesc:'',
                     payWay:'',
+                    total:'',
                     orderStatus:'',
                     goods:[ //多个商品
 
@@ -634,6 +637,7 @@
               this.getEmpolyeeOrder(this.loadParam);
             }
         },
+        
         events: {
             fresh: function(input) {
                 this.loadParam.cur = input;

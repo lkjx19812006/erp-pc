@@ -817,6 +817,7 @@ const mutations = {
                 "district":data.district,
                 "consigneeAddr":data.consigneeAddr,
                 'comments':data.comments,
+                 'total': data.total,
                 'goods':data.goods,
                 "show": false,
                 "no":data.no,
@@ -862,6 +863,7 @@ const mutations = {
                 'goods':data,goods,
                 "show": false,
                 "no":data.no,
+                'total': data.total,
                 "orderStatus":data.orderStatus,
                 "validate":data.validate,
                 "payWay":data.payWay,
@@ -881,7 +883,7 @@ const mutations = {
     },
     [ORDER_UPLOAD_DATA](state,data){ //新建订单详情凭证
         console.log(data);
-        if(data.titles=='申请分期审核'){
+        if(data.titles=='申请分期审核'||data.titles=='重新申请审核'){
           console.log(data.validate)
              console.log(state.orderDetail.stages.arr[data.sub])
              state.orderDetail.stages.arr[data.sub].validate=  data.validate;

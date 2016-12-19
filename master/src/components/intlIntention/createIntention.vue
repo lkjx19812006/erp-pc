@@ -347,7 +347,7 @@ export default {
             customerPhone:'',
             employeeId:''
           },
-          tag:['真空包装','瓦楞纸箱','编织袋','积压包','其它'],
+          tag:['真空包装/Vacuum packaging','瓦楞纸箱/Box','编织袋/Woven bag','积压包/Pallets','其它/Other'],
             country:{
               cname:'',
             },

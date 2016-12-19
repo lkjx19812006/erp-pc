@@ -5,11 +5,12 @@
   <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
   <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
+  <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <div>
     <div class="service-nav clearfix">
      <!--  <div class="my_enterprise col-xs-1">产品列表</div> -->
-      <div class="my_order_search  col-xs-8">
+      <div class="my_order_search left">
            <div class="filter_search clearfix">
                 <dl class="clearfix">
                     <dt>类型：</dt>
@@ -22,20 +23,26 @@
                         </select>
                     </dd>
                 </dl>
-                <dl class="clearfix">
-                    <dt>状态：</dt>
-                    <dd>
-                        <select class="form-control" v-model="loadParam.status" @change="searchProduct()">
-                            <option value="">全部</option>
-                            <option value="0">无效</option>
-                            <option value="1">可用</option>
-                        </select>
-                    </dd>
-                </dl>
+<!--                 <dl class="clearfix">
+    <dt>状态：</dt>
+    <dd>
+        <select class="form-control" v-model="loadParam.status" @change="searchProduct()">
+            <option value="">全部</option>
+            <option value="0">无效</option>
+            <option value="1">可用</option>
+        </select>
+    </dd>
+</dl> -->
                 <dl class="clearfix">
                     <dt>产品名称：</dt>
                     <dd>
                         <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
+                    </dd>
+                </dl>
+                <dl class="clearfix">
+                    <dt>品种名称：</dt>
+                    <dd>
+                        <input type="text"  class="form-control"  class="search_input"  v-model="loadParam.breedName"  @click="selectBreed()"/>
                     </dd>
                 </dl>
                 <dl class="clearfix">
@@ -105,22 +112,22 @@
         <tr v-for="item in initProductlist">
           <td>{{item.type}}</td>     
           <td class="underline"  @click="supplyOn({
-                                id:item.cid,
-                                sub:$index,
-                                show:true,
-                                loading:true,
-                                name:item.cName,
-                                url:'/customer/',
-                                key:'customerList'
-                                })">{{item.cName}}</td>
+                        id:item.cid,
+                        sub:$index,
+                        show:true,
+                        loading:true,
+                        name:item.cName,
+                        url:'/customer/',
+                        key:'customerList'
+                        })">{{item.cName}}</td>
           <td>{{item.breedName}}</td>
           <td class="underline"  @click="clickOn({
-                             id:item.id,
-                             sub:$index,
-                             show:true,
-                             name:item.name,
-                             loading:true
-                             })">{{item.name}}</td>
+                       id:item.id,
+                       sub:$index,
+                       show:true,
+                       name:item.name,
+                       loading:true
+                       })">{{item.name}}</td>
           <td>{{item.quality}}</td>
           <td>{{item.location}}</td>
           <td>{{item.spec}}</td>
@@ -160,7 +167,7 @@
                    url:'/customer/product',
                    headline:'productList'
                   })">
-               <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
+               <a class="operate"><img src="/static/images/edit.png"   alt="编辑" title="编辑"/>
                </a>
           </td>
           
@@ -183,6 +190,7 @@
   import common from  '../../common/common'
   import changeMenu from '../../components/tools/tabs/tabs.js'
   import tipsModel from '../tips/tipDialog'
+  import searchbreedModel from '../Intention/breedsearch'
   import {
     initProductlist
   } from '../../vuex/getters'
@@ -190,7 +198,8 @@
     getProductList,
     updateProduct,
     saveCreate,
-    newProduct
+    newProduct,
+    getBreedDetail
   } from '../../vuex/actions'
 
   export default {
@@ -201,8 +210,8 @@
       alterinfoModel,
       searchModel,
       supplydetailModel,
-      tipsModel
-
+      tipsModel,
+      searchbreedModel
     },
     vuex: {
       getters: {
@@ -212,7 +221,8 @@
         getProductList,
         updateProduct,
         saveCreate,
-        newProduct
+        newProduct,
+        getBreedDetail
       }
     },
     data() {
@@ -228,6 +238,8 @@
           name:'',
           type:'',
           cName:'',
+          breedId:'',
+          breedName:'',
           total:0,
           status:''
         },
@@ -244,6 +256,9 @@
           show:false,
         },
         deleteParam:{
+          show:false
+        },
+        breedParam:{
           show:false
         },
         tipsParam:{
@@ -269,11 +284,16 @@
       createCustomer:function(initProductlist){
         this.createParam = initProductlist;
       },
+      selectBreed:function(){
+         this.breedParam.show=true;
+      },
       reset:function(){
         this.loadParam.name = "";
         this.loadParam.type = "";
         this.loadParam.status = "";
         this.loadParam.cName = "";
+        this.loadParam.breedName = "";
+        this.loadParam.breedId = "";
         this.getProductList(this.loadParam);
       },
       createSearch:function(){
@@ -303,14 +323,22 @@
       fresh: function(input) {
         this.loadParam.cur = input;
         this.getProductList(this.loadParam);
-      }
+      },
+      breed:function(breed){
+            this.loadParam.breedName = breed.breedName;
+            this.loadParam.breedId = breed.breedId;
+            this.breedParam.breedName = breed.breedName;
+            this.breedParam.id = breed.breedId;
+            this.breedParam.loading=true;
+            this.getBreedDetail(this.breedParam);
+        },
     },
     ready(){
       common('tab','table_box',1);
     },
     created() {
-      this.getProductList(this.loadParam);
-      //changeMenu(this.$store.state.table.isTop,this.getProductList,this.loadParam,localStorage.productParam);
+      /*this.getProductList(this.loadParam);*/
+      changeMenu(this.$store.state.table.isTop,this.getProductList,this.loadParam,localStorage.productParam);
 
       /*if(!this.$store.state.table.isTop){
             console.log("刷新数据");
