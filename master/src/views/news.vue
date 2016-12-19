@@ -249,7 +249,7 @@
                                     email:item.email,
                                     qq:item.qq,
                                     type:0,
-                                    classify:0,
+                                    classify:'1,买',
                                     fullname:item.fullname,
                                     show:true,
                                     key:'userList',

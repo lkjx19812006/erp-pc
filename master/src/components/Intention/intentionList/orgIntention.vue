@@ -304,7 +304,7 @@
                         </td> 
                     -->
                         <td>
-                              <a class="operate" v-if="item.onSell!=2" @click.stop="modifyIntention({
+                              <!-- <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" @click.stop="modifyIntention({
                                               id:item.id,
                                               sub:$index,
                                               selectCustomer:false,
@@ -356,8 +356,8 @@
                                                image_t_show:'',
                                                duedate:item.duedate
                                                })"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
-                              </a>
-                              <a class="operate" v-if="item.onSell!=2" @click.stop="specDelete({
+                              </a> -->
+                              <a class="operate" v-if="item.onSell===0||item.onSell==-2||item.onSell==4" @click.stop="specDelete({
                                id:item.id,
                                sub:$index,
                                show:true,
@@ -370,11 +370,12 @@
                                </a>
                                <!-- <a class="operate" v-if="item.validate==2" @click.stop="audit($index,item.id)"><img src="/static/images/orgcheck.png"   alt="审核" title="审核"/>
                                </a> -->
-                               <a class="operate" v-if="item.onSell==1&&item.especial==1" @click.stop="upAudit($index,item.id)">上架审核
-                               </a>
-                               
-                               <a class="operate" v-if="item.onSell==3&&item.especial==1" @click.stop="downAudit($index,item.id)">下架审核
-                               </a>
+                               <!-- <a class="operate" v-if="item.onSell==1&&item.especial==1" @click.stop="upAudit($index,item.id)">上架审核
+                               </a> -->
+                               <a v-if="item.onSell==1&&item.especial==1"><button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="upAudit($index,item.id)">上架审核</button></a> 
+                               <!-- <a class="operate" v-if="item.onSell==3&&item.especial==1" @click.stop="downAudit($index,item.id)">下架审核
+                               </a> -->
+                               <a v-if="item.onSell==3&&item.especial==1"><button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="downAudit($index,item.id)">下架审核</button></a>
                         </td>
 
                     </tr>
