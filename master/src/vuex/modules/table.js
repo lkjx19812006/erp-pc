@@ -782,6 +782,7 @@ const mutations = {
         
     },
     [ORDER_ADD_DATA](state, data) {  //创建订单
+      console.log(data)
         if(data.key == 'intentionDetail'){
             console.log('意向详情采纳报价');
             state.basicBaseList.intentionDetail.offers.arr[data.index].orderTime++;
@@ -817,7 +818,7 @@ const mutations = {
                 "district":data.district,
                 "consigneeAddr":data.consigneeAddr,
                 'comments':data.comments,
-                 'total': data.total,
+                'total': data.total,
                 'goods':data.goods,
                 "show": false,
                 "no":data.no,

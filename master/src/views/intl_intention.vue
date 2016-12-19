@@ -15,11 +15,11 @@
      </div>
      <!-- 国际我的寄样申请 -->
      <div class="myOrder" v-if="$route.path.split('=')[1]==3">
-        <intl-inquire></intl-inquire>
+        <mysample-model></mysample-model>
      </div>
      <!-- 国际部门寄样 -->
      <div class="myOrder" v-if="$route.path.split('=')[1]==4">
-        <intl-inquire></intl-inquire>
+        <sample-model></sample-model>
      </div>
 
      
@@ -29,17 +29,15 @@
 import myIntention from '../components/intlIntention/intentionList/myIntention.vue'
 import orgIntention from '../components/intlIntention/intentionList/orgIntention.vue'
 import intlInquire from '../components/intlIntention/intentionList/intlInquire.vue'
-import {
-    
-} from '../vuex/getters'
-import {
-    
-} from '../vuex/actions'
+import mysampleModel from '../components/intlIntention/intentionList/mySampleApply'
+import sampleModel from  '../components/intlIntention/intentionList/orgSampleApply'
 export default {
     components: { 
         myIntention,
         orgIntention,
-        intlInquire
+        intlInquire,
+        mysampleModel,
+        sampleModel
     }
 }
 </script>

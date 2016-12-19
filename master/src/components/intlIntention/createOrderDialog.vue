@@ -24,7 +24,8 @@
                           </div>
                            <div class="editpage-input">
                               <label class="editlabel">{{$t('static.consignee_name')}} <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}" v-validate:consignee="{minlength:2}" />
+                              <input type="text"  class="form-control edit-input" v-model="param.consignee" value="{{param.customerName}}" v-validate:consignee="{minlength:2}" />
+  
                           </div>
                           <!-- <div class="editpage-input">
                               <label class="editlabel">{{$t('static.client_email')}} <span class="system_danger" v-if="$validation.you.email">请输入正确的邮箱</span></label>
@@ -32,6 +33,9 @@
                           </div> -->
                           <div class="editpage-input">
                               <label class="editlabel">{{$t('static.country')}}</label>
+                              <!-- <select type="text" class="form-control edit-input" v-model="param.country">
+                                  <option v-for="item in initCountrylist">{{item.nameEn}}{{item.cname}}</option>
+                              </select> -->
                               <div type="text" class="edit-input">
                                   <v-select
                                      :debounce="250"
@@ -39,7 +43,7 @@
                                      :on-change="selectProvince"
                                      :options="initCountrylist"
                                      placeholder="国家/country"
-                                     label="cname"
+                                     label="nameEn"
                                     >
                                    </v-select>
                              </div>
@@ -73,11 +77,11 @@
                           </div> -->
                           <div class="editpage-input"  v-if="param.different=='国际'">
                               <label class="editlabel">{{$t('static.consignee_phone')}}  <span class="system_danger" v-if="$validation.intl.intlphone">{{$t('static.enter_phone')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:intl="['intlphone']" value="{{param.consigneePhone}}"/>
+                              <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:intl="['intlphone']" value="{{param.customerPhone}}"/>
                           </div>
                           <div class="editpage-input" v-else>
-                              <label class="editlabel">{{$t('static.consignee_phone')}}  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span></label>
-                              <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  v-validate:mobile="['phone']" value="{{param.consigneePhone}}"/>
+                              <label class="editlabel">{{$t('static.consignee_phone')}} {{param.customerPhone}} <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span></label>
+                              <input type="text"  class="form-control edit-input" v-model="param.consigneePhone"   value="{{param.customerPhone}}"/>
                           </div>
                         
                           <div class="editpage-input" >
@@ -262,7 +266,7 @@
           </div>
           <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-            <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&$inner.valid&&param.goods.length>0&&param.goods[param.goods.length-1].breedId!=''"  @click="confirm(param)">{{$t('static.confirm')}}</button>
+            <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.goods.length>0&&param.goods[param.goods.length-1].breedId!=''"  @click="confirm(param)">{{$t('static.confirm')}}</button>
             <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.confirm')}}</button>
           </div>
       </validator>
@@ -348,6 +352,7 @@ export default {
             },
             country:{
               cname:'',
+              nameEn:''
             },
             province:{
               cname:''
@@ -514,10 +519,11 @@ export default {
            if(this.param.intl==1){} 
         },
         confirm:function(param){
-            this.param.country = this.country.cname;
-            this.param.province = this.province.cname;
+            this.param.country =this.country.cname+this.country.nameEn;
+            console.log(this.param.country )
+/*            this.param.province = this.province.cname;
             this.param.city = this.city.cname;
-            this.param.district = this.district.cname;
+            this.param.district = this.district.cname;*/
             this.param.show=false;
             console.log(this.param);
             this.createOrder(this.param);
@@ -561,7 +567,7 @@ export default {
           this.countryParam.province=this.param.province;
           this.countryParam.city=this.param.city;
           this.countryParam.district=this.param.district;
-          this.country.cname=this.param.country;
+          this.country.nameEn=this.param.country;
           this.province.cname=this.param.province;
           this.city.cname=this.param.city;
           this.district.cname=this.param.district;

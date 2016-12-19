@@ -152,9 +152,9 @@
                                       <div v-if="breedInfo.status==1" @click="cancelAddBreed()">{{$t('static.cancel')}}</div>
                                       <div v-if="breedInfo.status==2" @click="cancelModifyBreed()">{{$t('static.cancel')}}</div>
                                   </button>
-<button type="button" class="btn btn-confirm" v-show='false'>
-    <div  @click="addBreed()">{{$t('static.save')}}</div>
-</button>
+                                  <button type="button" class="btn btn-confirm" v-show='false'>
+                                      <div  @click="addBreed()">{{$t('static.save')}}</div>
+                                  </button>
                                   <button type="button" class="btn btn-confirm" v-if="$inner.valid">
                                       <div v-if="breedInfo.status==1" @click="addBreed()">{{$t('static.save')}}</div>
                                       <div v-if="breedInfo.status==2" @click="modifyBreed()">{{$t('static.save')}}</div>
@@ -174,7 +174,7 @@
                      <div class="editpageleft">
                        <div class="editpage-input">
                          <label class="editlabel">{{$t('static.country')}}<span class="system_danger" v-if="$validation.country.required">{{$t('static.choose_country')}}</span></label>
-                         <input type="text" v-show="false" v-model="country.cname" v-validate:country="['required']">
+                         <input type="text" v-show="false" v-model="country.nameEn" v-validate:country="['required']">
                          <div type="text" class="edit-input" >
                            <v-select
                              :debounce="250"
@@ -182,7 +182,7 @@
                              :on-change="selectProvince"
                              :options="initCountrylist"
                              placeholder="国家/Country"
-                             label="cname"
+                             label="nameEn"
                             >
                            </v-select>
                          </div>
@@ -206,7 +206,7 @@
                          <input type="text"  class="form-control edit-input"  placeholder="{{$t('static.choose_city')}}" v-model="param.city" />
                        </div>
 
-                       <!-- <div class="editpage-input">
+                      <!-- <div class="editpage-input">
                            <label class="editlabel">{{$t('static.province')}}<span class="system_danger" v-if="$validation.province.required">{{$t('static.choose_province')}}</span></label>
                            <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.choose_country')}}" />
                            <input type="text" v-show="false" v-model="province.cname" v-validate:province="['required']">
@@ -221,9 +221,9 @@
                        
                               </v-select>
                            </div>
-                       </div>
-                       
-                       <div class="editpage-input">
+                         </div>
+                         
+                         <div class="editpage-input">
                            <label class="editlabel">{{$t('static.area')}}</label>
                            <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.choose_city')}}" />
                            <div v-if="city.cname" type="text" class="edit-input">
@@ -236,7 +236,8 @@
                                >
                                </v-select>
                            </div>
-                       </div> -->
+                         </div> 
+                      -->
                       <div class="editpage-input">
                          <label class="editlabel">{{$t('static.client_email')}}<span v-if="$validation.email.email" class="system_danger">{{$t('static.enter_email')}}</span></label>
                          <input type="text" v-model='param.customerEmail' v-validate:email="['email']" class="form-control edit-input"  />
@@ -350,15 +351,19 @@ export default {
           tag:['真空包装/Vacuum packaging','瓦楞纸箱/Box','编织袋/Woven bag','积压包/Pallets','其它/Other'],
             country:{
               cname:'',
+              nameEn:''
             },
             province:{
-              cname:''
+              cname:'',
+              nameEn:''
             },
             city:{
-              cname:''
+              cname:'',
+              nameEn:''
             },
             district:{
-              cname:''
+              cname:'',
+              nameEn:''
             },
             countryParam:{
               loading:true,
@@ -524,10 +529,10 @@ export default {
           this.tipParam.show=false;
       },
       createOrUpdateIntlIntention:function(){
-        this.param.country = this.country.cname;
-        this.param.province = this.province.cname;
+        this.param.country = this.country.nameEn;
+       /* this.param.province = this.province.cname;
         this.param.city = this.city.cname;
-        this.param.district = this.district.cname;
+        this.param.district = this.district.cname;*/
         this.param.show = false;
         this.createIntlIntention(this.param);
         console.log(this.param);

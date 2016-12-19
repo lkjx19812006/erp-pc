@@ -2149,7 +2149,6 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
     const data1 = {
         categoryId: data.categoryId,
         name: data.name,
-        code: data.code,
         pinyin: data.pinyin,
         eName: data.eName,
         lName: data.lName,
@@ -5799,8 +5798,10 @@ export const createSample = ({ dispatch }, data) => { //新建寄样申请
        district:data.district,
        items:data.items
     }
-    if(data.address==''){
+    if(data.address==''&&data.province){
         body.address = data.country+','+data.province+','+data.city+','+data.district
+    }else{
+        body.address = data.country+' '+data.city+' '+data.address
     }
     if(data.consignee=='') {
         body.consignee = data.customerName;

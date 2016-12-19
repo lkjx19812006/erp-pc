@@ -8,32 +8,32 @@
 	 <div>
         <div class="service-nav clearfix">
             <div class="my_order_search pull-right"> 
-               <button class="btn btn-default transfer" @click="New()">新建</button>
-               <button class="btn btn-primary  transfer" @click="searchMsg()">刷新</button>
+               <button class="btn btn-default transfer" @click="New()">{{$t('static.new')}}</button>
+               <button class="btn btn-primary  transfer" @click="searchMsg()">{{$t('static.refresh')}}</button>
             </div>
             <div class="clearfix col-md-6">
               <div class="my_order_search clearfix" >
                  <div class="name_search clearfix">
                      <img src="/static/images/search.png" height="24" width="24">
-                     <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchMsg()">
+                     <input type="text" class="search_input" placeholder="{{$t('static.enter_client_name')}}" v-model="loadParam.customerName"  @keyup.enter="searchMsg()">
                  </div>
                  <div class="ordertel_search clearfix">
                      <img src="/static/images/search.png" height="24" width="24">
-                     <input type="text" class="search_input" v-model="loadParam.customerPhone" placeholder="按客户电话搜索" @keyup.enter="searchMsg()">
+                     <input type="text" class="search_input" v-model="loadParam.customerPhone" placeholder="{{$t('static.enter_client_name')}}" @keyup.enter="searchMsg()">
                  </div>
                  <div class="ordertel_search clearfix">
                      <!-- <img src="/static/images/search.png" height="24" width="24"> -->
                      <select class="form-control search_input" v-model="loadParam.validate" @change="searchMsg()">
-                          <option value="">全部</option>
-                          <option value="0">初始状态</option>
-                          <option value="1">申请审核</option>
-                          <option value="2">审核通过</option>
-                          <option value="3">审核未通过</option>
+                          <option value="">{{$t('static.please_select')}}</option>
+                          <option value="0">{{$t('static.initial')}}</option>
+                          <option value="1">{{$t('static.review_application')}}</option>
+                          <option value="2">{{$t('static.approved')}}</option>
+                          <option value="3">{{$t('static.unapproved')}}</option>
                      </select>
                      <!-- <input type="text" class="search_input" v-model="loadParam.validate" placeholder="按业务员名称搜索" @keyup.enter="searchMsg()"> -->
                  </div>
-                 <button class="new_btn transfer" @click="searchMsg()">搜索</button>
-                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
+                 <button class="new_btn transfer" @click="searchMsg()">{{$t('static.search')}}</button>
+                 <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
               </div>
             </div>
         </div>
@@ -44,18 +44,18 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th>客户名称</th>
-                        <th>客户电话</th>
+                        <th>{{$t('static.client_name')}}</th>
+                        <th>{{$t('static.client_phone')}}</th>
                         <th>需支付总金额</th>
-                        <th>币种</th>
-                        <th>收货人名称</th>
+                        <th>{{$t('static.currency')}}</th>
+                        <th>{{$t('static.consignee_name')}}</th>
                         <th>联系方式</th>
-                        <th>收货地址</th>
+                        <th>{{$t('static.consignee_address')}}</th>
                         <th>样品名称</th>
-                        <th>审核状态</th>
-                        <th>备注</th>
-      	            	  <th>创建时间</th>
-                        <th style="min-width: 200px;text-align: left">操作</th>
+                        <th>{{$t('static.review_status')}}</th>
+                        <th>{{$t('static.comment')}}</th>
+      	            	  <th>{{$t('static.create_time')}}</th>
+                        <th style="min-width: 200px;text-align: left">{{$t('static.operation')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,7 +83,7 @@
                         <td>{{item.ctime}}</td>
                         <td style="text-align: left;">
                             <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"  @click="updateOrder(item.id,$index)">
-                                  <img src="/static/images/edit.png"  alt="编辑" title="编辑"/>
+                                  <img src="/static/images/{{$t('static.img_edit')}}.png"  alt="编辑" title="编辑"/>
                             </a>
                             <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"   @click="deleInfo({
                                     sub:$index,
@@ -93,7 +93,7 @@
                                     url:'/sample/',
                                     key:'mySampleList'
                                     })">
-                                <img src="/static/images/del.png" />
+                                <img src="/static/images/{{$t('static.img_del')}}.png" />
                             </a>
                             <a class="operate"  v-if="item.validate==0" @click="applyCheck({
                                     sub:$index,
@@ -106,7 +106,7 @@
                                     url:'/sample/validate/apply/',
                                     key:'mySampleList'
                                     })">
-                                <img src="/static/images/apply.png" />
+                                <img src="/static/images/{{$t('static.img_apply')}}.png" />
                             </a>
                             <a class="operate"  v-if="item.validate==3" @click="applyCheck({
                                     sub:$index,
@@ -119,7 +119,7 @@
                                     url:'/sample/validate/apply/',
                                     key:'mySampleList'
                                     })">
-                                <img src="/static/images/reset.png" />
+                                <img src="/static/images/{{$t('static.img_reset')}}.png" />
                             </a>
                         </td>
                     </tr>
@@ -134,19 +134,19 @@
 <script>
 import pagination from '../../pagination'
 import filter from '../../../filters/filters'
-import createModel  from '../sendSampleapply'
-import detailModel from '../sampleDetail'
+import createModel  from '../newSample'
+import detailModel from '../../Intention/sampleDetail'
 import common from '../../../common/common'
 import deleteModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import editModel from '../alterSample'
-import applyModel from '../../tips/auditDialog'
+import applyModel from '../../tips/auditDialog' 
 import tipsModel from '../../tips/tipDialog'
 import {
 	initSamplelist,
     initLogin
-} from '../../../vuex/getters'
+} from  '../../../vuex/getters'
 import {
-	 getSampleList,
+	  getSampleList,
     getSampleDetail,
     deleteData,
     updateSample,
@@ -216,7 +216,7 @@ export default {
                currency:'1',
                address:'',
                comments:'',
-               country:'中国',
+               country:'',
                province:'',
                city:'',
                district:'',

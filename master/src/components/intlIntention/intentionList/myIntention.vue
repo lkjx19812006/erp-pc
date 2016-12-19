@@ -144,7 +144,6 @@
 
                             <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
                         </td>
-                            <!-- <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id)">取消询价</div> -->
                     </tr>
                 </tbody>
             </table>
