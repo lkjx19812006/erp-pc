@@ -724,10 +724,10 @@ export default {
            this.createOrderParam.goods[0].price = item.price;
            this.createOrderParam.goods[0].unit = item.unit;
            this.createOrderParam.goods[0].number = item.number;
-           this.createOrderParam.incidentals = item.incidentals;
-           this.createOrderParam.incidentalsDesc = item.incidentalsDesc;
            this.createOrderParam.goods[0].quality = item.quality;
            this.createOrderParam.goods[0].location = item.location;
+           this.createOrderParam.total = 0;
+           this.createOrderParam.callback = this.createback;
            console.log(this.createOrderParam)
         },
         clientTransfer:function(param){

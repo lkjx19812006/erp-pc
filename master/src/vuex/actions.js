@@ -833,7 +833,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         country: data.country,
         province: data.province,
         city: data.city,
-         total: data.total,
+        
         employee: data.employee,
         org: data.org,
         district: data.district,

@@ -146,7 +146,7 @@
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">收货人电话 <span class="system_danger" v-if="$validation.mobile.phone">必填项</span></label>
-                                    <input type="text" class="form-control edit-input" v-model="param.consigneePhone" v-validate:mobile="['phone']"/>
+                                    <input type="tel" class="form-control edit-input" v-model="param.consigneePhone" v-validate:mobile="['phone']"/>
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">省</label>
@@ -183,7 +183,7 @@
                                 </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">总价</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.total" value="{{param.total}}" readonly="true" />
+                                    <input type="text" class="form-control edit-input" v-model="param.total"  readonly="true" />
                                 </div>
                             </div>
 
@@ -361,6 +361,7 @@ export default {
     created(){
         this.getCountryList(this.countryParam);
         console.log(this.param);
+        console.log(this.param.total);
         this.param.total = (parseFloat(this.param.goods[0].price*this.param.goods[0].number)*100+parseFloat(this.param.incidentals)*100 - parseFloat(this.param.preferential)*100)/100;
     }
 }
