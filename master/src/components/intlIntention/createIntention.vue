@@ -133,9 +133,6 @@
                                    </div>
 
                               </div>
-                       
-                              
-                       
                               <div class="editpage-input">
                                    <label class="editlabel" >{{$t('static.packaging')}}</label>
                                    <input type="text" v-show="false" v-model="breedInfo.pack" class="form-control edit-input"  />
@@ -155,6 +152,9 @@
                                       <div v-if="breedInfo.status==1" @click="cancelAddBreed()">{{$t('static.cancel')}}</div>
                                       <div v-if="breedInfo.status==2" @click="cancelModifyBreed()">{{$t('static.cancel')}}</div>
                                   </button>
+<button type="button" class="btn btn-confirm" v-show='false'>
+    <div  @click="addBreed()">{{$t('static.save')}}</div>
+</button>
                                   <button type="button" class="btn btn-confirm" v-if="$inner.valid">
                                       <div v-if="breedInfo.status==1" @click="addBreed()">{{$t('static.save')}}</div>
                                       <div v-if="breedInfo.status==2" @click="modifyBreed()">{{$t('static.save')}}</div>
@@ -188,8 +188,8 @@
                          </div>
                        </div>
                        <div class="editpage-input">
-                         <label class="editlabel">{{$t('static.detailed_address')}}<span v-if="$validation.address.required" class="system_danger">{{$t('static.enter_address')}}</span></label>
-                         <input type="text" v-model='param.address' v-validate:address="['required']" class="form-control edit-input" value="{{param.address}}" />
+                         <label class="editlabel">{{$t('static.detailed_address')}}</label>
+                         <input type="text" v-model='param.address' class="form-control edit-input" value="{{param.address}}" />
                        </div>
 
                        <div class="editpage-input">
@@ -435,7 +435,7 @@ export default {
             }*/
       },
       showAddBreed:function(){
-
+          console.log(this.param.items.length)
           if(this.param.items.length == 0||this.param.items[this.param.items.length-1].breedId != ''){
               this.breedInfo.status = 1;    
               this.breedInfo.breedId='';
@@ -460,10 +460,10 @@ export default {
               });
               this.addParam.show = true;
           }  
-          
       },
       addBreed:function(){
-          //this.param.items[this.param.items.length-1].breedName = this.breedInfo.breedName;
+          console.log('14141452')
+          console.log(this.breedInfo.breedId)
           this.param.items[this.param.items.length-1].breedId = this.breedInfo.breedId;
           this.param.items[this.param.items.length-1].breedName = this.breedInfo.breedName;
           this.param.items[this.param.items.length-1].qualification = this.breedInfo.qualification;
@@ -471,7 +471,6 @@ export default {
           this.param.items[this.param.items.length-1].location = this.breedInfo.location;
           this.param.items[this.param.items.length-1].spec = this.breedInfo.spec;
           this.param.items[this.param.items.length-1].number = this.breedInfo.number;
-/*          this.param.items[this.param.items.length-1].unit = this.breedInfo.unit.split(',')[0]*/;
           this.param.items[this.param.items.length-1].unit = this.breedInfo.unit;
           this.param.items[this.param.items.length-1].pack = this.breedInfo.pack;
           console.log(this.param.items[this.param.items.length-1]);
@@ -503,7 +502,6 @@ export default {
           this.param.items[this.updateParam.index].spec=this.breedInfo.spec,
           this.param.items[this.updateParam.index].number=this.breedInfo.number,
           this.param.items[this.updateParam.index].unit=this.breedInfo.unit,
-/*          this.param.items[this.updateParam.index].eunit=this.breedInfo.eunit.split(',')[1],*/
           this.param.items[this.updateParam.index].pack=this.breedInfo.pack,
           this.breedInfo.status = 0;
           this.updateParam.show = false;
@@ -591,7 +589,6 @@ export default {
         }
     },
     created(){
-      console.log(this.param.breedId)
       if(this.param.breedId){
         this.breedParam.breedName = this.param.breedName;
         this.breedParam.id = this.param.breedId;

@@ -315,6 +315,7 @@ var locales = {
       //client
       drag_into_blacklist:'加入黑名单',
       out_of_blacklist:'移出黑名单',
+      blacklist:'客户黑名单',
       make_them_become_supplier:'提取为供应商',
       assigned_to_employee:'划转',
       customer_classification:'客户分类',
@@ -713,6 +714,7 @@ var locales = {
       upload_logistcs:'Please upload the logistics document photos',
       drag_into_blacklist:'Transfer to the black list',
       out_of_blacklist:'Out of blacklist',
+      blacklist:'Client blacklist',
       make_them_become_supplier:'Transfer to the supplier list',
       assigned_to_employee:'Transfer',
       customer_classification:'Customer classification',

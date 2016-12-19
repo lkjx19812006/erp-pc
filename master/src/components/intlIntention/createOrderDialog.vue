@@ -419,6 +419,8 @@ export default {
             }*/
         },
         addBreed:function(){
+          console.log('111111')
+          console.log(this.param.goods[this.param.goods.length-1]);
           this.param.goods[this.param.goods.length-1].breedId = this.breedInfo.breedId;
           this.param.goods[this.param.goods.length-1].breedName = this.breedInfo.breedName;
           this.param.goods[this.param.goods.length-1].title = this.breedInfo.title;

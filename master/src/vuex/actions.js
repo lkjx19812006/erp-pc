@@ -817,6 +817,12 @@ export const logisticsInfo = ({ dispatch }, param) => { //物流查看详情
 }
 export const createOrder = ({ dispatch }, data) => { //创建订单
     console.log(data.goods);
+    if(data.city==null||data.city==''||!data.city){
+        data.city=''; 
+    }
+    if(data.district==null||data.district==''||!data.district){
+       data.district=''; 
+    }
     const body = {
         type: data.type,
         sourceType: data.sourceType,
@@ -833,11 +839,10 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         country: data.country,
         province: data.province,
         city: data.city,
-        
         employee: data.employee,
         org: data.org,
         district: data.district,
-        consigneeAddr:data.country+','+data.province+','+data.city+','+data.district+','+data.consigneeAddr,
+        consigneeAddr:data.country+' '+data.province+' '+data.city+' '+data.district+' '+data.consigneeAddr,
         comments: data.comments,
         orderStatus: data.orderStatus,
         goods: data.goods
@@ -867,7 +872,6 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('添加成功')
         data.callback(res.json().msg);
         data.no = res.json().result.no;
         data.id = res.json().result.id;
@@ -895,6 +899,12 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
 }
 export const alterOrder = ({ dispatch }, param) => { //修改订单
     console.log(param);
+    if(param.city==null||param.city==''||!param.city){
+           param.city=''; 
+    }
+    if(param.district==null||param.district==''||!param.district){
+       param.district=''; 
+    }
     const body = {
         type: param.type,
         id: param.id,
@@ -912,11 +922,10 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         zipCode: param.zipCode,
         country: param.country,
         province: param.province,
-        total: data.total,
         city: param.city,
         district: param.district,
         customerName: param.customerName,
-        consigneeAddr: param.consigneeAddr,
+        consigneeAddr:param.country +' '+param.province+' '+param.city+' '+param.district+' '+param.consigneeAddr,
         comments: param.comments,
         goods: param.goods
     }
@@ -931,10 +940,10 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('修改成功')
+        param.callback(res.json().msg);
         param.show = false;
         param.checked = false;
-        param.callback(res.json().msg);
+        param.consigneeAddr =res.json().result.consigneeAddr;
         if(res.json().code==200){
           dispatch(types.ORDER_UPDATE_DATA, param);
         }
@@ -4501,6 +4510,12 @@ export const getUserList = ({ dispatch }, param) => { //会员信息列表
         }
         if (key == 'province' && param[key] !== '') {
             url += '&province=' + param[key];
+        }
+        if (key == 'utype' && param[key] !== '') {
+            url += '&utype=' + param[key];
+        }
+        if (key == 'ctype' && param[key] !== '') {
+            url += '&ctype=' + param[key];
         }
     }
 

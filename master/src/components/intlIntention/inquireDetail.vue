@@ -168,7 +168,8 @@
                                                 <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
                                                 <td>{{item.utime}}</td>
                                                 <td>
-                                                    <a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" /></a>
+                                                    <a v-if="initIntlIntentionDetail.inquire==1||initIntlIntentionDetail.inquire==2" style="cursor:pointer" @click="editOffer(item,$index)"><img src="/static/images/{{$t('static.img_quote')}}.png" alt="报价" />
+                                                    </a>
                                                 </td>
                                                 <td></td>
                                             </tr>

@@ -5,8 +5,8 @@
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
   <div>
     <div class="service-nav clearfix">
-      <!-- <div class="my_enterprise col-xs-1">客户黑名单</div> -->
-      <button class="new_btn transfer" @click="clientTransferWhite()">踢出黑名单</button>
+      <div class="my_enterprise col-xs-1">{{$t('static.blacklist')}}</div>
+      <button class="new_btn transfer" @click="clientTransferWhite()">{{$t('static.out_of_blacklist')}}</button>
     </div>
     <div class="order_table" id="table_box">
       <div class="cover_loading">
@@ -16,21 +16,22 @@
         <thead>
         <tr>
           <th>
-            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
+            <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
+          </th>
 
-          <th>所属业务员</th>
-          <th>创建时间</th>
-          <th>最近成交时间</th>
-          <th>客户名称</th>
-          <th>成交次数</th>
-          <th>客户类型</th>
-          <th>联系人</th>
-          <th>联系人职位</th>
-          <th>联系人电话</th>
-          <th>手机归属地</th>
-          <th>客户归属地</th>
-          <th>详细地址</th>
-          <th>主营产品</th> 
+          <th>{{$t('static.salesman')}}</th>
+          <th>{{$t('static.create_time')}}</th>
+          <th>{{$t('static.recent_contact')}}</th>
+          <th>{{$t('static.client_name')}}</th>
+          <th>{{$t('static.transaction_num')}}</th>
+          <th>{{$t('static.client_type')}}</th>
+          <th>{{$t('static.contact')}}</th>
+          <th>{{$t('static.position')}}</th>
+          <th>{{$t('static.cellphone')}}</th>
+          <th>{{$t('static.phone_origin')}}</th>
+          <th>{{$t('static.client_origin')}}</th>
+          <th>{{$t('static.detailed_address')}}</th>
+          <th>{{$t('static.main_product')}}</th> 
 
         <!-- <th>类型</th>
           <th>分类</th>

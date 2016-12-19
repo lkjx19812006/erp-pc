@@ -9,12 +9,6 @@
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <div>
         <div class="service-nav clearfix">
-           <!--  <div class="my_enterprise col-xs-1">潜在客户</div> -->
-            <div class="right">
-              
-              <!-- <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-              <button class="new_btn transfer" @click="createSearch()">搜索</button> -->
-            </div>
 
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
@@ -66,9 +60,6 @@
                         </select>
                    </dd>
                 </dl>
-                
-                
-
                 <dl class="clear left transfer">
                     <div class="client-detailInfo col-xs-6">
                         <dt class="left transfer marg_top">注册起始时间：</dt>
@@ -76,8 +67,6 @@
                         </mz-datepicker>
                     </div>
                 </dl>
-
-                
                 <dd class="left" style="margin-left:20px">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
                 </dd>
@@ -148,7 +137,8 @@
                 <thead>
                     <tr>
                         <th>
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
+                            <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
+                        </th>
 
                         <th>所属业务员</th>
                         <th>创建时间</th>
@@ -164,7 +154,7 @@
                         <th>详细地址</th>
                         <th>主营产品</th> 
 
-                        <!-- <th>类 型</th>
+                    <!-- <th>类 型</th>
                         <th>分 类</th>
                         <th>客户来源</th>
                         <th>客户信用等级</th>

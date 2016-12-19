@@ -238,6 +238,9 @@
                                           <div v-if="breedInfo.status==1" @click="cancelAddBreed()">{{$t('static.cancel')}}</div>
                                           <div v-if="breedInfo.status==2" @click="cancelModifyBreed()">{{$t('static.cancel')}}</div>
                                       </button>
+                                      <button type="button" class="btn btn-confirm" v-show='false'>
+                                          <div  @click="addBreed()">{{$t('static.save')}}</div>
+                                      </button>
                                       <button type="button" class="btn btn-confirm" v-if="$inner.valid">
                                           <div v-if="breedInfo.status==1" @click="addBreed()">{{$t('static.save')}}</div>
                                           <div v-if="breedInfo.status==2" @click="modifyBreed()">{{$t('static.save')}}</div>
