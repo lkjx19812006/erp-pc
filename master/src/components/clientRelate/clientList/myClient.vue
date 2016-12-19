@@ -177,8 +177,8 @@
                 <thead>
                     <tr>
                         <th>
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
-
+                            <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
+                        </th>
                         <th>{{$t('static.salesman')}}</th>
                         <th>{{$t('static.create_time')}}</th>
                         <th>{{$t('static.recent_contact')}}</th>

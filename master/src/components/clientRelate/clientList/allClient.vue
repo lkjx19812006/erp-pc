@@ -135,11 +135,7 @@
                   <button type="button" class="btn btn-default" @click="clientTransferSupplier()">提取供应商</button>
                   <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                 </dd>
-
             </div>
-
-
-
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">
@@ -149,7 +145,8 @@
                 <thead>
                     <tr>
                         <th>
-                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
+                          <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
+                        </th>
 
                         <th>所属业务员</th>
                         <th>创建时间</th>

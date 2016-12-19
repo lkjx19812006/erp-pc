@@ -8,22 +8,22 @@
        <textarea v-model='param.auditComment' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5" value="{{param.auditComment}}"></textarea>
       </div>
       <div class="model-footer" v-if="param.confirm">
-        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-        <input type="button" class="btn  btn-confirm"  @click="confirm()" value="确定" />
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+        <input type="button" class="btn  btn-confirm"  @click="confirm()" value="{{$t('static.confirm')}}" />
       </div>
       <div class="model-footer" v-if="param.supplier">
-        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-        <input type="button" class="btn  btn-confirm"  @click="param.callback(),param.show = false" value="确定" />
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+        <input type="button" class="btn  btn-confirm"  @click="param.callback(),param.show = false" value="{{$t('static.confirm')}}" />
       </div>
       
       <div class="model-footer" v-if="param.audit">
-        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
         <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="不通过" />
         <input type="button" class="btn  btn-confirm"  @click="param.pass(),param.show = false" value="通过" />
       </div>
 
       <div class="model-footer" v-if="param.taskKey=='employee_handle'">
-        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
         <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="重新申请" />
         <input type="button" class="btn  btn-confirm"  @click="param.pass(),param.show = false" value="取消订单" />
       </div>

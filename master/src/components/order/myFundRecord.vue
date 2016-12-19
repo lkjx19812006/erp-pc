@@ -98,7 +98,7 @@
             <td v-if="item.pr==1&&item.type==0" style="background:green;color:#fff;">已确认付款</td>
             <td v-if="item.pr==1&&item.type==1" style="background:green;color:#fff;">已确认收款</td>
             <td>
-              <a class="operate" v-if="item.type==0&&item.pr==0&&item.validate==2">确认收款</a>
+              <a class="operate" v-if="item.type==0&&item.pr==0&&item.validate==2"><img src="/static/images/surePayment.png"/></a>
             </td>
           </tr>
         </tbody>

@@ -10,24 +10,16 @@
     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      <div>
         <div class="service-nav">
-            <div class="clearfix">
-               <!--  <div class="my_enterprise col-xs-1">会员</div> -->
-                <div class="right col-xs-2">
-                    <!-- <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button> -->
-                </div>
-            </div>
   
             <div class="clear" style="margin-top:3px;">
-                <dl class="clear left transfer col-xs-2" >
+                <dl class="clear left transfer" >
                    <dt class="left transfer marg_top">会员名称：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.fullname" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
                 </dl>
 
-                <dl class="clear left transfer col-xs-2">
+                <dl class="clear left transfer">
                    <dt class="left transfer marg_top" style="letter-spacing:8px">来源：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.source" @change="selectSearch()">
@@ -40,7 +32,7 @@
                    </dd>
                 </dl>
 
-                <dl class="clear left transfer col-xs-2">
+                <dl class="clear left transfer ">
                    <dt class="left transfer marg_top">经营类型：</dt>
                    <dd class="left">
                          <select v-model="loadParam.bizType"  class="form-control" @change="selectSearch()">
@@ -72,7 +64,18 @@
                         </select>
                    </dd>
                 </dl>
-
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">个人认证：</dt>
+                   <dd class="left">
+                        <select class="form-control" v-model="loadParam.utype" @change="selectSearch()">
+                            <option value="">全部</option>
+                            <option value="0">未申请</option>
+                            <option value="1">等待认证</option>
+                            <option value="2">已认证</option>
+                            <option value="3">认证失败</option>
+                        </select>
+                   </dd>
+                </dl>
                 <dd class="left" style="margin-left:20px">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
                     
@@ -81,7 +84,7 @@
             </div>
     
             <div class="clear" style="margin-top:3px;">
-                <dl class="clear left transfer col-xs-2">
+                <dl class="clear left transfer">
                    <dt class="left transfer marg_top" style="letter-spacing:3px" >手机号：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
@@ -89,7 +92,7 @@
                 </dl>
 
                 
-                <dl class="clear left transfer col-xs-2">
+                <dl class="clear left transfer">
                    <dt class="left transfer marg_top">划转状态：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.transform" @change="selectSearch()">
@@ -102,7 +105,7 @@
                    
                 </dl>
 
-                <dl class="clear left transfer col-xs-2">
+                <dl class="clear left transfer">
                    <dt class="left transfer marg_top">审核状态：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.audit" @change="selectSearch()">
@@ -114,16 +117,26 @@
                         </select>
                    </dd>
                 </dl>
-
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">企业认证：</dt>
+                   <dd class="left">
+                        <select class="form-control" v-model="loadParam.ctype" @change="selectSearch()">
+                            <option value="">全部</option>
+                            <option value="0">未申请</option>
+                            <option value="1">等待认证</option>
+                            <option value="2">已认证</option>
+                            <option value="3">认证失败</option>
+                        </select>
+                   </dd>
+                </dl>
                 <dd class="left" style="margin-left:20px">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
                    
                 </dd>
-                <dd class="pull-right" style="margin-right:20px;">
+                <dd class="pull-right">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
                     <button type="button" class="btn btn-primary" height="24" width="24" @click="selectSearch()">刷新</button>
                 </dd>
-                
             </div>
 
 
@@ -139,7 +152,7 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th>
+                        <th><!-- <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label> --></th>
                         <th>姓名</th>
                         <!-- <th>昵称</th> -->
                         <th>等级</th>
@@ -195,14 +208,14 @@
                         <td>{{item.bizTypeName}}</td>
                         <td>{{item.province+item.city}}</td>
                         <td>{{item.auditResult}}</td>
-                        <td v-if="item.utype==0">待认证</td>
-                        <td v-if="item.utype==1">申请认证</td>
-                        <td v-if="item.utype==2">已认证</td>
-                        <td v-if="item.utype==3">认证失败</td>
-                        <td v-if="item.ctype==0">待认证</td>
-                        <td v-if="item.ctype==1">申请认证</td>
-                        <td v-if="item.ctype==2">已认证</td>
-                        <td v-if="item.ctype==3">认证失败</td>
+                        <td v-if="item.utype==0" style="color:#3399CC">未申请</td>
+                        <td v-if="item.utype==1" style="color:#339966">等待认证</td>
+                        <td v-if="item.utype==2" style="background:green;color:#fff">已认证</td>
+                        <td v-if="item.utype==3" style="background:red;color:#fff">认证失败</td>
+                        <td v-if="item.ctype==0" style="color:#3399CC">未申请</td>
+                        <td v-if="item.ctype==1" style="color:#339966">等待认证</td>
+                        <td v-if="item.ctype==2" style="background:green;color:#fff">已认证</td>
+                        <td v-if="item.ctype==3" style="background:red;color:#fff">认证失败</td>
                         <td v-if="item.transStatus==1" style="color:#fff;background:green">已划转</td>
                         <td v-if="item.transStatus==0" style="color:#fff;background:#C71585">未划转</td>
                         <td v-if="item.transStatus!=0&&item.transStatus!=1">转黑名单</td>
@@ -411,6 +424,8 @@ export default {
                 endCtime:'',
                 audit:'',
                 transform:'',
+                ctype:'',
+                utype:'',
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
@@ -544,6 +559,8 @@ export default {
         this.loadParam.audit = "";
         this.loadParam.transform = "";
         this.loadParam.city = "";
+        this.loadParam.utype = "";
+        this.loadParam.ctype = "";
         this.loadParam.province = "";
         this.getUserList(this.loadParam);
     },
@@ -707,7 +724,7 @@ export default {
     background-position: 5px;
 }
 .transfer{
-    margin-right: 8px;
+    margin-right: 16px;
 }
 .checkbox_select{
     background-image: url(../../static/images/selected.png);

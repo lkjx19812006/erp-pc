@@ -13,6 +13,14 @@
      <div class="myOrder" v-if="$route.path.split('=')[1]==2">
         <intl-inquire></intl-inquire>
      </div>
+     <!-- 国际我的寄样申请 -->
+     <div class="myOrder" v-if="$route.path.split('=')[1]==3">
+        <intl-inquire></intl-inquire>
+     </div>
+     <!-- 国际部门寄样 -->
+     <div class="myOrder" v-if="$route.path.split('=')[1]==4">
+        <intl-inquire></intl-inquire>
+     </div>
 
      
 </template>
