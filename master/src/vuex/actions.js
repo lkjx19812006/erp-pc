@@ -1136,6 +1136,43 @@ export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分
     });
 }
 
+export const paymentConfirm = ({ dispatch }, param) => { //确定收款
+    console.log(param)
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t }
+    var ss= param.images;
+    var img = ss.split(",");//字符串转化为数组
+    img.toString();
+    console.log(img)
+    const body = {
+        id: param.id,
+        images:img
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+        param.pr=res.json().result.pr;
+        if(res.json().code==200){
+            dispatch(types.MY_FUND_LIST, param);
+        }
+    }, (res) => {
+        console.log('fail'); 
+    });
+}
+
 export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     console.log(param)
     param.images = '';

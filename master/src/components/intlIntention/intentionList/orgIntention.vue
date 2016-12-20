@@ -1,3 +1,4 @@
+
 <template>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
@@ -422,7 +423,7 @@ export default {
     border: 1px solid #ddd;
     border-bottom: none;
     border-right: none;
-    width: 569px;
+    width: 541px;
     line-height: 30px;
 }
 .click_change span{
