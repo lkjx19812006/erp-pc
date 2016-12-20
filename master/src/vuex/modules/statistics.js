@@ -73,7 +73,12 @@ const mutations = {
         state.orgSampleList = data;
     },
     [MY_FUND_LIST](state,data){ //我的资金记录
-      state.myFundlist = data;
+      if(data.titles=='确定收款'){
+            console.log(state.myFundlist[data.sub])
+            state.myFundlist[data.sub].pr =  data.pr;
+        }else{
+          state.myFundlist = data;
+        }
     },
     [ORG_FUND_LIST](state,data){ //我的资金记录
       state.orgFundlist = data;

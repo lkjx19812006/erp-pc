@@ -1,5 +1,7 @@
 <template>
   <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
+  <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
+  <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
   <div>
     <div class="service-nav clearfix">
       <div class="clearfix">
@@ -98,7 +100,18 @@
             <td v-if="item.pr==1&&item.type==0" style="background:green;color:#fff;">已确认付款</td>
             <td v-if="item.pr==1&&item.type==1" style="background:green;color:#fff;">已确认收款</td>
             <td>
-              <a class="operate" v-if="item.type==0&&item.pr==0&&item.validate==2"><img src="/static/images/surePayment.png"/></a>
+              <a class="operate" v-if="item.type==0&&item.pr==0&&item.validate==2" @click="applyInfo({
+                          show:true,
+                          sub:$index,
+                          id:item.id,
+                          image_f:'',
+                          image_s:'',
+                          image_t:'',
+                          images:'',
+                          url:'/fund/proceedsConfirm',
+                          titles:'确定收款',
+                          link:paymentConfirm
+                      })"><img src="/static/images/surePayment.png"/></a>
             </td>
           </tr>
         </tbody>
@@ -114,23 +127,29 @@
   import detailModel from '../order/second_order/fundDetail'
   import common from '../../common/common'
   import changeMenu from '../../components/tools/tabs/tabs.js'
+  import auditModel  from './second_order/financeAudit'
+  import tipsModel from '../../components/tips/tipDialog'
   import {
     initMyFundList
   } from '../../vuex/getters'
   import {
-    getMyFundList
+    getMyFundList,
+    paymentConfirm
   } from '../../vuex/actions'
   export default {
     components: {
       pagination,
       detailModel,
+      auditModel,
+      tipsModel
     },
     vuex: {
       getters: {
         initMyFundList
       },
       actions: {
-        getMyFundList
+        getMyFundList,
+        paymentConfirm
       }
     },
     data() {
@@ -153,6 +172,14 @@
         },
         changeParam: {
           show: false
+        },
+        tipsParam:{
+          show:false,
+          alert:true,
+          name:''
+        },
+        financeParam:{
+          show:false
         },
         checked:false
       }
@@ -177,6 +204,16 @@
         this.loadParam.payNumber='';
         this.loadParam.payWay='';
         this.getMyFundList(this.loadParam);
+      },
+      applyInfo:function(item){
+        this.financeParam.show = true;
+        this.financeParam = item;
+        this.financeParam.callback = this.callback;
+      },
+      callback:function(title){
+          this.tipsParam.show= true;
+          this.tipsParam.alert= true;
+          this.tipsParam.name= title;
       }
     },
     events: {
