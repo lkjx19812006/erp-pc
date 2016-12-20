@@ -142,8 +142,11 @@
                                       <table class="table contactSet">
                                         <thead>
                                           <th>{{$t('static.breed')}}</th>
-                                          <!-- <th>{{$t('static.currency')}}</th> -->
+                                          <th>{{$t('static.origin')}}</th>
+                                          <th>{{$t('static.specification')}}</th>
+                                          <th>{{$t('static.quality')}}</th>
                                           <th>{{$t('static.quoted_price')}}</th>
+                                          <th>汇率</th>
                                           <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                           <th>{{$t('static.quatation_name')}}</th>
                                           <th>{{$t('static.inquiry_again')}}</th>
@@ -155,8 +158,11 @@
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.items.arr">
                                                 <td><a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a></td>
-                                                <!-- <td>{{item.offerCurrency | Currency}}</td> -->
+                                                <td>{{item.location}}</td>
+                                                <td>{{item.spec}}</td>
+                                                <td>{{item.quality}}</td>
                                                 <td>{{item.offerPrice}}（{{item.offerEUnit}}）</td>
+                                                <td>{{item.exchangeRate}}</td>
                                                 <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                 <td>{{item.offererName}}</td>
                                                 <td v-if="item.again==0">{{$t('static.please_quote')}}</td>

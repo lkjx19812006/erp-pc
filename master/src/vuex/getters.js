@@ -357,5 +357,11 @@ export const initFundDetail= (state) => {
 export const initFinanceList= (state) => { //财务资金审核
   return parseJson(state.count.financeList); 
 }
+export const initRecordList= (state) => { //分期申请历史记录
+  return parseJson(state.count.recordList); 
+}
+export const initSupplierList= (state) => { //分期申请历史记录
+  return parseJson(state.count.supplierList); 
+}
 
 

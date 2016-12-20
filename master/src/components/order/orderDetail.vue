@@ -6,6 +6,7 @@
     <divided-model :param="divideParam" v-if="divideParam.show"></divided-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
+    <apply-model :param="applyDetails" v-if="applyDetails.show"></apply-model>
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
       <div class="top-title">
@@ -122,8 +123,8 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                         {{$t('static.pay_evidence')}}（0）
                                         </a>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="(initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2||initOrderDetail.orderStatus<20))">{{$t('static.new')}}/{{$t('static.edit')}}</button>
-                                        <a v-else></a>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.new')}}/{{$t('static.edit')}}</button>
+                                        <button v-else></button>
                                     </h4>
                                 </div>
                                 <div class="panel-collapse" v-if="initOrderDetail.stages.arr.length&&initOrderDetail.stages.show" v-cloak>
@@ -137,7 +138,7 @@
                                             
                                             <th>分期支付时间</th>-->
                                             <th>分期原因</th> 
-                                            <th>{{$t('static.review_status')}}</th>
+                                            <th>申请状态</th>
                                             <th>申请备注</th>
                                             <th>{{$t('static.create_time')}}</th>
                                             <th></th>
@@ -148,14 +149,50 @@
                                                 <td v-if="item.type==1">收款</td>
                                                 <td colspan="6">{{item.orderStatus | orderDescript}}支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
                                                 <td>{{item.description}}</td>
-                                                <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
-                                                <td v-if="item.validate==1">{{$t('static.applied')}}</td>
-                                                <td v-if="item.validate==2" style="background:green;color:#fff">{{$t('static.approved')}}</td>
-                                                <td v-if="item.validate==3" style="background:red;color:#fff">{{$t('static.unapproved')}}</td>
+                                                <td v-if="item.validate==0" style="color:#91a0ff;cursor:pointer" @click="apply_Record({
+                                                    sub:$index,
+                                                    show:true,
+                                                    loading:false,
+                                                    type:item.type,
+                                                    bizType:'order',
+                                                    bizId:item.orderId,
+                                                    bizSubId:item.id,
+                                                    url:'/fund/requestRecord'
+                                                    })">{{$t('static.wait_approval')}}</td>
+                                                <td v-if="item.validate==1"  style="color:#91a0ff;cursor:pointer" @click="apply_Record({
+                                                    sub:$index,
+                                                    show:true,
+                                                    loading:false,
+                                                    type:item.type,
+                                                    bizType:'order',
+                                                    bizId:item.orderId,
+                                                    bizSubId:item.id,
+                                                    url:'/fund/requestRecord'
+                                                    })">{{$t('static.applied')}}</td>
+                                                <td v-if="item.validate==2" style="background:green;color:#fff;cursor:pointer" @click="apply_Record({
+                                                    sub:$index,
+                                                    show:true,
+                                                    loading:false,
+                                                    type:item.type,
+                                                    bizType:'order',
+                                                    bizId:item.orderId,
+                                                    bizSubId:item.id,
+                                                    url:'/fund/requestRecord'
+                                                    })">{{$t('static.approved')}}</td>
+                                                <td v-if="item.validate==3" style="background:red;color:#fff;cursor:pointer" @click="apply_Record({
+                                                    sub:$index,
+                                                    show:true,
+                                                    loading:false,
+                                                    type:item.type,
+                                                    bizType:'order',
+                                                    bizId:item.orderId,
+                                                    bizSubId:item.id,
+                                                    url:'/fund/requestRecord'
+                                                    })">{{$t('static.unapproved')}}</td>
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
-                                                    <a class="operate" v-if="item.validate==0&&initOrderDetail.orderStatus>=20" @click="applyInfo({
+                                                    <a class="operate" v-if="item.validate==0&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,
@@ -176,11 +213,13 @@
                                                         })"> 
                                                     <img src="/static/images/apply.png"  style="width:47px" />
                                                     </a>
-                                                    <a class="operate" v-if="item.validate==3&&initOrderDetail.orderStatus>=0" @click="applyInfo({
+                                                    <a class="operate" v-if="item.validate==3&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,
                                                             bizSubId:item.id,
+                                                            type:item.type,
+                                                            validate:item.validate,
                                                             payWay:'',
                                                             payName:'',
                                                             paySubName:'',
@@ -468,7 +507,7 @@ import dividedModel from './second_order/newDivided'
 import filter from '../../filters/filters'
 import tipsModel  from  '../tips/tipDialog'
 import auditModel from './second_order/orderAudit'
-
+import applyModel from './second_order/applyDetaillist'
 import {
   initOrderDetail
 } from '../../vuex/getters'
@@ -487,8 +526,8 @@ export default {
       dividedModel,
       filter,
       tipsModel,
-      auditModel 
-
+      auditModel,
+      applyModel
     },
     props:['param'],
     data(){
@@ -542,6 +581,9 @@ export default {
         auditParam:{
             show:false,
             id:''
+        },
+        applyDetails:{
+            show:false
         }
       }
     },
@@ -568,6 +610,10 @@ export default {
                 this.auditParam.show=true;
                 this.auditParam = item;
                 this.auditParam.callback = this.callback;
+          },
+          apply_Record:function(item){
+             this.applyDetails.show=true;
+             this.applyDetails = item;
           },
           divided_payments:function(id,total,stages){
             console.log(stages)

@@ -1234,11 +1234,12 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
         }
     }).then((res) => {
         param.callback(res.json().msg);
-        if(res.json().msg=='已申请审核'){
-            param.validate = 1;
+        if(res.json().code==200){
+            param.validate = res.json().result.validate;
             dispatch(types.ORDER_UPLOAD_DATA, param);
         }
         if(param.titles=='分期审核'){
+            param.pr = res.json().result.pr;
             dispatch(types.FINANCE_LIST, param);
         }
         
@@ -4294,7 +4295,6 @@ export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向(�
         inquireType: param.inquireType,
         comment: param.comment
     }
-
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.link,
@@ -4338,9 +4338,6 @@ export const cancelIntlIntentionInquire = ({ dispatch }, param) => { //国际意
         }
     }).then((res) => {
         console.log('取消成功')
-            /*param.id=res.json().result.intentionId;
-            param.validate = 0;
-            param.checked = false;*/
         param.show = false;
         param.inquire = 0;
         param.inquireTime = param.inquireTime - 1;
@@ -4351,12 +4348,10 @@ export const cancelIntlIntentionInquire = ({ dispatch }, param) => { //国际意
 }
 
 export const intlIntentionItemInquire = ({ dispatch }, param) => { //国际意向条目再询价
-
     const data = {
         id: param.itemId,
         description: param.description
     }
-
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.link,
@@ -4369,9 +4364,6 @@ export const intlIntentionItemInquire = ({ dispatch }, param) => { //国际意�
         }
     }).then((res) => {
         console.log('询价成功');
-        /*param.id=res.json().result.intentionId;
-        param.validate = 0;
-        param.checked = false;*/
         param.show = false;
         dispatch(types.ITEM_INQUIRE, param);
     }, (res) => {
@@ -4391,6 +4383,11 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
         itemId: param.itemId,
         itemName: param.itemName,
         origPrice: param.origPrice,
+        origCurrency:param.origCurrency,
+        supplierName:param.supplierName,
+        supplier:param.supplier,
+        exchangeRate:param.exchangeRate,
+        product:param.product,
         price: param.price,
         number: param.number,
         unit: param.unit,
@@ -4409,14 +4406,12 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('原材料报价成功')
         if(param.callback){
             param.callback(res.json().msg);
         }
         if(res.json().code==200){
             dispatch(types.ORIGIN_OFFER_DATA, param);
         }
-        ;
     }, (res) => {
         console.log('fail');
     })
@@ -5829,9 +5824,6 @@ export const getOrgSampleList = ({ dispatch }, param) => { //部门寄样申请�
         if (seach == 'validate' && param[seach] !== '') {
             apiurl += '&validate=' + param.validate
         }
-       /* if (seach == 'orgCode' && param[seach] !== '') {
-            apiurl += '&orgCode=' + param.orgCode
-        }*/
     }
     Vue.http({
         method: 'GET',
@@ -6148,7 +6140,7 @@ export const getOrgFundList = ({ dispatch }, param) => { //部门资金记录以
         param.loading = false;
     })
 }
-export const getFundDetail = ({ dispatch }, param) => { //获取供应商产品详情
+export const getFundDetail = ({ dispatch }, param) => { //获取资金记录详情
     console.log(param)
     param.loading = true;
     Vue.http({
@@ -6166,4 +6158,54 @@ export const getFundDetail = ({ dispatch }, param) => { //获取供应商产品�
         console.log('fail');
         param.loading = false;
     });
+}
+export const getRequestRecord = ({ dispatch }, param) => { ///获取分期申请记录列表
+    console.log(param);
+    const body = {
+        bizId:param.bizId,
+        type:param.type,
+        bizType:param.bizType,
+        bizSubId:param.bizSubId
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        dispatch(types.REQUEST_RECORD, param);
+        param.loading=false;
+    }, (res) => {
+        console.log('fail');
+        param.loading=false;
+    });
+}
+export const getProductSupplier = ({ dispatch }, param) => { //有产品的供应商列表
+    param.loading = true;
+    var url = apiUrl.clientList +'/customer/product/byBreed'+ '?breedId=' + param.breedId;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var itemHistory = res.json().result;
+        for (var i in itemHistory) {
+            itemHistory[i].checked = false;
+            itemHistory[i].show = false;
+        }
+        dispatch(types.ITEM_SUPPLIER_LIST, itemHistory);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
 }

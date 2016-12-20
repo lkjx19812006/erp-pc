@@ -584,7 +584,7 @@ var locales = {
       inquiry_again:'Quotation Status',
       quote_again:'Product demand',
       inquiry_type:'Inquiry type',
-      product_price:'Product price',
+      product_price:'Total value',
       other_cost:'Other cost',
       total_cost:'Total amount',
       review_application:'Review application',

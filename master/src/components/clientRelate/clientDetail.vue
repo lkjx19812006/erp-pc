@@ -32,25 +32,25 @@
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                          <li>
                             <button type="button" class="btn btn-base" @click="specDelete({
-                                          id:param.id,
-                                          sub:param.sub,
-                                          show:true,
-                                          name:param.name,
-                                          title:param.name,
-                                          link:deleteInfo,
-                                          url:'/customer/',
-                                          key:'customerList'
-                                          })">{{$t('static.del_client_info')}}</button>
+                                id:param.id,
+                                sub:param.sub,
+                                show:true,
+                                name:param.name,
+                                title:param.name,
+                                link:deleteInfo,
+                                url:'/customer/',
+                                key:'customerList'
+                                })">{{$t('static.del_client_info')}}</button>
                         </li>
 
                         <li v-if="initClientDetail.supplier!=1">
                           <button  type="button" class="btn btn-base"  @click="clientTransferSupplier({
-                                           id:param.id,
-                                           sub:param.sub,
-                                           show:true,
-                                           link:'/customer/setSupplier',
-                                           title:'客户提取为供应商备注'
-                                           })">{{$t('static.make_them_become_supplier')}}</button>
+                               id:param.id,
+                               sub:param.sub,
+                               show:true,
+                               link:'/customer/setSupplier',
+                               title:'客户提取为供应商备注'
+                               })">{{$t('static.make_them_become_supplier')}}</button>
                         </li>
 
                       <li v-if="initClientDetail.blacklist==0">
@@ -331,7 +331,7 @@
                               </div>
                           </div>
 
-                          <div class="panel panel-default">
+                          <div class="panel panel-default" v-if="param.inquiry!='询价'">
                               <div class="panel-heading" v-cloak>
                                   <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:initClientDetail.intentions,
@@ -418,7 +418,7 @@
                               </div>
                           </div>
 
-                          <div class="panel panel-default">
+                          <div class="panel panel-default" v-if="param.inquiry!='询价'">
                               <div class="panel-heading" v-cloak>
                                   <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:initClientDetail.orders,
@@ -1359,6 +1359,12 @@ export default {
 }
 </script>
 <style scoped>
+.modal{
+  z-index: 1082;
+}
+.modal_con {
+  z-index: 1082;
+}
 .client_body {
     position: relative;
     background-color: #fff;

@@ -1,0 +1,174 @@
+<template>
+    <div  class="modal modal-main fade account-modal" role="dialog"></div>
+    <tipdialog-model :param="tipParam" v-if="tipParam.show"></tipdialog-model>
+    <div id="scroll" class="container modal_con" v-show="param.show">
+        <div @click="param.show=false" class="top-title">
+            <span class="glyphicon glyphicon-remove-circle"></span>
+        </div>
+        <div class="edit-content">
+            <h3>订单分期申请记录</h3>
+        </div>
+        <validator name="validation">
+          <div class="edit-model">
+            <div class="cover_loading">
+              <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+             <section class="editsection" v-cloak>
+                 <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
+                <div style="margin-top:25px">
+                   <!-- <img src="/static/images/sellerinfo@2x.png" style="display:inline"/> -->
+                   <h4 style="display:inline"></h4>
+                </div> 
+                 
+                 <table class="table table-hover table_color table-striped ">
+                     <thead>
+                         <tr>
+                           <th>{{$t('static.breed')}}</th> 
+                           <th>{{$t('static.currency')}}</th>
+                           <th v-if="param.showCost">{{$t('static.cost_price')}}</th>
+                           <th>{{$t('static.quoted_price')}}</th>
+                           <th>{{$t('static.unit')}}</th>
+                           <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
+                           <th>{{$t('static.quatation_name')}}</th> 
+                           <th>{{$t('static.comment')}}</th> 
+                           <th>{{$t('static.create_time')}}</th> 
+                           
+                         </tr>
+                     </thead>
+                     <tbody>
+                         <tr v-for="item in initRecordList">
+                             <td>{{item.itemName}}</td>
+                             <td>{{item.currency | Currency}}</td>
+                             <td v-if="param.showCost">{{item.origPrice}}</td>
+                             <td>{{item.price}}</td>
+                             <td>{{item.unit | Unit}}</td>
+                             <td>{{item.number}}（{{item.unit | Unit}}）</td>
+                             <td>{{item.offererName}}</td>
+                             <td>{{item.comment}}</td>
+                             <td>{{item.ctime}}</td> 
+                         </tr>
+                     </tbody>
+                 </table>
+             </section>
+          </div>
+          <div class="edit_footer">
+              <button type="button" class="btn  btn-confirm" @click="param.show = false">{{$t('static.confirm')}}</button>
+          </div>
+        </validator>
+    </div>
+</template>
+<script>
+import vSelect from '../../tools/vueSelect/components/Select'
+import inputSelect from '../../tools/vueSelect/components/inputselect'
+import tipdialogModel from '../../tips/tipDialog'
+import {
+    initRecordList
+} from '../../../vuex/getters'
+import {
+    getRequestRecord
+} from '../../../vuex/actions'
+export default {
+    components: {
+        vSelect,
+        inputSelect,
+        tipdialogModel,
+    },
+    props: ['param'],
+    data() {
+        return {
+          tipParam:{
+              show:false,
+              name:'',
+              remain:true,
+              callback:this.callback
+          },
+          
+          
+          updateParam:{
+            show:false,
+            index:0
+          },
+          offerInfo:{ 
+              link:'/intlIntention/itemOffer',
+              id:'',
+              intentionId:'',
+              inquireId:'',
+              type:'',
+              currency:'',
+              itemId:'',
+              itemName:'',
+              origPrice:'',
+              price:'',
+              number:'',
+              unit:'',
+              total:'',
+              comment:''
+          },
+          
+          tag:['真空包装','瓦楞纸箱','编织袋','积压包','其它'],
+            
+          imageParam:{
+            url:'/crm/api/v1/file/',
+            qiniu:false
+          },
+          type:"image/*"
+        }
+    },
+    vuex: {
+       getters: {
+          initRecordList
+        },
+        actions: {
+          getRequestRecord
+          
+        }
+    },
+    methods: {
+      
+   
+
+    },
+    events:{
+        
+    },
+    created(){
+      //在这里要有查询询价详情的
+      console.log(this.param)
+      this.getRequestRecord(this.param);
+      
+    }
+}
+</script>
+<style scoped>
+.modal{
+  z-index: 1083
+}
+.modal_con{
+  z-index: 1084
+}
+
+.edit-model {
+  padding: 10px 30px 80px 30px;
+}
+
+.top-title{
+    position: absolute;
+    top: 0;
+    right:0;
+}
+
+.edit-content {
+    padding: 19px 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+.editpage-input {
+    margin-top: 15px;
+}
+table{
+  display: table;
+}
+a{
+    cursor:pointer;
+}
+</style>

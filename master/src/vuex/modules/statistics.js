@@ -14,7 +14,9 @@ import {
     MY_FUND_LIST,
     ORG_FUND_LIST,
     FUND_DETAIL_DATA,
-    FINANCE_LIST
+    FINANCE_LIST,
+    REQUEST_RECORD,
+    ITEM_SUPPLIER_LIST
 } from '../mutation-types'
 
 const state = {
@@ -48,7 +50,11 @@ const state = {
     myFundlist:[],
     orgFundlist:[],
     fundDetail:[],
-    financeList:[]
+    financeList:[],
+    //分期申请历史记录
+    recordList:[],
+    //产品供应商
+    supplierList:[]
 }
 const mutations = {
     [UNIT_LIST](state,data){ //常用单位
@@ -142,14 +148,19 @@ const mutations = {
     [FINANCE_LIST](state,data){
       console.log(data)
         if(data.titles=='分期审核'){
-            console.log(data)
-            console.log(state.financeList[data.sub])
             state.financeList[data.sub].validate =  data.validate;
             state.financeList[data.sub].pr =  data.pr;
         }else{
           state.financeList = data;
         }
+    },
+    [REQUEST_RECORD](state,data){
+      state.recordList = data;
+    },
+    [ITEM_SUPPLIER_LIST](state,data){
+       state.supplierList = data;
     }
+
 }
 export default {
     state,

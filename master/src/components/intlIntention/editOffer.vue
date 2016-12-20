@@ -1,6 +1,7 @@
 <template>
     <div  id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <tipdialog-model :param="tipParam" v-if="tipParam.show"></tipdialog-model>
+    <supplier-dialog :param="supplierParam" v-if="supplierParam.show"></supplier-dialog>
     <div id="scroll" class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -10,9 +11,6 @@
         </div>
         <validator name="validation">
           <div class="edit-model">
-            <!--<div class="cover_loading">-->
-              <!--<pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>-->
-            <!--</div>-->
             <!-- <div class="cover_loading">
               <pulse-loader :loading="breedParam.loading" :color="color" :size="size"></pulse-loader>
             </div> -->
@@ -24,14 +22,12 @@
                                <label class="editlabel">{{$t('static.breed')}}</label>
                                <input type="text" v-model="param.itemName" class="form-control edit-input" disabled="true" />
                           </div>  
-                          <div class="editpage-input" >
-                               <label class="editlabel">{{$t('static.cost')}}（{{param.currency | Currency}}）<span class="system_danger" v-if="$validation.origprice.required">{{$t('static.required')}}</span></label>
+                          <div class="editpage-input col-xs-6" style="padding:0">
+                               <label class="editlabel">{{$t('static.cost')}}<span class="system_danger" v-if="$validation.origprice.required">{{$t('static.required')}}</span></label>
                                <input type="number" v-model="param.origPrice" class="form-control edit-input" v-validate:origprice="{required:true}" />
                           </div>
-                          <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.currency')}}</label>
-                               <select type="text" class="form-control edit-input" v-model="param.currency">
-                                   <option  value="2" selected>USD（美元）</option>
+                          <div class="editpage-input col-xs-6" style="margin-left: -15px;margin-top: 44px">
+                               <select type="text" class="form-control edit-input" v-model="param.origCurrency" @change="selectleft(param.origCurrency)">
                                    <option v-for="item in initCurrencylist"  value="{{item.id}}">{{item.name}}（{{item.cname}}）</option>
                                </select>
                           </div>
@@ -47,19 +43,32 @@
                                <label class="editlabel" >{{$t('static.quantity')}}（{{param.unit | Unit}}）<span class="system_danger" v-if="$validation.number.required">{{$t('static.required')}}</span></label>
                                 <input type="number" value="{{param.number}}" v-model="param.number" class="form-control edit-input"  v-validate:number="{required:true}" disabled="true" />
                           </div>
-                          <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.quoted_price')}}（{{param.currency | Currency}}）<span class="system_danger" v-if="$validation.price.required">{{$t('static.required')}}</span></label>
+                          <div class="editpage-input col-xs-6" style="padding:0;">
+                               <label class="editlabel" >{{$t('static.quoted_price')}}<span class="system_danger" v-if="$validation.price.required">{{$t('static.required')}}</span></label>
                                <input type="number" v-model="param.price" class="form-control edit-input" v-validate:price="{required:true}" />
                           </div>
-                          
+                          <div class="editpage-input col-xs-6" style="margin-left: -15px;margin-top: 44px">
+                               <select type="text" class="form-control edit-input" v-model="param.currency" @change="selectCurrency(param.currency)">
+                                   <option v-for="item in initCurrencylist"  value="{{item.id}}">{{item.name}}（{{item.cname}}）</option>
+                               </select>
+                          </div>   
                        </div> 
                   </div> 
              </section>
+             <div class="editpage-input col-md-6" style="padding:0;">
+                 <label class="editlabel" >{{$t('static.supplier')}} <span class="system_danger" v-if="$validation.suppliername.required">{{$t('static.required')}}</span></label>
+                 <input type="text" class="form-control edit-input" v-model="param.supplierName"  @click="selectSupplier()" v-validate:suppliername="{required:true}" />
+             </div>
+             <div class="editpage-input col-md-6" style="padding:0;">
+                 <label class="editlabel">汇率</label>
+                 <div>
+                   （{{param.exchangeRate}}）{{param.origCurrency | Currency}} ={{param.currency | Currency}}
+                 </div>
+             </div>
              <div class="col-md-12" style="padding:0;">
                  <label class="editlabel" >{{$t('static.comment')}}</label>
-                 <!-- <input type="text" v-model="param.comment" class="form-control edit-input"  /> -->
                  <textarea v-model="param.comment" rows="6" style="resize: none;border:1px solid #ddd;width:100%;"class="form-control"></textarea>
-            </div>
+             </div>
           </div>
           <div class="edit_footer">
               <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
@@ -74,6 +83,7 @@ import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipdialogModel from '../tips/tipDialog'
 import pressImage from '../imagePress'
+import supplierDialog from './linkSupplier'
 import {
     initUnitlist,
     initIntlIntentionDetail,
@@ -90,7 +100,8 @@ export default {
         vSelect,
         inputSelect,
         tipdialogModel,
-        pressImage
+        pressImage,
+        supplierDialog
     },
     props: ['param'],
     data() {
@@ -98,7 +109,9 @@ export default {
           loadParam:{
             loading:false,
             size:'15px',
-            
+            color: '#5dc596',
+            cur: 1,
+            all: 7
           },
           tipParam:{
               show:false,
@@ -109,6 +122,14 @@ export default {
           updateParam:{
             show:false,
             index:0
+          },
+          supplierParam:{
+            show:false,
+            supplierName:'',
+            origPrice:'',
+            supplier:'',
+            product:'',
+            breedId:this.param.breedId,
           },
           offerInfo:{ 
               link:'/intlIntention/itemOffer',
@@ -125,15 +146,14 @@ export default {
               unit:'',
               total:'',
               comment:''
-          },
-          
-          tag:['真空包装','瓦楞纸箱','编织袋','积压包','其它'],
-            
+          },      
           imageParam:{
             url:'/crm/api/v1/file/',
             qiniu:false
           },
-          type:"image/*"
+          type:"image/*",
+          countleft:0,
+          countright:0
         }
     },
     vuex: {
@@ -150,20 +170,48 @@ export default {
         }
     },
     methods: {
-      
       confrim:function(){
-        this.param.callback=this.param.callback;
+/*        this.param.callback=this.param.callback;*/
         this.param.show = false;
         this.intlIntentionOffer(this.param);
+      },
+      selectSupplier:function(){
+        this.supplierParam.show=true;
+        console.log(this.supplierParam)
+      },
+      selectleft:function(item){
+         console.log(this.initCurrencylist[item-1].rate)
+         this.countleft = this.initCurrencylist[item-1].rate;
+      },
+      selectCurrency:function(item){
+        console.log(this.initCurrencylist[item-1].rate)
+        this.countright= this.initCurrencylist[item-1].rate;
+      },
+      changeTotal:function(){
+          this.param.exchangeRate = this.countright / this.countleft;
       }
-  
+    },
+    watch:{
+        'countleft':'changeTotal',
+        'countright':'changeTotal'
     },
     events:{
-        
+        supplier:function(item){
+          console.log(item)
+          this.supplierParam.supplierName = item.supplierName;
+          this.supplierParam.origPrice = item.origPrice;
+          this.supplierParam.supplier = item.supplier;
+          this.supplierParam.product = item.product;
+          this.param.supplierName = this.supplierParam.supplierName ;
+          this.param.origPrice = this.supplierParam.origPrice ;
+          this.param.supplier = this.supplierParam.supplier;
+          this.param.product = this.supplierParam.product;
+        }
     },
     created(){
       this.getUnitList(this.loadParam);
       this.getCurrencyList();
+      console.log(this.param)
     }
 }
 </script>

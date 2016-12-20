@@ -666,6 +666,8 @@ Vue.filter('Currency',function(val){     //订单货币方式
 	}
 	if(val==17){
 		 return 'PHP菲律宾';
+	}else{
+		return val;
 	}
 
 })
