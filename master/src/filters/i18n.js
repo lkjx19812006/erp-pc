@@ -144,6 +144,7 @@ var locales = {
       product_name:'产品名称',
       cost:'成本',
       quoted_price:'报价',
+      exchange:'汇率',
       quote:'报价',
       quantity:'数量',
       unit:'单位',
@@ -561,6 +562,7 @@ var locales = {
       jump_to:'Jump to',
       click_jump:'Click to jump',
       quoted_price:'Quoted price',    //报价金额
+      exchange:'Exchange rate',
       quote:'Quoted',
       quantity:'Quantity',
       unit:'Unit',

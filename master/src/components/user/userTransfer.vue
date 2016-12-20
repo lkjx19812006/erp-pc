@@ -503,9 +503,6 @@
         this.saveCreate(this.param,this.tipsParam);
 
       },
-      /*callback:function(){
-        this.param.show = false;
-      }*/
     },
 
     events: {

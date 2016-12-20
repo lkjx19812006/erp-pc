@@ -243,7 +243,7 @@ export default {
                 title1:'新建订单',
                 type:1,
                 sourceType:1,
-                sample:'',
+                sample:0,
                 intl:1,
                 customer:'',
                 currency:'',
@@ -254,6 +254,7 @@ export default {
                 province:'',
                 city:'',
                 email:'',
+                total:0,
                 employee:this.initLogin.id,
                 org:this.initLogin.orgId,
                 district:'',
@@ -261,9 +262,9 @@ export default {
                 customerName:'',
                 customerPhone:'',
                 comments:'',
-                incidentals:'',
+                incidentals:0,
                 incidentalsDesc:'',
-                preferential:'',
+                preferential:0,
                 preferentialDesc:'',
                 payWay:'',
                 orderStatus:'',
@@ -446,6 +447,7 @@ export default {
             this.createOrderParam.city = item.city;
             this.createOrderParam.consigneeAddr = item.address;
             this.createOrderParam.intl = item.intl;
+            this.createOrderParam.total = item.itemsTotal;
             this.createOrderParam.goods = [];
         },
         

@@ -336,7 +336,6 @@
 import filter from '../../../filters/filters'
 import pagination from '../../../components/pagination'
 import detailModel from '../../../components/clientRelate/clientDetail'
-//import createModel from '../components/clientRelate/clientCreate'
 import createModel  from '../../../components/user/userTransfer'
 import deletebreedModel  from '../../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import alterinfoModel  from '../../../components/clientRelate/clientUpdate'

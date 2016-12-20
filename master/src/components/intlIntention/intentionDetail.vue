@@ -133,7 +133,7 @@
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                         {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
                                       </a>
-                                      <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：{{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency}}</span>
+                                      <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：{{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}}</span>
                                       <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                 </h4>
                               </div>
@@ -146,7 +146,7 @@
                                           <th>{{$t('static.specification')}}</th>
                                           <th>{{$t('static.quality')}}</th>
                                           <th>{{$t('static.quoted_price')}}</th>
-                                          <th>汇率</th>
+                                          <th>{{$t('static.exchange')}}</th>
                                           <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                           <th>{{$t('static.quatation_name')}}</th>
                                           <th>{{$t('static.inquiry_again')}}</th>
@@ -192,7 +192,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                           {{$t('static.other_quotations')}}（0）
                                         </a>
-                                         <span class="pull-right" style="color:#fa6705">{{$t('static.quotation_total')}}：{{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency}}</span>
+                                         <span class="pull-right" style="color:#fa6705">{{$t('static.quotation_total')}}：{{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}}</span>
                                         <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                   </h4>
                               </div>
