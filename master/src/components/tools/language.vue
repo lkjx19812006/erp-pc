@@ -29,6 +29,8 @@
             console.log(localStorage.lang);
             if(localStorage.lang){
               this.language = localStorage.lang;
+            }else{
+              this.language = 'zh_CN';
             }
         }
     }

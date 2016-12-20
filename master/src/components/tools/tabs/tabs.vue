@@ -38,11 +38,28 @@ export default {
   },
   methods:{
     setIsTop:function(){
-      this.$store.state.table.isTop = true;
+        this.$store.state.table.isTop = true;
     },
+
     closeTab:function(index){
-      this.tabs.splice(index,1);
+        /*console.log(this.$route.path);
+        console.log(this.tabs[index].url);*/
+        if(this.$route.path==this.tabs[index].url){   //关闭的是当前页
+            this.tabs.splice(index,1);
+            this.$store.state.table.isTop = true;
+            if(index!=0){
+                this.$router.go(this.tabs[index-1].url);
+            }else if(index==0&&this.tabs.length==0){
+              this.$store.state.table.isTop = false;
+              this.$router.go('/home/main');
+            }else{
+              this.$router.go(this.tabs[0].url);
+            }
+        }else{                              //关闭的不是当前页
+            this.tabs.splice(index,1);
+        } 
     }
+
   },
 
   events:{

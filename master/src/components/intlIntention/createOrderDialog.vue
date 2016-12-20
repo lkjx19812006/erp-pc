@@ -1,6 +1,7 @@
 <template>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
+    <tip-model :param="tipParam" v-if="tipParam.show"></tip-model>
     <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -43,7 +44,7 @@
                                      :on-change="selectProvince"
                                      :options="initCountrylist"
                                      placeholder="国家/country"
-                                     label="nameEn"
+                                     label="cnameEn"
                                     >
                                    </v-select>
                              </div>
@@ -278,6 +279,7 @@ import vSelect from  '../tools/vueSelect/components/Select'
 import pressImage from '../imagePress'
 import searchcustomerModel  from  '../Intention/clientname'
 import inputSelect from '../tools/vueSelect/components/inputselect'
+import tipModel from '../tips/tipDialog'
 import searchbreedModel  from '../Intention/breedsearch'
 import {
     initCountrylist,
@@ -304,6 +306,7 @@ export default {
         pressImage,
         searchcustomerModel,
         searchbreedModel,
+        tipModel,
         inputSelect
     },
     props: ['param'],
@@ -350,9 +353,15 @@ export default {
               show:false,
               index:0
             },
+            tipParam:{
+              show:false,
+              name:"The Price Is Required!!!",
+              alert:true
+            },
             country:{
               cname:'',
-              nameEn:''
+              nameEn:'',
+              cnameEn:''
             },
             province:{
               cname:''
@@ -424,7 +433,6 @@ export default {
             }*/
         },
         addBreed:function(){
-          console.log('111111')
           console.log(this.param.goods[this.param.goods.length-1]);
           this.param.goods[this.param.goods.length-1].breedId = this.breedInfo.breedId;
           this.param.goods[this.param.goods.length-1].breedName = this.breedInfo.breedName;
@@ -519,11 +527,24 @@ export default {
            if(this.param.intl==1){} 
         },
         confirm:function(param){
-            this.param.country =this.country.cname+this.country.nameEn;
-            console.log(this.param.country )
-/*            this.param.province = this.province.cname;
+            this.param.country =this.country.cnameEn;
+            console.log(this.param.country);
+            /*this.param.province = this.province.cname;
             this.param.city = this.city.cname;
             this.param.district = this.district.cname;*/
+            //进入生成订单页面时,价格不存在,需要编辑
+            /*this.param.goods.forEach(function(item){
+                if(!item.price){
+                    alert("你大爷");
+                    return false;
+                } 
+            })*/
+            for(var i=0;i<this.param.goods.length;i++){
+                if(!this.param.goods[i].price){
+                    this.tipParam.show = true;
+                    return ;
+                } 
+            }
             this.param.show=false;
             console.log(this.param);
             this.createOrder(this.param);
@@ -567,7 +588,7 @@ export default {
           this.countryParam.province=this.param.province;
           this.countryParam.city=this.param.city;
           this.countryParam.district=this.param.district;
-          this.country.nameEn=this.param.country;
+          this.country.cnameEn=this.param.country;
           this.province.cname=this.param.province;
           this.city.cname=this.param.city;
           this.district.cname=this.param.district;
