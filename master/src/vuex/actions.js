@@ -1099,6 +1099,7 @@ export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分
             orderId:param.stages[i].orderId,
             orderStatus:param.stages[i].orderStatus,
             ratio:param.stages[i].ratio,
+            extra:param.stages[i].extra,
             status:param.stages[i].status,
             type:param.stages[i].type,
             validate:param.stages[i].validate

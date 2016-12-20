@@ -201,6 +201,7 @@
                                                             payName:'',
                                                             paySubName:'',
                                                             payUserName:'',
+                                                            extra:item.extra,
                                                             payNumber:'',
                                                             comment:'',
                                                             image_f:'',
@@ -220,6 +221,7 @@
                                                             bizSubId:item.id,
                                                             type:item.type,
                                                             validate:item.validate,
+                                                            extra:item.extra,
                                                             payWay:'',
                                                             payName:'',
                                                             paySubName:'',
@@ -611,10 +613,10 @@ export default {
                 this.auditParam = item;
                 this.auditParam.callback = this.callback;
           },
-          apply_Record:function(item){
+          /*apply_Record:function(item){
              this.applyDetails.show=true;
              this.applyDetails = item;
-          },
+          },*/
           divided_payments:function(id,total,stages){
             console.log(stages)
               console.log(this.initOrderDetail)

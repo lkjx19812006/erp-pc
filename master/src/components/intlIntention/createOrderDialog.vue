@@ -190,7 +190,7 @@
                               <input type="text" class="form-control edit-input" v-model="param.preferentialDesc" value="{{param.preferentialDesc}}"/>
                           </div>
                           <div class="editpage-input">
-                              <label class="editlabel">总价</label>
+                              <label class="editlabel">{{$t('static.total')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.total" readonly="true" />
                           </div>
                           <div class="editpage-input">

@@ -172,17 +172,17 @@
                                                 <td v-if="item.offerPrice==null"></td>
                                                 <td>{{item.exchangeRate}}</td>
                                                 <td>{{item.offerNumber}}（{{item.unit | Unit}}）</td>
-                                                  <td><a style="cursor:pointer" @click="clickOn({
-                                                    id:item.id,
-                                                    sub:$index,
-                                                    show:true,
-                                                    name:item.supplierName,
-                                                    link:alterInfo,
-                                                    inquiry:'询价',
-                                                    loading:true,
-                                                    url:'/customer/',
-                                                    key:'myCustomerList'
-                                                  })">{{item.supplierName}}</a></td>
+                                                <td><a style="cursor:pointer" @click="clickOn({
+                                                      id:item.id,
+                                                      sub:$index,
+                                                      show:true,
+                                                      name:item.supplierName,
+                                                      link:alterInfo,
+                                                      inquiry:'询价',
+                                                      loading:true,
+                                                      url:'/customer/',
+                                                      key:'myCustomerList'
+                                                    })">{{item.supplierName}}</a></td>
                                                 <td>{{item.offererName}}</td>
                                                 <td>{{item.offerComment}}</td>
                                                 <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
@@ -537,9 +537,9 @@ export default {
           }
           this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show;
       },
-      clickOn: function(item) {
+      /*clickOn: function(item) {
         this.supplyParam = item;
-      },
+      },*/
      offer:function(){
         this.offerParam.show = true;
      },

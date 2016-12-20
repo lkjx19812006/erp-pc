@@ -30,7 +30,7 @@
                                 <td>{{item.amount}}</td>
                                 <td>{{item.ratio}}</td>
                                 <td>{{item.orderStatus}}</td>
-                                <td>{{item.extral}}</td>
+                                <td>{{item.extra}}</td>
                                 <td>{{item.description}}</td>
                                 <td>{{item.comment}}</td>
                                 <td v-if="(breedInfo.status==0||breedInfo.status==2)&&this.sum <= this.param.total" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
@@ -80,7 +80,7 @@
                                 
                                 <div class="editpage-input col-md-6">
                                      <label class="editlabel">额外支付时间 <span class="system_danger" v-if="$inner.extral.required">{{$t('static.required')}}</span></label>
-                                     <input type="text" v-model="breedInfo.extral" class="form-control edit-input" v-validate:extral="{required:true}"  style="width:95%;float:left" /> <span> 天</span>
+                                     <input type="text" v-model="breedInfo.extra" class="form-control edit-input" v-validate:extral="{required:true}"  style="width:95%;float:left" /> <span> 天</span>
                                 </div>
                                 <div class="editpage-input col-md-12">
                                      <label class="editlabel">分期说明<span class="system_danger" v-if="$inner.description.required">{{$t('static.required')}}</span></label>
@@ -149,7 +149,7 @@
                   description:'',
                   orderStatus:'',
                   comment:'',
-                 /* extral:''*/
+                  extra:''
                 },
                 addParam:{
                   show:false,
@@ -172,7 +172,7 @@
               this.breedInfo.description=this.param.stages[index].description;
               this.breedInfo.orderStatus=this.param.stages[index].orderStatus;
               this.breedInfo.comment=this.param.stages[index].comment;
-              /*this.breedInfo.extral=this.param.stages[index].extral;*/
+              this.breedInfo.extra=this.param.stages[index].extra;
               this.updateParam.show = true;
               this.sum -=parseFloat(this.param.stages[index].amount);
               this.scale -=parseInt(this.param.stages[index].ratio*10);
@@ -181,7 +181,8 @@
             },
             calculate:function(){
                 console.log(this.scale)
-                this.breedInfo.amount = this.breedInfo.ratio*this.param.total;
+                this.breedInfo.amount = (this.breedInfo.ratio*1000)*this.param.total/1000
+                ;
                 console.log(((this.breedInfo.ratio)*10) >= (10-this.scale))
                 console.log((this.breedInfo.ratio)*10)
                 console.log(10-this.scale)
@@ -220,7 +221,7 @@
               this.param.stages[this.updateParam.index].description=this.breedInfo.description;
               this.param.stages[this.updateParam.index].orderStatus=this.breedInfo.orderStatus;
               this.param.stages[this.updateParam.index].comment=this.breedInfo.comment;
-              /*this.param.stages[this.updateParam.index].extral=this.breedInfo.extral;*/
+              this.param.stages[this.updateParam.index].extra=this.breedInfo.extra;
               /*this.param.items[this.updateParam.index].orderId=this.breedInfo.id,*/
               this.breedInfo.status = 0;
               this.updateParam.show = false;
@@ -231,7 +232,7 @@
               this.param.stages[this.param.stages.length-1].description = this.breedInfo.description;
               this.param.stages[this.param.stages.length-1].orderStatus = this.breedInfo.orderStatus;
               this.param.stages[this.param.stages.length-1].comment = this.breedInfo.comment;
-              /*this.param.stages[this.param.stages.length-1].extral = this.breedInfo.extral;*/
+              this.param.stages[this.param.stages.length-1].extra = this.breedInfo.extra;
               console.log(this.param.stages[this.param.stages.length-1]);
               this.breedInfo.status = 0;
               this.addParam.show = false; 
@@ -252,14 +253,14 @@
                   this.breedInfo.description='';
                   this.breedInfo.orderStatus='';
                   this.breedInfo.comment='';
-                  /*this.breedInfo.extral='';*/
+                  this.breedInfo.extra='';
                   this.param.stages.push({
                       amount:'',
                       ratio:'',
                       description:'',
                       orderStatus:'',
                       comment:'',
-                      /*extral:'',*/
+                      extra:'',
                   });
                   this.addParam.show = true;
               }  
