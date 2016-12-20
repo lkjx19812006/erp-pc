@@ -1644,6 +1644,9 @@ export const getCountryList = ({ dispatch }, param) => { //获取国家列表
         }
     }).then((res) => {
         var obj = res.json().result;
+        obj.forEach(function(item){
+            item.cnameEn = item.cname + '(' + item.nameEn + ')';  //中英文名字"中国/Chinese"
+        })
         dispatch(types.COUNTRY_LIST, obj);
         param.loading = false;
         param.all = res.json().result.pages;
@@ -4132,7 +4135,6 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
 }
 
 export const createIntlIntention = ({ dispatch }, param) => { //新增国际意向
-
     const data = {
         customerId: param.customerId,
         customerName: param.customerName,

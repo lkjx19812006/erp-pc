@@ -446,6 +446,7 @@ export default {
             this.createOrderParam.city = item.city;
             this.createOrderParam.consigneeAddr = item.address;
             this.createOrderParam.intl = item.intl;
+            this.createOrderParam.goods = [];
         },
         
         search:function(){
