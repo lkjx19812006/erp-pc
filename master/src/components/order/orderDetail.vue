@@ -192,7 +192,7 @@
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
-                                                    <a class="operate" v-if="item.validate==0&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
+                                                    <a class="operate" v-if="item.validate==0" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,
@@ -430,17 +430,11 @@
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
-                                <!-- <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>订单ID</label>
-                                    <input type="text" class="form-control" v-model="initOrderDetail.id" value="{{initOrderDetail.id}}" disabled="disabled" />
-                                </div> -->
-                                <div class="client-detailInfo   col-xs-12">
+                                <div class="client-detailInfo  col-md-6 col-xs-12">
                                     <label>{{$t('static.order_no')}} </label>
                                     <input type="text" class="form-control" v-model="initOrderDetail.no" value="{{initOrderDetail.no}}" disabled="disabled"/>
                                 </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                                <div class="client-detailInfo  col-md-6 col-xs-12">
                                     <label>{{$t('static.order_type')}}</label>
                                     <input type="text" class="form-control"   value="{{type[initOrderDetail.type]}}" disabled="disabled"/>
                                 </div>
@@ -468,7 +462,7 @@
                                     <label>{{$t('static.postcodes')}}</label>
                                     <input type="text" class="form-control"  value="{{initOrderDetail.zipCode}}" disabled="disabled"/>
                                 </div>
-                                <div class="client-detailInfo col-md-6 col-xs-12">
+                                <div class="client-detailInfo col-md-12">
                                     <label>{{$t('static.detailed_address')}}</label>
                                     <input type="text" class="form-control" value="{{initOrderDetail.consigneeAddr}}" disabled="disabled"/>
                                 </div>
@@ -613,10 +607,10 @@ export default {
                 this.auditParam = item;
                 this.auditParam.callback = this.callback;
           },
-          /*apply_Record:function(item){
+          apply_Record:function(item){
              this.applyDetails.show=true;
              this.applyDetails = item;
-          },*/
+          },
           divided_payments:function(id,total,stages){
             console.log(stages)
               console.log(this.initOrderDetail)

@@ -9,7 +9,6 @@
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <div>
         <div class="service-nav clearfix">
-
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">客户名称：</dt>
@@ -31,32 +30,32 @@
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">客户类型：</dt>
                    <dd class="left">
-                         <select v-model="loadParam.type"  class="form-control" @change="selectSearch()">
-                              <option value="">全部</option>
-                              <option value="0">其它</option>
-                              <option value="1">合作社</option>
-                              <option value="2">药商</option>
-                              <option value="3">药厂</option>
-                              <option value="4">个体户</option>
-                              <option value="5">药店</option>
-                              <option value="6">医院</option>
-                              <option value="7">贸易公司</option>
-                              <option value="8">零售商行</option>
-                              <option value="9">药农</option>
-                              <option value="10">介绍人</option>
-                              <option value="11">药贩子</option>
-                              <option value="12">产地药商</option>
-                              <option value="13">销地药商</option>
-                              <option value="14">养生诊所</option>
-                              <option value="15">化工厂</option>
-                              <option value="16">化妆品厂</option>
-                              <option value="17">提取物厂</option>
-                              <option value="18">食品厂</option>
-                              <option value="19">实验室</option>
-                              <option value="20">网上电商</option>
-                              <option value="21">中成药生产商</option>
-                              <option value="22">西药生产商</option>
-                              <option value="23">饮片厂</option>
+                        <select v-model="loadParam.type"  class="form-control" @change="selectSearch()">
+                          <option value="">全部</option>
+                          <option value="0">其它</option>
+                          <option value="1">合作社</option>
+                          <option value="2">药商</option>
+                          <option value="3">药厂</option>
+                          <option value="4">个体户</option>
+                          <option value="5">药店</option>
+                          <option value="6">医院</option>
+                          <option value="7">贸易公司</option>
+                          <option value="8">零售商行</option>
+                          <option value="9">药农</option>
+                          <option value="10">介绍人</option>
+                          <option value="11">药贩子</option>
+                          <option value="12">产地药商</option>
+                          <option value="13">销地药商</option>
+                          <option value="14">养生诊所</option>
+                          <option value="15">化工厂</option>
+                          <option value="16">化妆品厂</option>
+                          <option value="17">提取物厂</option>
+                          <option value="18">食品厂</option>
+                          <option value="19">实验室</option>
+                          <option value="20">网上电商</option>
+                          <option value="21">中成药生产商</option>
+                          <option value="22">西药生产商</option>
+                          <option value="23">饮片厂</option>
                         </select>
                    </dd>
                 </dl>
@@ -133,13 +132,12 @@
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-striped " v-cloak id="tab">
+            <table class="table table-hover table_color table-striped" v-cloak id="tab">
                 <thead>
                     <tr>
                         <th>
-                            <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
+                            <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->全选
                         </th>
-
                         <th>所属业务员</th>
                         <th>创建时间</th>
                         <th>最近成交时间</th>
@@ -153,31 +151,28 @@
                         <th>客户归属地</th>
                         <th>详细地址</th>
                         <th>主营产品</th> 
-
-                    <!-- <th>类 型</th>
-                        <th>分 类</th>
-                        <th>客户来源</th>
-                        <th>客户信用等级</th>
-                        <th>客户名称</th>
-                        <th>分类码</th>
-                        <th>所属分类</th>
-                        <th>所属业务员</th>
-                        <th>负责人</th>
-                        <th style="min-width:120px;">经营范围</th>
-                        <th>手机</th>
-                        <th>手机省</th>
-                        <th>手机市</th>
-                        <th>邮 箱</th>
-                        <th>国 家</th>
-                        <th>所在省</th>
-                        <th>所在市</th>
-                        <th>注册地址</th>
-                        <th>创建时间</th>
-                        <th>是否供应商</th>
-                        <th style="min-width:200px">备注</th> -->
                         <th colspan="2">操作</th>
                     </tr>
                 </thead>
+                <tr>
+                    <th>
+                        <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
+                    </th>
+                    <th style="color:#fa6705;font-size: 14px">全选</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
                 <tbody>
                     <tr>
 

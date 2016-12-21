@@ -8,12 +8,12 @@
         <div class="service-nav clearfix">
             
         </div>
-        <div class="click_change pull-left">
-            <span class="date_active" v-bind:class="{ 'date_active': isA}" @click="clickday()">{{$t('static.please_select')}}</span>
-            <span v-bind:class="{ 'date_active': !isA&&isB}" @click="clickweek()">{{$t('static.not_inquiry')}}</span>
-            <span v-bind:class="{ 'date_active': !isA&&!isB&&isC}" @click="clickmonth()">{{$t('static.inquiry')}}</span>
-            <span v-bind:class="{ 'date_active': !isA&&!isB&&!isC&&isD}" @click="clickyear()">{{$t('static.quotation')}}</span>
-            <span v-bind:class="{ 'date_active': !isA&&!isB&&!isC&&!isD}" @click="clickfinish()">{{$t('static.quo_complete')}}</span>
+        <div class="btn-group pull-left">
+            <button class="btn btn-default" v-bind:class="{ 'btn-warning': isA}" @click="clickday()">{{$t('static.please_select')}}</button>
+            <button class="btn btn-default" v-bind:class="{ 'btn-warning': !isA&&isB}" @click="clickweek()">{{$t('static.not_inquiry')}}</button>
+            <button  class="btn btn-default" v-bind:class="{ 'btn-warning': !isA&&!isB&&isC}" @click="clickmonth()">{{$t('static.inquiry')}}</button>
+            <button class="btn btn-default" v-bind:class="{ 'btn-warning': !isA&&!isB&&!isC&&isD}" @click="clickyear()">{{$t('static.quotation')}}</button>
+            <button class="btn btn-default" v-bind:class="{ 'btn-warning': !isA&&!isB&&!isC&&!isD}" @click="clickfinish()">{{$t('static.quo_complete')}}</button>
         </div>
          <button class="btn btn-primary pull-right" style="margin-right:20px" @click="intentionSearch()">{{$t('static.refresh')}}</button> 
         <div class="order_table" id="table_box" v-show="currentView==1">

@@ -171,7 +171,7 @@
                                                 <td v-if="item.offerAgain==null">{{$t('static.not_quote')}}</td>
                                                 <td v-if="item.offerAgain==1">{{$t('static.quoted')}}</td>
                                                 <td>{{item.utime}}</td>
-                                                <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> 
+                                                <td><a style="cursor:pointer" @click="inquireAgain(item,$index)" v-if="item.again==0&&initIntlIntentionDetail.inquireTime>0"><img src="/static/images/{{$t('static.img_rerequire')}}.png" alt="再次询价" /></a></a></td> 
                                                 <td></td>
                                             </tr>
                                     </table>

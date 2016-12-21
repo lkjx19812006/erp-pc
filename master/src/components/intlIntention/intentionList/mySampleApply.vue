@@ -51,7 +51,7 @@
                         <th>{{$t('static.consignee_name')}}</th>
                         <th>联系方式</th>
                         <th>{{$t('static.consignee_address')}}</th>
-                        <th>样品名称</th>
+                        <th>{{$t('static.sample_order')}}</th>
                         <th>{{$t('static.review_status')}}</th>
                         <th>{{$t('static.comment')}}</th>
       	            	  <th>{{$t('static.create_time')}}</th>
@@ -75,10 +75,10 @@
                         <td>{{item.consigneePhone}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.sampleDesc}}</td>
-                        <td v-if="item.validate==0">{{item.validate | Audit}}</td>
-                        <td v-if="item.validate==1" style="background:#9010ff;color:#fff">{{item.validate | Audit}}</td>
-                        <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Audit}}</td>
-                        <td v-if="item.validate==3" tyle="background:red;color:#fff">{{item.validate | Audit}}</td>
+                        <td v-if="item.validate==0">{{$t('static.initial')}}</td>
+                        <td v-if="item.validate==1" style="background:#9010ff;color:#fff">{{$t('static.review_application')}}</td>
+                        <td v-if="item.validate==2" style="background:green;color:#fff">{{$t('static.approved')}}</td>
+                        <td v-if="item.validate==3" tyle="background:red;color:#fff">{{$t('static.unapproved')}}</td>
                         <td>{{item.comments}}</td>
                         <td>{{item.ctime}}</td>
                         <td style="text-align: left;">
@@ -348,7 +348,7 @@ export default {
 </script>
 <style scoped>
 .service-nav {
-    padding-bottom:10px;
+    padding-bottom:0px;
 }
 .my_enterprise{
     padding:6px;

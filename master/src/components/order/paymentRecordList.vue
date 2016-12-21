@@ -10,6 +10,7 @@
                 <option value="1">{{$t('static.alipay')}}</option>
                 <option value="2">{{$t('static.pingan')}}</option>
                 <option value="3">{{$t('static.yaokuan')}}</option>
+                <option value="4">WeChat</option>
             </select>
         </div>
         <div class="left clearfix">
@@ -44,6 +45,7 @@
             <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
             <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
             <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
+            <td v-if="item.payWay==4">WeChat</td>
             <td v-if="item.payWay==null">未支付</td>
             <td>{{item.orderNo}}</td>
             <td>{{item.payNo}}</td>

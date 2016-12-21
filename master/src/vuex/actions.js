@@ -4540,6 +4540,7 @@ export const uploadIntlIntentionFiles = ({ dispatch }, param) => { //上传国�
         }
         param.show = false;
         var file = res.json().result;
+        param.url = res.json().result.url;
         if(res.json().code==200){
             dispatch(types.UPLOAD_INTL_INTENT_FILE, file);
         }
@@ -5285,9 +5286,6 @@ export const updateTrackingInfo = ({ dispatch }, param) => { //修改跟进信�
 }
 
 export const createTrackingInfo = ({ dispatch }, param) => { //添加跟进信息
-
-    console.log(param.flag);
-
     const data = {
 
     }
@@ -5866,7 +5864,7 @@ export const createSample = ({ dispatch }, data) => { //新建寄样申请
        district:data.district,
        items:data.items
     }
-    if(data.address==''&&data.province){
+    if(data.address==''){
         body.address = data.country+','+data.province+','+data.city+','+data.district
     }else{
         body.address = data.country+' '+data.city+' '+data.address
@@ -5929,8 +5927,10 @@ export const alterSample = ({ dispatch }, param) => { //修改寄样申请
        status:param.status,
        items:param.items
     }
-    if(param.address==''){
-        body.address = param.country+','+param.province+','+param.city+','+param.district
+    if(param.address==''||param.address==null){
+        body.address = param.country+''+param.province+''+param.city+''+param.district
+    }else{
+        body.address = param.address;
     }
     if(param.consignee=='') {
         body.consignee = param.customerName;
@@ -5957,6 +5957,7 @@ export const alterSample = ({ dispatch }, param) => { //修改寄样申请
         param.callback(res.json().msg);
         param.send = false;
         param.address = res.json().result.address;
+        param.sampleDesc = res.json().result.sampleDesc;
         if(res.json().code==200){
             dispatch(types.UPDATE_SAMPLE, param);
         }
@@ -6149,7 +6150,8 @@ export const getFundDetail = ({ dispatch }, param) => { //获取资金记录详�
     Vue.http({
         method: 'GET',
         url: apiUrl.clientList + '/fund/' + param.id,
-        emulateJSON: true,
+        mulateHTTP: false,
+        emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest"
         }
@@ -6163,33 +6165,24 @@ export const getFundDetail = ({ dispatch }, param) => { //获取资金记录详�
     });
 }
 export const getRequestRecord = ({ dispatch }, param) => { ///获取分期申请记录列表
-    console.log(param);
-    const body = {
-        bizId:param.bizId,
-        type:param.type,
-        bizType:param.bizType,
-        bizSubId:param.bizSubId
-    }
-    console.log(body);
     Vue.http({
-        method: 'POST',
-        url: apiUrl.commonList + param.url,
-        emulateHTTP: true,
-        body: body,
-        emulateJSON: false,
+        method: 'GET',
+        url: apiUrl.commonList + param.url+'/?bizId='+param.bizId+'&type='+param.type+'&bizType='+param.bizType+'&bizSubId='+param.bizSubId,
+        emulateJSON: true,
         headers: {
-            "X-Requested-With": "XMLHttpRequest",
-            'Content-Type': 'application/json;charset=UTF-8'
+            "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
-        dispatch(types.REQUEST_RECORD, param);
+        var obj = res.json().result;
+        console.log(res.json().result)
+        dispatch(types.REQUEST_RECORD, obj);
         param.loading=false;
     }, (res) => {
         console.log('fail');
         param.loading=false;
     });
 }
-export const getProductSupplier = ({ dispatch }, param) => { //有产品的供应商列表
+export const getProductSupplier = ({ dispatch }, param) => { //获取有产品的供应商列表
     param.loading = true;
     var url = apiUrl.clientList +'/customer/product/byBreed'+ '?breedId=' + param.breedId;
     Vue.http({
@@ -6206,6 +6199,64 @@ export const getProductSupplier = ({ dispatch }, param) => { //有产品的供�
             itemHistory[i].show = false;
         }
         dispatch(types.ITEM_SUPPLIER_LIST, itemHistory);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+export const getBankList = ({ dispatch }, param) => { //获取银行数据
+    param.loading = true;
+    var url = apiUrl.clientList +'/customer/product/byBreed';
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var bank = res.json().result;
+        /*for (var i in itemHistory) {
+            itemHistory[i].checked = false;
+            itemHistory[i].show = false;
+        }*/
+        if (param.payName) {
+            for (var i in res.json().result) {
+                if (res.json().result[i].cname == param.payName) {
+                    const object = {
+                        id: res.json().result[i].id,
+                        paySubName: param.paySubName,
+                        loading: false
+                    }
+                    console.log(object);
+                    return getBankBranchList({ dispatch }, object);
+                }
+            }
+        }
+        dispatch(types.BANK_LIST, bank);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+export const getBankBranchList = ({ dispatch }, param) => { //获取银行支行的数据
+    param.loading = true;
+    if (!param.id) {
+        param.id = '';
+    }
+    var url = apiUrl.clientList +'/customer/product/byBreed'+'&country=' + param.id;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var branch = res.json().result;
+        dispatch(types.BANK_BRANCH_LIST, branch);
         param.loading = false;
     }, (res) => {
         console.log('fail');

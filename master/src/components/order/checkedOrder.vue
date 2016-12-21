@@ -19,7 +19,7 @@
         <table class="table table-hover table_color table-striped " v-cloak id="tab">
             <thead>
                 <tr>
-                    <!-- <th>{{$t('static.order_no')}}</th>
+                  <!-- <th>{{$t('static.order_no')}}</th>
                     <th>{{$t('static.order_type')}}</th>
                     <th>{{$t('static.order_source')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
@@ -34,7 +34,8 @@
                     <th>{{$t('static.order_status')}}</th>
                     <th>{{$t('static.review_status')}}</th>
                     <th>{{$t('static.currency')}}</th>
-                    <th>{{$t('static.payment_method')}}</th> -->
+                    <th>{{$t('static.payment_method')}}</th> 
+                  -->
                       <th>{{$t('static.transcation')}}</th>
                       <th>{{$t('static.order_type')}}</th>
                       <th>{{$t('static.trading_patterns')}}</th>
@@ -56,7 +57,7 @@
             </thead>
             <tbody>
                 <tr v-for="item in initSellOrderlist"  v-cloak>
-                  <!-- <td><a @click="clickOn({
+                <!-- <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
                                 loading:false,
@@ -88,7 +89,8 @@
                   <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
                   <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
                   <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
-                  <td v-if="item.payWay==null">其他</td> -->
+                  <td v-if="item.payWay==null">其他</td> 
+                -->
                   <td>{{item.ctime}}</td>
                   <td v-if="item.type==1">{{$t('static.sell')}}</td>
                   <td v-if="item.type==0">{{$t('static.purchase')}}</td>
@@ -116,6 +118,7 @@
                   <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
                   <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
                   <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
+                  <td v-if="item.payWay==4">WeChat</td>
                   <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">未支付</td>
                   <td v-if="item.orderStatus==30">已支付，等待审核</td>
                   <td v-if="item.orderStatus==40">已审核</td>

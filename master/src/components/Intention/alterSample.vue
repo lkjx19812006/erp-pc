@@ -227,7 +227,7 @@
 	            </div>
 	           	<div class="edit_footer">
 		            <button type="button" class="btn btn-default btn-close" @click="param.send = false">{{$t('static.cancel')}}</button>
-		            <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.items.length>0"  @click="createOrUpdateIntlIntention()">{{$t('static.confirm')}}</button>
+		            <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.items.length>0"  @click="createOrUpdateIntlIntention(param)">{{$t('static.confirm')}}</button>
 		            <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.confirm')}}</button>
 		        </div>
 	        </validator>
@@ -435,7 +435,7 @@ export default{
           this.param.items[this.updateParam.index].cunit=this.breedInfo.cunit.split(',')[1],
           this.param.items[this.updateParam.index].unit=this.breedInfo.cunit.split(',')[0],
           /*this.param.items[this.updateParam.index].sourceType=this.breedInfo.sourceType,*/
-          this.param.items[this.updateParam.index].status=this.breedInfo.status,
+          this.param.items[this.updateParam.index].status=1,
           /*this.param.items[this.updateParam.index].orderId=this.breedInfo.id,*/
           this.breedInfo.status = 0;
           this.updateParam.show = false;
@@ -478,13 +478,23 @@ export default{
                   cunit:'',
                   unit:'',
                   description:'',
-                  status:''
+                  status:1
               });
               this.addParam.show = true;
           }  
           
         },
-        createOrUpdateIntlIntention:function(){
+        createOrUpdateIntlIntention:function(item){
+        	console.log(item)
+        	console.log(item.items[0].status)
+        	if(this.param.address==item.address){
+        		item.address='';
+        	}
+        	this.param.country = this.country.cname;
+            this.param.province = this.province.cname;
+            this.param.city = this.city.cname;
+            this.param.district = this.district.cname;
+            this.param.address = this.country.cname+' '+this.province.cname+' '+this.city.cname+' '+this.district.cname + ' '+item.address;
 	        this.param.send = false;
 	        //将this.param.items补全
 	        console.log(this.param.items.length);
@@ -509,7 +519,9 @@ export default{
 	        })
 	        console.log(this.param.items);
 	        this.param.callback=this.param.callback;
+	        console.log(this.param)
 	        this.alterSample(this.param);
+	        
       },
 	},
 	events:{
