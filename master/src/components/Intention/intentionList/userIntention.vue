@@ -90,6 +90,27 @@
               </dl>
 
               <dl class="clear left transfer" style="margin-left:50px">
+                 <dt class="left transfer marg_top">意向来源：</dt>
+                 <div class="btn-group">
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inType===''}" @click="selectInType('')">
+                        全部
+                     </button>
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inType===0}" @click="selectInType(0)">
+                        抓取
+                     </button>
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inType===1}" @click="selectInType(1)">
+                        客户录入
+                     </button>
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inType===2}" @click="selectInType(2)">
+                        客服录入
+                     </button>
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inType===3}" @click="selectInType(3)">
+                        业务员录入
+                     </button>
+                 </div>
+              </dl>
+
+              <dl class="clear left transfer" style="margin-left:50px">
                  
                  <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
               </dl>
@@ -406,6 +427,7 @@ export default {
                 advance:'',  //预付比例
                 intl:'',  //是否国际
                 validate:'',  //审核状态
+                inType:'',    //意向来源
                 onSell:'', //上架状态
                 total:0,
                 breedId:'',
@@ -537,6 +559,10 @@ export default {
         },
         selectValidate:function(validate){
             this.loadParam.validate = validate;
+            this.selectSearch();
+        },
+        selectInType:function(inType){
+            this.loadParam.inType = inType;
             this.selectSearch();
         },
         intentionAudit:function(){

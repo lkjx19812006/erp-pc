@@ -2,6 +2,7 @@
   <create-model :param="createParam" v-if="createParam.show"></create-model>
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
   <supplydetail-model :param="supplyParam" v-if="supplyParam.show"></supplydetail-model>
+  <createfiles-model :param="cfilesParam" v-if="cfilesParam.show"></createfiles-model>
   <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
   <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
@@ -105,6 +106,7 @@
               <th>创建时间</th>
               <th>价格过期时间</th>
               <th>备注</th>
+              <th>上传产品文件</th>
               <th>操作</th>
             </tr>
         </thead>
@@ -138,6 +140,20 @@
           <td>{{item.ctime}}</td>
           <td>{{item.duedate}}</td>
           <td>{{item.comments}}</td>
+          <td @click="createfiles({
+               bizId:item.id,
+               show:true,
+               title:'新建产品文件',
+               fileType:'',
+               bizType:'product_license',
+               description:'',
+               path:'',
+               link:uploadFiles,
+               url:'/customer/file/',
+               key:'files'
+             })">
+             <a class="operate"><img src="/static/images/uploadPro.png" height="18" width="67"/></a>
+          </td>
           <td  @click="modifySupply({
                    sub:$index,
                    id:item.id,
@@ -170,7 +186,6 @@
                <a class="operate"><img src="/static/images/edit.png"   alt="编辑" title="编辑"/>
                </a>
           </td>
-          
         </tr>
         </tbody>
       </table>
@@ -187,6 +202,7 @@
   import alterinfoModel  from '../supply/createProduct'
   import searchModel  from  '../clientRelate/searchModel'
   import supplydetailModel from  '../clientRelate/clientDetail'
+  import createfilesModel from  '../clientRelate/createFiles'
   import common from  '../../common/common'
   import changeMenu from '../../components/tools/tabs/tabs.js'
   import tipsModel from '../tips/tipDialog'
@@ -198,6 +214,7 @@
     getProductList,
     updateProduct,
     saveCreate,
+    uploadFiles,
     newProduct,
     getBreedDetail
   } from '../../vuex/actions'
@@ -207,6 +224,7 @@
       pagination,
       detailModel,
       createModel,
+      createfilesModel,
       alterinfoModel,
       searchModel,
       supplydetailModel,
@@ -221,6 +239,7 @@
         getProductList,
         updateProduct,
         saveCreate,
+        uploadFiles,
         newProduct,
         getBreedDetail
       }
@@ -251,6 +270,9 @@
         },
         createParam:{
           show: false
+        },
+        cfilesParam:{
+          show:false
         },
         searchParam:{
           show:false,
@@ -286,6 +308,9 @@
       },
       selectBreed:function(){
          this.breedParam.show=true;
+      },
+      createfiles:function(param){
+         this.cfilesParam = param;
       },
       reset:function(){
         this.loadParam.name = "";
@@ -395,7 +420,7 @@
   }
    #table_box  table th,#table_box  table td{
     width: 121px;
-    min-width:121px;
+    min-width:110px;
   }
   .service-nav {
     padding: 23px 30px 0px 4px;

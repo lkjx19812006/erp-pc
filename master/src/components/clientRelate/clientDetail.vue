@@ -102,6 +102,7 @@
       		                                     QQ:'qq',
       		                                     webchart:'微信',
       		                                     link:createCustomer,
+                                               list:initClientDetail.contacts.arr,
       		                                     url:'/customer/contact',
       		                                     key:'contacts'
       		                                     })">{{$t('static.new')}}</button>
@@ -154,6 +155,7 @@
                                                            wechart:item.wechart,
                                                            main:item.main,
                                                            link:updateContact,
+                                                           list:initClientDetail.contacts.arr,
                                                            url:'/customer/contact',
                                                            key:'contacts',
                                                            headline:'clientDetail'

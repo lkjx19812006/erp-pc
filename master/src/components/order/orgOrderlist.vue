@@ -147,7 +147,7 @@
                   <td v-if="item.validate==2" style="background:green;color:#fff">{{$t('static.approved')}}</td>
                   <td v-if="item.validate==-2" style="background:red;color:#fff">{{$t('static.unapproved')}}</td>
                   <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
-                  <td v-if="item.validate==1">{{$t('static.approving')}}</td>
+                  <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
                  <!--  <td @click="editClick($index)">
                      <img height="24" width="24" src="/static/images/default_arrow.png" />
                      <div class="component_action" v-show="item.show">

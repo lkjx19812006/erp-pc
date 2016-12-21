@@ -2230,7 +2230,7 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
         pinyin: data.pinyin,
         eName: data.eName,
         lName: data.lName,
-        icon: data.path,
+        icon: data.icon,
         url: data.url
     }
 
@@ -2247,6 +2247,7 @@ export const saveBreed = ({ dispatch }, data) => { //新增药材信息
     }).then((res) => {
         console.log('添加成功')
         data.id = res.json().result.id;
+        data.code = res.json().result.code;
         console.log(data);
         data.callback(res.json().msg);
         if(res.json().code==200){
@@ -2433,7 +2434,6 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         if (search == 'classify' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&classify=' + param.classify
         }
-
         if (search == 'phone' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&phone=' + param.phone
         }
@@ -3683,6 +3683,9 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         } 
         if (search == 'validate' && param[search] !== '') {
             url += '&validate=' + param.validate
+        }
+        if (search == 'inType' && param[search] !== '') {
+            url += '&inType=' + param.inType
         }
         if (search == 'onSell' && param[search] !== '') {
             url += '&onSell=' + param.onSell

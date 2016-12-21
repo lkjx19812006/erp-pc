@@ -429,7 +429,7 @@ export default {
           var saith = 0;
           if(this.param.preferential&&this.param.preferential!=''){
              saith=parseFloat(this.param.preferential);
-             saith +=1;
+             saith = (saith*1000+1000)/1000;
              this.param.preferential = saith;
           }else{
              this.param.preferential=0;
@@ -453,7 +453,7 @@ export default {
           var saith = 0;
           if(this.param.incidentals&&this.param.incidentals!=''){
              saith=parseFloat(this.param.incidentals);
-             saith +=1;
+             saith = (saith*1000+1000)/1000;
              this.param.incidentals = saith;
           }else{
              this.param.incidentals=0;
@@ -495,7 +495,10 @@ export default {
             this.empNameParam.show=true;
         },
         addBreed:function(){
-          
+          //价格只能输入之多两位小数
+          if((/\.\d{3,}/).test(this.breedInfo.price)){
+              this.breedInfo.price = this.breedInfo.price.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
+          }
           this.param.goods[this.param.goods.length-1].breedId = this.breedInfo.breedId;
           this.param.goods[this.param.goods.length-1].breedName = this.breedInfo.breedName;
           this.param.goods[this.param.goods.length-1].title = this.breedInfo.title;
@@ -568,6 +571,10 @@ export default {
             this.addParam.show = false; 
         },
         modifyBreed:function(){
+          //价格只能输入之多两位小数
+          if((/\.\d{3,}/).test(this.breedInfo.price)){
+              this.breedInfo.price = this.breedInfo.price.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
+          }
           this.param.goods[this.updateParam.index].breedId=this.breedInfo.breedId,
           this.param.goods[this.updateParam.index].breedName=this.breedInfo.breedName,
           this.param.goods[this.updateParam.index].title=this.breedInfo.title,
@@ -580,8 +587,8 @@ export default {
           this.param.goods[this.updateParam.index].sourceType=this.breedInfo.sourceType,
           this.breedInfo.status = 0;
           this.updateParam.show = false;
-          console.log(this.param.goods[this.updateParam.index].price)
-          console.log(this.param.goods[this.updateParam.index].number)
+          console.log(this.param.goods[this.updateParam.index].price);
+          console.log(this.param.goods[this.updateParam.index].number);
           this.altogether += (parseFloat(this.param.goods[this.updateParam.index].number)*parseFloat(this.param.goods[this.updateParam.index].price)*100)/100
           console.log(this.altogether)
         },
@@ -608,7 +615,26 @@ export default {
             this.createOrder(this.param);
         },
         changeTotal:function(){
-            this.param.total = (parseFloat(this.altogether)*100+parseFloat(this.param.incidentals)*100 - parseFloat(this.param.preferential)*100)/100;
+            var patt=new RegExp(/\.\d{3,}/);
+            if(!this.param.incidentals){
+               this.param.incidentals=0
+            }
+            if(!this.param.preferential){
+               this.param.preferential=0
+            }
+            if(patt.test(this.param.incidentals)){   //如果超过两位小数，则只保留前两位小数
+                this.param.incidentals = this.param.incidentals.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
+            }
+            if(patt.test(this.param.preferential)){   //如果超过两位小数，则只保留前两位小数
+                this.param.preferential = this.param.preferential.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
+            }
+            if(patt.test(this.altogether)){   //如果超过两位小数，则只保留前两位小数
+                this.altogether = this.altogether + '';
+                this.altogether = this.altogether.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
+            }
+            console.log(this.param.incidentals);
+            //this.param.incidentals.replace(/^(\-)*(\d+)\.(\d\d)*$/,'$1$2.$3');
+            this.param.total = (parseFloat(this.altogether)*1000+parseFloat(this.param.incidentals)*1000 - parseFloat(this.param.preferential)*1000)/1000;
         }
     },
     watch:{
