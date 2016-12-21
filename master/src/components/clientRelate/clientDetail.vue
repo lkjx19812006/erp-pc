@@ -1017,12 +1017,13 @@
                             </div>
                             <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>{{$t('static.business_scope')}}</label>
-                                <input type="text" class="form-control" v-model="initClientDetail.bizScope" value="{{initClientDetail.bizScope}}" disabled="disabled" />
-                              </div>
-                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label>{{$t('static.registered_time')}}</label>
                                 <input type="text" class="form-control" v-model="initClientDetail.ctime" value="{{initClientDetail.ctime}}" disabled="disabled" />
+                              </div>
+                            
+                              <div class="client-detailInfo  col-md-12">
+                                <label>{{$t('static.business_scope')}}</label>
+                                <textarea type="text" class="form-control" v-model="initClientDetail.bizScope" value="{{initClientDetail.bizScope}}" disabled="disabled" rows="5" style="resize: none"></textarea>
                               </div>
                             </div>
                             <!-- <div class="client-detailInfo">

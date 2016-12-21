@@ -1,13 +1,4 @@
 <template>
-    <create-model :param="createParam" v-if="createParam.show"></create-model>
-    <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
-    <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
-    <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
-    <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
-    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
-    <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-    
     <div>
         <div class="service-nav">
             <div class="clear" style="margin-top:3px;"> 
@@ -33,42 +24,31 @@
                 </dl>
 
                 <dl class="clear left transfer" >
-                    <div class="client-detailInfo col-xs-6">
-                        <dt class="left transfer marg_top">开始时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
+                    <!-- <div class="client-detailInfo col-xs-6"> -->
+                    <dt class="left transfer marg_top">开始时间：</dt>
+                    <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
+                    </mz-datepicker>
+                    <!-- </div> -->
                 </dl>
 
                 <dl class="clear left transfer" >
-                    <div class="client-detailInfo col-xs-6">
-                        <dt class="left transfer marg_top">结束时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
+                    <!-- <div class="client-detailInfo col-xs-6"> -->
+                    <dt class="left transfer marg_top">结束时间：</dt>
+                    <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
+                    </mz-datepicker>
+                    <!-- </div> -->
                 </dl>
-
-               
-                
-                
                 <dd class="left" style="margin-left:20px">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
                 </dd>
 
-                 <dd class="left" style="margin-left:20px" >
+                <dd class="left" style="margin-left:20px" >
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
                 </dd>
                 
                 <dd class="pull-right" style="margin-right:20px">
-                  
                   <button type="button" class="btn btn-primary" @click="selectSearch()">刷新</button>
                 </dd>
-
-            </div>
-
-            <div class="clear" style="margin-top:3px;"> 
-                 
-
             </div>
         </div>
         <div class="order_table" id="table_box">
@@ -90,7 +70,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                   
                     <tr v-for="item in initCallRecordList">
                        <td>{{item.emploeeName}}</td>
                        <td>{{item.workno}}</td>
@@ -113,15 +92,6 @@
 <script>
 import filter from '../../../filters/filters'
 import pagination from '../../../components/pagination'
-import detailModel from '../../../components/clientRelate/clientDetail'
-import createModel  from '../../../components/user/userTransfer'
-import deletebreedModel  from '../../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
-import alterinfoModel  from '../../../components/clientRelate/clientUpdate'
-import transferModel   from '../../../components/user/employeeOrOrg'
-import tipsdialogModel  from '../../../components/tips/tipDialog'
-import searchModel  from  '../../../components/clientRelate/searchModel'
-import auditDialog from '../../../components/tips/auditDialog'
-import vSelect from '../../tools/vueSelect/components/Select'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
@@ -134,15 +104,8 @@ import {
 export default {
     components: {
         pagination,
-        detailModel,
-        createModel,
-        deletebreedModel,
-        alterinfoModel,
-        transferModel,
-        tipsdialogModel,
-        searchModel,
-        auditDialog,
-        vSelect
+        changeMenu,
+        common
     },
     vuex: {
         getters: {
@@ -168,9 +131,6 @@ export default {
                 startTime:'',
                 endTime:''
             },
-         
-         
-           
         
         }
     },
@@ -250,7 +210,7 @@ export default {
     min-width: 115px;
 }
 .service-nav {
-    padding: 23px 30px 0px 4px;
+    padding: 35px 10px 0px 4px;
 }
 dl{
     margin-bottom: 5px;

@@ -41,12 +41,12 @@
             </div>
         </div>
         <div class="clearfix" style="margin-right: 10px">
-            <div class="click_change pull-left">
-                <span class="date_active" v-bind:class="{ 'date_active': this.loadParam.inquire===''}" @click="clickday('')">{{$t('static.please_select')}}</span>
-                <span v-bind:class="{ 'date_active': this.loadParam.inquire===0}" @click="clickday(0)">{{$t('static.not_inquiry')}}</span>
-                <span v-bind:class="{ 'date_active':  this.loadParam.inquire===1}" @click="clickday(1)">{{$t('static.inquiry')}}</span>
-                <span v-bind:class="{ 'date_active':  this.loadParam.inquire===2}" @click="clickday(2)">{{$t('static.quotation')}}</span>
-                <span v-bind:class="{ 'date_active':  this.loadParam.inquire===3}" @click="clickday(3)">{{$t('static.quo_complete')}}</span>
+            <div class="btn-group pull-left">
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inquire===''}" @click="clickday('')">{{$t('static.please_select')}}</button>
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inquire===0}" @click="clickday(0)">{{$t('static.not_inquiry')}}</button>
+                <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===1}" @click="clickday(1)">{{$t('static.inquiry')}}</button>
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===2}" @click="clickday(2)">{{$t('static.quotation')}}</button>
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===3}" @click="clickday(3)">{{$t('static.quo_complete')}}</button>
             </div>
             <button class="btn btn-primary pull-right transfer" @click="intentionSearch()">{{$t('static.refresh')}}</button>  
             <button class="btn btn-default pull-right" @click="createIntention()">{{$t('static.new')}}</button>
@@ -549,7 +549,7 @@ export default {
 }
 .service-nav{
     padding-left: 0;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
 }
 .click_change{
     text-align: left;

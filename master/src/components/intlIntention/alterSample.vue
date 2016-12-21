@@ -33,7 +33,7 @@
 				                	<td>{{item.location}}</td>
 				                	<td>{{item.spec}}</td>
 				                	<td>{{item.number}}</td>
-				                	<td>{{item.cunit}}</td>
+				                	<td>{{item.unit | Unit}}</td>
 				                	<td>{{item.description}}</td>
 				                	<td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
 	                                <td v-else>{{$t('static.edit')}}</td>
@@ -58,20 +58,9 @@
 	                                </div>
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
-	                                     <select v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}" @change="test()">
-	                                     	<option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}({{item.ename}})</option>
+	                                     <select v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" @change="test()">
+	                                     	<option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}({{item.ename}})</option>
 	                                     </select>
-	                                     <!-- <input type="text" v-show="!breedParam.id" v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" placeholder="请先选择一个品种"/>
-	                                     <div type="text" class="edit-input" v-if="breedParam.id">
-	                                         <input-select
-	                                           :value.sync="breedInfo.cunit"
-	                                           :prevalue="breedInfo.cunit"
-	                                           :options="initBreedDetail.units.arr"
-	                                           placeholder="单位"
-	                                           label="name"
-	                                         >
-	                                         </input-select>
-	                                     </div> -->
 	                                </div>      
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.quality')}}</label>
@@ -156,7 +145,7 @@
 	                    </div>
 	                    <div class="client-detailInfo  col-md-6 col-xs-12">
                               <label class="editlabel">{{$t('static.country')}}<span class="system_danger" v-if="$validation.country.required">{{$t('static.required')}}</span></label>
-                              <input type="text" v-show="false" v-model="country.cname" v-validate:country="['required']">
+                              <input type="text" v-show="false" v-model="country.cnameEn" v-validate:country="['required']">
                               <div type="text" class="edit-input">
                                   <v-select
                                      :debounce="250"
@@ -164,7 +153,7 @@
                                      :on-change="selectProvince"
                                      :options="initCountrylist"
                                      placeholder="国家/Country"
-                                     label="cname"
+                                     label="cnameEn"
                                     >
                                    </v-select>
                              </div>
@@ -187,19 +176,20 @@
                           <div class="client-detailInfo  col-md-6 col-xs-12">
                               <label class="editlabel">{{$t('static.city')}}<!-- <span class="system_danger" v-if="$validation.city.required">{{$t('static.required')}}</span> --></label>
                               <input type="text" class="form-control edit-input"  v-model="param.city" />
-                              <!-- <input type="text" v-show="false" v-model="city.cname" v-validate:city="['required']">
-                              <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
-                              <div v-if="province.cname" type="text" class="edit-input">
-                                  <v-select
-                                       :debounce="250"
-                                       :value.sync="city"
-                                       :on-change="selectDistrict"
-                                       :options="initCitylist"
-                                       placeholder="市"
-                                       label="cname"
-                                  >
-                                  </v-select>
-                              </div> -->
+	                            <!-- <input type="text" v-show="false" v-model="city.cname" v-validate:city="['required']">
+	                              <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
+	                              <div v-if="province.cname" type="text" class="edit-input">
+	                                  <v-select
+	                                       :debounce="250"
+	                                       :value.sync="city"
+	                                       :on-change="selectDistrict"
+	                                       :options="initCitylist"
+	                                       placeholder="市"
+	                                       label="cname"
+	                                  >
+	                                  </v-select>
+	                              </div>
+                             	 -->
                           </div>
                           <!-- <div class="client-detailInfo  col-md-6 col-xs-12">
                               <label class="editlabel">{{$t('static.area')}}<span class="system_danger" v-if="$validation.district.required">必填项</span></label>
@@ -228,7 +218,7 @@
 	            </div>
 	           	<div class="edit_footer">
 		            <button type="button" class="btn btn-default btn-close" @click="param.send = false">{{$t('static.cancel')}}</button>
-		            <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.items.length>0"  @click="createOrUpdateIntlIntention()">{{$t('static.confirm')}}</button>
+		            <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.items.length>0"  @click="createOrUpdateIntlIntention(param)">{{$t('static.confirm')}}</button>
 		            <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.confirm')}}</button>
 		        </div>
 	        </validator>
@@ -239,7 +229,7 @@
 import pagination from '../pagination'
 import vSelect from   '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
-import searchbreedModel  from './breedsearch'
+import searchbreedModel  from '../Intention/breedsearch'
 import searchcustomerModel  from '../Intention/clientname'
 import {
     initCustomerlist,
@@ -290,7 +280,6 @@ export default{
               location:'',
               spec:'',
               number:'',
-              cunit:'',
               unit:'',
               description:'',
               id:''
@@ -310,7 +299,7 @@ export default{
                 customerPhone:''
             },
             country:{
-              cname:'',
+              cnameEn:'',
               id:''
             },
             province:{
@@ -379,11 +368,6 @@ export default{
               this.getDistrictList(this.city);
             }
         },
-        test:function(){
-        	console.log(this.breedInfo.cunit)
-        	/*this.breedInfo.unit = this.unit.unit;
-        	this.breedInfo.cunit = unit.cunit;*/
-        },
 		employNameSearch: function() {
             this.getClientList(this.loadParam);
         },
@@ -408,7 +392,6 @@ export default{
           this.breedInfo.location=this.param.items[index].location,
           this.breedInfo.spec=this.param.items[index].spec,
           this.breedInfo.number=this.param.items[index].number,
-          this.breedInfo.cunit=this.param.items[index].cunit,
           this.breedInfo.unit=this.param.items[index].unit,
           this.breedInfo.description=this.param.items[index].description,
           this.updateParam.show = true;
@@ -433,10 +416,9 @@ export default{
           this.param.items[this.updateParam.index].spec=this.breedInfo.spec,
           this.param.items[this.updateParam.index].description=this.breedInfo.description,
           this.param.items[this.updateParam.index].number=this.breedInfo.number,
-          this.param.items[this.updateParam.index].cunit=this.breedInfo.cunit.split(',')[1],
-          this.param.items[this.updateParam.index].unit=this.breedInfo.cunit.split(',')[0],
+          this.param.items[this.updateParam.index].unit=this.breedInfo.unit,
           /*this.param.items[this.updateParam.index].sourceType=this.breedInfo.sourceType,*/
-          this.param.items[this.updateParam.index].status=this.breedInfo.status,
+          this.param.items[this.updateParam.index].status=1,
           /*this.param.items[this.updateParam.index].orderId=this.breedInfo.id,*/
           this.breedInfo.status = 0;
           this.updateParam.show = false;
@@ -449,8 +431,7 @@ export default{
           this.param.items[this.param.items.length-1].spec = this.breedInfo.spec;
           this.param.items[this.param.items.length-1].description = this.breedInfo.description;
           this.param.items[this.param.items.length-1].number = this.breedInfo.number;
-          this.param.items[this.param.items.length-1].cunit = this.breedInfo.cunit.split(',')[1];
-          this.param.items[this.param.items.length-1].unit = this.breedInfo.cunit.split(',')[0];
+          this.param.items[this.param.items.length-1].unit = this.breedInfo.unit;
           this.param.items[this.param.items.length-1].status = 1;
 
           console.log(this.param.items[this.param.items.length-1]);
@@ -467,7 +448,6 @@ export default{
               this.breedInfo.spec='';
               this.breedInfo.description='';
               this.breedInfo.number='';
-              this.breedInfo.cunit='';
               this.breedInfo.unit='';
               this.param.items.push({
                   breedId:'',
@@ -476,17 +456,21 @@ export default{
                   location:'',
                   spec:'',
                   number:'',
-                  cunit:'',
                   unit:'',
                   description:'',
-                  status:''
+                  status:1
               });
               this.addParam.show = true;
           }  
           
         },
-        createOrUpdateIntlIntention:function(){
+        createOrUpdateIntlIntention:function(item){
 	        this.param.send = false;
+        	if(this.param.address==item.address){
+        		item.address='';
+        	}
+	        this.param.country =this.country.cnameEn;
+	        this.param.address = this.country.cnameEn+' '+this.province.cname+' '+this.city.cname+' '+this.district.cname + ' '+item.address;
 	        //将this.param.items补全
 	        console.log(this.param.items.length);
 	        console.log(this.param.itemsBack.length);
@@ -516,9 +500,14 @@ export default{
 	events:{
         breed:function(breed){
         	console.log(breed)
-            this.breedInfo.breedName = breed.breedName;
+        	if(breed.eName==null){
+	            this.breedInfo.breedName = breed.breedName;
+	            this.breedParam.breedName = breed.breedName; 
+          	}else{
+	            this.breedParam.breedName = breed.eName;
+	            this.breedInfo.breedName = breed.eName;
+          	} 
             this.breedInfo.breedId = breed.breedId;
-            this.breedParam.breedName = breed.breedName;
             this.breedParam.id = breed.breedId;
             console.log(this.breedParam.id)
         },
@@ -548,7 +537,7 @@ export default{
           this.countryParam.province=this.param.province;
           this.countryParam.city=this.param.city;
           this.countryParam.district=this.param.district;
-          this.country.cname=this.param.country;
+          this.country.cnameEn=this.param.country;
           this.province.cname=this.param.province;
           this.city.cname=this.param.city;
           this.district.cname=this.param.district;

@@ -83,6 +83,7 @@
           <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
           <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
           <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
+          <td v-if="item.payWay==4">WeChat</td>
           <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">未支付</td>
           <td>{{$t('static.wait_payment')}}</td>
           <td v-if="item.sourceType==0">交易员新建</td>

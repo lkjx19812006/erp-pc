@@ -41,7 +41,7 @@ Vue.validator('money', function (val) {    //单价
 });
 
 Vue.validator('quantity', function (val) {    //数量
-  return (/^(([1-9]\d*)|0)(\.\d{1,4})?$/.test(val));
+  return (/^([\+]?([1-9]\d*)|0)(\.\d{1,4})?$/.test(val));
 });
 
 Vue.validator('wechart', function (val) {    //微信

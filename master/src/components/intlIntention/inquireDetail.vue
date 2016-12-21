@@ -173,7 +173,7 @@
                                                 <td>{{item.exchangeRate}}</td>
                                                 <td>{{item.offerNumber}}（{{item.unit | Unit}}）</td>
                                                 <td><a style="cursor:pointer" @click="clickOn({
-                                                      id:item.id,
+                                                      id:item.supplier,
                                                       sub:$index,
                                                       show:true,
                                                       name:item.supplierName,
@@ -371,13 +371,15 @@ import tipsModel from '../../components/tips/tipDialog'
 import supplyModel from '../../components/clientRelate/clientDetail'
 import{
     initIntlIntentionDetail,
-    initLogin
+    initLogin,
+    initCurrencylist
 } from '../../vuex/getters'
 import {
     editintentInfo,
     getIntlIntentionDetail,
     delIntlIntentionOtherOffer,
-    delIntlIntentionFiles
+    delIntlIntentionFiles,
+    getCurrencyList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -516,14 +518,15 @@ export default {
     vuex: {
         getters:{
             initIntlIntentionDetail,
-            initLogin
-            
+            initLogin,
+            initCurrencylist
         },
         actions:{
             editintentInfo,
             getIntlIntentionDetail,
             delIntlIntentionOtherOffer,
-            delIntlIntentionFiles
+            delIntlIntentionFiles,
+            getCurrencyList
         }
     },
     methods: {
@@ -537,9 +540,9 @@ export default {
           }
           this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show = !this.$store.state.table.basicBaseList.intlIntentionDetail[param.crete].show;
       },
-      /*clickOn: function(item) {
+      clickOn: function(item) {
         this.supplyParam = item;
-      },*/
+      },
      offer:function(){
         this.offerParam.show = true;
      },
@@ -579,6 +582,8 @@ export default {
         this.editOfferParam.supplierName = item.supplierName;
         this.editOfferParam.origCurrency = item.origCurrency;
         this.editOfferParam.exchangeRate = item.exchangeRate;
+/*        this.editOfferParam.countleft = this.initCurrencylist[item.origCurrency-1].rate;
+        this.editOfferParam.countright = this.initCurrencylist[item.currency-1].rate;*/
         this.editOfferParam.lastIndex = this.param.index;    //列表页，询价的索引，报价后将inquire改为=2
         this.editOfferParam.index = index;   //条目的索引
         this.editOfferParam.show = true;
@@ -637,7 +642,6 @@ export default {
         this.editOtherOfferParam.callback = this.offerCallback;
      },
      editOtherOffer:function(item,index){
-        
         this.editOtherOfferParam.id=item.id;
         this.editOtherOfferParam.intentionId=item.intentionId;
         this.editOtherOfferParam.inquireId=item.inquireId;
@@ -673,6 +677,7 @@ export default {
     created(){
       console.log(this.param);
        this.getIntlIntentionDetail(this.param);
+       this.getCurrencyList();
     },
     filter: (filter, {})
 }

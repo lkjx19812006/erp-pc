@@ -9,8 +9,9 @@
       <div class="order_search">
         <div class="clear">
             <div class="right">
-                <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
-                <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button> -->
+              <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
+                <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button>
+               -->
                 <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
             </div>
             <div class="clear left">
@@ -92,7 +93,7 @@
                     <th>{{$t('static.order_status')}}</th>
                     <th>{{$t('static.order_source')}}</th>
                     <th>{{$t('static.review_status')}}</th>
-                    <th></th> 
+                    <th>{{$t('static.handle')}}</th> 
                 </tr>
             </thead>
             <tbody>
@@ -127,6 +128,7 @@
                   <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
                   <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
                   <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
+                  <td v-if="item.payWay==4">WeChat</td>
                   <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">{{$t('static.none')}}</td>
                   <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
                   <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>

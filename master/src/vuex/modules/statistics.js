@@ -16,7 +16,9 @@ import {
     FUND_DETAIL_DATA,
     FINANCE_LIST,
     REQUEST_RECORD,
-    ITEM_SUPPLIER_LIST
+    ITEM_SUPPLIER_LIST,
+    BANK_LIST,
+    BANK_BRANCH_LIST
 } from '../mutation-types'
 
 const state = {
@@ -54,7 +56,9 @@ const state = {
     //分期申请历史记录
     recordList:[],
     //产品供应商
-    supplierList:[]
+    supplierList:[],
+    bankList:[],
+    bankBranchList:[]
 }
 const mutations = {
     [UNIT_LIST](state,data){ //常用单位
@@ -155,10 +159,17 @@ const mutations = {
         }
     },
     [REQUEST_RECORD](state,data){
+      console.log(data)
       state.recordList = data;
     },
     [ITEM_SUPPLIER_LIST](state,data){
        state.supplierList = data;
+    },
+    [BANK_LIST](state,data){
+      state.bankList = data;
+    },
+    [BANK_BRANCH_LIST](state,data){
+      state.bankBranchList = data;
     }
 
 }

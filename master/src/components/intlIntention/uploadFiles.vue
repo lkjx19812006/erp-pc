@@ -9,14 +9,14 @@
         </div>
         <div class="edit-model">
             <section class="editsection">
-                <div class="editpage-input">
-                    <label class="editlabel">{{$t('static.description')}}</label>
-                    <textarea style="width:100%;resize:none;border:1px solid #ddd;border-radius:5px;" rows="5" v-model="param.description">
-                    </textarea>
-                </div>
                 <div class="editpage-input clearfix">
                     <label class="editlabel">{{$t('static.file')}}</label>
                     <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="param.fileType" :param="imageParam" style="float:left;margin-left:15px;width:25%"></press-image>
+                </div>
+                <div class="editpage-input">
+                    <label class="editlabel">{{$t('static.description')}}</label>
+                    <textarea style="width:100%;resize:none;border:1px solid #ddd;border-radius:5px;" class="form-control" rows="5" v-model="param.description">
+                    </textarea>
                 </div>
             </section>
         </div>

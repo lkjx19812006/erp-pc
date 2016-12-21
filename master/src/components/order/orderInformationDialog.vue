@@ -281,12 +281,12 @@
                        <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
                    </div>
                     <div class="editpage-input col-md-6">
-                        <label class="editlabel">总价</label>
+                        <label class="editlabel">{{$t('static.total')}}</label>
                         <input type="text" class="form-control edit-input" v-model="param.total" readonly="true" />
                     </div>
                   <div class="editpage-input col-md-12">
                       <label class="editlabel">{{$t('static.comment')}}</label>
-                      <textarea rows="5" class="form-control" v-model="param.comments" value="{{param.comments}}" style="resize: none;width:100%;"></textarea>
+                      <textarea rows="5" class="form-control" v-model="param.comments" value="{{param.comments}}" style="resize:none;width:100%;"></textarea>
                   </div>
               </div>
           </div>

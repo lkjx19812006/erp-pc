@@ -571,7 +571,7 @@ export default {
             this.auditParam.blackComments=this.auditParam.auditComment;
             this.auditParam.customerIds=this.auditParam.arr;
             this.auditParam.auditComment='';
-            this.param.callback = this.supplierback;
+            this.auditParam.callback = this.supplierback;
             this.customerTransferBlacklist(this.auditParam);
           },
           supplierback:function(title){

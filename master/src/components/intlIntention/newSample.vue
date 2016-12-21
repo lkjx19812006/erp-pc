@@ -33,7 +33,7 @@
 				                	<td>{{item.location}}</td>
 				                	<td>{{item.spec}}</td>
 				                	<td>{{item.number}}</td>
-				                	<td>{{item.cunit}}</td>
+				                	<td>{{item.unit | Unit}}</td>
 				                	<td>{{item.description}}</td>
 				                	<td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
 	                                <td v-else>{{$t('static.edit')}}</td>
@@ -59,8 +59,8 @@
 	                                <div class="editpage-input col-md-6">
 	                                     <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
 	                                     <!-- <input type="text"  /> -->
-	                                     <select v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}">
-	                                     	<option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}({{item.ename}})</option>
+	                                     <select v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}">
+	                                     	<option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}({{item.ename}})</option>
 	                                     </select>
 	                                </div>  
 	                                <div class="editpage-input col-md-6">
@@ -106,12 +106,14 @@
 	                                        <div v-if="breedInfo.status==1" @click="cancelAddBreed()">{{$t('static.cancel')}}</div>
 	                                        <div v-if="breedInfo.status==2" @click="cancelModifyBreed()">{{$t('static.cancel')}}</div>
 	                                    </button>
+	                                    <button type="button" class="btn btn-confirm" v-show='false'>
+                                          <div  @click="addBreed()">{{$t('static.save')}}</div>
+                                      </button>
 	                                    <button type="button" class="btn btn-confirm" v-if="$inner.valid">
 	                                        <div v-if="breedInfo.status==1" @click="addBreed()">{{$t('static.save')}}</div>
 	                                        <div v-if="breedInfo.status==2" @click="modifyBreed()">{{$t('static.save')}}</div>
 	                                    </button>
 	                                    <button type="button" class="btn btn-confirm" v-else disabled="disabled">{{$t('static.save')}}</button>
-	                                    
 	                                </div>  
 	                             </div>
 	                       </div>  
@@ -145,7 +147,7 @@
 	                    </div>
 	                    <div class="client-detailInfo  col-md-6 col-xs-12">
                               <label class="editlabel">{{$t('static.country')}}<span class="system_danger" v-if="$validation.country.required">{{$t('static.required')}}</span></label>
-                              <input type="text" v-show="false" v-model="country.cname+country.nameEn" v-validate:country="['required']">
+                              <input type="text" v-show="false" v-model="country.cnameEn" v-validate:country="['required']">
                               <div type="text" class="edit-input">
                                   <v-select
                                      :debounce="250"
@@ -153,7 +155,7 @@
                                      :on-change="selectProvince"
                                      :options="initCountrylist"
                                      placeholder="国家/Country"
-                                     label="cname"
+                                     label="cnameEn"
                                     >
                                    </v-select>
                              </div>
@@ -228,7 +230,7 @@
 import pagination from '../pagination'
 import vSelect from   '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
-import searchbreedModel  from './breedsearch'
+import searchbreedModel  from '../Intention/breedsearch'
 import searchcustomerModel  from '../Intention/clientname'
 import {
     initCustomerlist,
@@ -276,7 +278,6 @@ export default{
               location:'',
               spec:'',
               number:'',
-              cunit:'',
               unit:'',
               description:'',
               id:''
@@ -297,7 +298,7 @@ export default{
             },
             country:{
               cname:'',
-              nameEn:'',
+              cnameEn:'',
               id:'',
             },
             province:{
@@ -410,7 +411,6 @@ export default{
           this.breedInfo.location=this.param.items[index].location,
           this.breedInfo.spec=this.param.items[index].spec,
           this.breedInfo.number=this.param.items[index].number,
-          this.breedInfo.cunit=this.param.items[index].cunit,
           this.breedInfo.unit=this.param.items[index].unit,
           this.breedInfo.description=this.param.items[index].description,
           this.updateParam.show = true;
@@ -434,8 +434,7 @@ export default{
           this.param.items[this.updateParam.index].location=this.breedInfo.location,
           this.param.items[this.updateParam.index].spec=this.breedInfo.spec,
           this.param.items[this.updateParam.index].number=this.breedInfo.number,
-          this.param.items[this.updateParam.index].cunit=this.breedInfo.cunit.split(',')[1],
-          this.param.items[this.updateParam.index].unit=this.breedInfo.cunit.split(',')[0],
+          this.param.items[this.updateParam.index].unit=this.breedInfo.unit,
           /*this.param.items[this.updateParam.index].sourceType=this.breedInfo.sourceType,*/
           this.param.items[this.updateParam.index].status=this.breedInfo.status,
           this.param.items[this.updateParam.index].description=this.breedInfo.description,
@@ -451,8 +450,7 @@ export default{
           this.param.items[this.param.items.length-1].spec = this.breedInfo.spec;
           this.param.items[this.param.items.length-1].description = this.breedInfo.description;
           this.param.items[this.param.items.length-1].number = this.breedInfo.number;
-          this.param.items[this.param.items.length-1].cunit = this.breedInfo.cunit.split(',')[1];
-          this.param.items[this.param.items.length-1].unit = this.breedInfo.cunit.split(',')[0];
+          this.param.items[this.param.items.length-1].unit = this.breedInfo.unit;
           /*this.param.items[this.param.items.length-1].sourceType = this.breedInfo.sourceType;*/
           console.log(this.param.items[this.param.items.length-1]);
           this.breedInfo.status = 0;
@@ -468,7 +466,6 @@ export default{
               this.breedInfo.spec='';
               this.breedInfo.number='';
               this.breedInfo.description='';
-              this.breedInfo.cunit='';
               this.breedInfo.unit='';
               this.param.items.push({
                   breedId:'',
@@ -477,7 +474,6 @@ export default{
                   location:'',
                   spec:'',
                   number:'',
-                  cunit:'',
                   description:'',
                   unit:''
               });
@@ -486,7 +482,7 @@ export default{
           
         },
         confirm:function(param){
-            this.param.country = this.country.cname;
+            this.param.country = this.country.cnameEn;
             this.param.province = '';
             /*this.param.city = this.city.cname;*/
             this.param.district = '';
@@ -499,9 +495,16 @@ export default{
 	events:{
         breed:function(breed){
         	console.log(breed)
-            this.breedInfo.breedName = breed.breedName;
+        	  if(breed.eName==null){
+	             this.breedInfo.breedName = breed.breedName;
+	             this.breedParam.breedName = breed.breedName; 
+	          }else{
+	            this.breedParam.breedName = breed.eName;
+	            this.breedInfo.breedName = breed.eName;
+	          } 
+            /*this.breedInfo.breedName = breed.breedName;*/
             this.breedInfo.breedId = breed.breedId;
-            this.breedParam.breedName = breed.breedName;
+            /*this.breedParam.breedName = breed.breedName;*/
             this.breedParam.id = breed.breedId;
             console.log(this.breedParam.id)
         },
