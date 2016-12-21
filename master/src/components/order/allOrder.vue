@@ -145,7 +145,7 @@
                   <td v-if="item.validate==2" style="background:green;color:#fff">{{$t('static.approved')}}</td>
                   <td v-if="item.validate==-2" style="background:red;color:#fff">{{$t('static.unapproved')}}</td>
                   <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
-                  <td v-if="item.validate==1">{{$t('static.approving')}}</td>
+                  <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
                   <td><a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
                      <img src="/static/images/orgcheck.png"  title="审核" alt="审核" />
                  </a></td>

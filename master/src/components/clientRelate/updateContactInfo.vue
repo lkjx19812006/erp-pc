@@ -1,4 +1,5 @@
 <template>
+    <tip-model :param="tipParam" v-if="tipParam.show"></tip-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -61,7 +62,7 @@
                 </div>
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show = false)">{{$t('static.save')}}</button>
+                    <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="save()">{{$t('static.save')}}</button>
                     <button type="button" class="btn  btn-confirm" v-else disabled="true">{{$t('static.save')}}</button>
                 </div>
             </form>
@@ -69,14 +70,40 @@
     </div>
 </template>
 <script>
+import tipModel from '../tips/tipDialog'
 export default {
     components: {
-
+        tipModel
     },
     props: ['param'],
     data() {
         return {
+            tipParam:{
+                show:false,
+                name:"该联系人姓名或电话已存在,请重新编辑",
+                alert:true,
+            }
         }
+    },
+    methods:{
+        save:function(){
+            if(this.param.list&&this.param.list.length>0){   
+                for(var i=0;i<this.param.list.length;i++){
+                    if(this.param.sub!=i&&(this.param.list[i].name==this.param.name||this.param.list[i].phone==this.param.phone)){
+                        this.tipParam.show = true;
+                        return ;
+                    }
+                }
+                this.param.link(this.param);
+                this.param.show = false
+            }else{
+                this.param.link(this.param);
+                this.param.show = false
+            }
+        }
+    },
+    created(){
+        console.log(this.param.sub);
     },
     route: {
         activate: function(transition) {

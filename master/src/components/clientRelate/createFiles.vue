@@ -80,7 +80,7 @@ export default {
 .modal_con{
     z-index: 1084;
     width: 600px;
-    height: 600px;
+    height: 650px;
 }
 .top-title {
     position: absolute;
