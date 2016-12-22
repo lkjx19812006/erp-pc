@@ -192,7 +192,7 @@
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
-                                                    <a class="operate" v-if="item.validate==0" @click="applyInfo({
+                                                    <a class="operate" v-if="item.validate==0&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,
