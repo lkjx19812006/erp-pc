@@ -651,6 +651,7 @@ export default {
             this.loadParam.breedName='';
             this.loadParam.customerPhone='';
             this.loadParam.location='';
+            this.loadParam.inType = '';
             this.getIntentionList(this.loadParam);
 
         },
