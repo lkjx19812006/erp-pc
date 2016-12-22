@@ -221,10 +221,6 @@
                 <input type="text" class="form-control edit-input" v-validate:cqq="['qq']" v-model="contacts[0].qq"/>
               </div>
             </div>
-            
-
-  
-
             <!-- 联系人信息 -->  
             <!-- <div v-if="contactshow">
               <div style="margin-top:25px;margin-left:30px;margin-bottom:15px;">

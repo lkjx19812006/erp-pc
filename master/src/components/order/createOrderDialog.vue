@@ -696,7 +696,7 @@ export default {
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
-    padding: 10px 30px 30px 30px;
+    padding: 10px 30px 70px 30px;
 }
 
 .editsection {
@@ -754,8 +754,7 @@ export default {
     border-top: 1px solid #ddd;
     text-align: right;
     padding: 10px 20px;
-    bottom:5px;
-    margin-top: 50px;
+    margin-top: 0px;
 }
 
 .edit_footer button {

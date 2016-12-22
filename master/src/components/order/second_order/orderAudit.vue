@@ -201,9 +201,7 @@ export default {
             payName:{
               name:''
             },
-            branches:{
-              name:''
-            },
+            paySubName:'',
             type:"image/jpeg,image/jpg,image/png",
             imageParam:{
                url:'/crm/api/v1/file/',
@@ -226,7 +224,8 @@ export default {
     methods: {
         selectProvince:function(){
             console.log('selectProvince');
-            this.branches = '';
+            this.paySubName = '';
+            console.log(this.paySubName)
             if(this.payName!=''&&this.payName!=null){
               this.getBankBranchList(this.payName);
             }
