@@ -18,9 +18,9 @@
             </div> -->
              <section class="editsection" v-cloak>
                 <input type="hidden"  class="form-control edit-input" value="{{param.id}}" />
-                <div style="margin-top:25px">
+                <div style="margin-top:5px;margin-bottom: 5px;">
                    <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
-                   <h4 style="display:inline">{{$t('static.raw_material_quotation')}}</h4>
+                   <h5 style="display:inline">{{$t('static.raw_material_quotation')}}</h5>
                 </div> 
                  <table class="table table-hover table_color table-striped ">
                      <thead>
@@ -52,9 +52,9 @@
                 <!--  <div style="padding-left:25%">
                      <div v-if="breedInfo.status==0" style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showAddBreed()">添加药材信息</div>   
                  </div>   --> 
-                  <div style="margin-top:25px">
+                  <div style="margin-top:25px;margin-bottom: 5px;">
                    <img src="/static/images/sellerinfo@2x.png" style="display:inline"/>
-                   <h4 style="display:inline">{{$t('static.other_quotations')}}</h4>
+                   <h5 style="display:inline">{{$t('static.other_quotations')}}</h5>
                 </div> 
                  
                  <table class="table table-hover table_color table-striped ">

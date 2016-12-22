@@ -365,6 +365,7 @@ export const initSupplierList= (state) => { //分期申请历史记录
   return parseJson(state.count.supplierList); 
 }
 export const initBankList= (state) => { //获取银行的数据
+    console.log(state.count.bankList)
   return parseJson(state.count.bankList); 
 }
 export const initBankBranchList= (state) => { //获取银行分支的数据

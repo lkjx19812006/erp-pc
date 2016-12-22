@@ -66,7 +66,6 @@ export default {
     topTab:function(tab){
       var arr = [];
        for(var i = 0;i<this.tabs.length;i++){
-        
           arr.push(this.tabs[i].id);
        }
        console.log(arr);

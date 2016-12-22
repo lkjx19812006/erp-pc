@@ -9,13 +9,6 @@
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <div>
         <div class="service-nav">
-            <div class="clearfix">
-               <!--  <div class="my_enterprise col-xs-1">部门客户</div> -->
-                <div class="right">
-                    
-                </div>
-            </div>
-
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t("static.client_name")}}：</dt>
@@ -66,21 +59,17 @@
                         </select>
                    </dd>
                 </dl>
-                
-                
-
-                <!-- <dl class="clear left transfer">
-                    <div class="client-detailInfo col-xs-6">
-                        <dt class="left transfer marg_top">{{$t("static.registration_start_time")}}：</dt>
-                        <mz-datepicker :time.sync="loadParam.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
+                <dl class="clear left transfer" v-if="this.initLogin.orgId==29">
+                   <dt class="left transfer marg_top">客服跟进情况：</dt>
+                   <dd class="left">
+                      <select v-model="loadParam.audit"  class="form-control" @change="selectSearch()">
+                          <option value="">{{$t("static.please_select")}}</option>
+                          <option value="0">跟进中</option>
+                          <option value="1">有效</option>
+                          <option value="2">无效</option>
+                      </select>
+                   </dd>
                 </dl>
-                 -->
-                
-                <dd class="left" style="margin-left:20px">
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">{{$t("static.search")}}</button>
-                </dd>
             </div>
 
             <div class="clear" style="margin-top:3px;"> 
@@ -118,8 +107,10 @@
                         </mz-datepicker>
                     </div>
                 </dl> -->
-                
-                <dd class="left" style="margin-left:-13px">
+                <dd class="left transfer">
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">{{$t("static.search")}}</button>
+                </dd>
+                <dd class="left">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">{{$t("static.clear_all")}}</button>
                 </dd>
                  
@@ -322,7 +313,8 @@ import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
     initOrgCustomerlist,
-    initProvince
+    initProvince,
+    initLogin
 } from '../../../vuex/getters'
 import {
     getClientList,
@@ -349,7 +341,8 @@ export default {
     vuex: {
         getters: {
             initOrgCustomerlist,
-            initProvince
+            initProvince,
+            initLogin
         },
         actions: {
             getClientList,
@@ -390,6 +383,7 @@ export default {
                 creditLevel:'',
                 ctimeStart:'',
                 ctimeEnd:'',
+                audit:'',
                 total:0
 
             },
@@ -479,6 +473,7 @@ export default {
             this.loadParam.label='';
             this.loadParam.creditLevel='';
             this.loadParam.ctimeStart='';
+            this.loadParam.audit='',
             this.loadParam.ctimeEnd='';
             this.getClientList(this.loadParam);
         },

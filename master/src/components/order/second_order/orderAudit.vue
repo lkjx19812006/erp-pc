@@ -33,14 +33,24 @@
                        </select>
                     </div>
                     <div class="editpage-input col-md-6" v-if="param.payWay==2"> 
-                       <label class="editlabel">银行名称 <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
-                       <input type="text" v-validate:payname="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
-                       <select class="form-control edit-input" v-model="param.payName">
-                            <option>中国银行</option>
-                            <option>招商银行</option>
-                            <option>广发银行</option>
-                            <option>建设银行</option>
-                       </select>
+                      <!--  <label class="editlabel">银行名称 <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
+                      <input type="text" v-validate:payname="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" /> -->
+                          <label class="editlabel">银行名称 <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
+                        <input type="text" v-validate:payname="{required:true}" v-show="false"  v-model="payName.name" class="form-control edit-input" />
+                          <div  class="form-control edit-input" style="padding:0;border:none" >
+                              <v-select
+                                :debounce="250"
+                                :value.sync="payName"
+                                :on-change="selectProvince"
+                                :options="initBankList"
+                                placeholder="银行名称"
+                                label="name"
+                              >
+                              </v-select>
+                            </div>
+                       <!-- <select class="form-control edit-input" v-model="param.payName">
+                            <option v-for="item in initBankList">{{item.name}}</option>
+                       </select> -->
                     </div>
                     <div class="editpage-input col-md-6"  v-if="param.payWay==2">
                        <label class="editlabel">银行支行</label>
@@ -68,6 +78,7 @@
                          <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:25%"></press-image>
                     </div>
                </section>
+               <!-- 重新申请审核 -->
                <section class="editsection clearfix" v-cloak v-if="param.titles=='重新申请审核'">
                     <div class="editpage-input col-md-6">
                        <label class="editlabel">支付方式 <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
@@ -84,9 +95,9 @@
                        <label class="editlabel">名称 <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
                        <input type="text" v-validate:name="{required:true}" v-show="false" v-model="initMyFundList[initMyFundList.length-1].payName" class="form-control edit-input" />
                        <select class="form-control edit-input" v-model="initMyFundList[initMyFundList.length-1].payName">
+                            <option>线下转账</option>
                             <option>支付宝</option>
                             <option>Wechat</option>
-                            <option>线下转账</option>
                             <option>药款支付</option>
                        </select>
                     </div>
@@ -94,10 +105,7 @@
                        <label class="editlabel">银行名称 <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
                        <input type="text" v-validate:payname="{required:true}" v-show="false" v-model="initMyFundList[initMyFundList.length-1].payName" class="form-control edit-input" />
                        <select class="form-control edit-input" v-model="initMyFundList[initMyFundList.length-1].payName">
-                            <option>中国银行</option>
-                            <option>招商银行</option>
-                            <option>广发银行</option>
-                            <option>建设银行</option>
+                            <option v-for="item in initBankList">{{item.name}}</option>
                        </select>
                     </div>
                     <div class="editpage-input col-md-6"  v-if="initMyFundList[initMyFundList.length-1].payWay==2">
@@ -139,10 +147,6 @@
             </div>
              <div class="edit_footer" v-if="param.titles=='重新申请审核'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
-               <!--  <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=reject,tipsParam.name='确认审核不通过?'">不通过</button>
-               <div v-if="param.key=='user'" style="display:inline-block">
-                   <button type="button" class="btn  btn-confirm" @click="tipsParam.show=true,tipsParam.callback=auditing,tipsParam.name='确认审核中?'">审核中</button>
-               </div> -->
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirmReset(param)">提交</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true" >提交</button>
             </div>
@@ -152,16 +156,22 @@
 <script>
 import tipsdialogModel  from '../../tips/tipDialog'
 import pressImage from '../../imagePress'
+import vSelect from '../../tools/vueSelect/components/Select'
 import {
-    initMyFundList
+    initMyFundList,
+    initBankList,
+    initBankBranchList
 } from '../../../vuex/getters'
 import {
-    getMyFundList
+    getMyFundList,
+    getBankList,
+    getBankBranchList
 } from '../../../vuex/actions'
 export default {
     components: {
         tipsdialogModel,
-        pressImage
+        pressImage,
+        vSelect
     },
     props: ['param'],
     data() {
@@ -188,6 +198,12 @@ export default {
                 name:"",
                 callback:''
             },
+            payName:{
+              name:''
+            },
+            branches:{
+              name:''
+            },
             type:"image/jpeg,image/jpg,image/png",
             imageParam:{
                url:'/crm/api/v1/file/',
@@ -197,13 +213,24 @@ export default {
     },
     vuex: {
         getters: {
-            initMyFundList
+            initMyFundList,
+            initBankList,
+            initBankBranchList
         },
         actions: {
-            getMyFundList
+            getMyFundList,
+            getBankList,
+            getBankBranchList
         }
     },
     methods: {
+        selectProvince:function(){
+            console.log('selectProvince');
+            this.branches = '';
+            if(this.payName!=''&&this.payName!=null){
+              this.getBankBranchList(this.payName);
+            }
+        },
         confirmReset:function(item){
             console.log(item)
             console.log(this.initMyFundList[initMyFundList.length-1])
@@ -219,6 +246,12 @@ export default {
     },
     created() {
         this.getMyFundList(this.loadParam);
+        console.log(this.param)
+        this.getBankList(this.payName);
+        this.getBankBranchList(this.payName);
+        if(this.param.payName){
+          this.payName.name = this.param.payName;
+        }
     }
 
 }
@@ -229,13 +262,11 @@ export default {
 }
 .modal_con{
     z-index:1086;
-    width:600px;
     height:650px;
 }
 .edit_footer{
     position: absolute;
     bottom: 0px;
-    width:600px;
 }
 .top-title{
     width: 100%;

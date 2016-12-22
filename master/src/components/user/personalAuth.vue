@@ -1,4 +1,5 @@
 <template>
+    <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <div  class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" >
         <div @click="param.show=false" class="top-title">
@@ -23,13 +24,13 @@
                                     <th>文件类型</th>
                                     <th>预览</th>
                                     <th>所属文件</th>
-                                    <th>描述<th>
+                                    <th>描述</th>
                                 </thead>
                                 <tbody>
                                     <tr v-for="item in initIdentify.files">
                                         <td>{{item.name}}</td>
                                         <td>{{item.fileType}}</td>
-                                        <td><img :src="item.path" width="200"></td>
+                                        <td><img :src="item.path" max-width="200" @click="clickBig(item.path)" /></td>
                                         <td>{{item.bizType}}</td>
                                         <td>{{item.description}}</td>
                                     </tr>
@@ -48,6 +49,7 @@
     </div>
 </template>
 <script>
+import pictureModel from '../tips/pictureDialog'
 import {
     initIdentify
 } from '../../vuex/getters'
@@ -56,10 +58,16 @@ import {
     getAuthInfo
 } from '../../vuex/actions'
 export default {
+    components:{
+        pictureModel
+    },
     props: ['param'],
     data() {
         return {
-
+            pictureParam:{
+                show:false,
+                img:''
+            }
         }
     },
     vuex: {
@@ -69,6 +77,12 @@ export default {
         actions: {
             updateUserInfo,
             getAuthInfo
+        }
+    },
+    methods:{
+        clickBig:function(img){
+          this.pictureParam.show = true;
+          this.pictureParam.img = img;
         }
     },
     created() {
@@ -96,54 +110,18 @@ export default {
     box-sizing: border-box;
 }
 
-.editpage {
-    display: -webkit-flex;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -ms-box-orient: horizontal;
-    box-orient: horizontal;
-}
-
-.editpageleft,
-.editpageright {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-    width: 50%;
-}
-
-.editpage-input {
-    margin-top: 15px;
-}
-.edit-input {
-    height: 36px;
-    line-height: 36px;
-    width: 90%;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-}
-
 .edit-input:focus {
     border-color: #fa6705;
 }
-
+.editpage-input{
+    margin-top: 10px;
+}
 .addblack span {
     color: #333;
     font-size: 14px;
     display: inline-block;
     margin-left: 10px;
     margin-top: 5px;
-}
-
-.edit_footer button {
-    margin-left: 15px;
 }
 
 .btn-confirm {
@@ -154,17 +132,7 @@ export default {
 .btn-close {
     color: #fa6705;
 }
-
-.editpage_img {
-    width: 90%;
-}
-
-.editpage_img img {
-    display: inline-block;
-    background: #ccc;
-}
-
-.editpage-image {
-    display: inline-block;
+table{
+    display: table;
 }
 </style>

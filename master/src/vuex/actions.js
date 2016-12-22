@@ -1086,7 +1086,6 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
 }
 
 export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分期
-    console.log(param)
     const stages = [];
     for(var i=0;i< param.stages.length;i++){
         var temp = {};
@@ -1122,7 +1121,6 @@ export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('添加成功')
         param.callback(res.json().msg);
         for(var i in res.json().result){
             param.stages[i].type = res.json().result[i].type;
@@ -1185,7 +1183,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     var ss= param.images;
     var sss = ss.split(",");//字符串转化为数组
     sss.toString();
-    console.log(sss)
     const body = {};
     if(param.id&&param.id!=''){
         body.id = param.id;
@@ -1243,7 +1240,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
             param.pr = res.json().result.pr;
             dispatch(types.FINANCE_LIST, param);
         }
-        
     }, (res) => {
         console.log('fail'); 
     });
@@ -1251,7 +1247,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
 
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     console.log(param)
-    console.log("orderStatu");
     param.images = '';
     if (param.image_f) {
         param.images += param.image_f + ','
@@ -1288,15 +1283,13 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('订单已处理')
         var status = res.json().result;
-        status.link = param.link;
-        status.key = param.key;
         param.callback(res.json().msg);
         if(res.json().code==200){
            dispatch(types.ORDER_STATUS, status);
         }
-       
+        status.link = param.link;
+        status.key = param.key;
     }, (res) => {
         console.log('fail');
     })
@@ -1304,8 +1297,6 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
 
 export const orderCancle = ({ dispatch }, param, data) => { //订单取消状态
     console.log(param)
-    console.log(data);
-    console.log("orderCancle");
     const body = {
         orderId: param.id,
         cancleCauses: param.cancleCauses
@@ -1334,8 +1325,6 @@ export const orderCancle = ({ dispatch }, param, data) => { //订单取消状态
 
 export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单支付状态
     console.log(param)
-    console.log(undelinePay)
-    console.log("yankuanPayorder");
     undelinePay.images = '';
     if (undelinePay.image_f) {
         undelinePay.images += undelinePay.image_f + ','
@@ -1352,7 +1341,6 @@ export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单�
     if (undelinePay.images) {
         body.images = undelinePay.images;
     }
-
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + undelinePay.link,
@@ -1387,7 +1375,6 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
         }
     }).then((res) => {
          var orderDetail = res.json().result;
-         console.log(orderDetail)
         if(param.key=='orderDetail'){
             var goods = orderDetail.goods; 
             if (!goods) {
@@ -2470,6 +2457,9 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         }
         if (search == 'ctimeEnd' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&ctimeEnd=' + param.ctimeEnd
+        }
+        if (search == 'audit' && param[search] !== '' && param[search] != 'undefined') {
+            clienturl += '&audit=' + param.audit
         }
     }
 
@@ -4313,8 +4303,8 @@ export const intlIntentionInquire = ({ dispatch }, param) => { //国际意向(�
         }
     }).then((res) => {
         console.log('询价成功')
-        if(param.callback){
-            param.callback(res.json().msg);
+        if(param.cancleCallback){
+            param.cancleCallback(res.json().msg);
         }
         param.show = false;
         param.inquire = 1;
@@ -4343,7 +4333,9 @@ export const cancelIntlIntentionInquire = ({ dispatch }, param) => { //国际意
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('取消成功')
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
         param.show = false;
         param.inquire = 0;
         param.inquireTime = param.inquireTime - 1;
@@ -6209,8 +6201,8 @@ export const getProductSupplier = ({ dispatch }, param) => { //获取有产品�
     })
 }
 export const getBankList = ({ dispatch }, param) => { //获取银行数据
-    param.loading = true;
-    var url = apiUrl.clientList +'/customer/product/byBreed';
+    console.log(param)
+    var url = apiUrl.clientList +'/sys/enum/banks';
     Vue.http({
         method: 'GET',
         url: url,
@@ -6220,17 +6212,12 @@ export const getBankList = ({ dispatch }, param) => { //获取银行数据
         }
     }).then((res) => {
         var bank = res.json().result;
-        /*for (var i in itemHistory) {
-            itemHistory[i].checked = false;
-            itemHistory[i].show = false;
-        }*/
-        if (param.payName) {
+        if (param.name) {
             for (var i in res.json().result) {
-                if (res.json().result[i].cname == param.payName) {
+                if (res.json().result[i].name == param.name) {
                     const object = {
-                        id: res.json().result[i].id,
+                        name: res.json().result[i].name,
                         paySubName: param.paySubName,
-                        loading: false
                     }
                     console.log(object);
                     return getBankBranchList({ dispatch }, object);
@@ -6238,18 +6225,16 @@ export const getBankList = ({ dispatch }, param) => { //获取银行数据
             }
         }
         dispatch(types.BANK_LIST, bank);
-        param.loading = false;
     }, (res) => {
         console.log('fail');
-        param.loading = false;
     })
 }
 export const getBankBranchList = ({ dispatch }, param) => { //获取银行支行的数据
-    param.loading = true;
-    if (!param.id) {
-        param.id = '';
+    console.log(param)
+    if (!param.name) {
+        param.name = '';
     }
-    var url = apiUrl.clientList +'/customer/product/byBreed'+'&country=' + param.id;
+    var url = apiUrl.clientList +'/sys/enum/getBankSubbranchs'+'&name=' + param.name;
     Vue.http({
         method: 'GET',
         url: url,
@@ -6260,9 +6245,7 @@ export const getBankBranchList = ({ dispatch }, param) => { //获取银行支行
     }).then((res) => {
         var branch = res.json().result;
         dispatch(types.BANK_BRANCH_LIST, branch);
-        param.loading = false;
     }, (res) => {
         console.log('fail');
-        param.loading = false;
     })
 }

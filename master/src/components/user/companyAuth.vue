@@ -1,4 +1,5 @@
 <template>
+    <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -30,7 +31,7 @@
                                     <tr v-for="item in initIdentify.files">
                                         <td>{{item.name}}</td>
                                         <td>{{item.fileType}}</td>
-                                        <td><img :src="item.path" width="200"></td>
+                                        <td><img :src="item.path" width="200" @click="clickBig(item.path)" /></td>
                                         <td>{{item.bizType}}</td>
                                         <td>{{item.description}}</td>
 
@@ -50,6 +51,7 @@
     </div>
 </template>
 <script>
+import pictureModel from '../tips/pictureDialog'
 import {
     initIdentify
 } from '../../vuex/getters'
@@ -58,10 +60,16 @@ import {
     getAuthInfo
 } from '../../vuex/actions'
 export default {
+    components:{
+        pictureModel
+    },
     props: ['param'],
     data() {
         return {
-
+            pictureParam:{
+                show:false,
+                img:''
+            }
         }
     },
     vuex: {
@@ -83,11 +91,12 @@ export default {
             transition.next()
         }
     },
-    /*methods: {
-      alertInfo:function(param){
-        updateUserInfo(param)
-      }
-    }*/
+    methods: {
+       clickBig:function(img){
+          this.pictureParam.show = true;
+          this.pictureParam.img = img;
+        }
+    },
     created() {
         this.getAuthInfo(this.param);
   }

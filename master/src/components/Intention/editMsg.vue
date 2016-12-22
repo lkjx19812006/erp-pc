@@ -14,8 +14,7 @@
                <div class="editpageleft">
                     <div class="editpage-input">
                            <label class="editlabel">备注</label>
-                           <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
-                           <textarea v-model='param.comments' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none" rows="6"></textarea>
+                           <textarea v-model='param.comments' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;font-size: 14px;" rows="6"></textarea>
                     </div>
 
                    

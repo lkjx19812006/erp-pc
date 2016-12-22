@@ -5,7 +5,7 @@
   <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
   <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
   <tipsdialog-model :param="tipParam" v-if="tipParam.show"></tipsdialog-model>
-
+  <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show">
       <div @click="param.show=false" class="top-title">
@@ -236,15 +236,13 @@
                                         <thead>
                                           <th>文件类型</th>
                                           <th>路径</th>
-                                          <th>描述<th>
+                                          <th>描述</th>
                                         </thead>
                                         <tbody>
                                             <tr v-for="item in initIdentify.files">
                                                  <td>{{item.fileType}}</td>
                                                 <td>
-                                                  <div class="thumbnail col-md-3 col-sm-4 col-xs-6">
-                                                    <img v-bind:src="item.path">
-                                                  </div>
+                                                    <img v-bind:src="item.path" @click="clickBig(item.path)" max-width='150px'/>
                                                 </td>
                                                  <td>{{item.description}}</td>
 
@@ -285,7 +283,7 @@
                                                  <td>{{item.fileType}}</td>
                                                 <td>
                                                   <div class="thumbnail col-md-3 col-sm-4 col-xs-6">
-                                                    <img v-bind:src="item.path">
+                                                    <img v-bind:src="item.path"  @click="clickBig(item.path)" max-width="200px"/>
                                                   </div>
                                                 </td>
                                                  <td>{{item.description}}</td>
@@ -475,7 +473,7 @@ import companyauthModel from './companyAuth'
 import intentionauditModel from'./intentionAudit'
 import tipsdialogModel  from '../tips/tipDialog'
 import filter from '../../filters/filters'
-
+import pictureModel from '../tips/pictureDialog'
 
 import {
   initClientDetail,
@@ -486,8 +484,6 @@ import {
   getClientDetail,
   getUserDetail,
   getAuthInfo
-
-
 } from '../../vuex/actions'
 export default {
     components: {
@@ -496,7 +492,8 @@ export default {
         intentionModel,
         companyauthModel,
         intentionauditModel,
-        tipsdialogModel
+        tipsdialogModel,
+        pictureModel
     },
     props:['param'],
     data(){
@@ -576,6 +573,10 @@ export default {
         detailParam:{
           show:false
         },
+        pictureParam:{
+            show:false,
+            img:''
+        },
         show:true,
         personalParam:{
           show:false,
@@ -633,7 +634,11 @@ export default {
           userType:''
         });
       },
-
+      clickBig:function(img){
+        console.log(img)
+          this.pictureParam.show=true;
+          this.pictureParam.img = img;
+      },
       onlyselected:function(index,id){
         console.log('index='+index+',id='+id);
         const _this=this;
@@ -896,9 +901,7 @@ section article {
     cursor: pointer;
 }
 
-.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
-  text-align: left;
-}
+
 .edit-detail {
     border: 1px solid #ddd;
     border-radius: 3px;
@@ -952,5 +955,8 @@ section article {
     margin: auto;
     text-align: center;
     background-position: 5px;
+}
+table{
+  display:table;
 }
 </style>

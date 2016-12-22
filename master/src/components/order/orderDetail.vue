@@ -192,11 +192,13 @@
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
-                                                    <a class="operate" v-if="item.validate==0&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
+                                                    <a class="operate" v-if="item.validate==0" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,
                                                             bizSubId:item.id,
+                                                            validate:item.validate,
+                                                            type:item.type,
                                                             payWay:'',
                                                             payName:'',
                                                             paySubName:'',

@@ -9,7 +9,7 @@
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
-        <div class="order_contain">{{$t('static.order_status')}}{{param.key}}</div>
+        <div class="order_contain">{{$t('static.order_status')}}</div>
         <div class="navbar-client" style="margin-top:0">
             <div class="message">
                <p class="order-message">{{$t('static.order_message')}}</p>
@@ -30,7 +30,7 @@
             </div>
             <div class="order_info clearfix">
               <div class="col-xs-6 pull-left" v-for="item in initOrderDetail.goods.arr">
-                  <p>{{item.brredName}}</p>
+                  <p>{{item.breedName}}</p>
                   <p>{{item.price}}元/{{item.unit}}</p>
                   <p>{{$t('static.quantity')}}：{{item.number}}</p>
                   <p>{{$t('static.order_time')}}：{{item.ctime}}</p>
@@ -158,15 +158,15 @@
           <div class="message clearfix">
               <p class="order-message">{{$t('static.logistics_info')}}</p>
               <div class="space_15 clearfix">
-                <div class="logical_color">
-                  <span class="mui-pull-left">{{$t('static.logistics_company')}}：</span>
-                  <select v-model="uploadLogistic.b">
-                    <option v-for="item in initExpresslist" value="{{item.id + ',' + item.name}}">{{item.name}}</option>
+                <div class="logical_color clearfix">
+                  <span class="pull-left">{{$t('static.logistics_company')}}：</span>
+                  <select v-model="uploadLogistic.b" class="form-control left edit-input">
+                    <option v-for="item in initExpresslist" value="{{item.id + ',' + item.name}}">{{item.name}}{{item.code}}</option>
                   </select>
                 </div>
-                <div class="logical_color">
-                  <span class="mui-pull-left">{{$t('static.logistics_no')}}：</span>
-                  <input type="number" placeholder="请输入运单号" v-model="uploadLogistic.lcompanyNo"/>
+                <div class="logical_color clearfix">
+                  <span class="pull-left">{{$t('static.logistics_no')}}：</span>
+                  <input type="number" class="form-control left edit-input" placeholder="{{$t('static.willpay')}}" v-model="uploadLogistic.lcompanyNo"/>
                 </div>
                 <div class="logical_color">
                   <label class="editlabel">{{$t('static.upload_logistcs')}}</label>
@@ -326,7 +326,7 @@ export default {
               show:false,
               key:this.param.key
             },
-            payName: "去支付",
+            payName: "去支付/To pay",
            type:"image/jpeg,image/jpg,image/png",
             uploadLogistic:{
               images:'',
@@ -403,7 +403,7 @@ export default {
             }else if(payWay ==3){
               this.yaokuanPaySelected = true; //药款
               this.undelinePaySelect = false;
-              this.payName="去支付";
+              this.payName="去支付/To pay";
             }
         },
         payOrder:function(payorder){
@@ -420,9 +420,8 @@ export default {
                console.log(payorder)
                //this.param.show=false;
             }else {
-               console.log('请选择支付方式');
                 this.tipParam.show = true;
-                this.tipParam.name='请选择支付方式';
+                this.tipParam.name='请选择支付方式/Select order status';
                 this.tipParam.alert=true;
             }
         },
@@ -491,6 +490,9 @@ export default {
 }
 .message_front{
   width: 33.33%;
+}
+.edit-input{
+  width: 30%;
 }
 .tips{
   margin-left: 13px;

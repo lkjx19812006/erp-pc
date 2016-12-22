@@ -200,7 +200,7 @@
               value="{{prevalue}}"
 							class="form-control"
 							:placeholder="searchPlaceholder"
-							:style="{ width: isValueEmpty ? '100%' : 'auto' }"
+							:style="{ width: isValueEmpty ? '100%' : '50px' }"
 			>
 
 			<i v-el:open-indicator role="presentation" class="open-indicator"></i>
