@@ -103,7 +103,7 @@
             <td v-if="item.pr==1&&item.type==0" style="background:green;color:#fff;">已确认付款</td>
             <td v-if="item.pr==1&&item.type==1" style="background:green;color:#fff;">已确认收款</td>
             <td>
-              <a class="operate" v-if="item.validate==1" @click="applyInfo({
+              <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.validate==1&&item.type==1" @click="applyInfo({
                           show:true,
                           sub:$index,
                           id:item.id,
@@ -114,11 +114,39 @@
                           image_t:'',
                           images:'',
                           url:'/fund/validate',
-                          titles:'分期审核',
+                          titles:'确认收款',
                           link:paymentAudit
-                      })"> 
-                  <img src="/static/images/orgcheck.png" />
-              </a>
+                      })">审核收款</button>
+               <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.validate==1&&item.type==0" @click="applyInfo({
+                          show:true,
+                          sub:$index,
+                          id:item.id,
+                          validate:item.validate,
+                          description:'',
+                          image_f:'',
+                          image_s:'',
+                          image_t:'',
+                          images:'',
+                          url:'/fund/validate',
+                          titles:'确认付款',
+                          link:paymentAudit
+                      })">确认付款</button>
+             <!--  <a class="operate" v-if="item.validate==1" @click="applyInfo({
+                         show:true,
+                         sub:$index,
+                         id:item.id,
+                         validate:item.validate,
+                         description:'',
+                         image_f:'',
+                         image_s:'',
+                         image_t:'',
+                         images:'',
+                         url:'/fund/validate',
+                         titles:'分期审核',
+                         link:paymentAudit
+                     })"> 
+                 <img src="/static/images/orgcheck.png" />
+             </a> -->
             </td>
           </tr>
         </tbody>

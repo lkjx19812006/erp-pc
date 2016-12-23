@@ -37,8 +37,14 @@
                              <td>{{item.payUserName}}</td>
                              <td>{{item.payNumber}}</td>
                              <td>{{item.paySubName}}</td>
-                             <td>{{item.validate}}</td>
-                             <td>{{item.pr}}</td>
+                             <td v-if="item.validate==0">未审核</td>
+                             <td v-if="item.validate==1">申请中</td>
+                             <td v-if="item.validate==2">审核成功</td>
+                             <td v-if="item.validate==3">审核未通过</td>
+                             <td v-if="item.pr==0&&item.type==0">未付款</td>
+                             <td v-if="item.pr==0&&item.type==1">未收款</td>
+                             <td v-if="item.pr==1&&item.type==0">已确认付款</td>
+                             <td v-if="item.pr==1&&item.type==1">已确认收款</td>
                              <td>{{item.ctime}}</td> 
                          </tr>
                      </tbody>

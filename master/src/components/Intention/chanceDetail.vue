@@ -397,9 +397,9 @@
                                     </select>
                                 </div>
                                 <div class="client-detailInfo col-md-1 col-xs-12"></div>
-                                <div class="client-detailInfo col-md-2 col-xs-12">
+                                <div class="client-detailInfo col-md-9 col-xs-12">
                                     <label class="editlabel">预览</label>
-                                    <img v-for="item in initIntentionDetail.pics" :src="item.url"  width="150px;" @click="clickBig(item.url)"/>
+                                    <img v-for="item in initIntentionDetail.pics" :src="item.url"  width="150px;" class="left" @click="clickBig(item.url)"/>
                                 </div>
                             </div>
                         </div>
