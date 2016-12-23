@@ -1,4 +1,5 @@
 <template>
+    <tip-model :param="tipParam" v-if="tipParam.show"></tip-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -38,15 +39,17 @@
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-            <button type="button" class="btn btn-confirm" @click="param.link(param,param.show = false)">{{$t('static.save')}}</button>
+            <button type="button" class="btn btn-confirm" @click="save()">{{$t('static.save')}}</button>
         </div>
     </div>
 </template>
 <script>
 import pressImage from '../imagePress'
+import tipModel from '../tips/tipDialog'
 export default {
     components: {
-        pressImage
+        pressImage,
+        tipModel
     },
     props: ['param'],
     data() {
@@ -55,12 +58,27 @@ export default {
                 url:'/crm/api/v1/file/',
                 qiniu:false
               },
+              tipParam:{
+                show:false,
+                alert:true,
+                name:"请输入文件名并上传文件!!"
+              },
               type:"image/*"
             }
     },
     vuex: {
         actions: {
 
+        }
+    },
+    methods:{
+        save:function(){
+            if(!this.param.path||this.param.name===''){
+                this.tipParam.show = true;
+            }else{
+                this.param.link(this.param);
+                this.param.show = false;
+            }  
         }
     },
     events: {

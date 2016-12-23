@@ -4974,6 +4974,9 @@ export const uploadFiles = ({ dispatch }, param) => { //客户文件上传
         }
     }).then((res) => {
         console.log('文件添加成功')
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
         param.id = res.json().result.id;
         dispatch(types.ADD_FILES_DATA, param);
     }, (res) => {
