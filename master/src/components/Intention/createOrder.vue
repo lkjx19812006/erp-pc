@@ -5,13 +5,13 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h5>新建订单</h5>
+            <h3>新建订单</h3>
         </div>
         <validator name="validation">
             <div class="edit-model">
                 <form name="editOrderinfo" action="javascript:void(0)">
                     <section class="editsection">
-                        <h5>商品信息</h5>
+                        <h5 style="border-bottom:1px solid #ddd;color:#fa6705;margin-bottom: 0;padding-bottom:10px">商品信息</h5>
                         <div class="editpage">
                             <div class="editpageleft">
                                 <div class="editpage-input">
@@ -53,7 +53,7 @@
 
                             </div>
                         </div>
-                        <h5>订单信息</h5>
+                        <h5 style="border-bottom:1px solid #ddd;color:#fa6705;margin-bottom: 0;padding-bottom:10px">订单信息</h5>
                         <div class="editpage">
                             <div class="editpageleft">
                                 <div class="editpage-input">
@@ -166,7 +166,7 @@
                                 <div class="editpage-input">
                                     <label class="editlabel">区</label>
                                     <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
-                                    <div v-if="city.cname" type="text" class="edit-input">
+                                     <div v-if="city.cname" type="text" class="edit-input">
                                         <v-select
                                               :debounce="250"
                                               :value.sync="district"
@@ -186,9 +186,7 @@
                                     <input type="text" class="form-control edit-input" v-model="param.total"  readonly="true" />
                                 </div>
                             </div>
-
                         </div>
-                        
                     </section>
                 </form>
             </div>
@@ -438,8 +436,7 @@ export default {
     border-top: 1px solid #ddd;
     text-align: right;
     padding: 10px 20px;
-    bottom:5px;
-    margin-top: 50px;
+    margin-top:0px;
 }
 
 .edit_footer button {

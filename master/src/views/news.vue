@@ -106,7 +106,7 @@
                             <option value="">全部</option>
                             <option value="0">待提取</option>
                             <option value="1">已提取</option>
-                            <option value="2">转黑</option>
+                            <!-- <option value="2">转黑</option> -->
                         </select>
                    </dd>
                    

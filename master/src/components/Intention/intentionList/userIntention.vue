@@ -71,7 +71,7 @@
                  </div>
               </dl>
 
-              <dl class="clear left transfer" style="margin-left:50px">
+              <dl class="clear left transfer" style="margin-left:20px">
                  <dt class="left transfer marg_top">审核状态：</dt>
                  <div class="btn-group">
                      <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===''}" @click="selectValidate('')">
@@ -89,7 +89,7 @@
                  </div>
               </dl>
 
-              <dl class="clear left transfer" style="margin-left:50px">
+              <dl class="clear left transfer" style="margin-left:20px">
                  <dt class="left transfer marg_top">意向来源：</dt>
                  <div class="btn-group">
                      <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===''}" @click="selectSource('')">

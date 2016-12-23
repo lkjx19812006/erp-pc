@@ -102,7 +102,8 @@
             <td v-if="item.validate==1" style="background:#483D8B;color:#fff;">申请中</td>
             <td v-if="item.validate==2" style="background:green;color:#fff;">审核成功</td>
             <td v-if="item.validate==3" style="background:red;color:#fff;">审核未通过</td>
-            <td v-if="item.pr==0">未收款/付款</td>
+            <td v-if="item.pr==0&&item.type==0">未付款</td>
+            <td v-if="item.pr==0&&item.type==1">未收款</td>
             <td v-if="item.pr==1&&item.type==0" style="background:green;color:#fff;">已确认付款</td>
             <td v-if="item.pr==1&&item.type==1" style="background:green;color:#fff;">已确认收款</td>
           </tr>

@@ -242,7 +242,7 @@
                                             <tr v-for="item in initIdentify.files">
                                                  <td>{{item.fileType}}</td>
                                                 <td>
-                                                    <img v-bind:src="item.path" @click="clickBig(item.path)" max-width='150px'/>
+                                                    <img v-bind:src="item.path" @click="clickBig(item.path)" width='150px'/>
                                                 </td>
                                                  <td>{{item.description}}</td>
 
@@ -283,7 +283,7 @@
                                                  <td>{{item.fileType}}</td>
                                                 <td>
                                                   <div class="thumbnail col-md-3 col-sm-4 col-xs-6">
-                                                    <img v-bind:src="item.path"  @click="clickBig(item.path)" max-width="200px"/>
+                                                    <img v-bind:src="item.path"  @click="clickBig(item.path)" width="200px"/>
                                                   </div>
                                                 </td>
                                                  <td>{{item.description}}</td>

@@ -74,7 +74,7 @@
                          key:'filesList'
                          })"><img src="/static/images/edit.png" height="18" width="30"  />
                  </a>
-                <a  class="operate" href="/crm/api/v1/file/dowanloadFile?path={{item.path}}"><img src="/static/images/upload.png" height="18" width="28"  /></a>
+                <a  class="operate" href="{{item.url}}" download=""><img src="/static/images/upload.png" height="18" width="28"  /></a>
                 <a class="operate"  @click="specDelete({
                       id:item.id,
                       sub:$index,

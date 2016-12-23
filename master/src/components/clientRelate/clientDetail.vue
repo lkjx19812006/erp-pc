@@ -15,8 +15,8 @@
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
   <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con modal_overall" v-show="param.show">
-    	<div @click="param.show=false" class="top-title">
+    <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
+    	<div @click.stop="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="cover_loading">
@@ -31,7 +31,7 @@
                     </div>
                     <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
                          <li>
-                            <button type="button" class="btn btn-base" @click="specDelete({
+                            <button type="button" class="btn btn-base" @click.stop="specDelete({
                                 id:param.id,
                                 sub:param.sub,
                                 show:true,
@@ -44,7 +44,7 @@
                         </li>
 
                         <li v-if="initClientDetail.supplier!=1">
-                          <button  type="button" class="btn btn-base"  @click="clientTransferSupplier({
+                          <button  type="button" class="btn btn-base"  @click.stop="clientTransferSupplier({
                                id:param.id,
                                sub:param.sub,
                                show:true,
@@ -54,10 +54,10 @@
                         </li>
 
                       <li v-if="initClientDetail.blacklist==0">
-                        <button type="button" class="btn btn-base"  @click="clientTransferBlack()">{{$t('static.drag_into_blacklist')}}</button>
+                        <button type="button" class="btn btn-base"  @click.stop="clientTransferBlack()">{{$t('static.drag_into_blacklist')}}</button>
                       </li>
                       <li v-if="initClientDetail.blacklist==1">
-                        <button type="button" class="btn btn-base"  @click="clientTransferBlack()">{{$t('static.out_of_blacklist')}}</button>
+                        <button type="button" class="btn btn-base"  @click.stop="clientTransferBlack()">{{$t('static.out_of_blacklist')}}</button>
                       </li>
                     </ul>
                 </div>
@@ -68,10 +68,10 @@
                 <div class="col-md-8 client-detail">
                     <h4 class="section_title">{{$t('static.related_information')}}</h4>
                     <article>
-                        <div class="panel-group">
+                        <div class="panel-group" @click.stop="">
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                    <h4 class="panel-title clearfix" @click.stop="enfoldment({
                   						            	link:initClientDetail.contacts,
                   						            	crete:'contacts'
                   						            	})">
@@ -132,7 +132,7 @@
 		                                            <td>{{item.email}}</td>
 		                                            <td>{{item.qq}}</td>
 		                                            <td>{{item.wechart}}</td>
-                                                <td  @click="updateSpec({
+                                                <td  @click.stop="updateSpec({
                                                            sub:$index,
                                                            id:item.id,
                                                            show:true,
@@ -163,7 +163,7 @@
                                                      <a class="operate"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/>
                                                      </a>
                                                 </td>
-                                                <td @click="specDelete({
+                                                <td @click.stop="specDelete({
                                                            id:item.id,
                                                            sub:$index,
                                                            show:true,
@@ -256,7 +256,7 @@
                            </div> -->
                            <div class="panel panel-default">
                               <div class="panel-heading" v-cloak>
-                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                  <h4 class="panel-title clearfix" @click.stop="enfoldment({
                     						            	link:initClientDetail.files,
                     						            	crete:'files'
                     						            	})">
@@ -307,14 +307,14 @@
 		                                            <!-- <td v-if="item.bizType=='customer_license'">客户文件</td> -->
                                                 <!-- <td v-if="item.bizType=='product_license'">产品文件</td> -->
                                                 <td>
-                                                    <img v-if="item.fileType=='image'" width="100" :src="item.url"  @click="clickBig(item.url)"/>
+                                                    <img v-if="item.fileType=='image'||item.fileType=='other'" width="100" :src="item.url"  @click.stop="clickBig(item.url)"/>
                                                     <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf文件'">
                                                     <img  src="/static/images/word.png" v-if="item.fileType=='word'">
                                                     <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
                                                 </td>
                                                 <td>{{item.description}}</td>
-                                                <td >
-                                                     <a class="operate" @click="specDelete({
+                                                <td>
+                                                     <a class="operate" @click.stop="specDelete({
                                                            id:item.id,
                                                            sub:$index,
                                                            show:true,
@@ -323,9 +323,9 @@
                                                            url:'/customer/file/',
                                                            key:'files',
                                                            headline:'clientDetail'
-                                                           },item.show=false)"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/>
+                                                           },item.show=false)"><img src="/static/images/del.png"  alt="删除" title="删除"/>
                                                      </a>
-                                               <a class="operate" href="/crm/api/v1/file/dowanloadFile?path={{item.path}}"><img src="/static/images/upload.png" height="18" width="28"  /></a></td>
+                                               <a class="operate"  href="{{item.url}}" download=""><img src="/static/images/upload.png" height="18" width="28"  /></a></td>
 		                                        </tr>
 		                                    </tbody>
 		                                </table>
@@ -335,7 +335,7 @@
 
                           <div class="panel panel-default" v-if="param.inquiry!='询价'">
                               <div class="panel-heading" v-cloak>
-                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                  <h4 class="panel-title clearfix" @click.stop="enfoldment({
                                               link:initClientDetail.intentions,
                                               crete:'intentions'
                                               })">
@@ -366,7 +366,7 @@
                                                 <td>{{item.number}}</td>
                                                 <td>{{item.price}}元</td>
                                                 <td>{{item.unit}}</td>
-                                                <td  @click="updateIntention({
+                                                <td  @click.stop="updateIntention({
                                                             flag:1,
                                                             show:true,
                                                             sub:$index,
@@ -422,7 +422,7 @@
 
                           <div class="panel panel-default" v-if="param.inquiry!='询价'">
                               <div class="panel-heading" v-cloak>
-                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                  <h4 class="panel-title clearfix" @click.stop="enfoldment({
                                               link:initClientDetail.orders,
                                               crete:'orders'
                                               })">
@@ -503,7 +503,7 @@
                           </div>
                              <div class="panel panel-default">
                                <div class="panel-heading">
-                                   <h4 class="panel-title clearfix" @click="enfoldment({
+                                   <h4 class="panel-title clearfix" @click.stop="enfoldment({
                                               link:initClientDetail.trackings,
                                               crete:'trackings'
                                               })">
@@ -546,7 +546,7 @@
                                                <td>{{item.contactNo}}</td>
                                                <td>{{item.comments}}</td>
                                                <td>{{item.ctime}}</td>
-                                               <td  @click="updateTracking(item,$index)">
+                                               <td  @click.stop="updateTracking(item,$index)">
                                                    <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
                                                    </a>
                                                </td>
@@ -569,7 +569,7 @@
                            </div>
                              <div class="panel panel-default" collapse>
                                 <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                    <h4 class="panel-title clearfix" @click.stop="enfoldment({
                   						            	link:initClientDetail.remarks,
                   						            	crete:'remarks'
                   						            	})">
@@ -605,7 +605,7 @@
 		                                            <td>{{item.remark}}</td>
 		                                            <td>{{item.status}}</td>
                                                 <td >
-                                                   <a class="operate"  @click="updatelabel({
+                                                   <a class="operate"  @click.stop="updatelabel({
                                                            sub:$index,
                                                            id:item.id,
                                                            customerId:item.customerId,
@@ -623,7 +623,7 @@
                                                    </a>
                                            <!--      </td>
                                            <td  > -->
-                                                   <a class="operate" @click="specDelete({
+                                                   <a class="operate" @click.stop="specDelete({
                                                            id:item.id,
                                                            sub:$index,
                                                            show:true,
@@ -643,7 +643,7 @@
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                    <h4 class="panel-title clearfix" @click.stop="enfoldment({
               						            	link:initClientDetail.addresses,
               						            	crete:'addresses'
               						            	})">
@@ -717,7 +717,7 @@
 		                                            <td>{{item.street}}</td>
 		                                            <td>{{item.detailAddr}}</td>
 		                                            <td>{{item.address}}</td>
-                                                <td  @click="updateAddr({
+                                                <td  @click.stop="updateAddr({
                                                            sub:$index,
                                                            id:item.id,
                                                            customerId:item.customerId,
@@ -753,7 +753,7 @@
                                                    <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
                                                    </a>
                                                 </td>
-                                                <td  @click="specDelete({
+                                                <td  @click.stop="specDelete({
                                                            id:item.id,
                                                            sub:$index,
                                                            show:true,
@@ -774,7 +774,7 @@
                             </div>
                              <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                    <h4 class="panel-title clearfix" @click.stop="enfoldment({
                   						            	link:initClientDetail.labels,
                   						            	crete:'labels'
                   						            	})">
@@ -808,7 +808,7 @@
 		                                        <tr v-for="item in initClientDetail.labels.arr">
 		                                            <td>{{item.label}}</td>
                                                 <td >
-                                                   <a class="operate" @click="updatelabel({
+                                                   <a class="operate" @click.stop="updatelabel({
                                                            sub:$index,
                                                            id:item.id,
                                                            customerId:item.customerId,
@@ -826,7 +826,7 @@
                                                    </a>
                                                <!--  </td>
                                                <td > -->
-                                                   <div class="operate"   @click="specDelete({
+                                                   <div class="operate" @click.stop="specDelete({
                                                            id:item.id,
                                                            sub:$index,
                                                            show:true,
@@ -847,7 +847,7 @@
                             </div>
                             <div class="panel panel-default" v-cloak>
                                 <div class="panel-heading">
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                    <h4 class="panel-title clearfix" @click.stop="enfoldment({
                   						            	link:initClientDetail.products,
                   						            	crete:'products'
                   						            	})">
@@ -909,7 +909,7 @@
 		                                            <td>{{item.duedate}}</td>
 		                                            <td v-if="item.coa==0">无</td>
                                                 <td v-if="item.coa==1">有</td>
-                                                <td   @click="newproduct({
+                                                <td   @click.stop="newproduct({
                                                            sub:$index,
                                                            id:item.id,
                                                            cid:item.cid,
@@ -935,7 +935,7 @@
                                                    <a class="operate"><img src="/static/images/edit.png" height="18" width="30"/>
                                                    </a>
                                                 </td>
-                                                <td  @click="createfiles({
+                                                <td  @click.stop="createfiles({
                                                              bizId:item.id,
                                                              show:true,
                                                              title:'新建产品文件',
@@ -963,7 +963,7 @@
                 </div>
                 <div class="col-md-4">
                     <h4 class="section_title">{{$t('static.detailed_information')}}</h4>
-                    <article>
+                    <article  @click.stop="">
                         <div class="edit-detail">
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">

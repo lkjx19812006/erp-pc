@@ -30,8 +30,13 @@
             </div>
         </div>
         <div class="employee_right col-md-4">
-            <p class="employee_right_title">消息</p>
+            <p class="employee_right_title">消息
+                <button class="btn btn-primary right" @click="refresh()">刷新</button>
+            </p>
             <div class="employee_right_message">
+                <div class="cover_loading">
+                    <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+                  </div>
                 <div class="employee_message_view" v-for="item in initBacklogList">
                     <div class="message_view_left">
                          <span></span>
@@ -174,8 +179,10 @@ export default {
                 this.tipParam.name = name;
                 //审核完成后刷新页面
                 this.getBacklogList(this.loadParam);
+            },
+            refresh:function(){
+                this.getBacklogList(this.loadParam);
             }
-
 
         },
         created() {
@@ -221,7 +228,7 @@ export default {
 }
 .employee_right_title{
     color: #333;
-    font-size: 20px;
+    font-size:18px;
 }
 .employee_right_message{
     padding-top: 20px;
@@ -255,6 +262,9 @@ export default {
     top: 23px;
     vertical-align: middle;
 }
+.message_view_right a {
+    font-size: 13px;
+}
 .employee_top{
     margin-bottom: 20px;
 }
@@ -287,7 +297,7 @@ export default {
 .select_btn_date {
     display: inline-block;
     color: #333;
-    font-size: 20px;
+    font-size: 14px;
     float: left;
     padding: 5px 10px 5px 5px;
 }
@@ -295,7 +305,7 @@ export default {
 .select_btn_img {
     display: inline-block;
     text-align: center;
-    margin-top: 14px;
+    margin-top: 12px;
     padding: 0 8px;
 }
 .pie_chart{

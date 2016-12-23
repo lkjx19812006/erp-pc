@@ -192,7 +192,7 @@
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td>
-                                                    <a class="operate" v-if="item.validate==0&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
+                                                    <a class="operate" v-if="item.type==1&&item.validate==0&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,
@@ -216,14 +216,61 @@
                                                         })"> 
                                                     <img src="/static/images/apply.png"  style="width:47px" />
                                                     </a>
-                                                    <a class="operate" v-if="item.validate==3&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
+                                                    <a class="operate" v-if="item.type==0&&item.validate==0&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,
                                                             bizSubId:item.id,
+                                                            validate:item.validate,
+                                                            type:item.type,
+                                                            payWay:'',
+                                                            payName:'',
+                                                            paySubName:'',
+                                                            payUserName:'',
+                                                            payNumber:'',
+                                                            comment:'',
+                                                            image_f:'',
+                                                            image_s:'',
+                                                            image_t:'',
+                                                            images:'',
+                                                            url:'/fund/createByOrderStages',
+                                                            titles:'申请支付',
+                                                            link:paymentAudit
+                                                        })"> 
+                                                    <img src="/static/images/payorder.png"  style="width:38px" />
+                                                    </a>
+                                                    <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==3&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
+                                                            show:true,
+                                                            sub:$index,
+                                                            bizId:item.orderId,
+                                                            bizSubId:item.id,
+                                                            loading:false,
+                                                            cur:1,
                                                             type:item.type,
                                                             validate:item.validate,
-                                                            extra:item.extra,
+                                                            payWay:'',
+                                                            payName:'',
+                                                            paySubName:'',
+                                                            payUserName:'',
+                                                            payNumber:'',
+                                                            comment:'',
+                                                            image_f:'',
+                                                            image_s:'',
+                                                            image_t:'',
+                                                            images:'',
+                                                            url:'/fund/createByOrderStages',
+                                                            titles:'重新申请支付',
+                                                            link:paymentAudit
+                                                        })">重新申请支付</button>
+                                                    <a class="operate" v-if="item.type==1&&item.validate==3&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
+                                                            show:true,
+                                                            sub:$index,
+                                                            bizId:item.orderId,
+                                                            bizSubId:item.id,
+                                                            loading:false,
+                                                            cur:1,
+                                                            type:item.type,
+                                                            validate:item.validate,
                                                             payWay:'',
                                                             payName:'',
                                                             paySubName:'',
@@ -507,13 +554,15 @@ import tipsModel  from  '../tips/tipDialog'
 import auditModel from './second_order/orderAudit'
 import applyModel from './second_order/applyDetaillist'
 import {
-  initOrderDetail
+  initOrderDetail,
+  initMyFundList
 } from '../../vuex/getters'
 import {
   getOrderDetail,
   uploadDocument,
   dividedPayment,
-  paymentAudit
+  paymentAudit,
+  getMyFundList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -587,13 +636,15 @@ export default {
     },
     vuex:{
       getters:{
-        initOrderDetail
+        initOrderDetail,
+        initMyFundList
       },
       actions:{
         getOrderDetail,
         uploadDocument,
         dividedPayment,
-        paymentAudit
+        paymentAudit,
+        getMyFundList
       }
     },
     methods:{
@@ -605,9 +656,28 @@ export default {
             this.$store.state.table.orderDetail[param.crete].show = !this.$store.state.table.orderDetail[param.crete].show;
           },
           applyInfo:function(item){
-                this.auditParam.show=true;
+            console.log(item)
                 this.auditParam = item;
                 this.auditParam.callback = this.callback;
+                if(item.titles=='重新申请审核'){
+                    this.getMyFundList(item);
+                    if(this.initMyFundList!=''&&this.initMyFundList[initMyFundList.length-1]){
+                       console.log(this.initMyFundList[this.initMyFundList.length-1])
+                        item.amount = this.initMyFundList[this.initMyFundList.length-1].amount;
+                        item.payName = this.initMyFundList[this.initMyFundList.length-1].payName;
+                        item.payUserName = this.initMyFundList[this.initMyFundList.length-1].payUserName;
+                        item.payNumber = this.initMyFundList[this.initMyFundList.length-1].payNumber;
+                        item.payWay = this.initMyFundList[this.initMyFundList.length-1].payWay;
+                        item.paySubName = this.initMyFundList[this.initMyFundList.length-1].paySubName;
+                        item.images = this.initMyFundList[this.initMyFundList.length-1].images;
+                        this.auditParam.show=true;
+                    }else{
+                        this.auditParam.show=false;
+                    }
+                }else{
+                    this.auditParam.show=true;
+                }
+                
           },
           apply_Record:function(item){
              this.applyDetails.show=true;
@@ -655,7 +725,6 @@ export default {
     filter:(filter,{}),
    created(){
    	  this.getOrderDetail(this.param);
-
    }
 }
 </script>
