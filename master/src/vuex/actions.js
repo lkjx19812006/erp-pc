@@ -2465,6 +2465,9 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         if (search == 'audit' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&audit=' + param.audit
         }
+        if (search == 'trackingDay' && param[search] !== '' && param[search] != 'undefined') {
+            clienturl += '&trackingDay=' + param.trackingDay
+        }
     }
 
     Vue.http({
@@ -3678,8 +3681,8 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         if (search == 'validate' && param[search] !== '') {
             url += '&validate=' + param.validate
         }
-        if (search == 'inType' && param[search] !== '') {
-            url += '&inType=' + param.inType
+        if (search == 'source' && param[search] !== '') {
+            url += '&source=' + param.source
         }
         if (search == 'onSell' && param[search] !== '') {
             url += '&onSell=' + param.onSell
@@ -4615,6 +4618,9 @@ export const getUserList = ({ dispatch }, param) => { //会员信息列表
         }
         if (key == 'ctype' && param[key] !== '') {
             url += '&ctype=' + param[key];
+        }
+        if (key == 'trackingDay' && param[key] !== '') {
+            url += '&trackingDay=' + param[key];
         }
     }
 

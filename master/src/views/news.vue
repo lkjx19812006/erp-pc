@@ -76,6 +76,13 @@
                         </select>
                    </dd>
                 </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">未跟进天数：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.trackingDay" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+
                 <dd class="left" style="margin-left:20px">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
                     
@@ -426,6 +433,7 @@ export default {
                 transform:'',
                 ctype:'',
                 utype:'',
+                trackingDay:'',   //几天未联系
                 color: '#5dc596',
                 size: '15px',
                 cur: 1,
@@ -562,6 +570,7 @@ export default {
         this.loadParam.utype = "";
         this.loadParam.ctype = "";
         this.loadParam.province = "";
+        this.loadParam.trackingDay = "";
         this.getUserList(this.loadParam);
     },
     onlyselected: function(index){
