@@ -74,53 +74,53 @@
                         <div class="panel-group">
                             
                           <div class="panel panel-default">
-                                    <div class="panel-heading" v-cloak>
-                                      <h4 class="panel-title clearfix" @click="enfoldment({
-                                                  link:initIntlIntentionDetail.inquires,
-                                                  crete:'inquires'
-                                                  })">
-                                            <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26"  />
-                                            <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                              {{$t('static.inquiry_record')}}（{{initIntlIntentionDetail.inquires.arr.length}}）
-                                            </a>
-                                            <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
-                                      </h4>
-                                    </div>
-                                    <div  class="panel-collapse" v-show="!initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
-                                       <div class="panel-body panel-set">
-                                            <table class="table contactSet">
-                                              <thead>
-                                                <th>{{$t('static.inquire_type')}}</th>
-                                                <th>{{$t('static.inquire_time')}}</th>
-                                                <th>{{$t('static.inquiry_state')}}</th>
-                                                <th>{{$t('static.product_price')}}</th>
-                                                <th>{{$t('static.other_cost')}}</th>
-                                                <th>{{$t('static.total_cost')}}</th>
-                                                <th>{{$t('static.comment')}}</th>
-                                                <!-- <th></th>
-                                                <th></th> -->
+                            <div class="panel-heading" v-cloak>
+                              <h4 class="panel-title clearfix" @click="enfoldment({
+                                          link:initIntlIntentionDetail.inquires,
+                                          crete:'inquires'
+                                          })">
+                                    <img class="pull-left" src="/static/images/inquire_icon.png" height="29" width="26"  />
+                                    <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                      {{$t('static.inquiry_record')}}（{{initIntlIntentionDetail.inquires.arr.length}}）
+                                    </a>
+                                    <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                              </h4>
+                            </div>
+                            <div  class="panel-collapse" v-show="!initIntlIntentionDetail.inquires.show&&initIntlIntentionDetail.inquires.arr.length>0">
+                               <div class="panel-body panel-set">
+                                    <table class="table contactSet">
+                                      <thead>
+                                        <th>{{$t('static.inquire_type')}}</th>
+                                        <th>{{$t('static.inquire_time')}}</th>
+                                        <th>{{$t('static.inquiry_state')}}</th>
+                                        <th>{{$t('static.product_price')}}</th>
+                                        <th>{{$t('static.other_cost')}}</th>
+                                        <th>{{$t('static.total_cost')}}</th>
+                                        <th>{{$t('static.comment')}}</th>
+                                        <!-- <th></th>
+                                        <th></th> -->
+                                        
+                                      </thead>
+                                      <tbody>
+                                           <tr v-for="item in initIntlIntentionDetail.inquires.arr">
+                                              <td><a class="underline" @click="getInquireInfo(item.id)">{{item.inquireType}}</a></td>
+                                              <td>{{item.ctime}}</td>
+                                              <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
+                                              <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.inquiry')}}</td>
+                                              <td v-if="item.inquire==2" style="color:#EE82EE">{{$t('static.quotation')}}</td>
+                                              <td v-if="item.inquire==3" style="color:#2E8B57">{{$t('static.quo_complete')}}</td>
+                                              <td>{{item.productTotal}}</td>
+                                              <td>{{item.otherTotal}}</td>
+                                              <td>{{item.total}}</td>
+                                              <td>{{item.comment}}</td>
+                                              <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
+                                              <td @click="otherOffer()" style="cursor:pointer">其他报价</td> -->
                                                 
-                                              </thead>
-                                              <tbody>
-                                                   <tr v-for="item in initIntlIntentionDetail.inquires.arr">
-                                                      <td><a class="underline" @click="getInquireInfo(item.id)">{{item.inquireType}}</a></td>
-                                                      <td>{{item.ctime}}</td>
-                                                      <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
-                                                      <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.inquiry')}}</td>
-                                                      <td v-if="item.inquire==2" style="color:#EE82EE">{{$t('static.quotation')}}</td>
-                                                      <td v-if="item.inquire==3" style="color:#2E8B57">{{$t('static.quo_complete')}}</td>
-                                                      <td>{{item.productTotal}}</td>
-                                                      <td>{{item.otherTotal}}</td>
-                                                      <td>{{item.total}}</td>
-                                                      <td>{{item.comment}}</td>
-                                                      <!-- <td @click="offer()" style="cursor:pointer">原材料报价</td>
-                                                      <td @click="otherOffer()" style="cursor:pointer">其他报价</td> -->
-                                                        
-                                                  </tr>
-                                              </tbody>
-                                          </table>
-                                        </div>
-                                    </div>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                </div>
+                            </div>
                           </div>       
 
                           <div class="panel panel-default">

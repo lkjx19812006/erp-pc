@@ -42,7 +42,7 @@
                                       :on-change="selectProvince"
                                       :options="initCountrylist"
                                       placeholder="国家"
-                                      label="cname"
+                                      label="cnameEn"
                                     >
                                     </v-select>
                                 </div>
@@ -80,10 +80,7 @@
                                 <label class="editlabel">{{$t('static.business_scope')}}</label>
                                 <input type="text" v-model='param.bizScope' class="form-control edit-input" value="{{param.bizScope}}" />
                             </div>
-                          <div class="editpage-input">
-                            <label class="editlabel">{{$t('static.comment')}}</label>
-                            <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
-                          </div>
+                          
                         </div>
                         <div class="editpageright">
                             <div class="editpage-input">
@@ -129,7 +126,10 @@
                               <option value="3">{{$t('static.three_star')}}</option>
                             </select>
                           </div>
-
+                          <div class="editpage-input">
+                            <label class="editlabel">{{$t('static.comment')}}</label>
+                            <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
+                          </div>
                         </div>
                     </div>
                 </section>
@@ -183,7 +183,8 @@ export default {
                   cname: ''
                 },
                 country:{
-                  cname: ''
+                  cname: '',
+                  cnameEn: '',
                 },
                 countryParam:{
                   loading:false,
@@ -247,7 +248,7 @@ export default {
       },
       confirm:function(){
         this.param.country=this.country.id;
-        this.param.countryName=this.country.cname;
+        this.param.countryName=this.country.cnameEn;
         this.param.province=this.province.id;
         this.param.provinceName=this.province.cname;
         this.param.city=this.city.id;
@@ -267,7 +268,7 @@ export default {
     },
     created(){
       if(this.param.country){
-        this.country.cname=this.param.countryName;
+        this.country.cnameEn=this.param.countryName;
         this.province.cname=this.param.provinceName;
         this.city.cname=this.param.cityName;
       }

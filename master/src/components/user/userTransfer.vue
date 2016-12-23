@@ -24,31 +24,31 @@
               <!-- 客户名称 -->
               <div class="client-detailInfo col-md-6">
                  <label class="editlabel">{{$t('static.client_name')}}<span class="system_danger" v-if="$validation.name.minlength">{{$t('static.enter_client_name')}}</span></label>
-                 <input type="text"  class="form-control edit-input" v-model="param.name"
+                 <input type="text" class="form-control edit-input" v-model="param.name"
                        v-validate:name="{minlength:2}"/>
               </div>
-            <!-- 联系人姓名 -->         
-            <div class="client-detailInfo  col-md-6">
-              <label class="editlabel">{{$t('static.contact')}}{{$t('static.name')}}<span class="system_danger" v-if="$validation.cname.minlength">{{$t('static.required')}}</span></label>
-              <input type="text" class="form-control edit-input" v-validate:cname="{minlength:2}" v-model="contacts[0].name"/>
-            </div>
-            <!-- 客户类型 -->
+              <!-- 客户类型 -->
               <div class="client-detailInfo   col-md-6">
                 <label class="editlabel">{{$t('static.type')}}</label>
                 <select class="form-control edit-input" v-model="param.type">
                     <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerType}}</option>
                 </select>
               </div>
+              <!-- 联系人姓名 -->         
+              <div class="client-detailInfo  col-md-6">
+                <label class="editlabel">{{$t('static.contact')}}{{$t('static.name')}}<span class="system_danger" v-if="$validation.cname.minlength">{{$t('static.required')}}</span></label>
+                <input type="text" class="form-control edit-input" v-validate:cname="{minlength:2}" v-model="contacts[0].name"/>
+              </div>
               <!-- 联系人手机 -->
-            <div class="client-detailInfo  col-md-6">
-              <label class="editlabel" for="system">{{$t('static.contact')}}{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.cphone.phone">{{$t('static.validate_cellphone')}}</span></label>
-              <input type="text" class="form-control edit-input" v-validate:cphone="['phone']" v-model="contacts[0].phone"/>
-            </div>
-            <!-- 客户电话 -->
-            <div class="client-detailInfo  col-md-6">
-               <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.tel.tel">{{$t('static.validate_telephone')}}</span></label>
-               <input type="text" class="form-control edit-input" v-validate:tel="['tel']" v-model="param.tel" />
-            </div>
+              <div class="client-detailInfo  col-md-6">
+                <label class="editlabel" for="system">{{$t('static.contact')}}{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.cphone.phone">{{$t('static.validate_cellphone')}}</span></label>
+                <input type="text" class="form-control edit-input" v-validate:cphone="['phone']" v-model="contacts[0].phone"/>
+              </div>
+              <!-- 客户电话 -->
+              <div class="client-detailInfo  col-md-6">
+                 <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.tel.tel">{{$t('static.validate_telephone')}}</span></label>
+                 <input type="text" class="form-control edit-input" v-validate:tel="['tel']" v-model="param.tel" />
+              </div>
             
               <!-- <div  class="client-detailInfo   col-md-6">
                 <label class="editlabel">{{$t('static.type')}}</label>
@@ -77,7 +77,6 @@
                 <input type="text"  class="form-control edit-input" v-model="param.number"
                       />
               </div>
-
               
               <!-- 客户分类 -->
               <div class="client-detailInfo  col-md-6">
@@ -114,7 +113,7 @@
                       :on-change="selectProvince"
                       :options="countryArr"
                       placeholder="国家"
-                      label="cname"
+                      label="cnameEn"
                     >
                     </v-select>
                   </div>
@@ -201,7 +200,9 @@
               </div>
               <!-- 联系人电话 -->
               <div class="client-detailInfo   col-md-6">
-                <label class="editlabel" for="system">{{$t('static.contact')}}{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.ctel.tel">{{$t('static.validate_telephone')}}）</span></label>
+                <label class="editlabel" for="system">{{$t('static.contact')}}{{$t('static.telephone')}}
+                  <span class="system_danger" v-if="$validation.ctel.tel">{{$t('static.validate_telephone')}}）</span>
+                </label>
                 <input type="text" class="form-control edit-input" v-validate:ctel="['tel']" v-model="contacts[0].tel"/>
               </div>
               <!-- 联系人邮箱 -->
@@ -220,10 +221,6 @@
                 <input type="text" class="form-control edit-input" v-validate:cqq="['qq']" v-model="contacts[0].qq"/>
               </div>
             </div>
-            
-
-  
-
             <!-- 联系人信息 -->  
             <!-- <div v-if="contactshow">
               <div style="margin-top:25px;margin-left:30px;margin-bottom:15px;">
@@ -287,7 +284,6 @@
   import vSelect from '../tools/vueSelect/components/Select'
   import {
     initUserType,
-    
   } from '../../vuex/getters'
   import {
     saveCreate,
@@ -326,6 +322,7 @@
           show:false,
           remain:true,
           name:'创建成功',
+          alert:true
         },
         contacts: [{
           name: null,
@@ -342,6 +339,7 @@
         loading: false,
         provinceArr:[],
         cityArr:[],
+        checkCustomer:{},
         countryArr:[],
         province: {
           cname: ''
@@ -350,7 +348,8 @@
           cname: ''
         },
         country:{
-          cname: ''
+/*          cname: '',*/
+          cnameEn:''
         },
 
       }
@@ -392,6 +391,9 @@
           emulateHTTP: false
         }).then((res) => {
           _self.countryArr=res.json().result;
+          _self.countryArr.forEach(function(item){
+            item.cnameEn = item.cname + '(' + item.nameEn + ')';  //中英文名字"中国/Chinese"
+          })
         }, (res) => {
 
           console.log('fail');
@@ -400,6 +402,7 @@
       getProvinces:function(){
         var _self = this;
         console.log(_self.param);
+        console.log(this.country.id)
         this.$http({
           method: 'GET',
           url: '/crm/api/v1/sys/location/province/?country='+this.country.id,
@@ -435,12 +438,32 @@
               return _self.city=item;
             }
           })
-
         }, (res) => {
-
           console.log('fail');
         })
 
+      },
+      checkCustomer:function(){  //检查客户是否存在
+        var _self = this;
+        this.$http({
+          method: 'POST',
+          url: '/crm/api/v1/customer/checkCustomer?phone='+this.contacts[0].phone,
+          emulateHTTP: true,
+          emulateJSON: false,
+          headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              'Content-Type': 'application/json;charset=UTF-8'
+          }
+        }).then((res) => {
+          if(this.contacts[0].phone.length==11&&res.json().code==200){
+            _self.chechCallback(res.json().result);
+            console.log(res.json().result)
+            _self.provinceArr=res.json().result;
+          }
+          console.log(res.json().result)
+        }, (res) => {
+          console.log('fail');
+        })
       },
       initContacts: function (data) {
         var _self = this;
@@ -496,15 +519,22 @@
         }
         else{
           this.param.country=this.country.id;
-          this.param.countryName=this.country.cname;
+          this.param.countryName=this.country.cnameEn;
         }
         this.param.show=false;
         this.param.callback=this.param.callback;
         this.saveCreate(this.param,this.tipsParam);
-
       },
+      chechCallback:function(title){
+          this.tipsParam.show =true;
+          this.tipsParam.remain =false;
+          this.tipsParam.name =title;
+          this.tipsParam.alert =true;
+      }
     },
-
+    watch:{
+        'contacts[0].phone':'checkCustomer'
+    },
     events: {
       'selectEmpOrOrg': function (param) {
         this.param.employeeId = param.employeeId;
@@ -519,7 +549,6 @@
         this.loading=true;
         this.getContacts('/crm/api/v1/company/' + this.param.companyId);
       }
-
       if(this.param.countryId){
         this.country.id=this.param.countryId;
         this.getProvinces();

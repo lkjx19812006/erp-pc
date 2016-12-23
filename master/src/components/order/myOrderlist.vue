@@ -237,7 +237,7 @@
                             <img src="/static/images/{{$t('static.deadline')}}.png"  title="订单已过期" alt="订单已过期"/>
                         </a>
                         <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)">
-                            <img src="/static/images/apply.png"  title="申请审核" alt="申请审核" />
+                            <img src="/static/images/{{$t('static.img_apply')}}.png"  title="申请审核" alt="申请审核" />
                         </a>
                         <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2&&(item.orderStatus==0||item.orderStatus==70)">
                             <img src="/static/images/{{$t('static.img_reset')}}.png"  title="重新申请" alt="重新申请" />

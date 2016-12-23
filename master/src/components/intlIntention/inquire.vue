@@ -43,6 +43,7 @@
         </div>
         <div class="edit_footer">
             <button type="button" class="btn btn-default btn-close" @click="param.show=false">{{$t('static.cancel')}}</button>
+            <button type="button" class="btn  btn-confirm" v-show="false">{{$t('static.confirm')}}</button>
             <button type="button" class="btn  btn-confirm" v-if="$validation.valid"  @click="confirm()">{{$t('static.confirm')}}</button>
             <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.confirm')}}</button>
         </div>

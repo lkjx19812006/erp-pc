@@ -7,7 +7,6 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-    
     <div>
         <div class="service-nav">
             <div class="clear" style="margin-top:3px;"> 
@@ -60,21 +59,17 @@
                         </select>
                    </dd>
                 </dl>
-                
-                
-
-                <!-- <dl class="clear left transfer">
-                    <div class="client-detailInfo col-xs-6">
-                        <dt class="left transfer marg_top">{{$t("static.registration_start_time")}}：</dt>
-                        <mz-datepicker :time.sync="loadParam.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </dl> -->
-
-                
-                <dd class="left" style="margin-left:20px">
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">{{$t("static.search")}}</button>
-                </dd>
+                <dl class="clear left transfer" v-if="this.initLogin.orgId==29">
+                   <dt class="left transfer marg_top">客服跟进情况：</dt>
+                   <dd class="left">
+                      <select v-model="loadParam.audit"  class="form-control" @change="selectSearch()">
+                          <option value="">{{$t("static.please_select")}}</option>
+                          <option value="0">跟进中</option>
+                          <option value="1">有效</option>
+                          <option value="2">无效</option>
+                      </select>
+                   </dd>
+                </dl>
             </div>
 
             <div class="clear" style="margin-top:3px;"> 
@@ -104,16 +99,10 @@
                         <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
                 </dl>
-                
-                <!-- <dl class="clear left transfer" style="margin-left: -33px;">
-                    <div class="client-detailInfo col-xs-6">
-                        <dt class="left transfer marg_top">{{$t("static.registration_end_time")}}：</dt>
-                        <mz-datepicker :time.sync="loadParam.ctimeEnd" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </dl> -->
-                
-                <dd class="left" style="margin-left:-13px" >
+                <dd class="left transfer">
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">{{$t("static.search")}}</button>
+                </dd>
+                <dd class="left">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">{{$t("static.clear_all")}}</button>
                 </dd>
                 
@@ -419,6 +408,7 @@ export default {
                 creditLevel:'',
                 ctimeStart:'',
                 ctimeEnd:'',
+                audit:'',
                 total:0
             },
             provinceParam:{
@@ -509,6 +499,7 @@ export default {
             this.loadParam.phoneProvinceName='';
             this.loadParam.label='';
             this.loadParam.creditLevel='';
+            this.loadParam.audit=''; 
             this.loadParam.ctimeStart='';
             this.loadParam.ctimeEnd='';
             this.getClientList(this.loadParam);
@@ -664,6 +655,7 @@ export default {
     created() {
         this.getProvinceList(this.provinceParam);
         changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.myClientParam);
+        console.log(this.initLogin)
         
     },
     ready(){

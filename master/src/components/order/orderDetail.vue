@@ -197,6 +197,8 @@
                                                             sub:$index,
                                                             bizId:item.orderId,
                                                             bizSubId:item.id,
+                                                            validate:item.validate,
+                                                            type:item.type,
                                                             payWay:'',
                                                             payName:'',
                                                             paySubName:'',

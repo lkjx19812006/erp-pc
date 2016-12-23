@@ -93,12 +93,12 @@
 
                 
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">划转状态：</dt>
+                   <dt class="left transfer marg_top">提取状态：</dt>
                    <dd class="left">
                         <select class="form-control" v-model="loadParam.transform" @change="selectSearch()">
                             <option value="">全部</option>
-                            <option value="0">待划转</option>
-                            <option value="1">已划转</option>
+                            <option value="0">待提取</option>
+                            <option value="1">已提取</option>
                             <option value="2">转黑</option>
                         </select>
                    </dd>
@@ -168,7 +168,7 @@
                         <th>审核状态</th>
                         <th>个人认证</th>
                         <th>企业认证</th>
-                        <th>划转状态</th>
+                        <th>提取状态</th>
                         <th>所属业务员</th>
                         <th>注册时间</th>
                         <th style="min-width: 130px;">操作</th>
@@ -216,8 +216,8 @@
                         <td v-if="item.ctype==1" style="color:#339966">等待认证</td>
                         <td v-if="item.ctype==2" style="background:green;color:#fff">已认证</td>
                         <td v-if="item.ctype==3" style="background:red;color:#fff">认证失败</td>
-                        <td v-if="item.transStatus==1" style="color:#fff;background:green">已划转</td>
-                        <td v-if="item.transStatus==0" style="color:#fff;background:#C71585">未划转</td>
+                        <td v-if="item.transStatus==1" style="color:#fff;background:green">已提取</td>
+                        <td v-if="item.transStatus==0" >未提取</td>
                         <td v-if="item.transStatus!=0&&item.transStatus!=1">转黑名单</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.ctime}}</td>
