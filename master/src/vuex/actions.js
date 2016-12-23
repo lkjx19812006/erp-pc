@@ -206,6 +206,7 @@ export const freshPiecharts = ({ dispatch }, getPiechart) => {
 
 //获取待办事项
 export const getBacklogList = ({ dispatch }, param) => {
+    console.log(param)
     param.loading = true;
     var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
     
@@ -222,7 +223,6 @@ export const getBacklogList = ({ dispatch }, param) => {
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
         param.loading = false;
-
         //localStorage.BacklogParam = JSON.stringify(param);
 
     }, (res) => {
@@ -1235,6 +1235,10 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
         if(res.json().code==200){
             param.validate = res.json().result.validate;
             dispatch(types.ORDER_UPLOAD_DATA, param);
+        }
+        if(res.json().msg=='已申请审核'){
+           param.validate = 1;
+           dispatch(types.ORDER_UPLOAD_DATA, param); 
         }
         if(param.titles=='分期审核'){
             param.pr = res.json().result.pr;
@@ -4333,9 +4337,6 @@ export const cancelIntlIntentionInquire = ({ dispatch }, param) => { //国际意
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        if(param.callback){
-            param.callback(res.json().msg);
-        }
         param.show = false;
         param.inquire = 0;
         param.inquireTime = param.inquireTime - 1;
@@ -5999,7 +6000,6 @@ export const sampleApply = ({ dispatch }, param) => { //申请/审核 寄样申�
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('添加成功')
         param.callback(res.json().msg);
         param.validate= res.json().result.validate; 
         param.description=res.json().result.description;
@@ -6212,18 +6212,6 @@ export const getBankList = ({ dispatch }, param) => { //获取银行数据
         }
     }).then((res) => {
         var bank = res.json().result;
-        if (param.name) {
-            for (var i in res.json().result) {
-                if (res.json().result[i].name == param.name) {
-                    const object = {
-                        name: res.json().result[i].name,
-                        paySubName: param.paySubName,
-                    }
-                    console.log(object);
-                    return getBankBranchList({ dispatch }, object);
-                }
-            }
-        }
         dispatch(types.BANK_LIST, bank);
     }, (res) => {
         console.log('fail');
@@ -6231,10 +6219,19 @@ export const getBankList = ({ dispatch }, param) => { //获取银行数据
 }
 export const getBankBranchList = ({ dispatch }, param) => { //获取银行支行的数据
     console.log(param)
+    param.loading = true;
     if (!param.name) {
         param.name = '';
     }
-    var url = apiUrl.clientList +'/sys/enum/getBankSubbranchs'+'&name=' + param.name;
+    var url = apiUrl.clientList +'/sys/enum/getBankSubbranchs'+'?name=' + param.name+'&page=' + param.cur + '&pageSize=15';
+    for (var seach in param) {
+        if (seach == 'province' && param[seach] !== '') {
+            url += '&province=' + param.province
+        }
+        if (seach == 'city' && param[seach] !== '') {
+            url += '&city=' + param.city
+        }
+    }
     Vue.http({
         method: 'GET',
         url: url,
@@ -6243,9 +6240,17 @@ export const getBankBranchList = ({ dispatch }, param) => { //获取银行支行
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
-        var branch = res.json().result;
+        var branch = res.json().result.list;
+        for(var i in branch){
+            branch[i].checked = false;
+        }
         dispatch(types.BANK_BRANCH_LIST, branch);
+        param.loading = false;
+        param.all = res.json().result.all;
+        param.total = res.json().result.total;
+        console.log(param.cur)
     }, (res) => {
         console.log('fail');
+        param.loading = false;
     })
 }

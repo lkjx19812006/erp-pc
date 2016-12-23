@@ -35,7 +35,7 @@
                                       <th>单位</th>
                                       <th>说明</th>
                                       <th>创建时间</th>
-                                      <th></th>
+  
                                     </thead>
                                     <tbody>
                                         <tr v-for="item in initgSampleDetail.items.arr">
@@ -49,7 +49,8 @@
                                             <!-- <td @click="edit($index,item)">
                                                                               <a class="operate"><img src="/static/images/upremark.png" height="18" width="48"  alt="修改备注" title="修改备注"/>
                                                                                 </a>
-                                                                            </td>      -->                                
+                                                 </td> 
+                                            -->                                
                                         </tr>
                                     </tbody>
                                 </table>
@@ -277,6 +278,9 @@ input{
 }
 .table{
     display: table;
+}
+.table>thead>tr>th,.table>tbody>tr>td{
+  border-bottom:1px solid #ddd;
 }
 .mz-datepicker > i {
     height: 36px;

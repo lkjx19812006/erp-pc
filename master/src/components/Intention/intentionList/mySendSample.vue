@@ -55,7 +55,7 @@
                         <th>审核状态</th>
                         <th>备注</th>
       	            	  <th>创建时间</th>
-                        <th style="min-width: 200px;text-align: left">操作</th>
+                        <th style="min-width: 150px;text-align: left">操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,7 +82,7 @@
                         <td>{{item.comments}}</td>
                         <td>{{item.ctime}}</td>
                         <td style="text-align: left;">
-                            <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"  @click="updateOrder(item.id,$index)">
+                            <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"  @click="updateOrder(item,$index)">
                                   <img src="/static/images/edit.png"  alt="编辑" title="编辑"/>
                             </a>
                             <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"   @click="deleInfo({
@@ -319,7 +319,12 @@ export default {
         },
         updateOrder:function(item,index){
               this.dialogParam.send = true;
-              this.dialogParam.id = item;
+              this.dialogParam.id = item.id;
+              this.dialogParam.country = item.country;
+              this.dialogParam.province = item.province;
+              this.dialogParam.city = item.city;
+              this.dialogParam.address = item.address;
+              this.dialogParam.district = item.district;
               this.dialogParam.index = index;
               this.dialogParam.items = [];
               this.dialogParam.itemsBack = [];

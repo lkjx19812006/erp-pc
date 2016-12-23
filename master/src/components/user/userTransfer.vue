@@ -27,17 +27,18 @@
                  <input type="text" class="form-control edit-input" v-model="param.name"
                        v-validate:name="{minlength:2}"/>
               </div>
+              
+              <!-- 联系人姓名 -->         
+              <div class="client-detailInfo  col-md-6">
+                <label class="editlabel">{{$t('static.contact')}}{{$t('static.name')}}<span class="system_danger" v-if="$validation.cname.minlength">{{$t('static.required')}}</span></label>
+                <input type="text" class="form-control edit-input" v-validate:cname="{minlength:2}" v-model="contacts[0].name"/>
+              </div>
               <!-- 客户类型 -->
               <div class="client-detailInfo   col-md-6">
                 <label class="editlabel">{{$t('static.type')}}</label>
                 <select class="form-control edit-input" v-model="param.type">
                     <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerType}}</option>
                 </select>
-              </div>
-              <!-- 联系人姓名 -->         
-              <div class="client-detailInfo  col-md-6">
-                <label class="editlabel">{{$t('static.contact')}}{{$t('static.name')}}<span class="system_danger" v-if="$validation.cname.minlength">{{$t('static.required')}}</span></label>
-                <input type="text" class="form-control edit-input" v-validate:cname="{minlength:2}" v-model="contacts[0].name"/>
               </div>
               <!-- 联系人手机 -->
               <div class="client-detailInfo  col-md-6">

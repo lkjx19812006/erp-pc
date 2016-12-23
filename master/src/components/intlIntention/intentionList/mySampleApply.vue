@@ -55,7 +55,7 @@
                         <th>{{$t('static.review_status')}}</th>
                         <th>{{$t('static.comment')}}</th>
       	            	  <th>{{$t('static.create_time')}}</th>
-                        <th style="min-width: 200px;text-align: left">{{$t('static.operation')}}</th>
+                        <th style="min-width: 150px;text-align: left">{{$t('static.operation')}}</th>
                     </tr>
                 </thead>
                 <tbody>

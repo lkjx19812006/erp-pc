@@ -207,4 +207,7 @@ export default {
 .editpage-image {
     display: inline-block;
 }
+table{
+    display: table;
+}
 </style>

@@ -146,9 +146,7 @@
                   <td v-if="item.validate==-2" style="background:red;color:#fff">{{$t('static.unapproved')}}</td>
                   <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                   <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
-      
-
-                  <!-- <td></td>
+                <!-- <td></td>
                   <td>{{item.country}}</td>
                   <td>{{item.province}}</td>
                   <td>{{item.city}}</td>
@@ -158,8 +156,8 @@
                   <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
                   <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
                   <td v-if="item.clients!=0&&item.clients!=1&&item.clients!=2&&item.clients!=3"  style="background:#000;color:#fff">未说明</td>
-                  <td>{{item.currency | Currency}}</td> -->
-                  
+                  <td>{{item.currency | Currency}}</td> 
+                -->
                   <td><a class="operate" v-if="item.orderStatus<20"  @click="updateOrder({
                         show:true,
                         id:item.id,

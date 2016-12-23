@@ -30,7 +30,7 @@
                                     <tr v-for="item in initIdentify.files">
                                         <td>{{item.name}}</td>
                                         <td>{{item.fileType}}</td>
-                                        <td><img :src="item.path" max-width="200" @click="clickBig(item.path)" /></td>
+                                        <td><img :src="item.path" width="200" @click="clickBig(item.path)" /></td>
                                         <td>{{item.bizType}}</td>
                                         <td>{{item.description}}</td>
                                     </tr>
