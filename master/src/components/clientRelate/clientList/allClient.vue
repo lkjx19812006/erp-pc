@@ -76,11 +76,14 @@
                         </mz-datepicker>
                     </div>
                 </dl>
-
                 
-                <dd class="left" style="margin-left:20px">
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
-                </dd>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">未跟进天数：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.trackingDay" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+                
             </div>
 
             <div class="clear" style="margin-top:3px;"> 
@@ -118,6 +121,10 @@
                         </mz-datepicker>
                     </div>
                 </dl>
+
+                <dd class="left" style="margin-left:20px">
+                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
+                </dd>
                 
                 <dd class="left" style="margin-left:20px">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
@@ -383,6 +390,7 @@ export default {
                 phoneProvinceName:'',
                 label:'',
                 creditLevel:'',
+                trackingDay:'',
                 total:0
 
             },
@@ -475,6 +483,7 @@ export default {
             this.loadParam.creditLevel='';
             this.loadParam.ctimeStart='';
             this.loadParam.ctimeEnd='';
+            this.loadParam.trackingDay='';
             this.getClientList(this.loadParam);
         },
         eventClick:function(id){

@@ -92,20 +92,20 @@
               <dl class="clear left transfer" style="margin-left:50px">
                  <dt class="left transfer marg_top">意向来源：</dt>
                  <div class="btn-group">
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inType===''}" @click="selectInType('')">
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===''}" @click="selectSource('')">
                         全部
                      </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inType===0}" @click="selectInType(0)">
-                        抓取
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===1}" @click="selectSource(1)">
+                        PC
                      </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inType===1}" @click="selectInType(1)">
-                        客户录入
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===2}" @click="selectSource(2)">
+                        安卓
                      </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inType===2}" @click="selectInType(2)">
-                        客服录入
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===3}" @click="selectSource(3)">
+                        微信
                      </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inType===3}" @click="selectInType(3)">
-                        业务员录入
+                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.source===4}" @click="selectSource(4)">
+                        IOS
                      </button>
                  </div>
               </dl>
@@ -427,7 +427,7 @@ export default {
                 advance:'',  //预付比例
                 intl:'',  //是否国际
                 validate:'',  //审核状态
-                inType:'',    //意向来源
+                source:'',    //意向来源
                 onSell:'', //上架状态
                 total:0,
                 breedId:'',
@@ -561,8 +561,8 @@ export default {
             this.loadParam.validate = validate;
             this.selectSearch();
         },
-        selectInType:function(inType){
-            this.loadParam.inType = inType;
+        selectSource:function(source){
+            this.loadParam.source = source;
             this.selectSearch();
         },
         intentionAudit:function(){

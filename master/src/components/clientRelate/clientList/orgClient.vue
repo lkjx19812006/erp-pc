@@ -64,9 +64,10 @@
                    <dd class="left">
                       <select v-model="loadParam.audit"  class="form-control" @change="selectSearch()">
                           <option value="">{{$t("static.please_select")}}</option>
-                          <option value="0">跟进中</option>
-                          <option value="1">有效</option>
-                          <option value="2">无效</option>
+                          <option value="0">初始</option>
+                          <option value="1">跟进中</option>
+                          <option value="2">有效</option>
+                          <option value="3">无效</option>
                       </select>
                    </dd>
                 </dl>
