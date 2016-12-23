@@ -149,6 +149,7 @@
                description:'',
                path:'',
                link:uploadFiles,
+               callback:'',
                url:'/customer/file/',
                key:'files'
              })">
@@ -311,6 +312,7 @@
       },
       createfiles:function(param){
          this.cfilesParam = param;
+         this.cfilesParam.callback = this.productback;
       },
       reset:function(){
         this.loadParam.name = "";
