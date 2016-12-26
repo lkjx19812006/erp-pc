@@ -38,7 +38,7 @@
                 <div class="cover_loading">
                     <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
                   </div>
-                <div class="employee_message_view" v-for="item in initBacklogList">
+                <div class="employee_message_view" v-for="item in initBacklogList" v-if="item.bizType=='order_validate'">
                     <div class="message_view_left">
                          <span></span>
                          <p>{{item.taskDesc}}</p>
@@ -51,15 +51,14 @@
                         <a v-if="item.taskKey!='employee_handle'" @click="showAudit(item)">审核</a>
                         <a v-else @click="showAudit(item)">重新申请</a>
                     </div>
-                    <div class="message_view_right" v-if="item.bizType=='order_send'">
-                        <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
+                    <!-- <div class="message_view_right" v-if="item.bizType=='order_send'">
                         <a @click="orderSend(item.bizId)">详情</a>
                         <a @click="showRecord(item)">记录</a>
                         <a  v-if="item.taskKey=='order_send_governor_validate'"  @click="sendAudit(item)">审核</a>
                         <a v-if="item.taskKey=='order_send_warehouse_validate'"  @click="sendAudit(item)">发货</a>
                         <a  v-if="item.taskKey=='order_send_employee_handle'"  @click="sendAudit(item)">重新申请</a>
                         
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
