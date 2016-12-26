@@ -352,7 +352,7 @@ Vue.filter('customerType', function(val){ //客户类型
 		 return '中成药生产商';
 	}else if(val==22){
 		 return '西成药生产商';
-	}else if(val==22){
+	}else if(val==23){
 		 return '饮片厂';
 	}else{
 		return val;

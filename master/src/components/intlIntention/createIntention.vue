@@ -193,6 +193,20 @@
                        </div>
 
                        <div class="editpage-input">
+                         <label class="editlabel">意向来源<span class="system_danger" v-if="$validation.source.required">Please select the source</label>
+                         <input type="text" v-show="false" v-model='param.source' v-validate:source="['required']" class="form-control edit-input"  />
+                         <div type="text" class="edit-input" >
+                           <input-select
+                             :prevalue="param.source"
+                             :value.sync="param.source"
+                             :options="source"
+                             placeholder="来源/Source"
+                           >
+                           </input-select>
+                         </div>
+                       </div>
+
+                       <div class="editpage-input">
                          <label class="editlabel">{{$t('static.deadline')}}</label>
                          <mz-datepicker :time.sync="param.duedate" format="yyyy-MM-dd HH:mm:ss" class="a">
                          </mz-datepicker>
@@ -349,6 +363,7 @@ export default {
             employeeId:''
           },
           tag:['真空包装/Vacuum packaging','瓦楞纸箱/Box','编织袋/Woven bag','积压包/Pallets','其它/Other'],
+          source:['Alibaba','Email','Facebook'],
             country:{
               cname:'',
               nameEn:'',
