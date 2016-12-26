@@ -24,16 +24,36 @@
   import {
     initOrgList
   } from '../../vuex/getters'
-
+  import {
+    getOrgList
+  } from '../../vuex/actions'
   export default {
     props: ['param'],
+    data(){
+      return {
+          orgParam: {
+              loading: true,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7,
+              total:''
+          },
+      }
+    },
     vuex:{
       getters:{
         initOrgList
+      },
+      actions:{
+        getOrgList
       }
     },
     methods:{
 
+    },
+    created(){
+        this.getOrgList(this.orgParam);
     },
     events: {
       treeview_click:function(param){

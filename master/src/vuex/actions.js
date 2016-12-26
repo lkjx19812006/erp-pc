@@ -295,38 +295,41 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
     param.loading = true;
     var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
     for (var key in param) {
-        if (key == 'consignee' && param[key] != '') {
+        if (key == 'consignee' && param[key] !== '') {
             url += '&consignee=' + param[key];
         }
-        if (key == 'clients' && param[key] != '') {
+        if (key == 'clients' && param[key] !== '') {
             url += '&clients=' + param[key];
         }
-        if (key == 'no' && param[key] != '') {
+        if (key == 'no' && param[key] !== '') {
             url += '&orderNo=' + param[key];
         }
-        if (key == 'ctime' && param[key] != '') {
+        if (key == 'startTime' && param[key] !== '') {
             url += '&startTime=' + param[key];
         }
-        if (key == 'ftime' && param[key] != '') {
+        if (key == 'endTime' && param[key] !== '') {
             url += '&endTime=' + param[key];
         }
-        if (key == 'mode' && param[key] != '') {
+        if (key == 'mode' && param[key] !== '') {
             url += '&mode=' + param[key];
         }
-        if (key == 'dataStatus' && param[key] != '') {
+        if (key == 'dataStatus' && param[key] !== '') {
             url += '&dataStatus=' + param[key];
         }
-        if (key == 'orderStatus' && param[key] != '') {
+        if (key == 'orderStatus' && param[key] !== '') {
             url += '&orderStatus=' + param[key];
         }
-        if (key == 'payWay' && param[key] != '') {
+        if (key == 'payWay' && param[key] !== '') {
             url += '&payWay=' + param[key];
         }
-        if (key == 'consigneePhone' && param[key] != '') {
+        if (key == 'consigneePhone' && param[key] !== '') {
             url += '&consigneePhone=' + param[key];
         }
-        if (key == 'type' && param[key] != '') {
+        if (key == 'type' && param[key] !== '') {
             url += '&type=' + param[key];
+        }
+        if (key == 'org' && param[key] !== '') {
+            url += '&org=' + param[key];
         }
     }
     Vue.http({
@@ -4147,9 +4150,11 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
         district: param.district,
         address: param.address,
         duedate: param.duedate,
+        source: param.source,
         pack: param.pack,
         items: param.items
     }
+   
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,

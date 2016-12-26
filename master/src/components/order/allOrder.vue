@@ -5,12 +5,36 @@
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+    <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
     <div>
       <div class="order_search clearfix">
           <div class="right">
                 <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
-                <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-            </div>
+                
+          </div>
+          <div class="clear left">
+             <dl class="clear left transfer">
+                <dt class="left transfer marg_top">部门：</dt>
+                <dd class="left">
+                    <input type="text"  class="form-control" v-model="loadParam.orgName"  placeholder="请选择部门"  readonly="true"  @click="selectOrg()"/>
+                </dd>
+             </dl>
+             <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                 <dd class="left">
+                    <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
+                 </dd>
+              </dl>
+              <dl class="clear left transfer" style="margin-right:280px">
+                 <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
+                 <dd class="left">
+                    <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
+                 </dd>
+              </dl>
+              <button type="button" class="new_btn transfer"  @click="resetCondition()">{{$t('static.clear_all')}}</button>
+              <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+          </div>
+
           <div class="clear left">
             <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
@@ -22,6 +46,22 @@
                     </select>
                </dd>
             </dl>
+
+            <!-- <dl class="clear left transfer">
+               <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
+               <div class="btn-group">
+                   <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===''}" @click="selectType('')">
+                      {{$t('static.please_select')}}
+                   </button>
+                   <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0}" @click="selectType(0)">
+                      {{$t('static.purchase')}}
+                   </button>
+                   <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===1}" @click="selectType(1)">
+                      {{$t('static.sell')}}
+                   </button>
+               </div>
+            </dl> -->
+
             <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
                <dd class="left">
@@ -49,21 +89,28 @@
                     </select>
                </dd>
             </dl>
-             <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
-                 <dd class="left">
-                    <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
-                 </dd>
-              </dl>
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
-                 <dd class="left">
-                    <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
-                 </dd>
-              </dl>
-              <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
-                <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+            
+            <dl class="clear left transfer">
+                <div class="client-detailInfo col-xs-6">
+                    <dt class="left transfer marg_top">起始时间：</dt>
+                    <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
+                    </mz-datepicker>
+                </div>
+            </dl>
+
+            <dl class="clear left transfer" style="margin-left:-33px;">
+                <div class="client-detailInfo col-xs-6">
+                    <dt class="left transfer marg_top">结束时间：</dt>
+                    <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
+                    </mz-datepicker>
+                </div>
+            </dl>
           </div>
+
+          <div class="right">
+              <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+          </div>
+
       </div>
       <div class="order_table" id="table_box">
           <div class="cover_loading">
@@ -203,6 +250,7 @@
     import disposeModel  from  '../order/orderStatus'
     import tipsdialogModel  from '../tips/tipDialog'
     import auditModel  from '../../components/tips/auditDialog'
+    import selectorgModel  from '../../components/tips/treeDialog'
     import filter from '../../filters/filters'
     import common from '../../common/common'
     import changeMenu from '../../components/tools/tabs/tabs.js'
@@ -229,7 +277,8 @@
             deletebreedModel,
             disposeModel,
             tipsdialogModel,
-            auditModel
+            auditModel,
+            selectorgModel
         },
         data() {
             return {
@@ -250,10 +299,18 @@
                     clients:'',
                     dataStatus:'',
                     no:'',
-                    ctime:'',
-                    ftime:'',
+                    org:'',
+                    orgName:'',
+                    startTime:'',
+                    endTime:'',
                     mode:'',
                     total:0
+                },
+                selectOrgParam:{
+                    show:false,
+                    orgId:'',
+                    orgName:'',
+                    callback:this.callback,
                 },
                 dialogParam:{
                     show: false
@@ -315,8 +372,25 @@
             }
         },
         methods: {
+
+            selectOrg:function(){
+                this.selectOrgParam.show = true;
+            },
+            callback:function(){
+              console.log("dfasds");
+              if(this.selectOrgParam.orgId){
+                this.loadParam.org=this.selectOrgParam.orgId;
+                this.loadParam.orgName=this.selectOrgParam.orgName;
+                this.selectSearch();
+                
+              }
+            },
             selectSearch:function(){
                 this.getOrderList(this.loadParam);
+            },
+            selectType:function(type){
+              this.loadParam.type = type;
+              this.selectSearch();
             },
             editClick: function(sub) {
                 if(this.$store.state.table.basicBaseList.allOrderList[sub].show){
@@ -341,9 +415,9 @@
              
                 this.dialogParam=param;
             },
-            resetTime:function(){
-              this.loadParam.ctime = "";
-              this.loadParam.ftime = "";
+            resetCondition:function(){
+              this.loadParam.startTime = "";
+              this.loadParam.endTime = "";
               this.loadParam.consigneePhone = "";
               this.loadParam.consignee = "";
               this.loadParam.orderStatus="";
@@ -353,6 +427,8 @@
               this.loadParam.type="";
               this.loadParam.clients="";
               this.loadParam.payWay="";
+              this.loadParam.org="";
+              this.loadParam.orgName="";
               this.getOrderList(this.loadParam);
             },
             applyBack:function(title){

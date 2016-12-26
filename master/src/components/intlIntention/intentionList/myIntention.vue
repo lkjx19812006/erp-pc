@@ -337,6 +337,7 @@ export default {
                 district:'',
                 address:'',
                 duedate:'',
+                source:'',
                 pack:'',
                 items:[
                     
