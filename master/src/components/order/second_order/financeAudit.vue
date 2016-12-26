@@ -10,7 +10,7 @@
         <validator name="validation">
             <div class="edit-model">
                <section class="editsection clearfix" v-cloak>
-                    <div class="editpage-input col-md-12" v-if="param.titles=='分期审核'">
+                    <div class="editpage-input col-md-12" v-if="param.titles=='确认收款'||param.titles=='确认付款'">
                        <label class="editlabel">备注</label>
                        <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" value="{{param.description}}"></textarea>
                     </div>
@@ -22,16 +22,16 @@
                     </div>
                </section>
             </div>
-            <div class="edit_footer" v-if="param.titles=='分期审核'">
+            <div class="edit_footer" v-if="param.titles=='确认收款'||param.titles=='确认付款'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="reject(param)">不通过</button>
-                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="agree(param)">通过审核</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="agree(param)">确定</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true" >通过审核</button>
             </div>
             <div class="edit_footer" v-if="param.titles=='确定收款'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show=false)">{{$t('static.confirm')}}</button>
-                <button type="button" class="btn  btn-confirm" v-else disabled="true" >通过审核</button>
+                <button type="button" class="btn  btn-confirm" v-else disabled="true" >确定</button>
             </div>
         </validator>
     </div>

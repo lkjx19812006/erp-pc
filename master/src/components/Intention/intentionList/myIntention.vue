@@ -171,7 +171,7 @@
                         <th>商品数量</th>
                         <th>剩余有效期</th>
                         <th>客户备注</th>
-                        <th>意向来源</th>
+                        <th>录入类型</th>
                         <th>上架状态</th>
                         <th style="min-width:220px;text-align: left;">操作</th>
                     <!-- 
