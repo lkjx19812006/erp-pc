@@ -5,7 +5,7 @@
     <div class="model-header">
       <h4>{{param.title}}</h4>
       <div class="model-tips clearfix">
-       <textarea v-model='param.auditComment' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5" value="{{param.auditComment}}"></textarea>
+        <textarea v-model='param.auditComment' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5" value="{{param.auditComment}}"></textarea>
       </div>
       <div class="model-footer" v-if="param.confirm">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
@@ -21,11 +21,22 @@
         <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="不通过" />
         <input type="button" class="btn  btn-confirm"  @click="param.pass(),param.show = false" value="通过" />
       </div>
-
       <div class="model-footer" v-if="param.taskKey=='employee_handle'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
         <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="重新申请" />
         <input type="button" class="btn  btn-confirm"  @click="param.pass(),param.show = false" value="取消订单" />
+      </div>
+    <!-- 审核发货申请 -->
+      <div class="model-footer" v-if="param.titles=='审核发货申请'">
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+        <input type="button" class="btn  btn-confirm"  @click="param.sendRefuse(),param.show = false" value="不通过" />
+        <input type="button" class="btn  btn-confirm"  @click="param.sendPass(),param.show = false" value="通过" />
+      </div>
+    <!-- 重新或取消发货申请 -->
+      <div class="model-footer" v-if="param.title=='重新申请发货'||param.taskKey=='order_send_employee_handle'">
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+        <input type="button" class="btn  btn-confirm"  @click="cancelApply(param)" value="取消发货" />
+        <input type="button" class="btn  btn-confirm"  @click="confirmApply(param)" value="确定" />
       </div>
 
       <div class="model-footer" v-if="param.key=='mySampleList'">
@@ -42,13 +53,17 @@
 </template>
 <script>
   import {
-    sampleApply
+    sampleApply,
+    sendRestart,
+    sendCancel
   } from '../../vuex/actions'
   export default {
     props: ['param'],
     vuex:{
       actions:{
-        sampleApply
+        sampleApply,
+        sendRestart,
+        sendCancel
       }
     },
     methods:{
@@ -59,8 +74,17 @@
           this.sampleApply(item);
        },
        confirm:function(){
-        this.param.callback(this.param);
-        this.param.show = false;
+          this.param.callback(this.param);
+          this.param.show = false;
+       },
+       confirmApply:function(item){
+        console.log(item)
+          this.param.show = false;
+          this.sendRestart(item);
+       },
+       cancelApply:function(item){
+          this.param.show = false;
+          this.sendCancel(item);
        }
     }
   }

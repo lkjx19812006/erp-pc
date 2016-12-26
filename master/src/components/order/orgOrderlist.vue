@@ -31,13 +31,13 @@
                        <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
                               <option value="">{{$t('static.please_select')}}</option>
                               <option value="0">{{$t('static.create_order')}}</option>
-                              <!-- <option value="10">{{$t('static.pending')}}</option> -->
-                              <option value="20">{{$t('static.wait_for_payment')}}</option>
-                              <option value="30">{{$t('static.wait_for_audit')}}</option>
-                              <option value="40">{{$t('static.wait_for_delivery')}}</option>
-                              <option value="50">{{$t('static.wait_for_receiving')}}</option>
+                              <option value="10">{{$t('static.order_procing')}}</option>
+                              <option value="20">{{$t('static.waiting_order')}}</option>
+                              <option value="30">{{$t('static.awaiting_review')}}</option>
+                              <option value="40">{{$t('static.wait_ship')}}</option>
+                              <option value="50">{{$t('static.wait_receipt')}}</option>
                               <option value="60">{{$t('static.awaiting_comment')}}</option>
-                              <option value="70">{{$t('static.completed')}}</option>
+                              <option value="70">{{$t('static.order_over')}}</option>
                       </select>
                  </dd>
               </dl>
@@ -129,7 +129,7 @@
                   <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
                   <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                   <td v-if="item.payWay==4">WeChat</td>
-                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">{{$t('static.none')}}</td>
+                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td>
                   <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
                   <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                   <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
@@ -217,9 +217,12 @@
                           </ul>
                       </div>
                  </td> -->
-                 <td><a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
-                     <img src="/static/images/orgcheck.png"  title="审核" alt="审核" />
-                 </a></td>
+                 <td>
+                    <a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
+                      <img src="/static/images/orgcheck.png"  title="审核" alt="审核" />
+                    </a>
+                    <button class="btn btn-warning" v-if="item.validate==2&&(item.verifier == $store.state.table.login.id)&&item.logistics==1" @click="orderSend(item.id,$index)" style="background:#fff;color:#eea236;padding:1px 3px;">审核发货</button>
+                 </td>
                 </tr>
             </tbody>
         </table>
@@ -314,6 +317,7 @@
                     express:false,
                     delivery:false
                 },
+                term:2,
                 show:true,
                 checked:false,
                 auditParam:{
@@ -416,20 +420,25 @@
                 this.getOrgOrder(this.loadParam);
             },
             orderCheck:function(id,index){ 
-                
                 this.auditParam.id = id;
                 this.auditParam.index = index;
-                
                 this.auditParam.show = true;
                 this.auditParam.title = '审核订单';
                 this.auditParam.callback = this.applyBack;
             },
-            auditPass:function(){
+            orderSend:function(id,index){
+                this.auditParam.id = id;
+                this.auditParam.index = index;
+                this.auditParam.show = true;
+                this.auditParam.title = '审核发货订单';
+                this.auditParam.callback = this.applyBack;
+            },
+            auditPass:function(){  //通过
                 this.auditParam.validate = 1; 
                 this.orderOrgAudit(this.auditParam);             
             },
-            auditReject:function(){
-                this.auditParam.validate = 0;  
+            auditReject:function(){  //拒绝
+                this.auditParam.validate = 0; 
                 this.orderOrgAudit(this.auditParam);
             },
             onlyselected: function(index){

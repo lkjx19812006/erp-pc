@@ -33,13 +33,13 @@
                           </div>
                        </div>
                        <div class="editpageright">
-                          <div class="editpage-input" v-if="param.number==null">
+                          <!-- <div class="editpage-input" v-if="param.number==null">
                                <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$validation.number.required">{{$t('static.required')}}</span></label>
                                <p class="clearfix">
                                   <input type="number" value="{{param.number}}" v-model="param.number" class="form-control edit-input" style="width:80%; float: left;" v-validate:number="{required:true}"/>（{{param.unit | Unit}}）
                                </p>
-                          </div>
-                          <div class="editpage-input" v-if="param.number!=null">
+                          </div> -->
+                          <div class="editpage-input" >
                                <label class="editlabel" >{{$t('static.quantity')}}（{{param.unit | Unit}}）<span class="system_danger" v-if="$validation.number.required">{{$t('static.required')}}</span></label>
                                 <input type="number" value="{{param.number}}" v-model="param.number" class="form-control edit-input"  v-validate:number="{required:true}" disabled="true" />
                           </div>

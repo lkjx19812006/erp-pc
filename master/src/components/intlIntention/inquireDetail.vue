@@ -12,7 +12,7 @@
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <supply-model :param="supplyParam" v-if="supplyParam.show"></supply-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con modal_overall" v-show="param.show">
+    <div class="container modal_con modal_overall" v-show="param.show"   @click="param.show=false">
         <div class="top-title">
             <span class="glyphicon glyphicon-remove-circle"  @click="param.show=false" ></span>
         </div>
@@ -33,7 +33,7 @@
             </nav>
         </div>
         <section>
-            <div class="client-section clearfix" >
+            <div class="client-section clearfix" @click.stop="">
                 <div class="col-md-12">
                     <h4 class="section_title">{{$t('static.details')}}</h4>
                     <article>
@@ -148,7 +148,7 @@
                                           <!-- <th>{{$t('static.currency')}}</th> -->
                                           <th>{{$t('static.cost')}}</th>
                                           <th>{{$t('static.quoted_price')}}</th>
-                                          <th>汇率</th>
+                                          <th>{{$t('static.exchange')}}</th>
                                           <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                           <th>{{$t('static.supplier')}}</th>
                                           <th>{{$t('static.quatation_name')}}</th>
@@ -574,7 +574,7 @@ export default {
         this.editOfferParam.currency = item.offerCurrency;
         this.editOfferParam.origPrice = item.offerOrigPrice;
         this.editOfferParam.price = item.offerPrice;
-        this.editOfferParam.number = item.offerNumber;
+        this.editOfferParam.number = item.number;
         this.editOfferParam.unit = item.unit;
         this.editOfferParam.offerEUnit = item.offerEUnit;
         //this.editOfferParam.total = item.total;

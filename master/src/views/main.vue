@@ -3,6 +3,7 @@
      <record-model :param="recordParam" v-if="recordParam.show"></record-model>
      <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
      <tip-model :param="tipParam" v-if="tipParam.show"></tip-model>
+     <send-detail :param="sendDetailParam" v-if="sendDetailParam.show"></send-detail>
 	 <div class="employee clear" >
         <div class="employee_left col-md-8">
             <div class="employee_top" @click="freshLinecharts(getLinechart)">
@@ -49,6 +50,14 @@
                         <a @click="showRecord(item)">记录</a>
                         <a v-if="item.taskKey!='employee_handle'" @click="showAudit(item)">审核</a>
                         <a v-else @click="showAudit(item)">重新申请</a>
+                    </div>
+                    <div class="message_view_right" v-if="item.bizType=='order_send'">
+                        <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
+                        <a @click="orderSend(item.bizId)">详情</a>
+                        <a @click="showRecord(item)">记录</a>
+                        <a  v-if="item.taskKey=='order_send_governor_validate'"  @click="sendAudit(item)">审核</a>
+                        <a v-if="item.taskKey=='order_send_warehouse_validate'"  @click="sendAudit(item)">发货</a>
+                        <a  v-if="item.taskKey=='order_send_employee_handle'"  @click="sendAudit(item)">重新申请</a>
                         
                     </div>
                 </div>
@@ -61,6 +70,7 @@ import detailModel from '../components/order/orderDetail'
 import recordModel from '../components/record/record'
 import auditModel from '../components/tips/auditDialog'
 import tipModel from '../components/tips/tipDialog'
+import sendDetail from '../components/order/second_order/orderSendDetail'
 import {
     getList,
     getLinechart,
@@ -78,7 +88,8 @@ export default {
         detailModel,
         recordModel,
         auditModel,
-        tipModel
+        tipModel,
+        sendDetail
     },
     data() {
             return {
@@ -93,6 +104,14 @@ export default {
                     total:0
                 },
                 orderDetailParam:{
+                    loading:true,
+                    show:false,
+                    key:'orderDetail',
+                    id:'',
+                    orderStatus:'',
+                    contact:''
+                },
+                sendDetailParam:{
                     loading:true,
                     show:false,
                     key:'orderDetail',
@@ -119,13 +138,14 @@ export default {
                     auditComment:'',
                     reject: this.reject,      //拒绝申请
                     pass:this.pass,       //通过申请
-                    callback:this.callback
+                    callback:this.callback,
+                    sendPass:this.sendPass, //发货审核成功
+                    sendRefuse:this.sendRefuse, //发货审核失败
                 },
                 tipParam:{
                     show:false,
                     alert:true,
                     name:"",
-                    
                 }
             }
         },
@@ -148,6 +168,10 @@ export default {
                 this.orderDetailParam.id = id;
                 this.orderDetailParam.show = true;
             },
+            orderSend:function(id){
+                this.sendDetailParam.id = id;
+                this.sendDetailParam.show = true;
+            },
             showRecord:function(item){
                 this.recordParam.bizType = item.bizType;
                 this.recordParam.bizId = item.bizId;
@@ -157,7 +181,6 @@ export default {
                 if(item.taskKey=='employee_handle'){
                     this.auditParam.audit = false;
                     this.auditParam.title = '重新申请审核';
-
                 }else{
                     this.auditParam.audit = true;
                     this.auditParam.title = '审核订单';
@@ -166,11 +189,37 @@ export default {
                 this.auditParam.taskId = item.taskId;
                 this.auditParam.show = true;
             },
+            sendAudit:function(item){
+                console.log(item)
+                if(item.taskKey=='order_send_employee_handle'){
+                    this.auditParam.audit = false;
+                    this.auditParam.title = '重新申请审核';
+                }else if(item.taskKey=='order_send_governor_validate'){
+                    this.auditParam.audit = true;
+                    this.auditParam.title = '审核发货申请';
+                }else if(item.taskKey=='order_send_warehouse_validate'){
+                    this.auditParam.audit = true;
+                    this.auditParam.title = '发货';
+                }
+                this.auditParam.taskKey = item.taskKey;
+                this.auditParam.taskId = item.taskId;
+                this.auditParam.bizId = item.bizId;
+                this.auditParam.show = true;
+                console.log(this.auditParam)
+            },
             pass:function(){
                 this.auditParam.result = 1;
                 this.finishFlow(this.auditParam);
             },
             reject:function(){
+                this.auditParam.result = 0;
+                this.finishFlow(this.auditParam);
+            },
+            sendPass:function(){ //发货审核成功
+                this.auditParam.result = 1;
+                this.finishFlow(this.auditParam);
+            },
+            sendRefuse:function(){ //发货审核不通过
                 this.auditParam.result = 0;
                 this.finishFlow(this.auditParam);
             },

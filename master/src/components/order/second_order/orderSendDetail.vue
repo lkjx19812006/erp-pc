@@ -12,7 +12,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <span class="navbar-brand navbar-name" href="#">{{initFundDetail.payUserName}}</span>
+                        <span class="navbar-brand navbar-name" href="#">{{initOrderDetail.payUserName}}</span>
                     </div>
                 </div>
             </nav>
@@ -21,19 +21,16 @@
             <div class="client-section clearfix" @click.stop="">
               <h4 class="section_title">{{$t('static.details')}}</h4>
                 <ul class="clearfix" style="margin-top:20px;font-size: 13px">
-                  <li class="col-md-4">支付类型：<label>{{initFundDetail.bizType | bizType}}{{initFundDetail.type | payMent}}</li>
-                  <li class="col-md-4">支付名称：<label>{{initFundDetail.payName}}</label></li>
-                  <li class="col-md-4">用户名：<label>{{initFundDetail.payUserName}}</li>
-                  <li class="col-md-4">账&nbsp;&nbsp;&nbsp;&nbsp;号：<label>{{initFundDetail.payNumber}}</li>
-                  <li class="col-md-4" v-show="initFundDetail.payWay==2">支付分行：<label>{{initFundDetail.payName}}</li>
-                  <li class="col-md-4">支付金额：<label>{{initFundDetail.amount}}</li>
-                  <li class="col-md-4" v-if="initFundDetail.pr==0">收/付款状态：<label>未收款/付款</li>
-                  <li class="col-md-4" v-if="initFundDetail.pr==1&&initFundDetail.type==1">支付状态：<label>已确认收款</li>
-                  <li class="col-md-4" v-if="initFundDetail.pr==1&&initFundDetail.type==0">支付状态：<label>已确认付款</li>
-                  <li class="col-md-4">创建时间：<label>{{initFundDetail.ctime}}</li>
+                  <li class="col-md-4 col-xs-6">商品名称：<label>{{initOrderDetail.goodsDesc}}</li>
+                  <li class="col-md-4 col-xs-6">客户名称：<label>{{initOrderDetail.customerName}}</label></li>
+                  <li class="col-md-4 col-xs-6">客户手机：<label>{{initOrderDetail.customerPhone}}</li>
+                  <li class="col-md-4 col-xs-6">收货人名称：<label>{{initOrderDetail.consignee}}</li>
+                  <li class="col-md-4 col-xs-6">收货人电话：<label>{{initOrderDetail.consigneePhone}}</li>
+                  <li class="col-md-4 col-xs-6">收货地址：<label>{{initOrderDetail.consigneeAddr}}</li>
+                  <li class="col-md-4 col-xs-6">创建时间：<label>{{initOrderDetail.ctime}}</li>
                 </ul>
                 <ul class="clearfix">
-                  <li v-for="img in initFundDetail.images" class="col-md-4">
+                  <li v-for="img in initOrderDetail.images" class="col-md-4">
                       <img :src="img.url" />
                   </li>
                 </ul>
@@ -43,10 +40,10 @@
 </template>
 <script>
 import{
-    initFundDetail
+    initOrderDetail
 } from '../../../vuex/getters'
 import {
-    getFundDetail
+    getOrderDetail
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -54,17 +51,16 @@ export default {
     },
     data() {
         return {
-            changeShow: true,
-            
+          changeShow: true,
         }
     },
     props:['param'],
     vuex: {
         getters:{
-            initFundDetail
+            initOrderDetail
         },
         actions:{
-            getFundDetail
+            getOrderDetail
         }
     },
     methods:{
@@ -74,7 +70,7 @@ export default {
       }
     },
     created(){
-       this.getFundDetail(this.param);
+       this.getOrderDetail(this.param);
     }
 }
 </script>

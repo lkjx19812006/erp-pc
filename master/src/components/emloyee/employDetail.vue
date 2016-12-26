@@ -1,7 +1,7 @@
 <template>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con modal_overall" v-show="param.show">
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div> 
+    <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
         <div class="client-section clearfix" v-cloak>
             <div  class="top-title" @click="param.show=false">
                 <span class="glyphicon glyphicon-remove-circle"  style="font-size:28px"></span>
@@ -13,7 +13,7 @@
                     <button class="new_btn transfer" v-else disabled="disabled">保存</button> 
                 
                 </div> -->
-                <div class="edit-left col-md-8 col-xs-12">
+                <div class="edit-left col-md-8 col-xs-12" @click.stop="">
 
                     <div class="section_title clearfix col-md-11 col-xs-12">
                         <span style="font-size:14px">基本信息</span>
@@ -93,9 +93,7 @@
                 <div class=" col-md-4 col-xs-12 pull-right">
                          <span class="section_title clearfix col-md-12 col-xs-12" style="margin-top:15px;font-size:14px;">工作时间信息</span>
                 </div>
-                <div class="col-md-4 col-xs-12 pull-right">
-                    
-                     
+                <div class="col-md-4 col-xs-12 pull-right" @click.stop="">
                      <div class="edit-right clearfix">
                         <div class="client-detailInfo pull-left col-md-11 col-xs-12">
                             <label class="editlabel">入职时间</label>

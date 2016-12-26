@@ -5,7 +5,7 @@
   <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
   <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con modal_overall" v-show="param.show">
+    <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
         <div class="top-title">
             <span class="glyphicon glyphicon-remove-circle"  @click="param.show=false" ></span>
         </div>
@@ -30,7 +30,7 @@
         </div>
         <section>
             <div class="client-section clearfix" >
-                <div class="col-md-8 client-detail">
+                <div class="col-md-8 client-detail" @click.stop="">
                     <h4 class="section_title">相关</h4>
                     <article>
                         <div class="panel-group">
@@ -219,7 +219,7 @@
                         </div>
                     </article>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-12" @click.stop="">
                     <h4 class="section_title">详情</h4>
                     <article>
                         <div class="edit-detail">

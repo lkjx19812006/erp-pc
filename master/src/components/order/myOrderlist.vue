@@ -6,6 +6,8 @@
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+    <applysend-model :param="applyParam" v-if="applyParam.show"></applysend-model>
+    <reapply-model :param="reapplyParam" v-if="reapplyParam.show"></reapply-model>
       <div class="order_search">
         <div class="clear">
             <div class="right">
@@ -127,7 +129,7 @@
                   <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
                   <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
                   <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
-                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">{{$t('static.none')}}</td>
+                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td>
                   <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
                   <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                   <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
@@ -158,7 +160,8 @@
                   <td v-if="item.clients!=0&&item.clients!=1&&item.clients!=2&&item.clients!=3"  style="background:#000;color:#fff">未说明</td>
                   <td>{{item.currency | Currency}}</td> 
                 -->
-                  <td><a class="operate" v-if="item.orderStatus<20"  @click="updateOrder({
+                  <td>
+                      <a class="operate" v-if="item.orderStatus<20"  @click="updateOrder({
                         show:true,
                         id:item.id,
                         index:$index,
@@ -193,7 +196,8 @@
                         url:'/order/',
                         goods:item.goods,
                         goodsBack:[]
-                        },item.goods)"><img src="/static/images/{{$t('static.img_edit')}}.png"   alt="编辑" title="编辑"/></a>
+                        },item.goods)"><img src="/static/images/{{$t('static.img_edit')}}.png"   alt="编辑" title="编辑"/>
+                      </a>
                       <div v-if="item.validate==2">
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="(item.orderStatus==20||item.orderStatus==10)&&item.type==0">
                              <img src="/static/images/{{$t('static.img_payorder')}}.png"  title="待财务付款" alt="待财务付款"/>
@@ -201,9 +205,14 @@
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==0">
                               <img src="/static/images/{{$t('static.img_paid')}}.png"  title="待客户收款" alt="待客户收款" />
                         </a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0">
-                            <img src="/static/images/{{$t('static.img_deliver')}}.png"  title="待客户发货" alt="待客户发货"/>
-                        </a>
+                        <!-- 销售订单发货流程start-->
+                        <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0&&item.verifier==-1" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">申请发货
+                        </button>
+                        <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 3px;">重新申请发货
+                        </button>
+                        <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==-1" style="background:#fff;color:#eea236;padding:1px 3px;">已取消发货
+                        </button>
+                        <!-- 销售订单发货流程end -->
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0">
                             <img src="/static/images/{{$t('static.img_take')}}.png"  title="待收货" alt="等待收货"/>
                         </a>
@@ -218,7 +227,7 @@
                             <img src="/static/images/{{$t('static.img_collection')}}.png"  title="申请收款" alt="申请收款"/>
                         </a>
                         <!--<a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1"><img src="/static/images/uncheck.png" height="18" width="38" title="申请收款" alt="申请收款"/></a>-->
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==1">
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0">
                              <img src="/static/images/{{$t('static.img_deliver')}}.png" title="待发货" alt="待发货"/>
                         </a>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1">
@@ -240,9 +249,7 @@
                         <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2&&(item.orderStatus==0||item.orderStatus==70)">
                             <img src="/static/images/{{$t('static.img_reset')}}.png"  title="重新申请" alt="重新申请" />
                         </a>  
-
                   </td>
-
                 </tr>
             </tbody>
         </table>
@@ -265,6 +272,8 @@
     import auditModel  from '../order/orgAudit'
     import common from '../../common/common'
     import changeMenu from '../../components/tools/tabs/tabs.js'
+    import applysendModel from '../order/second_order/orderAudit'
+    import reapplyModel from '../tips/auditDialog'
     import {
         getList,
         initMyOrderlist,
@@ -289,7 +298,9 @@
             disposeModel,
             auditModel,
             tipsdialogModel,
-            filter
+            filter,
+            reapplyModel,
+            applysendModel
         },
         data() {
             return {
@@ -319,7 +330,6 @@
                     ftime:'',
                     mode:'',
                     total:0
-
                 },
                 dialogParam:{
                   show: false,
@@ -374,7 +384,6 @@
                     delivery:false,
                     confirmReceipt:false,
                     key:'myOrderList'
-
                 },
                 show:true,
                 checked:false,
@@ -393,6 +402,24 @@
                     show:false,
                     alert:true,
                     name:"请选择要申请审核的订单",
+                },
+                applyParam:{
+                  show:false,
+                  orderId:'',
+                  sub:'',
+                  titles:'申请发货',
+                  description:'',
+                  callback:'',
+                  logistics:''
+                },
+                reapplyParam:{
+                  show:false,
+                  orderId:'',
+                  sub:'',
+                  titles:'',
+                  auditComment:'',
+                  callback:'',
+                  logistics:''
                 }
             }
         },
@@ -413,6 +440,7 @@
         methods: {
             selectSearch:function(){
                 this.getEmpolyeeOrder(this.loadParam);
+                console.log(this.initLogin)
             },
             editClick: function(sub) {
                 if(this.$store.state.table.basicBaseList.myOrderList[sub].show){
@@ -496,17 +524,25 @@
             },
             createSearch:function(){
                  this.loadParam.show=true;
-                 /*console.log(this.loadParam.link)
-                 this.loadParam.loading=false;*/
                  this.loadParam.link='/order/myList';
-                /* console.log(this.loadParam)
-                 console.log(this.loadParam.link)
-                 console.log(this.loadParam)*/
             },
             clickOn:function(param){
                 this.detailParam=param;
             },
-
+            applySend:function(item,sub){
+              this.applyParam.show=true;
+              this.applyParam.orderId=item.id;
+              this.applyParam.sub=sub;
+              this.applyParam.titles='申请发货';
+              this.applyParam.callback = this.orderBack;
+            },
+            reapplySend:function(item,sub){
+              this.reapplyParam.show=true;
+              this.reapplyParam.orderId=item.id;
+              this.reapplyParam.sub=sub;
+              this.reapplyParam.title='重新申请发货';
+              this.reapplyParam.callback = this.orderBack;
+            },
             updateOrder:function(param,goods){
                 this.dialogParam=param;
                 var _this = this;

@@ -1,6 +1,6 @@
 <template>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con modal_overall" v-show="param.show">
+    <div class="container modal_con modal_overall" v-show="param.show"> 
         <div class="client-section clearfix" v-cloak>
             <div  class="top-title" @click="param.show=false">
                 <span class="glyphicon glyphicon-remove-circle"  style="font-size:28px"></span>

@@ -65,6 +65,7 @@
                         <th>{{$t('static.Number_of_inquiries')}}</th>
                         <th>{{$t('static.quotation_number')}}</th>
                         <th>{{$t('static.issued_time')}}</th>
+                        <th>{{$t('static.description')}}</th>
                         <th>{{$t('static.inquiry_state')}}</th>
                         <th>{{$t('static.inquiry_type')}}</th>
                     </tr>
@@ -87,6 +88,7 @@
                         <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime | date}}</td>
+                        <td>{{item.description}}</td>
                         <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
                         <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
@@ -440,8 +442,8 @@ export default {
     margin-left: 18px;
 }
 #table_box table th,#table_box table td{
-   min-width: 131px;
-    width: 131px;
+   min-width: 120px;
+    width: 120px;
 }
 </style>
 

@@ -8,7 +8,7 @@
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <apply-model :param="applyDetails" v-if="applyDetails.show"></apply-model>
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con" v-show="param.show">
+    <div class="container modal_con" v-show="param.show" @click="param.show=false">
       <div class="top-title">
             <span class="glyphicon glyphicon-remove-circle" @click="param.show=false"></span>
         </div>
@@ -42,7 +42,7 @@
             <div class="client-section clearfix" >
                 <div class="col-md-8 client-detail">
                     <h4 class="section_title">{{$t('static.related_information')}}</h4>
-                    <article>
+                    <article @click.stop="">
                         <div class="panel-group">
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
@@ -476,7 +476,7 @@
                 </div>
                 <div class="col-md-4" style="border-left: 1px solid #ddd;">
                     <h4 class="section_title">{{$t('static.details')}}</h4>
-                    <article>
+                    <article @click.stop="">
                         <div class="edit-detail">
                             <div class="clearfix">
                                 <div class="client-detailInfo  col-md-6 col-xs-12">

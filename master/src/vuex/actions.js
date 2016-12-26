@@ -265,7 +265,6 @@ export const finishFlow = ({ dispatch }, param) => {
         result:param.result,
         description:param.auditComment
     }
-    
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + '/flow/',
@@ -775,12 +774,16 @@ export const orderApplyAuditAgain = ({ dispatch }, param) => { //订单重新申
 }
 
 export const orderOrgAudit = ({ dispatch }, param) => { //订单部门主管审核（单个）
+    console.log(param)
     const data = {
         id: param.id,
         validate:param.validate
     }
     if (param.auditComment) {
         data.description = param.auditComment;
+    }
+    if(param.logistics){
+        data.validate = param.logistics;
     }
     Vue.http({
         method: 'PUT',
@@ -799,6 +802,7 @@ export const orderOrgAudit = ({ dispatch }, param) => { //订单部门主管审�
         data.index = param.index;
         data.key = param.key;
         data.validate = param.validate;
+        data.logistics = res.json().result.logistics;
         if(res.json().code==200){
            dispatch(types.ORG_ORDER_AUDIT, data);
         }
@@ -6263,3 +6267,112 @@ export const getBankBranchList = ({ dispatch }, param) => { //获取银行支行
         param.loading = false;
     })
 }
+
+export const orderApplySend = ({ dispatch }, param) => {   //发货申请
+    console.log(param);
+    const body = {
+        id:param.orderId,
+        description:param.description
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + '/order/sendflowStart',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+        param.logistics= res.json().result.logistics; 
+        /*param.description=res.json().result.description;*/
+        if(res.json().code==200){
+           dispatch(types.ORDER_TABLE, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
+export const sendRestart = ({ dispatch }, param) => {   //重新申请发货
+    console.log(param);
+    const body = {
+
+    }
+    if(param.orderId){
+        body.id = param.orderId;
+    }
+    if(param.bizId){
+        body.id = param.bizId;
+    }
+    if(param.auditComment){
+        body.description = param.auditComment;
+    }
+    if(param.description){
+        body.description = param.description;
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + '/order/sendflowRestart',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+        param.logistics= 1; 
+        /*param.description=res.json().result.description;*/
+        if(res.json().code==200){
+           dispatch(types.ORDER_TABLE, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
+export const sendCancel = ({ dispatch }, param) => {   //取消发货
+    console.log(param);
+    const body = {
+
+    }
+     if(param.orderId){
+        body.id = param.orderId;
+    }
+    if(param.bizId){
+        body.id = param.bizId;
+    }
+    if(param.auditComment){
+        body.description = param.auditComment;
+    }
+    if(param.description){
+        body.description = param.description;
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + '/order/sendflowCancle',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+        param.logistics= 0; 
+        /*param.description=res.json().result.description;*/
+        if(res.json().code==200){
+           dispatch(types.ORDER_TABLE, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+        

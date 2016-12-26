@@ -7,7 +7,7 @@
   <tipsdialog-model :param="tipParam" v-if="tipParam.show"></tipsdialog-model>
   <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con modal_overall" v-show="param.show">
+    <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
       <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
       </div>
@@ -52,7 +52,7 @@
                 <div class="col-md-8 client-detail">
                     <h4 class="section_title">相关</h4>
 
-                      <article>
+                      <article @click.stop="">
                           <div class="panel-group">
                               <div class="panel panel-default">
                                   <div class="panel-heading" >
@@ -366,7 +366,7 @@
 
               <div class="col-md-4">
                   <h4 class="section_title">详情</h4>
-                  <article>
+                  <article @click.stop="">
                       <div class="edit-detail">
                           <div class="clearfix">
                               <div class="client-detailInfo pull-left col-md-6 col-xs-12">

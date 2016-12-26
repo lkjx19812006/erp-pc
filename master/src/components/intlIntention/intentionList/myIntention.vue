@@ -78,7 +78,7 @@
                         <th>{{$t('static.quotation_number')}}</th>
                         <th>{{$t('static.issued_time')}}</th>
                         <!-- <th>{{$t('static.review_status')}}</th> -->
-                        <!-- <th>{{$t('static.description')}}</th> -->
+                        <th>{{$t('static.description')}}</th>
                         <th>{{$t('static.inquiry_state')}}</th>
                         <th>{{$t('static.inquiry_type')}}</th>
                         <th style="min-width: 250px;">{{$t('static.handle')}}</th>
@@ -119,7 +119,7 @@
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime}}</td>
                         <!-- <td>{{item.validate | intentionAudit}}</td> -->
-                        <!-- <td>{{item.description}}</td> -->
+                        <td>{{item.description}}</td>
                         <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
                         <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
@@ -570,8 +570,8 @@ export default {
     color: #fff;
 }
 #table_box table th,#table_box table td{
-    width: 117px;
-    min-width: 117px;
+    width: 110px;
+    min-width: 105px;
 }
 </style>
 

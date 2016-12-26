@@ -154,16 +154,28 @@
                          <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
                     </div>
                </section>
+               <!-- 重新申请审核end -->
+               <section class="editsection clearfix" v-cloak v-if="param.titles=='申请发货'">
+                    <div class="editpage-input col-md-12">
+                       <label class="editlabel">备注</label>
+                       <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" value="{{param.description}}"></textarea>
+                    </div>
+               </section>
             </div>
             <div class="edit_footer" v-if="param.titles=='申请分期审核'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm(param)">提交</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true" >提交</button>
             </div>
-             <div class="edit_footer" v-if="param.titles=='重新申请审核'">
+            <div class="edit_footer" v-if="param.titles=='重新申请审核'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirmReset(param)">提交</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true" >提交</button>
+            </div>
+            <div class="edit_footer" v-if="param.titles=='申请发货'">
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="applySend(param)">提交</button>
+                <button type="button" class="btn  btn-confirm" v-else disabled="true">提交</button>
             </div>
         </validator>
     </div>
@@ -181,7 +193,8 @@ import {
 import {
     getMyFundList,
     getBankList,
-    getBankBranchList
+    getBankBranchList,
+    orderApplySend
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -199,7 +212,8 @@ export default {
         actions: {
             getMyFundList,
             getBankList,
-            getBankBranchList
+            getBankBranchList,
+            orderApplySend
         }
     },
     props: ['param'],
@@ -264,14 +278,13 @@ export default {
         },
         confirmReset:function(item){
             console.log(item)
-            /*item.payName = this.initMyFundList[initMyFundList.length-1].payName;
-            item.payNumber = this.initMyFundList[initMyFundList.length-1].payNumber;
-            item.paySubName = this.initMyFundList[initMyFundList.length-1].paySubName;
-            item.payUserName = this.initMyFundList[initMyFundList.length-1].payUserName;
-            item.payWay = this.initMyFundList[initMyFundList.length-1].payWay;*/
             this.param.show = false;
             this.param.link(item)
             console.log(item)
+        },
+        applySend:function(item){
+           this.param.show = false;
+           this.orderApplySend(item)
         }
     },
     events:{
