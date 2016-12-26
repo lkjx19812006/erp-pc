@@ -206,12 +206,15 @@
                               <img src="/static/images/{{$t('static.img_paid')}}.png"  title="待客户收款" alt="待客户收款" />
                         </a>
                         <!-- 销售订单发货流程start-->
-                        <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0&&item.verifier==-1" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">申请发货
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==1">
+                             <img src="/static/images/{{$t('static.img_deliver')}}.png" title="待发货" alt="待发货"/>
+                        </a>
+                        <!-- <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0&&item.verifier==-1" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">申请发货
                         </button>
                         <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 3px;">重新申请发货
                         </button>
                         <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==-1" style="background:#fff;color:#eea236;padding:1px 3px;">已取消发货
-                        </button>
+                        </button> -->
                         <!-- 销售订单发货流程end -->
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0">
                             <img src="/static/images/{{$t('static.img_take')}}.png"  title="待收货" alt="等待收货"/>

@@ -12,7 +12,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <span class="navbar-brand navbar-name" href="#">{{initOrderDetail.payUserName}}</span>
+                        <span class="navbar-brand navbar-name" href="#">{{initOrderDetail.consignee}}</span>
                     </div>
                 </div>
             </nav>
