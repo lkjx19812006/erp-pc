@@ -30,8 +30,19 @@
                             <option>DAT</option>
                             <option>DAP</option>
                             <option>DDP</option>
+                            <option>FEDEX</option>
+                            <option>DHL</option>
+                            <option>UPS</option>
+                            <option>TNT</option>
+                            <option>EMS</option>
+                            <option>Post Office-by Sea</option>
+                            <option>Post Office-by Air</option>
+                            <option>E-Post</option>
+                            <option>other</option>
                         </select>
                     </div>
+
+
                     <div class="editpage-input">
                        <label class="editlabel">{{$t('static.comment')}}</label>
                        <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->

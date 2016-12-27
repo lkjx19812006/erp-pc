@@ -39,7 +39,7 @@
                     <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer">
                         <td>{{item.inquireType}}</td>
                         <td>{{item.names}}</td>
-                        <td class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.customerName}}</td>
+                        <td class="underline" @click="clickOn(item,$index)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
@@ -79,7 +79,7 @@
                     <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer" v-if="item.inquire==0">
                         <td>{{item.inquireType}}</td>
                         <td>{{item.names}}</td>
-                        <td class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.customerName}}</td>
+                        <td class="underline" @click="clickOn(item,$index)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
@@ -119,7 +119,7 @@
                     <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer" v-if="item.inquire==1">
                         <td>{{item.inquireType}}</td>
                         <td>{{item.names}}</td>
-                        <td class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.customerName}}</td>
+                        <td class="underline" @click="clickOn(item,$index)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
@@ -159,7 +159,7 @@
                     <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer" v-if="item.inquire==2">
                         <td>{{item.inquireType}}</td>
                         <td>{{item.names}}</td>
-                        <td class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.customerName}}</td>
+                        <td class="underline" @click="clickOn(item,$index)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
@@ -199,7 +199,7 @@
                     <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer" v-if="item.inquire==3">
                         <td>{{item.inquireType}}</td>
                         <td>{{item.names}}</td>
-                        <td class="underline" @click="clickOn(item.intentionId,item.id,$index)">{{item.customerName}}</td>
+                        <td class="underline" @click="clickOn(item,$index)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
@@ -295,7 +295,8 @@ export default {
                 show:false,
                 index:'',    //询价列表的索引
                 id:'',
-                inquireId:''
+                inquireId:'',
+                inquire:''
             },
            
             inquireParam:{
@@ -378,11 +379,11 @@ export default {
             this.isD = false;
             this.currentView = 5;
         },
-        clickOn:function(id,inquireId,index){
-            this.detailParam.id = id;
+        clickOn:function(item,index){  
+            this.detailParam.id = item.intentionId;
             this.detailParam.index = index;
-            this.detailParam.inquireId = inquireId;
-
+            this.detailParam.inquireId = item.id;
+            this.detailParam.inquire = item.inquire;
             this.detailParam.show = true;
         },
         intentionSearch:function(){

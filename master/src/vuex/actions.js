@@ -1418,9 +1418,12 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             orderDetail.goods = {};
             orderDetail.goods.arr = goods;
             orderDetail.goods.show = true;
+            orderDetail.goods.total = 0;
             for (var i in orderDetail.goods.arr) {
                 orderDetail.goods.arr[i].show = false;
+                orderDetail.goods.total += orderDetail.goods.arr[i].amount*100;
             }
+            orderDetail.goods.total = orderDetail.goods.total/100;
             var payPics = orderDetail.payPics;
             if (!payPics) {
                 payPics = [];
@@ -3585,7 +3588,6 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
 }
 export const newProduct = ({ dispatch }, param) => { //新增供应商产品
     console.log(param);
-    return;
     const data = {
         "type": param.type,
         "name": param.name,

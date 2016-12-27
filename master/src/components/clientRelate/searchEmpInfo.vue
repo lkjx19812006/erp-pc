@@ -1,5 +1,6 @@
 <template>
 	<div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
 	<div class="container modal_con" v-show="param.show">
         <div @click="param.show = false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -11,21 +12,19 @@
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 	            </div>
 	            <div class="col-xs-4">
-		            <div class="name_search clearfix" style="border:none">
-	                   <select  class="form-control" v-model="loadParam.orgId" @change="employNameSearch()">
-	                        <option selected value="">请选择业务员部门</option>
-	                  	    <option v-for="item in initOrgList" value="{{item.id}}">{{item.name}}</option>
-	                  </select> 
-	                </div>
+                    <div class="name_search clearfix">
+                        <img src="/static/images/search.png" height="24" width="24">
+                        <input type="text" class="search_input" v-model="loadParam.orgName" placeholder="请选择部门" @click="selectOrg()" readonly="true">
+                    </div>
 	            </div>
 				<div class="col-xs-8">
 	                <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" @change="employNameSearch()">
+	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" @keyup.enter="employNameSearch()">
 	                </div>
 	                 <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @change="employNameSearch()">
+	                    <input type="text" class="search_input" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @keyup.enter="employNameSearch()">
 	                </div>
 	            </div>
 	            <table class="table table-hover table_head table-striped " v-cloak>
@@ -40,7 +39,7 @@
 	                <tbody>
 	                    <tr v-for="item in initEmployeeList" @click="serviceselected($index,item.id,item.name)">
 	                       <td >
-	                           <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"></label>
+	                           <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"></label>
 	                        </td>
 	                        <td>{{item.name}}</td>
 	                        <td>{{item.orgName}}</td>
@@ -61,6 +60,7 @@
 </template>
 <script>
 import pagination from '../pagination'
+import selectorgModel  from '../../components/tips/treeDialog'
 import {
     initEmployeeList,
     initOrgList
@@ -80,16 +80,24 @@ export default{
                 size: '15px',
                 cur: 1,
                 all: 7,
+                total:0,
                 name:'',
                 mobile:'',
                 orgId:''
+            },
+            selectOrgParam:{
+                show:false,
+                orgId:'',
+                orgName:'',
+                callback:this.callback,
             },
 			checked:false,
 			show:true
 		}
 	},
 	components:{
-		pagination
+		pagination,
+        selectorgModel
 	},
 	vuex:{
 		getters:{
@@ -115,8 +123,20 @@ export default{
 			this.param.employeeId = id;
 			this.param.employeeName = name;
 			this.param.show=false;
+            console.log(this.param);
 			this.$dispatch('a',this.param);
 		},
+        selectOrg:function(){
+            this.selectOrgParam.show = true;
+        },
+        callback:function(){
+          if(this.selectOrgParam.orgId){
+            this.loadParam.orgId=this.selectOrgParam.orgId;
+            this.loadParam.orgName=this.selectOrgParam.orgName;
+            this.getEmployeeList(this.loadParam);
+            
+          }
+        },
 		employNameSearch: function() {
             this.getEmployeeList(this.loadParam);
         }
@@ -135,16 +155,21 @@ export default{
 </script>
 <style scoped>
 .modal{
-	z-index: 1111;
+	z-index: 1086;
 }
 .modal_con{
-	z-index: 1111;
+	z-index: 1086;
 }
 .change_trans{
 	margin-top: 20px;
 }
 .con_trans{
 	margin-top: 40px;
+}
+.top-title {
+    left:0;
+    right: 0;
+    width:800px;
 }
 .tans_tab{
 	height: 40px;
@@ -209,8 +234,7 @@ export default{
 .base_pagination{
 	margin-top: 0;
 }
-th,td{
-	width: 200px;
-	min-width: 200px;
+.table{
+    display: table
 }
 </style>
