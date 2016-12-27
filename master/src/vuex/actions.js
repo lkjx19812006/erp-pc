@@ -891,7 +891,7 @@ export const logisticsInfo = ({ dispatch }, param) => { //物流查看详情
     })
 }
 export const createOrder = ({ dispatch }, data) => { //创建订单
-    console.log(data.goods);
+    console.log(data);
     if(data.city==null||data.city==''||!data.city){
         data.city=''; 
     }
@@ -925,6 +925,9 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     if (data.email) {
         body.email = data.email;
     }
+    if (data.consigner) {
+        body.consigner = data.consigner;
+    }
     if(data.consignee==''){
         body.consignee = data.customerName;
     }else{
@@ -948,25 +951,25 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         }
     }).then((res) => {
         data.callback(res.json().msg);
-        data.no = res.json().result.no;
-        data.id = res.json().result.id;
-        data.clients = res.json().result.clients;
-        data.payWay = res.json().result.payWay;
-        data.validate = res.json().result.validate;
-        data.checked = false;
-        data.sample = res.json().result.sample;
-        data.goodsDesc = res.json().result.goodsDesc;
-        data.total = res.json().result.total;
-        data.ctime = new Date();
-        data.consignee = res.json().result.consignee;
-        data.consigneePhone = res.json().result.consigneePhone;
-        data.consigneeAddr = res.json().result.consigneeAddr;
-        data.mode = 3;
         if(res.json().code==200){
-           dispatch(types.ORDER_ADD_DATA, data);
-        }
+            data.no = res.json().result.no;
+            data.id = res.json().result.id;
+            data.clients = res.json().result.clients;
+            data.payWay = res.json().result.payWay;
+            data.validate = res.json().result.validate;
+            data.checked = false;
+            data.sample = res.json().result.sample;
+            data.goodsDesc = res.json().result.goodsDesc;
+            data.total = res.json().result.total;
+            data.ctime = new Date();
+            data.consignee = res.json().result.consignee;
+            data.consigneePhone = res.json().result.consigneePhone;
+            data.consigneeAddr = res.json().result.consigneeAddr;
+            data.mode = 3;
+            data.show = false;
+            dispatch(types.ORDER_ADD_DATA, data);
+        }   
         
-        data.show = false;
     }, (res) => {
         console.log('fail');
         data.show = false;
@@ -1270,18 +1273,31 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     if (param.images) {
         body.images = param.images;
     }
-    if (param.b) {
+    if (param.b&&param.link=='/order/send') {
         var strs = param.b.split(",");
         param.lcompanyId = strs[0];
         body.lcompanyId = param.lcompanyId;
+    }
+    if (param.b&&param.link=='/order/sendflowSend') {
+        var strs = param.b.split(",");
+        param.logistics = strs[0];
+        body.logistics = param.logistics;
     }
     if (param.b) {
         var strs = param.b.split(",");
         param.name = strs[1];
         body.name = param.name;
     }
+    if (param.b) {
+        var strs = param.b.split(",");
+        param.code = strs[2];
+        body.code = param.code;
+    }
     if (param.lcompanyNo) {
         body.lcompanyNo = param.lcompanyNo;
+    }
+    if (param.number) {
+        body.number = param.number;
     }
     if (param.driverName) {
         body.driverName = param.driverName;
@@ -1310,7 +1326,11 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        var status = res.json().result;
+        if(res.json().result==null){
+             var status = param;
+        }else{
+            var status = res.json().result;
+        }
         param.callback(res.json().msg);
         if(res.json().code==200){
            dispatch(types.ORDER_STATUS, status);
@@ -6309,6 +6329,7 @@ export const orderApplySend = ({ dispatch }, param) => {   //发货申请
     }).then((res) => {
         param.callback(res.json().msg);
         param.logistics= res.json().result.logistics; 
+        param.verifier = res.json().result.verifier;
         /*param.description=res.json().result.description;*/
         if(res.json().code==200){
            dispatch(types.ORDER_TABLE, param);

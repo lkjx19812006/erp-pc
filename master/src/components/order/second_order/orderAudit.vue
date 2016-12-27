@@ -273,7 +273,10 @@ export default {
         },
         confirm:function(item){
           this.param.show=false;
-          this.param.payName=this.payName.name;
+          if(this.payName.name){
+            this.param.payName=this.payName.name;
+          }
+          console.log(this.param)
           this.param.link(this.param);
         },
         confirmReset:function(item){

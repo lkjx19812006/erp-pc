@@ -187,6 +187,7 @@ export default {
             this.deliverParam.show = true;
             this.deliverParam.sendoff = true;
             this.deliverParam.tips="财务核查通过，请等待卖家发货！";
+            this.deliverParam.callback = this.callback;
             console.log(this.deliverParam)
         },
         showRecord:function(item){

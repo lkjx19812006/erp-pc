@@ -255,7 +255,7 @@ const state = {
                 "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
                 "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
                 "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
-                "payPics":null,"sendPics":null}],
+                "payPics":null,"sendPics":null,"mode":3,"sample":0}],
         orgOrderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
                 "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
                 "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
@@ -800,7 +800,6 @@ const mutations = {
         }
         if(data.key == 'myOrderList'){
             console.log(data)
-           /* state.basicBaseList[data.key].unshift(data);*/
            state.basicBaseList[data.key].unshift({
                 "type":data.type,
                 "sourceType":data.sourceType,

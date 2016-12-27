@@ -29,13 +29,15 @@
                 </div>
             </div>
             <div class="order_info clearfix">
-              <div class="col-xs-6 pull-left" v-for="item in initOrderDetail.goods.arr">
+              <div class="col-xs-6 pull-left clearfix" >
+                <div class="col-xs-3 col-md-4 pull-left" v-for="item in initOrderDetail.goods.arr">
                   <p>{{item.breedName}}</p>
                   <p>{{item.price}}元/{{item.unit}}</p>
                   <p>{{$t('static.quantity')}}：{{item.number}}</p>
                   <p>{{$t('static.order_time')}}：{{item.ctime}}</p>
+                </div>
               </div>
-              <div class="col-xs-6 pull-left">
+              <div class="col-xs-6 pull-left" style="padding-left:13%;border-left: 1px solid #ddd;">
                  <div>
                       <label>{{$t('static.sundry_fees')}}：</label><span style="color:#fa6705">¥{{initOrderDetail.incidentals}}</span><br>
                       <label>{{$t('static.fee_explain')}}：</label><span style="color:#fa6705">{{initOrderDetail.incidentalsDesc}}</span><br>
@@ -205,15 +207,16 @@
                   <span class="pull-left">{{$t('static.logistics_company')}} <span class="system_danger" v-if="$validation.logisticname.required">{{$t('static.required')}}</span></span>
                   <input type="text" v-model="salesLogistic.b"  v-show="false"  v-validate:logisticname="{required:true}"/>
                   <select v-model="salesLogistic.b" class="form-control left">
-                    <option v-for="item in initExpresslist" value="{{item.id + ',' + item.name}}">{{item.name}}{{item.code}}</option>
+                    <option v-for="item in initExpresslist" value="{{item.id + ',' + item.name +','+item.code}}">{{item.name}}{{item.code}}</option>
                   </select>
                 </div>
                 <div class="logical_color clearfix col-md-6">
                   <span class="pull-left">{{$t('static.logistics_no')}} <span class="system_danger" v-if="$validation.logisticno.required">{{$t('static.required')}}</span></span>
-                  <input type="number" class="form-control left" placeholder="{{$t('static.willpay')}}" v-model="salesLogistic.lcompanyNo" v-validate:logisticno="{required:true}" />
+                  <input type="number" class="form-control left" placeholder="{{$t('static.willpay')}}" v-model="salesLogistic.number" v-validate:logisticno="{required:true}" />
                 </div>
                 <div class="logical_color col-md-12">
-                  <label class="editlabel">{{$t('static.upload_logistcs')}}</label>
+                  <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img.required">{{$t('static.required')}}</span></span>
+                  <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f||salesLogistic.image_s||salesLogistic.image_t" v-validate:img="{required:true}" />
                   <div class="clearfix">
                       <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam" style="float:left;width:15%"></press-image>
                      <press-image :value.sync="salesLogistic.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
@@ -240,7 +243,8 @@
                   <input type="text" class="form-control left" placeholder="请输入车牌号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
                 </div>
                 <div class="logical_color col-md-12">
-                  <label class="editlabel">{{$t('static.upload_logistcs')}}</label>
+                  <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img1.required">{{$t('static.required')}}</span></span>
+                  <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f||salesLogistic.image_s||salesLogistic.image_t" v-validate:img1="{required:true}" />
                   <div class="clearfix">
                       <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam" style="float:left;width:15%"></press-image>
                      <press-image :value.sync="salesLogistic.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
@@ -255,7 +259,7 @@
           </div>
         </validator>
         </div>
-        <!-- 订单待收货查看物流 -->
+        <!-- 订单确认收货以及查看物流 -->
         <div class="navbar-client" v-if="param.delivery">
           <div class="message clearfix">
               <p class="order-message">{{$t('static.logistics_info')}}</p>
@@ -268,7 +272,7 @@
                 </div>
                 <div class="logical_color clearfix">
                   <p>{{$t('static.logistics')}}：</p>
-                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url"/>
+                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url"  width="150px" />
                 </div>
               </div>
               <div class="order_info clearfix">
@@ -292,8 +296,8 @@
               </div>
           </div>
         </div>
-        <!-- 买家订单待收货查看物流 -->
-        <div class="navbar-client" v-if="param.express">
+        <!-- 买家订单等待收货查看物流 -->
+        <div class="navbar-client" v-if="param.express&&initOrderDetail.logisticses.arr[0].way!==1">
           <div class="message clearfix">
               <p class="order-message">{{$t('static.logistics_info')}}</p>
               <div class="space_15 clearfix">
@@ -305,7 +309,7 @@
                 </div>
                 <div class="logical_color clearfix">
                   <p>{{$t('static.logistics')}}：</p>
-                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url"/>
+                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url" width="150px" />
                 </div>
               </div>
               <div class="order_info clearfix">
@@ -323,7 +327,43 @@
               </div>
           </div>
         </div>
-
+        <!-- 买家订单等待收货查看物流（司机自运） -->
+        <div class="navbar-client" v-if="param.express&&initOrderDetail.logisticses.arr[0].way==1">
+          <div class="message clearfix">
+              <p class="order-message">{{$t('static.logistics_info')}}</p>
+              <div class="space_15 clearfix">
+                <div class="logical_color col-md-6">
+                  <span>司机姓名：{{initOrderDetail.logisticses.arr[0].driverName}}</span>
+                </div>
+                <div class="logical_color col-md-6">
+                  <span>司机身份证号：{{initOrderDetail.logisticses.arr[0].driverPid}}</span>
+                </div>
+                <div class="logical_color col-md-6">
+                  <span>司机联系方式：{{initOrderDetail.logisticses.arr[0].driverTel}}</span>
+                </div>
+                <div class="logical_color col-md-6">
+                  <span>车牌号：{{initOrderDetail.logisticses.arr[0].vehicleNo}}</span>
+                </div>
+                <div class="logical_color clearfix col-md-12">
+                  <p>{{$t('static.logistics')}}：</p>
+                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url" width="150px" />
+                </div>
+              </div>
+              <!-- <div class="order_info clearfix">
+                <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
+                  id:initOrderDetail.logisticses.arr[0].id,
+                  lcompanyId:initOrderDetail.logisticses.arr[0].logistics,
+                  lcompanyCode:initOrderDetail.logisticses.arr[0].code,
+                  number:initOrderDetail.logisticses.arr[0].number,
+                  key:param.key,
+                  show:true,
+                  loading:true,
+                  callback:logisticsInfo
+                  })"  value="{{$t('static.view_logistics')}}" />
+              
+              </div> -->
+          </div>
+        </div>
     </div>
 </template>
 <script>
@@ -420,8 +460,9 @@ export default {
               images:'',
               b:'',
               orderStatus:'',
-              lcompanyId:'',
-              lcompanyNo:'',
+              logistics:'',
+              number:'',
+              code:'',
               id:this.param.id,
               driverName:'',
               driverPid:'',
@@ -563,7 +604,8 @@ export default {
 }
 .picture{
   float: left;
-  width: 14%;
+  width:150px;
+  margin-right: 15px;
 }
 .navbar-client {
   margin-bottom: 0;
@@ -612,8 +654,4 @@ export default {
   border-top: 1px solid #ddd;
   padding: 20px 0;
  }
-.order_info div:nth-child(2){
-  padding-left: 13%;
-  border-left: 1px solid #ddd;
-}
 </style>

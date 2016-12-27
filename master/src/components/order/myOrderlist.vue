@@ -213,7 +213,7 @@
                         </button>
                         <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 3px;">重新申请发货
                         </button>
-                        <button class="btn btn-warning" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 5px;">发货
+                        <button class="btn btn-warning" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.consigner==item.employee" style="background:#fff;color:#eea236;padding:1px 5px;">发货
                         </button>
                         <!-- 销售订单发货流程end -->
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0">
@@ -226,9 +226,9 @@
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1">
                             <img src="/static/images/{{$t('static.img_payorder')}}.png"  title="待客户付款" alt="待客户付款"/>
                         </a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==20&&item.type==1">
+                        <!-- <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==20&&item.type==1">
                             <img src="/static/images/{{$t('static.img_collection')}}.png"  title="申请收款" alt="申请收款"/>
-                        </a>
+                        </a> -->
                         <!--<a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1"><img src="/static/images/uncheck.png" height="18" width="38" title="申请收款" alt="申请收款"/></a>-->
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0">
                              <img src="/static/images/{{$t('static.img_deliver')}}.png" title="待发货" alt="待发货"/>
@@ -348,6 +348,7 @@
                     currency:'',
                     consignee:'',
                     consigneePhone:'',
+                    consigner:'', //发货人
                     zipCode:'',
                     country:'中国',
                     province:'',
