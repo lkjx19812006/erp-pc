@@ -71,7 +71,7 @@
   }
   .modal_con {
     width: 500px;
-    z-index: 1082;
+    z-index: 1088;
   }
   .del_modal_con {
     position: fixed;

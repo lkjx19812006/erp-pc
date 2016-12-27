@@ -211,7 +211,7 @@
                                           {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
                                         </a>
                                         <span class="pull-right" style="color:#fa6705;line-height:27px;">{{$t('static.quotation_total')}}：{{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}}</span>
-                                        <button v-if="initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
+                                        <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                   </h4>
                               </div>
                           
@@ -233,8 +233,8 @@
                                                 <td>{{item.cost}}</td>
                                                 <td>{{item.costDesc}}</td>
                                                 <td>{{item.comment}}</td>
-                                                <td><a style="cursor:pointer" @click="editOtherOffer(item,$index)"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑" /></a></td>
-                                                <td><a style="cursor:pointer" @click="delOtherOffer(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
+                                                <td><a v-if="initIntlIntentionDetail.inquire !=3&&param.inquire!=3" style="cursor:pointer" @click="editOtherOffer(item,$index)"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑" /></a></td>
+                                                <td><a v-if="initIntlIntentionDetail.inquire !=3&&param.inquire!=3" style="cursor:pointer" @click="delOtherOffer(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                
                                                 <!-- <td  @click="clickShow($index,{
                                                     concrete:'otherOffers'
