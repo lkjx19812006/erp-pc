@@ -35,7 +35,7 @@
               </div>
               <!-- 客户类型 -->
               <div class="client-detailInfo   col-md-6">
-                <label class="editlabel">{{$t('static.type')}}</label>
+                <label class="editlabel">{{$t('static.client_type')}}</label>
                 <select class="form-control edit-input" v-model="param.type">
                     <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerType}}</option>
                 </select>

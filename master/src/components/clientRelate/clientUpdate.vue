@@ -22,7 +22,7 @@
                                 <input type="text" v-model='param.name' v-validate:name="{minlength:2}" class="form-control edit-input" value="{{param.name}}" />
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">{{$t('static.type')}}</label>
+                                <label class="editlabel">{{$t('static.client_type')}}</label>
                                 <select class="form-control edit-input"  v-model='param.type'>
                                      <option value="0">{{$t('static.personal')}}</option>
                                      <option value="1">{{$t('static.enterprise')}}</option>
