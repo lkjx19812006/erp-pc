@@ -4,6 +4,7 @@
      <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
      <tip-model :param="tipParam" v-if="tipParam.show"></tip-model>
      <send-detail :param="sendDetailParam" v-if="sendDetailParam.show"></send-detail>
+     <deliver-model :param="deliverParam" v-if="deliverParam.show"></deliver-model>
 	 <div class="employee clear" >
         <div class="employee_left col-md-8">
             <div class="employee_top" @click="freshLinecharts(getLinechart)">
@@ -38,7 +39,7 @@
                 <div class="cover_loading">
                     <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
                   </div>
-                <div class="employee_message_view" v-for="item in initBacklogList" v-if="item.bizType=='order_validate'">
+                <div class="employee_message_view" v-for="item in initBacklogList">
                     <div class="message_view_left">
                          <span></span>
                          <p>{{item.taskDesc}}</p>
@@ -51,14 +52,14 @@
                         <a v-if="item.taskKey!='employee_handle'" @click="showAudit(item)">审核</a>
                         <a v-else @click="showAudit(item)">重新申请</a>
                     </div>
-                    <!-- <div class="message_view_right" v-if="item.bizType=='order_send'">
+                    <div class="message_view_right" v-if="item.bizType=='order_send'">
                         <a @click="orderSend(item.bizId)">详情</a>
                         <a @click="showRecord(item)">记录</a>
                         <a  v-if="item.taskKey=='order_send_governor_validate'"  @click="sendAudit(item)">审核</a>
-                        <a v-if="item.taskKey=='order_send_warehouse_validate'"  @click="sendAudit(item)">发货</a>
+                        <a v-if="item.taskKey=='order_send_warehouse_validate'"  @click="deliverGoods(item)">发货</a>
                         <a  v-if="item.taskKey=='order_send_employee_handle'"  @click="sendAudit(item)">重新申请</a>
                         
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,6 +71,7 @@ import recordModel from '../components/record/record'
 import auditModel from '../components/tips/auditDialog'
 import tipModel from '../components/tips/tipDialog'
 import sendDetail from '../components/order/second_order/orderSendDetail'
+import deliverModel from '../components/order/orderStatus'
 import {
     getList,
     getLinechart,
@@ -88,163 +90,179 @@ export default {
         recordModel,
         auditModel,
         tipModel,
-        sendDetail
+        sendDetail,
+        deliverModel
     },
     data() {
-            return {
-                loadParam: {
-                    loading: true,
-                    show:false,
-                    link:'/flow/',
-                    color: '#5dc596',
-                    size: '15px',
-                    cur: 1,
-                    all: 7,
-                    total:0
-                },
-                orderDetailParam:{
-                    loading:true,
-                    show:false,
-                    key:'orderDetail',
-                    id:'',
-                    orderStatus:'',
-                    contact:''
-                },
-                sendDetailParam:{
-                    loading:true,
-                    show:false,
-                    key:'orderDetail',
-                    id:'',
-                    orderStatus:'',
-                    contact:''
-                },
-                recordParam:{
-                    loading:true,
-                    link:'/flow/flowRecord',
-                    bizType:'',
-                    bizId:'',
-                    show:false,
-                },
-                auditParam:{
-                    loading:true,
-                    show:false,
-                    link:'/flow/',
-                    title:'审核订单',
-                    audit:true,
-                    taskKey:'',
-                    taskId:'',
-                    result:'',
-                    auditComment:'',
-                    reject: this.reject,      //拒绝申请
-                    pass:this.pass,       //通过申请
-                    callback:this.callback,
-                    sendPass:this.sendPass, //发货审核成功
-                    sendRefuse:this.sendRefuse, //发货审核失败
-                },
-                tipParam:{
-                    show:false,
-                    alert:true,
-                    name:"",
-                }
+        return {
+            loadParam: {
+                loading: true,
+                show:false,
+                link:'/flow/',
+                color: '#5dc596',
+                size: '15px',
+                cur: 1,
+                all: 7,
+                total:0
+            },
+            orderDetailParam:{
+                loading:true,
+                show:false,
+                key:'orderDetail',
+                id:'',
+                orderStatus:'',
+                contact:''
+            },
+            sendDetailParam:{
+                loading:true,
+                show:false,
+                key:'orderDetail',
+                id:'',
+                orderStatus:'',
+                contact:''
+            },
+            deliverParam:{
+                show:false,
+                key:'myOrderList',
+                id:'',
+                orderStatus:'',
+                contact:'',
+                sendoff:false
+            },
+            recordParam:{
+                loading:true,
+                link:'/flow/flowRecord',
+                bizType:'',
+                bizId:'',
+                show:false,
+            },
+            auditParam:{
+                loading:true,
+                show:false,
+                link:'/flow/',
+                title:'审核订单',
+                audit:true,
+                taskKey:'',
+                taskId:'',
+                result:'',
+                auditComment:'',
+                reject: this.reject,      //拒绝申请
+                pass:this.pass,       //通过申请
+                callback:this.callback,
+                sendPass:this.sendPass, //发货审核成功
+                sendRefuse:this.sendRefuse, //发货审核失败
+            },
+            tipParam:{
+                show:false,
+                alert:true,
+                name:"",
             }
+        }
+    },
+    vuex: {
+        getters: {
+            getList,
+            getLinechart,
+            getPiechart,
+            initBacklogList
         },
-        vuex: {
-            getters: {
-                getList,
-                getLinechart,
-                getPiechart,
-                initBacklogList
-            },
-            actions: {
-                freshLinecharts,
-                freshPiecharts,
-                getBacklogList,
-                finishFlow
-            },
+        actions: {
+            freshLinecharts,
+            freshPiecharts,
+            getBacklogList,
+            finishFlow
         },
-        methods:{
-            showOrderDetail:function(id){
-                this.orderDetailParam.id = id;
-                this.orderDetailParam.show = true;
-            },
-            orderSend:function(id){
-                this.sendDetailParam.id = id;
-                this.sendDetailParam.show = true;
-            },
-            showRecord:function(item){
-                this.recordParam.bizType = item.bizType;
-                this.recordParam.bizId = item.bizId;
-                this.recordParam.show = true;
-            },
-            showAudit:function(item){
-                if(item.taskKey=='employee_handle'){
-                    this.auditParam.audit = false;
-                    this.auditParam.title = '重新申请审核';
-                }else{
-                    this.auditParam.audit = true;
-                    this.auditParam.title = '审核订单';
-                }
-                this.auditParam.taskKey = item.taskKey;
-                this.auditParam.taskId = item.taskId;
-                this.auditParam.show = true;
-            },
-            sendAudit:function(item){
-                console.log(item)
-                if(item.taskKey=='order_send_employee_handle'){
-                    this.auditParam.audit = false;
-                    this.auditParam.title = '重新申请审核';
-                }else if(item.taskKey=='order_send_governor_validate'){
-                    this.auditParam.audit = true;
-                    this.auditParam.title = '审核发货申请';
-                }else if(item.taskKey=='order_send_warehouse_validate'){
-                    this.auditParam.audit = true;
-                    this.auditParam.title = '发货';
-                }
-                this.auditParam.taskKey = item.taskKey;
-                this.auditParam.taskId = item.taskId;
-                this.auditParam.bizId = item.bizId;
-                this.auditParam.show = true;
-                console.log(this.auditParam)
-            },
-            pass:function(){
-                this.auditParam.result = 1;
-                this.finishFlow(this.auditParam);
-            },
-            reject:function(){
-                this.auditParam.result = 0;
-                this.finishFlow(this.auditParam);
-            },
-            sendPass:function(){ //发货审核成功
-                this.auditParam.result = 1;
-                this.finishFlow(this.auditParam);
-            },
-            sendRefuse:function(){ //发货审核不通过
-                this.auditParam.result = 0;
-                this.finishFlow(this.auditParam);
-            },
-            callback:function(name){
-                this.tipParam.show = true;
-                this.tipParam.name = name;
-                //审核完成后刷新页面
-                this.getBacklogList(this.loadParam);
-            },
-            refresh:function(){
-                this.getBacklogList(this.loadParam);
+    },
+    methods:{
+        showOrderDetail:function(id){
+            this.orderDetailParam.id = id;
+            this.orderDetailParam.show = true;
+        },
+        orderSend:function(id){
+            this.sendDetailParam.id = id;
+            this.sendDetailParam.show = true;
+        },
+        deliverGoods:function(item){
+            this.deliverParam.id = item.bizId;
+            this.deliverParam.show = true;
+            this.deliverParam.sendoff = true;
+            this.deliverParam.tips="财务核查通过，请等待卖家发货！";
+            console.log(this.deliverParam)
+        },
+        showRecord:function(item){
+            this.recordParam.bizType = item.bizType;
+            this.recordParam.bizId = item.bizId;
+            this.recordParam.show = true;
+        },
+        showAudit:function(item){
+            if(item.taskKey=='employee_handle'){
+                this.auditParam.audit = false;
+                this.auditParam.title = '重新申请审核';
+            }else{
+                this.auditParam.audit = true;
+                this.auditParam.title = '审核订单';
             }
-
+            this.auditParam.taskKey = item.taskKey;
+            this.auditParam.taskId = item.taskId;
+            this.auditParam.show = true;
         },
-        created() {
-            console.log("this.$store.state.table.login=====");
-            console.log(this.$store.state.table.login.orgId);
-            this.freshLinecharts();
-            this.freshPiecharts();
-            if (this.$route.query.id > this.getList[0].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
-                this.$route.query.id = 0;
+        sendAudit:function(item){
+            console.log(item)
+            if(item.taskKey=='order_send_employee_handle'){
+                this.auditParam.audit = false;
+                this.auditParam.title = '重新申请审核';
+            }else if(item.taskKey=='order_send_governor_validate'){
+                this.auditParam.audit = true;
+                this.auditParam.title = '审核发货申请';
+            }else if(item.taskKey=='order_send_warehouse_validate'){
+                this.auditParam.audit = true;
+                this.auditParam.title = '发货';
             }
-            //获取待办事项
+            this.auditParam.taskKey = item.taskKey;
+            this.auditParam.taskId = item.taskId;
+            this.auditParam.bizId = item.bizId;
+            this.auditParam.show = true;
+            console.log(this.auditParam)
+        },
+        pass:function(){
+            this.auditParam.result = 1;
+            this.finishFlow(this.auditParam);
+        },
+        reject:function(){
+            this.auditParam.result = 0;
+            this.finishFlow(this.auditParam);
+        },
+        sendPass:function(){ //发货审核成功
+            this.auditParam.result = 1;
+            this.finishFlow(this.auditParam);
+        },
+        sendRefuse:function(){ //发货审核不通过
+            this.auditParam.result = 0;
+            this.finishFlow(this.auditParam);
+        },
+        callback:function(name){
+            this.tipParam.show = true;
+            this.tipParam.name = name;
+            //审核完成后刷新页面
             this.getBacklogList(this.loadParam);
         },
-     route: {
+        refresh:function(){
+            this.getBacklogList(this.loadParam);
+        }
+
+    },
+    created() {
+        console.log("this.$store.state.table.login=====");
+        console.log(this.$store.state.table.login.orgId);
+        this.freshLinecharts();
+        this.freshPiecharts();
+        if (this.$route.query.id > this.getList[0].subcategory.length || isNaN(this.$route.query.id)||!this.$route.query.id) {
+            this.$route.query.id = 0;
+        }
+        //获取待办事项
+        this.getBacklogList(this.loadParam);
+    },
+    route: {
         activate: function (transition) {
           console.log('hook-example activated!')
           transition.next()

@@ -35,7 +35,7 @@
     <!-- 重新或取消发货申请 -->
       <div class="model-footer" v-if="param.title=='重新申请发货'||param.taskKey=='order_send_employee_handle'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-        <input type="button" class="btn  btn-confirm"  @click="cancelApply(param)" value="取消发货" />
+        <!-- <input type="button" class="btn  btn-confirm"  @click="cancelApply(param)" value="取消发货" /> -->
         <input type="button" class="btn  btn-confirm"  @click="confirmApply(param)" value="确定" />
       </div>
 

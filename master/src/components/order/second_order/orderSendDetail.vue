@@ -50,9 +50,9 @@ export default {
         
     },
     data() {
-        return {
-          changeShow: true,
-        }
+      return {
+        changeShow: true,
+      }
     },
     props:['param'],
     vuex: {

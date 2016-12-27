@@ -35,7 +35,7 @@
                     <div class="editpage-input">
                        <label class="editlabel">{{$t('static.comment')}}</label>
                        <!-- <input type="textarea" v-model='param.auditComment' class="form-control edit-input" value="{{param.auditComment}}" /> -->
-                       <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5"></textarea>
+                       <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5" placeholder='You can choose by sea or by air.'></textarea>
                     </div>
                </div>
                  </div>

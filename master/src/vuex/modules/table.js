@@ -703,6 +703,7 @@ const mutations = {
         if(data.key){
           state.basicBaseList[data.key] = data;
         }else if(data.titles=='申请发货'){
+          
           state.basicBaseList.orderList[data.sub].logistics = data.logistics;
           console.log(state.basicBaseList.orderList[data.sub].logistics)
         }else{

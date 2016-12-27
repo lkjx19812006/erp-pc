@@ -153,34 +153,107 @@
                 <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">{{$t('static.cancel')}}</button>
             </div>
         </div>
-        <!-- 订单发货上传物流信息 -->
-        <div class="navbar-client" v-if="param.sendoff">
+        <!-- 订单采购发货上传物流信息 -->
+        <div class="navbar-client" v-if="param.sendoff&&initOrderDetail.type==0">
+        <validator name="validation">
           <div class="message clearfix">
               <p class="order-message">{{$t('static.logistics_info')}}</p>
-              <div class="space_15 clearfix">
-                <div class="logical_color clearfix">
-                  <span class="pull-left">{{$t('static.logistics_company')}}：</span>
-                  <select v-model="uploadLogistic.b" class="form-control left edit-input">
+              <!-- 上传物流 -->
+              <div class="space_15 clearfix col-md-12">
+                <div class="logical_color clearfix col-md-6">
+                  <span class="pull-left">{{$t('static.logistics_company')}} <span class="system_danger" v-if="$validation.logisticname.required">{{$t('static.required')}}</span></span>
+                  <input type="text" v-model="uploadLogistic.b"  v-show="false"  v-validate:logisticname="{required:true}"/>
+                  <select v-model="uploadLogistic.b" class="form-control left">
                     <option v-for="item in initExpresslist" value="{{item.id + ',' + item.name}}">{{item.name}}{{item.code}}</option>
                   </select>
                 </div>
-                <div class="logical_color clearfix">
-                  <span class="pull-left">{{$t('static.logistics_no')}}：</span>
-                  <input type="number" class="form-control left edit-input" placeholder="{{$t('static.willpay')}}" v-model="uploadLogistic.lcompanyNo"/>
+                <div class="logical_color clearfix col-md-6">
+                  <span class="pull-left">{{$t('static.logistics_no')}} <span class="system_danger" v-if="$validation.logisticno.required">{{$t('static.required')}}</span></span>
+                  <input type="number" class="form-control left" placeholder="{{$t('static.willpay')}}" v-model="uploadLogistic.lcompanyNo" v-validate:logisticno="{required:true}" />
                 </div>
-                <div class="logical_color">
+                <div class="logical_color col-md-12">
                   <label class="editlabel">{{$t('static.upload_logistcs')}}</label>
                   <div class="clearfix">
-                      <press-image :value.sync="uploadLogistic.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
-                     <press-image :value.sync="uploadLogistic.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
-                     <press-image :value.sync="uploadLogistic.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:14%"></press-image>
+                      <press-image :value.sync="uploadLogistic.image_f" :type="type" :param="imageParam" style="float:left;width:15%"></press-image>
+                     <press-image :value.sync="uploadLogistic.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
+                     <press-image :value.sync="uploadLogistic.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
                   </div>
                 </div>
               </div>
           </div>
           <div class="clearfix logical_color">
-              <input type="button" class="btn  btn-confirm right"  @click="accept(uploadLogistic,param.show=false)"  value="{{$t('static.confirmation_delivery')}}" />
+              <input type="button" class="btn  btn-confirm right"  @click="accept(uploadLogistic,param.show=false)" v-if="$validation.valid"  value="{{$t('static.confirmation_delivery')}}" />
+              <input type="button" class="btn  btn-confirm right"  v-else disabled="true"  value="{{$t('static.confirmation_delivery')}}" />
           </div>
+        </validator>
+        </div>
+        <!-- 订单销售发货上传物流信息 -->
+        <div class="navbar-client" v-if="param.sendoff&&initOrderDetail.type==1">
+        <validator name="validation">
+          <div class="message clearfix">
+              <p class="order-message">{{$t('static.logistics_info')}}</p>
+              <div class="clearfix col-md-6">
+                <span class="pull-left">选择发货方式：</span>
+                <select v-model="salesLogistic.way" class="form-control left">
+                   <option value="0" selected>第三方物流</option>
+                   <option value="1">包车自运</option>
+                </select>
+              </div>
+              <!-- 上传物流 -->
+              <div class="space_15 clearfix col-md-12" v-if="salesLogistic.way==0">
+                <div class="logical_color clearfix col-md-6">
+                  <span class="pull-left">{{$t('static.logistics_company')}} <span class="system_danger" v-if="$validation.logisticname.required">{{$t('static.required')}}</span></span>
+                  <input type="text" v-model="salesLogistic.b"  v-show="false"  v-validate:logisticname="{required:true}"/>
+                  <select v-model="salesLogistic.b" class="form-control left">
+                    <option v-for="item in initExpresslist" value="{{item.id + ',' + item.name}}">{{item.name}}{{item.code}}</option>
+                  </select>
+                </div>
+                <div class="logical_color clearfix col-md-6">
+                  <span class="pull-left">{{$t('static.logistics_no')}} <span class="system_danger" v-if="$validation.logisticno.required">{{$t('static.required')}}</span></span>
+                  <input type="number" class="form-control left" placeholder="{{$t('static.willpay')}}" v-model="salesLogistic.lcompanyNo" v-validate:logisticno="{required:true}" />
+                </div>
+                <div class="logical_color col-md-12">
+                  <label class="editlabel">{{$t('static.upload_logistcs')}}</label>
+                  <div class="clearfix">
+                      <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam" style="float:left;width:15%"></press-image>
+                     <press-image :value.sync="salesLogistic.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
+                     <press-image :value.sync="salesLogistic.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
+                  </div>
+                </div>
+              </div>
+              <!-- 司机信息 -->
+              <div class="space_15 clearfix col-md-12" v-if="salesLogistic.way==1">
+                <div class="logical_color clearfix col-md-6">
+                  <span class="pull-left">司机姓名 <span class="system_danger" v-if="$validation.drivername.required">{{$t('static.required')}}</span></span>
+                  <input type="text" class="form-control left" placeholder="请输入司机姓名" v-model="salesLogistic.driverName" v-validate:drivername="{required:true}" />
+                </div>
+                <div class="logical_color clearfix col-md-6">
+                  <span class="pull-left">身份证号 <span class="system_danger" v-if="$validation.drivernumber.IDCard">{{$t('static.required')}}</span></span>
+                  <input type="text" class="form-control left" placeholder="请输入司机身份证号" v-model="salesLogistic.driverPid" v-validate:drivernumber="['IDCard']" />
+                </div>
+                <div class="logical_color clearfix col-md-6">
+                  <span class="pull-left">司机联系方式 <span class="system_danger" v-if="$validation.drivertel.phone">{{$t('static.required')}}</span></span>
+                  <input type="tel" class="form-control left" placeholder="请输入司机联系方式" v-model="salesLogistic.driverTel" v-validate:drivertel="['phone']" />
+                </div>
+                <div class="logical_color clearfix col-md-6">
+                  <span class="pull-left">车辆车牌号 <span class="system_danger" v-if="$validation.driverno.required">{{$t('static.required')}}</span></span>
+                  <input type="text" class="form-control left" placeholder="请输入车牌号" v-model="salesLogistic.vehicleNo" v-validate:driverno="{required:true}" />
+                </div>
+                <div class="logical_color col-md-12">
+                  <label class="editlabel">{{$t('static.upload_logistcs')}}</label>
+                  <div class="clearfix">
+                      <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam" style="float:left;width:15%"></press-image>
+                     <press-image :value.sync="salesLogistic.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
+                     <press-image :value.sync="salesLogistic.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="clearfix logical_color">
+              <input type="button" class="btn  btn-confirm right"  @click="accept(salesLogistic,param.show=false)" v-if="$validation.valid"  value="{{$t('static.confirmation_delivery')}}" />
+              <input type="button" class="btn  btn-confirm right"  v-else disabled="true"  value="{{$t('static.confirmation_delivery')}}" />
+          </div>
+        </validator>
         </div>
         <!-- 订单待收货查看物流 -->
         <div class="navbar-client" v-if="param.delivery">
@@ -200,21 +273,21 @@
               </div>
               <div class="order_info clearfix">
                 <input type="button" class="btn  btn-confirm right"  @click="accept({
-                  id:param.id,
-                  show:true,
-                  orderStatus:'',
-                  link:'/order/receiveConfirm',
-                  key:param.key
-                },param.show=false)"  value="{{$t('static.confirm_receipt')}}" />
+                    id:param.id,
+                    show:true,
+                    orderStatus:'',
+                    link:'/order/receiveConfirm',
+                    key:param.key
+                  },param.show=false)"  value="{{$t('static.confirm_receipt')}}" />
                 <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
-                  id:initOrderDetail.logisticses.arr[0].id,
-                  lcompanyId:initOrderDetail.logisticses.arr[0].logistics,
-                  lcompanyCode:initOrderDetail.logisticses.arr[0].code,
-                  number:initOrderDetail.logisticses.arr[0].number,
-                  show:true,
-                  loading:true,
-                  callback:logisticsInfo
-                  })" value="{{$t('static.view_logistics')}}" />
+                    id:initOrderDetail.logisticses.arr[0].id,
+                    lcompanyId:initOrderDetail.logisticses.arr[0].logistics,
+                    lcompanyCode:initOrderDetail.logisticses.arr[0].code,
+                    number:initOrderDetail.logisticses.arr[0].number,
+                    show:true,
+                    loading:true,
+                    callback:logisticsInfo
+                    })" value="{{$t('static.view_logistics')}}" />
 
               </div>
           </div>
@@ -327,7 +400,7 @@ export default {
               key:this.param.key
             },
             payName: "去支付/To pay",
-           type:"image/jpeg,image/jpg,image/png",
+            type:"image/jpeg,image/jpg,image/png",
             uploadLogistic:{
               images:'',
               b:'',
@@ -337,6 +410,26 @@ export default {
               id:this.param.id,
               show:true,
               link:'/order/send',
+              key:this.param.key,
+              image_f:'',
+              image_s:'',
+              image_t:'',
+              name:''
+            },
+            salesLogistic:{
+              images:'',
+              b:'',
+              orderStatus:'',
+              lcompanyId:'',
+              lcompanyNo:'',
+              id:this.param.id,
+              driverName:'',
+              driverPid:'',
+              driverTel:'',
+              vehicleNo:'',
+              show:true,
+              way:0,
+              link:'/order/sendflowSend',
               key:this.param.key,
               image_f:'',
               image_s:'',
@@ -377,6 +470,7 @@ export default {
             this.orderCancle(this.cancleReason,this.param);
         },
         accept:function(confirm){
+          console.log(confirm)
             confirm.callback = this.param.callback;
             this.orderStatu(confirm);
         },

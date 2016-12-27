@@ -1283,6 +1283,22 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     if (param.lcompanyNo) {
         body.lcompanyNo = param.lcompanyNo;
     }
+    if (param.driverName) {
+        body.driverName = param.driverName;
+    }
+    if (param.driverPid) {
+        body.driverPid = param.driverPid;
+    }
+    if (param.driverTel) {
+        body.driverTel = param.driverTel;
+    }
+    if (param.vehicleNo) {
+        body.vehicleNo = param.vehicleNo;
+    }
+    if (param.way) {
+        body.way = param.way;
+    }
+    console.log(param)
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
