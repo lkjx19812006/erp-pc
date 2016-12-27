@@ -41,7 +41,7 @@
                                       :value.sync="country"
                                       :on-change="selectProvince"
                                       :options="initCountrylist"
-                                      placeholder="国家"
+                                      placeholder="国家/Country"
                                       label="cnameEn"
                                     >
                                     </v-select>
@@ -55,7 +55,7 @@
                                       :value.sync="province"
                                       :on-change="selectCity"
                                       :options="initProvince"
-                                      placeholder="省"
+                                      placeholder="省/Province"
                                       label="cname"
                                       v-if="country.cname"
                                     >
