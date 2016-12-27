@@ -126,7 +126,7 @@
                         <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>{{item.inquireType}}</td>
                         <td>
-                            <div style="display:inline-block;margin-right:7px" @click="deleteIntention({
+                            <div v-if="item.inquire===0||item.inquire===3" style="display:inline-block;margin-right:7px" @click="deleteIntention({
                                         id:item.id,
                                         sub:$index,
                                         show:true,

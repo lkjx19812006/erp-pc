@@ -131,7 +131,7 @@ export const login = ({ dispatch }, data) => { //登录
         data.loading = false;
     });
 }
-export const resetPawd = ({ dispatch }, data) => { //修改密码
+export const resetPawd = ({ dispatch }, data) => { //修改密码(需要提供原密码)
     console.log(data);
     const body = {
         no: data.no,
@@ -152,6 +152,30 @@ export const resetPawd = ({ dispatch }, data) => { //修改密码
     }).then((res) => {
         console.log(res.json())
         dispatch(types.PASSWORD_DATA, data);
+        if(res.json().code==200){
+           data.callback(res.json().msg);
+        }
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const updatePawd = ({ dispatch }, data) => { //修改密码(直接修改密码,无需提供原密码,管理员使用)
+    const body = {
+        no: data.no,
+        newPwd: data.newPwd 
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + '/employee/updatePassword',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
         if(res.json().code==200){
            data.callback(res.json().msg);
         }

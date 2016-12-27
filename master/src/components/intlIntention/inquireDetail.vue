@@ -171,7 +171,7 @@
                                                 <td v-if="item.offerPrice!=null">{{item.offerPrice}}（{{item.offerEUnit | Unit}}）</td>
                                                 <td v-if="item.offerPrice==null"></td>
                                                 <td>{{item.exchangeRate}}</td>
-                                                <td>{{item.offerNumber}}（{{item.unit | Unit}}）</td>
+                                                <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                 <td><a style="cursor:pointer" @click="clickOn({
                                                       id:item.supplier,
                                                       sub:$index,
