@@ -369,4 +369,10 @@ export const initBankList= (state) => { //获取银行的数据
 export const initBankBranchList= (state) => { //获取银行分支的数据
   return parseJson(state.count.bankBranchList); 
 }
+export const initMyContractList= (state) => { //我的补充合同
+  return parseJson(state.count.myContractList); 
+}
+export const initOrgContractList= (state) => { //部门补充合同
+  return parseJson(state.count.orgContractList); 
+}
 

@@ -20,7 +20,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <span class="navbar-brand navbar-name" href="#">{{initOrderDetail.customerName}}</span>
+                        <span class="navbar-brand navbar-name">{{initOrderDetail.customerName}}</span>
                     </div>
                    <!--  <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
                        <li>
@@ -123,6 +123,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                         {{$t('static.pay_evidence')}}（0）
                                         </a>
+                                        <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">客户已收货，商品质量符合客户要求！</span>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.new')}}/{{$t('static.edit')}}</button>
                                         <button v-else></button>
                                     </h4>

@@ -18,7 +18,8 @@ import {
     REQUEST_RECORD,
     ITEM_SUPPLIER_LIST,
     BANK_LIST,
-    BANK_BRANCH_LIST
+    BANK_BRANCH_LIST,
+    CONTRACT_LIST
 } from '../mutation-types'
 
 const state = {
@@ -58,7 +59,11 @@ const state = {
     //产品供应商
     supplierList:[],
     bankList:[],
-    bankBranchList:[]
+    bankBranchList:[],
+    //我的补充合同
+    myContractList:[],
+    //部门补充合同
+    orgContractList:[]
 }
 const mutations = {
     [UNIT_LIST](state,data){ //常用单位
@@ -165,11 +170,19 @@ const mutations = {
     [ITEM_SUPPLIER_LIST](state,data){
        state.supplierList = data;
     },
-    [BANK_LIST](state,data){
+    [BANK_LIST](state,data){ //银行数据
       state.bankList = data;
     },
-    [BANK_BRANCH_LIST](state,data){
+    [BANK_BRANCH_LIST](state,data){ //银行分支
       state.bankBranchList = data;
+    },
+    [CONTRACT_LIST](state,data){  //补充合同列表
+      if(data.link=='/order/contract/list/employee'){
+         state.myContractList = data;
+      }else if(data.link=='/order/contract/list/org'){
+         state.orgContractList = data
+      }
+     
     }
 
 }

@@ -164,4 +164,7 @@ export const ITEM_SUPPLIER_LIST = 'ITEM_SUPPLIER_LIST'  //产品供应商获取
 export const BANK_LIST ='BANK_LIST' //获取银行数据
 export const BANK_BRANCH_LIST ='BANK_BRANCH_LIST' //获取银行分支的数据
 
+export const CONTRACT_LIST ='CONTRACT_LIST' //补充合同列表的数据
+
+
 

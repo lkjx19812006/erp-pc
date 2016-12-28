@@ -84,7 +84,7 @@
                     </div>
                </section>
                <!-- 重新申请审核 -->
-               <section class="editsection clearfix" v-cloak v-if="param.titles=='重新申请审核'">
+               <section class="editsection clearfix" v-cloak v-if="param.titles=='重新申请审核'||param.titles=='重新申请支付'">
                     <div class="editpage-input col-md-6">
                        <label class="editlabel">支付方式 <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
                       <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
@@ -162,12 +162,12 @@
                     </div>
                </section>
             </div>
-            <div class="edit_footer" v-if="param.titles=='申请分期审核'">
+            <div class="edit_footer" v-if="param.titles=='申请分期审核'||param.titles=='申请支付'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm(param)">提交</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true" >提交</button>
             </div>
-            <div class="edit_footer" v-if="param.titles=='重新申请审核'">
+            <div class="edit_footer" v-if="param.titles=='重新申请审核'||param.titles=='重新申请支付'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirmReset(param)">提交</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true" >提交</button>

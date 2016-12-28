@@ -4,6 +4,8 @@
     <undeline-model :param="undelinePay" v-if="undelinePay.show"></undeline-model>
     <logistics-model :param="logisticsDetail" v-if="logisticsDetail.show"></logistics-model>
     <editorder-model :param="editorder" v-if="editorder.show"></editorder-model>
+    <contract-model :param="contractParam" v-if="contractParam.show"></contract-model>
+    <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con client_body" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -15,7 +17,7 @@
                <p class="order-message">{{$t('static.order_message')}}</p>
                <p class="clearfix space_15">
                   <img src="/static/images/tips.png" height="30" width="30" class="left" />
-                  <span class="tips">{{param.tips}}<span v-if="param.estimate&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;">客户已收货，商品质量符合客户要求！</span></span>
+                  <span class="tips">{{param.tips}}</span>
                </p>
             </div>
         </div>
@@ -24,7 +26,7 @@
                 <p class="order-message">{{$t('static.order_info')}}</p>
                 <div class="space_15 clearfix">
                     <div class="left message_front" style="margin-top:5px;">{{$t('static.order_no')}}：{{initOrderDetail.no}}</div>
-                    <div class="left message_front"><img src="../../../static/images/contacter.png" height="30" width="23"  class="left"/><span class="tips">{{$t('static.consignee')}}：{{initOrderDetail.consignee}} | {{initOrderDetail.consigneePhone}}</span></div>
+                    <div class="left message_front"><img src="/static/images/contacter.png" height="30" width="23"  class="left"/><span class="tips">{{$t('static.consignee')}}：{{initOrderDetail.consignee}} | {{initOrderDetail.consigneePhone}}</span></div>
                     <div class="left message_front"><img src="../../../static/images/address.png" class="left" height="34" width="24"  /><span class="tips">{{$t('static.consignee_address')}}：{{initOrderDetail.consigneeAddr}}</span></div>
                 </div>
             </div>
@@ -272,7 +274,7 @@
                 </div>
                 <div class="logical_color clearfix">
                   <p>{{$t('static.logistics')}}：</p>
-                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url"  width="150px" />
+                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url"  width="150px" @click="clickBig(item.url)" />
                 </div>
               </div>
               <div class="order_info clearfix">
@@ -309,7 +311,7 @@
                 </div>
                 <div class="logical_color clearfix">
                   <p>{{$t('static.logistics')}}：</p>
-                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url" width="150px" />
+                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url" width="150px" @click="clickBig(item.url)" />
                 </div>
               </div>
               <div class="order_info clearfix">
@@ -353,7 +355,7 @@
                 </div>
                 <div class="logical_color clearfix col-md-12">
                   <p>{{$t('static.logistics')}}：</p>
-                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url" width="150px" />
+                  <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url" width="150px" @click="clickBig(item.url)"/>
                 </div>
               </div>
               <div class="order_info clearfix">
@@ -376,7 +378,18 @@
                link:'/order/quality/qualified',
                key:param.key
               })">合格</button>
-            <button type="button" class="btn btn-info margin-10 right"  @click="param.show = false">补充合同</button>
+            <button type="button" class="btn btn-info margin-10 right"  @click="addContract({
+                show:true,
+                orderId:param.id,
+                total:initOrderDetail.total,
+                adjusted:'',
+                comment:'',
+                contractText:'',
+                url:'/order/quality/contract/start',
+                link:applyContract,
+                titles:'订单补充合同',
+                images:'',
+              })">补充合同</button>
             <button type="button" class="btn btn-warning margin-10 right"  @click="param.show = false">申请售后</button>
             <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">{{$t('static.cancel')}}</button>
           </div>
@@ -387,11 +400,12 @@
 <script>
 import cancleModel from  '../order/cancleMsg'
 import undelineModel from  '../order/uploadPayment'
-/*import yaokuanModel from  '../order/orderpayPassword'*/
+import contractModel from '../order/second_order/contractItems'
 import pressImage from '../imagePress'
 import logisticsModel  from  '../order/logisticsDetail'
 import editorderModel  from  '../order/ordergoods'
 import alertModel from  '../tips/tipDialog'
+import pictureModel  from  '../tips/pictureDialog'
 import {
   initExpresslist,
   initOrderDetail,
@@ -406,7 +420,8 @@ import {
     alterOrder,
     logisticsInfo,
     orderReceive,
-    getEmpolyeeOrder
+    getEmpolyeeOrder,
+    applyContract
 } from '../../vuex/actions'
 export default {
     components: {
@@ -415,7 +430,9 @@ export default {
         pressImage,
         logisticsModel,
         editorderModel,
-        alertModel
+        alertModel,
+        contractModel,
+        pictureModel
     },
     props:['param'],
     data() {
@@ -464,6 +481,10 @@ export default {
           imageParam:{
               url:'/crm/api/v1/file/',
               qiniu:false
+          },
+          pictureParam:{
+            show:false,
+            img:''
           },
           logisticsDetail:{
             show:false,
@@ -515,6 +536,9 @@ export default {
             show:false,
             alert:true,
             name:''
+          },
+          contractParam:{
+            show:false
           }
       }
     },
@@ -534,7 +558,8 @@ export default {
             alterOrder,
             logisticsInfo,
             orderReceive,
-            getEmpolyeeOrder
+            getEmpolyeeOrder,
+            applyContract
         }
     },
     methods: {
@@ -543,6 +568,10 @@ export default {
             this.cancleReason = cancle;
             this.param.reason=true;
             /*this.orderCancle(this.cancleReason)*/
+        },
+        clickBig:function(img){
+          this.pictureParam.show=true;
+          this.pictureParam.img = img;
         },
         cancel:function(){
             this.orderCancle(this.cancleReason,this.param);
@@ -560,6 +589,11 @@ export default {
             this.param.show = false;
             checkout.callback = this.checkCallback;
             this.orderReceive(checkout);  
+        },
+        addContract:function(contract){
+            this.contractParam.show=true;
+            this.contractParam = contract;
+            this.contractParam.callback = this.contractCallback;
         },
         accept:function(confirm){
             console.log(confirm)
@@ -616,6 +650,11 @@ export default {
           this.tipParam.show = true;
           this.tipParam.name = title;
           this.getEmpolyeeOrder(this.myOrderParam);
+        },
+        contractCallback:function(title){
+          this.tipParam.show = true;
+          this.tipParam.alert = true;
+          this.tipParam.name = title;
         }
     },
     created() {

@@ -136,7 +136,10 @@
                   <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
                   <td v-if="item.orderStatus==40">{{$t('static.wait_ship')}}</td>
                   <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
-                  <td v-if="item.orderStatus==60&&item.type==1">{{$t('static.awaiting_comment')}}</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==50">{{$t('static.order_over')}}（补充合同申请）</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==60">{{$t('static.order_over')}}（售后）</td>
                   <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
                   <td v-if="item.orderStatus==70">{{$t('static.order_over')}}</td>
                   <td v-if="item.orderStatus==-1">{{$t('static.cancle_order')}}</td>
@@ -162,11 +165,12 @@
                   <td>{{item.currency | Currency}}</td> 
                 -->
                   <td>
-                      <a class="operate" v-if="item.orderStatus<20"  @click="updateOrder({
+                      <a class="operate" v-if="item.validate==0"  @click="updateOrder({
                         show:true,
                         id:item.id,
                         index:$index,
                         type:item.type,
+                        consigner:item.consigner,
                         sourceType:0,
                         sample:item.sample,
                         intl:item.intl,
@@ -223,7 +227,7 @@
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70||(item.orderStatus >=60&&item.type==0)">
                            <img src="/static/images/{{$t('static.img_finish')}}.png"   title="已完成订单" alt="已完成订单"/>
                         </a>
-                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1" style="background:#fff;color:#eea236;padding:1px 5px;">等待评价
+                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==3" style="background:#fff;color:#eea236;padding:1px 5px;">等待评价
                         </button>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1">
                             <img src="/static/images/{{$t('static.img_payorder')}}.png"  title="待客户付款" alt="待客户付款"/>
@@ -647,7 +651,8 @@
             orderBack:function(title){
                 this.tipsParam.show = true;
                 this.tipsParam.name=title;
-                this.tipsParam.alert=true;
+                /*this.tipsParam.alert=true;*/
+                this.getEmpolyeeOrder(this.loadParam);
             },
             resetTime:function(){
               this.loadParam.ctime = "";

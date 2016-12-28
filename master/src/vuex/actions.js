@@ -978,10 +978,13 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
 export const alterOrder = ({ dispatch }, param) => { //修改订单
     console.log(param);
     if(param.city==null||param.city==''||!param.city){
-           param.city=''; 
+        param.city=''; 
     }
     if(param.district==null||param.district==''||!param.district){
        param.district=''; 
+    }
+    if(param.consigner) {
+        body.consigner = param.consigner;
     }
     const body = {
         type: param.type,
@@ -6380,9 +6383,7 @@ export const orderApplySend = ({ dispatch }, param) => {   //发货申请
 }
 export const sendRestart = ({ dispatch }, param) => {   //重新申请发货
     console.log(param);
-    const body = {
-
-    }
+    const body = {};
     if(param.orderId){
         body.id = param.orderId;
     }
@@ -6456,5 +6457,77 @@ export const sendCancel = ({ dispatch }, param) => {   //取消发货
         console.log('fail');
     });
 }
+export const applyContract = ({ dispatch }, param) => {   //申请补充合同
+    console.log(param);
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t }
+    var ss= param.images;
+    var img = ss.split(",");//字符串转化为数组
+    img.toString();
+    console.log(img)
+    const body = {
+        orderId:param.orderId,
+        contractText:param.contractText,
+        comment:param.comment,
+        adjusted:param.adjusted,
+        images:img
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg); 
+        /*param.description=res.json().result.description;*/
+        if(res.json().code==200){
+           dispatch(types.ORDER_TABLE, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
 
-        
+export const getMyContractList = ({ dispatch }, param) => { //补充合同列表（我的、部门）
+    console.log(param)
+    param.loading = true;
+    var url = apiUrl.clientList +param.link+'?page=' + param.cur + '&pageSize=15';
+    for (var seach in param) {
+        if (seach == 'province' && param[seach] !== '') {
+            url += '&province=' + param.province
+        }
+        if (seach == 'city' && param[seach] !== '') {
+            url += '&city=' + param.city
+        }
+    }
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var contract = res.json().result.list;
+        for(var i in contract){
+            contract[i].checked = false;
+        }
+        dispatch(types.CONTRACT_LIST, contract);
+        param.loading = false;
+        param.all = res.json().result.all;
+        param.total = res.json().result.total;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
