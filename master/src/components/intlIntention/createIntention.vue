@@ -363,7 +363,7 @@ export default {
             employeeId:''
           },
           tag:['真空包装/Vacuum packaging','瓦楞纸箱/Box','编织袋/Woven bag','积压包/Pallets','其它/Other'],
-          source:['Alibaba','Email','Facebook'],
+          source:['facebook','Twitter','linkedin','google','Yahoo','WeChat','QQ','Alibaba initiative inquiry' ,'Alibaba initiative quotation' ,'Customs data','Personal network collection' ,'ERP client resource','Exhibition，others'],
             country:{
               cname:'',
               nameEn:'',

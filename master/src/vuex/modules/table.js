@@ -105,6 +105,7 @@ import {
    EXPRESS_DATA,
    ORDER_UPLOAD_DATA,
    ORDER_PAY_DATA,
+   DRUG_ACCOUNT_DATA,
    ORDER_ROLLOUT_DATA,
    EXPRESS_DETAIL_DATA,
    ORG_ORDER_AUDIT,
@@ -461,6 +462,7 @@ const state = {
         orderPayList:[{
              "id": "580ebddddeb2e33b1ffb9495","payWay":"3","orderId":"57f88e6288e8bb85da01df9b","orderNo": "11111","payFee":"0"
         }],
+        drugAccountList:[],
         orderRolloutList:{
           list:[]
         },
@@ -741,6 +743,9 @@ const mutations = {
     },
     [ORDER_PAY_DATA](state,data){  //订单支付记录
         state.basicBaseList.orderPayList = data;
+    },
+    [DRUG_ACCOUNT_DATA](state,data){ //药款账户
+        state.basicBaseList.drugAccountList = data;
     },
     [ORDER_ROLLOUT_DATA](state,data){ //药款转出记录
         state.basicBaseList.orderRolloutList = data;

@@ -531,7 +531,11 @@ export default {
         breed:function(breed){
             this.loadParam.breedId=breed.breedId;
             this.loadParam.breedName=breed.breedName;
-            console.log(this.loadParam);
+            if(!!breed.eName){
+                this.loadParam.breedName=breed.eName;
+            }
+            this.getIntlIntentionList(this.loadParam);
+            
         }
     },
     created() {

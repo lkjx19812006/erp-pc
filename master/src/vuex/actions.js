@@ -425,6 +425,30 @@ export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录�
     })
 }
 
+export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列表 
+    param.loading = true;
+    var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var drugAccountList = res.json().result.list;
+        dispatch(types.DRUG_ACCOUNT_DATA, drugAccountList);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+
+        localStorage.drugAccountParam = JSON.stringify(param);  
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列表以及订单搜索
     param.loading = true;
     var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
@@ -4251,6 +4275,9 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => { //国际�
     param.loading = true;
     console.log(param);
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
+    if(param.inquire!==''&&param.inquire!==undefined){
+        url += "&inquire=" + param.inquire;
+    }
     Vue.http({
         method: 'GET',
         url: url,

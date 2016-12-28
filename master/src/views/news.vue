@@ -543,6 +543,12 @@ export default {
       },
   methods: {
     selectSearch:function(){
+        if(!this.loadParam.trackingDay.match(/^([0-9]|[1-9][0-9]{1,2})$/)&&this.loadParam.trackingDay!==''){
+            this.tipsParam.show = true;
+            this.tipsParam.name="请输入至多三位的整数";
+            this.tipsParam.alert=true;
+            return ;
+        }
         this.getUserList(this.loadParam)
     },
     clickOn: function(item) {
@@ -610,6 +616,8 @@ export default {
             this.auditParam.show = true;
         }else{
             this.tipsParam.show = true;
+            this.tipsParam.name="请选择会员";
+            this.tipsParam.alert=true;
         }
 
 

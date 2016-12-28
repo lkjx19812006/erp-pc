@@ -9,14 +9,14 @@
             
         </div>
         <div class="btn-group pull-left">
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': isA}" @click="clickday()">{{$t('static.please_select')}}</button>
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': !isA&&isB}" @click="clickweek()">{{$t('static.not_inquiry')}}</button>
-            <button  class="btn btn-default" v-bind:class="{ 'btn-warning': !isA&&!isB&&isC}" @click="clickmonth()">{{$t('static.inquiry')}}</button>
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': !isA&&!isB&&!isC&&isD}" @click="clickyear()">{{$t('static.quotation')}}</button>
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': !isA&&!isB&&!isC&&!isD}" @click="clickfinish()">{{$t('static.quo_complete')}}</button>
+            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === ''}" @click="selectInquire('')">{{$t('static.please_select')}}</button>
+            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 0}" @click="selectInquire(0)">{{$t('static.not_inquiry')}}</button>
+            <button  class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 1}" @click="selectInquire(1)">{{$t('static.inquiry')}}</button>
+            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 2}" @click="selectInquire(2)">{{$t('static.quotation')}}</button>
+            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 3}" @click="selectInquire(3)">{{$t('static.quo_complete')}}</button>
         </div>
          <button class="btn btn-primary pull-right" style="margin-right:20px" @click="intentionSearch()">{{$t('static.refresh')}}</button> 
-        <div class="order_table" id="table_box" v-show="currentView==1">
+        <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -44,7 +44,7 @@
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
                         <td>{{item.city}}</td>
-                        <td>{{item.ctime | date}}</td>
+                        <td>{{item.ctime}}</td>
                         <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
                         <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
@@ -56,166 +56,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="order_table" id="table_box" v-show="currentView==2">
-            <div class="cover_loading">
-                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-            </div>
-            <table class="table table-hover table_color table-striped " v-cloak id="tab">
-                <thead>
-                    <tr>
-                        <th>{{$t('static.inquire_type')}}</th>
-                        <th>{{$t('static.commodity_items')}}</th>
-                        <th>{{$t('static.client_name')}}</th>
-                        <th>{{$t('static.client_email')}}</th>
-                        <th>{{$t('static.salesman')}}</th>
-                        <th>{{$t('static.country')}}</th>
-                        <th>{{$t('static.city')}}</th>
-                        <th>{{$t('static.create_time')}}</th>
-                        <th>{{$t('static.inquiry_state')}}</th>
-                        <th>{{$t('static.handle')}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer" v-if="item.inquire==0">
-                        <td>{{item.inquireType}}</td>
-                        <td>{{item.names}}</td>
-                        <td class="underline" @click="clickOn(item,$index)">{{item.customerName}}</td>
-                        <td>{{item.customerEmail}}</td>
-                        <td>{{item.employeeName}}</td>
-                        <td>{{item.country}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.ctime | date}}</td>
-                        <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
-                        <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
-                        <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
-                        <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
-                        <td>
-                            <div v-if="item.inquire==2&&privilege==true" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="order_table" id="table_box" v-show="currentView==3">
-            <div class="cover_loading">
-                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-            </div>
-            <table class="table table-hover table_color table-striped " v-cloak id="tab">
-                <thead>
-                    <tr>
-                        <th>{{$t('static.inquire_type')}}</th>
-                        <th>{{$t('static.commodity_items')}}</th>
-                        <th>{{$t('static.client_name')}}</th>
-                        <th>{{$t('static.client_email')}}</th>
-                        <th>{{$t('static.salesman')}}</th>
-                        <th>{{$t('static.country')}}</th>
-                        <th>{{$t('static.city')}}</th>
-                        <th>{{$t('static.create_time')}}</th>
-                        <th>{{$t('static.inquiry_state')}}</th>
-                        <th>{{$t('static.handle')}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer" v-if="item.inquire==1">
-                        <td>{{item.inquireType}}</td>
-                        <td>{{item.names}}</td>
-                        <td class="underline" @click="clickOn(item,$index)">{{item.customerName}}</td>
-                        <td>{{item.customerEmail}}</td>
-                        <td>{{item.employeeName}}</td>
-                        <td>{{item.country}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.ctime | date}}</td>
-                        <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
-                        <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
-                        <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
-                        <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
-                        <td>
-                            <div v-if="item.inquire==2&&privilege==true" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="order_table" id="table_box" v-show="currentView==4">
-            <div class="cover_loading">
-                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-            </div>
-            <table class="table table-hover table_color table-striped " v-cloak id="tab">
-                <thead>
-                    <tr>
-                        <th>{{$t('static.inquire_type')}}</th>
-                        <th>{{$t('static.commodity_items')}}</th>
-                        <th>{{$t('static.client_name')}}</th>
-                        <th>{{$t('static.client_email')}}</th>
-                        <th>{{$t('static.salesman')}}</th>
-                        <th>{{$t('static.country')}}</th>
-                        <th>{{$t('static.city')}}</th>
-                        <th>{{$t('static.create_time')}}</th>
-                        <th>{{$t('static.inquiry_state')}}</th>
-                        <th>{{$t('static.handle')}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer" v-if="item.inquire==2">
-                        <td>{{item.inquireType}}</td>
-                        <td>{{item.names}}</td>
-                        <td class="underline" @click="clickOn(item,$index)">{{item.customerName}}</td>
-                        <td>{{item.customerEmail}}</td>
-                        <td>{{item.employeeName}}</td>
-                        <td>{{item.country}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.ctime | date}}</td>
-                        <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
-                        <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
-                        <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
-                        <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
-                        <td>
-                            <div v-if="item.inquire==2&&privilege==true" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="order_table" id="table_box" v-show="currentView==5">
-            <div class="cover_loading">
-                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-            </div>
-            <table class="table table-hover table_color table-striped " v-cloak id="tab">
-                <thead>
-                    <tr>
-                        <th>{{$t('static.inquire_type')}}</th>
-                        <th>{{$t('static.commodity_items')}}</th>
-                        <th>{{$t('static.client_name')}}</th>
-                        <th>{{$t('static.client_email')}}</th>
-                        <th>{{$t('static.salesman')}}</th>
-                        <th>{{$t('static.country')}}</th>
-                        <th>{{$t('static.city')}}</th>
-                        <th>{{$t('static.create_time')}}</th>
-                        <th>{{$t('static.inquiry_state')}}</th>
-                        <th>{{$t('static.handle')}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in initIntlIntentionInquireList" style="cursor:pointer" v-if="item.inquire==3">
-                        <td>{{item.inquireType}}</td>
-                        <td>{{item.names}}</td>
-                        <td class="underline" @click="clickOn(item,$index)">{{item.customerName}}</td>
-                        <td>{{item.customerEmail}}</td>
-                        <td>{{item.employeeName}}</td>
-                        <td>{{item.country}}</td>
-                        <td>{{item.city}}</td>
-                        <td>{{item.ctime | date}}</td>
-                        <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
-                        <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
-                        <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
-                        <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
-                        <td>
-                            <div v-if="item.inquire==2&&privilege==true" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        
         <div class="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
@@ -274,13 +115,9 @@ export default {
                 breedId:'',
                 breedName:'',
                 customerName:'',
-                customerEmail:''  
+                customerEmail:'',
+                inquire:''
             },
-            isA:true,
-            isB:false,
-            isC:false,
-            isD:false,
-            currentView:1,
             affirmOfferParam:{
                 show:false,
                 link:'/intlIntention/offer',
@@ -350,34 +187,9 @@ export default {
       common('tab','table_box',1);
     },
     methods: {
-        clickday:function(){
-            this.isA = true;
-            this.currentView = 1;
-        },
-        clickweek:function(){
-            this.isA = false;
-            this.isB = true;
-            this.currentView = 2;
-        },
-        clickmonth:function(){
-            this.isB = false;
-            this.isA = false;
-            this.isC = true;
-            this.currentView = 3;
-        },
-        clickyear:function(){
-            this.isB = false;
-            this.isA = false;
-            this.isC = false;
-            this.isD= true;
-            this.currentView = 4;
-        },
-        clickfinish:function(){
-            this.isB = false;
-            this.isA = false;
-            this.isC = false;
-            this.isD = false;
-            this.currentView = 5;
+        selectInquire:function(inquire){
+            this.loadParam.inquire = inquire;
+            this.getIntlIntentionInquireList(this.loadParam);
         },
         clickOn:function(item,index){  
             this.detailParam.id = item.intentionId;
