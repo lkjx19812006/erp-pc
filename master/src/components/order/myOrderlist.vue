@@ -161,7 +161,7 @@
                   <td>{{item.currency | Currency}}</td> 
                 -->
                   <td>
-                      <a class="operate" v-if="item.orderStatus<20"  @click="updateOrder({
+                      <a class="operate" v-if="item.validate==0"  @click="updateOrder({
                         show:true,
                         id:item.id,
                         index:$index,
