@@ -22,7 +22,7 @@
                                 <input type="text" v-model='param.name' v-validate:name="{minlength:2}" class="form-control edit-input" value="{{param.name}}" />
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">{{$t('static.type')}}</label>
+                                <label class="editlabel">{{$t('static.client_type')}}</label>
                                 <select class="form-control edit-input"  v-model='param.type'>
                                      <option value="0">{{$t('static.personal')}}</option>
                                      <option value="1">{{$t('static.enterprise')}}</option>
@@ -30,7 +30,7 @@
                                 <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">分类码</label>
+                                <label class="editlabel">{{$t('static.classification_code')}}</label>
                                 <input type="text" v-model='param.category' class="form-control edit-input" value="{{param.category}}" />
                             </div>
                              <div class="editpage-input">
@@ -101,7 +101,7 @@
                             </div>
                              -->
                             <div class="editpage-input">
-                                <label class="editlabel">负责人</label>
+                                <label class="editlabel">{{$t("static.principals")}}</label>
                                 <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />
                             </div>
                             <div class="editpage-input">
