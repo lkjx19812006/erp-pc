@@ -30,7 +30,7 @@
                                 <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">分类码</label>
+                                <label class="editlabel">{{$t('static.classification_code')}}</label>
                                 <input type="text" v-model='param.category' class="form-control edit-input" value="{{param.category}}" />
                             </div>
                              <div class="editpage-input">
@@ -101,7 +101,7 @@
                             </div>
                              -->
                             <div class="editpage-input">
-                                <label class="editlabel">负责人</label>
+                                <label class="editlabel">{{$t("static.principals")}}</label>
                                 <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />
                             </div>
                             <div class="editpage-input">
