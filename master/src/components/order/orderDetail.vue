@@ -113,9 +113,9 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:'',
-                                              crete:'stages'
-                                              })">
+                                          link:'',
+                                          crete:'stages'
+                                          })">
                                         <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.stages.arr.length!==null">
                                           {{$t('static.installment')}}（{{initOrderDetail.stages.arr.length}}）

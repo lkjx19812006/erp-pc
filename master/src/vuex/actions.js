@@ -1242,18 +1242,22 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
         }
     }).then((res) => {
         param.callback(res.json().msg);
+        console.log(res.json().result)
         if(res.json().code==200){
             param.validate = res.json().result.validate;
+            param.pr = res.json().result.pr;
             dispatch(types.ORDER_UPLOAD_DATA, param);
         }
         if(res.json().msg=='已申请审核'){
            param.validate = 1;
            dispatch(types.ORDER_UPLOAD_DATA, param); 
         }
-        if(param.titles=='分期审核'){
+        if(param.titles=='分期审核'||param.titles=='确认付款'||param.titles=='确认收款'){
+            param.validate = res.json().result.validate;
             param.pr = res.json().result.pr;
             dispatch(types.FINANCE_LIST, param);
         }
+        console.log(param)
     }, (res) => {
         console.log('fail'); 
     });
@@ -1314,7 +1318,6 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     if (param.way) {
         body.way = param.way;
     }
-    console.log(param)
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
@@ -1332,13 +1335,50 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
             var status = res.json().result;
         }
         param.callback(res.json().msg);
+        status.link = param.link;
+        status.key = param.key;
         if(res.json().code==200){
            dispatch(types.ORDER_STATUS, status);
         }
-        status.link = param.link;
-        status.key = param.key;
+        console.log(status)
     }, (res) => {
         console.log('fail');
+    })
+}
+export const orderReceive = ({ dispatch }, param) => { //订单收货流程
+    console.log(param)
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t };
+    const body = {
+        id: param.id
+    }
+    if (param.images) {
+        body.images = param.images;
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateJSON: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(param)
+        param.callback(res.json().msg);
+        if(res.json().code==200){
+           dispatch(types.ORDER_STATUS, param);
+        }
+        param.show=false;
+    }, (res) => {
+        console.log('fail');
+        param.show=false;
     })
 }
 

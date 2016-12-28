@@ -15,7 +15,7 @@
                <p class="order-message">{{$t('static.order_message')}}</p>
                <p class="clearfix space_15">
                   <img src="/static/images/tips.png" height="30" width="30" class="left" />
-                  <span class="tips">{{param.tips}}</span>
+                  <span class="tips">{{param.tips}}<span v-if="param.estimate&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;">客户已收货，商品质量符合客户要求！</span></span>
                </p>
             </div>
         </div>
@@ -100,7 +100,7 @@
             </div>
         </div>
 
-      <!-- 订单支付 -->
+      <!-- 订单确认支付 -->
       <div class="navbar-client" v-if="param.confirmReceipt">
         <div class="clearfix logical_color">
           <input type="button" class="btn  btn-confirm right"  @click="accept({
@@ -116,7 +116,7 @@
         </div>
       </div>
 
-        <!-- 订单支付 -->
+        <!-- 订单支付成功 -->
         <div class="navbar-client" v-if="param.payment">
             <div class="message clearfix">
                 <p class="order-message">{{$t('static.payment_method')}}</p>
@@ -313,6 +313,13 @@
                 </div>
               </div>
               <div class="order_info clearfix">
+                <input type="button" class="btn  btn-confirm right"  @click="accept({
+                    id:param.id,
+                    show:true,
+                    orderStatus:'',
+                    link:'/order/receiveConfirm',
+                    key:param.key
+                  },param.show=false)"  value="确认客户收货" />
                 <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
                   id:initOrderDetail.logisticses.arr[0].id,
                   lcompanyId:initOrderDetail.logisticses.arr[0].logistics,
@@ -349,21 +356,32 @@
                   <img  class="picture" v-for="item in initOrderDetail.sendPics.arr"  v-bind:src="item.url" width="150px" />
                 </div>
               </div>
-              <!-- <div class="order_info clearfix">
-                <input type="button" class="btn  btn-confirm right margin-10"  @click="Viewlogistics({
-                  id:initOrderDetail.logisticses.arr[0].id,
-                  lcompanyId:initOrderDetail.logisticses.arr[0].logistics,
-                  lcompanyCode:initOrderDetail.logisticses.arr[0].code,
-                  number:initOrderDetail.logisticses.arr[0].number,
-                  key:param.key,
-                  show:true,
-                  loading:true,
-                  callback:logisticsInfo
-                  })"  value="{{$t('static.view_logistics')}}" />
-              
-              </div> -->
+              <div class="order_info clearfix">
+                <input type="button" class="btn  btn-confirm right"  @click="accept({
+                    id:param.id,
+                    show:true,
+                    orderStatus:'',
+                    link:'/order/receiveConfirm',
+                    key:param.key
+                  },param.show=false)"  value="确认客户收货" />
+              </div>
           </div>
         </div>
+        <!-- 销售订单等待评价 -->
+        <div class="navbar-client" v-if="param.estimate&&initOrderDetail.logistics==3">
+          <div class="clearfix logical_color">
+            <button type="button" class="btn btn-success margin-10 right"  @click="satisfied({
+               id:param.id,
+               show:true,
+               link:'/order/quality/qualified',
+               key:param.key
+              })">合格</button>
+            <button type="button" class="btn btn-info margin-10 right"  @click="param.show = false">补充合同</button>
+            <button type="button" class="btn btn-warning margin-10 right"  @click="param.show = false">申请售后</button>
+            <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">{{$t('static.cancel')}}</button>
+          </div>
+        </div>
+
     </div>
 </template>
 <script>
@@ -376,7 +394,8 @@ import editorderModel  from  '../order/ordergoods'
 import alertModel from  '../tips/tipDialog'
 import {
   initExpresslist,
-  initOrderDetail
+  initOrderDetail,
+  initLogin
 } from '../../vuex/getters'
 import {
     getOrderDetail,
@@ -385,7 +404,9 @@ import {
     yankuanPayorder,
     getExpressList,
     alterOrder,
-    logisticsInfo
+    logisticsInfo,
+    orderReceive,
+    getEmpolyeeOrder
 } from '../../vuex/actions'
 export default {
     components: {
@@ -398,106 +419,122 @@ export default {
     },
     props:['param'],
     data() {
-        return {
-            changeShow: true,
-            loadParam: {
-                loading: true,
-                color: '#5dc596',
-                size: '15px',
-                key:'orderDetail',
-                id:this.param.id,
-            },
-            cancleReason:{
-               show:false,
-               key:this.param.key
-            },
-            undelinePaySelect:false,
-            yaokuanPaySelected:false,
-            undelinePay:{
-               show:false,
-               images:'',
-               callback:'',
-               id:'',
-               link:'',
-               payWay:'',
-               orderStatus:'',
-               key:this.param.key
-            },
-            payorder:{
-              show:false,
-              key:this.param.key
-            },
-            imageParam:{
-                url:'/crm/api/v1/file/',
-                qiniu:false
-            },
-            logisticsDetail:{
-              show:false,
-              key:this.param.key
-            },
-            editorder:{
-              show:false,
-              key:this.param.key
-            },
-            payName: "去支付/To pay",
-            type:"image/jpeg,image/jpg,image/png",
-            uploadLogistic:{
-              images:'',
-              b:'',
-              orderStatus:'',
-              lcompanyId:'',
-              lcompanyNo:'',
+      return {
+          changeShow: true,
+          loadParam: {
+              loading: true,
+              color: '#5dc596',
+              size: '15px',
+              key:'orderDetail',
               id:this.param.id,
-              show:true,
-              link:'/order/send',
-              key:this.param.key,
-              image_f:'',
-              image_s:'',
-              image_t:'',
-              name:''
-            },
-            salesLogistic:{
-              images:'',
-              b:'',
-              orderStatus:'',
-              logistics:'',
-              number:'',
-              code:'',
-              id:this.param.id,
-              driverName:'',
-              driverPid:'',
-              driverTel:'',
-              vehicleNo:'',
-              show:true,
-              way:0,
-              link:'/order/sendflowSend',
-              key:this.param.key,
-              image_f:'',
-              image_s:'',
-              image_t:'',
-              name:''
-            },
-            tipParam:{
+          },
+          myOrderParam: {
+              loading: true,
+              color: '#5dc596',
+              size: '15px',
               show:false,
-              alert:true,
-              name:''
-            }
-        }
+              cur: 1,
+              all:1,
+              link:'/order/myList',
+              key:'myOrderList',
+              employee:this.initLogin.id,
+              org:this.initLogin.orgId,
+              total:0
+          },
+          cancleReason:{
+             show:false,
+             key:this.param.key
+          },
+          undelinePaySelect:false,
+          yaokuanPaySelected:false,
+          undelinePay:{
+             show:false,
+             images:'',
+             callback:'',
+             id:'',
+             link:'',
+             payWay:'',
+             orderStatus:'',
+             key:this.param.key
+          },
+          payorder:{
+            show:false,
+            key:this.param.key
+          },
+          imageParam:{
+              url:'/crm/api/v1/file/',
+              qiniu:false
+          },
+          logisticsDetail:{
+            show:false,
+            key:this.param.key
+          },
+          editorder:{
+            show:false,
+            key:this.param.key
+          },
+          payName: "去支付/To pay",
+          type:"image/jpeg,image/jpg,image/png",
+          uploadLogistic:{
+            images:'',
+            b:'',
+            orderStatus:'',
+            lcompanyId:'',
+            lcompanyNo:'',
+            id:this.param.id,
+            show:true,
+            link:'/order/send',
+            key:this.param.key,
+            image_f:'',
+            image_s:'',
+            image_t:'',
+            name:''
+          },
+          salesLogistic:{
+            images:'',
+            b:'',
+            orderStatus:'',
+            logistics:'',
+            number:'',
+            code:'',
+            id:this.param.id,
+            driverName:'',
+            driverPid:'',
+            driverTel:'',
+            vehicleNo:'',
+            show:true,
+            way:0,
+            link:'/order/sendflowSend',
+            key:this.param.key,
+            image_f:'',
+            image_s:'',
+            image_t:'',
+            name:''
+          },
+          tipParam:{
+            show:false,
+            alert:true,
+            name:''
+          }
+      }
     },
 
     vuex: {
         getters:{
             initExpresslist,
-            initOrderDetail
+            initOrderDetail,
+            initLogin
         },
         actions:{
-          getOrderDetail,
+            getOrderDetail,
             orderCancle,
             orderStatu,
             yankuanPayorder,
             getExpressList,
             alterOrder,
-            logisticsInfo
+            logisticsInfo,
+            orderReceive,
+            getEmpolyeeOrder
         }
     },
     methods: {
@@ -510,8 +547,22 @@ export default {
         cancel:function(){
             this.orderCancle(this.cancleReason,this.param);
         },
+        satisfied:function(checkout){ //收货
+        /*  if(this.initOrderDetail.unpaid > 0){
+            for(var i in this.initOrderDetail.stages.arr){
+              if(this.initOrderDetail.stages.arr[i].validate!=2&&this.initOrderDetail.stages.arr[i].orderStatus ==this.initOrderDetail.orderStatus){
+                  this.tipParam.show=true;
+                  this.tipParam.alert=true;
+                  this.tipParam.name='您还有没有结清的订单款项';
+              }
+            }
+          }else{}*/
+            this.param.show = false;
+            checkout.callback = this.checkCallback;
+            this.orderReceive(checkout);  
+        },
         accept:function(confirm){
-          console.log(confirm)
+            console.log(confirm)
             confirm.callback = this.param.callback;
             this.orderStatu(confirm);
         },
@@ -520,11 +571,9 @@ export default {
             this.orderStatu(confirm)
         },
         orderEdit:function(edit){
- 
           this.editorder = edit;
         },
         Viewlogistics:function(logistics){
-         
             this.logisticsDetail = logistics;
             this.logisticsInfo(this.logisticsDetail)
         },
@@ -563,6 +612,11 @@ export default {
         underPay:function(){
             this.yankuanPayorder(this.param,this.undelinePay);
         },
+        checkCallback:function(title){
+          this.tipParam.show = true;
+          this.tipParam.name = title;
+          this.getEmpolyeeOrder(this.myOrderParam);
+        }
     },
     created() {
         this.getExpressList(this.loadParam);

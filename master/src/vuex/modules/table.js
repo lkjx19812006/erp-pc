@@ -703,7 +703,7 @@ const mutations = {
         if(data.key){
           state.basicBaseList[data.key] = data;
         }else if(data.titles=='申请发货'){
-          
+          state.basicBaseList.orderList[data.sub].verifier = data.verifier;
           state.basicBaseList.orderList[data.sub].logistics = data.logistics;
           console.log(state.basicBaseList.orderList[data.sub].logistics)
         }else{
@@ -833,7 +833,6 @@ const mutations = {
                 "payWay":data.payWay,
                 "checked":false,
                 "clients":data.clients,
-                "sample": data.sample,
                 "goodsDesc":data.goodsDesc,
                 "total":data.total,
                 "ctime":data.ctime,
@@ -894,6 +893,7 @@ const mutations = {
              console.log(state.orderDetail.stages.arr[data.sub])
              state.orderDetail.stages.arr[data.sub].validate=  data.validate;
         }
+
         if(data.stages){
           console.log(state.orderDetail.stages.arr)
           state.orderDetail.stages.arr =  data.stages;//分期付款
@@ -948,7 +948,7 @@ const mutations = {
           }
         }
         if(data.orderStatus==40||data.orderStatus==30){
-             for(var i=0;i<state.basicBaseList[data.key].length;i++){
+             for(var i=0;i<state.basicBaseList[data.key].length-1;i++){
                if(state.basicBaseList[data.key][i].id==data.id){
                  state.basicBaseList[data.key].splice(i,1);
                }
