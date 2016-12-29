@@ -4474,6 +4474,7 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
             param.callback(res.json().msg);
         }
         if(res.json().code==200){
+            param.itemsTotal = (param.itemsTotal*100 + param.number*param.price*100)/100;
             dispatch(types.ORIGIN_OFFER_DATA, param);
         }
     }, (res) => {
@@ -4515,8 +4516,11 @@ export const intlIntentionOtherOffer = ({ dispatch }, param) => { //国际意向
         }
         param.id = res.json().result.id;
         if(res.json().code==200){
+            //成功后total会改变
+            param.offersTotal = (param.offersTotal*100 + param.cost*100)/100;
             dispatch(types.OTHER_OFFER_DATA, param);
         }
+
     }, (res) => {
         console.log('fail');
     })
@@ -4540,7 +4544,6 @@ export const delIntlIntentionOtherOffer = ({ dispatch }, param) => { //删除国
         }
     }).then((res) => {
         console.log('删除其他报价成功!!!!')
-
         dispatch(types.DEL_OTHER_OFFER, param);
     }, (res) => {
         console.log('fail');

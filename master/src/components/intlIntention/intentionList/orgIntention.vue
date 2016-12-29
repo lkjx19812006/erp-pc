@@ -68,6 +68,7 @@
                         <th>{{$t('static.description')}}</th>
                         <th>{{$t('static.inquiry_state')}}</th>
                         <th>{{$t('static.inquiry_type')}}</th>
+                        <th>{{$t('static.intention_source')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -94,6 +95,7 @@
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
                         <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>{{item.inquireType}}</td>
+                        <td>{{item.source}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -445,8 +447,8 @@ export default {
     margin-left: 18px;
 }
 #table_box table th,#table_box table td{
-   min-width: 120px;
-    width: 120px;
+   min-width: 111px;
+    width: 111px;
 }
 </style>
 
