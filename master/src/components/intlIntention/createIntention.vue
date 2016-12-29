@@ -193,7 +193,7 @@
                        </div>
 
                        <div class="editpage-input">
-                         <label class="editlabel">意向来源<span class="system_danger" v-if="$validation.source.required">Please select the source</label>
+                         <label class="editlabel">{{$t('static.intention_source')}}<span class="system_danger" v-if="$validation.source.required">Please select the source</label>
                          <input type="text" v-show="false" v-model='param.source' v-validate:source="['required']" class="form-control edit-input"  />
                          <div type="text" class="edit-input" >
                            <input-select
