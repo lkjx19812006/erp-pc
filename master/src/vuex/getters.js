@@ -375,4 +375,10 @@ export const initMyContractList= (state) => { //我的补充合同
 export const initOrgContractList= (state) => { //部门补充合同
   return parseJson(state.count.orgContractList); 
 }
+export const initMyAfterSales= (state) => { //我的售后列表
+  return parseJson(state.count.mySalesList); 
+}
+export const initOrgAfterSales= (state) => { //我的售后列表
+  return parseJson(state.count.orgSalesList); 
+}
 

@@ -30,11 +30,8 @@
                       </select>
                   </div>
                   <div class="editpage-input col-md-6" v-if="param.type==1">
-                    <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">选择发货人</span></label>
+                    <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
                     <input  type="text" class="form-control" v-model="employeeParam.consignerName" value="{{param.consigner}}" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
-                   <!--  <select  class="form-control edit-input" v-model="param.consigner">
-                       <option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
-                   </select> -->
                   </div>
               </div>
               <section class="editsection">

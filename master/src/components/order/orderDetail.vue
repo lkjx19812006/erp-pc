@@ -170,7 +170,7 @@
                                                     bizSubId:item.id,
                                                     url:'/fund/requestRecord'
                                                     })">{{$t('static.applied')}}</td>
-                                                <td v-if="item.validate==2" style="background:green;color:#fff;cursor:pointer" @click="apply_Record({
+                                                <td v-if="item.validate==2" style="color:green;cursor:pointer" @click="apply_Record({
                                                     sub:$index,
                                                     show:true,
                                                     loading:false,
@@ -180,7 +180,7 @@
                                                     bizSubId:item.id,
                                                     url:'/fund/requestRecord'
                                                     })">{{$t('static.approved')}}</td>
-                                                <td v-if="item.validate==3" style="background:red;color:#fff;cursor:pointer" @click="apply_Record({
+                                                <td v-if="item.validate==3" style="color:red;cursor:pointer" @click="apply_Record({
                                                     sub:$index,
                                                     show:true,
                                                     loading:false,

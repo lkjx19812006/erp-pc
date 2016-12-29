@@ -172,7 +172,6 @@ export default{
              })
            }
 		},
-
 		selectEmployee:function(id,item){
 			this.$store.state.table.basicBaseList.employeeList[id].checked=!this.$store.state.table.basicBaseList.employeeList[id].checked;
 			for(var key in this.initEmployeeList){
@@ -194,10 +193,8 @@ export default{
 					if(this.$store.state.table.basicBaseList.orgList[key].checked==true){
 						this.$store.state.table.basicBaseList.orgList[key].checked=false;
 					}
-
 				}
 			}
-
 		},
         confirmEmp:function(){
             console.log('选业务员');
@@ -218,11 +215,9 @@ export default{
             this.$dispatch('selectEmpOrOrg', this.param);
             this.param.show = false;
             this.param.callback = this.param.callback;
-
         }
 
 	},
-
     events: {
         fresh: function(input) {
             this.loadParam.cur = input;
@@ -244,17 +239,17 @@ export default{
       //this.getClientList(this.orgParam, this.orgParam.all);
       this.getEmployeeList(this.loadParam);
       this.getOrgList(this.orgParam);
-      console.log(this.$store.state.table.login);
+      console.log(this.param)
     }
 }
 </script>
 <style scoped>
 .modal {
-	z-index:1085;
+	z-index:1092;
 }
 .modal_con {
     width: 900px;
-    z-index: 1085;
+    z-index: 1092;
 }
 .top-title{
 	width: 900px;

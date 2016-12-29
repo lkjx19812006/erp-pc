@@ -5,55 +5,47 @@
   <div>
     <div class="service-nav clearfix">
       <div class="clearfix">
-        <dl class="clear left">
-           <dt class="left  marg_top">类型：</dt>
+        <dl class="clear left transfer">
+           <dt class="left  marg_top">商品名称：</dt>
            <dd class="left">
-                <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                    <option value="">{{$t('static.please_select')}}</option>
-                    <option value="0">付款</option>
-                    <option value="1">收款</option>
-                </select>
+              <input type="text"  class="form-control" v-model="loadParam.orderDesc"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">支付名称：</dt>
+           <dt class="left transfer marg_top">订单号：</dt>
            <dd class="left">
-              <input type="text"  class="form-control" v-model="loadParam.payName"  @keyup.enter="selectSearch()"/>
+              <input type="text"  class="form-control" v-model="loadParam.orderNo"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">金额：</dt>
+           <dt class="left transfer marg_top">订单类型：</dt>
            <dd class="left">
-              <input type="text"  class="form-control" v-model="loadParam.amount"  @keyup.enter="selectSearch()"/>
+              <select class="form-control" v-model="loadParam.orderType" @change="selectSearch()">
+                <option value="">全部</option>
+                <option value="0">采购</option>
+                <option value="1">销售</option>
+              </select>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">用户名：</dt>
+           <dt class="left transfer marg_top">客户名称：</dt>
            <dd class="left">
-              <input type="text"  class="form-control" v-model="loadParam.payUserName"  @keyup.enter="selectSearch()"/>
+              <input type="text"  class="form-control" v-model="loadParam.customerName"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">账号：</dt>
+           <dt class="left transfer marg_top">客户手机：</dt>
            <dd class="left">
-              <input type="text"  class="form-control" v-model="loadParam.payNumber"  @keyup.enter="selectSearch()"/>
+              <input type="text"  class="form-control" v-model="loadParam.customerPhone"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
-      </div>
-      <div class="clearfix left">
-        <div class="btn-group ">
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===''}" @click="clickday('')">{{$t('static.please_select')}}</button>
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===0}" @click="clickday(0)">未审核</button>
-            <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.validate===1}" @click="clickday(1)">申请中</button>
-            <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.validate===2}" @click="clickday(2)">审核通过</button>
-            <button class="btn btn-default"  v-bind:class="{ 'btn-warning':  this.loadParam.validate===3}" @click="clickday(3)">审核未通过</button>
-            <button type="button" class="new_btn transfer pull-left"  @click="resetTime()">{{$t('static.clear_all')}}</button>
-            <button class="new_btn transfer pull-left" @click="selectSearch()">{{$t('static.search')}}</button>
+        <button type="button" class="new_btn transfer pull-left"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+        <button class="new_btn transfer pull-left" @click="selectSearch()">{{$t('static.search')}}</button>
+        <div class="clearfix right" >
+          <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
         </div>
       </div>
-      <div class="clearfix right" >
-          <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-      </div>
+      
     </div>
     <div class="order_table" id="table_box">
       <div class="cover_loading">
@@ -68,39 +60,46 @@
               <th>订单商品</th>
               <th>订单号</th>
               <th>订单类型</th>
+              <th>调整差额</th>
+              <th>补充合同文本</th>
+              <th>备注</th>
               <th>审核状态</th>
               <th>操作</th>
             </tr>
         </thead>
         <tbody>
           <tr v-for="item in initOrgContractList">
-            <td>{{item.ctime}}</td>
-            <td><a @click="clickOn({
+            <td>{{item.ctime | dateTime}}</td>
+            <td>{{item.customerName}}</td>
+            <!-- <td><a @click="clickOn({
                 sub:$index,
                 id:item.id,
                 loading:true,
                 show:true,
                 key:'fundRecord'
               })">{{item.customerName}}</a>
-            </td>
+            </td> -->
             <td>{{item.customerPhone}}</td>
             <td>{{item.orderDesc}}</td>
             <td>{{item.orderNo}}</td>
-            <td>{{item.orderType}}</td>
-            <td>{{item.validate}}</td>
+            <td v-if="item.orderType==0">采购</td>
+            <td v-if="item.orderType==1">销售</td>
+            <td>{{item.adjusted}}</td>
+            <td>{{item.contractText}}</td>
+            <td>{{item.comment}}</td>
+            <td>{{item.validate | Auditing}}</td>
             <td>
-              <a class="operate" v-if="item.type==0&&item.pr==0&&item.validate==2" @click="applyInfo({
-                          show:true,
-                          sub:$index,
-                          id:item.id,
-                          image_f:'',
-                          image_s:'',
-                          image_t:'',
-                          images:'',
-                          url:'/fund/proceedsConfirm',
-                          titles:'确定收款',
-                          link:paymentConfirm
-                      })"><img src="/static/images/surePayment.png"/></a>
+                <a class="operate" v-if="item.validate==1" @click="applyInfo({
+                      show:true,
+                      sub:$index,
+                      id:item.id,
+                      validate:item.validate,
+                      adjusted:item.adjusted,
+                      description:'',
+                      url:'/order/quality/contract/validate',
+                      titles:'审核合同',
+                      link:contractCheck
+                  })"><img src="/static/images/orgcheck.png"/></a>
             </td>
           </tr>
         </tbody>
@@ -123,7 +122,8 @@
   } from '../../vuex/getters'
   import {
     getMyContractList,
-    paymentConfirm
+    paymentConfirm,
+    contractCheck
   } from '../../vuex/actions'
   export default {
     components: {
@@ -138,7 +138,8 @@
       },
       actions: {
         getMyContractList,
-        paymentConfirm
+        paymentConfirm,
+        contractCheck
       }
     },
     data() {
@@ -151,12 +152,11 @@
           cur: 1,
           all: 1,
           link:'/order/contract/list/org',
-          type:'',
-          amount:'',
-          payName:'',
-          payUserName:'',
-          payNumber:'',
-          payWay:'',
+          orderDesc:'',
+          customerName:'',
+          customerPhone:'',
+          orderNo:'',
+          orderType:'',
           validate:'',
           total:0
         },
@@ -187,12 +187,11 @@
          this.getMyContractList(this.loadParam);
       },
       resetTime:function(){
-        this.loadParam.amount='';
-        this.loadParam.type='';
-        this.loadParam.payName='';
-        this.loadParam.payUserName='';
-        this.loadParam.payNumber='';
-        this.loadParam.payWay='';
+        this.loadParam.orderDesc='';
+        this.loadParam.customerName='';
+        this.loadParam.customerPhone='';
+        this.loadParam.orderNo='';
+        this.loadParam.orderType='';
         this.getMyContractList(this.loadParam);
       },
       applyInfo:function(item){
@@ -221,22 +220,13 @@
   }
 </script>
 <style scoped>
-  .breed_action {
-    top: 33px;
-    right: 106px;
-  }
   .transfer{
-    margin-left: 18px;
+    margin-right: 10px;
   }
   .service-nav{
-    padding-bottom:5px;
+    padding-bottom:0px;
     padding-left:10px;
     padding-right:10px;
-  }
-  .my_order_search{
-    width: 170px;
-    float: left;
-    margin-right: 10px;
   }
   .checkbox_unselect{
     background-image: url(/static/images/unselect.png);

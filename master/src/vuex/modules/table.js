@@ -706,6 +706,8 @@ const mutations = {
           state.basicBaseList.orderList[data.sub].verifier = data.verifier;
           state.basicBaseList.orderList[data.sub].logistics = data.logistics;
           console.log(state.basicBaseList.orderList[data.sub].logistics)
+        }else if(data.titles=='售后申请'){
+          state.basicBaseList.orderList[data.sub].logistics = data.logistics;
         }else{
           state.basicBaseList.orderList = data;
         }

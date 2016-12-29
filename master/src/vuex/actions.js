@@ -983,9 +983,6 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
     if(param.district==null||param.district==''||!param.district){
        param.district=''; 
     }
-    if(param.consigner) {
-        body.consigner = param.consigner;
-    }
     const body = {
         type: param.type,
         id: param.id,
@@ -1009,6 +1006,9 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         consigneeAddr:param.country +' '+param.province+' '+param.city+' '+param.district+' '+param.consigneeAddr,
         comments: param.comments,
         goods: param.goods
+    }
+    if(param.consigner) {
+        body.consigner = param.consigner;
     }
     Vue.http({
         method: 'PUT',
@@ -6343,7 +6343,7 @@ export const getBankBranchList = ({ dispatch }, param) => { //获取银行支行
         }
         dispatch(types.BANK_BRANCH_LIST, branch);
         param.loading = false;
-        param.all = res.json().result.all;
+        param.all = res.json().result.pages;
         param.total = res.json().result.total;
         console.log(param.cur)
     }, (res) => {
@@ -6489,7 +6489,6 @@ export const applyContract = ({ dispatch }, param) => {   //申请补充合同
         }
     }).then((res) => {
         param.callback(res.json().msg); 
-        /*param.description=res.json().result.description;*/
         if(res.json().code==200){
            dispatch(types.ORDER_TABLE, param);
         }
@@ -6499,15 +6498,23 @@ export const applyContract = ({ dispatch }, param) => {   //申请补充合同
 }
 
 export const getMyContractList = ({ dispatch }, param) => { //补充合同列表（我的、部门）
-    console.log(param)
     param.loading = true;
     var url = apiUrl.clientList +param.link+'?page=' + param.cur + '&pageSize=15';
-    for (var seach in param) {
-        if (seach == 'province' && param[seach] !== '') {
-            url += '&province=' + param.province
+    for(var seach in param) {
+        if (seach == 'orderDesc'& param[seach] !== '') {
+            url += '&orderDesc=' + param.orderDesc
         }
-        if (seach == 'city' && param[seach] !== '') {
-            url += '&city=' + param.city
+        if (seach == 'customerName'& param[seach] !== '') {
+            url += '&customerName=' + param.customerName
+        }
+        if (seach == 'customerPhone'& param[seach] !== '') {
+            url += '&customerPhone=' + param.customerPhone
+        }
+        if (seach == 'orderNo'& param[seach] !== '') {
+            url += '&orderNo=' + param.orderNo
+        }
+        if (seach == 'orderType'& param[seach] !== '') {
+            url += '&orderType=' + param.orderType
         }
     }
     Vue.http({
@@ -6519,15 +6526,126 @@ export const getMyContractList = ({ dispatch }, param) => { //补充合同列表
         }
     }).then((res) => {
         var contract = res.json().result.list;
-        for(var i in contract){
-            contract[i].checked = false;
-        }
+        contract.link = param.link;
         dispatch(types.CONTRACT_LIST, contract);
         param.loading = false;
-        param.all = res.json().result.all;
+        param.all = res.json().result.pages;
         param.total = res.json().result.total;
     }, (res) => {
         console.log('fail');
         param.loading = false;
     })
+}
+
+export const contractCheck = ({ dispatch }, param) => {   //重新申请补充合同或者取消
+    console.log(param);
+    const body = {
+        id:param.id,
+        validate:param.validate,
+    }
+    if(param.description){
+        body.description = param.description;
+    }
+    if(param.comment){
+        body.comment = param.comment;
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg); 
+        if(res.json().code==200){
+           dispatch(types.CONTRACT_LIST, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getSalesApplyList = ({ dispatch }, param) => { //售后申请列表（我的、部门）
+    param.loading = true;
+    var url = apiUrl.clientList +param.link+'?page=' + param.cur + '&pageSize=15';
+    for(var seach in param) {
+        if (seach == 'orderDesc'& param[seach] !== '') {
+            url += '&orderDesc=' + param.orderDesc
+        }
+        if (seach == 'customerName'& param[seach] !== '') {
+            url += '&customerName=' + param.customerName
+        }
+        if (seach == 'customerPhone'& param[seach] !== '') {
+            url += '&customerPhone=' + param.customerPhone
+        }
+        if (seach == 'orderNo'& param[seach] !== '') {
+            url += '&orderNo=' + param.orderNo
+        }
+        if (seach == 'orderType'& param[seach] !== '') {
+            url += '&orderType=' + param.orderType
+        }
+    }
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var contract = res.json().result.list;
+        contract.link = param.link;
+        dispatch(types.AFTER_SALES, contract);
+        param.loading = false;
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const afterSalesApply = ({ dispatch }, param) => {   //售后申请
+    console.log(param);
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t }
+    var ss= param.images;
+    var img = ss.split(",");//字符串转化为数组
+    img.toString();
+    const body = {
+        orderId:param.orderId,
+        comment:param.comment,
+        consignee:param.consignee,
+        shipper:param.shipper,
+        type:param.type,
+        images:img
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg); 
+        if(res.json().code==200){
+           dispatch(types.AFTER_SALES, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
 }

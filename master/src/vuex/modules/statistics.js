@@ -19,7 +19,8 @@ import {
     ITEM_SUPPLIER_LIST,
     BANK_LIST,
     BANK_BRANCH_LIST,
-    CONTRACT_LIST
+    CONTRACT_LIST,
+    AFTER_SALES
 } from '../mutation-types'
 
 const state = {
@@ -63,7 +64,11 @@ const state = {
     //我的补充合同
     myContractList:[],
     //部门补充合同
-    orgContractList:[]
+    orgContractList:[],
+    //我的售后列表
+    mySalesList:[],
+    //部门售后列表
+    orgSalesList:[]
 }
 const mutations = {
     [UNIT_LIST](state,data){ //常用单位
@@ -177,12 +182,24 @@ const mutations = {
       state.bankBranchList = data;
     },
     [CONTRACT_LIST](state,data){  //补充合同列表
+      console.log(data)
       if(data.link=='/order/contract/list/employee'){
          state.myContractList = data;
       }else if(data.link=='/order/contract/list/org'){
-         state.orgContractList = data
+         state.orgContractList = data;
+      }else if(data.url=='/order/quality/contract/validate'){
+        state.orgContractList[data.sub].validate= data.validate;
+      }else if(data.url=='/order/quality/contract/restartOrCancel'){
+        state.myContractList[data.sub].validate= data.validate;
       }
-     
+    },
+    [AFTER_SALES](state,data){
+      console.log(data)
+      if(data.link=='/order/after/sales/list/employee'){
+         state.mySalesList = data;
+      }else if(data.link=='/order/after/sales/list/org'){
+         state.orgSalesList = data;
+      }
     }
 
 }

@@ -41,20 +41,11 @@
         </dl>
         <button type="button" class="new_btn transfer pull-left"  @click="resetTime()">{{$t('static.clear_all')}}</button>
         <button class="new_btn transfer pull-left" @click="selectSearch()">{{$t('static.search')}}</button>
-         <div class="clearfix right" >
-            <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-         </div>
+        <div class="clearfix right" >
+          <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+        </div>
       </div>
-     <!--  <div class="clearfix left">
-       <div class="btn-group ">
-           <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===''}" @click="clickday('')">{{$t('static.please_select')}}</button>
-           <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===0}" @click="clickday(0)">未审核</button>
-           <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.validate===1}" @click="clickday(1)">申请中</button>
-           <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.validate===2}" @click="clickday(2)">审核通过</button>
-           <button class="btn btn-default"  v-bind:class="{ 'btn-warning':  this.loadParam.validate===3}" @click="clickday(3)">审核未通过</button>
-           
-       </div>
-     </div> -->
+      
     </div>
     <div class="order_table" id="table_box">
       <div class="cover_loading">
@@ -64,44 +55,42 @@
         <thead>
             <tr>
               <th>日期</th>
+              <th>售后类型</th>
               <th>客户名称</th>
               <th>客户电话</th>
               <th>订单商品</th>
               <th>订单号</th>
               <th>订单类型</th>
-              <th>调整差额</th>
-              <th>补充合同文本</th>
               <th>备注</th>
               <th>审核状态</th>
               <th>操作</th>
             </tr>
         </thead>
         <tbody>
-          <tr v-for="item in initMyContractList">
+          <tr v-for="item in initMyAfterSales">
             <td>{{item.ctime | dateTime}}</td>
+            <td v-if="item.type==0">换货</td>
+            <td v-if="item.type==1">退货</td>
             <td>{{item.customerName}}</td>
             <td>{{item.customerPhone}}</td>
             <td>{{item.orderDesc}}</td>
             <td>{{item.orderNo}}</td>
             <td v-if="item.orderType==0">采购</td>
             <td v-if="item.orderType==1">销售</td>
-            <td>{{item.adjusted}}</td>
-            <td>{{item.contractText}}</td>
             <td>{{item.comment}}</td>
             <td>{{item.validate | Auditing}}</td>
             <td>
-                <a class="operate" v-if="item.validate==-2" @click="applyInfo({
+                <a class="operate" v-if="item.validate==1" @click="applyInfo({
                       show:true,
                       sub:$index,
                       id:item.id,
-                      orderId:item.orderId,
                       validate:item.validate,
                       adjusted:item.adjusted,
-                      comment:'',
-                      url:'/order/quality/contract/restartOrCancel',
-                      titles:'重新申请审核',
+                      description:'',
+                      url:'/order/quality/contract/validate',
+                      titles:'审核合同',
                       link:contractCheck
-                  })"><img src="/static/images/{{$t('static.img_reset')}}.png"/></a>
+                  })"><img src="/static/images/orgcheck.png"/></a>
             </td>
           </tr>
         </tbody>
@@ -120,10 +109,10 @@
   import auditModel  from './second_order/financeAudit'
   import tipsModel from '../../components/tips/tipDialog'
   import {
-    initMyContractList
+    initMyAfterSales
   } from '../../vuex/getters'
   import {
-    getMyContractList,
+    getSalesApplyList,
     paymentConfirm,
     contractCheck
   } from '../../vuex/actions'
@@ -136,10 +125,10 @@
     },
     vuex: {
       getters: {
-        initMyContractList
+        initMyAfterSales
       },
       actions: {
-        getMyContractList,
+        getSalesApplyList,
         paymentConfirm,
         contractCheck
       }
@@ -153,7 +142,7 @@
           size: '15px',
           cur: 1,
           all: 1,
-          link:'/order/contract/list/employee',
+          link:'/order/after/sales/list/employee',
           orderDesc:'',
           customerName:'',
           customerPhone:'',
@@ -177,16 +166,16 @@
       }
     },
     methods: {
-      clickOn: function(initMyContractList) {
-        this.changeParam = initMyContractList;
+      clickOn: function(initMyAfterSales) {
+        this.changeParam = initMyAfterSales;
         this.changeParam.show = true;
       },
       selectSearch:function(){
-        this.getMyContractList(this.loadParam);
+           this.getSalesApplyList(this.loadParam);
       },
       clickday:function(validate){
          this.loadParam.validate = validate;
-         this.getMyContractList(this.loadParam);
+         this.getSalesApplyList(this.loadParam);
       },
       resetTime:function(){
         this.loadParam.orderDesc='';
@@ -194,7 +183,7 @@
         this.loadParam.customerPhone='';
         this.loadParam.orderNo='';
         this.loadParam.orderType='';
-        this.getMyContractList(this.loadParam);
+        this.getSalesApplyList(this.loadParam);
       },
       applyInfo:function(item){
         this.financeParam.show = true;
@@ -210,14 +199,14 @@
     events: {
       fresh: function(input) {
         this.loadParam.cur = input;
-        this.getMyContractList(this.loadParam);
+        this.getSalesApplyList(this.loadParam);
       }
     },
     ready(){
         common('tab','table_box',1);
       },
     created() {
-      changeMenu(this.$store.state.count.isTop,this.getMyContractList,this.loadParam,localStorage.myFundParam); 
+      changeMenu(this.$store.state.count.isTop,this.getSalesApplyList,this.loadParam,localStorage.myFundParam); 
     }
   }
 </script>
@@ -229,6 +218,28 @@
     padding-bottom:0px;
     padding-left:10px;
     padding-right:10px;
+  }
+  .checkbox_unselect{
+    background-image: url(/static/images/unselect.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
+  }
+  .checkbox_select{
+    background-image: url(/static/images/selected.png);
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    background-size: 80%;
+    margin: auto;
+    text-align: center;
+    background-position: 5px;
   }
    #table_box  table th,#table_box  table td{
     width:156px;

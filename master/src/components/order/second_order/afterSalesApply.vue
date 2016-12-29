@@ -1,4 +1,5 @@
 <template>
+    <personnel-model :param="employeeParam" v-if="employeeParam.show"></personnel-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -10,21 +11,28 @@
         <validator name="validation">
             <div class="edit-model">
                <section class="editsection clearfix" v-cloak>
-                    <div class="editpage-input col-md-12">
-                       <label class="editlabel">总金额：{{param.total}}</label>
-                       <label class="editlabel">调整后金额 <span class="system_danger" v-if="$validation.adjust.required">{{$t('static.required')}}</span></label>
-                       <input type="number" class="form-control" v-model="amount"  v-validate:adjust="{required:true}"/>
+                    <div class="editpage-input col-md-6">
+                       <label class="editlabel">售后方式 <span class="system_danger" v-if="$validation.adjust.required">{{$t('static.required')}}</span></label>
+                       <input type="text" v-show="false" class="form-control" v-model="param.type"  v-validate:adjust="{required:true}"/>
+                       <select class="form-control" v-model="param.type">
+                          <option value="0">换货</option>
+                          <option value="1">退货</option>
+                       </select>
                     </div>
-                    <div class="editpage-input col-md-12">
-                       <label class="editlabel">补充合同文本 <span class="system_danger" v-if="$validation.text.required">{{$t('static.required')}}</span></label>
-                       <textarea v-model='param.contractText' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;font-size: 13px;" rows="5" placeholder="请说明补充理由" v-validate:text="{required:true}"></textarea>
+                    <div class="editpage-input col-md-6">
+                       <label class="editlabel">收货人 <span class="system_danger" v-if="$validation.consignee.required">{{$t('static.required')}}</span></label>
+                       <input type="text"  class="form-control" v-model="employeeParam.consigneeName"  v-validate:consignee="{required:true}" readonly="true"  @click="selectEmployee(param.consignee,employeeParam.consigneeName,receive)" />
+                    </div>
+                    <div class="editpage-input col-md-6" v-if="param.type==0">
+                       <label class="editlabel">发货人 <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
+                       <input type="text"  class="form-control" v-model="employeeParam.shipperName"  v-validate:shipper="{required:true}" readonly="true"  @click="selectEmployee(param.shipper,employeeParam.shipperName,deliver)" />
                     </div>
                     <div class="editpage-input col-md-12">
                        <label class="editlabel">备注</label>
-                       <textarea v-model='param.comment' class="form-control" style="width:40%;overflow:auto;word-break:break-all;resize:none;font-size: 13px;" rows="3"></textarea>
+                       <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;font-size: 13px;" rows="5"></textarea>
                     </div>
                     <div class="editpage-input col-md-12">
-                         <label class="editlabel">支付/收款凭证</label>
+                         <label class="editlabel">上传凭证</label>
                          <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;width:20%"></press-image>
                          <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
                          <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
@@ -41,16 +49,17 @@
 </template>
 <script>
 import pressImage from '../../imagePress'
+import personnelModel  from  '../second_order/allEmployee'
 import {
 
 } from '../../../vuex/getters'
 import {
 
-    
 } from '../../../vuex/actions'
 export default {
     components: {
-        pressImage
+        pressImage,
+        personnelModel
     },
     props: ['param'],
     data() {
@@ -61,6 +70,16 @@ export default {
                qiniu:false
             },
             amount:'',
+            employeeParam:{
+                show:false,
+                shipperName:'',
+                consigneeName:'',
+                consignee:'',
+                shipper:'',
+                differce:''
+            },
+            receive:'收货',
+            deliver:'发货'
         }
     },
     vuex: {
@@ -74,8 +93,31 @@ export default {
     methods: {
         confirm:function(){
             this.param.show =false;
-            this.param.adjusted = (this.amount*100 - this.param.total*100)/100;
             this.param.link(this.param);
+        },
+        selectEmployee:function(id,name,differce){
+            console.log(differce)
+           this.employeeParam.show = true;
+           if(differce=='收货'){
+             this.employeeParam.consignee= id;
+             this.employeeParam.consigneeName = name;
+           }else if(differce=='发货'){
+             this.employeeParam.shipper= id;
+             this.employeeParam.shipperName = name;
+           }
+           this.employeeParam.differce = differce;
+        }
+    },
+    events: {
+        selectEmpOrOrg: function(person) {
+            console.log(person)
+            if(person.differce=='收货'){
+                this.employeeParam.consigneeName = person.employeeName;
+                this.param.conginee = person.employeeId;
+            }else if(person.differce=='发货'){
+                this.employeeParam.shipperName = person.employeeName;
+                this.param.shipper = person.employeeId;
+            }
         }
     },
     created() {
@@ -86,10 +128,10 @@ export default {
 </script>
 <style scoped>
 .modal{
-    z-index:1102;
+    z-index:1091;
 }
 .modal_con{
-    z-index:1102;
+    z-index:1091;
 }
 
 .top-title{
@@ -111,7 +153,6 @@ export default {
 .edit-input:focus {
     border-color: #fa6705;
 }
-
 .btn-confirm {
     background-color: #fa6705;
     color: #fff;

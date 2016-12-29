@@ -466,6 +466,11 @@ Vue.filter('date',function(val){      //将时间的时分秒去掉
 		return val;
 	}
 })
+Vue.filter('dateTime',function(val){      //将时间的时分秒去掉
+	var val = val;
+	val = new Date(parseInt(val)).toLocaleString().substr(0,17);
+	return val;
+})
 
 Vue.filter('payfee',function(val){      //将金额保留小数点后两位
 	var val = val;
@@ -513,18 +518,18 @@ Vue.filter('Auditing',function(val){     //订单审核
 	var val = val;
 	if(val==null){
 		return '初始状态';
-	}
-	if(val==0){
+	}else if(val==0){
 		 return '初始状态';
-	}
-	if(val==1){
+	}else if(val==1){
 		 return '申请审核';
-	}
-	if(val==2){
+	}else if(val==2){
 		 return '审核通过';
-	}
-	if(val==-2){
+	}else if(val==-2){
 		 return '审核未通过';
+	}else if(val==-1){
+		 return '取消合同';
+	}else{
+		return val;
 	}
 })
 
