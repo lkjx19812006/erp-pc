@@ -1,4 +1,3 @@
-
 <template>
   <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
   <div class="container del_modal_con" v-show="param.show">

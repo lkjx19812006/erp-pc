@@ -43,7 +43,7 @@
                     <div class="message_view_left">
                          <span></span>
                          <p>{{item.taskDesc}}</p>
-                         <time>2016-07-25 12:23:36</time>
+                         <time>{{item.date}}</time>
                     </div>
                     <div class="message_view_right" v-if="item.bizType=='order_validate'">
                         <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
@@ -61,14 +61,22 @@
                     </div>
                     <div class="message_view_right" v-if="item.bizType=='order_supplementary_contract'">
                         <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
-                        <a @click="orderSend(item.bizId)">详情</a>
+                        <a @click="orderReceive({
+                            id:item.bizId,
+                            url:'/order/contract/list/employee/',
+                            link:'receiveDetail'
+                            })">详情</a>
                         <a @click="showRecord(item)">记录</a>
-                        <a v-if="item.taskKey=='supplementary_contract_governor_validate'" @click="showAudit(item)">合同的审核</a>
-                        <a v-if="item.taskKey=='supplementary_contract_employee_handle'"  @click="showAudit(item)">重新申请</a>
+                        <a v-if="item.taskKey=='supplementary_contract_governor_validate'" @click="receiveAudit(item)">合同的审核</a>
+                        <a v-if="item.taskKey=='supplementary_contract_employee_handle'"  @click="receiveAudit(item)">重新申请</a>
                     </div>
                     <div class="message_view_right" v-if="item.bizType=='order_after_sales'">
                         <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
-                        <a @click="orderSend(item.bizId)">详情</a>
+                        <a @click="orderReceive({
+                            id:item.bizId,
+                            url:'/order/contract/list/employee/',
+                            link:'receiveDetail'
+                            })">详情</a>
                         <a @click="showRecord(item)">记录</a>
                         <a v-if="item.taskKey=='after_sales_governor_validate'" @click="showAudit(item)">售后的审核</a>
                         <a v-else @click="showAudit(item)">重新申请</a>

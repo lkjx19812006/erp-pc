@@ -28,9 +28,9 @@
                        <label class="editlabel">名称 <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
                        <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
                        <select class="form-control edit-input" v-model="param.payName">
+                            <option>线下转账</option>
                             <option>支付宝</option>
                             <option>Wechat</option>
-                            <option>线下转账</option>
                             <option>药款支付</option>
                        </select>
                     </div>
