@@ -669,7 +669,7 @@ export default {
           this.tipParam.show = true;
           this.tipParam.alert = true;
           this.tipParam.name = title;
-          /*this.param.show =false;*/
+          this.param.show =false;
           this.getEmpolyeeOrder(this.myOrderParam);
         }
     },

@@ -58,7 +58,20 @@
                         <a  v-if="item.taskKey=='order_send_governor_validate'"  @click="sendAudit(item)">审核</a>
                         <a v-if="item.taskKey=='order_send_warehouse_validate'"  @click="deliverGoods(item)">发货</a>
                         <a  v-if="item.taskKey=='order_send_employee_handle'"  @click="sendAudit(item)">重新申请</a>
-                        
+                    </div>
+                    <div class="message_view_right" v-if="item.bizType=='order_supplementary_contract'">
+                        <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
+                        <a @click="orderSend(item.bizId)">详情</a>
+                        <a @click="showRecord(item)">记录</a>
+                        <a v-if="item.taskKey=='supplementary_contract_governor_validate'" @click="showAudit(item)">合同的审核</a>
+                        <a v-if="item.taskKey=='supplementary_contract_employee_handle'"  @click="showAudit(item)">重新申请</a>
+                    </div>
+                    <div class="message_view_right" v-if="item.bizType=='order_after_sales'">
+                        <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
+                        <a @click="orderSend(item.bizId)">详情</a>
+                        <a @click="showRecord(item)">记录</a>
+                        <a v-if="item.taskKey=='after_sales_governor_validate'" @click="showAudit(item)">售后的审核</a>
+                        <a v-else @click="showAudit(item)">重新申请</a>
                     </div>
                 </div>
             </div>
@@ -196,7 +209,7 @@ export default {
             this.recordParam.show = true;
         },
         showAudit:function(item){
-            if(item.taskKey=='employee_handle'){
+            if(item.taskKey=='employee_handle'||item.taskKey=='supplementary_contract_employee_handle'){
                 this.auditParam.audit = false;
                 this.auditParam.title = '重新申请审核';
             }else{
@@ -291,6 +304,8 @@ export default {
 
 .employee_right {
     float: left;
+    max-height: 800px;
+    overflow-y:auto;
    /*  width: calc(100% - 1000px); */
 }
 .employee_right_title{
@@ -312,7 +327,7 @@ export default {
 }
 .message_view_left{
     color: #333;
-    font-size: 16px;
+    font-size: 15px;
 }
 .message_view_left span{
     width: 20px;
@@ -326,7 +341,7 @@ export default {
 .message_view_right{
     position: absolute;
     right: 14px;
-    top: 23px;
+    bottom:11px;
     vertical-align: middle;
 }
 .message_view_right a {

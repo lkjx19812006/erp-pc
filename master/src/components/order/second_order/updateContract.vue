@@ -11,9 +11,8 @@
             <div class="edit-model">
                <section class="editsection clearfix" v-cloak>
                     <div class="editpage-input col-md-12">
-                       <label class="editlabel">总金额：{{param.total}}</label>
-                       <label class="editlabel">调整后金额 <span class="system_danger" v-if="$validation.adjust.required">{{$t('static.required')}}</span></label>
-                       <input type="number" class="form-control" v-model="amount"  v-validate:adjust="{required:true}"/>
+                       <label class="editlabel">调整差额 <span class="system_danger" v-if="$validation.adjust.required">{{$t('static.required')}}</span></label>
+                       <input type="number" class="form-control" v-model="param.adjusted"  v-validate:adjust="{required:true}"/>
                     </div>
                     <div class="editpage-input col-md-12">
                        <label class="editlabel">补充合同文本 <span class="system_danger" v-if="$validation.text.required">{{$t('static.required')}}</span></label>
@@ -74,7 +73,6 @@ export default {
     methods: {
         confirm:function(){
             this.param.show =false;
-            this.param.adjusted = (this.amount*100 - this.param.total*100)/100;
             this.param.link(this.param);
         }
     },

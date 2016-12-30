@@ -21,11 +21,11 @@
                     </div>
                     <div class="editpage-input col-md-6">
                        <label class="editlabel">收货人 <span class="system_danger" v-if="$validation.consignee.required">{{$t('static.required')}}</span></label>
-                       <input type="text"  class="form-control" v-model="employeeParam.consigneeName"  v-validate:consignee="{required:true}" readonly="true"  @click="selectEmployee(param.consignee,employeeParam.consigneeName,receive)" />
+                       <input type="text"  class="form-control" v-model="employeeParam.consigneeName"  v-validate:consignee="{required:true}" value="{{param.consignee}}" readonly="true"  @click="selectEmployee(param.consignee,employeeParam.consigneeName,receive)" />
                     </div>
                     <div class="editpage-input col-md-6" v-if="param.type==0">
                        <label class="editlabel">发货人 <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
-                       <input type="text"  class="form-control" v-model="employeeParam.shipperName"  v-validate:shipper="{required:true}" readonly="true"  @click="selectEmployee(param.shipper,employeeParam.shipperName,deliver)" />
+                       <input type="text"  class="form-control" v-model="employeeParam.shipperName"  v-validate:shipper="{required:true}" value="{{param.consignee}}" readonly="true"  @click="selectEmployee(param.shipper,employeeParam.shipperName,deliver)" />
                     </div>
                     <div class="editpage-input col-md-12">
                        <label class="editlabel">备注</label>
@@ -113,11 +113,14 @@ export default {
             console.log(person)
             if(person.differce=='收货'){
                 this.employeeParam.consigneeName = person.employeeName;
-                this.param.conginee = person.employeeId;
+                this.param.consignee = person.employeeId;
+                this.employeeParam.consignee = person.employeeId;
             }else if(person.differce=='发货'){
                 this.employeeParam.shipperName = person.employeeName;
                 this.param.shipper = person.employeeId;
+                this.employeeParam.shipper = person.employeeId;
             }
+            console.log(this.param.consignee)
         }
     },
     created() {

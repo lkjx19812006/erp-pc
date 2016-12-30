@@ -1203,6 +1203,9 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if(param.validate&&param.validate!=''){
         body.validate = param.validate;
     }
+    if(param.amount&&param.amount!=''){
+        body.amount = param.amount;
+    }
     if(param.description&&param.description!=''){
         body.description = param.description;
     }
@@ -1259,6 +1262,12 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
             param.validate = res.json().result.validate;
             param.pr = res.json().result.pr;
             dispatch(types.FINANCE_LIST, param);
+        }
+        if(param.titles=='编辑'){
+            param.validate = res.json().result.validate;
+            param.pr = res.json().result.pr;
+            param = res.json().result;
+            dispatch(types.MY_FUND_LIST, param);
         }
         console.log(param)
     }, (res) => {
@@ -6537,14 +6546,19 @@ export const getMyContractList = ({ dispatch }, param) => { //补充合同列表
     })
 }
 
-export const contractCheck = ({ dispatch }, param) => {   //重新申请补充合同或者取消
+export const contractCheck = ({ dispatch }, param) => {  //审核合同和重新申请补充合同或者取消以及售后申请审核
     console.log(param);
     const body = {
-        id:param.id,
-        validate:param.validate,
+        id:param.id, 
+    }
+    if(param.validate){
+        body.validate = param.validate;
     }
     if(param.description){
         body.description = param.description;
+    }
+    if(param.orderId){
+        body.orderId = param.orderId;
     }
     if(param.comment){
         body.comment = param.comment;
@@ -6644,6 +6658,86 @@ export const afterSalesApply = ({ dispatch }, param) => {   //售后申请
         param.callback(res.json().msg); 
         if(res.json().code==200){
            dispatch(types.AFTER_SALES, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const contractEdit = ({ dispatch }, param) => {   //合同编辑修改
+    console.log(param);
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t }
+    var ss= param.images;
+    var img = ss.split(",");//字符串转化为数组
+    img.toString();
+    const body = {
+        orderId:param.orderId,
+        id:param.id,
+        comment:param.comment,
+        adjusted:param.adjusted,
+        contractText:param.contractText,
+        images:img
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg); 
+        if(res.json().code==200){
+           dispatch(types.CONTRACT_LIST, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
+export const afterSalseEdit = ({ dispatch }, param) => {   //售后编辑修改
+    console.log(param);
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t }
+    var ss= param.images;
+    var img = ss.split(",");//字符串转化为数组
+    img.toString();
+    const body = {
+        orderId:param.orderId,
+        id:param.id,
+        comment:param.comment,
+        shipper:param.shipper,
+        consignee:param.consignee,
+        type:param.type,
+        images:img
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg); 
+        if(res.json().code==200){
+           dispatch(types.CONTRACT_LIST, param);
         }
     }, (res) => {
         console.log('fail');

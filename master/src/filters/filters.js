@@ -32,6 +32,8 @@ Vue.filter('bizType', function(val){
 	var val = val;
 	if(val=='order'){
 		 return '订单';
+	}else if(val=='order_after_sales_refund'){
+		return '售后退款订单'
 	}else{
 		return val;
 	}
@@ -527,7 +529,7 @@ Vue.filter('Auditing',function(val){     //订单审核
 	}else if(val==-2){
 		 return '审核未通过';
 	}else if(val==-1){
-		 return '取消合同';
+		 return '取消申请';
 	}else{
 		return val;
 	}

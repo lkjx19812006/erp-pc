@@ -61,6 +61,8 @@
               <th>订单商品</th>
               <th>订单号</th>
               <th>订单类型</th>
+              <th>收货人</th>
+              <th>发货人</th>
               <th>备注</th>
               <th>审核状态</th>
               <th>操作</th>
@@ -77,18 +79,25 @@
             <td>{{item.orderNo}}</td>
             <td v-if="item.orderType==0">采购</td>
             <td v-if="item.orderType==1">销售</td>
+            <td>{{item.consignee}}</td>
+            <td>{{item.shipper}}</td>
             <td>{{item.comment}}</td>
-            <td>{{item.validate | Auditing}}</td>
+            <td v-if="item.taskKey===''||item.taskKey=='after_sales_governor_validate'">{{item.validate | Auditing}}</td>
+            <td v-if="item.validate==-1&&item.taskKey=='after_sales_employee_handle'">{{item.validate | Auditing}}</td>
+            <td v-if="item.validate==1&&item.taskKey=='after_sales_receipt'">{{item.validate | Auditing}}（待{{item.handlerName}}收货确认）</td>
+            <td v-if="item.taskKey=='after_sales_resend'&&item.validate==1">待{{item.handlerName}}发货</td>
+            <td v-if="item.validate==-2&&item.taskKey=='after_sales_employee_handle'">{{item.validate | Auditing}}（待{{item.handlerName}}处理）</td>
+            <td v-if="item.taskKey=='after_sales_refund'&&item.validate==1">待{{item.handlerName}}处理</td>
+            <td v-if="item.taskKey=='after_sales_disputed_handle'&&item.validate==-1">{{item.validate | Auditing}}</td>
             <td>
-                <a class="operate" v-if="item.validate==1" @click="applyInfo({
+                <a class="operate" v-if="item.validate==1&&(item.taskKey===''||item.taskKey=='after_sales_governor_validate')" @click="applyInfo({
                       show:true,
                       sub:$index,
                       id:item.id,
                       validate:item.validate,
-                      adjusted:item.adjusted,
                       description:'',
-                      url:'/order/quality/contract/validate',
-                      titles:'审核合同',
+                      url:'/order/quality/after/sales/validate',
+                      titles:'售后审核',
                       link:contractCheck
                   })"><img src="/static/images/orgcheck.png"/></a>
             </td>
@@ -194,6 +203,7 @@
           this.tipsParam.show= true;
           this.tipsParam.alert= true;
           this.tipsParam.name= title;
+          this.getSalesApplyList(this.loadParam);
       }
     },
     events: {
@@ -219,30 +229,8 @@
     padding-left:10px;
     padding-right:10px;
   }
-  .checkbox_unselect{
-    background-image: url(/static/images/unselect.png);
-    display: inline-block;
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    background-size: 80%;
-    margin: auto;
-    text-align: center;
-    background-position: 5px;
-  }
-  .checkbox_select{
-    background-image: url(/static/images/selected.png);
-    display: inline-block;
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    background-size: 80%;
-    margin: auto;
-    text-align: center;
-    background-position: 5px;
-  }
    #table_box  table th,#table_box  table td{
-    width:156px;
-    min-width: 156px;
+    width:144px;
+    min-width: 144px;
   }
 </style>

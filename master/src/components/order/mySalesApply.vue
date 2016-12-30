@@ -1,5 +1,5 @@
 <template>
-  <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
+  <update-model :param="editParam" v-if="editParam.show"></update-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
   <div>
@@ -61,8 +61,11 @@
               <th>订单商品</th>
               <th>订单号</th>
               <th>订单类型</th>
+              <th>收货人</th>
+              <th>发货人</th>
               <th>备注</th>
-              <th>审核状态</th>
+              <th>说明</th>
+              <th>状态说明</th>
               <th>操作</th>
             </tr>
         </thead>
@@ -77,20 +80,65 @@
             <td>{{item.orderNo}}</td>
             <td v-if="item.orderType==0">采购</td>
             <td v-if="item.orderType==1">销售</td>
+            <td>{{item.consignee}}</td>
+            <td>{{item.shipper}}</td>
             <td>{{item.comment}}</td>
-            <td>{{item.validate | Auditing}}</td>
+            <td>{{item.description}}</td>
+            <td v-if="item.taskKey=='after_sales_refund'&&item.validate==1">待{{item.handlerName}}处理</td>
+            <td v-if="item.taskKey=='after_sales_resend'&&item.validate==1">待{{item.handlerName}}发货</td>
+            <td v-if="item.taskKey!=='after_sales_refund'&&item.taskKey!=='after_sales_resend'">{{item.validate | Auditing}}</td>
+
             <td>
-                <a class="operate" v-if="item.validate==1" @click="applyInfo({
+                <a class="operate" v-if="item.validate==-2" @click="editPayment({
+                        show:true,
+                        sub:$index,
+                        id:item.id,
+                        consignee:item.consignee,
+                        validate:item.validate,
+                        orderId:item.orderId,
+                        comment:item.comment,
+                        type:item.type,
+                        image_f:'',
+                        image_s:'',
+                        image_t:'',
+                        images:'',
+                        shipper:item.shipper,
+                        url:'/order/quality/after/sales/edit',
+                        titles:'编辑',
+                        link:afterSalseEdit
+                    })"><img src="/static/images/edit.png"/></a>
+                <a class="operate" v-if="item.validate==-2&&item.taskKey=='after_sales_employee_handle'" @click="applyInfo({
                       show:true,
                       sub:$index,
                       id:item.id,
+                      //orderId:item.orderId,
                       validate:item.validate,
-                      adjusted:item.adjusted,
-                      description:'',
-                      url:'/order/quality/contract/validate',
-                      titles:'审核合同',
+                      comment:'',
+                      url:'/order/quality/after/sales/restartOrCancel',
+                      titles:'重新申请审核',
                       link:contractCheck
-                  })"><img src="/static/images/orgcheck.png"/></a>
+                  })"><img src="/static/images/{{$t('static.img_reset')}}.png"/></a>
+                  <button class="btn btn-primary" v-if="item.validate==1&&item.taskKey=='after_sales_receipt'" style="background:#fff;color:#2e6da4;padding:2px 5px;" 
+                      @click="applyInfo({
+                          show:true,
+                          sub:$index,
+                          id:item.id,
+                          description:'',
+                          validate:item.validate,
+                          url:'/order/quality/after/sales/validate',
+                          titles:'确认收货',
+                          link:contractCheck
+                    })">收货确认</button>
+                  <button class="btn btn-primary" v-if="item.validate==-2&&item.taskKey=='after_sales_disputed_handle'" style="background:#fff;color:#2e6da4;padding:2px 5px;" 
+                      @click="applyInfo({
+                          show:true,
+                          sub:$index,
+                          id:item.id,
+                          description:'',
+                          url:'/order/quality/after/sales/disputed',
+                          titles:'售后异议处理',
+                          link:contractCheck
+                    })">异议处理</button>
             </td>
           </tr>
         </tbody>
@@ -108,20 +156,23 @@
   import changeMenu from '../../components/tools/tabs/tabs.js'
   import auditModel  from './second_order/financeAudit'
   import tipsModel from '../../components/tips/tipDialog'
+  import updateModel from '../../components/order/second_order/afterSalesApply'
   import {
     initMyAfterSales
   } from '../../vuex/getters'
   import {
     getSalesApplyList,
     paymentConfirm,
-    contractCheck
+    contractCheck,
+    afterSalseEdit
   } from '../../vuex/actions'
   export default {
     components: {
       pagination,
       detailModel,
       auditModel,
-      tipsModel
+      tipsModel,
+      updateModel
     },
     vuex: {
       getters: {
@@ -130,7 +181,8 @@
       actions: {
         getSalesApplyList,
         paymentConfirm,
-        contractCheck
+        contractCheck,
+        afterSalseEdit
       }
     },
     data() {
@@ -151,7 +203,7 @@
           validate:'',
           total:0
         },
-        changeParam: {
+        editParam: {
           show: false
         },
         tipsParam:{
@@ -166,10 +218,6 @@
       }
     },
     methods: {
-      clickOn: function(initMyAfterSales) {
-        this.changeParam = initMyAfterSales;
-        this.changeParam.show = true;
-      },
       selectSearch:function(){
            this.getSalesApplyList(this.loadParam);
       },
@@ -190,10 +238,17 @@
         this.financeParam = item;
         this.financeParam.callback = this.callback;
       },
+      editPayment:function(update){
+        this.editParam.show=true;
+        this.editParam = update;
+        this.editParam.callback = this.callback;
+        console.log(this.editParam)
+      },
       callback:function(title){
           this.tipsParam.show= true;
           this.tipsParam.alert= true;
           this.tipsParam.name= title;
+          this.getSalesApplyList(this.loadParam);
       }
     },
     events: {
@@ -242,7 +297,7 @@
     background-position: 5px;
   }
    #table_box  table th,#table_box  table td{
-    width:156px;
-    min-width: 156px;
+    width:134px;
+    min-width: 134px;
   }
 </style>

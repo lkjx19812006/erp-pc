@@ -2,6 +2,7 @@
   <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
+  <receipt-model :param="auditParam" v-if="auditParam.show"></receipt-model>
   <div>
     <div class="service-nav clearfix">
       <div class="clearfix">
@@ -113,6 +114,24 @@
                           titles:'确定收款',
                           link:paymentConfirm
                       })"><img src="/static/images/surePayment.png"/></a>
+              <a class="operate" v-if="item.validate==0" @click="editPayment({
+                          show:true,
+                          sub:$index,
+                          bizId:item.bizId,
+                          bizSubId:item.id,
+                          validate:item.validate,
+                          amount:item.amount,
+                          type:item.type,
+                          payWay:'',
+                          payName:'',
+                          paySubName:'',
+                          payUserName:'',
+                          payNumber:'',
+                          comment:item.comment,
+                          url:'/fund/createByOrderStages',
+                          titles:'编辑',
+                          link:paymentAudit
+                      })"><img src="/static/images/edit.png"/></a>
             </td>
           </tr>
         </tbody>
@@ -130,19 +149,22 @@
   import changeMenu from '../../components/tools/tabs/tabs.js'
   import auditModel  from './second_order/financeAudit'
   import tipsModel from '../../components/tips/tipDialog'
+  import receiptModel from '../order/second_order/orderAudit'
   import {
     initMyFundList
   } from '../../vuex/getters'
   import {
     getMyFundList,
-    paymentConfirm
+    paymentConfirm,
+    paymentAudit
   } from '../../vuex/actions'
   export default {
     components: {
       pagination,
       detailModel,
       auditModel,
-      tipsModel
+      tipsModel,
+      receiptModel
     },
     vuex: {
       getters: {
@@ -150,7 +172,8 @@
       },
       actions: {
         getMyFundList,
-        paymentConfirm
+        paymentConfirm,
+        paymentAudit
       }
     },
     data() {
@@ -173,6 +196,9 @@
         },
         changeParam: {
           show: false
+        },
+        auditParam:{
+          show:false
         },
         tipsParam:{
           show:false,
@@ -210,6 +236,11 @@
         this.financeParam.show = true;
         this.financeParam = item;
         this.financeParam.callback = this.callback;
+      },
+      editPayment:function(receipt){
+        this.auditParam.show = true;
+        this.auditParam = receipt;
+        this.auditParam.callback = this.callback;
       },
       callback:function(title){
           this.tipsParam.show= true;

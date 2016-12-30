@@ -93,15 +93,17 @@ const mutations = {
         state.orgSampleList = data;
     },
     [MY_FUND_LIST](state,data){ //我的资金记录
-      if(data.titles=='确定收款'){
+        if(data.titles=='确定收款'){
             console.log(state.myFundlist[data.sub])
             state.myFundlist[data.sub].pr =  data.pr;
+        }else if(data.titles=='编辑'){
+            state.myFundlist[data.sub] =  data;
         }else{
           state.myFundlist = data;
         }
     },
     [ORG_FUND_LIST](state,data){ //我的资金记录
-      state.orgFundlist = data;
+        state.orgFundlist = data;
     },
     [ADD_SAMPLE](state,data){
         console.log(data)
@@ -183,14 +185,26 @@ const mutations = {
     },
     [CONTRACT_LIST](state,data){  //补充合同列表
       console.log(data)
+      console.log(data.url)
       if(data.link=='/order/contract/list/employee'){
          state.myContractList = data;
       }else if(data.link=='/order/contract/list/org'){
          state.orgContractList = data;
-      }else if(data.url=='/order/quality/contract/validate'){
+      }
+      if(data.url=='/order/quality/contract/validate'){
         state.orgContractList[data.sub].validate= data.validate;
       }else if(data.url=='/order/quality/contract/restartOrCancel'){
         state.myContractList[data.sub].validate= data.validate;
+      }else if(data.url=='/order/quality/after/sales/validate'){ //售后申请审核
+          state.orgSalesList[data.sub].validate= data.validate;
+          state.orgSalesList[data.sub].description= data.description;
+      }else if(data.url=='/order/quality/after/sales/restartOrCancel'){ //售后重新审核或者取消
+          state.mySalesList[data.sub].validate= data.validate;
+          state.mySalesList[data.sub].comment= data.comment;
+      }else if(data.url=='/order/contract/edit'){
+        state.myContractList[data.sub].comment = data.comment;
+        state.myContractList[data.sub].contractText = data.contractText;
+        state.myContractList[data.sub].adjusted = data.adjusted;
       }
     },
     [AFTER_SALES](state,data){

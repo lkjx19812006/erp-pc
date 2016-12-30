@@ -1,5 +1,5 @@
 <template>
-  <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
+  <update-model :param="editParam" v-if="editParam.show"></update-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
   <div>
@@ -72,6 +72,7 @@
               <th>调整差额</th>
               <th>补充合同文本</th>
               <th>备注</th>
+              <th>审核说明</th>
               <th>审核状态</th>
               <th>操作</th>
             </tr>
@@ -88,13 +89,30 @@
             <td>{{item.adjusted}}</td>
             <td>{{item.contractText}}</td>
             <td>{{item.comment}}</td>
+            <td>{{item.description}}</td>
             <td>{{item.validate | Auditing}}</td>
             <td>
+                <a class="operate" v-if="item.validate==-2" @click="editPayment({
+                        show:true,
+                        sub:$index,
+                        id:item.id,
+                        orderId:item.orderId,
+                        validate:item.validate,
+                        adjusted:item.adjusted,
+                        comment:item.comment,
+                        image_f:'',
+                        image_s:'',
+                        image_t:'',
+                        images:'',
+                        contractText:item.contractText,
+                        url:'/order/contract/edit',
+                        titles:'编辑',
+                        link:contractEdit
+                    })"><img src="/static/images/edit.png"/></a>
                 <a class="operate" v-if="item.validate==-2" @click="applyInfo({
                       show:true,
                       sub:$index,
                       id:item.id,
-                      orderId:item.orderId,
                       validate:item.validate,
                       adjusted:item.adjusted,
                       comment:'',
@@ -119,20 +137,23 @@
   import changeMenu from '../../components/tools/tabs/tabs.js'
   import auditModel  from './second_order/financeAudit'
   import tipsModel from '../../components/tips/tipDialog'
+  import updateModel from '../../components/order/second_order/updateContract'
   import {
     initMyContractList
   } from '../../vuex/getters'
   import {
     getMyContractList,
     paymentConfirm,
-    contractCheck
+    contractCheck,
+    contractEdit
   } from '../../vuex/actions'
   export default {
     components: {
       pagination,
       detailModel,
       auditModel,
-      tipsModel
+      tipsModel,
+      updateModel
     },
     vuex: {
       getters: {
@@ -141,7 +162,8 @@
       actions: {
         getMyContractList,
         paymentConfirm,
-        contractCheck
+        contractCheck,
+        contractEdit
       }
     },
     data() {
@@ -162,7 +184,7 @@
           validate:'',
           total:0
         },
-        changeParam: {
+        editParam: {
           show: false
         },
         tipsParam:{
@@ -177,10 +199,6 @@
       }
     },
     methods: {
-      clickOn: function(initMyContractList) {
-        this.changeParam = initMyContractList;
-        this.changeParam.show = true;
-      },
       selectSearch:function(){
         this.getMyContractList(this.loadParam);
       },
@@ -195,6 +213,12 @@
         this.loadParam.orderNo='';
         this.loadParam.orderType='';
         this.getMyContractList(this.loadParam);
+      },
+      editPayment:function(param){
+        this.editParam.show=true;
+        this.editParam = param;
+        this.editParam.callback = this.callback;
+        console.log(this.editParam)
       },
       applyInfo:function(item){
         this.financeParam.show = true;
@@ -231,7 +255,7 @@
     padding-right:10px;
   }
    #table_box  table th,#table_box  table td{
-    width:156px;
-    min-width: 156px;
+    width:144px;
+    min-width: 144px;
   }
 </style>
