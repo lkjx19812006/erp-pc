@@ -3087,8 +3087,8 @@ export const deleteInfo = ({ dispatch }, param) => { //删除客户、药材信�
     });
 }
 export const alterInfo = ({ dispatch }, param) => { //修改客户信息
-    console.log(param)
-    const data = {
+    console.log(param);
+    var data = {
         name: param.name,
         type: param.type,
         category: param.category,
@@ -3114,6 +3114,14 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
     }
     if (param.supplier) {
         data.supplier = param.supplier;
+    }
+    if(param.tracking){
+        data = '';
+        data = {
+            id: param.id,
+            audit: param.audit,
+            auditComment: param.auditComment
+        };
     }
     Vue.http({
         method: 'PUT',
