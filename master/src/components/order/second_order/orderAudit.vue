@@ -216,7 +216,7 @@
                        <input type="text" v-model="param.payNumber" class="form-control edit-input" v-validate:paynumber="['required']" /> 
                     </div>
                     <div class="editpage-input col-md-6" >
-                       <label class="editlabel">金额</label>
+                       <label class="editlabel">差额</label>
                        <input type="text" v-model="param.amount" class="form-control edit-input" value="{{param.amount}}" disabled="true" /> 
                     </div>
                     <div class="editpage-input col-md-12">

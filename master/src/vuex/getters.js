@@ -382,3 +382,8 @@ export const initOrgAfterSales= (state) => { //我的售后列表
   return parseJson(state.count.orgSalesList); 
 }
 
+export const initReceiptDetail= (state) => { //补充合同，售后详情
+  return parseJson(state.count.contractDetail); 
+}
+
+

@@ -18,6 +18,10 @@
                        <label class="editlabel">审核说明</label>
                        <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" ></textarea>
                     </div>
+                     <div class="editpage-input col-md-12" v-if="param.titles=='申请审核'">
+                       <label class="editlabel">审核说明</label>
+                       <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" ></textarea>
+                    </div>
                     <div class="editpage-input col-md-12" v-if="param.titles=='售后异议处理'">
                        <label class="editlabel">异议处理说明</label>
                        <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" ></textarea>
@@ -52,7 +56,7 @@
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="referTo(param)">提交</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true" >提交</button>
             </div>
-            <div class="edit_footer" v-if="param.titles=='确定收款'">
+            <div class="edit_footer" v-if="param.titles=='确定收款'||param.titles=='申请审核'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show=false)">{{$t('static.confirm')}}</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true" >确定</button>

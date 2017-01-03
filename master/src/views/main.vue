@@ -1,5 +1,6 @@
 <template>
      <detail-model :param="orderDetailParam" v-if="orderDetailParam.show"></detail-model>
+     <receivedetail-model :param="detailParam" v-if="detailParam.show"></receivedetail-model>
      <record-model :param="recordParam" v-if="recordParam.show"></record-model>
      <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
      <tip-model :param="tipParam" v-if="tipParam.show"></tip-model>
@@ -61,25 +62,21 @@
                     </div>
                     <div class="message_view_right" v-if="item.bizType=='order_supplementary_contract'">
                         <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
-                        <a @click="orderReceive({
-                            id:item.bizId,
-                            url:'/order/contract/list/employee/',
-                            link:'receiveDetail'
-                            })">详情</a>
+                        <a @click="compactDetail(item.bizId)">详情</a>
                         <a @click="showRecord(item)">记录</a>
-                        <a v-if="item.taskKey=='supplementary_contract_governor_validate'" @click="receiveAudit(item)">合同的审核</a>
+                        <a v-if="item.taskKey=='supplementary_contract_governor_validate'" @click="receiveAudit(item)">合同审核</a>
                         <a v-if="item.taskKey=='supplementary_contract_employee_handle'"  @click="receiveAudit(item)">重新申请</a>
                     </div>
                     <div class="message_view_right" v-if="item.bizType=='order_after_sales'">
                         <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->
-                        <a @click="orderReceive({
-                            id:item.bizId,
-                            url:'/order/contract/list/employee/',
-                            link:'receiveDetail'
-                            })">详情</a>
+                        <a @click="salesDetail(item.bizId)">详情</a>
                         <a @click="showRecord(item)">记录</a>
-                        <a v-if="item.taskKey=='after_sales_governor_validate'" @click="showAudit(item)">售后的审核</a>
-                        <a v-else @click="showAudit(item)">重新申请</a>
+                        <a v-if="item.taskKey=='after_sales_governor_validate'" @click="showAudit(item)">售后审核</a>
+                        <a v-if="item.taskKey=='after_sales_receipt'" @click="showAudit(item)">收货确认</a>
+                        <a v-if="item.taskKey=='after_sales_resend'" @click="showAudit(item)">重新发货</a>
+                        <a v-if="item.taskKey=='after_sales_employee_handle'" @click="showAudit(item)">重新申请</a>
+                        <a v-if="item.taskKey=='after_sales_disputed_handle'" @click="showAudit(item)">业务员异议处理</a>
+                        
                     </div>
                 </div>
             </div>
@@ -93,6 +90,7 @@ import auditModel from '../components/tips/auditDialog'
 import tipModel from '../components/tips/tipDialog'
 import sendDetail from '../components/order/second_order/orderSendDetail'
 import deliverModel from '../components/order/orderStatus'
+import receivedetailModel from  '../components/order/second_order/orderReceiveDetail'
 import {
     getList,
     getLinechart,
@@ -112,6 +110,7 @@ export default {
         auditModel,
         tipModel,
         sendDetail,
+        receivedetailModel,
         deliverModel
     },
     data() {
@@ -157,6 +156,16 @@ export default {
                 bizId:'',
                 show:false,
             },
+            receiveDetailParam:{  //发货详情
+                show:false,
+                id:'',
+            },
+            detailParam:{  //收货详情
+                id:'',
+                show:false,
+                url:'',
+                loading:true
+            },
             auditParam:{
                 loading:true,
                 show:false,
@@ -199,9 +208,24 @@ export default {
             this.orderDetailParam.id = id;
             this.orderDetailParam.show = true;
         },
+        compactDetail:function(id){  //合同详情
+            this.detailParam.id = id;
+            this.detailParam.url='/order/contract/details/';
+            this.detailParam.show = true;
+        },
+        salesDetail:function(id){ //售后详情
+            this.detailParam.id = id;
+            this.detailParam.url='/order/quality/after/sales/details/';
+            this.detailParam.show = true;
+        },
         orderSend:function(id){
             this.sendDetailParam.id = id;
             this.sendDetailParam.show = true;
+        },
+        orderReceive:function(item){
+            this.receiveDetailParam.id = item.id;
+            this.receiveDetailParam = item;
+            this.receiveDetailParam.show =true;
         },
         deliverGoods:function(item){
             this.deliverParam.id = item.bizId;
@@ -216,7 +240,20 @@ export default {
             this.recordParam.bizId = item.bizId;
             this.recordParam.show = true;
         },
-        showAudit:function(item){
+        receiveAudit:function(item){  //合同补充
+            if(item.taskKey=='supplementary_contract_employee_handle'){
+                this.auditParam.audit = false;
+                this.auditParam.title = '重新申请审核';
+            }else if(item.taskKey=='supplementary_contract_governor_validate'){
+                this.auditParam.audit = true;
+                this.auditParam.title = '审核补充合同';
+            }
+            this.auditParam.taskKey = item.taskKey;
+            this.auditParam.taskId = item.taskId;
+            this.auditParam.bizId = item.bizId;
+            this.auditParam.show = true;
+        },
+        showAudit:function(item){ //订单
             if(item.taskKey=='employee_handle'||item.taskKey=='supplementary_contract_employee_handle'){
                 this.auditParam.audit = false;
                 this.auditParam.title = '重新申请审核';
@@ -228,7 +265,7 @@ export default {
             this.auditParam.taskId = item.taskId;
             this.auditParam.show = true;
         },
-        sendAudit:function(item){
+        sendAudit:function(item){ //发货
             console.log(item)
             if(item.taskKey=='order_send_employee_handle'){
                 this.auditParam.audit = false;

@@ -103,35 +103,47 @@
             <td v-if="item.pr==1&&item.type==1" style="background:green;color:#fff;">已确认收款</td>
             <td>
               <a class="operate" v-if="item.type==0&&item.pr==0&&item.validate==2" @click="applyInfo({
-                          show:true,
-                          sub:$index,
-                          id:item.id,
-                          image_f:'',
-                          image_s:'',
-                          image_t:'',
-                          images:'',
-                          url:'/fund/proceedsConfirm',
-                          titles:'确定收款',
-                          link:paymentConfirm
-                      })"><img src="/static/images/surePayment.png"/></a>
-              <a class="operate" v-if="item.validate==0" @click="editPayment({
-                          show:true,
-                          sub:$index,
-                          bizId:item.bizId,
-                          bizSubId:item.id,
-                          validate:item.validate,
-                          amount:item.amount,
-                          type:item.type,
-                          payWay:'',
-                          payName:'',
-                          paySubName:'',
-                          payUserName:'',
-                          payNumber:'',
-                          comment:item.comment,
-                          url:'/fund/createByOrderStages',
-                          titles:'编辑',
-                          link:paymentAudit
-                      })"><img src="/static/images/edit.png"/></a>
+                        show:true,
+                        sub:$index,
+                        id:item.id,
+                        image_f:'',
+                        image_s:'',
+                        image_t:'',
+                        images:'',
+                        url:'/fund/proceedsConfirm',
+                        titles:'确定收款',
+                        link:paymentConfirm
+                    })"><img src="/static/images/surePayment.png"/></a>
+              <a class="operate" v-if="item.validate==0" @click="editClick({
+                        show:true,
+                        sub:$index,
+                        id:item.id,
+                        validate:item.validate,
+                        amount:item.amount,
+                        type:item.type,
+                        payWay:item.payWay,
+                        payName:item.payName,
+                        paySubName:item.paySubName,
+                        payUserName:item.payUserName,
+                        payNumber:item.payNumber,
+                        comment:item.comment,
+                        url:'/fund/',
+                        titles:'编辑',
+                        link:editPayment
+                    })"><img src="/static/images/edit.png"/></a>
+              <button class="btn btn-success" v-if="item.validate==0" @click="applyInfo({
+                      show:true,
+                      sub:$index,
+                      id:item.id,
+                      comment:item.comment,
+                      image_f:'',
+                      image_s:'',
+                      image_t:'',
+                      images:'',
+                      url:'/fund/validate/request',
+                      titles:'申请审核',
+                      link:paymentConfirm
+                  })" style="padding:1px 4px;background:#fff;color:#398439;margin-top:-22px;">申请审核</button>
             </td>
           </tr>
         </tbody>
@@ -156,7 +168,7 @@
   import {
     getMyFundList,
     paymentConfirm,
-    paymentAudit
+    editPayment,
   } from '../../vuex/actions'
   export default {
     components: {
@@ -173,7 +185,7 @@
       actions: {
         getMyFundList,
         paymentConfirm,
-        paymentAudit
+        editPayment,
       }
     },
     data() {
@@ -237,8 +249,11 @@
         this.financeParam = item;
         this.financeParam.callback = this.callback;
       },
-      editPayment:function(receipt){
+      editClick:function(receipt){
         this.auditParam.show = true;
+        if(receipt.titles=='申请分期审核'){
+          receipt.validate = 1;
+        }
         this.auditParam = receipt;
         this.auditParam.callback = this.callback;
       },
@@ -246,6 +261,7 @@
           this.tipsParam.show= true;
           this.tipsParam.alert= true;
           this.tipsParam.name= title;
+          this.getMyFundList(this.loadParam);
       }
     },
     events: {

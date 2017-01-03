@@ -662,16 +662,24 @@ export default {
                 this.auditParam.callback = this.callback;
                 if(item.titles=='重新申请审核'){
                     this.getMyFundList(item);
-                    if(this.initMyFundList!=''&&this.initMyFundList[initMyFundList.length-1]){
-                       console.log(this.initMyFundList[this.initMyFundList.length-1])
-                        item.amount = this.initMyFundList[this.initMyFundList.length-1].amount;
+                    if(this.initMyFundList!=''&&this.initMyFundList[0]){
+                       console.log(this.initMyFundList[0])
+                        item.amount = this.initMyFundList[0].amount;
+                        item.payName = this.initMyFundList[0].payName;
+                        item.payUserName = this.initMyFundList[0].payUserName;
+                        item.payNumber = this.initMyFundList[0].payNumber;
+                        item.payWay = this.initMyFundList[0].payWay;
+                        item.paySubName = this.initMyFundList[0].paySubName;
+                        item.images = this.initMyFundList[0].images;
+                        this.auditParam.show=true;
+                        /* item.amount = this.initMyFundList[this.initMyFundList.length-1].amount;
                         item.payName = this.initMyFundList[this.initMyFundList.length-1].payName;
                         item.payUserName = this.initMyFundList[this.initMyFundList.length-1].payUserName;
                         item.payNumber = this.initMyFundList[this.initMyFundList.length-1].payNumber;
                         item.payWay = this.initMyFundList[this.initMyFundList.length-1].payWay;
                         item.paySubName = this.initMyFundList[this.initMyFundList.length-1].paySubName;
                         item.images = this.initMyFundList[this.initMyFundList.length-1].images;
-                        this.auditParam.show=true;
+                        this.auditParam.show=true;*/
                     }else{
                         this.auditParam.show=false;
                     }

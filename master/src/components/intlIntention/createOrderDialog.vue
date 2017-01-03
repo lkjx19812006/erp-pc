@@ -1,6 +1,7 @@
 <template>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
+    <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
     <tip-model :param="tipParam" v-if="tipParam.show"></tip-model>
     <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
@@ -142,6 +143,14 @@
                   <div class="editpage">
                       <div class="editpageleft">
                           <div class="editpage-input">
+                              <label class="editlabel">{{$t('static.order_status')}}</label>
+                              <select  class="form-control edit-input" v-model="param.orderStatus" >
+                                  <option value="0" selected>{{$t('static.create_order')}}</option>
+                                  <option value="60">{{$t('static.awaiting_comment')}}</option>
+                                  <option value="70">{{$t('static.order_over')}}</option>
+                              </select>
+                          </div>
+                          <div class="editpage-input">
                               <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.choose_client')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.customerName"   v-validate:custname="['required']" value="{{param.customerName}}" disabled="true" @click="searchCustomer(param.customerName,param.customer)"/>
                           </div>
@@ -193,12 +202,13 @@
                               <label class="editlabel">{{$t('static.total')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.total" readonly="true" />
                           </div>
-                          <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.comment')}}</label>
-                              <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
-                          </div>
+                          
                       </div>
                       <div class="editpageright">
+                          <div class="editpage-input" v-if="param.type==1">
+                            <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">选择发货人</span></label>
+                            <input  type="text" class="form-control" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
+                          </div>  
                           <!-- <div class="editpage-input">
                               <label class="editlabel">{{$t('static.client_phone')}} <span class="system_danger" v-if="$validation.custtel.required">{{$t('static.required')}}</span></label>
                               <input type="text" class="form-control edit-input" v-model="param.customerPhone"   v-validate:custtel="['required']" value="{{param.customerPhone}}" disabled="true"/>
@@ -266,15 +276,11 @@
                               <label class="editlabel">{{$t('static.fee_explain')}}</label>
                               <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc" value="{{param.incidentalsDesc}}"/>
                           </div>
-                          
                           <div class="editpage-input">
-                              <label class="editlabel">{{$t('static.order_status')}}</label>
-                              <select  class="form-control edit-input" v-model="param.orderStatus" >
-                                  <option value="0" selected>{{$t('static.create_order')}}</option>
-                                  <option value="60">{{$t('static.awaiting_comment')}}</option>
-                                  <option value="70">{{$t('static.order_over')}}</option>
-                              </select>
+                              <label class="editlabel">{{$t('static.comment')}}</label>
+                              <input type="text" class="form-control edit-input" v-model="param.comments" value="{{param.comments}}"/>
                           </div>
+                         
                       </div>
                   </div>
               </section>
@@ -296,6 +302,7 @@ import searchcustomerModel  from  '../Intention/clientname'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipModel from '../tips/tipDialog'
 import searchbreedModel  from '../Intention/breedsearch'
+import searchemgModel from '../order/second_order/allEmployee'
 import {
     initCountrylist,
     initProvince,
@@ -322,7 +329,8 @@ export default {
         searchcustomerModel,
         searchbreedModel,
         tipModel,
-        inputSelect
+        inputSelect,
+        searchemgModel
     },
     props: ['param'],
     data() {
@@ -372,6 +380,11 @@ export default {
               show:false,
               name:"The Price Is Required!!!",
               alert:true
+            },
+            employeeParam:{
+              show:false,
+              consigner:'',
+              consignerName:''
             },
             country:{
               cname:'',
@@ -423,7 +436,11 @@ export default {
               this.getProvinceList(this.country);
             }
         },
-
+        selectEmployee:function(id,name){
+           this.employeeParam.show = true;
+           this.employeeParam.consigner= id;
+           this.employeeParam.consignerName = name;
+        },
         selectCity:function(){
             this.city = '';
             this.district = '';
@@ -652,6 +669,12 @@ export default {
             this.breedParam.id = breed.breedId;
             //this.breedParam.loading=true;
             //this.getBreedDetail(this.breedParam);
+        },
+        selectEmpOrOrg:function(employee){
+            console.log(employee)
+            this.employeeParam.consigner = employee.employeeId;
+            this.employeeParam.consignerName = employee.employeeName;
+            this.param.consigner = this.employeeParam.consigner;
         },
         customer:function(customer){
             this.param.customerName = customer.customerName;

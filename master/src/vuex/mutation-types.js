@@ -167,6 +167,9 @@ export const BANK_BRANCH_LIST ='BANK_BRANCH_LIST' //获取银行分支的数据
 export const CONTRACT_LIST ='CONTRACT_LIST' //补充合同列表的数据
 export const AFTER_SALES ='AFTER_SALES' //售后申请列表的数据
 
+export const SALES_DETAIL ='SALES_DETAIL' //合同、售后详情页面
+
+
 
 
 

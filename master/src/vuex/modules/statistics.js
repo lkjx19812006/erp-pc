@@ -20,7 +20,8 @@ import {
     BANK_LIST,
     BANK_BRANCH_LIST,
     CONTRACT_LIST,
-    AFTER_SALES
+    AFTER_SALES,
+    SALES_DETAIL
 } from '../mutation-types'
 
 const state = {
@@ -65,10 +66,12 @@ const state = {
     myContractList:[],
     //部门补充合同
     orgContractList:[],
+    //补充合同详情
+    contractDetail:[],
     //我的售后列表
     mySalesList:[],
     //部门售后列表
-    orgSalesList:[]
+    orgSalesList:[],
 }
 const mutations = {
     [UNIT_LIST](state,data){ //常用单位
@@ -78,26 +81,28 @@ const mutations = {
         state.currencyList = data;
     },
     [MY_CLIENT_COUNT](state, data) { //我的客户统计
-      state.countList = data;
+       state.countList = data;
     },
     [MY_ORDER_COUNT](state, data) { //我的订单统计
-      state[data.key] = data;
+       state[data.key] = data;
     },
     [MY_TIME_ORDER_COUNT](state, data) { //我的订单统计(时间维度)
-      state.myTimeOrderCount = data;
+       state.myTimeOrderCount = data;
     },
     [MY_SAMPLE_LIST](state,data){ //我的寄样申请列表
-        state.mySampleList = data;
+       state.mySampleList = data;
     },
     [ORG_SAMPLE_LIST](state,data){ //部门寄样申请列表
-        state.orgSampleList = data;
+       state.orgSampleList = data;
     },
     [MY_FUND_LIST](state,data){ //我的资金记录
         if(data.titles=='确定收款'){
             console.log(state.myFundlist[data.sub])
             state.myFundlist[data.sub].pr =  data.pr;
         }else if(data.titles=='编辑'){
-            state.myFundlist[data.sub] =  data;
+          for(var key in data){
+            state.myFundlist[data.sub][key] =  data[key];
+          }
         }else{
           state.myFundlist = data;
         }
@@ -214,8 +219,16 @@ const mutations = {
       }else if(data.link=='/order/after/sales/list/org'){
          state.orgSalesList = data;
       }
+      if(data.url=='/order/quality/after/sales/resend'){
+        for(var key in data){
+          state.mySalesList[data.sub][key] = data[key];
+        }
+        
+      }
+    },
+    [SALES_DETAIL](state,data){
+      state.contractDetail = data;
     }
-
 }
 export default {
     state,

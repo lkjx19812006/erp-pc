@@ -134,7 +134,7 @@
                   <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                   <td v-if="item.orderStatus==20" style="color:#fa6705">{{$t('static.waiting_order')}}</td>
                   <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
-                  <td v-if="item.orderStatus==40">{{$t('static.wait_ship')}}</td>
+                  <td v-if="item.orderStatus==40">等待{{item.employeeName}}发货</td>
                   <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
                   <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
                   <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
@@ -214,11 +214,11 @@
                              <img src="/static/images/{{$t('static.img_deliver')}}.png" title="待发货" alt="待发货"/>
                         </a> -->
                         <!-- 销售订单发货流程start-->
-                        <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0&&item.verifier==-1" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">申请发货
+                        <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0&&item.verifier==-1&&item.taskKey=='financial_validate'" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">申请发货
                         </button>
                         <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 3px;">重新申请发货
                         </button>
-                        <button class="btn btn-warning" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.consigner==item.employee" style="background:#fff;color:#eea236;padding:1px 5px;">发货
+                        <button class="btn btn-warning" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.consigner==item.employee" style="background:#fff;color:#eea236;padding:1px 5px;">发货
                         </button>
                         <!-- 销售订单发货流程end -->
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0">

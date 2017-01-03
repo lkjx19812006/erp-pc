@@ -2,6 +2,7 @@
   <update-model :param="editParam" v-if="editParam.show"></update-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
+  <resend-model :param="resendParam" v-if="resendParam.show"></resend-model>
   <div>
     <div class="service-nav clearfix">
       <div class="clearfix">
@@ -87,7 +88,6 @@
             <td v-if="item.taskKey=='after_sales_refund'&&item.validate==1">待{{item.handlerName}}处理</td>
             <td v-if="item.taskKey=='after_sales_resend'&&item.validate==1">待{{item.handlerName}}发货</td>
             <td v-if="item.taskKey!=='after_sales_refund'&&item.taskKey!=='after_sales_resend'">{{item.validate | Auditing}}</td>
-
             <td>
                 <a class="operate" v-if="item.validate==-2" @click="editPayment({
                         show:true,
@@ -118,7 +118,7 @@
                       titles:'重新申请审核',
                       link:contractCheck
                   })"><img src="/static/images/{{$t('static.img_reset')}}.png"/></a>
-                  <button class="btn btn-primary" v-if="item.validate==1&&item.taskKey=='after_sales_receipt'" style="background:#fff;color:#2e6da4;padding:2px 5px;" 
+                <button class="btn btn-primary" v-if="item.validate==1&&item.taskKey=='after_sales_receipt'" style="background:#fff;color:#2e6da4;padding:2px 5px;" 
                       @click="applyInfo({
                           show:true,
                           sub:$index,
@@ -128,8 +128,8 @@
                           url:'/order/quality/after/sales/validate',
                           titles:'确认收货',
                           link:contractCheck
-                    })">收货确认</button>
-                  <button class="btn btn-primary" v-if="item.validate==-2&&item.taskKey=='after_sales_disputed_handle'" style="background:#fff;color:#2e6da4;padding:2px 5px;" 
+                })">收货确认</button>
+                <button class="btn btn-primary" v-if="item.validate==-2&&item.taskKey=='after_sales_disputed_handle'" style="background:#fff;color:#2e6da4;padding:2px 5px;" 
                       @click="applyInfo({
                           show:true,
                           sub:$index,
@@ -138,7 +138,9 @@
                           url:'/order/quality/after/sales/disputed',
                           titles:'售后异议处理',
                           link:contractCheck
-                    })">异议处理</button>
+                })">异议处理</button>
+                <button class="btn btn-primary" v-if="item.taskKey=='after_sales_resend'&&item.handler==initLogin.id" style="background:#fff;color:#2e6da4;padding:2px 5px;" 
+                      @click="salesResend(item,$index)">重新发货</button>
             </td>
           </tr>
         </tbody>
@@ -153,18 +155,21 @@
   import pagination from '../pagination'
   import detailModel from '../order/second_order/fundDetail'
   import common from '../../common/common'
-  import changeMenu from '../../components/tools/tabs/tabs.js'
+  import changeMenu from '../../components/tools/tabs/tabs'
   import auditModel  from './second_order/financeAudit'
   import tipsModel from '../../components/tips/tipDialog'
   import updateModel from '../../components/order/second_order/afterSalesApply'
+  import resendModel from '../order/second_order/afterResendPage'
   import {
-    initMyAfterSales
+    initMyAfterSales,
+    initLogin 
   } from '../../vuex/getters'
   import {
     getSalesApplyList,
     paymentConfirm,
     contractCheck,
-    afterSalseEdit
+    afterSalseEdit,
+    
   } from '../../vuex/actions'
   export default {
     components: {
@@ -172,17 +177,20 @@
       detailModel,
       auditModel,
       tipsModel,
-      updateModel
+      updateModel,
+      resendModel
     },
     vuex: {
       getters: {
-        initMyAfterSales
+        initMyAfterSales,
+        initLogin
       },
       actions: {
         getSalesApplyList,
         paymentConfirm,
         contractCheck,
-        afterSalseEdit
+        afterSalseEdit,
+        
       }
     },
     data() {
@@ -202,6 +210,27 @@
           orderType:'',
           validate:'',
           total:0
+        },
+        resendParam:{
+          show:false,
+          loading:true,
+          afterSalesId:'',
+          orderId:'',
+          url:'/order/quality/after/sales/resend',
+          titles:'换货后重新发货',
+          validate:'',
+          code:'', //第三方物流查询编码
+          driverName:'',
+          driverPid:'',
+          driverTel:'',
+          logistics:'',
+          name:'',
+          number:'',
+          vehicleNo:'', //车牌号
+          wareAddr:'', //仓库地址
+          wareName:'', //仓库名
+          warehouse:'',
+          way:'', //0/1 第三方/自运
         },
         editParam: {
           show: false
@@ -232,6 +261,14 @@
         this.loadParam.orderNo='';
         this.loadParam.orderType='';
         this.getSalesApplyList(this.loadParam);
+      },
+      salesResend:function(item,sub){ //重新发货
+        this.resendParam.show = true;
+        this.resendParam.afterSalesId = item.id;
+        this.resendParam.orderId = item.orderId;
+        this.resendParam.validate = item.validate;
+        this.resendParam.callback = this.callback;
+        console.log(this.resendParam)
       },
       applyInfo:function(item){
         this.financeParam.show = true;

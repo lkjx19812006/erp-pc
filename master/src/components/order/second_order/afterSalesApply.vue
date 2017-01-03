@@ -14,7 +14,7 @@
                     <div class="editpage-input col-md-6">
                        <label class="editlabel">售后方式 <span class="system_danger" v-if="$validation.adjust.required">{{$t('static.required')}}</span></label>
                        <input type="text" v-show="false" class="form-control" v-model="param.type"  v-validate:adjust="{required:true}"/>
-                       <select class="form-control" v-model="param.type">
+                       <select class="form-control" v-model="param.type" @change="clickSwitch()">
                           <option value="0">换货</option>
                           <option value="1">退货</option>
                        </select>
@@ -94,6 +94,14 @@ export default {
         confirm:function(){
             this.param.show =false;
             this.param.link(this.param);
+        },
+        clickSwitch:function(){
+            if(this.param.type==0){
+
+            }else if(this.param.type==1){
+                this.employeeParam.shipperName = '';
+                this.param.shipper = '';
+            }   
         },
         selectEmployee:function(id,name,differce){
             console.log(differce)

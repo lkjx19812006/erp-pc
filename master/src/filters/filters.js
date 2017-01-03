@@ -470,7 +470,7 @@ Vue.filter('date',function(val){      //将时间的时分秒去掉
 })
 Vue.filter('dateTime',function(val){      //将时间的时分秒去掉
 	var val = val;
-	val = new Date(parseInt(val)).toLocaleString().substr(0,17);
+	val = new Date(parseInt(val)).toLocaleString().substr(0,20);
 	return val;
 })
 

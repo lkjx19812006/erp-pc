@@ -91,7 +91,7 @@
             <td>{{item.description}}</td>
             <td>{{item.validate | Auditing}}</td>
             <td>
-                <a class="operate" v-if="item.validate==1" @click="applyInfo({
+                <a class="operate" v-if="item.validate==1&&item.taskKey=='supplementary_contract_governor_validate'" @click="applyInfo({
                       show:true,
                       sub:$index,
                       id:item.id,

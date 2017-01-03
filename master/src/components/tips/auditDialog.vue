@@ -31,6 +31,12 @@
         <input type="button" class="btn  btn-confirm"  @click="param.sendRefuse(),param.show = false" value="不通过" />
         <input type="button" class="btn  btn-confirm"  @click="param.sendPass(),param.show = false" value="通过" />
       </div>
+     <!-- 审核补充合同 -->
+      <div class="model-footer" v-if="param.taskKey=='supplementary_contract_employee_handle'">
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+        <input type="button" class="btn  btn-confirm"  @click="param.sendRefuse(),param.show = false" value="取消补充合同" />
+        <input type="button" class="btn  btn-confirm"  @click="param.sendPass(),param.show = false" value="重新申请" />
+      </div>
     <!-- 重新或取消发货申请 -->
       <div class="model-footer" v-if="param.title=='重新申请发货'||param.taskKey=='order_send_employee_handle'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>

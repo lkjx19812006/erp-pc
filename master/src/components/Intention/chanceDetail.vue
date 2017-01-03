@@ -470,9 +470,9 @@ export default {
                 intl:0,
                 employee:this.initLogin.id,   //业务员ID
                 org:this.initLogin.orgId,    //部门ID
-                incidentals:'',
+                incidentals:0,
                 incidentalsDesc:'',
-                preferential:'',   //优惠金额
+                preferential:0,   //优惠金额
                 preferentialDesc:'',
                 currency:'',     //货币品种
                 consignee:'',    //收货人姓名
@@ -482,6 +482,7 @@ export default {
                 province:'',
                 city:'',
                 district:'',
+                total:0,
                 consigneeAddr:'',
                 comments:'',
                 sourceType:1,    //来源类型(意向)
@@ -540,9 +541,7 @@ export default {
           this.pictureParam.img = img;
       },
       adopt:function(item,index){
-          console.log("创建订单");
           console.log(item);
-
           this.orderParam.show = true;
           this.orderParam.index = index;
           //this.orderParam.customer = item.customerId;
@@ -555,6 +554,8 @@ export default {
           this.orderParam.incidentalsDesc = item.incidentalsDesc;
           this.orderParam.goods[0].quality = item.quality;
           this.orderParam.goods[0].location = item.location;
+          this.orderParam.callback = this.callback;
+          console.log(this.orderParam)
       },
       edit:function(index,item){
         console.log(item)
@@ -590,6 +591,11 @@ export default {
         this.trackingParam = item;
         this.trackingParam.flag = 1;   //1表示修改
         this.trackingParam.show = true;
+      },
+      callback:function(name){
+        this.tipsParam.show=true;
+        this.tipsParam.name=name;
+        this.tipsParam.alert = true;
       }
     },
     created(){
@@ -667,11 +673,6 @@ section article {
 .contactSet thead{
   color:#fa6705;
 }
-.contact-view {
-    color: #fa6705;
-    margin-bottom: 0;
-    cursor: pointer;
-}
 .table{
   display: table;
 }
@@ -703,25 +704,5 @@ section article {
     background-color: #fa6705;
     color: #fff;
     font-size: 18px;
-}
-.label_action{
-  position: absolute;
-  top:13px;
-  right: 32px;
-  border: 1px solid #ccc;
-    border-radius: 3px;
-    background: #fff;
-    z-index: 1000;
-    min-width: 90px;
-    cursor: pointer;
-    padding: 5px 10px;
-    max-width: 200px;
-}
-.client-editbtn {
-    text-align: right;
-    margin-top: 15px;
-}
-.client-image {
-    display: inline-block;
 }
 </style>

@@ -1164,6 +1164,9 @@ export const paymentConfirm = ({ dispatch }, param) => { //确定收款
         id: param.id,
         images:img
     }
+    if(param.comment){
+        body.comment = param.comment;
+    }
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.url,
@@ -1196,16 +1199,18 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     var ss= param.images;
     var sss = ss.split(",");//字符串转化为数组
     sss.toString();
-    const body = {};
+    const body = {
+        payWay:param.payWay,
+    };
     if(param.id&&param.id!=''){
         body.id = param.id;
     }
     if(param.validate&&param.validate!=''){
         body.validate = param.validate;
     }
-    if(param.amount&&param.amount!=''){
+    /*if(param.amount&&param.amount!=''){
         body.amount = param.amount;
-    }
+    }*/
     if(param.description&&param.description!=''){
         body.description = param.description;
     }
@@ -1221,9 +1226,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if(param.payUserName&&param.payUserName!=''){
         body.payUserName = param.payUserName;
     }
-    if(param.payWay&&param.payWay!=''){
-        body.payWay = param.payWay;
-    }
     if(param.bizId&&param.bizId!=''){
         body.bizId = param.bizId;
     }
@@ -1236,6 +1238,7 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if (param.images) {
         body.images = sss;
     }
+    console.log(body)
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.url,
@@ -1248,7 +1251,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
         }
     }).then((res) => {
         param.callback(res.json().msg);
-        console.log(res.json().result)
         if(res.json().code==200){
             param.validate = res.json().result.validate;
             param.pr = res.json().result.pr;
@@ -1274,7 +1276,43 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
         console.log('fail'); 
     });
 }
-
+export const editPayment = ({ dispatch }, param) => { //编辑我的收付款
+    console.log(param)
+    const data = {
+        id: param.id,
+        comment: param.comment,
+        payName: param.payName,
+        payNumber: param.payNumber,
+        payUserName: param.payUserName,
+        payWay: param.payWay
+    }
+    if(param.paySubName&&param.paySubName!=''){
+        data.paySubName = param.paySubName;
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.orderList + param.url,
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+        if(res.json().code==200){
+            param.payName = res.json().result.payName;
+            param.payNumber = res.json().result.payNumber;
+            param.payUserName = res.json().result.payUserName;
+            param.payWay = res.json().result.payWay;
+            param.paySubName = res.json().result.paySubName;
+            dispatch(types.MY_FUND_LIST, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+};
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     console.log(param)
     param.images = '';
@@ -6738,6 +6776,93 @@ export const afterSalseEdit = ({ dispatch }, param) => {   //售后编辑修改
         param.callback(res.json().msg); 
         if(res.json().code==200){
            dispatch(types.CONTRACT_LIST, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getReceiptDetail = ({ dispatch }, param) => { //合同、售后详情页面
+    param.loading = true;
+    var url = apiUrl.clientList +param.url+param.id;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var contract = res.json().result;
+        contract.url = param.url;
+        dispatch(types.SALES_DETAIL, contract);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const afterResend = ({ dispatch }, param) => {   //售后重新发货
+    console.log(param);
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t }
+    var ss= param.images;
+    var img = ss.split(",");//字符串转化为数组
+    img.toString();
+    const body = {
+        afterSalesId:param.afterSalesId,
+        orderId:param.orderId,
+        way:param.way,
+        validate:param.validate
+    }
+    if (param.images) {
+        body.images = img;
+    } 
+    if (param.number) {
+        body.number = param.number;
+    }    
+    if (param.name) {
+        body.name = param.name;
+    }
+    if (param.code) {
+        body.code = param.code;
+    }
+    if (param.logistics) {
+        body.logistics = param.logistics;
+    }
+    if (param.driverName) {
+        body.driverName = param.driverName;
+    }
+    if (param.driverPid) {
+        body.driverPid = param.driverPid;
+    }
+    if (param.driverTel) {
+        body.driverTel = param.driverTel;
+    }
+    if (param.vehicleNo) {
+        body.vehicleNo = param.vehicleNo;
+    }
+    console.log(body);
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg); 
+        if(res.json().code==200){
+           dispatch(types.AFTER_SALES, param);
         }
     }, (res) => {
         console.log('fail');

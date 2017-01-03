@@ -364,10 +364,10 @@ export default {
               all: 7
             },
             empNameParam:{
-                show:false,
-                customer:'',
-                customerName:'',
-                customerPhone:''
+              show:false,
+              customer:'',
+              customerName:'',
+              customerPhone:''
             },
             breedParam:{
                 show:false,

@@ -26,19 +26,17 @@
 <script>
 export default {
     props: ['param']
-
 }
 </script>
 <style scoped>
-
-.del_modal_con{
-    z-index:1102;
-}
 .modal {
-    z-index:1102;
     opacity: 0.5;
     background-color: #000;
     display: block;
+    z-index: 1102;
+}
+.del_modal_con{
+    z-index: 1102;
 }
 .big-font {
     font-size: 36px;
