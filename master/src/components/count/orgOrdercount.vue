@@ -29,8 +29,6 @@
                     <th>订单数</th>
                     <th>重量</th>
                     <th>订单金额</th>
-                    <th>利润</th>
-                    <th>利润率</th>
                     <th>订单数</th>
                     <th>重量</th>
                     <th>订单金额</th>
@@ -48,54 +46,44 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in initOrgOrderCount">
-                    <th>{{item.id}}</th>
-                    <th>{{item.saleAllOrderNumber}}</th>
-                    <th>{{item.saleAllOrderAmount}}kg</th>
-                    <th>{{item.saleAllOrderMoney}}元</th>
-                    <th>{{item.saleEndOrderNumber}}</th>
-                    <th>{{item.saleEndOrderAmount}}kg</th>
-                    <th>{{item.saleEndOrderMoney}}元</th>
-                    <th>{{item.profit}}元</th>
-                    <th>{{item.profitMargin}}</th>
-                    <th>{{item.saleIngOrderNumber}}</th>
-                    <th>{{item.saleIngOrderAmount}}kg</th>
-                    <th>{{item.saleIngOrderMoney}}元</th>
-                    <th>{{item.saleIngOrderUnpaid}}元</th>
-                    <th>{{item.buyAllOrderNumber}}</th>
-                    <th>{{item.buyAllOrderAmount}}kg</th>
-                    <th>{{item.buyAllOrderMoney}}元</th>
-                    <th>{{item.buyEndOrderNumber}}</th>
-                    <th>{{item.buyEndOrderAmount}}kg</th>
-                    <th>{{item.buyEndOrderMoney}}元</th>
-                    <th>{{item.buyIngOrderNumber}}</th>
-                    <th>{{item.buyIngOrderAmount}}kg</th>
-                    <th>{{item.buyIngOrderMoney}}元</th>
-                    <th>{{item.buyIngOrderUnpaid}}元</th>
+                <tr>
+                    <td></td>
+                    <td>{{initOrgOrderCount.salesAllNum | isnull}}</td>
+                    <td>{{initOrgOrderCount.salesAllWeight | isnull}}kg</td>
+                    <td>{{initOrgOrderCount.salesAllTotal | isnull}}元</td>
+                    <td>{{initOrgOrderCount.salesEndNum | isnull}}</td>
+                    <td>{{initOrgOrderCount.salesEndWeight | isnull}}kg</td>
+                    <td>{{initOrgOrderCount.salesEndTotal | isnull}}元</td>
+                    <td>{{initOrgOrderCount.salesIngNum | isnull}}</td>
+                    <td>{{initOrgOrderCount.salesIngWeight | isnull}}kg</td>
+                    <td>{{initOrgOrderCount.salesIngTotal | isnull}}元</td>
+                    <td>{{initOrgOrderCount.salesReceivables | isnull}}元</td>
+                    <td>{{initOrgOrderCount.buyAllNum | isnull}}</td>
+                    <td>{{initOrgOrderCount.buyAllWeight | isnull}}kg</td>
+                    <td>{{initOrgOrderCount.buyAllTotal | isnull}}元</td>
+                    <td>{{initOrgOrderCount.buyEndNum | isnull}}</td>
+                    <td>{{initOrgOrderCount.buyEndWeight | isnull}}kg</td>
+                    <td>{{initOrgOrderCount.buyEndTotal | isnull}}元</td>
+                    <td>{{initOrgOrderCount.buyIngNum | isnull}}</td>
+                    <td>{{initOrgOrderCount.buyIngWeight | isnull}}kg</td>
+                    <td>{{initOrgOrderCount.buyIngTotal | isnull}}元</td>
+                    <td>{{initOrgOrderCount.buyPayable | isnull}}元</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- <div class="click_change">
-        <span class="date_active" v-bind:class="{ 'date_active': orderSort=='type'}" @click="changeOrderSort('type')">客户类型</span>
-        <span v-bind:class="{ 'date_active': orderSort=='address'}" @click="changeOrderSort('address')">客户所在地</span>
-        <span v-bind:class="{ 'date_active': orderSort=='breed'}" @click="changeOrderSort('breed')">品种</span>
-        <span v-bind:class="{ 'date_active': orderSort=='location'}" @click="changeOrderSort('location')">产地</span>
-        <span v-bind:class="{ 'date_active': orderSort=='other'}" @click="changeOrderSort('other')">辅材其他</span>
-    </div> -->
-
     <div class="btn-group" style="margin-top:20px">
-         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': orderSort=='type'}" @click="changeOrderSort('type')">
+         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='customer_type'}" @click="changeGroupType('customer_type')">
             客户类型
          </button>
-         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': orderSort=='address'}" @click="changeOrderSort('address')">
-            客户所在地
+         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='phone_province'}" @click="changeGroupType('phone_province')">
+            地区
          </button>
-         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': orderSort=='breed'}" @click="changeOrderSort('breed')">
+         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='breed_id'}" @click="changeGroupType('breed_id')">
             品种
          </button>
-         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': orderSort=='location'}" @click="changeOrderSort('location')">
+         <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': groupType=='location'}" @click="changeGroupType('location')">
             产地
          </button>
          <!-- <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': orderSort=='other'}" @click="changeOrderSort('other')">
@@ -103,37 +91,39 @@
          </button> -->
      </div>
 
-	<div class="order_table">
+	 <div class="order_table" style="max-height:500px;overflow:auto" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <table class="table table-hover table_color table-bordered table-striped " v-cloak>
+            <table class="table table-hover table_color table-bordered table-striped " v-cloak id="tab">
                 <thead>
                     <tr style="background:none;color:#000">
                         <th>序号</th>
                         <th>
-                            <span v-if="orderSort=='type'">客户类型</span>
-                            <span v-if="orderSort=='address'">地区</span>
-                            <span v-if="orderSort=='breed'">品种</span>
-                            <span v-if="orderSort=='location'">产地</span>
-                            <span v-if="orderSort=='other'">其他</span>
+                            <span v-if="groupType=='customer_type'">客户类型</span>
+                            <span v-if="groupType=='phone_province'">地区</span>
+                            <span v-if="groupType=='breed_id'">品种</span>
+                            <span v-if="groupType=='location'">产地</span>
                         </th>
-                        <th>订单数</th>
+                        <th>订单笔数</th>
                         <th>重量</th>
                         <th>订单金额</th>
-                        <th>利润</th>
-                        <th>利润率</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in initOrgOrderSortCount">
                         <td width="100px">{{$index+1}}</td>
-                        <td width="100px">{{item.focuName}}</td>
-                        <td width="100px">{{item.saleAllOrderNumber}}</td>
-                        <td width="100px">{{item.saleAllOrderAmount}}kg</td>
-                        <td width="100px">{{item.saleAllOrderMoney}}元</td>
-                        <td width="100px">{{item.profit}}元</td>
-                        <td width="100px">{{item.profitMargin}}</td>
+                        <td>
+                            <span v-if="groupType=='customer_type'">{{item.customerType}}</span>
+                            <span v-if="groupType=='phone_province'">{{item.phoneProvince}}</span>
+                            <span v-if="groupType=='breed_id'">{{item.breedName}}</span>
+                            <span v-if="groupType=='location'">{{item.location}}</span>
+                        </td>
+                        <td>{{item.total}}笔</td>
+                        <td>{{item.totalNumber}}kg</td>
+                        <td>{{item.totalAmount}}元</td>
+                        
                     </tr>
                 </tbody>
             </table>
@@ -149,7 +139,9 @@
 	import {
 		getOrderCount
 	} from '../../vuex/actions'
+    import filter from '../../filters/filters'
 	import pagination from  '../pagination'
+    import common from '../../common/common'
 	export default {
 		components:{
 			pagination,
@@ -167,50 +159,19 @@
                 },
                 sortParam:{   
                     loading: true,
-                    link:"/report/order/org",
+                    link:"/report/order/type",
                     key:"orgOrderSortCount",
-                    focus:'custType',  
-                    objType:'', 
-                    objId:'', 
-                    orgId:this.$store.state.table.login.orgId  
+                    groupType:'customer_type' 
                 },
-                orderSort:"type",
+                groupType:'customer_type',
+                
 	        }
 	    },
 	    methods:{
-            changeOrderSort:function(orderSort){
-                this.orderSort = orderSort;
-                if(orderSort=="type"){
-                    this.sortParam.link = "/report/order/org";
-                    this.sortParam.focus = "custType";
-                    this.sortParam.orgId = this.$store.state.table.login.orgId;
-                    this.sortParam.objType = "";
-                    this.sortParam.objId = "" ;
-                }
-                if(orderSort=="address"){
-                    this.sortParam.link = "/report/order/org";
-                    this.sortParam.focus = "custRegion";
-                    this.sortParam.orgId = this.$store.state.table.login.orgId;
-                    this.sortParam.objType = "";
-                    this.sortParam.objId = "" ;
-                }
-                if(orderSort=="breed"){
-                    this.sortParam.link = "/report/order/goods";
-                    this.sortParam.focus = "goods";
-                    this.sortParam.orgId = "";
-                    this.sortParam.objType = "org";
-                    this.sortParam.objId = this.$store.state.table.login.orgId  ;
-                }
-                if(orderSort=="location"){
-                    this.sortParam.link = "/report/order/goods";
-                    this.sortParam.focus = "location";
-                    this.sortParam.orgId = "";
-                    this.sortParam.objType = "org";
-                    this.sortParam.objId = this.$store.state.table.login.orgId  ;
-                }
+            changeGroupType:function(groupType){
+                this.groupType = groupType;
+                this.sortParam.groupType = groupType;
                 this.getOrderCount(this.sortParam);
-
-
             }
 	    },
 	    vuex: {
@@ -225,11 +186,15 @@
 	    events: {
 	        
 	    },
+        ready(){
+          //common('tab','table_box',1);
+        },
 	    created() {
 	        this.getOrderCount(this.loadParam);
             this.getOrderCount(this.sortParam);
 	    
-	    }
+	    },
+        filter:(filter,{})
 	}
 </script>
 <style scoped>

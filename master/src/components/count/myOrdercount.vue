@@ -50,27 +50,27 @@
             </thead>
             <tbody>
                 <tr>
-                    <th>{{$store.state.table.login.name}}</th>
-                	<th>{{initMyOrderCount.salesAllNum}}</th>
-                    <th>{{initMyOrderCount.salesAllWeight}}kg</th>
-                    <th>{{initMyOrderCount.salesAllTotal}}元</th>
-                    <th>{{initMyOrderCount.salesEndNum}}</th>
-                    <th>{{initMyOrderCount.salesEndWeight}}kg</th>
-                    <th>{{initMyOrderCount.salesEndTotal}}元</th>
-                    <th>{{initMyOrderCount.salesIngNum}}</th>
-                    <th>{{initMyOrderCount.salesIngWeight}}kg</th>
-                    <th>{{initMyOrderCount.salesIngTotal}}元</th>
-                    <th>{{initMyOrderCount.salesReceivables}}元</th>
-                    <th>{{initMyOrderCount.buyAllNum}}</th>
-                    <th>{{initMyOrderCount.buyAllWeight}}kg</th>
-                    <th>{{initMyOrderCount.buyAllTotal}}元</th>
-                    <th>{{initMyOrderCount.buyEndNum}}</th>
-                    <th>{{initMyOrderCount.buyEndWeight}}kg</th>
-                    <th>{{initMyOrderCount.buyEndTotal}}元</th>
-                    <th>{{initMyOrderCount.buyIngNum}}</th>
-                    <th>{{initMyOrderCount.buyIngWeight}}kg</th>
-                    <th>{{initMyOrderCount.buyIngTotal}}元</th>
-                    <th>{{initMyOrderCount.buyPayable}}元</th>
+                    <td>{{$store.state.table.login.name}}</td>
+                	<td>{{initMyOrderCount.salesAllNum | isnull}}</td>
+                    <td>{{initMyOrderCount.salesAllWeight | isnull}}kg</td>
+                    <td>{{initMyOrderCount.salesAllTotal | isnull}}元</td>
+                    <td>{{initMyOrderCount.salesEndNum | isnull}}</td>
+                    <td>{{initMyOrderCount.salesEndWeight | isnull}}kg</td>
+                    <td>{{initMyOrderCount.salesEndTotal | isnull}}元</td>
+                    <td>{{initMyOrderCount.salesIngNum | isnull}}</td>
+                    <td>{{initMyOrderCount.salesIngWeight | isnull}}kg</td>
+                    <td>{{initMyOrderCount.salesIngTotal | isnull}}元</td>
+                    <td>{{initMyOrderCount.salesReceivables | isnull}}元</td>
+                    <td>{{initMyOrderCount.buyAllNum | isnull}}</td>
+                    <td>{{initMyOrderCount.buyAllWeight | isnull}}kg</td>
+                    <td>{{initMyOrderCount.buyAllTotal | isnull}}元</td>
+                    <td>{{initMyOrderCount.buyEndNum | isnull}}</td>
+                    <td>{{initMyOrderCount.buyEndWeight | isnull}}kg</td>
+                    <td>{{initMyOrderCount.buyEndTotal | isnull}}元</td>
+                    <td>{{initMyOrderCount.buyIngNum | isnull}}</td>
+                    <td>{{initMyOrderCount.buyIngWeight | isnull}}kg</td>
+                    <td>{{initMyOrderCount.buyIngTotal | isnull}}元</td>
+                    <td>{{initMyOrderCount.buyPayable | isnull}}元</td>
                 </tr>
             </tbody>
         </table>
@@ -102,7 +102,7 @@
          </button>
      </div>
 
-    <div class="module clear">
+    <div class="module clear" style="max-height:500px;overflow:auto">
         <table class="table table-hover table_color table-bordered table-striped " v-cloak>
             <tr style="background:none;color:#000">
                 <th rowspan="1"></th>
@@ -168,6 +168,7 @@
 		getOrderCount,
         getTimeOrderCount
 	} from '../../vuex/actions'
+    import filter from '../../filters/filters'
 	import pagination from  '../pagination'
 	export default {
 		components:{
@@ -217,7 +218,8 @@
 	    created() {
 	        this.getOrderCount(this.loadParam);
             this.getTimeOrderCount(this.timeParam);
-	    }
+	    },
+        filter:(filter,{})
 	}
 </script>
 <style scoped>
