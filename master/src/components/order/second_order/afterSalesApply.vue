@@ -25,7 +25,7 @@
                     </div>
                     <div class="editpage-input col-md-6" v-if="param.type==0">
                        <label class="editlabel">发货人 <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
-                       <input type="text"  class="form-control" v-model="employeeParam.shipperName"  v-validate:shipper="{required:true}" value="{{param.consignee}}" readonly="true"  @click="selectEmployee(param.shipper,employeeParam.shipperName,deliver)" />
+                       <input type="text"  class="form-control" v-model="employeeParam.shipperName"  v-validate:shipper="{required:true}" value="{{param.shipper}}" readonly="true"  @click="selectEmployee(param.shipper,employeeParam.shipperName,deliver)" />
                     </div>
                     <div class="editpage-input col-md-12">
                        <label class="editlabel">备注</label>
@@ -97,10 +97,11 @@ export default {
         },
         clickSwitch:function(){
             if(this.param.type==0){
-
+               
             }else if(this.param.type==1){
                 this.employeeParam.shipperName = '';
                 this.param.shipper = '';
+                this.employeeParam.shipper= '';
             }   
         },
         selectEmployee:function(id,name,differce){

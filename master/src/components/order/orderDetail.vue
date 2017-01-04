@@ -193,7 +193,7 @@
                                                     })">{{$t('static.unapproved')}}</td>
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td>
+                                                <td v-if="param.contact=='/order/myList'">
                                                     <a class="operate" v-if="item.type==1&&item.validate==0&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
