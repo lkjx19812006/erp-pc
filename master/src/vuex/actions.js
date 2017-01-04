@@ -5820,6 +5820,10 @@ export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交
     if(param.org&&param.org!==''){
         url += "&org=" + param.org;
     }
+    if(param.groupType&&param.groupType!==''){
+        url += "&groupType=" + param.groupType;
+    }
+
     Vue.http({
         method: 'GET',
         url: url ,
