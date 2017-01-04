@@ -1432,7 +1432,16 @@ const mutations = {
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerComment = data.comment;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerCurrency = data.currency;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].exchangeRate = data.exchangeRate;
+
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].supplierName = data.supplierName;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].supplier = data.supplier;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].product = data.product;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].offererName = data.offererName;
+        
+      
+        state.basicBaseList.intlIntentionDetail.itemsTotal = data.itemsTotal;
         state.basicBaseList.intlIntentionInquireList[data.lastIndex].inquire = 2;  //原材料报价后将inquire置为2
+
     },
 
     [OTHER_OFFER_DATA](state, data) { //增（改）国际意向其他报价
@@ -1441,19 +1450,22 @@ const mutations = {
           //新建要补全信息
           console.log('新建其他报价');
           state.basicBaseList.intlIntentionDetail.offers.arr.unshift(data);
+          state.basicBaseList.intlIntentionDetail.offersTotal = data.offersTotal;
         }else{
           console.log('修改其他报价');
           state.basicBaseList.intlIntentionDetail.offers.arr[data.index].currency = data.currency;
           state.basicBaseList.intlIntentionDetail.offers.arr[data.index].cost = data.cost;
           state.basicBaseList.intlIntentionDetail.offers.arr[data.index].costDesc = data.costDesc;
           state.basicBaseList.intlIntentionDetail.offers.arr[data.index].comment = data.comment;
+          state.basicBaseList.intlIntentionDetail.offersTotal = data.offersTotal;
         }
         
         
     },
 
     [DEL_OTHER_OFFER](state, data) { //删除国际意向其他报价
-        state.basicBaseList.intlIntentionDetail.offers.arr.splice(data.index,1);    
+        state.basicBaseList.intlIntentionDetail.offers.arr.splice(data.index,1);
+        state.basicBaseList.intlIntentionDetail.offersTotal = data.offersTotal;    
     },
 
     [CONFIRM_OFFER](state, data) { //确认报价
@@ -1722,6 +1734,7 @@ const mutations = {
           'inquireTime': data.inquireTime,
           'offerTime' : data.offerTime,
           'validate' : data.validate,
+          'source' : data.source,
           'inquire' : data.inquire,
           'names':data.names,
           'ctime':data.ctime,

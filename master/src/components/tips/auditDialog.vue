@@ -15,11 +15,19 @@
         <input type="button" class="btn  btn-confirm"  @click="param.callback(),param.show = false" value="{{$t('static.confirm')}}" />
       </div>
       
-      <div class="model-footer" v-if="param.audit">
+      <div class="model-footer" v-if="param.audit===true">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
         <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="不通过" />
         <input type="button" class="btn  btn-confirm"  @click="param.pass(),param.show = false" value="通过" />
       </div>
+
+      <div class="model-footer" v-if="param.tracking">
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+        <input type="button" class="btn  btn-confirm"  @click="param.wait(),param.show = false" value="跟进中" />
+        <input type="button" class="btn  btn-confirm"  @click="param.pass(),param.show = false" value="有效" />
+        <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="无效" />
+      </div>
+
       <div class="model-footer" v-if="param.taskKey=='employee_handle'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
         <input type="button" class="btn  btn-confirm"  @click="param.reject(),param.show = false" value="重新申请" />
@@ -91,7 +99,11 @@
           this.param.show = false;
           this.sendCancel(item);
        }
+    },
+    created(){
+        console.log(this.param);  
     }
+
   }
 </script>
 <style scoped>

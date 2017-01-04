@@ -7,6 +7,8 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+    <updatetracking-model :param="updateTrackingParam" v-if="updateTrackingParam.show"></updatetracking-model>
+    
     <div>
         <div class="service-nav">
             <div class="clear" style="margin-top:3px;"> 
@@ -181,7 +183,9 @@
                         <th>{{$t('static.phone_origin')}}</th>
                         <th>{{$t('static.client_origin')}}</th>
                         <th>{{$t('static.detailed_address')}}</th>
-                        <th>{{$t('static.main_product')}}</th> 
+                        <th>{{$t('static.main_product')}}</th>
+                        <th v-if="this.initLogin.orgId==29">跟进状态</th> 
+                        <th v-if="this.initLogin.orgId==29">跟进说明</th>  
                         
                     <!-- <th>{{$t("static.type")}}</th>
                         <th>{{$t("static.classification")}}</th>
@@ -203,11 +207,31 @@
                         <th>{{$t("static.whether_supplier")}}</th>
                         <th style="min-width:200px">{{$t("static.comment")}}</th> -->
                         <th>{{$t("static.operation")}}</th>
+                        <th v-if="this.initLogin.orgId==29">跟进</th>
                     </tr>
                 </thead>
+                <tr>
+                    <th>
+                        <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
+                    </th>
+                    <th style="color:#fa6705;font-size: 14px">全选</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
                 <tbody>
                     <tr>
-
+                        
                     </tr>
                     <tr v-for="item in initMyCustomerlist">
                         <td  @click.stop="">
@@ -236,6 +260,8 @@
                         <td>{{item.provinceName}}{{item.cityName}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.bizScope}}</td>
+                        <td v-if="this.initLogin.orgId==29">{{item.audit | tracking}}</td> 
+                        <td v-if="this.initLogin.orgId==29">{{item.auditComment}}</td> 
 
                     <!-- <td>{{item.typeDesc}}</td>
                         <td>{{item.classifyDesc | classify}}</td>
@@ -311,6 +337,7 @@
                                                 orgId:item.orgId
                                                 })">
                             <a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" />
+                            <td v-if="this.initLogin.orgId==29"><a @click="updateTracking(item,$index)">跟进</a></td>
                             </a>
                         </td>
                     </tr>
@@ -333,6 +360,7 @@ import transferModel   from '../../../components/user/employeeOrOrg'
 import tipsdialogModel  from '../../../components/tips/tipDialog'
 import searchModel  from  '../../../components/clientRelate/searchModel'
 import auditDialog from '../../../components/tips/auditDialog'
+import updatetrackingModel from '../../../components/tips/auditDialog'
 import vSelect from '../../tools/vueSelect/components/Select'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
@@ -362,6 +390,7 @@ export default {
         tipsdialogModel,
         searchModel,
         auditDialog,
+        updatetrackingModel,
         vSelect
     },
     vuex: {
@@ -432,6 +461,20 @@ export default {
             searchParam:{
                 show:false
             },
+            updateTrackingParam:{
+                show:false,
+                title:'跟进',
+                tracking:true,
+                key:'myCustomerList',
+                sub:'',
+                id:'',
+                audit:'',
+                auditComment:'',
+                wait:this.waitTracking,
+                pass:this.passTracking,
+                reject:this.rejectTracking,
+                callback:this.trackingback
+            }, 
             transferParam:{
                 show:false,
                 name:'',
@@ -470,6 +513,30 @@ export default {
         clickOn: function(param) {
             this.changeParam = param;
         },
+        updateTracking:function(item,index){
+            this.updateTrackingParam.sub = index;
+            this.updateTrackingParam.id = item.id;
+            this.updateTrackingParam.auditComment = item.auditComment;
+            this.updateTrackingParam.show = true;
+        },
+        waitTracking:function(){
+            this.updateTrackingParam.audit = 1;
+            this.alterInfo(this.updateTrackingParam);
+        },
+        passTracking:function(){
+            this.updateTrackingParam.audit = 2;
+            this.alterInfo(this.updateTrackingParam);
+        },
+        rejectTracking:function(){
+            this.updateTrackingParam.audit = 3;
+            this.alterInfo(this.updateTrackingParam);
+        },
+        trackingback:function(title){
+          this.tipsParam.show = true;
+          this.tipsParam.name=title;
+          this.tipsParam.alert=true;
+       },
+
         createCustomer:function(info){
             this.createParam = info;
             this.createParam.callback=this.valueback;
@@ -705,8 +772,8 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 115px;
-    min-width: 115px;
+    width: 113px;
+    min-width: 96px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;

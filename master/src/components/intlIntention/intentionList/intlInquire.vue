@@ -30,6 +30,7 @@
                         <th>{{$t('static.salesman')}}</th>
                         <th>{{$t('static.country')}}</th>
                         <th>{{$t('static.city')}}</th>
+                        <th>{{$t('static.intention_source')}}</th>
                         <th>{{$t('static.create_time')}}</th>
                         <th>{{$t('static.inquiry_state')}}</th>
                         <th>{{$t('static.handle')}}</th>
@@ -44,6 +45,7 @@
                         <td>{{item.employeeName}}</td>
                         <td>{{item.country}}</td>
                         <td>{{item.city}}</td>
+                        <td>{{item.source}}</td>
                         <td>{{item.ctime}}</td>
                         <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
                         <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
@@ -271,8 +273,8 @@ export default {
     margin-left: 18px;
 }
  #table_box  table th,#table_box  table td{
-    min-width: 171px;
-    width: 171px;
+    min-width: 155px;
+    width: 155px;
 }
 </style>
 

@@ -3214,8 +3214,8 @@ export const deleteInfo = ({ dispatch }, param) => { //删除客户、药材信�
     });
 }
 export const alterInfo = ({ dispatch }, param) => { //修改客户信息
-    console.log(param)
-    const data = {
+    console.log(param);
+    var data = {
         name: param.name,
         type: param.type,
         category: param.category,
@@ -3241,6 +3241,14 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
     }
     if (param.supplier) {
         data.supplier = param.supplier;
+    }
+    if(param.tracking){
+        data = '';
+        data = {
+            id: param.id,
+            audit: param.audit,
+            auditComment: param.auditComment
+        };
     }
     Vue.http({
         method: 'PUT',
@@ -4530,7 +4538,12 @@ export const cancelIntlIntentionInquire = ({ dispatch }, param) => { //国际意
         }
     }).then((res) => {
         param.show = false;
-        param.inquire = 0;
+        if(param.inquireTime<=1){
+            param.inquire = 0;
+            param.inquireType = '';
+        }else{
+            param.inquire = 3;
+        }
         param.inquireTime = param.inquireTime - 1;
         dispatch(types.INQUIRE_DATA, param);
     }, (res) => {
@@ -4601,6 +4614,7 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
             param.callback(res.json().msg);
         }
         if(res.json().code==200){
+            param.itemsTotal = (param.itemsTotal*100 + param.number*param.price*100)/100;
             dispatch(types.ORIGIN_OFFER_DATA, param);
         }
     }, (res) => {
@@ -4642,8 +4656,11 @@ export const intlIntentionOtherOffer = ({ dispatch }, param) => { //国际意向
         }
         param.id = res.json().result.id;
         if(res.json().code==200){
+            //成功后total会改变
+            param.offersTotal = (param.offersTotal*100 + param.cost*100)/100;
             dispatch(types.OTHER_OFFER_DATA, param);
         }
+
     }, (res) => {
         console.log('fail');
     })
@@ -4667,7 +4684,6 @@ export const delIntlIntentionOtherOffer = ({ dispatch }, param) => { //删除国
         }
     }).then((res) => {
         console.log('删除其他报价成功!!!!')
-
         dispatch(types.DEL_OTHER_OFFER, param);
     }, (res) => {
         console.log('fail');
@@ -5795,23 +5811,15 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
 export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交易统计)
     if(param) param.loading= true;
     var url = apiUrl.clientList +param.link +'?';
-    if(param.focus&&param.focus!==''){
-        url += "&focus=" + param.focus;
-    }
-    if(param.employeeId&&param.employeeId!==''){
-        url += "&employeeId=" + param.employeeId;
-    }
-    if(param.orgId&&param.orgId!==''){
-        url += "&orgId=" + param.orgId;
-    }
     if(param.objType&&param.objType!==''){
         url += "&objType=" + param.objType;
     }
-    if(param.objId&&param.objId!==''){
-        url += "&objId=" + param.objId;
+    if(param.employee&&param.employee!==''){
+        url += "&employee=" + param.employee;
     }
-
-
+    if(param.org&&param.org!==''){
+        url += "&org=" + param.org;
+    }
     Vue.http({
         method: 'GET',
         url: url ,
@@ -5842,8 +5850,8 @@ export const getTimeOrderCount = ({ dispatch }, param) => { //我的订单统计
     if(param.objType&&param.objType!==''){
         url += "&objType=" + param.objType;
     }
-    if(param.objId&&param.objId!==''){
-        url += "&objId=" + param.objId;
+    if(param.employee&&param.employee!==''){
+        url += "&employee=" + param.employee;
     }
     
     Vue.http({

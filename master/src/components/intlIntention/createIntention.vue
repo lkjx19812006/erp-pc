@@ -193,7 +193,7 @@
                        </div>
 
                        <div class="editpage-input">
-                         <label class="editlabel">意向来源<span class="system_danger" v-if="$validation.source.required">Please select the source</label>
+                         <label class="editlabel">{{$t('static.intention_source')}}<span class="system_danger" v-if="$validation.source.required">Please select the source</label>
                          <input type="text" v-show="false" v-model='param.source' v-validate:source="['required']" class="form-control edit-input"  />
                          <div type="text" class="edit-input" >
                            <input-select
@@ -363,7 +363,7 @@ export default {
             employeeId:''
           },
           tag:['真空包装/Vacuum packaging','瓦楞纸箱/Box','编织袋/Woven bag','积压包/Pallets','其它/Other'],
-          source:['facebook','Twitter','linkedin','google','Yahoo','WeChat','QQ','Alibaba initiative inquiry' ,'Alibaba initiative quotation' ,'Customs data','Personal network collection' ,'ERP client resource','Exhibition，others'],
+          source:['facebook','Twitter','linkedin','google','Yahoo','WeChat','QQ','Alibaba initiative inquiry' ,'Alibaba initiative quotation' ,'Customs data','Personal network collection' ,'ERP client resource','Exhibition','others'],
             country:{
               cname:'',
               nameEn:'',
