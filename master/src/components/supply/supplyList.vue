@@ -3,6 +3,7 @@
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
   <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
   <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
+  <employee-model  :param="employeeParam" v-if="employeeParam.show"></employee-model>
   <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <div>
@@ -63,7 +64,12 @@
                   <mz-datepicker :time.sync="loadParam.ctimeStart" format="yyyy/MM/dd HH:mm:ss">
                   </mz-datepicker>
               </div>
-          </dl>    
+          </dl> 
+
+          <dd class="left" style="margin-left:104px">
+              <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+          </dd>
+
           <dd class="left" style="margin-left:20px">
               <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
           </dd>
@@ -103,10 +109,15 @@
                   </mz-datepicker>
               </div>
           </dl>
+
+          <dl class="clear left transfer">
+             <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
+             <dd class="left">
+                  <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
+             </dd>
+          </dl>
           
-          <dd class="left" style="margin-left:20px">
-              <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
-          </dd>
+          
           
           <dd class="pull-right" style="margin-right:20px"> 
               <button type="button" class="btn btn-default" @click="createCustomer({
@@ -310,6 +321,7 @@
   import deletebreedModel  from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
   import alterinfoModel  from '../clientRelate/clientUpdate'
   import searchModel  from  '../clientRelate/searchModel'
+  import employeeModel  from  '../clientRelate/searchEmpInfo'
   import filter from '../../filters/filters'
   import common from '../../common/common'
   import changeMenu from '../../components/tools/tabs/tabs.js'
@@ -336,6 +348,7 @@
       deletebreedModel,
       alterinfoModel,
       searchModel,
+      employeeModel,
       tipsModel
     },
     vuex: {
@@ -401,6 +414,11 @@
           show: false,
           name:''
         },
+        employeeParam:{
+          show:false,
+          employeeId:'',
+          employeeName:''
+        },
         searchParam:{
           show:false,
         },
@@ -433,6 +451,9 @@
           this.tipsParam.show = true;
           this.tipsParam.name=title;
           this.tipsParam.alert=true;
+      },
+      selectEmployee:function(){
+          this.employeeParam.show = true;
       },
       createSearch:function(){
         this.loadParam.show=true;
@@ -479,6 +500,10 @@
       fresh: function(input) {
         this.loadParam.cur = input;
         this.getClientList(this.loadParam);
+      },
+      a:function(employee){
+        this.loadParam.employeeId = employee.employeeId;
+        this.loadParam.employeeName = employee.employeeName;
       }
     },
     created() {

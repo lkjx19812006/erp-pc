@@ -3,6 +3,7 @@
    <detailemp-model :param="changeParam" v-if="changeParam.show"></detailemp-model>
    <searchorg-model :param.sync="orgParam" v-if="orgParam.show"></searchorg-model>
    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+   <password-model :param="passwordParam" v-if="passwordParam.show"></password-model>
     <div  class="myemploy">
         <div class="order_search">
             <div class="clear">
@@ -94,6 +95,7 @@
                      <th>职级</th>
                      <th>员工状态</th>
                      <th>编辑</th>
+                     <th>修改密码</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -172,6 +174,7 @@
                                 })">
                         <a class="operate"><img src="/static/images/edit.png" height="18" width="30" alt="编辑" title="编辑"/></a>
                     </td>
+                    <td><a class="operate" @click="updatePassword(item.no)">修改密码</a></td>
                   </tr>
                 </tbody>
               </table>
@@ -190,6 +193,7 @@ import searchorgModel  from '../components/emloyee/searchorg'
 import common from '../common/common'
 import changeMenu from '../components/tools/tabs/tabs.js'
 import tipsdialogModel from '../components/tips/tipDialog'
+import passwordModel from '../components/emloyee/updatePassword'
 import {
    getList,
    initEmployeeList,
@@ -199,7 +203,8 @@ import {
     getEmployeeList,
     updateEmploy,
     createEmploy,
-    getOrgList
+    getOrgList,
+    updatePawd
 } from '../vuex/actions'
 export default {
     components:{
@@ -207,7 +212,8 @@ export default {
         createempModel,
         detailempModel,
         searchorgModel,
-        tipsdialogModel
+        tipsdialogModel,
+        passwordModel
     },
     data() {
         return {
@@ -245,6 +251,12 @@ export default {
                 orgName:'',
                 orgcode:'',
                 all:true      //表示获取所有部门信息，而不是只有叶子信息
+            },
+            passwordParam:{
+                show:false,
+                no:'',
+                newPwd:'',
+                callback:''
             }
         }
     },
@@ -291,6 +303,15 @@ export default {
         },
         searchOrg:function(){
             this.orgParam.show = true;
+        },
+        updatePassword:function(no){
+            this.passwordParam.show = true;
+            this.passwordParam.no = no;
+            this.passwordParam.callback = this.confirmPassword;
+        },
+        confirmPassword:function(){
+            this.passwordParam.callback = this.callback;
+            this.updatePawd(this.passwordParam);
         }
     },
     vuex: {
@@ -303,7 +324,8 @@ export default {
             getEmployeeList,
             updateEmploy,
             createEmploy,
-            getOrgList
+            getOrgList,
+            updatePawd
         },
     },
     events: {
@@ -396,7 +418,7 @@ export default {
    right: 0
 }
  #table_box  table th,#table_box  table td{
-    width: 141px;
-    min-width: 141px;
+    width: 131px;
+    min-width: 131px;
 }
 </style>

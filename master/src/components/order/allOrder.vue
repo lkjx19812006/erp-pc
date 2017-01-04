@@ -391,7 +391,6 @@
                 this.selectOrgParam.show = true;
             },
             callback:function(){
-              console.log("dfasds");
               if(this.selectOrgParam.orgId){
                 this.loadParam.org=this.selectOrgParam.orgId;
                 this.loadParam.orgName=this.selectOrgParam.orgName;

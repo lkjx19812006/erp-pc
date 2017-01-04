@@ -87,7 +87,7 @@
                         <td>{{item.address}}</td>
                         <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
-                        <td>{{item.ctime | date}}</td>
+                        <td>{{item.ctime}}</td>
                         <td>{{item.description}}</td>
                         <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
                         <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
@@ -405,7 +405,10 @@ export default {
         breed:function(breed){
             this.loadParam.breedId=breed.breedId;
             this.loadParam.breedName=breed.breedName;
-            console.log(this.loadParam);
+            if(!!breed.eName){
+                this.loadParam.breedName=breed.eName;
+            }
+           this.getIntlIntentionList(this.loadParam);
         }
     },
     created() {

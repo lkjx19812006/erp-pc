@@ -54,6 +54,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" >
                                           {{$t('static.commodity_order')}}（{{initOrderDetail.goods.arr.length}}）
                                         </a>
+                                        <span class="pull-right" style="color:#fa6705;line-height:27px;">{{$t('static.total')}}：{{initOrderDetail.goods.total}}元</span>
                                         <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
                                     </h4>
                                 </div>

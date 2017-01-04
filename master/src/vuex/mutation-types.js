@@ -24,6 +24,7 @@ export const ORDER_ROLLOUT_DATA = 'ORDER_ROLLOUT_DATA' //订单药款转出记�
 export const EXPRESS_DETAIL_DATA = 'EXPRESS_DETAIL_DATA' //订单物流详情
 export const ORG_ORDER_AUDIT = 'ORG_ORDER_AUDIT' //审核部门订单(单个)
 export const BATCH_ORG_ORDER = 'BATCH_ORG_ORDER' //批量审核部门订单
+export const DRUG_ACCOUNT_DATA = 'DRUG_ACCOUNT_DATA' //药款账户列表
 export const ROLLOUT_STATUS = 'ROLLOUT_STATUS' //药款财务审核
 export const ROLLOUT_DETAIL = 'ROLLOUT_DETAIL' //药款转出详情页面
 export const MY_SAMPLE_LIST = 'MY_SAMPLE_LIST' //我的寄样申请列表

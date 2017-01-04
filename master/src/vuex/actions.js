@@ -131,7 +131,7 @@ export const login = ({ dispatch }, data) => { //登录
         data.loading = false;
     });
 }
-export const resetPawd = ({ dispatch }, data) => { //修改密码
+export const resetPawd = ({ dispatch }, data) => { //修改密码(需要提供原密码)
     console.log(data);
     const body = {
         no: data.no,
@@ -152,6 +152,30 @@ export const resetPawd = ({ dispatch }, data) => { //修改密码
     }).then((res) => {
         console.log(res.json())
         dispatch(types.PASSWORD_DATA, data);
+        if(res.json().code==200){
+           data.callback(res.json().msg);
+        }
+    }, (res) => {
+        console.log('fail');
+    })
+}
+
+export const updatePawd = ({ dispatch }, data) => { //修改密码(直接修改密码,无需提供原密码,管理员使用)
+    const body = {
+        no: data.no,
+        newPwd: data.newPwd 
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + '/employee/updatePassword',
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
         if(res.json().code==200){
            data.callback(res.json().msg);
         }
@@ -395,6 +419,30 @@ export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录�
 
         localStorage.payRecordParam = JSON.stringify(param);
 
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列表 
+    param.loading = true;
+    var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var drugAccountList = res.json().result.list;
+        dispatch(types.DRUG_ACCOUNT_DATA, drugAccountList);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+
+        localStorage.drugAccountParam = JSON.stringify(param);  
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -1521,9 +1569,12 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             orderDetail.goods = {};
             orderDetail.goods.arr = goods;
             orderDetail.goods.show = true;
+            orderDetail.goods.total = 0;
             for (var i in orderDetail.goods.arr) {
                 orderDetail.goods.arr[i].show = false;
+                orderDetail.goods.total += orderDetail.goods.arr[i].amount*100;
             }
+            orderDetail.goods.total = orderDetail.goods.total/100;
             var payPics = orderDetail.payPics;
             if (!payPics) {
                 payPics = [];
@@ -3688,7 +3739,6 @@ export const createProduct = ({ dispatch }, param) => { //新增客户产品
 }
 export const newProduct = ({ dispatch }, param) => { //新增供应商产品
     console.log(param);
-    return;
     const data = {
         "type": param.type,
         "name": param.name,
@@ -4352,6 +4402,9 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => { //国际�
     param.loading = true;
     console.log(param);
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
+    if(param.inquire!==''&&param.inquire!==undefined){
+        url += "&inquire=" + param.inquire;
+    }
     Vue.http({
         method: 'GET',
         url: url,
