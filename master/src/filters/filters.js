@@ -34,6 +34,8 @@ Vue.filter('bizType', function(val){
 		 return '订单';
 	}else if(val=='order_after_sales_refund'){
 		return '售后退款订单'
+	}else if(val=='order_refund'){
+		return '补充合同退款订单'
 	}else{
 		return val;
 	}

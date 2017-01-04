@@ -371,7 +371,7 @@
           </div>
         </div>
         <!-- 销售订单等待评价 -->
-        <div class="navbar-client" v-if="param.estimate&&initOrderDetail.logistics==3">
+        <div class="navbar-client" v-if="param.estimate&&(initOrderDetail.logistics==3||initOrderDetail.logistics==2)">
           <div class="clearfix logical_color">
             <button type="button" class="btn btn-success margin-10 right"  @click="satisfied({
                id:param.id,

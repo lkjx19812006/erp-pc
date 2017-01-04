@@ -85,7 +85,8 @@
             <td v-if="item.taskKey===''||item.taskKey=='after_sales_governor_validate'">{{item.validate | Auditing}}</td>
             <td v-if="item.validate==-1&&item.taskKey=='after_sales_employee_handle'">{{item.validate | Auditing}}</td>
             <td v-if="item.validate==1&&item.taskKey=='after_sales_receipt'">{{item.validate | Auditing}}（待{{item.handlerName}}收货确认）</td>
-            <td v-if="item.taskKey=='after_sales_resend'&&item.validate==1">待{{item.handlerName}}发货</td>
+            <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==0">待{{item.handlerName}}发货</td>
+            <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==2">已发货，请到我的订单确认收货</td>
             <td v-if="item.validate==-2&&item.taskKey=='after_sales_employee_handle'">{{item.validate | Auditing}}（待{{item.handlerName}}处理）</td>
             <td v-if="item.taskKey=='after_sales_refund'&&item.validate==1">待{{item.handlerName}}处理</td>
             <td v-if="item.taskKey=='after_sales_disputed_handle'&&item.validate==-1">{{item.validate | Auditing}}</td>

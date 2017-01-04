@@ -220,10 +220,7 @@ const mutations = {
          state.orgSalesList = data;
       }
       if(data.url=='/order/quality/after/sales/resend'){
-        for(var key in data){
-          state.mySalesList[data.sub][key] = data[key];
-        }
-        
+        state.mySalesList[data.sub].validate = data.validate;
       }
     },
     [SALES_DETAIL](state,data){

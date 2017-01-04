@@ -90,7 +90,7 @@
                     <th>{{$t('static.supplier_name')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
                     <th>{{$t('static.consignee_phone')}}</th>
-                    <th style="width:300px">{{$t('static.consignee_address')}}</th>
+                    <th>{{$t('static.consignee_address')}}</th>
                     <!-- <th>{{$t('static.payment_method')}}</th> -->
                     <th>{{$t('static.order_status')}}</th>
                     <th>{{$t('static.order_source')}}</th>
@@ -138,6 +138,7 @@
                   <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
                   <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
                   <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==2">已重新发货（仓库审核）</td>
                   <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==50">{{$t('static.order_over')}}（补充合同申请）</td>
                   <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==60">{{$t('static.order_over')}}（售后处理中）</td>
                   <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
@@ -176,6 +177,7 @@
                         intl:item.intl,
                         customer:item.costomer,
                         currency:item.currency,
+                        consigner:item.consigner,
                         consignee:item.consignee,
                         consigneePhone:item.consigneePhone,
                         zipCode:item.zipCode,
@@ -228,6 +230,8 @@
                            <img src="/static/images/{{$t('static.img_finish')}}.png"   title="已完成订单" alt="已完成订单"/>
                         </a>
                         <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==3" style="background:#fff;color:#eea236;padding:1px 5px;">等待评价
+                        </button>
+                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==2" style="background:#fff;color:#eea236;padding:1px 5px;">确认收货
                         </button>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1">
                             <img src="/static/images/{{$t('static.img_payorder')}}.png"  title="待客户付款" alt="待客户付款"/>
@@ -705,9 +709,6 @@
     .marg_top{
         margin-top: 8px;
     }
-   .component_action{
-        right: 43px;
-    }
     .checkbox_unselect{
         background-image: url(/static/images/unselect.png);
         display: inline-block;
@@ -764,61 +765,14 @@
     .order_table .table > ul >li img {
         margin: auto;
     }
-
-    .order_action {
-        position: absolute;
-        right: 97px;
-        padding: 10px 0;
-        top: 32px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background: #fff;
-        z-index: 10;
-        min-width: 90px;
-        max-width: 200px;
-    }
-
-    .order_show {
-        position: absolute;
-        right: 20px;
-        padding: 10px 0;
-        top: 32px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background: #fff;
-        z-index: 10;
-        min-width: 90px;
-        max-width: 200px;
-        display: block;
-    }
-
-    .order_action ul,
-    .order_show ul {
-        margin-bottom: 0;
-    }
-
-    .order_action ul li a,
-    .order_show ul li a {
-        color: #003077;
-        padding: 5px 5px 5px 10px;
-        display: block;
-    }
-
-    .expand-transition {
-        transition: all .3s ease;
-        overflow: inherit;
-    }
-
-    .expand-enter,
-    .expand-leave {
-        opacity: 0;
-        height: 0;
-    }
-
     .v-spinner {
         text-align: center;
     }
     .order_pagination{
         text-align: center;
     }
+  #table_box  table th,#table_box  table td{
+    width:114px;
+    min-width: 114px;
+  }
   </style>

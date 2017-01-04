@@ -109,7 +109,7 @@
                         titles:'编辑',
                         link:contractEdit
                     })"><img src="/static/images/edit.png"/></a>
-                <a class="operate" v-if="item.validate==-2" @click="applyInfo({
+                <a class="operate" v-if="item.validate==-2&&item.taskKey=='supplementary_contract_employee_handle'" @click="applyInfo({
                       show:true,
                       sub:$index,
                       id:item.id,

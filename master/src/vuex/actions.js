@@ -963,6 +963,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             data.total = res.json().result.total;
             data.ctime = new Date();
             data.consignee = res.json().result.consignee;
+            data.consigner = res.json().result.consigner;
             data.consigneePhone = res.json().result.consigneePhone;
             data.consigneeAddr = res.json().result.consigneeAddr;
             data.mode = 3;
@@ -6173,6 +6174,12 @@ export const getMyFundList = ({ dispatch }, param) => { //个人资金记录以�
         if (seach == 'type' && param[seach] !== '') {
             apiurl += '&type=' + param.type
         }
+        if (seach == 'bizSubId' && param[seach] !== '') {
+            apiurl += '&bizSubId=' + param.bizSubId
+        }
+        if (seach == 'bizId' && param[seach] !== '') {
+            apiurl += '&bizId=' + param.bizId
+        }
         if (seach == 'validate' && param[seach] !== ''){
             apiurl += '&validate=' + param.validate
         }
@@ -6811,9 +6818,9 @@ export const afterResend = ({ dispatch }, param) => {   //售后重新发货
     }
     if (param.image_s) { param.images += param.image_s + ',' }
     if (param.image_t) { param.images += param.image_t }
-    var ss= param.images;
+    /*var ss= param.images;
     var img = ss.split(",");//字符串转化为数组
-    img.toString();
+    img.toString();*/
     const body = {
         afterSalesId:param.afterSalesId,
         orderId:param.orderId,
@@ -6821,7 +6828,7 @@ export const afterResend = ({ dispatch }, param) => {   //售后重新发货
         validate:param.validate
     }
     if (param.images) {
-        body.images = img;
+        body.images = param.images;
     } 
     if (param.number) {
         body.number = param.number;

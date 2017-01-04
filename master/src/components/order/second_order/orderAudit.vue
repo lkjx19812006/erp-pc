@@ -291,6 +291,8 @@ export default {
               all: 1,
               type:this.param.type,
               validate:this.param.validate,
+              bizSubId:this.param.bizSubId,
+              bizId:this.param.bizId,
               total:0
             },
             resetCheckParam:{
@@ -352,22 +354,13 @@ export default {
     events:{
       subName: function(branch) {
         this.param.paySubName=branch.paySubName;
-        this.initMyFundList[this.initMyFundList.length-1].paySubName = branch.paySubName;
-        console.log(this.initMyFundList[initMyFundList.length-1].paySubName)
+        this.initMyFundList[0].paySubName = branch.paySubName;
+        console.log(this.initMyFundList[0].paySubName)
       },
     },
     created() {
         /*this.getMyFundList(this.loadParam);*/
         console.log(this.initMyFundList)
-        /*if(this.initMyFundList!=''&&this.initMyFundList[initMyFundList.length-1]){
-          console.log(this.initMyFundList[this.initMyFundList.length-1])
-            this.param.amount = this.initMyFundList[this.initMyFundList.length-1].amount;
-            this.param.payName = this.initMyFundList[this.initMyFundList.length-1].payName;
-            this.param.payUserName = this.initMyFundList[this.initMyFundList.length-1].payUserName;
-            this.param.payNumber = this.initMyFundList[this.initMyFundList.length-1].payNumber;
-            this.param.payWay = this.initMyFundList[this.initMyFundList.length-1].payWay;
-            this.param.paySubName = this.initMyFundList[this.initMyFundList.length-1].paySubName;
-        }*/
         this.getBankList(this.payName);
         if(this.param.payName&&this.param.titles=='申请分期审核'){
             this.payName.name = this.param.payName;

@@ -86,7 +86,8 @@
             <td>{{item.comment}}</td>
             <td>{{item.description}}</td>
             <td v-if="item.taskKey=='after_sales_refund'&&item.validate==1">待{{item.handlerName}}处理</td>
-            <td v-if="item.taskKey=='after_sales_resend'&&item.validate==1">待{{item.handlerName}}发货</td>
+            <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==0">待{{item.handlerName}}发货</td>
+            <td v-if="item.taskKey=='after_sales_resend'&&item.logistics==2">已发货，请到我的订单确认收货</td>
             <td v-if="item.taskKey!=='after_sales_refund'&&item.taskKey!=='after_sales_resend'">{{item.validate | Auditing}}</td>
             <td>
                 <a class="operate" v-if="item.validate==-2" @click="editPayment({
@@ -139,8 +140,7 @@
                           titles:'售后异议处理',
                           link:contractCheck
                 })">异议处理</button>
-                <button class="btn btn-primary" v-if="item.taskKey=='after_sales_resend'&&item.handler==initLogin.id" style="background:#fff;color:#2e6da4;padding:2px 5px;" 
-                      @click="salesResend(item,$index)">重新发货</button>
+                <button class="btn btn-primary" v-if="item.taskKey=='after_sales_resend'&&item.handler==initLogin.id&&item.logistics==0" style="background:#fff;color:#2e6da4;padding:2px 5px;"  @click="salesResend(item,$index)">重新发货</button>
             </td>
           </tr>
         </tbody>
@@ -299,6 +299,7 @@
       },
     created() {
       changeMenu(this.$store.state.count.isTop,this.getSalesApplyList,this.loadParam,localStorage.myFundParam); 
+      console.log(this.initLogin)
     }
   }
 </script>

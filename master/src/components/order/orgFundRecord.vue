@@ -15,31 +15,31 @@
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">业务员：</dt>
+           <dt class="left  marg_top">业务员：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.employeeName"  @click="employeeSearch(employee,employeeName)"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">支付名称：</dt>
+           <dt class="left  marg_top">支付名称：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.payName"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">金额：</dt>
+           <dt class="left  marg_top">金额：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.amount"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">用户名：</dt>
+           <dt class="left  marg_top">用户名：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.payUserName"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">账号：</dt>
+           <dt class="left  marg_top">账号：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.payNumber"  @keyup.enter="selectSearch()"/>
            </dd>
@@ -92,7 +92,7 @@
               })">{{item.bizType | bizType}}{{item.type | payMent}}</a>
             </td>
             <td>{{item.amount}}</td>
-            <td>{{item.payName}}</td>
+            <td>{{item.payName}}<span v-if="item.paySubName!==''">（{{item.paySubName}}）</span></td>
             <td>{{item.employeeName}}</td>
             <td>{{item.payUserName}}</td>
             <td>{{item.payNumber}}</td>

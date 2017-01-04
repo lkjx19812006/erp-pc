@@ -65,7 +65,7 @@
                         <a @click="compactDetail(item.bizId)">详情</a>
                         <a @click="showRecord(item)">记录</a>
                         <a v-if="item.taskKey=='supplementary_contract_governor_validate'" @click="receiveAudit(item)">合同审核</a>
-                        <a v-if="item.taskKey=='supplementary_contract_employee_handle'"  @click="receiveAudit(item)">重新申请</a>
+                        <a v-if="item.taskKey=='supplementary_contract_employee_handle'"  @click="showAudit(item)">重新申请</a>
                     </div>
                     <div class="message_view_right" v-if="item.bizType=='order_after_sales'">
                         <!-- <img src="/static/images/default_arrow.png" height="24" width="24"> -->

@@ -17,25 +17,25 @@
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">支付名称：</dt>
+           <dt class="left  marg_top">支付名称：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.payName"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">金额：</dt>
+           <dt class="left  marg_top">金额：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.amount"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">用户名：</dt>
+           <dt class="left  marg_top">用户名：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.payUserName"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">账号：</dt>
+           <dt class="left  marg_top">账号：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.payNumber"  @keyup.enter="selectSearch()"/>
            </dd>
@@ -88,7 +88,7 @@
               })">{{item.bizType | bizType}}{{item.type | payMent}}</a>
             </td>
             <td>{{item.amount}}</td>
-            <td>{{item.payName}}</td>
+            <td>{{item.payName}}<span v-if="item.paySubName!==''">（{{item.paySubName}}）</span></td>
             <td>{{item.payUserName}}</td>
             <td>{{item.payNumber}}</td>
             <td>{{item.ctime}}</td>
@@ -100,7 +100,9 @@
             <td v-if="item.pr==0&&item.type==0">未付款</td>
             <td v-if="item.pr==0&&item.type==1">未收款</td>
             <td v-if="item.pr==1&&item.type==0" style="background:green;color:#fff;">已确认付款</td>
-            <td v-if="item.pr==1&&item.type==1" style="background:green;color:#fff;">已确认收款</td>
+            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order'" style="background:green;color:#fff;">已确认收款</td>
+            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_refund'" style="background:green;color:#fff;">已确认付款</td>
+            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_after_sales_refund'" style="background:green;color:#fff;">已确认退款</td>
             <td>
               <a class="operate" v-if="item.type==0&&item.pr==0&&item.validate==2" @click="applyInfo({
                         show:true,
