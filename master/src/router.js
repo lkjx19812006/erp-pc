@@ -123,7 +123,13 @@ export default (router) => router.map({
                 component: function(resolve) {
                     require(['./views/set'], resolve)
                 }
-            }
+            },
+            '/drug_money': {
+                component: function(resolve) {
+                    require(['./views/drugMoney'], resolve)
+                }
+            },
+
         }
     },
     '*': { //除'/'以外的所有路由，均跳转到404页面

@@ -370,3 +370,9 @@ export const initBankBranchList= (state) => { //获取银行分支的数据
   return parseJson(state.count.bankBranchList); 
 }
 
+/*--药款管理记录--*/
+export const initDrugAccountList= (state) => { //获取药款账户的数据
+    console.log(state.table.basicBaseList.drugAccountList);
+  return JSON.parse(JSON.stringify(state.table.basicBaseList.drugAccountList));
+}
+

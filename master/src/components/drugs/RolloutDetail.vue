@@ -186,7 +186,7 @@
                                 </div>
                                 <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                     <label>{{$t('static.normal_amount')}}</label>
-                                    <input type="text" class="form-control" v-model="initDrugsDetail.credit" value="{{initDrugsDetail.credit}}" disabled="disabled"/>
+                                    <input type="text" class="form-control" v-model="initDrugsDetail.normalMoney" value="{{initDrugsDetail.credit}}" disabled="disabled"/>
                                 </div>
                             </div>
                             <div class="clearfix">

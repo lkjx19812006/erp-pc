@@ -39,30 +39,35 @@
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
-                                <div class="client-detailInfo  col-md-4">
+                                <div class="client-detailInfo col-md-3">
+                                    <label class="editlabel">{{$t('static.intention_source')}}：</label>
+                                    <span>{{initIntlIntentionDetail.source}}</span>
+                                </div> 
+                                <div class="client-detailInfo  col-md-3">
                                     <label class="editlabel">{{$t('static.client_name')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerName}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3">
                                     <label class="editlabel">{{$t('static.client_phone')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerPhone}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4" >
+                                <div class="client-detailInfo col-md-3" >
                                     <label class="editlabel">{{$t('static.client_email')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerEmail}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3">
                                     <label class="editlabel">{{$t('static.country')}}：</label>
                                     <span>{{initIntlIntentionDetail.country}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3">
                                     <label class="editlabel">{{$t('static.city')}}：</label>   
                                     <span>{{initIntlIntentionDetail.city}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3">
                                     <label class="editlabel">{{$t('static.address')}}：</label>
                                     <span>{{initIntlIntentionDetail.address}}</span>
-                                </div>   
+                                </div>  
+                                 
                             </div>
                         </div>
                     </article>
@@ -451,7 +456,9 @@ export default {
                 unit:'',
                 total:'',
                 comment:'',
-                breedId:''
+                breedId:'',
+                itemsTotal:0,
+                offererName:''
             },
             otherOfferParam:{
                 show:false,
@@ -472,7 +479,9 @@ export default {
                 cost:'',
                 costDesc:'',
                 total:'',
-                comment:''
+                comment:'',
+                offersTotal:0     //增加其他报价时表示，所有其他报价费用之和，编辑时表示除被编辑报价外的其他报价费用之和
+
             },
             pictureParam:{
                show:false,
@@ -486,7 +495,8 @@ export default {
                 confirm:true,
                 id:'',
                 index:'',
-                type:''
+                type:'',
+                offersTotal:0,   //删除其他报价时表示除被删除报价外的其他报价费用之和
             },
             uploadFilesParam:{
                 link:'/intlIntention/files',
@@ -554,7 +564,6 @@ export default {
         console.log(id);
         this.inquireInfoParam.id = id;
         this.inquireInfoParam.show = true;
-
      },
 
      getItemHistory:function(id){
@@ -562,8 +571,15 @@ export default {
         this.itemHistoryParam.show = true;
      },
      //编辑原材料报价
-     editOffer:function(item,index){                          
-        console.log(item);
+     editOffer:function(item,index){   
+        if(!item.offerPrice){
+          this.editOfferParam.itemsTotal = this.initIntlIntentionDetail.itemsTotal;
+        }else{
+          this.editOfferParam.itemsTotal = (this.initIntlIntentionDetail.itemsTotal*100 - item.number*item.offerPrice*100)/100;
+        }
+
+         console.log(this.editOfferParam.itemsTotal);                    
+        
         this.editOfferParam.id = item.offerId;    //?报价ID？？？没有
         this.editOfferParam.intentionId = item.intentionId;
         this.editOfferParam.inquireId = item.inquireId;
@@ -582,7 +598,8 @@ export default {
         this.editOfferParam.supplierName = item.supplierName;
         this.editOfferParam.origCurrency = item.origCurrency;
         this.editOfferParam.exchangeRate = item.exchangeRate;
-/*        this.editOfferParam.countleft = this.initCurrencylist[item.origCurrency-1].rate;
+        this.editOfferParam.offererName = this.$store.state.table.login.name;
+/*      this.editOfferParam.countleft = this.initCurrencylist[item.origCurrency-1].rate;
         this.editOfferParam.countright = this.initCurrencylist[item.currency-1].rate;*/
         this.editOfferParam.lastIndex = this.param.index;    //列表页，询价的索引，报价后将inquire改为=2
         this.editOfferParam.index = index;   //条目的索引
@@ -627,8 +644,8 @@ export default {
      
       //新建其他报价和编辑其他报价共用一个界面
      addOtherOffer:function(){
-
-        console.log(this.param);
+        //首先计算出之前的所有的其他费用之和
+        this.editOtherOfferParam.offersTotal = this.initIntlIntentionDetail.offersTotal;
         this.editOtherOfferParam.id='';
         this.editOtherOfferParam.intentionId = this.param.id;
         this.editOtherOfferParam.inquireId=this.param.inquireId;
@@ -642,6 +659,8 @@ export default {
         this.editOtherOfferParam.callback = this.offerCallback;
      },
      editOtherOffer:function(item,index){
+      //首先计算出之前的所有的其他费用之和
+        this.editOtherOfferParam.offersTotal = (this.initIntlIntentionDetail.offersTotal*100 - item.cost*100)/100;
         this.editOtherOfferParam.id=item.id;
         this.editOtherOfferParam.intentionId=item.intentionId;
         this.editOtherOfferParam.inquireId=item.inquireId;
@@ -657,6 +676,8 @@ export default {
 
      },
      delOtherOffer:function(item,index){
+        //首先计算出之前的所有的其他费用之和
+        this.delOtherOfferParam.offersTotal = (this.initIntlIntentionDetail.offersTotal*100 - item.cost*100)/100;
         this.delOtherOfferParam.id=item.id;
         this.delOtherOfferParam.type=item.type;
         this.delOtherOfferParam.index = index;
@@ -675,7 +696,7 @@ export default {
       
     },
     created(){
-      console.log(this.param);
+       console.log(this.param);
        this.getIntlIntentionDetail(this.param);
        this.getCurrencyList();
     },

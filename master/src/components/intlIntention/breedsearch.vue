@@ -29,7 +29,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in initBreedlist"  @click="serviceselected($index,item.id,item.name)">
+                        <tr v-for="item in initBreedlist"  @click="serviceselected($index,item)">
                             <td>
                                <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  ></label>
                             </td> 
@@ -85,7 +85,7 @@ export default{
         }
     },
     methods:{
-        serviceselected:function(sub,id,name){
+        serviceselected:function(sub,item){
             this.$store.state.table.basicBaseList.breedList[sub].checked=!this.$store.state.table.basicBaseList.breedList[sub].checked;
             for(var key in this.initBreedlist){
                 if(key!=sub){
@@ -94,9 +94,11 @@ export default{
                     }
                 }
             }
-            this.param.breedId= id;
-            this.param.breedName = name;
-            console.log(this.param.breedName)
+            this.param.breedId= item.id;
+            this.param.breedName = item.name;
+            this.param.eName = item.eName;
+            console.log(item);
+            console.log(this.param);
             this.param.show=false;
             this.$dispatch('breed',this.param);
         },
@@ -121,6 +123,9 @@ export default{
 }
 .modal_con{
     z-index: 1085;
+}
+.table{
+    display:table;
 }
 .change_trans{
     margin-top: 20px;
@@ -203,4 +208,5 @@ th,td{
     width: 200px;
     min-width: 200px;
 }
+
 </style>

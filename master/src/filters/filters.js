@@ -739,3 +739,33 @@ Vue.filter('Unit',function(val){     //国际意向单位
 	}
 
 })
+
+Vue.filter('tracking',function(val){      //跟进状态
+	var val = val;
+	if(val===0){
+		return '初始';
+	}
+	if(val===1){
+		return '跟进中';
+	}
+	if(val===2){
+		return '有效';
+	}
+	if(val===3){
+		return '无效';
+	}else{
+		return val;
+	}
+
+})
+
+Vue.filter('isnull',function(val){      //将时间的时分秒去掉
+	var val = val;
+	if(val===null){
+		return 0;
+	}else{
+		return val;
+	}
+})
+
+

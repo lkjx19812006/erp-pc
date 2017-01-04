@@ -113,7 +113,7 @@
           <dl class="clear left transfer">
              <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
              <dd class="left">
-                  <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="按回车键搜索" @click="selectEmployee()">
+                  <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
              </dd>
           </dl>
           

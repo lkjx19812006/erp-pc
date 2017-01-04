@@ -68,6 +68,7 @@
                         <th>{{$t('static.description')}}</th>
                         <th>{{$t('static.inquiry_state')}}</th>
                         <th>{{$t('static.inquiry_type')}}</th>
+                        <th>{{$t('static.intention_source')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,13 +88,14 @@
                         <td>{{item.address}}</td>
                         <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
-                        <td>{{item.ctime | date}}</td>
+                        <td>{{item.ctime}}</td>
                         <td>{{item.description}}</td>
                         <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
                         <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
                         <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>{{item.inquireType}}</td>
+                        <td>{{item.source}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -405,7 +407,10 @@ export default {
         breed:function(breed){
             this.loadParam.breedId=breed.breedId;
             this.loadParam.breedName=breed.breedName;
-            console.log(this.loadParam);
+            if(!!breed.eName){
+                this.loadParam.breedName=breed.eName;
+            }
+           this.getIntlIntentionList(this.loadParam);
         }
     },
     created() {
@@ -442,8 +447,8 @@ export default {
     margin-left: 18px;
 }
 #table_box table th,#table_box table td{
-   min-width: 120px;
-    width: 120px;
+   min-width: 111px;
+    width: 111px;
 }
 </style>
 

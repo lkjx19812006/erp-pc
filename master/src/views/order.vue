@@ -20,9 +20,9 @@
         <order-review></order-review>
     </div>
     <!-- 药款转出记录 -->
-    <div class="myOrder" v-if="$route.path.split('=')[1]==5">
+    <!-- <div class="myOrder" v-if="$route.path.split('=')[1]==5">
         <drugs-record></drugs-record>
-    </div>
+    </div> -->
     <!-- 待支付订单 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==6">
       <order-pay></order-pay>

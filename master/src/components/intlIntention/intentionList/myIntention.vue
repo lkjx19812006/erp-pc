@@ -81,6 +81,7 @@
                         <th>{{$t('static.description')}}</th>
                         <th>{{$t('static.inquiry_state')}}</th>
                         <th>{{$t('static.inquiry_type')}}</th>
+                        <th>{{$t('static.intention_source')}}</th>
                         <th style="min-width: 250px;">{{$t('static.handle')}}</th>
                     </tr>
                 </thead>
@@ -125,6 +126,7 @@
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
                         <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
                         <td>{{item.inquireType}}</td>
+                        <td>{{item.source}}</td>
                         <td>
                             <div v-if="item.inquire===0||item.inquire===3" style="display:inline-block;margin-right:7px" @click="deleteIntention({
                                         id:item.id,
@@ -142,7 +144,7 @@
                             <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_inquire')}}.png" alt="询价" /></div>
                             <div v-if="item.inquire===3" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
 
-                            <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
+                            <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item,$index)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
                         </td>
                     </tr>
                 </tbody>
@@ -306,6 +308,7 @@ export default {
                 confirm:true,
                 inquire:'',
                 inquireTime:'',
+                inquireType:'',
                 callback:this.confirmCancelInquire,
                 link:'/intlIntention/inquire',
                 key:'myIntlIntentionList',
@@ -410,12 +413,12 @@ export default {
         breedSearch:function(){
             this.breedSearchParam.show = true;
         },
-        cancelInquire:function(id,index,time){
-            console.log('取消询价');
-             console.log(time);   
-            this.cancelInquireParam.id = id;
+        cancelInquire:function(item,index){
+            console.log('取消询价');  
+            this.cancelInquireParam.id = item.id;
             this.cancelInquireParam.index = index;
-            this.cancelInquireParam.inquireTime = time;
+            this.cancelInquireParam.inquireTime = item.inquireTime;
+            this.cancelInquireParam.inquireType = item.inquireType;
             this.cancelInquireParam.show = true;
             //this.cancelIntlIntentionInquire(this.cancelInquireParam);
         },
@@ -531,7 +534,11 @@ export default {
         breed:function(breed){
             this.loadParam.breedId=breed.breedId;
             this.loadParam.breedName=breed.breedName;
-            console.log(this.loadParam);
+            if(!!breed.eName){
+                this.loadParam.breedName=breed.eName;
+            }
+            this.getIntlIntentionList(this.loadParam);
+            
         }
     },
     created() {
@@ -571,8 +578,8 @@ export default {
     color: #fff;
 }
 #table_box table th,#table_box table td{
-    width: 110px;
-    min-width: 105px;
+    width: 100px;
+    min-width: 100px;
 }
 </style>
 
