@@ -30,32 +30,32 @@
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">客户类型：</dt>
                    <dd class="left">
-                        <select v-model="loadParam.type"  class="form-control" @change="selectSearch()">
-                          <option value="">全部</option>
-                          <option value="0">其它</option>
-                          <option value="1">合作社</option>
-                          <option value="2">药商</option>
-                          <option value="3">药厂</option>
-                          <option value="4">个体户</option>
-                          <option value="5">药店</option>
-                          <option value="6">医院</option>
-                          <option value="7">贸易公司</option>
-                          <option value="8">零售商行</option>
-                          <option value="9">药农</option>
-                          <option value="10">介绍人</option>
-                          <option value="11">药贩子</option>
-                          <option value="12">产地药商</option>
-                          <option value="13">销地药商</option>
-                          <option value="14">养生诊所</option>
-                          <option value="15">化工厂</option>
-                          <option value="16">化妆品厂</option>
-                          <option value="17">提取物厂</option>
-                          <option value="18">食品厂</option>
-                          <option value="19">实验室</option>
-                          <option value="20">网上电商</option>
-                          <option value="21">中成药生产商</option>
-                          <option value="22">西药生产商</option>
-                          <option value="23">饮片厂</option>
+                        <select v-model="loadParam.type" style="width:50%;" class="form-control" @change="selectSearch()">
+                              <option value="">{{$t("static.please_select")}}</option>
+                              <option value="0">Others 其它</option>
+                              <option value="1">Cooperatives 合作社</option>
+                              <option value="2">Drug Makers 药商</option>
+                              <option value="3">Factory 药厂</option>
+                              <option value="4">Private Use 个体户</option>
+                              <option value="5">Pharmacy 药店</option>
+                              <option value="6">Hospital 医院</option>
+                              <option value="7">Trading Company 贸易公司</option>
+                              <option value="8">Retail 零售商行</option>
+                              <option value="9">药农</option>
+                              <option value="10">介绍人</option>
+                              <option value="11">药贩子</option>
+                              <option value="12">产地药商</option>
+                              <option value="13">销地药商</option>
+                              <option value="14">Acupuncture Clinic 养生诊所</option>
+                              <option value="15">Chemical  Company 化工厂</option>
+                              <option value="16">Cosmetics  Company 化妆品厂</option>
+                              <option value="17">Extract  Company 提取物厂</option>
+                              <option value="18">Food Company 食品厂</option>
+                              <option value="19">Laboratory for trial 实验室</option>
+                              <option value="20">Online Company 网上电商</option>
+                              <option value="21">Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商</option>
+                              <option value="22">Pharmaceutical producer of Western Medicine 西药生产商</option>
+                              <option value="23">Pieces Factory 饮片厂</option>
                         </select>
                    </dd>
                 </dl>
@@ -196,7 +196,7 @@
                                 key:'unCustomerList'
                                 })">{{item.name}}</td>
                         <td>{{item.orderTotal}}</td>
-                        <td>{{item.typeDesc}}</td>
+                        <td>{{item.type | customerType}}</td>
                         <td>{{item.mainContact}}</td>
                         <td></td>
                         <td>{{item.mainPhone}}</td>

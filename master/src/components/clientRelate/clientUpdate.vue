@@ -10,7 +10,7 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>编辑{{param.name}}的信息</h3>
+            <h3>{{$t('static.edit')}}{{param.name}}</h3>
         </div>
         <validator name="validation">
             <div class="edit-model">
@@ -24,15 +24,15 @@
                             <div class="editpage-input">
                                 <label class="editlabel">{{$t('static.type')}}</label>
                                 <select class="form-control edit-input"  v-model='param.type'>
-                                     <option value="0">{{$t('static.personal')}}</option>
-                                     <option value="1">{{$t('static.enterprise')}}</option>
+                                   <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerType}}</option>
                                 </select>
                                 <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
                             </div>
-                            <div class="editpage-input">
-                                <label class="editlabel">分类码</label>
-                                <input type="text" v-model='param.category' class="form-control edit-input" value="{{param.category}}" />
-                            </div>
+                              <!-- 法人 -->
+                              <div class="editpage-input">
+                                <label class="editlabel">{{$t('static.legal')}} </label>
+                                <input type="text" id="legalPerson" class="form-control edit-input" v-model="param.legalPerson"/>
+                              </div>
                              <div class="editpage-input">
                                 <label  class="editlabel">{{$t('static.country')}}</label>
                                  <div>
@@ -69,7 +69,7 @@
                                   :debounce="250"
                                   :value.sync="city"
                                   :options="initCitylist"
-                                  placeholder="市"
+                                  placeholder="市/City"
                                   label="cname"
                                   v-if="province.cname"
                                 >
@@ -101,7 +101,7 @@
                             </div>
                              -->
                             <div class="editpage-input">
-                                <label class="editlabel">负责人</label>
+                                <label class="editlabel">{{$t('static.principals')}}</label>
                                 <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />
                             </div>
                             <div class="editpage-input">
@@ -153,12 +153,14 @@ import selectModel  from '../user/employeeOrOrg'
 import {
     initCountrylist,
     initProvince,
-    initCitylist
+    initCitylist,
+    initUserType
 } from '../../vuex/getters'
 import {
     getCountryList,
     getProvinceList,
-    getCityList
+    getCityList,
+    getUserTypeList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -218,12 +220,14 @@ export default {
         getters: {
           initCountrylist,
           initProvince,
+          initUserType,
           initCitylist
         },
         actions: {
           getCountryList,
           getProvinceList,
           getCityList,
+          getUserTypeList
         }
     },
     methods: {
@@ -273,6 +277,7 @@ export default {
         this.city.cname=this.param.cityName;
       }
       this.getCountryList(this.countryParam);
+      this.getUserTypeList(this.countryParam)
 
     }
 }
