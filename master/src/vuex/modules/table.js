@@ -1429,6 +1429,12 @@ const mutations = {
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerCurrency = data.currency;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].exchangeRate = data.exchangeRate;
 
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].supplierName = data.supplierName;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].supplier = data.supplier;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].product = data.product;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].offererName = data.offererName;
+        
+      
         state.basicBaseList.intlIntentionDetail.itemsTotal = data.itemsTotal;
         state.basicBaseList.intlIntentionInquireList[data.lastIndex].inquire = 2;  //原材料报价后将inquire置为2
 
@@ -1724,6 +1730,7 @@ const mutations = {
           'inquireTime': data.inquireTime,
           'offerTime' : data.offerTime,
           'validate' : data.validate,
+          'source' : data.source,
           'inquire' : data.inquire,
           'names':data.names,
           'ctime':data.ctime,

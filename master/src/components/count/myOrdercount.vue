@@ -49,28 +49,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in initMyOrderCount">
-                    <th>{{$store.state.table.login.name}}</th>
-                	<th>{{item.saleAllOrderNumber}}</th>
-                    <th>{{item.saleAllOrderAmount}}kg</th>
-                    <th>{{item.saleAllOrderMoney}}元</th>
-                    <th>{{item.saleEndOrderNumber}}</th>
-                    <th>{{item.saleEndOrderAmount}}kg</th>
-                    <th>{{item.saleEndOrderMoney}}元</th>
-                    <th>{{item.saleIngOrderNumber}}</th>
-                    <th>{{item.saleIngOrderAmount}}kg</th>
-                    <th>{{item.saleIngOrderMoney}}元</th>
-                    <th>{{item.saleIngOrderUnpaid}}元</th>
-                    <th>{{item.buyAllOrderNumber}}</th>
-                    <th>{{item.buyAllOrderAmount}}kg</th>
-                    <th>{{item.buyAllOrderMoney}}元</th>
-                    <th>{{item.buyEndOrderNumber}}</th>
-                    <th>{{item.buyEndOrderAmount}}kg</th>
-                    <th>{{item.buyEndOrderMoney}}元</th>
-                    <th>{{item.buyIngOrderNumber}}</th>
-                    <th>{{item.buyIngOrderAmount}}kg</th>
-                    <th>{{item.buyIngOrderMoney}}元</th>
-                    <th>{{item.buyIngOrderUnpaid}}元</th>
+                <tr>
+                    <td>{{$store.state.table.login.name}}</td>
+                	<td>{{initMyOrderCount.salesAllNum | isnull}}</td>
+                    <td>{{initMyOrderCount.salesAllWeight | isnull}}kg</td>
+                    <td>{{initMyOrderCount.salesAllTotal | isnull}}元</td>
+                    <td>{{initMyOrderCount.salesEndNum | isnull}}</td>
+                    <td>{{initMyOrderCount.salesEndWeight | isnull}}kg</td>
+                    <td>{{initMyOrderCount.salesEndTotal | isnull}}元</td>
+                    <td>{{initMyOrderCount.salesIngNum | isnull}}</td>
+                    <td>{{initMyOrderCount.salesIngWeight | isnull}}kg</td>
+                    <td>{{initMyOrderCount.salesIngTotal | isnull}}元</td>
+                    <td>{{initMyOrderCount.salesReceivables | isnull}}元</td>
+                    <td>{{initMyOrderCount.buyAllNum | isnull}}</td>
+                    <td>{{initMyOrderCount.buyAllWeight | isnull}}kg</td>
+                    <td>{{initMyOrderCount.buyAllTotal | isnull}}元</td>
+                    <td>{{initMyOrderCount.buyEndNum | isnull}}</td>
+                    <td>{{initMyOrderCount.buyEndWeight | isnull}}kg</td>
+                    <td>{{initMyOrderCount.buyEndTotal | isnull}}元</td>
+                    <td>{{initMyOrderCount.buyIngNum | isnull}}</td>
+                    <td>{{initMyOrderCount.buyIngWeight | isnull}}kg</td>
+                    <td>{{initMyOrderCount.buyIngTotal | isnull}}元</td>
+                    <td>{{initMyOrderCount.buyPayable | isnull}}元</td>
                 </tr>
             </tbody>
         </table>
@@ -102,7 +102,7 @@
          </button>
      </div>
 
-    <div class="module clear">
+    <div class="module clear" style="max-height:500px;overflow:auto">
         <table class="table table-hover table_color table-bordered table-striped " v-cloak>
             <tr style="background:none;color:#000">
                 <th rowspan="1"></th>
@@ -141,18 +141,18 @@
                     <div v-if="timeParam.timeType=='quarter'">{{item.date}}季度</div>
                     <div v-if="timeParam.timeType=='year'">{{item.date}}年</div>
                 </td>
-                <td>{{item.saleAddOrderNumber}}</td>
-                <td>{{item.saleAddOrderAmount}}kg</td>
-                <td>{{item.saleAddOrderMoney}}元</td>
-                <td>{{item.saleEndOrderNumber}}</td>
-                <td>{{item.saleEndOrderAmount}}kg</td>
-                <td>{{item.saleEndOrderMoney}}元</td>
-                <td>{{item.buyAddOrderNumber}}</td>
-                <td>{{item.buyAddOrderAmount}}kg</td>
-                <td>{{item.buyAddOrderMoney}}元</td>
-                <td>{{item.buyEndOrderNumber}}</td>
-                <td>{{item.buyEndOrderAmount}}kg</td>
-                <td>{{item.buyEndOrderMoney}}元</td>
+                <td>{{item.salesNewNum}}</td>
+                <td>{{item.salesNewWeight}}kg</td>
+                <td>{{item.salesNewTotal}}元</td>
+                <td>{{item.salesEndNum}}</td>
+                <td>{{item.salesEndWeight}}kg</td>
+                <td>{{item.salesEndTotal}}元</td>
+                <td>{{item.buyNewNum}}</td>
+                <td>{{item.buyNewWeight}}kg</td>
+                <td>{{item.buyNewTotal}}元</td>
+                <td>{{item.buyEndNum}}</td>
+                <td>{{item.buyEndWeight}}kg</td>
+                <td>{{item.buyEndTotal}}元</td>
             </tr>  
 
         </table>       
@@ -168,6 +168,7 @@
 		getOrderCount,
         getTimeOrderCount
 	} from '../../vuex/actions'
+    import filter from '../../filters/filters'
 	import pagination from  '../pagination'
 	export default {
 		components:{
@@ -180,17 +181,17 @@
 	                loading: true,
                     color: '#5dc596',
                     size: '15px',
-                    link:"/report/order/employee",
+                    link:"/report/order/total",
                     key:"myOrderCount",
-                    focus:'all',    
-                    employeeId:this.$store.state.table.login.id
+                    objType:'employee',    
+                    employee:this.$store.state.table.login.id
 	            },
                 timeParam: {
                     loading: true,
-                    link:"/report/order/timeRange",
+                    link:"/report/order/new/add",
                     timeType:"day",  
                     objType:"employee" ,
-                    objId:this.$store.state.table.login.id, 
+                    employee:this.$store.state.table.login.id, 
                 },
                 currentView:1,
 	        }
@@ -217,7 +218,8 @@
 	    created() {
 	        this.getOrderCount(this.loadParam);
             this.getTimeOrderCount(this.timeParam);
-	    }
+	    },
+        filter:(filter,{})
 	}
 </script>
 <style scoped>

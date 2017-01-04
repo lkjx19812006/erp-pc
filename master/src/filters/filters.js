@@ -759,4 +759,13 @@ Vue.filter('tracking',function(val){      //跟进状态
 
 })
 
+Vue.filter('isnull',function(val){      //将时间的时分秒去掉
+	var val = val;
+	if(val===null){
+		return 0;
+	}else{
+		return val;
+	}
+})
+
 

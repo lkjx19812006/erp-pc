@@ -39,30 +39,35 @@
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
-                                <div class="client-detailInfo  col-md-4">
+                                <div class="client-detailInfo col-md-3">
+                                    <label class="editlabel">{{$t('static.intention_source')}}：</label>
+                                    <span>{{initIntlIntentionDetail.source}}</span>
+                                </div> 
+                                <div class="client-detailInfo  col-md-3">
                                     <label class="editlabel">{{$t('static.client_name')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerName}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3">
                                     <label class="editlabel">{{$t('static.client_phone')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerPhone}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4" >
+                                <div class="client-detailInfo col-md-3" >
                                     <label class="editlabel">{{$t('static.client_email')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerEmail}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3">
                                     <label class="editlabel">{{$t('static.country')}}：</label>
                                     <span>{{initIntlIntentionDetail.country}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3">
                                     <label class="editlabel">{{$t('static.city')}}：</label>   
                                     <span>{{initIntlIntentionDetail.city}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3">
                                     <label class="editlabel">{{$t('static.address')}}：</label>
                                     <span>{{initIntlIntentionDetail.address}}</span>
-                                </div>   
+                                </div>  
+                                 
                             </div>
                         </div>
                     </article>
@@ -452,7 +457,8 @@ export default {
                 total:'',
                 comment:'',
                 breedId:'',
-                itemsTotal:0
+                itemsTotal:0,
+                offererName:''
             },
             otherOfferParam:{
                 show:false,
@@ -558,7 +564,6 @@ export default {
         console.log(id);
         this.inquireInfoParam.id = id;
         this.inquireInfoParam.show = true;
-
      },
 
      getItemHistory:function(id){
@@ -593,6 +598,7 @@ export default {
         this.editOfferParam.supplierName = item.supplierName;
         this.editOfferParam.origCurrency = item.origCurrency;
         this.editOfferParam.exchangeRate = item.exchangeRate;
+        this.editOfferParam.offererName = this.$store.state.table.login.name;
 /*      this.editOfferParam.countleft = this.initCurrencylist[item.origCurrency-1].rate;
         this.editOfferParam.countright = this.initCurrencylist[item.currency-1].rate;*/
         this.editOfferParam.lastIndex = this.param.index;    //列表页，询价的索引，报价后将inquire改为=2
@@ -690,7 +696,7 @@ export default {
       
     },
     created(){
-      console.log(this.param);
+       console.log(this.param);
        this.getIntlIntentionDetail(this.param);
        this.getCurrencyList();
     },

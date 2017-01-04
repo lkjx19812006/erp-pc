@@ -144,7 +144,7 @@
                             <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_inquire')}}.png" alt="询价" /></div>
                             <div v-if="item.inquire===3" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
 
-                            <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
+                            <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item,$index)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
                         </td>
                     </tr>
                 </tbody>
@@ -308,6 +308,7 @@ export default {
                 confirm:true,
                 inquire:'',
                 inquireTime:'',
+                inquireType:'',
                 callback:this.confirmCancelInquire,
                 link:'/intlIntention/inquire',
                 key:'myIntlIntentionList',
@@ -412,12 +413,12 @@ export default {
         breedSearch:function(){
             this.breedSearchParam.show = true;
         },
-        cancelInquire:function(id,index,time){
-            console.log('取消询价');
-             console.log(time);   
-            this.cancelInquireParam.id = id;
+        cancelInquire:function(item,index){
+            console.log('取消询价');  
+            this.cancelInquireParam.id = item.id;
             this.cancelInquireParam.index = index;
-            this.cancelInquireParam.inquireTime = time;
+            this.cancelInquireParam.inquireTime = item.inquireTime;
+            this.cancelInquireParam.inquireType = item.inquireType;
             this.cancelInquireParam.show = true;
             //this.cancelIntlIntentionInquire(this.cancelInquireParam);
         },

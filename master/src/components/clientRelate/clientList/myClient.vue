@@ -210,9 +210,28 @@
                         <th v-if="this.initLogin.orgId==29">跟进</th>
                     </tr>
                 </thead>
+                <tr>
+                    <th>
+                        <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
+                    </th>
+                    <th style="color:#fa6705;font-size: 14px">全选</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
                 <tbody>
                     <tr>
-
+                        
                     </tr>
                     <tr v-for="item in initMyCustomerlist">
                         <td  @click.stop="">
@@ -753,7 +772,7 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 96px;
+    width: 113px;
     min-width: 96px;
 }
 .service-nav {

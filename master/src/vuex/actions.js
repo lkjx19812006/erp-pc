@@ -4411,7 +4411,12 @@ export const cancelIntlIntentionInquire = ({ dispatch }, param) => { //国际意
         }
     }).then((res) => {
         param.show = false;
-        param.inquire = 0;
+        if(param.inquireTime<=1){
+            param.inquire = 0;
+            param.inquireType = '';
+        }else{
+            param.inquire = 3;
+        }
         param.inquireTime = param.inquireTime - 1;
         dispatch(types.INQUIRE_DATA, param);
     }, (res) => {
@@ -5679,22 +5684,18 @@ export const getClientOrgcount = ({ dispatch }, param) => { //部门客户统计
 export const getOrderCount = ({ dispatch }, param) => { //我的订单统计(交易统计)
     if(param) param.loading= true;
     var url = apiUrl.clientList +param.link +'?';
-    if(param.focus&&param.focus!==''){
-        url += "&focus=" + param.focus;
-    }
-    if(param.employeeId&&param.employeeId!==''){
-        url += "&employeeId=" + param.employeeId;
-    }
-    if(param.orgId&&param.orgId!==''){
-        url += "&orgId=" + param.orgId;
-    }
     if(param.objType&&param.objType!==''){
         url += "&objType=" + param.objType;
     }
-    if(param.objId&&param.objId!==''){
-        url += "&objId=" + param.objId;
+    if(param.employee&&param.employee!==''){
+        url += "&employee=" + param.employee;
     }
-
+    if(param.org&&param.org!==''){
+        url += "&org=" + param.org;
+    }
+    if(param.groupType&&param.groupType!==''){
+        url += "&groupType=" + param.groupType;
+    }
 
     Vue.http({
         method: 'GET',
@@ -5726,8 +5727,8 @@ export const getTimeOrderCount = ({ dispatch }, param) => { //我的订单统计
     if(param.objType&&param.objType!==''){
         url += "&objType=" + param.objType;
     }
-    if(param.objId&&param.objId!==''){
-        url += "&objId=" + param.objId;
+    if(param.employee&&param.employee!==''){
+        url += "&employee=" + param.employee;
     }
     
     Vue.http({
