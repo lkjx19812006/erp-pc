@@ -49,28 +49,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in initMyOrderCount">
+                <tr>
                     <th>{{$store.state.table.login.name}}</th>
-                	<th>{{item.saleAllOrderNumber}}</th>
-                    <th>{{item.saleAllOrderAmount}}kg</th>
-                    <th>{{item.saleAllOrderMoney}}元</th>
-                    <th>{{item.saleEndOrderNumber}}</th>
-                    <th>{{item.saleEndOrderAmount}}kg</th>
-                    <th>{{item.saleEndOrderMoney}}元</th>
-                    <th>{{item.saleIngOrderNumber}}</th>
-                    <th>{{item.saleIngOrderAmount}}kg</th>
-                    <th>{{item.saleIngOrderMoney}}元</th>
-                    <th>{{item.saleIngOrderUnpaid}}元</th>
-                    <th>{{item.buyAllOrderNumber}}</th>
-                    <th>{{item.buyAllOrderAmount}}kg</th>
-                    <th>{{item.buyAllOrderMoney}}元</th>
-                    <th>{{item.buyEndOrderNumber}}</th>
-                    <th>{{item.buyEndOrderAmount}}kg</th>
-                    <th>{{item.buyEndOrderMoney}}元</th>
-                    <th>{{item.buyIngOrderNumber}}</th>
-                    <th>{{item.buyIngOrderAmount}}kg</th>
-                    <th>{{item.buyIngOrderMoney}}元</th>
-                    <th>{{item.buyIngOrderUnpaid}}元</th>
+                	<th>{{initMyOrderCount.salesAllNum}}</th>
+                    <th>{{initMyOrderCount.salesAllWeight}}kg</th>
+                    <th>{{initMyOrderCount.salesAllTotal}}元</th>
+                    <th>{{initMyOrderCount.salesEndNum}}</th>
+                    <th>{{initMyOrderCount.salesEndWeight}}kg</th>
+                    <th>{{initMyOrderCount.salesEndTotal}}元</th>
+                    <th>{{initMyOrderCount.salesIngNum}}</th>
+                    <th>{{initMyOrderCount.salesIngWeight}}kg</th>
+                    <th>{{initMyOrderCount.salesIngTotal}}元</th>
+                    <th>{{initMyOrderCount.salesReceivables}}元</th>
+                    <th>{{initMyOrderCount.buyAllNum}}</th>
+                    <th>{{initMyOrderCount.buyAllWeight}}kg</th>
+                    <th>{{initMyOrderCount.buyAllTotal}}元</th>
+                    <th>{{initMyOrderCount.buyEndNum}}</th>
+                    <th>{{initMyOrderCount.buyEndWeight}}kg</th>
+                    <th>{{initMyOrderCount.buyEndTotal}}元</th>
+                    <th>{{initMyOrderCount.buyIngNum}}</th>
+                    <th>{{initMyOrderCount.buyIngWeight}}kg</th>
+                    <th>{{initMyOrderCount.buyIngTotal}}元</th>
+                    <th>{{initMyOrderCount.buyPayable}}元</th>
                 </tr>
             </tbody>
         </table>
@@ -141,18 +141,18 @@
                     <div v-if="timeParam.timeType=='quarter'">{{item.date}}季度</div>
                     <div v-if="timeParam.timeType=='year'">{{item.date}}年</div>
                 </td>
-                <td>{{item.saleAddOrderNumber}}</td>
-                <td>{{item.saleAddOrderAmount}}kg</td>
-                <td>{{item.saleAddOrderMoney}}元</td>
-                <td>{{item.saleEndOrderNumber}}</td>
-                <td>{{item.saleEndOrderAmount}}kg</td>
-                <td>{{item.saleEndOrderMoney}}元</td>
-                <td>{{item.buyAddOrderNumber}}</td>
-                <td>{{item.buyAddOrderAmount}}kg</td>
-                <td>{{item.buyAddOrderMoney}}元</td>
-                <td>{{item.buyEndOrderNumber}}</td>
-                <td>{{item.buyEndOrderAmount}}kg</td>
-                <td>{{item.buyEndOrderMoney}}元</td>
+                <td>{{item.salesNewNum}}</td>
+                <td>{{item.salesNewWeight}}kg</td>
+                <td>{{item.salesNewTotal}}元</td>
+                <td>{{item.salesEndNum}}</td>
+                <td>{{item.salesEndWeight}}kg</td>
+                <td>{{item.salesEndTotal}}元</td>
+                <td>{{item.buyNewNum}}</td>
+                <td>{{item.buyNewWeight}}kg</td>
+                <td>{{item.buyNewTotal}}元</td>
+                <td>{{item.buyEndNum}}</td>
+                <td>{{item.buyEndWeight}}kg</td>
+                <td>{{item.buyEndTotal}}元</td>
             </tr>  
 
         </table>       
@@ -180,17 +180,17 @@
 	                loading: true,
                     color: '#5dc596',
                     size: '15px',
-                    link:"/report/order/employee",
+                    link:"/report/order/total",
                     key:"myOrderCount",
-                    focus:'all',    
-                    employeeId:this.$store.state.table.login.id
+                    objType:'employee',    
+                    employee:this.$store.state.table.login.id
 	            },
                 timeParam: {
                     loading: true,
-                    link:"/report/order/timeRange",
+                    link:"/report/order/new/add",
                     timeType:"day",  
                     objType:"employee" ,
-                    objId:this.$store.state.table.login.id, 
+                    employee:this.$store.state.table.login.id, 
                 },
                 currentView:1,
 	        }

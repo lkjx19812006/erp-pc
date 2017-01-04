@@ -160,10 +160,10 @@
                     loading: true,
                     color: '#5dc596',
                     size: '15px',
-                    link:"/report/order/org",
+                    link:"/report/order/total",
                     key:"orgOrderCount",
-                    focus:'all',    
-                    orgId:this.$store.state.table.login.orgId
+                    objType:'org',    
+                    org:this.$store.state.table.login.orgId
                 },
                 sortParam:{   
                     loading: true,
