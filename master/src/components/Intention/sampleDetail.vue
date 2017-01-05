@@ -1,6 +1,6 @@
 <template>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con modal_overall" v-show="param.show"> 
+    <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false"> 
         <div class="client-section clearfix" v-cloak>
             <div  class="top-title" @click="param.show=false">
                 <span class="glyphicon glyphicon-remove-circle"  style="font-size:28px"></span>
@@ -11,7 +11,7 @@
                 <div class="section_title clearfix col-md-12 col-xs-12">
                     <span style="font-size:14px">基本信息</span>
                 </div>
-                <div class="panel panel-default col-md-12 clearfix" style="padding:0;margin-top:10px;">
+                <div class="panel panel-default col-md-12 clearfix" style="padding:0;margin-top:10px;" @click.stop="">
                       <div class="panel-heading" v-cloak>
                           <h4 class="panel-title clearfix" @click="enfoldment({
                                       link:initgSampleDetail.items,
@@ -43,7 +43,7 @@
                                             <td>{{item.location}}</td>
                                             <td>{{item.spec}}</td>
                                             <td>{{item.quality}}</td>
-                                            <td>{{item.cunit}}</td>
+                                            <td>{{item.unit | Unit}}</td>
                                             <td>{{item.description}}</td>
                                             <td>{{item.ctime}}</td>
                                             <!-- <td @click="edit($index,item)">
@@ -57,7 +57,7 @@
                             </div>
                       </div>
                 </div>
-                <div class="clearfix col-md-12 col-xs-12">
+                <div class="clearfix col-md-12 col-xs-12"  @click.stop="">
                     <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                         <label class="editlabel">客户名称</label>
                         <input type="text" class="form-control edit-input" v-model="initgSampleDetail.customerName" value="{{initgSampleDetail.customerName}}" disabled="disabled"/>
@@ -67,7 +67,7 @@
                         <input type="text" class="form-control edit-input"  v-model="initgSampleDetail.customerPhone" value="{{initgSampleDetail.customerPhone}}" disabled="disabled"/>
                     </div>
                 </div>
-                <div class="clearfix col-md-12 col-xs-12">
+                <div class="clearfix col-md-12 col-xs-12"  @click.stop="">
                     <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                         <label class="editlabel">收货人名称</label>
                         <input type="text" class="form-control edit-input" v-model="initgSampleDetail.consignee" value="{{initgSampleDetail.consignee}}" disabled="disabled"/>
@@ -77,7 +77,7 @@
                          <input type="text" class="form-control edit-input" v-model="initgSampleDetail.consigneePhone" value="{{initgSampleDetail.consigneePhone}}" disabled="disabled"/>
                     </div>
                 </div>
-                <div class="clearfix col-md-12 col-xs-12">
+                <div class="clearfix col-md-12 col-xs-12"  @click.stop="">
                     <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                         <label class="editlabel">样品名称</label>
                          <input type="text" class="form-control edit-input" v-model="initgSampleDetail.sampleDesc" value="{{initgSampleDetail.sampleDesc}}" disabled="disabled"/>
@@ -87,7 +87,7 @@
                         <input type="text" class="form-control edit-input" v-model="initgSampleDetail.address" value="{{initgSampleDetail.address}}" disabled="disabled"/>
                     </div>
                 </div>
-                <div class="clearfix col-md-12 col-xs-12">
+                <div class="clearfix col-md-12 col-xs-12"  @click.stop="">
                     <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                         <label class="editlabel">总金额</label>
                          <input type="text" class="form-control edit-input"   v-model="initgSampleDetail.total" value="{{initgSampleDetail.total}}" disabled="disabled"/>

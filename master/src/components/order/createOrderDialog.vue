@@ -1,6 +1,9 @@
 <template>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
+    <consignee-model :param="consigneeParam" v-if="consigneeParam.show"></consignee-model>
+    <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
+
     <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -28,25 +31,30 @@
                             <option value="70">{{$t('static.order_over')}}</option>
                         </select>
                     </div>
+                    <div class="editpage-input col-md-6" v-if="param.type==1">
+                        <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">选择发货人</span></label>
+                        <input  type="text" class="form-control" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
+                       <!--  <select  class="form-control edit-input" v-model="param.consigner">
+                           <option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
+                       </select> -->
+                    </div>
                 </div>
                 <section class="editsection">
                     <div style="margin-top:20px;">
                        <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
                        <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
+                       <!-- <a v-if="param.customerName" class="right" style="margin-right:40px;" @click="selectConsignee()">选择收货人信息</a> -->
+                       <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">选择收货地址</button>
+
+                       <!-- <a v-if="param.customerName" class="right" style="margin-right:20px;" @click="createConsignee()">新建收货人信息</a> -->
+                       <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">新建收货地址</button>
+
                     </div>
                     <div class="clearfix">
                         <div class="editpage-input col-md-4">
                             <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.required')}}</span></label>
                             <input type="text" class="form-control edit-input" v-model="param.customerName"   v-validate:custname="['required']" value="{{param.customerName}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
                         </div>
-                        <div class="editpage-input col-md-4">
-                            <label class="editlabel">{{$t('static.consignee_name')}} <!-- <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span> --></label>
-                            <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.customerName}}"  />
-                        </div> 
-                        <div class="editpage-input col-md-4" >
-                            <label class="editlabel">{{$t('static.consignee_phone')}} <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
-                            <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  value="{{param.customerPhone}}"/>
-                        </div>  
                         <div class="editpage-input col-md-4">
                             <label class="editlabel">{{$t('static.international')}}</label>
                             <select type="text" class="form-control edit-input" v-model="param.intl"  @change="selectBizType()">
@@ -64,6 +72,16 @@
                                 <option  v-for="item in initCurrencylist" value="{{item.id}}">{{item.name}}{{item.cname}}</option>
                             </select>
                         </div>
+                        <!-- 收货人信息 -->
+                        <div class="editpage-input col-md-4">
+                            <label class="editlabel">{{$t('static.consignee_name')}} <!-- <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span> --></label>
+                            <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.customerName}}"  />
+                        </div> 
+                        <div class="editpage-input col-md-4" >
+                            <label class="editlabel">{{$t('static.consignee_phone')}} <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
+                            <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  value="{{param.customerPhone}}"/>
+                        </div>  
+                        
                         <div class="editpage-input col-md-4">
                             <label class="editlabel">{{$t('static.country')}}</label>
                             <div type="text" class="edit-input">
@@ -181,7 +199,7 @@
                                        <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
                                        <input type="text" v-show="false" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" />
                                        <select  class="form-control edit-input"  v-model="breedInfo.unit">
-                                            <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}（{{item.ename}}）</option>
+                                          <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}（{{item.ename}}）</option>
                                        </select>
                                   </div>
                                   <div class="editpage-input">
@@ -305,6 +323,9 @@ import pressImage from '../imagePress'
 import searchcustomerModel  from '../Intention/clientname'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import searchbreedModel  from '../Intention/breedsearch'
+import consigneeModel  from '../clientRelate/addressSearch'
+import searchemgModel from '../order/second_order/allEmployee'
+
 import {
     initCountrylist,
     initProvince,
@@ -312,7 +333,8 @@ import {
     initDistrictlist,
     initBreedDetail,
     initCurrencylist,
-    initUnitlist
+    initUnitlist,
+    initEmployeeList
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -322,7 +344,8 @@ import {
     getDistrictList,
     createOrder,
     getUnitList,
-    getCurrencyList
+    getCurrencyList,
+    getEmployeeList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -330,7 +353,10 @@ export default {
         pressImage,
         searchcustomerModel,
         searchbreedModel,
-        inputSelect
+        consigneeModel,
+        inputSelect,
+        searchemgModel
+
     },
     props: ['param'],
     data() {
@@ -343,11 +369,25 @@ export default {
               cur: 1,
               all: 7
             },
+            orgParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7
+            },
             empNameParam:{
+              show:false,
+              customer:'',
+              customerName:'',
+              customerPhone:''
+            },
+            consigneeParam:{
                 show:false,
-                customer:'',
-                customerName:'',
-                customerPhone:''
+                loading:true,
+                link:'/customer/getAddress/',
+                customerId:''
             },
             breedParam:{
                 show:false,
@@ -376,18 +416,28 @@ export default {
               show:false,
               index:0
             },
+            employeeParam:{
+              show:false,
+              consigner:'',
+              consignerName:''
+            },
             country:{
+              id:'',
               cname:'',
             },
             province:{
+              id:'',
               cname:''
             },
             city:{
+              id:'',
               cname:''
             },
             district:{
+              id:'',
               cname:''
             },
+            createOrSelect:0,     //选择还是新建客户收货地址,0新建,1选择
             saith:0, //点击按钮计算
             sum:0, //点击按钮计算
             altogether:0, //所有商品的总金额
@@ -401,7 +451,8 @@ export default {
             initDistrictlist,
             initBreedDetail,
             initCurrencylist,
-            initUnitlist
+            initUnitlist,
+            initEmployeeList
         },
         actions:{
             getCountryList,
@@ -411,18 +462,59 @@ export default {
             getDistrictList,
             createOrder,
             getUnitList,
+            getEmployeeList,
             getCurrencyList
         }
     },
     methods:{
         selectProvince:function(){
             console.log('selectProvince');
-            this.province = '';
-            this.city = '';
-            this.district = '';
+            this.province = {
+              id:'',
+              cname:''
+            };
+            this.city = {
+              id:'',
+              cname:''
+            };
+            this.district = {
+              id:'',
+              cname:''
+            };
             if(this.country!=''&&this.country!=null){
               this.getProvinceList(this.country);
             }
+        },
+
+        selectCity:function(){
+            this.city = {
+              id:'',
+              cname:''
+            };
+            this.district = {
+              id:'',
+              cname:''
+            };
+            if(this.province!=''&&this.province!=null){
+              this.getCityList(this.province);
+            }
+
+        },
+        selectDistrict:function(){
+            this.district = {
+              id:'',
+              cname:''
+            };
+            if(this.city!=''&&this.city!=null){
+              this.getDistrictList(this.city);
+            }
+        },
+
+        selectEmployee:function(id,name){
+           this.employeeParam.show = true;
+           this.employeeParam.consigner= id;
+           this.employeeParam.consignerName = name;
+
         },
         addCompute:function(){ //优惠增加
           var saith = 0;
@@ -472,26 +564,29 @@ export default {
           }
         },
         
-        selectCity:function(){
-            this.city = '';
-            this.district = '';
-            if(this.province!=''&&this.province!=null){
-              this.getCityList(this.province);
-            }
-
-        },
-        selectDistrict:function(){
-            this.district = '';
-            if(this.city!=''&&this.city!=null){
-              this.getDistrictList(this.city);
-            }
-
-        },
         searchBreed:function(breedName,breedId){
             this.breedParam.show=true;
         },
         searchCustomer:function(customerName,customer){
             this.empNameParam.show=true;
+        },
+        selectConsignee:function(){
+            this.createOrSelect = 1;
+            this.consigneeParam.show=true;
+        },
+        createConsignee:function(){
+            this.createOrSelect = 0;
+            this.param.addressId = '';
+            this.param.consignee = this.param.customerName;
+            this.param.consigneePhone = this.param.customerPhone;
+            this.param.consigneeAddr = "";
+
+            this.country.cname = "中国";
+            this.province.cname = "";
+            this.city.cname = "";
+            this.district.cname = "";
+            
+
         },
         addBreed:function(){
           //价格只能输入之多两位小数
@@ -609,6 +704,7 @@ export default {
             this.param.city = this.city.cname;
             this.param.district = this.district.cname;
             this.param.show=false;
+            //如果this.param.addressId = 0,则新增客户地址
             console.log(this.param);
             this.param.callback = this.param.callback;
             this.createOrder(this.param);
@@ -652,14 +748,41 @@ export default {
             this.param.customerName = customer.customerName;
             this.param.customerPhone = customer.customerPhone;
             this.param.customer = customer.customerId;
+
+            this.consigneeParam.customerId = customer.customerId;
+        },
+        address:function(address){
+          console.log(address);
+          this.param.consignee = address.contactName;
+          this.param.consigneePhone = address.contactPhone;
+
+          this.country.cname = address.country;
+          this.province.cname = address.province;
+          this.city.cname = address.city;
+          this.district.cname = address.district;
+
+          this.param.consigneeAddr = address.address;
+          this.param.addressId = address.id;   //地址ID
+
+        },
+        selectEmpOrOrg:function(employee){
+            console.log(employee)
+            this.employeeParam.consigner = employee.employeeId;
+            this.employeeParam.consignerName = employee.employeeName;
+            this.param.consigner = this.employeeParam.consigner;
+
         }
     },
     created(){
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
+        this.getEmployeeList(this.orgParam);
         this.getUnitList();
         this.getCurrencyList();
         console.log(this.param);
+         if(this.param.customer){
+            this.consigneeParam.customerId = this.param.customer;
+         }
          if(this.param.breedId){
             this.breedParam.breedName = this.param.breedName;
             this.breedParam.id = this.param.breedId;

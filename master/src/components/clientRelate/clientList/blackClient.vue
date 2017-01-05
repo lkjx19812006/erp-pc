@@ -81,7 +81,7 @@
                 })">{{item.name}}
           </td>
           <td>{{item.orderTotal}}</td>
-          <td>{{item.typeDesc}}</td>
+          <td>{{item.type | customerType}}</td>
           <td>{{item.mainContact}}</td>
           <td></td>
           <td>{{item.mainPhone}}</td>
@@ -216,6 +216,8 @@
           blacklist:0,
           link:'/customer/transferBlacklist',
           key:'blackCustomerList',
+          auditComment:'',
+          blackComments:'',
         },
         checked:false
       }

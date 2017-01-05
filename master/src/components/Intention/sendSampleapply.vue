@@ -204,8 +204,8 @@
                                </div>
                            </div>
                            <div class="client-detailInfo  col-md-6 col-xs-12">
-		                        <label class="editlabel">详细地址 </label></label>
-		                        <input type="text" class="form-control edit-input" v-model="param.address" value="{{param.address}}"  />
+		                        <label class="editlabel">详细地址 <span class="system_danger" v-if="$validation.addr.required">必填项</span></label>
+		                        <input type="text" v-validate:addr="['required']" class="form-control edit-input" v-model="param.address"   />
 		                    </div>
 		                    <div class="client-detailInfo  col-md-12">
 		                        <label class="editlabel">备注 </label></label>

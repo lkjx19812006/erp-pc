@@ -32,6 +32,10 @@ Vue.filter('bizType', function(val){
 	var val = val;
 	if(val=='order'){
 		 return '订单';
+	}else if(val=='order_after_sales_refund'){
+		return '售后退款订单'
+	}else if(val=='order_refund'){
+		return '补充合同退款订单'
 	}else{
 		return val;
 	}
@@ -307,23 +311,23 @@ Vue.filter('country', function(val){ //国家
 Vue.filter('customerType', function(val){ //客户类型
 	var val = val;
 	if(val==0){
-		 return '其他';
+		 return 'Others 其他';
 	}else if(val==1){
-		 return '合作社';
+		 return 'Cooperatives 合作社';
 	}else if(val==2){
-		 return '药商';
+		 return 'Drug Makers 药商';
 	}else if(val==3){
-		 return '药厂';
+		 return 'Factory 药厂';
 	}else if(val==4){
-		 return '个体户';
+		 return 'Private Use 个体户';
 	}else if(val==5){
-		 return '药店';
+		 return 'Pharmacy 药店';
 	}else if(val==6){
-		 return '医院';
+		 return 'Hospital 医院';
 	}else if(val==7){
-		 return '贸易公司';
+		 return 'Trading Company 贸易公司';
 	}else if(val==8){
-		 return '零售商行';
+		 return 'Retail 零售商行';
 	}else if(val==9){
 		 return '药农';
 	}else if(val==10){
@@ -335,25 +339,25 @@ Vue.filter('customerType', function(val){ //客户类型
 	}else if(val==13){
 		 return '销地药商';
 	}else if(val==14){
-		 return '养生诊所';
+		 return 'Acupuncture Clinic 养生诊所';
 	}else if(val==15){
-		 return '化工厂';
+		 return 'Chemical Company 化工厂';
 	}else if(val==16){
-		 return '化妆品厂';
+		 return 'Cosmetics Company 化妆品厂';
 	}else if(val==17){
-		 return '提取物厂';
+		 return 'Extract Company 提取物厂';
 	}else if(val==18){
-		 return '食品厂';
+		 return 'Food Company 食品厂';
 	}else if(val==19){
-		 return '实验室';
+		 return 'Laboratory for trial 实验室';
 	}else if(val==20){
-		 return '网上电商';
+		 return 'Online Company 网上电商';
 	}else if(val==21){
-		 return '中成药生产商';
+		 return 'Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商';
 	}else if(val==22){
-		 return '西成药生产商';
+		 return 'Pharmaceutical producer of Western Medicine 西成药生产商';
 	}else if(val==23){
-		 return '饮片厂';
+		 return 'Pieces Factory 饮片厂';
 	}else{
 		return val;
 	}
@@ -466,6 +470,11 @@ Vue.filter('date',function(val){      //将时间的时分秒去掉
 		return val;
 	}
 })
+Vue.filter('dateTime',function(val){      //将时间的时分秒去掉
+	var val = val;
+	val = new Date(parseInt(val)).toLocaleString().substr(0,20);
+	return val;
+})
 
 Vue.filter('payfee',function(val){      //将金额保留小数点后两位
 	var val = val;
@@ -513,18 +522,18 @@ Vue.filter('Auditing',function(val){     //订单审核
 	var val = val;
 	if(val==null){
 		return '初始状态';
-	}
-	if(val==0){
+	}else if(val==0){
 		 return '初始状态';
-	}
-	if(val==1){
+	}else if(val==1){
 		 return '申请审核';
-	}
-	if(val==2){
+	}else if(val==2){
 		 return '审核通过';
-	}
-	if(val==-2){
+	}else if(val==-2){
 		 return '审核未通过';
+	}else if(val==-1){
+		 return '取消申请';
+	}else{
+		return val;
 	}
 })
 

@@ -939,12 +939,15 @@ export const logisticsInfo = ({ dispatch }, param) => { //物流查看详情
     })
 }
 export const createOrder = ({ dispatch }, data) => { //创建订单
-    console.log(data.goods);
+    console.log(data);
     if(data.city==null||data.city==''||!data.city){
         data.city=''; 
     }
     if(data.district==null||data.district==''||!data.district){
        data.district=''; 
+    }
+    if(data.addressId==null||data.addressId==''||!data.addressId){
+       data.addressId=0; 
     }
     const body = {
         type: data.type,
@@ -959,19 +962,24 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         preferentialDesc: data.preferentialDesc,
         currency: data.currency,
         zipCode: data.zipCode,
+        addressId:data.addressId,
         country: data.country,
         province: data.province,
         city: data.city,
         employee: data.employee,
         org: data.org,
         district: data.district,
-        consigneeAddr:data.country+' '+data.province+' '+data.city+' '+data.district+' '+data.consigneeAddr,
+        //consigneeAddr:data.country+' '+data.province+' '+data.city+' '+data.district+' '+data.consigneeAddr,
+        consigneeAddr:data.consigneeAddr,
         comments: data.comments,
         orderStatus: data.orderStatus,
         goods: data.goods
     }
     if (data.email) {
         body.email = data.email;
+    }
+    if (data.consigner) {
+        body.consigner = data.consigner;
     }
     if(data.consignee==''){
         body.consignee = data.customerName;
@@ -996,25 +1004,26 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         }
     }).then((res) => {
         data.callback(res.json().msg);
-        data.no = res.json().result.no;
-        data.id = res.json().result.id;
-        data.clients = res.json().result.clients;
-        data.payWay = res.json().result.payWay;
-        data.validate = res.json().result.validate;
-        data.checked = false;
-        data.sample = res.json().result.sample;
-        data.goodsDesc = res.json().result.goodsDesc;
-        data.total = res.json().result.total;
-        data.ctime = new Date();
-        data.consignee = res.json().result.consignee;
-        data.consigneePhone = res.json().result.consigneePhone;
-        data.consigneeAddr = res.json().result.consigneeAddr;
-        data.mode = 3;
         if(res.json().code==200){
-           dispatch(types.ORDER_ADD_DATA, data);
-        }
+            data.no = res.json().result.no;
+            data.id = res.json().result.id;
+            data.clients = res.json().result.clients;
+            data.payWay = res.json().result.payWay;
+            data.validate = res.json().result.validate;
+            data.checked = false;
+            data.sample = res.json().result.sample;
+            data.goodsDesc = res.json().result.goodsDesc;
+            data.total = res.json().result.total;
+            data.ctime = new Date();
+            data.consignee = res.json().result.consignee;
+            data.consigner = res.json().result.consigner;
+            data.consigneePhone = res.json().result.consigneePhone;
+            data.consigneeAddr = res.json().result.consigneeAddr;
+            data.mode = 3;
+            data.show = false;
+            dispatch(types.ORDER_ADD_DATA, data);
+        }   
         
-        data.show = false;
     }, (res) => {
         console.log('fail');
         data.show = false;
@@ -1023,7 +1032,7 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
 export const alterOrder = ({ dispatch }, param) => { //修改订单
     console.log(param);
     if(param.city==null||param.city==''||!param.city){
-           param.city=''; 
+        param.city=''; 
     }
     if(param.district==null||param.district==''||!param.district){
        param.district=''; 
@@ -1051,6 +1060,9 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         consigneeAddr:param.country +' '+param.province+' '+param.city+' '+param.district+' '+param.consigneeAddr,
         comments: param.comments,
         goods: param.goods
+    }
+    if(param.consigner) {
+        body.consigner = param.consigner;
     }
     Vue.http({
         method: 'PUT',
@@ -1206,6 +1218,9 @@ export const paymentConfirm = ({ dispatch }, param) => { //确定收款
         id: param.id,
         images:img
     }
+    if(param.comment){
+        body.comment = param.comment;
+    }
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.url,
@@ -1238,13 +1253,18 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     var ss= param.images;
     var sss = ss.split(",");//字符串转化为数组
     sss.toString();
-    const body = {};
+    const body = {
+        payWay:param.payWay,
+    };
     if(param.id&&param.id!=''){
         body.id = param.id;
     }
     if(param.validate&&param.validate!=''){
         body.validate = param.validate;
     }
+    /*if(param.amount&&param.amount!=''){
+        body.amount = param.amount;
+    }*/
     if(param.description&&param.description!=''){
         body.description = param.description;
     }
@@ -1260,9 +1280,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if(param.payUserName&&param.payUserName!=''){
         body.payUserName = param.payUserName;
     }
-    if(param.payWay&&param.payWay!=''){
-        body.payWay = param.payWay;
-    }
     if(param.bizId&&param.bizId!=''){
         body.bizId = param.bizId;
     }
@@ -1275,6 +1292,7 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if (param.images) {
         body.images = sss;
     }
+    console.log(body)
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.url,
@@ -1289,21 +1307,66 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
         param.callback(res.json().msg);
         if(res.json().code==200){
             param.validate = res.json().result.validate;
+            param.pr = res.json().result.pr;
             dispatch(types.ORDER_UPLOAD_DATA, param);
         }
         if(res.json().msg=='已申请审核'){
            param.validate = 1;
            dispatch(types.ORDER_UPLOAD_DATA, param); 
         }
-        if(param.titles=='分期审核'){
+        if(param.titles=='分期审核'||param.titles=='确认付款'||param.titles=='确认收款'){
+            param.validate = res.json().result.validate;
             param.pr = res.json().result.pr;
             dispatch(types.FINANCE_LIST, param);
         }
+        if(param.titles=='编辑'){
+            param.validate = res.json().result.validate;
+            param.pr = res.json().result.pr;
+            param = res.json().result;
+            dispatch(types.MY_FUND_LIST, param);
+        }
+        console.log(param)
     }, (res) => {
         console.log('fail'); 
     });
 }
-
+export const editPayment = ({ dispatch }, param) => { //编辑我的收付款
+    console.log(param)
+    const data = {
+        id: param.id,
+        comment: param.comment,
+        payName: param.payName,
+        payNumber: param.payNumber,
+        payUserName: param.payUserName,
+        payWay: param.payWay
+    }
+    if(param.paySubName&&param.paySubName!=''){
+        data.paySubName = param.paySubName;
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.orderList + param.url,
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg);
+        if(res.json().code==200){
+            param.payName = res.json().result.payName;
+            param.payNumber = res.json().result.payNumber;
+            param.payUserName = res.json().result.payUserName;
+            param.payWay = res.json().result.payWay;
+            param.paySubName = res.json().result.paySubName;
+            dispatch(types.MY_FUND_LIST, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+};
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     console.log(param)
     param.images = '';
@@ -1318,18 +1381,46 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     if (param.images) {
         body.images = param.images;
     }
-    if (param.b) {
+    if (param.b&&param.link=='/order/send') {
         var strs = param.b.split(",");
         param.lcompanyId = strs[0];
         body.lcompanyId = param.lcompanyId;
+    }
+    if (param.b&&param.link=='/order/sendflowSend') {
+        var strs = param.b.split(",");
+        param.logistics = strs[0];
+        body.logistics = param.logistics;
     }
     if (param.b) {
         var strs = param.b.split(",");
         param.name = strs[1];
         body.name = param.name;
     }
+    if (param.b) {
+        var strs = param.b.split(",");
+        param.code = strs[2];
+        body.code = param.code;
+    }
     if (param.lcompanyNo) {
         body.lcompanyNo = param.lcompanyNo;
+    }
+    if (param.number) {
+        body.number = param.number;
+    }
+    if (param.driverName) {
+        body.driverName = param.driverName;
+    }
+    if (param.driverPid) {
+        body.driverPid = param.driverPid;
+    }
+    if (param.driverTel) {
+        body.driverTel = param.driverTel;
+    }
+    if (param.vehicleNo) {
+        body.vehicleNo = param.vehicleNo;
+    }
+    if (param.way) {
+        body.way = param.way;
     }
     Vue.http({
         method: 'POST',
@@ -1342,15 +1433,56 @@ export const orderStatu = ({ dispatch }, param) => { //订单状态详情
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        var status = res.json().result;
+        if(res.json().result==null){
+             var status = param;
+        }else{
+            var status = res.json().result;
+        }
         param.callback(res.json().msg);
+        status.link = param.link;
+        status.key = param.key;
         if(res.json().code==200){
            dispatch(types.ORDER_STATUS, status);
         }
-        status.link = param.link;
-        status.key = param.key;
+        console.log(status)
     }, (res) => {
         console.log('fail');
+    })
+}
+export const orderReceive = ({ dispatch }, param) => { //订单收货流程
+    console.log(param)
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t };
+    const body = {
+        id: param.id
+    }
+    if (param.images) {
+        body.images = param.images;
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + param.link,
+        emulateJSON: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(param)
+        param.callback(res.json().msg);
+        if(res.json().code==200){
+           dispatch(types.ORDER_STATUS, param);
+        }
+        param.show=false;
+    }, (res) => {
+        console.log('fail');
+        param.show=false;
     })
 }
 
@@ -3182,6 +3314,35 @@ export const updateContact = ({ dispatch }, param) => { //修改客户联系人
         console.log('fail');
     })
 }
+
+//获取客户地址
+export const getAddrInfo = ({ dispatch }, param) => {
+    console.log(param)
+    param.loading = true;
+    var url = apiUrl.clientList + param.link + param.customerId;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var addressList = res.json().result;
+        console.log(addressList);
+
+        dispatch(types.ADDRESS_TABLE, addressList);
+        
+        param.loading = false;
+        //localStorage.BacklogParam = JSON.stringify(param);
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+
 export const addrInfo = ({ dispatch }, param) => { //修改客户地址
 
     const updatedata = {
@@ -5865,6 +6026,7 @@ export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
                     number: item.number,
                     unit: item.unit,
                     cunit: item.cunit,
+                    eunit: item.eunit,
                     status:item.status,
                     description:item.description
                 }
@@ -5941,12 +6103,8 @@ export const createSample = ({ dispatch }, data) => { //新建寄样申请
        province:data.province,
        city:data.city,
        district:data.district,
+       address:data.address,
        items:data.items
-    }
-    if(data.address==''){
-        body.address = data.country+','+data.province+','+data.city+','+data.district
-    }else{
-        body.address = data.country+' '+data.city+' '+data.address
     }
     if(data.consignee=='') {
         body.consignee = data.customerName;
@@ -6004,12 +6162,8 @@ export const alterSample = ({ dispatch }, param) => { //修改寄样申请
        city:param.city,
        district:param.district,
        status:param.status,
+       address:param.address,
        items:param.items
-    }
-    if(param.address==''||param.address==null){
-        body.address = param.country+''+param.province+''+param.city+''+param.district
-    }else{
-        body.address = param.address;
     }
     if(param.consignee=='') {
         body.consignee = param.customerName;
@@ -6064,12 +6218,16 @@ export const deleteData = ({ dispatch }, param) => { //删除客户、药材信�
         console.log('fail');
     });
 }
-export const sampleApply = ({ dispatch }, param) => { //申请/审核 寄样申请
+export const sampleApply = ({ dispatch }, param) => { //  申请/审核 寄样申请
     console.log(param);
     const body = {
-        id:param.id,
-        description:param.auditComment,
-        validate:param.validate
+        id:param.id
+    }
+    if(param.auditComment){
+        body.description = param.auditComment;
+    }
+    if(param.validate){
+        body.validate = param.validate;
     }
     console.log(body);
     Vue.http({
@@ -6111,6 +6269,12 @@ export const getMyFundList = ({ dispatch }, param) => { //个人资金记录以�
         }
         if (seach == 'type' && param[seach] !== '') {
             apiurl += '&type=' + param.type
+        }
+        if (seach == 'bizSubId' && param[seach] !== '') {
+            apiurl += '&bizSubId=' + param.bizSubId
+        }
+        if (seach == 'bizId' && param[seach] !== '') {
+            apiurl += '&bizId=' + param.bizId
         }
         if (seach == 'validate' && param[seach] !== ''){
             apiurl += '&validate=' + param.validate
@@ -6329,7 +6493,7 @@ export const getBankBranchList = ({ dispatch }, param) => { //获取银行支行
         }
         dispatch(types.BANK_BRANCH_LIST, branch);
         param.loading = false;
-        param.all = res.json().result.all;
+        param.all = res.json().result.pages;
         param.total = res.json().result.total;
         console.log(param.cur)
     }, (res) => {
@@ -6358,6 +6522,7 @@ export const orderApplySend = ({ dispatch }, param) => {   //发货申请
     }).then((res) => {
         param.callback(res.json().msg);
         param.logistics= res.json().result.logistics; 
+        param.verifier = res.json().result.verifier;
         /*param.description=res.json().result.description;*/
         if(res.json().code==200){
            dispatch(types.ORDER_TABLE, param);
@@ -6368,9 +6533,7 @@ export const orderApplySend = ({ dispatch }, param) => {   //发货申请
 }
 export const sendRestart = ({ dispatch }, param) => {   //重新申请发货
     console.log(param);
-    const body = {
-
-    }
+    const body = {};
     if(param.orderId){
         body.id = param.orderId;
     }
@@ -6444,5 +6607,367 @@ export const sendCancel = ({ dispatch }, param) => {   //取消发货
         console.log('fail');
     });
 }
+export const applyContract = ({ dispatch }, param) => {   //申请补充合同
+    console.log(param);
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t }
+    var ss= param.images;
+    var img = ss.split(",");//字符串转化为数组
+    img.toString();
+    console.log(img)
+    const body = {
+        orderId:param.orderId,
+        contractText:param.contractText,
+        comment:param.comment,
+        adjusted:param.adjusted,
+        images:img
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg); 
+        if(res.json().code==200){
+           dispatch(types.ORDER_TABLE, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
 
-        
+export const getMyContractList = ({ dispatch }, param) => { //补充合同列表（我的、部门）
+    param.loading = true;
+    var url = apiUrl.clientList +param.link+'?page=' + param.cur + '&pageSize=15';
+    for(var seach in param) {
+        if (seach == 'orderDesc'& param[seach] !== '') {
+            url += '&orderDesc=' + param.orderDesc
+        }
+        if (seach == 'customerName'& param[seach] !== '') {
+            url += '&customerName=' + param.customerName
+        }
+        if (seach == 'customerPhone'& param[seach] !== '') {
+            url += '&customerPhone=' + param.customerPhone
+        }
+        if (seach == 'orderNo'& param[seach] !== '') {
+            url += '&orderNo=' + param.orderNo
+        }
+        if (seach == 'orderType'& param[seach] !== '') {
+            url += '&orderType=' + param.orderType
+        }
+    }
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var contract = res.json().result.list;
+        contract.link = param.link;
+        dispatch(types.CONTRACT_LIST, contract);
+        param.loading = false;
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const contractCheck = ({ dispatch }, param) => {  //审核合同和重新申请补充合同或者取消以及售后申请审核
+    console.log(param);
+    const body = {
+        id:param.id, 
+    }
+    if(param.validate){
+        body.validate = param.validate;
+    }
+    if(param.description){
+        body.description = param.description;
+    }
+    if(param.orderId){
+        body.orderId = param.orderId;
+    }
+    if(param.comment){
+        body.comment = param.comment;
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg); 
+        if(res.json().code==200){
+           dispatch(types.CONTRACT_LIST, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getSalesApplyList = ({ dispatch }, param) => { //售后申请列表（我的、部门）
+    param.loading = true;
+    var url = apiUrl.clientList +param.link+'?page=' + param.cur + '&pageSize=15';
+    for(var seach in param) {
+        if (seach == 'orderDesc'& param[seach] !== '') {
+            url += '&orderDesc=' + param.orderDesc
+        }
+        if (seach == 'customerName'& param[seach] !== '') {
+            url += '&customerName=' + param.customerName
+        }
+        if (seach == 'customerPhone'& param[seach] !== '') {
+            url += '&customerPhone=' + param.customerPhone
+        }
+        if (seach == 'orderNo'& param[seach] !== '') {
+            url += '&orderNo=' + param.orderNo
+        }
+        if (seach == 'orderType'& param[seach] !== '') {
+            url += '&orderType=' + param.orderType
+        }
+    }
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var contract = res.json().result.list;
+        contract.link = param.link;
+        dispatch(types.AFTER_SALES, contract);
+        param.loading = false;
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const afterSalesApply = ({ dispatch }, param) => {   //售后申请
+    console.log(param);
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t }
+    var ss= param.images;
+    var img = ss.split(",");//字符串转化为数组
+    img.toString();
+    const body = {
+        orderId:param.orderId,
+        comment:param.comment,
+        consignee:param.consignee,
+        shipper:param.shipper,
+        type:param.type,
+        images:img
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg); 
+        if(res.json().code==200){
+           dispatch(types.AFTER_SALES, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const contractEdit = ({ dispatch }, param) => {   //合同编辑修改
+    console.log(param);
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t }
+    var ss= param.images;
+    var img = ss.split(",");//字符串转化为数组
+    img.toString();
+    const body = {
+        orderId:param.orderId,
+        id:param.id,
+        comment:param.comment,
+        adjusted:param.adjusted,
+        contractText:param.contractText,
+        images:img
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg); 
+        if(res.json().code==200){
+           dispatch(types.CONTRACT_LIST, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
+export const afterSalseEdit = ({ dispatch }, param) => {   //售后编辑修改
+    console.log(param);
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t }
+    var ss= param.images;
+    var img = ss.split(",");//字符串转化为数组
+    img.toString();
+    const body = {
+        orderId:param.orderId,
+        id:param.id,
+        comment:param.comment,
+        shipper:param.shipper,
+        consignee:param.consignee,
+        type:param.type,
+        images:img
+    }
+    console.log(body);
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg); 
+        if(res.json().code==200){
+           dispatch(types.CONTRACT_LIST, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}
+
+export const getReceiptDetail = ({ dispatch }, param) => { //合同、售后详情页面
+    param.loading = true;
+    var url = apiUrl.clientList +param.url+param.id;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var contract = res.json().result;
+        contract.url = param.url;
+        dispatch(types.SALES_DETAIL, contract);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const afterResend = ({ dispatch }, param) => {   //售后重新发货
+    console.log(param);
+    param.images = '';
+    if (param.image_f) {
+        param.images += param.image_f + ','
+    }
+    if (param.image_s) { param.images += param.image_s + ',' }
+    if (param.image_t) { param.images += param.image_t }
+    /*var ss= param.images;
+    var img = ss.split(",");//字符串转化为数组
+    img.toString();*/
+    const body = {
+        afterSalesId:param.afterSalesId,
+        orderId:param.orderId,
+        way:param.way,
+        validate:param.validate
+    }
+    if (param.images) {
+        body.images = param.images;
+    } 
+    if (param.number) {
+        body.number = param.number;
+    }    
+    if (param.name) {
+        body.name = param.name;
+    }
+    if (param.code) {
+        body.code = param.code;
+    }
+    if (param.logistics) {
+        body.logistics = param.logistics;
+    }
+    if (param.driverName) {
+        body.driverName = param.driverName;
+    }
+    if (param.driverPid) {
+        body.driverPid = param.driverPid;
+    }
+    if (param.driverTel) {
+        body.driverTel = param.driverTel;
+    }
+    if (param.vehicleNo) {
+        body.vehicleNo = param.vehicleNo;
+    }
+    console.log(body);
+
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.commonList + param.url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.callback(res.json().msg); 
+        if(res.json().code==200){
+           dispatch(types.AFTER_SALES, param);
+        }
+    }, (res) => {
+        console.log('fail');
+    });
+}

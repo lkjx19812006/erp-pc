@@ -79,7 +79,7 @@ var locales = {
       awaiting_review:'等待审核',
       wait_ship:'等待发货',
       wait_receipt:'等待收货',
-      awaiting_comment:'等待评论',
+      awaiting_comment:'等待评价',
       order_over:'已完成订单',
       cancle_order:'已取消订单',
       expired_order:'已过期订单',

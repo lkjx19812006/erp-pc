@@ -707,8 +707,8 @@
                                                 <td v-if="item.type==1">默认</td>
 		                                            <td>{{item.contactName}}</td>
 		                                            <td>{{item.contactPhone}}</td>
-		                                            <td v-if="item.sex==0">男</td>
-                                                <td v-if="item.sex==1">女</td>
+		                                            <td v-if="item.sex==1">男</td>
+                                                <td v-if="item.sex==0">女</td>
                                                 <td v-if="item.sex==null">未说明</td>
 		                                            <td>{{item.country}}</td>
 		                                            <td>{{item.province}}</td>

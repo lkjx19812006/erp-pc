@@ -18,7 +18,10 @@ import {
     REQUEST_RECORD,
     ITEM_SUPPLIER_LIST,
     BANK_LIST,
-    BANK_BRANCH_LIST
+    BANK_BRANCH_LIST,
+    CONTRACT_LIST,
+    AFTER_SALES,
+    SALES_DETAIL
 } from '../mutation-types'
 
 const state = {
@@ -58,7 +61,17 @@ const state = {
     //产品供应商
     supplierList:[],
     bankList:[],
-    bankBranchList:[]
+    bankBranchList:[],
+    //我的补充合同
+    myContractList:[],
+    //部门补充合同
+    orgContractList:[],
+    //补充合同详情
+    contractDetail:[],
+    //我的售后列表
+    mySalesList:[],
+    //部门售后列表
+    orgSalesList:[],
 }
 const mutations = {
     [UNIT_LIST](state,data){ //常用单位
@@ -68,30 +81,34 @@ const mutations = {
         state.currencyList = data;
     },
     [MY_CLIENT_COUNT](state, data) { //我的客户统计
-      state.countList = data;
+       state.countList = data;
     },
     [MY_ORDER_COUNT](state, data) { //我的订单统计
-      state[data.key] = data;
+       state[data.key] = data;
     },
     [MY_TIME_ORDER_COUNT](state, data) { //我的订单统计(时间维度)
-      state.myTimeOrderCount = data;
+       state.myTimeOrderCount = data;
     },
     [MY_SAMPLE_LIST](state,data){ //我的寄样申请列表
-        state.mySampleList = data;
+       state.mySampleList = data;
     },
     [ORG_SAMPLE_LIST](state,data){ //部门寄样申请列表
-        state.orgSampleList = data;
+       state.orgSampleList = data;
     },
     [MY_FUND_LIST](state,data){ //我的资金记录
-      if(data.titles=='确定收款'){
+        if(data.titles=='确定收款'){
             console.log(state.myFundlist[data.sub])
             state.myFundlist[data.sub].pr =  data.pr;
+        }else if(data.titles=='编辑'){
+          for(var key in data){
+            state.myFundlist[data.sub][key] =  data[key];
+          }
         }else{
           state.myFundlist = data;
         }
     },
     [ORG_FUND_LIST](state,data){ //我的资金记录
-      state.orgFundlist = data;
+        state.orgFundlist = data;
     },
     [ADD_SAMPLE](state,data){
         console.log(data)
@@ -151,7 +168,7 @@ const mutations = {
     },
     [FINANCE_LIST](state,data){
       console.log(data)
-        if(data.titles=='分期审核'){
+        if(data.titles=='分期审核'||data.titles=='确认收款'||data.titles=='确认付款'){
             state.financeList[data.sub].validate =  data.validate;
             state.financeList[data.sub].pr =  data.pr;
         }else{
@@ -165,13 +182,50 @@ const mutations = {
     [ITEM_SUPPLIER_LIST](state,data){
        state.supplierList = data;
     },
-    [BANK_LIST](state,data){
+    [BANK_LIST](state,data){ //银行数据
       state.bankList = data;
     },
-    [BANK_BRANCH_LIST](state,data){
+    [BANK_BRANCH_LIST](state,data){ //银行分支
       state.bankBranchList = data;
+    },
+    [CONTRACT_LIST](state,data){  //补充合同列表
+      console.log(data)
+      console.log(data.url)
+      if(data.link=='/order/contract/list/employee'){
+         state.myContractList = data;
+      }else if(data.link=='/order/contract/list/org'){
+         state.orgContractList = data;
+      }
+      if(data.url=='/order/quality/contract/validate'){
+        state.orgContractList[data.sub].validate= data.validate;
+      }else if(data.url=='/order/quality/contract/restartOrCancel'){
+        state.myContractList[data.sub].validate= data.validate;
+      }else if(data.url=='/order/quality/after/sales/validate'){ //售后申请审核
+          state.orgSalesList[data.sub].validate= data.validate;
+          state.orgSalesList[data.sub].description= data.description;
+      }else if(data.url=='/order/quality/after/sales/restartOrCancel'){ //售后重新审核或者取消
+          state.mySalesList[data.sub].validate= data.validate;
+          state.mySalesList[data.sub].comment= data.comment;
+      }else if(data.url=='/order/contract/edit'){
+        state.myContractList[data.sub].comment = data.comment;
+        state.myContractList[data.sub].contractText = data.contractText;
+        state.myContractList[data.sub].adjusted = data.adjusted;
+      }
+    },
+    [AFTER_SALES](state,data){
+      console.log(data)
+      if(data.link=='/order/after/sales/list/employee'){
+         state.mySalesList = data;
+      }else if(data.link=='/order/after/sales/list/org'){
+         state.orgSalesList = data;
+      }
+      if(data.url=='/order/quality/after/sales/resend'){
+        state.mySalesList[data.sub].validate = data.validate;
+      }
+    },
+    [SALES_DETAIL](state,data){
+      state.contractDetail = data;
     }
-
 }
 export default {
     state,

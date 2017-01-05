@@ -40,6 +40,7 @@ import {
    UPDATE_CUSTOMER_DETAIL,
    CUSTOMER_UPDATE_DATA,
    UPDATE_ADDR_DETAIL,
+   ADDRESS_TABLE,
    ADD_ADDR_DETAIL,
    LABEL_DATA,
    CUSTOMER_CONTACT_DATA,
@@ -256,7 +257,7 @@ const state = {
                 "pay":0,"ptime":null,"payWay":null,"invoice":0,"logistics":0,"stime":null,"consigneeAddr":"北京,北京,西城区 阿伦",
                 "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
                 "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
-                "payPics":null,"sendPics":null}],
+                "payPics":null,"sendPics":null,"mode":3,"sample":0}],
         orgOrderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
                 "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
                 "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
@@ -352,6 +353,8 @@ const state = {
         supplyCustomerList: [
             { "id": 0, "type": 0,"typeDesc": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false }
         ],
+        //收货地址列表
+        addressList:[],
         //客户通话记录
         callRecordList:[],
         //产品列表
@@ -705,8 +708,11 @@ const mutations = {
         if(data.key){
           state.basicBaseList[data.key] = data;
         }else if(data.titles=='申请发货'){
+          state.basicBaseList.orderList[data.sub].verifier = data.verifier;
           state.basicBaseList.orderList[data.sub].logistics = data.logistics;
           console.log(state.basicBaseList.orderList[data.sub].logistics)
+        }else if(data.titles=='售后申请'){
+          state.basicBaseList.orderList[data.sub].logistics = data.logistics;
         }else{
           state.basicBaseList.orderList = data;
         }
@@ -804,7 +810,6 @@ const mutations = {
         }
         if(data.key == 'myOrderList'){
             console.log(data)
-           /* state.basicBaseList[data.key].unshift(data);*/
            state.basicBaseList[data.key].unshift({
                 "type":data.type,
                 "sourceType":data.sourceType,
@@ -818,6 +823,7 @@ const mutations = {
                 'preferentialDesc':data.preferentialDesc,
                 'currency':data.currency,
                 "consignee":data.consignee,
+                'consigner':data.consigner,
                 'consigneePhone':data.consigneePhone,
                 "zipCode":data.zipCode,
                 "country":data.country,
@@ -838,7 +844,6 @@ const mutations = {
                 "payWay":data.payWay,
                 "checked":false,
                 "clients":data.clients,
-                "sample": data.sample,
                 "goodsDesc":data.goodsDesc,
                 "total":data.total,
                 "ctime":data.ctime,
@@ -860,6 +865,7 @@ const mutations = {
                 "preferential":data.preferential,
                 'preferentialDesc':data.preferentialDesc,
                 'currency':data.currency,
+                'consigner':data.consigner,
                 "consignee":data.consignee,
                 'consigneePhone':data.consigneePhone,
                 "zipCode":data.zipCode,
@@ -899,6 +905,7 @@ const mutations = {
              console.log(state.orderDetail.stages.arr[data.sub])
              state.orderDetail.stages.arr[data.sub].validate=  data.validate;
         }
+
         if(data.stages){
           console.log(state.orderDetail.stages.arr)
           state.orderDetail.stages.arr =  data.stages;//分期付款
@@ -953,7 +960,7 @@ const mutations = {
           }
         }
         if(data.orderStatus==40||data.orderStatus==30){
-             for(var i=0;i<state.basicBaseList[data.key].length;i++){
+             for(var i=0;i<state.basicBaseList[data.key].length-1;i++){
                if(state.basicBaseList[data.key][i].id==data.id){
                  state.basicBaseList[data.key].splice(i,1);
                }
@@ -1301,6 +1308,9 @@ const mutations = {
             "main": data.main,
             "show": false
         })
+    },
+    [ADDRESS_TABLE](state, data){ // 客户地址列表
+        state.basicBaseList.addressList = data;
     },
     [ADD_ADDR_DETAIL](state, data) { // 新增客户地址
         state.clientDetail[data.key].arr.unshift({

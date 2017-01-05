@@ -1,6 +1,7 @@
 <template>
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
+    <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
     <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -23,10 +24,14 @@
                   <div class="editpage-input col-md-6">
                       <label class="editlabel">{{$t('static.order_status')}}</label>
                       <select  class="form-control edit-input" v-model="param.orderStatus" >
-                          <option value="0" selected>{{$t('static.create_order')}}</option>
+                          <option value="0">{{$t('static.create_order')}}</option>
                           <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
                           <option value="70">{{$t('static.order_over')}}</option>
                       </select>
+                  </div>
+                  <div class="editpage-input col-md-6" v-if="param.type==1">
+                    <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
+                    <input  type="text" class="form-control" value="{{param.consigner}}" v-model="employeeParam.consignerName"  v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
                   </div>
               </div>
               <section class="editsection">
@@ -305,6 +310,7 @@ import pressImage from '../imagePress'
 import searchcustomerModel  from '../Intention/clientname'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import searchbreedModel  from '../Intention/breedsearch'
+import searchemgModel from '../order/second_order/allEmployee'
 import {
     initCountrylist,
     initProvince,
@@ -332,7 +338,8 @@ export default {
         pressImage,
         searchcustomerModel,
         searchbreedModel,
-        inputSelect
+        inputSelect,
+        searchemgModel
     },
     props: ['param'],
     data() {
@@ -356,6 +363,11 @@ export default {
                 breedId:'',
                 loading:false,
                 id:''
+            },
+            employeeParam:{
+              show:false,
+              consigner:'',
+              consignerName:''
             },
             breedInfo:{ 
               status:0,   //自定义状态，表示编辑框的状态，0表示收起(起始)状态，1表示add，2表示update，add或update结束后将status置为0
@@ -428,6 +440,11 @@ export default {
               this.getProvinceList(this.country);
             }
         },
+        selectEmployee:function(id,name){
+           this.employeeParam.show = true;
+           this.employeeParam.consigner= id;
+           this.employeeParam.consignerName = name;
+        },
         addCompute:function(){ //优惠增加
           var saith = 0;
           if(this.param.preferential&&this.param.preferential!=''){
@@ -488,7 +505,6 @@ export default {
             if(this.city!=''&&this.city!=null){
               this.getDistrictList(this.city);
             }
-
         },
         searchBreed:function(breedName,breedId){
                 this.breedParam.show=true;
@@ -659,6 +675,12 @@ export default {
             this.param.customerName = customer.customerName;
             this.param.customer = customer.customerId;
             this.param.customerEmail = customer.email;
+        },
+        selectEmpOrOrg:function(employee){
+            console.log(employee)
+            this.employeeParam.consigner = employee.employeeId;
+            this.employeeParam.consignerName = employee.employeeName;
+            this.param.consigner = this.employeeParam.consigner;
         }
     },
     created(){
@@ -667,7 +689,6 @@ export default {
         this.getCurrencyList();
         this.getUnitList();
         console.log(this.param);
-         //.getOrderDetail(this.param);   
          if(this.param.breedId){
             this.breedParam.breedName = this.param.breedName;
             this.breedParam.id = this.param.breedId;
