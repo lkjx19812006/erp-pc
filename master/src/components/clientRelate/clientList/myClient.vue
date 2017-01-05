@@ -501,6 +501,8 @@ export default {
             title:'客户拉入黑名单备注',
             arr:[],
             blacklist:1,
+            auditComment:'',
+            blackComments:'',
             callback:this.callback
           },
             checked:false

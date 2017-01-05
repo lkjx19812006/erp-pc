@@ -113,7 +113,7 @@
                   <td>{{item.employeeName}}</td>
                   <td>{{item.consignee}}</td>
                   <td>{{item.consigneePhone}}</td>
-                  <td>{{item.consigneeAddr}}</td>
+                  <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
                   <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
                   <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
                   <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>

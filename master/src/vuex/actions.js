@@ -946,6 +946,9 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     if(data.district==null||data.district==''||!data.district){
        data.district=''; 
     }
+    if(data.addressId==null||data.addressId==''||!data.addressId){
+       data.addressId=0; 
+    }
     const body = {
         type: data.type,
         sourceType: data.sourceType,
@@ -959,13 +962,15 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         preferentialDesc: data.preferentialDesc,
         currency: data.currency,
         zipCode: data.zipCode,
+        addressId:data.addressId,
         country: data.country,
         province: data.province,
         city: data.city,
         employee: data.employee,
         org: data.org,
         district: data.district,
-        consigneeAddr:data.country+' '+data.province+' '+data.city+' '+data.district+' '+data.consigneeAddr,
+        //consigneeAddr:data.country+' '+data.province+' '+data.city+' '+data.district+' '+data.consigneeAddr,
+        consigneeAddr:data.consigneeAddr,
         comments: data.comments,
         orderStatus: data.orderStatus,
         goods: data.goods
@@ -3182,6 +3187,35 @@ export const updateContact = ({ dispatch }, param) => { //修改客户联系人
         console.log('fail');
     })
 }
+
+//获取客户地址
+export const getAddrInfo = ({ dispatch }, param) => {
+    console.log(param)
+    param.loading = true;
+    var url = apiUrl.clientList + param.link + param.customerId;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var addressList = res.json().result;
+        console.log(addressList);
+
+        dispatch(types.ADDRESS_TABLE, addressList);
+        
+        param.loading = false;
+        //localStorage.BacklogParam = JSON.stringify(param);
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+
 export const addrInfo = ({ dispatch }, param) => { //修改客户地址
 
     const updatedata = {

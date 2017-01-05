@@ -216,6 +216,8 @@
           blacklist:0,
           link:'/customer/transferBlacklist',
           key:'blackCustomerList',
+          auditComment:'',
+          blackComments:'',
         },
         checked:false
       }

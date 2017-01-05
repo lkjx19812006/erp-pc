@@ -438,6 +438,8 @@ export default {
             auditParam:{
               show:false,
               title:'客户拉入黑名单备注',
+              auditComment:'',
+              blackComments:'',
               arr:[],
               link:'/customer/transferBlacklist',
               key:'allCustomerList',
