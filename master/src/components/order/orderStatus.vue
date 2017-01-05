@@ -234,8 +234,8 @@
                   <input type="text" class="form-control left" placeholder="请输入司机姓名" v-model="salesLogistic.driverName" v-validate:drivername="{required:true}" />
                 </div>
                 <div class="logical_color clearfix col-md-6">
-                  <span class="pull-left">身份证号 <span class="system_danger" v-if="$validation.drivernumber.IDCard">{{$t('static.required')}}</span></span>
-                  <input type="text" class="form-control left" placeholder="请输入司机身份证号" v-model="salesLogistic.driverPid" v-validate:drivernumber="['IDCard']" />
+                  <span class="pull-left">身份证号 <span class="system_danger" v-if="$validation.drivernumber.IdentityCard">{{$t('static.required')}}</span></span>
+                  <input type="text" class="form-control left" placeholder="请输入司机身份证号" v-model="salesLogistic.driverPid" v-validate:drivernumber="['IdentityCard']" />
                 </div>
                 <div class="logical_color clearfix col-md-6">
                   <span class="pull-left">司机联系方式 <span class="system_danger" v-if="$validation.drivertel.phone">{{$t('static.required')}}</span></span>

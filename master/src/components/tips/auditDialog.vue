@@ -3,8 +3,11 @@
   <div class="container del_modal_con" v-show="param.show">
     <div class="model-header">
       <h4>{{param.title}}</h4>
-      <div class="model-tips clearfix">
+      <div class="model-tips clearfix" v-if="param.key!=='mySampleList'">
         <textarea v-model='param.auditComment' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5" value="{{param.auditComment}}"></textarea>
+      </div>
+      <div class="model-tips clearfix" v-if="param.key=='mySampleList'">
+        <img src="/static/images/bee.png" height="158" width="131" />
       </div>
       <div class="model-footer" v-if="param.confirm">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>

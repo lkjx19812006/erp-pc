@@ -215,12 +215,12 @@
                                </div>
                            </div>
                            <div class="client-detailInfo  col-md-6 col-xs-12">
-		                        <label class="editlabel">详细地址 </label></label>
-		                        <input type="text" class="form-control edit-input" v-model="param.address" value="{{param.address}}"  />
+		                        <label class="editlabel">详细地址 <span class="system_danger" v-if="$validation.addr.required">必填项</span></label>
+		                        <input type="text" class="form-control edit-input"  v-validate:addr="['required']"  v-model="param.address"   />
 		                   </div>
 		                    <div class="client-detailInfo  col-md-12">
 		                        <label class="editlabel">备注 </label></label>
-		                        <textarea class="form-control" v-model="param.comments" value="{{param.comments}}" style="resize:none; border:1px solid #ddd;" rows="5"></textarea>
+		                        <textarea class="form-control" v-model="param.comments"  style="resize:none; border:1px solid #ddd;" rows="5"></textarea>
 		                    </div>
 	                </section>
 	                
@@ -486,15 +486,10 @@ export default{
         },
         createOrUpdateIntlIntention:function(item){
         	console.log(item)
-        	console.log(item.items[0].status)
-        	if(this.param.address==item.address){
-        		item.address='';
-        	}
         	this.param.country = this.country.cname;
             this.param.province = this.province.cname;
             this.param.city = this.city.cname;
             this.param.district = this.district.cname;
-            this.param.address = this.country.cname+' '+this.province.cname+' '+this.city.cname+' '+this.district.cname + ' '+item.address;
 	        this.param.send = false;
 	        //将this.param.items补全
 	        console.log(this.param.items.length);

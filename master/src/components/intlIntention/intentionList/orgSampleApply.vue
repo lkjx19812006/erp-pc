@@ -70,7 +70,7 @@
                         <!-- <td>{{item.currency}}</td> -->
                         <td>{{item.consignee}}</td>
                         <td>{{item.consigneePhone}}</td>
-                        <td>{{item.address}}</td>
+                        <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.address}}</td>
                         <td>{{item.sampleDesc}}</td>
                         <td v-if="item.validate==0">{{$t('static.initial')}}</td>
                         <td v-if="item.validate==1" style="background:#9010ff;color:#fff">{{$t('static.review_application')}}</td>

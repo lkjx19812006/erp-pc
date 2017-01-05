@@ -73,7 +73,7 @@
                         <td>{{item.currency | Currency}}</td>
                         <td>{{item.consignee}}</td>
                         <td>{{item.consigneePhone}}</td>
-                        <td>{{item.address}}</td>
+                        <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.address}}</td>
                         <td>{{item.sampleDesc}}</td>
                         <td v-if="item.validate==0">{{item.validate | Audit}}</td>
                         <td v-if="item.validate==1" style="background:#9010ff;color:#fff">{{item.validate | Audit}}</td>
@@ -82,10 +82,10 @@
                         <td>{{item.comments}}</td>
                         <td>{{item.ctime}}</td>
                         <td style="text-align: left;">
-                            <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"  @click="updateOrder(item,$index)">
+                            <a class="operate" v-if="item.validate==0||item.validate==3"  @click="updateOrder(item,$index)">
                                   <img src="/static/images/edit.png"  alt="编辑" title="编辑"/>
                             </a>
-                            <a class="operate" v-if="item.validate==0||item.validate==2||item.validate==3"   @click="deleInfo({
+                            <a class="operate" v-if="item.validate==0||item.validate==3"   @click="deleInfo({
                                     sub:$index,
                                     id:item.id,
                                     show:true,
@@ -149,7 +149,6 @@ import {
 	 getSampleList,
     getSampleDetail,
     deleteData,
-    updateSample,
     sampleApply
 } from '../../../vuex/actions'
 export default {
@@ -171,7 +170,6 @@ export default {
             getSampleList,
             getSampleDetail,
             deleteData,
-            updateSample,
             sampleApply
         }
     },
@@ -220,7 +218,7 @@ export default {
                province:'',
                city:'',
                district:'',
-               total:0,
+               total:'',
                employee:this.initLogin.id,
                items:[ 
 
@@ -315,7 +313,7 @@ export default {
             this.changeParam = initSamplelist;
         },
         deleInfo:function(initSamplelist){
-              this.delParam = initSamplelist;
+            this.delParam = initSamplelist;
         },
         updateOrder:function(item,index){
               this.dialogParam.send = true;

@@ -5992,6 +5992,7 @@ export const getSampleDetail = ({ dispatch }, param) => { //寄样详情
                     number: item.number,
                     unit: item.unit,
                     cunit: item.cunit,
+                    eunit: item.eunit,
                     status:item.status,
                     description:item.description
                 }
@@ -6068,12 +6069,8 @@ export const createSample = ({ dispatch }, data) => { //新建寄样申请
        province:data.province,
        city:data.city,
        district:data.district,
+       address:data.address,
        items:data.items
-    }
-    if(data.address==''){
-        body.address = data.country+','+data.province+','+data.city+','+data.district
-    }else{
-        body.address = data.country+' '+data.city+' '+data.address
     }
     if(data.consignee=='') {
         body.consignee = data.customerName;
@@ -6131,12 +6128,8 @@ export const alterSample = ({ dispatch }, param) => { //修改寄样申请
        city:param.city,
        district:param.district,
        status:param.status,
+       address:param.address,
        items:param.items
-    }
-    if(param.address==''||param.address==null){
-        body.address = param.country+''+param.province+''+param.city+''+param.district
-    }else{
-        body.address = param.address;
     }
     if(param.consignee=='') {
         body.consignee = param.customerName;
@@ -6191,12 +6184,16 @@ export const deleteData = ({ dispatch }, param) => { //删除客户、药材信�
         console.log('fail');
     });
 }
-export const sampleApply = ({ dispatch }, param) => { //申请/审核 寄样申请
+export const sampleApply = ({ dispatch }, param) => { //  申请/审核 寄样申请
     console.log(param);
     const body = {
-        id:param.id,
-        description:param.auditComment,
-        validate:param.validate
+        id:param.id
+    }
+    if(param.auditComment){
+        body.description = param.auditComment;
+    }
+    if(param.validate){
+        body.validate = param.validate;
     }
     console.log(body);
     Vue.http({
