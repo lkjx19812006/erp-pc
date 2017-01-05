@@ -20,7 +20,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <span class="navbar-brand navbar-name" href="#">{{initOrderDetail.customerName}}</span>
+                        <span class="navbar-brand navbar-name">{{initOrderDetail.customerName}}</span>
                     </div>
                    <!--  <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
                        <li>
@@ -114,9 +114,9 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:'',
-                                              crete:'stages'
-                                              })">
+                                          link:'',
+                                          crete:'stages'
+                                          })">
                                         <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.stages.arr.length!==null">
                                           {{$t('static.installment')}}（{{initOrderDetail.stages.arr.length}}）
@@ -124,6 +124,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                         {{$t('static.pay_evidence')}}（0）
                                         </a>
+                                        <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">客户已收货，商品质量符合客户要求！</span>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.new')}}/{{$t('static.edit')}}</button>
                                         <button v-else></button>
                                     </h4>
@@ -170,7 +171,7 @@
                                                     bizSubId:item.id,
                                                     url:'/fund/requestRecord'
                                                     })">{{$t('static.applied')}}</td>
-                                                <td v-if="item.validate==2" style="background:green;color:#fff;cursor:pointer" @click="apply_Record({
+                                                <td v-if="item.validate==2" style="color:green;cursor:pointer" @click="apply_Record({
                                                     sub:$index,
                                                     show:true,
                                                     loading:false,
@@ -180,7 +181,7 @@
                                                     bizSubId:item.id,
                                                     url:'/fund/requestRecord'
                                                     })">{{$t('static.approved')}}</td>
-                                                <td v-if="item.validate==3" style="background:red;color:#fff;cursor:pointer" @click="apply_Record({
+                                                <td v-if="item.validate==3" style="color:red;cursor:pointer" @click="apply_Record({
                                                     sub:$index,
                                                     show:true,
                                                     loading:false,
@@ -192,7 +193,7 @@
                                                     })">{{$t('static.unapproved')}}</td>
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td>
+                                                <td v-if="param.contact=='/order/myList'">
                                                     <a class="operate" v-if="item.type==1&&item.validate==0&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
@@ -662,16 +663,24 @@ export default {
                 this.auditParam.callback = this.callback;
                 if(item.titles=='重新申请审核'){
                     this.getMyFundList(item);
-                    if(this.initMyFundList!=''&&this.initMyFundList[initMyFundList.length-1]){
-                       console.log(this.initMyFundList[this.initMyFundList.length-1])
-                        item.amount = this.initMyFundList[this.initMyFundList.length-1].amount;
+                    if(this.initMyFundList!=''&&this.initMyFundList[0]){
+                       console.log(this.initMyFundList[0])
+                        item.amount = this.initMyFundList[0].amount;
+                        item.payName = this.initMyFundList[0].payName;
+                        item.payUserName = this.initMyFundList[0].payUserName;
+                        item.payNumber = this.initMyFundList[0].payNumber;
+                        item.payWay = this.initMyFundList[0].payWay;
+                        item.paySubName = this.initMyFundList[0].paySubName;
+                        item.images = this.initMyFundList[0].images;
+                        this.auditParam.show=true;
+                        /* item.amount = this.initMyFundList[this.initMyFundList.length-1].amount;
                         item.payName = this.initMyFundList[this.initMyFundList.length-1].payName;
                         item.payUserName = this.initMyFundList[this.initMyFundList.length-1].payUserName;
                         item.payNumber = this.initMyFundList[this.initMyFundList.length-1].payNumber;
                         item.payWay = this.initMyFundList[this.initMyFundList.length-1].payWay;
                         item.paySubName = this.initMyFundList[this.initMyFundList.length-1].paySubName;
                         item.images = this.initMyFundList[this.initMyFundList.length-1].images;
-                        this.auditParam.show=true;
+                        this.auditParam.show=true;*/
                     }else{
                         this.auditParam.show=false;
                     }

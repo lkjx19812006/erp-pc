@@ -52,7 +52,6 @@
                                      <select v-model="breedInfo.orderStatus" class="form-control edit-input" v-validate:status="{required:true}">
                                         <option  value="20">合同签订后</option>
                                         <option  value="60">已确认收货</option>
-                                        <option  value="70">已完成订单</option>
                                      </select>
                                 </div>
                                 <div class="editpage-input col-md-6">

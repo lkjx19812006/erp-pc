@@ -11,6 +11,7 @@
         </div>
         <validator name="validation">
             <div class="edit-model">
+               <!-- 申请分期 -->
                <section class="editsection clearfix" v-cloak v-if="param.titles=='申请分期审核'||param.titles=='申请支付'">
                     <div class="editpage-input col-md-6">
                        <label class="editlabel">支付方式 <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
@@ -27,9 +28,9 @@
                        <label class="editlabel">名称 <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
                        <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
                        <select class="form-control edit-input" v-model="param.payName">
+                            <option>线下转账</option>
                             <option>支付宝</option>
                             <option>Wechat</option>
-                            <option>线下转账</option>
                             <option>药款支付</option>
                        </select>
                     </div>
@@ -84,7 +85,7 @@
                     </div>
                </section>
                <!-- 重新申请审核 -->
-               <section class="editsection clearfix" v-cloak v-if="param.titles=='重新申请审核'">
+               <section class="editsection clearfix" v-cloak v-if="param.titles=='重新申请审核'||param.titles=='重新申请支付'">
                     <div class="editpage-input col-md-6">
                        <label class="editlabel">支付方式 <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
                       <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
@@ -161,13 +162,75 @@
                        <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" value="{{param.description}}"></textarea>
                     </div>
                </section>
+               <!-- 收付款编辑 -->
+                <section class="editsection clearfix" v-cloak v-if="param.titles=='编辑'">
+                    <div class="editpage-input col-md-6">
+                       <label class="editlabel">支付方式 <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
+                      <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
+                       <select class="form-control edit-input" v-model="param.payWay">
+                            <option value="2">{{$t('static.pingan')}}</option>
+                            <option value="0">{{$t('static.offline')}}</option>
+                            <option value="1">{{$t('static.alipay')}}</option>
+                            <option value="4">WeChat</option>
+                            <option value="3">{{$t('static.yaokuan')}}</option>
+                       </select>
+                    </div>
+                    <div class="editpage-input col-md-6" v-if="param.payWay!=2"> 
+                       <label class="editlabel">名称 <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
+                       <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
+                       <select class="form-control edit-input" v-model="param.payName">
+                            <option>线下转账</option>
+                            <option>支付宝</option>
+                            <option>Wechat</option>
+                            <option>药款支付</option>
+                       </select>
+                    </div>
+                    <div class="editpage-input col-md-6" v-if="param.payWay==2"> 
+                        <label class="editlabel">银行名称 <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
+                        <input type="text" v-validate:payname="{required:true}" v-show="false"  v-model="payName.name" class="form-control edit-input" />
+                          <div  class="form-control edit-input" style="padding:0;border:none" >
+                              <v-select
+                                :debounce="250"
+                                :value.sync="payName"
+                                :on-change="selectProvince"
+                                :options="initBankList"
+                                placeholder="银行名称"
+                                label="name"
+                              >
+                              </v-select>
+                            </div>
+                    </div>
+                    <div class="editpage-input col-md-6"  v-if="param.payWay==2">
+                       <label class="editlabel">银行支行</label>
+                       <input type="text" v-model="param.paySubName"  class="form-control edit-input" @click="branch({
+                          show:true,
+                          name:this.payName.name
+                        })"/> 
+                    </div>
+                    <div class="editpage-input col-md-6" >
+                       <label class="editlabel">用户名 <span class="system_danger" v-if="$validation.payuser.required">{{$t('static.required')}}</span></label>
+                       <input type="text" v-model="param.payUserName" v-validate:payuser="['required']" class="form-control edit-input" /> 
+                    </div>
+                    <div class="editpage-input col-md-6" >
+                       <label class="editlabel">账号 <span class="system_danger" v-if="$validation.paynumber.required">{{$t('static.required')}}</span></label>
+                       <input type="text" v-model="param.payNumber" class="form-control edit-input" v-validate:paynumber="['required']" /> 
+                    </div>
+                    <div class="editpage-input col-md-6" >
+                       <label class="editlabel">差额</label>
+                       <input type="text" v-model="param.amount" class="form-control edit-input" value="{{param.amount}}" disabled="true" /> 
+                    </div>
+                    <div class="editpage-input col-md-12">
+                       <label class="editlabel">备注</label>
+                       <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" value="{{param.comment}}" disabled="true"></textarea>
+                    </div>
+               </section>
             </div>
-            <div class="edit_footer" v-if="param.titles=='申请分期审核'">
+            <div class="edit_footer" v-if="param.titles=='申请分期审核'||param.titles=='申请支付'||param.titles=='编辑'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirm(param)">提交</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true" >提交</button>
             </div>
-            <div class="edit_footer" v-if="param.titles=='重新申请审核'">
+            <div class="edit_footer" v-if="param.titles=='重新申请审核'||param.titles=='重新申请支付'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="confirmReset(param)">提交</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true" >提交</button>
@@ -228,6 +291,8 @@ export default {
               all: 1,
               type:this.param.type,
               validate:this.param.validate,
+              bizSubId:this.param.bizSubId,
+              bizId:this.param.bizId,
               total:0
             },
             resetCheckParam:{
@@ -262,10 +327,6 @@ export default {
     },
     
     methods: {
-/*        ddd:function(){
-          this.payName.name= this.initMyFundList[this.initMyFundList.length-1].payName;
-          console.log(this.initMyFundList[this.initMyFundList.length-1].paySubName)
-        },*/
         branch:function(item){
            this.branchParam.show = true;
            this.branchParam = item;
@@ -273,7 +334,10 @@ export default {
         },
         confirm:function(item){
           this.param.show=false;
-          this.param.payName=this.payName.name;
+          if(this.payName.name){
+            this.param.payName=this.payName.name;
+          }
+          console.log(this.param)
           this.param.link(this.param);
         },
         confirmReset:function(item){
@@ -290,22 +354,13 @@ export default {
     events:{
       subName: function(branch) {
         this.param.paySubName=branch.paySubName;
-        this.initMyFundList[this.initMyFundList.length-1].paySubName = branch.paySubName;
-        console.log(this.initMyFundList[initMyFundList.length-1].paySubName)
+        this.initMyFundList[0].paySubName = branch.paySubName;
+        console.log(this.initMyFundList[0].paySubName)
       },
     },
     created() {
         /*this.getMyFundList(this.loadParam);*/
         console.log(this.initMyFundList)
-        /*if(this.initMyFundList!=''&&this.initMyFundList[initMyFundList.length-1]){
-          console.log(this.initMyFundList[this.initMyFundList.length-1])
-            this.param.amount = this.initMyFundList[this.initMyFundList.length-1].amount;
-            this.param.payName = this.initMyFundList[this.initMyFundList.length-1].payName;
-            this.param.payUserName = this.initMyFundList[this.initMyFundList.length-1].payUserName;
-            this.param.payNumber = this.initMyFundList[this.initMyFundList.length-1].payNumber;
-            this.param.payWay = this.initMyFundList[this.initMyFundList.length-1].payWay;
-            this.param.paySubName = this.initMyFundList[this.initMyFundList.length-1].paySubName;
-        }*/
         this.getBankList(this.payName);
         if(this.param.payName&&this.param.titles=='申请分期审核'){
             this.payName.name = this.param.payName;

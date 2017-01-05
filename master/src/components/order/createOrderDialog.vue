@@ -2,7 +2,8 @@
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
     <consignee-model :param="consigneeParam" v-if="consigneeParam.show"></consignee-model>
-    
+    <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
+
     <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -29,6 +30,13 @@
                             <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
                             <option value="70">{{$t('static.order_over')}}</option>
                         </select>
+                    </div>
+                    <div class="editpage-input col-md-6" v-if="param.type==1">
+                        <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">选择发货人</span></label>
+                        <input  type="text" class="form-control" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
+                       <!--  <select  class="form-control edit-input" v-model="param.consigner">
+                           <option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
+                       </select> -->
                     </div>
                 </div>
                 <section class="editsection">
@@ -191,7 +199,7 @@
                                        <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
                                        <input type="text" v-show="false" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" />
                                        <select  class="form-control edit-input"  v-model="breedInfo.unit">
-                                            <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}（{{item.ename}}）</option>
+                                          <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}（{{item.ename}}）</option>
                                        </select>
                                   </div>
                                   <div class="editpage-input">
@@ -316,6 +324,8 @@ import searchcustomerModel  from '../Intention/clientname'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import searchbreedModel  from '../Intention/breedsearch'
 import consigneeModel  from '../clientRelate/addressSearch'
+import searchemgModel from '../order/second_order/allEmployee'
+
 import {
     initCountrylist,
     initProvince,
@@ -323,7 +333,8 @@ import {
     initDistrictlist,
     initBreedDetail,
     initCurrencylist,
-    initUnitlist
+    initUnitlist,
+    initEmployeeList
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -333,7 +344,8 @@ import {
     getDistrictList,
     createOrder,
     getUnitList,
-    getCurrencyList
+    getCurrencyList,
+    getEmployeeList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -342,7 +354,9 @@ export default {
         searchcustomerModel,
         searchbreedModel,
         consigneeModel,
-        inputSelect
+        inputSelect,
+        searchemgModel
+
     },
     props: ['param'],
     data() {
@@ -355,11 +369,19 @@ export default {
               cur: 1,
               all: 7
             },
+            orgParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7
+            },
             empNameParam:{
-                show:false,
-                customer:'',
-                customerName:'',
-                customerPhone:''
+              show:false,
+              customer:'',
+              customerName:'',
+              customerPhone:''
             },
             consigneeParam:{
                 show:false,
@@ -394,6 +416,11 @@ export default {
               show:false,
               index:0
             },
+            employeeParam:{
+              show:false,
+              consigner:'',
+              consignerName:''
+            },
             country:{
               id:'',
               cname:'',
@@ -424,7 +451,8 @@ export default {
             initDistrictlist,
             initBreedDetail,
             initCurrencylist,
-            initUnitlist
+            initUnitlist,
+            initEmployeeList
         },
         actions:{
             getCountryList,
@@ -434,6 +462,7 @@ export default {
             getDistrictList,
             createOrder,
             getUnitList,
+            getEmployeeList,
             getCurrencyList
         }
     },
@@ -456,6 +485,7 @@ export default {
               this.getProvinceList(this.country);
             }
         },
+
         selectCity:function(){
             this.city = {
               id:'',
@@ -478,6 +508,12 @@ export default {
             if(this.city!=''&&this.city!=null){
               this.getDistrictList(this.city);
             }
+        },
+
+        selectEmployee:function(id,name){
+           this.employeeParam.show = true;
+           this.employeeParam.consigner= id;
+           this.employeeParam.consignerName = name;
 
         },
         addCompute:function(){ //优惠增加
@@ -712,6 +748,7 @@ export default {
             this.param.customerName = customer.customerName;
             this.param.customerPhone = customer.customerPhone;
             this.param.customer = customer.customerId;
+
             this.consigneeParam.customerId = customer.customerId;
         },
         address:function(address){
@@ -726,11 +763,20 @@ export default {
 
           this.param.consigneeAddr = address.address;
           this.param.addressId = address.id;   //地址ID
+
+        },
+        selectEmpOrOrg:function(employee){
+            console.log(employee)
+            this.employeeParam.consigner = employee.employeeId;
+            this.employeeParam.consignerName = employee.employeeName;
+            this.param.consigner = this.employeeParam.consigner;
+
         }
     },
     created(){
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
+        this.getEmployeeList(this.orgParam);
         this.getUnitList();
         this.getCurrencyList();
         console.log(this.param);

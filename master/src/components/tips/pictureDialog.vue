@@ -25,10 +25,11 @@ export default {
     width: 60%;
     overflow: auto;
     background: none;
+    height: 600px;
 }
 .model-header img{
     margin: auto;
-    height: 600px;
+    max-height: 600px;
 }
 .top-title{
     width: 60%;

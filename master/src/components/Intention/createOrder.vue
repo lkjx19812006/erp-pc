@@ -1,4 +1,5 @@
 <template>
+    <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
     <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -120,8 +121,8 @@
                                     <input type="text" class="form-control edit-input" v-model="param.consigneeAddr" v-validate:addr="['required']"/>
                                 </div>
                                 <div class="editpage-input">
-                                    <label class="editlabel">货币类型</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.currency"/>
+                                    <label class="editlabel">总价</label>
+                                    <input type="text" class="form-control edit-input" v-model="param.total"  readonly="true" />
                                 </div>
                                 <div class="editpage-input">
                                        <label class="editlabel">备注</label>
@@ -177,14 +178,15 @@
                                         </v-select>
                                      </div>
                                 </div>
+                                <div class="editpage-input" v-if="param.type==1">
+                                  <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">选择发货人</span></label>
+                                  <input  type="text" class="form-control" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
+                                </div>
                                 <div class="editpage-input">
                                     <label class="editlabel">邮编<span class="system_danger" v-if="$validation.zipcode.postcode">请输入正确的邮编</span></label>
                                     <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:zipcode="['postcode']"/>
                                 </div>
-                                <div class="editpage-input">
-                                    <label class="editlabel">总价</label>
-                                    <input type="text" class="form-control edit-input" v-model="param.total"  readonly="true" />
-                                </div>
+                                
                             </div>
                         </div>
                     </section>
@@ -201,6 +203,7 @@
 <script>
 import vSelect from '../tools/vueSelect/components/Select'
 import pressImage from '../../components/imagePress'
+import searchemgModel from '../order/second_order/allEmployee'
 import {
     initCountrylist,
     initProvince,
@@ -217,7 +220,8 @@ import {
 export default {
     components: {
         vSelect,
-        pressImage
+        pressImage,
+        searchemgModel
     },
     props: ['param'],
     data() {
@@ -241,6 +245,11 @@ export default {
             },
             district:{
               cname:''
+            },
+            employeeParam:{
+              show:false,
+              consigner:'',
+              consignerName:''
             },
             saith:0, //点击按钮计算
             sum:0, //点击按钮计算
@@ -346,8 +355,12 @@ export default {
             console.log(this.param);
             this.param.callback = this.param.callback;
             this.createOrder(this.param);
-
-        }
+        },
+        selectEmployee:function(id,name){
+           this.employeeParam.show = true;
+           this.employeeParam.consigner= id;
+           this.employeeParam.consignerName = name;
+        },
     },
     watch:{
         'param.incidentals':'changeTotal',
@@ -355,6 +368,14 @@ export default {
         'param.goods[0].price':'changeTotal',
         'param.goods[0].number':'changeTotal',
     },
+    events:{
+        selectEmpOrOrg:function(employee){
+            console.log(employee)
+            this.employeeParam.consigner = employee.employeeId;
+            this.employeeParam.consignerName = employee.employeeName;
+            this.param.consigner = this.employeeParam.consigner;
+        }
+      },
    
     created(){
         this.getCountryList(this.countryParam);
@@ -365,6 +386,9 @@ export default {
 }
 </script>
 <style scoped>
+.modal,.modal_con{
+  z-index: 1082;
+}
 .top-title{
   z-index: 100;
   width:800px;

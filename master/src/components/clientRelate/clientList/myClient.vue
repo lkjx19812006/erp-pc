@@ -32,7 +32,7 @@
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t("static.client_type")}}：</dt>
                    <dd class="left">
-                         <select v-model="loadParam.type" style="width:50%"  class="form-control" @change="selectSearch()">
+                      <select v-model="loadParam.type" style="width:50%;"  class="form-control" @change="selectSearch()">
                             <option value="">{{$t("static.please_select")}}</option>
                             <option value="0">Others 其它</option>
                             <option value="1">Cooperatives 合作社</option>
@@ -58,7 +58,9 @@
                             <option value="21">Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商</option>
                             <option value="22">Pharmaceutical producer of Western Medicine 西药生产商</option>
                             <option value="23">Pieces Factory 饮片厂</option>
-                        </select>
+
+                      </select>
+
                    </dd>
                 </dl>
                 <dl class="clear left transfer" v-if="this.initLogin.orgId==29">
@@ -205,7 +207,8 @@
                         <th>{{$t("static.registered_address")}}</th>
                         <th>{{$t("static.create_time")}}</th>
                         <th>{{$t("static.whether_supplier")}}</th>
-                        <th style="min-width:200px">{{$t("static.comment")}}</th> -->
+                        <th style="min-width:200px">{{$t("static.comment")}}</th> 
+                    -->
                         <th>{{$t("static.operation")}}</th>
                         <th v-if="this.initLogin.orgId==29">跟进</th>
                     </tr>
@@ -215,19 +218,9 @@
                         <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
                     </th>
                     <th style="color:#fa6705;font-size: 14px">全选</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th colspan="14"></th>
+                    <th  v-if="this.initLogin.orgId==29"></th>
+                    <th  v-if="this.initLogin.orgId==29"></th>
                 </tr>
                 <tbody>
                     <tr>
@@ -307,39 +300,39 @@
                         <td>{{item.comments}}</td> 
                     -->
                         <td  @click="modifyClient({
-                                                id:item.id,
-                                                sub:$index,
-                                                show:true,
-                                                name:item.name,
-                                                type:item.type,
-                                                typeDesc:item.typeDesc,
-                                                classifyDesc:item.classifyDesc,
-                                                classify:item.classify,
-                                                category:item.category,
-                                                principal:item.principal,
-                                                bizScope:item.bizScope,
-                                                mainPhone:item.mainPhone,
-                                                email:item.email,
-                                                country:item.country,
-                                                countryName:item.countryName,
-                                                province:item.province,
-                                                provinceName:item.provinceName,
-                                                city:item.city,
-                                                cityName:item.cityName,
-                                                address:item.address,
-                                                comments:item.comments,
-                                                creditLevel:item.creditLevel,
-                                                link:alterInfo,
-                                                url:'/customer/',
-                                                key:'myCustomerList',
-                                                employeeId:item.employeeId,
-                                                employeeName:item.employeeName,
-                                                orgId:item.orgId
-                                                })">
+                                    id:item.id,
+                                    sub:$index,
+                                    show:true,
+                                    name:item.name,
+                                    type:item.type,
+                                    typeDesc:item.typeDesc,
+                                    classifyDesc:item.classifyDesc,
+                                    classify:item.classify,
+                                    category:item.category,
+                                    principal:item.principal,
+                                    bizScope:item.bizScope,
+                                    mainPhone:item.mainPhone,
+                                    email:item.email,
+                                    country:item.country,
+                                    countryName:item.countryName,
+                                    province:item.province,
+                                    provinceName:item.provinceName,
+                                    city:item.city,
+                                    cityName:item.cityName,
+                                    address:item.address,
+                                    comments:item.comments,
+                                    creditLevel:item.creditLevel,
+                                    link:alterInfo,
+                                    url:'/customer/',
+                                    key:'myCustomerList',
+                                    employeeId:item.employeeId,
+                                    employeeName:item.employeeName,
+                                    orgId:item.orgId
+                                    })">
                             <a class="operate"><img src="/static/images/{{$t('static.img_edit')}}.png" />
-                            <td v-if="this.initLogin.orgId==29"><a @click="updateTracking(item,$index)">跟进</a></td>
                             </a>
                         </td>
+                        <td v-if="this.initLogin.orgId==29"><a class="btn btn-success" style="padding:1px 5px;font-size: 12px;"  @click="updateTracking(item,$index)">跟进</a></td>
                     </tr>
                 </tbody>
             </table>

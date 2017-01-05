@@ -14,7 +14,23 @@
                        <label class="editlabel">备注</label>
                        <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" value="{{param.description}}"></textarea>
                     </div>
-                    <div class="editpage-input col-md-12">
+                    <div class="editpage-input col-md-12" v-if="param.titles=='审核合同'||param.titles=='售后审核'||param.titles=='确认收货'">
+                       <label class="editlabel">审核说明</label>
+                       <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" ></textarea>
+                    </div>
+                     <div class="editpage-input col-md-12" v-if="param.titles=='申请审核'">
+                       <label class="editlabel">审核说明</label>
+                       <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" ></textarea>
+                    </div>
+                    <div class="editpage-input col-md-12" v-if="param.titles=='售后异议处理'">
+                       <label class="editlabel">异议处理说明</label>
+                       <textarea v-model='param.description' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" ></textarea>
+                    </div>
+                    <div class="editpage-input col-md-12" v-if="param.titles=='重新申请审核'">
+                       <label class="editlabel">备注</label>
+                       <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5"></textarea>
+                    </div>
+                    <div class="editpage-input col-md-12" v-if="param.titles!='审核合同'&&param.titles!='重新申请审核'&&param.titles!='售后审核'&&param.titles!='售后异议处理'&&param.titles!=='确认收货'">
                          <label class="editlabel">支付/收款凭证</label>
                          <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;width:25%"></press-image>
                          <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:25%"></press-image>
@@ -28,10 +44,28 @@
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="agree(param)">确定</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true" >通过审核</button>
             </div>
-            <div class="edit_footer" v-if="param.titles=='确定收款'">
+            <div class="edit_footer" v-if="param.titles=='审核合同'||param.titles=='售后审核'">
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+               <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="bargainReject(param)">不通过</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="bargainPass(param)">确定</button>
+                <button type="button" class="btn  btn-confirm" v-else disabled="true" >通过审核</button>
+            </div>
+            <div class="edit_footer" v-if="param.titles=='重新申请审核'">
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+               <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="cancelContract(param)">取消申请</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="referTo(param)">提交</button>
+                <button type="button" class="btn  btn-confirm" v-else disabled="true" >提交</button>
+            </div>
+            <div class="edit_footer" v-if="param.titles=='确定收款'||param.titles=='申请审核'">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
                 <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="param.link(param,param.show=false)">{{$t('static.confirm')}}</button>
                 <button type="button" class="btn  btn-confirm" v-else disabled="true" >确定</button>
+            </div>
+            <div class="edit_footer" v-if="param.titles=='售后异议处理'||param.titles=='确认收货'">
+                <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
+               <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.titles=='售后异议处理'" @click="param.link(param,param.show=false)" >异议处理</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.titles=='确认收货'" @click="bargainReject(param)">不合格</button>
+                <button type="button" class="btn  btn-confirm" v-if="$validation.valid&&param.titles=='确认收货'" @click="bargainPass(param)">合格</button>
             </div>
         </validator>
     </div>
@@ -43,7 +77,6 @@ import {
 } from '../../../vuex/getters'
 import {
 
-    batchUserIntentionAudit
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -64,7 +97,7 @@ export default {
 
         },
         actions: {
-            batchUserIntentionAudit
+            
         }
     },
     methods: {
@@ -77,6 +110,30 @@ export default {
             this.param.validate = 3;
             this.param.link(item);
             this.param.show=false;
+        },
+        bargainPass:function(){ //审核合同/售后通过
+            this.param.show = false;
+            this.param.validate = 2;
+            console.log(this.param)
+            this.param.link(this.param);
+        },
+        cancelContract:function(){ //取消申请
+            this.param.show = false;
+            this.param.validate = -1;
+            console.log(this.param)
+            this.param.link(this.param);
+        },
+        referTo:function(){  //重新申请
+            this.param.show = false; 
+            this.param.validate = 1;
+            console.log(this.param)
+            this.param.link(this.param);
+        },
+        bargainReject:function(){ //审核合同、售后未通过
+            this.param.show = false;
+            this.param.validate = -2;
+            console.log(this.param)
+            this.param.link(this.param);
         }
     },
     created() {
@@ -92,7 +149,8 @@ export default {
 .modal_con{
     z-index:1086;
     width:600px;
-    height:650px;
+    max-height: 600px;
+    overflow-y:auto;
 }
 .edit_footer{
     position: absolute;
@@ -104,25 +162,6 @@ export default {
     position: absolute;
     top:0;
 }
-.big-font {
-    font-size: 36px;
-}
-.top-title span {
-    font-size: 28px;
-}
-
-.edit-content {
-    padding: 19px 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.edit-content h3 {
-    font-size: 15px;
-    color: #fa6705;
-    margin: 0;
-}
-
 .edit-model {
     overflow: hidden;
     overflow-y: auto;
@@ -132,33 +171,6 @@ export default {
 .editsection {
     width: 100%;
     box-sizing: border-box;
-}
-
-.editpage {
-    display: -webkit-flex;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -ms-box-orient: horizontal;
-    box-orient: horizontal;
-}
-
-.editpageleft,
-.editpageright {
-    -webkit-box-flex: 1;
-    -webkit-flex: auto;
-    -ms-flex: auto;
-    flex: auto;
-    width: 50%;
-}
-
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
 }
 
 .edit-input {
@@ -176,13 +188,6 @@ export default {
     border-color: #fa6705;
 }
 
-.addblack span {
-    color: #333;
-    font-size: 14px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 5px;
-}
 .btn-confirm {
     background-color: #fa6705;
     color: #fff;
