@@ -32,8 +32,8 @@
                                  <div class="editpage-input">
                                     <label class="editlabel">{{$t('static.sex')}}</label>
                                     <select  class="form-control" v-model="param.sex" style="width:90%;">
-                                        <option value="1">女</option>
-                                        <option value="0">男</option>
+                                        <option value="1">男</option>
+                                        <option value="0">女</option>
                                     </select>
                                 </div>
                                  <div class="editpage-input">

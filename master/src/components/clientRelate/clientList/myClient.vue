@@ -58,7 +58,9 @@
                             <option value="21">Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商</option>
                             <option value="22">Pharmaceutical producer of Western Medicine 西药生产商</option>
                             <option value="23">Pieces Factory 饮片厂</option>
+
                       </select>
+
                    </dd>
                 </dl>
                 <dl class="clear left transfer" v-if="this.initLogin.orgId==29">
@@ -492,6 +494,8 @@ export default {
             title:'客户拉入黑名单备注',
             arr:[],
             blacklist:1,
+            auditComment:'',
+            blackComments:'',
             callback:this.callback
           },
             checked:false

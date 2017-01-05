@@ -40,6 +40,7 @@ import {
    UPDATE_CUSTOMER_DETAIL,
    CUSTOMER_UPDATE_DATA,
    UPDATE_ADDR_DETAIL,
+   ADDRESS_TABLE,
    ADD_ADDR_DETAIL,
    LABEL_DATA,
    CUSTOMER_CONTACT_DATA,
@@ -352,6 +353,8 @@ const state = {
         supplyCustomerList: [
             { "id": 0, "type": 0,"typeDesc": 0, "name": "ddd", "category": "14555", "principal": "suny", "biz_scope": "djkdfd", "tel": "13162875213", "email": "大大", "province": "上海市", "city": "虹口", "address": "上海市虹口区", "employee_id": "AAA", "credit_level": "AAA", "show": true, "checked": false }
         ],
+        //收货地址列表
+        addressList:[],
         //客户通话记录
         callRecordList:[],
         //产品列表
@@ -1305,6 +1308,9 @@ const mutations = {
             "main": data.main,
             "show": false
         })
+    },
+    [ADDRESS_TABLE](state, data){ // 客户地址列表
+        state.basicBaseList.addressList = data;
     },
     [ADD_ADDR_DETAIL](state, data) { // 新增客户地址
         state.clientDetail[data.key].arr.unshift({

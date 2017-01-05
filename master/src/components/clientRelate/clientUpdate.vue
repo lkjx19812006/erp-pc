@@ -22,17 +22,19 @@
                                 <input type="text" v-model='param.name' v-validate:name="{minlength:2}" class="form-control edit-input" value="{{param.name}}" />
                             </div>
                             <div class="editpage-input">
-                                <label class="editlabel">{{$t('static.type')}}</label>
+                                <label class="editlabel">{{$t('static.client_type')}}</label>
                                 <select class="form-control edit-input"  v-model='param.type'>
                                    <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerType}}</option>
                                 </select>
                                 <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
                             </div>
-                              <!-- 法人 -->
-                              <div class="editpage-input">
-                                <label class="editlabel">{{$t('static.legal')}} </label>
-                                <input type="text" id="legalPerson" class="form-control edit-input" v-model="param.legalPerson"/>
-                              </div>
+
+                            <!-- 法人 -->
+                            <div class="editpage-input">
+                              <label class="editlabel">{{$t('static.legal')}} </label>
+                              <input type="text" id="legalPerson" class="form-control edit-input" v-model="param.legalPerson"/>
+                            </div>
+
                              <div class="editpage-input">
                                 <label  class="editlabel">{{$t('static.country')}}</label>
                                  <div>
@@ -101,7 +103,9 @@
                             </div>
                              -->
                             <div class="editpage-input">
+
                                 <label class="editlabel">{{$t('static.principals')}}</label>
+
                                 <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />
                             </div>
                             <div class="editpage-input">

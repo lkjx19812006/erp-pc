@@ -393,3 +393,9 @@ export const initDrugAccountList= (state) => { //获取药款账户的数据
   return JSON.parse(JSON.stringify(state.table.basicBaseList.drugAccountList));
 }
 
+/*--收货地址列表--*/
+export const initAddressList= (state) => { //获取药款账户的数据
+    console.log(state.table.basicBaseList.addressList);
+  return JSON.parse(JSON.stringify(state.table.basicBaseList.addressList));
+}
+

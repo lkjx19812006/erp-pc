@@ -149,6 +149,7 @@
                                           <th>{{$t('static.exchange')}}</th>
                                           <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                           <th>{{$t('static.quatation_name')}}</th>
+                                          <th>{{$t('static.comment')}}</th>
                                           <th>{{$t('static.inquiry_again')}}</th>
                                           <th>{{$t('static.quote_again')}}</th>
                                           <th>{{$t('static.quatiton_time')}}</th>
@@ -165,6 +166,7 @@
                                                 <td>{{item.exchangeRate}}</td>
                                                 <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                 <td>{{item.offererName}}</td>
+                                                <td>{{item.offerComment}}</td>
                                                 <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
                                                 <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>
                                                 <td v-if="item.offerAgain==0">{{$t('static.not_quote')}}</td>

@@ -124,8 +124,9 @@
                   <td></td>
                   <td>{{item.consignee}}</td>
                   <td>{{item.consigneePhone}}</td>
-                  <td>{{item.consigneeAddr}}</td>
+                  <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
                   <!-- <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
+
                   <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
                   <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
                   <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
@@ -356,6 +357,7 @@
                     intl:0,
                     customer:'',
                     currency:'',
+                    addressId:'',    //地址ID，如果为空，表示是新增的收货地址,否则是已存在的收货地址
                     consignee:'',
                     consigneePhone:'',
                     consigner:'', //发货人
@@ -528,7 +530,7 @@
                   })
 
             },
-            newOrder:function(){
+            newOrder:function(){ 
                  this.createParam.show = true;
                  this.createParam.callback = this.newBack;
             },
