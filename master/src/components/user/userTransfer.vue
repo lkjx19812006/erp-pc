@@ -30,7 +30,7 @@
               
               <!-- 联系人姓名 -->         
               <div class="client-detailInfo  col-md-6">
-                <label class="editlabel">{{$t('static.contact')}}{{$t('static.name')}}<span class="system_danger" v-if="$validation.cname.minlength">{{$t('static.required')}}</span></label>
+                <label class="editlabel">{{$t('static.contact')}} <span class="system_danger" v-if="$validation.cname.minlength">{{$t('static.required')}}</span></label>
                 <input type="text" class="form-control edit-input" v-validate:cname="{minlength:2}" v-model="contacts[0].name"/>
               </div>
               <!-- 客户类型 -->
@@ -42,7 +42,7 @@
               </div>
               <!-- 联系人手机 -->
               <div class="client-detailInfo  col-md-6">
-                <label class="editlabel" for="system">{{$t('static.contact')}}{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.cphone.phone">{{$t('static.validate_cellphone')}}</span></label>
+                <label class="editlabel" for="system">{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.cphone.phone">{{$t('static.validate_cellphone')}}</span></label>
                 <input type="text" class="form-control edit-input" v-validate:cphone="['phone']" v-model="contacts[0].phone"/>
               </div>
               <!-- 客户电话 -->
