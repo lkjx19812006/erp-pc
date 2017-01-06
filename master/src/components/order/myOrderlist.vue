@@ -135,7 +135,7 @@
                   <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                   <td v-if="item.orderStatus==20" style="color:#fa6705">{{$t('static.waiting_order')}}</td>
                   <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
-                  <td v-if="item.orderStatus==40">等待{{item.employeeName}}发货</td>
+                  <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td>
                   <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
                   <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
                   <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>

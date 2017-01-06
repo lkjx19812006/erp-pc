@@ -5,7 +5,7 @@
      <edit-model :param.sync="dialogParam" v-if="dialogParam.send"></edit-model>
      <apply-model :param="applyParam" v-if="applyParam.show"></apply-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-	 <div>
+	  <div>
         <div class="service-nav clearfix">
             <div class="my_order_search pull-right"> 
                <button class="btn btn-default transfer" @click="New()">新建</button>
