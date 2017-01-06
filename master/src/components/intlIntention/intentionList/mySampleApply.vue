@@ -108,6 +108,19 @@
                                     })">
                                 <img src="/static/images/{{$t('static.img_apply')}}.png" />
                             </a>
+                            <a class="operate"  v-if="item.validate==1" >
+                                <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;margin-top:-22px;color:#fa6705" @click="applyCheck({
+                                    sub:$index,
+                                    id:item.id,
+                                    show:true,
+                                    link:sampleApply,
+                                    title:'取消寄样申请',
+                                    auditComment:'',
+                                    url:'/sample/validate/cancel/',
+                                    key:'mySampleList'
+                                    })">取消申请
+                                </button>
+                            </a> 
                             <a class="operate"  v-if="item.validate==3" @click="applyCheck({
                                     sub:$index,
                                     id:item.id,

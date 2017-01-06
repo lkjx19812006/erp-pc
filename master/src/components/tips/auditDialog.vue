@@ -54,10 +54,13 @@
         <!-- <input type="button" class="btn  btn-confirm"  @click="cancelApply(param)" value="取消发货" /> -->
         <input type="button" class="btn  btn-confirm"  @click="confirmApply(param)" value="确定" />
       </div>
-
-      <div class="model-footer" v-if="param.key=='mySampleList'">
+      <div class="model-footer" v-if="param.key=='mySampleList'&&param.url!='/sample/validate/cancel/'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
         <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.show = false" value="申请" />
+      </div>
+      <div class="model-footer" v-if="param.key=='mySampleList'&&param.url=='/sample/validate/cancel/'">
+        <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
+        <input type="button" class="btn  btn-confirm"  @click="param.link(param),param.show = false" value="取消申请" />
       </div>
       <div class="model-footer" v-if="param.key=='orgSampleList'">
         <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>

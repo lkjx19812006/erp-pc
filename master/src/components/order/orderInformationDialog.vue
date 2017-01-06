@@ -167,7 +167,7 @@
                              <td>{{item.spec}}</td>
                              <td>{{item.location}}</td>
                              <td v-show=false>{{item.orderId}}</td>
-                             <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
+                             <td v-if="breedInfo.status==0" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
                              <td v-else>{{$t('static.edit')}}</td>
                              <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
                              <td v-else>{{$t('static.del')}}</td>
@@ -215,12 +215,31 @@
                              <div class="editpageright">
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-                                     <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                       <div style="clear:both;height:36px;">
+                                           <div class="left" style="width:45%;">
+                                              <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                           </div>
+                                           <div class="left" style="width:45%;">
+                                              <select  class="form-control edit-input"  v-model="breedInfo.unit" disabled="true">
+                                                  <option v-for="item in initUnitlist"  value="{{item.id}}">{{item.name}}({{item.ename}})</option>
+                                              </select>
+                                           </div>
+                                       </div>
                                 </div>
                          
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
-                                     <input type="number"  v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
+                                     <div style="clear:both;height:36px;">
+                                         <div class="left" style="width:45%;">
+                                            <input type="number"  v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
+                                         </div>
+                                          
+                                         <div class="left" style="width:45%;">
+                                            <select  class="form-control edit-input"  v-model="breedInfo.unit" disabled="true">
+                                                <option v-for="item in initUnitlist"  value="{{item.id}}">元/{{item.name}}({{item.ename}})</option>
+                                            </select>
+                                         </div>
+                                     </div>
                                 </div>
                                 <div class="editpage-input">
                                      <label class="editlabel" >{{$t('static.headline')}}</label>
@@ -388,7 +407,9 @@ export default {
             },
             updateParam:{
               show:false,
-              index:0
+              index:0,
+              price:0,    //修改前,被修改条目的单价
+              number:0,   //修改前,被修改条目的数量
             },
             country:{
               cname:'',
@@ -538,7 +559,10 @@ export default {
         },
         showModifyBreed:function(index){
           this.breedInfo.status = 2;
+          this.updateParam.price = this.param.goods[index].price,
+          this.updateParam.number = this.param.goods[index].number,
           this.updateParam.index = index;
+
           this.breedInfo.breedId=this.param.goods[index].breedId,
           this.breedInfo.breedName=this.param.goods[index].breedName,
           this.breedInfo.title=this.param.goods[index].title,
@@ -550,6 +574,7 @@ export default {
           this.breedInfo.price=this.param.goods[index].price,
           this.breedInfo.sourceType=this.param.goods[index].sourceType,
           this.breedInfo.id=this.param.goods[index].orderId,
+
           this.updateParam.show = true;
           this.altogether -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.price);
         },
@@ -617,6 +642,9 @@ export default {
         cancelModifyBreed:function(){
           this.breedInfo.status = 0;
           this.updateParam.show = false; 
+          this.altogether += (parseFloat(this.updateParam.number)*parseFloat(this.updateParam.price)*100)/100;
+          this.updateParam.number = 0;
+          this.updateParam.price = 0;
         },
         selectBizType:function(){
            console.log('addad');

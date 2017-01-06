@@ -155,7 +155,7 @@ const mutations = {
             }  
          state.orgSampleList[data.sub].description = data.auditComment;
         }
-        if(data.url=='/sample/validate/apply/'){
+        if(data.url=='/sample/validate/apply/'||data.url=='/sample/validate/cancel/'){
             for (var key in data) {
                 console.log(state.mySampleList[data.sub])
                 state.mySampleList[data.sub][key] = data[key];

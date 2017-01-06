@@ -12,7 +12,7 @@
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 	            </div>
 	            <div class="col-xs-4">
-                    <div class="name_search clearfix">
+                    <div v-if="!param.org" class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
                         <input type="text" class="search_input" v-model="loadParam.orgName" placeholder="请选择部门" @click="selectOrg()" readonly="true">
                     </div>
@@ -148,6 +148,9 @@ export default{
 	    }
     },
 	created(){
+        if(this.param.orgId){
+            this.loadParam.orgId = this.param.orgId;
+        }
 		this.getEmployeeList(this.loadParam);
 		this.getOrgList(this.loadParam);
 	}
