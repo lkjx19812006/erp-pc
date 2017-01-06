@@ -2,6 +2,7 @@
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
     <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
+    <consignee-model :param="consigneeParam" v-if="consigneeParam.show"></consignee-model>
     <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -38,6 +39,10 @@
                   <div style="margin-top:20px;">
                      <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
                      <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
+                     <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">选择收货地址</button>
+
+                       <!-- <a v-if="param.customerName" class="right" style="margin-right:20px;" @click="createConsignee()">新建收货人信息</a> -->
+                       <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">新建收货地址</button>
                   </div>
                   <div class="clearfix">
                         <div class="editpage-input col-md-4">
@@ -311,6 +316,7 @@ import searchcustomerModel  from '../Intention/clientname'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import searchbreedModel  from '../Intention/breedsearch'
 import searchemgModel from '../order/second_order/allEmployee'
+import consigneeModel  from '../clientRelate/addressSearch'
 import {
     initCountrylist,
     initProvince,
@@ -339,7 +345,8 @@ export default {
         searchcustomerModel,
         searchbreedModel,
         inputSelect,
-        searchemgModel
+        searchemgModel,
+        consigneeModel
     },
     props: ['param'],
     data() {
@@ -382,6 +389,12 @@ export default {
               price:'',
               id:''
             },
+            consigneeParam:{
+                show:false,
+                loading:true,
+                link:'/customer/getAddress/',
+                customerId:''
+            },
             addParam:{
               show:false,
               length:0
@@ -402,6 +415,7 @@ export default {
             district:{
               cname:''
             },
+            createOrSelect:0,     //选择还是新建客户收货地址,0新建,1选择
             saith:0, //点击按钮计算
             sum:0, //点击按钮计算
             altogether:0, //所有商品的总金额
@@ -593,6 +607,21 @@ export default {
             this.param.goods.pop();
             this.breedInfo.status = 0;
             this.addParam.show = false; 
+        },
+        selectConsignee:function(){
+            this.createOrSelect = 1;
+            this.consigneeParam.show=true;
+        },
+        createConsignee:function(){
+            this.createOrSelect = 0;
+            this.param.addressId = '';
+            this.param.consignee = this.param.customerName;
+            this.param.consigneePhone = this.param.customerPhone;
+            this.param.consigneeAddr = "";
+            this.country.cname = "中国";
+            this.province.cname = "";
+            this.city.cname = "";
+            this.district.cname = "";
         },
         modifyBreed:function(){
           this.param.goods[this.updateParam.index].breedId=this.breedInfo.breedId,

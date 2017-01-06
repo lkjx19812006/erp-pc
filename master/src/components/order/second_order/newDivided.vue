@@ -29,8 +29,9 @@
                             <tr v-for="item in param.stages">
                                 <td>{{item.amount}}</td>
                                 <td>{{item.ratio}}</td>
-                                <td>{{item.orderStatus}}</td>
-                                <td>{{item.extra}}</td>
+                                <td v-if="item.orderStatus==20">合同签订后</td>
+                                <td v-if="item.orderStatus==60">确认收货后</td>
+                                <td>{{item.extra}}天</td>
                                 <td>{{item.description}}</td>
                                 <td>{{item.comment}}</td>
                                 <td v-if="(breedInfo.status==0||breedInfo.status==2)&&this.sum <= this.param.total*100" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
