@@ -1007,8 +1007,8 @@
                             </div>
                             <div class="clearfix">
                                 <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>{{$t('static.comment')}}</label>
-                                    <input type="text" class="form-control" v-model="initClientDetail.comments" value="{{initClientDetail.comments}}" disabled="disabled" />
+                                  <label>{{$t('static.registered_time')}}</label>
+                                  <input type="text" class="form-control" v-model="initClientDetail.ctime" value="{{initClientDetail.ctime}}" disabled="disabled" />
                                 </div>
                                 <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
 	                                <label>{{$t('static.registered_address')}}</label>
@@ -1016,14 +1016,13 @@
 	                            </div>
                             </div>
                             <div class="clearfix">
-                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>{{$t('static.registered_time')}}</label>
-                                <input type="text" class="form-control" v-model="initClientDetail.ctime" value="{{initClientDetail.ctime}}" disabled="disabled" />
+                              <div class="client-detailInfo col-xs-12">
+                                  <label>{{$t('static.comment')}}</label>
+                                  <textarea type="text" class="form-control" v-model="initClientDetail.comments" value="{{initClientDetail.comments}}"  readonly="true" rows="5" style="resize: none;"></textarea>
                               </div>
-                            
                               <div class="client-detailInfo  col-md-12">
                                 <label>{{$t('static.business_scope')}}</label>
-                                <textarea type="text" class="form-control" v-model="initClientDetail.bizScope" value="{{initClientDetail.bizScope}}" disabled="disabled" rows="5" style="resize: none"></textarea>
+                                <textarea type="text" class="form-control" v-model="initClientDetail.bizScope" value="{{initClientDetail.bizScope}}" readonly="true" rows="5" style="resize: none"></textarea>
                               </div>
                             </div>
                             <!-- <div class="client-detailInfo">

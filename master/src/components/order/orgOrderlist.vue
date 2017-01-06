@@ -84,7 +84,7 @@
                     <th>{{$t('static.breed')}}</th>
                     <th>{{$t('static.transcation_amount')}}</th>
                     <th>{{$t('static.client_name')}}</th>
-                    <th>{{$t('static.supplier_name')}}</th>
+                    <!-- <th>{{$t('static.supplier_name')}}</th> -->
                     <th>{{$t('static.salesman')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
                     <th>{{$t('static.consignee_phone')}}</th>
@@ -119,7 +119,6 @@
                                 orderStatus:item.orderStatus,
                                 contact:''
                         })">{{item.customerName}}</a></td>
-                  <td></td>
                   <td>{{item.employeeName}}</td>
                   <td>{{item.consignee}}</td>
                   <td>{{item.consigneePhone}}</td>
