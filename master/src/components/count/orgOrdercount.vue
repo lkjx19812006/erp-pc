@@ -10,13 +10,13 @@
             <thead>
                 <tr style="background:none;color:#000">
                     <th rowspan="1"></th>
-                    <th colspan="12">销售订单</th>
-                    <th colspan="12">采购订单</th>
+                    <th colspan="10">销售订单</th>
+                    <th colspan="10">采购订单</th>
                 </tr>
                 <tr style="background:none;color:#000">
                     <th rowspan="2">业务员/部门</th>
                     <th colspan="3">全部订单</th>
-                    <th colspan="5">全部已完成</th>
+                    <th colspan="3">全部已完成</th>
                     <th colspan="4">进行中订单</th>
                     <th colspan="3">全部订单</th>
                     <th colspan="3">全部已完成</th>
