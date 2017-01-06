@@ -211,6 +211,7 @@ export default{
 }
 .trans_service{
 	margin-top: 20px;
+	margin-bottom: 50px;
 }
 .trans_service .col-xs-8{
 	margin-bottom: 20px;

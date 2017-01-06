@@ -1057,7 +1057,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         city: param.city,
         district: param.district,
         customerName: param.customerName,
-        consigneeAddr:param.country +' '+param.province+' '+param.city+' '+param.district+' '+param.consigneeAddr,
+        consigneeAddr:param.consigneeAddr,
         comments: param.comments,
         goods: param.goods
     }

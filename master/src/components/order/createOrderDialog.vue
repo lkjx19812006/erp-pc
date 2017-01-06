@@ -605,13 +605,10 @@ export default {
             this.param.consignee = this.param.customerName;
             this.param.consigneePhone = this.param.customerPhone;
             this.param.consigneeAddr = "";
-
             this.country.cname = "中国";
             this.province.cname = "";
             this.city.cname = "";
             this.district.cname = "";
-            
-
         },
         addBreed:function(){
           //价格只能输入之多两位小数

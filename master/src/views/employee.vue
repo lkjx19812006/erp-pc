@@ -4,7 +4,7 @@
    <searchorg-model :param.sync="orgParam" v-if="orgParam.show"></searchorg-model>
    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
    <password-model :param="passwordParam" v-if="passwordParam.show"></password-model>
-    <div  class="myemploy">
+    <div class="myemploy">
         <div class="order_search">
             <div class="clear">
                 <div class="left my_order_search">
@@ -71,7 +71,8 @@
                          levellist:'职级',
                          link:createEmploy,
                          url:'/employee/',
-                         key:'employeeList'
+                         key:'employeeList',
+                         division:'new',
                          })">新建</button>
                 </div>
             </div>
@@ -171,6 +172,7 @@
                                  link:updateEmploy,
                                  url:'/employee/',
                                  key:'employeeList',
+                                 division:'edit',
                                 })">
                         <a class="operate"><img src="/static/images/edit.png" height="18" width="30" alt="编辑" title="编辑"/></a>
                     </td>

@@ -125,7 +125,7 @@
                                         {{$t('static.pay_evidence')}}（0）
                                         </a>
                                         <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">客户已收货，商品质量符合客户要求！</span>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.new')}}/{{$t('static.edit')}}</button>
+                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.edit')}}</button>
                                         <button v-else></button>
                                     </h4>
                                 </div>

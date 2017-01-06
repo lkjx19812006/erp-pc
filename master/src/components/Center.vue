@@ -18,10 +18,10 @@ export default {
 </script>
 <style scoped>
 .center {
-    height: calc(100% - 70px);
+    height: calc(100% - 84px);
     position: absolute;
     right: 0;
-    top: 70px;
+    top: 84px;
     left: 200px;
     white-space: nowrap;
     overflow: hidden;
