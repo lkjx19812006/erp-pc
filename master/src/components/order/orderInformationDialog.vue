@@ -39,24 +39,19 @@
                   <div style="margin-top:20px;">
                      <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
                      <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
+
+                     <!-- <a v-if="param.customerName" class="right" style="margin-right:40px;" @click="selectConsignee()">选择收货人信息</a> -->
                      <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">选择收货地址</button>
 
-                       <!-- <a v-if="param.customerName" class="right" style="margin-right:20px;" @click="createConsignee()">新建收货人信息</a> -->
-                       <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">新建收货地址</button>
+                     <!-- <a v-if="param.customerName" class="right" style="margin-right:20px;" @click="createConsignee()">新建收货人信息</a> -->
+                     <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">填写收货地址</button>
+
                   </div>
                   <div class="clearfix">
                         <div class="editpage-input col-md-4">
                             <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.choose_client')}}</span></label>
                             <input type="text" class="form-control edit-input" v-model="param.customerName"   v-validate:custname="['required']" value="{{param.customerName}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
                         </div>
-                        <div class="editpage-input col-md-4">
-                            <label class="editlabel">{{$t('static.consignee_name')}} <!-- <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span> --></label>
-                            <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}"  />
-                        </div> 
-                        <div class="editpage-input col-md-4" >
-                            <label class="editlabel">{{$t('static.consignee_phone')}} <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
-                            <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  value="{{param.consigneePhone}}"/>
-                        </div>  
                         <div class="editpage-input col-md-4">
                             <label class="editlabel">{{$t('static.international')}}</label>
                             <select type="text" class="form-control edit-input" v-model="param.intl"  @change="selectBizType()">
@@ -75,6 +70,15 @@
                                 <option  v-for="item in initCurrencylist" value="{{item.id}}">{{item.name}}{{item.cname}}</option>
                             </select>
                         </div>
+                        <div class="editpage-input col-md-4">
+                            <label class="editlabel">{{$t('static.consignee_name')}} <!-- <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span> --></label>
+                            <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}"  />
+                        </div> 
+                        <div class="editpage-input col-md-4" >
+                            <label class="editlabel">{{$t('static.consignee_phone')}} <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
+                            <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  value="{{param.consigneePhone}}"/>
+                        </div>  
+                        
                         <div class="editpage-input col-md-4">
                             <label class="editlabel">{{$t('static.country')}}</label>
                             <div type="text" class="edit-input">
@@ -363,9 +367,11 @@ export default {
         pressImage,
         searchcustomerModel,
         searchbreedModel,
+        consigneeModel,
         inputSelect,
         searchemgModel,
         consigneeModel
+
     },
     props: ['param'],
     data() {
@@ -382,6 +388,12 @@ export default {
                 show:false,
                 customer:'',
                 customerName:''
+            },
+            consigneeParam:{
+                show:false,
+                loading:true,
+                link:'/customer/getAddress/',
+                customerId:''
             },
             breedParam:{
                 show:false,
@@ -551,6 +563,23 @@ export default {
             /*if("employeeId" in this.param){
                 this.empNameParam.employeeId = this.param.employeeId;
             }*/
+        },
+        selectConsignee:function(){
+            this.createOrSelect = 1;
+            this.consigneeParam.show=true;
+        },
+        createConsignee:function(){
+            this.createOrSelect = 0;
+            this.param.addressId = '';
+            this.param.consignee = this.param.customerName;
+            this.param.consigneePhone = this.param.customerPhone;
+            this.param.consigneeAddr = "";
+            this.country.cname = "中国";
+            this.province.cname = "";
+            this.city.cname = "";
+            this.district.cname = "";
+            
+
         },
         addBreed:function(){
           this.param.goods[this.param.goods.length-1].breedId = this.breedInfo.breedId;
@@ -729,15 +758,34 @@ export default {
             this.breedParam.id = breed.breedId;
         },
         customer:function(customer){
+            console.log(customer);
             this.param.customerName = customer.customerName;
             this.param.customer = customer.customerId;
+            this.param.customerPhone = customer.customerPhone;
+            this.param.consigneePhone = customer.customerPhone;
             this.param.customerEmail = customer.email;
+            this.consigneeParam.customerId = customer.customerId;
+        },
+        address:function(address){
+          console.log(address);
+          this.param.consignee = address.contactName;
+          this.param.consigneePhone = address.contactPhone;
+
+          this.country.cname = address.country;
+          this.province.cname = address.province;
+          this.city.cname = address.city;
+          this.district.cname = address.district;
+
+          this.param.consigneeAddr = address.detailAddr;
+          this.param.addressId = address.id;   //地址ID
+
         },
         selectEmpOrOrg:function(employee){
             console.log(employee)
             this.employeeParam.consigner = employee.employeeId;
             this.employeeParam.consignerName = employee.employeeName;
             this.param.consigner = this.employeeParam.consigner;
+
         }
     },
     created(){
@@ -746,6 +794,12 @@ export default {
         this.getCurrencyList();
         this.getUnitList();
         console.log(this.param);
+
+         if(this.param.customer){
+            this.consigneeParam.customerId = this.param.customer;
+         }
+         //.getOrderDetail(this.param);   
+
          if(this.param.breedId){
             this.breedParam.breedName = this.param.breedName;
             this.breedParam.id = this.param.breedId;

@@ -1311,7 +1311,7 @@ const mutations = {
         state.basicBaseList.addressList = data;
     },
     [ADD_ADDR_DETAIL](state, data) { // 新增客户地址
-        state.clientDetail[data.key].arr.unshift({
+        var temp = {
             "type": data.type,
             "contactName": data.contactName,
             "contactPhone": data.contactPhone,
@@ -1326,7 +1326,10 @@ const mutations = {
             "customerId": data.customerId,
             "id": data.id,
             "show": false
-        })
+        };
+        state.clientDetail[data.key].arr.unshift(temp);
+        state.basicBaseList.addressList.unshift(temp);
+
     },
     [ADD_LABEL_DATA](state, data) { // 新增客户标签
         state.clientDetail[data.key].arr.unshift({

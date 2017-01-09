@@ -47,7 +47,7 @@
                        <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">选择收货地址</button>
 
                        <!-- <a v-if="param.customerName" class="right" style="margin-right:20px;" @click="createConsignee()">新建收货人信息</a> -->
-                       <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">新建收货地址</button>
+                       <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">填写收货地址</button>
 
                     </div>
                     <div class="clearfix">
@@ -79,7 +79,7 @@
                         </div> 
                         <div class="editpage-input col-md-4" >
                             <label class="editlabel">{{$t('static.consignee_phone')}} <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
-                            <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  value="{{param.customerPhone}}"/>
+                            <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  value="{{param.consigneePhone}}"/>
                         </div>  
                         
                         <div class="editpage-input col-md-4">
@@ -775,6 +775,7 @@ export default {
         customer:function(customer){
             this.param.customerName = customer.customerName;
             this.param.customerPhone = customer.customerPhone;
+            this.param.consigneePhone = customer.customerPhone;
             this.param.customer = customer.customerId;
 
             this.consigneeParam.customerId = customer.customerId;
@@ -789,7 +790,7 @@ export default {
           this.city.cname = address.city;
           this.district.cname = address.district;
 
-          this.param.consigneeAddr = address.address;
+          this.param.consigneeAddr = address.detailAddr;
           this.param.addressId = address.id;   //地址ID
 
         },
