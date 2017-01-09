@@ -657,7 +657,7 @@ export default {
     },
     events:{
         breed:function(breed){
-          if(breed.eName==null){
+          if(breed.eName==null||breed.eName==""){
              this.breedInfo.breedName = breed.breedName;
              this.breedParam.breedName = breed.breedName;
           }else{
