@@ -14,7 +14,7 @@
         </div>
         <validator name="validation">
             <div class="edit-model">
-                <section class="editsection" v-cloak>
+                <section class="editsection clear" v-cloak>
                     <div class="editpage">
                         <div class="editpageleft">
                             <div class="editpage-input">
@@ -130,11 +130,11 @@
                               <option value="3">{{$t('static.three_star')}}</option>
                             </select>
                           </div>
-                          <div class="editpage-input">
-                            <label class="editlabel">{{$t('static.comment')}}</label>
-                            <input type="text" v-model='param.comments' class="form-control edit-input" value="{{param.comments}}" />
-                          </div>
                         </div>
+                    </div>
+                    <div class="editpage-input col-md-12">
+                      <label class="editlabel">{{$t('static.comment')}}</label>
+                      <textarea type="text" class="form-control" v-model="initClientDetail.comments" value="{{initClientDetail.comments}}"  readonly="true" rows="5" ></textarea>
                     </div>
                 </section>
             </div>

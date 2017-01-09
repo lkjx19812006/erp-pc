@@ -1057,7 +1057,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         city: param.city,
         district: param.district,
         customerName: param.customerName,
-        consigneeAddr:param.country +' '+param.province+' '+param.city+' '+param.district+' '+param.consigneeAddr,
+        consigneeAddr:param.consigneeAddr,
         comments: param.comments,
         goods: param.goods
     }
@@ -2621,6 +2621,9 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         if (search == 'employeeId' && param[search] !== '' && param[search] != 'undefined') {
             clienturl += '&employeeId=' + param.employeeId
         }
+        if (search == 'employeeIds' && param[search] !== '' && param[search] != 'undefined') {
+            clienturl += '&employeeIds=' + param.employeeIds
+        }
         if (search == 'bizScope' && param[search] != '' && param[search] != 'undefined') {
             clienturl += '&bizScope=' + param.bizScope
         }
@@ -3010,7 +3013,7 @@ export const customerTransferBlacklist = ({ dispatch }, param) => {    //客户�
 export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及搜索
     console.log(param)
     param.loading = true;
-    var apiurl = apiUrl.clientList + '/employee/?' + '&page=' + param.cur + '&pageSize=14';
+    var apiurl = apiUrl.clientList + '/employee/?' + '&page=' + param.cur + '&pageSize=12';
     /*var apiurl = apiUrl.employeeList+'/?'+'&page=' + param.cur + '&pageSize=14';*/
     for (var seach in param) {
         if (seach == 'name' && param[seach] !== '') {

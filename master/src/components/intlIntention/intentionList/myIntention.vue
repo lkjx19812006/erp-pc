@@ -551,9 +551,6 @@ export default {
 }
 </script>
 <style scoped>
-.base_pagination{
-  margin-bottom:250px;
-}
 .transfer{
     margin-left: 18px;
 }

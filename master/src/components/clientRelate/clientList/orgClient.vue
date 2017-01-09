@@ -4,6 +4,7 @@
     <alterinfo-model :param="alterParam" v-if="alterParam.show"></alterinfo-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
+    <employee-model  :param="employeeParam" v-if="employeeParam.show"></employee-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
@@ -26,40 +27,22 @@
                         </select>
                    </dd>
                 </dl>
-
+                
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">{{$t("static.client_type")}}：</dt>
+                   <dt class="left transfer marg_top">{{$t("static.business_scope")}}：</dt>
                    <dd class="left">
-                       <select v-model="loadParam.type" style="width:50%"  class="form-control" @change="selectSearch()">
-                          <option value="">{{$t("static.please_select")}}</option>
-                          <option value="0">Others 其它</option>
-                          <option value="1">Cooperatives 合作社</option>
-                          <option value="2">Drug Makers 药商</option>
-                          <option value="3">Factory 药厂</option>
-                          <option value="4">Private Use 个体户</option>
-                          <option value="5">Pharmacy 药店</option>
-                          <option value="6">Hospital 医院</option>
-                          <option value="7">Trading Company 贸易公司</option>
-                          <option value="8">Retail 零售商行</option>
-                          <option value="9">药农</option>
-                          <option value="10">介绍人</option>
-                          <option value="11">药贩子</option>
-                          <option value="12">产地药商</option>
-                          <option value="13">销地药商</option>
-                          <option value="14">Acupuncture Clinic 养生诊所</option>
-                          <option value="15">Chemical  Company 化工厂</option>
-                          <option value="16">Cosmetics  Company 化妆品厂</option>
-                          <option value="17">Extract  Company 提取物厂</option>
-                          <option value="18">Food Company 食品厂</option>
-                          <option value="19">Laboratory for trial 实验室</option>
-                          <option value="20">Online Company 网上电商</option>
-                          <option value="21">Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商</option>
-                          <option value="22">Pharmaceutical producer of Western Medicine 西药生产商</option>
-                          <option value="23">Pieces Factory 饮片厂</option>
-                      </select>
-
+                        <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
                 </dl>
+
+                <!-- 单个业务员搜索 -->
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
+                   </dd>
+                </dl>
+                
                 <dl class="clear left transfer" v-if="this.initLogin.orgId==29">
                    <dt class="left transfer marg_top">客服跟进情况：</dt>
                    <dd class="left">
@@ -94,13 +77,42 @@
                         </select>
                    </dd>
                 </dl>
-
+                
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">{{$t("static.business_scope")}}：</dt>
+                   <dt class="left transfer marg_top">{{$t("static.client_type")}}：</dt>
                    <dd class="left">
-                        <input type="text" class="form-control" style="width:80%" v-model="loadParam.bizScope" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                       <select v-model="loadParam.type" style="width:50%"  class="form-control" @change="selectSearch()">
+                          <option value="">{{$t("static.please_select")}}</option>
+                          <option value="0">Others 其它</option>
+                          <option value="1">Cooperatives 合作社</option>
+                          <option value="2">Drug Makers 药商</option>
+                          <option value="3">Factory 药厂</option>
+                          <option value="4">Private Use 个体户</option>
+                          <option value="5">Pharmacy 药店</option>
+                          <option value="6">Hospital 医院</option>
+                          <option value="7">Trading Company 贸易公司</option>
+                          <option value="8">Retail 零售商行</option>
+                          <option value="9">药农</option>
+                          <option value="10">介绍人</option>
+                          <option value="11">药贩子</option>
+                          <option value="12">产地药商</option>
+                          <option value="13">销地药商</option>
+                          <option value="14">Acupuncture Clinic 养生诊所</option>
+                          <option value="15">Chemical  Company 化工厂</option>
+                          <option value="16">Cosmetics  Company 化妆品厂</option>
+                          <option value="17">Extract  Company 提取物厂</option>
+                          <option value="18">Food Company 食品厂</option>
+                          <option value="19">Laboratory for trial 实验室</option>
+                          <option value="20">Online Company 网上电商</option>
+                          <option value="21">Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商</option>
+                          <option value="22">Pharmaceutical producer of Western Medicine 西药生产商</option>
+                          <option value="23">Pieces Factory 饮片厂</option>
+                      </select>
+
                    </dd>
                 </dl>
+
+                
                 
                 <!-- <dl class="clear left transfer" style="margin-left:-33px;">
                     <div class="client-detailInfo col-xs-6">
@@ -310,6 +322,8 @@ import alterinfoModel  from '../../../components/clientRelate/clientUpdate'
 import transferModel   from '../../../components/user/employeeOrOrg'
 import tipsdialogModel  from '../../../components/tips/tipDialog'
 import searchModel  from  '../../../components/clientRelate/searchModel'
+//单个业务员搜索
+import employeeModel  from  '../searchEmpInfo'
 import auditDialog from '../../../components/tips/auditDialog'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
@@ -336,6 +350,7 @@ export default {
         deletebreedModel,
         alterinfoModel,
         transferModel,
+        employeeModel,
         tipsdialogModel,
         searchModel,
         auditDialog
@@ -406,10 +421,20 @@ export default {
                 show: false,
                 name:''
             },
+            employeeParam:{
+              show:false,
+              org:true,
+              orgId:this.initLogin.orgId,
+              //单个业务员搜索
+              employeeId:'',
+              employeeName:'',  
+              //多个业务员搜索
+              employeeIds:'',
+              employeeNames:'',
+
+            },
             searchParam:{
                 show:false,
-
-
             },
             transferParam:{
                 show:false,
@@ -455,6 +480,9 @@ export default {
             this.tipsParam.show = true;
             this.tipsParam.name=title;
             this.tipsParam.alert=true;
+        },
+        selectEmployee:function(){
+            this.employeeParam.show = true;
         },
         createSearch:function(){
             this.loadParam.show=true;
@@ -627,6 +655,10 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getClientList(this.loadParam);
+        },
+        a:function(employee){
+          this.loadParam.employeeId = employee.employeeId;
+          this.loadParam.employeeName = employee.employeeName;
         },
         selectEmpOrOrg: function (param) {
           this.transferParam.employeeId = param.employeeId;

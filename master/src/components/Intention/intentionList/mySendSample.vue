@@ -5,7 +5,7 @@
      <edit-model :param.sync="dialogParam" v-if="dialogParam.send"></edit-model>
      <apply-model :param="applyParam" v-if="applyParam.show"></apply-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-	 <div>
+	  <div>
         <div class="service-nav clearfix">
             <div class="my_order_search pull-right"> 
                <button class="btn btn-default transfer" @click="New()">新建</button>
@@ -108,6 +108,19 @@
                                     })">
                                 <img src="/static/images/apply.png" />
                             </a>
+                            <a class="operate"  v-if="item.validate==1" >
+                                <button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;margin-top:-22px;color:#fa6705" @click="applyCheck({
+                                    sub:$index,
+                                    id:item.id,
+                                    show:true,
+                                    link:sampleApply,
+                                    title:'取消寄样申请',
+                                    auditComment:'',
+                                    url:'/sample/validate/cancel/',
+                                    key:'mySampleList'
+                                    })">取消申请
+                                </button>
+                            </a> 
                             <a class="operate"  v-if="item.validate==3" @click="applyCheck({
                                     sub:$index,
                                     id:item.id,

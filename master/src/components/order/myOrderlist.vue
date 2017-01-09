@@ -87,7 +87,7 @@
                     <th>{{$t('static.breed')}}</th>
                     <th>{{$t('static.transcation_amount')}}</th>
                     <th>{{$t('static.client_name')}}</th>
-                    <th>{{$t('static.supplier_name')}}</th>
+                    <!-- <th>{{$t('static.supplier_name')}}</th> -->
                     <th>{{$t('static.consignee_name')}}</th>
                     <th>{{$t('static.consignee_phone')}}</th>
                     <th>{{$t('static.consignee_address')}}</th>
@@ -121,7 +121,6 @@
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'
                         })">{{item.customerName}}</a></td>
-                  <td></td>
                   <td>{{item.consignee}}</td>
                   <td>{{item.consigneePhone}}</td>
                   <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
@@ -135,7 +134,7 @@
                   <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                   <td v-if="item.orderStatus==20" style="color:#fa6705">{{$t('static.waiting_order')}}</td>
                   <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
-                  <td v-if="item.orderStatus==40">等待{{item.employeeName}}发货</td>
+                  <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td>
                   <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
                   <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
                   <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
@@ -774,7 +773,7 @@
         text-align: center;
     }
   #table_box  table th,#table_box  table td{
-    width:114px;
-    min-width: 114px;
+    width:124px;
+    min-width: 124px;
   }
   </style>

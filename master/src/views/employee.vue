@@ -4,7 +4,7 @@
    <searchorg-model :param.sync="orgParam" v-if="orgParam.show"></searchorg-model>
    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
    <password-model :param="passwordParam" v-if="passwordParam.show"></password-model>
-    <div  class="myemploy">
+    <div class="myemploy">
         <div class="order_search">
             <div class="clear">
                 <div class="left my_order_search">
@@ -25,8 +25,7 @@
                 </div>
             </div>
             <div class="clear">
-                <dl class="clear left">
-<!--                   <dt class="left marg_top">是否在职：</dt> -->
+                <dl class="clear left" style="margin-bottom: 0">
                   <div class="btn-group">
                      <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.leave==1}" @click="selectType(1)">
                         在职
@@ -35,8 +34,8 @@
                         离职
                      </button>
                   </div>
-               </dl>
-               <div class="right">
+                </dl>
+                <div class="right">
                     <button type="button" class="btn btn-primary pull-right transfer" @click="loadByCondition()">刷新</button>
                     <button class="btn btn-default pull-right " @click="newData({
                          title:'新建员工',
@@ -71,15 +70,19 @@
                          levellist:'职级',
                          link:createEmploy,
                          url:'/employee/',
-                         key:'employeeList'
+                         key:'employeeList',
+                         division:'new',
                          })">新建</button>
                 </div>
             </div>
         </div>
         <div class="order_table" id="table_box">
-          <div class="cover_loading">
-              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-          </div>
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+<!--             <div style="position:relative;width: 100%;" >
+<i-table highlight-row   :columns="columns1" :data="initOrderlist" stripe :height="tab_height" @on-selection-change="test()"></i-table>
+          </div> -->
            <table class="table table-hover table_color table-striped"  v-cloak id="tab">
               <thead>
                   <tr>
@@ -171,6 +174,7 @@
                                  link:updateEmploy,
                                  url:'/employee/',
                                  key:'employeeList',
+                                 division:'edit',
                                 })">
                         <a class="operate"><img src="/static/images/edit.png" height="18" width="30" alt="编辑" title="编辑"/></a>
                     </td>
@@ -353,13 +357,12 @@ export default {
 }
 </script>
 <style scoped>
-
 .myemploy {
     width: 100%;
     white-space: nowrap;
 }
 .order_search {
-    padding: 35px 30px 0 40px;
+    padding: 25px 20px 0 20px;
 }
 .transfer{
     margin-left: 18px;
