@@ -107,13 +107,11 @@
                           <option value="21">Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商</option>
                           <option value="22">Pharmaceutical producer of Western Medicine 西药生产商</option>
                           <option value="23">Pieces Factory 饮片厂</option>
+                          <option value="24">Herb tea company  茶类公司</option>
                       </select>
 
                    </dd>
                 </dl>
-
-                
-                
                 <!-- <dl class="clear left transfer" style="margin-left:-33px;">
                     <div class="client-detailInfo col-xs-6">
                         <dt class="left transfer marg_top">{{$t("static.registration_end_time")}}：</dt>
