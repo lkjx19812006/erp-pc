@@ -29,8 +29,9 @@
                             <tr v-for="item in param.stages">
                                 <td>{{item.amount}}</td>
                                 <td>{{item.ratio}}</td>
-                                <td>{{item.orderStatus}}</td>
-                                <td>{{item.extra}}</td>
+                                <td v-if="item.orderStatus==20">合同签订后</td>
+                                <td v-if="item.orderStatus==60">确认收货后</td>
+                                <td>{{item.extra}}天</td>
                                 <td>{{item.description}}</td>
                                 <td>{{item.comment}}</td>
                                 <td v-if="(breedInfo.status==0||breedInfo.status==2)&&this.sum <= this.param.total*100" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
@@ -52,7 +53,6 @@
                                      <select v-model="breedInfo.orderStatus" class="form-control edit-input" v-validate:status="{required:true}">
                                         <option  value="20">合同签订后</option>
                                         <option  value="60">已确认收货</option>
-                                        <option  value="70">已完成订单</option>
                                      </select>
                                 </div>
                                 <div class="editpage-input col-md-6">

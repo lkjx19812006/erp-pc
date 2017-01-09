@@ -2,7 +2,8 @@
     <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
     <consignee-model :param="consigneeParam" v-if="consigneeParam.show"></consignee-model>
-    
+    <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
+
     <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -29,6 +30,13 @@
                             <!-- <option value="60">{{$t('static.awaiting_comment')}}</option> -->
                             <option value="70">{{$t('static.order_over')}}</option>
                         </select>
+                    </div>
+                    <div class="editpage-input col-md-6" v-if="param.type==1">
+                        <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">选择发货人</span></label>
+                        <input  type="text" class="form-control" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
+                       <!--  <select  class="form-control edit-input" v-model="param.consigner">
+                           <option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
+                       </select> -->
                     </div>
                 </div>
                 <section class="editsection">
@@ -170,7 +178,7 @@
                                <td>{{item.number}}</td>
                                <td>{{item.spec}}</td>
                                <td>{{item.location}}</td>
-                               <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
+                               <td v-if="breedInfo.status==0" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
                                <td v-else>{{$t('static.edit')}}</td>
                                <td v-if="breedInfo.status==0" @click="deleteBreed($index)"><a>{{$t('static.del')}}</a></td>
                                <td v-else>{{$t('static.del')}}</td>
@@ -191,7 +199,7 @@
                                        <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
                                        <input type="text" v-show="false" v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}" disabled="disabled" />
                                        <select  class="form-control edit-input"  v-model="breedInfo.unit">
-                                            <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}（{{item.ename}}）</option>
+                                          <option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}({{item.ename}})</option>
                                        </select>
                                   </div>
                                   <div class="editpage-input">
@@ -217,12 +225,31 @@
                                <div class="editpageright">                                                          
                                   <div class="editpage-input">
                                        <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-                                       <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                       <div style="clear:both;height:36px;">
+                                           <div class="left" style="width:45%;">
+                                              <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                           </div>
+                                           <div class="left" style="width:45%;">
+                                              <select  class="form-control edit-input"  v-model="breedInfo.unit" disabled="true">
+                                                  <option v-for="item in initUnitlist"  value="{{item.id}}">{{item.name}}({{item.ename}})</option>
+                                              </select>
+                                           </div>
+                                       </div>
                                   </div>
                            
                                   <div class="editpage-input">
                                        <label class="editlabel" >{{$t('static.price')}}<span class="system_danger" v-if="$inner.pack0.required">{{$t('static.required')}}</span></label>
-                                       <input type="number"  v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
+                                       <div style="clear:both;height:36px;">
+                                           <div class="left" style="width:45%;">
+                                              <input type="number"  v-model="breedInfo.price" class="form-control edit-input" v-validate:pack0="{required:true}" />
+                                           </div>
+                                            
+                                           <div class="left" style="width:45%;">
+                                              <select  class="form-control edit-input"  v-model="breedInfo.unit" disabled="true">
+                                                  <option v-for="item in initUnitlist"  value="{{item.id}}">元/{{item.name}}({{item.ename}})</option>
+                                              </select>
+                                           </div>
+                                       </div>
                                   </div>
                                   <div class="editpage-input">
                                        <label class="editlabel" >{{$t('static.headline')}}</label>
@@ -316,6 +343,8 @@ import searchcustomerModel  from '../Intention/clientname'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import searchbreedModel  from '../Intention/breedsearch'
 import consigneeModel  from '../clientRelate/addressSearch'
+import searchemgModel from '../order/second_order/allEmployee'
+
 import {
     initCountrylist,
     initProvince,
@@ -323,7 +352,8 @@ import {
     initDistrictlist,
     initBreedDetail,
     initCurrencylist,
-    initUnitlist
+    initUnitlist,
+    initEmployeeList
 } from '../../vuex/getters'
 import {
     getCountryList,
@@ -333,7 +363,8 @@ import {
     getDistrictList,
     createOrder,
     getUnitList,
-    getCurrencyList
+    getCurrencyList,
+    getEmployeeList
 } from '../../vuex/actions'
 export default {
     components: {
@@ -342,7 +373,9 @@ export default {
         searchcustomerModel,
         searchbreedModel,
         consigneeModel,
-        inputSelect
+        inputSelect,
+        searchemgModel
+
     },
     props: ['param'],
     data() {
@@ -355,11 +388,19 @@ export default {
               cur: 1,
               all: 7
             },
+            orgParam:{
+              loading:true,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7
+            },
             empNameParam:{
-                show:false,
-                customer:'',
-                customerName:'',
-                customerPhone:''
+              show:false,
+              customer:'',
+              customerName:'',
+              customerPhone:''
             },
             consigneeParam:{
                 show:false,
@@ -384,6 +425,7 @@ export default {
               spec:'',
               number:'',
               unit:'',
+              unitName:'',
               price:''
             },
             addParam:{
@@ -392,7 +434,14 @@ export default {
             },
             updateParam:{
               show:false,
-              index:0
+              index:0,
+              price:0,    //修改前,被修改条目的单价
+              number:0,   //修改前,被修改条目的数量
+            },
+            employeeParam:{
+              show:false,
+              consigner:'',
+              consignerName:''
             },
             country:{
               id:'',
@@ -424,7 +473,8 @@ export default {
             initDistrictlist,
             initBreedDetail,
             initCurrencylist,
-            initUnitlist
+            initUnitlist,
+            initEmployeeList
         },
         actions:{
             getCountryList,
@@ -434,10 +484,14 @@ export default {
             getDistrictList,
             createOrder,
             getUnitList,
+            getEmployeeList,
             getCurrencyList
         }
     },
     methods:{
+      test:function(){
+        console.log("fasfasfasf");
+      },
         selectProvince:function(){
             console.log('selectProvince');
             this.province = {
@@ -456,6 +510,7 @@ export default {
               this.getProvinceList(this.country);
             }
         },
+
         selectCity:function(){
             this.city = {
               id:'',
@@ -478,6 +533,12 @@ export default {
             if(this.city!=''&&this.city!=null){
               this.getDistrictList(this.city);
             }
+        },
+
+        selectEmployee:function(id,name){
+           this.employeeParam.show = true;
+           this.employeeParam.consigner= id;
+           this.employeeParam.consignerName = name;
 
         },
         addCompute:function(){ //优惠增加
@@ -544,13 +605,10 @@ export default {
             this.param.consignee = this.param.customerName;
             this.param.consigneePhone = this.param.customerPhone;
             this.param.consigneeAddr = "";
-
             this.country.cname = "中国";
             this.province.cname = "";
             this.city.cname = "";
             this.district.cname = "";
-            
-
         },
         addBreed:function(){
           //价格只能输入之多两位小数
@@ -575,6 +633,9 @@ export default {
         },
         showModifyBreed:function(index){
           this.breedInfo.status = 2;
+          this.updateParam.price = this.param.goods[index].price,
+          this.updateParam.number = this.param.goods[index].number,
+
           this.updateParam.index = index;
           this.breedInfo.breedId=this.param.goods[index].breedId,
           this.breedInfo.breedName=this.param.goods[index].breedName,
@@ -653,6 +714,9 @@ export default {
         cancelModifyBreed:function(){
           this.breedInfo.status = 0;
           this.updateParam.show = false; 
+          this.altogether += (parseFloat(this.updateParam.number)*parseFloat(this.updateParam.price)*100)/100;
+          this.updateParam.number = 0;
+          this.updateParam.price = 0;
         },
         selectBizType:function(){
            console.log('addad');
@@ -713,6 +777,7 @@ export default {
             this.param.customerPhone = customer.customerPhone;
             this.param.consigneePhone = customer.customerPhone;
             this.param.customer = customer.customerId;
+
             this.consigneeParam.customerId = customer.customerId;
         },
         address:function(address){
@@ -727,11 +792,20 @@ export default {
 
           this.param.consigneeAddr = address.detailAddr;
           this.param.addressId = address.id;   //地址ID
+
+        },
+        selectEmpOrOrg:function(employee){
+            console.log(employee)
+            this.employeeParam.consigner = employee.employeeId;
+            this.employeeParam.consignerName = employee.employeeName;
+            this.param.consigner = this.employeeParam.consigner;
+
         }
     },
     created(){
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
+        this.getEmployeeList(this.orgParam);
         this.getUnitList();
         this.getCurrencyList();
         console.log(this.param);

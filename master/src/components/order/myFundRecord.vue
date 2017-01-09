@@ -2,6 +2,7 @@
   <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
+  <receipt-model :param="auditParam" v-if="auditParam.show"></receipt-model>
   <div>
     <div class="service-nav clearfix">
       <div class="clearfix">
@@ -16,25 +17,25 @@
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">支付名称：</dt>
+           <dt class="left  marg_top">支付名称：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.payName"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">金额：</dt>
+           <dt class="left  marg_top">金额：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.amount"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">用户名：</dt>
+           <dt class="left  marg_top">用户名：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.payUserName"  @keyup.enter="selectSearch()"/>
            </dd>
         </dl>
         <dl class="clear left transfer">
-           <dt class="left transfer marg_top">账号：</dt>
+           <dt class="left  marg_top">账号：</dt>
            <dd class="left">
               <input type="text"  class="form-control" v-model="loadParam.payNumber"  @keyup.enter="selectSearch()"/>
            </dd>
@@ -87,7 +88,7 @@
               })">{{item.bizType | bizType}}{{item.type | payMent}}</a>
             </td>
             <td>{{item.amount}}</td>
-            <td>{{item.payName}}</td>
+            <td>{{item.payName}}<span v-if="item.paySubName!==''">（{{item.paySubName}}）</span></td>
             <td>{{item.payUserName}}</td>
             <td>{{item.payNumber}}</td>
             <td>{{item.ctime}}</td>
@@ -99,20 +100,52 @@
             <td v-if="item.pr==0&&item.type==0">未付款</td>
             <td v-if="item.pr==0&&item.type==1">未收款</td>
             <td v-if="item.pr==1&&item.type==0" style="background:green;color:#fff;">已确认付款</td>
-            <td v-if="item.pr==1&&item.type==1" style="background:green;color:#fff;">已确认收款</td>
+            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order'" style="background:green;color:#fff;">已确认收款</td>
+            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_refund'" style="background:green;color:#fff;">已确认付款</td>
+            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_after_sales_refund'" style="background:green;color:#fff;">已确认退款</td>
             <td>
               <a class="operate" v-if="item.type==0&&item.pr==0&&item.validate==2" @click="applyInfo({
-                          show:true,
-                          sub:$index,
-                          id:item.id,
-                          image_f:'',
-                          image_s:'',
-                          image_t:'',
-                          images:'',
-                          url:'/fund/proceedsConfirm',
-                          titles:'确定收款',
-                          link:paymentConfirm
-                      })"><img src="/static/images/surePayment.png"/></a>
+                        show:true,
+                        sub:$index,
+                        id:item.id,
+                        image_f:'',
+                        image_s:'',
+                        image_t:'',
+                        images:'',
+                        url:'/fund/proceedsConfirm',
+                        titles:'确定收款',
+                        link:paymentConfirm
+                    })"><img src="/static/images/surePayment.png"/></a>
+              <a class="operate" v-if="item.validate==0" @click="editClick({
+                        show:true,
+                        sub:$index,
+                        id:item.id,
+                        validate:item.validate,
+                        amount:item.amount,
+                        type:item.type,
+                        payWay:item.payWay,
+                        payName:item.payName,
+                        paySubName:item.paySubName,
+                        payUserName:item.payUserName,
+                        payNumber:item.payNumber,
+                        comment:item.comment,
+                        url:'/fund/',
+                        titles:'编辑',
+                        link:editPayment
+                    })"><img src="/static/images/edit.png"/></a>
+              <button class="btn btn-success" v-if="item.validate==0" @click="applyInfo({
+                      show:true,
+                      sub:$index,
+                      id:item.id,
+                      comment:item.comment,
+                      image_f:'',
+                      image_s:'',
+                      image_t:'',
+                      images:'',
+                      url:'/fund/validate/request',
+                      titles:'申请审核',
+                      link:paymentConfirm
+                  })" style="padding:1px 4px;background:#fff;color:#398439;margin-top:-22px;">申请审核</button>
             </td>
           </tr>
         </tbody>
@@ -130,19 +163,22 @@
   import changeMenu from '../../components/tools/tabs/tabs.js'
   import auditModel  from './second_order/financeAudit'
   import tipsModel from '../../components/tips/tipDialog'
+  import receiptModel from '../order/second_order/orderAudit'
   import {
     initMyFundList
   } from '../../vuex/getters'
   import {
     getMyFundList,
-    paymentConfirm
+    paymentConfirm,
+    editPayment,
   } from '../../vuex/actions'
   export default {
     components: {
       pagination,
       detailModel,
       auditModel,
-      tipsModel
+      tipsModel,
+      receiptModel
     },
     vuex: {
       getters: {
@@ -150,7 +186,8 @@
       },
       actions: {
         getMyFundList,
-        paymentConfirm
+        paymentConfirm,
+        editPayment,
       }
     },
     data() {
@@ -173,6 +210,9 @@
         },
         changeParam: {
           show: false
+        },
+        auditParam:{
+          show:false
         },
         tipsParam:{
           show:false,
@@ -211,10 +251,19 @@
         this.financeParam = item;
         this.financeParam.callback = this.callback;
       },
+      editClick:function(receipt){
+        this.auditParam.show = true;
+        if(receipt.titles=='申请分期审核'){
+          receipt.validate = 1;
+        }
+        this.auditParam = receipt;
+        this.auditParam.callback = this.callback;
+      },
       callback:function(title){
           this.tipsParam.show= true;
           this.tipsParam.alert= true;
           this.tipsParam.name= title;
+          this.getMyFundList(this.loadParam);
       }
     },
     events: {

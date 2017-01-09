@@ -87,11 +87,11 @@
                     <th>{{$t('static.breed')}}</th>
                     <th>{{$t('static.transcation_amount')}}</th>
                     <th>{{$t('static.client_name')}}</th>
-                    <th>{{$t('static.supplier_name')}}</th>
+                    <!-- <th>{{$t('static.supplier_name')}}</th> -->
                     <th>{{$t('static.consignee_name')}}</th>
                     <th>{{$t('static.consignee_phone')}}</th>
-                    <th style="width:300px">{{$t('static.consignee_address')}}</th>
-                    <th>{{$t('static.payment_method')}}</th>
+                    <th>{{$t('static.consignee_address')}}</th>
+                    <!-- <th>{{$t('static.payment_method')}}</th> -->
                     <th>{{$t('static.order_status')}}</th>
                     <th>{{$t('static.order_source')}}</th>
                     <th>{{$t('static.review_status')}}</th>
@@ -121,22 +121,27 @@
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'
                         })">{{item.customerName}}</a></td>
-                  <td></td>
                   <td>{{item.consignee}}</td>
                   <td>{{item.consigneePhone}}</td>
                   <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
-                  <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
+                  <!-- <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
+
                   <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
                   <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
                   <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
-                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td>
+                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td> -->
                   <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
                   <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
-                  <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
+                  <td v-if="item.orderStatus==20" style="color:#fa6705">{{$t('static.waiting_order')}}</td>
                   <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
-                  <td v-if="item.orderStatus==40">{{$t('static.wait_ship')}}</td>
+                  <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td>
                   <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
-                  <td v-if="item.orderStatus==60">{{$t('static.order_over')}}</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==2">已重新发货（仓库审核）</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==50">{{$t('static.order_over')}}（补充合同申请）</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==60">{{$t('static.order_over')}}（售后处理中）</td>
+                  <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
                   <td v-if="item.orderStatus==70">{{$t('static.order_over')}}</td>
                   <td v-if="item.orderStatus==-1">{{$t('static.cancle_order')}}</td>
                   <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td>
@@ -166,11 +171,13 @@
                         id:item.id,
                         index:$index,
                         type:item.type,
+                        consigner:item.consigner,
                         sourceType:0,
                         sample:item.sample,
                         intl:item.intl,
                         customer:item.customer,
                         currency:item.currency,
+                        consigner:item.consigner,
                         consignee:item.consignee,
                         consigneePhone:item.consigneePhone,
                         customerPhone:item.consigneePhone,
@@ -206,30 +213,33 @@
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==0">
                               <img src="/static/images/{{$t('static.img_paid')}}.png"  title="待客户收款" alt="待客户收款" />
                         </a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==1">
+                        <!-- <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==1">
                              <img src="/static/images/{{$t('static.img_deliver')}}.png" title="待发货" alt="待发货"/>
-                        </a>
+                        </a> -->
                         <!-- 销售订单发货流程start-->
-                        <!-- <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0&&item.verifier==-1" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">申请发货
+                        <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">申请发货
                         </button>
                         <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 3px;">重新申请发货
                         </button>
-                        <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==-1" style="background:#fff;color:#eea236;padding:1px 3px;">已取消发货
-                        </button> -->
+                        <button class="btn btn-warning" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.consigner==item.employee" style="background:#fff;color:#eea236;padding:1px 5px;">发货
+                        </button>
                         <!-- 销售订单发货流程end -->
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0">
                             <img src="/static/images/{{$t('static.img_take')}}.png"  title="待收货" alt="等待收货"/>
                         </a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus >=60">
+                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70||(item.orderStatus >=60&&item.type==0)">
                            <img src="/static/images/{{$t('static.img_finish')}}.png"   title="已完成订单" alt="已完成订单"/>
                         </a>
-
+                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==3" style="background:#fff;color:#eea236;padding:1px 5px;">等待评价
+                        </button>
+                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==2" style="background:#fff;color:#eea236;padding:1px 5px;">确认收货
+                        </button>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1">
                             <img src="/static/images/{{$t('static.img_payorder')}}.png"  title="待客户付款" alt="待客户付款"/>
                         </a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==20&&item.type==1">
+                        <!-- <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==20&&item.type==1">
                             <img src="/static/images/{{$t('static.img_collection')}}.png"  title="申请收款" alt="申请收款"/>
-                        </a>
+                        </a> -->
                         <!--<a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1"><img src="/static/images/uncheck.png" height="18" width="38" title="申请收款" alt="申请收款"/></a>-->
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0">
                              <img src="/static/images/{{$t('static.img_deliver')}}.png" title="待发货" alt="待发货"/>
@@ -350,6 +360,7 @@
                     addressId:'',    //地址ID，如果为空，表示是新增的收货地址,否则是已存在的收货地址
                     consignee:'',
                     consigneePhone:'',
+                    consigner:'', //发货人
                     zipCode:'',
                     country:'中国',
                     province:'',
@@ -388,6 +399,7 @@
                     express:false,
                     delivery:false,
                     confirmReceipt:false,
+                    estimate:false,
                     key:'myOrderList'
                 },
                 show:true,
@@ -576,19 +588,12 @@
                 /*--采购状态type==0--*/
                 if(item.orderStatus==0&&item.type==0){
                     this.disposeParam.tips="订单已提交，请审核！";
-                    /*this.disposeParam.handle = true;*/
-                    /*this.disposeParam.sendoff = true;*/
-                    /*this.orderStatu(this.disposeParam);*/
                 }
                 if(item.orderStatus==10&&item.type==0){
                     this.disposeParam.tips="订单处理完成，待财务付款！";
-
-                    /*this.disposeParam.delivery = true;*/
-                    /*this.orderStatu(this.disposeParam);*/
                 }
                 if(item.orderStatus==-1){
                     this.disposeParam.tips="订单已取消！";
-                   /* this.disposeParam.link='/order/cancle';*/
                 }
                 if(item.orderStatus==-2){
                     this.disposeParam.tips="订单已过期！";
@@ -600,12 +605,10 @@
                 if(item.orderStatus==30&&item.type==0){
                     this.disposeParam.tips="订单已付款，待客户收款";
                   this.disposeParam.confirmReceipt=true;
-                    /*this.disposeParam.Auditing = true;*/
                 }
                 if(item.orderStatus==40&&item.type==0){
-                    this.disposeParam.tips="待客户发货！";
+                    this.disposeParam.tips="等待客户发货！";
                     this.disposeParam.sendoff=true;
-                    /*this.disposeParam.sendoff = true; */
                 }
                 if(item.orderStatus==50&&item.type==0){
                     this.disposeParam.tips="您的订单已发货，请注意保持电话通畅，等待收货确认！";
@@ -613,22 +616,18 @@
                 }
                 if(item.orderStatus==60&&item.type==0){
                     this.disposeParam.tips="买家已收货，订单已完成！";
-                    /*this.disposeParam.link='/order/receiveConfirm';*/
                 }
                 if(item.orderStatus==70&&item.type==0){
                     this.disposeParam.tips="买家已收货，订单已完成！";
-                    /*this.disposeParam.link='/order/receiveConfirm';*/
                 }
                 /*--销售状态type==1--*/
                 if(item.orderStatus==0&&item.type==1){
                     this.disposeParam.tips="订单已提交，请审核！";
                     this.disposeParam.handle = true;
-                    /*this.orderStatu(this.disposeParam);*/
                 }
                 if(item.orderStatus==10&&item.type==1){
                     this.disposeParam.tips="订单处理完成，等待客户付款！";
                     this.disposeParam.sales = true;
-                    /*this.orderStatu(this.disposeParam);*/
                 }
                 if(item.orderStatus==20&&item.type==1){
                     this.disposeParam.tips="客户已付款，等待申请财务核查！";
@@ -647,7 +646,8 @@
                     this.disposeParam.express = true;
                 }
                 if(item.orderStatus==60&&item.type==1){
-                    this.disposeParam.tips="买家已收货，订单已完成！";
+                    this.disposeParam.tips="买家已收货，请确认订单是否完成！";
+                    this.disposeParam.estimate = true;
                 }
                 if(item.orderStatus==70&&item.type==1){
                     this.disposeParam.tips="订单已完成！";
@@ -657,7 +657,8 @@
             orderBack:function(title){
                 this.tipsParam.show = true;
                 this.tipsParam.name=title;
-                this.tipsParam.alert=true;
+                /*this.tipsParam.alert=true;*/
+                this.getEmpolyeeOrder(this.loadParam);
             },
             resetTime:function(){
               this.loadParam.ctime = "";
@@ -709,9 +710,6 @@
     }
     .marg_top{
         margin-top: 8px;
-    }
-   .component_action{
-        right: 43px;
     }
     .checkbox_unselect{
         background-image: url(/static/images/unselect.png);
@@ -769,61 +767,14 @@
     .order_table .table > ul >li img {
         margin: auto;
     }
-
-    .order_action {
-        position: absolute;
-        right: 97px;
-        padding: 10px 0;
-        top: 32px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background: #fff;
-        z-index: 10;
-        min-width: 90px;
-        max-width: 200px;
-    }
-
-    .order_show {
-        position: absolute;
-        right: 20px;
-        padding: 10px 0;
-        top: 32px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background: #fff;
-        z-index: 10;
-        min-width: 90px;
-        max-width: 200px;
-        display: block;
-    }
-
-    .order_action ul,
-    .order_show ul {
-        margin-bottom: 0;
-    }
-
-    .order_action ul li a,
-    .order_show ul li a {
-        color: #003077;
-        padding: 5px 5px 5px 10px;
-        display: block;
-    }
-
-    .expand-transition {
-        transition: all .3s ease;
-        overflow: inherit;
-    }
-
-    .expand-enter,
-    .expand-leave {
-        opacity: 0;
-        height: 0;
-    }
-
     .v-spinner {
         text-align: center;
     }
     .order_pagination{
         text-align: center;
     }
+  #table_box  table th,#table_box  table td{
+    width:124px;
+    min-width: 124px;
+  }
   </style>

@@ -109,13 +109,21 @@
                   </mz-datepicker>
               </div>
           </dl>
-
+          
+          <!-- 单个业务员搜索 -->
           <dl class="clear left transfer">
              <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
              <dd class="left">
                   <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
              </dd>
           </dl>
+          <!-- 多个业务员搜索 -->
+          <!-- <dl class="clear left transfer">
+             <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
+             <dd class="left">
+                  <input type="text" class="form-control" v-model="loadParam.employeeNames" placeholder="请选择业务员" @click="selectEmployee()">
+             </dd>
+          </dl> -->
           
           
           
@@ -321,7 +329,10 @@
   import deletebreedModel  from '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
   import alterinfoModel  from '../clientRelate/clientUpdate'
   import searchModel  from  '../clientRelate/searchModel'
+  //单个业务员搜索
   import employeeModel  from  '../clientRelate/searchEmpInfo'
+  //多个业务员搜索
+  /*import employeeModel  from  '../clientRelate/selectEmployees'*/
   import filter from '../../filters/filters'
   import common from '../../common/common'
   import changeMenu from '../../components/tools/tabs/tabs.js'
@@ -381,6 +392,8 @@
           phone:'',
           employeeId:'',
           employeeName:'',
+          employeeIds:'',
+          employeeNames:'',
           type:'',
           classify:'',
           status:'',
@@ -416,8 +429,13 @@
         },
         employeeParam:{
           show:false,
+          //单个业务员搜索
           employeeId:'',
-          employeeName:''
+          employeeName:'',  
+          //多个业务员搜索
+          employeeIds:'',
+          employeeNames:'',
+
         },
         searchParam:{
           show:false,
@@ -463,6 +481,8 @@
             this.loadParam.phone='';
             this.loadParam.employeeId='';
             this.loadParam.employeeName='';
+            this.loadParam.employeeIds='';
+            this.loadParam.employeeNames='';
             this.loadParam.type='';
             this.loadParam.classify='';
             this.loadParam.status='';
@@ -504,6 +524,10 @@
       a:function(employee){
         this.loadParam.employeeId = employee.employeeId;
         this.loadParam.employeeName = employee.employeeName;
+      },
+      employees:function(employees){
+        this.loadParam.employeeIds = employees.employeeIds;
+        this.loadParam.employeeNames = employees.employeeNames;
       }
     },
     created() {

@@ -254,6 +254,7 @@ export default {
                 zipCode:'',
                 country:'',
                 province:'',
+                consigner:'',
                 city:'',
                 email:'',
                 total:0,
@@ -449,6 +450,7 @@ export default {
             this.createOrderParam.country = item.country;
             this.createOrderParam.district = item.district;
             this.createOrderParam.city = item.city;
+            this.createOrderParam.consigner = item.consigner;
             this.createOrderParam.consigneeAddr = item.address;
             this.createOrderParam.intl = item.intl;
             this.createOrderParam.total = item.itemsTotal;
@@ -549,9 +551,6 @@ export default {
 }
 </script>
 <style scoped>
-.base_pagination{
-  margin-bottom:250px;
-}
 .transfer{
     margin-left: 18px;
 }

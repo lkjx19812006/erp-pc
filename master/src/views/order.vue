@@ -39,6 +39,22 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==9">
       <finance-model></finance-model>
     </div>
+    <!-- 我的补充合同 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==10">
+      <mycontract-model></mycontract-model>
+    </div>
+    <!-- 部门补充合同 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==11">
+      <orgcontract-model></orgcontract-model>
+    </div>
+    <!-- 我的补充合同 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==12">
+      <myafterapply-model></myafterapply-model>
+    </div>
+    <!-- 部门补充合同 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==13">
+      <orgafterapply-model></orgafterapply-model>
+    </div>
 </template>
 <script>
 import paymentRecord from '../components/order/paymentRecordList'
@@ -51,6 +67,10 @@ import orderPay from '../components/order/payOrder'
 import myFund from '../components/order/myFundRecord'
 import orgFund from '../components/order/orgFundRecord'
 import financeModel  from '../components/order/financeOrderList'
+import mycontractModel from '../components/order/myContractList'
+import orgcontractModel from '../components/order/orgContractList'
+import myafterapplyModel from '../components/order/mySalesApply'
+import orgafterapplyModel from  '../components/order/orgSalesApply'
 export default {
     components: {
         paymentRecord,
@@ -62,9 +82,12 @@ export default {
         orderPay,
         myFund,
         orgFund,
-        financeModel
+        financeModel,
+        mycontractModel,
+        orgcontractModel,
+        orgafterapplyModel,
+        myafterapplyModel
     }
-
 }
 </script>
 <style scoped>

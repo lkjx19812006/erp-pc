@@ -12,7 +12,7 @@
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <span class="navbar-brand navbar-name" href="#">{{initOrderDetail.consignee}}</span>
+                        <span class="navbar-brand navbar-name" href="#">{{initReceiptDetail.customerName}}</span>
                     </div>
                 </div>
             </nav>
@@ -21,18 +21,14 @@
             <div class="client-section clearfix" @click.stop="">
               <h4 class="section_title">{{$t('static.details')}}</h4>
                 <ul class="clearfix" style="margin-top:20px;font-size: 13px; white-space: normal;">
-                  <li class="col-md-6 col-xs-6">商品名称：<label>{{initOrderDetail.goodsDesc}}</li>
-                  <li class="col-md-6 col-xs-6">客户名称：<label>{{initOrderDetail.customerName}}</label></li>
-                  <li class="col-md-6 col-xs-6">客户手机：<label>{{initOrderDetail.customerPhone}}</li>
-                  <li class="col-md-6 col-xs-6">收货人名称：<label>{{initOrderDetail.consignee}}</li>
-                  <li class="col-md-6 col-xs-6">收货人电话：<label>{{initOrderDetail.consigneePhone}}</li>
-                  <li class="col-md-6 col-xs-6">收货地址：<label>{{initOrderDetail.consigneeAddr}}</li>
-                  <li class="col-md-6 col-xs-6">创建时间：<label>{{initOrderDetail.ctime}}</li>
-                </ul>
-                <ul class="clearfix">
-                  <li v-for="img in initOrderDetail.images" class="col-md-4">
-                      <img :src="img.url" />
-                  </li>
+                  <li class="col-md-6 col-xs-6">商品名称：<label>{{initReceiptDetail.orderDesc}}</li>
+                  <li class="col-md-6 col-xs-6">客户名称：<label>{{initReceiptDetail.customerName}}</label></li>
+                  <li class="col-md-6 col-xs-6">客户手机：<label>{{initReceiptDetail.customerPhone}}</li>
+                  <li class="col-md-6 col-xs-6">订单流水号：<label>{{initReceiptDetail.orderNo}}</li>
+                  <li class="col-md-6 col-xs-6" v-if="param.url=='/order/contract/details/'">合同文本：<label>{{initReceiptDetail.contractText}}</li>
+                  <li class="col-md-6 col-xs-6" v-if="param.url=='/order/contract/details/'">调整差额：<label>{{initReceiptDetail.adjusted}}</li>
+                  <li class="col-md-6 col-xs-6">备注：<label>{{initReceiptDetail.comment}}</li>
+                  <li class="col-md-6 col-xs-6">创建时间：<label>{{initReceiptDetail.ctime | dateTime}}</li>
                 </ul>
             </div>
         </section>
@@ -40,10 +36,10 @@
 </template>
 <script>
 import{
-    initOrderDetail
+    initReceiptDetail
 } from '../../../vuex/getters'
 import {
-    getOrderDetail
+    getReceiptDetail
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -57,10 +53,10 @@ export default {
     props:['param'],
     vuex: {
         getters:{
-            initOrderDetail
+            initReceiptDetail
         },
         actions:{
-            getOrderDetail
+            getReceiptDetail
         }
     },
     methods:{
@@ -70,7 +66,7 @@ export default {
       }
     },
     created(){
-       this.getOrderDetail(this.param);
+       this.getReceiptDetail(this.param);
     }
 }
 </script>

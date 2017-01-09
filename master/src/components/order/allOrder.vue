@@ -46,7 +46,6 @@
                     </select>
                </dd>
             </dl>
-
             <!-- <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
                <div class="btn-group">
@@ -126,7 +125,7 @@
                     <th>{{$t('static.breed')}}</th>
                     <th>{{$t('static.transcation_amount')}}</th>
                     <th>{{$t('static.client_name')}}</th>
-                    <th>{{$t('static.supplier_name')}}</th>
+                    <!-- <th>{{$t('static.supplier_name')}}</th> -->
                     <th>{{$t('static.salesman')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
                     <th>{{$t('static.consignee_phone')}}</th>
@@ -152,7 +151,6 @@
                       <th>{{$t('static.currency')}}</th>
                       <th>{{$t('static.payment_method')}}</th> 
                     -->
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -175,7 +173,6 @@
                                 orderStatus:item.orderStatus,
                                 contact:''
                         })">{{item.customerName}}</a></td>
-                  <td></td>
                   <td>{{item.employeeName}}</td>
                   <td>{{item.consignee}}</td>
                   <td>{{item.consigneePhone}}</td>
@@ -186,7 +183,21 @@
                   <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                   <td v-if="item.payWay==4">WeChat</td>
                   <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">{{$t('static.none')}}</td>
-                  <td>{{item.orderStatus | orderstatus}}</td>
+                  <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
+                  <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
+                  <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
+                  <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
+                  <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td> <!-- {{$t('static.wait_ship')}} -->
+                  <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==2">已重新发货（仓库审核）</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==50">{{$t('static.order_over')}}（补充合同申请）</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==60">{{$t('static.order_over')}}（售后处理中）</td>
+                  <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
+                  <td v-if="item.orderStatus==70">{{$t('static.order_over')}}</td>
+                  <td v-if="item.orderStatus==-1">{{$t('static.cancle_order')}}</td>
+                  <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td>
                   <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
                   <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
                   <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>
@@ -195,10 +206,11 @@
                   <td v-if="item.validate==-2" style="background:red;color:#fff">{{$t('static.unapproved')}}</td>
                   <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                   <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
-                  <td><a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
+                  <!-- <td><a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
                      <img src="/static/images/orgcheck.png"  title="审核" alt="审核" />
-                 </a></td>
-                  <!-- <td><a @click="clickOn({
+                                   </a></td> -->
+                <!-- 
+                        <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
                                 loading:false,
@@ -231,7 +243,8 @@
                         <td v-if="item.payWay==1">支付宝</td>
                         <td v-if="item.payWay==2">平安支付</td>
                         <td v-if="item.payWay==3">药款支付</td>
-                        <td v-if="item.payWay==null">未支付</td> -->
+                        <td v-if="item.payWay==null">未支付</td> 
+                -->
                 </tr>
             </tbody>
         </table>
@@ -596,7 +609,7 @@
         text-align: center;
     }
      #table_box  table th,#table_box  table td{
-      width: 107px;
-      min-width: 100px;
+      width: 114px;
+      min-width: 114px;
     }
   </style>

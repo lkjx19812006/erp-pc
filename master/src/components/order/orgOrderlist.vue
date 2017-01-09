@@ -84,7 +84,7 @@
                     <th>{{$t('static.breed')}}</th>
                     <th>{{$t('static.transcation_amount')}}</th>
                     <th>{{$t('static.client_name')}}</th>
-                    <th>{{$t('static.supplier_name')}}</th>
+                    <!-- <th>{{$t('static.supplier_name')}}</th> -->
                     <th>{{$t('static.salesman')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
                     <th>{{$t('static.consignee_phone')}}</th>
@@ -119,7 +119,6 @@
                                 orderStatus:item.orderStatus,
                                 contact:''
                         })">{{item.customerName}}</a></td>
-                  <td></td>
                   <td>{{item.employeeName}}</td>
                   <td>{{item.consignee}}</td>
                   <td>{{item.consigneePhone}}</td>
@@ -134,9 +133,14 @@
                   <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                   <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
                   <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
-                  <td v-if="item.orderStatus==40">{{$t('static.wait_ship')}}</td>
+                  <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td> <!-- {{$t('static.wait_ship')}} -->
                   <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
-                  <td v-if="item.orderStatus==60">{{$t('static.order_over')}}</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==2">已重新发货（仓库审核）</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==50">{{$t('static.order_over')}}（补充合同申请）</td>
+                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==60">{{$t('static.order_over')}}（售后处理中）</td>
+                  <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
                   <td v-if="item.orderStatus==70">{{$t('static.order_over')}}</td>
                   <td v-if="item.orderStatus==-1">{{$t('static.cancle_order')}}</td>
                   <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td>
@@ -221,7 +225,7 @@
                     <a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
                       <img src="/static/images/orgcheck.png"  title="审核" alt="审核" />
                     </a>
-                    <!-- <button class="btn btn-warning" v-if="item.validate==2&&(item.verifier == $store.state.table.login.id)&&item.logistics==1" @click="orderSend(item.id,$index)" style="background:#fff;color:#eea236;padding:1px 3px;">审核发货</button> -->
+                    <button class="btn btn-warning" v-if="item.validate==2&&(item.verifier == $store.state.table.login.id)&&item.logistics==1&&(item.taskKey=='order_send_governor_validate'||item.taskKey=='financial_validate')" @click="orderSend(item.id,$index)" style="background:#fff;color:#eea236;padding:1px 3px;">审核发货</button>
                  </td>
                 </tr>
             </tbody>

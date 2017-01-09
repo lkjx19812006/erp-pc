@@ -33,7 +33,7 @@
 				                	<td>{{item.location}}</td>
 				                	<td>{{item.spec}}</td>
 				                	<td>{{item.number}}</td>
-				                	<td>{{item.unit | Unit}}</td>
+				                	<td>{{item.eunit}}</td>
 				                	<td>{{item.description}}</td>
 				                	<td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed($index)"><a>{{$t('static.edit')}}</a></td>
 	                                <td v-else>{{$t('static.edit')}}</td>
@@ -57,10 +57,10 @@
 	                                     <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
 	                                </div>
 	                                <div class="editpage-input col-md-6">
-	                                     <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
+	                                     <label class="editlabel">{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
 	                                     <!-- <input type="text"  /> -->
-	                                     <select v-model="breedInfo.unit" class="form-control edit-input" v-validate:unit="{required:true}">
-	                                     	<option v-for="item in initUnitlist" value="{{item.id}}">{{item.name}}({{item.ename}})</option>
+	                                     <select v-model="breedInfo.eunit" class="form-control edit-input" v-validate:unit="{required:true}">
+	                                     	<option v-for="item in initUnitlist" value="{{item.id+','+item.name+','+item.ename}}">{{item.name}}({{item.ename}})</option>
 	                                     </select>
 	                                </div>  
 	                                <div class="editpage-input col-md-6">
@@ -176,8 +176,8 @@
 	                                                  </div>
 	                          </div> -->
                           <div class="client-detailInfo  col-md-6 col-xs-12">
-                              <label class="editlabel">{{$t('static.city')}}<!-- <span class="system_danger" v-if="$validation.city.required">必填项</span> --></label>
-                              <input type="text" class="form-control edit-input"  v-model="param.city" >
+                              <label class="editlabel">{{$t('static.city')}}<span class="system_danger" v-if="$validation.city.required">{{$t('static.required')}}</span></label>
+                              <input type="text" class="form-control edit-input" v-validate:city="['required']"  v-model="param.city" >
                               <!-- <input type="text" v-show="false" v-model="city.cname" v-validate:city="['required']">
                               <input type="text" v-if="!province.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个省" />
                               <div v-if="province.cname" type="text" class="edit-input">
@@ -207,8 +207,8 @@
                                </div>
                            </div> -->
                            <div class="client-detailInfo  col-md-6 col-xs-12">
-		                        <label class="editlabel">{{$t('static.detailed_address')}} </label></label>
-		                        <input type="text" class="form-control edit-input" v-model="param.address" value="{{param.address}}"  />
+		                        <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">{{$t('static.required')}}</span></label>
+		                        <input type="text" class="form-control edit-input" v-validate:addr="['required']" v-model="param.address" value="{{param.address}}"  />
 		                    </div>
 		                    <div class="client-detailInfo  col-md-12">
 		                        <label class="editlabel">{{$t('static.comment')}} </label></label>
@@ -278,6 +278,8 @@ export default{
               location:'',
               spec:'',
               number:'',
+              cunit:'',
+              eunit:'',
               unit:'',
               description:'',
               id:''
@@ -412,6 +414,8 @@ export default{
           this.breedInfo.spec=this.param.items[index].spec,
           this.breedInfo.number=this.param.items[index].number,
           this.breedInfo.unit=this.param.items[index].unit,
+          this.breedInfo.cunit=this.param.items[index].cunit,
+          this.breedInfo.eunit=this.param.items[index].eunit,
           this.breedInfo.description=this.param.items[index].description,
           this.updateParam.show = true;
         },
@@ -434,7 +438,9 @@ export default{
           this.param.items[this.updateParam.index].location=this.breedInfo.location,
           this.param.items[this.updateParam.index].spec=this.breedInfo.spec,
           this.param.items[this.updateParam.index].number=this.breedInfo.number,
-          this.param.items[this.updateParam.index].unit=this.breedInfo.unit,
+          this.param.items[this.updateParam.index].cunit=this.breedInfo.eunit.split(',')[1],
+          this.param.items[this.updateParam.index].unit=this.breedInfo.eunit.split(',')[0],
+          this.param.items[this.updateParam.index].eunit=this.breedInfo.eunit.split(',')[2],
           /*this.param.items[this.updateParam.index].sourceType=this.breedInfo.sourceType,*/
           this.param.items[this.updateParam.index].status=this.breedInfo.status,
           this.param.items[this.updateParam.index].description=this.breedInfo.description,
@@ -450,7 +456,9 @@ export default{
           this.param.items[this.param.items.length-1].spec = this.breedInfo.spec;
           this.param.items[this.param.items.length-1].description = this.breedInfo.description;
           this.param.items[this.param.items.length-1].number = this.breedInfo.number;
-          this.param.items[this.param.items.length-1].unit = this.breedInfo.unit;
+          this.param.items[this.param.items.length-1].cunit = this.breedInfo.eunit.split(',')[1];
+          this.param.items[this.param.items.length-1].unit = this.breedInfo.eunit.split(',')[0];
+          this.param.items[this.param.items.length-1].eunit = this.breedInfo.eunit.split(',')[2];
           /*this.param.items[this.param.items.length-1].sourceType = this.breedInfo.sourceType;*/
           console.log(this.param.items[this.param.items.length-1]);
           this.breedInfo.status = 0;
@@ -467,14 +475,18 @@ export default{
               this.breedInfo.number='';
               this.breedInfo.description='';
               this.breedInfo.unit='';
+              this.breedInfo.cunit='';
+              this.breedInfo.eunit='';
               this.param.items.push({
                   breedId:'',
                   breedName:'',
                   quality:'',
                   location:'',
+                  cunit:'',
                   spec:'',
                   number:'',
                   description:'',
+                  eunit:'',
                   unit:''
               });
               this.addParam.show = true;
@@ -495,7 +507,7 @@ export default{
 	events:{
         breed:function(breed){
         	console.log(breed)
-        	  if(breed.eName==null){
+        	  if(breed.eName==null||breed.eName==""){
 	             this.breedInfo.breedName = breed.breedName;
 	             this.breedParam.breedName = breed.breedName; 
 	          }else{
@@ -522,7 +534,7 @@ export default{
         this.getProvinceList(this.countryParam);
         this.getUnitList();
         if(this.param.breedId){
-            this.breedParam.breedName = this.param.brredName;
+            this.breedParam.breedName = this.param.breedName;
             this.breedParam.id = this.param.breedId;
             this.getBreedDetail(this.breedParam);
             console.log(this.breedParam)
@@ -571,15 +583,6 @@ export default{
 	line-height: 40px;
 	border-bottom: 1px solid #fa6705;
 	text-align: left;
-}
-.edit-input {
-    height: 36px;
-    width: 90%;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
 }
 
 .edit-input:focus {

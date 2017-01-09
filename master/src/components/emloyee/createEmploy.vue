@@ -27,9 +27,16 @@
                                 <label>{{param.job}}  <span class="system_danger" v-if="$validation.no.required">请输入员工工号</span></label>
                                 <input type="text" class="form-control" v-model="param.no" v-validate:no="['required']" />
                             </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12" v-if="param.division=='new'">
                                 <label>{{param.parten}}  <span class="system_danger" v-if="$validation.org.required">请选择部门</span></label>
                                  <input type="text" class="form-control" v-model="param.orgName" v-validate:org="['required']" @click="selectorg()" readonly="true" />
+                               <!--  <select class="form-control" v-model="param.orgName" id="userown" v-validate:userown="['required']">
+                                   <option v-for="item in initOrgList">{{item.name}}</option>
+                               </select> -->
+                            </div>
+                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12" v-if="param.division=='edit'">
+                                <label>{{param.parten}}</label>
+                                 <input type="text" class="form-control" v-model="param.orgName"  disabled="true" />
                                <!--  <select class="form-control" v-model="param.orgName" id="userown" v-validate:userown="['required']">
                                    <option v-for="item in initOrgList">{{item.name}}</option>
                                </select> -->
@@ -38,7 +45,7 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label>{{param.positionlist}} <span class="system_danger" v-if="$validation.position.required">请输入职位</span></label>
-                                <input type="text" class="form-control" maxlength="11" v-model="param.position" v-validate:position="['required']" />
+                                <input type="text" class="form-control"  v-model="param.position" v-validate:position="['required']" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label>{{param.phonelist}} <span class="system_danger" v-if="$validation.phone.phone">请输入正确的手机号</span></label>
@@ -206,6 +213,7 @@ export default {
             this.roleParam.roles = this.param.privilege.split(',');
         }
         this.getRoleList(this.roleParam);
+        console.log(this.param)
     },
     ready() {
         this.createDateText()
