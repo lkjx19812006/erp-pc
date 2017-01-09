@@ -111,6 +111,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- 分期付款 -->
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -296,6 +297,63 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- 合同凭证 -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading" >
+                                    <h4 class="panel-title clearfix" @click="enfoldment({
+                                          link:'',
+                                          crete:'contractList'
+                                          })">
+                                        <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.contractList.arr.length!==null">
+                                          合同凭证（{{initOrderDetail.contractList.arr.length}}）
+                                        </a>
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                        合同凭证（0）
+                                        </a>
+                                        <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">客户已收货，商品质量符合客户要求！</span>
+                                            <button type="button" class="btn btn-base pull-right" @click.stop="createcredence({
+                                                show:true,
+                                                orderId:initOrderDetail.id,
+                                                route:uploadDocument,
+                                                link:'/order/attachSubmit/',
+                                                description:'',
+                                                fileType:'image',
+                                                bizType:'order_contract',
+                                                orderContractList:'',
+                                                titles:'上传合同'
+                                                })" 
+                                                v-if="initOrderDetail.contractList.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
+                                        <button v-else></button>
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse" v-if="initOrderDetail.contractList.arr.length&&!initOrderDetail.contractList.show" v-cloak>
+                                    <div class="panel-body panel-set">
+                                        <table class="table  contactSet">
+                                          <thead>
+                                            <th>{{$t('static.file_type')}}</th>
+                                            <th>{{$t('static.file_origin')}}</th>
+                                            <th>{{$t('static.file_path')}}</th>
+                                            <th>{{$t('static.description')}}</th>
+                                            <th>{{$t('static.create_time')}}</th>
+                                          </thead>
+                                          <tbody>
+                                            <tr v-for="item in initOrderDetail.contractList.arr">
+                                                <td>{{item.fileType}}</td>
+                                                <td>{{item.bizType}}</td>
+                                                <td>
+                                                    <img :src="item.url" v-if="item.fileType=='image'" @click="clickBig(item.url)"/>
+                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
+                                                </td>
+                                                <td>{{item.description}}</td>
+                                                <td>{{item.ctime}}</td>
+                                            </tr>
+                                         </tbody>
+                                      </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 支付凭证 -->
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -312,7 +370,7 @@
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
                                             show:true,
                                             orderId:initOrderDetail.id,
-                                            callback:uploadDocument,
+                                            route:uploadDocument,
                                             link:'/order/attachSubmit/',
                                             description:'',
                                             fileType:'image',
@@ -364,7 +422,7 @@
                                             show:true,
                                             orderId:param.id,
                                             link:'/order/attachSubmit/',
-                                            callback:uploadDocument,
+                                            route:uploadDocument,
                                             description:'',
                                             fileType:'image',
                                             bizType:'attach_files',
@@ -421,7 +479,7 @@
                                             fileType:'image',
                                             bizType:'order_send',
                                             sendPics:'',
-                                            callback:uploadDocument,
+                                            route:uploadDocument,
                                             titles:'上传物流凭证'
                                             })" v-if="initOrderDetail.sendPics.arr.length!==null&&param.contact=='/order/myList'&&param.orderStatus>=50">{{$t('static.new')}}</button>
                                         <!--<button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>-->
@@ -596,7 +654,8 @@ export default {
         },
         show:true,
         credenceParam:{
-           show:false
+           show:false,
+           creCallback:''
         },
         disposeParam:{ //订单处理各个状态
             show:false,
@@ -713,6 +772,8 @@ export default {
          createcredence:function(initOrderDetail){
             console.log(initOrderDetail)
              this.credenceParam=initOrderDetail;
+             this.credenceParam.creCallback = this.pictureCallback;
+             console.log(this.credenceParam)
          },
          clickBig:function(img){
               this.pictureParam.show=true;
@@ -730,6 +791,12 @@ export default {
           this.tipsParam.show = true;
           this.tipsParam.name=title;
           this.tipsParam.alert=true;
+        },
+        pictureCallback:function(title){
+          this.tipsParam.show = true;
+          this.tipsParam.name=title;
+          this.tipsParam.alert=true;
+          this.getOrderDetail(this.param);
         }
     },
     filter:(filter,{}),

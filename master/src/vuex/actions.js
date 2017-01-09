@@ -1116,6 +1116,14 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         if (param.image_t) { param.sendPics += param.image_t };
         console.log(param.sendPics)
     }
+    if (param.titles == "上传合同") {
+        if (param.image_f) {
+            param.orderContractList += param.image_f + ','
+        }
+        if (param.image_s) { param.orderContractList += param.image_s + ',' }
+        if (param.image_t) { param.orderContractList += param.image_t };
+        console.log(param.orderContractList)
+    }
 
     const body = {
         orderId: param.orderId,
@@ -1132,6 +1140,9 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
     if (param.attachFiles) {
         body.attachFiles = param.attachFiles;
     }
+    if (param.orderContractList) {
+        body.orderContractList = param.orderContractList;
+    }
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
@@ -1143,7 +1154,7 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('添加成功')
+        param.creCallback(res.json().msg);
         dispatch(types.ORDER_UPLOAD_DATA, param);
         param.show = false;
     }, (res) => {
@@ -1262,6 +1273,9 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     if(param.validate&&param.validate!=''){
         body.validate = param.validate;
     }
+    if(param.prNo&&param.prNo!=''){
+        body.prNo = param.prNo;
+    }
     /*if(param.amount&&param.amount!=''){
         body.amount = param.amount;
     }*/
@@ -1315,8 +1329,10 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
            dispatch(types.ORDER_UPLOAD_DATA, param); 
         }
         if(param.titles=='分期审核'||param.titles=='确认付款'||param.titles=='确认收款'){
+
             param.validate = res.json().result.validate;
             param.pr = res.json().result.pr;
+            param.prNo = res.json().result.prNo;
             dispatch(types.FINANCE_LIST, param);
         }
         if(param.titles=='编辑'){
@@ -1610,6 +1626,14 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
             orderDetail.logisticses.show = true;
             for (var i in orderDetail.logisticses.arr) {
                 orderDetail.logisticses.arr[i].show = false;
+            }
+            
+            var contractList = orderDetail.contractList;
+            orderDetail.contractList = {};
+            orderDetail.contractList.arr = contractList;
+            orderDetail.contractList.show = true;
+            for (var i in orderDetail.contractList.arr) {
+                orderDetail.contractList.arr[i].show = false;
             }
             var stages = orderDetail.stages;
             orderDetail.stages = {};
@@ -4449,6 +4473,21 @@ export const getIntlIntentionInquireList = ({ dispatch }, param) => { //国际�
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     if(param.inquire!==''&&param.inquire!==undefined){
         url += "&inquire=" + param.inquire;
+    }
+    if (param.breedId !== '') {
+        url += '&breedId=' + param.breedId;
+    }
+    if (param.employeeName !== '') {
+        url += '&employeeName=' + param.employeeName;
+    }
+    if (param.customerName !== '') {
+        url += '&customerName=' + param.customerName;
+    }
+    if (param.customerEmail !== '') {
+        url += '&customerEmail=' + param.customerEmail;
+    }
+    if (param.country !== '') {
+        url += '&country=' + param.country;
     }
     Vue.http({
         method: 'GET',

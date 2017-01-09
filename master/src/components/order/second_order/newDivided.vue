@@ -84,7 +84,17 @@
                                 </div>
                                 <div class="editpage-input col-md-12">
                                      <label class="editlabel">分期说明<span class="system_danger" v-if="$inner.description.required">{{$t('static.required')}}</span></label>
-                                     <textarea class="form-control" v-model="breedInfo.description" value="{{breedInfo.description}}" style="resize:none; border:1px solid #ddd;" rows="5" v-validate:description="{required:true}"></textarea>
+                                     <input type="text" v-show="false" v-model="breedInfo.description" class="form-control edit-input"  />
+                                     <div type="text" class="edit-input" >
+                                         <input-select
+                                           :prevalue="breedInfo.description"
+                                           :value.sync="breedInfo.description"
+                                           :options="tag"
+                                           placeholder="分期说明"
+                                         >
+                                         </input-select>
+                                     </div>
+                                     <!-- <textarea class="form-control" v-model="breedInfo.description" value="{{breedInfo.description}}" style="resize:none; border:1px solid #ddd;" rows="5" v-validate:description="{required:true}"></textarea> -->
                                 </div>  
                                 <div class="client-detailInfo  col-md-12">
                                     <label class="editlabel">申请备注</label>
@@ -122,195 +132,202 @@
 
 </template>
 <script>
-    import {
-        initOrderDetail
-    } from '../../../vuex/getters'
-    import {
-        dividedPayment,
-        getOrderDetail
-    } from '../../../vuex/actions'
+  import vSelect from '../../tools/vueSelect/components/Select'
+  import inputSelect from  '../../tools/vueSelect/components/inputselect'
+  import {
+      initOrderDetail
+  } from '../../../vuex/getters'
+  import {
+      dividedPayment,
+      getOrderDetail
+  } from '../../../vuex/actions'
 	export default{
 		props:['param'],
-        vuex:{
-            actions:{
-                dividedPayment,
-                getOrderDetail
-            },
-            getters:{
-                initOrderDetail
-            }
+    components:{
+      vSelect,
+      inputSelect
+    },
+    vuex:{
+        actions:{
+            dividedPayment,
+            getOrderDetail
         },
-        data(){
-            return{
-                breedInfo:{ 
-                  status:0,   //自定义状态，表示编辑框的状态，0表示收起(起始)状态，1表示add，2表示update，add或update结束后将status置为0
+        getters:{
+            initOrderDetail
+        }
+    },
+    data(){
+        return{
+            breedInfo:{ 
+              status:0,   //自定义状态，表示编辑框的状态，0表示收起(起始)状态，1表示add，2表示update，add或update结束后将status置为0
+              amount:'',
+              ratio:'',
+              description:'',
+              orderStatus:'',
+              comment:'',
+              extra:''
+            },
+            tag:['定金','预付款','首笔款'],
+            addParam:{
+              show:false,
+              length:0
+            },
+            updateParam:{
+              show:false,
+              index:0
+            },
+            sum:0,   //数组金额之和
+            scale:0,   //数组金额比例之和 
+            modifySum:0,   //用于取消修改后，还原sum
+            modifyScale:0,   //用于取消修改后，还原scale
+
+        }
+    },
+    methods:{
+        showModifyBreed:function(index){
+          //必须先循环数组，计算sum和scale
+          this.sum = 0;
+          this.scale = 0;
+          for(var i=0;i < this.param.stages.length;i++){
+             this.sum +=parseFloat(this.param.stages[i].amount)*100;
+             this.scale +=parseInt(this.param.stages[i].ratio*10);
+          }
+          this.modifySum = this.sum;
+          this.modifyScale = this.scale;
+          this.breedInfo.status = 2;
+          this.updateParam.index = index;
+          this.breedInfo.amount=this.param.stages[index].amount;
+          this.breedInfo.ratio=this.param.stages[index].ratio;
+          this.breedInfo.description=this.param.stages[index].description;
+          this.breedInfo.orderStatus=this.param.stages[index].orderStatus;
+          this.breedInfo.comment=this.param.stages[index].comment;
+          this.breedInfo.extra=this.param.stages[index].extra;
+          this.updateParam.show = true;
+          this.sum -=parseFloat(this.param.stages[index].amount)*100;
+          this.scale -=parseInt(this.param.stages[index].ratio*10);
+          console.log(this.sum);
+          console.log(this.scale);
+        },
+        calculate:function(){
+            console.log(this.scale)
+            this.breedInfo.amount = (this.breedInfo.ratio*1000)*this.param.total/1000
+            ;
+            console.log(((this.breedInfo.ratio)*10) >= (10-this.scale))
+            console.log((this.breedInfo.ratio)*10)
+            console.log(10-this.scale);
+            console.log(this.scale);
+        },
+        deleteBreed:function(index){
+            this.sum -=parseFloat(this.param.stages[index].amount)*100;
+            this.scale -=parseInt(this.param.stages[index].ratio*10);
+            console.log(this.sum);
+            console.log(this.scale);
+            this.param.stages.splice(index,1);
+        },
+        cancelAddBreed:function(){
+            this.param.stages.pop();
+            this.breedInfo.status = 0;
+            this.addParam.show = false; 
+        },
+        cancelModifyBreed:function(){
+          //把sum和scale还原
+          this.sum = this.modifySum;
+          this.scale = this.modifyScale;
+          this.modifySum = 0;
+          this.modifyScale = 0;
+          this.breedInfo.status = 0;
+          this.updateParam.show = false;
+          console.log(this.sum);
+          console.log(this.scale);
+        },
+        closeInfo:function(){
+            if(this.breedInfo.status==1){
+                this.param.stages.pop();
+                this.breedInfo.status = 0;
+                this.addParam.show = false;  
+            }else if(this.breedInfo.status==2){
+                this.breedInfo.status = 0;
+                this.updateParam.show = false;
+            }
+            this.param.show=false;
+        },
+        modifyBreed:function(){
+          this.param.stages[this.updateParam.index].amount=this.breedInfo.amount;
+          this.param.stages[this.updateParam.index].ratio=this.breedInfo.ratio;
+          this.param.stages[this.updateParam.index].description=this.breedInfo.description;
+          this.param.stages[this.updateParam.index].orderStatus=this.breedInfo.orderStatus;
+          this.param.stages[this.updateParam.index].comment=this.breedInfo.comment;
+          this.param.stages[this.updateParam.index].extra=this.breedInfo.extra;
+          /*this.param.items[this.updateParam.index].orderId=this.breedInfo.id,*/
+          this.sum +=parseFloat(this.breedInfo.amount)*100;
+          this.scale +=parseInt(this.breedInfo.ratio*10);
+          this.breedInfo.status = 0;
+          this.updateParam.show = false;
+          console.log(this.sum);
+          console.log(this.scale);
+        },
+         addBreed:function(){
+          this.param.stages[this.param.stages.length-1].amount = this.breedInfo.amount;
+          this.param.stages[this.param.stages.length-1].ratio = this.breedInfo.ratio;
+          this.param.stages[this.param.stages.length-1].description = this.breedInfo.description;
+          this.param.stages[this.param.stages.length-1].orderStatus = this.breedInfo.orderStatus;
+          this.param.stages[this.param.stages.length-1].comment = this.breedInfo.comment;
+          this.param.stages[this.param.stages.length-1].extra = this.breedInfo.extra;
+          console.log(this.param.stages[this.param.stages.length-1]);
+          this.breedInfo.status = 0;
+          this.addParam.show = false; 
+          console.log(this.param.stages)
+          this.sum += parseFloat(this.breedInfo.amount)*100;
+          this.scale +=parseInt(this.breedInfo.ratio*10);
+          console.log(this.sum);
+          console.log(this.scale);
+            
+        },
+        showAddBreed:function(){
+            this.sum=0;       
+            this.scale=0;
+          if(this.param.stages.length == 0 ||this.param.stages[this.param.stages.length-1].amount <=this.param.total){
+              this.breedInfo.status = 1;    
+              this.breedInfo.amount='';
+              this.breedInfo.ratio='';
+              this.breedInfo.description='';
+              this.breedInfo.orderStatus='';
+              this.breedInfo.comment='';
+              this.breedInfo.extra='';
+              this.param.stages.push({
                   amount:'',
                   ratio:'',
                   description:'',
                   orderStatus:'',
                   comment:'',
-                  extra:''
-                },
-                addParam:{
-                  show:false,
-                  length:0
-                },
-                updateParam:{
-                  show:false,
-                  index:0
-                },
-                sum:0,   //数组金额之和
-                scale:0,   //数组金额比例之和 
-                modifySum:0,   //用于取消修改后，还原sum
-                modifyScale:0,   //用于取消修改后，还原scale
-
-            }
+                  extra:'',
+              });
+              this.addParam.show = true;
+          }  
+          for(var i=0;i < this.param.stages.length-1;i++){
+             this.sum +=parseFloat(this.param.stages[i].amount)*100;
+             this.scale +=parseInt(this.param.stages[i].ratio*10);
+          }
+          console.log(this.sum);
+          console.log(this.scale);
+          
         },
-        methods:{
-            showModifyBreed:function(index){
-              //必须先循环数组，计算sum和scale
-              this.sum = 0;
-              this.scale = 0;
-              for(var i=0;i < this.param.stages.length;i++){
-                 this.sum +=parseFloat(this.param.stages[i].amount)*100;
-                 this.scale +=parseInt(this.param.stages[i].ratio*10);
-              }
-              this.modifySum = this.sum;
-              this.modifyScale = this.scale;
-              this.breedInfo.status = 2;
-              this.updateParam.index = index;
-              this.breedInfo.amount=this.param.stages[index].amount;
-              this.breedInfo.ratio=this.param.stages[index].ratio;
-              this.breedInfo.description=this.param.stages[index].description;
-              this.breedInfo.orderStatus=this.param.stages[index].orderStatus;
-              this.breedInfo.comment=this.param.stages[index].comment;
-              this.breedInfo.extra=this.param.stages[index].extra;
-              this.updateParam.show = true;
-              this.sum -=parseFloat(this.param.stages[index].amount)*100;
-              this.scale -=parseInt(this.param.stages[index].ratio*10);
-              console.log(this.sum);
-              console.log(this.scale);
-            },
-            calculate:function(){
-                console.log(this.scale)
-                this.breedInfo.amount = (this.breedInfo.ratio*1000)*this.param.total/1000
-                ;
-                console.log(((this.breedInfo.ratio)*10) >= (10-this.scale))
-                console.log((this.breedInfo.ratio)*10)
-                console.log(10-this.scale);
-                console.log(this.scale);
-            },
-            deleteBreed:function(index){
-                this.sum -=parseFloat(this.param.stages[index].amount)*100;
-                this.scale -=parseInt(this.param.stages[index].ratio*10);
-                console.log(this.sum);
-                console.log(this.scale);
-                this.param.stages.splice(index,1);
-            },
-            cancelAddBreed:function(){
-                this.param.stages.pop();
-                this.breedInfo.status = 0;
-                this.addParam.show = false; 
-            },
-            cancelModifyBreed:function(){
-              //把sum和scale还原
-              this.sum = this.modifySum;
-              this.scale = this.modifyScale;
-              this.modifySum = 0;
-              this.modifyScale = 0;
-              this.breedInfo.status = 0;
-              this.updateParam.show = false;
-              console.log(this.sum);
-              console.log(this.scale);
-            },
-            closeInfo:function(){
-                if(this.breedInfo.status==1){
-                    this.param.stages.pop();
-                    this.breedInfo.status = 0;
-                    this.addParam.show = false;  
-                }else if(this.breedInfo.status==2){
-                    this.breedInfo.status = 0;
-                    this.updateParam.show = false;
-                }
-                this.param.show=false;
-            },
-            modifyBreed:function(){
-              this.param.stages[this.updateParam.index].amount=this.breedInfo.amount;
-              this.param.stages[this.updateParam.index].ratio=this.breedInfo.ratio;
-              this.param.stages[this.updateParam.index].description=this.breedInfo.description;
-              this.param.stages[this.updateParam.index].orderStatus=this.breedInfo.orderStatus;
-              this.param.stages[this.updateParam.index].comment=this.breedInfo.comment;
-              this.param.stages[this.updateParam.index].extra=this.breedInfo.extra;
-              /*this.param.items[this.updateParam.index].orderId=this.breedInfo.id,*/
-              this.sum +=parseFloat(this.breedInfo.amount)*100;
-              this.scale +=parseInt(this.breedInfo.ratio*10);
-              this.breedInfo.status = 0;
-              this.updateParam.show = false;
-              console.log(this.sum);
-              console.log(this.scale);
-            },
-             addBreed:function(){
-              this.param.stages[this.param.stages.length-1].amount = this.breedInfo.amount;
-              this.param.stages[this.param.stages.length-1].ratio = this.breedInfo.ratio;
-              this.param.stages[this.param.stages.length-1].description = this.breedInfo.description;
-              this.param.stages[this.param.stages.length-1].orderStatus = this.breedInfo.orderStatus;
-              this.param.stages[this.param.stages.length-1].comment = this.breedInfo.comment;
-              this.param.stages[this.param.stages.length-1].extra = this.breedInfo.extra;
-              console.log(this.param.stages[this.param.stages.length-1]);
-              this.breedInfo.status = 0;
-              this.addParam.show = false; 
-              console.log(this.param.stages)
-              this.sum += parseFloat(this.breedInfo.amount)*100;
-              this.scale +=parseInt(this.breedInfo.ratio*10);
-              console.log(this.sum);
-              console.log(this.scale);
-                
-            },
-            showAddBreed:function(){
-                this.sum=0;       
-                this.scale=0;
-              if(this.param.stages.length == 0 ||this.param.stages[this.param.stages.length-1].amount <=this.param.total){
-                  this.breedInfo.status = 1;    
-                  this.breedInfo.amount='';
-                  this.breedInfo.ratio='';
-                  this.breedInfo.description='';
-                  this.breedInfo.orderStatus='';
-                  this.breedInfo.comment='';
-                  this.breedInfo.extra='';
-                  this.param.stages.push({
-                      amount:'',
-                      ratio:'',
-                      description:'',
-                      orderStatus:'',
-                      comment:'',
-                      extra:'',
-                  });
-                  this.addParam.show = true;
-              }  
-              for(var i=0;i < this.param.stages.length-1;i++){
-                 this.sum +=parseFloat(this.param.stages[i].amount)*100;
-                 this.scale +=parseInt(this.param.stages[i].ratio*10);
-              }
-              console.log(this.sum);
-              console.log(this.scale);
-              
-            },
-            confirm:function(param){
-                this.param.show=false;
-                console.log(this.param);
-                this.param.callback=this.param.callback;
-                this.dividedPayment(this.param);
-            }
-        },
-        created(){
-            if(this.param.stages.length>0){
-                for(var i=0;i < this.param.stages.length;i++){
-                    this.sum +=parseFloat(this.param.stages[i].amount)*100;
-                    this.scale +=parseInt(this.param.stages[i].ratio*10);
-                }
-            }
-
+        confirm:function(param){
+            this.param.show=false;
+            console.log(this.param);
+            this.param.callback=this.param.callback;
+            this.dividedPayment(this.param);
         }
+    },
+    created(){
+        if(this.param.stages.length>0){
+            for(var i=0;i < this.param.stages.length;i++){
+                this.sum +=parseFloat(this.param.stages[i].amount)*100;
+                this.scale +=parseInt(this.param.stages[i].ratio*10);
+            }
+        }
+
+    }
 	}
 </script>
 <style scoped>

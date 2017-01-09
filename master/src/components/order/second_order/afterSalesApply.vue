@@ -21,11 +21,11 @@
                     </div>
                     <div class="editpage-input col-md-6">
                        <label class="editlabel">收货人 <span class="system_danger" v-if="$validation.consignee.required">{{$t('static.required')}}</span></label>
-                       <input type="text"  class="form-control" v-model="employeeParam.consigneeName"  v-validate:consignee="{required:true}" value="{{param.consignee}}" readonly="true"  @click="selectEmployee(param.consignee,employeeParam.consigneeName,receive)" />
+                       <input type="text"  class="form-control" v-model="employeeParam.consigneeName"  v-validate:consignee="{required:true}" value="{{param.consigneeName}}" readonly="true"  @click="selectEmployee(param.consignee,employeeParam.consigneeName,receive)" />
                     </div>
                     <div class="editpage-input col-md-6" v-if="param.type==0">
                        <label class="editlabel">发货人 <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
-                       <input type="text"  class="form-control" v-model="employeeParam.shipperName"  v-validate:shipper="{required:true}" value="{{param.shipper}}" readonly="true"  @click="selectEmployee(param.shipper,employeeParam.shipperName,deliver)" />
+                       <input type="text"  class="form-control" v-model="employeeParam.shipperName"  v-validate:shipper="{required:true}" value="{{param.shipperName}}" readonly="true"  @click="selectEmployee(param.shipper,employeeParam.shipperName,deliver)" />
                     </div>
                     <div class="editpage-input col-md-12">
                        <label class="editlabel">备注</label>

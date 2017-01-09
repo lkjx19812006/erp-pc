@@ -26,7 +26,7 @@
             </div>
             <div class="edit_footer">
                 <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-                <input type="button" class="btn btn-confirm" v-if="$validation.valid" @click="param.callback(param,param.show = false)" value="{{$t('static.submit')}}" />
+                <input type="button" class="btn btn-confirm" v-if="$validation.valid" @click="param.route(param,param.show = false)" value="{{$t('static.submit')}}" />
                  <input type="button" class="btn btn-confirm" v-else disabled="true"  value="{{$t('static.submit')}}" />
             </div>
           </form>

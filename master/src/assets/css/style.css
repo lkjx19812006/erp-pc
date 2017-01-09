@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2017-01-05 18:41:28
+* @Last Modified time: 2017-01-09 17:29:27
 */
 
 * {
@@ -28,7 +28,10 @@ body {
     /*-khtml-user-select: none; !*早期浏览器*!*/
     /*user-select: none;*/
 }
-
+[type=reset], [type=submit], button, html [type=button]{
+    -webkit-appearance: none;
+    appearance: none;
+}
 ul,
 li {
     list-style: none;
@@ -60,8 +63,9 @@ img {
 }
 
 body {
-    background: #f4f6f9;
-    font-family: '微软雅黑', Source Sans Pro, Helvetica, sans-serif;
+    background: #fff;
+    /* background: #f4f6f9; */
+    font-family:'Microsoft YaHei','微软雅黑', Source Sans Pro, Helvetica, sans-serif;
     width: 100%;
     overflow: auto;
 }
@@ -103,10 +107,7 @@ body {
 
 
 /* .expand-enter 定义进入的开始状态 */
-
-
 /* .expand-leave 定义离开的结束状态 */
-
 .expand-enter,
 .expand-leave {
     opacity: 0;
@@ -194,7 +195,7 @@ left: 50%;
 }
 
 .service-nav {
-    padding:35px 10px 10px 10px;
+    padding:35px 10px 0px 10px;
 }
 
 .my_enterprise,
@@ -218,7 +219,6 @@ left: 50%;
 
 .order_table {
     background: #fff none repeat scroll 0 0;
-    border-top: 1px solid #ddd;
     /* height: 100%; */
     margin-top: 0;
     text-align: center;
@@ -244,7 +244,7 @@ left: 50%;
 }
 
 .table-hover > tbody > tr:hover {
-    background-color: #99CCFF;
+    background-color: #ebf7ff;
 }
 
 .table_color {
@@ -252,13 +252,16 @@ left: 50%;
 }
 
 .table_color>thead>tr {
-    background-color: #004796;
-    color: #fff;
+    background-color: #f5f7f9;
+    color: #000;
+    border-top:1px solid #ddd;
 }
-
-
-
-
+.table-striped>tbody>tr:nth-of-type(odd){
+    background-color: #fff;
+}
+dt{
+    font-weight: 100;
+}
 .operate {
     color: #fa6705;
     font-size: 14px;

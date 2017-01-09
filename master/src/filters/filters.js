@@ -358,6 +358,8 @@ Vue.filter('customerType', function(val){ //客户类型
 		 return 'Pharmaceutical producer of Western Medicine 西成药生产商';
 	}else if(val==23){
 		 return 'Pieces Factory 饮片厂';
+	}else if(val==24){
+		 return 'Herb tea company 茶类公司';
 	}else{
 		return val;
 	}

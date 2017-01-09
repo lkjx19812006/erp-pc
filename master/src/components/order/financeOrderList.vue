@@ -71,6 +71,7 @@
               <th>账号</th>
               <th>付款时间</th>
               <th>备注</th>
+              <th>订单流水号</th>
               <th>审核状态</th>
               <th>收/付款状态</th>
               <th>操作</th>
@@ -94,6 +95,7 @@
             <td>{{item.payNumber}}</td>
             <td>{{item.ctime}}</td>
             <td>{{item.comment}}</td>
+            <td>{{item.prNo}}</td>
             <td v-if="item.validate==0">未审核</td>
             <td v-if="item.validate==1" style="background:#483D8B;color:#fff;">申请中</td>
             <td v-if="item.validate==2" style="background:green;color:#fff;">审核通过</td>
@@ -110,6 +112,7 @@
                           sub:$index,
                           id:item.id,
                           validate:item.validate,
+                          prNo:'',
                           description:'',
                           image_f:'',
                           image_s:'',
@@ -308,7 +311,7 @@
     background-position: 5px;
   }
    #table_box  table th,#table_box  table td{
-    width:145px;
-    min-width: 145px;
+    width:132px;
+    min-width: 132px;
   }
 </style>

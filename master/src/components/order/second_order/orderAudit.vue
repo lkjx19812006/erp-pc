@@ -16,7 +16,7 @@
                     <div class="editpage-input col-md-6">
                        <label class="editlabel">支付方式 <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
                       <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
-                       <select class="form-control edit-input" v-model="param.payWay">
+                       <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
                             <option value="2">{{$t('static.pingan')}}</option>
                             <option value="0">{{$t('static.offline')}}</option>
                             <option value="1">{{$t('static.alipay')}}</option>
@@ -89,7 +89,7 @@
                     <div class="editpage-input col-md-6">
                        <label class="editlabel">支付方式 <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
                       <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
-                       <select class="form-control edit-input" v-model="param.payWay">
+                       <select class="form-control edit-input" v-model="param.payWay" @change="selectname()">
                             <option value="2">{{$t('static.pingan')}}</option>
                             <option value="0">{{$t('static.offline')}}</option>
                             <option value="1">{{$t('static.alipay')}}</option>
@@ -167,7 +167,7 @@
                     <div class="editpage-input col-md-6">
                        <label class="editlabel">支付方式 <span class="system_danger" v-if="$validation.payway.required">{{$t('static.required')}}</span></label>
                       <input type="text" v-validate:payway="{required:true}" v-show="false" v-model="param.payWay" class="form-control edit-input" />
-                       <select class="form-control edit-input" v-model="param.payWay">
+                       <select class="form-control edit-input" v-model="param.payWay"  @change="selectname()">
                             <option value="2">{{$t('static.pingan')}}</option>
                             <option value="0">{{$t('static.offline')}}</option>
                             <option value="1">{{$t('static.alipay')}}</option>
@@ -303,7 +303,6 @@ export default {
                 payWay:'',
                 paySubName:0,
                 //paySubName:0
-                
             },
             tipsParam:{
                 show:false,
@@ -317,7 +316,6 @@ export default {
             branchParam:{
               show:false
             },
-
             type:"image/jpeg,image/jpg,image/png",
             imageParam:{
                url:'/crm/api/v1/file/',
@@ -331,6 +329,21 @@ export default {
            this.branchParam.show = true;
            this.branchParam = item;
            console.log(this.branchParam)
+        },
+        selectname:function(){
+           if(this.param.payWay==0){
+              this.param.payName ='线下转账';
+              this.param.paySubName = "";
+           }else if(this.param.payWay==1){
+              this.param.payName ='支付宝';
+              this.param.paySubName = "";
+           }else if(this.param.payWay==3){
+              this.param.payName ='药款支付';
+              this.param.paySubName = "";
+           }else if(this.param.payWay==4){
+              this.param.payName ='Wechat';
+              this.param.paySubName = "";
+           }
         },
         confirm:function(item){
           this.param.show=false;
@@ -354,8 +367,9 @@ export default {
     events:{
       subName: function(branch) {
         this.param.paySubName=branch.paySubName;
+       /* console.log(this.initMyFundList)
         this.initMyFundList[0].paySubName = branch.paySubName;
-        console.log(this.initMyFundList[0].paySubName)
+        console.log(this.initMyFundList[0].paySubName)*/
       },
     },
     created() {

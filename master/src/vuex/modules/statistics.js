@@ -171,6 +171,7 @@ const mutations = {
         if(data.titles=='分期审核'||data.titles=='确认收款'||data.titles=='确认付款'){
             state.financeList[data.sub].validate =  data.validate;
             state.financeList[data.sub].pr =  data.pr;
+            state.financeList[data.sub].prNo =  data.prNo;
         }else{
           state.financeList = data;
         }

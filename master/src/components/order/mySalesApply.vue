@@ -81,8 +81,8 @@
             <td>{{item.orderNo}}</td>
             <td v-if="item.orderType==0">采购</td>
             <td v-if="item.orderType==1">销售</td>
-            <td>{{item.consignee}}</td>
-            <td>{{item.shipper}}</td>
+            <td>{{item.consigneeName}}</td>
+            <td>{{item.shipperName}}</td>
             <td>{{item.comment}}</td>
             <td>{{item.description}}</td>
             <td v-if="item.taskKey=='after_sales_refund'&&item.validate==1">待{{item.handlerName}}处理</td>
@@ -95,6 +95,7 @@
                         sub:$index,
                         id:item.id,
                         consignee:item.consignee,
+                        consigneeName:item.consigneeName,
                         validate:item.validate,
                         orderId:item.orderId,
                         comment:item.comment,
@@ -104,6 +105,7 @@
                         image_t:'',
                         images:'',
                         shipper:item.shipper,
+                        shipperName:item.shipperName,
                         url:'/order/quality/after/sales/edit',
                         titles:'编辑',
                         link:afterSalseEdit

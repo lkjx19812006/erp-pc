@@ -34,10 +34,10 @@
                    </dd>
                 </dl>
 
-                <dl class="clear left transfer">
+                <dl class="clear left transfer" style="width:338px">
                    <dt class="left transfer marg_top">客户类型：</dt>
-                   <dd class="left">
-                       <select v-model="loadParam.type" style="width:50%"  class="form-control" @change="selectSearch()">
+                   <dd class="left" style="width:71%">
+                       <select v-model="loadParam.type"   class="form-control" @change="selectSearch()">
                           <option value="">{{$t("static.please_select")}}</option>
                           <option value="0">Others 其它</option>
                           <option value="1">Cooperatives 合作社</option>
@@ -63,12 +63,10 @@
                           <option value="21">Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商</option>
                           <option value="22">Pharmaceutical producer of Western Medicine 西药生产商</option>
                           <option value="23">Pieces Factory 饮片厂</option>
+                          <option value="24">Herb tea company  茶类公司</option>
                       </select>
                    </dd>
                 </dl>
-                
-                
-
                 <dl class="clear left transfer">
                     <div class="client-detailInfo col-xs-6">
                         <dt class="left transfer marg_top">注册起始时间：</dt>
