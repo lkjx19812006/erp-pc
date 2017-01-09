@@ -264,10 +264,10 @@ export default {
 </script>
 <style scoped>
 .modal{
-  z-index: 1083;
+  z-index: 1087;
 }
 .modal_con{
-  z-index: 1084;
+  z-index: 1087;
   bottom: 200px;
 }
 .top-title{

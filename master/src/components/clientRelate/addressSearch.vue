@@ -1,4 +1,5 @@
 <template>
+    <createaddr-model :param="addressParam" v-if="addressParam.show"></createaddr-model>
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
     <div class="container modal_con" v-show="param.show">
@@ -32,6 +33,38 @@
                         </tr>
                     </tbody>
                 </table>
+                <div style="padding-left:25%">
+                    <div style="width:60%;font-size:14px;text-align:center;border:1px solid #AAAAAA;border-radius:5px;padding:5px 0" @click="showCreateAddress({
+                                             customerId:param.customerId,
+                                             show:true,
+                                             title:'地址',
+                                             typelist:'类型',
+                                             namelist:'联系人姓名',
+                                             phonelist:'联系人电话',
+                                             sexlist:'性别',
+                                             countylist:'国家',
+                                             provicelist:'所在省',
+                                             citylist:'所在市',
+                                             addr_detail:'地址',
+                                             distlist:'所在区域',
+                                             streetlist:'所在街道',
+                                             addr:'详细地址',
+                                             type:'',
+                                             contactName:'',
+                                             contactPhone:'',
+                                             sex:'',
+                                             country:'',
+                                             province:'',
+                                             city:'',
+                                             district:'',
+                                             street:'',
+                                             detailAddr:'',
+                                             address:'',
+                                             link:createAddress,
+                                             url:'/customer/insertAddress',
+                                             key:'addresses'
+                                             })">新增收货地址</div>   
+                </div>
                 <!-- <div class="edit_footer">
                     <button type="button" class="btn btn-close"  @click="param.show = false">取消</button>
                     <input  type="button" class="btn btn-orange" @click="selected(param,param.show=false)" value="确定"/>
@@ -41,12 +74,13 @@
     </div>
 </template>
 <script>
-
+import createaddrModel from './createAddrInfo'
 import {
    initAddressList
 } from '../../vuex/getters'
 import {
-    getAddrInfo
+    getAddrInfo,
+    createAddress,
 } from '../../vuex/actions'
 export default{
     props:['param'],
@@ -69,19 +103,23 @@ export default{
                 orgName:'',
                 callback:this.callback,
             },
+            addressParam:{
+                show:false
+            },
             checked:false,
             show:true
         }
     },
     components:{
-        
+        createaddrModel
     },
     vuex:{
         getters:{
            initAddressList
         },
         actions:{
-           getAddrInfo 
+           getAddrInfo,
+           createAddress,
         }
     },
     methods:{
@@ -89,6 +127,9 @@ export default{
             this.param.show=false;
             this.$dispatch('address',item);
         },
+        showCreateAddress:function(address){
+            this.addressParam = address;
+        }
         
     },
     events: {
