@@ -356,6 +356,7 @@
                 dialogParam:{
                   show: false,
                 },
+                line_height:0,
                 createParam:{
                     show:false,
                     title1:'新建订单',
@@ -697,7 +698,6 @@
           common('tab','table_box',1);
         },
         created() {
-
             changeMenu(this.$store.state.table.isTop,this.getEmpolyeeOrder,this.loadParam,localStorage.myOrderParam); 
         }
     }

@@ -78,10 +78,10 @@
                    </dd>
                 </dl>
                 
-                <dl class="clear left transfer">
+                <dl class="clear left transfer" style="width:330px">
                    <dt class="left transfer marg_top">{{$t("static.client_type")}}：</dt>
-                   <dd class="left">
-                       <select v-model="loadParam.type" style="width:50%"  class="form-control" @change="selectSearch()">
+                   <dd class="left" style="width:71%">
+                       <select v-model="loadParam.type"   class="form-control" @change="selectSearch()">
                           <option value="">{{$t("static.please_select")}}</option>
                           <option value="0">Others 其它</option>
                           <option value="1">Cooperatives 合作社</option>

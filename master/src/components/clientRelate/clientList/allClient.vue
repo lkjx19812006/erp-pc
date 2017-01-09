@@ -34,10 +34,10 @@
                    </dd>
                 </dl>
 
-                <dl class="clear left transfer">
+                <dl class="clear left transfer" style="width:338px">
                    <dt class="left transfer marg_top">客户类型：</dt>
-                   <dd class="left">
-                       <select v-model="loadParam.type" style="width:50%"  class="form-control" @change="selectSearch()">
+                   <dd class="left" style="width:71%">
+                       <select v-model="loadParam.type"   class="form-control" @change="selectSearch()">
                           <option value="">{{$t("static.please_select")}}</option>
                           <option value="0">Others 其它</option>
                           <option value="1">Cooperatives 合作社</option>
@@ -66,9 +66,6 @@
                       </select>
                    </dd>
                 </dl>
-                
-                
-
                 <dl class="clear left transfer">
                     <div class="client-detailInfo col-xs-6">
                         <dt class="left transfer marg_top">注册起始时间：</dt>
