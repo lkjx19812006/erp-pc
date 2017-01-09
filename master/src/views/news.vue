@@ -206,10 +206,10 @@
                         <!--<td>{{item.qq}}</td>-->
                         <td>{{item.company}}</td>
                         <td>{{item.bizMain}}</td>
-                        <td v-if="item.source==1" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==2" style="background:green;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==3" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==4" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
+                        <td v-if="item.source==1"><div style="background:#CC3333;color:#fff">{{item.sourceType}}</div></td>
+                        <td v-if="item.source==2"><div style="background:green;color:#fff">{{item.sourceType}}</div></td>
+                        <td v-if="item.source==3"><div style="background:#0000CC;color:#fff">{{item.sourceType}}</div></td>
+                        <td v-if="item.source==4"><div style="background:#CC0099;color:#fff">{{item.sourceType}}</div></td>
                         <!-- <td v-if="item.source==4" style="background:#9966FF;color:#fff">{{item.sourceType}}</td> -->
                         <td v-if="!item.source" >其它</td>
                         <td>{{item.bizTypeName}}</td>
@@ -217,13 +217,13 @@
                         <td>{{item.auditResult}}</td>
                         <td v-if="item.utype==0" style="color:#3399CC">未申请</td>
                         <td v-if="item.utype==1" style="color:#339966">等待认证</td>
-                        <td v-if="item.utype==2" style="background:green;color:#fff">已认证</td>
-                        <td v-if="item.utype==3" style="background:red;color:#fff">认证失败</td>
+                        <td v-if="item.utype==2"><div  style="background:green;color:#fff">已认证</div></td>
+                        <td v-if="item.utype==3"><div  style="background:red;color:#fff">认证失败</div></td>
                         <td v-if="item.ctype==0" style="color:#3399CC">未申请</td>
                         <td v-if="item.ctype==1" style="color:#339966">等待认证</td>
-                        <td v-if="item.ctype==2" style="background:green;color:#fff">已认证</td>
-                        <td v-if="item.ctype==3" style="background:red;color:#fff">认证失败</td>
-                        <td v-if="item.transStatus==1" style="color:#fff;background:green">已提取</td>
+                        <td v-if="item.ctype==2"><div style="background:green;color:#fff">已认证</div></td>
+                        <td v-if="item.ctype==3"><div  style="background:red;color:#fff">认证失败</div></td>
+                        <td v-if="item.transStatus==1"><div  style="color:#fff;background:green">已提取</div></td>
                         <td v-if="item.transStatus==0" >未提取</td>
                         <td v-if="item.transStatus!=0&&item.transStatus!=1">转黑名单</td>
                         <td>{{item.employeeName}}</td>

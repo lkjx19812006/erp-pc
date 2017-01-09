@@ -81,10 +81,14 @@
                         <td>{{item.city}}</td>
                         <td>{{item.source}}</td>
                         <td>{{item.ctime}}</td>
-                        <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
+                        <td v-if="item.inquire==0"><div style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</div></td>
+                        <td v-if="item.inquire==1"><div style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</div></td>
+                        <td v-if="item.inquire==2"><div style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</div></td>
+                        <td v-if="item.inquire==3"><div style="background:green;color:#fff">{{$t('static.quo_complete')}}</div></td>
+                        <!-- <td v-if="item.inquire==0" style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</td>
                         <td v-if="item.inquire==1" style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</td>
                         <td v-if="item.inquire==2" style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</td>
-                        <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td>
+                        <td v-if="item.inquire==3" style="background:green;color:#fff">{{$t('static.quo_complete')}}</td> -->
                         <td>
                             <div v-if="item.inquire==2&&privilege==true" style="display:inline-block;margin-right:7px" @click="confirmOffer(item.intentionId,$index)"><img src="/static/images/{{$t('static.img_confirm')}}.png" alt="确认报价"  /></div>
                         </td>

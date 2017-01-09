@@ -202,8 +202,8 @@
                   <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
                   <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>
                   <td v-if="item.sourceType==3">{{$t('static.sample_order')}}</td>
-                  <td v-if="item.validate==2" style="background:green;color:#fff">{{$t('static.approved')}}</td>
-                  <td v-if="item.validate==-2" style="background:red;color:#fff">{{$t('static.unapproved')}}</td>
+                  <td v-if="item.validate==2" ><div style="background:green;color:#fff">{{$t('static.approved')}}</div></td>
+                  <td v-if="item.validate==-2"><div style="background:red;color:#fff">{{$t('static.unapproved')}}</div></td>
                   <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                   <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
                   <!-- <td><a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">

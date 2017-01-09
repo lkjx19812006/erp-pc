@@ -97,15 +97,15 @@
             <td>{{item.comment}}</td>
             <td>{{item.prNo}}</td>
             <td v-if="item.validate==0">未审核</td>
-            <td v-if="item.validate==1" style="background:#483D8B;color:#fff;">申请中</td>
-            <td v-if="item.validate==2" style="background:green;color:#fff;">审核通过</td>
-            <td v-if="item.validate==3" style="background:red;color:#fff;">审核未通过</td>
+            <td v-if="item.validate==1"><div  style="background:#483D8B;color:#fff;">申请中</div></td>
+            <td v-if="item.validate==2"><div  style="background:green;color:#fff;">审核成功</div></td>
+            <td v-if="item.validate==3"><div style="background:red;color:#fff;">审核未通过</div></td>
             <td v-if="item.pr==0&&item.type==0">未付款</td>
             <td v-if="item.pr==0&&item.type==1">未收款</td>
-            <td v-if="item.pr==1&&item.type==0" style="background:green;color:#fff;">已确认付款</td>
-            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order'" style="background:green;color:#fff;">已确认收款</td>
-            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_refund'" style="background:green;color:#fff;">已确认付款</td>
-            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_after_sales_refund'" style="background:green;color:#fff;">已确认退款</td>
+            <td v-if="item.pr==1&&item.type==0"><div style="background:green;color:#fff;">已确认付款</div></td>
+            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order'"><div style="background:green;color:#fff;">已确认收款</div></td>
+            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_refund'"><div style="background:green;color:#fff;">已确认付款</div></td>
+            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_after_sales_refund'"><div style="background:green;color:#fff;">已确认退款</div></td>
             <td>
               <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.validate==1&&item.type==1" @click="applyInfo({
                           show:true,
