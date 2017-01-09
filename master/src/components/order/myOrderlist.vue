@@ -215,6 +215,15 @@
                         <!-- <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==1">
                              <img src="/static/images/{{$t('static.img_deliver')}}.png" title="待发货" alt="待发货"/>
                         </a> -->
+                        <button class="btn btn-warning" @click="clickOn({
+                                show:true,
+                                id:item.id,
+                                loading:true,
+                                key:'orderDetail',
+                                orderStatus:item.orderStatus,
+                                contact:'/order/myList'
+                        })" v-if="item.orderStatus==20&&item.type==1" style="background:#fff;color:#eea236;padding:2px 4px;font-size: 12px;">申请收款
+                        </button>
                         <!-- 销售订单发货流程start-->
                         <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">申请发货
                         </button>
@@ -224,7 +233,7 @@
                         </button>
                         <!-- 销售订单发货流程end -->
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0">
-                            <img src="/static/images/{{$t('static.img_take')}}.png"  title="待收货" alt="等待收货"/>
+                            <img src="/static/images/{{$t('static.img_take')}}.png"   alt="等待收货"/>
                         </a>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70||(item.orderStatus >=60&&item.type==0)">
                            <img src="/static/images/{{$t('static.img_finish')}}.png"   title="已完成订单" alt="已完成订单"/>

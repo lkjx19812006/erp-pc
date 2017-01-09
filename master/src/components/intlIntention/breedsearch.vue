@@ -10,14 +10,14 @@
                 <div class="cover_loading">
                     <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
                 </div>
-                <div class="col-xs-8">
-                    <div class="name_search clearfix">
+                <div class="clear col-xs-8">
+                    <div class="name_search clearfix left">
                         <img src="/static/images/search.png" height="24" width="24">
-                        <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入品种名称">
-
+                        <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入品种名称" @keyup.enter="employNameSearch()">
                     </div>
-          <div class="name_search clearfix" style="border:none"> <input type="button" class="search_input btn btn-default"   height="24" width="24" value="查询" @click="employNameSearch()"></div>
-
+                    <div class="name_search clearfix left" style="border:none">
+                         <input type="button" class="search_input btn btn-default"   height="24" width="24" value="查询" @click="employNameSearch()">
+                    </div>
                 </div>
                 <table class="table table-hover table_head table-striped " v-cloak>
                     <thead>
@@ -126,6 +126,7 @@ export default{
 }
 .table{
     display:table;
+    margin-bottom: 64px;
 }
 .change_trans{
     margin-top: 20px;
@@ -190,12 +191,6 @@ export default{
 .trans_service{
     margin-top: 20px;
 }
-.trans_service .col-xs-8{
-    margin-bottom: 20px;
-}
-.table{
-    margin-bottom: 5px;
-}
 .table_head>thead>tr{
     background-color: #f5f5f5;
     color: #333;
@@ -203,6 +198,8 @@ export default{
 }
 .base_pagination{
     margin-top: 0;
+    width: 800px;
+    background: #fff;
 }
 th,td{
     width: 200px;

@@ -79,8 +79,8 @@
             <td>{{item.orderNo}}</td>
             <td v-if="item.orderType==0">采购</td>
             <td v-if="item.orderType==1">销售</td>
-            <td>{{item.consignee}}</td>
-            <td>{{item.shipper}}</td>
+            <td>{{item.consigneeName}}</td>
+            <td>{{item.shipperName}}</td>
             <td>{{item.comment}}</td>
             <td v-if="item.taskKey===''||item.taskKey=='after_sales_governor_validate'">{{item.validate | Auditing}}</td>
             <td v-if="item.validate==-1&&item.taskKey=='after_sales_employee_handle'">{{item.validate | Auditing}}</td>

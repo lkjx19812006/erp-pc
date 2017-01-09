@@ -4,9 +4,43 @@
      <offer-model :param="offerParam" v-if="offerParam.show"></offer-model>
      <affirmoffer-model :param="affirmOfferParam" v-if="affirmOfferParam.show"></affirmoffer-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
+     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
      <div>
         <div class="service-nav clearfix">
-            
+            <div class="clear left" >
+                  <dl class="clear left transfer">
+                     <dt class="left  marg_top">{{$t('static.breed')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
+                     </dd>
+                  </dl>
+                  <dl class="clear left transfer">
+                     <dt class="left  marg_top">{{$t('static.client_name')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.customerName" @keyup.enter="intentionSearch()"/>
+                     </dd>
+                  </dl>
+                  <dl class="clear left transfer">
+                     <dt class="left  marg_top">{{$t('static.salesman')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.employeeName" @keyup.enter="intentionSearch()"/>
+                     </dd>
+                  </dl>
+                  <dl class="clear left transfer">
+                     <dt class="left  marg_top">国家：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.country" @keyup.enter="intentionSearch()"/>
+                     </dd>
+                  </dl>
+                  <dl class="clear left transfer">
+                     <dt class="left  marg_top">{{$t('static.client_email')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.customerEmail" @keyup.enter="intentionSearch()"/>
+                     </dd>
+                  </dl>
+                  <button class="new_btn left transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                  <button class="new_btn left transfer" @click="intentionSearch()">{{$t('static.search')}}</button>        
+            </div>
         </div>
         <div class="btn-group pull-left">
             <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === ''}" @click="selectInquire('')">{{$t('static.please_select')}}</button>
@@ -74,6 +108,7 @@ import common from '../../../common/common'
 import inquireModel from '../inquire'
 import tipsModel  from '../../../components/tips/tipDialog'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import breedsearchModel from '../breedsearch'
 import {
     initIntlIntentionInquireList,
     initLogin
@@ -90,7 +125,8 @@ export default {
         offerModel,
         detailModel,
         affirmofferModel,
-        tipsModel
+        tipsModel,
+        breedsearchModel
     },
     vuex: {
         getters: {
@@ -116,9 +152,11 @@ export default {
                 employee:'',
                 breedId:'',
                 breedName:'',
+                employeeName:'',
                 customerName:'',
                 customerEmail:'',
-                inquire:''
+                inquire:'',
+                country:''
             },
             affirmOfferParam:{
                 show:false,
@@ -137,7 +175,9 @@ export default {
                 inquireId:'',
                 inquire:''
             },
-           
+            breedSearchParam:{
+                show:false    
+            },
             inquireParam:{
                 show:false,
                 times:0,    //询价的次数
@@ -193,6 +233,9 @@ export default {
             this.loadParam.inquire = inquire;
             this.getIntlIntentionInquireList(this.loadParam);
         },
+        breedSearch:function(){
+            this.breedSearchParam.show = true;
+        },
         clickOn:function(item,index){  
             this.detailParam.id = item.intentionId;
             this.detailParam.index = index;
@@ -219,15 +262,16 @@ export default {
 
         },
         searchIntention:function(){
-            this.getIntlIntentionList(this.loadParam);
+            this.getIntlIntentionInquireList(this.loadParam);
         },
         resetCondition:function(){
             this.loadParam.employee='';
             this.loadParam.customerName='';
+            this.loadParam.employeeName='';
             this.loadParam.breedId='';
             this.loadParam.breedName='';
             this.loadParam.customerEmail='';
-            this.getIntlIntentionList(this.loadParam);
+            this.getIntlIntentionInquireList(this.loadParam);
         },
         offerCallback:function(name){
             this.tipsParam.show = true;
@@ -239,6 +283,14 @@ export default {
         fresh: function(input) {
             this.loadParam.cur = input;
             this.getIntlIntentionInquireList(this.loadParam);
+        },
+        breed:function(breed){
+            this.loadParam.breedId=breed.breedId;
+            this.loadParam.breedName=breed.breedName;
+            if(!!breed.eName){
+                this.loadParam.breedName=breed.eName;
+            }
+           this.getIntlIntentionInquireList(this.loadParam);
         }
     },
     created() {
@@ -251,6 +303,9 @@ export default {
 }
 </script>
 <style scoped>
+.service-nav{
+    padding: 25px 0 0 0;
+}
 .click_change{
     text-align: left;
     border: 1px solid #ddd;

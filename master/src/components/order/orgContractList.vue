@@ -63,6 +63,7 @@
               <th>调整差额</th>
               <th>补充合同文本</th>
               <th>备注</th>
+              <th>业务员</th>
               <th>审核说明</th>
               <th>审核状态</th>
               <th>操作</th>
@@ -88,6 +89,7 @@
             <td>{{item.adjusted}}</td>
             <td>{{item.contractText}}</td>
             <td>{{item.comment}}</td>
+            <td>{{item.handlerName}}</td>
             <td>{{item.description}}</td>
             <td>{{item.validate | Auditing}}</td>
             <td>
@@ -253,7 +255,7 @@
     background-position: 5px;
   }
    #table_box  table th,#table_box  table td{
-    width:144px;
-    min-width: 144px;
+    width:131px;
+    min-width: 131px;
   }
 </style>
