@@ -152,221 +152,9 @@
            </div> -->
                 
         </div>
-        <div class="order_table" id="table_box">
-            <div class="cover_loading">
-                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-            </div>
-            <table class="table table-hover table_color table-striped " v-cloak id="tab">
-                <thead>
-                    <tr>
-                        <th><!-- <label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label> --></th>
-                        <th>姓名</th>
-                        <!-- <th>昵称</th> -->
-                        <th>等级</th>
-                        <th>手机</th>
-                        <th>手机归属地</th>
-                        <!--<th>邮箱</th>-->
-                        <!--<th>qq</th>-->
-                        <th>所在公司</th>
-                        <th>主营业务</th>
-                        <th>来源</th>
-                        <th>经营类型</th>
-                        <th>经营地址</th>
-                        <th>审核状态</th>
-                        <th>个人认证</th>
-                        <th>企业认证</th>
-                        <th>提取状态</th>
-                        <th>所属业务员</th>
-                        <th>注册时间</th>
-                        <th style="min-width: 130px;">操作</th>
-                    </tr>
-                </thead>
-                <tbody>
 
-                    <tr v-for="item in initUserList" >
-                        <td  @click.stop="">
-                            <!-- <label v-if="item.audit!=1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
-                            <label v-if="item.audit==1" class="checkbox_unselect"></label> -->
-                            <label v-if="item.audit!=2" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
-                        </td>
-                        <td class="underline" @click="clickOn({
-                                id:item.id,
-                                sub:$index,
-                                show:true,
-                                loading:true
-                                })">{{item.fullname}}</td>
-                        <!-- <td>{{item.nickname}}</td> -->
-                        <td v-if="item.grade==0">一星</td>
-                        <td v-if="item.grade==1">二星</td>
-                        <td v-if="item.grade==2">三星</td>
-                        <td v-if="item.grade!=0&&item.grade!=1&&item.grade!=2">其它</td>
-                        <td>{{item.phone}}</td>
-                        <td>{{item.phoneProvince+item.phoneCity}}</td>
-                        <!--<td>{{item.email}}</td>-->
-                        <!--<td>{{item.qq}}</td>-->
-                        <td>{{item.company}}</td>
-                        <td>{{item.bizMain}}</td>
-                        <td v-if="item.source==1" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==2" style="background:green;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==3" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.source==4" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
-                        <!-- <td v-if="item.source==4" style="background:#9966FF;color:#fff">{{item.sourceType}}</td> -->
-                        <td v-if="!item.source" >其它</td>
-                        <td>{{item.bizTypeName}}</td>
-                        <td>{{item.province+item.city}}</td>
-                        <td>{{item.auditResult}}</td>
-                        <td v-if="item.utype==0" style="color:#3399CC">未申请</td>
-                        <td v-if="item.utype==1" style="color:#339966">等待认证</td>
-                        <td v-if="item.utype==2" style="background:green;color:#fff">已认证</td>
-                        <td v-if="item.utype==3" style="background:red;color:#fff">认证失败</td>
-                        <td v-if="item.ctype==0" style="color:#3399CC">未申请</td>
-                        <td v-if="item.ctype==1" style="color:#339966">等待认证</td>
-                        <td v-if="item.ctype==2" style="background:green;color:#fff">已认证</td>
-                        <td v-if="item.ctype==3" style="background:red;color:#fff">认证失败</td>
-                        <td v-if="item.transStatus==1" style="color:#fff;background:green">已提取</td>
-                        <td v-if="item.transStatus==0" >未提取</td>
-                        <td v-if="item.transStatus!=0&&item.transStatus!=1">转黑名单</td>
-                        <td>{{item.employeeName}}</td>
-                        <td>{{item.ctime}}</td>
-                        <td>
-                            <div class="operate" @click="modifyUser({
-                                    loading:false,
-                                    id:item.id,
-                                    show:true,
-                                    userType:3,
-                                    link:alertInfo,
-                                    url:'/user/',
-                                    key:'userList',
-                                    index:$index,
-                                    nickname:'',
-                                    qq:'',
-                                    fullname:'',
-                                    email:'',
-                                    phone:'',
-                                    tel:'',
-                                    nickname:'',
-                                    company:'',
-                                    comment:'',
-                                    address:'',
-                                    idnumber:'',
-                                    bizType:'',
-                                    gender:'',
-                                    importance:'',
-                                    userType:'',
-                                    bizMain:'',
-                                    grade:item.grade
-                                    },item.show=false)"><img src="/static/images/edit.png" height="18" width="30"/>
-                            </div>
-                            <div class="operate"  v-if="item.transStatus==0&&item.audit==2"  @click="userToClient({
-                                    mainBiz:item.bizMain,
-                                    name:item.fullname,
-                                    keyname:'transStatus',
-                                    sub:$index,
-                                    userId:item.id,
-                                    province:'',
-                                    phone:item.phone,
-                                    tel:item.tel,
-                                    email:item.email,
-                                    qq:item.qq,
-                                    type:0,
-                                    classify:'1,买',
-                                    fullname:item.fullname,
-                                    show:true,
-                                    key:'userList',
-                                    countryId:7,
-                                    countryName:'中国',
-                                    contact:{
-                                     name: item.fullname,
-                                     position: '',
-                                     department: '',
-                                     phone: item.phone,
-                                     tel: item.tel,
-                                     email: item.email,
-                                     qq: item.qq,
-                                     wechart: item.wechart
-                                     }
-                                    },item.show=false)"><img src="/static/images/convert.png" height="18" width="30"/>
-                            </div>
-                            <div class="operate"  v-if="item.utype==1"  @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)"><img src="/static/images/Pcertification.png" height="18" width="47"/>
-                            </div>
+        <i-table :columns="columns" :data="initUserList" :height="tab_height" @on-selection-change="selectUser"></i-table>
 
-                            <div class="operate" v-if="item.ctype==1"  @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)"><img src="/static/images/Ecertification.png" height="18" width="48"/>
-                            </div>
-                        </td>
-                        <!-- <td @click.stop="eventClick($index)">
-                            <img height="24" width="24" src="/static/images/default_arrow.png" />
-                            <div class="component_action" v-show="item.show">
-                                <ul>
-                                    <li @click="modifyUser({
-                                                loading:false,
-                                                id:item.id,
-                                                show:true,
-                                                userType:3,
-                                                link:alertInfo,
-                                                url:'/user/',
-                                                key:'userList',
-                                                index:$index,
-                                                nickname:'',
-                                                qq:'',
-                                                fullname:'',
-                                                email:'',
-                                                phone:'',
-                                                tel:'',
-                                                nickname:'',
-                                                company:'',
-                                                comment:'',
-                                                address:'',
-                                                idnumber:'',
-                                                bizType:'',
-                                                gender:'',
-                                                importance:'',
-                                                userType:'',
-                                                bizMain:'',
-                                                grade:item.grade
-                                                },item.show=false)">编辑</li>
-                                    <li v-if="item.transStatus==0" @click="userToClient({
-                                                mainBiz:item.bizMain,
-                                                name:item.fullname,
-                                                keyname:'transStatus',
-                                                sub:$index,
-                                                userId:item.id,
-                                                province:'',
-                                                phone:item.phone,
-                                                tel:item.tel,
-                                                email:item.email,
-                                                qq:item.qq,
-                                                type:'0,个人',
-                                                classify:'',
-                                                fullname:item.fullname,
-                                                employeeId:'',
-                                                employeeName:'',
-                                                orgId:'',
-                                                orgName:'',
-                                                show:true,
-                                                key:'userList',
-                                                countryId:7,
-                                                countryName:'中国',
-                                                contact:{
-                                                 name: item.fullname,
-                                                 position: '',
-                                                 department: '',
-                                                 phone: item.phone,
-                                                 tel: item.tel,
-                                                 email: item.email,
-                                                 qq: item.qq,
-                                                 wechart: item.wechart
-                                                }
-                                                },item.show=false)">划转</li>
-                                    <li @click="createIntention(item.show=false)">意向</li>
-                                    <li v-if="item.utype==1" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">个人认证</li>
-                                    <li v-if="item.ctype==1" @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)">企业认证</li>
-                                </ul>
-                            </div>
-                        </td> -->
-                    </tr>
-                </tbody>
-            </table>
-        </div>
         <div class="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
@@ -418,6 +206,140 @@ export default {
     },
 	 data() {
         return {
+            columns: [
+                {
+                    type: 'selection',
+                    width: 60,
+                    align: 'center'
+                }, 
+                {
+                    type: 'index',
+                    align: 'center'
+                },      
+                {
+                    title: '姓名',
+                    key: 'fullname',
+                    width:100,
+                    /*render (row,column,index) {
+                        const style = 'cursor: pointer;color: #0090ff;';   
+                        return `<i-button type="text" style="${style}" size="small" @click="clickOn(${index})">${row.fullname}</i-button>`;
+                    }*/
+                },
+                {
+                    title: '等级',
+                    key: 'grade',
+                    render (row) {
+                        const grade = row.grade == 0 ? '一星':row.grade == 1 ? '两星':row.grade == 2 ? '三星':'其他';
+                        return `<div>${grade}</div>`;
+
+                    }
+                },
+                {
+                    title: '手机',
+                    key: 'phone',
+                    width:120
+                    
+                },
+                {
+                    title: '手机归属地',
+                    key: 'phoneProvince',
+                    width:100,
+                    render (row) {
+                        const text = row.phoneProvince + row.phoneCity;
+                        return `<div>${text}</div>`;
+
+                    }
+
+                },
+                {
+                    title: '所在公司',
+                    key: 'company'
+                },
+                {
+                    title: '主营业务',
+                    key: 'bizMain'
+                },
+                {
+                    title: '来源',
+                    key: 'sourceType',
+                    align:'center',
+                    render (row) {
+                        const sourceType = row.sourceType;
+                        const style = row.source == 1 ? 'background:#CC3333;color:#fff':row.source == 2 ? 'background:green;color:#fff':row.source == 3 ? 'background:#0000CC;color:#fff':row.source == 4 ?'background:#CC0099;color:#fff':'';
+                        return `<div style="${style}">${sourceType}</div>`;
+
+                    }
+                },
+                {
+                    title: '经营类型',
+                    key: 'bizTypeName'
+                },
+                {
+                    title: '经营地址',
+                    key: 'province',
+                    render (row) {
+                        const text = row.province + row.city;
+                        return `<div>${text}</div>`;
+
+                    }
+                },
+                {
+                    title: '审核状态',
+                    key: 'auditResult'
+                },
+                {
+                    title: '个人认证',
+                    key: 'utype',
+                    render (row) {
+                        const style = row.utype == 0 ? 'color:#3399CC':row.utype == 1 ? 'color:#339966':row.utype == 2 ? 'background:green;color:#fff':row.utype == 3 ?'background:red;color:#fff':'';
+                        const utype = row.utype == 0 ? '未申请':row.utype == 1 ? '等待认证':row.utype == 2 ? '已认证':row.utype == 3 ?'认证失败':'';
+                        return `<div style="${style}">${utype}</div>`;
+
+                    }
+
+                },
+                {
+                    title: '企业认证',
+                    key: 'ctype',
+                    render (row) {
+                        const style = row.ctype == 0 ? 'color:#3399CC':row.ctype == 1 ? 'color:#339966':row.ctype == 2 ? 'background:green;color:#fff':row.ctype == 3 ?'background:red;color:#fff':'';
+                        const ctype = row.ctype == 0 ? '未申请':row.ctype == 1 ? '等待认证':row.ctype == 2 ? '已认证':row.ctype == 3 ?'认证失败':'';
+                        return `<div  style="${style}">${ctype}</div>`;
+                    }
+                },
+                {
+                    title: '提取状态',
+                    key: 'transStatus',
+                    render (row) {
+                        const style = row.transStatus == 1 ? 'color:#fff;background:green':'';
+                        const transStatus = row.transStatus == 0 ? '未提取':row.transStatus == 1 ? '已提取':'转黑名单';
+                        return `<div  style="${style}">${transStatus}</div>`;
+                    }
+                },
+                {
+                    title: '所属业务员',
+                    key: 'employeeName'
+                },
+                {
+                    title: '注册时间',
+                    key: 'ctime'
+                },
+                {
+                    title: '操作',
+                    key: 'action',
+                    fixed: 'right',
+                    width: 150,
+                    render (row,column,index) {
+                        return `<i-button type="text" size="small" @click="clickOn(${index})">查看详情</i-button>
+                                <i-button type="text" size="small" @click="modifyUser(${index})">编辑</i-button>
+                                <i-button type="text" size="small" v-if="initUserList[${index}].transStatus==0&&initUserList[${index}].audit==2" @click="userToClient(${index})">提取</i-button>
+                                <i-button type="text" size="small" v-if="initUserList[${index}].utype==1" @click="personalAuth(${index})">个人认证</i-button>
+                                <i-button type="text" size="small" v-if="initUserList[${index}].ctype==1" @click="companyAuth(${index})">企业认证</i-button>
+                                `;
+                    }
+                }
+            ],
+            tab_height:0,
             list: {all:8,cur:1},
             loadParam: {
                 loading: true,
@@ -451,7 +373,27 @@ export default {
                 show:false,
                 loading:true,
                 id:'',
-                name:''
+                link:this.alertInfo,
+                url:'/user/',
+                key:'userList',
+                index:0,
+                nickname:'',
+                qq:'',
+                fullname:'',
+                email:'',
+                phone:'',
+                tel:'',
+                nickname:'',
+                company:'',
+                comment:'',
+                address:'',
+                idnumber:'',
+                bizType:'',
+                gender:'',
+                importance:'',
+                userType:'',
+                bizMain:'',
+                grade:''
             },
             auditParam:{
                 show:false,
@@ -464,15 +406,40 @@ export default {
                 show:false,
                 id:'',
                 name:'',
-                /*employeeId:'',
-                employeeName:'',
-                orgCode:'0001002',
-                orgName:'',*/
+                mainBiz:'',
+                name:'',
+                keyname:'transStatus',
+                sub:'',
+                userId:'',
                 province:'',
-                city:''
+                phone:'',
+                tel:'',
+                email:'',
+                qq:'',
+                type:0,
+                classify:'1,买',
+                fullname:'',
+                key:'userList',
+                countryId:7,
+                countryName:'中国',
+                contact:{
+                 name: '',
+                 position: '',
+                 department: '',
+                 phone: '',
+                 tel: '',
+                 email: '',
+                 qq: '',
+                 wechart: ''
+                }   
+                  
             },
             changeParam:{
-                show:false
+                show:false,
+                loading:true,
+                id:'',
+                sub:0,
+                
             },
          intentionParam:{
             show:false,
@@ -516,6 +483,7 @@ export default {
           show:false,
           ctype:1
         },
+        users:[]     //被选中的注册客户
 
         }
     },
@@ -551,9 +519,11 @@ export default {
         }
         this.getUserList(this.loadParam)
     },
-    clickOn: function(item) {
-        this.changeParam = item;
-        //this.getUserDetail(this.changeParam);
+    clickOn: function(index) {
+        this.changeParam.id=this.initUserList[index].id,
+        this.changeParam.sub=index,
+        this.changeParam.show=true,
+        this.changeParam.loading=true
     },
     eventClick:function(id){
         if(this.$store.state.table.basicBaseList.userList[id].show){
@@ -601,18 +571,24 @@ export default {
       })
 
     },
+    selectUser:function(selection){
+      this.users = selection;
+    },
     audit: function(){
         var _this = this;
         _this.auditParam.userIds = [];
         _this.auditParam.indexs = [];
-      _this.checked=false;
         for(var i=0;i<this.initUserList.length;i++){
-            if(this.$store.state.table.basicBaseList.userList[i].checked){
-                _this.auditParam.userIds.push(this.$store.state.table.basicBaseList.userList[i].id);
-                _this.auditParam.indexs.push(i);
+          for(var j=0;j<this.users.length;j++){
+            if(this.users[j].id == this.initUserList[i].id){
+              _this.auditParam.userIds.push(this.users[j].id);
+              _this.auditParam.indexs.push(i);
             }
+          }  
         }
         if(this.auditParam.userIds.length>0){
+          console.log(_this.auditParam.userIds);
+          console.log(_this.auditParam.indexs);
             this.auditParam.show = true;
         }else{
             this.tipsParam.show = true;
@@ -640,8 +616,10 @@ export default {
         this.transferParam.show=true;
         this.transferParam.name=value;
     },
-    modifyUser:function(item){
-        this.alterParam = item;
+    modifyUser:function(index){
+        this.alterParam.index = index;
+        this.alterParam.id = this.initUserList[index].id;
+        this.alterParam.show = true;
         this.alterParam.callback = this.editback;
     },
     editback:function(title){
@@ -649,8 +627,29 @@ export default {
         this.tipsParam.name=title;
         this.tipsParam.alert=true;
     },
-    userToClient:function(item){
-        this.transferParam = item;
+    userToClient:function(index){
+        this.transferParam.mainBiz=this.initUserList[index].bizMain;
+        this.transferParam.name=this.initUserList[index].fullname;
+        this.transferParam.keyname='transStatus';
+        this.transferParam.sub=index;
+        this.transferParam.userId=this.initUserList[index].id;
+        this.transferParam.province='';
+        this.transferParam.phone=this.initUserList[index].phone;
+        this.transferParam.tel=this.initUserList[index].tel;
+        this.transferParam.email=this.initUserList[index].email;
+        this.transferParam.qq=this.initUserList[index].qq;
+        this.transferParam.fullname=this.initUserList[index].fullname;
+        this.transferParam.show=true;
+        this.transferParam.contact={
+           name: this.initUserList[index].fullname,
+           position: '',
+           department: '',
+           phone: this.initUserList[index].phone,
+           tel: this.initUserList[index].tel,
+           email: this.initUserList[index].email,
+           qq: this.initUserList[index].qq,
+           wechart: this.initUserList[index].wechart
+        };
         this.transferParam.callback = this.transferback;
     },
     transferback:function(title){
@@ -695,26 +694,28 @@ export default {
       };
         this.intentionParam.show = true;
     },
-    personalAuth:function(item){
+    personalAuth:function(index){
+
       this.personalParam.show = true;
-      this.personalParam.id = item.id;
-      this.personalParam.index = item.index;
-      this.personalParam.ucomment = item.ucomment;
-      this.personalParam.utype = item.utype;
+      this.personalParam.id = this.initUserList[index].id;
+      this.personalParam.index = index;
+      this.personalParam.ucomment = this.initUserList[index].ucomment;
+      this.personalParam.utype = this.initUserList[index].utype;
     },
-    companyAuth:function(item){
+    companyAuth:function(index){
       this.companyParam.show = true;
-      this.companyParam.id = item.id;
-      this.companyParam.index = item.index;
-      this.companyParam.ccomment = item.ccomment;
-      this.companyParam.ctype = item.ctype;
+      this.companyParam.id = this.initUserList[index].id;
+      this.companyParam.index = index;
+      this.companyParam.ccomment = this.initUserList[index].ccomment;
+      this.companyParam.ctype = this.initUserList[index].ctype;
     },
 
   },
   ready(){
-      common('tab','table_box',1);
+      /*common('tab','table_box',1);*/
   },
   created() {
+      this.tab_height = window.document.body.offsetHeight - 264;
       changeMenu(this.$store.state.table.isTop,this.getUserList,this.loadParam,localStorage.userParam);   
   }
 
@@ -760,5 +761,15 @@ export default {
 }
 dl{
     margin-bottom: 5px;
+}
+.base_pagination{
+    text-align: center;
+    position: fixed;
+    height: 64px;
+    bottom:0px;
+    left: 0;
+    right:0;
+    background: #fff;
+    z-index: 10;
 }
 </style>
