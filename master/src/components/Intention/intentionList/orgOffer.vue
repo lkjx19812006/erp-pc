@@ -52,7 +52,6 @@
                         <th>报价价格</th>
                         <th>库存</th>
                         <th>报价备注</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,10 +65,6 @@
                         <td>{{item.price}}</td>
                         <td>{{item.number}}{{item.unit}}</td>
                         <td>{{item.description}}</td>
-                        <td>
-                               <a class="operate" v-if="item.orderTime==0"  @click.stop="adopt(item,$index)"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
-                               </a>
-                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -315,8 +310,8 @@ export default {
     background-position: 5px;
 }
  #table_box  table th,#table_box  table td{
-  width: 190px;
-  min-width:190px;
+  width: 213px;
+  min-width:213px;
 }
 </style>
 

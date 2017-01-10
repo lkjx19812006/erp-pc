@@ -11,8 +11,7 @@
      <audit-dialog :param.sync="auditParam" v-if="auditParam.show"></audit-dialog>
      <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
      <sendapply-model :param="sampleOrderParam" v-if="sampleOrderParam.send"></sendapply-model>
-     
-	 <div>
+	   <div>
         <div class="service-nav">
 
           <div class="clear" style="margin-top:3px;">
