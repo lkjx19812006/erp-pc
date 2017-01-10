@@ -7,34 +7,32 @@
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	  <div>
         <div class="service-nav clearfix">
-            <div class="my_order_search pull-right"> 
+            <div class="pull-right"> 
                <button class="btn btn-default transfer" @click="New()">新建</button>
                <button class="btn btn-primary  transfer" @click="searchMsg()">刷新</button>
             </div>
-            <div class="clearfix col-md-6">
-              <div class="my_order_search clearfix" >
-                 <div class="name_search clearfix">
-                     <img src="/static/images/search.png" height="24" width="24">
-                     <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchMsg()">
-                 </div>
-                 <div class="ordertel_search clearfix">
-                     <img src="/static/images/search.png" height="24" width="24">
-                     <input type="text" class="search_input" v-model="loadParam.customerPhone" placeholder="按客户电话搜索" @keyup.enter="searchMsg()">
-                 </div>
-                 <div class="ordertel_search clearfix">
-                     <!-- <img src="/static/images/search.png" height="24" width="24"> -->
-                     <select class="form-control search_input" v-model="loadParam.validate" @change="searchMsg()">
-                          <option value="">全部</option>
-                          <option value="0">初始状态</option>
-                          <option value="1">申请审核</option>
-                          <option value="2">审核通过</option>
-                          <option value="3">审核未通过</option>
-                     </select>
-                     <!-- <input type="text" class="search_input" v-model="loadParam.validate" placeholder="按业务员名称搜索" @keyup.enter="searchMsg()"> -->
-                 </div>
-                 <button class="new_btn transfer" @click="searchMsg()">搜索</button>
-                 <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
-              </div>
+            <div class="clearfix col-md-10">
+               <div class="name_search left clearfix">
+                   <img src="/static/images/search.png" height="24" width="24">
+                   <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchMsg()">
+               </div>
+               <div class="name_search left clearfix">
+                   <img src="/static/images/search.png" height="24" width="24">
+                   <input type="text" class="search_input" v-model="loadParam.customerPhone" placeholder="按客户电话搜索" @keyup.enter="searchMsg()">
+               </div>
+               <div class="name_search left clearfix">
+                   <!-- <img src="/static/images/search.png" height="24" width="24"> -->
+                   <select class="form-control search_input" v-model="loadParam.validate" @change="searchMsg()">
+                        <option value="">全部</option>
+                        <option value="0">初始状态</option>
+                        <option value="1">申请审核</option>
+                        <option value="2">审核通过</option>
+                        <option value="3">审核未通过</option>
+                   </select>
+                   <!-- <input type="text" class="search_input" v-model="loadParam.validate" placeholder="按业务员名称搜索" @keyup.enter="searchMsg()"> -->
+               </div>
+               <button class="new_btn  pull-left transfer" @click="searchMsg()">搜索</button>
+               <button class="new_btn  pull-left transfer" @click="resetCondition()">清空条件</button>
             </div>
         </div>
         <div class="order_table" id="table_box">
