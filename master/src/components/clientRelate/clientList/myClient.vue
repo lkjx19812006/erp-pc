@@ -163,15 +163,29 @@
 
             </div>
         </div>
-        <div class="order_table" id="table_box">
-            <div class="cover_loading">
-                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-            </div>
-            <table class="table table-hover table_color table-striped " v-cloak id="tab">
+        <div class="order_table">
+            <table class="table table-hover table_color table-striped " style="margin-bottom:0px;" v-cloak>
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
                 <thead>
                     <tr>
                         <th>
-                            <!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> -->
+                            <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
                         </th>
                         <th>{{$t('static.salesman')}}</th>
                         <th>{{$t('static.create_time')}}</th>
@@ -188,32 +202,36 @@
                         <th>{{$t('static.main_product')}}</th>
                         <th v-if="this.initLogin.orgId==29">跟进状态</th> 
                         <th v-if="this.initLogin.orgId==29">跟进说明</th>  
-                        
-                    <!-- <th>{{$t("static.type")}}</th>
-                        <th>{{$t("static.classification")}}</th>
-                        <th>{{$t("static.customer_source")}}</th>
-                        <th>{{$t("static.credit_rating")}}</th>
-                        <th>{{$t("static.client_name")}}</th>
-                        <th>{{$t("static.salesman")}}</th>
-                        <th>{{$t("static.principals")}}</th>
-                        <th style="min-width:120px;">{{$t("static.business_scope")}}</th>
-                        <th>{{$t("static.client_phone")}}</th>
-                        <th>{{$t("static.province_of_phone")}}</th>
-                        <th>{{$t("static.city_of_phone")}}</th>
-                        <th>{{$t("static.client_email")}}</th>
-                        <th>{{$t("static.country")}}</th>
-                        <th>{{$t("static.province")}}</th>
-                        <th>{{$t("static.city")}}</th>
-                        <th>{{$t("static.registered_address")}}</th>
-                        <th>{{$t("static.create_time")}}</th>
-                        <th>{{$t("static.whether_supplier")}}</th>
-                        <th style="min-width:200px">{{$t("static.comment")}}</th> 
-                    -->
                         <th>{{$t("static.operation")}}</th>
                         <th v-if="this.initLogin.orgId==29">跟进</th>
                     </tr>
                 </thead>
-                <tr>
+            </table>
+        </div>
+
+        <div class="order_table" id="table_height">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_color table-striped " v-cloak>
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <!-- <tr>
                     <th>
                         <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label>
                     </th>
@@ -221,7 +239,7 @@
                     <th colspan="14"></th>
                     <th  v-if="this.initLogin.orgId==29"></th>
                     <th  v-if="this.initLogin.orgId==29"></th>
-                </tr>
+                </tr> -->
                 <tbody>
                     <tr>
                         
@@ -721,9 +739,7 @@ export default {
         console.log(this.initLogin)
         
     },
-    ready(){
-      common('tab','table_box',1);
-    },
+    
     filter:(filter,{})
 }
 </script>
@@ -766,14 +782,19 @@ export default {
     text-align: center;
     background-position: 5px;
 }
-#table_box table th,#table_box table td{
+col{
     width: 113px;
-    min-width: 96px;
+    min-width: 6px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;
 }
 dl{
     margin-bottom: 5px;
+}
+#table_height {
+    height:530px;
+    overflow-y: auto;
+    position: relative;
 }
 </style>
