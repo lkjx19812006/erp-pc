@@ -327,7 +327,7 @@ export default {
                 {
                     title: '操作',
                     key: 'action',
-                    fixed: 'right',
+                    //fixed: 'right',
                     width: 150,
                     render (row,column,index) {
                         return `<i-button type="text" size="small" @click="clickOn(${index})">查看详情</i-button>
