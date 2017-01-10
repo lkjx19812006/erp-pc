@@ -70,62 +70,40 @@
 
                   <div class="panel panel-default" style="border:none">
                       <ul class="clearfix" style="font-size: 14px;">
-                        <div class="col-md-4 col-xs-6">{{$t('static.name')}}:{{initClientDetail.name}}</div>
-                        <div class="col-md-4 col-xs-6">{{$t('static.type')}}:{{initClientDetail.typeDesc}}</div>
-                        <div class="col-md-4 col-xs-6">{{$t('static.classification')}}:{{initClientDetail.classifyDesc | classify}}</div>
-                        <div class="col-md-4 col-xs-6">{{$t('static.telephone')}}:{{initClientDetail.mainPhone}}</div>
-                        <div class="col-md-4 col-xs-6">{{$t('static.principals')}}:{{initClientDetail.principal}}</div>
-                        <div class="col-md-4 col-xs-6">{{$t('static.province')}}:{{initClientDetail.provinceName}}</div>
-                        <div class="col-md-4 col-xs-6">{{$t('static.city')}}:{{initClientDetail.cityName}}</div>
-                        <div class="col-md-4 col-xs-6">{{$t('static.registered_address')}}:{{initClientDetail.address}}</div>
-                        <div class="col-md-4 col-xs-6">{{$t('static.client_email')}}:{{initClientDetail.email}}</div>
-                        <div class="col-md-4 col-xs-6">{{$t('static.registered_time')}}:{{initClientDetail.ctime}}</div>
-                        <div class="col-md-4 col-xs-6">{{$t('static.comment')}}:{{initClientDetail.comments}}</div>
-                        <div class="col-md-4 col-xs-6">{{$t('static.business_scope')}}:{{initClientDetail.bizScope}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.name')}}:{{initClientDetail.name}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.type')}}:{{initClientDetail.typeDesc}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="initClientDetail.supplier==0">{{$t('static.whether_supplier')}}:{{$t('static.no')}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="initClientDetail.supplier==1">{{$t('static.whether_supplier')}}:{{$t('static.yes')}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.classification')}}:{{initClientDetail.classifyDesc | classify}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.telephone')}}:{{initClientDetail.mainPhone}}（{{initClientDetail.phoneProvince}}{{initClientDetail.phoneCity}}）</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.client_email')}}:{{initClientDetail.email}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.country')}}:{{initClientDetail.countryName}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.province')}}/{{$t('static.city')}}:{{initClientDetail.provinceName}}{{initClientDetail.cityName}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.detailed_address')}}:{{initClientDetail.address}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.transaction_num')}}/{{$t('static.recent_contact')}}:{{initClientDetail.orderTotal}}{{initClientDetail.lastOrderTime}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.client_source')}}:{{initClientDetail.sourceType}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.department')}}/{{$t('static.salesman')}}:{{initClientDetail.orgName}}（{{initClientDetail.orgName}}）</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.create_time')}}:{{initClientDetail.ctime}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="initClientDetail.blacklist==1">{{$t('static.blacklist')}}:{{initClientDetail.name}}</div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">{{$t('static.business_scope')}}:{{initClientDetail.bizScope}}</div>
+                         <div class="col-md-12 col-sm-12 col-xs-12">{{$t('static.comment')}}:{{initClientDetail.comments}}</div>
                       </ul>
-                  </div>
-                  <div class="panel panel-default"> 
-                      <div class="panel-heading" >
-                        <h4 class="panel-title clearfix">
-                          {{$t('static.detailed_information')}}
-                        </h4>
+                      <div style="font-size:14px;">
+                        <label>{{$t('static.label')}}</label>：<Tag color="blue" v-for="item in initClientDetail.labels.arr" closable @on-close="deleteLabel(item,$index)">{{item.label}}</Tag>
+                          <i-button icon="ios-plus-empty" type="dashed" size="small" @click="newlabel({
+                                   customerId:param.id,
+                                   id:param.id,
+                                   show:true,
+                                   title:'标签',
+                                   labelist:'标签',
+                                   statuslist:'类型',
+                                   label:'',
+                                   status:'',
+                                   link:createLabel,
+                                   url:'/customer/insertLabel',
+                                   key:'labels'
+                                   })">添加标签</i-button>
                       </div>
-                      <div class="panel-collapse">
-                        <div class="panel-body panel-set">
-                          <table class="table  contactSet">
-                            <thead>
-                              <th>{{$t('static.name')}}</th>
-                              <th>{{$t('static.type')}}</th>
-                              <th>{{$t('static.classification')}}</th>
-                              <th>{{$t('static.telephone')}}</th>
-                              <th>{{$t('static.principals')}}</th>
-                              <th>{{$t('static.province')}}</th>
-                              <th>{{$t('static.city')}}</th>
-                              <th>{{$t('static.registered_address')}}</th>
-                              <th>{{$t('static.client_email')}}</th>
-                              <th>{{$t('static.registered_time')}}</th>
-                              <th colspan="2">{{$t('static.comment')}}</th>
-                              <th colspan="2">{{$t('static.business_scope')}}</th>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>{{initClientDetail.name}}</td>
-                                <td>{{initClientDetail.typeDesc}}</td>
-                                <td>{{initClientDetail.classifyDesc | classify}}</td>
-                                <td>{{initClientDetail.mainPhone}}</td>
-                                <td>{{initClientDetail.principal}}</td>
-                                <td>{{initClientDetail.provinceName}}</td>
-                                <td>{{initClientDetail.cityName}}</td>
-                                <td>{{initClientDetail.address}}</td>
-                                <td>{{initClientDetail.email}}</td>
-                                <td>{{initClientDetail.ctime}}</td>
-                                <td colspan="2">{{initClientDetail.comments}}</td>
-                                <td colspan="2">{{initClientDetail.bizScope}}</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                    </div>
                   </div>
                   <div class="panel panel-default">
                     <div class="panel-heading" >
@@ -759,17 +737,17 @@
                           </div>
                       </div>
                   </div>
-                  <div class="panel panel-default">
+                  <!-- <div class="panel panel-default">
                       <div class="panel-heading">
                           <h4 class="panel-title clearfix" @click.stop="enfoldment({
-        						            	link:initClientDetail.labels,
-        						            	crete:'labels'
-        						            	})">
-        										<img class="pull-left" src="/static/images/label.png" height="30" width="26"  />
-        										<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-        											{{$t('static.label')}}（{{initClientDetail.labels.arr.length}}）
-        										</a>
-        										<button type="button" class="btn btn-base pull-right" @click.stop="newlabel({
+                                                    link:initClientDetail.labels,
+                                                    crete:'labels'
+                                                    })">
+                                              <img class="pull-left" src="/static/images/label.png" height="30" width="26"  />
+                                              <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                                {{$t('static.label')}}（{{initClientDetail.labels.arr.length}}）
+                                              </a>
+                                              <button type="button" class="btn btn-base pull-right" @click.stop="newlabel({
                                    customerId:param.id,
                                    id:param.id,
                                    show:true,
@@ -782,15 +760,15 @@
                                    url:'/customer/insertLabel',
                                    key:'labels'
                                    })">{{$t('static.new')}}</button>
-        									</h4>
+                                            </h4>
                       </div>
                       <div  class="panel-collapse" v-show="!initClientDetail.labels.show&&initClientDetail.labels.arr.length>0">
                          <div class="panel-body panel-set">
                               <table class="table contactSet">
-                              	<thead>
-                              		<th>{{$t('static.label')}}</th>
-                              		<th colspan="1">{{$t('static.operation')}}</th>
-                              	</thead>
+                                <thead>
+                                  <th>{{$t('static.label')}}</th>
+                                  <th colspan="1">{{$t('static.operation')}}</th>
+                                </thead>
                               <tbody>
                                   <tr v-for="item in initClientDetail.labels.arr">
                                       <td>{{item.label}}</td>
@@ -811,8 +789,8 @@
                                                  headline:'clientDetail'
                                                  })"><img src="/static/images/edit.png" height="18" width="30"/>
                                          </a>
-                                     <!--  </td>
-                                     <td > -->
+                                     </td>
+                                     <td >
                                          <div class="operate" @click.stop="specDelete({
                                                  id:item.id,
                                                  sub:$index,
@@ -831,7 +809,7 @@
                           </table>
                           </div>
                       </div>
-                  </div>
+                  </div> -->
                   <div class="panel panel-default" v-cloak>
                       <div class="panel-heading">
                           <h4 class="panel-title clearfix" @click.stop="enfoldment({
@@ -956,7 +934,7 @@
 <script>
 import pressImage from '../../components/imagePress'
 import filter from '../../filters/filters.js'
-import tipsdialogModel from '../tipsDialog'
+import tipsdialogModel from '../tips/tipDialog' 
 import createcustModel  from '../clientRelate/createClientDetail'
 import createaddrModel from '../clientRelate/createAddrInfo'
 import createlabelModel from '../clientRelate/label/createLabel'
@@ -1058,6 +1036,14 @@ export default {
           customer:true,
           flag:0
     		},
+        labelDelParam:{
+           id:'',
+           sub:'',
+           title:'标签',
+           url:'/customer/deleteLable/',
+           key:'labels',
+           headline:'clientDetail'
+        },
     		cproductParam:{
     			show:false
     		},
@@ -1066,7 +1052,9 @@ export default {
           img:''
         },
     		tipsParam:{
-    			show:false
+    			show:false,
+          name:'',
+          alert:true
     		},
         auditParam:{
           show:false
@@ -1125,8 +1113,10 @@ export default {
       },
       newlabel:function(initBreedDetail){
       	this.labelParam = initBreedDetail;
+        this.labelParam.callback = this.labelCallback;
       },
       specDelete:function(initBreedDetail){
+        console.log(initBreedDetail.key)
         var _self=this;
         if(initBreedDetail.key=='customerList'){
           initBreedDetail.callback=function(){
@@ -1138,6 +1128,12 @@ export default {
           }
         }
         this.deleteParam = initBreedDetail;
+      },
+      deleteLabel:function(item,sub){
+          this.labelDelParam.id=item.id;
+          this.labelDelParam.sub=sub;
+          console.log(this.labelDelParam)
+          this.addrDel(this.labelDelParam)
       },
       clientTransferSupplier:function(initBreedDetail){
         console.log(initBreedDetail)
@@ -1249,7 +1245,7 @@ export default {
         this.auditParam.auditComment='';
         this.customerTransferBlacklist(this.auditParam);
       },
-      clientTransferBlack(){
+      clientTransferBlack:function(){
         this.auditParam.link='/customer/transferBlacklist';
         this.auditParam.arr=[];
         this.auditParam.arr.push(this.initClientDetail.id);
@@ -1268,6 +1264,11 @@ export default {
       newOrder:function(order){
         console.log(order)
         this.orderParam = order;
+      },
+      labelCallback:function(title){
+        this.tipsParam.show=true;
+        this.tipsParam.name=title;
+        this.tipsParam.alert=true;
       }
     },
   filter:(filter,{}),
@@ -1314,10 +1315,9 @@ section article {
 }
 .top-title{
   z-index: 100;
-  width: 70%;
+  width: 60%;
   right: 0;
   top: 91px;
-  position: fixed;
   left: 0;
   margin: auto;
 }
@@ -1356,7 +1356,7 @@ section article {
     margin-right: 8px;
 }
 .panel-default ul > div{
-   padding:10px 0; 
+   padding:5px 0; 
    white-space: normal;
 }
 

@@ -29,7 +29,7 @@ export default {
 }
 </script>
 <style scoped>
-.modal {
+.modal{
     opacity: 0.5;
     background-color: #000;
     display: block;

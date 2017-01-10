@@ -3738,7 +3738,7 @@ export const createLabel = ({ dispatch }, param) => { //新增客户标签
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('添加成功')
+        param.callback(res.json().msg)
         param.id = res.json().result.id;
         dispatch(types.ADD_LABEL_DATA, param);
     }, (res) => {
@@ -3765,6 +3765,7 @@ export const createRemark = ({ dispatch }, param) => { //新增客户备注
         }
     }).then((res) => {
         console.log('添加成功')
+        param.callback(res.json().msg)
         param.id = res.json().result.id;
         dispatch(types.ADD_LABEL_DATA, param);
     }, (res) => {

@@ -13,7 +13,6 @@
      <sendapply-model :param="sampleOrderParam" v-if="sampleOrderParam.send"></sendapply-model>
 	   <div>
         <div class="service-nav">
-
           <div class="clear" style="margin-top:3px;">
               <dl class="clear left transfer">
                  <dt class="left transfer marg_top" style="letter-spacing:3px">客户名：</dt>
