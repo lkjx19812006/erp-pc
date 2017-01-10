@@ -16,10 +16,6 @@
       <form novalidate>
         <div class="edit-model">
           <section class="editsection" v-cloak>
-            <!-- <div style="margin-top:20px;margin-left:10px;margin-bottom:15px;">
-               <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
-               <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
-            </div> -->
             <div class="clearfix">
               <!-- 客户名称 -->
               <div class="client-detailInfo col-md-6">
@@ -27,7 +23,6 @@
                  <input type="text" class="form-control edit-input" v-model="param.name"
                        v-validate:name="{minlength:2}"/>
               </div>
-              
               <!-- 联系人姓名 -->         
               <div class="client-detailInfo  col-md-6">
                 <label class="editlabel">{{$t('static.contact')}} <span class="system_danger" v-if="$validation.cname.minlength">{{$t('static.required')}}</span></label>
@@ -222,52 +217,6 @@
                 <input type="text" class="form-control edit-input" v-validate:cqq="['qq']" v-model="contacts[0].qq"/>
               </div>
             </div>
-            <!-- 联系人信息 -->  
-            <!-- <div v-if="contactshow">
-              <div style="margin-top:25px;margin-left:30px;margin-bottom:15px;">
-                <img src="/static/images/contact@2x.png" style="display:inline"/>
-                <h5 style="display:inline">{{$t('static.contact')}}</h5>
-              </div>
-            
-              <div class="clearfix">
-                
-                <div class="client-detailInfo col-md-6">
-                  <label>{{$t('static.whether_main_contact')}}</label>
-                  <select class="form-control " v-model='contacts[0].main'>
-                    <option value="1">{{$t('static.yes')}}</option>
-                    <option value="0">{{$t('static.no')}}</option>
-                  </select>
-                </div>
-            
-                <div class="client-detailInfo  col-md-6">
-                  <label>{{$t('static.department')}}</label>
-                  <input type="text" class="form-control" v-model="contacts[0].department"/>
-                </div>
-                <div class="client-detailInfo col-md-6">
-                  <label>{{$t('static.position')}}</label>
-                  <input type="text" class="form-control" v-model="contacts[0].position"/>
-                </div>
-                
-                <div class="client-detailInfo   col-md-6">
-                  <label class="editlabel" for="system">{{$t('static.telephone')}}<span class="system_danger" v-if="$validation.ctel.tel">{{$t('static.validate_telephone')}}）</span></label>
-                  <input type="text" class="form-control" v-validate:ctel="['tel']" v-model="contacts[0].tel"/>
-                </div>
-                <div class="client-detailInfo   col-md-6">
-                  <label class="editlabel" for="system">{{$t('static.email')}}<span class="system_danger" v-if="$validation.cemail.email">{{$t('static.validate_email')}}</span></label>
-                  <input type="email" class="form-control" v-validate:cemail="['email']" v-model="contacts[0].email"/>
-                </div>
-                <div class="client-detailInfo  col-md-6">
-                  <label class="editlabel" for="system">{{$t('static.wechat')}}<span class="system_danger" v-if="$validation.cwechart.wechart">{{$t('static.validate_wechat')}}</span></label>
-                  <input type="text" class="form-control" v-validate:cwechart="['wechart']" v-model="contacts[0].wechart"/>
-                </div>
-            
-                <div class="client-detailInfo  col-md-6">
-                  <label class="editlabel" for="system">QQ<span class="system_danger" v-if="$validation.cqq.qq">{{$t('static.validate_qq')}}</span></label>
-                  <input type="text" class="form-control" v-validate:cqq="['qq']" v-model="contacts[0].qq"/>
-                </div>
-              </div>
-            </div> -->
-
           </section>
         </div>
         <div class="edit_footer">

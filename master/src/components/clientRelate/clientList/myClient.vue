@@ -8,7 +8,7 @@
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <updatetracking-model :param="updateTrackingParam" v-if="updateTrackingParam.show"></updatetracking-model>
-    
+    <language-model v-show="false"></language-model>
     <div>
         <div class="service-nav">
             <div class="clear" style="margin-top:3px;"> 
@@ -76,7 +76,6 @@
                    </dd>
                 </dl>
             </div>
-
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top" style="letter-spacing:3px" >{{$t("static.cellphone")}}：</dt>
@@ -84,7 +83,6 @@
                         <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
                 </dl>
-
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t("static.credit_rating")}}：</dt>
                    <dd class="left">
@@ -97,7 +95,6 @@
                         </select>
                    </dd>
                 </dl>
-
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t("static.business_scope")}}：</dt>
                    <dd class="left">
@@ -110,7 +107,6 @@
                 <dd class="left">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">{{$t("static.clear_all")}}</button>
                 </dd>
-                
                 <dd class="pull-right" style="margin-right:20px">
                   <!-- <button type="button" class="btn btn-default" @click="clientTransfer({
                         arr:[],
@@ -245,7 +241,8 @@
                                 key:'myCustomerList'
                                 })">{{item.name}}</td>
                         <td>{{item.orderTotal}}</td>
-                        <td>{{item.type | customerType}}</td>
+                        <td v-if="this.language=='zh_CN'">{{item.typeDesc}}</td>
+                        <td v-if="this.language=='en'">{{item.type | customerTypeEn}}</td>
                         <td>{{item.mainContact}}</td>
                         <td>{{item.mainPosition}}</td>
                         <td>{{item.mainPhone}}</td>
@@ -357,6 +354,7 @@ import updatetrackingModel from '../../../components/tips/auditDialog'
 import vSelect from '../../tools/vueSelect/components/Select'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import languageModel from '../../tools/language'
 import {
     initMyCustomerlist,
     initProvince,
@@ -384,7 +382,8 @@ export default {
         searchModel,
         auditDialog,
         updatetrackingModel,
-        vSelect
+        vSelect,
+        languageModel
     },
     vuex: {
         getters: {
@@ -434,6 +433,7 @@ export default {
                 audit:'',
                 total:0
             },
+            language:'',
             provinceParam:{
               loading:true,
               show:false,
@@ -718,8 +718,9 @@ export default {
     created() {
         this.getProvinceList(this.provinceParam);
         changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.myClientParam);
-        console.log(this.initLogin)
-        
+        console.log(localStorage.lang)
+        this.language = localStorage.lang;
+        console.log(this.language)   
     },
     ready(){
       common('tab','table_box',1);

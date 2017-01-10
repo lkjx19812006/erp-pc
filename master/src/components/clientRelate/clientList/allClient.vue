@@ -194,7 +194,7 @@
                         <td>{{item.orderTotal}}</td>
                         <td>{{item.type | customerType}}</td>
                         <td>{{item.mainContact}}</td>
-                        <td></td>
+                        <td>{{item.mainPosition}}</td>
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>

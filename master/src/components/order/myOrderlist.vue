@@ -746,7 +746,6 @@
         background: #fff;
         position: relative;
         margin-bottom: 10px;
-        border-top: 1px solid #ddd;
     }
 
     .order_table .table > ul {

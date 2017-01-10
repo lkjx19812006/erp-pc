@@ -311,23 +311,23 @@ Vue.filter('country', function(val){ //国家
 Vue.filter('customerType', function(val){ //客户类型
 	var val = val;
 	if(val==0){
-		 return 'Others 其他';
+		 return '其他';
 	}else if(val==1){
-		 return 'Cooperatives 合作社';
+		 return '合作社';
 	}else if(val==2){
-		 return 'Drug Makers 药商';
+		 return '药商';
 	}else if(val==3){
-		 return 'Factory 药厂';
+		 return '药厂';
 	}else if(val==4){
-		 return 'Private Use 个体户';
+		 return '个体户';
 	}else if(val==5){
-		 return 'Pharmacy 药店';
+		 return '药店';
 	}else if(val==6){
-		 return 'Hospital 医院';
+		 return '医院';
 	}else if(val==7){
-		 return 'Trading Company 贸易公司';
+		 return '贸易公司';
 	}else if(val==8){
-		 return 'Retail 零售商行';
+		 return '零售商行';
 	}else if(val==9){
 		 return '药农';
 	}else if(val==10){
@@ -339,27 +339,71 @@ Vue.filter('customerType', function(val){ //客户类型
 	}else if(val==13){
 		 return '销地药商';
 	}else if(val==14){
-		 return 'Acupuncture Clinic 养生诊所';
+		 return '养生诊所';
 	}else if(val==15){
-		 return 'Chemical Company 化工厂';
+		 return '化工厂';
 	}else if(val==16){
-		 return 'Cosmetics Company 化妆品厂';
+		 return '化妆品厂';
 	}else if(val==17){
-		 return 'Extract Company 提取物厂';
+		 return '提取物厂';
 	}else if(val==18){
-		 return 'Food Company 食品厂';
+		 return '食品厂';
 	}else if(val==19){
-		 return 'Laboratory for trial 实验室';
+		 return '实验室';
 	}else if(val==20){
-		 return 'Online Company 网上电商';
+		 return '网上电商';
 	}else if(val==21){
-		 return 'Pharmaceutical producer of Chinese Traditional Patent Medicine 中成药生产商';
+		 return '中成药生产商';
 	}else if(val==22){
-		 return 'Pharmaceutical producer of Western Medicine 西成药生产商';
+		 return '西成药生产商';
 	}else if(val==23){
-		 return 'Pieces Factory 饮片厂';
+		 return '饮片厂';
 	}else if(val==24){
-		 return 'Herb tea company 茶类公司';
+		 return '茶类公司';
+	}else{
+		return val;
+	}
+})
+Vue.filter('customerTypeEn', function(val){ //客户类型
+	var val = val;
+	if(val==0){
+		 return 'Others';
+	}else if(val==1){
+		 return 'Cooperatives';
+	}else if(val==2){
+		 return 'Drug Makers';
+	}else if(val==3){
+		 return 'Factory';
+	}else if(val==4){
+		 return 'Private Use';
+	}else if(val==5){
+		 return 'Pharmacy';
+	}else if(val==6){
+		 return 'Hospital';
+	}else if(val==7){
+		 return 'Trading Company';
+	}else if(val==14){
+		 return 'Acupuncture Clinic';
+	}else if(val==15){
+		 return 'Chemical Company';
+	}else if(val==16){
+		 return 'Cosmetics Company';
+	}else if(val==17){
+		 return 'Extract Company';
+	}else if(val==18){
+		 return 'Food Company';
+	}else if(val==19){
+		 return 'Laboratory for trial';
+	}else if(val==20){
+		 return 'Online Company';
+	}else if(val==21){
+		 return 'Pharmaceutical producer of Chinese Traditional Patent Medicine';
+	}else if(val==22){
+		 return 'Pharmaceutical producer of Western Medicine';
+	}else if(val==23){
+		 return 'Pieces Factory';
+	}else if(val==24){
+		 return 'Herb tea company';
 	}else{
 		return val;
 	}
