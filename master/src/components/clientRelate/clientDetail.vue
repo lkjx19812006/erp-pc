@@ -69,7 +69,7 @@
                 <div class="panel-group" @click.stop="">
 
                   <div class="panel panel-default" style="border:none">
-                      <ul class="clearfix" style="font-size: 14px;">
+                      <ul class="clearfix" style="font-size: 14px;padding:5px 0">
                         <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.name')}}:{{initClientDetail.name}}</div>
                         <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.type')}}:{{initClientDetail.typeDesc}}</div>
                         <div class="col-md-3 col-sm-4 col-xs-6" v-if="initClientDetail.supplier==0">{{$t('static.whether_supplier')}}:{{$t('static.no')}}</div>

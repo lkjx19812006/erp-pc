@@ -757,10 +757,8 @@ section article {
 }
 .top-title{
   z-index: 100;
-  width: 70%;
+  width: 60%;
   right: 0;
-  top: 91px;
-  position: fixed;
   margin: auto;
   left: 0;
 }

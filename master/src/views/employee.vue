@@ -237,67 +237,6 @@ export default {
                 total:0
             },
             tab_height:0,
-            columns1:[
-                {
-                    title: '姓名',
-                    key: 'name'
-                },
-                {
-                    title: '英文名',
-                    key: 'ename',
-                },
-                {
-                    title: '工号',
-                    minWidth: 100,
-                    key: 'no',
-                },
-                {
-                    title: '部门',
-                    minWidth: 150,
-                    key: 'orgName',
-                },
-                {
-                    title: '职位',
-                    key: 'position',
-                },
-                {
-                    title: '手机号',
-                    key: 'mobile',
-                },
-                {
-                    title: '分机号',
-                    key: 'extno',
-                },
-                {
-                    title: '入职时间',
-                    key: 'entrydate',
-                },
-                {
-                    title: '离职时间',
-                    key: 'leavedate',
-                },
-                {
-                    title: '职级',
-                    key: 'level',
-                },
-                {
-                    title: '员工状态',
-                    key: 'leave',
-                    render (row) {
-                        const text = row.leave == 0 ? '离职' : '在职';
-                        return `<td>${text}</td>`;
-                    }
-                },
-                {
-                    title: '操作',
-                    key: 'action',
-                    fixed: 'right',
-                    width: 150,
-                    render (row,column,index) {
-                        return `<i-button type="text" size="small" @click="clickOn(${index})">查看详情</i-button><i-button type="text" size="small" @click="updateOrder(${index})">编辑</i-button><i-button type="text" size="small">修改密码</i-button>`;
-                    }
-                }
-            ],
             createParam:{
                 show:false
             },
@@ -356,10 +295,10 @@ export default {
             this.createParam=initEmployeeList;
             this.createParam.callback = this.callback;
         },
-        clickOn: function(sub) {
-            this.changeParam.sub= sub;
-            this.changeParam.id= this.initEmployeeList[sub].id;
-            this.changeParam = this.initEmployeeList[sub]; 
+        clickOn: function(initEmployeeList) {
+/*            this.changeParam.sub= sub;
+            this.changeParam.id= this.initEmployeeList[sub].id;*/
+            this.changeParam = initEmployeeList; 
             this.changeParam.show=true;
         },
         loadByCondition:function(){
