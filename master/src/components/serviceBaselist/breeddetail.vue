@@ -483,10 +483,10 @@ export default {
 </script>
 <style scoped>
 .top-title{
-        right: 0;
+    right: 0;
     top: 91px;
     position: fixed;
-    width: 70%;
+    width: 60%;
     margin: auto;
     left: 0;
 }

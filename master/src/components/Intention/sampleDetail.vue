@@ -172,7 +172,7 @@ input{
 }
 .top-title{
     position: fixed;
-    width: 70%;
+    width: 60%;
     margin: auto;
     right: 0;
     left: 0;

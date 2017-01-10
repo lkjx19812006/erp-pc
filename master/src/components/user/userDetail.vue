@@ -21,7 +21,6 @@
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
                         <span class="navbar-brand navbar-name" >{{initUserDetail.fullname}}</span>
                     </div>
-
                   <!--   <ul class="nav navbar-nav navbar-right" style="margin-top:8px;">
 
                         <li>
@@ -42,20 +41,38 @@
 
                                                })">编辑</button>
                         </li>
-
                     </ul> -->
                 </div>
             </nav>
         </div>
         <section>
             <div class="client-section clearfix" >
-                <div class="col-md-8 client-detail">
-                    <h4 class="section_title">相关</h4>
-
-                      <article @click.stop="">
-                          <div class="panel-group">
-                              <div class="panel panel-default">
-                                  <div class="panel-heading" >
+                <div class="col-md-12">
+                    <h4 class="section_title">详情</h4>
+                    <article @click.stop="">
+                        <div class="panel-group">
+                          <div class="panel panel-default" style="border:none">
+                            <ul class="clearfix" style="font-size: 14px;padding:5px 0">
+                              <div class="col-md-3 col-sm-4 col-xs-6">姓名:{{initUserDetail.fullname}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6">昵称:{{initUserDetail.nickname}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6">手机（归属地）:{{initUserDetail.phone}}（{{initUserDetail.province}}）</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6">QQ:{{initUserDetail.qq}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6">公司:{{initUserDetail.company}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.client_email')}}:{{initUserDetail.email}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6">经营类型:{{initUserDetail.bizTypeName}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6">来源:{{initUserDetail.sourceType}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6">主营业务:{{initUserDetail.bizMain}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6">身份证号:{{initUserDetail.idnumber}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6">重要等级:{{importance[initUserDetail.importance]}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6">审核状态:{{initUserDetail.auditResult}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6" v-if="initUserDetail.transStatus==1">划转状态:已划转</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6" v-else>划转状态:未划转</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6">会员星级:{{grade[initUserDetail.grade]}}</div>
+                               <div class="col-md-12 col-sm-12 col-xs-12">{{$t('static.comment')}}:{{initUserDetail.comment}}</div>
+                            </ul>
+                          </div>
+                          <div class="panel panel-default">
+                                <div class="panel-heading" >
                                       <h4 class="panel-title clearfix" @click="enfoldment({
                                               link:initUserDetail.intention,
                                               crete:'intention'
@@ -67,7 +84,6 @@
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="createIntention()">新建</button>
                                         <button type="button" class="btn btn-base pull-right"  @click.stop="intentionAudit()">审核</button>
                                       </h4>
-
                                 </div>
                                 <div class="panel-collapse" v-show="initUserDetail.intention.show">
                                     <div class="panel-body panel-set">
@@ -210,10 +226,7 @@
                                     </table>
                                     </div>
                                 </div>
-                            </div>
-
-
-
+                          </div>
                           <div class="panel panel-default">
 
                                 <div class="panel-heading" >
@@ -251,10 +264,8 @@
                                     </table>
                                     </div>
                                 </div>
-                            </div>
-
-
-                            <div class="panel panel-default">
+                          </div>
+                          <div class="panel panel-default">
                               <div class="panel-heading" >
                                    <h4 class="panel-title clearfix" @click="companyEnfoldment({id:initUserDetail.id})">
                                       <img class="pull-left" src="/static/images/company1.png" height="26" width="30" style="margin-top:4px;" />
@@ -359,111 +370,12 @@
                               </div>
                           </div>
 
-
-                      </div>
-                  </article>
-              </div>
-
-              <div class="col-md-4">
-                  <h4 class="section_title">详情</h4>
-                  <article @click.stop="">
-                      <div class="edit-detail">
-                          <div class="clearfix">
-                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                  <label>姓名</label>
-                                  <input type="text" class="form-control" value="{{initUserDetail.fullname}}" disabled="disabled" />
-                              </div>
-                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                  <label>昵称</label>
-                                  <input type="text" class="form-control"  value="{{initUserDetail.nickname}}" disabled="disabled"/>
-                              </div>
-                          </div>
-                          <div class="clearfix">
-                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                  <label>手机</label>
-                                  <input type="text" class="form-control"   value="{{initUserDetail.phone}}" disabled="disabled"/>
-                              </div>
-                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                  <label>归属地</label>
-                                  <input type="text" class="form-control"  value="{{initUserDetail.province}}" disabled="disabled"/>
-                              </div>
-
-                          </div>
-                          <div class="clearfix">
-                              <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                  <label>QQ</label>
-                                  <input type="text" class="form-control"  value="{{initUserDetail.qq}}" disabled="disabled"/>
-                              </div>
-                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                  <label>公司</label>
-                                  <input type="text" class="form-control"  value="{{initUserDetail.company}}" disabled="disabled"/>
-                              </div>
-                          </div>
-                          <div class="clearfix">
-                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                  <label>邮箱</label>
-                                  <input type="text" class="form-control"  value="{{initUserDetail.email}}" disabled="disabled"/>
-                              </div>
-                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                  <label>经营类型</label>
-                                <input type="text" class="form-control"  value="{{initUserDetail.bizTypeName}}" disabled="disabled"/>
-                              </div>
-                          </div>
-                          <div class="clearfix">
-                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                  <label>来源</label>
-                                  <input type="text" class="form-control"  value="{{initUserDetail.sourceType}}" disabled="disabled"/>
-                              </div>
-                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                  <label>主营业务</label>
-                                <input type="text" class="form-control"  value="{{initUserDetail.bizMain}}" disabled="disabled"/>
-                              </div>
-                          </div>
-                        <div class="clearfix">
-                          <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                            <label>身份证号码</label>
-                            <input type="text" class="form-control"  value="{{initUserDetail.idnumber}}" disabled="disabled"/>
-                          </div>
-                          <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                            <label>重要等级</label>
-                            <input type="text" class="form-control"  value="{{importance[initUserDetail.importance]}}" disabled="disabled"/>
-                          </div>
                         </div>
-                          <div class="clearfix">
-                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                  <label>审核状态</label>
-                                  <input type="text" class="form-control"  value="{{initUserDetail.auditResult}}" disabled="disabled"/>
-                              </div>
-                              <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                  <label>划转状态</label>
-                                  <input v-if="initUserDetail.transStatus==1" type="text" class="form-control" value="已划转" disabled="disabled"/>
-                                  <input v-else type="text" class="form-control" value="未划转" disabled="disabled"/>
-                              </div>
-                          </div>
-                        <div class="clearfix">
-
-                          <div class="client-detailInfo  pull-left col-md-6 col-xs-12">
-                            <label>会员星级</label>
-                            <input type="text" class="form-control"  value="{{grade[initUserDetail.grade]}}"  disabled="disabled"/>
-                          </div>
-                        </div>
-                          <div class="clearfix">
-                              <div class="client-detailInfo pull-left col-md-12 col-xs-12">
-                                  <label>备注</label>
-                                  <input type="text" class="form-control" value="{{initUserDetail.comment}}"  disabled="disabled"/>
-                              </div>
-
-
-                          </div>
-
-                      </div>
-                  </article>
-              </div>
+                    </article>
+                </div>
           </div>
       </section>
   </div>
-
-
 </template>
 <script>
 import trackingModel from  './userTracking'
@@ -596,8 +508,8 @@ export default {
     },
     vuex:{
       getters:{
-      initClientDetail,
       initUserDetail,
+      initClientDetail,
       initIdentify
       },
       actions:{
@@ -882,7 +794,7 @@ section article {
 }
 .top-title{
   z-index: 100;
-  width:70%;
+  width:60%;
   position: fixed;
   right: 0;
   top:91px;
@@ -959,4 +871,9 @@ section article {
 table{
   display:table;
 }
+.panel-default ul > div{
+   padding:5px 0; 
+   white-space: normal;
+}
+
 </style>

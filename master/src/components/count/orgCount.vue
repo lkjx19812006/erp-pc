@@ -351,8 +351,8 @@
 		border-bottom: none;
 	}
 	.module_th{
-		background: #004796;
-		color: #fff;
+		background: #f5f7f9;
+		color: #000;
 		float: left;
 		width: 11.111%;
 		line-height: 30px;
