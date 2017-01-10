@@ -55,6 +55,7 @@
                         <option value="21">中成药生产商</option>
                         <option value="22">西药生产商</option>
                         <option value="23">饮片厂</option>
+                        <option value="24">茶类公司</option>
                   </select>
              </dd>
           </dl>

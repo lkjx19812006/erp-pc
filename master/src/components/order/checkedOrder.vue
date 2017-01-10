@@ -126,8 +126,8 @@
                   <td v-if="item.sourceType==1">意向</td>
                   <td v-if="item.sourceType==2">报价</td>
                   <td v-if="item.sourceType==3">{{$t('static.sample_order')}}</td>
-                  <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Auditing}}</td>
-                  <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
+                  <td v-if="item.validate==2"><div style="background:green;color:#fff">{{item.validate | Auditing}}</div></td>
+                  <td v-if="item.validate==-2"><div style="background:red;color:#fff">{{item.validate | Auditing}}</div></td>
                   <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
                   <td>
                       <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1">

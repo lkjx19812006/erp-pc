@@ -8,6 +8,7 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
+    <language-model v-show="false"></language-model>
     <div>
         <div class="service-nav">
             <div class="clear" style="margin-top:3px;"> 
@@ -215,9 +216,10 @@
                                 key:'orgCustomerList'
                                 })">{{item.name}}</td>
                         <td>{{item.orderTotal}}</td>
-                        <td>{{item.type | customerType}}</td>
+                        <td v-if="this.language=='zh_CN'">{{item.typeDesc}}</td>
+                        <td v-if="this.language=='en'">{{item.type | customerTypeEn}}</td>
                         <td>{{item.mainContact}}</td>
-                        <td></td>
+                        <td>{{item.mainPosition}}</td>
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
@@ -325,6 +327,7 @@ import employeeModel  from  '../searchEmpInfo'
 import auditDialog from '../../../components/tips/auditDialog'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import languageModel from '../../tools/language.vue'
 import {
     initOrgCustomerlist,
     initProvince,
@@ -351,7 +354,8 @@ export default {
         employeeModel,
         tipsdialogModel,
         searchModel,
-        auditDialog
+        auditDialog,
+        languageModel
     },
     vuex: {
         getters: {
@@ -400,8 +404,8 @@ export default {
                 ctimeEnd:'',
                 audit:'',
                 total:0
-
             },
+            language:'',
             provinceParam:{
               loading:true,
               show:false,
@@ -669,6 +673,7 @@ export default {
     created() {
         this.getProvinceList(this.provinceParam);
         changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.orgClientParam);
+        this.language = localStorage.lang;
     },
     ready(){
       common('tab','table_box',1);

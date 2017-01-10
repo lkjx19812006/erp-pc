@@ -99,8 +99,6 @@
                                        </input-select>
                                    </div>
                               </div>
-                              
-                              
                            </div>
                        
                            <div class="editpageright">
@@ -236,7 +234,6 @@
                               </v-select>
                            </div>
                          </div>
-                         
                          <div class="editpage-input">
                            <label class="editlabel">{{$t('static.area')}}</label>
                            <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="{{$t('static.choose_city')}}" />
@@ -446,8 +443,8 @@ export default {
         }
     },
     methods: {
-      searchBreed:function(breedName,breedId){
-            this.breedParam.show=true;
+      searchBreed:function(breedName,breedId,eName){
+          this.breedParam.show=true;
       },
       searchCustomer:function(){
             this.empNameParam.show=true;
@@ -587,7 +584,7 @@ export default {
     },
     events:{
         breed:function(breed){
-          if(breed.eName==null){
+          if(breed.eName==null||breed.eName==""){
              this.breedInfo.breedName = breed.breedName;
              this.breedParam.breedName = breed.breedName;
           }else{

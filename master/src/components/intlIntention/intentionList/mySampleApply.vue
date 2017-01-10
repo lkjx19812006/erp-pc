@@ -76,9 +76,9 @@
                         <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.address}}</td>
                         <td>{{item.sampleDesc}}</td>
                         <td v-if="item.validate==0">{{$t('static.initial')}}</td>
-                        <td v-if="item.validate==1" style="background:#9010ff;color:#fff">{{$t('static.review_application')}}</td>
-                        <td v-if="item.validate==2" style="background:green;color:#fff">{{$t('static.approved')}}</td>
-                        <td v-if="item.validate==3" tyle="background:red;color:#fff">{{$t('static.unapproved')}}</td>
+                        <td v-if="item.validate==1"><div style="background:#9010ff;color:#fff">{{$t('static.review_application')}}</div></td>
+                        <td v-if="item.validate==2"><div style="background:green;color:#fff">{{$t('static.approved')}}</div></td>
+                        <td v-if="item.validate==3"><div tyle="background:red;color:#fff">{{$t('static.unapproved')}}</div></td>
                         <td>{{item.comments}}</td>
                         <td>{{item.ctime}}</td>
                         <td style="text-align: left;">

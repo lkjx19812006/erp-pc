@@ -90,8 +90,8 @@
           <td v-if="item.sourceType==1">意向</td>
           <td v-if="item.sourceType==2">报价</td>
           <td v-if="item.sourceType==3">{{$t('static.sample_order')}}</td>
-          <td v-if="item.validate==2" style="background:green;color:#fff">{{item.validate | Auditing}}</td>
-          <td v-if="item.validate==-2" style="background:red;color:#fff">{{item.validate | Auditing}}</td>
+          <td v-if="item.validate==2"><div style="background:green;color:#fff">{{item.validate | Auditing}}</div></td>
+          <td v-if="item.validate==-2"><div style="background:red;color:#fff">{{item.validate | Auditing}}</div></td>
           <td v-if="item.validate!=-2&&item.validate!=2">{{item.validate | Auditing}}</td>
           <td>
             <a class="operate" ><img src="/static/images/{{$t('static.img_payorder')}}.png" title="待付款" alt="待付款" @click="pendingOrder(item,$index)" /></a>
