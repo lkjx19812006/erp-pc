@@ -416,7 +416,7 @@ export default {
         personalauthModel,
         companyauthModel
     },
-	 data() {
+     data() {
         return {
             list: {all:8,cur:1},
             loadParam: {

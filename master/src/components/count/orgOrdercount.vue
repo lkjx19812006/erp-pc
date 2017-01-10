@@ -115,7 +115,7 @@
                     <tr v-for="item in initOrgOrderSortCount">
                         <td width="100px">{{$index+1}}</td>
                         <td>
-                            <span v-if="groupType=='customer_type'">{{item.customerType}}</span>
+                            <span v-if="groupType=='customer_type'">{{item.customerTypeName}}</span>
                             <span v-if="groupType=='phone_province'">{{item.phoneProvince}}</span>
                             <span v-if="groupType=='breed_id'">{{item.breedName}}</span>
                             <span v-if="groupType=='location'">{{item.location}}</span>
