@@ -3723,16 +3723,21 @@ export const createAddress = ({ dispatch }, param) => { //新增客户地址
 }
 export const createLabel = ({ dispatch }, param) => { //新增客户标签
     console.log(param)
-    const data1 = {
+    const data = {
         "label": param.label,
         "status": param.status,
-        "customerId": param.customerId
+    }
+    if(param.customerId){
+        data.customerId = param.customerId;
+    }
+    if(param.intentionId){
+        data.intentionId = param.intentionId;
     }
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.url,
         emulateHTTP: true,
-        body: data1,
+        body: data,
         emulateJSON: false,
         headers: {
             "X-Requested-With": "XMLHttpRequest",
@@ -3966,7 +3971,9 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         if (search == 'customerPhone' && param[search] !== '') {
             url += '&customerPhone=' + param.customerPhone
         }
-
+        if (search == 'label' && param[search] !== '') {
+            url += '&label=' + param.label
+        }
     }
     Vue.http({
         method: 'GET',

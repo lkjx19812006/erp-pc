@@ -823,4 +823,19 @@ Vue.filter('isnull',function(val){      //将时间的时分秒去掉
 	}
 })
 
+Vue.filter('intentionSource',function(val){      //意向来源
+	var val = val;
+	if(val==1){
+		return "pc";
+	}else if(val==2){
+		return "android";
+	}else if(val==3){
+		return "weixin";
+	}else if(val==4){
+		return "ios";
+	}else{
+		return "其他";
+	}
+})
+
 

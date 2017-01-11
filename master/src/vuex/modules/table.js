@@ -1048,11 +1048,9 @@ const mutations = {
         state.basicBaseList[data.key].splice(data.sub, 1);
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
-      if(data.key=='labels'||data.key=='locals'||data.key=='specs'||data.key=='alias'||data.key=='units'){
-          
-      }else {
+
+      /*if(data.key=='labels'||data.key=='locals'||data.key=='specs'||data.key=='alias'||data.key=='units'){*/ 
         state[data.headline][data.key].arr.splice(data.sub, 1);
-      }
 
     },
     [DELETE_SHOW_STATUE](state, data) { //删除枚举
@@ -1327,7 +1325,15 @@ const mutations = {
         state.basicBaseList.addressList.unshift(temp);
 
     },
-    [ADD_LABEL_DATA](state, data) { // 新增客户标签
+    [ADD_LABEL_DATA](state, data) { // 新增客户标签(意向标签)
+        if(data.url=="/intention/insertLabel"){
+            state.basicBaseList.intentionDetail.labels.unshift({
+              "label": data.label,
+              "status": 1,
+              "intentionId":data.intentionId,
+              "id":data.id
+            });
+        }
         state.clientDetail[data.key].arr.unshift({
             "label": data.label,
             "remark": data.remark,
