@@ -255,7 +255,7 @@ export default {
     margin-top:0px;
 }
  #table_box  table th,#table_box  table td{
-    width: 180px;
-    min-width: 180px;
+    width: 213px;
+    min-width: 210px;
 }
 </style>

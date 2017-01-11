@@ -2512,6 +2512,7 @@ export const saveAlias = ({ dispatch }, param, id) => { //新增药材别名
         }
     }).then((res) => {
         console.log('别名添加成功')
+        param.callback(res.json().msg);
         param.id = res.json().result.id;
         param.breedId = id;
         dispatch(types.ADDSPEC_DATA, param);

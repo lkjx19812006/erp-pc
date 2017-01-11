@@ -204,7 +204,7 @@
                                                 <td>{{item.comment}}</td>
                                                 <td>{{item.ctime}}</td>
                                                 <td v-if="param.contact=='/order/myList'">
-                                                    <a class="operate" v-if="item.type==1&&item.validate==0&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
+                                                    <a class="operate" v-if="item.type==1&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,
@@ -228,7 +228,7 @@
                                                         })"> 
                                                     <img src="/static/images/apply.png"  style="width:47px" />
                                                     </a>
-                                                    <a class="operate" v-if="item.type==0&&item.validate==0&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
+                                                    <a class="operate" v-if="item.type==0&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,
@@ -251,7 +251,7 @@
                                                         })"> 
                                                     <img src="/static/images/payorder.png"  style="width:38px" />
                                                     </a>
-                                                    <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==3&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
+                                                    <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,
@@ -274,7 +274,7 @@
                                                             titles:'重新申请支付',
                                                             link:paymentAudit
                                                         })">重新申请支付</button>
-                                                    <a class="operate" v-if="item.type==1&&item.validate==3&&initOrderDetail.orderStatus==item.orderStatus" @click="applyInfo({
+                                                    <a class="operate" v-if="item.type==1&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                             show:true,
                                                             sub:$index,
                                                             bizId:item.orderId,

@@ -223,7 +223,7 @@
                                 key:'orderDetail',
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'
-                        })" v-if="item.orderStatus==20&&item.type==1" style="background:#fff;color:#eea236;padding:2px 4px;font-size: 12px;">申请收款
+                        })" v-if="(item.orderStatus==20||item.orderStatus==30)&&item.type==1" style="background:#fff;color:#eea236;padding:2px 4px;font-size: 12px;">申请收款
                         </button>
                         <!-- 销售订单发货流程start-->
                         <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">申请发货
