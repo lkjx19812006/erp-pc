@@ -4,6 +4,7 @@
   <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
   <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
   <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
+  <label-model :param="labelParam" v-if="labelParam.show"></label-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
         <div class="top-title">
@@ -150,7 +151,18 @@
                                     <div class="editlabel">备注：</div>
                                 </div>
 
-                                <div></div>
+                                <div class="client-detailInfo col-md-12 col-xs-12">
+                                  {{$t('static.label')}}：<Tag color="blue" v-for="item in initIntentionDetail.labels" closable @on-close="deleteLabel(item,$index)">{{item.label}}</Tag>
+                                    <i-button icon="ios-plus-empty" type="dashed" size="small" @click="newlabel({
+                                             intentionId:param.id,
+                                             show:true,
+                                             label:'',
+                                             status:'',
+                                             link:createLabel,
+                                             url:'/intention/insertLabel',
+                                             key:'labels'
+                                             })">添加标签</i-button>
+                                </div>
                                 
                             </div>
                         </div>
@@ -357,13 +369,16 @@ import tipsdialogModel  from '../tipsDialog'
 import createorderModel  from './createOrder'
 import editmsgModel from './editMsg'
 import pictureModel from '../tips/pictureDialog'
+import labelModel from './createLabel'
 import{
     initIntentionDetail,
     initLogin
 } from '../../vuex/getters'
 import {
     editintentInfo,
-    getIntentionDetail
+    getIntentionDetail,
+    createLabel,
+    addrDel
 } from '../../vuex/actions'
 export default {
     components: {
@@ -372,7 +387,8 @@ export default {
         createorderModel,
         editmsgModel,
         trackingModel,
-        pictureModel
+        pictureModel,
+        labelModel
     },
     data() {
         return {
@@ -400,6 +416,14 @@ export default {
             pictureParam:{
               show:false,
               img:''
+            },
+            labelParam:{
+              show:false
+            },
+            delLabelParam:{
+              id:'',
+              sub:'',
+              url:'/intention/deleteLabel/',
             },
             orderParam:{
                 show:false,
@@ -460,7 +484,9 @@ export default {
         },
         actions:{
             editintentInfo,
-            getIntentionDetail
+            getIntentionDetail,
+            createLabel,
+            addrDel
         }
     },
     methods: {
@@ -537,6 +563,14 @@ export default {
         this.tipsParam.show=true;
         this.tipsParam.name=name;
         this.tipsParam.alert = true;
+      },
+      newlabel:function(item){
+        this.labelParam = item;
+      },
+      deleteLabel(item,index){
+          this.delLabelParam.id = item.id;
+          this.delLabelParam.sub = item.index;
+          this.addrDel(this.delLabelParam);
       }
     },
     created(){
