@@ -42,117 +42,42 @@
                                 </div>
                             </div>
                             <div class="clearfix">
-                              <div class="editlabel">基本信息:</div>
+                              <label class="editlabel">基本信息:</label>
                             </div>  
                             <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-4 col-xs-6">
-                                    <div class="editlabel">客户名称:{{initIntentionDetail.customerName}}</div>
-                                </div>
-                                
-                                <div class="client-detailInfo col-md-4 col-xs-6">
-                                    <div class="editlabel">客户手机号:{{initIntentionDetail.customerPhone}}</div>
-                                </div>
-                                
-                                <div class="client-detailInfo col-md-4 col-xs-6">
-                                    <div class="editlabel" v-if="initIntentionDetail.type==0&&param.especial==1">类型:紧急求购</div>
-                                    <div class="editlabel" v-if="initIntentionDetail.type==1&&param.especial==1">类型:低价资源</div>
-                                    <div class="editlabel" v-if="initIntentionDetail.especial==0">类型:普通</div>
-                                </div>
-                                
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">品种名称:{{initIntentionDetail.breedName}}</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">数量:{{initIntentionDetail.number}}</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">价格:{{initIntentionDetail.price}}元/{{initIntentionDetail.unit}}</div>
-                                </div>
-                                
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">规格要求：{{initIntentionDetail.spec}}</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">产地要求：{{initIntentionDetail.location}}</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">质量要求：{{initIntentionDetail.quality}}</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel" v-if="!initIntentionDetail.sampling">样品信息:不提供样品</div>
-                                    <div class="editlabel" v-else>样品信息:{{initIntentionDetail.sampleNumber}}{{initIntentionDetail.sampleUnit}} {{initIntentionDetail.sampleAmount}}元</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">国家：{{initIntentionDetail.country}}</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">交收地(省/市/区)：{{initIntentionDetail.province}} {{initIntentionDetail.city}} {{initIntentionDetail.district}}</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">预付比例:{{param.advance}}</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">发票说明:{{initIntentionDetail.invoic}}</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">看货说明:{{initIntentionDetail.visit}}</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" v-if="param.type===0">
-                                    <div class="editlabel">报价人数:{{initIntentionDetail.offerNumber}}</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" v-if="param.type===0">
-                                    <div class="editlabel">报价平均价格:{{initIntentionDetail.offerVprice}}元/{{initIntentionDetail.unit}}</div>
-                                </div>
-          
-                                <div class="client-detailInfo col-md-4 col-xs-6" v-if="param.type===0">
-                                    <div class="editlabel">供货总量:{{initIntentionDetail.offerTotal}}{{initIntentionDetail.unit}}</div>
-                                </div>
-                                
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">上下架:{{initIntentionDetail.onSell | onsell}}
-                                      <span v-if="initIntentionDetail.onSell==2">({{initIntentionDetail.shelveTime}})</span>
-                                      <span v-if="initIntentionDetail.onSell==4">({{initIntentionDetail.unshelveTime}})</span>
-                                    </div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">发布时间：{{initIntentionDetail.pubdate}}</div>
-                                </div>
-
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">过期时间：{{initIntentionDetail.duedate}}</div>
-                                </div>
-                                
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">审核状态：{{initIntentionDetail.validate | intentionAudit}}({{initIntentionDetail.description}})</div>
-                                </div>
-                               
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">来源：{{initIntentionDetail.source | intentionSource}}</div>
-                                </div>
-                                 
-                                <div class="client-detailInfo col-md-4 col-xs-6" >
-                                    <div class="editlabel">归属业务员：{{initIntentionDetail.employeeName}}</div>
-                                </div>
-                    
-                                <div class="client-detailInfo col-md-12 col-xs-12" >
-                                    <div class="editlabel">备注：</div>
-                                </div>
+                                <mg-label title="姓名">{{initIntentionDetail.customerName}}</mg-label>
+                                <mg-label title="客户手机号">{{initIntentionDetail.customerPhone}}</mg-label>
+                                <mg-label title="类型"  v-if="initIntentionDetail.type==0&&param.especial==1">紧急求购</mg-label>
+                                <mg-label title="类型" v-if="initIntentionDetail.type==1&&param.especial==1">低价资源</mg-label>
+                                <mg-label title="类型" v-if="initIntentionDetail.especial==0">普通</mg-label>
+                                <mg-label title="品种名称">{{initIntentionDetail.breedName}}</mg-label>
+                                <mg-label title="数量">{{initIntentionDetail.number}}</mg-label>
+                                <mg-label title="价格">{{initIntentionDetail.price}}元/{{initIntentionDetail.unit | Unit}}</mg-label>
+                                <mg-label title="规格要求">{{initIntentionDetail.spec}}</mg-label>
+                                <mg-label title="产地要求">{{initIntentionDetail.location}}</mg-label>
+                                <mg-label title="质量要求">{{initIntentionDetail.quality}}</mg-label>
+                                <mg-label title="样品信息"  v-if="initIntentionDetail.sampling==0">不提供样品</mg-label>
+                                <mg-label title="样品信息" v-if="initIntentionDetail.sampling==1">一份样品{{initIntentionDetail.sampleNumber}}{{initIntentionDetail.sampleUnit| Unit}}，总共{{initIntentionDetail.sampleAmount}}元</mg-label>
+                                <mg-label title="国家">{{initIntentionDetail.country}}</mg-label>
+                                <mg-label title="交收地(省/市/区)">{{initIntentionDetail.province}} {{initIntentionDetail.city}} {{initIntentionDetail.district}} {{initIntentionDetail.address}}</mg-label>
+                                <mg-label title="预付比例">{{initIntentionDetail.advance | advanced}}</mg-label>
+                                <mg-label title="发票说明">{{initIntentionDetail.invoic | invoicstate}}</mg-label>
+                                <mg-label title="看货说明">{{initIntentionDetail.visit | visitstate}}</mg-label>
+                                <mg-label title="报价人数" v-if="param.type===0">{{initIntentionDetail.offerNumber}}</mg-label>
+                                <mg-label title="报价平均价格" v-if="param.type===0">{{initIntentionDetail.offerVprice}}元/{{initIntentionDetail.unit | Unit}}</mg-label>
+                                <mg-label title="供货总量" v-if="param.type===0">{{initIntentionDetail.offerTotal}}{{initIntentionDetail.unit|Unit}}</mg-label>
+                                <mg-label title="上下架">{{initIntentionDetail.onSell | onsell}}<span v-if="initIntentionDetail.onSell==2">({{initIntentionDetail.shelveTime}})</span>
+                                <span v-if="initIntentionDetail.onSell==4">({{initIntentionDetail.unshelveTime}})</span>
+                                </mg-label>
+                                <mg-label title="发布时间">{{initIntentionDetail.pubdate}}</mg-label>
+                                <mg-label title="过期时间">{{initIntentionDetail.duedate}}</mg-label>
+                                <mg-label title="审核状态">{{initIntentionDetail.validate | intentionAudit}}({{initIntentionDetail.description}})</mg-label>
+                                <mg-label title="来源">{{initIntentionDetail.source | intentionSource}}</mg-label>
+                                <mg-label title="归属业务员">{{initIntentionDetail.employeeName}}</mg-label>
+                                <mg-label title="来源">{{initIntentionDetail.source | intentionSource}}</mg-label>
 
                                 <div class="client-detailInfo col-md-12 col-xs-12">
-                                  {{$t('static.label')}}：<Tag color="blue" v-for="item in initIntentionDetail.labels" closable @on-close="deleteLabel(item,$index)">{{item.label}}</Tag>
+                                    <label style="display:inline;font-size:14px;">{{$t('static.label')}}：</label><Tag color="blue" v-for="item in initIntentionDetail.labels" closable @on-close="deleteLabel(item,$index)">{{item.label}}</Tag>
                                     <i-button icon="ios-plus-empty" type="dashed" size="small" @click="newlabel({
                                              intentionId:param.id,
                                              show:true,
@@ -168,15 +93,12 @@
                         </div>
                     </article>
                 </div>
-
                 <div class="col-md-12 client-detail" @click.stop="">
                     <h4 class="section_title">相关</h4>
                     <article>
                         <div class="panel-group">
-
                           <div class="panel panel-default" v-if="param.type===0">
                               <div class="panel-heading" v-cloak>
-                             
                                 <h4 class="panel-title clearfix" @click="enfoldment({
                                             link:initIntentionDetail.offers,
                                             crete:'offers'
@@ -233,7 +155,6 @@
                                   </div>
                               </div>
                           </div>
-
                           <div class="panel panel-default">
                               <div class="panel-heading" v-cloak>
                                   <h4 class="panel-title clearfix" @click="enfoldment({
@@ -289,9 +210,6 @@
                                   </div>
                               </div>
                           </div>
-
-
-
                           <div class="panel panel-default">
                             <div class="panel-heading" v-cloak>
                               <h4 class="panel-title clearfix" @click="enfoldment({
@@ -370,6 +288,7 @@ import createorderModel  from './createOrder'
 import editmsgModel from './editMsg'
 import pictureModel from '../tips/pictureDialog'
 import labelModel from './createLabel'
+import mgLabel from '../mguan/mgLabel.vue'
 import{
     initIntentionDetail,
     initLogin
@@ -388,7 +307,8 @@ export default {
         editmsgModel,
         trackingModel,
         pictureModel,
-        labelModel
+        labelModel,
+        mgLabel
     },
     data() {
         return {
@@ -629,9 +549,6 @@ section {
     padding: 3px;
     font-size: 14px;
     cursor: pointer;
-}
-section article {
-    margin-top: 30px;
 }
 .modal_overall {
     width: 60%;

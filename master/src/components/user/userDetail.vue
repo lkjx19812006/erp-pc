@@ -53,21 +53,21 @@
                         <div class="panel-group">
                           <div class="panel panel-default" style="border:none">
                             <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                              <div class="col-md-3 col-sm-4 col-xs-6">姓名:{{initUserDetail.fullname}}</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6">昵称:{{initUserDetail.nickname}}</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6">手机（归属地）:{{initUserDetail.phone}}（{{initUserDetail.province}}）</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6">QQ:{{initUserDetail.qq}}</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6">公司:{{initUserDetail.company}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6"><label>姓名：</label>{{initUserDetail.fullname}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6"><label>昵称：</label>{{initUserDetail.nickname}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6"><label>手机（归属地）：</label>{{initUserDetail.phone}}<span v-if="initUserDetail.province!==''">（{{initUserDetail.province}}）</span></div>
+                              <div class="col-md-3 col-sm-4 col-xs-6"><label>QQ：</label>{{initUserDetail.qq}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6"><label>公司：</label>{{initUserDetail.company}}</div>
                               <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.client_email')}}:{{initUserDetail.email}}</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6">经营类型:{{initUserDetail.bizTypeName}}</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6">来源:{{initUserDetail.sourceType}}</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6">主营业务:{{initUserDetail.bizMain}}</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6">身份证号:{{initUserDetail.idnumber}}</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6">重要等级:{{importance[initUserDetail.importance]}}</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6">审核状态:{{initUserDetail.auditResult}}</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6" v-if="initUserDetail.transStatus==1">划转状态:已划转</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6" v-else>划转状态:未划转</div>
-                              <div class="col-md-3 col-sm-4 col-xs-6">会员星级:{{grade[initUserDetail.grade]}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6"><label>经营类型：</label>{{initUserDetail.bizTypeName}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6"><label>来源：</label>{{initUserDetail.sourceType}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6"><label>主营业务：</label>{{initUserDetail.bizMain}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6"><label>身份证号：</label>{{initUserDetail.idnumber}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6"><label>重要等级：</label>{{importance[initUserDetail.importance]}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6"><label>审核状态：</label>{{initUserDetail.auditResult}}</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6" v-if="initUserDetail.transStatus==1"><label>划转状态：</label>已划转</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6" v-if="initUserDetail.transStatus!==1"><label>划转状态：</label>未划转</div>
+                              <div class="col-md-3 col-sm-4 col-xs-6"><label>会员星级：</label>{{grade[initUserDetail.grade]}}</div>
                                <div class="col-md-12 col-sm-12 col-xs-12">{{$t('static.comment')}}:{{initUserDetail.comment}}</div>
                             </ul>
                           </div>

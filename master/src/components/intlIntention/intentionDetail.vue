@@ -85,7 +85,6 @@
                                     <label class="editlabel">{{$t('static.issued_time')}}：</label>
                                     <span>{{initIntlIntentionDetail.ctime}}</span>
                                 </div>
-
                             </div>
 
                         </div>
