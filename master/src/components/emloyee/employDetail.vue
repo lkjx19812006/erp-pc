@@ -3,124 +3,58 @@
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div> 
     <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
         <div class="client-section clearfix" v-cloak>
-            <div  class="top-title" @click="param.show=false">
+            <div class="top-title" @click="param.show=false">
                 <span class="glyphicon glyphicon-remove-circle"  style="font-size:28px"></span>
             </div>
-            <validator name="validation">
-                <!-- <div  class="section_title clearfix">
-                    <span style="font-size:18px;color:#FA6705">{{param.name}}</span>
-                    <button class="new_btn transfer" v-if="$validation.valid" @click="saveSucc(param)">保存</button> 
-                    <button class="new_btn transfer" v-else disabled="disabled">保存</button> 
-                
-                </div> -->
-                <div class="edit-left col-md-8 col-xs-12" @click.stop="">
-
-                    <div class="section_title clearfix col-md-11 col-xs-12">
-                        <span style="font-size:14px">基本信息</span>
-                    </div>
-
-                    <div class="clearfix col-md-11 col-xs-12">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">姓名</label>
-                            <input type="text" class="form-control edit-input" v-model="param.name" value="{{param.name}}" disabled="disabled"/>
+            <!-- <div  class="section_title clearfix">
+                <span style="font-size:18px;color:#FA6705">{{param.name}}</span>
+                <button class="new_btn transfer" v-if="$validation.valid" @click="saveSucc(param)">保存</button> 
+                <button class="new_btn transfer" v-else disabled="disabled">保存</button> 
+            </div> -->
+            <div class="col-md-12 col-xs-12" >
+                <div class="section_title  col-md-12 col-xs-12 clearfix">
+                    <span style="font-size:14px">基本信息</span>
+                </div>
+                <div @click.stop="">
+                    <div class="clearfix col-md-12 col-xs-12" style="padding-top:10px;">
+                        <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6" ><label>姓名:</label>{{param.name}}</div>
+                        <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6"><label>英文名:</label>{{param.ename}}
                         </div>
-                        <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                            <label class="editlabel">英文名</label>
-                            <input type="text" class="form-control edit-input"  v-model="param.ename" value="{{param.ename}}" disabled="disabled"/>
+                        <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6"><label>工号:</label>{{param.no}}</div>
+                        <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6"><label>部门:</label>{{param.orgName}}
                         </div>
-                    </div>
-                    <div class="clearfix col-md-11 col-xs-12">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">工号</label>
-                            <input type="text" class="form-control edit-input" v-model="param.no" value="{{param.no}}" disabled="disabled"/>
+                        <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6"><label>职位:</label>{{param.position}}</div>
+                        <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6"><label>手机号:</label>{{param.mobile}}
                         </div>
-                        <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                            <label class="editlabel">部门</label>
-                             <input type="text" class="form-control edit-input" v-model="param.orgName" value="{{param.orgName}}" disabled="disabled"/>
+                        <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6"><label>分机号:</label>{{param.extno}}</div>
+                        <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6"><label>是否在职:</label>{{param.leave | leaveTime}}
+                        </div>
+                        <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6"><label>入职时间:</label>{{param.entrydate}}</div>
+                        <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6"><label>离职时间:</label>{{param.leavedate}}
                         </div>
                     </div>
-                    <div class="clearfix col-md-11 col-xs-12">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">职位</label>
-                             <input type="text" class="form-control edit-input" v-model="param.position" value="{{param.position}}" disabled="disabled"/>
-                        </div>
-                        <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                            <label class="editlabel">手机号</label>
-                            <input type="text" class="form-control edit-input" v-model="param.mobile" value="{{param.mobile}}" disabled="disabled"/>
-                        </div>
-                    </div>
-                    <div class="clearfix col-md-11 col-xs-12">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">分机号</label>
-                             <input type="text" class="form-control edit-input"   v-model="param.extno" value="{{param.extno}}" disabled="disabled"/>
-                        </div>
-                        <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                            <label class="editlabel">是否在职</label>
-                            <input type="text" class="form-control edit-input"  v-model="param.leave" value="{{param.leave | leaveTime}}" disabled="disabled"/>
-                        </div>
-                    </div>
-                    <!-- <div class="clearfix col-md-10 col-xs-12">
-                        <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                            <label class="editlabel">入职时间</label>
-                            <div class="search_input">
-                                <mz-datepicker :time.sync="param.entrydate" format="yyyy-MM-dd HH:mm:ss">
-                                </mz-datepicker>
-                            </div>
-                        </div>
-                        <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                            <label class="editlabel">离职时间</label>
-                            <div class="search_input">
-                                <mz-datepicker :time.sync="param.leavedate" format="yyyy-MM-dd HH:mm:ss">
-                                </mz-datepicker>
-                            </div>
-                        </div> 
-                    </div> -->
                     <div class="clearfix col-md-11 col-xs-12">
                         <div class="client-detailInfo pull-left col-md-12 col-xs-12">
                             <label class="editlabel">角色</label>
                             <div  class="clerafix">
-                                    <div class="pull-left role clerafix col-md-3 col-xs-3" v-for="item in initRoleList" >
-                                        <input type="checkbox" class="checkbox_unselect"  
-                                        v-model="item.checked" />
-                                        <label for="admin">{{item.cname}}</label>
-                                    </div>
-                                    
+                                <div class="pull-left role clerafix col-md-3 col-xs-3" v-for="item in initRoleList" >
+                                    <input type="checkbox" class="checkbox_unselect"  
+                                    v-model="item.checked" />
+                                    <label for="admin">{{item.cname}}</label>
                                 </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class=" col-md-4 col-xs-12 pull-right">
-                         <span class="section_title clearfix col-md-12 col-xs-12" style="margin-top:15px;font-size:14px;">工作时间信息</span>
-                </div>
-                <div class="col-md-4 col-xs-12 pull-right" @click.stop="">
-                     <div class="edit-right clearfix">
-                        <div class="client-detailInfo pull-left col-md-11 col-xs-12">
-                            <label class="editlabel">入职时间</label>
-                            <div class="search_input">
-                                <mz-datepicker :time.sync="param.entrydate" format="yyyy-MM-dd HH:mm:ss">
-                                </mz-datepicker>
-                            </div>
-                        </div>
-                        <div class="client-detailInfo pull-left col-md-11 col-xs-12">
-                            <label class="editlabel">离职时间</label>
-                            <div class="search_input" style="width:350px">
-                                <mz-datepicker :time.sync="param.leavedate" format="yyyy-MM-dd HH:mm:ss">
-                                </mz-datepicker>
                             </div>
                         </div>
                     </div>
-
-                    
-
                 </div>
-            </validator>   
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 import filter from '../../filters/filters'
 import tipsdialogModel  from '../tipsDialog'
 import calendar from '../calendar/vue.datepicker'
-import {
+    import {
     initRoleList
 } from '../../vuex/getters'
 import {
@@ -226,8 +160,12 @@ input{
     left: 0;
     cursor: pointer;
 }
-.section_title{
-    padding-top:6px;
+.client-detailInfo{
+    padding: 5PX;
+    font-size: 14px;
+}
+.client-detailInfo label{
+    display: inline-block;
 }
 .client-detailInfo img {
     width: 100px;

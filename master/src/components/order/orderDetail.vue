@@ -22,28 +22,37 @@
                         <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
                         <span class="navbar-brand navbar-name">{{initOrderDetail.customerName}}</span>
                     </div>
-                   <!--  <ul class="nav navbar-nav navbar-right" style="margin-top:8px;margin-right:20px;">
-                       <li>
-                           <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单已提交，请审核！')" v-if="initOrderDetail.orderStatus==0&&param.contact=='/order/myList'">处理中</button>
-                           <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='{{$t('static.related_information')}}订单正在处理，商家将进行电话确认，请保持电话通畅！',param.sales=true)" v-if="initOrderDetail.orderStatus==10&&param.contact=='/order/myList'">等待处理</button>
-                           <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='订单处理完成，等待买家付款！',param.payment=true)" v-if="initOrderDetail.orderStatus==20&&param.contact=='/order/myList'">待客户付款</button>
-                           <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已支付，请等待商家发货！',param.sendoff=true)" v-if="initOrderDetail.orderStatus==40&&param.contact=='/order/myList'">待发货</button>
-                           <button type="button" class="btn btn-base" @click="pendingOrder(param,param.tips='您的订单已发货，请注意保持电话通畅，等待收货确认！',param.express=true)" v-if="initOrderDetail.orderStatus==50&&param.contact=='/order/myList'">待客户收货</button>
-                   
-                           <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus>=60"  @click="pendingOrder(param,param.tips='买家已收货，订单已完成！')">已完成</button>
-                           <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-1" @click="pendingOrder(param,param.tips='订单已取消！')">已取消</button>
-                           <button type="button" class="btn btn-base"  v-if="initOrderDetail.orderStatus==-2" @click="pendingOrder(param,param.tips='订单已过期！')">已过期</button>
-                       </li>
-                   </ul> -->
                 </div>
             </nav>
         </div>
         <section>
             <div class="client-section clearfix" >
-                <div class="col-md-8 client-detail">
-                    <h4 class="section_title">{{$t('static.related_information')}}</h4>
+                <div class="col-md-12 client-detail">
+                    <h4 class="section_title">{{$t('static.details')}}</h4>
                     <article @click.stop="">
                         <div class="panel-group">
+                            <!-- 详情 -->
+                            <div class="panel panel-default" style="border:none">
+                                <ul class="clearfix" style="font-size: 14px;padding:5px 0">
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.order_no')}}:{{initOrderDetail.no}}</div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.order_type')}}:{{type[initOrderDetail.type]}}</div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.breed')}}:{{initOrderDetail.goodsDesc}}</div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.consignee_name')}}:{{initOrderDetail.consignee}}</div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.consignee_phone')}}:{{initOrderDetail.consigneePhone}}</div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.country')}}:{{initOrderDetail.country}}</div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.province')}}/{{$t('static.city')}}/{{$t('static.area')}}:{{initOrderDetail.province}} {{initOrderDetail.city}} {{initOrderDetail.district}}</div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.detailed_address')}}:{{initOrderDetail.consigneeAddr}}</div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.total')}}:{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.sundry_fees')}}（{{$t('static.fee_explain')}}）:{{initOrderDetail.incidentals}}<span v-if="initOrderDetail.incidentalsDesc!=''">（{{initOrderDetail.incidentalsDesc}}）</span></div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.preferential')}}（{{$t('static.discount_note')}}）:{{initOrderDetail.preferential}}<span v-if="initOrderDetail.preferentialDesc!=''">（{{initOrderDetail.preferentialDesc}}）</span></div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.paid')}}:{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.wait_payment')}}:{{initOrderDetail.unpaid}}（{{initOrderDetail.currency | Currency}}）</div>
+
+                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.transcation')}}:{{initOrderDetail.ctime}}</div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">{{$t('static.comment')}}:{{initOrderDetail.description}}</div>
+                                </ul>        
+                            </div>
+                            <!-- 品种信息 -->
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -534,71 +543,7 @@
                         </div>
                     </article>
                 </div>
-                <div class="col-md-4" style="border-left: 1px solid #ddd;">
-                    <h4 class="section_title">{{$t('static.details')}}</h4>
-                    <article @click.stop="">
-                        <div class="edit-detail">
-                            <div class="clearfix">
-                                <div class="client-detailInfo  col-md-6 col-xs-12">
-                                    <label>{{$t('static.order_no')}} </label>
-                                    <input type="text" class="form-control" v-model="initOrderDetail.no" value="{{initOrderDetail.no}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo  col-md-6 col-xs-12">
-                                    <label>{{$t('static.order_type')}}</label>
-                                    <input type="text" class="form-control"   value="{{type[initOrderDetail.type]}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo  col-md-6 col-xs-12">
-                                    <label>{{$t('static.consignee_name')}}</label>
-                                    <input type="text" class="form-control"  v-model="initOrderDetail.consignee" value="{{initOrderDetail.consignee}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo   col-md-6 col-xs-12">
-                                    <label>{{$t('static.consignee_phone')}}</label>
-                                    <input type="text" class="form-control" v-model="initOrderDetail.consigneePhone" value="{{initOrderDetail.consigneePhone}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo  col-md-6 col-xs-12">
-                                    <label>{{$t('static.country')}}</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.country}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo   col-md-6 col-xs-12">
-                                    <label>{{$t('static.province')}}</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.province}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo col-md-6 col-xs-12">
-                                    <label>{{$t('static.city')}}</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.city}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo   col-md-6 col-xs-12">
-                                    <label>{{$t('static.postcodes')}}</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.zipCode}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo col-md-12">
-                                    <label>{{$t('static.detailed_address')}}</label>
-                                    <input type="text" class="form-control" value="{{initOrderDetail.consigneeAddr}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo  col-md-6 col-xs-12">
-                                    <label>{{$t('static.sundry_fees')}}</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.incidentals}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo   col-md-6 col-xs-12">
-                                    <label>{{$t('static.fee_explain')}}</label>
-                                    <input type="text" class="form-control" value="{{initOrderDetail.incidentalsDesc}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo  col-md-6 col-xs-12">
-                                    <label>{{$t('static.preferential')}}</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.preferential}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo   col-md-6 col-xs-12">
-                                    <label>{{$t('static.discount_note')}}</label>
-                                    <input type="text" class="form-control" value="{{initOrderDetail.preferentialDesc}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo  col-md-12">
-                                    <label>{{$t('static.comment')}}</label>
-                                    <input type="text" class="form-control"  value="{{initOrderDetail.comments}}" disabled="disabled"/>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+                
             </div>
         </section>
        </div>
@@ -855,7 +800,7 @@ section {
     cursor: pointer;
 }
 section article {
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 .client-section {

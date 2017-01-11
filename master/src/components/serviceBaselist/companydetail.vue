@@ -3,7 +3,7 @@
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con modal_overall" v-show="param.show">
+    <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
       <div class="cover_loading" v-if="param.id!=initCompanyDetail.id">
         <pulse-loader :loading="true" :color="color" :size="size"></pulse-loader>
       </div>
@@ -11,8 +11,8 @@
             <div @click="param.show=false" class="top-title">
                 <span class="glyphicon glyphicon-remove-circle"></span>
             </div>
-            <div class="col-md-8">
-                <h4 class="section_title">企业相关 <button v-if="!initCompanyDetail.customerId" class="new_btn transfer" @click="createCustomer({
+            <div class="col-md-12">
+                <h4 class="section_title">企业相关 <button v-if="!initCompanyDetail.customerId" class="new_btn transfer" @click.stop="createCustomer({
                           detail:'companyDetail',
                           sub:param.sub,
                           keyname:'transform',
@@ -37,7 +37,47 @@
                           countryName:'中国'
                           })">提取为客户</button>
                 </h4>
-                <div class="panel-group">
+                <div class="panel-group" @click.stop="">
+                    <div class="panel panel-default" style="border:none">
+                      <ul class="clearfix" style="font-size: 14px;padding:5px 0">
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>分类码</label>：{{initCompanyDetail.category | catestate}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>类别</label>：{{initCompanyDetail.type}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>企业名称</label>：{{initCompanyDetail.name}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>电话</label>：{{initCompanyDetail.tel}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>企业代表人</label>：{{initCompanyDetail.principal}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>所在省市</label>：{{initCompanyDetail.province}}{{initCompanyDetail.city}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>注册地址</label>：{{initCompanyDetail.address}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="initCompanyDetail.transform==0">
+                           <label>是否转为客户</label>：否
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="initCompanyDetail.transform==1">
+                            <label>是否转为客户</label>：是
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>车牌号</label>：{{initCompanyDetail.number}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>备注</label>：{{initCompanyDetail.remark}}
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                          <label>经营范围</label>：{{initCompanyDetail.bizScope}}
+                        </div>
+                      </ul>
+                    </div>
                     <div class="panel panel-default">
                         <div class="panel-heading clearfix" @click="companytoggle({
                                 link:initCompanyDetail.companyContacts,
@@ -121,7 +161,7 @@
                                                  main:item.main
                                                  },item.show=false)"><img src="/static/images/edit.png" height="18" width="30"  alt="编辑" title="编辑"/></a>
                                             <a class="operate" @click="contactDel({name:item.name,id:item.id,url:'contract',index:$index},item.show=false)" v-if="!initCompanyDetail.customerId"><img src="/static/images/del.png" height="18" width="30"  alt="删除" title="删除"/></a>
-                                                <!-- <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                        <!-- <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                 <div class="breed_action" v-show="item.show" transition="expand">
                                                    <dl>
                                                        <dt @click="updateCompany({
@@ -150,17 +190,6 @@
                                                    </dl>
                                         </div> -->
                                             </td>
-                                        </tr>
-                                    </tbody>
-                                    <tbody>
-                                        <tr>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -247,43 +276,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4" style="border-left:1px solid #ddd">
-                <h4 class="section_title">详情</h4>
-                <div class="edit-detail clearfix">
-                        <div class="client-detailInfo col-xs-12">
-                            <label>分类码:</label>
-                            <input type="text" class="form-control" value="{{initCompanyDetail.category | catestate}}" disabled=""  />
-                        </div>
-                        <div class="client-detailInfo col-xs-12">
-                            <label>类别:</label>
-                            <input type="text" class="form-control" value="{{initCompanyDetail.type}}" disabled=""  />
-                        </div>
-                        <div class="client-detailInfo  col-xs-12">
-                            <label>企业名称</label>
-                            <input type="text" class="form-control" value="{{initCompanyDetail.name}}" disabled=""  />
-                        </div>
-                        <div class="client-detailInfo  col-xs-12">
-                            <label>经营范围</label>
-                             <input type="text" class="form-control" value="{{initCompanyDetail.bizScope}}" disabled=""  />
-                        </div>
-                         <div class="client-detailInfo  col-xs-12 ">
-                            <label>企业代表人</label>
-                            <input type="text" class="form-control" value="{{initCompanyDetail.principal}}" disabled=""  />
-                        </div>
-                        <div class="client-detailInfo  col-xs-12 ">
-                            <label>所在省</label>
-                            <input type="text" class="form-control" value="{{initCompanyDetail.province}}" disabled=""  />
-                        </div>
-                        <div class="client-detailInfo  col-xs-12 ">
-                            <label>所在市</label>
-                            <input type="text" class="form-control" value="{{initCompanyDetail.city}}" disabled=""  />
-                        </div>
-                        <div class="client-detailInfo  col-xs-12 ">
-                            <label>注册地址</label>
-                            <input type="text" class="form-control" value="{{initCompanyDetail.address}}"  disabled=""  />
-                        </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 </template>
@@ -429,28 +422,10 @@ table{
     margin-right: 5px;
     font-size: 14px;
 }
-.breed_action{
-  top: 20px;
-  right: 40px;
-}
-
-.breed_action {
-    padding: 5px 0;
-}
-
-.breed_action dl {
-    margin-bottom: 0;
-}
-
-.breed_action dl dt{
-    display: block;
-    padding: 3px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-.contactSet>thead{
-    color: #fa6705;
+.new_btn{
+  border-color:#003077;
+  font-size: 14px;
+  padding: 5px 10px;
 }
 .table{
   display: table;

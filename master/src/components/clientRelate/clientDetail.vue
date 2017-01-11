@@ -70,26 +70,26 @@
 
                   <div class="panel panel-default" style="border:none">
                       <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.name')}}:{{initClientDetail.name}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.type')}}:{{initClientDetail.typeDesc}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="initClientDetail.supplier==0">{{$t('static.whether_supplier')}}:{{$t('static.no')}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="initClientDetail.supplier==1">{{$t('static.whether_supplier')}}:{{$t('static.yes')}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.classification')}}:{{initClientDetail.classifyDesc | classify}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.telephone')}}:{{initClientDetail.mainPhone}}（{{initClientDetail.phoneProvince}}{{initClientDetail.phoneCity}}）</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.client_email')}}:{{initClientDetail.email}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.country')}}:{{initClientDetail.countryName}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.province')}}/{{$t('static.city')}}:{{initClientDetail.provinceName}}{{initClientDetail.cityName}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.detailed_address')}}:{{initClientDetail.address}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.transaction_num')}}/{{$t('static.recent_contact')}}:{{initClientDetail.orderTotal}}{{initClientDetail.lastOrderTime}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.client_source')}}:{{initClientDetail.sourceType}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.department')}}/{{$t('static.salesman')}}:{{initClientDetail.orgName}}（{{initClientDetail.orgName}}）</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.create_time')}}:{{initClientDetail.ctime}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.name')}}：{{initClientDetail.name}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.type')}}：{{initClientDetail.typeDesc}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="initClientDetail.supplier==0">{{$t('static.whether_supplier')}}：{{$t('static.no')}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="initClientDetail.supplier==1">{{$t('static.whether_supplier')}}：{{$t('static.yes')}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.classification')}}：{{initClientDetail.classifyDesc | classify}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.telephone')}}：{{initClientDetail.mainPhone}}<span v-if="initClientDetail.phoneProvince!=''||nitClientDetail.phoneCity!=''">（{{initClientDetail.phoneProvince}}{{initClientDetail.phoneCity}}）</span></div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.client_email')}}：{{initClientDetail.email}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.country')}}：{{initClientDetail.countryName}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.province')}}/{{$t('static.city')}}:{{initClientDetail.provinceName}} {{initClientDetail.cityName}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.detailed_address')}}：{{initClientDetail.address}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.transaction_num')}}/{{$t('static.recent_contact')}}：{{initClientDetail.orderTotal}}{{initClientDetail.lastOrderTime}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.client_source')}}：{{initClientDetail.sourceType}}</div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.department')}}/{{$t('static.salesman')}}：{{initClientDetail.orgName}}<span v-if="initClientDetail.employeeName!==''&&initClientDetail.employeeName!==null">（{{initClientDetail.employeeName}}）</span></div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.create_time')}}：{{initClientDetail.ctime}}</div>
                         <div class="col-md-3 col-sm-4 col-xs-6" v-if="initClientDetail.blacklist==1">{{$t('static.blacklist')}}:{{initClientDetail.name}}</div>
-                        <div class="col-md-12 col-sm-12 col-xs-12">{{$t('static.business_scope')}}:{{initClientDetail.bizScope}}</div>
-                         <div class="col-md-12 col-sm-12 col-xs-12">{{$t('static.comment')}}:{{initClientDetail.comments}}</div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">{{$t('static.business_scope')}}：{{initClientDetail.bizScope}}</div>
+                         <div class="col-md-12 col-sm-12 col-xs-12">{{$t('static.comment')}}：{{initClientDetail.comments}}</div>
                       </ul>
                       <div style="font-size:14px;">
-                        <label>{{$t('static.label')}}</label>：<Tag color="blue" v-for="item in initClientDetail.labels.arr" closable @on-close="deleteLabel(item,$index)">{{item.label}}</Tag>
+                          <label>{{$t('static.label')}}</label>：<Tag color="blue" v-for="item in initClientDetail.labels.arr" closable @on-close="deleteLabel(item,$index)">{{item.label}}</Tag>
                           <i-button icon="ios-plus-empty" type="dashed" size="small" @click="newlabel({
                                    customerId:param.id,
                                    id:param.id,
@@ -1354,10 +1354,6 @@ section article {
 }
 .client-detailInfo img {
     margin-right: 8px;
-}
-.panel-default ul > div{
-   padding:5px 0; 
-   white-space: normal;
 }
 
 </style>

@@ -594,9 +594,7 @@ const state = {
             show: false
         },
         "labels": {
-            arr: [
-                { "id": 1, "customerId": 10, "label": "dfhidfhi", "status": 0, "show": true }
-            ],
+            arr: [],
             show: false
         },
         "intention":{
@@ -1057,7 +1055,12 @@ const mutations = {
         state.basicBaseList[data.key].splice(data.sub, 1);
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
+      if(data.key=='labels'){
+          console.log('yyyyy')
+      }else {
         state[data.headline][data.key].arr.splice(data.sub, 1);
+      }
+
     },
     [DELETE_SHOW_STATUE](state, data) { //删除枚举
         state.systemBaseList.enumlist.splice(data.sub, 1);
