@@ -42,7 +42,7 @@
                                     <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.country')}}:{{initOrderDetail.country}}</div>
                                     <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.province')}}/{{$t('static.city')}}/{{$t('static.area')}}:{{initOrderDetail.province}} {{initOrderDetail.city}} {{initOrderDetail.district}}</div>
                                     <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.detailed_address')}}:{{initOrderDetail.consigneeAddr}}</div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.total')}}:{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6" style="color:red">{{$t('static.transcation_amount')}}:{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</div>
                                     <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.sundry_fees')}}（{{$t('static.fee_explain')}}）:{{initOrderDetail.incidentals}}<span v-if="initOrderDetail.incidentalsDesc!=''">（{{initOrderDetail.incidentalsDesc}}）</span></div>
                                     <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.preferential')}}（{{$t('static.discount_note')}}）:{{initOrderDetail.preferential}}<span v-if="initOrderDetail.preferentialDesc!=''">（{{initOrderDetail.preferentialDesc}}）</span></div>
                                     <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.paid')}}:{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</div>
@@ -63,7 +63,7 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" >
                                           {{$t('static.commodity_order')}}（{{initOrderDetail.goods.arr.length}}）
                                         </a>
-                                        <span class="pull-right" style="color:#fa6705;line-height:27px;">{{$t('static.total')}}：{{initOrderDetail.goods.total}}元</span>
+                                        <span class="pull-right" style="color:#000;line-height:27px;font-size: 13px;">{{$t('static.breed')}}{{$t('static.total')}}：{{initOrderDetail.goods.total}}元</span>
                                         <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
                                     </h4>
                                 </div>
@@ -159,7 +159,8 @@
                                             <tr v-for="item in initOrderDetail.stages.arr">
                                                 <td v-if="item.type==0">付款</td>
                                                 <td v-if="item.type==1">收款</td>
-                                                <td colspan="6">{{item.orderStatus | orderDescript}}支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
+                                                <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}}立即支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
+                                                <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}}的{{item.extra}}天内支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
                                                 <td>{{item.description}}</td>
                                                 <td v-if="item.validate==0" style="color:#91a0ff;cursor:pointer" @click="apply_Record({
                                                     sub:$index,
