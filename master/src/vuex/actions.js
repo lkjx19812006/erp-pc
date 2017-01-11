@@ -3970,7 +3970,9 @@ export const getIntentionList = ({ dispatch }, param) => { //意向信息列表�
         if (search == 'customerPhone' && param[search] !== '') {
             url += '&customerPhone=' + param.customerPhone
         }
-
+        if (search == 'label' && param[search] !== '') {
+            url += '&label=' + param.label
+        }
     }
     Vue.http({
         method: 'GET',

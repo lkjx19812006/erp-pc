@@ -5,7 +5,7 @@
     <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <div>
-        <div class="service-nav clearfix" style="padding-bottom:10px;">
+        <div class="service-nav clearfix">
             <div class="col-xs-9 my_order_search">
               <div class="ordertel_search clearfix" style="sfloat:left;width:180px" >
                 <select class="form-control " v-model="loadParam.categoryId" @change="categoryNameSearch()">
@@ -33,7 +33,8 @@
             </div>
             <table class="table table-hover table_color table-striped" v-cloak id="tab">
                 <thead>
-                    <tr>
+                    <tr> 
+                        <th>创建时间</th>  
                         <th>编码</th>
                         <th>品种名称</th>
                         <th>品种类别</th>
@@ -45,6 +46,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initBreedlist">
+                        <td>{{item.ctime}}</td>
                         <td>{{item.code | breedcode}}</td>
                         <td  class="underline"  @click="editBreed(item.id)">{{item.name}}</td>
                         <td v-if="breedCategory[item.categoryId]">{{breedCategory[item.categoryId]}}</td>
@@ -253,7 +255,7 @@ export default {
     margin-top:0px;
 }
  #table_box  table th,#table_box  table td{
-    width: 242px;
-    min-width: 242px;
+    width: 180px;
+    min-width: 180px;
 }
 </style>

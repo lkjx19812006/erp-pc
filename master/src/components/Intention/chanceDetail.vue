@@ -424,6 +424,7 @@ export default {
               id:'',
               sub:'',
               url:'/intention/deleteLabel/',
+              key:'labels'
             },
             orderParam:{
                 show:false,
@@ -566,6 +567,7 @@ export default {
       },
       newlabel:function(item){
         this.labelParam = item;
+        this.labelParam.callback = this.callback;
       },
       deleteLabel(item,index){
           this.delLabelParam.id = item.id;

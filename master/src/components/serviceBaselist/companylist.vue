@@ -5,7 +5,7 @@
     <update-model :param="updateParam" v-if="updateParam.show"></update-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <div>
-        <div class="service-nav" style="padding-bottom:5px;">
+        <div class="service-nav">
             <div class="clearfix">
                 <div class="pull-right" >
                     <button class="btn btn-primary transfer"   @click="selectSearch()">刷新</button>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="order_table" v-cloak id="table_box">
-             <div class="cover_loading">
+            <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
             <table class="table table-hover table_color table-striped" id="tab">

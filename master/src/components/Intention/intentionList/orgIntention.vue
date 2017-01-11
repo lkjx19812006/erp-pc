@@ -42,6 +42,19 @@
                       <input type="text" class="form-control" v-model="loadParam.location" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                  </dd>
               </dl>
+
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top" style="letter-spacing:3px" >标签：</dt>
+                 <dd class="left">
+                      <input-select
+                         :value.sync="loadParam.label"
+                         :prevalue="loadParam.label"
+                         :options="labels"
+                         placeholder="标签"
+                       >
+                      </input-select>
+                 </dd>
+              </dl>
               
               <dl class="clear left transfer">
                  <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
@@ -403,6 +416,8 @@ import supdemModel from '../supplyDemand'
 import searchModel from '../intentionSearch'
 import breedsearchModel from '../breedsearch'
 import onsellModel from '../../../components/tips/auditDialog'
+import inputSelect from '../../tools/vueSelect/components/inputselect'
+import commonArray from '../../tools/commonArray'
 import common from  '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import {
@@ -430,7 +445,8 @@ export default {
         supdemModel,
         searchModel,
         breedsearchModel,
-        onsellModel
+        onsellModel,
+        inputSelect
     },
     vuex: {
         getters: {
@@ -471,8 +487,10 @@ export default {
                 breedName:'',
                 customerName:'',
                 customerPhone:'',
-                location:''
+                location:'',
+                label:''
             },
+            labels:[],
             supdemParam:{
                 show:false,
                 id:'',
@@ -741,6 +759,7 @@ export default {
             this.loadParam.breedName='';
             this.loadParam.customerPhone='';
             this.loadParam.location='';
+            this.loadParam.label='';
             this.getIntentionList(this.loadParam);
 
         },
@@ -773,6 +792,7 @@ export default {
         }
     },
     created() {
+      this.labels = commonArray.intentionLabels;
       changeMenu(this.$store.state.table.isTop,this.getIntentionList,this.loadParam,localStorage.orgIntentionParam);
       
        

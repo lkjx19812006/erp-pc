@@ -408,6 +408,7 @@ var locales = {
       wait_payment:'待支付',
       //client
       installment:'分期付款',
+      paid:'已支付'
     }
   },
   en: {
@@ -809,7 +810,8 @@ var locales = {
       transcation:'Transaction time',
       transcation_amount:'Transaction amount',
       wait_payment:'Waiting to pay',
-      installment:'Installment payment'
+      installment:'Installment payment',
+      paid:'Paid'
     }
   }
 }
