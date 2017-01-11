@@ -33,7 +33,7 @@ export default {
     opacity: 0.5;
     background-color: #000;
     display: block;
-    z-index: 1102;
+    z-index: 1200;
 }
 .del_modal_con{
     z-index: 1102;

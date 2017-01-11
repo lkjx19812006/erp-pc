@@ -484,12 +484,13 @@ export default {
         this.tipsParam.show=true;
         this.tipsParam.name=name;
         this.tipsParam.alert = true;
+        console.log('..')
       },
       newlabel:function(item){
         this.labelParam = item;
         this.labelParam.callback = this.callback;
       },
-      deleteLabel(item,index){
+      deleteLabel:function(item,index){
           this.delLabelParam.id = item.id;
           this.delLabelParam.sub = item.index;
           this.addrDel(this.delLabelParam);
