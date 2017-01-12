@@ -123,7 +123,6 @@
                   <td>{{item.total}}</td>
                   <td>{{item.unpaid}}</td>
                   <td>{{item.prepaid}}</td>
-                  
                   <td>{{item.employeeName}}</td>
                   <td>{{item.consignee}}</td>
                   <td>{{item.consigneePhone}}</td>

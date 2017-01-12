@@ -258,6 +258,7 @@ export default {
                 city:'',
                 email:'',
                 total:0,
+                cost:0,
                 employee:this.initLogin.id,
                 org:this.initLogin.orgId,
                 district:'',

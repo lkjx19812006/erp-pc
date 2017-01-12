@@ -1,6 +1,7 @@
 <template>
   <select-model :param="selectParam" v-if="selectParam.show"></select-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
+  <language-model v-show="false"></language-model>
   <div class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
   <div class="container modal_con">
     <div class="cover_loading">
@@ -29,10 +30,16 @@
                 <input type="text" class="form-control edit-input" v-validate:cname="{minlength:2}" v-model="contacts[0].name"/>
               </div>
               <!-- 客户类型 -->
-              <div class="client-detailInfo   col-md-6">
+              <div class="client-detailInfo  col-md-6" v-if="this.language=='zh_CN'">
                 <label class="editlabel">{{$t('static.client_type')}}</label>
                 <select class="form-control edit-input" v-model="param.type">
-                    <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerType}}</option>
+                    <option v-for="item in initUserType" value="{{item.id}}">{{item.name}}</option>
+                </select>
+              </div>
+              <div class="client-detailInfo   col-md-6" v-if="this.language=='en'">
+                <label class="editlabel">{{$t('static.client_type')}}</label>
+                <select class="form-control edit-input" v-model="param.type">
+                    <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerTypeEn}}</option>
                 </select>
               </div>
               <!-- 联系人手机 -->
@@ -232,6 +239,7 @@
   import selectModel  from './employeeOrOrg'
   import tipsModel  from '../tips/tipDialog'
   import vSelect from '../tools/vueSelect/components/Select'
+  import languageModel from '../tools/language.vue'
   import {
     initUserType,
   } from '../../vuex/getters'
@@ -243,7 +251,8 @@
     components: {
       selectModel,
       tipsModel,
-      vSelect
+      vSelect,
+      languageModel
     },
     props: {
       param: {},
@@ -285,6 +294,7 @@
           wechart: '',
           main: 1
         }],
+        language:'',
         contactshow:true,
         loading: false,
         provinceArr:[],
@@ -494,7 +504,7 @@
       }
     },
     created(){
-      
+      this.language = localStorage.lang;
       if (this.param.companyId) {
         this.loading=true;
         this.getContacts('/crm/api/v1/company/' + this.param.companyId);

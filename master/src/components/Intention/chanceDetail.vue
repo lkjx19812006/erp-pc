@@ -283,7 +283,7 @@
 <script>
 import trackingModel from  '../user/userTracking'
 import filter from '../../filters/filters'
-import tipsdialogModel  from '../tipsDialog'
+import tipsdialogModel  from  '../tipsDialog'
 import createorderModel  from './createOrder'
 import editmsgModel from './editMsg'
 import pictureModel from '../tips/pictureDialog'

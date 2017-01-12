@@ -17,12 +17,13 @@
                             <tr>
                                 <th>商品标题</th>
                                 <th>品种名称</th>
-                                <th>质量</th>
-                                <th>产地</th>
-                                <th>规格</th>
                                 <th>数量</th>
                                 <th>单位</th>
                                 <th>价格</th>
+                                <th>成本价</th>
+                                <th>质量</th>
+                                <th>产地</th>
+                                <th>规格</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -30,12 +31,13 @@
                             <tr>
                                 <td>{{param.goods[0].title}}</td>
                                 <td>{{param.goods[0].breedName}}</td>
-                                <td>{{param.goods[0].quality}}</td>
-                                <td>{{param.goods[0].location}}</td>
-                                <td>{{param.goods[0].spec}}</td>
                                 <td>{{param.goods[0].number}}</td>
                                 <td>{{param.goods[0].unit | Unit}}</td>
                                 <td>{{param.goods[0].price}}</td>
+                                <td>{{param.goods[0].costPrice}}</td>
+                                <td>{{param.goods[0].quality}}</td>
+                                <td>{{param.goods[0].location}}</td>
+                                <td>{{param.goods[0].spec}}</td>
                                 <td v-if="breedInfo.status==0||breedInfo.status==2" @click="showModifyBreed()">
                                     <a>{{$t('static.edit')}}</a>
                                 </td>
@@ -54,11 +56,16 @@
                                 </div>
                                 <div class="editpage-input col-md-6">
                                      <label class="editlabel" >{{$t('static.quantity')}}<span class="system_danger" v-if="$inner.number.required">{{$t('static.required')}}</span></label>
-                                     <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
-                                </div>
-                                <div class="editpage-input col-md-6">
-                                     <label class="editlabel" >{{$t('static.price')}}<span class="system_danger" v-if="$inner.price.required">{{$t('static.required')}}</span></label>
-                                     <input type="number" v-model="breedInfo.price" class="form-control edit-input" v-validate:number="{required:true}" />
+                                     <div style="clear:both;height:36px;">
+                                       <div class="left" style="width:45%;">
+                                          <input type="number" v-model="breedInfo.number" class="form-control edit-input" v-validate:number="{required:true}" />
+                                       </div>
+                                       <div class="left" style="width:45%;">
+                                          <select  class="form-control edit-input"  v-model="breedInfo.cunit" disabled="true">
+                                              <option v-for="item in initUnitlist"  value="{{item.id+','+item.name}}">{{item.name}}({{item.ename}})</option>
+                                          </select>
+                                       </div>
+                                   </div>
                                 </div>
                                 <div class="editpage-input col-md-6">
                                      <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
@@ -67,6 +74,34 @@
                                         <option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}({{item.ename}})</option>
                                      </select>
                                 </div>  
+                                <div class="editpage-input col-md-6">
+                                     <label class="editlabel" >{{$t('static.price')}}<span class="system_danger" v-if="$inner.price.required">{{$t('static.required')}}</span></label>
+                                     <div style="clear:both;height:36px;">
+                                       <div class="left" style="width:45%;">
+                                          <input type="number" v-model="breedInfo.price" class="form-control edit-input" v-validate:price="{required:true}" />
+                                       </div>
+                                       <div class="left" style="width:45%;">
+                                          <select  class="form-control edit-input"  v-model="breedInfo.cunit" disabled="true">
+                                              <option v-for="item in initUnitlist"  value="{{item.id+','+item.name}}">{{item.name}}({{item.ename}})</option>
+                                          </select>
+                                       </div>
+                                   </div>
+                                     
+                                </div>
+                                
+                                <div class="editpage-input col-md-6">
+                                     <label class="editlabel">成本价<span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span></label>
+                                     <div style="clear:both;height:36px;">
+                                       <div class="left" style="width:45%;">
+                                          <input type="number"  v-model="breedInfo.costPrice" class="form-control edit-input"  v-validate:cost="{required:true}"/>
+                                       </div>
+                                       <div class="left" style="width:45%;">
+                                          <select  class="form-control edit-input"  v-model="breedInfo.cunit" disabled="true">
+                                              <option v-for="item in initUnitlist"  value="{{item.id+','+item.name}}">{{item.name}}({{item.ename}})</option>
+                                          </select>
+                                       </div>
+                                   </div>
+                                </div>
                                 <div class="editpage-input col-md-6">
                                      <label class="editlabel" >{{$t('static.quality')}}</label>
                                      <input type="text" v-model="breedInfo.quality" class="form-control edit-input"  />
@@ -79,10 +114,6 @@
                                 <div class="editpage-input col-md-6">
                                      <label class="editlabel" >{{$t('static.origin')}}</label>
                                      <input type="text"  v-model="breedInfo.location" class="form-control edit-input" />
-                                </div>
-                                <div class="editpage-input col-md-6">
-                                     <label class="editlabel">标题</label>
-                                     <input type="text"  v-model="breedInfo.title" class="form-control edit-input" />
                                 </div>
                                 <div class="pull-right col-md-6" style="margin-top:10px;text-align:right">
                                     <button type="button" class="btn btn-confirm">
@@ -225,9 +256,13 @@
                               <input  type="text" class="form-control" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
                             </div>
                             <div class="editpage-input">
+                                   <label class="editlabel">成本总价</label>
+                                   <input type="text" readonly="true" class="form-control edit-input" v-model="param.cost" />
+                            </div>
+                            <!-- <div class="editpage-input">
                                 <label class="editlabel">邮编<span class="system_danger" v-if="$validation.zipcode.postcode">请输入正确的邮编</span></label>
                                 <input type="text" class="form-control edit-input" v-model="param.zipCode" v-validate:zipcode="['postcode']"/>
-                            </div>
+                            </div> -->
                             
                         </div>
                     </div>
@@ -290,6 +325,7 @@ export default {
               number:'',
               cunit:'',
               unit:'',
+              costPrice:'',
               price:'',
               id:''
             },
@@ -419,6 +455,7 @@ export default {
           this.breedInfo.unit=this.param.goods[0].unit,
           this.breedInfo.cunit=this.param.goods[0].unit,
           this.breedInfo.price=this.param.goods[0].price,
+          this.breedInfo.costPrice=this.param.goods[0].costPrice,
           this.breedInfo.title=this.param.goods[0].title,       
           this.updateParam.show = true;
         },
@@ -435,12 +472,14 @@ export default {
           this.param.goods[0].number=this.breedInfo.number,
           this.param.goods[0].unit=this.breedInfo.cunit.split(',')[0],
           this.param.goods[0].price=this.breedInfo.price,
-          this.param.goods[0].title=this.breedInfo.title,
+          this.param.goods[0].costPrice=this.breedInfo.costPrice,
+          this.param.goods[0].title=this.breedInfo.breedName,
           this.breedInfo.status = 0;
           this.updateParam.show = false;
         },
         changeTotal:function(){
             this.param.total = (parseFloat(this.param.goods[0].price*this.param.goods[0].number)*100+parseFloat(this.param.incidentals)*100 - parseFloat(this.param.preferential)*100)/100;
+            this.param.cost = (parseFloat(this.param.goods[0].costPrice*this.param.goods[0].number)*100+parseFloat(this.param.incidentals)*100 - parseFloat(this.param.preferential)*100)/100;
         },
         confirm:function(){
             this.param.country = this.country.cname;
@@ -461,6 +500,7 @@ export default {
         'param.incidentals':'changeTotal',
         'param.preferential':'changeTotal',
         'param.goods[0].price':'changeTotal',
+        'param.goods[0].costPrice':'changeTotal',
         'param.goods[0].number':'changeTotal',
     },
     events:{
@@ -478,6 +518,7 @@ export default {
         console.log(this.param);
         console.log(this.param.total);
         this.param.total = (parseFloat(this.param.goods[0].price*this.param.goods[0].number)*100+parseFloat(this.param.incidentals)*100 - parseFloat(this.param.preferential)*100)/100;
+        this.param.cost = (parseFloat(this.param.goods[0].costPrice*this.param.goods[0].number)*100+parseFloat(this.param.incidentals)*100 - parseFloat(this.param.preferential)*100)/100;
     }
 }
 </script>

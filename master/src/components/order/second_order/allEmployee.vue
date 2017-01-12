@@ -259,6 +259,9 @@ export default{
     left: 0;
     margin:auto;
 }
+.base_pagination{
+    position: relative;
+}
 .edit_footer{
 	width:900px;
     z-index: 1000;

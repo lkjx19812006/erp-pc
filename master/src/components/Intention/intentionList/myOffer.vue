@@ -177,6 +177,7 @@ export default {
                 province:'',
                 city:'',
                 total:0,
+                cost:0,
                 district:'',
                 consigneeAddr:'',
                 comments:'',
@@ -192,6 +193,7 @@ export default {
                   location:'',
                   spec:'',
                   price:'',
+                  costPrice:'',
                   unit:'',
                   number:''
                 }]

@@ -814,6 +814,9 @@ const mutations = {
                 "consigneeAddr":data.consigneeAddr,
                 'comments':data.comments,
                 'total': data.total,
+                'cost':data.cost,
+                'unpaid':data.unpaid,
+                'prepaid':data.prepaid,
                 'goods':data.goods,
                 "show": false,
                 "no":data.no,
@@ -870,6 +873,9 @@ const mutations = {
                 "goodsDesc":data.goodsDesc,
                 "ctime":data.ctime,
                 "total":data.total,
+                'cost':data.cost,
+                'unpaid':data.unpaid,
+                'prepaid':data.prepaid,
                 "mode":data.mode
             });
         }

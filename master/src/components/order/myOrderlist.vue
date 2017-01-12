@@ -87,6 +87,7 @@
                     <th>{{$t('static.client_name')}}</th>
                     <th>{{$t('static.breed')}}</th>
                     <th>{{$t('static.transcation_amount')}}</th>
+                    <th>{{$t('static.cost')}}{{$t('static.total')}}</th>
                     <th>{{$t('static.wait_payment')}}</th>
                     <th>{{$t('static.paid')}}</th>
                     <!-- <th>{{$t('static.supplier_name')}}</th> -->
@@ -123,6 +124,7 @@
                         })">{{item.customerName}}</a></td>
                   <td>{{item.goodsDesc}}</td>
                   <td>{{item.total}}</td>
+                  <td>{{item.cost}}</td>
                   <td>{{item.unpaid}}</td>
                   <td>{{item.prepaid}}</td>
                   <td>{{item.consignee}}</td>
@@ -203,6 +205,7 @@
                         preferentialDesc:item.preferentialDesc,
                         status:item.status,
                         total:item.total,
+                        cost:item.cost,
                         key:'myOrderList',
                         link:alterOrder,
                         url:'/order/',
@@ -392,6 +395,7 @@
                     preferentialDesc:'',
                     payWay:'',
                     total:'',
+                    cost:'',
                     orderStatus:'',
                     goods:[ //多个商品
 
@@ -785,8 +789,4 @@
     .order_pagination{
         text-align: center;
     }
-  #table_box  table th,#table_box  table td{
-    width:107px;
-    min-width: 107px;
-  }
   </style>

@@ -34,22 +34,22 @@
                             <!-- 详情 -->
                             <div class="panel panel-default" style="border:none">
                                 <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.order_no')}}:{{initOrderDetail.no}}</div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.order_type')}}:{{type[initOrderDetail.type]}}</div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.breed')}}:{{initOrderDetail.goodsDesc}}</div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.consignee_name')}}:{{initOrderDetail.consignee}}</div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.consignee_phone')}}:{{initOrderDetail.consigneePhone}}</div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.country')}}:{{initOrderDetail.country}}</div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.province')}}/{{$t('static.city')}}/{{$t('static.area')}}:{{initOrderDetail.province}} {{initOrderDetail.city}} {{initOrderDetail.district}}</div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.detailed_address')}}:{{initOrderDetail.consigneeAddr}}</div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6" style="color:red">{{$t('static.transcation_amount')}}:{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.sundry_fees')}}（{{$t('static.fee_explain')}}）:{{initOrderDetail.incidentals}}<span v-if="initOrderDetail.incidentalsDesc!=''">（{{initOrderDetail.incidentalsDesc}}）</span></div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.preferential')}}（{{$t('static.discount_note')}}）:{{initOrderDetail.preferential}}<span v-if="initOrderDetail.preferentialDesc!=''">（{{initOrderDetail.preferentialDesc}}）</span></div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.paid')}}:{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</div>
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.wait_payment')}}:{{initOrderDetail.unpaid}}（{{initOrderDetail.currency | Currency}}）</div>
-
-                                    <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.transcation')}}:{{initOrderDetail.ctime}}</div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">{{$t('static.comment')}}:{{initOrderDetail.description}}</div>
+                                    <mg-label :title="$t('static.order_no')">{{initOrderDetail.no}}</mg-label>
+                                    <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1">{{$t('static.sell')}}</mg-label>
+                                    <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0">{{$t('static.purchase')}}</mg-label>
+                                    <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
+                                    <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
+                                    <mg-label :title="$t('static.consignee_phone')">{{initOrderDetail.consigneePhone}}</mg-label>
+                                    <mg-label :title="$t('static.country')">{{initOrderDetail.country}}</mg-label>
+                                    <mg-label :title="$t('static.province')+$t('static.city')+$t('static.area')">{{initOrderDetail.province}} {{initOrderDetail.city}} {{initOrderDetail.district}}</mg-label>
+                                    <mg-label :title="$t('static.detailed_address')">{{initOrderDetail.consigneeAddr}}</mg-label>
+                                    <mg-label :title="$t('static.transcation_amount')" style="color:red">{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</mg-label>
+                                    <mg-label :title="$t('static.sundry_fees')+$t('static.fee_explain')">{{initOrderDetail.incidentals}}<span v-if="initOrderDetail.incidentalsDesc!=''">（{{initOrderDetail.incidentalsDesc}}）</span></mg-label>
+                                    <mg-label :title="$t('static.preferential')+$t('static.discount_note')">{{initOrderDetail.preferential}}<span v-if="initOrderDetail.preferentialDesc!=''">（{{initOrderDetail.preferentialDesc}}）</span></mg-label>
+                                    <mg-label :title="$t('static.paid')">{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
+                                    <mg-label :title="$t('static.wait_payment')">{{initOrderDetail.unpaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
+                                    <mg-label :title="$t('static.transcation')">{{initOrderDetail.ctime}}</mg-label>
+                                    <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.description}}</mg-label>
                                 </ul>        
                             </div>
                             <!-- 品种信息 -->
@@ -77,6 +77,8 @@
                                             <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
                                             <th>{{$t('static.quality')}}</th>
                                             <th>{{$t('static.price')}}</th>
+                                            <th>{{$t('static.cost_price')}}</th>
+                                            <th>{{$t('static.cost')}}{{$t('static.total')}}</th>
                                             <th>{{$t('static.total')}}</th>
                                           </thead>
                                         <tbody>
@@ -87,6 +89,8 @@
                                                 <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                 <td>{{item.quality}}</td>
                                                 <td>{{item.price}}元/{{item.unit | Unit}}</td>
+                                                <td>{{item.costPrice}}元/{{item.unit | Unit}}</td>
+                                                <td>{{item.cost}}</td>
                                                 <td>{{item.amount}}元</td>
                                             </tr>
                                         </tbody>
@@ -518,28 +522,6 @@
                                     </table>
                                     </div>
                                 </div>
-                                <!--<div class="panel-collapse" v-else v-show="!initOrderDetail.sendPics.show">-->
-                                    <!--<div class="panel-body panel-set">-->
-                                        <!--<table class="table  contactSet">-->
-                                          <!--<thead>-->
-                                            <!--<th>文件类型</th>-->
-                                            <!--<th>文件来源</th>-->
-                                            <!--<th>文件图片或路径</th>-->
-                                            <!--<th>描述</th>-->
-                                          <!--</thead>-->
-                                        <!--<tbody>-->
-                                            <!--<tr v-for="item in initOrderDetail.sendPics.arr">-->
-                                                <!--<td>{{item.fileType}}</td>-->
-                                                <!--<td>{{item.bizType}}</td>-->
-                                                <!--<td><img :src="item.path" v-if="item.fileType=='image'"/>-->
-                                                    <!--<img src="/static/images/pdf.png" height="20" width="20" v-else/>-->
-                                                <!--</td>-->
-                                                <!--<td>{{item.description}}</td>-->
-                                            <!--</tr>-->
-                                        <!--</tbody>-->
-                                    <!--</table>-->
-                                    <!--</div>-->
-                                <!--</div>-->
                             </div>
                         </div>
                     </article>
@@ -559,6 +541,7 @@ import filter from '../../filters/filters'
 import tipsModel  from  '../tips/tipDialog'
 import auditModel from './second_order/orderAudit'
 import applyModel from './second_order/applyDetaillist'
+import mgLabel from '../mguan/mgLabel.vue'
 import {
   initOrderDetail,
   initMyFundList
@@ -580,7 +563,8 @@ export default {
       filter,
       tipsModel,
       auditModel,
-      applyModel
+      applyModel,
+      mgLabel
     },
     props:['param'],
     data(){

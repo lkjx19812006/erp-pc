@@ -382,6 +382,18 @@ Vue.filter('customerTypeEn', function(val){ //客户类型
 		 return 'Hospital';
 	}else if(val==7){
 		 return 'Trading Company';
+	}else if(val==8){
+		 return '零售商行 International Department ignored ';
+	}else if(val==9){
+		 return '药农 International Department ignored ';
+	}else if(val==10){
+		 return '介绍人 International Department ignored ';
+	}else if(val==11){
+		 return '药贩子 International Department ignored ';
+	}else if(val==12){
+		 return '产地药商 International Department ignored ';
+	}else if(val==13){
+		 return '销地药商 International Department ignored ';
 	}else if(val==14){
 		 return 'Acupuncture Clinic';
 	}else if(val==15){
