@@ -6,7 +6,7 @@
   <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
   <tipsdialog-model :param="tipParam" v-if="tipParam.show"></tipsdialog-model>
   <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
-   <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+   <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"  @click="param.show=false"></div>
     <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
       <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>

@@ -1,5 +1,5 @@
 <template>
-    <div  class="modal modal-main fade account-modal" role="dialog"></div>
+    <div  class="modal modal-main fade account-modal" role="dialog"  @click="param.show=false"></div>
     <div id="scroll" class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>

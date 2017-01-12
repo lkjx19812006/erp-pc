@@ -2,7 +2,7 @@
     <updatecompany-model :param="companylistParam" v-if="companylistParam.show"></updatecompany-model>
     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
-    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1"  @click="param.show=false" role="dialog"></div>
     <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
       <div class="cover_loading" v-if="param.id!=initCompanyDetail.id">
         <pulse-loader :loading="true" :color="color" :size="size"></pulse-loader>

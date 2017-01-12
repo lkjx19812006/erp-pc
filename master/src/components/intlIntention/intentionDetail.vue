@@ -8,7 +8,7 @@
     <inquireagain-model :param="inquireAgainParam" v-if="inquireAgainParam.show"></inquireagain-model>
     <delfile-model :param="delFileParam" v-if="delFileParam.show"></delfile-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"  @click="param.show=false"></div>
     <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
         <div class="top-title">
             <span class="glyphicon glyphicon-remove-circle"  @click="param.show=false" ></span>

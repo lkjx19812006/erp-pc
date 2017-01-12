@@ -5,7 +5,7 @@
   <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
   <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
   <label-model :param="labelParam" v-if="labelParam.show"></label-model>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"  @click="param.show=false"></div>
     <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
         <div class="top-title">
             <span class="glyphicon glyphicon-remove-circle"  @click="param.show=false" ></span>
