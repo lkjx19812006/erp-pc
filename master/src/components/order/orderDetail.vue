@@ -7,529 +7,526 @@
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <apply-model :param="applyDetails" v-if="applyDetails.show"></apply-model>
-    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con" v-show="param.show" @click="param.show=false">
-      <div class="top-title">
-            <span class="glyphicon glyphicon-remove-circle" @click="param.show=false"></span>
-        </div>
+    <shadow-model :param="param">
         <div class="cover_loading">
-            <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
+             <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
         </div>
         <div class="client_nav">
-            <nav class="navbar navbar-client" role="navigation">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
-                        <span class="navbar-brand navbar-name">{{initOrderDetail.customerName}}</span>
-                    </div>
-                </div>
-            </nav>
+          <nav class="navbar navbar-client" role="navigation">
+              <div class="container-fluid">
+                  <div class="navbar-header">
+                      <img class="navbar-img" src="/static/images/personPhoto.png" height="38" width="37" />
+                      <span class="navbar-brand navbar-name">{{initOrderDetail.customerName}}</span>
+                  </div>
+              </div>
+          </nav>
         </div>
         <section>
-            <div class="client-section clearfix" >
-                <div class="col-md-12 client-detail">
-                    <h4 class="section_title">{{$t('static.details')}}</h4>
-                    <article @click.stop="">
-                        <div class="panel-group">
-                            <!-- 详情 -->
-                            <div class="panel panel-default" style="border:none">
-                                <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                                    <mg-label :title="$t('static.order_no')">{{initOrderDetail.no}}</mg-label>
-                                    <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1">{{$t('static.sell')}}</mg-label>
-                                    <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0">{{$t('static.purchase')}}</mg-label>
-                                    <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
-                                    <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
-                                    <mg-label :title="$t('static.consignee_phone')">{{initOrderDetail.consigneePhone}}</mg-label>
-                                    <mg-label :title="$t('static.country')">{{initOrderDetail.country}}</mg-label>
-                                    <mg-label :title="$t('static.province')+$t('static.city')+$t('static.area')">{{initOrderDetail.province}} {{initOrderDetail.city}} {{initOrderDetail.district}}</mg-label>
-                                    <mg-label :title="$t('static.detailed_address')">{{initOrderDetail.consigneeAddr}}</mg-label>
-                                    <mg-label :title="$t('static.transcation_amount')" style="color:red">{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</mg-label>
-                                    <mg-label :title="$t('static.sundry_fees')+$t('static.fee_explain')">{{initOrderDetail.incidentals}}<span v-if="initOrderDetail.incidentalsDesc!=''">（{{initOrderDetail.incidentalsDesc}}）</span></mg-label>
-                                    <mg-label :title="$t('static.preferential')+$t('static.discount_note')">{{initOrderDetail.preferential}}<span v-if="initOrderDetail.preferentialDesc!=''">（{{initOrderDetail.preferentialDesc}}）</span></mg-label>
-                                    <mg-label :title="$t('static.paid')">{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
-                                    <mg-label :title="$t('static.wait_payment')">{{initOrderDetail.unpaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
-                                    <mg-label :title="$t('static.transcation')">{{initOrderDetail.ctime}}</mg-label>
-                                    <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.description}}</mg-label>
-                                </ul>        
-                            </div>
-                            <!-- 品种信息 -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:'',
-                                              crete:'goods'
-                                              })">
-                                        <img class="pull-left" src="/static/images/order.png" height="30" width="30" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" >
-                                          {{$t('static.commodity_order')}}（{{initOrderDetail.goods.arr.length}}）
-                                        </a>
-                                        <span class="pull-right" style="color:#000;line-height:27px;font-size: 13px;">{{$t('static.breed')}}{{$t('static.total')}}：{{initOrderDetail.goods.total}}元</span>
-                                        <!-- <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button> -->
-                                    </h4>
-                                </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.goods.arr.length!==null" v-show="initOrderDetail.goods.show">
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>{{$t('static.breed')}}</th>
-                                            <th>{{$t('static.origin')}}</th>
-                                            <th>{{$t('static.specification')}}</th>
-                                            <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
-                                            <th>{{$t('static.quality')}}</th>
-                                            <th>{{$t('static.price')}}</th>
-                                            <th>{{$t('static.cost_price')}}</th>
-                                            <th>{{$t('static.cost')}}{{$t('static.total')}}</th>
-                                            <th>{{$t('static.total')}}</th>
-                                          </thead>
+          <div class="client-section clearfix" >
+              <div class="col-md-12">
+                  <h4 class="section_title">{{$t('static.details')}}</h4>
+                  <article @click.stop="">
+                      <div class="panel-group">
+                          <div class="panel panel-default" style="border:none">
+                              <ul class="clearfix" style="font-size: 14px;padding:5px 0">
+                                  <mg-label :title="$t('static.order_no')">{{initOrderDetail.no}}</mg-label>
+                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1">{{$t('static.sell')}}</mg-label>
+                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0">{{$t('static.purchase')}}</mg-label>
+                                  <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
+                                  <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
+                                  <mg-label :title="$t('static.consignee_phone')">{{initOrderDetail.consigneePhone}}</mg-label>
+                                  <mg-label :title="$t('static.country')">{{initOrderDetail.country}}</mg-label>
+                                  <mg-label :title="$t('static.province')+$t('static.city')+$t('static.area')">{{initOrderDetail.province}} {{initOrderDetail.city}} {{initOrderDetail.district}}</mg-label>
+                                  <mg-label :title="$t('static.detailed_address')">{{initOrderDetail.consigneeAddr}}</mg-label>
+                                  <mg-label :title="$t('static.transcation_amount')" style="color:red">{{initOrderDetail.total}}（{{initOrderDetail.currency | Currency}}）</mg-label>
+                                  <mg-label :title="$t('static.sundry_fees')+$t('static.fee_explain')">{{initOrderDetail.incidentals}}<span v-if="initOrderDetail.incidentalsDesc!=''">（{{initOrderDetail.incidentalsDesc}}）</span></mg-label>
+                                  <mg-label :title="$t('static.preferential')+$t('static.discount_note')">{{initOrderDetail.preferential}}<span v-if="initOrderDetail.preferentialDesc!=''">（{{initOrderDetail.preferentialDesc}}）</span></mg-label>
+                                  <mg-label :title="$t('static.paid')">{{initOrderDetail.prepaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
+                                  <mg-label :title="$t('static.wait_payment')">{{initOrderDetail.unpaid}}（{{initOrderDetail.currency | Currency}}）</mg-label>
+                                  <mg-label :title="$t('static.transcation')">{{initOrderDetail.ctime}}</mg-label>
+                                  <mg-label :title="$t('static.comment')" style="width:100%">{{initOrderDetail.description}}</mg-label>
+                              </ul>        
+                          </div>
+                          <div class="panel panel-default">
+                              <div class="panel-heading" >
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                            link:'',
+                                            crete:'goods'
+                                            })">
+                                      <img class="pull-left" src="/static/images/order.png" height="30" width="30" style="margin-top:4px;" />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" >
+                                        {{$t('static.commodity_order')}}（{{initOrderDetail.goods.arr.length}}）
+                                      </a>
+                                      <span class="pull-right" style="color:#000;line-height:27px;font-size: 13px;">{{$t('static.breed')}}{{$t('static.total')}}：{{initOrderDetail.goods.total}}元</span>
+                                      <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button>
+                                  </h4>
+                              </div>
+                              <div class="panel-collapse" v-if="initOrderDetail.goods.arr.length!==null" v-show="initOrderDetail.goods.show">
+                                  <div class="panel-body panel-set">
+                                      <table class="table  contactSet">
+                                        <thead>
+                                          <th>{{$t('static.breed')}}</th>
+                                          <th>{{$t('static.origin')}}</th>
+                                          <th>{{$t('static.specification')}}</th>
+                                          <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
+                                          <th>{{$t('static.quality')}}</th>
+                                          <th>{{$t('static.price')}}</th>
+                                          <th>{{$t('static.cost_price')}}</th>
+                                          <th>{{$t('static.cost')}}{{$t('static.total')}}</th>
+                                          <th>{{$t('static.total')}}</th>
+                                        </thead>
+                                      <tbody>
+                                          <tr v-for="item in initOrderDetail.goods.arr">
+                                              <td>{{item.breedName}}</td>
+                                              <td>{{item.location}}</td>
+                                              <td>{{item.spec}}</td>
+                                              <td>{{item.number}}（{{item.unit | Unit}}）</td>
+                                              <td>{{item.quality}}</td>
+                                              <td>{{item.price}}元/{{item.unit | Unit}}</td>
+                                              <td>{{item.costPrice}}元/{{item.unit | Unit}}</td>
+                                              <td>{{item.cost}}</td>
+                                              <td>{{item.amount}}元</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                  </div>
+                              </div>
+                              <div class="panel-collapse" v-else v-show="initOrderDetail.goods.show">
+                                  <div class="panel-body panel-set">
+                                      <table class="table  contactSet">
+                                        <thead>
+                                          <th>{{$t('static.breed')}}</th>
+                                          <th>{{$t('static.origin')}}</th>
+                                          <th>{{$t('static.specification')}}</th>
+                                          <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
+                                          <th>{{$t('static.quality')}}</th>
+                                          <th>{{$t('static.price')}}</th>
+                                          <th>{{$t('static.total')}}</th>
+                                        </thead>
+                                      <tbody>
+                                          <tr v-for="item in initOrderDetail.goods.arr">
+                                              <td>{{item.breedName}}</td>
+                                              <td>{{item.location}}</td>
+                                              <td>{{item.spec}}</td>
+                                              <td>{{item.number}}（{{item.unit | Unit}}）</td>
+                                              <td>{{item.quality}}</td>
+                                              <td>{{item.price}}元/{{item.unit | Unit}}</td>
+                                              <td>{{item.amount}}元</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="panel panel-default">
+                              <div class="panel-heading" >
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                        link:'',
+                                        crete:'stages'
+                                        })">
+                                      <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.stages.arr.length!==null">
+                                        {{$t('static.installment')}}（{{initOrderDetail.stages.arr.length}}）
+                                      </a>
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                      {{$t('static.pay_evidence')}}（0）
+                                      </a>
+                                      <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">客户已收货，商品质量符合客户要求！</span>
+                                      <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.edit')}}</button>
+                                      <button v-else></button>
+                                  </h4>
+                              </div>
+                              <div class="panel-collapse" v-if="initOrderDetail.stages.arr.length&&initOrderDetail.stages.show" v-cloak>
+                                  <div class="panel-body panel-set">
+                                      <table class="table  contactSet">
+                                        <thead>
+                                          <th>分期类型</th>
+<!--                                           <th>分期期数</th> -->
+                                          <th colspan="6">分期说明</th>
+                                          <!-- <th>付款比例</th> -->
+                                         <!--  <th>分期支付时间</th> -->
+                                          <th>分期原因</th> 
+                                          <th>申请状态</th>
+                                          <th>申请备注</th>
+                                          <th>{{$t('static.create_time')}}</th>
+                                          <th></th>
+                                        </thead>
                                         <tbody>
-                                            <tr v-for="item in initOrderDetail.goods.arr">
-                                                <td>{{item.breedName}}</td>
-                                                <td>{{item.location}}</td>
-                                                <td>{{item.spec}}</td>
-                                                <td>{{item.number}}（{{item.unit | Unit}}）</td>
-                                                <td>{{item.quality}}</td>
-                                                <td>{{item.price}}元/{{item.unit | Unit}}</td>
-                                                <td>{{item.costPrice}}元/{{item.unit | Unit}}</td>
-                                                <td>{{item.cost}}</td>
-                                                <td>{{item.amount}}元</td>
-                                            </tr>
-                                        </tbody>
+                                          <tr v-for="item in initOrderDetail.stages.arr">
+                                              <td v-if="item.type==0">付款</td>
+                                              <td v-if="item.type==1">收款</td>
+                                              <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}}立即支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
+                                              <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}}的{{item.extra}}天内支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
+                                              <td>{{item.description}}</td>
+                                              <td v-if="item.validate==0" style="color:#91a0ff;cursor:pointer" @click="apply_Record({
+                                                  sub:$index,
+                                                  show:true,
+                                                  loading:false,
+                                                  type:item.type,
+                                                  bizType:'order',
+                                                  bizId:item.orderId,
+                                                  bizSubId:item.id,
+                                                  url:'/fund/requestRecord'
+                                                  })">{{$t('static.wait_approval')}}</td>
+                                              <td v-if="item.validate==1"  style="color:#91a0ff;cursor:pointer" @click="apply_Record({
+                                                  sub:$index,
+                                                  show:true,
+                                                  loading:false,
+                                                  type:item.type,
+                                                  bizType:'order',
+                                                  bizId:item.orderId,
+                                                  bizSubId:item.id,
+                                                  url:'/fund/requestRecord'
+                                                  })">{{$t('static.applied')}}</td>
+                                              <td v-if="item.validate==2" style="color:green;cursor:pointer" @click="apply_Record({
+                                                  sub:$index,
+                                                  show:true,
+                                                  loading:false,
+                                                  type:item.type,
+                                                  bizType:'order',
+                                                  bizId:item.orderId,
+                                                  bizSubId:item.id,
+                                                  url:'/fund/requestRecord'
+                                                  })">{{$t('static.approved')}}</td>
+                                              <td v-if="item.validate==3" style="color:red;cursor:pointer" @click="apply_Record({
+                                                  sub:$index,
+                                                  show:true,
+                                                  loading:false,
+                                                  type:item.type,
+                                                  bizType:'order',
+                                                  bizId:item.orderId,
+                                                  bizSubId:item.id,
+                                                  url:'/fund/requestRecord'
+                                                  })">{{$t('static.unapproved')}}</td>
+                                              <td>{{item.comment}}</td>
+                                              <td>{{item.ctime}}</td>
+                                              <td v-if="param.contact=='/order/myList'">
+                                                  <a class="operate" v-if="item.type==1&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
+                                                          show:true,
+                                                          sub:$index,
+                                                          bizId:item.orderId,
+                                                          bizSubId:item.id,
+                                                          validate:item.validate,
+                                                          type:item.type,
+                                                          payWay:'',
+                                                          payName:'',
+                                                          paySubName:'',
+                                                          payUserName:'',
+                                                          extra:item.extra,
+                                                          payNumber:'',
+                                                          comment:'',
+                                                          image_f:'',
+                                                          image_s:'',
+                                                          image_t:'',
+                                                          images:'',
+                                                          url:'/fund/createByOrderStages',
+                                                          titles:'申请分期审核',
+                                                          link:paymentAudit
+                                                      })"> 
+                                                  <img src="/static/images/apply.png"  style="width:47px" />
+                                                  </a>
+                                                  <a class="operate" v-if="item.type==0&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
+                                                          show:true,
+                                                          sub:$index,
+                                                          bizId:item.orderId,
+                                                          bizSubId:item.id,
+                                                          validate:item.validate,
+                                                          type:item.type,
+                                                          payWay:'',
+                                                          payName:'',
+                                                          paySubName:'',
+                                                          payUserName:'',
+                                                          payNumber:'',
+                                                          comment:'',
+                                                          image_f:'',
+                                                          image_s:'',
+                                                          image_t:'',
+                                                          images:'',
+                                                          url:'/fund/createByOrderStages',
+                                                          titles:'申请支付',
+                                                          link:paymentAudit
+                                                      })"> 
+                                                  <img src="/static/images/payorder.png"  style="width:38px" />
+                                                  </a>
+                                                  <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
+                                                          show:true,
+                                                          sub:$index,
+                                                          bizId:item.orderId,
+                                                          bizSubId:item.id,
+                                                          loading:false,
+                                                          cur:1,
+                                                          type:item.type,
+                                                          validate:item.validate,
+                                                          payWay:'',
+                                                          payName:'',
+                                                          paySubName:'',
+                                                          payUserName:'',
+                                                          payNumber:'',
+                                                          comment:'',
+                                                          image_f:'',
+                                                          image_s:'',
+                                                          image_t:'',
+                                                          images:'',
+                                                          url:'/fund/createByOrderStages',
+                                                          titles:'重新申请支付',
+                                                          link:paymentAudit
+                                                      })">重新申请支付</button>
+                                                  <a class="operate" v-if="item.type==1&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
+                                                          show:true,
+                                                          sub:$index,
+                                                          bizId:item.orderId,
+                                                          bizSubId:item.id,
+                                                          loading:false,
+                                                          cur:1,
+                                                          type:item.type,
+                                                          validate:item.validate,
+                                                          payWay:'',
+                                                          payName:'',
+                                                          paySubName:'',
+                                                          payUserName:'',
+                                                          payNumber:'',
+                                                          comment:'',
+                                                          image_f:'',
+                                                          image_s:'',
+                                                          image_t:'',
+                                                          images:'',
+                                                          url:'/fund/createByOrderStages',
+                                                          titles:'重新申请审核',
+                                                          link:paymentAudit
+                                                      })"> 
+                                                      <img src="/static/images/reset.png"  style="width:47px" />
+                                                  </a>
+                                              </td>
+                                          </tr>
+                                       </tbody>
                                     </table>
-                                    </div>
-                                </div>
-                                <div class="panel-collapse" v-else v-show="initOrderDetail.goods.show">
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>{{$t('static.breed')}}</th>
-                                            <th>{{$t('static.origin')}}</th>
-                                            <th>{{$t('static.specification')}}</th>
-                                            <th>{{$t('static.quantity')}}（{{$t('static.unit')}}）</th>
-                                            <th>{{$t('static.quality')}}</th>
-                                            <th>{{$t('static.price')}}</th>
-                                            <th>{{$t('static.total')}}</th>
-                                          </thead>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="panel panel-default">
+                              <div class="panel-heading" >
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                        link:'',
+                                        crete:'contractList'
+                                        })">
+                                      <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.contractList.arr.length!==null">
+                                        合同凭证（{{initOrderDetail.contractList.arr.length}}）
+                                      </a>
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                      合同凭证（0）
+                                      </a>
+                                      <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">客户已收货，商品质量符合客户要求！</span>
+                                          <button type="button" class="btn btn-base pull-right" @click.stop="createcredence({
+                                              show:true,
+                                              orderId:initOrderDetail.id,
+                                              route:uploadDocument,
+                                              link:'/order/attachSubmit/',
+                                              description:'',
+                                              fileType:'image',
+                                              bizType:'order_contract',
+                                              orderContractList:'',
+                                              titles:'上传合同'
+                                              })" 
+                                              v-if="initOrderDetail.contractList.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
+                                      <button v-else></button>
+                                  </h4>
+                              </div>
+                              <div class="panel-collapse" v-if="initOrderDetail.contractList.arr.length&&!initOrderDetail.contractList.show" v-cloak>
+                                  <div class="panel-body panel-set">
+                                      <table class="table  contactSet">
+                                        <thead>
+                                          <th>{{$t('static.file_type')}}</th>
+                                          <th>{{$t('static.file_origin')}}</th>
+                                          <th>{{$t('static.file_path')}}</th>
+                                          <th>{{$t('static.description')}}</th>
+                                          <th>{{$t('static.create_time')}}</th>
+                                        </thead>
                                         <tbody>
-                                            <tr v-for="item in initOrderDetail.goods.arr">
-                                                <td>{{item.breedName}}</td>
-                                                <td>{{item.location}}</td>
-                                                <td>{{item.spec}}</td>
-                                                <td>{{item.number}}（{{item.unit | Unit}}）</td>
-                                                <td>{{item.quality}}</td>
-                                                <td>{{item.price}}元/{{item.unit | Unit}}</td>
-                                                <td>{{item.amount}}元</td>
-                                            </tr>
-                                        </tbody>
+                                          <tr v-for="item in initOrderDetail.contractList.arr">
+                                              <td>{{item.fileType}}</td>
+                                              <td>{{item.bizType}}</td>
+                                              <td>
+                                                  <img :src="item.url" v-if="item.fileType=='image'" @click="clickBig(item.url)"/>
+                                                  <img src="/static/images/pdf.png" height="20" width="20" v-else/>
+                                              </td>
+                                              <td>{{item.description}}</td>
+                                              <td>{{item.ctime}}</td>
+                                          </tr>
+                                       </tbody>
                                     </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 分期付款 -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-                                          link:'',
-                                          crete:'stages'
-                                          })">
-                                        <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.stages.arr.length!==null">
-                                          {{$t('static.installment')}}（{{initOrderDetail.stages.arr.length}}）
-                                        </a>
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                        {{$t('static.pay_evidence')}}（0）
-                                        </a>
-                                        <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">客户已收货，商品质量符合客户要求！</span>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="divided_payments(initOrderDetail.id,initOrderDetail.total,initOrderDetail.stages)"  v-if="initOrderDetail.stages.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.edit')}}</button>
-                                        <button v-else></button>
-                                    </h4>
-                                </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.stages.arr.length&&initOrderDetail.stages.show" v-cloak>
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>分期类型</th>
-                                            <!-- <th>分期期数</th> -->
-                                            <th colspan="6">分期说明</th>
-                                            <!-- <th>付款比例</th>
-                                            
-                                            <th>分期支付时间</th>-->
-                                            <th>分期原因</th> 
-                                            <th>申请状态</th>
-                                            <th>申请备注</th>
-                                            <th>{{$t('static.create_time')}}</th>
-                                            <th></th>
-                                          </thead>
-                                          <tbody>
-                                            <tr v-for="item in initOrderDetail.stages.arr">
-                                                <td v-if="item.type==0">付款</td>
-                                                <td v-if="item.type==1">收款</td>
-                                                <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}}立即支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
-                                                <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}}的{{item.extra}}天内支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
-                                                <td>{{item.description}}</td>
-                                                <td v-if="item.validate==0" style="color:#91a0ff;cursor:pointer" @click="apply_Record({
-                                                    sub:$index,
-                                                    show:true,
-                                                    loading:false,
-                                                    type:item.type,
-                                                    bizType:'order',
-                                                    bizId:item.orderId,
-                                                    bizSubId:item.id,
-                                                    url:'/fund/requestRecord'
-                                                    })">{{$t('static.wait_approval')}}</td>
-                                                <td v-if="item.validate==1"  style="color:#91a0ff;cursor:pointer" @click="apply_Record({
-                                                    sub:$index,
-                                                    show:true,
-                                                    loading:false,
-                                                    type:item.type,
-                                                    bizType:'order',
-                                                    bizId:item.orderId,
-                                                    bizSubId:item.id,
-                                                    url:'/fund/requestRecord'
-                                                    })">{{$t('static.applied')}}</td>
-                                                <td v-if="item.validate==2" style="color:green;cursor:pointer" @click="apply_Record({
-                                                    sub:$index,
-                                                    show:true,
-                                                    loading:false,
-                                                    type:item.type,
-                                                    bizType:'order',
-                                                    bizId:item.orderId,
-                                                    bizSubId:item.id,
-                                                    url:'/fund/requestRecord'
-                                                    })">{{$t('static.approved')}}</td>
-                                                <td v-if="item.validate==3" style="color:red;cursor:pointer" @click="apply_Record({
-                                                    sub:$index,
-                                                    show:true,
-                                                    loading:false,
-                                                    type:item.type,
-                                                    bizType:'order',
-                                                    bizId:item.orderId,
-                                                    bizSubId:item.id,
-                                                    url:'/fund/requestRecord'
-                                                    })">{{$t('static.unapproved')}}</td>
-                                                <td>{{item.comment}}</td>
-                                                <td>{{item.ctime}}</td>
-                                                <td v-if="param.contact=='/order/myList'">
-                                                    <a class="operate" v-if="item.type==1&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
-                                                            show:true,
-                                                            sub:$index,
-                                                            bizId:item.orderId,
-                                                            bizSubId:item.id,
-                                                            validate:item.validate,
-                                                            type:item.type,
-                                                            payWay:'',
-                                                            payName:'',
-                                                            paySubName:'',
-                                                            payUserName:'',
-                                                            extra:item.extra,
-                                                            payNumber:'',
-                                                            comment:'',
-                                                            image_f:'',
-                                                            image_s:'',
-                                                            image_t:'',
-                                                            images:'',
-                                                            url:'/fund/createByOrderStages',
-                                                            titles:'申请分期审核',
-                                                            link:paymentAudit
-                                                        })"> 
-                                                    <img src="/static/images/apply.png"  style="width:47px" />
-                                                    </a>
-                                                    <a class="operate" v-if="item.type==0&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
-                                                            show:true,
-                                                            sub:$index,
-                                                            bizId:item.orderId,
-                                                            bizSubId:item.id,
-                                                            validate:item.validate,
-                                                            type:item.type,
-                                                            payWay:'',
-                                                            payName:'',
-                                                            paySubName:'',
-                                                            payUserName:'',
-                                                            payNumber:'',
-                                                            comment:'',
-                                                            image_f:'',
-                                                            image_s:'',
-                                                            image_t:'',
-                                                            images:'',
-                                                            url:'/fund/createByOrderStages',
-                                                            titles:'申请支付',
-                                                            link:paymentAudit
-                                                        })"> 
-                                                    <img src="/static/images/payorder.png"  style="width:38px" />
-                                                    </a>
-                                                    <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
-                                                            show:true,
-                                                            sub:$index,
-                                                            bizId:item.orderId,
-                                                            bizSubId:item.id,
-                                                            loading:false,
-                                                            cur:1,
-                                                            type:item.type,
-                                                            validate:item.validate,
-                                                            payWay:'',
-                                                            payName:'',
-                                                            paySubName:'',
-                                                            payUserName:'',
-                                                            payNumber:'',
-                                                            comment:'',
-                                                            image_f:'',
-                                                            image_s:'',
-                                                            image_t:'',
-                                                            images:'',
-                                                            url:'/fund/createByOrderStages',
-                                                            titles:'重新申请支付',
-                                                            link:paymentAudit
-                                                        })">重新申请支付</button>
-                                                    <a class="operate" v-if="item.type==1&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
-                                                            show:true,
-                                                            sub:$index,
-                                                            bizId:item.orderId,
-                                                            bizSubId:item.id,
-                                                            loading:false,
-                                                            cur:1,
-                                                            type:item.type,
-                                                            validate:item.validate,
-                                                            payWay:'',
-                                                            payName:'',
-                                                            paySubName:'',
-                                                            payUserName:'',
-                                                            payNumber:'',
-                                                            comment:'',
-                                                            image_f:'',
-                                                            image_s:'',
-                                                            image_t:'',
-                                                            images:'',
-                                                            url:'/fund/createByOrderStages',
-                                                            titles:'重新申请审核',
-                                                            link:paymentAudit
-                                                        })"> 
-                                                        <img src="/static/images/reset.png"  style="width:47px" />
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                         </tbody>
-                                      </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 合同凭证 -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-                                          link:'',
-                                          crete:'contractList'
-                                          })">
-                                        <img class="pull-left" src="/static/images/dividePay.png" height="32" width="26" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.contractList.arr.length!==null">
-                                          合同凭证（{{initOrderDetail.contractList.arr.length}}）
-                                        </a>
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                        合同凭证（0）
-                                        </a>
-                                        <span v-if="initOrderDetail.orderStatus==60&&initOrderDetail.logistics==40" style="color:red;font-size: 13px;padding-left: 10px;display:inline-block;line-height:27px">客户已收货，商品质量符合客户要求！</span>
-                                            <button type="button" class="btn btn-base pull-right" @click.stop="createcredence({
-                                                show:true,
-                                                orderId:initOrderDetail.id,
-                                                route:uploadDocument,
-                                                link:'/order/attachSubmit/',
-                                                description:'',
-                                                fileType:'image',
-                                                bizType:'order_contract',
-                                                orderContractList:'',
-                                                titles:'上传合同'
-                                                })" 
-                                                v-if="initOrderDetail.contractList.arr.length!==null&&(initOrderDetail.validate==0||initOrderDetail.validate==-2)&&initOrderDetail.orderStatus<20&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
-                                        <button v-else></button>
-                                    </h4>
-                                </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.contractList.arr.length&&!initOrderDetail.contractList.show" v-cloak>
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>{{$t('static.file_type')}}</th>
-                                            <th>{{$t('static.file_origin')}}</th>
-                                            <th>{{$t('static.file_path')}}</th>
-                                            <th>{{$t('static.description')}}</th>
-                                            <th>{{$t('static.create_time')}}</th>
-                                          </thead>
-                                          <tbody>
-                                            <tr v-for="item in initOrderDetail.contractList.arr">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.bizType}}</td>
-                                                <td>
-                                                    <img :src="item.url" v-if="item.fileType=='image'" @click="clickBig(item.url)"/>
-                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
-                                                </td>
-                                                <td>{{item.description}}</td>
-                                                <td>{{item.ctime}}</td>
-                                            </tr>
-                                         </tbody>
-                                      </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 支付凭证 -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:'',
-                                              crete:'payPics'
-                                              })">
-                                        <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.payPics.arr.length!==null">
-                                          {{$t('static.pay_evidence')}}（{{initOrderDetail.payPics.arr.length}}）<span v-if="param.orderStatus<30&&param.contact=='/order/myList'" class="system_danger">{{$t('static.pay_tips')}}</span>
-                                        </a>
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                        {{$t('static.pay_evidence')}}（0）<span class="system_danger" v-if="param.orderStatus<30&&param.contact=='/order/myList'">{{$t('static.pay_tips')}}</span>
-                                        </a>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
-                                            show:true,
-                                            orderId:initOrderDetail.id,
-                                            route:uploadDocument,
-                                            link:'/order/attachSubmit/',
-                                            description:'',
-                                            fileType:'image',
-                                            bizType:'order_pay',
-                                            payPics:'',
-                                            titles:'上传支付凭证'
-                                            })"  v-if="(initOrderDetail.payPics.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">{{$t('static.new')}}</button>
-                                        <!--<button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>-->
-                                        <a v-else></a>
-                                    </h4>
-                                </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.payPics.arr.length&&!initOrderDetail.payPics.show" v-cloak>
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>{{$t('static.file_type')}}</th>
-                                            <th>{{$t('static.file_origin')}}</th>
-                                            <th>{{$t('static.file_path')}}</th>
-                                            <th>{{$t('static.description')}}</th>
-                                          </thead>
-                                        <tbody>
-                                            <tr v-for="item in initOrderDetail.payPics.arr">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.bizType}}</td>
-                                                <td><img :src="item.url" v-if="item.fileType=='image'" @click="clickBig(item.url)"/>
-                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
-                                                </td>
-                                                <td>{{item.description}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:'',
-                                              crete:'attachFiles'
-                                              })">
-                                        <img class="pull-left" src="/static/images/appendix.png"  style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" >
-                                          {{$t('static.upload_attachments')}}（{{initOrderDetail.attachFiles.arr.length}}）
-                                        </a>
-                                        <!--<a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set " v-else>-->
-                                          <!--上传附件（0）-->
-                                        <!--</a>-->
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
-                                            show:true,
-                                            orderId:param.id,
-                                            link:'/order/attachSubmit/',
-                                            route:uploadDocument,
-                                            description:'',
-                                            fileType:'image',
-                                            bizType:'attach_files',
-                                            attachFiles:'',
-                                            titles:'上传附件凭证'
-                                            })" v-if="initOrderDetail.attachFiles.arr.length!==null&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
-                                        <a v-else ></a>
-                                    </h4>
-                                </div>
-                                <div class="panel-collapse" v-show="!initOrderDetail.attachFiles.show">
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                           <th>{{$t('static.file_type')}}</th>
-                                            <th>{{$t('static.file_origin')}}</th>
-                                            <th>{{$t('static.file_path')}}</th>
-                                            <th>{{$t('static.description')}}</th>
-                                          </thead>
-                                        <tbody>
-                                            <tr v-for="item in initOrderDetail.attachFiles.arr">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.bizType}}</td>
-                                                <td><img :src="item.url" v-if="item.fileType=='image'" @click="clickBig(item.url)"/>
-                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
-                                                </td>
-                                                <td>{{item.description}}</td>
-                                                <td>
-                                                    <img v-bind:src="item.image" />
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" >
-                                    <h4 class="panel-title clearfix" @click="enfoldment({
-                                              link:'',
-                                              crete:'sendPics'
-                                              })">
-                                        <img class="pull-left" src="/static/images/logist.png"  style="margin-top:4px;" />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.sendPics.arr.length">
-                                          {{$t('static.logistics')}}（{{initOrderDetail.sendPics.arr.length}}）<span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">{{$t('static.logistics_tips')}}</span>
-                                        </a>
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
-                                          {{$t('static.logistics')}}（0） <span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">{{$t('static.logistics_tips')}}</span>
-                                        </a>
-                                        <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
-                                            show:true,
-                                            orderId:param.id,
-                                            link:'/order/attachSubmit/',
-                                            description:'',
-                                            fileType:'image',
-                                            bizType:'order_send',
-                                            sendPics:'',
-                                            route:uploadDocument,
-                                            titles:'上传物流凭证'
-                                            })" v-if="initOrderDetail.sendPics.arr.length!==null&&param.contact=='/order/myList'&&param.orderStatus>=50">{{$t('static.new')}}</button>
-                                        <!--<button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>-->
-                                        <a v-else></a>
-                                    </h4>
-                                </div>
-                                <div class="panel-collapse" v-if="initOrderDetail.sendPics.arr.length!==null&&!initOrderDetail.sendPics.show" >
-                                    <div class="panel-body panel-set">
-                                        <table class="table  contactSet">
-                                          <thead>
-                                            <th>{{$t('static.file_type')}}</th>
-                                            <th>{{$t('static.file_origin')}}</th>
-                                            <th>{{$t('static.file_path')}}</th>
-                                            <th>{{$t('static.description')}}</th>
-                                          </thead>
-                                        <tbody>
-                                            <tr v-for="item in initOrderDetail.sendPics.arr">
-                                                <td>{{item.fileType}}</td>
-                                                <td>{{item.bizType}}</td>
-                                                <td><img :src="item.url" v-if="item.fileType=='image'" @click="clickBig(item.url)"/>
-                                                    <img src="/static/images/pdf.png" height="20" width="20" v-else/>
-                                                </td>
-                                                <td>{{item.description}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-                
-            </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <!-- 支付凭证 -->
+                          <div class="panel panel-default">
+                              <div class="panel-heading" >
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                            link:'',
+                                            crete:'payPics'
+                                            })">
+                                      <img class="pull-left" src="/static/images/pay.png" height="26" width="26" style="margin-top:4px;" />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.payPics.arr.length!==null">
+                                        {{$t('static.pay_evidence')}}（{{initOrderDetail.payPics.arr.length}}）<span v-if="param.orderStatus<30&&param.contact=='/order/myList'" class="system_danger">{{$t('static.pay_tips')}}</span>
+                                      </a>
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                      {{$t('static.pay_evidence')}}（0）<span class="system_danger" v-if="param.orderStatus<30&&param.contact=='/order/myList'">{{$t('static.pay_tips')}}</span>
+                                      </a>
+                                      <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
+                                          show:true,
+                                          orderId:initOrderDetail.id,
+                                          route:uploadDocument,
+                                          link:'/order/attachSubmit/',
+                                          description:'',
+                                          fileType:'image',
+                                          bizType:'order_pay',
+                                          payPics:'',
+                                          titles:'上传支付凭证'
+                                          })"  v-if="(initOrderDetail.payPics.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">{{$t('static.new')}}</button>
+                                      <button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>
+                                      <a v-else></a>
+                                  </h4>
+                              </div>
+                              <div class="panel-collapse" v-if="initOrderDetail.payPics.arr.length&&!initOrderDetail.payPics.show" v-cloak>
+                                  <div class="panel-body panel-set">
+                                      <table class="table  contactSet">
+                                        <thead>
+                                          <th>{{$t('static.file_type')}}</th>
+                                          <th>{{$t('static.file_origin')}}</th>
+                                          <th>{{$t('static.file_path')}}</th>
+                                          <th>{{$t('static.description')}}</th>
+                                        </thead>
+                                      <tbody>
+                                          <tr v-for="item in initOrderDetail.payPics.arr">
+                                              <td>{{item.fileType}}</td>
+                                              <td>{{item.bizType}}</td>
+                                              <td><img :src="item.url" v-if="item.fileType=='image'" @click="clickBig(item.url)"/>
+                                                  <img src="/static/images/pdf.png" height="20" width="20" v-else/>
+                                              </td>
+                                              <td>{{item.description}}</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="panel panel-default">
+                              <div class="panel-heading" >
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                            link:'',
+                                            crete:'attachFiles'
+                                            })">
+                                      <img class="pull-left" src="/static/images/appendix.png"  style="margin-top:4px;" />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" >
+                                        {{$t('static.upload_attachments')}}（{{initOrderDetail.attachFiles.arr.length}}）
+                                      </a>
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set " v-else>
+                                        上传附件（0）
+                                      </a>
+                                      <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
+                                          show:true,
+                                          orderId:param.id,
+                                          link:'/order/attachSubmit/',
+                                          route:uploadDocument,
+                                          description:'',
+                                          fileType:'image',
+                                          bizType:'attach_files',
+                                          attachFiles:'',
+                                          titles:'上传附件凭证'
+                                          })" v-if="initOrderDetail.attachFiles.arr.length!==null&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
+                                      <a v-else ></a>
+                                  </h4>
+                              </div>
+                              <div class="panel-collapse" v-show="!initOrderDetail.attachFiles.show">
+                                  <div class="panel-body panel-set">
+                                      <table class="table  contactSet">
+                                        <thead>
+                                         <th>{{$t('static.file_type')}}</th>
+                                          <th>{{$t('static.file_origin')}}</th>
+                                          <th>{{$t('static.file_path')}}</th>
+                                          <th>{{$t('static.description')}}</th>
+                                        </thead>
+                                      <tbody>
+                                          <tr v-for="item in initOrderDetail.attachFiles.arr">
+                                              <td>{{item.fileType}}</td>
+                                              <td>{{item.bizType}}</td>
+                                              <td><img :src="item.url" v-if="item.fileType=='image'" @click="clickBig(item.url)"/>
+                                                  <img src="/static/images/pdf.png" height="20" width="20" v-else/>
+                                              </td>
+                                              <td>{{item.description}}</td>
+                                              <td>
+                                                  <img v-bind:src="item.image" />
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="panel panel-default">
+                              <div class="panel-heading" >
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                            link:'',
+                                            crete:'sendPics'
+                                            })">
+                                      <img class="pull-left" src="/static/images/logist.png"  style="margin-top:4px;" />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" v-if="initOrderDetail.sendPics.arr.length">
+                                        {{$t('static.logistics')}}（{{initOrderDetail.sendPics.arr.length}}）<span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">{{$t('static.logistics_tips')}}</span>
+                                      </a>
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
+                                        {{$t('static.logistics')}}（0） <span class="system_danger" v-if="param.orderStatus<50&&param.contact=='/order/myList'">{{$t('static.logistics_tips')}}</span>
+                                      </a>
+                                      <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
+                                          show:true,
+                                          orderId:param.id,
+                                          link:'/order/attachSubmit/',
+                                          description:'',
+                                          fileType:'image',
+                                          bizType:'order_send',
+                                          sendPics:'',
+                                          route:uploadDocument,
+                                          titles:'上传物流凭证'
+                                          })" v-if="initOrderDetail.sendPics.arr.length!==null&&param.contact=='/order/myList'&&param.orderStatus>=50">{{$t('static.new')}}</button>
+                                      <button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>
+                                      <a v-else></a>
+                                  </h4>
+                              </div>
+                              <div class="panel-collapse" v-if="initOrderDetail.sendPics.arr.length!==null&&!initOrderDetail.sendPics.show" >
+                                  <div class="panel-body panel-set">
+                                      <table class="table  contactSet">
+                                        <thead>
+                                          <th>{{$t('static.file_type')}}</th>
+                                          <th>{{$t('static.file_origin')}}</th>
+                                          <th>{{$t('static.file_path')}}</th>
+                                          <th>{{$t('static.description')}}</th>
+                                        </thead>
+                                      <tbody>
+                                          <tr v-for="item in initOrderDetail.sendPics.arr">
+                                              <td>{{item.fileType}}</td>
+                                              <td>{{item.bizType}}</td>
+                                              <td><img :src="item.url" v-if="item.fileType=='image'" @click="clickBig(item.url)"/>
+                                                  <img src="/static/images/pdf.png" height="20" width="20" v-else/>
+                                              </td>
+                                              <td>{{item.description}}</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </article>
+              </div>
+          </div>
         </section>
-       </div>
+    </shadow-model>
+  <!-- <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
+  <div class="container modal_con" v-show="param.show" >
+      <div class="top-title">
+          <span class="glyphicon glyphicon-remove-circle" @click="param.show=false"></span>
+      </div>
+     
+     </div> -->
 </template>
 <script>
 import trackingModel from '../order/ordergoods'
@@ -542,6 +539,7 @@ import tipsModel  from  '../tips/tipDialog'
 import auditModel from './second_order/orderAudit'
 import applyModel from './second_order/applyDetaillist'
 import mgLabel from '../mguan/mgLabel.vue'
+import shadowModel from '../mguan/shadow.vue'
 import {
   initOrderDetail,
   initMyFundList
@@ -564,7 +562,8 @@ export default {
       tipsModel,
       auditModel,
       applyModel,
-      mgLabel
+      mgLabel,
+      shadowModel
     },
     props:['param'],
     data(){
@@ -741,17 +740,7 @@ export default {
     background-color: #fff;
     padding: 20px;
 }
-.top-title{
-    position: fixed;
-    width: 70%;
-    right: 0;
-    left: 0;
-    margin: auto;
-    z-index: 1083
-}
-.modal_con{
-    width: 70%;
-}
+
 .navbar-client {
     margin-bottom: 0;
     padding-top: 10px;
