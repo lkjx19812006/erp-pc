@@ -492,7 +492,7 @@ export default {
       },
       deleteLabel:function(item,index){
           this.delLabelParam.id = item.id;
-          this.delLabelParam.sub = item.index;
+          this.delLabelParam.sub = index;
           this.addrDel(this.delLabelParam);
       }
     },

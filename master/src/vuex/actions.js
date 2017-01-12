@@ -3851,7 +3851,7 @@ export const newProduct = ({ dispatch }, param) => { //新增供应商产品
     })
 }
 
-export const addrDel = ({ dispatch }, param) => { //删除客户收货地址
+export const addrDel = ({ dispatch }, param) => { //删除客户收货地址,客户标签,意向标签等
     Vue.http({
         method: 'PUT',
         url: apiUrl.clientList + param.url + param.id,
