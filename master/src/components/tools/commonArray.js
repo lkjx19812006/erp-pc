@@ -5,7 +5,7 @@
 
 
 var commonArray = {
-    intentionLabels : ['爆','火','低','审核中']
+    intentionLabels : ['爆款','火热','低价','审核中','下次联系','紧急']
 };
 
 
