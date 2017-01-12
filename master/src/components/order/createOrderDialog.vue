@@ -33,7 +33,7 @@
                     </div>
                     <div class="editpage-input col-md-6" v-if="param.type==1">
                         <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">选择发货人</span></label>
-                        <input  type="text" class="form-control" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
+                        <input  type="text" class="form-control edit-input" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
                        <!--  <select  class="form-control edit-input" v-model="param.consigner">
                            <option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
                        </select> -->
@@ -160,6 +160,7 @@
                              <th>{{$t('static.breed')}}</th>
                              <th>{{$t('static.unit')}}</th>
                              <th>{{$t('static.price')}}</th>
+                             <th>{{$t('static.cost_price')}}</th>
                              <th>{{$t('static.quality')}}</th>
                              <th>{{$t('static.quantity')}}</th> 
                              <th>{{$t('static.specification')}}</th> 
@@ -174,6 +175,7 @@
                                <td>{{item.breedName}}</td>
                                <td>{{item.unit | Unit}}</td>
                                <td>{{item.price}}</td>
+                               <td>{{item.costPrice}}</td>
                                <td>{{item.quality}}</td>
                                <td>{{item.number}}</td>
                                <td>{{item.spec}}</td>
@@ -252,8 +254,17 @@
                                        </div>
                                   </div>
                                   <div class="editpage-input">
-                                       <label class="editlabel" >{{$t('static.headline')}}</label>
-                                       <input type="text" v-model="breedInfo.title" class="form-control edit-input" value="{{breedInfo.breedName}}"/>
+                                       <label class="editlabel" >{{$t('static.cost_price')}}<span class="system_danger" v-if="$inner.cost.required">{{$t('static.required')}}</span></label>
+                                        <div style="clear:both;height:36px;">
+                                           <div class="left" style="width:45%;">
+                                              <input type="text" v-model="breedInfo.costPrice" class="form-control edit-input" v-validate:cost="{required:true}" />
+                                           </div>
+                                           <div class="left" style="width:45%;">
+                                              <select  class="form-control edit-input"  v-model="breedInfo.unit" disabled="true">
+                                                  <option v-for="item in initUnitlist"  value="{{item.id}}">元/{{item.name}}({{item.ename}})</option>
+                                              </select>
+                                           </div>
+                                        </div>
                                   </div>
                                   <div class="editpage-input">
                                        <label class="editlabel" >{{$t('static.origin')}}</label>
@@ -321,6 +332,10 @@
                     <div class="editpage-input col-md-6">
                         <label class="editlabel">{{$t('static.total')}}</label>
                         <input type="text" class="form-control edit-input" v-model="param.total" readonly="true" />
+                    </div>
+                    <div class="editpage-input col-md-6">
+                        <label class="editlabel">{{$t('static.cost')}}{{$t('static.total')}}</label>
+                        <input type="text" class="form-control edit-input" v-model="param.cost" readonly="true" />
                     </div>
                     <div class="editpage-input col-md-12">
                         <label class="editlabel">{{$t('static.comment')}}</label>
@@ -423,6 +438,7 @@ export default {
               quality:'',
               location:'',
               spec:'',
+              costPrice:'',
               number:'',
               unit:'',
               unitName:'',
@@ -462,7 +478,8 @@ export default {
             createOrSelect:0,     //选择还是新建客户收货地址,0新建,1选择
             saith:0, //点击按钮计算
             sum:0, //点击按钮计算
-            altogether:0, //所有商品的总金额
+            altogether:0, //所有商品的总金额,
+            costmoney:0, //所有商品的成本总金额
         }
     },
     vuex: {
@@ -615,27 +632,32 @@ export default {
           if((/\.\d{3,}/).test(this.breedInfo.price)){
               this.breedInfo.price = this.breedInfo.price.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
           }
+          if((/\.\d{3,}/).test(this.breedInfo.costPrice)){
+              this.breedInfo.costPrice = this.breedInfo.costPrice.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
+          }
           this.param.goods[this.param.goods.length-1].breedId = this.breedInfo.breedId;
           this.param.goods[this.param.goods.length-1].breedName = this.breedInfo.breedName;
-          this.param.goods[this.param.goods.length-1].title = this.breedInfo.title;
+          this.param.goods[this.param.goods.length-1].title = this.breedInfo.breedName;
           this.param.goods[this.param.goods.length-1].quality = this.breedInfo.quality;
           this.param.goods[this.param.goods.length-1].location = this.breedInfo.location;
           this.param.goods[this.param.goods.length-1].spec = this.breedInfo.spec;
           this.param.goods[this.param.goods.length-1].number = this.breedInfo.number;
           this.param.goods[this.param.goods.length-1].unit = this.breedInfo.unit;
           this.param.goods[this.param.goods.length-1].price = this.breedInfo.price;
+          this.param.goods[this.param.goods.length-1].costPrice = this.breedInfo.costPrice;
           this.param.goods[this.param.goods.length-1].sourceType = this.breedInfo.sourceType;
           console.log(this.param.goods[this.param.goods.length-1]);
           this.breedInfo.status = 0;
           this.addParam.show = false; 
-          this.altogether += (parseFloat(this.param.goods[this.param.goods.length-1].price)*parseFloat(this.param.goods[this.param.goods.length-1].number)*100)/100
+          this.altogether += (parseFloat(this.param.goods[this.param.goods.length-1].price)*parseFloat(this.param.goods[this.param.goods.length-1].number)*100)/100;
+          this.costmoney +=(parseFloat(this.param.goods[this.param.goods.length-1].costPrice)*parseFloat(this.param.goods[this.param.goods.length-1].number)*100)/100;
           console.log(this.altogether)
+          console.log(this.costmoney)
         },
         showModifyBreed:function(index){
           this.breedInfo.status = 2;
           this.updateParam.price = this.param.goods[index].price,
           this.updateParam.number = this.param.goods[index].number,
-
           this.updateParam.index = index;
           this.breedInfo.breedId=this.param.goods[index].breedId,
           this.breedInfo.breedName=this.param.goods[index].breedName,
@@ -646,9 +668,11 @@ export default {
           this.breedInfo.number=this.param.goods[index].number,
           this.breedInfo.unit=this.param.goods[index].unit,
           this.breedInfo.price=this.param.goods[index].price,
+          this.breedInfo.costPrice=this.param.goods[index].costPrice,
           this.breedInfo.sourceType=this.param.goods[index].sourceType,
           this.updateParam.show = true;
           this.altogether -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.price);
+          this.costmoney -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.costPrice);
         },
         showAddBreed:function(){
           if(this.param.goods.length == 0||this.param.goods[this.param.goods.length-1].breedId != ''){
@@ -662,6 +686,7 @@ export default {
               this.breedInfo.number='';
               this.breedInfo.unit='';
               this.breedInfo.price='';
+              this.breedInfo.costPrice='';
               this.breedInfo.sourceType=0;
               this.param.goods.push({
                   breedId:'',
@@ -673,6 +698,7 @@ export default {
                   number:'',
                   unit:'',
                   price:'',
+                  costPrice:'',
                   sourceType:0
               });
               this.addParam.show = true;
@@ -681,6 +707,7 @@ export default {
         },
         deleteBreed:function(index){
            this.altogether -=parseFloat(this.param.goods[index].number)*parseFloat(this.param.goods[index].price)
+           this.costmoney -=parseFloat(this.param.goods[index].number)*parseFloat(this.param.goods[index].costPrice)
            this.param.goods.splice(index,1);
 
         },
@@ -694,27 +721,32 @@ export default {
           if((/\.\d{3,}/).test(this.breedInfo.price)){
               this.breedInfo.price = this.breedInfo.price.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
           }
+          if((/\.\d{3,}/).test(this.breedInfo.costPrice)){
+              this.breedInfo.costPrice = this.breedInfo.costPrice.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
+          }
           this.param.goods[this.updateParam.index].breedId=this.breedInfo.breedId,
           this.param.goods[this.updateParam.index].breedName=this.breedInfo.breedName,
-          this.param.goods[this.updateParam.index].title=this.breedInfo.title,
+          this.param.goods[this.updateParam.index].title=this.breedInfo.breedName,
           this.param.goods[this.updateParam.index].quality=this.breedInfo.quality,
           this.param.goods[this.updateParam.index].location=this.breedInfo.location,
           this.param.goods[this.updateParam.index].spec=this.breedInfo.spec,
           this.param.goods[this.updateParam.index].number=this.breedInfo.number,
           this.param.goods[this.updateParam.index].unit=this.breedInfo.unit,
           this.param.goods[this.updateParam.index].price=this.breedInfo.price,
+          this.param.goods[this.updateParam.index].costPrice=this.breedInfo.costPrice,
           this.param.goods[this.updateParam.index].sourceType=this.breedInfo.sourceType,
           this.breedInfo.status = 0;
           this.updateParam.show = false;
-          console.log(this.param.goods[this.updateParam.index].price);
-          console.log(this.param.goods[this.updateParam.index].number);
-          this.altogether += (parseFloat(this.param.goods[this.updateParam.index].number)*parseFloat(this.param.goods[this.updateParam.index].price)*100)/100
+          this.altogether += (parseFloat(this.param.goods[this.updateParam.index].number)*parseFloat(this.param.goods[this.updateParam.index].price)*100)/100;
+          this.costmoney += (parseFloat(this.param.goods[this.updateParam.index].number)*parseFloat(this.param.goods[this.updateParam.index].costPrice)*100)/100;
           console.log(this.altogether)
+          console.log(this.costmoney)
         },
         cancelModifyBreed:function(){
           this.breedInfo.status = 0;
           this.updateParam.show = false; 
           this.altogether += (parseFloat(this.updateParam.number)*parseFloat(this.updateParam.price)*100)/100;
+          this.costmoney += (parseFloat(this.updateParam.number)*parseFloat(this.updateParam.costPrice)*100)/100;
           this.updateParam.number = 0;
           this.updateParam.price = 0;
         },
@@ -755,15 +787,21 @@ export default {
                 this.altogether = this.altogether + '';
                 this.altogether = this.altogether.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
             }
+            if(patt.test(this.costmoney)){   //如果超过两位小数，则只保留前两位小数
+                this.costmoney = this.costmoney + '';
+                this.costmoney = this.costmoney.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
+            }
             console.log(this.param.incidentals);
             //this.param.incidentals.replace(/^(\-)*(\d+)\.(\d\d)*$/,'$1$2.$3');
             this.param.total = (parseFloat(this.altogether)*1000+parseFloat(this.param.incidentals)*1000 - parseFloat(this.param.preferential)*1000)/1000;
+            this.param.cost = (parseFloat(this.costmoney)*1000+parseFloat(this.param.incidentals)*1000 - parseFloat(this.param.preferential)*1000)/1000;
         }
     },
     watch:{
         'param.incidentals':'changeTotal',
         'param.preferential':'changeTotal',
         'altogether':'changeTotal',
+        'costmoney':'changeTotal'
     },
     events:{
         breed:function(breed){

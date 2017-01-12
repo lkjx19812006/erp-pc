@@ -1014,6 +1014,9 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
             data.sample = res.json().result.sample;
             data.goodsDesc = res.json().result.goodsDesc;
             data.total = res.json().result.total;
+            data.cost = res.json().result.cost;
+            data.unpaid = res.json().result.unpaid;
+            data.prepaid = res.json().result.prepaid;
             data.ctime = new Date();
             data.consignee = res.json().result.consignee;
             data.consigner = res.json().result.consigner;
@@ -1079,11 +1082,10 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         param.show = false;
         param.checked = false;
         param.consigneeAddr =res.json().result.consigneeAddr;
+        param.unpaid=res.json().result.unpaid;
         if(res.json().code==200){
           dispatch(types.ORDER_UPDATE_DATA, param);
         }
-        
-
     }, (res) => {
         console.log('fail');
         param.show = false;
@@ -1656,6 +1658,7 @@ export const getOrderDetail = ({ dispatch }, param) => { //获取订单详情
                     number: item.number,
                     unit: item.unit,
                     price: item.price,
+                    costPrice: item.costPrice,
                     status:item.status,
                     sourceType:item.sourceType,
                 }
@@ -2512,6 +2515,7 @@ export const saveAlias = ({ dispatch }, param, id) => { //新增药材别名
         }
     }).then((res) => {
         console.log('别名添加成功')
+        param.callback(res.json().msg);
         param.id = res.json().result.id;
         param.breedId = id;
         dispatch(types.ADDSPEC_DATA, param);
@@ -4383,6 +4387,7 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
                     number: item.number,
                     unit: item.unit,
                     price: item.price,
+                    costPrice: item.costPrice,
                     sourceType: 1
                 }
                 param.goods.push(temp);

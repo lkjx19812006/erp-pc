@@ -6,114 +6,102 @@
                 <span class="glyphicon glyphicon-remove-circle"  style="font-size:28px"></span>
             </div>
 
-            <div class="edit-left col-md-12 col-xs-12">
+            <div class="edit-left clearfix">
 
-                <div class="section_title clearfix col-md-12 col-xs-12">
+                <div class="section_title">
                     <span style="font-size:14px">基本信息</span>
                 </div>
-                <div class="panel panel-default col-md-12 clearfix" style="padding:0;margin-top:10px;" @click.stop="">
-                      <div class="panel-heading" v-cloak>
-                          <h4 class="panel-title clearfix" @click="enfoldment({
-                                      link:initgSampleDetail.items,
-                                      crete:'items'
-                                      })">
-                                <img class="pull-left" src="/static/images/msg.png" height="29" width="26"  />
-                                <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
-                                  样品（{{initgSampleDetail.items.arr.length}}）
-                                </a>
-                                <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
-                          </h4>
-                      </div>
-                      <div  class="panel-collapse" v-if="initgSampleDetail.items.arr.length!==null" v-show="initgSampleDetail.items.show">
-                            <div class="panel-body panel-set">
-                                <table class="table contactSet">
-                                    <thead>
-                                      <th>样品名称</th>
-                                      <th>产地</th>
-                                      <th>规格</th>
-                                      <th>质量</th>
-                                      <th>单位</th>
-                                      <th>说明</th>
-                                      <th>创建时间</th>
-  
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="item in initgSampleDetail.items.arr">
-                                            <td>{{item.breedName}}</td>
-                                            <td>{{item.location}}</td>
-                                            <td>{{item.spec}}</td>
-                                            <td>{{item.quality}}</td>
-                                            <td>{{item.unit | Unit}}</td>
-                                            <td>{{item.description}}</td>
-                                            <td>{{item.ctime}}</td>
-                                            <!-- <td @click="edit($index,item)">
-                                                                              <a class="operate"><img src="/static/images/upremark.png" height="18" width="48"  alt="修改备注" title="修改备注"/>
-                                                                                </a>
-                                                 </td> 
-                                            -->                                
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                      </div>
-                </div>
-                <div class="clearfix col-md-12 col-xs-12"  @click.stop="">
-                    <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                        <label class="editlabel">客户名称</label>
-                        <input type="text" class="form-control edit-input" v-model="initgSampleDetail.customerName" value="{{initgSampleDetail.customerName}}" disabled="disabled"/>
+                <div class="clearfix" @click.stop="">
+                    <div class="panel panel-default clearfix" style="border:none">
+                      <ul class="clearfix" style="font-size: 14px;padding:5px 0">
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>客户名称：</label>{{initgSampleDetail.customerName}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>客户电话：</label>{{initgSampleDetail.customerPhone}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>样品名称：</label>{{initgSampleDetail.sampleDesc}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>收货人名称：</label>{{initgSampleDetail.consignee}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>收货人联系方式：</label>{{initgSampleDetail.consigneePhone}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>国家：</label>{{initgSampleDetail.country}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>省市区：</label>{{initgSampleDetail.province}} {{initgSampleDetail.city}} {{initgSampleDetail.district}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>收货地址：</label>{{initgSampleDetail.address}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>总金额：</label>{{initgSampleDetail.total}}（{{initgSampleDetail.currency | Currency}}）
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>备注：</label>{{initgSampleDetail.comments}}
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                          <label>审核备注：</label>{{initgSampleDetail.description}}
+                        </div>
+                        <div class="col-md-3 col-sm-4 col-xs-6">
+                          <label>创建时间：</label>{{initgSampleDetail.ctime}}
+                        </div>
+                      </ul>
                     </div>
-                    <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                        <label class="editlabel">客户电话</label>
-                        <input type="text" class="form-control edit-input"  v-model="initgSampleDetail.customerPhone" value="{{initgSampleDetail.customerPhone}}" disabled="disabled"/>
-                    </div>
-                </div>
-                <div class="clearfix col-md-12 col-xs-12"  @click.stop="">
-                    <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                        <label class="editlabel">收货人名称</label>
-                        <input type="text" class="form-control edit-input" v-model="initgSampleDetail.consignee" value="{{initgSampleDetail.consignee}}" disabled="disabled"/>
-                    </div>
-                    <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                        <label class="editlabel">收货人联系方式</label>
-                         <input type="text" class="form-control edit-input" v-model="initgSampleDetail.consigneePhone" value="{{initgSampleDetail.consigneePhone}}" disabled="disabled"/>
-                    </div>
-                </div>
-                <div class="clearfix col-md-12 col-xs-12"  @click.stop="">
-                    <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                        <label class="editlabel">样品名称</label>
-                         <input type="text" class="form-control edit-input" v-model="initgSampleDetail.sampleDesc" value="{{initgSampleDetail.sampleDesc}}" disabled="disabled"/>
-                    </div>
-                    <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                        <label class="editlabel">收货地址</label>
-                        <input type="text" class="form-control edit-input" v-model="initgSampleDetail.address" value="{{initgSampleDetail.address}}" disabled="disabled"/>
-                    </div>
-                </div>
-                <div class="clearfix col-md-12 col-xs-12"  @click.stop="">
-                    <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                        <label class="editlabel">总金额</label>
-                         <input type="text" class="form-control edit-input"   v-model="initgSampleDetail.total" value="{{initgSampleDetail.total}}" disabled="disabled"/>
-                    </div>
-                    <div class="client-detailInfo pull-right col-md-6 col-xs-12">
-                        <label class="editlabel">备注</label>
-                         <input type="text" class="form-control edit-input"   v-model="initgSampleDetail.comments" value="{{initgSampleDetail.total}}" disabled="disabled"/>
-                    </div>
-                </div>
-               
-            </div>
+                    <div class="panel panel-default col-md-12 clearfix" style="padding:0;margin-top:10px;" >
+                        <div class="panel-heading" v-cloak>
+                            <h4 class="panel-title clearfix" @click="enfoldment({
+                                        link:initgSampleDetail.items,
+                                        crete:'items'
+                                        })">
+                                  <img class="pull-left" src="/static/images/msg.png" height="29" width="26"  />
+                                  <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                    样品（{{initgSampleDetail.items.arr.length}}）
+                                  </a>
+                                  <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
+                            </h4>
+                        </div>
+                        <div  class="panel-collapse" v-if="initgSampleDetail.items.arr.length!==null" v-show="initgSampleDetail.items.show">
+                              <div class="panel-body panel-set">
+                                  <table class="table contactSet">
+                                      <thead>
+                                        <th>样品名称</th>
+                                        <th>产地</th>
+                                        <th>规格</th>
+                                        <th>质量</th>
+                                        <th>单位</th>
+                                        <th>说明</th>
+                                        <th>创建时间</th>
 
-           <!--  <div class=" col-md-4 col-xs-12 pull-right">
-                    <span class="section_title clearfix col-md-12 col-xs-12" style="margin-top:15px;font-size:14px;">创建时间信息</span>
-           </div>
-           <div class="col-md-4 col-xs-12 pull-right">
-               <div class="edit-right clearfix">
-                   <div class="client-detailInfo pull-left col-md-11 col-xs-12">
-                       <label class="editlabel">创建时间</label>
-                       <div class="search_input">
-                           <mz-datepicker :time.sync="initgSampleDetail.ctime" format="yyyy-MM-dd HH:mm:ss">
-                           </mz-datepicker>
-                       </div>
-                   </div>
-               </div>
-           </div>  -->
+                                      </thead>
+                                      <tbody>
+                                          <tr v-for="item in initgSampleDetail.items.arr">
+                                              <td>{{item.breedName}}</td>
+                                              <td>{{item.location}}</td>
+                                              <td>{{item.spec}}</td>
+                                              <td>{{item.quality}}</td>
+                                              <td>{{item.unit | Unit}}</td>
+                                              <td>{{item.description}}</td>
+                                              <td>{{item.ctime}}</td>
+                                              <!-- <td @click="edit($index,item)">
+                                                                                <a class="operate"><img src="/static/images/upremark.png" height="18" width="48"  alt="修改备注" title="修改备注"/>
+                                                                                  </a>
+                                                   </td> 
+                                              -->                                
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 import filter from '../../filters/filters'

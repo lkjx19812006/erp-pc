@@ -122,9 +122,11 @@
                     <th>{{$t('static.order_type')}}</th>
                     <th>{{$t('static.trading_patterns')}}</th>
                     <th>{{$t('static.sample_order')}}</th>
+                    <th>{{$t('static.client_name')}}</th>
                     <th>{{$t('static.breed')}}</th>
                     <th>{{$t('static.transcation_amount')}}</th>
-                    <th>{{$t('static.client_name')}}</th>
+                    <th>{{$t('static.wait_payment')}}</th>
+                    <th>{{$t('static.paid')}}</th>
                     <!-- <th>{{$t('static.supplier_name')}}</th> -->
                     <th>{{$t('static.salesman')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
@@ -163,8 +165,6 @@
                   <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
                   <td v-if="item.sample==0">{{$t('static.no')}}</td>
                   <td v-if="item.sample==1">{{$t('static.yes')}}</td>
-                  <td>{{item.goodsDesc}}</td>
-                  <td>{{item.total}}</td>
                   <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
@@ -173,6 +173,11 @@
                                 orderStatus:item.orderStatus,
                                 contact:''
                         })">{{item.customerName}}</a></td>
+                  <td>{{item.goodsDesc}}</td>
+                  <td>{{item.total}}</td>
+                  <td>{{item.unpaid}}</td>
+                  <td>{{item.prepaid}}</td>
+                  
                   <td>{{item.employeeName}}</td>
                   <td>{{item.consignee}}</td>
                   <td>{{item.consigneePhone}}</td>
@@ -182,7 +187,7 @@
                   <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
                   <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                   <td v-if="item.payWay==4">WeChat</td>
-                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3">{{$t('static.none')}}</td>
+                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td>
                   <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
                   <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                   <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
@@ -607,9 +612,5 @@
     }
     .order_pagination{
         text-align: center;
-    }
-     #table_box  table th,#table_box  table td{
-      width: 114px;
-      min-width: 114px;
     }
   </style>

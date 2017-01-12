@@ -495,12 +495,8 @@ const state = {
             arr: [],
             show: false
         },
-        "langues": { arr: [], show: false },
         "specs": {
-            arr: [
-                { "id": 630, "breedId": 1001, "name": "统1个", "show": "true" },
-                { "id": 631, "breedId": 1001, "name": "段11", "show": "true" }
-            ],
+            arr: [],
             show: true
         },
         "name": "花类",
@@ -509,10 +505,7 @@ const state = {
         "categoryId": 810,
         "show": true,
         "locals": {
-            arr: [
-                { "id": 1, "breedId": 1001, "name": "云南", "show": "true" },
-                { "id": 2, "breedId": 1001, "name": "广东", "show": "true" }
-            ],
+            arr: [],
             show: false
         }
     },
@@ -821,6 +814,9 @@ const mutations = {
                 "consigneeAddr":data.consigneeAddr,
                 'comments':data.comments,
                 'total': data.total,
+                'cost':data.cost,
+                'unpaid':data.unpaid,
+                'prepaid':data.prepaid,
                 'goods':data.goods,
                 "show": false,
                 "no":data.no,
@@ -877,6 +873,9 @@ const mutations = {
                 "goodsDesc":data.goodsDesc,
                 "ctime":data.ctime,
                 "total":data.total,
+                'cost':data.cost,
+                'unpaid':data.unpaid,
+                'prepaid':data.prepaid,
                 "mode":data.mode
             });
         }
@@ -1055,13 +1054,9 @@ const mutations = {
         state.basicBaseList[data.key].splice(data.sub, 1);
     },
     [DELETE_SPECS_DATA](state, data) { //删除相关信息
-      if(data.key=='labels'){
-          if(data.url == "/intention/deleteLabel/"){
-            state.basicBaseList.intentionDetail.labels.splice(data.sub, 1);
-          }
-      }else {
+
+      /*if(data.key=='labels'||data.key=='locals'||data.key=='specs'||data.key=='alias'||data.key=='units'){*/ 
         state[data.headline][data.key].arr.splice(data.sub, 1);
-      }
 
     },
     [DELETE_SHOW_STATUE](state, data) { //删除枚举

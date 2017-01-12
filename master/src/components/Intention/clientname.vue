@@ -211,7 +211,7 @@ export default{
 }
 .trans_service{
 	margin-top: 20px;
-	margin-bottom: 50px;
+	margin-bottom: 20px;
 }
 .trans_service .col-xs-8{
 	margin-bottom: 20px;
@@ -226,6 +226,7 @@ export default{
 }
 .base_pagination{
 	margin-top: 0;
+	position: relative;
 }
 table{
 	display: table;

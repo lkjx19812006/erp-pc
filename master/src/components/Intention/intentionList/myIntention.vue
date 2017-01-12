@@ -184,36 +184,7 @@
                         <th>客户备注</th>
                         <th>录入类型</th>
                         <th>上架状态</th>
-                        <th style="min-width:220px;text-align: left;">操作</th>
-                    <!-- 
-                        <th>客户名称</th>
-                        <th>客户手机号</th>
-                        <th>品种名称</th>
-                        <th>资格资质</th>
-                        <th>规格</th>
-                        <th>单位</th>
-                        <th>单价</th>
-                        <th>产地</th>
-                        <th>数量</th>
-                        <th>国家</th>
-                        <th>所在省</th>
-                        <th>所在市</th>
-                        <th>所在区</th>
-                        <th>交收地址</th>
-                        <th>预付比例</th>
-                        <th>发票</th>
-                        <th>上门看货</th>
-                        <th>包装</th>
-                        <th>是否国际</th>
-                        <th>提供样品</th>
-                        <th>样品数量</th>
-                        <th>样品单位</th>
-                        <th>样品价格</th>
-                        <th>报价人数</th>
-                        <th>发布时间</th>
-                        <th>审核状态</th>
-                        <th>上下架</th> -->
-                        
+                        <th style="min-width:220px;text-align: left;">操作</th>        
                     </tr>
                 </thead>
                 <tbody>
@@ -340,15 +311,7 @@
                                                key:'myIntentionList'
                                                })"><img src="/static/images/del.png" height="18" width="28" alt="删除"/>
                                </a>
-                               <!-- <a class="operate" v-if="(item.onSell===0||item.onSell==-2||item.onSell==4)&&item.especial==1" @click="up($index,item.id,1)" >申请上架
-                               </a> -->
                                <a v-if="(item.onSell===0||item.onSell==-2||item.onSell==4)&&item.especial==1"><button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;margin-top:-22px;color:#fa6705" @click="up($index,item.id,1)">申请上架</button></a> 
-                              <!-- <a class="operate" v-if="(item.validate==3&&item.onSell==0)||(item.especial==0&&(item.onSell==0||item.onSell==4))" @click="up($index,item.id,2)"><img src="/static/images/grounding.png" height="18" width="28" alt="上架"/>
-                              </a> -->
-                              <!-- <a class="operate"  v-if="((item.onSell==0&&item.especial==1&&item.validate!=3)||((item.onSell==4||item.onSell==-4)&&item.validate==3)||item.validate==-3||item.validate==1)&&item.validate!=2&&item.especial==1" @click="applyAudit($index,item.id)"><img src="/static/images/apply.png" height="18" width="47" alt="申请审核"/>
-                               </a> -->
-                              <!-- <a class="operate" v-if="item.onSell==2&&(item.especial==0||(item.type==0&&item.especial==1))" @click="up($index,item.id,4)"><img src="/static/images/undercarriage.png" height="18" width="28"  alt="下架"/>
-                               </a> -->
                               <a class="operate" v-if="item.onSell==2&&item.especial==1" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架"/>
                               </a>
                               <a class="operate" v-if="item.type==1"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" alt="生成订单"/>
@@ -523,6 +486,7 @@ export default {
                 consigneeAddr:'',
                 comments:'',
                 total:0,
+                cost:0,
                 currency:1,
                 sourceType:1,    //来源类型(意向)
                 orderStatus:0,   //订单状态
@@ -536,6 +500,7 @@ export default {
                   location:'',
                   spec:'',
                   price:0,
+                  costPrice:0,
                   unit:'',
                   number:0
               }]

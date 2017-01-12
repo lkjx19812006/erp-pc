@@ -39,31 +39,52 @@
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                    <label class="editlabel">{{$t('static.type')}}：</label>
+                                    <span v-if="initIntlIntentionDetail.especial==0&&initIntlIntentionDetail.type==0">{{$t('static.common_purchase')}}</span>
+                                    <span v-if="initIntlIntentionDetail.especial==0&&initIntlIntentionDetail.type==1">{{$t('static.common_supply')}}</span>
+                                    <span v-if="initIntlIntentionDetail.especial==1&&initIntlIntentionDetail.type==0">{{$t('static.emergency')}}</span>
+                                    <span v-if="initIntlIntentionDetail.especial==1&&initIntlIntentionDetail.type==1">{{$t('static.low_cost')}}</span>
+                                </div>
+                                <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
                                     <label class="editlabel">{{$t('static.client_name')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerName}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
                                     <label class="editlabel">{{$t('static.client_phone')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerPhone}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4" >
+                                <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6" >
                                     <label class="editlabel">{{$t('static.client_email')}}：</label>
                                     <span>{{initIntlIntentionDetail.customerEmail}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
                                     <label class="editlabel">{{$t('static.country')}}：</label>
                                     <span>{{initIntlIntentionDetail.country}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
                                     <label class="editlabel">{{$t('static.city')}}：</label>   
                                     <span>{{initIntlIntentionDetail.city}}</span>
                                 </div>
-                                <div class="client-detailInfo col-md-4">
+                                <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
                                     <label class="editlabel">{{$t('static.address')}}：</label>
                                     <span>{{initIntlIntentionDetail.address}}</span>
                                 </div>
-                                
+                                <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                    <label class="editlabel">{{$t('static.intention_source')}}：</label>
+                                    <span>{{initIntlIntentionDetail.source}}</span>
+                                </div>
+                                <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                    <label class="editlabel">{{$t('static.inquiry_state')}}：</label>
+                                    <span v-if="initIntlIntentionDetail.inquire==0">{{$t('static.initial')}}</span>
+                                    <span v-if="initIntlIntentionDetail.inquire==1">{{$t('static.inquiry')}}</span>
+                                    <span v-if="initIntlIntentionDetail.inquire==2">{{$t('static.quotation')}}</span>
+                                    <span v-if="initIntlIntentionDetail.inquire==3">{{$t('static.quo_complete')}}</span>
+                                </div>
+                                <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6">
+                                    <label class="editlabel">{{$t('static.issued_time')}}：</label>
+                                    <span>{{initIntlIntentionDetail.ctime}}</span>
+                                </div>
                             </div>
 
                         </div>
@@ -162,7 +183,7 @@
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
                                                 <td>{{item.quality}}</td>
-                                                <td>{{item.offerPrice}}（{{item.offerEUnit}}）</td>
+                                                <td>{{item.offerPrice}}<span v-if="item.offerEUnit!=''&&item.offerEUnit!==null">（{{item.offerEUnit}}）</span></td>
                                                 <td>{{item.exchangeRate}}</td>
                                                 <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                 <td>{{item.offererName}}</td>
@@ -622,7 +643,7 @@ section article {
 }
 
 .client-detailInfo {
-    padding: 0 15px 14px 15px;
+    padding: 0 15px 0px 15px;
 }
 .client-detailInfo label{
   display: inline-block;

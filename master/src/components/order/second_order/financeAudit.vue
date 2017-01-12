@@ -12,7 +12,7 @@
                <section class="editsection clearfix" v-cloak>
                     <div class="editpage-input col-md-12" v-if="param.titles=='确认收款'||param.titles=='确认付款'">
                        <label class="editlabel">订单流水号 <span class="system_danger" v-if="$validation.prno.required">必填项</span></label>
-                       <input type="number" class="form-control" v-validate:prno="{required:true}" v-model='param.prNo' value="{{param.prNo}}"/>
+                       <input type="text" class="form-control" v-validate:prno="{required:true}" v-model='param.prNo' value="{{param.prNo}}"/>
                     </div>
                     <div class="editpage-input col-md-12" v-if="param.titles=='确认收款'||param.titles=='确认付款'">
                        <label class="editlabel">备注</label>

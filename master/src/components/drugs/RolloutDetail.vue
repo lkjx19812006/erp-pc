@@ -2,10 +2,10 @@
 <template>
     <drugs-model :param="disposeParam" v-if="disposeParam.show"></drugs-model>
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container modal_con" v-show="param.show">
+    <div class="container modal_con" v-show="param.show"  @click="param.show=false">
 <!--     <div class="client_body" v-show="!disposeParam.show"> -->
-      <div class="top-title">
-            <span class="glyphicon glyphicon-remove-circle" @click="param.show=false"></span>
+      <div class="top-title" @click="param.show=false">
+            <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="cover_loading">
             <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
@@ -22,10 +22,35 @@
         </div>
         <section>
             <div class="client-section clearfix" >
-                <div class="col-md-8 client-detail">
+                <div class="col-md-12">
                     <h4 class="section_title">{{$t('static.related_information')}}</h4>
-                    <article>
+                    <article @click.stop="">
                         <div class="panel-group">
+                            <div class="panel panel-default" style="border:none">
+                                <ul class="clearfix">
+                                    <div class="col-md-3 col-sm-4 col-xs-6">
+                                        <label>{{$t('static.client_name')}}：</label>{{initDrugsDetail.userName}}
+                                    </div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">
+                                        <label>{{$t('static.normal_amount')}}：</label>{{initDrugsDetail.normalMoney}}
+                                    </div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6" v-if="param.rollOutMoney">
+                                        <label>{{$t('static.transfer_amount')}}：</label>{{initDrugsDetail.rollOutMoney}}
+                                    </div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6" v-if="!param.rollOutMoney">
+                                        <label>{{$t('static.transfer_amount')}}：</label>0
+                                    </div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">
+                                        <label>{{$t('static.freezing_amount')}}：</label>{{initDrugsDetail.freezeMoney}}
+                                    </div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">
+                                        <label>{{$t('static.status')}}：</label>{{initDrugsDetail.status | drugsStatus}}
+                                    </div>
+                                    <div class="col-md-3 col-sm-4 col-xs-6">
+                                        <label>{{$t('static.create_time')}}：</label>{{initDrugsDetail.createTime}}
+                                    </div>
+                                </ul>
+                            </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" >
                                     <h4 class="panel-title clearfix" @click="enfoldment({
@@ -175,45 +200,6 @@
                         </div>
                     </article>
                 </div>
-                <div class="col-md-4" style="border-left: 1px solid #ddd;">
-                    <h4 class="section_title">{{$t('static.description')}}</h4>
-                    <article>
-                        <div class="edit-detail">
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>{{$t('static.client_name')}}</label>
-                                    <input type="text" class="form-control" v-model="initDrugsDetail.userName" value="{{initDrugsDetail.userName}}" disabled="disabled" />
-                                </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>{{$t('static.normal_amount')}}</label>
-                                    <input type="text" class="form-control" v-model="initDrugsDetail.normalMoney" value="{{initDrugsDetail.credit}}" disabled="disabled"/>
-                                </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>{{$t('static.freezing_amount')}}</label>
-                                    <input type="text" class="form-control"   value="{{initDrugsDetail.freezeMoney}}" disabled="disabled"/>
-                                </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                    <label>{{$t('static.status')}}</label>
-                                    <input type="text" class="form-control"  value="{{initDrugsDetail.status | drugsStatus}}" disabled="disabled"/>
-                                </div>
-                            </div>
-                            <div class="clearfix">
-                                <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                    <label>{{$t('static.transfer_amount')}}</label>
-                                    <input type="text" v-if="param.rollOutMoney" class="form-control"  v-model="initDrugsDetail.rollOutMoney" value="{{initDrugsDetail.rollOutMoney}}" disabled="disabled"/>
-                                <input type="text" class="form-control"  v-if="!param.rollOutMoney" value="0" disabled="disabled">
-                                </div>
-                                <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                   <label>{{$t('static.create_time')}}</label>
-                                    <input type="text" class="form-control"  v-model="initDrugsDetail.createTime" value="{{initDrugsDetail.createTime}}" disabled="disabled"/>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </article>
-                </div>
             </div>
         </section>
        </div>
@@ -287,14 +273,14 @@ export default {
 }
 .top-title{
     position: fixed;
-    width: 70%;
+    width: 60%;
     right: 0;
     left: 0;
     margin: auto;
     z-index: 1083
 }
 .modal_con{
-    width: 70%;
+    width: 60%;
 }
 .navbar-client {
     margin-bottom: 0;
@@ -317,21 +303,6 @@ export default {
 section {
     background-color: #fff;
 }
-.breed_action{
-  top: 10px;
-  right: 35px;
-  padding: 0 2px;
-}
-.breed_action dl dt{
-    display: block;
-    padding: 3px;
-    font-size: 14px;
-    cursor: pointer;
-}
-section article {
-    margin-top: 30px;
-}
-
 .client-section {
     padding: 10px 5px 40px 5px;
 }

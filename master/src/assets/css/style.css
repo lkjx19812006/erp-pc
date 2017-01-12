@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2017-01-11 10:04:29
+* @Last Modified time: 2017-01-12 14:38:59
 */
 
 * {
@@ -236,7 +236,7 @@ left: 50%;
 }
 .order_pagination,.base_pagination {
     position: fixed;
-    bottom: 50px;
+    bottom:20px;
     margin:auto;
     left: 0;
     right: 0;
@@ -280,7 +280,9 @@ dt{
     display: block;
     /* table-layout:fixed;*/
 } 
-
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    border:1px solid #ddd;
+}
 .table>thead>tr>th {
     border-bottom: 0;
     font-weight: 100;
@@ -290,6 +292,11 @@ word-wrap: break-word; */
 .panel-default ul > div{
    padding:5px 0; 
    white-space: normal;
+}
+.div_tag{
+    font-size:14px;
+    white-space: normal;
+    padding:5px 0;
 }
 .table>tbody>tr {
     position: relative;

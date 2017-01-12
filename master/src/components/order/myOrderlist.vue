@@ -84,9 +84,12 @@
                     <th>{{$t('static.order_type')}}</th>
                     <th>{{$t('static.trading_patterns')}}</th>
                     <th>{{$t('static.sample_order')}}</th>
+                    <th>{{$t('static.client_name')}}</th>
                     <th>{{$t('static.breed')}}</th>
                     <th>{{$t('static.transcation_amount')}}</th>
-                    <th>{{$t('static.client_name')}}</th>
+                    <th>{{$t('static.cost')}}{{$t('static.total')}}</th>
+                    <th>{{$t('static.wait_payment')}}</th>
+                    <th>{{$t('static.paid')}}</th>
                     <!-- <th>{{$t('static.supplier_name')}}</th> -->
                     <th>{{$t('static.consignee_name')}}</th>
                     <th>{{$t('static.consignee_phone')}}</th>
@@ -111,8 +114,6 @@
                   <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
                   <td v-if="item.sample==0">{{$t('static.no')}}</td>
                   <td v-if="item.sample==1">{{$t('static.yes')}}</td>
-                  <td>{{item.goodsDesc}}</td>
-                  <td>{{item.total}}</td>
                   <td><a @click="clickOn({
                                 show:true,
                                 id:item.id,
@@ -121,6 +122,11 @@
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'
                         })">{{item.customerName}}</a></td>
+                  <td>{{item.goodsDesc}}</td>
+                  <td>{{item.total}}</td>
+                  <td>{{item.cost}}</td>
+                  <td>{{item.unpaid}}</td>
+                  <td>{{item.prepaid}}</td>
                   <td>{{item.consignee}}</td>
                   <td>{{item.consigneePhone}}</td>
                   <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
@@ -199,6 +205,7 @@
                         preferentialDesc:item.preferentialDesc,
                         status:item.status,
                         total:item.total,
+                        cost:item.cost,
                         key:'myOrderList',
                         link:alterOrder,
                         url:'/order/',
@@ -223,7 +230,7 @@
                                 key:'orderDetail',
                                 orderStatus:item.orderStatus,
                                 contact:'/order/myList'
-                        })" v-if="item.orderStatus==20&&item.type==1" style="background:#fff;color:#eea236;padding:2px 4px;font-size: 12px;">申请收款
+                        })" v-if="(item.orderStatus==20||item.orderStatus==30)&&item.type==1" style="background:#fff;color:#eea236;padding:2px 4px;font-size: 12px;">申请收款
                         </button>
                         <!-- 销售订单发货流程start-->
                         <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">申请发货
@@ -388,6 +395,7 @@
                     preferentialDesc:'',
                     payWay:'',
                     total:'',
+                    cost:'',
                     orderStatus:'',
                     goods:[ //多个商品
 
@@ -781,8 +789,4 @@
     .order_pagination{
         text-align: center;
     }
-  #table_box  table th,#table_box  table td{
-    width:124px;
-    min-width: 124px;
-  }
   </style>

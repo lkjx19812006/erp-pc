@@ -70,23 +70,23 @@
 
                   <div class="panel panel-default" style="border:none">
                       <ul class="clearfix" style="font-size: 14px;padding:5px 0">
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.name')}}：{{initClientDetail.name}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.type')}}：{{initClientDetail.typeDesc}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="initClientDetail.supplier==0">{{$t('static.whether_supplier')}}：{{$t('static.no')}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="initClientDetail.supplier==1">{{$t('static.whether_supplier')}}：{{$t('static.yes')}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.classification')}}：{{initClientDetail.classifyDesc | classify}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.telephone')}}：{{initClientDetail.mainPhone}}<span v-if="initClientDetail.phoneProvince!=''||nitClientDetail.phoneCity!=''">（{{initClientDetail.phoneProvince}}{{initClientDetail.phoneCity}}）</span></div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.client_email')}}：{{initClientDetail.email}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.country')}}：{{initClientDetail.countryName}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.province')}}/{{$t('static.city')}}:{{initClientDetail.provinceName}} {{initClientDetail.cityName}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.detailed_address')}}：{{initClientDetail.address}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.transaction_num')}}/{{$t('static.recent_contact')}}：{{initClientDetail.orderTotal}}{{initClientDetail.lastOrderTime}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.client_source')}}：{{initClientDetail.sourceType}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.department')}}/{{$t('static.salesman')}}：{{initClientDetail.orgName}}<span v-if="initClientDetail.employeeName!==''&&initClientDetail.employeeName!==null">（{{initClientDetail.employeeName}}）</span></div>
-                        <div class="col-md-3 col-sm-4 col-xs-6">{{$t('static.create_time')}}：{{initClientDetail.ctime}}</div>
-                        <div class="col-md-3 col-sm-4 col-xs-6" v-if="initClientDetail.blacklist==1">{{$t('static.blacklist')}}:{{initClientDetail.name}}</div>
-                        <div class="col-md-12 col-sm-12 col-xs-12">{{$t('static.business_scope')}}：{{initClientDetail.bizScope}}</div>
-                         <div class="col-md-12 col-sm-12 col-xs-12">{{$t('static.comment')}}：{{initClientDetail.comments}}</div>
+                        <mg-label :title="$t('static.name')">{{initClientDetail.name}}</mg-label>
+                        <mg-label :title="$t('static.type')">{{initClientDetail.typeDesc}}</mg-label>
+                        <mg-label :title="$t('static.whether_supplier')" v-if="initClientDetail.supplier==0">{{$t('static.no')}}</mg-label>
+                        <mg-label :title="$t('static.whether_supplier')" v-if="initClientDetail.supplier==1">{{$t('static.yes')}}</mg-label>
+                        <mg-label :title="$t('static.classification')">{{initClientDetail.classifyDesc | classify}}</mg-label>
+                        <mg-label :title="$t('static.telephone')">{{initClientDetail.mainPhone}}<span v-if="initClientDetail.phoneProvince!=''||nitClientDetail.phoneCity!=''">（{{initClientDetail.phoneProvince}}{{initClientDetail.phoneCity}}）</span></mg-label>
+                        <mg-label :title="$t('static.client_email')">{{initClientDetail.email}}</mg-label>
+                        <mg-label :title="$t('static.country')">{{initClientDetail.countryName}}</mg-label>
+                        <mg-label :title="$t('static.province')+$t('static.city')">{{initClientDetail.provinceName}} {{initClientDetail.cityName}}</mg-label>
+                        <mg-label :title="$t('static.detailed_address')">{{initClientDetail.address}}</mg-label>
+                        <mg-label :title="$t('static.transaction_num')">{{initClientDetail.orderTotal}}{{initClientDetail.lastOrderTime}}</mg-label>
+                        <mg-label :title="$t('static.client_source')">{{initClientDetail.sourceType}}</mg-label>
+                        <mg-label :title="$t('static.department')+'/'+$t('static.salesman')">{{initClientDetail.orgName}}<span v-if="initClientDetail.employeeName!==''&&initClientDetail.employeeName!==null">（{{initClientDetail.employeeName}}）</span></mg-label>
+                        <mg-label :title="$t('static.create_time')">{{initClientDetail.ctime}}</mg-label>
+                        <mg-label :title="$t('static.blacklist')" v-if="initClientDetail.blacklist==1">{{initClientDetail.name}}</mg-label>
+                        <div class="col-md-12 col-sm-12 col-xs-12"><label>{{$t('static.business_scope')}}：</label>{{initClientDetail.bizScope}}</div>
+                        <div class="col-md-12 col-sm-12 col-xs-12"><label>{{$t('static.comment')}}：</label>{{initClientDetail.comments}}</div>
                       </ul>
                       <div style="font-size:14px;">
                           <label>{{$t('static.label')}}</label>：<Tag color="blue" v-for="item in initClientDetail.labels.arr" closable @on-close="deleteLabel(item,$index)">{{item.label}}</Tag>
@@ -949,6 +949,7 @@ import intentionModel from  '../user/userIntention'
 import auditDialog from '../tips/auditDialog'
 import createorderModel  from  '../order/createOrderDialog'
 import pictureModel  from  '../tips/pictureDialog'
+import mgLabel from '../../components/mguan/mgLabel'
 import {
 	initClientDetail
 } from '../../vuex/getters'
@@ -990,7 +991,8 @@ export default {
         tipsdialogModel,
         auditDialog,
         createorderModel,
-        pictureModel
+        pictureModel,
+        mgLabel
     },
     props:['param'],
     data(){

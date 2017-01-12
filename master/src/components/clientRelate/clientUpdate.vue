@@ -1,6 +1,7 @@
 <template>
     <select-model :param="selectParam" v-if="selectParam.show"></select-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+    <language-model v-show="false"></language-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="cover_loading">
         <pulse-loader :loading="countryParam.loading" :color="color" :size="size"></pulse-loader>
@@ -21,13 +22,21 @@
                                 <label class="editlabel" for="system">{{$t('static.client_name')}}<span class="system_danger" v-if="$validation.name.minlength">{{$t('static.enter_client_name')}}</span></label>
                                 <input type="text" v-model='param.name' v-validate:name="{minlength:2}" class="form-control edit-input" value="{{param.name}}" />
                             </div>
-                            <div class="editpage-input">
+                            <div class="editpage-input"  v-if="this.language=='zh_CN'">
                                 <label class="editlabel">{{$t('static.client_type')}}</label>
                                 <select class="form-control edit-input"  v-model='param.type'>
-                                   <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerType}}</option>
+                                   <option v-for="item in initUserType" value="{{item.id}}">{{item.name}}</option>
                                 </select>
                                 <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
                             </div>
+                            <div class="editpage-input"  v-if="this.language=='en'">
+                                <label class="editlabel">{{$t('static.client_type')}}</label>
+                                <select class="form-control edit-input"  v-model='param.type'>
+                                   <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerTypeEn}}</option>
+                                </select>
+                                <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
+                            </div>
+
 
                             <!-- 法人 -->
                             <div class="editpage-input">
@@ -153,7 +162,7 @@
 import tipsdialogModel  from '../tips/tipDialog'
 import vSelect from '../tools/vueSelect/components/Select'
 import selectModel  from '../user/employeeOrOrg'
-
+import languageModel from '../tools/language.vue'
 import {
     initCountrylist,
     initProvince,
@@ -170,7 +179,8 @@ export default {
     components: {
         tipsdialogModel,
         vSelect,
-        selectModel
+        selectModel,
+        languageModel
     },
     props: ['param'],
     data() {
@@ -200,6 +210,7 @@ export default {
                   cur: 1,
                   all: 7
                 },
+                language:'',
                 provinceParam:{
                   loading:false,
                   show:false,
@@ -282,6 +293,7 @@ export default {
       }
       this.getCountryList(this.countryParam);
       this.getUserTypeList(this.countryParam)
+      this.language = localStorage.lang;
 
     }
 }
