@@ -5,8 +5,8 @@
      <edit-model :param.sync="dialogParam" v-if="dialogParam.send"></edit-model>
      <apply-model :param="applyParam" v-if="applyParam.show"></apply-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-	 <div>
-        <div class="service-nav clearfix" id="top">
+     <mglist-model>
+         <div slot="top">
             <div class="my_order_search pull-right"> 
                <button class="btn btn-default transfer" @click="New()">{{$t('static.new')}}</button>
                <button class="btn btn-primary  transfer" @click="searchMsg()">{{$t('static.refresh')}}</button>
@@ -35,10 +35,10 @@
                  <button class="new_btn transfer pull-left" @click="searchMsg()">{{$t('static.search')}}</button>
                  <button class="new_btn transfer pull-left" @click="resetCondition()">{{$t('static.clear_all')}}</button>
               </div>
-            </div>
-        </div>
-        <div class="order_table" id="table_box">
-            <div class="cover_loading">
+            </div> 
+         </div>
+         <div slot="form">
+             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
@@ -54,7 +54,7 @@
                         <th>{{$t('static.sample_order')}}</th>
                         <th>{{$t('static.review_status')}}</th>
                         <th>{{$t('static.comment')}}</th>
-      	            	  <th>{{$t('static.create_time')}}</th>
+                        <th>{{$t('static.create_time')}}</th>
                         <th style="min-width: 150px;text-align: left">{{$t('static.operation')}}</th>
                     </tr>
                 </thead>
@@ -138,11 +138,9 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="base_pagination" id="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+         </div>
+        <pagination :combination="loadParam"  slot="page"></pagination>
+     </mglist-model>
 </template>
 <script>
 import pagination from '../../pagination'
@@ -154,6 +152,7 @@ import deleteModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDeta
 import editModel from '../alterSample'
 import applyModel from '../../tips/auditDialog' 
 import tipsModel from '../../tips/tipDialog'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
 	initSamplelist,
     initLogin
@@ -173,7 +172,8 @@ export default {
         deleteModel,
         editModel,
         applyModel,
-        tipsModel
+        tipsModel,
+        mglistModel
     },
     vuex: {
         getters: {

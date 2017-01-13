@@ -1,13 +1,14 @@
 <template>
     <drugs-model :param="detailParam" v-if="detailParam.show"></drugs-model>
-    <div>
-        <div class="service-nav clearfix" id="top">
+    <mglist-model>
+        <!-- 头部搜索 -->
+        <div slot="top">
             <dd class="pull-right" style="margin-right:20px">
                 <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
             </dd>
-
         </div>
-        <div class="order_table" id="table_box">
+        <!-- 中间列表 -->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -20,8 +21,6 @@
                         <th>积分</th>
                         <th>信用度</th>
                         <th>创建时间</th>
-                        
-                      
                     </tr>
                 </thead>
                 <tbody>
@@ -50,10 +49,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination" id="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+        <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
+    
 </template>
 <script>
 import  drugsModel  from  '../RolloutDetail'
@@ -61,7 +60,7 @@ import filter from '../../../filters/filters'
 import pagination from '../../../components/pagination'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
-
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
     initDrugAccountList
 } from '../../../vuex/getters'
@@ -72,7 +71,8 @@ import {
 export default {
     components: {
         pagination,
-        drugsModel
+        drugsModel,
+        mglistModel
     },
     vuex: {
         getters: {

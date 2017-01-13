@@ -1,68 +1,60 @@
 <template>
     <drugs-model :param="detailParam" v-if="detailParam.show"></drugs-model>
     <state-model :param="disposeParam" v-if="disposeParam.show"></state-model>
-    <div class="service-nav clearfix" style="padding-bottom:10px" id="top">
-     <!--  <div class="left">
-       <dl class="clear left">
-          <dt class="left  marg_top">银行名称：</dt>
-          <dd class="left">
-               <input type="text"  class="form-control" v-model="loadParam.bank"  @keyup.enter="selectSearch()"/>
-          </dd>
-       </dl>
-        <button type="button" class="new_btn transfer pull-left"  @click="resetTime()">{{$t('static.clear_all')}}</button>
-       <button class="new_btn transfer pull-left" @click="selectSearch()">{{$t('static.search')}}</button>
-     </div> -->
-      <div class="btn btn-primary pull-right" @click="selectSearch()">{{$t('static.refresh')}}</div>
-    </div>
-    <div class="order_table" id="table_box">
-      <div class="cover_loading">
-        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-      </div>
-      <table class="table table-hover table_color table-striped " v-cloak id="tab">
-        <thead>
-            <tr>
-              <th>{{$t('static.client_name')}}</th>
-              <th>{{$t('static.account_number')}}</th>
-              <th>{{$t('static.normal_amount')}}</th>
-              <th>{{$t('static.freezing_amount')}}</th>
-              <th>{{$t('static.transfer_amount')}}</th>
-              <th>{{$t('static.application_time')}}</th>
-              <th>{{$t('static.status')}}</th>
-              <th>{{$t('static.handle')}}</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in initRolloutlist">
-            <td><a @click.stop="clickOn({
-                      show:true,
-                      id:item.id,
-                      moneyId:item.moneyId,
-                      userId:item.userId,
-                      loading:false,
-                      status:item.status,
-                      link:'/money/details/'
-                })">{{item.name}}</a></td>
-            <td>{{item.bank}}</td>
-            <td>{{item.normalMoney}}</td>
-            <td>{{item.freezeMoney}}</td>
-            <td v-if="item.rollOutMoney">{{item.rollOutMoney}}</td>
-            <td v-if="!item.rollOutMoney">0</td>
-            <td>{{item.ctime}}</td>
-            <td>{{item.status | drugsStatus}}</td>
-            <td>
-                <a class="operate" v-if="item.status==0" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_apply')}}.png" /></a>
-                <a class="operate" v-if="item.status==1" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_Financial')}}.png" title="转账处理中" alt="转账处理中"></a>
-                <a class="operate" v-if="item.status==2" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_transfer')}}.png"  title="转出成功" alt="转出成功"></a>
-                <a class="operate" v-if="item.status==3" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_Financialover')}}.png" ></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="base_pagination" id="base_pagination">
-      <pagination :combination="loadParam"></pagination>
-    </div>
-
+    <mglist-model>
+        <!-- 头部搜索 -->
+        <div slot="top">
+            <div class="btn btn-primary pull-right" @click="selectSearch()">{{$t('static.refresh')}}</div>
+        </div>
+        <!-- 中间列表 -->
+        <div slot="form">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
+              <thead>
+                  <tr>
+                    <th>{{$t('static.client_name')}}</th>
+                    <th>{{$t('static.account_number')}}</th>
+                    <th>{{$t('static.normal_amount')}}</th>
+                    <th>{{$t('static.freezing_amount')}}</th>
+                    <th>{{$t('static.transfer_amount')}}</th>
+                    <th>{{$t('static.application_time')}}</th>
+                    <th>{{$t('static.status')}}</th>
+                    <th>{{$t('static.handle')}}</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item in initRolloutlist">
+                  <td><a @click.stop="clickOn({
+                            show:true,
+                            id:item.id,
+                            moneyId:item.moneyId,
+                            userId:item.userId,
+                            loading:false,
+                            status:item.status,
+                            link:'/money/details/'
+                      })">{{item.name}}</a></td>
+                  <td>{{item.bank}}</td>
+                  <td>{{item.normalMoney}}</td>
+                  <td>{{item.freezeMoney}}</td>
+                  <td v-if="item.rollOutMoney">{{item.rollOutMoney}}</td>
+                  <td v-if="!item.rollOutMoney">0</td>
+                  <td>{{item.ctime}}</td>
+                  <td>{{item.status | drugsStatus}}</td>
+                  <td>
+                      <a class="operate" v-if="item.status==0" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_apply')}}.png" /></a>
+                      <a class="operate" v-if="item.status==1" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_Financial')}}.png" title="转账处理中" alt="转账处理中"></a>
+                      <a class="operate" v-if="item.status==2" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_transfer')}}.png"  title="转出成功" alt="转出成功"></a>
+                      <a class="operate" v-if="item.status==3" @click="drugs(item,$index)"><img src="/static/images/{{$t('static.img_Financialover')}}.png" ></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
 </template>
 <script>
   import  drugsModel  from  '../RolloutDetail' 
@@ -71,6 +63,7 @@
   import filter from '../../../filters/filters'
   import common from '../../../common/common'
   import changeMenu from '../../../components/tools/tabs/tabs.js'
+  import mglistModel from '../../mguan/mgListComponent.vue'
   import {
     initRolloutlist
   } from '../../../vuex/getters'
@@ -83,7 +76,8 @@
       pagination,
       filter,
       drugsModel,
-      stateModel
+      stateModel,
+      mglistModel
     },
     vuex: {
       getters: {

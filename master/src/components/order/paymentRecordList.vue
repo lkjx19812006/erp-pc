@@ -1,64 +1,66 @@
 <template>
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
-  <div v-show="!changeParam.show">
-    <div class="service-nav clearfix" id="top">
-      <div class="clearfix left" >
-        <div class="my_order_search">
-            <select  v-model="loadParam.payWay" class="form-control" @change="searchProduct()">
-                <option value="">{{$t('static.select_payment_method')}}</option>
-                <option value="0">{{$t('static.line_down')}}</option>
-                <option value="1">{{$t('static.alipay')}}</option>
-                <option value="2">{{$t('static.pingan')}}</option>
-                <option value="3">{{$t('static.yaokuan')}}</option>
-                <option value="4">WeChat</option>
-            </select>
-        </div>
-        <div class="left clearfix">
-           <input type="text"  class="form-control" v-model="loadParam.orderNo" placeholder="{{$t('static.order_no')}}" @keyUp.enter="searchProduct()" />
-        </div>
-        <div class="left">
-           <button class="new_btn transfer" @click="searchProduct()">{{$t('static.search')}}</button>
-           <button class="new_btn transfer" @click="reset()">{{$t('static.clear_all')}}</button>
-        </div>
+  <mglist-model>
+      <!-- 头部搜索 -->
+      <div slot="top">
+          <div class="clearfix left" >
+            <div class="my_order_search">
+                <select  v-model="loadParam.payWay" class="form-control" @change="searchProduct()">
+                    <option value="">{{$t('static.select_payment_method')}}</option>
+                    <option value="0">{{$t('static.line_down')}}</option>
+                    <option value="1">{{$t('static.alipay')}}</option>
+                    <option value="2">{{$t('static.pingan')}}</option>
+                    <option value="3">{{$t('static.yaokuan')}}</option>
+                    <option value="4">WeChat</option>
+                </select>
+            </div>
+            <div class="left clearfix">
+               <input type="text"  class="form-control" v-model="loadParam.orderNo" placeholder="{{$t('static.order_no')}}" @keyUp.enter="searchProduct()" />
+            </div>
+            <div class="left">
+               <button class="new_btn transfer" @click="searchProduct()">{{$t('static.search')}}</button>
+               <button class="new_btn transfer" @click="reset()">{{$t('static.clear_all')}}</button>
+            </div>
+          </div>
+          <div class="clearfix right" >
+              <button class="btn btn-primary" @click="searchProduct()">{{$t('static.refresh')}}</button>
+          </div>
       </div>
-      <div class="clearfix right" >
-          <button class="btn btn-primary" @click="searchProduct()">{{$t('static.refresh')}}</button>
+      <!-- 中间列表 -->
+      <div slot="form">
+          <div class="cover_loading">
+              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+          </div>
+          <table class="table table-hover table_color table-striped " v-cloak id="tab">
+            <thead>
+                <tr>
+                  <th>{{$t('static.payment_method')}}</th>
+                  <th>{{$t('static.order_no')}}</th>
+                  <th>{{$t('static.pay_no')}}</th>
+                  <th>{{$t('static.transaction_status')}}</th>
+                  <th>{{$t('static.order_amount')}}</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in initOrderPaylist">
+                <td v-if="item.payWay===0">{{$t('static.line_down')}}</td>
+                <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
+                <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
+                <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
+                <td v-if="item.payWay==4">WeChat</td>
+                <td v-if="item.payWay==null">未支付</td>
+                <td>{{item.orderNo}}</td>
+                <td>{{item.payNo}}</td>
+                <td>{{item.payStatus}}</td>
+                <td>{{item.payFee | payfee}}</td>
+              </tr>
+            </tbody>
+          </table>
       </div>
-    </div>
-    <div class="order_table" id="table_box">
-      <div class="cover_loading">
-        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-      </div>
-      <table class="table table-hover table_color table-striped " v-cloak id="tab">
-        <thead>
-            <tr>
-              <th>{{$t('static.payment_method')}}</th>
-              <th>{{$t('static.order_no')}}</th>
-              <th>{{$t('static.pay_no')}}</th>
-              <th>{{$t('static.transaction_status')}}</th>
-              <th>{{$t('static.order_amount')}}</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in initOrderPaylist">
-            <td v-if="item.payWay===0">{{$t('static.line_down')}}</td>
-            <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
-            <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
-            <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
-            <td v-if="item.payWay==4">WeChat</td>
-            <td v-if="item.payWay==null">未支付</td>
-            <td>{{item.orderNo}}</td>
-            <td>{{item.payNo}}</td>
-            <td>{{item.payStatus}}</td>
-            <td>{{item.payFee | payfee}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="base_pagination" id="base_pagination">
-      <pagination :combination="loadParam"></pagination>
-    </div>
-  </div>
+       <!-- 底部分页 -->
+      <pagination :combination="loadParam"  slot="page"></pagination>
+  </mglist-model>
+
 </template>
 <script>
   import pagination from '../pagination'
@@ -66,6 +68,7 @@
   import detailModel from '../supply/productDetail'
   import common from '../../common/common'
   import changeMenu from '../../components/tools/tabs/tabs.js'
+  import mglistModel from '../mguan/mgListComponent.vue'
   import {
     initOrderPaylist
   } from '../../vuex/getters'
@@ -77,7 +80,8 @@
     components: {
       pagination,
       detailModel,
-      filter
+      filter,
+      mglistModel
     },
     vuex: {
       getters: {

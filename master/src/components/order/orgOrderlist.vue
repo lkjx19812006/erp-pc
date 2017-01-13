@@ -5,240 +5,242 @@
     <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <div>
-      <div class="order_search" id="top">
-        <div class="clear">
-            <div class="right">
-              <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
-                <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button>
-               -->
-                <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-            </div>
-            <div class="clear left">
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
-                 <dd class="left">
-                      <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                          <option value="">{{$t('static.please_select')}}</option>
-                          <option value="0">{{$t('static.purchase')}}</option>
-                          <option value="1">{{$t('static.sell')}}</option>
-                      </select>
-                 </dd>
-              </dl>
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
-                 <dd class="left">
-                       <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
-                              <option value="">{{$t('static.please_select')}}</option>
-                              <option value="0">{{$t('static.create_order')}}</option>
-                              <option value="10">{{$t('static.order_procing')}}</option>
-                              <option value="20">{{$t('static.waiting_order')}}</option>
-                              <option value="30">{{$t('static.awaiting_review')}}</option>
-                              <option value="40">{{$t('static.wait_ship')}}</option>
-                              <option value="50">{{$t('static.wait_receipt')}}</option>
-                              <option value="60">{{$t('static.awaiting_comment')}}</option>
-                              <option value="70">{{$t('static.order_over')}}</option>
-                      </select>
-                 </dd>
-              </dl>
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
-                 <dd class="left">
-                       <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
-                          <option value="">{{$t('static.please_select')}}</option>
-                          <option value="1">{{$t('static.together')}}</option>
-                          <option value="2">{{$t('static.three_side')}}</option>
-                          <option value="3">{{$t('static.self_support')}}</option>
-                      </select>
-                 </dd>
-              </dl>
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
-                 <dd class="left">
-                    <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
-                 </dd>
-              </dl>
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
-                 <dd class="left">
-                    <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
-                 </dd>
-              </dl>
-              <button type="button" class="new_btn"  @click="resetTime()">{{$t('static.clear_all')}}</button>
-                <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+    <mglist-model>
+        <!-- 头部搜索 -->
+        <div slot="top">
+            <div class="clear">
+              <div class="right">
+                <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
+                  <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button>
+                 -->
+                  <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+              </div>
+              <div class="clear left">
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
+                   <dd class="left">
+                        <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
+                            <option value="">{{$t('static.please_select')}}</option>
+                            <option value="0">{{$t('static.purchase')}}</option>
+                            <option value="1">{{$t('static.sell')}}</option>
+                        </select>
+                   </dd>
+                </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
+                   <dd class="left">
+                         <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
+                                <option value="">{{$t('static.please_select')}}</option>
+                                <option value="0">{{$t('static.create_order')}}</option>
+                                <option value="10">{{$t('static.order_procing')}}</option>
+                                <option value="20">{{$t('static.waiting_order')}}</option>
+                                <option value="30">{{$t('static.awaiting_review')}}</option>
+                                <option value="40">{{$t('static.wait_ship')}}</option>
+                                <option value="50">{{$t('static.wait_receipt')}}</option>
+                                <option value="60">{{$t('static.awaiting_comment')}}</option>
+                                <option value="70">{{$t('static.order_over')}}</option>
+                        </select>
+                   </dd>
+                </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
+                   <dd class="left">
+                         <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
+                            <option value="">{{$t('static.please_select')}}</option>
+                            <option value="1">{{$t('static.together')}}</option>
+                            <option value="2">{{$t('static.three_side')}}</option>
+                            <option value="3">{{$t('static.self_support')}}</option>
+                        </select>
+                   </dd>
+                </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                   <dd class="left">
+                      <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
+                   </dd>
+                </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
+                   <dd class="left">
+                      <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
+                   </dd>
+                </dl>
+                <button type="button" class="new_btn"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+                  <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+              </div>
             </div>
         </div>
-      </div>
-      <div class="order_table" id="table_box">
-        <div class="cover_loading">
-            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+        <!-- 中间列表 -->
+        <div slot="form">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
+              <thead>
+                  <tr>
+                      <!-- <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th> -->
+                      <th>{{$t('static.transcation')}}</th>
+                      <th>{{$t('static.order_type')}}</th>
+                      <th>{{$t('static.trading_patterns')}}</th>
+                      <th>{{$t('static.sample_order')}}</th>
+                      <th>{{$t('static.client_name')}}</th>
+                      <th>{{$t('static.breed')}}</th>
+                      <th>{{$t('static.transcation_amount')}}</th>
+                      <th>{{$t('static.wait_payment')}}</th>
+                      <th>{{$t('static.paid')}}</th>
+                      <!-- <th>{{$t('static.supplier_name')}}</th> -->
+                      <th>{{$t('static.salesman')}}</th>
+                      <th>{{$t('static.consignee_name')}}</th>
+                      <th>{{$t('static.consignee_phone')}}</th>
+                      <th style="width:300px">{{$t('static.consignee_address')}}</th>
+                      <th>{{$t('static.payment_method')}}</th>
+                      <th>{{$t('static.order_status')}}</th>
+                      <th>{{$t('static.order_source')}}</th>
+                      <th>{{$t('static.review_status')}}</th>
+                      <th>{{$t('static.handle')}}</th> 
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr v-for="item in initOrgOrderlist"  v-cloak>
+                    <!-- <td  @click.stop="">
+                      <label v-if="item.validate==1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
+                    </td> -->
+                    <td>{{item.ctime}}</td>
+                    <td v-if="item.type==1">{{$t('static.sell')}}</td>
+                    <td v-if="item.type==0">{{$t('static.purchase')}}</td>
+                    <td v-if="item.mode==1">{{$t('static.together')}}</td>
+                    <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
+                    <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
+                    <td v-if="item.sample==0">{{$t('static.no')}}</td>
+                    <td v-if="item.sample==1">{{$t('static.yes')}}</td>
+                    <td><a @click="clickOn({
+                                  show:true,
+                                  id:item.id,
+                                  loading:false,
+                                   key:'orderDetail',
+                                  orderStatus:item.orderStatus,
+                                  contact:''
+                          })">{{item.customerName}}</a></td>
+                    <td>{{item.goodsDesc}}</td>
+                    <td>{{item.total}}</td>
+                    <td>{{item.unpaid}}</td>
+                    <td>{{item.prepaid}}</td>
+                    <td>{{item.employeeName}}</td>
+                    <td>{{item.consignee}}</td>
+                    <td>{{item.consigneePhone}}</td>
+                    <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
+                    <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
+                    <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
+                    <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
+                    <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
+                    <td v-if="item.payWay==4">WeChat</td>
+                    <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td>
+                    <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
+                    <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
+                    <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
+                    <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
+                    <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td> <!-- {{$t('static.wait_ship')}} -->
+                    <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
+                    <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
+                    <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
+                    <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==2">已重新发货（仓库审核）</td>
+                    <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==50">{{$t('static.order_over')}}（补充合同申请）</td>
+                    <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==60">{{$t('static.order_over')}}（售后处理中）</td>
+                    <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
+                    <td v-if="item.orderStatus==70">{{$t('static.order_over')}}</td>
+                    <td v-if="item.orderStatus==-1">{{$t('static.cancle_order')}}</td>
+                    <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td>
+                    <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
+                    <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
+                    <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>
+                    <td v-if="item.sourceType==3">{{$t('static.sample_order')}}</td>
+                    <td v-if="item.validate==2" ><div style="background:green;color:#fff">{{$t('static.approved')}}</div></td>
+                    <td v-if="item.validate==-2"><div style="background:red;color:#fff">{{$t('static.unapproved')}}</div></td>
+                    <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
+                    <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
+                   <!--  <td @click="editClick($index)">
+                       <img height="24" width="24" src="/static/images/default_arrow.png" />
+                       <div class="component_action" v-show="item.show">
+                            <ul>
+                                <li @click="updateOrder({
+                                         sub:$index,
+                                         id:item.id,
+                                         show:true,
+                                         title1:'修改订单',
+                                         type:item.type,
+                                         sourceType:item.sourceType,
+                                         sample:item.sample,
+                                         intl:item.intl,
+                                         customer:item.customer,
+                                         currency:item.currency,
+                                         consignee:item.consignee,
+                                         consigneePhone:item.consigneePhone,
+                                         zipCode:item.zipCode,
+                                         country:item.country,
+                                         province:item.province,
+                                         city:item.city,
+                                         district:item.district,
+                                         consigneeAddr:item.consigneeAddr,
+                                         comments:item.comments,
+                                         orderStatus:item.orderStatus,
+                                         incidentals:item.incidentals,
+                                         incidentalsDesc:item.incidentalsDesc,
+                                         preferential:item.preferential,
+                                         preferentialDesc:item.preferentialDesc,
+                                         goods:[{
+                                                 sourceType:item.goods[0].sourceType,
+                                                 sourceId:item.goods[0].sourceId,
+                                                 title:item.goods[0].title,
+                                                 breedId:item.goods[0].breedId,
+                                                 brredName:item.goods[0].brredName,
+                                                 quality:item.goods[0].quality,
+                                                 location:item.goods[0].location,
+                                                 spec:item.goods[0].spec,
+                                                 price:item.goods[0].price,
+                                                 unit:item.goods[0].unit,
+                                                 number:item.goods[0].number
+                                             }],
+                                         key:'orderList',
+                                         link:alterOrder,
+                                         url:'/order/'
+                                         })">编辑</li>
+                                 <li v-if="item.orderStatus==-1&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
+                                 <li v-if="item.orderStatus==-2&&item.type==0" @click="pendingOrder(item,$index)">订单已过期</li>
+                                 <li v-if="item.orderStatus==0&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">待处理订单</li>
+                                 <li v-if="item.orderStatus==10&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>
+                                 <li v-if="item.orderStatus==20&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">等待支付</li>
+                                 <li v-if="item.orderStatus==30&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li>
+                                 <li v-if="item.orderStatus==40&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">等待发货</li>
+                                 <li v-if="item.orderStatus==50&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">等待收货</li>
+                                 <li v-if="item.orderStatus==60&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
+                                 <li v-if="item.orderStatus==70&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
+                                 <li v-if="item.orderStatus==-1&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
+                                 <li v-if="item.orderStatus==-2&&item.type==1" @click="pendingOrder(item,$index)">订单已过期</li>
+                                 <li v-if="item.orderStatus==0&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">待处理订单</li>
+                                 <li v-if="item.orderStatus==10&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>
+                                 <li v-if="item.orderStatus==20&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待支付</li>
+                                 <li v-if="item.orderStatus==30&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li>
+                                 <li v-if="item.orderStatus==40&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">等待发货</li>
+                                 <li v-if="item.orderStatus==50&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">等待收货</li>
+                                 <li v-if="item.orderStatus==60&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
+                                 <li v-if="item.orderStatus==70&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
+                            </ul>
+                        </div>
+                   </td> -->
+                   <td>
+                      <a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
+                        <img src="/static/images/orgcheck.png"  title="审核" alt="审核" />
+                      </a>
+                      <button class="btn btn-warning" v-if="item.validate==2&&(item.verifier == $store.state.table.login.id)&&item.logistics==1&&(item.taskKey=='order_send_governor_validate'||item.taskKey=='financial_validate')" @click="orderSend(item.id,$index)" style="background:#fff;color:#eea236;padding:1px 3px;">审核发货</button>
+                   </td>
+                  </tr>
+              </tbody>
+            </table>
         </div>
-        <table class="table table-hover table_color table-striped " v-cloak id="tab">
-            <thead>
-                <tr>
-                    <!-- <th><label class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}"  @click="select()"></label></th> -->
-                    <th>{{$t('static.transcation')}}</th>
-                    <th>{{$t('static.order_type')}}</th>
-                    <th>{{$t('static.trading_patterns')}}</th>
-                    <th>{{$t('static.sample_order')}}</th>
-                    <th>{{$t('static.client_name')}}</th>
-                    <th>{{$t('static.breed')}}</th>
-                    <th>{{$t('static.transcation_amount')}}</th>
-                    <th>{{$t('static.wait_payment')}}</th>
-                    <th>{{$t('static.paid')}}</th>
-                    <!-- <th>{{$t('static.supplier_name')}}</th> -->
-                    <th>{{$t('static.salesman')}}</th>
-                    <th>{{$t('static.consignee_name')}}</th>
-                    <th>{{$t('static.consignee_phone')}}</th>
-                    <th style="width:300px">{{$t('static.consignee_address')}}</th>
-                    <th>{{$t('static.payment_method')}}</th>
-                    <th>{{$t('static.order_status')}}</th>
-                    <th>{{$t('static.order_source')}}</th>
-                    <th>{{$t('static.review_status')}}</th>
-                    <th>{{$t('static.handle')}}</th> 
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in initOrgOrderlist"  v-cloak>
-                  <!-- <td  @click.stop="">
-                    <label v-if="item.validate==1" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
-                  </td> -->
-                  <td>{{item.ctime}}</td>
-                  <td v-if="item.type==1">{{$t('static.sell')}}</td>
-                  <td v-if="item.type==0">{{$t('static.purchase')}}</td>
-                  <td v-if="item.mode==1">{{$t('static.together')}}</td>
-                  <td v-if="item.mode==2">{{$t('static.three_side')}}</td>
-                  <td v-if="item.mode==3">{{$t('static.self_support')}}</td>
-                  <td v-if="item.sample==0">{{$t('static.no')}}</td>
-                  <td v-if="item.sample==1">{{$t('static.yes')}}</td>
-                  <td><a @click="clickOn({
-                                show:true,
-                                id:item.id,
-                                loading:false,
-                                 key:'orderDetail',
-                                orderStatus:item.orderStatus,
-                                contact:''
-                        })">{{item.customerName}}</a></td>
-                  <td>{{item.goodsDesc}}</td>
-                  <td>{{item.total}}</td>
-                  <td>{{item.unpaid}}</td>
-                  <td>{{item.prepaid}}</td>
-                  <td>{{item.employeeName}}</td>
-                  <td>{{item.consignee}}</td>
-                  <td>{{item.consigneePhone}}</td>
-                  <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
-                  <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
-                  <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
-                  <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
-                  <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
-                  <td v-if="item.payWay==4">WeChat</td>
-                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td>
-                  <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
-                  <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
-                  <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
-                  <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
-                  <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td> <!-- {{$t('static.wait_ship')}} -->
-                  <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
-                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
-                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
-                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==2">已重新发货（仓库审核）</td>
-                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==50">{{$t('static.order_over')}}（补充合同申请）</td>
-                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==60">{{$t('static.order_over')}}（售后处理中）</td>
-                  <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
-                  <td v-if="item.orderStatus==70">{{$t('static.order_over')}}</td>
-                  <td v-if="item.orderStatus==-1">{{$t('static.cancle_order')}}</td>
-                  <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td>
-                  <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
-                  <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
-                  <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>
-                  <td v-if="item.sourceType==3">{{$t('static.sample_order')}}</td>
-                  <td v-if="item.validate==2" ><div style="background:green;color:#fff">{{$t('static.approved')}}</div></td>
-                  <td v-if="item.validate==-2"><div style="background:red;color:#fff">{{$t('static.unapproved')}}</div></td>
-                  <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
-                  <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
-                 <!--  <td @click="editClick($index)">
-                     <img height="24" width="24" src="/static/images/default_arrow.png" />
-                     <div class="component_action" v-show="item.show">
-                          <ul>
-                              <li @click="updateOrder({
-                                       sub:$index,
-                                       id:item.id,
-                                       show:true,
-                                       title1:'修改订单',
-                                       type:item.type,
-                                       sourceType:item.sourceType,
-                                       sample:item.sample,
-                                       intl:item.intl,
-                                       customer:item.customer,
-                                       currency:item.currency,
-                                       consignee:item.consignee,
-                                       consigneePhone:item.consigneePhone,
-                                       zipCode:item.zipCode,
-                                       country:item.country,
-                                       province:item.province,
-                                       city:item.city,
-                                       district:item.district,
-                                       consigneeAddr:item.consigneeAddr,
-                                       comments:item.comments,
-                                       orderStatus:item.orderStatus,
-                                       incidentals:item.incidentals,
-                                       incidentalsDesc:item.incidentalsDesc,
-                                       preferential:item.preferential,
-                                       preferentialDesc:item.preferentialDesc,
-                                       goods:[{
-                                               sourceType:item.goods[0].sourceType,
-                                               sourceId:item.goods[0].sourceId,
-                                               title:item.goods[0].title,
-                                               breedId:item.goods[0].breedId,
-                                               brredName:item.goods[0].brredName,
-                                               quality:item.goods[0].quality,
-                                               location:item.goods[0].location,
-                                               spec:item.goods[0].spec,
-                                               price:item.goods[0].price,
-                                               unit:item.goods[0].unit,
-                                               number:item.goods[0].number
-                                           }],
-                                       key:'orderList',
-                                       link:alterOrder,
-                                       url:'/order/'
-                                       })">编辑</li>
-                               <li v-if="item.orderStatus==-1&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
-                               <li v-if="item.orderStatus==-2&&item.type==0" @click="pendingOrder(item,$index)">订单已过期</li>
-                               <li v-if="item.orderStatus==0&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">待处理订单</li>
-                               <li v-if="item.orderStatus==10&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>
-                               <li v-if="item.orderStatus==20&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">等待支付</li>
-                               <li v-if="item.orderStatus==30&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li>
-                               <li v-if="item.orderStatus==40&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">等待发货</li>
-                               <li v-if="item.orderStatus==50&&item.type==0&&item.validate==2"  @click="pendingOrder(item,$index)">等待收货</li>
-                               <li v-if="item.orderStatus==60&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
-                               <li v-if="item.orderStatus==70&&item.type==0&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
-                               <li v-if="item.orderStatus==-1&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单已取消</li>
-                               <li v-if="item.orderStatus==-2&&item.type==1" @click="pendingOrder(item,$index)">订单已过期</li>
-                               <li v-if="item.orderStatus==0&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">待处理订单</li>
-                               <li v-if="item.orderStatus==10&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">订单处理中</li>
-                               <li v-if="item.orderStatus==20&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待支付</li>
-                               <li v-if="item.orderStatus==30&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">等待核查</li>
-                               <li v-if="item.orderStatus==40&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">等待发货</li>
-                               <li v-if="item.orderStatus==50&&item.type==1&&item.validate==2"  @click="pendingOrder(item,$index)">等待收货</li>
-                               <li v-if="item.orderStatus==60&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
-                               <li v-if="item.orderStatus==70&&item.type==1&&item.validate==2" @click="pendingOrder(item,$index)">已完成订单</li>
-                          </ul>
-                      </div>
-                 </td> -->
-                 <td>
-                    <a class="operate" v-if="item.validate==1&&(item.verifier == $store.state.table.login.id)" @click="orderCheck(item.id,$index)">
-                      <img src="/static/images/orgcheck.png"  title="审核" alt="审核" />
-                    </a>
-                    <button class="btn btn-warning" v-if="item.validate==2&&(item.verifier == $store.state.table.login.id)&&item.logistics==1&&(item.taskKey=='order_send_governor_validate'||item.taskKey=='financial_validate')" @click="orderSend(item.id,$index)" style="background:#fff;color:#eea236;padding:1px 3px;">审核发货</button>
-                 </td>
-                </tr>
-            </tbody>
-        </table>
-      </div>
-      <div class="order_pagination" id="base_pagination">
-          <pagination :combination="loadParam"></pagination>
-      </div>
-    </div>
+         <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
+
   </template>
   <script>
     import pagination from '../pagination'
@@ -252,6 +254,7 @@
     import filter from '../../filters/filters'
     import common from '../../common/common'
     import changeMenu from '../../components/tools/tabs/tabs.js'
+    import mglistModel from '../mguan/mgListComponent.vue'
     import {
         getList,
         initOrgOrderlist,
@@ -270,6 +273,7 @@
         components: {
             editorderModel,
             pagination,
+            mglistModel,
             filter,
             detailModel,
             searchModel,

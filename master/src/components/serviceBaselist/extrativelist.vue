@@ -1,59 +1,63 @@
 <template>
-
-    <div class="service-nav clearfix" style="padding-bottom:10px;" id="top">
-        <div class="left">
-            <div class="name_search clearfix">
-                <img src="/static/images/search.png" height="24" width="24">
-                <input type="text" class="search_input" placeholder="按名称搜索" v-model="loadParam.name" @keyup.enter="categoryNameSearch()">
-            </div>
-            <div class="name_search clearfix">
-                <img src="/static/images/search.png" height="24" width="24">
-                <input type="text" class="search_input" placeholder="按公司名称搜索" v-model="loadParam.company" @keyup.enter="categoryNameSearch()">
-            </div>
-            <div class="name_search clearfix" style="border:none">
-            <button class="new_btn" style="height: 30px;padding: 0 10px;" @click="categoryNameSearch()">搜索</button>
-            <button class="new_btn" style="height: 30px;padding: 0 10px;margin-right:10px;" @click="reset()">清空条件</button>
-            </div>
-       </div>
-       <div class="right">
-           <button class="btn btn-primary"  @click="categoryNameSearch()">刷新</button>
-       </div>
-    </div>
-    <div class="order_table" id="table_box">
-        <div class="cover_loading">
-            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+    <mglist-model>
+        <!-- 头部搜索 -->
+        <div slot="top">
+            <div class="left">
+                <div class="name_search clearfix">
+                    <img src="/static/images/search.png" height="24" width="24">
+                    <input type="text" class="search_input" placeholder="按名称搜索" v-model="loadParam.name" @keyup.enter="categoryNameSearch()">
+                </div>
+                <div class="name_search clearfix">
+                    <img src="/static/images/search.png" height="24" width="24">
+                    <input type="text" class="search_input" placeholder="按公司名称搜索" v-model="loadParam.company" @keyup.enter="categoryNameSearch()">
+                </div>
+                <div class="name_search clearfix" style="border:none">
+                <button class="new_btn" style="height: 30px;padding: 0 10px;" @click="categoryNameSearch()">搜索</button>
+                <button class="new_btn" style="height: 30px;padding: 0 10px;margin-right:10px;" @click="reset()">清空条件</button>
+                </div>
+           </div>
+           <div class="right">
+               <button class="btn btn-primary"  @click="categoryNameSearch()">刷新</button>
+           </div>
         </div>
-        <table class="table table-hover table_color table-striped" v-cloak id="tab">
-            <thead>
-                <tr>
-                    <th>中文名</th>
-                    <th>联系人</th>
-                    <th>联系方式</th>
-                    <th>公司名称</th>
-                    <th>邮箱</th>
-                    <th>主要成分</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in initDrawlist">
-                    <td>{{item.name}}</td>
-                    <td>{{item.contactsName}}</td>
-                    <td>{{item.contactsPhone}}</td>
-                    <td>{{item.company}}</td>
-                    <td>{{item.email}}</td>
-                    <td>{{item.mainProducts}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="base_pagination" id="base_pagination">
-        <pagination :combination="loadParam"></pagination>
-    </div>
+        <!-- 中间列表 -->
+        <div slot="form">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_color table-striped" v-cloak id="tab">
+                <thead>
+                    <tr>
+                        <th>中文名</th>
+                        <th>联系人</th>
+                        <th>联系方式</th>
+                        <th>公司名称</th>
+                        <th>邮箱</th>
+                        <th>主要成分</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in initDrawlist">
+                        <td>{{item.name}}</td>
+                        <td>{{item.contactsName}}</td>
+                        <td>{{item.contactsPhone}}</td>
+                        <td>{{item.company}}</td>
+                        <td>{{item.email}}</td>
+                        <td>{{item.mainProducts}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+         <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
+    
 </template>
 <script>
 import pagination from '../../components/pagination'
 import filter from '../../filters/filters'
 import common from '../../common/common'
+import mglistModel from '../mguan/mgListComponent.vue'
 import {
     initDrawlist
 } from '../../vuex/getters'
@@ -63,7 +67,8 @@ import {
 export default {
     components: {
         pagination,
-        filter
+        filter,
+        mglistModel
     },
     vuex: {
         getters: {

@@ -11,13 +11,11 @@
     			<div class="cover_loading">
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 	            </div>
-	            <div class="col-xs-4">
+	            <div class="col-xs-12">
                     <div v-if="!param.org" class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
                         <input type="text" class="search_input" v-model="loadParam.orgName" placeholder="请选择部门" @click="selectOrg()" readonly="true">
                     </div>
-	            </div>
-				<div class="col-xs-8">
 	                <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
 	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" @keyup.enter="employNameSearch()">
@@ -52,7 +50,7 @@
 		    		<input  type="button" class="btn btn-orange" @click="selected(param,param.show=false)" value="确定"/>
 		    	</div> -->
 			</div>
-			<div class="base_pagination">
+			<div class="order_pagination">
 	            <pagination :combination="loadParam"></pagination>
 	        </div>
 	    </div>

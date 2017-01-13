@@ -2,8 +2,10 @@
   <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-  <div>
-    <div class="service-nav clearfix" id="top">
+
+  <mglist-model>
+      <!-- 头部搜索 -->
+      <div slot="top">
         <div class="clearfix">
           <dl class="clear left">
              <dt class="left  marg_top">类型：</dt>
@@ -51,116 +53,117 @@
               <button class="new_btn transfer pull-left" @click="selectSearch()">{{$t('static.search')}}</button>
           </div>
         </div>
-      <div class="clearfix right" >
-          <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+        <div class="clearfix right" >
+            <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+        </div>
       </div>
-    </div>
-    <div class="order_table" id="table_box">
-      <div class="cover_loading">
-        <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+      <!-- 中间列表 -->
+      <div slot="form">
+          <div class="cover_loading">
+              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+          </div>
+          <table class="table table-hover table_color table-striped" v-cloak id="tab">
+            <thead>
+                <tr>
+                  <th>日期</th>
+                  <th>类型</th>
+                  <th>金额</th>
+                  <th>支付名称</th>
+                  <th>业务员</th>
+                  <th>用户名</th>
+                  <th>账号</th>
+                  <th>付款时间</th>
+                  <th>备注</th>
+                  <th>订单流水号</th>
+                  <th>审核状态</th>
+                  <th>收/付款状态</th>
+                  <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr v-for="item in initFinanceList">
+                <td>{{item.ctime}}</td>
+                <td><a @click="clickOn({
+                    sub:$index,
+                    id:item.id,
+                    loading:true,
+                    show:true,
+                    key:'fundRecord'
+                  })">{{item.bizType | bizType}}{{item.type | payMent}}</a>
+                </td>
+                <td>{{item.amount}}</td>
+                <td>{{item.payName}}<span v-if="item.paySubName!==''">（{{item.paySubName}}）</span></td>
+                <td>{{item.employeeName}}</td>
+                <td>{{item.payUserName}}</td>
+                <td>{{item.payNumber}}</td>
+                <td>{{item.ctime}}</td>
+                <td>{{item.comment}}</td>
+                <td>{{item.prNo}}</td>
+                <td v-if="item.validate==0">未审核</td>
+                <td v-if="item.validate==1"><div  style="background:#483D8B;color:#fff;">申请中</div></td>
+                <td v-if="item.validate==2"><div  style="background:green;color:#fff;">审核成功</div></td>
+                <td v-if="item.validate==3"><div style="background:red;color:#fff;">审核未通过</div></td>
+                <td v-if="item.pr==0&&item.type==0">未付款</td>
+                <td v-if="item.pr==0&&item.type==1">未收款</td>
+                <td v-if="item.pr==1&&item.type==0"><div style="background:green;color:#fff;">已确认付款</div></td>
+                <td v-if="item.pr==1&&item.type==1&&item.bizType=='order'"><div style="background:green;color:#fff;">已确认收款</div></td>
+                <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_refund'"><div style="background:green;color:#fff;">已确认付款</div></td>
+                <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_after_sales_refund'"><div style="background:green;color:#fff;">已确认退款</div></td>
+                <td>
+                  <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.validate==1&&item.type==1" @click="applyInfo({
+                              show:true,
+                              sub:$index,
+                              id:item.id,
+                              validate:item.validate,
+                              prNo:'',
+                              description:'',
+                              image_f:'',
+                              image_s:'',
+                              image_t:'',
+                              images:'',
+                              url:'/fund/validate',
+                              titles:'确认收款',
+                              link:paymentAudit
+                          })">审核收款</button>
+                   <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.validate==1&&item.type==0" @click="applyInfo({
+                              show:true,
+                              sub:$index,
+                              id:item.id,
+                              validate:item.validate,
+                              description:'',
+                              image_f:'',
+                              image_s:'',
+                              image_t:'',
+                              images:'',
+                              url:'/fund/validate',
+                              titles:'确认付款',
+                              link:paymentAudit
+                          })">确认付款</button>
+                 <!--  <a class="operate" v-if="item.validate==1" @click="applyInfo({
+                             show:true,
+                             sub:$index,
+                             id:item.id,
+                             validate:item.validate,
+                             description:'',
+                             image_f:'',
+                             image_s:'',
+                             image_t:'',
+                             images:'',
+                             url:'/fund/validate',
+                             titles:'分期审核',
+                             link:paymentAudit
+                         })"> 
+                     <img src="/static/images/orgcheck.png" />
+                 </a> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
       </div>
-      <table class="table table-hover table_color table-striped" v-cloak id="tab">
-        <thead>
-            <tr>
-              <th>日期</th>
-              <th>类型</th>
-              <th>金额</th>
-              <th>支付名称</th>
-              <th>业务员</th>
-              <th>用户名</th>
-              <th>账号</th>
-              <th>付款时间</th>
-              <th>备注</th>
-              <th>订单流水号</th>
-              <th>审核状态</th>
-              <th>收/付款状态</th>
-              <th>操作</th>
-            </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in initFinanceList">
-            <td>{{item.ctime}}</td>
-            <td><a @click="clickOn({
-                sub:$index,
-                id:item.id,
-                loading:true,
-                show:true,
-                key:'fundRecord'
-              })">{{item.bizType | bizType}}{{item.type | payMent}}</a>
-            </td>
-            <td>{{item.amount}}</td>
-            <td>{{item.payName}}<span v-if="item.paySubName!==''">（{{item.paySubName}}）</span></td>
-            <td>{{item.employeeName}}</td>
-            <td>{{item.payUserName}}</td>
-            <td>{{item.payNumber}}</td>
-            <td>{{item.ctime}}</td>
-            <td>{{item.comment}}</td>
-            <td>{{item.prNo}}</td>
-            <td v-if="item.validate==0">未审核</td>
-            <td v-if="item.validate==1"><div  style="background:#483D8B;color:#fff;">申请中</div></td>
-            <td v-if="item.validate==2"><div  style="background:green;color:#fff;">审核成功</div></td>
-            <td v-if="item.validate==3"><div style="background:red;color:#fff;">审核未通过</div></td>
-            <td v-if="item.pr==0&&item.type==0">未付款</td>
-            <td v-if="item.pr==0&&item.type==1">未收款</td>
-            <td v-if="item.pr==1&&item.type==0"><div style="background:green;color:#fff;">已确认付款</div></td>
-            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order'"><div style="background:green;color:#fff;">已确认收款</div></td>
-            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_refund'"><div style="background:green;color:#fff;">已确认付款</div></td>
-            <td v-if="item.pr==1&&item.type==1&&item.bizType=='order_after_sales_refund'"><div style="background:green;color:#fff;">已确认退款</div></td>
-            <td>
-              <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.validate==1&&item.type==1" @click="applyInfo({
-                          show:true,
-                          sub:$index,
-                          id:item.id,
-                          validate:item.validate,
-                          prNo:'',
-                          description:'',
-                          image_f:'',
-                          image_s:'',
-                          image_t:'',
-                          images:'',
-                          url:'/fund/validate',
-                          titles:'确认收款',
-                          link:paymentAudit
-                      })">审核收款</button>
-               <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.validate==1&&item.type==0" @click="applyInfo({
-                          show:true,
-                          sub:$index,
-                          id:item.id,
-                          validate:item.validate,
-                          description:'',
-                          image_f:'',
-                          image_s:'',
-                          image_t:'',
-                          images:'',
-                          url:'/fund/validate',
-                          titles:'确认付款',
-                          link:paymentAudit
-                      })">确认付款</button>
-             <!--  <a class="operate" v-if="item.validate==1" @click="applyInfo({
-                         show:true,
-                         sub:$index,
-                         id:item.id,
-                         validate:item.validate,
-                         description:'',
-                         image_f:'',
-                         image_s:'',
-                         image_t:'',
-                         images:'',
-                         url:'/fund/validate',
-                         titles:'分期审核',
-                         link:paymentAudit
-                     })"> 
-                 <img src="/static/images/orgcheck.png" />
-             </a> -->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="base_pagination" id="base_pagination">
-      <pagination :combination="loadParam"></pagination>
-    </div>
-  </div>
+       <!-- 底部分页 -->
+      <pagination :combination="loadParam"  slot="page"></pagination>
+  </mglist-model>
+
 </template>
 <script>
   import pagination from '../pagination'
@@ -169,6 +172,7 @@
   import changeMenu from '../../components/tools/tabs/tabs.js'
   import auditModel from '../order/second_order/financeAudit'
   import tipsModel from '../tips/tipDialog'
+  import mglistModel from '../mguan/mgListComponent.vue'
   import {
     initFinanceList
   } from '../../vuex/getters'
@@ -181,6 +185,7 @@
       pagination,
       detailModel,
       auditModel,
+      mglistModel,
       tipsModel
     },
     vuex: {

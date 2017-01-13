@@ -4,8 +4,9 @@
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <update-model :param="updateParam" v-if="updateParam.show"></update-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-    <div>
-        <div class="service-nav" id="top">
+    <mglist-model>
+        <!-- 头部搜索 -->
+        <div slot="top">
             <div class="clearfix">
                 <div class="pull-right" >
                     <button class="btn btn-primary transfer"   @click="selectSearch()">刷新</button>
@@ -38,7 +39,8 @@
                 <button class="btn btn-default transfer"   @click="resetCondition()">清空条件</button>
             </div>
         </div>
-        <div class="order_table" v-cloak id="table_box">
+        <!-- 中间列表 -->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -118,10 +120,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+         <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
+    
 </template>
 <script>
 import pagination from '../../components/pagination'
@@ -132,6 +134,7 @@ import searchModel from './companySearch'
 import updateModel from '../serviceBaselist/breedDetailDialog/updateEnterprise'
 import common from '../../common/common'
 import tipsModel from '../../components/tips/tipDialog'
+import mglistModel from '../mguan/mgListComponent.vue'
 import {
     initEnterpriselist,
     initProvince
@@ -151,7 +154,8 @@ export default {
         transferModel,
         searchModel,
         updateModel,
-        tipsModel
+        tipsModel,
+        mglistModel
     },
     data() {
         return {

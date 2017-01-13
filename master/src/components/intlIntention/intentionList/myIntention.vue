@@ -10,7 +10,7 @@
      <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 
-     <mglist-model :param="fluctuate">
+     <mglist-model>
         <div slot="top">
             <div class="clear" >
                   <dl class="clear left">

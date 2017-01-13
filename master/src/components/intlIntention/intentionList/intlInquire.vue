@@ -5,8 +5,8 @@
      <affirmoffer-model :param="affirmOfferParam" v-if="affirmOfferParam.show"></affirmoffer-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
      <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
-     <div>
-        <div class="service-nav clearfix" id="top">
+     <mglist-model>
+         <div slot="top">
             <div class="clear left" >
                   <dl class="clear left transfer">
                      <dt class="left  marg_top">{{$t('static.breed')}}：</dt>
@@ -49,10 +49,9 @@
                 <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 3}" @click="selectInquire(3)">{{$t('static.quo_complete')}}</button>
             </div>
             <button class="btn btn-primary pull-right" style="margin-right:20px" @click="intentionSearch()">{{$t('static.refresh')}}</button> 
-        </div>
-        
-        <div class="order_table" id="table_box">
-            <div class="cover_loading">
+         </div>
+         <div slot="form">
+             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
@@ -96,12 +95,10 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-        
-        <div class="base_pagination" id="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+         </div>
+        <pagination :combination="loadParam"  slot="page"></pagination>
+     </mglist-model>
+     
 </template>
 <script>
 import pagination from '../../pagination'
@@ -114,6 +111,7 @@ import inquireModel from '../inquire'
 import tipsModel  from '../../../components/tips/tipDialog'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import breedsearchModel from '../breedsearch'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
     initIntlIntentionInquireList,
     initLogin
@@ -131,7 +129,8 @@ export default {
         detailModel,
         affirmofferModel,
         tipsModel,
-        breedsearchModel
+        breedsearchModel,
+        mglistModel
     },
     vuex: {
         getters: {

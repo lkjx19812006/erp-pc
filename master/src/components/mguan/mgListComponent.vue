@@ -14,21 +14,13 @@
 <script>
 import common from  '../../common/common.js'
 export default{
-	props:['fluctuate'],
+	props:[],
 	components:{
 		 common,
 	},
 	data(){
 		return{
-			loadParam:{
-				loading: true,
-                show:false,
-                color: '#5dc596',
-                size: '15px',
-                cur: 1,
-                all: 7,
-                total:0,
-			}
+			
 		}
 	},
 	ready(){

@@ -10,7 +10,7 @@
     			<div class="cover_loading">
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 	            </div>
-				<div class="col-xs-12">
+				<div class="left">
 	                <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
 	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入品种名称" @keyUp.enter="employNameSearch()">
@@ -217,8 +217,8 @@ export default{
 	margin-bottom: 5px;
 }
 .table_head>thead>tr{
-	background-color: #004796;
-	color: #fff;
+	background-color: #f5f7f9;
+	color: #000;
 	font-size: 18px;
 }
 .base_pagination{

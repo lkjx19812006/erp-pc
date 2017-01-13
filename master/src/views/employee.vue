@@ -4,8 +4,9 @@
    <searchorg-model :param.sync="orgParam" v-if="orgParam.show"></searchorg-model>
    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
    <password-model :param="passwordParam" v-if="passwordParam.show"></password-model>
-    <div class="myemploy">
-        <div class="order_search" id="top">
+   <mglist-model>
+        <!-- 头部搜索 -->
+        <div slot="top">
             <div class="clear">
                 <div class="left my_order_search">
                     <div class="name_search clearfix">
@@ -76,15 +77,12 @@
                 </div>
             </div>
         </div>
-        
-        <div class="order_table" id="table_box">
+        <!-- 中间列表 -->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
-            <!-- <div style="position:relative;width: 100%;" >
-              <i-table highlight-row   :columns="columns1" :data="initEmployeeList" stripe :height="tab_height" ></i-table>
-            </div> -->
-           <table class="table table-hover table_color table-striped"  v-cloak id="tab">
+            <table class="table table-hover table_color table-striped"  v-cloak id="tab">
                <thead>
                    <tr>
                       <th>姓名</th>
@@ -184,10 +182,10 @@
                  </tbody>
            </table>
         </div>
-        <div class="order_pagination" id="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+         <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+   </mglist-model>
+
 </template>
 <script>
 import createempModel  from  '../components/emloyee/createEmploy'
@@ -199,6 +197,7 @@ import common from '../common/common'
 import changeMenu from '../components/tools/tabs/tabs.js'
 import tipsdialogModel from '../components/tips/tipDialog'
 import passwordModel from '../components/emloyee/updatePassword'
+import mglistModel from '../components/mguan/mgListComponent.vue'
 import {
    getList,
    initEmployeeList,
@@ -218,7 +217,8 @@ export default {
         detailempModel,
         searchorgModel,
         tipsdialogModel,
-        passwordModel
+        passwordModel,
+        mglistModel
     },
     data() {
         return {

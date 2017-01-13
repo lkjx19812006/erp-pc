@@ -4,8 +4,9 @@
     <breedrevise-model :param="reviseParam" v-if="reviseParam.show"></breedrevise-model>
     <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-    <div>
-        <div class="service-nav clearfix" id="top">
+    <mglist-model>
+        <!-- 头部搜索 -->
+        <div slot="top">
             <div class="col-xs-9 my_order_search">
               <div class="ordertel_search clearfix" style="sfloat:left;width:180px" >
                 <select class="form-control " v-model="loadParam.categoryId" @change="categoryNameSearch()">
@@ -27,7 +28,8 @@
                 <button class="btn btn-primary" @click="categoryNameSearch()">刷新</button>
             </div>
         </div>
-        <div class="order_table" id="table_box">
+        <!-- 中间列表 -->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -77,10 +79,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination" id="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+         <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
+    
 </template>
 <script>
 import pagination from '../../components/pagination'
@@ -92,6 +94,7 @@ import breedreviseModel from '../../components/serviceBaseData/breedUpdate'
 import detailModel from '../../components/serviceBaselist/breeddetail'
 import common from '../../common/common'
 import tipsModel from '../../components/tips/tipDialog'
+import mglistModel from '../mguan/mgListComponent.vue'
 import {
     initBreedlist,
   initCategorylist
@@ -112,6 +115,7 @@ export default {
         breedreviseModel,
         filter,
         detailModel,
+        mglistModel,
         tipsModel
     },
     data() {

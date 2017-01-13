@@ -3,8 +3,9 @@
      <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
      <audit-model :param="applyParam" v-if="applyParam.show"></audit-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-	 <div>
-        <div class="service-nav clearfix" id="top">
+     <mglist-model>
+         <!-- 头部搜索 -->
+         <div slot="top">
             <div class="my_order_search pull-right">
                <button class="btn btn-primary  transfer" @click="searchMsg()">{{$t('static.refresh')}}</button>
             </div>
@@ -30,9 +31,10 @@
                </div>
                <button class="new_btn transfer" @click="searchMsg()">{{$t('static.search')}}</button>
                <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
-           </div>
-        </div>
-        <div class="order_table" id="table_box">
+            </div>
+         </div>
+         <!-- 中间列表 -->
+         <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -96,11 +98,49 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="base_pagination" id="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+         </div>
+         <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+     </mglist-model>
+	 <!-- <div>
+             <div class="service-nav clearfix" id="top">
+                 <div class="my_order_search pull-right">
+                    <button class="btn btn-primary  transfer" @click="searchMsg()">{{$t('static.refresh')}}</button>
+                 </div>
+                 <div class="clearfix  pull-left">
+                    <div class="name_search clearfix">
+                        <img src="/static/images/search.png" height="24" width="24">
+                        <input type="text" class="search_input" placeholder="{{$t('static.enter_client_name')}}" v-model="loadParam.customerName"  @keyup.enter="searchMsg()">
+                    </div>
+                    <div class="name_search clearfix">
+                        <img src="/static/images/search.png" height="24" width="24">
+                        <input type="text" class="search_input" v-model="loadParam.customerPhone" placeholder="{{$t('static.enter_client_name')}}" @keyup.enter="searchMsg()">
+                    </div>
+                    <div class="name_search clearfix">
+                        <img src="/static/images/search.png" height="24" width="24">
+                        <select class="form-control search_input" v-model="loadParam.validate" @change="searchMsg()">
+                             <option value="">{{$t('static.please_select')}}</option>
+                             <option value="0">{{$t('static.initial')}}</option>
+                             <option value="1">{{$t('static.review_application')}}</option>
+                             <option value="2">{{$t('static.approved')}}</option>
+                             <option value="3">{{$t('static.unapproved')}}</option>
+                        </select>
+                        <input type="text" class="search_input" v-model="loadParam.validate" placeholder="按业务员名称搜索" @keyup.enter="searchMsg()">
+                    </div>
+                    <button class="new_btn transfer" @click="searchMsg()">{{$t('static.search')}}</button>
+                    <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                </div>
+             </div>
+             <div class="order_table" id="table_box">
+                 <div class="cover_loading">
+                     <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+                 </div>
+                 
+             </div>
+             <div class="base_pagination" id="base_pagination">
+                 <pagination :combination="loadParam"></pagination>
+             </div>
+         </div> -->
 </template>
 <script>
 import pagination from '../../pagination'
@@ -110,6 +150,7 @@ import detailModel from '../../Intention/sampleDetail'
 import common from '../../../common/common'
 import auditModel from '../../tips/auditDialog'
 import tipsModel from '../../tips/tipDialog'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
 	initOrgSample
 } from '../../../vuex/getters'
@@ -123,7 +164,8 @@ export default {
         editmsgModel,
         detailModel,
         auditModel,
-        tipsModel
+        tipsModel,
+        mglistModel
     },
     vuex: {
         getters: {

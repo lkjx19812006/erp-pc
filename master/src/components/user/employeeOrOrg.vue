@@ -65,7 +65,7 @@
 
 		                </tbody>
 		            </table>
-                    <div class="base_pagination">
+                    <div class="order_pagination">
                         <pagination :combination="loadParam"></pagination>
                     </div>
                     <div class="edit_footer">
@@ -430,5 +430,6 @@ export default{
 }
 .table{
     display: table;
+    margin-bottom: 0;
 }
 </style>

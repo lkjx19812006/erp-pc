@@ -1,20 +1,22 @@
 	<template>
   	<create-model :param.sync="createParam" v-if="createParam.show"></create-model>
   	<tip-model :param.sync="tipParam" v-if="tipParam.show"></tip-model>
-		 <div  class="myemploy">
-        <div class="order_search" id="top">
+    <mglist-model>
+        <!-- 头部搜索 -->
+        <div slot="top">
             <div class="clearfix">
                 <div class="right">
                     <button class="new_btn" @click="newData()">新建</button>
                 </div>
             </div>
         </div>
-        <div class="order_table" id="table_box">
-          <div class="cover_loading">
-              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-          </div>
-           <table class="table table-hover table_color table-striped"  v-cloak id="tab">
-              <thead>
+        <!-- 中间列表 -->
+        <div slot="form">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_color table-striped"  v-cloak id="tab">
+                <thead>
                   <tr>
                      <th>名称</th>
                      <th>备注</th>
@@ -42,22 +44,20 @@
                     </td>
                   </tr>
                 </tbody>
-              </table>
+            </table>
         </div>
-         <div class="base_pagination" id="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+         <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
+		 
 	</template>
 
-	<script>
+<script>
 import createModel  from '../components/role/createRole'
 import pagination from '../components/pagination'
 import tipModel  from '../components/tips/tipDialog'
 import common from '../common/common'
-import {
-
-} from '../vuex/getters'
+import mglistModel from '../components/mguan/mgListComponent.vue'
 import {
  baseGetData,
  baseDelData
@@ -66,7 +66,8 @@ export default {
     components:{
         pagination,
         createModel,
-        tipModel
+        tipModel,
+        mglistModel
     },
     data() {
         return {

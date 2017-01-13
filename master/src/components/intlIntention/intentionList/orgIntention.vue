@@ -6,7 +6,7 @@
      <modify-model :param.sync="modifyParam" v-if="modifyParam.show"></modify-model>
      <inquire-model :param="inquireParam" v-if="inquireParam.show"></inquire-model>
      <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
-     <mglist-model :param="fluctuate">
+     <mglist-model>
          <div slot="top">
             <div class="clear" >
                   <dl class="clear left transfer">

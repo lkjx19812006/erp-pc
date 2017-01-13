@@ -6,12 +6,9 @@
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
-    <div>
-      <div class="order_search clearfix" id="top">
-          <div class="right">
-                <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
-                
-          </div>
+    <mglist-model>
+        <!-- 头部搜索 -->
+        <div slot="top">
           <div class="clear left">
              <dl class="clear left transfer">
                 <dt class="left transfer marg_top">部门：</dt>
@@ -34,7 +31,6 @@
               <button type="button" class="new_btn transfer"  @click="resetCondition()">{{$t('static.clear_all')}}</button>
               <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
           </div>
-
           <div class="clear left">
             <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
@@ -105,17 +101,16 @@
                 </div>
             </dl>
           </div>
-
           <div class="right">
               <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
           </div>
-
-      </div>
-      <div class="order_table" id="table_box">
-          <div class="cover_loading">
-              <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-          </div>
-          <table class="table table-hover table_color table-striped " v-cloak id="tab">
+        </div>
+        <!-- 中间列表 -->
+        <div slot="form">
+            <div class="cover_loading">
+                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
+            </div>
+            <table class="table table-hover table_color table-striped " v-cloak id="tab">
               <thead>
                   <tr>
                       <th>{{$t('static.transcation')}}</th>
@@ -252,12 +247,11 @@
                   -->
                   </tr>
               </tbody>
-          </table>
-      </div>
-      <div class="base_pagination" id="base_pagination">
-          <pagination :combination="loadParam"></pagination>
-      </div>
-    </div>
+            </table>
+        </div>
+         <!-- 底部分页 -->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
   </template>
   <script>
     import pagination from '../pagination'
@@ -272,6 +266,7 @@
     import filter from '../../filters/filters'
     import common from '../../common/common'
     import changeMenu from '../../components/tools/tabs/tabs.js'
+    import mglistModel from '../mguan/mgListComponent.vue'
     import {
         getList,
         initAllOrderlist
@@ -284,7 +279,6 @@
         getOrderDetail,
         orderOrgAudit
     } from '../../vuex/actions'
-
     export default {
         components: {
             editorderModel,
@@ -296,6 +290,7 @@
             disposeModel,
             tipsdialogModel,
             auditModel,
+            mglistModel,
             selectorgModel
         },
         data() {
