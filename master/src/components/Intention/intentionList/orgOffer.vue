@@ -47,8 +47,9 @@
                         <th>报价时间</th>
                         <th>所属交易员</th>
                         <th>报价客户</th>
-                        <th>主要联系人</th>
+                        
                         <th>联系方式</th>
+                        <th>品种名</th>
                         <th>报价价格</th>
                         <th>库存</th>
                         <th>报价备注</th>
@@ -60,8 +61,9 @@
                         <td>{{item.otime | date}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.customerName}}</td>
-                        <td>{{item.mainContact}}</td>
+                        
                         <td>{{item.customerPhone}}</td>
+                        <td>{{item.breedName}}</td>
                         <td>{{item.price}}</td>
                         <td>{{item.number}}{{item.unit}}</td>
                         <td>{{item.description}}</td>

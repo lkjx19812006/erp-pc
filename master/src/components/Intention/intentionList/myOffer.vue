@@ -46,11 +46,13 @@
                        <th>报价时间</th>
                        <th>所属交易员</th>
                        <th>报价客户</th>
-                       <th>主要联系人</th>
+                       
                        <th>联系方式</th>
+                       <th>品种名</th>
                        <th>报价价格</th>
                        <th>库存</th>
                        <th>报价备注</th>
+                       <th>订单次数</th>
       	            	 <th>操作</th>
                     </tr>
                 </thead>
@@ -59,11 +61,13 @@
                         <td>{{item.otime | date}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.customerName}}</td>
-                        <td>{{item.mainContact}}</td>
+                        
                         <td>{{item.customerPhone}}</td>
+                        <td>{{item.breedName}}</td>
                         <td>{{item.price}}</td>
                         <td>{{item.number}}{{item.unit}}</td>
                         <td>{{item.description}}</td>
+                        <td>{{item.orderTime}}次</td>
                         
                   <!-- <td>{{item.userName}}</td>
                         <td>{{item.userPhone}}</td>
@@ -85,6 +89,7 @@
                         <td >
                               <a class="operate" @click.stop="adopt(item,$index)" v-if="item.orderTime==0"><img src="/static/images/adopt.png"   alt="我要采纳" title="我要采纳"/>
                                </a>
+                               <div v-else>已生成订单</div>
                         </td>
                     </tr>
                 </tbody>
@@ -337,8 +342,8 @@ export default {
     background-position: 5px;
 }
  #table_box  table th,#table_box  table td{
-  width: 190px;
-  min-width:190px;
+  width: 170px;
+  min-width:170px;
 }
 </style>
 
