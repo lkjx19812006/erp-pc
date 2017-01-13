@@ -10,9 +10,8 @@
      <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
      <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
-
-   <div>
-        <div class="service-nav">
+    <div>
+        <div class="service-nav" id="top">
           <div class="clear" style="margin-top:3px;">
               <dl class="clear left transfer">
                  <dt class="left transfer marg_top" style="letter-spacing:3px" >会员名：</dt>
@@ -134,7 +133,6 @@
                   <button type="button" class="btn btn-default" height="24" width="24" @click="intentionAudit()">审核</button>
               </dd>
           </div>
-
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">
@@ -358,7 +356,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

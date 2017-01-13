@@ -8,7 +8,7 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <applysend-model :param="applyParam" v-if="applyParam.show"></applysend-model>
     <reapply-model :param="reapplyParam" v-if="reapplyParam.show"></reapply-model>
-      <div class="order_search">
+      <div class="order_search" id="top">
         <div class="clear">
             <div class="right">
                 <button class="btn btn-default transfer" @click="newOrder()">{{$t('static.new')}}</button>
@@ -284,7 +284,7 @@
             </tbody>
         </table>
       </div>
-      <div class="order_pagination">
+      <div class="base_pagination" id="base_pagination">
           <pagination :combination="loadParam"></pagination>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="service-nav">
+        <div class="service-nav" id="top">
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">客户电话：</dt>
@@ -84,7 +84,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

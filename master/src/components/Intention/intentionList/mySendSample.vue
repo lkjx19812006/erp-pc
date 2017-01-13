@@ -6,12 +6,12 @@
      <apply-model :param="applyParam" v-if="applyParam.show"></apply-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	  <div>
-        <div class="service-nav clearfix">
+        <div class="service-nav clearfix" id="top">
             <div class="pull-right"> 
                <button class="btn btn-default transfer" @click="New()">新建</button>
                <button class="btn btn-primary  transfer" @click="searchMsg()">刷新</button>
             </div>
-            <div class="clearfix col-md-10">
+            <div class="clearfix">
                <div class="name_search left clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchMsg()">
@@ -137,7 +137,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

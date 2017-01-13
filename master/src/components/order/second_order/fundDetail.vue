@@ -1,9 +1,5 @@
 <template>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"  @click="param.show=false"></div>
-    <div class="container modal_con" v-show="param.show" @click="param.show=false">
-        <div @click="close()" class="top-title">
-            <span class="glyphicon glyphicon-remove-circle"></span>
-        </div>
+    <shadow-model :param="param">
         <div class="cover_loading">
             <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
         </div>
@@ -39,7 +35,7 @@
                 </ul>
             </div>
         </section>
-    </div>
+    </shadow-model>
 </template>
 <script>
 import{
@@ -48,9 +44,10 @@ import{
 import {
     getFundDetail
 } from '../../../vuex/actions'
+import shadowModel from '../../mguan/shadow.vue'
 export default {
     components: {
-        
+        shadowModel
     },
     data() {
         return {

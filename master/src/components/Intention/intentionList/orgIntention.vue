@@ -12,7 +12,7 @@
      <onsell-model :param="onSellParam" v-if="onSellParam.show"></onsell-model>
 
    <div>
-        <div class="service-nav">
+        <div class="service-nav" id="top">
 
           <div class="clear" style="margin-top:3px;">
               <dl class="clear left transfer">
@@ -109,7 +109,6 @@
                  <button type="button" class="btn btn-primary"  @click="selectSearch()">刷新</button>
               </dl>
             </div>
-
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">
@@ -395,9 +394,8 @@
 
                 </tbody>
             </table>
-
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

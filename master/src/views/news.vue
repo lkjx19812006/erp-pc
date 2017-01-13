@@ -9,7 +9,7 @@
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
      <div>
-        <div class="service-nav">
+        <div class="service-nav" id="top">
   
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer" >
@@ -149,8 +149,7 @@
 
            <!--  <div class="right" style="margin-top:10px;">
                <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
-           </div> -->
-                
+           </div> -->           
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">
@@ -173,6 +172,7 @@
                         <th>经营类型</th>
                         <th>经营地址</th>
                         <th>审核状态</th>
+                        <th>审核说明</th>
                         <th>个人认证</th>
                         <th>企业认证</th>
                         <th>提取状态</th>
@@ -215,6 +215,7 @@
                         <td>{{item.bizTypeName}}</td>
                         <td>{{item.province+item.city}}</td>
                         <td>{{item.auditResult}}</td>
+                        <td>{{item.auditComment}}</td>
                         <td v-if="item.utype==0" style="color:#3399CC">未申请</td>
                         <td v-if="item.utype==1" style="color:#339966">等待认证</td>
                         <td v-if="item.utype==2"><div  style="background:green;color:#fff">已认证</div></td>
@@ -367,7 +368,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

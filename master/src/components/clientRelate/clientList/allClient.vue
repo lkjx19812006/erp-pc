@@ -8,7 +8,7 @@
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <div>
-        <div class="service-nav">
+        <div class="service-nav" id="top">
             <div class="clearfix">
                 <!-- <div class="my_enterprise col-xs-1">所有客户</div> -->
                 <div class="right">
@@ -237,7 +237,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

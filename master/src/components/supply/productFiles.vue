@@ -2,35 +2,34 @@
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
   <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
   <div v-show="!changeParam.show">
-    <div class="service-nav clearfix">
+    <div class="service-nav clearfix" id="top">
       <!-- <div class="my_enterprise col-xs-1">产品文件列表</div> -->
-      <div class="my_order_search  col-xs-8">
-        <div class="filter_search clearfix">
-          <dl class="clearfix">
-            <dt>产品名称：</dt>
-            <dd>
-              <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.name" @keyup.enter="searchProduct()"/>
-            </dd>
-          </dl>
-          <dl class="clearfix">
-            <dt>描述：</dt>
-            <dd>
-              <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.description" @keyup.enter="searchProduct()"/>
-            </dd>
-          </dl>
-          <dl class="clearfix">
-            <dd>
-              <button class="btn btn-default transfer"  @click="searchProduct()">搜索</button>
-              <button class="btn btn-default"  @click="reset()">清空条件</button>
-            </dd>
-          </dl>
-          
+        <div class="my_order_search  col-xs-8">
+          <div class="filter_search clearfix">
+            <dl class="clearfix">
+              <dt>产品名称：</dt>
+              <dd>
+                <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.name" @keyup.enter="searchProduct()"/>
+              </dd>
+            </dl>
+            <dl class="clearfix">
+              <dt>描述：</dt>
+              <dd>
+                <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.description" @keyup.enter="searchProduct()"/>
+              </dd>
+            </dl>
+            <dl class="clearfix">
+              <dd>
+                <button class="btn btn-default transfer"  @click="searchProduct()">搜索</button>
+                <button class="btn btn-default"  @click="reset()">清空条件</button>
+              </dd>
+            </dl>
+            
+          </div>
         </div>
-      </div>
-      <div class="right col-xs-3">
-        <button class="btn btn-primary pull-right"  @click="searchProduct()">刷新</button>
-      </div>
-    </div>
+        <div class="right col-xs-3">
+          <button class="btn btn-primary pull-right"  @click="searchProduct()">刷新</button>
+        </div>
     </div>
     <div class="order_table" id="table_box">
       <div class="cover_loading">
@@ -67,7 +66,7 @@
         </tbody>
       </table>
     </div>
-    <div class="base_pagination">
+    <div class="base_pagination" id="base_pagination">
       <pagination :combination="loadParam"></pagination>
     </div>
   </div>

@@ -2,7 +2,7 @@
 * @Author: huili.sun
 * @Date:   2016-08-17 12:20:00
 * @Last Modified by:   huili.sun
-* @Last Modified time: 2017-01-12 14:38:59
+* @Last Modified time: 2017-01-13 14:51:57
 */
 
 * {
@@ -164,7 +164,7 @@ left: 50%;
     -ms-border-radius: 3px;
     height: 30px;
     line-height: 28px;
-    margin-right: 7%;
+    margin-right: 3%;
 }
 
 .tel_search {
@@ -195,7 +195,7 @@ left: 50%;
 }
 
 .service-nav {
-    padding:35px 10px 0px 10px;
+    padding:25px 10px 0px 10px;
 }
 
 .my_enterprise,
@@ -234,14 +234,7 @@ left: 50%;
    /*  width:100px; */
     
 }
-.order_pagination,.base_pagination {
-    position: fixed;
-    bottom:20px;
-    margin:auto;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
+
 .table-striped>tbody>tr:nth-of-type(odd){
     background-color: #fff;
 }
@@ -776,6 +769,14 @@ dl {
    min-width: 100px;
     width: 100px;/** 不管是固定像素或是百分比，应与对应数据列的宽度一致 */
     line-height: 24px;
+}
+.order_pagination,.base_pagination {
+    position: fixed;
+    bottom:20px;
+    margin:auto;
+    left: 0;
+    right: 0;
+    text-align: center;
 }
 #table_box {
     height:530px;

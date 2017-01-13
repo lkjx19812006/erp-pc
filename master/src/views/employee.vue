@@ -5,7 +5,7 @@
    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
    <password-model :param="passwordParam" v-if="passwordParam.show"></password-model>
     <div class="myemploy">
-        <div class="order_search">
+        <div class="order_search" id="top">
             <div class="clear">
                 <div class="left my_order_search">
                     <div class="name_search clearfix">
@@ -84,107 +84,107 @@
             <!-- <div style="position:relative;width: 100%;" >
               <i-table highlight-row   :columns="columns1" :data="initEmployeeList" stripe :height="tab_height" ></i-table>
             </div> -->
-       <table class="table table-hover table_color table-striped"  v-cloak id="tab">
-           <thead>
-               <tr>
-                  <th>姓名</th>
-                  <th>英文名</th>
-                  <th>工号</th>
-                  <th>部门</th>
-                  <th>职位</th>
-                  <th>手机号</th>
-                  <th>分机号</th>
-                  <th>入职时间</th>
-                  <th>离职时间</th>
-                  <th>职级</th>
-                  <th>员工状态</th>
-                  <th>编辑</th>
-                  <th>修改密码</th>
-               </tr>
-             </thead>
-             <tbody>
-               <tr v-for="item in initEmployeeList">
-                 <td class="underline"  @click="clickOn({
-                              sub:$index,
-                              id:item.id,
-                              show:true,
-                              name:item.name,
-                              ename:item.ename,
-                              no:item.no,
-                              privilege:item.privilege,
-                              orgid:item.orgid,
-                              orgcode:item.orgcode,
-                              leave:item.leave,
-                              orgName:item.orgName,
-                              position:item.position,
-                              mobile:item.mobile,
-                              extno:item.extno,
-                              level:item.level,
-                              entrydate:item.entrydate,
-                              leavedate:item.leavedate,
-                              link:updateEmploy,
-                              url:'/employee/',
-                              key:'employeeList'
-                             })">{{item.name}}</td>
-                 <td>{{item.ename}}</td>
-                 <td>{{item.no}}</td>
-                 <td>{{item.orgName}}</td>
-                 <td>{{item.position}}</td>
-                 <td>{{item.mobile}}</td>
-                 <td>{{item.extno}}</td>
-                 <td>{{item.entrydate | date}}</td>
-                 <td>{{item.leavedate | date}}</td>
-                 <td>{{item.level | levelstate}}</td>
-                 <td>
-                     <div v-if="item.leave==0">离职</div>
-                     <div v-if="item.leave==1">在职</div>
-                     <div v-if="item.leave!=1&&item.leave!=0">在职</div>  
-                 </td>
-                 <td @click="modify({
-                              title:'编辑员工',
-                              sub:$index,
-                              id:item.id,
-                              show:true,
-                              name:item.name,
-                              ename:item.ename,
-                              no:item.no,
-                              privilege:item.privilege,
-                              orgid:item.orgid,
-                              orgcode:item.orgcode,
-                              leave:item.leave,
-                              orgName:item.orgName,
-                              position:item.position,
-                              mobile:item.mobile,
-                              extno:item.extno,
-                              level:item.level,
-                              entrydate:item.entrydate,
-                              leavedate:item.leavedate,
-                              namelist:'姓名',
-                              englist:'英文名',
-                              job:'工号',
-                              parten:'部门',
-                              positionlist:'职位',
-                              phonelist:'手机',
-                              nolist:'分机号',
-                              code:'部门编码',
-                              orgiid:'部门编号',
-                              statuslist:'状态',
-                              entry:'入职时间',
-                              leaveTime:'离职时间',
-                              levellist:'职级',
-                              link:updateEmploy,
-                              url:'/employee/',
-                              key:'employeeList',
-                              division:'edit',
-                             })">
-                     <a class="operate"><img src="/static/images/edit.png" height="18" width="30" alt="编辑" title="编辑"/></a>
-                 </td>
-                 <td><a class="operate" @click="updatePassword(item.no)">修改密码</a></td>
-               </tr>
-             </tbody>
-       </table>
+           <table class="table table-hover table_color table-striped"  v-cloak id="tab">
+               <thead>
+                   <tr>
+                      <th>姓名</th>
+                      <th>英文名</th>
+                      <th>工号</th>
+                      <th>部门</th>
+                      <th>职位</th>
+                      <th>手机号</th>
+                      <th>分机号</th>
+                      <th>入职时间</th>
+                      <th>离职时间</th>
+                      <th>职级</th>
+                      <th>员工状态</th>
+                      <th>编辑</th>
+                      <th>修改密码</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                   <tr v-for="item in initEmployeeList">
+                     <td class="underline"  @click="clickOn({
+                                  sub:$index,
+                                  id:item.id,
+                                  show:true,
+                                  name:item.name,
+                                  ename:item.ename,
+                                  no:item.no,
+                                  privilege:item.privilege,
+                                  orgid:item.orgid,
+                                  orgcode:item.orgcode,
+                                  leave:item.leave,
+                                  orgName:item.orgName,
+                                  position:item.position,
+                                  mobile:item.mobile,
+                                  extno:item.extno,
+                                  level:item.level,
+                                  entrydate:item.entrydate,
+                                  leavedate:item.leavedate,
+                                  link:updateEmploy,
+                                  url:'/employee/',
+                                  key:'employeeList'
+                                 })">{{item.name}}</td>
+                     <td>{{item.ename}}</td>
+                     <td>{{item.no}}</td>
+                     <td>{{item.orgName}}</td>
+                     <td>{{item.position}}</td>
+                     <td>{{item.mobile}}</td>
+                     <td>{{item.extno}}</td>
+                     <td>{{item.entrydate | date}}</td>
+                     <td>{{item.leavedate | date}}</td>
+                     <td>{{item.level | levelstate}}</td>
+                     <td>
+                         <div v-if="item.leave==0">离职</div>
+                         <div v-if="item.leave==1">在职</div>
+                         <div v-if="item.leave!=1&&item.leave!=0">在职</div>  
+                     </td>
+                     <td @click="modify({
+                                  title:'编辑员工',
+                                  sub:$index,
+                                  id:item.id,
+                                  show:true,
+                                  name:item.name,
+                                  ename:item.ename,
+                                  no:item.no,
+                                  privilege:item.privilege,
+                                  orgid:item.orgid,
+                                  orgcode:item.orgcode,
+                                  leave:item.leave,
+                                  orgName:item.orgName,
+                                  position:item.position,
+                                  mobile:item.mobile,
+                                  extno:item.extno,
+                                  level:item.level,
+                                  entrydate:item.entrydate,
+                                  leavedate:item.leavedate,
+                                  namelist:'姓名',
+                                  englist:'英文名',
+                                  job:'工号',
+                                  parten:'部门',
+                                  positionlist:'职位',
+                                  phonelist:'手机',
+                                  nolist:'分机号',
+                                  code:'部门编码',
+                                  orgiid:'部门编号',
+                                  statuslist:'状态',
+                                  entry:'入职时间',
+                                  leaveTime:'离职时间',
+                                  levellist:'职级',
+                                  link:updateEmploy,
+                                  url:'/employee/',
+                                  key:'employeeList',
+                                  division:'edit',
+                                 })">
+                         <a class="operate"><img src="/static/images/edit.png" height="18" width="30" alt="编辑" title="编辑"/></a>
+                     </td>
+                     <td><a class="operate" @click="updatePassword(item.no)">修改密码</a></td>
+                   </tr>
+                 </tbody>
+           </table>
         </div>
-         <div class="order_pagination">
+        <div class="order_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

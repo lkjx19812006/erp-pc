@@ -8,7 +8,7 @@
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <div>
-        <div class="service-nav clearfix">
+        <div class="service-nav clearfix" id="top">
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">客户名称：</dt>
@@ -126,8 +126,6 @@
                 </dd>
 
             </div>
-
-
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">
@@ -284,7 +282,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

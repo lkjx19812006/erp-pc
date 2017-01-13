@@ -3,7 +3,7 @@
     <modify-model :param="modifyParam" v-if="modifyParam.show"></modify-model>
     <system-model :param="dialogParam" v-if="dialogParam.show"></system-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-	<div class="order_search">
+	<div class="order_search" id="top">
         <div class="clear">
             <div class="my_order_search left">
                 <div class="name_search">
@@ -83,7 +83,7 @@
             </tbody>
           </table>
     </div>
-     <div class="order_pagination">
+     <div class="base_pagination" id="base_pagination">
         <pagination :combination="loadParam"></pagination>
     </div>
 </template>
@@ -265,11 +265,6 @@ export default {
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     background: #fff;
-}
-
-.order_table {
-    margin-top: 10px;
-    position: relative;
 }
 
 .order_table .table {

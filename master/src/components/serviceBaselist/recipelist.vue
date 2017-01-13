@@ -1,7 +1,7 @@
 <template>
     <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
     <div>
-        <div class="service-nav clearfix">
+        <div class="service-nav clearfix" id="top">
             <div class="right">
                  <button class="btn btn-primary transfer"  @click="multiSearch()">刷新</button>
             </div>
@@ -50,7 +50,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

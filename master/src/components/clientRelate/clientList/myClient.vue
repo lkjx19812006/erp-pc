@@ -10,7 +10,7 @@
     <updatetracking-model :param="updateTrackingParam" v-if="updateTrackingParam.show"></updatetracking-model>
     <language-model v-show="false"></language-model>
     <div>
-        <div class="service-nav">
+        <div class="service-nav" id="top">
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t("static.client_name")}}：</dt>
@@ -334,7 +334,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

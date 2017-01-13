@@ -6,7 +6,7 @@
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
      <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
      <div>
-        <div class="service-nav clearfix">
+        <div class="service-nav clearfix" id="top">
             <div class="clear left" >
                   <dl class="clear left transfer">
                      <dt class="left  marg_top">{{$t('static.breed')}}：</dt>
@@ -38,18 +38,19 @@
                            <input type="text" class="form-control" v-model="loadParam.customerEmail" @keyup.enter="intentionSearch()"/>
                      </dd>
                   </dl>
-                  <button class="new_btn left transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
-                  <button class="new_btn left transfer" @click="intentionSearch()">{{$t('static.search')}}</button>        
+                  <button class="new_btn left transfer pull-left" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                  <button class="new_btn left transfer pull-left" @click="intentionSearch()">{{$t('static.search')}}</button>        
             </div>
+            <div class="btn-group pull-left">
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === ''}" @click="selectInquire('')">{{$t('static.please_select')}}</button>
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 0}" @click="selectInquire(0)">{{$t('static.not_inquiry')}}</button>
+                <button  class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 1}" @click="selectInquire(1)">{{$t('static.inquiry')}}</button>
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 2}" @click="selectInquire(2)">{{$t('static.quotation')}}</button>
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 3}" @click="selectInquire(3)">{{$t('static.quo_complete')}}</button>
+            </div>
+            <button class="btn btn-primary pull-right" style="margin-right:20px" @click="intentionSearch()">{{$t('static.refresh')}}</button> 
         </div>
-        <div class="btn-group pull-left">
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === ''}" @click="selectInquire('')">{{$t('static.please_select')}}</button>
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 0}" @click="selectInquire(0)">{{$t('static.not_inquiry')}}</button>
-            <button  class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 1}" @click="selectInquire(1)">{{$t('static.inquiry')}}</button>
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 2}" @click="selectInquire(2)">{{$t('static.quotation')}}</button>
-            <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 3}" @click="selectInquire(3)">{{$t('static.quo_complete')}}</button>
-        </div>
-         <button class="btn btn-primary pull-right" style="margin-right:20px" @click="intentionSearch()">{{$t('static.refresh')}}</button> 
+        
         <div class="order_table" id="table_box">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -97,7 +98,7 @@
             </table>
         </div>
         
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

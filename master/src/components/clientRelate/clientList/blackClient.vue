@@ -4,7 +4,7 @@
   <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
   <div>
-    <div class="service-nav clearfix">
+    <div class="service-nav clearfix" id="top">
       <div class="my_enterprise col-xs-1">{{$t('static.blacklist')}}</div>
       <button class="new_btn transfer" @click="clientTransferWhite()">{{$t('static.out_of_blacklist')}}</button>
     </div>
@@ -70,7 +70,7 @@
         </tbody>
       </table>
     </div>
-    <div class="base_pagination">
+    <div class="base_pagination" id="base_pagination">
       <pagination :combination="loadParam"></pagination>
     </div>
   </div>

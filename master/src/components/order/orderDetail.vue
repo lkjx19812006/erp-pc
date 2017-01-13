@@ -7,6 +7,7 @@
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <apply-model :param="applyDetails" v-if="applyDetails.show"></apply-model>
+
     <shadow-model :param="param">
         <div class="cover_loading">
              <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
@@ -58,7 +59,7 @@
                                         {{$t('static.commodity_order')}}（{{initOrderDetail.goods.arr.length}}）
                                       </a>
                                       <span class="pull-right" style="color:#000;line-height:27px;font-size: 13px;">{{$t('static.breed')}}{{$t('static.total')}}：{{initOrderDetail.goods.total}}元</span>
-                                      <button type="button" class="btn btn-base pull-right"  @click.stop="createChance()">新建</button>
+                                     
                                   </h4>
                               </div>
                               <div class="panel-collapse" v-if="initOrderDetail.goods.arr.length!==null" v-show="initOrderDetail.goods.show">
@@ -383,7 +384,7 @@
                                           payPics:'',
                                           titles:'上传支付凭证'
                                           })"  v-if="(initOrderDetail.payPics.arr.length!==null&&param.contact=='/order/myList')&&param.orderStatus>=30">{{$t('static.new')}}</button>
-                                      <button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>
+                                     <!--  <button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button> -->
                                       <a v-else></a>
                                   </h4>
                               </div>
@@ -410,6 +411,7 @@
                                   </div>
                               </div>
                           </div>
+                          <!-- 上传附件 -->
                           <div class="panel panel-default">
                               <div class="panel-heading" >
                                   <h4 class="panel-title clearfix" @click="enfoldment({
@@ -419,9 +421,6 @@
                                       <img class="pull-left" src="/static/images/appendix.png"  style="margin-top:4px;" />
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set pull-left" >
                                         {{$t('static.upload_attachments')}}（{{initOrderDetail.attachFiles.arr.length}}）
-                                      </a>
-                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set " v-else>
-                                        上传附件（0）
                                       </a>
                                       <button type="button" class="btn btn-base pull-right"  @click.stop="createcredence({
                                           show:true,
@@ -463,6 +462,7 @@
                                   </div>
                               </div>
                           </div>
+                          <!-- 物流凭证 -->
                           <div class="panel panel-default">
                               <div class="panel-heading" >
                                   <h4 class="panel-title clearfix" @click="enfoldment({
@@ -487,7 +487,7 @@
                                           route:uploadDocument,
                                           titles:'上传物流凭证'
                                           })" v-if="initOrderDetail.sendPics.arr.length!==null&&param.contact=='/order/myList'&&param.orderStatus>=50">{{$t('static.new')}}</button>
-                                      <button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button>
+                                      <!-- <button type="button" class="btn btn-base pull-right" v-if="param.contact=='/order/myList'"  @click.stop="">新建</button> -->
                                       <a v-else></a>
                                   </h4>
                               </div>

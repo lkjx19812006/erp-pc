@@ -6,22 +6,22 @@
      <apply-model :param="applyParam" v-if="applyParam.show"></apply-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	 <div>
-        <div class="service-nav clearfix">
+        <div class="service-nav clearfix" id="top">
             <div class="my_order_search pull-right"> 
                <button class="btn btn-default transfer" @click="New()">{{$t('static.new')}}</button>
                <button class="btn btn-primary  transfer" @click="searchMsg()">{{$t('static.refresh')}}</button>
             </div>
-            <div class="clearfix col-md-6">
+            <div class="clearfix">
               <div class="my_order_search clearfix" >
-                 <div class="name_search clearfix">
+                 <div class="name_search clearfix pull-left">
                      <img src="/static/images/search.png" height="24" width="24">
                      <input type="text" class="search_input" placeholder="{{$t('static.enter_client_name')}}" v-model="loadParam.customerName"  @keyup.enter="searchMsg()">
                  </div>
-                 <div class="ordertel_search clearfix">
+                 <div class="ordertel_search clearfix pull-left">
                      <img src="/static/images/search.png" height="24" width="24">
                      <input type="text" class="search_input" v-model="loadParam.customerPhone" placeholder="{{$t('static.enter_client_name')}}" @keyup.enter="searchMsg()">
                  </div>
-                 <div class="ordertel_search clearfix">
+                 <div class="ordertel_search clearfix pull-left">
                      <!-- <img src="/static/images/search.png" height="24" width="24"> -->
                      <select class="form-control search_input" v-model="loadParam.validate" @change="searchMsg()">
                           <option value="">{{$t('static.please_select')}}</option>
@@ -32,8 +32,8 @@
                      </select>
                      <!-- <input type="text" class="search_input" v-model="loadParam.validate" placeholder="按业务员名称搜索" @keyup.enter="searchMsg()"> -->
                  </div>
-                 <button class="new_btn transfer" @click="searchMsg()">{{$t('static.search')}}</button>
-                 <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                 <button class="new_btn transfer pull-left" @click="searchMsg()">{{$t('static.search')}}</button>
+                 <button class="new_btn transfer pull-left" @click="resetCondition()">{{$t('static.clear_all')}}</button>
               </div>
             </div>
         </div>
@@ -139,7 +139,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

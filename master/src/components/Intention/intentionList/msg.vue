@@ -3,7 +3,7 @@
      <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	 <div>
-        <div class="service-nav clearfix">
+        <div class="service-nav clearfix" id="top">
             <div class="clearfix">
                <div class="name_search clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
@@ -61,7 +61,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

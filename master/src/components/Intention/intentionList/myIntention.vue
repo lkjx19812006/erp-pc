@@ -12,7 +12,7 @@
      <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
      <sendapply-model :param="sampleOrderParam" v-if="sampleOrderParam.send"></sendapply-model>
 	   <div>
-        <div class="service-nav">
+        <div class="service-nav" id="top">
           <div class="clear" style="margin-top:3px;">
               <dl class="clear left transfer">
                  <dt class="left transfer marg_top" style="letter-spacing:3px">客户名：</dt>
@@ -159,8 +159,6 @@
                   <button type="button" class="btn btn-primary"  @click="selectSearch()">刷新</button>
               </dd>
             </div>
-
-
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">
@@ -325,7 +323,7 @@
                 </tbody> 
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

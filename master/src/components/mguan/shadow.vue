@@ -12,7 +12,8 @@ export default {
     props:['param'],
     data() {
         return {
-            show:true
+            show:true,
+            name:''
         }
     }
 
@@ -21,13 +22,13 @@ export default {
 <style scoped>
 .top-title{
     position: fixed;
-    width:50%;
+    width:60%;
     right: 0;
     left: 0;
     margin: auto;
     z-index: 1083;
 }
 .modal_con{
-    width: 50%;
+    width: 60%;
 }
 </style>

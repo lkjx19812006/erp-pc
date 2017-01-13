@@ -2,8 +2,8 @@
      <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
      <search-model :param="loadParam" v-if="loadParam.show"></search-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-	 <div>
-        <div class="service-nav clearfix">
+	  <div>
+        <div class="service-nav clearfix" id="top">
             <div class="clear pull-left">
               <dl class="clear left transfer">
                  <dt class="left transfer marg_top">会员名：</dt>
@@ -90,7 +90,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

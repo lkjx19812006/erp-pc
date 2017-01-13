@@ -9,7 +9,7 @@
   <searchbreed-model :param="breedParam" v-if="breedParam.show"></searchbreed-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <div>
-    <div class="service-nav clearfix">
+    <div class="service-nav clearfix" id="top">
      <!--  <div class="my_enterprise col-xs-1">产品列表</div> -->
       <div class="my_order_search left">
            <div class="filter_search clearfix">
@@ -24,16 +24,16 @@
                         </select>
                     </dd>
                 </dl>
-<!--                 <dl class="clearfix">
-    <dt>状态：</dt>
-    <dd>
-        <select class="form-control" v-model="loadParam.status" @change="searchProduct()">
-            <option value="">全部</option>
-            <option value="0">无效</option>
-            <option value="1">可用</option>
-        </select>
-    </dd>
-</dl> -->
+                <!--                 <dl class="clearfix">
+                    <dt>状态：</dt>
+                    <dd>
+                        <select class="form-control" v-model="loadParam.status" @change="searchProduct()">
+                            <option value="">全部</option>
+                            <option value="0">无效</option>
+                            <option value="1">可用</option>
+                        </select>
+                    </dd>
+                </dl> -->
                 <dl class="clearfix">
                     <dt>产品名称：</dt>
                     <dd>
@@ -191,7 +191,7 @@
         </tbody>
       </table>
     </div>
-    <div class="base_pagination">
+    <div class="base_pagination" id="base_pagination">
       <pagination :combination="loadParam"></pagination>
     </div>
   </div>
