@@ -7,8 +7,10 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
-    <div>
-        <div class="service-nav clearfix" id="top">
+
+    <mglist-model>
+        <!-- 头部搜索-->
+        <div slot="top">
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">客户名称：</dt>
@@ -127,7 +129,9 @@
 
             </div>
         </div>
-        <div class="order_table" id="table_box">
+
+        <!--中间列表-->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -282,10 +286,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination" id="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+
+        <!--底部分页-->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+
+    </mglist-model>
+
 </template>
 <script>
 import filter from '../../../filters/filters'
@@ -301,6 +307,7 @@ import searchModel  from  '../../../components/clientRelate/searchModel'
 import auditDialog from '../../../components/tips/auditDialog'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
     initUnCustomerlist,
     initProvince
@@ -325,7 +332,8 @@ export default {
         transferModel,
         tipsdialogModel,
         searchModel,
-      auditDialog
+      auditDialog,
+      mglistModel
     },
     vuex: {
         getters: {

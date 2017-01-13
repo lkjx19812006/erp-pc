@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <div class="service-nav" id="top">
+    <mglist-model>
+        <!-- 头部搜索-->
+        <div slot="top">
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">客户电话：</dt>
@@ -51,7 +52,9 @@
                 </dd>
             </div>
         </div>
-        <div class="order_table" id="table_box">
+
+        <!--中间列表-->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -84,16 +87,18 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination" id="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+
+        <!--底部分页-->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
+    
 </template>
 <script>
 import filter from '../../../filters/filters'
 import pagination from '../../../components/pagination'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
     initCallRecordList
 } from '../../../vuex/getters'
@@ -105,7 +110,8 @@ export default {
     components: {
         pagination,
         changeMenu,
-        common
+        common,
+        mglistModel
     },
     vuex: {
         getters: {

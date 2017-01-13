@@ -8,9 +8,10 @@
     <companyauth-model :param="companyParam" v-if="companyParam.show"></companyauth-model>
     <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
-     <div>
-        <div class="service-nav" id="top">
-  
+    
+    <mglist-model>
+        <!-- 头部搜索-->
+        <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer" >
                    <dt class="left transfer marg_top">会员名称：</dt>
@@ -144,14 +145,11 @@
                     <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
                     <button type="button" class="btn btn-primary" height="24" width="24" @click="selectSearch()">刷新</button>
                 </dd>
-            </div>
-
-
-           <!--  <div class="right" style="margin-top:10px;">
-               <button type="button" class="btn btn-default" height="24" width="24" @click="audit()">审核</button>
-           </div> -->           
+            </div>        
         </div>
-        <div class="order_table" id="table_box">
+
+        <!--中间列表-->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -294,84 +292,15 @@
                             <div class="operate" v-if="item.ctype==1"  @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)"><img src="/static/images/Ecertification.png" height="18" width="48"/>
                             </div>
                         </td>
-                        <!-- <td @click.stop="eventClick($index)">
-                            <img height="24" width="24" src="/static/images/default_arrow.png" />
-                            <div class="component_action" v-show="item.show">
-                                <ul>
-                                    <li @click="modifyUser({
-                                                loading:false,
-                                                id:item.id,
-                                                show:true,
-                                                userType:3,
-                                                link:alertInfo,
-                                                url:'/user/',
-                                                key:'userList',
-                                                index:$index,
-                                                nickname:'',
-                                                qq:'',
-                                                fullname:'',
-                                                email:'',
-                                                phone:'',
-                                                tel:'',
-                                                nickname:'',
-                                                company:'',
-                                                comment:'',
-                                                address:'',
-                                                idnumber:'',
-                                                bizType:'',
-                                                gender:'',
-                                                importance:'',
-                                                userType:'',
-                                                bizMain:'',
-                                                grade:item.grade
-                                                },item.show=false)">编辑</li>
-                                    <li v-if="item.transStatus==0" @click="userToClient({
-                                                mainBiz:item.bizMain,
-                                                name:item.fullname,
-                                                keyname:'transStatus',
-                                                sub:$index,
-                                                userId:item.id,
-                                                province:'',
-                                                phone:item.phone,
-                                                tel:item.tel,
-                                                email:item.email,
-                                                qq:item.qq,
-                                                type:'0,个人',
-                                                classify:'',
-                                                fullname:item.fullname,
-                                                employeeId:'',
-                                                employeeName:'',
-                                                orgId:'',
-                                                orgName:'',
-                                                show:true,
-                                                key:'userList',
-                                                countryId:7,
-                                                countryName:'中国',
-                                                contact:{
-                                                 name: item.fullname,
-                                                 position: '',
-                                                 department: '',
-                                                 phone: item.phone,
-                                                 tel: item.tel,
-                                                 email: item.email,
-                                                 qq: item.qq,
-                                                 wechart: item.wechart
-                                                }
-                                                },item.show=false)">划转</li>
-                                    <li @click="createIntention(item.show=false)">意向</li>
-                                    <li v-if="item.utype==1" @click="personalAuth({id:item.id,index:$index,ucomment:item.ucomment,utype:1},item.show=false)">个人认证</li>
-                                    <li v-if="item.ctype==1" @click="companyAuth({id:item.id,index:$index,ccomment:item.ccomment,ctype:1},item.show=false)">企业认证</li>
-                                </ul>
-                            </div>
-                        </td> -->
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination" id="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+
+        <!--底部分页-->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+
+    </mglist-model>
 
 </template>
 
@@ -389,6 +318,7 @@ import changeMenu from '../components/tools/tabs/tabs.js'
 import pagination from '../components/pagination'
 import personalauthModel from  '../components/user/personalAuth' 
 import companyauthModel from '../components/user/companyAuth'
+import mglistModel from '../components/mguan/mgListComponent.vue'
 import {
     getCount,
     initUserList,
@@ -415,7 +345,8 @@ export default {
         intentionModel,
         auditModel,
         personalauthModel,
-        companyauthModel
+        companyauthModel,
+        mglistModel
     },
      data() {
         return {

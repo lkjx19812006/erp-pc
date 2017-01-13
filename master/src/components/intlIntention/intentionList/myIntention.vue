@@ -52,6 +52,7 @@
                 <button class="btn btn-default pull-right" @click="createIntention()">{{$t('static.new')}}</button>
             </div>
         </div>
+        
         <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -126,105 +127,7 @@
         </div>
         <pagination :combination="loadParam"  slot="page"></pagination>
      </mglist-model>
-    <!-- <div class="order_table" id="table_box">
-        
-        <table class="table table-hover table_color table-striped " v-cloak id="tab">
-            <thead>
-                <tr>
-                    <th><label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label></th>
-                    <th>{{$t('static.type')}}</th>
-                    <th>{{$t('static.client_name')}}</th>
-                    <th>{{$t('static.client_email')}}</th>
-                    <th style="width:200px;min-width: 200px">{{$t('static.commodity_items')}}</th>
-                    <th>{{$t('static.certificate')}}</th>
-                    <th>{{$t('static.country')}}</th>
-                    <th>{{$t('static.province')}}</th>
-                    <th>{{$t('static.city')}}</th>
-                    <th>{{$t('static.area')}}</th>
-                    <th>{{$t('static.dealing_address')}}</th>
-                    <th>{{$t('static.pre_payment')}}</th>
-                     <th>{{$t('static.invoice')}}</th>
-                    <th>{{$t('static.come_to_see_product')}}</th> 
-                    <th>{{$t('static.packaging')}}</th>
-                    <th>{{$t('static.international')}}</th>
-                    <th>{{$t('static.Number_of_inquiries')}}</th>
-                    <th>{{$t('static.quotation_number')}}</th>
-                    <th>{{$t('static.issued_time')}}</th>
-                    <th>{{$t('static.review_status')}}</th>
-                    <th>{{$t('static.description')}}</th>
-                    <th>{{$t('static.inquiry_state')}}</th>
-                    <th>{{$t('static.inquiry_type')}}</th>
-                    <th>{{$t('static.intention_source')}}</th>
-                    <th style="min-width: 250px;">{{$t('static.handle')}}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in initMyIntlIntentionList" style="cursor:pointer">
-                    <td>
-                        <div v-if="item.especial==0&&item.type==0">{{$t('static.common_purchase')}}</div>
-                        <div v-if="item.especial==0&&item.type==1">{{$t('static.common_supply')}}</div>
-                        <div v-if="item.especial==1&&item.type==0">{{$t('static.emergency')}}</div>
-                        <div v-if="item.especial==1&&item.type==1">{{$t('static.low_cost')}}</div>
-                    </td>
-                    <td class="underline" @click="clickOn(item.id)">{{item.customerName}}</td>
-                    <td>{{item.customerEmail}}</td>
-                    <td>{{item.names}}</td>
-                    <td>{{item.qualification | qualify}}</td>
-                    <td>{{item.country}}</td>
-                    <td>{{item.province}}</td>
-                    <td>{{item.city}}</td>
-                    <td>{{item.district}}</td>
-                    <td>{{item.address}}</td>
-                <td>{{item.advance | advanced}}</td>
-                    发票<td v-if="item.invoic==0">{{$t('static.none')}}</td>
-                    <td v-if="item.invoic==1">{{$t('static.common_invoice')}}</td>
-                    <td v-if="item.invoic==2">{{$t('static.add_invoice')}}</td>
-                    <td v-if="item.invoic===null">{{$t('static.none')}}</td>
-                    <td>{{item.visit | visitstate}}</td>
-                    <td v-if="item.pack=='其它'">{{$t('static.other')}}</td>
-                    <td v-if="item.pack!='积压包'&&item.pack!='编织袋'&&item.pack!='瓦楞纸箱'&&item.pack!='真空包装'&&item.pack!='其它'">{{$t('static.other')}}</td>
-                    <td v-if="item.pack=='积压包'">{{$t('static.pallets')}}</td>
-                    <td v-if="item.pack=='编织袋'">{{$t('static.bag')}}</td>
-                    <td v-if="item.pack=='瓦楞纸箱'">{{$t('static.box')}}</td>
-                    <td v-if="item.pack=='真空包装'">{{$t('static.packing')}}</td>
-                    <td>{{item.intl | intlstata}}</td>
-                    <td>{{item.inquireTime}}</td>
-                    <td>{{item.offerTime}}</td>
-                    <td>{{item.ctime}}</td>
-                    <td>{{item.validate | intentionAudit}}</td>
-                    <td>{{item.description}}</td>
-                    <td v-if="item.inquire==0"><div style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</div></td>
-                    <td v-if="item.inquire==1"><div style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</div></td>
-                    <td v-if="item.inquire==2"><div style="background:#483D8B;color:#fff">{{$t('static.quotation')}}</div></td>
-                    <td v-if="item.inquire==3"><div style="background:green;color:#fff">{{$t('static.quo_complete')}}</div></td>
-                    <td>{{item.inquireType}}</td>
-                    <td>{{item.source}}</td>
-                    <td>
-                        <div v-if="item.inquire===0||item.inquire===3" style="display:inline-block;margin-right:7px" @click="deleteIntention({
-                                    id:item.id,
-                                    sub:$index,
-                                    show:true,
-                                    name:item.customerName,
-                                    title:'意向',
-                                    link:deleteInfo,
-                                    url:'/intlIntention/',
-                                    key:'myIntlIntentionList'
-                                    })"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除"  /></div>
-                        <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div>
-                        <div style="display:inline-block;margin-right:7px"  @click.stop="newOrder(item,$index)"><img src="/static/images/{{$t('static.img_adopt')}}.png" alt="生成订单" /></div>
-                        <div v-if="item.inquire===0||item.inquire===3"  style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑"  /></div>
-                        <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_inquire')}}.png" alt="询价" /></div>
-                        <div v-if="item.inquire===3" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
     
-                        <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item,$index)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div> -->
-        <!-- <div class="base_pagination" id="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div> -->
 </template>
 <script>
 import pagination from '../../pagination'

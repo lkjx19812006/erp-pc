@@ -1,9 +1,11 @@
 <template>
-     <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
-     <search-model :param="loadParam" v-if="loadParam.show"></search-model>
-     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-     <div>
-        <div class="service-nav clearfix" id="top">
+    <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
+    <search-model :param="loadParam" v-if="loadParam.show"></search-model>
+    <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
+
+    <mglist-model>
+        <!-- 头部搜索-->
+        <div slot="top">
             <div class="clear pull-left">
               <dl class="clear left transfer">
                  <dt class="left transfer marg_top">会员名：</dt>
@@ -36,7 +38,9 @@
               <!-- <button class="new_btn" @click="createIntention()">新建</button> -->
             </div>
         </div>
-        <div class="order_table" id="table_box">
+
+        <!--中间列表-->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -47,8 +51,9 @@
                         <th>报价时间</th>
                         <th>所属交易员</th>
                         <th>报价客户</th>
-                        <th>主要联系人</th>
+                        
                         <th>联系方式</th>
+                        <th>品种名</th>
                         <th>报价价格</th>
                         <th>库存</th>
                         <th>报价备注</th>
@@ -60,8 +65,9 @@
                         <td>{{item.otime | date}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.customerName}}</td>
-                        <td>{{item.mainContact}}</td>
+                        
                         <td>{{item.customerPhone}}</td>
+                        <td>{{item.breedName}}</td>
                         <td>{{item.price}}</td>
                         <td>{{item.number}}{{item.unit}}</td>
                         <td>{{item.description}}</td>
@@ -69,10 +75,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination" id="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+
+        <!--底部分页-->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+
+    </mglist-model>
+
 </template>
 <script>
 import pagination from '../../pagination'
@@ -82,6 +90,7 @@ import searchModel  from '../offerSearch'
 import common  from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import tipsModel from '../../tips/tipDialog'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
     initOrgOfferList,
     initLogin
@@ -94,7 +103,8 @@ export default {
         pagination,
         createorderModel,
         searchModel,
-        tipsModel 
+        tipsModel,
+        mglistModel 
     },
     vuex: {
         getters: {
