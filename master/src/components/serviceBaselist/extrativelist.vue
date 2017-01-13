@@ -1,6 +1,6 @@
 <template>
 
-    <div class="service-nav clearfix" style="padding-bottom:10px;">
+    <div class="service-nav clearfix" style="padding-bottom:10px;" id="top">
         <div class="left">
             <div class="name_search clearfix">
                 <img src="/static/images/search.png" height="24" width="24">
@@ -46,7 +46,7 @@
             </tbody>
         </table>
     </div>
-    <div class="base_pagination">
+    <div class="base_pagination" id="base_pagination">
         <pagination :combination="loadParam"></pagination>
     </div>
 </template>

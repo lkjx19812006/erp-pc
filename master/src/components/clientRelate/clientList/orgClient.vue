@@ -9,8 +9,10 @@
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <language-model v-show="false"></language-model>
-    <div>
-        <div class="service-nav">
+
+    <mglist-model>
+        <!-- 头部搜索-->
+        <div slot="top">
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t("static.client_name")}}：</dt>
@@ -126,7 +128,6 @@
                 <dd class="left">
                     <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">{{$t("static.clear_all")}}</button>
                 </dd>
-                 
                 
                 <dd class="pull-right" style="margin-right:20px">
                   <button type="button" class="btn btn-default" @click="clientTransfer({
@@ -137,14 +138,12 @@
                   <button type="button" class="btn btn-default" @click="clientTransferBlack()">{{$t("static.drag_into_blacklist")}}</button>
                   <button type="button" class="btn btn-default" @click="clientTransferSupplier()">{{$t("static.make_them_become_supplier")}}</button>
                   <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-                 
                 </dd>
-
             </div>
-
-
         </div>
-        <div class="order_table" id="table_box">
+
+        <!--中间列表-->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -306,10 +305,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+
+        <!--底部分页-->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+
+    </mglist-model>
+    
 </template>
 <script>
 import filter from '../../../filters/filters'
@@ -328,6 +329,7 @@ import auditDialog from '../../../components/tips/auditDialog'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import languageModel from '../../tools/language.vue'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
     initOrgCustomerlist,
     initProvince,
@@ -355,7 +357,8 @@ export default {
         tipsdialogModel,
         searchModel,
         auditDialog,
-        languageModel
+        languageModel,
+        mglistModel
     },
     vuex: {
         getters: {

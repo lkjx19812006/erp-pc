@@ -4,7 +4,7 @@
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
   <receipt-model :param="auditParam" v-if="auditParam.show"></receipt-model>
   <div>
-    <div class="service-nav clearfix">
+    <div class="service-nav clearfix" id="top">
       <div class="clearfix">
         <dl class="clear left">
            <dt class="left  marg_top">类型：</dt>
@@ -151,7 +151,7 @@
         </tbody>
       </table>
     </div>
-    <div class="base_pagination">
+    <div class="base_pagination" id="base_pagination">
       <pagination :combination="loadParam"></pagination>
     </div>
   </div>

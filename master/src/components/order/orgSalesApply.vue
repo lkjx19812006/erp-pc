@@ -3,7 +3,7 @@
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <audit-model :param="financeParam" v-if="financeParam.show"></audit-model>
   <div>
-    <div class="service-nav clearfix">
+    <div class="service-nav clearfix" id="top">
       <div class="clearfix">
         <dl class="clear left transfer">
            <dt class="left  marg_top">商品名称：</dt>
@@ -106,7 +106,7 @@
         </tbody>
       </table>
     </div>
-    <div class="base_pagination">
+    <div class="base_pagination" id="base_pagination">
       <pagination :combination="loadParam"></pagination>
     </div>
   </div>

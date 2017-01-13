@@ -4,7 +4,7 @@
     <!-- <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model> -->
     <picture-model :param="pictureParam" v-if="pictureParam.show"></picture-model>
     <tip-model :param="tipsParam" v-if="tipsParam.show"></tip-model>
-    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" @click="param.show=false"></div>
     <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
         <div class="cover_loading" v-if="param.id!=initBreedDetail.id">
             <pulse-loader :loading="true" :color="color" :size="size"></pulse-loader>

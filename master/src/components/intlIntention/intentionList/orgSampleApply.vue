@@ -4,7 +4,7 @@
      <audit-model :param="applyParam" v-if="applyParam.show"></audit-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
 	 <div>
-        <div class="service-nav clearfix">
+        <div class="service-nav clearfix" id="top">
             <div class="my_order_search pull-right">
                <button class="btn btn-primary  transfer" @click="searchMsg()">{{$t('static.refresh')}}</button>
             </div>
@@ -97,7 +97,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

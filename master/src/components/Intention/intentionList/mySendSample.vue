@@ -1,17 +1,19 @@
 <template>
-     <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
-     <create-model :param="createParam" v-if="createParam.send"></create-model>
-     <delete-model :param="delParam" v-if="delParam.show"></delete-model>
-     <edit-model :param.sync="dialogParam" v-if="dialogParam.send"></edit-model>
-     <apply-model :param="applyParam" v-if="applyParam.show"></apply-model>
-     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-	  <div>
-        <div class="service-nav clearfix">
+    <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
+    <create-model :param="createParam" v-if="createParam.send"></create-model>
+    <delete-model :param="delParam" v-if="delParam.show"></delete-model>
+    <edit-model :param.sync="dialogParam" v-if="dialogParam.send"></edit-model>
+    <apply-model :param="applyParam" v-if="applyParam.show"></apply-model>
+    <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
+
+    <mglist-model>
+        <!-- 头部搜索-->
+        <div slot="top">
             <div class="pull-right"> 
                <button class="btn btn-default transfer" @click="New()">新建</button>
                <button class="btn btn-primary  transfer" @click="searchMsg()">刷新</button>
             </div>
-            <div class="clearfix col-md-10">
+            <div class="clearfix">
                <div class="name_search left clearfix">
                    <img src="/static/images/search.png" height="24" width="24">
                    <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchMsg()">
@@ -35,7 +37,9 @@
                <button class="new_btn  pull-left transfer" @click="resetCondition()">清空条件</button>
             </div>
         </div>
-        <div class="order_table" id="table_box">
+
+        <!--中间列表-->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -52,7 +56,7 @@
                         <th>样品名称</th>
                         <th>审核状态</th>
                         <th>备注</th>
-      	            	  <th>创建时间</th>
+                        <th>创建时间</th>
                         <th style="min-width: 150px;text-align: left">操作</th>
                     </tr>
                 </thead>
@@ -137,10 +141,11 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+        
+        <!--底部分页-->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+    </mglist-model>
+
 </template>
 <script>
 import pagination from '../../pagination'
@@ -152,6 +157,7 @@ import deleteModel from '../../serviceBaselist/breedDetailDialog/deleteBreedDeta
 import editModel from '../alterSample'
 import applyModel from '../../tips/auditDialog'
 import tipsModel from '../../tips/tipDialog'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
 	initSamplelist,
     initLogin
@@ -170,7 +176,8 @@ export default {
         deleteModel,
         editModel,
         applyModel,
-        tipsModel
+        tipsModel,
+        mglistModel
     },
     vuex: {
         getters: {

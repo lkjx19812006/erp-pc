@@ -5,7 +5,7 @@
     <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <div>
-        <div class="service-nav clearfix">
+        <div class="service-nav clearfix" id="top">
             <div class="col-xs-9 my_order_search">
               <div class="ordertel_search clearfix" style="sfloat:left;width:180px" >
                 <select class="form-control " v-model="loadParam.categoryId" @change="categoryNameSearch()">
@@ -77,7 +77,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

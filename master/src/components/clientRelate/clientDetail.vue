@@ -14,7 +14,7 @@
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
   <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"  @click="param.show=false"></div>
     <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
     	  <div @click.stop="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>

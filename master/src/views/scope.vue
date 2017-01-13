@@ -2,7 +2,7 @@
   	<create-model :param.sync="createParam" v-if="createParam.show"></create-model>
   	<tip-model :param.sync="tipParam" v-if="tipParam.show"></tip-model>
 		 <div  class="myemploy">
-        <div class="order_search">
+        <div class="order_search" id="top">
             <div class="clearfix">
                 <div class="right">
                     <button class="new_btn" @click="newData()">新建</button>
@@ -44,7 +44,7 @@
                 </tbody>
               </table>
         </div>
-         <div class="order_pagination">
+         <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>
@@ -161,10 +161,10 @@ export default {
     white-space: nowrap;
 }
 .order_search {
-    padding: 25px 30px 0 40px;
+    padding: 25px 10px 0 10px;
 }
 .order_table {
-    margin-top: 20px;
+    margin-top:0px;
     position: relative;
 }
 

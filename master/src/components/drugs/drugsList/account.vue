@@ -1,37 +1,11 @@
 <template>
     <drugs-model :param="detailParam" v-if="detailParam.show"></drugs-model>
     <div>
-        <div class="service-nav">
-            <!-- <div class="clear" style="margin-top:3px;"> 
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">{{$t("static.client_name")}}：</dt>
-                   <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                   </dd>
-                </dl>
-            
-            </div>
-            
-            <div class="clear" style="margin-top:3px;"> 
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top" style="letter-spacing:3px" >{{$t("static.cellphone")}}：</dt>
-                   <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.phone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                   </dd>
-                </dl>
-            
-                <dd class="left transfer">
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">{{$t("static.search")}}</button>
-                </dd>
-                <dd class="left">
-                    <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">{{$t("static.clear_all")}}</button>
-                </dd> -->
-                
-                <dd class="pull-right" style="margin-right:20px">
-                    <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-                </dd>
+        <div class="service-nav clearfix" id="top">
+            <dd class="pull-right" style="margin-right:20px">
+                <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+            </dd>
 
-            </div>
         </div>
         <div class="order_table" id="table_box">
             <div class="cover_loading">
@@ -76,7 +50,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
     </div>

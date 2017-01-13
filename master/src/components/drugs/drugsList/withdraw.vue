@@ -1,7 +1,7 @@
 <template>
     <drugs-model :param="detailParam" v-if="detailParam.show"></drugs-model>
     <state-model :param="disposeParam" v-if="disposeParam.show"></state-model>
-    <div class="service-nav clearfix" style="padding-bottom:10px">
+    <div class="service-nav clearfix" style="padding-bottom:10px" id="top">
      <!--  <div class="left">
        <dl class="clear left">
           <dt class="left  marg_top">银行名称：</dt>
@@ -59,7 +59,7 @@
         </tbody>
       </table>
     </div>
-    <div class="base_pagination">
+    <div class="base_pagination" id="base_pagination">
       <pagination :combination="loadParam"></pagination>
     </div>
 

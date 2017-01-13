@@ -5,7 +5,7 @@
     <update-model :param="updateParam" v-if="updateParam.show"></update-model>
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <div>
-        <div class="service-nav">
+        <div class="service-nav" id="top">
             <div class="clearfix">
                 <div class="pull-right" >
                     <button class="btn btn-primary transfer"   @click="selectSearch()">刷新</button>

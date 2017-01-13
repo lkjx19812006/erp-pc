@@ -9,8 +9,10 @@
     <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <updatetracking-model :param="updateTrackingParam" v-if="updateTrackingParam.show"></updatetracking-model>
     <language-model v-show="false"></language-model>
-    <div>
-        <div class="service-nav">
+    
+    <mglist-model>
+        <!-- 头部搜索-->
+        <div slot="top">
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t("static.client_name")}}：</dt>
@@ -156,10 +158,11 @@
                                             })">{{$t("static.new")}}</button>
                   <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
                 </dd>
-
             </div>
         </div>
-        <div class="order_table" id="table_box">
+
+        <!--中间列表-->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -183,28 +186,7 @@
                         <th>{{$t('static.detailed_address')}}</th>
                         <th>{{$t('static.main_product')}}</th>
                         <th v-if="this.initLogin.orgId==29">跟进状态</th> 
-                        <th v-if="this.initLogin.orgId==29">跟进说明</th>  
-                        
-                    <!-- <th>{{$t("static.type")}}</th>
-                        <th>{{$t("static.classification")}}</th>
-                        <th>{{$t("static.customer_source")}}</th>
-                        <th>{{$t("static.credit_rating")}}</th>
-                        <th>{{$t("static.client_name")}}</th>
-                        <th>{{$t("static.salesman")}}</th>
-                        <th>{{$t("static.principals")}}</th>
-                        <th style="min-width:120px;">{{$t("static.business_scope")}}</th>
-                        <th>{{$t("static.client_phone")}}</th>
-                        <th>{{$t("static.province_of_phone")}}</th>
-                        <th>{{$t("static.city_of_phone")}}</th>
-                        <th>{{$t("static.client_email")}}</th>
-                        <th>{{$t("static.country")}}</th>
-                        <th>{{$t("static.province")}}</th>
-                        <th>{{$t("static.city")}}</th>
-                        <th>{{$t("static.registered_address")}}</th>
-                        <th>{{$t("static.create_time")}}</th>
-                        <th>{{$t("static.whether_supplier")}}</th>
-                        <th style="min-width:200px">{{$t("static.comment")}}</th> 
-                    -->
+                        <th v-if="this.initLogin.orgId==29">跟进说明</th> 
                         <th>{{$t("static.operation")}}</th>
                         <th v-if="this.initLogin.orgId==29">跟进</th>
                     </tr>
@@ -252,50 +234,6 @@
                         <td>{{item.bizScope}}</td>
                         <td v-if="this.initLogin.orgId==29">{{item.audit | tracking}}</td> 
                         <td v-if="this.initLogin.orgId==29">{{item.auditComment}}</td> 
-
-                    <!-- <td>{{item.typeDesc}}</td>
-                        <td>{{item.classifyDesc | classify}}</td>
-                        <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.sourceType=='weixin'" style="background:green;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.sourceType=='android'" style="background:#0000CC;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.sourceType=='ios'" style="background:#CC0099;color:#fff">{{item.sourceType}}</td>
-                        <td v-if="item.sourceType!='pc'&&item.sourceType!='weixin'&&item.sourceType!='android'&&item.sourceType!='ios'" style="background:#fa6705;color:#fff">{{item.sourceType}}</td> 
-                        <td v-if="item.creditLevel!=1&&item.creditLevel!=2&&item.creditLevel!=3">暂无等级</td>
-                        <td v-if="item.creditLevel==1">一星客户</td>
-                        <td v-if="item.creditLevel==2">二星客户</td>
-                        <td v-if="item.creditLevel==3">三星客户</td>
-                        <td class="underline"  @click="clickOn({
-                                id:item.id,
-                                sub:$index,
-                                show:true,
-                                name:item.name,
-                                link:alterInfo,
-                                loading:true,
-                                url:'/customer/',
-                                key:'customerList'
-                                })">{{item.name}}</td>
-                                    <img src="/static/images/compact.png" style='float:left;' /><div style='float:right'></div>
-                                    上面这个img显示新客户图标
-                        <td>{{item.category}}</td>
-                        <td>{{item.classify | classify}}</td>
-                        <td>{{item.employeeName}}</td>
-                        <td>{{item.principal}}</td>
-                        <td>{{item.bizScope}}</td>
-                        <td>{{item.mainPhone}}</td>
-                        <td>{{item.phoneProvince}}</td>
-                        <td>{{item.phoneCity}}</td>
-                        <td>{{item.email}}</td>
-                        <td>{{item.countryName | country}}</td>
-                        <td>{{item.provinceName}}</td>
-                        <td>{{item.cityName}}</td>
-                        <td>{{item.address}}</td>
-                        <td>{{item.ctime}}</td>
-                        <td>
-                          <div v-if="item.supplier==1">是</div>
-                          <div v-if="item.supplier==0">否</div>
-                        </td>
-                        <td>{{item.comments}}</td> 
-                    -->
                         <td  @click="modifyClient({
                                     id:item.id,
                                     sub:$index,
@@ -334,10 +272,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+
+        <!--底部分页-->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+
+    </mglist-model> 
+
 </template>
 <script>
 import filter from '../../../filters/filters'
@@ -355,6 +295,7 @@ import vSelect from '../../tools/vueSelect/components/Select'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import languageModel from '../../tools/language'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
     initMyCustomerlist,
     initProvince,
@@ -383,7 +324,8 @@ export default {
         auditDialog,
         updatetrackingModel,
         vSelect,
-        languageModel
+        languageModel,
+        mglistModel
     },
     vuex: {
         getters: {

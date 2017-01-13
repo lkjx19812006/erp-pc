@@ -9,10 +9,11 @@
      <inquire-model :param="inquireParam" v-if="inquireParam.show"></inquire-model>
      <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
      <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-     <div>
-        <div class="service-nav clearfix">
-            <div class="clear left" >
-                  <dl class="clear left transfer">
+
+     <mglist-model>
+        <div slot="top">
+            <div class="clear" >
+                  <dl class="clear left">
                      <dt class="left transfer marg_top">{{$t('static.breed')}}：</dt>
                      <dd class="left">
                            <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
@@ -36,22 +37,23 @@
                            <input type="text" class="form-control" v-model="loadParam.customerEmail" @keyup.enter="intentionSearch()"/>
                      </dd>
                   </dl>
-                  <button class="new_btn transfer" @click="resetCondition()">{{$t('static.clear_all')}}</button>
-                  <button class="new_btn transfer" @click="intentionSearch()">{{$t('static.search')}}</button>        
+                  <button class="new_btn transfer pull-left" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                  <button class="new_btn transfer pull-left"  @click="intentionSearch()">{{$t('static.search')}}</button>        
+            </div>
+            <div class="clearfix" style="margin-right: 10px">
+                <div class="btn-group pull-left">
+                    <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inquire===''}" @click="clickday('')">{{$t('static.please_select')}}</button>
+                    <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inquire===0}" @click="clickday(0)">{{$t('static.not_inquiry')}}</button>
+                    <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===1}" @click="clickday(1)">{{$t('static.inquiry')}}</button>
+                    <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===2}" @click="clickday(2)">{{$t('static.quotation')}}</button>
+                    <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===3}" @click="clickday(3)">{{$t('static.quo_complete')}}</button>
+                </div>
+                <button class="btn btn-primary pull-right transfer" @click="intentionSearch()">{{$t('static.refresh')}}</button>  
+                <button class="btn btn-default pull-right" @click="createIntention()">{{$t('static.new')}}</button>
             </div>
         </div>
-        <div class="clearfix" style="margin-right: 10px">
-            <div class="btn-group pull-left">
-                <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inquire===''}" @click="clickday('')">{{$t('static.please_select')}}</button>
-                <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inquire===0}" @click="clickday(0)">{{$t('static.not_inquiry')}}</button>
-                <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===1}" @click="clickday(1)">{{$t('static.inquiry')}}</button>
-                <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===2}" @click="clickday(2)">{{$t('static.quotation')}}</button>
-                <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===3}" @click="clickday(3)">{{$t('static.quo_complete')}}</button>
-            </div>
-            <button class="btn btn-primary pull-right transfer" @click="intentionSearch()">{{$t('static.refresh')}}</button>  
-            <button class="btn btn-default pull-right" @click="createIntention()">{{$t('static.new')}}</button>
-        </div>
-        <div class="order_table" id="table_box">
+        
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -63,21 +65,12 @@
                         <th>{{$t('static.client_name')}}</th>
                         <th>{{$t('static.client_email')}}</th>
                         <th style="width:200px;min-width: 200px">{{$t('static.commodity_items')}}</th>
-                        <!-- <th>{{$t('static.certificate')}}</th> -->
                         <th>{{$t('static.country')}}</th>
-                        <!-- <th>{{$t('static.province')}}</th> -->
                         <th>{{$t('static.city')}}</th>
-                        <!-- <th>{{$t('static.area')}}</th> -->
                         <th>{{$t('static.dealing_address')}}</th>
-                        <!--<th>{{$t('static.pre_payment')}}</th>
-                         <th>{{$t('static.invoice')}}</th> -->
-                        <!-- <th>{{$t('static.come_to_see_product')}}</th> 
-                        <th>{{$t('static.packaging')}}</th>-->
-                        <!-- <th>{{$t('static.international')}}</th> -->
                         <th>{{$t('static.Number_of_inquiries')}}</th>
                         <th>{{$t('static.quotation_number')}}</th>
                         <th>{{$t('static.issued_time')}}</th>
-                        <!-- <th>{{$t('static.review_status')}}</th> -->
                         <th>{{$t('static.description')}}</th>
                         <th>{{$t('static.inquiry_state')}}</th>
                         <th>{{$t('static.inquiry_type')}}</th>
@@ -96,30 +89,12 @@
                         <td class="underline" @click="clickOn(item.id)">{{item.customerName}}</td>
                         <td>{{item.customerEmail}}</td>
                         <td>{{item.names}}</td>
-                        <!-- <td>{{item.qualification | qualify}}</td> -->
                         <td>{{item.country}}</td>
-                        <!-- <td>{{item.province}}</td> -->
                         <td>{{item.city}}</td>
-                        <!-- <td>{{item.district}}</td> -->
                         <td>{{item.address}}</td>
-                    <!-- <td>{{item.advance | advanced}}</td>
-                        发票<td v-if="item.invoic==0">{{$t('static.none')}}</td>
-                        <td v-if="item.invoic==1">{{$t('static.common_invoice')}}</td>
-                        <td v-if="item.invoic==2">{{$t('static.add_invoice')}}</td>
-                        <td v-if="item.invoic===null">{{$t('static.none')}}</td> -->
-                        <!-- <td>{{item.visit | visitstate}}</td>
-                        <td v-if="item.pack=='其它'">{{$t('static.other')}}</td>
-                        <td v-if="item.pack!='积压包'&&item.pack!='编织袋'&&item.pack!='瓦楞纸箱'&&item.pack!='真空包装'&&item.pack!='其它'">{{$t('static.other')}}</td>
-                        <td v-if="item.pack=='积压包'">{{$t('static.pallets')}}</td>
-                        <td v-if="item.pack=='编织袋'">{{$t('static.bag')}}</td>
-                        <td v-if="item.pack=='瓦楞纸箱'">{{$t('static.box')}}</td>
-                        <td v-if="item.pack=='真空包装'">{{$t('static.packing')}}</td> -->
-                        <!-- <td>{{item.intl | intlstata}}</td> 
-                    -->
                         <td>{{item.inquireTime}}</td>
                         <td>{{item.offerTime}}</td>
                         <td>{{item.ctime}}</td>
-                        <!-- <td>{{item.validate | intentionAudit}}</td> -->
                         <td>{{item.description}}</td>
                         <td v-if="item.inquire==0"><div style="background:#7B68EE;color:#fff">{{$t('static.initial')}}</div></td>
                         <td v-if="item.inquire==1"><div style="background:#CD853F;color:#fff">{{$t('static.inquiry')}}</div></td>
@@ -150,10 +125,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+        <pagination :combination="loadParam"  slot="page"></pagination>
+     </mglist-model>
+    
 </template>
 <script>
 import pagination from '../../pagination'
@@ -170,6 +144,7 @@ import tipsModel  from '../../../components/tips/tipDialog'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import breedsearchModel from '../breedsearch'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
     initMyIntlIntentionList,
     initLogin
@@ -194,7 +169,8 @@ export default {
         deletebreedModel,
         createorderModel,
         tipsModel,
-        breedsearchModel
+        breedsearchModel,
+        mglistModel
     },
     vuex: {
         getters: {

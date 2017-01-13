@@ -1,8 +1,8 @@
 <template>
-	<div class="cover_loading">
+	      <div class="cover_loading">
             <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
         </div>
-        <div class="order_search">
+        <div class="order_search" id="top">
             <div class="clear">
                 <div class="my_order col-xs-2">省市区</div>
             </div>
@@ -29,7 +29,7 @@
                   </tbody>
               </table>
         </div>
-         <div class="order_pagination">
+        <div class="base_pagination" id="base_pagination">
             <pagination :combination="loadParam"></pagination>
         </div>
 </template>
@@ -133,12 +133,6 @@ export default {
     -ms-border-radius: 3px;
     background: #fff;
 }
-
-.order_table {
-    margin-top: 20px;
-    position: relative;
-}
-
 .order_table .table {
     background: #fff;
     position: relative;
@@ -167,10 +161,6 @@ export default {
 
 .order_table .table_hover > ul:hover {
     background: #f5f5f5;
-}
-.order_pagination{
-    margin:auto;
-    text-align: center;
 }
 .order_table .table > ul >li img {
     margin: auto;

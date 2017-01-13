@@ -1,5 +1,5 @@
 <template>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"  @click="param.show=false"></div>
     <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false"> 
         <div class="client-section clearfix" v-cloak>
             <div  class="top-title" @click="param.show=false">
@@ -7,7 +7,6 @@
             </div>
 
             <div class="edit-left clearfix">
-
                 <div class="section_title">
                     <span style="font-size:14px">基本信息</span>
                 </div>

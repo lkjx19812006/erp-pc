@@ -1,117 +1,119 @@
 <template>
-     <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
-     <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
-     <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
-     <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
-     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-     <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
-     <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
-     <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
-     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
-   <div>
-        <div class="service-nav">
-          <div class="clear" style="margin-top:10px;">
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top" style="letter-spacing:3px" >客户名：</dt>
-                 <dd class="left">
-                      <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                 </dd>
-              </dl>
+    <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
+    <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
+    <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
+    <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
+    <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+    <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
+    <transfer-model :param="transferParam" v-if="transferParam.show"></transfer-model>
+    <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
+    <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
 
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top" style="letter-spacing:3px" >客户手机：</dt>
-                 <dd class="left">
-                      <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                 </dd>
-              </dl>
+    <mglist-model>
+        <!-- 头部搜索-->
+        <div slot="top">
+            <div class="clear" style="margin-top:10px;">
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >客户名：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
 
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top" style="letter-spacing:3px" >品种：</dt>
-                 <dd class="left">
-                      <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" placeholder="选择品种" @click="breedSearch()" >
-                 </dd>
-              </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >客户手机：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
 
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top" style="letter-spacing:3px" >产地：</dt>
-                 <dd class="left">
-                      <input type="text" class="form-control" v-model="loadParam.location" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
-                 </dd>
-              </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >品种：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" placeholder="选择品种" @click="breedSearch()" >
+                   </dd>
+                </dl>
 
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top" style="letter-spacing:3px" >标签：</dt>
-                 <dd class="left">
-                      <input-select
-                         :value.sync="loadParam.label"
-                         :prevalue="loadParam.label"
-                         :options="labels"
-                         placeholder="标签"
-                       >
-                      </input-select>
-                 </dd>
-              </dl>
-              
-              <dl class="clear left transfer">
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >产地：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.location" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
 
-                 <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
-              </dl>
-          </div>
-          
-          <div class="clear" style="margin-top:3px;">
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">意向类型：</dt>
-                 <div class="btn-group">
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===''&&this.loadParam.especial===''}" @click="selectType('','')">
-                        全部
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0&&this.loadParam.especial===0}" @click="selectType(0,0)">
-                        普通求购
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0&&this.loadParam.especial===1}" @click="selectType(0,1)">
-                        紧急求购
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===1&&this.loadParam.especial===0}" @click="selectType(1,0)">
-                        普通供应
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===1&&this.loadParam.especial===1}" @click="selectType(1,1)">
-                        低价资源
-                     </button>
-                 </div>
-              </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >标签：</dt>
+                   <dd class="left">
+                        <input-select
+                           :value.sync="loadParam.label"
+                           :prevalue="loadParam.label"
+                           :options="labels"
+                           placeholder="标签"
+                         >
+                        </input-select>
+                   </dd>
+                </dl>
+                
+                <dl class="clear left transfer">
 
-              <dl class="clear left transfer" style="margin-left:50px">
-                 <dt class="left transfer marg_top">审核状态：</dt>
-                 <div class="btn-group">
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===''}" @click="selectValidate('')">
-                        全部
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===0}" @click="selectValidate(0)">
-                        待审核
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===1}" @click="selectValidate(1)">
-                        审核通过
-                     </button>
-                     <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===-1}" @click="selectValidate(-1)">
-                        审核不通过
-                     </button>
-                 </div>
-              </dl>
-
-              <dl class="clear left transfer" style="margin-left:50px">
-                 <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
-              </dl>
-
-              <dd class="pull-right" style="margin-right:10px">
-                  <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" @click="intentionAudit()">审核</button>
-                  <button type="button" class="btn btn-primary" height="24" width="24" @click="selectSearch()">刷新</button>
-              </dd>
-
+                   <button type="button" class="btn btn-default" height="24" width="24" @click="selectSearch()">搜索</button>
+                </dl>
             </div>
+            
+            <div class="clear" style="margin-top:3px;">
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">意向类型：</dt>
+                   <div class="btn-group">
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===''&&this.loadParam.especial===''}" @click="selectType('','')">
+                          全部
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0&&this.loadParam.especial===0}" @click="selectType(0,0)">
+                          普通求购
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0&&this.loadParam.especial===1}" @click="selectType(0,1)">
+                          紧急求购
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===1&&this.loadParam.especial===0}" @click="selectType(1,0)">
+                          普通供应
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===1&&this.loadParam.especial===1}" @click="selectType(1,1)">
+                          低价资源
+                       </button>
+                   </div>
+                </dl>
 
+                <dl class="clear left transfer" style="margin-left:50px">
+                   <dt class="left transfer marg_top">审核状态：</dt>
+                   <div class="btn-group">
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===''}" @click="selectValidate('')">
+                          全部
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===0}" @click="selectValidate(0)">
+                          待审核
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===1}" @click="selectValidate(1)">
+                          审核通过
+                       </button>
+                       <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===-1}" @click="selectValidate(-1)">
+                          审核不通过
+                       </button>
+                   </div>
+                </dl>
 
+                <dl class="clear left transfer" style="margin-left:50px">
+                   <button type="button" class="btn btn-default" height="24" width="24" @click="resetCondition()">清空条件</button>
+                </dl>
+
+                <dd class="pull-right" style="margin-right:10px">
+                    <button type="button" class="btn btn-default" style="margin-right:10px" height="24" width="24" @click="intentionAudit()">审核</button>
+                    <button type="button" class="btn btn-primary" height="24" width="24" @click="selectSearch()">刷新</button>
+                </dd>
+
+              </div>     
         </div>
-        <div class="order_table" id="table_box">
+
+        <!--中间列表-->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -307,12 +309,13 @@
 
                 </tbody>
             </table>
+        </div>
 
-        </div>
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+        <!--底部分页-->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+              
+    </mglist-model>
+
 </template>
 <script>
 import pagination from '../../pagination'
@@ -331,6 +334,7 @@ import inputSelect from '../../tools/vueSelect/components/multiSelect'
 import commonArray from '../../tools/commonArray'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
+import mglistModel from '../../mguan/mgListComponent.vue'
 
 import {
   initUnIntentionList,
@@ -353,7 +357,8 @@ export default {
         transferModel,
         searchModel,
         breedsearchModel,
-        inputSelect
+        inputSelect,
+        mglistModel
     },
     vuex: {
         getters: {

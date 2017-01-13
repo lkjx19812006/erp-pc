@@ -1,10 +1,12 @@
 <template>
-     <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
-     <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
-     <audit-model :param="applyParam" v-if="applyParam.show"></audit-model>
-     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
-	 <div>
-        <div class="service-nav clearfix">
+    <editmsg-model :param.sync="updateParam" v-if="updateParam.show"></editmsg-model>
+    <detail-model :param="changeParam" v-if="changeParam.show"></detail-model>
+    <audit-model :param="applyParam" v-if="applyParam.show"></audit-model>
+    <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
+
+    <mglist-model>
+        <!-- 头部搜索-->
+        <div slot="top">
             <div class="my_order_search pull-right">
                <button class="btn btn-primary  transfer" @click="searchMsg()">刷新</button>
             </div>
@@ -32,7 +34,9 @@
                <button class="new_btn transfer" @click="resetCondition()">清空条件</button>
            </div>
         </div>
-        <div class="order_table" id="table_box">
+
+        <!--中间列表-->
+        <div slot="form">
             <div class="cover_loading">
                 <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
             </div>
@@ -97,10 +101,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="base_pagination">
-            <pagination :combination="loadParam"></pagination>
-        </div>
-    </div>
+
+        <!--底部分页-->
+        <pagination :combination="loadParam"  slot="page"></pagination>
+
+    </mglist-model>
+
 </template>
 <script>
 import pagination from '../../pagination'
@@ -110,6 +116,7 @@ import detailModel from '../sampleDetail'
 import common from '../../../common/common'
 import auditModel from '../../tips/auditDialog'
 import tipsModel from '../../tips/tipDialog'
+import mglistModel from '../../mguan/mgListComponent.vue'
 import {
 	initOrgSample
 } from '../../../vuex/getters'
@@ -123,7 +130,8 @@ export default {
         editmsgModel,
         detailModel,
         auditModel,
-        tipsModel
+        tipsModel,
+        mglistModel
     },
     vuex: {
         getters: {

@@ -4,7 +4,7 @@
   <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
   <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
   <div>
-    <div class="order_search">
+    <div class="order_search" id="top">
       <div class="clear">
         <div class="my_order col-xs-2">{{$t('static.pay_order')}}</div>
         <div class="right">
@@ -108,7 +108,7 @@
         </tbody>
       </table>
     </div>
-    <div class="order_pagination">
+    <div class="order_pagination" id="base_pagination">
       <pagination :combination="loadParam"></pagination>
     </div>
   </div>

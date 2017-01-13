@@ -1,7 +1,7 @@
 <template>
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
   <div v-show="!changeParam.show">
-    <div class="service-nav clearfix">
+    <div class="service-nav clearfix" id="top">
       <div class="clearfix left" >
         <div class="my_order_search">
             <select  v-model="loadParam.payWay" class="form-control" @change="searchProduct()">
@@ -55,7 +55,7 @@
         </tbody>
       </table>
     </div>
-    <div class="base_pagination">
+    <div class="base_pagination" id="base_pagination">
       <pagination :combination="loadParam"></pagination>
     </div>
   </div>

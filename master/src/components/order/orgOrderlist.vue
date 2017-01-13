@@ -6,7 +6,7 @@
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <div>
-      <div class="order_search">
+      <div class="order_search" id="top">
         <div class="clear">
             <div class="right">
               <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
@@ -235,7 +235,7 @@
             </tbody>
         </table>
       </div>
-      <div class="order_pagination">
+      <div class="order_pagination" id="base_pagination">
           <pagination :combination="loadParam"></pagination>
       </div>
     </div>
