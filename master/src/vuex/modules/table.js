@@ -1447,6 +1447,7 @@ const mutations = {
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerComment = data.comment;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].offerCurrency = data.currency;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].exchangeRate = data.exchangeRate;
+        state.basicBaseList.intlIntentionDetail.items.arr[data.index].origCurrency = data.origCurrency;
 
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].supplierName = data.supplierName;
         state.basicBaseList.intlIntentionDetail.items.arr[data.index].supplier = data.supplier;

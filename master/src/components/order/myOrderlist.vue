@@ -10,10 +10,13 @@
     <reapply-model :param="reapplyParam" v-if="reapplyParam.show"></reapply-model>
 
     <mglist-model>
+
       <!-- 头部搜索 -->
       <div slot="top">
          <div class="clear">
             <div class="right">
+                <!-- <button class="btn btn-default transfer" @click="exportOrder(loadParam)">导出订单</button> -->
+                
                 <button class="btn btn-default transfer" @click="newOrder()">{{$t('static.new')}}</button>
                 <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review_application')}}</button> -->
                 <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
@@ -319,7 +322,8 @@
         alterOrder,
         createOrder,
         orderStatu,
-        getOrderDetail
+        getOrderDetail,
+        exportOrder
     } from '../../vuex/actions'
     export default {
         components: {
@@ -474,7 +478,8 @@
                 alterOrder,
                 createOrder,
                 orderStatu,
-                getOrderDetail
+                getOrderDetail,
+                exportOrder
             }
         },
         methods: {
@@ -489,6 +494,9 @@
                      this.$store.state.table.basicBaseList.myOrderList[sub].show=true;
                 }
             },
+            /*exportOrder:function(param){
+
+            },*/
             /*orgCheck:function(){   //批量审核，停用
                 var _this = this;
                 _this.auditParam.ids = [];

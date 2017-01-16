@@ -154,7 +154,10 @@
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                         {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
                                       </a>
-                                      <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：{{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}}</span>
+                                      <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
+                                          <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotals">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
+                                          <!-- {{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
+                                      </span>
                                       <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                 </h4>
                               </div>
@@ -215,7 +218,10 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                           {{$t('static.other_quotations')}}（0）
                                         </a>
-                                         <span class="pull-right" style="color:#fa6705">{{$t('static.quotation_total')}}：{{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}}</span>
+                                         <span class="pull-right" style="color:#fa6705">{{$t('static.quotation_total')}}：
+                                             <p class="pull-right" v-for="item in initIntlIntentionDetail.offersTotals">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
+                                             <!-- {{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
+                                         </span>
                                         <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                   </h4>
                               </div>

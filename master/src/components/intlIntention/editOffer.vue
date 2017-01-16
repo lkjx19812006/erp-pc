@@ -21,6 +21,10 @@
                           <div class="editpage-input">
                                <label class="editlabel">{{$t('static.breed')}}</label>
                                <input type="text" v-model="param.itemName" class="form-control edit-input" disabled="true" />
+                          </div>
+                          <div class="editpage-input col-md-12" style="padding:0;">
+                              <label class="editlabel" >{{$t('static.supplier')}} <span class="system_danger" v-if="$validation.suppliername.required">{{$t('static.required')}}</span></label>
+                              <input type="text" class="form-control edit-input" v-model="param.supplierName"  @click="selectSupplier()" v-validate:suppliername="{required:true}" />
                           </div>  
                           <div class="editpage-input col-xs-6" style="padding:0">
                                <label class="editlabel">{{$t('static.cost')}}<span class="system_danger" v-if="$validation.origprice.required">{{$t('static.required')}}</span></label>
@@ -43,6 +47,12 @@
                                <label class="editlabel" >{{$t('static.quantity')}}（{{param.unit | Unit}}）<span class="system_danger" v-if="$validation.number.required">{{$t('static.required')}}</span></label>
                                 <input type="number" value="{{param.number}}" v-model="param.number" class="form-control edit-input"  v-validate:number="{required:true}" disabled="true" />
                           </div>
+                          <div class="editpage-input col-md-12" style="padding:0;" >
+                              <label class="editlabel">汇率</label>
+                              <div style="line-height: 36px">
+                               （{{param.exchangeRate}}）{{param.origCurrency | Currency}} ={{param.currency | Currency}}
+                              </div>
+                          </div>
                           <div class="editpage-input col-xs-6" style="padding:0;">
                                <label class="editlabel" >{{$t('static.quoted_price')}}<span class="system_danger" v-if="$validation.price.required">{{$t('static.required')}}</span></label>
                                <input type="number" v-model="param.price" class="form-control edit-input" v-validate:price="{required:true}" />
@@ -55,7 +65,7 @@
                        </div> 
                   </div> 
              </section>
-             <div class="editpage-input col-md-6" style="padding:0;">
+             <!-- <div class="editpage-input col-md-6" style="padding:0;">
                  <label class="editlabel" >{{$t('static.supplier')}} <span class="system_danger" v-if="$validation.suppliername.required">{{$t('static.required')}}</span></label>
                  <input type="text" class="form-control edit-input" v-model="param.supplierName"  @click="selectSupplier()" v-validate:suppliername="{required:true}" />
              </div>
@@ -64,7 +74,7 @@
                  <div>
                    （{{param.exchangeRate}}）{{param.origCurrency | Currency}} ={{param.currency | Currency}}
                  </div>
-             </div>
+             </div> -->
              <div class="col-md-12" style="padding:0;">
                  <label class="editlabel" >{{$t('static.comment')}}</label>
                  <textarea v-model="param.comment" rows="6" style="resize: none;border:1px solid #ddd;width:100%;"class="form-control"></textarea>
@@ -173,7 +183,11 @@ export default {
       confrim:function(){
 /*        this.param.callback=this.param.callback;*/
         this.param.show = false;
+        this.param.getIntentionDetail = this.getIntentionDetail;
         this.intlIntentionOffer(this.param);
+      },
+      getIntentionDetail:function(param){
+        this.getIntlIntentionDetail(param);
       },
       selectSupplier:function(){
         this.supplierParam.show=true;
