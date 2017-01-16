@@ -50,7 +50,6 @@
                        <th>报价时间</th>
                        <th>所属交易员</th>
                        <th>报价客户</th>
-                       
                        <th>联系方式</th>
                        <th>品种名</th>
                        <th>报价价格</th>
@@ -62,10 +61,9 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in initMyOfferList">
-                        <td>{{item.otime | date}}</td>
+                        <td>{{item.ctime}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.customerName}}</td>
-                        
                         <td>{{item.customerPhone}}</td>
                         <td>{{item.breedName}}</td>
                         <td>{{item.price}}</td>
@@ -249,16 +247,16 @@ export default {
             }
         },
         checkedAll:function(){
-   			this.checked = !this.checked;
-   			if(this.checked){
-   				this.$store.state.table.basicBaseList.myOfferList.forEach(function(item){
-   					item.checked = true;
-   				})
-   			}else{
-   				this.$store.state.table.basicBaseList.myOfferList.forEach(function(item){
-   					item.checked = false;
-   				})
-   			}
+     			this.checked = !this.checked;
+     			if(this.checked){
+     				this.$store.state.table.basicBaseList.myOfferList.forEach(function(item){
+     					item.checked = true;
+     				})
+     			}else{
+     				this.$store.state.table.basicBaseList.myOfferList.forEach(function(item){
+     					item.checked = false;
+     				})
+     			}
         },
         adopt:function(item,index){
             console.log("创建订单");
