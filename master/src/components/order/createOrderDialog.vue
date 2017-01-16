@@ -3,7 +3,7 @@
     <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
     <consignee-model :param="consigneeParam" v-if="consigneeParam.show"></consignee-model>
     <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
-
+    <supplier-dialog :param="supplierParam" v-if="supplierParam.show"></supplier-dialog>
     <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -18,7 +18,7 @@
                     <div class="editpage-input col-md-6">
                         <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
                         <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
-                        <select  class="form-control edit-input" v-model="param.type"   >
+                        <select  class="form-control edit-input" v-model="param.type" @click="exChange()">
                             <option value="0">{{$t('static.purchase')}}</option>
                             <option value="1">{{$t('static.sell')}}</option>
                         </select>
@@ -32,8 +32,8 @@
                         </select>
                     </div>
                     <div class="editpage-input col-md-6" v-if="param.type==1">
-                        <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">选择发货人</span></label>
-                        <input  type="text" class="form-control edit-input" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
+                        <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required" >{{$t('static.required')}}</span></label>
+                        <input  type="text" class="form-control edit-input"  readonly="readonly"  v-model="employeeParam.consignerName" v-validate:shipper="{required:true}"  @click="selectEmployee(param.consigner,employeeParam.consignerName)"  />
                        <!--  <select  class="form-control edit-input" v-model="param.consigner">
                            <option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
                        </select> -->
@@ -43,17 +43,19 @@
                     <div style="margin-top:20px;">
                        <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
                        <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
-                       <!-- <a v-if="param.customerName" class="right" style="margin-right:40px;" @click="selectConsignee()">选择收货人信息</a> -->
-                       <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">选择收货地址</button>
-
-                       <!-- <a v-if="param.customerName" class="right" style="margin-right:20px;" @click="createConsignee()">新建收货人信息</a> -->
-                       <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">填写收货地址</button>
-
+                       <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}"  style="margin-right:40px;" @click="selectConsignee()">选择收货地址</button>
+                       <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}"  style="margin-right:20px;" @click="createConsignee()">填写收货地址</button>
                     </div>
                     <div class="clearfix">
-                        <div class="editpage-input col-md-4">
+                        <!-- 客户选择 -->
+                        <div class="editpage-input col-md-4"  v-if="param.type==1">
                             <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.required')}}</span></label>
-                            <input type="text" class="form-control edit-input" v-model="param.customerName"   v-validate:custname="['required']" value="{{param.customerName}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
+                            <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customerName}}"  v-validate:custname="['required']"  readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
+                        </div>
+                        <!-- 供应商选择 -->
+                        <div class="editpage-input col-md-4"  v-if="param.type==0">
+                            <label class="editlabel">{{$t('static.supplier_name')}} <span class="system_danger" v-if="$validation.supplier.required">{{$t('static.required')}}</span></label>
+                            <input type="text" class="form-control edit-input" v-model="param.customerName"  v-validate:supplier="{required:true}"  readonly="readonly" @click="selectSupplier()"/>
                         </div>
                         <div class="editpage-input col-md-4">
                             <label class="editlabel">{{$t('static.international')}}</label>
@@ -74,11 +76,13 @@
                         </div>
                         <!-- 收货人信息 -->
                         <div class="editpage-input col-md-4">
-                            <label class="editlabel">{{$t('static.consignee_name')}} <!-- <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span> --></label>
+                            <label class="editlabel" v-if="param.type==1">{{$t('static.consignee_name')}}</label>
+                            <label class="editlabel" v-if="param.type==0">发货人姓名</label>
                             <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.customerName}}"  />
                         </div> 
                         <div class="editpage-input col-md-4" >
-                            <label class="editlabel">{{$t('static.consignee_phone')}} <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
+                            <label class="editlabel"  v-if="param.type==1">{{$t('static.consignee_phone')}} <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
+                            <label class="editlabel" v-if="param.type==0">发货人手机</label>
                             <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  value="{{param.consigneePhone}}"/>
                         </div>  
                         
@@ -359,7 +363,7 @@ import inputSelect from '../tools/vueSelect/components/inputselect'
 import searchbreedModel  from '../Intention/breedsearch'
 import consigneeModel  from '../clientRelate/addressSearch'
 import searchemgModel from '../order/second_order/allEmployee'
-
+import supplierDialog from '../order/second_order/selectAllSupplier.vue'
 import {
     initCountrylist,
     initProvince,
@@ -389,8 +393,8 @@ export default {
         searchbreedModel,
         consigneeModel,
         inputSelect,
-        searchemgModel
-
+        searchemgModel,
+        supplierDialog
     },
     props: ['param'],
     data() {
@@ -475,6 +479,16 @@ export default {
               id:'',
               cname:''
             },
+            supplierParam:{
+              show:false,
+              customer:'',
+              customerName:'',
+              consignee:'',
+              consigneePhone:'',
+              employee:this.param.employee,
+              link:'/customer/suppliers'
+            },
+            selectType:1,
             createOrSelect:0,     //选择还是新建客户收货地址,0新建,1选择
             saith:0, //点击按钮计算
             sum:0, //点击按钮计算
@@ -506,9 +520,9 @@ export default {
         }
     },
     methods:{
-      test:function(){
-        console.log("fasfasfasf");
-      },
+        test:function(){
+          console.log("fasfasfasf");
+        },
         selectProvince:function(){
             console.log('selectProvince');
             this.province = {
@@ -615,6 +629,16 @@ export default {
         selectConsignee:function(){
             this.createOrSelect = 1;
             this.consigneeParam.show=true;
+        },
+        selectSupplier:function(){
+          this.supplierParam.show=true;
+          console.log(this.supplierParam)
+        },
+        exChange:function(){
+            this.param.customerName="";
+            this.param.consignee = "";
+            this.param.customer = "";
+            this.param.consigneeName = "";
         },
         createConsignee:function(){
             this.createOrSelect = 0;
@@ -818,11 +842,21 @@ export default {
 
             this.consigneeParam.customerId = customer.customerId;
         },
+        supplier:function(item){
+          console.log(item)
+          this.supplierParam.customer = item.customer;
+          this.supplierParam.customerName = item.customerName;
+          this.supplierParam.consignee = item.consignee;
+          this.supplierParam.consigneePhone = item.consigneePhone;
+          this.param.customer = this.supplierParam.customer ;
+          this.param.customerName = this.supplierParam.customerName ;
+          this.param.consignee = this.supplierParam.consignee;
+          this.param.consigneePhone = this.supplierParam.consigneePhone;
+        },
         address:function(address){
           console.log(address);
           this.param.consignee = address.contactName;
           this.param.consigneePhone = address.contactPhone;
-
           this.country.cname = address.country;
           this.province.cname = address.province;
           this.city.cname = address.city;

@@ -25,14 +25,14 @@
                             <div class="editpage-input"  v-if="this.language=='zh_CN'">
                                 <label class="editlabel">{{$t('static.client_type')}}</label>
                                 <select class="form-control edit-input"  v-model='param.type'>
-                                   <option v-for="item in initUserType" value="{{item.id}}">{{item.name}}</option>
+                                   <option v-for="item in initUserType" value="{{item.id +','+ item.name}}">{{item.name}}</option>
                                 </select>
                                 <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
                             </div>
                             <div class="editpage-input"  v-if="this.language=='en'">
                                 <label class="editlabel">{{$t('static.client_type')}}</label>
                                 <select class="form-control edit-input"  v-model='param.type'>
-                                   <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerTypeEn}}</option>
+                                   <option v-for="item in initUserType" value="{{item.id +','+ item.name}}">{{item.id | customerTypeEn}}</option>
                                 </select>
                                 <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
                             </div>
@@ -185,50 +185,56 @@ export default {
     props: ['param'],
     data() {
         return {
-                selectParam: {
-                  show: false,
-                  employeeId: '',
-                  employeeName: '',
-                  orgId: '',
-                  orgName: ''
-                },
-                province: {
-                  cname: ''
-                },
-                city: {
-                  cname: ''
-                },
-                country:{
-                  cname: '',
-                  cnameEn: '',
-                },
-                countryParam:{
-                  loading:false,
-                  show:false,
-                  color: '#5dc596',
-                  size: '15px',
-                  cur: 1,
-                  all: 7
-                },
-                language:'',
-                provinceParam:{
-                  loading:false,
-                  show:false,
-                  color: '#5dc596',
-                  size: '15px',
-                  cur: 1,
-                  all: 7,
-                  country:''
-                },
-                cityParam:{
-                  loading:false,
-                  show:false,
-                  color: '#5dc596',
-                  size: '15px',
-                  cur: 1,
-                  all: 7,
-                  province:''
-                }
+            selectParam: {
+              show: false,
+              employeeId: '',
+              employeeName: '',
+              orgId: '',
+              orgName: ''
+            },
+            province: {
+              cname: ''
+            },
+            city: {
+              cname: ''
+            },
+            country:{
+              cname: '',
+              cnameEn: '',
+            },
+            countryParam:{
+              loading:false,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7
+            },
+            language:'',
+            provinceParam:{
+              loading:false,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7,
+              country:''
+            },
+            cityParam:{
+              loading:false,
+              show:false,
+              color: '#5dc596',
+              size: '15px',
+              cur: 1,
+              all: 7,
+              province:''
+            },
+            tipsParam:{
+              show:false,
+              alert:true,
+              name:''
+            },
+            checkCustomer:{}
         }
     },
     vuex: {
@@ -265,6 +271,32 @@ export default {
         }
 
       },
+      checkCustomer:function(){  //检查客户是否存在
+        var _self = this;
+        this.$http({
+          method: 'POST',
+          url: '/crm/api/v1/customer/checkCustomer?phone='+this.param.mainPhone,
+          emulateHTTP: true,
+          emulateJSON: false,
+          headers: {
+              "X-Requested-With": "XMLHttpRequest",
+              'Content-Type': 'application/json;charset=UTF-8'
+          }
+        }).then((res) => {
+          console.log(this.param.mainPhone)
+          if(this.param.mainPhone.length>=7&&this.param.mainPhone.length<=15&&res.json().code==200){
+            _self.chechCallback(res.json().result);
+            _self.provinceArr=res.json().result;
+          }
+        }, (res) => {
+          console.log('fail');
+        })
+      },
+      chechCallback:function(title){
+          this.tipsParam.show =true;
+          this.tipsParam.name =title;
+          this.tipsParam.alert =true;
+      },
       confirm:function(){
         this.param.country=this.country.id;
         this.param.countryName=this.country.cnameEn;
@@ -272,18 +304,23 @@ export default {
         this.param.provinceName=this.province.cname;
         this.param.city=this.city.id;
         this.param.cityName=this.city.cname;
+        this.param.typeDesc=this.param.type.split(',')[1];
+        this.param.type=this.param.type.split(',')[0];
         this.param.show=false;
         this.param.callback=this.param.callback;
         this.param.link(this.param);
       }
     },
+    watch:{
+        'param.mainPhone':'checkCustomer'
+    },
     events: {
-    'selectEmpOrOrg': function (param) {
-      this.param.employeeId = param.employeeId;
-      this.param.employeeName = param.employeeName;
-      this.param.orgId = param.orgId;
-      this.param.orgName = param.orgName;
-    }
+        'selectEmpOrOrg': function (param) {
+          this.param.employeeId = param.employeeId;
+          this.param.employeeName = param.employeeName;
+          this.param.orgId = param.orgId;
+          this.param.orgName = param.orgName;
+        }
     },
     created(){
       if(this.param.country){

@@ -187,7 +187,13 @@
                             <label v-if="item.audit==1" class="checkbox_unselect"></label> -->
                             <label v-if="item.audit!=2" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="onlyselected($index)"></label>
                         </td>
-                        <td class="underline" @click="clickOn({
+                        <td class="underline" v-if="item.fullname==''||item.fullname==null" @click="clickOn({
+                                id:item.id,
+                                sub:$index,
+                                show:true,
+                                loading:true
+                                })">未填写</td>
+                        <td class="underline" v-else @click="clickOn({
                                 id:item.id,
                                 sub:$index,
                                 show:true,

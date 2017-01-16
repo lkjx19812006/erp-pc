@@ -305,6 +305,65 @@
                                   </div>
                               </div>
                           </div>
+                          <!-- 订单 -->
+                          <div class="panel panel-default">
+                              <div class="panel-heading">
+                                  <h4 class="panel-title clearfix" @click="enfoldment({
+                                            link:initUserDetail.orders,
+                                            crete:'orders'
+                                            })">
+                                      <img class="pull-left" src="/static/images/order.png" height="30" width="30"  />
+                                      <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
+                                        订单（{{initUserDetail.orders.arr.length}}）
+                                      </a>
+                                    </h4>
+                              </div>
+                              <div  class="panel-collapse" v-show="initUserDetail.orders.show">
+                                 <div class="panel-body panel-set">
+                                      <table class="table contactSet">
+                                        <thead>
+                                          <th>来源</th>
+                                          <th>订单单号</th>
+                                          <th>品种</th>
+                                          <th>收货人姓名</th>
+                                          <th>收货人手机</th>
+                                          <th>详细地址</th>
+                                          <th>成交时间</th>
+                                          <th>总金额</th>
+                                          <th>审核状态</th>
+                                          <th>订单状态</th>
+                                        </thead>
+                                      <tbody>
+                                          <tr v-for="item in initUserDetail.orders.arr">
+                                              <td v-if="item.sourceType==0">新建</td>
+                                              <td v-if="item.sourceType==1">意向</td>
+                                              <td v-if="item.sourceType==2">报价</td>
+                                              <td v-if="item.sourceType==3">样品</td>
+                                              <td v-if="item.sourceType!=0&&item.sourceType!=1&&item.sourceType!=2&&item.sourceType!=3">其他</td>
+                                              <td>{{item.no}}</td>
+                                              <td>{{item.goodsDesc}}</td>
+                                              <td>{{item.consignee}}</td>
+                                              <td>{{item.consigneePhone}}</td>
+                                              <td>{{item.consigneeAddr}}</td>
+                                              <td>{{item.ptime}}</td>
+                                              <td>{{item.total}}</td>
+                                              <td>{{item.validate | Auditing}}</td>
+                                              <td>{{item.orderStatus | orderstatus}}</td>
+                                             <!--  <td  @click="clickShow($index,{
+                                               concrete:'tracking'
+                                               })">
+                                               <img src="/static/images/default_arrow.png" height="24" width="24" />
+                                             <div class="breed_action" v-show="item.show" >
+                                                 <dt @click="updateTracking(item,$index)">编辑</dt>
+                                             </div>
+                                             </td> -->
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                                  </div>
+                              </div>
+                          </div>
+                          <!-- 跟进 -->
                           <div class="panel panel-default">
                               <div class="panel-heading">
                                   <h4 class="panel-title clearfix" @click="enfoldment({
@@ -390,12 +449,14 @@ import pictureModel from '../tips/pictureDialog'
 import {
   initClientDetail,
   initUserDetail,
-  initIdentify
+  initIdentify,
+  initLogin
 } from '../../vuex/getters'
 import {
   getClientDetail,
   getUserDetail,
-  getAuthInfo
+  getAuthInfo,
+  createOrder
 } from '../../vuex/actions'
 export default {
     components: {
@@ -405,15 +466,13 @@ export default {
         companyauthModel,
         intentionauditModel,
         tipsdialogModel,
-        pictureModel
+        pictureModel,
     },
     props:['param'],
     data(){
       return {
-
         trackingParam:{
           show:false
-
         },
         importance:{
           0:'重要',
@@ -503,22 +562,22 @@ export default {
           alert:true,
           name:'请先选择意向'
         }
-
       }
     },
     vuex:{
       getters:{
-      initUserDetail,
-      initClientDetail,
-      initIdentify
+        initUserDetail,
+        initClientDetail,
+        initIdentify,
+        initLogin
       },
       actions:{
         getClientDetail,
         getUserDetail,
-        getAuthInfo
+        getAuthInfo,
+        createOrder
       }
     },
-
     methods:{
       modifyUser:function(item){
         this.$parent.modifyUser({
@@ -602,7 +661,6 @@ export default {
         }
       },
       enfoldment:function(param){
-
         if(this.$store.state.table.userDetail[param.crete].arr.length==0){
                 this.$store.state.table.userDetail[param.crete].show=true;
             }
@@ -636,14 +694,12 @@ export default {
           this.personalParam.utype = item.utype;
       },
       companyAuth:function(item){
-
           this.companyParam.show = true;
           this.companyParam.id = item.id;
           this.companyParam.index = item.index;
           this.companyParam.ccomment = item.ccomment;
           this.companyParam.ctype = item.ctype;
       },
-
       clickShow: function(index,param) {
             if (this.$store.state.table.userDetail[param.concrete].arr[index].show) {
                 this.$store.state.table.userDetail[param.concrete].arr[index].show = false;
@@ -734,12 +790,11 @@ export default {
         getUserDetail:function(){
           detailParam.id = initUserDetail.id;
           this.getUserDetail(detailParam);
-
         }
 
     },
  created(){
-  
+    console.log(this.initLogin)
     this.getUserDetail(this.param);
  }, 
  filter: (filter,{})

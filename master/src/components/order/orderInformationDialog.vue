@@ -41,10 +41,10 @@
                      <h5 style="display:inline">{{$t('static.customer_info')}}</h5>
 
                      <!-- <a v-if="param.customerName" class="right" style="margin-right:40px;" @click="selectConsignee()">选择收货人信息</a> -->
-                     <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">选择收货地址</button>
+                     <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===1}" style="margin-right:40px;" @click="selectConsignee()">选择收货地址</button>
 
                      <!-- <a v-if="param.customerName" class="right" style="margin-right:20px;" @click="createConsignee()">新建收货人信息</a> -->
-                     <button v-if="param.customerName" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">填写收货地址</button>
+                     <button v-if="param.customerName&&param.type==1" type="button" class="btn right" v-bind:class="{ 'btn-confirm': createOrSelect===0}" style="margin-right:20px;" @click="createConsignee()">填写收货地址</button>
 
                   </div>
                   <div class="clearfix">
@@ -71,11 +71,13 @@
                             </select>
                         </div>
                         <div class="editpage-input col-md-4">
-                            <label class="editlabel">{{$t('static.consignee_name')}} <!-- <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span> --></label>
+                            <label class="editlabel" v-if="param.type==1">{{$t('static.consignee_name')}} <!-- <span class="system_danger" v-if="$validation.consignee.minlength">{{$t('static.enter_name')}}</span> --></label>
+                            <label class="editlabel" v-if="param.type==0">发货人姓名</label>
                             <input type="text" class="form-control edit-input" v-model="param.consignee" value="{{param.consignee}}"  />
                         </div> 
                         <div class="editpage-input col-md-4" >
-                            <label class="editlabel">{{$t('static.consignee_phone')}} <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
+                            <label class="editlabel" v-if="param.type==1">{{$t('static.consignee_phone')}} <!--  <span class="system_danger" v-if="$validation.mobile.phone">{{$t('static.enter_phone')}}</span> --></label>
+                            <label class="editlabel" v-if="param.type==0">发货人手机</label>
                             <input type="text" class="form-control edit-input" v-model="param.consigneePhone"  value="{{param.consigneePhone}}"/>
                         </div>  
                         

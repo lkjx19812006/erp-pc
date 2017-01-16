@@ -17,8 +17,6 @@
                 <button class="btn btn-default transfer" @click="newOrder()">{{$t('static.new')}}</button>
                 <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review_application')}}</button> -->
                 <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-                <!-- <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
-                <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
             </div>
             <div class="left">
               <dl class="clear left transfer">
@@ -545,22 +543,21 @@
                     }
             },
             select:function(){
-              console.log(this.checked)
                   this.checked=!this.checked;
                   const checked=this.checked;
                   this.$store.state.table.basicBaseList.myOrderList.forEach(function(item){
                     if(item.validate==0)item.checked=checked;
                   })
-
             },
             newOrder:function(){ 
                  this.createParam.show = true;
                  this.createParam.callback = this.newBack;
+                 console.log(this.createParam)
             },
             newBack:function(title){
-              this.tipsParam.show = true;
-              this.tipsParam.name=title;
-              this.tipsParam.alert=true;
+                this.tipsParam.show = true;
+                this.tipsParam.name = title;
+                this.tipsParam.alert = true;
             },
             createSearch:function(){
                  this.loadParam.show=true;

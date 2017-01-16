@@ -607,7 +607,7 @@ const state = {
     "addrReceive":null,"busiType":null,"province":null,"city":null,"source":1,"lastLoginIp":null,"lastLoginTime":null,
     "status":null,"updater":null,"utime":null,"creater":null,"ctime":null,"startCtime":null,"endCtime":null,"userIds":null,
     "customerId":null,"main":null,"audit":0,"bizMain":null,"userType":0,"auditResult":null,"sourceType":null,
-    "intention":{"show":false,"arr":[]},"tracking":{"show":false,"arr":[]},"personalAuthShow":false,"companyAuthShow":false
+    "intention":{"show":false,"arr":[]},"tracking":{"show":false,"arr":[]},"orders":{"show":false,"arr":[]},"personalAuthShow":false,"companyAuthShow":false
   },
   logisticsDetail:{
     "com": "yunda",
@@ -1626,11 +1626,9 @@ const mutations = {
     },
 
     [USER_DETAIL_DATA](state, data) { // 会员详情
-
       for (var key in data) {
         state.userDetail[key] = data[key];
       }
-
     },
 
     [ORG_DATA](state, data) { // 部门列表

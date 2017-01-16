@@ -33,13 +33,13 @@
               <div class="client-detailInfo  col-md-6" v-if="this.language=='zh_CN'">
                 <label class="editlabel">{{$t('static.client_type')}}</label>
                 <select class="form-control edit-input" v-model="param.type">
-                    <option v-for="item in initUserType" value="{{item.id}}">{{item.name}}</option>
+                    <option v-for="item in initUserType" value="{{item.id +','+ item.name}}">{{item.name}}</option>
                 </select>
               </div>
               <div class="client-detailInfo   col-md-6" v-if="this.language=='en'">
                 <label class="editlabel">{{$t('static.client_type')}}</label>
                 <select class="form-control edit-input" v-model="param.type">
-                    <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerTypeEn}}</option>
+                    <option v-for="item in initUserType" value="{{item.id +','+ item.name}}">{{item.id | customerTypeEn}}</option>
                 </select>
               </div>
               <!-- 联系人手机 -->
@@ -415,7 +415,7 @@
               'Content-Type': 'application/json;charset=UTF-8'
           }
         }).then((res) => {
-          if(this.contacts[0].phone.length==11&&res.json().code==200){
+          if(this.contacts[0].phone.length>=7&&this.contacts[0].phone.length<=15&&res.json().code==200){
             _self.chechCallback(res.json().result);
             console.log(res.json().result)
             _self.provinceArr=res.json().result;
@@ -461,16 +461,14 @@
         }
       },
       save: function () {
-
         console.log(this.param.type);  
-    
         this.param.contacts=this.contacts;
         this.param.province=this.province.id;
         this.param.city=this.city.id;
         this.param.cityName=this.city.cname;
         this.param.provinceName=this.province.cname;
-        /*this.param.typeDesc=this.param.type.split(',')[1];
-        this.param.type=this.param.type.split(',')[0];*/
+        this.param.typeDesc=this.param.type.split(',')[1];
+        this.param.type=this.param.type.split(',')[0];
         this.param.classifyDesc = this.param.classify.split(',')[1];
         this.param.classify= this.param.classify.split(',')[0];
         if(this.param.countryId){

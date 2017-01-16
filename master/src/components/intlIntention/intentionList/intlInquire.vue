@@ -7,7 +7,7 @@
      <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
      <mglist-model>
          <div slot="top">
-            <div class="clear left" >
+            <div class="clear" >
                   <dl class="clear left transfer">
                      <dt class="left  marg_top">{{$t('static.breed')}}：</dt>
                      <dd class="left">
