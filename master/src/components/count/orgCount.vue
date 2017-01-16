@@ -77,8 +77,10 @@
                     年
                  </button>
              </div>
-
-
+                
+           <!--  <div class="pull-right" style="margin-top:10px;" >
+                  <a class="btn btn-default" @click="getCustomerAddReport()">test</a>
+              </div>  -->   
 	        <div class="pull-right" style="margin-top:10px;" v-if="!loadParam.employeeId&&!loadParam.date">
         		<a class="btn btn-default" href="/crm/api/v1/count/getCustomerAddReport?role=org">导出部门客户统计</a>
         	</div>
@@ -228,7 +230,8 @@
 		getClientcount,
 		getEmployeeCount,
 		getClientOrgcount,
-		getExportOrgcount
+		getExportOrgcount,
+        getCustomerAddReport
 	} from '../../vuex/actions'
 	import pagination from  '../pagination'
 	export default {
@@ -295,7 +298,8 @@
 	            getClientcount,
 	            getEmployeeCount,
 	            getClientOrgcount,
-	            getExportOrgcount
+	            getExportOrgcount,
+                getCustomerAddReport
 	        }
 	    },
 	    events: {

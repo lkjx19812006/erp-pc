@@ -758,6 +758,34 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
     })
 }
 
+export const exportOrder = ({ dispatch }, param) => { //导出订单
+    console.log(param)
+    const body = {
+        page: param.cur,
+        pageSize: 15,
+    }
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.orderList + "/order/exportExcel",
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        //console.log(res);
+        console.log('订单导出成功')
+        
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+
+
 export const orgOrderAudit = ({ dispatch }, param) => { //订单申请审核（单个）
     const data = {
         id: param.id,
@@ -4322,6 +4350,28 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
     }).then((res) => {
         console.log('国际意向搜索成功');
         var intent = res.json().result;
+        var itemsTotals = [];
+        var offersTotals = [];
+
+        for(var key in intent.itemsTotals){
+            let temp={
+                currency:key,
+                total:intent.itemsTotals[key]
+            }
+            itemsTotals.unshift(temp);
+        }
+        intent.itemsTotals = itemsTotals;  
+
+        for(var key in intent.offersTotals){
+            let temp={
+                currency:key,
+                total:intent.offersTotals[key]
+            }
+            offersTotals.unshift(temp);
+        }
+        intent.offersTotals = offersTotals;
+
+
         if (param.key == "myIntlIntentionList") { //意向列表编辑意向
             intent.items.forEach(function(item) {
                 var temp = {
@@ -4705,6 +4755,13 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
         if(param.callback){
             param.callback(res.json().msg);
         }
+        if(param.getIntentionDetail){
+            param.getIntentionDetail({
+                id:param.intentionId,
+                link:"/intlIntention/",
+                key: "intentionDetail",
+            });
+        }
         if(res.json().code==200){
             param.itemsTotal = (param.itemsTotal*100 + param.number*param.price*100)/100;
             dispatch(types.ORIGIN_OFFER_DATA, param);
@@ -4745,6 +4802,13 @@ export const intlIntentionOtherOffer = ({ dispatch }, param) => { //国际意向
         console.log('其他报价成功');
         if(param.callback){
             param.callback(res.json().msg);
+        }
+        if(param.getIntentionDetail){
+            param.getIntentionDetail({
+                id:param.intentionId,
+                link:"/intlIntention/",
+                key: "intentionDetail",
+            });
         }
         param.id = res.json().result.id;
         if(res.json().code==200){
@@ -7037,4 +7101,25 @@ export const afterResend = ({ dispatch }, param) => {   //售后重新发货
     }, (res) => {
         console.log('fail');
     });
+}
+
+
+
+export const getCustomerAddReport = ({ dispatch }, param) => { //合同、售后详情页面
+    
+    var url = apiUrl.clientList + "/count/getCustomerAddReport?role=org";
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        
+      console.log("dassssssssss");
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
 }

@@ -158,7 +158,10 @@
                                     <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                       {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
                                     </a>
-                                    <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：{{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}}</span>
+                                    <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
+                                        <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotals">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
+                                        <!-- {{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].offerCurrency | Currency}} -->
+                                    </span>
                                     <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> --> 
                                 </h4>
                               </div>
@@ -193,7 +196,7 @@
                                                 <td v-if="item.offerOrigPrice!=null">{{item.offerOrigPrice}}（{{item.origCurrency | Currency}}）</td>
                                                 <td v-if="item.offerOrigPrice==null"></td>
 
-                                                <td v-if="item.offerPrice!=null">{{item.offerPrice}}（{{item.offerEUnit | Unit}}）</td>
+                                                <td v-if="item.offerPrice!=null">{{item.offerPrice}}（{{item.offerUnit}}）</td>
                                                 <td v-if="item.offerPrice==null"></td>
                                                 <td>{{item.exchangeRate}}</td>
                                                 <td>{{item.number}}（{{item.unit | Unit}}）</td>
@@ -235,7 +238,10 @@
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                           {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
                                         </a>
-                                        <span class="pull-right" style="color:#fa6705;line-height:27px;">{{$t('static.quotation_total')}}：{{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}}</span>
+                                        <span class="pull-right" style="color:#fa6705;line-height:27px;">{{$t('static.quotation_total')}}：
+                                            <p class="pull-right" v-for="item in initIntlIntentionDetail.offersTotals">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
+                                            <!-- {{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
+                                        </span>
                                         <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                   </h4>
                               </div>
@@ -478,7 +484,8 @@ export default {
                 comment:'',
                 breedId:'',
                 itemsTotal:0,
-                offererName:''
+                offererName:'',
+                getIntentionDetail:''      //获取意向详情的函数
             },
             otherOfferParam:{
                 show:false,
@@ -500,7 +507,8 @@ export default {
                 costDesc:'',
                 total:'',
                 comment:'',
-                offersTotal:0     //增加其他报价时表示，所有其他报价费用之和，编辑时表示除被编辑报价外的其他报价费用之和
+                offersTotal:0,     //增加其他报价时表示，所有其他报价费用之和，编辑时表示除被编辑报价外的其他报价费用之和
+                getIntentionDetail:'',      //获取意向详情的函数
 
             },
             pictureParam:{

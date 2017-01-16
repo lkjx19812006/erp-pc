@@ -138,11 +138,14 @@ export default {
     },
     methods: { 
       confirm:function(){
-        console.log(this.param.callback)
         this.param.show = false;
         this.param.callback = this.param.callback;
+        this.param.getIntentionDetail = this.getIntentionDetail;
         this.intlIntentionOtherOffer(this.param);
-      }
+      },
+      getIntentionDetail:function(param){
+        this.getIntlIntentionDetail(param);
+      },
 
     },
     events:{
