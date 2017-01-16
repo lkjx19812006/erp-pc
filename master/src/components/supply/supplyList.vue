@@ -12,7 +12,7 @@
       <div slot="top">
           <div class="clear" style="margin-top:3px;"> 
               <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">客户名称：</dt>
+                 <dt class="left transfer marg_top">供应商名称：</dt>
                  <dd class="left">
                       <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                  </dd>

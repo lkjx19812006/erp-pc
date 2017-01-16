@@ -968,6 +968,7 @@ export const logisticsInfo = ({ dispatch }, param) => { //物流查看详情
 }
 export const createOrder = ({ dispatch }, data) => { //创建订单
     console.log(data);
+    console.log(data.consigneeAddr);
     if(data.city==null||data.city==''||!data.city){
         data.city=''; 
     }
@@ -997,7 +998,6 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         employee: data.employee,
         org: data.org,
         district: data.district,
-        //consigneeAddr:data.country+' '+data.province+' '+data.city+' '+data.district+' '+data.consigneeAddr,
         consigneeAddr:data.consigneeAddr,
         comments: data.comments,
         orderStatus: data.orderStatus,
@@ -1061,7 +1061,6 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     });
 }
 export const alterOrder = ({ dispatch }, param) => { //修改订单
-    console.log(param);
     if(param.city==null||param.city==''||!param.city){
         param.city=''; 
     }
@@ -2841,6 +2840,9 @@ export const getProductList = ({ dispatch }, param) => { //供应商产品列表
     if (param.name) {
         clienturl = clienturl + '&name=' + param.name;
     }
+    if (param.employeeId) {
+        clienturl = clienturl + '&employeeId=' + param.employeeId;
+    }
     if (param.description) {
         clienturl = clienturl + '&description=' + param.description;
     }
@@ -2868,6 +2870,7 @@ export const getProductList = ({ dispatch }, param) => { //供应商产品列表
         var product = res.json().result.list;
         for (var i in product) {
             product[i].show = false;
+            product[i].checked = false;
         }
         dispatch(types.PRODUCT_DATA, product)
         param.all = res.json().result.pages;
@@ -3197,7 +3200,7 @@ export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列
         "name": data.name,
         "type": data.type,
         "tel": data.tel,
-        //"typeDesc": data.typeDesc,
+        "typeDesc": data.typeDesc,
         "classify": data.classify,
         "email": data.email,
         "userId": data.userId,
@@ -3283,7 +3286,7 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         name: param.name,
         type: param.type,
         category: param.category,
-        typeDesc: param.type,
+        typeDesc: param.typeDesc,
         classifyDesc: param.classify,
         classify: param.classify,
         principal: param.principal,
@@ -5036,13 +5039,16 @@ export const getUserDetail = ({ dispatch }, param) => { //会员详情
                 item.show = false;
             })
         }
-
         if (userDetail.tracking.length > 0) {
             userDetail.tracking.forEach(function(item) {
                 item.show = false;
             })
         }
-
+        if (userDetail.orders.length > 0) {
+            userDetail.orders.forEach(function(item) {
+                item.show = false;
+            })
+        }
         var intention = userDetail.intention;
         userDetail.intention = {};
         userDetail.intention.show = false;
@@ -5054,6 +5060,11 @@ export const getUserDetail = ({ dispatch }, param) => { //会员详情
         userDetail.tracking.show = false;
         userDetail.tracking.arr = tracking;
 
+        var orders = userDetail.orders;
+        userDetail.orders = {};
+        userDetail.orders.show = false;
+        userDetail.orders.arr = orders;
+
         userDetail.personalAuthShow = false;
         userDetail.companyAuthShow = false;
         for (var i in userDetail) {
@@ -5061,7 +5072,6 @@ export const getUserDetail = ({ dispatch }, param) => { //会员详情
         }
 
         dispatch(types.USER_DETAIL_DATA, userDetail);
-
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -5367,6 +5377,7 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
         "mobile": param.mobile,
         "extno": param.extno,
         "leave": param.leave,
+        "qq":param.qq,
         'entrydate': param.entrydate,
         "leavedate": param.leavedate,
         "orgid": param.orgid,
@@ -5415,6 +5426,7 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
         mobile: param.mobile,
         extno: param.extno,
         leave: param.leave,
+        qq:param.qq,
         entrydate: param.entrydate,
         leavedate: param.leavedate,
         orgid: param.orgid,

@@ -26,6 +26,8 @@
                         <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6"><label>职位:</label>{{param.position}}</div>
                         <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6"><label>手机号:</label>{{param.mobile}}
                         </div>
+                        <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6"><label>QQ:</label>{{param.qq}}
+                        </div>
                         <div class="client-detailInfo col-md-3 col-sm-4 col-xs-6"><label>分机号:</label>{{param.extno}}</div>
                         <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6"><label>是否在职:</label>{{param.leave | leaveTime}}
                         </div>

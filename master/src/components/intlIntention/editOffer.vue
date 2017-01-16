@@ -2,6 +2,7 @@
     <div  id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <tipdialog-model :param="tipParam" v-if="tipParam.show"></tipdialog-model>
     <supplier-dialog :param="supplierParam" v-if="supplierParam.show"></supplier-dialog>
+    
     <div id="scroll" class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
