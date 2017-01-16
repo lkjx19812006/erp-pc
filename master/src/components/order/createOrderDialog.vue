@@ -33,7 +33,7 @@
                     </div>
                     <div class="editpage-input col-md-6" v-if="param.type==1">
                         <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required" >{{$t('static.required')}}</span></label>
-                        <input  type="text" class="form-control edit-input"  readonly="readonly"  v-model="employeeParam.consignerName" v-validate:shipper="{required:true}"  @click="selectEmployee(param.consigner,employeeParam.consignerName)"  />
+                        <input  type="text" class="form-control edit-input"  readonly="true"  v-model="employeeParam.consignerName" v-validate:shipper="{required:true}"  @click="selectEmployee(param.consigner,employeeParam.consignerName)"  />
                        <!--  <select  class="form-control edit-input" v-model="param.consigner">
                            <option v-for="item in initEmployeeList" value="{{item.id}}">{{item.name}}</option>
                        </select> -->
@@ -50,12 +50,12 @@
                         <!-- 客户选择 -->
                         <div class="editpage-input col-md-4"  v-if="param.type==1">
                             <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.required')}}</span></label>
-                            <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customerName}}"  v-validate:custname="['required']"  readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
+                            <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customerName}}"  v-validate:custname="['required']" readonly="true" @click="searchCustomer(param.customerName,param.customer)"/>
                         </div>
                         <!-- 供应商选择 -->
                         <div class="editpage-input col-md-4"  v-if="param.type==0">
                             <label class="editlabel">{{$t('static.supplier_name')}} <span class="system_danger" v-if="$validation.supplier.required">{{$t('static.required')}}</span></label>
-                            <input type="text" class="form-control edit-input" v-model="param.customerName"  v-validate:supplier="{required:true}"  readonly="readonly" @click="selectSupplier()"/>
+                            <input type="text" class="form-control edit-input" v-model="supplierParam.supplierName"  v-validate:supplier="{required:true}" readonly="true" @click="selectSupplier()"/>
                         </div>
                         <div class="editpage-input col-md-4">
                             <label class="editlabel">{{$t('static.international')}}</label>
@@ -489,6 +489,7 @@ export default {
               customerName:'',
               consignee:'',
               consigneePhone:'',
+              supplierName:'',
               employee:this.param.employee,
               link:'/customer/suppliers'
             },
@@ -643,6 +644,7 @@ export default {
             this.param.consignee = "";
             this.param.customer = "";
             this.param.consigneeName = "";
+            this.supplierParam.supplierName = "";
         },
         createConsignee:function(){
             this.createOrSelect = 0;
@@ -851,6 +853,7 @@ export default {
           console.log(item)
           this.supplierParam.customer = item.customer;
           this.supplierParam.customerName = item.customerName;
+          this.supplierParam.supplierName = item.customerName;
           this.supplierParam.consignee = item.consignee;
           this.supplierParam.consigneePhone = item.consigneePhone;
           this.param.customer = this.supplierParam.customer ;

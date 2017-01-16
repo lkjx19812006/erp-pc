@@ -48,9 +48,13 @@
 
                   </div>
                   <div class="clearfix">
-                        <div class="editpage-input col-md-4">
+                        <div class="editpage-input col-md-4" v-if="param.type==1">
                             <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.choose_client')}}</span></label>
-                            <input type="text" class="form-control edit-input" v-model="param.customerName"   v-validate:custname="['required']" value="{{param.customerName}}" readonly="readonly" @click="searchCustomer(param.customerName,param.customer)"/>
+                            <input type="text" class="form-control edit-input" v-model="param.customerName"   v-validate:custname="['required']" value="{{param.customerName}}" readonly="true" @click="searchCustomer(param.customerName,param.customer)"/>
+                        </div>
+                        <div class="editpage-input col-md-4" v-if="param.type==0">
+                            <label class="editlabel">供应商姓名</label>
+                            <input type="text" class="form-control edit-input" v-model="param.customerName"   value="{{param.customerName}}" readonly="true" @click="searchCustomer(param.customerName,param.customer)"/>
                         </div>
                         <div class="editpage-input col-md-4">
                             <label class="editlabel">{{$t('static.international')}}</label>
