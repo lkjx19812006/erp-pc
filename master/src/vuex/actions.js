@@ -940,6 +940,7 @@ export const logisticsInfo = ({ dispatch }, param) => { //物流查看详情
 }
 export const createOrder = ({ dispatch }, data) => { //创建订单
     console.log(data);
+    console.log(data.consigneeAddr);
     if(data.city==null||data.city==''||!data.city){
         data.city=''; 
     }
@@ -969,7 +970,6 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         employee: data.employee,
         org: data.org,
         district: data.district,
-        //consigneeAddr:data.country+' '+data.province+' '+data.city+' '+data.district+' '+data.consigneeAddr,
         consigneeAddr:data.consigneeAddr,
         comments: data.comments,
         orderStatus: data.orderStatus,
@@ -1033,7 +1033,6 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     });
 }
 export const alterOrder = ({ dispatch }, param) => { //修改订单
-    console.log(param);
     if(param.city==null||param.city==''||!param.city){
         param.city=''; 
     }
