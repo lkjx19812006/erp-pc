@@ -254,7 +254,7 @@
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70||(item.orderStatus >=60&&item.type==0)">
                            <img src="/static/images/{{$t('static.img_finish')}}.png"   title="已完成订单" alt="已完成订单"/>
                         </a>
-                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==3" style="background:#fff;color:#eea236;padding:1px 5px;">等待评价
+                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==3" style="background:#fff;color:#eea236;padding:1px 5px;">质量检验
                         </button>
                         <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==2" style="background:#fff;color:#eea236;padding:1px 5px;">确认收货
                         </button>
@@ -486,7 +486,6 @@
         methods: {
             selectSearch:function(){
                 this.getEmpolyeeOrder(this.loadParam);
-                console.log(this.initLogin)
             },
             editClick: function(sub) {
                 if(this.$store.state.table.basicBaseList.myOrderList[sub].show){

@@ -674,7 +674,6 @@ const state = {
 
 const mutations = {
     [LOGIN_DATA](state, data) { //登录
-        console.log(data)
         state.login = data;
     },
     [BACKLOG_TABLE](state,data){
@@ -693,7 +692,6 @@ const mutations = {
         }else if(data.titles=='申请发货'){
           state.basicBaseList.orderList[data.sub].verifier = data.verifier;
           state.basicBaseList.orderList[data.sub].logistics = data.logistics;
-          console.log(state.basicBaseList.orderList[data.sub].logistics)
         }else if(data.titles=='售后申请'){
           state.basicBaseList.orderList[data.sub].logistics = data.logistics;
         }else{
@@ -1887,7 +1885,6 @@ const mutations = {
         state.basicBaseList.intentionDetail = data;
     },*/
     [PROVINCE_LIST](state,data){
-      console.log(data)
         state.locationList.provinceList = data;
     },
     [COUNTRY_LIST](state,data){

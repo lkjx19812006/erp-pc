@@ -10,7 +10,7 @@
     "test": ""
   },
   "dependencies": {
-    "iview": "^0.9.13",
+    "iview": "^0.9.15",
     "vue": "^1.0.21"
   },
   "devDependencies": {

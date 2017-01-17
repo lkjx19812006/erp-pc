@@ -62,7 +62,7 @@
                 <tbody>
                     <tr v-for="item in initOrgOfferList">
                          
-                        <td>{{item.otime | date}}</td>
+                        <td>{{item.ctime}}</td>
                         <td>{{item.employeeName}}</td>
                         <td>{{item.customerName}}</td>
                         

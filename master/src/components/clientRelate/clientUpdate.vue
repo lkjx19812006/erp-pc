@@ -25,14 +25,14 @@
                             <div class="editpage-input"  v-if="this.language=='zh_CN'">
                                 <label class="editlabel">{{$t('static.client_type')}}</label>
                                 <select class="form-control edit-input"  v-model='param.type'>
-                                   <option v-for="item in initUserType" value="{{item.id +','+ item.name}}">{{item.name}}</option>
+                                   <option v-for="item in initUserType" value="{{item.id}}">{{item.name}}</option>
                                 </select>
                                 <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
                             </div>
                             <div class="editpage-input"  v-if="this.language=='en'">
                                 <label class="editlabel">{{$t('static.client_type')}}</label>
                                 <select class="form-control edit-input"  v-model='param.type'>
-                                   <option v-for="item in initUserType" value="{{item.id +','+ item.name}}">{{item.id | customerTypeEn}}</option>
+                                   <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerTypeEn}}</option>
                                 </select>
                                 <!-- <input type="text" v-model='param.type' class="form-control edit-input" value="{{param.type}}" /> -->
                             </div>
@@ -141,7 +141,7 @@
                           </div>
                         </div>
                     </div>
-                    <div class="editpage-input col-md-12">
+                    <div class="editpage-input col-md-12" style="padding:0;">
                       <label class="editlabel">{{$t('static.comment')}}</label>
                       <textarea type="text" class="form-control" v-model="param.comments" value="{{param.comments}}"   rows="5" ></textarea>
                     </div>
@@ -273,9 +273,10 @@ export default {
       },
       checkCustomer:function(){  //检查客户是否存在
         var _self = this;
+        var phone = this.param.mainPhone.replace(/(^\s*)|(\s*$)/g,"");
         this.$http({
           method: 'POST',
-          url: '/crm/api/v1/customer/checkCustomer?phone='+this.param.mainPhone,
+          url: '/crm/api/v1/customer/checkCustomer?phone='+phone,
           emulateHTTP: true,
           emulateJSON: false,
           headers: {
@@ -284,7 +285,7 @@ export default {
           }
         }).then((res) => {
           console.log(this.param.mainPhone)
-          if(this.param.mainPhone.length>=7&&this.param.mainPhone.length<=15&&res.json().code==200){
+          if(this.param.mainPhone.length>=7&&this.param.mainPhone.length<=45&&res.json().code==200){
             _self.chechCallback(res.json().result);
             _self.provinceArr=res.json().result;
           }
@@ -304,8 +305,6 @@ export default {
         this.param.provinceName=this.province.cname;
         this.param.city=this.city.id;
         this.param.cityName=this.city.cname;
-        this.param.typeDesc=this.param.type.split(',')[1];
-        this.param.type=this.param.type.split(',')[0];
         this.param.show=false;
         this.param.callback=this.param.callback;
         this.param.link(this.param);

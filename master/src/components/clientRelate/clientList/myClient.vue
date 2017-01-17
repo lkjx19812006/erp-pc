@@ -124,7 +124,7 @@
                                             loading:false,
                                             id:'',
                                             category:'',
-                                            typeDesc:'',
+                                            typeDesc:'其他',
                                             classify:'1,买',
                                             type:0,
                                             name:'',
@@ -479,10 +479,10 @@ export default {
             this.createParam.callback=this.valueback;
         },
         valueback:function(title){
-            console.log(title)
             this.tipsParam.show = true;
             this.tipsParam.name=title;
             this.tipsParam.alert=true;
+            this.getClientList(this.loadParam)
         },
         createSearch:function(){
             this.loadParam.show=true;
@@ -524,14 +524,10 @@ export default {
             this.alterParam.callback = this.updateback;
         },
         updateback:function(title){
-            console.log(title)
             this.tipsParam.show = true;
-            if(title=='success'){
-                this.tipsParam.name = '修改成功';
-            }else{
-                this.tipsParam.name=title;
-            }
+            this.tipsParam.name=title;
             this.tipsParam.alert=true;
+            this.getClientList(this.loadParam);
         },
         clientTransfer:function(){
             this.transferParam.arr = [];
@@ -549,7 +545,6 @@ export default {
             this.transferParam.callback=this.transferback;
         },
         transferback:function(title){
-            console.log(title)
             this.tipsParam.show = true;
             if(title=='success'){
                 this.tipsParam.name = '划转成功';
@@ -608,7 +603,6 @@ export default {
         this.customerTransferBlacklist(this.auditParam);
       },
       supplierback:function(title){
-        console.log(title)
         this.tipsParam.show = true;
         this.tipsParam.name=title;
         this.tipsParam.alert=true;
@@ -660,9 +654,7 @@ export default {
     created() {
         this.getProvinceList(this.provinceParam);
         changeMenu(this.$store.state.table.isTop,this.getClientList,this.loadParam,localStorage.myClientParam);
-        console.log(localStorage.lang)
-        this.language = localStorage.lang;
-        console.log(this.language)   
+        this.language = localStorage.lang;  
     },
     ready(){
       common('tab','table_box',1);
