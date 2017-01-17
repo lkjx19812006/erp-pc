@@ -271,10 +271,10 @@
         <pagination :combination="loadParam"  slot="page"></pagination>
     </mglist-model>
 
-    <div style="font-size:16px">
-        <span style="margin-left:20px">总金额：{{initAllOrderStatis.totalSum | isnull}}元</span>
-        <span style="margin-left:20px">已支付金额：{{initAllOrderStatis.prepaidSum | isnull}}元</span>
-        <span style="margin-left:20px">未支付金额：{{initAllOrderStatis.unpaidSum | isnull}}元</span>
+    <div style="font-size:16px;border:solid #666;float:left">
+      <span style="margin-left:20px">总金额：<a>{{initAllOrderStatis.totalSum | isnull}}元</a></span>
+      <span style="margin-left:20px">已支付金额：<a>{{initAllOrderStatis.prepaidSum | isnull}}元</a></span>
+      <span style="margin-left:20px;margin-right: 20px;">未支付金额：<a>{{initAllOrderStatis.unpaidSum | isnull}}元</a></span>
     </div>
 
   </template>

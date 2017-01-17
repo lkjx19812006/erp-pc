@@ -96,25 +96,21 @@
                     </dd>
                 </dl>
 
-                <dl class="clear left transfer" style="margin-left:-33px;">
+                <dl class="clear left" style="margin-left:-20px;">
                     <div class="client-detailInfo col-xs-6">
                         <dt class="left transfer marg_top">结束时间：</dt>
                         <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                 </dl>
-
-
                 <button type="button" class="new_btn"  @click="resetTime()">{{$t('static.clear_all')}}</button>
-        
                 <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
                 <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
               </div>  
             </div>
 
         </div>
-        
-        
+      
         <!-- 中间列表 -->
         <div slot="form">
             <div class="cover_loading">
@@ -285,12 +281,22 @@
         <!-- 底部分页 -->
         <pagination :combination="loadParam" slot="page"></pagination>
     </mglist-model>
-
-    <div style="font-size:16px">
-        <span style="margin-left:20px">总金额：{{initOrgOrderStatis.totalSum | isnull}}元</span>
-        <span style="margin-left:20px">已支付金额：{{initOrgOrderStatis.prepaidSum | isnull}}元</span>
-        <span style="margin-left:20px">未支付金额：{{initOrgOrderStatis.unpaidSum | isnull}}元</span>
-    </div>
+        <div style="font-size:16px;border:solid #666;float:left">
+            <!-- <table class="table table_bordered">
+                <thead style="border-bottom: 1px solid #ddd;">
+                  <th style="font-weight: 700;font-size:15px">总金额</th>
+                  <th style="color:#fa6705;font-size:15px">{{initOrgOrderStatis.totalSum | isnull}}元</th>
+                  <th style="font-weight: 700;font-size:15px">已支付金额</th>
+                  <th style="color:#fa6705;font-size:15px">{{initOrgOrderStatis.prepaidSum | isnull}}元</th>
+                  <th style="font-weight: 700;font-size:15px">未支付金额</th>
+                  <th style="color:#fa6705;font-size:15px">{{initOrgOrderStatis.unpaidSum | isnull}}元</th>
+                </thead>
+            </table> -->
+            <span style="margin-left:20px;">总金额：<a>{{initOrgOrderStatis.totalSum | isnull}}元</a></span>
+            <span style="margin-left:20px">已支付金额：<a>{{initOrgOrderStatis.prepaidSum | isnull}}元</a></span>
+            <span style="margin-left:20px;margin-right: 20px;">未支付金额：<a>{{initOrgOrderStatis.unpaidSum | isnull}}元</a></span>
+        </div>
+    
 
   </template>
   <script>

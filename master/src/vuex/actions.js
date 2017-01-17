@@ -4425,7 +4425,6 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
             "X-Requested-With": "XMLHttpRequest"
         }
     }).then((res) => {
-        console.log('国际意向搜索成功');
         var intent = res.json().result;
         var itemsTotals = [];
         var offersTotals = [];
