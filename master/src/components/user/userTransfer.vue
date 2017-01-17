@@ -405,9 +405,10 @@
       },
       checkCustomer:function(){  //检查客户是否存在
         var _self = this;
+        var Phone = this.contacts[0].phone.replace(/(^\s*)|(\s*$)/g,"");
         this.$http({
           method: 'POST',
-          url: '/crm/api/v1/customer/checkCustomer?phone='+this.contacts[0].phone,
+          url: '/crm/api/v1/customer/checkCustomer?phone='+Phone,
           emulateHTTP: true,
           emulateJSON: false,
           headers: {
@@ -415,7 +416,7 @@
               'Content-Type': 'application/json;charset=UTF-8'
           }
         }).then((res) => {
-          if(this.contacts[0].phone.length>=7&&this.contacts[0].phone.length<=15&&res.json().code==200){
+          if(this.contacts[0].phone.length>=7&&this.contacts[0].phone.length<=45&&res.json().code==200){
             _self.chechCallback(res.json().result);
             console.log(res.json().result)
             _self.provinceArr=res.json().result;
