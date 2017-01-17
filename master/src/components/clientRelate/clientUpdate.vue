@@ -141,7 +141,7 @@
                           </div>
                         </div>
                     </div>
-                    <div class="editpage-input col-md-12">
+                    <div class="editpage-input col-md-12" style="padding:0;">
                       <label class="editlabel">{{$t('static.comment')}}</label>
                       <textarea type="text" class="form-control" v-model="param.comments" value="{{param.comments}}"   rows="5" ></textarea>
                     </div>

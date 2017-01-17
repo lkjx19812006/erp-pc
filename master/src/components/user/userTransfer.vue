@@ -33,13 +33,13 @@
               <div class="client-detailInfo  col-md-6" v-if="this.language=='zh_CN'">
                 <label class="editlabel">{{$t('static.client_type')}}</label>
                 <select class="form-control edit-input" v-model="param.type">
-                    <option v-for="item in initUserType" value="{{item.id +','+ item.name}}">{{item.name}}</option>
+                    <option v-for="item in initUserType" value="{{item.id}}">{{item.name}}</option>
                 </select>
               </div>
-              <div class="client-detailInfo   col-md-6" v-if="this.language=='en'">
+              <div class="client-detailInfo  col-md-6" v-if="this.language=='en'">
                 <label class="editlabel">{{$t('static.client_type')}}</label>
                 <select class="form-control edit-input" v-model="param.type">
-                    <option v-for="item in initUserType" value="{{item.id +','+ item.name}}">{{item.id | customerTypeEn}}</option>
+                    <option v-for="item in initUserType" value="{{item.id}}">{{item.id | customerTypeEn}}</option>
                 </select>
               </div>
               <!-- 联系人手机 -->
