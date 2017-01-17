@@ -81,7 +81,13 @@ export const initPurchaseOrderlist = (state) => {
 export const initOrderlist = (state) => {
     return parseJson(state.table.basicBaseList.orderList);
 }
-
+/*---列表页订单统计---*/
+export const initOrgOrderStatis = (state) => {
+    return parseJson(state.table.basicBaseList.orgOrderStatis);
+}
+export const initAllOrderStatis = (state) => {
+    return parseJson(state.table.basicBaseList.allOrderStatis);
+}
 
 export const initExpresslist = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.expressList));

@@ -4,8 +4,10 @@
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
     <dispose-model :param.sync="disposeParam" v-if="disposeParam.show"></dispose-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
+    <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
+    <employee-model  :param="employeeParam" v-if="employeeParam.show"></employee-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
-    <mglist-model>
+    <mglist-model :param="mgListParam">
         <!-- 头部搜索 -->
         <div slot="top">
             <div class="clear">
@@ -13,6 +15,7 @@
                 <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
                   <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button>
                  -->
+
                   <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
               </div>
               <div class="clear left">
@@ -53,6 +56,27 @@
                         </select>
                    </dd>
                 </dl>
+
+                <!-- 单个业务员搜索 -->
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                    <div class="client-detailInfo col-xs-6">
+                        <dt class="left transfer marg_top">起始时间：</dt>
+                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </dl>
+              </div>
+            </div>
+
+            <div class="clear">
+              <div class="left">
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
                    <dd class="left">
@@ -65,11 +89,32 @@
                       <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
                    </dd>
                 </dl>
+                <dl class="clear left transfer">
+                    <dt class="left transfer marg_top">{{$t('static.breed')}}：</dt>
+                    <dd class="left">
+                          <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
+                    </dd>
+                </dl>
+
+                <dl class="clear left transfer" style="margin-left:-33px;">
+                    <div class="client-detailInfo col-xs-6">
+                        <dt class="left transfer marg_top">结束时间：</dt>
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </dl>
+
+
                 <button type="button" class="new_btn"  @click="resetTime()">{{$t('static.clear_all')}}</button>
-                  <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
-              </div>
+        
+                <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
+                <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+              </div>  
             </div>
+
         </div>
+        
+        
         <!-- 中间列表 -->
         <div slot="form">
             <div class="cover_loading">
@@ -237,9 +282,15 @@
               </tbody>
             </table>
         </div>
-         <!-- 底部分页 -->
-        <pagination :combination="loadParam"  slot="page"></pagination>
+        <!-- 底部分页 -->
+        <pagination :combination="loadParam" slot="page"></pagination>
     </mglist-model>
+
+    <div style="font-size:16px">
+        <span style="margin-left:20px">总金额：{{initOrgOrderStatis.totalSum | isnull}}元</span>
+        <span style="margin-left:20px">已支付金额：{{initOrgOrderStatis.prepaidSum | isnull}}元</span>
+        <span style="margin-left:20px">未支付金额：{{initOrgOrderStatis.unpaidSum | isnull}}元</span>
+    </div>
 
   </template>
   <script>
@@ -251,6 +302,9 @@
     import disposeModel  from  '../order/orderStatus'
     import tipsdialogModel  from '../tips/tipDialog'
     import auditModel  from '../../components/tips/auditDialog'
+    //单个业务员搜索
+    import employeeModel  from  '../clientRelate/searchEmpInfo'
+    import breedsearchModel from '../intention/breedsearch'
     import filter from '../../filters/filters'
     import common from '../../common/common'
     import changeMenu from '../../components/tools/tabs/tabs.js'
@@ -258,10 +312,12 @@
     import {
         getList,
         initOrgOrderlist,
+        initOrgOrderStatis,
         initLogin
     } from '../../vuex/getters'
     import {
         getOrgOrder,
+        getOrderStatistical,
         alterOrder,
         createOrder,
         orderStatu,
@@ -277,6 +333,8 @@
             filter,
             detailModel,
             searchModel,
+            breedsearchModel,
+            employeeModel,
             deletebreedModel,
             disposeModel,
             tipsdialogModel,
@@ -294,10 +352,16 @@
                     org:this.initLogin.orgId,
                     link:'/order/sectionList',
                     key:'orgOrderList',
+                    breedId:'',
+                    breedName:'',
+                    employeeId:'',
+                    employeeName:'',
                     consignee:'',
                     consigneePhone:'',
                     type:'',
                     orderStatus:'',
+                    startTime:'',
+                    endTime:'',
                     payWay:'',
                     clients:'',
                     dataStatus:'',
@@ -306,6 +370,21 @@
                     ftime:'',
                     mode:'',
                     total:0
+                },
+                mgListParam:{
+                  pagestyle:'padding-top:100px'
+                },
+                breedSearchParam:{
+                  show:false
+                },
+                employeeParam:{
+                  show:false,
+                  org:true,
+                  orgId:this.initLogin.orgId,
+                  //单个业务员搜索
+                  employeeId:'',
+                  employeeName:'',  
+                  
                 },
                 dialogParam:{
                     show: false
@@ -354,14 +433,49 @@
                 }
             }
         },
+        computed: {
+            exportUrl:function(){
+                let url = "org=" + this.loadParam.org;
+                if(this.loadParam.orderStatus){
+                  url  +=  "&orderStatus=" + this.loadParam.orderStatus;
+                }
+                if(this.loadParam.type){
+                  url  +=  "&type=" + this.loadParam.type;
+                }
+                if(this.loadParam.consignee){
+                  url  +=  "&consignee=" + this.loadParam.consignee;
+                }
+                if(this.loadParam.consigneePhone){
+                  url  +=  "&consigneePhone=" + this.loadParam.consigneePhone;
+                }
+                if(this.loadParam.mode){
+                  url  +=  "&mode=" + this.loadParam.mode;
+                }
+                if(this.loadParam.breedId){
+                  url  +=  "&breedId=" + this.loadParam.breedId;
+                }
+                if(this.loadParam.employeeId){
+                  url  +=  "&employee=" + this.loadParam.employeeId;
+                }
+                if(this.loadParam.startTime){
+                  url  +=  "&startTime=" + this.loadParam.startTime;
+                }
+                if(this.loadParam.endTime){
+                  url  +=  "&endTime=" + this.loadParam.endTime;
+                }
+                return url;
+            }
+        },
         vuex: {
             getters: {
                 getList,
                 initOrgOrderlist,
+                initOrgOrderStatis,
                 initLogin
             },
             actions: {
                 getOrgOrder,
+                getOrderStatistical,
                 alterOrder,
                 createOrder,
                 orderStatu,
@@ -371,6 +485,8 @@
         },
         created() {
             changeMenu(this.$store.state.table.isTop,this.getOrgOrder,this.loadParam,localStorage.orgOrderParam); 
+            changeMenu(this.$store.state.table.isTop,this.getOrderStatistical,this.loadParam,localStorage.orgOrderParam); 
+            
             /*if(!this.$store.state.table.isTop){
                 console.log("刷新数据");
                 this.getOrgOrder(this.loadParam);
@@ -383,7 +499,8 @@
         },
         methods: {
             selectSearch:function(){
-                this.getOrgOrder(this.loadParam)
+                this.getOrgOrder(this.loadParam);
+                this.getOrderStatistical(this.loadParam);
             },
             editClick: function(sub) {
                 if(this.$store.state.table.basicBaseList.orgOrderList[sub].show){
@@ -391,6 +508,12 @@
                 }else{
                      this.$store.state.table.basicBaseList.orgOrderList[sub].show=true;
                 }
+            },
+            breedSearch:function(){
+                this.breedSearchParam.show = true;
+            },
+            selectEmployee:function(){
+                this.employeeParam.show = true;
             },
             resetTime:function(){
               this.loadParam.ctime = "";
@@ -404,7 +527,13 @@
               this.loadParam.type="";
               this.loadParam.clients="";
               this.loadParam.payWay="";
-              this.getOrgOrder(this.loadParam);
+              this.loadParam.breedId = "";
+              this.loadParam.breedName = "";
+              this.loadParam.employeeId = "";
+              this.loadParam.employeeName = "";
+              this.loadParam.startTime = "";
+              this.loadParam.endTime = "";
+              this.selectSearch();
             },
             /*orgCheck:function(){
                 var _this = this;
@@ -429,7 +558,7 @@
                 this.tipsParam.show = true;
                 this.tipsParam.name=title;
                 this.tipsParam.alert=true;
-                this.getOrgOrder(this.loadParam);
+                this.selectSearch();
             },
             orderCheck:function(id,index){ 
                 this.auditParam.id = id;
@@ -503,8 +632,18 @@
         events: {
             fresh: function(input) {
                 this.loadParam.cur = input;
-                this.getOrgOrder(this.loadParam);
-            }
+                this.selectSearch();
+            },
+            breed:function(breed){
+                this.loadParam.breedId=breed.breedId;
+                this.loadParam.breedName=breed.breedName;
+                this.selectSearch(); 
+            },
+            a:function(employee){
+              this.loadParam.employeeId = employee.employeeId;
+              this.loadParam.employeeName = employee.employeeName;
+              this.selectSearch();
+            },
         }
     }
   </script>
@@ -576,7 +715,9 @@
     .v-spinner {
         text-align: center;
     }
-    .order_pagination{
-        text-align: center;
+    .base_pagination{
+        position: fixed;
+        bottom: 20px;
+        padding-top: 50px;
     }
   </style>

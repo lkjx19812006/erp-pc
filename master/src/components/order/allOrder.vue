@@ -6,6 +6,8 @@
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
+    <employee-model  :param="employeeParam" v-if="employeeParam.show"></employee-model>
+    <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
     <mglist-model>
         <!-- 头部搜索 -->
         <div slot="top">
@@ -22,13 +24,29 @@
                     <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
                  </dd>
               </dl>
-              <dl class="clear left transfer" style="margin-right:280px">
+              <dl class="clear left transfer">
                  <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
                  <dd class="left">
                     <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
                  </dd>
               </dl>
+              <dl class="clear left transfer">
+                  <dt class="left transfer marg_top">{{$t('static.breed')}}：</dt>
+                  <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
+                  </dd>
+              </dl>
+              <!-- 单个业务员搜索 -->
+              <dl class="clear left transfer">
+                 <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
+                 <dd class="left">
+                      <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
+                 </dd>
+              </dl>
               <button type="button" class="new_btn transfer"  @click="resetCondition()">{{$t('static.clear_all')}}</button>
+
+              <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
+
               <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
           </div>
           <div class="clear left">
@@ -252,6 +270,13 @@
          <!-- 底部分页 -->
         <pagination :combination="loadParam"  slot="page"></pagination>
     </mglist-model>
+
+    <div style="font-size:16px">
+        <span style="margin-left:20px">总金额：{{initAllOrderStatis.totalSum | isnull}}元</span>
+        <span style="margin-left:20px">已支付金额：{{initAllOrderStatis.prepaidSum | isnull}}元</span>
+        <span style="margin-left:20px">未支付金额：{{initAllOrderStatis.unpaidSum | isnull}}元</span>
+    </div>
+
   </template>
   <script>
     import pagination from '../pagination'
@@ -262,17 +287,22 @@
     import disposeModel  from  '../order/orderStatus'
     import tipsdialogModel  from '../tips/tipDialog'
     import auditModel  from '../../components/tips/auditDialog'
+    import breedsearchModel from '../intention/breedsearch'
     import selectorgModel  from '../../components/tips/treeDialog'
+     //单个业务员搜索
+    import employeeModel  from  '../clientRelate/searchEmpInfo'
     import filter from '../../filters/filters'
     import common from '../../common/common'
     import changeMenu from '../../components/tools/tabs/tabs.js'
     import mglistModel from '../mguan/mgListComponent.vue'
     import {
         getList,
-        initAllOrderlist
+        initAllOrderlist,
+        initAllOrderStatis
     } from '../../vuex/getters'
     import {
         getOrderList,
+        getOrderStatistical,
         alterOrder,
         createOrder,
         orderStatu,
@@ -291,7 +321,9 @@
             tipsdialogModel,
             auditModel,
             mglistModel,
-            selectorgModel
+            selectorgModel,
+            employeeModel,
+            breedsearchModel
         },
         data() {
             return {
@@ -304,6 +336,10 @@
                     all: 1,
                     link:'/order/',
                     key:'allOrderList',
+                    breedId:'',
+                    breedName:'',
+                    employeeId:'',
+                    employeeName:'',
                     consignee:'',
                     consigneePhone:'',
                     type:'',
@@ -324,6 +360,18 @@
                     orgId:'',
                     orgName:'',
                     callback:this.callback,
+                },
+                employeeParam:{
+                  show:false,
+                  org:true,
+                  orgId:"",
+                  //单个业务员搜索
+                  employeeId:'',
+                  employeeName:'',  
+                  
+                },
+                breedSearchParam:{
+                  show:false
                 },
                 dialogParam:{
                     show: false
@@ -370,13 +418,48 @@
                 show:true
             }
         },
+        computed: {
+            exportUrl:function(){
+                let url = "org=" + this.loadParam.org;
+                if(this.loadParam.orderStatus){
+                  url  +=  "&orderStatus=" + this.loadParam.orderStatus;
+                }
+                if(this.loadParam.type){
+                  url  +=  "&type=" + this.loadParam.type;
+                }
+                if(this.loadParam.consignee){
+                  url  +=  "&consignee=" + this.loadParam.consignee;
+                }
+                if(this.loadParam.consigneePhone){
+                  url  +=  "&consigneePhone=" + this.loadParam.consigneePhone;
+                }
+                if(this.loadParam.mode){
+                  url  +=  "&mode=" + this.loadParam.mode;
+                }
+                if(this.loadParam.breedId){
+                  url  +=  "&breedId=" + this.loadParam.breedId;
+                }
+                if(this.loadParam.employeeId){
+                  url  +=  "&employee=" + this.loadParam.employeeId;
+                }
+                if(this.loadParam.startTime){
+                  url  +=  "&startTime=" + this.loadParam.startTime;
+                }
+                if(this.loadParam.endTime){
+                  url  +=  "&endTime=" + this.loadParam.endTime;
+                }
+                return url;
+            }
+        },
         vuex: {
             getters: {
                 getList,
-                initAllOrderlist
+                initAllOrderlist,
+                initAllOrderStatis
             },
             actions: {
                 getOrderList,
+                getOrderStatistical,
                 alterOrder,
                 createOrder,
                 orderStatu,
@@ -385,20 +468,29 @@
             }
         },
         methods: {
-
+            breedSearch:function(){
+                this.breedSearchParam.show = true;
+            },
             selectOrg:function(){
                 this.selectOrgParam.show = true;
+            },
+            selectEmployee:function(){
+                this.employeeParam.show = true;
             },
             callback:function(){
               if(this.selectOrgParam.orgId){
                 this.loadParam.org=this.selectOrgParam.orgId;
                 this.loadParam.orgName=this.selectOrgParam.orgName;
+
+                this.employeeParam.orgId = this.selectOrgParam.orgId;
+
                 this.selectSearch();
                 
               }
             },
             selectSearch:function(){
                 this.getOrderList(this.loadParam);
+                this.getOrderStatistical(this.loadParam);  
             },
             selectType:function(type){
               this.loadParam.type = type;
@@ -441,13 +533,19 @@
               this.loadParam.payWay="";
               this.loadParam.org="";
               this.loadParam.orgName="";
-              this.getOrderList(this.loadParam);
+              this.loadParam.employeeId="";
+              this.loadParam.employeeName="";
+              this.employeeParam.orgId = "";   //保证employeeParam.orgId与loadParam.org同步变化
+              this.loadParam.breedId="";
+              this.loadParam.breedName="";
+
+              this.selectSearch();
             },
             applyBack:function(title){
                 this.tipsParam.show = true;
                 this.tipsParam.name=title;
                 this.tipsParam.alert=true;
-                this.getOrderList(this.loadParam);
+                this.selectSearch();
             },
             orderCheck:function(id,index){ 
                 
@@ -550,8 +648,18 @@
         events: {
             fresh: function(input) {
                 this.loadParam.cur = input;
-                this.getOrderList(this.loadParam);
-            }
+                this.selectSearch();
+            },
+            breed:function(breed){
+                this.loadParam.breedId=breed.breedId;
+                this.loadParam.breedName=breed.breedName;
+                this.selectSearch(); 
+            },
+            a:function(employee){
+              this.loadParam.employeeId = employee.employeeId;
+              this.loadParam.employeeName = employee.employeeName;
+              this.selectSearch();
+            },
         },
         filter:(filter,{}),
         ready(){
@@ -559,6 +667,7 @@
         },
         created() {
             changeMenu(this.$store.state.table.isTop,this.getOrderList,this.loadParam,localStorage.allOrderParam); 
+            changeMenu(this.$store.state.table.isTop,this.getOrderStatistical,this.loadParam,localStorage.allOrderParam);
         }
     }
   </script>

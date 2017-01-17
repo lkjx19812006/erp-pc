@@ -16,6 +16,7 @@ export const ORDER_TABLE = 'ORDER_TABLE' //订单
 export const ORDER_ADD_DATA = 'ORDER_ADD_DATA' //创建订单
 export const ORDER_UPDATE_DATA = 'ORDER_UPDATE_DATA' //修改订单
 export const ORDER_DETAIL_DATA = 'ORDER_DETAIL_DATA' //订单详情
+export const ORDER_STATISTIC = 'ORDER_STATISTIC' //简单的订单统计
 export const ORDER_STATUS = 'ORDER_STATUS' //订单状态详情
 export const EXPRESS_DATA = 'EXPRESS_DATA' //订单物流列表
 export const ORDER_UPLOAD_DATA = 'ORDER_UPLOAD_DATA' //订单详情上传凭证

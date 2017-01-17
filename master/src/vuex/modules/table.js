@@ -8,6 +8,7 @@ import {
    ORDER_ADD_DATA,
    ORDER_DETAIL_DATA,
    ORDER_UPDATE_DATA,
+   ORDER_STATISTIC,
    CHANGE_SHOW_STATUE,
    SYSTEM_DATA,
    PROVINCE_DATA,
@@ -303,6 +304,9 @@ const state = {
                 "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
                 "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":[{"breedName":"三七"}],
                 "payPics":null,"sendPics":null}],
+
+        orgOrderStatis: "",
+        allOrderStatis: "",     
 
         enterpriseList: [
             { "id": 0, "number": "00", "category": "0ww", "name": "上海ee冕冠", "tel": "13162875213", "legal_person": "卡卡", "principal": "来啦", "biz_scope": "包括很多、很多、、、", "province": "上海虹口区", "city": "虹口区", "address": "上海虹口江湾镇", "release_date": "2015-07-07", "due_date": "2018-07-07", "show": "true" },
@@ -697,6 +701,16 @@ const mutations = {
         }
         
     },
+    [ORDER_STATISTIC](state, data){
+      if(data.key=="orgOrderList"){
+          state.basicBaseList.orgOrderStatis = data;
+      }
+      if(data.key=="allOrderList"){
+          state.basicBaseList.allOrderStatis = data;
+      }
+      
+    },
+    
     [EXPRESS_DATA](state,data){ //物流列表
         state.basicBaseList.expressList = data;
     },

@@ -23,7 +23,7 @@ function fixedTable(viewid, scrollid, size) {    //viewid为表的ID,scrollid为
     console.log(top)
     console.log(bottom)
     var scroll = document.getElementById(scrollid);     //获取父元素
-    scroll.style.height = document.body.clientHeight-top-bottom-108+'px';
+    scroll.style.height = document.body.clientHeight-top-bottom-115+'px';
     console.log(scroll.style.height)
     var tb2 = document.getElementById(viewid).cloneNode(true);    //复制id为viewid的表元素
     var len = tb2.rows.length;               //获取表的行数

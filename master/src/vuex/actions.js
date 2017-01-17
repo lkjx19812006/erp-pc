@@ -354,6 +354,12 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         if (key == 'org' && param[key] !== '') {
             url += '&org=' + param[key];
         }
+        if (key == 'breedId' && param[key] !== '') {
+            url += '&breedId=' + param[key];
+        }
+        if (key == 'employeeId' && param[key] !== '') {
+            url += '&employee=' + param[key];
+        }
     }
     Vue.http({
         method: 'GET',
@@ -382,6 +388,67 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         param.loading = false;
     })
 }
+
+export const getOrderStatistical = ({ dispatch }, param) => {   //简单的订单统计接口
+    param.loading = true;
+    var body = {
+        queryType:1
+    };
+    var url = apiUrl.orderList  + '/order/statistical';
+    for (var key in param) {
+        if (key == 'consignee' && param[key] !== '') {
+            body[key] = param[key];
+        }
+        if (key == 'consigneePhone' && param[key] !== '') {
+            body[key] = param[key];
+        }
+        if (key == 'startTime' && param[key] !== '') {
+            body[key] = param[key];
+        }
+        if (key == 'endTime' && param[key] !== '') {
+            body[key] = param[key];
+        }
+        if (key == 'mode' && param[key] !== '') {
+            body[key] = param[key];
+        }
+        if (key == 'orderStatus' && param[key] !== '') {
+            body[key] = param[key];
+        }
+        if (key == 'type' && param[key] !== '') {
+            body[key] = param[key];
+        }
+        if (key == 'org' && param[key] !== '') {
+            body[key] = param[key];
+        }
+        if (key == 'breedId' && param[key] !== '') {
+            body[key] = param[key];
+        }
+        if (key == 'employeeId' && param[key] !== '') {
+            body.employee = param[key];
+        }
+    }
+    Vue.http({
+        method: 'POST',
+        url: url,
+        emulateHTTP: true,
+        body: body,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        var orderStatis = res.json().result;
+        orderStatis.key = param.key;
+        
+        dispatch(types.ORDER_STATISTIC, orderStatis);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录列表以及订单搜索
     param.loading = true;
     const body = {
@@ -724,7 +791,20 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
         if (key == 'type' && param[key] != '') {
             body.type = param[key];
         }
+        if (key == 'breedId' && param[key] != '') {
+            body.breedId = param[key];
+        }
+        if (key == 'employeeId' && param[key] != '') {
+            body.employee = param[key];
+        }
+        if (key == 'startTime' && param[key] != '') {
+            body.startTime = param[key];
+        }
+        if (key == 'endTime' && param[key] != '') {
+            body.endTime = param[key];
+        }
     }
+
     Vue.http({
         method: 'POST',
         url: apiUrl.orderList + param.link,
