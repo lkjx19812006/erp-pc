@@ -345,7 +345,7 @@
                                               <td>{{item.consignee}}</td>
                                               <td>{{item.consigneePhone}}</td>
                                               <td>{{item.consigneeAddr}}</td>
-                                              <td>{{item.ptime}}</td>
+                                              <td>{{item.ctime}}</td>
                                               <td>{{item.total}}</td>
                                               <td>{{item.validate | Auditing}}</td>
                                               <td>{{item.orderStatus | orderstatus}}</td>

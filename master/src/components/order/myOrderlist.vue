@@ -310,6 +310,7 @@
     import applysendModel from '../order/second_order/orderAudit'
     import reapplyModel from '../tips/auditDialog'
     import mglistModel from '../mguan/mgListComponent.vue'
+    import debug from '../tools/util.js'
     import {
         getList,
         initMyOrderlist,
@@ -483,7 +484,7 @@
         methods: {
             selectSearch:function(){
                 this.getEmpolyeeOrder(this.loadParam);
-                console.log(this.initLogin)
+                debug(this.initLogin)
             },
             editClick: function(sub) {
                 if(this.$store.state.table.basicBaseList.myOrderList[sub].show){
@@ -560,7 +561,7 @@
             newOrder:function(){ 
                  this.createParam.show = true;
                  this.createParam.callback = this.newBack;
-                 console.log(this.createParam)
+                 debug(this.createParam)
             },
             newBack:function(title){
                 this.tipsParam.show = true;

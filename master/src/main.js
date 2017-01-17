@@ -17,6 +17,7 @@ import 'iview/dist/styles/iview.css';
 
 require('./assets/css/style.css')
 require('./components/calendar/vue.datepicker.css')
+require('./components/tools/util.js')
 
 
 Vue.component('PulseLoader',PulseLoader);
@@ -86,8 +87,6 @@ Vue.http.interceptors.push((request, next) => {
     if(response.json()&&response.json().code==100070){
         return  router.go({name: 'login'});
     }
-
-    console.log(response.json());
 
     return response
   })
