@@ -462,14 +462,11 @@
         }
       },
       save: function () {
-        console.log(this.param.type);  
         this.param.contacts=this.contacts;
         this.param.province=this.province.id;
         this.param.city=this.city.id;
         this.param.cityName=this.city.cname;
         this.param.provinceName=this.province.cname;
-        this.param.typeDesc=this.param.type.split(',')[1];
-        this.param.type=this.param.type.split(',')[0];
         this.param.classifyDesc = this.param.classify.split(',')[1];
         this.param.classify= this.param.classify.split(',')[0];
         if(this.param.countryId){

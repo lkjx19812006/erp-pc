@@ -126,7 +126,7 @@
                                             category:'',
                                             typeDesc:'',
                                             classify:'1,买',
-                                            type:0,
+                                            type:'',
                                             name:'',
                                             mainPhone:'',
                                             principal:'',
@@ -524,14 +524,10 @@ export default {
             this.alterParam.callback = this.updateback;
         },
         updateback:function(title){
-            console.log(title)
             this.tipsParam.show = true;
-            if(title=='success'){
-                this.tipsParam.name = '修改成功';
-            }else{
-                this.tipsParam.name=title;
-            }
+            this.tipsParam.name=title;
             this.tipsParam.alert=true;
+            this.getClientList(this.loadParam);
         },
         clientTransfer:function(){
             this.transferParam.arr = [];

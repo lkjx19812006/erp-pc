@@ -3195,12 +3195,12 @@ export const getRoleList = ({ dispatch }, param) => { //获取角色列表
 export const saveCreate = ({ dispatch }, data, tipsParam) => { //新增客户列表
     console.log('新增客户');
     console.log(data);
-    console.log(data.supplier);
+    console.log(data.type);
     const Cdata = {
         "name": data.name,
-        "type": data.type,
+        "type": data.type.split(',')[0],
         "tel": data.tel,
-        "typeDesc": data.typeDesc,
+        "typeDesc": data.type.split(',')[1],
         "classify": data.classify,
         "email": data.email,
         "userId": data.userId,
