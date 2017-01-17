@@ -119,7 +119,7 @@
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel" for="system">{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.mainphone.phone">{{$t('static.validate_cellphone')}}</span></label>
-                                <input type="text" v-model="param.mainPhone" class="form-control edit-input" v-validate:mainphone="['phone']" value="{{param.mainPhone}}" />
+                                <input type="text" v-model="param.mainPhone" class="form-control edit-input" v-validate:mainphone="['phone']" debounce="500" value="{{param.mainPhone}}" />
                             </div>
                             <div class="editpage-input">
                                 <label class="editlabel" for="system">{{$t('static.email')}}<span class="system_danger" v-if="$validation.email.email">{{$t('static.validate_email')}}</span></label>

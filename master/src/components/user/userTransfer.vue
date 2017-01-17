@@ -45,7 +45,7 @@
               <!-- 联系人手机 -->
               <div class="client-detailInfo  col-md-6">
                 <label class="editlabel" for="system">{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.cphone.phone">{{$t('static.validate_cellphone')}}</span></label>
-                <input type="text" class="form-control edit-input" v-validate:cphone="['phone']" v-model="contacts[0].phone"/>
+                <input type="text" class="form-control edit-input"  debounce="500" v-validate:cphone="['phone']" v-model="contacts[0].phone" />
               </div>
               <!-- 客户电话 -->
               <div class="client-detailInfo  col-md-6">
