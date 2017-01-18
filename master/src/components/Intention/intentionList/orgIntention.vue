@@ -132,7 +132,7 @@
                         <th>客户备注</th>
                         <th>录入类型</th>
                         <th>上架状态</th>
-                        <th style="min-width: 250px;">操作</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
