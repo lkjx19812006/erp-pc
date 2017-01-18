@@ -15,9 +15,6 @@
       <div slot="top">
          <div class="clear">
             <div class="right">
-
-                <div class="pull-right"><a class="btn btn-default" href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></div>
-                
                 <button class="btn btn-default transfer" @click="newOrder()">{{$t('static.new')}}</button>
                 <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review_application')}}</button> -->
                 <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
@@ -323,8 +320,8 @@
         alterOrder,
         createOrder,
         orderStatu,
-        getOrderDetail,
-        exportOrder
+        getOrderDetail
+        
     } from '../../vuex/actions'
     export default {
         components: {
@@ -479,8 +476,7 @@
                 alterOrder,
                 createOrder,
                 orderStatu,
-                getOrderDetail,
-                exportOrder
+                getOrderDetail
             }
         },
         methods: {
@@ -494,9 +490,6 @@
                      this.$store.state.table.basicBaseList.myOrderList[sub].show=true;
                 }
             },
-            /*exportOrder:function(param){
-
-            },*/
             /*orgCheck:function(){   //批量审核，停用
                 var _this = this;
                 _this.auditParam.ids = [];

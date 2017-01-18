@@ -211,7 +211,7 @@
                                                       url:'/customer/',
                                                       key:'myCustomerList'
                                                     })">{{item.supplierName}}</a></td>
-                                                <td>{{item.offererName}}</td>
+                                                <td>{{item.offererNameInOffer}}</td>
                                                 <td>{{item.offerComment}}</td>
                                                 <td v-if="item.again==0">{{$t('static.please_quote')}}</td>
                                                 <td v-if="item.again==1">{{$t('static.hasbeen_quote')}}</td>

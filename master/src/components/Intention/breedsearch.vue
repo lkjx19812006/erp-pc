@@ -103,17 +103,13 @@ export default{
 					}
 				}
 			}
-			console.log(name)
-			console.log(eName)
+			
 			this.param.breedId= id;
 			this.param.breedName = name;
 			this.param.eName = eName;
-			
 			this.param.show=false;
-			console.log(this.param.breedName)
 			this.$dispatch('breed',this.param);
-			console.log(this.param.breedName)
-			console.log(this.param)
+			
 			
 		},
 		employNameSearch: function() {

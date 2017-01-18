@@ -94,7 +94,8 @@
                 <div class="col-md-11 client-detail">
                     <h4 class="section_title">{{$t('static.related_information')}}</h4>
                     <article>
-                        <div class="panel-group"> 
+                        <div class="panel-group">
+                            
                           <div class="panel panel-default" >
                               <div class="panel-heading" v-cloak>
                                 <h4 class="panel-title clearfix" @click="enfoldment({
@@ -185,7 +186,7 @@
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
                                                 <td>{{item.quality}}</td>
-                                                <td>{{item.price}} <span>（{{item.currency |Currency}} / {{item.unit | Unit}}）</span></td>
+                                                <td>{{item.offerPrice}}<span v-if="item.offerEUnit!=''&&item.offerEUnit!==null">（{{item.offerEUnit}}）</span></td>
                                                 <td>{{item.exchangeRate}}</td>
                                                 <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                 <td>{{item.offererName}}</td>
@@ -340,6 +341,7 @@
                                   </div>
                               </div>
                           </div>
+
                         </div>
                     </article>
                 </div>
