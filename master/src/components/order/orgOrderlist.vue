@@ -284,14 +284,14 @@
     </mglist-model>
 
       <div style="font-size:14px;">
-        <span style="margin-left:1%;color:red">总金额：{{initOrgOrderStatis.totalSum | isnull}}元</span>
-        <span style="margin-left:1%;color:red">已支付金额：{{initOrgOrderStatis.prepaidSum | isnull}}元</span>
-        <span style="margin-left:1%;color:red">未支付金额：{{initOrgOrderStatis.unpaidSum | isnull}}元</span>
-        <span style="margin-left:1%;">成本总金额：{{initOrgOrderStatis.costSum | isnull}}元</span>
-        <span style="margin-left:1%;">商品总金额：{{initOrgOrderStatis.amountSum  | isnull}}元</span>
-        <span style="margin-left:1%;">订单数量：{{initOrgOrderStatis.orderCount | isnull}}笔</span>
-        <span style="margin-left:1%;">特惠总金额：{{initOrgOrderStatis.preferentialSum  | isnull}}元</span>
-        <span style="margin-left:1%;">杂费总金额：{{initOrgOrderStatis.incidentalsSum | isnull}}元</span>
+        <span style="margin-left:1%;color:red">总金额：{{initOrgOrderStatis.totalSum | money}}元</span>
+        <span style="margin-left:1%;color:red">已支付金额：{{initOrgOrderStatis.prepaidSum | money}}元</span>
+        <span style="margin-left:1%;color:red">未支付金额：{{initOrgOrderStatis.unpaidSum | money}}元</span>
+        <span style="margin-left:1%;">成本总金额：{{initOrgOrderStatis.costSum | money}}元</span>
+        <span style="margin-left:1%;">商品总金额：{{initOrgOrderStatis.amountSum  | money}}元</span>
+        <span style="margin-left:1%;">订单数量：{{initOrgOrderStatis.orderCount | money}}笔</span>
+        <span style="margin-left:1%;">特惠总金额：{{initOrgOrderStatis.preferentialSum  | money}}元</span>
+        <span style="margin-left:1%;">杂费总金额：{{initOrgOrderStatis.incidentalsSum | money}}元</span>
       </div>
     
   </template>

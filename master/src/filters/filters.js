@@ -924,6 +924,23 @@ Vue.filter('isnull',function(val){
 		return val;
 	}
 })
+Vue.filter('money',function(val){      
+	var val = val;
+	val = parseFloat((val + "").replace(/[^\d\.-]/g, "")).toFixed(2) + "";  
+    var l = val.split(".")[0].split("").reverse(), r = val.split(".")[1];  
+    var t= "";  
+    for (var i = 0; i < l.length; i++) {  
+        t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");  
+    } 
+    return t.split("").reverse().join("") + "." + r;
+    val = t; 
+	if(val===null){
+		return 0;
+	}else{
+		return val;
+	}
+})
+   
 
 Vue.filter('intentionSource',function(val){      //意向来源
 	var val = val;

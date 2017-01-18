@@ -186,7 +186,7 @@
                         <th>客户备注</th>
                         <th>录入类型</th>
                         <th>上架状态</th>
-                        <th style="min-width:220px;text-align: left;">操作</th>        
+                        <th style="min-width:200px;text-align: left;">操作</th>        
                     </tr>
                 </thead>
                 <tbody>
