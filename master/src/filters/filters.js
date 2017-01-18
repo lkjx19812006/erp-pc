@@ -41,6 +41,96 @@ Vue.filter('bizType', function(val){
 	}
 });
 
+Vue.filter('assess', function(val,type,logistic,name){ //订单状态判断
+	var val = val;
+	var type = type;
+	var logistic = logistic;
+	var name = name;
+	if(name==null){
+		name='';
+	}else{
+		name=name;
+	}
+	if(val==60&&type==1&&logistic==2){
+		 return '已重新发货（仓库审核）';
+	}else if(val==60&&type==1&&logistic==3){
+		return '等待检验'
+	}else if(val==60&&type==1&&logistic==40){
+		return '已完成订单（质量合格）'
+	}else if(val==60&&type==1&&logistic==50){
+		return '已完成订单（补充合同申请）'
+	}else if(val==60&&type==1&&logistic==60){
+		return '已完成订单（售后处理中）'
+	}else if(val==60&&type==0){
+		return '已完成订单'
+	}else if(val==60&&type==0){
+		return '已完成订单'
+	}else if(val==70){
+		return '已完成订单'
+	}else if(val==0){
+		return '新的订单'
+	}else if(val==10){
+		return '订单处理中'
+	}else if(val==20){
+		return '等待支付'
+	}else if(val==30){
+		return '等待审核'
+	}else if(val==40){
+		return '等待'+name+'发货'
+	}else if(val==50){
+		return '等待收货'
+	}else if(val==-1){
+		return '已取消订单'
+	}else if(val==-2){
+		return '已过期订单'
+	}else{
+		return '';
+	}
+});
+Vue.filter('Enassess', function(val,type,logistic,name){ //订单状态判断英文展示
+	var val = val;
+	var type = type;
+	var logistic = logistic;
+	var name = name;
+	if(name==null){
+		name='';
+	}else{
+		name=name;
+	}
+	if(val==60&&type==1&&logistic==2){
+		 return 'Awaiting comment（仓库审核）';
+	}else if(val==60&&type==1&&logistic==3){
+		return '质量检验'
+	}else if(val==60&&type==1&&logistic==40){
+		return 'Lost communication（质量合格）'
+	}else if(val==60&&type==1&&logistic==50){
+		return 'Awaiting comment（补充合同申请）'
+	}else if(val==60&&type==1&&logistic==60){
+		return 'Awaiting comment（售后处理中）'
+	}else if(val==60&&type==0){
+		return 'Awaiting comment'
+	}else if(val==70){
+		return 'Lost communication'
+	}else if(val==0){
+		return 'New Order'
+	}else if(val==10){
+		return 'Order review'
+	}else if(val==20){
+		return 'Processing with payment'
+	}else if(val==30){
+		return 'Bulk order phas'
+	}else if(val==40){
+		return 'Payment received'+name
+	}else if(val==50){
+		return 'Follow up order'
+	}else if(val==-1){
+		return 'Order canceled'
+	}else if(val==-2){
+		return 'Order Expired'
+	}else{
+		return '';
+	}
+});
 Vue.filter('numberstate', function(val){
 	var val = val;
 	if(val==null){

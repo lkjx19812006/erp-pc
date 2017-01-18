@@ -7,17 +7,11 @@
     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
     <employee-model  :param="employeeParam" v-if="employeeParam.show"></employee-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
+    <language-model v-show="false"></language-model>
     <mglist-model :param="mgListParam">
         <!-- 头部搜索 -->
         <div slot="top">
             <div class="clear">
-              <div class="right">
-                <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
-                  <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button>
-                 -->
-
-                  <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-              </div>
               <div class="clear left">
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
@@ -66,7 +60,7 @@
                 </dl>
 
                 <dl class="clear left transfer">
-                    <div class="client-detailInfo col-xs-6">
+                    <div class="col-xs-6">
                         <dt class="left transfer marg_top">起始时间：</dt>
                         <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
@@ -74,8 +68,13 @@
                 </dl>
               </div>
             </div>
-
             <div class="clear">
+              <div class="right">
+                <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
+                  <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button>
+                 -->
+                  <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+              </div>
               <div class="left">
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
@@ -97,7 +96,7 @@
                 </dl>
 
                 <dl class="clear left" style="margin-left:-20px;">
-                    <div class="client-detailInfo col-xs-6">
+                    <div class="col-xs-6">
                         <dt class="left transfer marg_top">结束时间：</dt>
                         <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
@@ -134,7 +133,7 @@
                       <th>{{$t('static.consignee_name')}}</th>
                       <th>{{$t('static.consignee_phone')}}</th>
                       <th style="width:300px">{{$t('static.consignee_address')}}</th>
-                      <th>{{$t('static.payment_method')}}</th>
+                      <!-- <th>{{$t('static.payment_method')}}</th> -->
                       <th>{{$t('static.order_status')}}</th>
                       <th>{{$t('static.order_source')}}</th>
                       <th>{{$t('static.review_status')}}</th>
@@ -170,17 +169,19 @@
                     <td>{{item.consignee}}</td>
                     <td>{{item.consigneePhone}}</td>
                     <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
-                    <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
+                    <!-- <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
                     <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
                     <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
                     <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                     <td v-if="item.payWay==4">WeChat</td>
-                    <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td>
-                    <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
+                    <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td> -->
+                    <td v-if="this.language=='zh_CN'">{{item.orderStatus | assess item.type item.logistics item.verifierName}}</td>
+                    <td v-if="this.language=='en'">{{item.orderStatus | Enassess item.type item.logistics item.verifierName}}</td>
+                    <!-- <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
                     <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                     <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
                     <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
-                    <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td> <!-- {{$t('static.wait_ship')}} -->
+                    <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td> {{$t('static.wait_ship')}}
                     <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
                     <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
                     <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
@@ -190,7 +191,7 @@
                     <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
                     <td v-if="item.orderStatus==70">{{$t('static.order_over')}}</td>
                     <td v-if="item.orderStatus==-1">{{$t('static.cancle_order')}}</td>
-                    <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td>
+                    <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td> -->
                     <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
                     <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
                     <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>
@@ -281,23 +282,18 @@
         <!-- 底部分页 -->
         <pagination :combination="loadParam" slot="page"></pagination>
     </mglist-model>
-        <div style="font-size:16px;border:solid #666;float:left">
-            <!-- <table class="table table_bordered">
-                <thead style="border-bottom: 1px solid #ddd;">
-                  <th style="font-weight: 700;font-size:15px">总金额</th>
-                  <th style="color:#fa6705;font-size:15px">{{initOrgOrderStatis.totalSum | isnull}}元</th>
-                  <th style="font-weight: 700;font-size:15px">已支付金额</th>
-                  <th style="color:#fa6705;font-size:15px">{{initOrgOrderStatis.prepaidSum | isnull}}元</th>
-                  <th style="font-weight: 700;font-size:15px">未支付金额</th>
-                  <th style="color:#fa6705;font-size:15px">{{initOrgOrderStatis.unpaidSum | isnull}}元</th>
-                </thead>
-            </table> -->
-            <span style="margin-left:20px;">总金额：<a>{{initOrgOrderStatis.totalSum | isnull}}元</a></span>
-            <span style="margin-left:20px">已支付金额：<a>{{initOrgOrderStatis.prepaidSum | isnull}}元</a></span>
-            <span style="margin-left:20px;margin-right: 20px;">未支付金额：<a>{{initOrgOrderStatis.unpaidSum | isnull}}元</a></span>
-        </div>
-    
 
+      <div style="font-size:14px;">
+        <span style="margin-left:1%;color:red">总金额：{{initOrgOrderStatis.totalSum | isnull}}元</span>
+        <span style="margin-left:1%;color:red">已支付金额：{{initOrgOrderStatis.prepaidSum | isnull}}元</span>
+        <span style="margin-left:1%;color:red">未支付金额：{{initOrgOrderStatis.unpaidSum | isnull}}元</span>
+        <span style="margin-left:1%;">成本总金额：{{initOrgOrderStatis.costSum | isnull}}元</span>
+        <span style="margin-left:1%;">商品总金额：{{initOrgOrderStatis.amountSum  | isnull}}元</span>
+        <span style="margin-left:1%;">订单数量：{{initOrgOrderStatis.orderCount | isnull}}笔</span>
+        <span style="margin-left:1%;">特惠总金额：{{initOrgOrderStatis.preferentialSum  | isnull}}元</span>
+        <span style="margin-left:1%;">杂费总金额：{{initOrgOrderStatis.incidentalsSum | isnull}}元</span>
+      </div>
+    
   </template>
   <script>
     import pagination from '../pagination'
@@ -315,6 +311,7 @@
     import common from '../../common/common'
     import changeMenu from '../../components/tools/tabs/tabs.js'
     import mglistModel from '../mguan/mgListComponent.vue'
+    import languageModel from '../tools/language.vue'
     import {
         getList,
         initOrgOrderlist,
@@ -334,6 +331,7 @@
     export default {
         components: {
             editorderModel,
+            languageModel,
             pagination,
             mglistModel,
             filter,
@@ -377,6 +375,7 @@
                     mode:'',
                     total:0
                 },
+                language:'',
                 mgListParam:{
                   pagestyle:'padding-top:100px'
                 },
@@ -492,6 +491,7 @@
         created() {
             changeMenu(this.$store.state.table.isTop,this.getOrgOrder,this.loadParam,localStorage.orgOrderParam); 
             changeMenu(this.$store.state.table.isTop,this.getOrderStatistical,this.loadParam,localStorage.orgOrderParam); 
+            this.language = localStorage.lang;
             
             /*if(!this.$store.state.table.isTop){
                 console.log("刷新数据");
