@@ -159,10 +159,8 @@
                                       {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
                                     </a>
                                     <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
-                                        <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotals">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
-                                        <!-- {{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].offerCurrency | Currency}} -->
-                                    </span>
-                                    <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> --> 
+                                        <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
+                                    </span> 
                                 </h4>
                               </div>
                               <div  class="panel-collapse" v-show="!initIntlIntentionDetail.items.show&&initIntlIntentionDetail.items.arr.length>0">
@@ -239,8 +237,7 @@
                                           {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
                                         </a>
                                         <span class="pull-right" style="color:#fa6705;line-height:27px;">{{$t('static.quotation_total')}}：
-                                            <p class="pull-right" v-for="item in initIntlIntentionDetail.offersTotals">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
-                                            <!-- {{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
+                                            <p class="pull-right" v-for="item in initIntlIntentionDetail.offersTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
                                         </span>
                                         <button v-if="(initIntlIntentionDetail.inquire==2||initIntlIntentionDetail.inquire==1)&&param.inquire!=3" type="button" class="btn btn-base pull-right" @click.stop="addOtherOffer()">{{$t('static.new')}}</button>
                                   </h4>
@@ -483,7 +480,6 @@ export default {
                 total:'',
                 comment:'',
                 breedId:'',
-                itemsTotal:0,
                 offererName:'',
                 getIntentionDetail:''      //获取意向详情的函数
             },
@@ -600,14 +596,6 @@ export default {
      },
      //编辑原材料报价
      editOffer:function(item,index){   
-        if(!item.offerPrice){
-          this.editOfferParam.itemsTotal = this.initIntlIntentionDetail.itemsTotal;
-        }else{
-          this.editOfferParam.itemsTotal = (this.initIntlIntentionDetail.itemsTotal*100 - item.number*item.offerPrice*100)/100;
-        }
-
-         console.log(this.editOfferParam.itemsTotal);                    
-        
         this.editOfferParam.id = item.offerId;    //?报价ID？？？没有
         this.editOfferParam.intentionId = item.intentionId;
         this.editOfferParam.inquireId = item.inquireId;

@@ -68,7 +68,7 @@
                 <dl class="clear left transfer">
                     <div class="client-detailInfo col-xs-6">
                         <dt class="left transfer marg_top">起始时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
+                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                 </dl>
@@ -99,7 +99,7 @@
                 <dl class="clear left" style="margin-left:-20px;">
                     <div class="client-detailInfo col-xs-6">
                         <dt class="left transfer marg_top">结束时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
                         </mz-datepicker>
                     </div>
                 </dl>

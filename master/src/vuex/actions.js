@@ -4426,27 +4426,26 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
         }
     }).then((res) => {
         var intent = res.json().result;
-        var itemsTotals = [];
-        var offersTotals = [];
+        var itemsTotal = [];
+        var offersTotal = [];
 
-        for(var key in intent.itemsTotals){
+        for(var key in intent.itemsTotal){
             let temp={
                 currency:key,
-                total:intent.itemsTotals[key]
+                total:intent.itemsTotal[key]
             }
-            itemsTotals.unshift(temp);
+            itemsTotal.unshift(temp);
         }
-        intent.itemsTotals = itemsTotals;  
+        intent.itemsTotal = itemsTotal;  
 
-        for(var key in intent.offersTotals){
+        for(var key in intent.offersTotal){
             let temp={
                 currency:key,
-                total:intent.offersTotals[key]
+                total:intent.offersTotal[key]
             }
-            offersTotals.unshift(temp);
+            offersTotal.unshift(temp);
         }
-        intent.offersTotals = offersTotals;
-
+        intent.offersTotal = offersTotal;
 
         if (param.key == "myIntlIntentionList") { //意向列表编辑意向
             intent.items.forEach(function(item) {
@@ -4839,7 +4838,7 @@ export const intlIntentionOffer = ({ dispatch }, param) => { //国际意向原�
             });
         }
         if(res.json().code==200){
-            param.itemsTotal = (param.itemsTotal*100 + param.number*param.price*100)/100;
+            
             dispatch(types.ORIGIN_OFFER_DATA, param);
         }
     }, (res) => {
@@ -4889,7 +4888,6 @@ export const intlIntentionOtherOffer = ({ dispatch }, param) => { //国际意向
         param.id = res.json().result.id;
         if(res.json().code==200){
             //成功后total会改变
-            param.offersTotal = (param.offersTotal*100 + param.cost*100)/100;
             dispatch(types.OTHER_OFFER_DATA, param);
         }
 

@@ -154,30 +154,12 @@
                         <th>手机归属地</th>
                         <th>意向商品</th>
                         <th>商品产地</th>
+                        <th>单价</th>
                         <th>商品规格</th>
                         <th>商品数量</th>
                         <th>剩余有效期</th>
                         <th>客户备注</th>
                         <th>录入类型</th>
-
-                    <!-- <th>意向类型</th>
-                        <th>会员名称</th>
-                        <th>会员手机号</th>
-                        <th>品种名称</th>
-                        <th>资格资质</th>
-                        <th>规格</th>
-                        <th>单位</th>
-                        <th>单价</th>
-                        <th>产地</th>
-                        <th>数量</th>
-                        <th>所在省</th>
-                        <th>交收地址</th>
-                        <th>提供样品</th>
-                        <th>样品数量</th>
-                        <th>样品价格</th>
-                        <th>发布时间</th>
-                        <th>审核状态</th> -->
-                        
                         <th style="min-width: 250px;">操作</th>
                     </tr>
                 </thead>
@@ -245,6 +227,7 @@
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.breedName}}</td>
                         <td>{{item.location}}</td>
+                        <td>{{item.price}}元/{{item.unit}}</td>
                         <td>{{item.spec}}</td>
                         <td>{{item.number}}{{item.unit}}</td>
                         <td>{{item.duedateDesc}}</td>
@@ -756,8 +739,8 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 116px;
-    min-width: 116px;
+    width: 100px;
+    min-width: 100px;
 }
 .service-nav {
     padding: 23px 10px 0px 4px;

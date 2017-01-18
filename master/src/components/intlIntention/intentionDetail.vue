@@ -154,8 +154,9 @@
                                       <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set">
                                         {{$t('static.item_details')}}（{{initIntlIntentionDetail.items.arr.length}}）
                                       </a>
+                                      <!--询价完成或再次询价才显示价格-->
                                       <span class="pull-right" style="color:#fa6705">{{$t('static.total')}}：
-                                          <p class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotals">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span> </p>
+                                          <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.itemsTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                           <!-- {{initIntlIntentionDetail.itemsTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
                                       </span>
                                       <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
@@ -212,21 +213,21 @@
                                               crete:'offers'
                                               })">
                                         <img class="pull-left" src="/static/images/otheroffer_icon.png" height="29" width="26"  />
-                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initIntlIntentionDetail.offers.arr.length">
+                                        <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-if="initIntlIntentionDetail.offers.arr.length&&(initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1)">
                                           {{$t('static.other_quotations')}}（{{initIntlIntentionDetail.offers.arr.length}}）
                                         </a>
                                         <a data-toggle="collapse" data-parent="#accordion"  href="javascript:void(0)" class="panel-title-set" v-else>
                                           {{$t('static.other_quotations')}}（0）
                                         </a>
                                          <span class="pull-right" style="color:#fa6705">{{$t('static.quotation_total')}}：
-                                             <p class="pull-right" v-for="item in initIntlIntentionDetail.offersTotals">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
+                                             <p v-show="initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1" class="pull-right" v-for="item in initIntlIntentionDetail.offersTotal">{{item.total}}{{item.currency | Currency}}<span v-if="$index!==0">+</span></p>
                                              <!-- {{initIntlIntentionDetail.offersTotal}}{{initIntlIntentionDetail.items.arr[0].currency | Currency}} -->
                                          </span>
                                         <!-- <button type="button" class="btn btn-base pull-right" @click.stop="">新建</button> -->
                                   </h4>
                               </div>
 
-                              <div  class="panel-collapse" v-show="initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0">
+                              <div  class="panel-collapse" v-show="initIntlIntentionDetail.offers.show&&initIntlIntentionDetail.offers.arr.length>0&&(initIntlIntentionDetail.inquire==3||initIntlIntentionDetail.inquireTime>1)">
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
