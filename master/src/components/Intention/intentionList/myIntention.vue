@@ -313,8 +313,8 @@
                                                key:'myIntentionList'
                                                })"><img src="/static/images/del.png" height="18" width="28" alt="删除"/>
                                </a>
-                               <a v-if="(item.onSell===0||item.onSell==-2||item.onSell==4)&&item.especial==1"><button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;margin-top:-22px;color:#fa6705" @click="up($index,item.id,1)">申请上架</button></a> 
-                              <a class="operate" v-if="item.onSell==2&&item.especial==1" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架"/>
+                               <a v-if="item.onSell===0||item.onSell==-2||item.onSell==4"><button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;margin-top:-22px;color:#fa6705" @click="up($index,item.id,1)">申请上架</button></a> 
+                              <a class="operate" v-if="item.onSell==2" @click="up($index,item.id,3)"><img src="/static/images/applyunder.png" height="18" width="47" alt="申请下架"/>
                               </a>
                               <a class="operate" v-if="item.type==1"  @click.stop="newOrder(item,$index)"><img src="/static/images/adopt.png" alt="生成订单"/>
                                </a>

@@ -218,10 +218,10 @@
                              </a> -->
                              <!-- <a class="operate" v-if="item.onSell==1&&item.especial==1" @click.stop="upAudit($index,item.id)">上架审核
                              </a> -->
-                             <a v-if="item.onSell==1&&item.especial==1"><button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="upAudit($index,item.id)">上架审核</button></a> 
+                             <a v-if="item.onSell==1"><button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="upAudit($index,item.id)">上架审核</button></a> 
                              <!-- <a class="operate" v-if="item.onSell==3&&item.especial==1" @click.stop="downAudit($index,item.id)">下架审核
                              </a> -->
-                             <a v-if="item.onSell==3&&item.especial==1"><button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="downAudit($index,item.id)">下架审核</button></a>
+                             <a v-if="item.onSell==3"><button type="button" class="btn btn-default" height="24" width="24" style="font-size:4px;padding:0px 2px;color:#fa6705" @click="downAudit($index,item.id)">下架审核</button></a>
                         </td>
                     </tr>
                 </tbody>
