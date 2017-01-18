@@ -44,9 +44,7 @@
                  </dd>
               </dl>
               <button type="button" class="new_btn transfer"  @click="resetCondition()">{{$t('static.clear_all')}}</button>
-
-              <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
-
+              
               <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
           </div>
           <div class="clear left">
@@ -60,21 +58,6 @@
                     </select>
                </dd>
             </dl>
-            <!-- <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
-               <div class="btn-group">
-                   <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===''}" @click="selectType('')">
-                      {{$t('static.please_select')}}
-                   </button>
-                   <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0}" @click="selectType(0)">
-                      {{$t('static.purchase')}}
-                   </button>
-                   <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===1}" @click="selectType(1)">
-                      {{$t('static.sell')}}
-                   </button>
-               </div>
-            </dl> -->
-
             <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
                <dd class="left">
@@ -104,7 +87,7 @@
             </dl>
             
             <dl class="clear left transfer">
-                <div class="client-detailInfo col-xs-6">
+                <div class="col-xs-6">
                     <dt class="left transfer marg_top">起始时间：</dt>
                     <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
                     </mz-datepicker>
@@ -112,12 +95,13 @@
             </dl>
 
             <dl class="clear left transfer" style="margin-left:-33px;">
-                <div class="client-detailInfo col-xs-6">
+                <div class="col-xs-6">
                     <dt class="left transfer marg_top">结束时间：</dt>
                     <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
                     </mz-datepicker>
                 </div>
             </dl>
+            <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
           </div>
           <div class="right">
               <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
@@ -149,23 +133,6 @@
                       <th>{{$t('static.order_status')}}</th>
                       <th>{{$t('static.order_source')}}</th>
                       <th>{{$t('static.review_status')}}</th>
-                      <!-- <th>{{$t('static.order_no')}}</th>
-                        <th>{{$t('static.order_type')}}</th>
-                        <th>{{$t('static.order_source')}}</th>
-                        <th>{{$t('static.consignee_name')}}</th>
-                        <th>{{$t('static.consignee_phone')}}</th>
-                        <th>{{$t('static.consignee_address')}}</th>
-                        <th>{{$t('static.country')}}</th>
-                        <th>{{$t('static.province')}}</th>
-                        <th>{{$t('static.city')}}</th>
-                        <th>{{$t('static.salesman')}}</th>
-                        <th>{{$t('static.comment')}}</th>
-                        <th>{{$t('static.client_source')}}</th>
-                        <th>{{$t('static.order_status')}}</th>
-                        <th>{{$t('static.review_status')}}</th>
-                        <th>{{$t('static.currency')}}</th>
-                        <th>{{$t('static.payment_method')}}</th> 
-                      -->
                   </tr>
               </thead>
               <tbody>
@@ -201,11 +168,12 @@
                     <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                     <td v-if="item.payWay==4">WeChat</td>
                     <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td>
-                    <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
+                    <td>{{item.orderStatus | assess item.type item.logistics item.verifierName}}</td>          
+                    <!--<td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
                     <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                     <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
                     <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
-                    <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td> <!-- {{$t('static.wait_ship')}} -->
+                    <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td> {{$t('static.wait_ship')}}
                     <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
                     <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
                     <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
@@ -215,7 +183,7 @@
                     <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
                     <td v-if="item.orderStatus==70">{{$t('static.order_over')}}</td>
                     <td v-if="item.orderStatus==-1">{{$t('static.cancle_order')}}</td>
-                    <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td>
+                    <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td> -->
                     <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
                     <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
                     <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>
@@ -271,10 +239,15 @@
         <pagination :combination="loadParam"  slot="page"></pagination>
     </mglist-model>
 
-    <div style="font-size:16px;border:solid #666;float:left">
-      <span style="margin-left:20px">总金额：<a>{{initAllOrderStatis.totalSum | isnull}}元</a></span>
-      <span style="margin-left:20px">已支付金额：<a>{{initAllOrderStatis.prepaidSum | isnull}}元</a></span>
-      <span style="margin-left:20px;margin-right: 20px;">未支付金额：<a>{{initAllOrderStatis.unpaidSum | isnull}}元</a></span>
+    <div style="font-size:14px;">
+        <span style="margin-left:1%;color:red">总金额：{{initAllOrderStatis.totalSum | isnull}}元</span>
+        <span style="margin-left:1%;color:red">已支付金额：{{initAllOrderStatis.prepaidSum | isnull}}元</span>
+        <span style="margin-left:1%;color:red">未支付金额：{{initAllOrderStatis.unpaidSum | isnull}}元</span>
+        <span style="margin-left:1%;">成本总金额：{{initAllOrderStatis.costSum | isnull}}元</span>
+        <span style="margin-left:1%;">商品总金额：{{initAllOrderStatis.amountSum  | isnull}}元</span>
+        <span style="margin-left:1%;">订单数量：{{initAllOrderStatis.orderCount | isnull}}笔</span>
+        <span style="margin-left:1%;">特惠总金额：{{initAllOrderStatis.preferentialSum  | isnull}}元</span>
+        <span style="margin-left:1%;">杂费总金额：{{initAllOrderStatis.incidentalsSum | isnull}}元</span>
     </div>
 
   </template>
@@ -323,7 +296,7 @@
             mglistModel,
             selectorgModel,
             employeeModel,
-            breedsearchModel
+            breedsearchModel,
         },
         data() {
             return {
@@ -564,86 +537,6 @@
                 this.auditParam.validate = 0;  
                 this.orderOrgAudit(this.auditParam);
             },
-            pendingOrder:function(item,sub){
-              console.log(item)
-                item.show=!item.show;
-                item.sub = sub;
-                this.disposeParam = item;
-                this.disposeParam.id = item.id;
-                this.disposeParam.show = true;
-                /*--采购状态type==0--*/
-                if(item.orderStatus==0&&item.type==0){
-                    this.disposeParam.tips="订单已提交，请审核！";
-                }
-                if(item.orderStatus==10&&item.type==0){
-                    this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
-                }
-                if(item.orderStatus==-1&&item.type==0){
-                    this.disposeParam.tips="订单已取消！";
-                }
-                if(item.orderStatus==-2&&item.type==0){
-                    this.disposeParam.tips="订单已过期！";
-                }
-                if(item.orderStatus==20&&item.type==0){
-                    this.disposeParam.tips="订单处理完成，等待买家付款！";
-                    this.disposeParam.payment=true;
-                }
-                if(item.orderStatus==30&&item.type==0){
-                    this.disposeParam.tips="订单买家已付款，商家正在核查！";
-                    /*this.disposeParam.Auditing = true;*/
-                }
-                if(item.orderStatus==40&&item.type==0){
-                    this.disposeParam.tips="您的订单已支付，请等待卖家发货！";
-                    /*this.disposeParam.sendoff = true; */
-                }
-                if(item.orderStatus==50&&item.type==0){
-                    this.disposeParam.tips="您的订单已发货，请注意保持电话通畅，等待收货确认！";
-                    this.disposeParam.delivery = true;
-                }
-                if(item.orderStatus==60&&item.type==0){
-                    this.disposeParam.tips="买家已收货，订单已完成！";
-                }
-                if(item.orderStatus==70&&item.type==0){
-                    this.disposeParam.tips="买家已收货，订单已完成！";
-                }
-                /*--销售状态type==1--*/
-                if(item.orderStatus==0&&item.type==1){
-                    this.disposeParam.tips="订单已提交，请审核！";
-                    this.disposeParam.handle = true;
-                }
-                if(item.orderStatus==10&&item.type==1){
-                    this.disposeParam.tips="订单正在处理，商家将进行电话确认，请保持电话通畅！";
-                    this.disposeParam.sales = true;
-                }
-                if(item.orderStatus==-1&&item.type==1){
-                    this.disposeParam.tips="订单已取消！";
-                }
-                if(item.orderStatus==-2&&item.type==0){
-                    this.disposeParam.tips="订单已过期！";
-                }
-                if(item.orderStatus==20&&item.type==1){
-                    this.disposeParam.tips="订单处理完成，等待买家付款！";
-                    this.disposeParam.payment=true;
-                }
-                if(item.orderStatus==30&&item.type==1){
-                    this.disposeParam.tips="订单买家已付款，商家正在核查！";
-                    this.disposeParam.Auditing = true;
-                }
-                if(item.orderStatus==40&&item.type==1){
-                    this.disposeParam.tips="订单已支付，请等待卖家发货！";
-                    this.disposeParam.sendoff = true;
-                }
-                if(item.orderStatus==50&&item.type==1){
-                    this.disposeParam.tips="订单已发货，请等待买家收货确认！";
-                    this.disposeParam.express = true;
-                }
-                if(item.orderStatus==60&&item.type==1){
-                    this.disposeParam.tips="买家已收货，订单已完成！";
-                }
-                if(item.orderStatus==70&&item.type==1){
-                    this.disposeParam.tips="买家已收货，订单已完成！";
-                }
-            }
         },
         events: {
             fresh: function(input) {
@@ -680,9 +573,8 @@
         padding: 35px 10px 0 10px;
     }
     .transfer{
-        margin-right: 20px;
+        margin-right:16px;
     }
-
     .order_table .table > ul {
         position: relative;
         width: 100%;

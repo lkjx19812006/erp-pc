@@ -32,7 +32,7 @@
                   </div>
                   <div class="editpage-input col-md-6" v-if="param.type==1">
                     <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
-                    <input  type="text" class="form-control edit-input" value="{{param.consigner}}" v-model="employeeParam.consignerName"  v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
+                    <input  type="text" class="form-control edit-input" value="{{param.verifierName}}" v-model="employeeParam.consignerName"  v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
                   </div>
               </div>
               <section class="editsection">

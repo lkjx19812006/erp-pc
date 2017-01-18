@@ -1189,6 +1189,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
         param.show = false;
         param.checked = false;
         param.consigneeAddr =res.json().result.consigneeAddr;
+        param.goodsDesc =res.json().result.goodsDesc;
         param.unpaid=res.json().result.unpaid;
         if(res.json().code==200){
           dispatch(types.ORDER_UPDATE_DATA, param);

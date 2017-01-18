@@ -8,7 +8,7 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <applysend-model :param="applyParam" v-if="applyParam.show"></applysend-model>
     <reapply-model :param="reapplyParam" v-if="reapplyParam.show"></reapply-model>
-
+    <language-model v-show="false"></language-model>
     <mglist-model>
 
       <!-- 头部搜索 -->
@@ -138,27 +138,23 @@
                   <td>{{item.consignee}}</td>
                   <td>{{item.consigneePhone}}</td>
                   <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
-                  <!-- <td v-if="item.payWay===0">{{$t('static.offline')}}</td>
-
-                  <td v-if="item.payWay==1">{{$t('static.alipay')}}</td>
-                  <td v-if="item.payWay==2">{{$t('static.pingan')}}</td>
-                  <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
-                  <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td> -->
-                  <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
-                  <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
-                  <td v-if="item.orderStatus==20" style="color:#fa6705">{{$t('static.waiting_order')}}</td>
-                  <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
-                  <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td>
-                  <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
-                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
-                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
-                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==2">已重新发货（仓库审核）</td>
-                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==50">{{$t('static.order_over')}}（补充合同申请）</td>
-                  <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==60">{{$t('static.order_over')}}（售后处理中）</td>
-                  <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
-                  <td v-if="item.orderStatus==70">{{$t('static.order_over')}}</td>
-                  <td v-if="item.orderStatus==-1">{{$t('static.cancle_order')}}</td>
-                  <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td>
+                  <td v-if="this.language=='zh_CN'">{{item.orderStatus | assess item.type item.logistics item.verifierName}}</td>
+                  <td v-if="this.language=='en'">{{item.orderStatus | Enassess item.type item.logistics item.verifierName}}</td>   
+               <!--    <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
+               <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
+               <td v-if="item.orderStatus==20" style="color:#fa6705">{{$t('static.waiting_order')}}</td>
+               <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
+               <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td>
+               <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
+               <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
+               <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
+               <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==2">已重新发货（仓库审核）</td>
+               <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==50">{{$t('static.order_over')}}（补充合同申请）</td>
+               <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==60">{{$t('static.order_over')}}（售后处理中）</td>
+               <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
+               <td v-if="item.orderStatus==70">{{$t('static.order_over')}}</td>
+               <td v-if="item.orderStatus==-1">{{$t('static.cancle_order')}}</td>
+               <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td> -->
                   <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
                   <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
                   <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>
@@ -167,20 +163,8 @@
                   <td v-if="item.validate==-2"><div style="background:red;color:#fff">{{$t('static.unapproved')}}</div></td>
                   <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                   <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
-                <!-- <td></td>
-                  <td>{{item.country}}</td>
-                  <td>{{item.province}}</td>
-                  <td>{{item.city}}</td>
-                  <td>{{item.comments}}</td>
-                  <td v-if="item.clients===0" style="background:red;color:#fff">PC</td>
-                  <td v-if="item.clients==1" style="background:green;color:#fff">android</td>
-                  <td v-if="item.clients==2" style="background:blue;color:#fff">wechart</td>
-                  <td v-if="item.clients==3" style="background:#444444;color:#fff">ios</td>
-                  <td v-if="item.clients!=0&&item.clients!=1&&item.clients!=2&&item.clients!=3"  style="background:#000;color:#fff">未说明</td>
-                  <td>{{item.currency | Currency}}</td> 
-                -->
                   <td>
-                      <a class="operate" v-if="item.validate==0"  @click="updateOrder({
+                      <a class="operate" v-if="item.validate==0||item.validate==-2"  @click="updateOrder({
                         show:true,
                         id:item.id,
                         index:$index,
@@ -192,6 +176,7 @@
                         customer:item.customer,
                         currency:item.currency,
                         consigner:item.consigner,
+                        verifierName:item.verifierName,
                         consignee:item.consignee,
                         consigneePhone:item.consigneePhone,
                         customerPhone:item.consigneePhone,
@@ -313,6 +298,7 @@
     import applysendModel from '../order/second_order/orderAudit'
     import reapplyModel from '../tips/auditDialog'
     import mglistModel from '../mguan/mgListComponent.vue'
+    import languageModel  from '../tools/language.vue'
     import {
         getList,
         initMyOrderlist,
@@ -340,7 +326,8 @@
             filter,
             mglistModel,
             reapplyModel,
-            applysendModel
+            applysendModel,
+            languageModel
         },
         data() {
             return {
@@ -374,6 +361,7 @@
                 dialogParam:{
                   show: false,
                 },
+                language:'',
                 line_height:0,
                 createParam:{
                     show:false,
@@ -721,6 +709,7 @@
         },
         created() {
             changeMenu(this.$store.state.table.isTop,this.getEmpolyeeOrder,this.loadParam,localStorage.myOrderParam); 
+            this.language = localStorage.lang;
         }
     }
   </script>

@@ -53,7 +53,8 @@
                             <input type="text" class="form-control edit-input" v-model="param.customerName" value="{{param.customerName}}"  v-validate:custname="['required']" readonly="true" @click="searchCustomer(param.customerName,param.customer)"/>
                         </div>
                         <!-- 供应商选择 -->
-                        <div class="editpage-input col-md-4"  v-if="param.type===0">
+                        <div class="editpage-input col-md-4"  v-if="param.type==0">
+                        
                             <label class="editlabel">{{$t('static.supplier_name')}} <span class="system_danger" v-if="$validation.supplier.required">{{$t('static.required')}}</span></label>
                             <input type="text" class="form-control edit-input" v-model="supplierParam.supplierName"  v-validate:supplier="{required:true}" readonly="true" @click="selectSupplier()"/>
                         </div>
