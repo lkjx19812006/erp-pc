@@ -187,7 +187,7 @@
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
                                                 <td>{{item.quality}}</td>
-                                                <td>{{item.price}}<span v-if="item.offerEUnit!=''&&item.offerEUnit!==null">（{{item.offerEUnit}}）</span></td>
+                                                <td>{{item.offerPrice}}<span v-if="item.offerEUnit!=''&&item.offerEUnit!==null">（{{item.offerEUnit}}）</span></td>
                                                 <td>{{item.exchangeRate}}</td>
                                                 <td>{{item.number}}（{{item.unit | Unit}}）</td>
                                                 <td>{{item.offererName}}</td>
