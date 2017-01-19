@@ -13,68 +13,7 @@
 
       <!-- 头部搜索 -->
       <div slot="top">
-         <div class="clear">
-            <div class="right">
-                <button class="btn btn-default transfer" @click="newOrder()">{{$t('static.new')}}</button>
-                <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review_application')}}</button> -->
-                <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-                <!-- <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
-                <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
-            </div>
-            <div class="left">
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
-                 <dd class="left">
-                      <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                          <option value="">{{$t('static.please_select')}}</option>
-                          <option value="0">{{$t('static.purchase')}}</option>
-                          <option value="1">{{$t('static.sell')}}</option>
-                      </select>
-                 </dd>
-              </dl>
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
-                 <dd class="left">
-                       <select    v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
-                              <option value="">{{$t('static.please_select')}}</option>
-                              <option value="0">{{$t('static.create_order')}}</option>
-                              <option value="10">{{$t('static.order_procing')}}</option>
-                              <option value="20">{{$t('static.waiting_order')}}</option>
-                              <option value="30">{{$t('static.awaiting_review')}}</option>
-                              <option value="40">{{$t('static.wait_ship')}}</option>
-                              <option value="50">{{$t('static.wait_receipt')}}</option>
-                              <option value="60">{{$t('static.awaiting_comment')}}</option>
-                              <option value="70">{{$t('static.order_over')}}</option>
-                      </select>
-                 </dd>
-              </dl>
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
-                 <dd class="left">
-                       <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
-                          <option value="">{{$t('static.please_select')}}</option>
-                          <option value="1">{{$t('static.together')}}</option>
-                          <option value="2">{{$t('static.three_side')}}</option>
-                          <option value="3">{{$t('static.self_support')}}</option>
-                      </select>
-                 </dd>
-              </dl>
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
-                 <dd class="left">
-                    <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
-                 </dd>
-              </dl>
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
-                 <dd class="left">
-                    <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
-                 </dd>
-              </dl>
-              <button type="button" class="new_btn"  @click="resetTime()">{{$t('static.clear_all')}}</button>
-                <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
-            </div>
-         </div>
+        <ordersearch-model v-on:order-search="selectSearch"></ordersearch-model>
       </div>
       <!-- 中间列表 -->
       <div slot="form">
@@ -296,6 +235,7 @@
     import reapplyModel from '../tips/auditDialog'
     import mglistModel from '../mguan/mgListComponent.vue'
     import languageModel  from '../tools/language.vue'
+    import ordersearchModel from '../mguan/orderSearch.vue'
     import {
         getList,
         initMyOrderlist,
@@ -324,7 +264,8 @@
             mglistModel,
             reapplyModel,
             applysendModel,
-            languageModel
+            languageModel,
+            ordersearchModel
         },
         data() {
             return {
@@ -468,7 +409,11 @@
             }
         },
         methods: {
-            selectSearch:function(){
+            selectSearch:function(searchParam){
+                this.loadParam = searchParam;
+                this.loadParam.link='/order/myList';
+                this.loadParam.key='myOrderList';
+                this.loadParam.employee=this.initLogin.id;
                 this.getEmpolyeeOrder(this.loadParam);
             },
             editClick: function(sub) {

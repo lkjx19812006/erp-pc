@@ -304,7 +304,6 @@
       },
     created() {
       changeMenu(this.$store.state.count.isTop,this.getSalesApplyList,this.loadParam,localStorage.myFundParam); 
-      console.log(this.initLogin)
     }
   }
 </script>
