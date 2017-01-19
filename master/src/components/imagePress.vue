@@ -60,7 +60,7 @@ export default {
                          let reader = new FileReader();
                       let  img = new Image();
                     reader.onload = function(e) {
-                        if (input.files[0].size > 2048000) { //图片大于2000kb则压缩
+                        if (input.files[0].size > 2048000) { //图片大于2M则压缩
                             img.src = e.target.result;
                             img.onload = function() {
                                 _self.image = _self.compress(img);
@@ -104,7 +104,7 @@ export default {
                 let ctx = canvas.getContext('2d');
                 //如果图片大于四百万像素，计算压缩比并将大小压至50万以下
                 let ratio=1;
-               /* if ((ratio = width * height / 300000) > 1) {
+                /*if ((ratio = width * height / 300000) > 1) {
                     ratio = Math.sqrt(ratio);
                     width /= ratio;
                     height /= ratio;
