@@ -694,10 +694,10 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
         if (key == 'no' && param[key] != '') {
             body.orderNo = param[key];
         }
-        if (key == 'ctime' && param[key] != '') {
+        if (key == 'startTime' && param[key] != '') {
             body.startTime = param[key];
         }
-        if (key == 'ftime' && param[key] != '') {
+        if (key == 'endTime' && param[key] != '') {
             body.endTime = param[key];
         }
         if (key == 'mode' && param[key] != '') {
@@ -717,6 +717,9 @@ export const getEmpolyeeOrder = ({ dispatch }, param) => { //业务员的订单(
         }
         if (key == 'type' && param[key] != '') {
             body.type = param[key];
+        }
+        if (key == 'validate' && param[key] !== '') {
+            body.validate = param[key];
         }
     }
     Vue.http({
@@ -766,12 +769,6 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
         }
         if (key == 'no' && param[key] != '') {
             body.orderNo = param[key];
-        }
-        if (key == 'ctime' && param[key] != '') {
-            body.startTime = param[key];
-        }
-        if (key == 'ftime' && param[key] != '') {
-            body.endTime = param[key];
         }
         if (key == 'mode' && param[key] != '') {
             body.mode = param[key];
