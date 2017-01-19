@@ -532,7 +532,6 @@
                 this.tipsParam.alert=true;
             },
             orderCheck:function(id,index,validate){ 
-                
                 this.auditParam.id = id;
                 this.auditParam.index = index;
                 this.auditParam.validate = validate;

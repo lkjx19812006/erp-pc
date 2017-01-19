@@ -8,6 +8,16 @@
       <div slot="top">
           <div class="clearfix">
             <dl class="clear left transfer">
+               <dt class="left transfer marg_top">订单类型：</dt>
+               <dd class="left">
+                  <select class="form-control" v-model="loadParam.orderType" @change="selectSearch()">
+                    <option value="">全部</option>
+                    <option value="0">采购</option>
+                    <option value="1">销售</option>
+                  </select>
+               </dd>
+            </dl>
+            <dl class="clear left transfer">
                <dt class="left  marg_top">商品名称：</dt>
                <dd class="left">
                   <input type="text"  class="form-control" v-model="loadParam.orderDesc"  @keyup.enter="selectSearch()"/>
@@ -19,16 +29,7 @@
                   <input type="text"  class="form-control" v-model="loadParam.orderNo"  @keyup.enter="selectSearch()"/>
                </dd>
             </dl>
-            <dl class="clear left transfer">
-               <dt class="left transfer marg_top">订单类型：</dt>
-               <dd class="left">
-                  <select class="form-control" v-model="loadParam.orderType" @change="selectSearch()">
-                    <option value="">全部</option>
-                    <option value="0">采购</option>
-                    <option value="1">销售</option>
-                  </select>
-               </dd>
-            </dl>
+            
             <dl class="clear left transfer">
                <dt class="left transfer marg_top">客户名称：</dt>
                <dd class="left">

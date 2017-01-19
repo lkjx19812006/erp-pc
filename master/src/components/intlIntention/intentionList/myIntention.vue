@@ -14,7 +14,7 @@
         <div slot="top">
             <div class="clear" >
                   <dl class="clear left">
-                     <dt class="left transfer marg_top">{{$t('static.breed')}}：</dt>
+                     <dt class="left marg_top">{{$t('static.breed')}}：</dt>
                      <dd class="left">
                            <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
                      </dd>
@@ -37,8 +37,7 @@
                            <input type="text" class="form-control" v-model="loadParam.customerEmail" @keyup.enter="intentionSearch()"/>
                      </dd>
                   </dl>
-                  <button class="new_btn transfer pull-left" @click="resetCondition()">{{$t('static.clear_all')}}</button>
-                  <button class="new_btn transfer pull-left"  @click="intentionSearch()">{{$t('static.search')}}</button>        
+                 
             </div>
             <div class="clearfix" style="margin-right: 10px">
                 <div class="btn-group pull-left">
@@ -46,7 +45,9 @@
                     <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.inquire===0}" @click="clickday(0)">{{$t('static.not_inquiry')}}</button>
                     <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===1}" @click="clickday(1)">{{$t('static.inquiry')}}</button>
                     <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===2}" @click="clickday(2)">{{$t('static.quotation')}}</button>
-                    <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===3}" @click="clickday(3)">{{$t('static.quo_complete')}}</button>
+                    <button class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.inquire===3}" @click="clickday(3)">{{$t('static.quo_complete')}}</button> 
+                    <button class="new_btn transfer pull-left" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                  <button class="new_btn transfer pull-left"  @click="intentionSearch()">{{$t('static.search')}}</button>        
                 </div>
                 <button class="btn btn-primary pull-right transfer" @click="intentionSearch()">{{$t('static.refresh')}}</button>  
                 <button class="btn btn-default pull-right" @click="createIntention()">{{$t('static.new')}}</button>
@@ -446,6 +447,7 @@ export default {
             this.loadParam.employeeName='';
             this.loadParam.customerName='';
             this.loadParam.breedId='';
+            this.loadParam.inquire='';
             this.loadParam.breedName='';
             this.loadParam.customerEmail='';
             this.getIntlIntentionList(this.loadParam);

@@ -9,16 +9,6 @@
       <div slot="top">
         <div class="clearfix">
           <dl class="clear left">
-             <dt class="left  marg_top">类型：</dt>
-             <dd class="left">
-                  <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                      <option value="">{{$t('static.please_select')}}</option>
-                      <option value="0">付款</option>
-                      <option value="1">收款</option>
-                  </select>
-             </dd>
-          </dl>
-          <dl class="clear left transfer">
              <dt class="left  marg_top">支付名称：</dt>
              <dd class="left">
                 <input type="text"  class="form-control" v-model="loadParam.payName"  @keyup.enter="selectSearch()"/>
@@ -50,6 +40,13 @@
               <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.validate===1}" @click="clickday(1)">申请中</button>
               <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.validate===2}" @click="clickday(2)">审核通过</button>
               <button class="btn btn-default"  v-bind:class="{ 'btn-warning':  this.loadParam.validate===3}" @click="clickday(3)">审核未通过</button>
+              <!-- <button type="button" class="new_btn transfer pull-left"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+              <button class="new_btn transfer pull-left" @click="selectSearch()">{{$t('static.search')}}</button> -->
+          </div>
+          <div class="btn-group transfer">
+              <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===''}" @click="clickType('')">{{$t('static.please_select')}}</button>
+              <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0}" @click="clickType(0)">付款</button>
+              <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.type===1}" @click="clickType(1)">收款</button>
               <button type="button" class="new_btn transfer pull-left"  @click="resetTime()">{{$t('static.clear_all')}}</button>
               <button class="new_btn transfer pull-left" @click="selectSearch()">{{$t('static.search')}}</button>
           </div>
@@ -236,15 +233,20 @@
         this.changeParam.show = true;
       },
       selectSearch:function(){
-           this.getMyFundList(this.loadParam);
+          this.getMyFundList(this.loadParam);
       },
       clickday:function(validate){
          this.loadParam.validate = validate;
-         this.getMyFundList(this.loadParam);
+         this.selectSearch();
+      },
+      clickType:function(type){
+         this.loadParam.type = type;
+         this.selectSearch();
       },
       resetTime:function(){
         this.loadParam.amount='';
         this.loadParam.type='';
+        this.loadParam.validate='';
         this.loadParam.payName='';
         this.loadParam.payUserName='';
         this.loadParam.payNumber='';
