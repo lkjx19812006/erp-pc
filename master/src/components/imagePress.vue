@@ -57,10 +57,10 @@ export default {
                     _self.fileName=file.name;
                     if(file.type.split('/')[0]=='image'){
 
-                         let reader = new FileReader();
+                      let reader = new FileReader();
                       let  img = new Image();
                     reader.onload = function(e) {
-                        if (input.files[0].size > 204800) { //图片大于200kb则压缩
+                        if (input.files[0].size > 10240000) { //图片大于10M则压缩
                             img.src = e.target.result;
                             img.onload = function() {
                                 _self.image = _self.compress(img);
@@ -103,23 +103,23 @@ export default {
                 let canvas = document.createElement("canvas");
                 let ctx = canvas.getContext('2d');
                 //如果图片大于四百万像素，计算压缩比并将大小压至50万以下
-                let ratio;
-                if ((ratio = width * height / 300000) > 1) {
+                let ratio=1;
+                /*if ((ratio = width * height / 300000) > 1) {
                     ratio = Math.sqrt(ratio);
                     width /= ratio;
                     height /= ratio;
                 } else {
                     ratio = 1;
-                }
+                }*/
                 canvas.width = width;
                 canvas.height = height;
                 ctx.fillStyle = "#fff";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, width, height);
                 let ndata = canvas.toDataURL(img.src.split(';')[0].split(':')[1], 1);
-                if (ndata.length > 165399) {
+                /*if (ndata.length > 165399) {
                     ndata = canvas.toDataURL(img.src.split(';')[0].split(':')[1], 165399 / ndata.length);
-                }
+                }*/
                 canvas.width = canvas.height = 0;
                 return ndata;
             },
