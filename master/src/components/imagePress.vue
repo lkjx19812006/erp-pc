@@ -57,10 +57,10 @@ export default {
                     _self.fileName=file.name;
                     if(file.type.split('/')[0]=='image'){
 
-                      let reader = new FileReader();
+                         let reader = new FileReader();
                       let  img = new Image();
                     reader.onload = function(e) {
-                        if (input.files[0].size > 10240000) { //图片大于10M则压缩
+                        if (input.files[0].size > 2048000) { //图片大于2M则压缩
                             img.src = e.target.result;
                             img.onload = function() {
                                 _self.image = _self.compress(img);
