@@ -40,6 +40,37 @@
                    </dd>
                 </dl>
                 <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                   <dd class="left">
+                      <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                    <div class="left">
+                        <dt class="left transfer marg_top">起止时间：</dt>
+                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+
+                    <div class="left">
+                        <dt class="left marg_top">~~</dt>
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </dl>
+
+              </div>
+            </div>
+            <div class="clear">
+              <div class="right">
+                <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
+                  <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button>
+                 -->
+                  <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+              </div>
+              <div class="left">
+                <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
                    <dd class="left">
                          <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
@@ -48,6 +79,25 @@
                             <option value="2">{{$t('static.three_side')}}</option>
                             <option value="3">{{$t('static.self_support')}}</option>
                         </select>
+                   </dd>
+                </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">审核状态：</dt>
+                   <dd class="left">
+                         <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
+                            <option value="">{{$t('static.please_select')}}</option>
+                            <option value="0">未审核</option>
+                            <option value="1">待审核</option>
+                            <option value="2">审核通过</option>
+                            <option value="-2">审核未通过</option>
+                        </select>
+                   </dd>
+                </dl>
+                
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
+                   <dd class="left">
+                      <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
                    </dd>
                 </dl>
 
@@ -60,50 +110,16 @@
                 </dl>
 
                 <dl class="clear left transfer">
-                    <div class="col-xs-6">
-                        <dt class="left transfer marg_top">起始时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </dl>
-              </div>
-            </div>
-            <div class="clear">
-              <div class="right">
-                <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
-                  <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button>
-                 -->
-                  <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-              </div>
-              <div class="left">
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
-                   <dd class="left">
-                      <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
-                   </dd>
-                </dl>
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
-                   <dd class="left">
-                      <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
-                   </dd>
-                </dl>
-                <dl class="clear left transfer">
                     <dt class="left transfer marg_top">{{$t('static.breed')}}：</dt>
                     <dd class="left">
                           <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
                     </dd>
                 </dl>
 
-                <dl class="clear left" style="margin-left:-20px;">
-                    <div class="col-xs-6">
-                        <dt class="left transfer marg_top">结束时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </dl>
-                <button type="button" class="new_btn"  @click="resetTime()">{{$t('static.clear_all')}}</button>
                 <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
+
+                <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+                
                 <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
               </div>  
             </div>
@@ -373,6 +389,7 @@
                     ctime:'',
                     ftime:'',
                     mode:'',
+                    validate:'',
                     total:0
                 },
                 language:'',
@@ -468,6 +485,9 @@
                 if(this.loadParam.endTime){
                   url  +=  "&endTime=" + this.loadParam.endTime;
                 }
+                if(this.loadParam.validate){
+                  url  +=  "&validate=" + this.loadParam.validate;
+                }
                 return url;
             }
         },
@@ -530,6 +550,7 @@
               this.loadParam.dataStatus="";
               this.loadParam.no="";
               this.loadParam.mode="";
+              this.loadParam.validate="";
               this.loadParam.type="";
               this.loadParam.clients="";
               this.loadParam.payWay="";

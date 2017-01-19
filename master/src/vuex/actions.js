@@ -336,6 +336,9 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         if (key == 'mode' && param[key] !== '') {
             url += '&mode=' + param[key];
         }
+        if (key == 'validate' && param[key] !== '') {
+            url += '&validate=' + param[key];
+        }
         if (key == 'dataStatus' && param[key] !== '') {
             url += '&dataStatus=' + param[key];
         }
@@ -775,6 +778,9 @@ export const getOrgOrder = ({ dispatch }, param) => { //部门的订单列表
         }
         if (key == 'mode' && param[key] != '') {
             body.mode = param[key];
+        }
+        if (key == 'validate' && param[key] !== '') {
+            body.validate = param[key];
         }
         if (key == 'dataStatus' && param[key] != '') {
             body.dataStatus = param[key];
