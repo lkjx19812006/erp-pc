@@ -14,25 +14,30 @@
                <button class="btn btn-primary  transfer" @click="searchMsg()">刷新</button>
             </div>
             <div class="clearfix">
-               <div class="name_search left clearfix">
-                   <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" placeholder="按客户名称搜索" v-model="loadParam.customerName"  @keyup.enter="searchMsg()">
-               </div>
-               <div class="name_search left clearfix">
-                   <img src="/static/images/search.png" height="24" width="24">
-                   <input type="text" class="search_input" v-model="loadParam.customerPhone" placeholder="按客户电话搜索" @keyup.enter="searchMsg()">
-               </div>
-               <div class="name_search left clearfix">
-                   <!-- <img src="/static/images/search.png" height="24" width="24"> -->
-                   <select class="form-control search_input" v-model="loadParam.validate" @change="searchMsg()">
-                        <option value="">全部</option>
-                        <option value="0">初始状态</option>
-                        <option value="1">申请审核</option>
-                        <option value="2">审核通过</option>
-                        <option value="3">审核未通过</option>
-                   </select>
-                   <!-- <input type="text" class="search_input" v-model="loadParam.validate" placeholder="按业务员名称搜索" @keyup.enter="searchMsg()"> -->
-               </div>
+                <dl class="clear left">
+                     <dt class="left  marg_top">{{$t('static.client_name')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.customerName"  @keyup.enter="searchMsg()" placeholder="{{$t('static.enter_client_name')}}"/>
+                     </dd>
+                  </dl>
+                  <dl class="clear left transfer">
+                     <dt class="left  marg_top">{{$t('static.client_phone')}}：</dt>
+                     <dd class="left">
+                           <input type="text" class="form-control" v-model="loadParam.customerPhone"  @keyup.enter="searchMsg()" placeholder="{{$t('static.enter_client_phone')}}"/>
+                     </dd>
+                  </dl>
+                 <dl class="clearfix pull-left transfer">
+                     <dt class="left  marg_top">{{$t('static.review_status')}}：</dt>
+                     <dd class="left">
+                       <select class="form-control search_input" v-model="loadParam.validate" @change="searchMsg()">
+                            <option value="">{{$t('static.please_select')}}</option>
+                            <option value="0">{{$t('static.initial')}}</option>
+                            <option value="1">{{$t('static.review_application')}}</option>
+                            <option value="2">{{$t('static.approved')}}</option>
+                            <option value="3">{{$t('static.unapproved')}}</option>
+                       </select>
+                     </dd>
+                 </dl>
                <button class="new_btn  pull-left transfer" @click="searchMsg()">搜索</button>
                <button class="new_btn  pull-left transfer" @click="resetCondition()">清空条件</button>
             </div>

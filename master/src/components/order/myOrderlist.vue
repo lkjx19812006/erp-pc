@@ -14,13 +14,6 @@
       <!-- 头部搜索 -->
       <div slot="top">
          <div class="clear">
-            <div class="right">
-                <button class="btn btn-default transfer" @click="newOrder()">{{$t('static.new')}}</button>
-                <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review_application')}}</button> -->
-                <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-                <!-- <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
-                <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
-            </div>
             <div class="left">
               <dl class="clear left transfer">
                  <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
@@ -35,7 +28,7 @@
               <dl class="clear left transfer">
                  <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
                  <dd class="left">
-                       <select    v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
+                       <select  v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
                               <option value="">{{$t('static.please_select')}}</option>
                               <option value="0">{{$t('static.create_order')}}</option>
                               <option value="10">{{$t('static.order_procing')}}</option>
@@ -49,6 +42,27 @@
                  </dd>
               </dl>
               <dl class="clear left transfer">
+                 <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                 <dd class="left">
+                    <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
+                 </dd>
+              </dl>             
+              <dl class="clear left transfer">
+                  <div class="col-xs-6">
+                      <dt class="left transfer marg_top">起始时间：</dt>
+                      <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
+                      </mz-datepicker>
+                  </div>
+              </dl>
+            </div>
+         </div>
+         <div class="clear">
+            <div class="right">
+                <button class="btn btn-default transfer" @click="newOrder()">{{$t('static.new')}}</button>
+                <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+            </div>
+            <div class="left">
+              <dl class="clear left transfer">
                  <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
                  <dd class="left">
                        <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
@@ -60,9 +74,15 @@
                  </dd>
               </dl>
               <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                 <dt class="left transfer marg_top">{{$t('static.review_status')}}：</dt>
                  <dd class="left">
-                    <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
+                      <select class="form-control" v-model="loadParam.validate" @change="selectSearch()">
+                          <option value="">{{$t('static.please_select')}}</option>
+                          <option value="0">{{$t('static.wait_approval')}}</option>
+                          <option value="1">{{$t('static.approving')}}</option>
+                          <option value="2">{{$t('static.approved')}}</option>
+                          <option value="-2">{{$t('static.unapproved')}}</option>
+                      </select>
                  </dd>
               </dl>
               <dl class="clear left transfer">
@@ -71,6 +91,14 @@
                     <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
                  </dd>
               </dl>
+              <dl class="clear left transfer">
+                  <div class="col-xs-6">
+                      <dt class="left transfer marg_top">结束时间：</dt>
+                      <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
+                      </mz-datepicker>
+                  </div>
+              </dl>
+              
               <button type="button" class="new_btn"  @click="resetTime()">{{$t('static.clear_all')}}</button>
                 <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
             </div>
@@ -347,11 +375,12 @@
                     payWay:'',
                     clients:'',
                     dataStatus:'',
+                    validate:'',
                     customerName:'',
                     customerPhone:'',
                     no:'',
-                    ctime:'',
-                    ftime:'',
+                    endTime:'',
+                    startTime:'',
                     mode:'',
                     total:0
                 },
@@ -503,7 +532,6 @@
                 this.tipsParam.alert=true;
             },
             orderCheck:function(id,index,validate){ 
-                
                 this.auditParam.id = id;
                 this.auditParam.index = index;
                 this.auditParam.validate = validate;
@@ -673,8 +701,8 @@
                 this.getEmpolyeeOrder(this.loadParam);
             },
             resetTime:function(){
-              this.loadParam.ctime = "";
-              this.loadParam.ftime = "";
+              this.loadParam.startTime = "";
+              this.loadParam.endTime = "";
               this.loadParam.consigneePhone = "";
               this.loadParam.consignee = "";
               this.loadParam.customerPhone = "";
@@ -683,6 +711,7 @@
               this.loadParam.dataStatus="";
               this.loadParam.no="";
               this.loadParam.mode="";
+              this.loadParam.validate="";
               this.loadParam.type="";
               this.loadParam.clients="";
               this.loadParam.payWay="";

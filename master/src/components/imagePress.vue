@@ -3,7 +3,7 @@
         <form>
             <input type="file" @change="previewImg" class="input_image" name="photo" accept="{{type}}">
             <img v-bind:src="image" class="image_show" v-if="imageShow&&!showurl">
-            <img v-bind:src="showurl" class="image_show" v-if="imageShow&&showurl">
+            <img v-bind:src="showurl" class="image_show" v-if="imageShow&&showurl" >
             <img src="../../static/images/close.png" v-show="showurl" @click="delImage" class="close_image">
             <div v-show="!imageShow">
                 <div>{{fileName}}</div>
@@ -172,6 +172,7 @@ h1 {
 
 .image_show {
     width: 100%;
+    max-height: 200px;
 }
 
 .close_image{

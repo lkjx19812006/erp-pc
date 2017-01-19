@@ -5,6 +5,7 @@
         </div>
         <div class="order_table" id="table_box">
 	        <slot name="form"></slot>
+	        <!-- <table is="my_table"></table> -->
         </div>
 
         <div id="base_pagination" class="base_pagination">
