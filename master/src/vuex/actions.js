@@ -5512,6 +5512,9 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
     if (param.leavedate) {
         param.leavedate = param.leavedate.split(' ')[0] + ' 00:00:00';
     }
+    param.photo = '';
+    if (param.image_f) { param.photo += param.image_f }
+    console.log(param.photo)
     const updatedata = {
         id: param.id,
         name: param.name,
@@ -5530,7 +5533,8 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
         privilege: param.privilege,
         gender:param.gender,
         wechat:param.wechat,
-        goodfield: param.goodfield
+        goodfield: param.goodfield,
+        photo:param.photo
     }
     Vue.http({
         method: 'PUT',

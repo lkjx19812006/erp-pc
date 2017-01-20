@@ -83,6 +83,8 @@ export default {
             wechat:'',
             goodfield:'',
             name:'',
+            image_f_show:'',
+            path:'',
             id:this.initLogin.id
          }
       }
@@ -119,16 +121,23 @@ export default {
       this.personalParam.wechat= this.initEmployeeDetail.wechat;
       this.personalParam.goodfield= this.initEmployeeDetail.goodfield;
       this.personalParam.name= this.initEmployeeDetail.name;
+      this.personalParam.photo = this.initEmployeeDetail.photo;
       this.personalParam.url ='/employee/';
       this.personalParam.key='employeeList';
       this.personalParam.title = 'first';
       this.personalParam.show=true;
-      this.personalParam.callback = this.callback;
+      this.personalParam.callback = this.personCallback;
     },
     callback:function(title){
         this.tipParam.show = true;
         this.tipParam.name=title;
         this.tipParam.alert=true;
+    },
+    personCallback:function(title){
+        this.tipParam.show = true;
+        this.tipParam.name=title;
+        this.tipParam.alert=true;
+        this.getEmployeeDetail(this.loadParam)
     },
     close:function(index){
       this.tabs.splice(index,1);
