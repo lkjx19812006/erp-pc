@@ -92,7 +92,8 @@
                     ftime:'',
                     mode:'',
                     total:0
-                }
+                },
+                show:false
 			}
 		},
 		vuex:{
@@ -104,10 +105,41 @@
 			selectSearch:function(){
 				console.log('1111')
                 this.$emit('order-search', this.loadParam);
+            },
+            resetTime:function(){
+              this.loadParam.ctime = "";
+              this.loadParam.ftime = "";
+              this.loadParam.consigneePhone = "";
+              this.loadParam.consignee = "";
+              this.loadParam.customerPhone = "";
+              this.loadParam.customerName = "";
+              this.loadParam.orderStatus="";
+              this.loadParam.dataStatus="";
+              this.loadParam.no="";
+              this.loadParam.mode="";
+              this.loadParam.type="";
+              this.loadParam.clients="";
+              this.loadParam.payWay="";
+              this.$emit('order-search', this.loadParam);
+            },
+            selectSearch:function(){
+                this.$emit('order-search', this.loadParam);
+            },
+            newOrder:function(){
+            	console.log('1111')
+            	this.$dispatch('newOrder', this.show)
             }
 		}
 	}
 </script>
 <style scoped>
-	
+.transfer{
+    margin-right: 10px;
+}
+.order_table {
+    position: relative;
+}
+.marg_top{
+    margin-top: 8px;
+}
 </style>
