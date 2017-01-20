@@ -39,6 +39,7 @@ import {
    CUSTOMER_BATCH_DELETE,
    CUSTOMER_BATCH_SUPPLIER,
    UPDATE_CUSTOMER_DETAIL,
+   EMPLOYEE_DETAIL,
    CUSTOMER_UPDATE_DATA,
    UPDATE_ADDR_DETAIL,
    ADDRESS_TABLE,
@@ -669,7 +670,8 @@ const state = {
       }
   },
   identify:{},
-  trackingDetail:{}
+  trackingDetail:{},
+  employeeDetail:{}
 }
 
 const mutations = {
@@ -1710,13 +1712,22 @@ const mutations = {
         state.clientDetail.trackings.arr.unshift(temp);
         state.basicBaseList.intentionDetail.trackings.arr.unshift(temp);
     },
-
-
-
+    [EMPLOYEE_DETAIL](state,data){ //员工详情
+        state.employeeDetail = data;
+    },
     [UPDATE_EMPLOY_DATA](state, data) { //修改员工信息
+      if(data.title=='first'){
+        state.basicBaseList[data.key].gender = data.gender;
+        state.basicBaseList[data.key].goodfield = data.goodfield;
+        state.basicBaseList[data.key].qq = data.qq;
+        state.basicBaseList[data.key].wechat = data.wechat;
+        state.basicBaseList[data.key].mobile = data.mobile;
+      }else{
         for (var key in data) {
             state.basicBaseList[data.key][data.sub][key] = data[key];
         }
+      }
+        
     },
     [UPDATA_INTENTION_DATA](state,data){ //修改意向
       if(data.key=='user'){   //会员详情页修改意向

@@ -3201,6 +3201,26 @@ export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及�
     })
 }
 
+export const getEmployeeDetail = ({ dispatch }, param) => { //员工列表以及搜索
+    console.log(param)
+    param.loading = true;
+    var apiurl = apiUrl.clientList + '/employee/'+param.id;
+    Vue.http({
+        method: 'GET',
+        url: apiurl,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var employ = res.json().result;
+        dispatch(types.EMPLOYEE_DETAIL, employ);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
 export const getOrgList = ({ dispatch }, param) => { //部门列表
     param.loading = true;
     Vue.http({
@@ -5486,9 +5506,7 @@ export const createEmploy = ({ dispatch }, param) => { //新增员工信息
 }
 
 export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
-    console.log(param)
     if (param.entrydate) {
-        console.log('dadda');
         param.entrydate = param.entrydate.split(' ')[0] + ' 00:00:00';
     }
     if (param.leavedate) {
@@ -5509,7 +5527,10 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
         leavedate: param.leavedate,
         orgid: param.orgid,
         orgcode: param.orgcode,
-        privilege: param.privilege
+        privilege: param.privilege,
+        gender:param.gender,
+        wechat:param.wechat,
+        goodfield: param.goodfield
     }
     Vue.http({
         method: 'PUT',
@@ -5522,7 +5543,6 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('修改成功')
         param.callback(res.json().msg);
         if(res.json().code==200){
             dispatch(types.UPDATE_EMPLOY_DATA, param);

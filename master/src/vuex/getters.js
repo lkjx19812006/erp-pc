@@ -18,8 +18,6 @@ export const getList = (state) => {
     return JSON.parse(JSON.stringify(state.category.list));
 }
 
-
-
 export const getCharList = (state) => {
     const option={
     	options:JSON.parse(JSON.stringify(state.echarts.barChartOption)),
@@ -198,10 +196,13 @@ export const initClientDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.clientDetail));
 }
 
-export const initEmployeeList = (state) => {
+export const initEmployeeList = (state) => { //员工
     return JSON.parse(JSON.stringify(state.table.basicBaseList.employeeList));
 }
 
+export const initEmployeeDetail = (state) => { //员工详情
+    return JSON.parse(JSON.stringify(state.table.employeeDetail));
+}
 export const initOrgList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.orgList));
 }

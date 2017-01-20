@@ -135,6 +135,7 @@ export const ROLE_DATA = 'ROLE_DATA'    //角色列表
 export const EMPLOYEE_DATA ='EMPLOYEE_DATA'  //员工（业务员）列表数据
 export const ADD_EMPLOYEE_DATA = 'ADD_EMPLOYEE_DATA'  //新增员工信息
 export const UPDATE_EMPLOY_DATA ='UPDATE_EMPLOY_DATA' //修改员工信息
+export const EMPLOYEE_DETAIL = 'EMPLOYEE_DETAIL' //员工详情
 
 export const IDENTIFY_DATA ='IDENTIFY_DATA' //认证信息
 
