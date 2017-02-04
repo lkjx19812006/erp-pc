@@ -73,10 +73,17 @@
                        <label class="editlabel">账号 <span class="system_danger" v-if="$validation.paynumber.required">{{$t('static.required')}}</span></label>
                        <input type="text" v-model="param.payNumber" class="form-control edit-input" v-validate:paynumber="['required']" /> 
                     </div>
+                    <div class="editpage-input col-md-6">
+                       <label class="editlabel">{{$t('static.currency')}}</label>
+                       <select v-model="param.currency" class="form-control" disabled="true">
+                          <option v-for="item in initCurrencylist" value="{{item.id}}">{{item.cname}}{{item.name}}</option>
+                       </select>
+                    </div>
                     <div class="editpage-input col-md-12">
                        <label class="editlabel">备注</label>
                        <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" value="{{param.comment}}"></textarea>
                     </div>
+                    
                     <div class="editpage-input col-md-12">
                          <label class="editlabel">支付/收款凭证</label>
                          <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;width:20%"></press-image>
@@ -142,6 +149,13 @@
                     <div class="editpage-input col-md-6" >
                        <label class="editlabel">账号 <span class="system_danger" v-if="$validation.paynumber.required">{{$t('static.required')}}</span></label>
                        <input type="text" v-model="param.payNumber" class="form-control edit-input" v-validate:paynumber="['required']" /> 
+                    </div>
+                    <div class="editpage-input col-md-6">
+                       <label class="editlabel">{{$t('static.currency')}}</label>
+                       <select v-model='param.currency' class="form-control" disabled="true">
+                          <option v-for="item in initCurrencylist" value=
+                          "{{item.id}}">{{item.cname}}{{item.name}}</option>
+                       </select>
                     </div>
                     <div class="editpage-input col-md-12">
                        <label class="editlabel">备注</label>
@@ -251,12 +265,14 @@ import bankModel from './bankBranch'
 import {
     initMyFundList,
     initBankList,
-    initBankBranchList
+    initBankBranchList,
+    initCurrencylist
 } from '../../../vuex/getters'
 import {
     getMyFundList,
     getBankList,
     getBankBranchList,
+    getCurrencyList,
     orderApplySend
 } from '../../../vuex/actions'
 export default {
@@ -270,11 +286,13 @@ export default {
         getters: {
             initMyFundList,
             initBankList,
-            initBankBranchList
+            initBankBranchList,
+            initCurrencylist
         },
         actions: {
             getMyFundList,
             getBankList,
+            getCurrencyList,
             getBankBranchList,
             orderApplySend
         }
@@ -361,7 +379,8 @@ export default {
         },
         applySend:function(item){
            this.param.show = false;
-           this.orderApplySend(item)
+           console.log(item)
+           this.orderApplySend(item);
         }
     },
     events:{
@@ -373,7 +392,7 @@ export default {
       },
     },
     created() {
-        /*this.getMyFundList(this.loadParam);*/
+        this.getCurrencyList(this.loadParam);
         console.log(this.initMyFundList)
         this.getBankList(this.payName);
         if(this.param.payName&&this.param.titles=='申请分期审核'){

@@ -158,7 +158,7 @@
                                               <td v-if="item.type==1">收款</td>
                                               <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}}立即支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
                                               <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}}的{{item.extra}}天内支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
-                                              <td>{{item.description}}</td>
+                                              <td>{{item.comment}}</td>
                                               <td v-if="item.validate==0" style="color:#91a0ff;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,
@@ -211,6 +211,7 @@
                                                           type:item.type,
                                                           payWay:'',
                                                           payName:'',
+                                                          currency:initOrderDetail.currency,
                                                           paySubName:'',
                                                           payUserName:'',
                                                           extra:item.extra,
@@ -236,6 +237,7 @@
                                                           payWay:'',
                                                           payName:'',
                                                           paySubName:'',
+                                                          currency:initOrderDetail.currency,
                                                           payUserName:'',
                                                           payNumber:'',
                                                           comment:'',
@@ -259,6 +261,7 @@
                                                           type:item.type,
                                                           validate:item.validate,
                                                           payWay:'',
+                                                          currency:1,
                                                           payName:'',
                                                           paySubName:'',
                                                           payUserName:'',
@@ -279,6 +282,7 @@
                                                           bizSubId:item.id,
                                                           loading:false,
                                                           cur:1,
+                                                          currency:1,
                                                           type:item.type,
                                                           validate:item.validate,
                                                           payWay:'',
@@ -660,6 +664,8 @@ export default {
                         item.payWay = this.initMyFundList[0].payWay;
                         item.paySubName = this.initMyFundList[0].paySubName;
                         item.images = this.initMyFundList[0].images;
+                        item.currency = this.initMyFundList[0].currency;
+                        item.comment = this.initMyFundList[0].comment;
                         this.auditParam.show=true;
                         /* item.amount = this.initMyFundList[this.initMyFundList.length-1].amount;
                         item.payName = this.initMyFundList[this.initMyFundList.length-1].payName;

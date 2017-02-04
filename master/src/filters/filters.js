@@ -62,9 +62,7 @@ Vue.filter('assess', function(val,type,logistic,name){ //订单状态判断
 	}else if(val==60&&type==1&&logistic==60){
 		return '已完成订单（售后处理中）'
 	}else if(val==60&&type==0){
-		return '已完成订单'
-	}else if(val==60&&type==0){
-		return '已完成订单'
+		return '质量检验'
 	}else if(val==70){
 		return '已完成订单'
 	}else if(val==0){

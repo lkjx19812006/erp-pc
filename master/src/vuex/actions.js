@@ -1051,7 +1051,6 @@ export const logisticsInfo = ({ dispatch }, param) => { //物流查看详情
 }
 export const createOrder = ({ dispatch }, data) => { //创建订单
     console.log(data);
-    console.log(data.consigneeAddr);
     if(data.city==null||data.city==''||!data.city){
         data.city=''; 
     }
@@ -1382,6 +1381,10 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     };
     if(param.id&&param.id!=''){
         body.id = param.id;
+    }
+    if(param.currency&&param.currency!=''){
+        body.currency = param.currency;
+        console.log(body.currency)
     }
     if(param.validate&&param.validate!=''){
         body.validate = param.validate;

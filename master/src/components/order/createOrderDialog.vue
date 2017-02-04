@@ -908,6 +908,12 @@ export default {
           this.city.cname=this.param.city;
           this.district.cname=this.param.district;
         }
+        if(this.param.goods.length>0){
+            for(var i=0;i < this.param.goods.length;i++){
+                this.altogether +=parseFloat(this.param.goods[i].number)*parseFloat(this.param.goods[i].price);
+                this.costmoney +=parseFloat(this.param.goods[i].number)*parseFloat(this.param.goods[i].costPrice);
+            }
+        }
     }
 }
 </script>
