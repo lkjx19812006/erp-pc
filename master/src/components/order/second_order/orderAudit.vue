@@ -75,7 +75,7 @@
                     </div>
                     <div class="editpage-input col-md-6">
                        <label class="editlabel">{{$t('static.currency')}}</label>
-                       <select v-model="param.currency" class="form-control" disabled="true">
+                       <select v-model="param.currency" class="form-control edit-input" disabled="true">
                           <option v-for="item in initCurrencylist" value="{{item.id}}">{{item.cname}}{{item.name}}</option>
                        </select>
                     </div>
@@ -152,7 +152,7 @@
                     </div>
                     <div class="editpage-input col-md-6">
                        <label class="editlabel">{{$t('static.currency')}}</label>
-                       <select v-model='param.currency' class="form-control" disabled="true">
+                       <select v-model='param.currency' class="form-control edit-input" disabled="true">
                           <option v-for="item in initCurrencylist" value=
                           "{{item.id}}">{{item.cname}}{{item.name}}</option>
                        </select>

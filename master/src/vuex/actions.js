@@ -1085,6 +1085,10 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
         orderStatus: data.orderStatus,
         goods: data.goods
     }
+    if(data.title1 == '采购订单'){
+        body.link = data.link;
+        console.log(body.link)
+    }
     if (data.email) {
         body.email = data.email;
     }

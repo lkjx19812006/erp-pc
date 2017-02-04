@@ -65,6 +65,7 @@
                   <th>日期</th>
                   <th>类型</th>
                   <th>金额</th>
+                  <th>货币类型</th>
                   <th>支付名称</th>
                   <th>业务员</th>
                   <th>用户名</th>
@@ -89,6 +90,7 @@
                   })">{{item.bizType | bizType}}{{item.type | payMent}}</a>
                 </td>
                 <td>{{item.amount}}</td>
+                <td>{{item.currency | Currency}}</td>
                 <td>{{item.payName}}<span v-if="item.paySubName!==''">（{{item.paySubName}}）</span></td>
                 <td>{{item.employeeName}}</td>
                 <td>{{item.payUserName}}</td>
@@ -318,7 +320,7 @@
     background-position: 5px;
   }
    #table_box  table th,#table_box  table td{
-    width:132px;
-    min-width: 132px;
+    width:122px;
+    min-width: 120px;
   }
 </style>

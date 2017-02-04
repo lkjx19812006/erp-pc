@@ -7,7 +7,6 @@
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <apply-model :param="applyDetails" v-if="applyDetails.show"></apply-model>
-    <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <shadow-model :param="param">
         <div class="cover_loading">
              <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
@@ -32,13 +31,7 @@
                               <ul class="clearfix" style="font-size: 14px;padding:5px 0">
                                   <mg-label :title="$t('static.order_no')">{{initOrderDetail.no}}</mg-label>
                                   <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link==''">{{$t('static.sell')}}</mg-label>
-                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link!==''">{{$t('static.sell')}}<a slot="" @click="linkDetail({
-                                    show:true,
-                                    id:initOrderDetail.link,
-                                    loading:true,
-                                    key:'orderDetail',
-                                    contact:'/order/myList'
-                                    })">（采购订单详情）</a></mg-label>
+                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link!==''">{{$t('static.sell')}}</mg-label>
                                   <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0">{{$t('static.purchase')}}</mg-label>
                                   <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
                                   <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
@@ -551,7 +544,6 @@ import auditModel from './second_order/orderAudit'
 import applyModel from './second_order/applyDetaillist'
 import mgLabel from '../mguan/mgLabel.vue'
 import shadowModel from '../mguan/shadow.vue'
-import detailModel from '../order/purchaseDetail.vue'
 import {
   initOrderDetail,
   initMyFundList
@@ -576,7 +568,6 @@ export default {
       applyModel,
       mgLabel,
       shadowModel,
-      detailModel
     },
     props:['param'],
     data(){
@@ -627,9 +618,6 @@ export default {
             url:'/order/updateStages/',
             stages:[],
             orderStatus:''
-        },
-        detailParam:{
-          show:false
         },
         auditParam:{
             show:false,
@@ -715,9 +703,6 @@ export default {
                 item.index = index;
                 this.trackingParam = item;
                 this.trackingParam.show = true;
-          },
-          linkDetail:function(detail){ //关联采购详情
-            this.detailParam=detail;
           },
          createcredence:function(initOrderDetail){
             console.log(initOrderDetail)

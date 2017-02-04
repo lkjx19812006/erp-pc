@@ -209,7 +209,7 @@
                           url:'/order/',
                           goods:item.goods,
                           goodsBack:[]
-                          },item.goods)" v-if="item.orderStatus==40" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">生成订单
+                          },item.goods)" v-if="item.orderStatus==40&&item.link==''" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">生成订单
                         </button>         
                       </div>
                         
@@ -510,27 +510,11 @@
                   }
               }
               this.applyParam.orderStatus = 0;
+              this.applyParam.title1='采购订单';
+              this.applyParam.type = 0;
+              this.applyParam.link = item.id;
               console.log(this.applyParam)
               this.applyParam.callback = this.orderBack;
-            },
-            updateOrder:function(param,goods){
-                this.dialogParam=param;
-                var _this = this;
-                if(goods==null){
-                   goods=[];
-                }
-                for(var i=0;i<goods.length;i++){
-                    this.dialogParam.goodsBack[i] = {};
-                    for(var key in goods[i]){
-                        this.dialogParam.goodsBack[i][key] = goods[i][key];
-                    }
-                }
-                this.dialogParam.callback=this.updateBack;
-            },
-            updateBack:function(title){
-              this.tipsParam.show = true;
-              this.tipsParam.name=title;
-              this.tipsParam.alert=true;
             },
             orderBack:function(title){
                 this.tipsParam.show = true;
