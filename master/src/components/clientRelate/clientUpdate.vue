@@ -11,17 +11,19 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="edit-content">
-            <h3>{{$t('static.edit')}}{{param.name}}</h3>
+            <h3>{{$t('static.edit')}} {{param.name}}</h3>
         </div>
         <validator name="validation">
             <div class="edit-model">
                 <section class="editsection clear" v-cloak>
                     <div class="editpage">
                         <div class="editpageleft">
+                            <!-- 客户名称 -->
                             <div class="editpage-input">
                                 <label class="editlabel" for="system">{{$t('static.client_name')}}<span class="system_danger" v-if="$validation.name.minlength">{{$t('static.enter_client_name')}}</span></label>
                                 <input type="text" v-model='param.name' v-validate:name="{minlength:2}" class="form-control edit-input" value="{{param.name}}" />
                             </div>
+                            <!-- 客户类型 -->
                             <div class="editpage-input"  v-if="this.language=='zh_CN'">
                                 <label class="editlabel">{{$t('static.client_type')}}</label>
                                 <select class="form-control edit-input"  v-model='param.type'>
@@ -117,10 +119,16 @@
 
                                 <input type="text" v-model='param.principal' class="form-control edit-input" value="{{param.principal}}" />
                             </div>
-                            <div class="editpage-input">
+                            <!-- 客户手机 -->
+                            <div class="editpage-input" v-if="this.language=='zh_CN'">
                                 <label class="editlabel" for="system">{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.mainphone.phone">{{$t('static.validate_cellphone')}}</span></label>
                                 <input type="text" v-model="param.mainPhone" class="form-control edit-input" v-validate:mainphone="['phone']" debounce="500" value="{{param.mainPhone}}" />
                             </div>
+                            <div class="editpage-input" v-if="this.language=='en'">
+                                <label class="editlabel" for="system">{{$t('static.cellphone')}}</label>
+                                <input type="text" v-model="param.mainPhone" class="form-control edit-input"  debounce="500" value="{{param.mainPhone}}" />
+                            </div>
+                            <!-- 客户邮箱 -->
                             <div class="editpage-input">
                                 <label class="editlabel" for="system">{{$t('static.email')}}<span class="system_danger" v-if="$validation.email.email">{{$t('static.validate_email')}}</span></label>
                                 <input type="text" v-model="param.email" class="form-control edit-input" v-validate:email="['email']" value="{{param.email}}" />
@@ -328,8 +336,13 @@ export default {
         this.city.cname=this.param.cityName;
       }
       this.getCountryList(this.countryParam);
-      this.getUserTypeList(this.countryParam)
-      this.language = localStorage.lang;
+      this.getUserTypeList(this.countryParam);
+      if(localStorage.lang){
+        this.language = localStorage.lang;
+      }else{
+        this.language = "zh_CN";
+      }
+      
 
     }
 }

@@ -43,9 +43,13 @@
                 </select>
               </div>
               <!-- 联系人手机 -->
-              <div class="client-detailInfo  col-md-6">
+              <div class="client-detailInfo  col-md-6" v-if="this.language=='zh_CN'">
                 <label class="editlabel" for="system">{{$t('static.cellphone')}}<span class="system_danger" v-if="$validation.cphone.phone">{{$t('static.validate_cellphone')}}</span></label>
                 <input type="text" class="form-control edit-input"  debounce="500" v-validate:cphone="['phone']" v-model="contacts[0].phone" />
+              </div>
+              <div class="client-detailInfo  col-md-6" v-if="this.language=='en'">
+                <label class="editlabel" for="system">{{$t('static.cellphone')}}</label>
+                <input type="text" class="form-control edit-input"  debounce="500" v-model="contacts[0].phone" />
               </div>
               <!-- 客户电话 -->
               <div class="client-detailInfo  col-md-6">
