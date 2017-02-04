@@ -19,10 +19,10 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==4">
         <order-review></order-review>
     </div>
-    <!-- 药款转出记录 -->
-    <!-- <div class="myOrder" v-if="$route.path.split('=')[1]==5">
-        <drugs-record></drugs-record>
-    </div> -->
+    <!-- 供应部订单查询 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==5">
+        <ordersupply-list></ordersupply-list>
+    </div>
     <!-- 待支付订单 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==6">
       <order-pay></order-pay>
@@ -58,7 +58,6 @@
 </template>
 <script>
 import paymentRecord from '../components/order/paymentRecordList'
-import drugsRecord  from  '../components/order/drugsRecordList'
 import employeeOrder from '../components/order/myOrderlist'
 import orgOrder  from  '../components/order/orgOrderlist'
 import orderReview  from  '../components/order/checkedOrder'
@@ -71,10 +70,10 @@ import mycontractModel from '../components/order/myContractList'
 import orgcontractModel from '../components/order/orgContractList'
 import myafterapplyModel from '../components/order/mySalesApply'
 import orgafterapplyModel from  '../components/order/orgSalesApply'
+import ordersupplyList from '../components/order/intentionalOrder'
 export default {
     components: {
         paymentRecord,
-        drugsRecord,
         employeeOrder,
         orgOrder,
         orderReview,
@@ -86,7 +85,8 @@ export default {
         mycontractModel,
         orgcontractModel,
         orgafterapplyModel,
-        myafterapplyModel
+        myafterapplyModel,
+        ordersupplyList
     }
 }
 </script>

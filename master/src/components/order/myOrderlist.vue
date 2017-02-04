@@ -123,7 +123,7 @@
                     <th>{{$t('static.cost')}}{{$t('static.total')}}</th>
                     <th>{{$t('static.wait_payment')}}</th>
                     <th>{{$t('static.paid')}}</th>
-                    <!-- <th>{{$t('static.supplier_name')}}</th> -->
+                    <th>{{$t('static.currency')}}</th>
                     <th>{{$t('static.consignee_name')}}</th>
                     <th>{{$t('static.consignee_phone')}}</th>
                     <th>{{$t('static.consignee_address')}}</th>
@@ -160,6 +160,7 @@
                   <td>{{item.cost}}</td>
                   <td>{{item.unpaid}}</td>
                   <td>{{item.prepaid}}</td>
+                  <td>{{item.currency | Currency}}</td>
                   <td>{{item.consignee}}</td>
                   <td>{{item.consigneePhone}}</td>
                   <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
@@ -779,36 +780,9 @@
         position: relative;
         margin-bottom: 10px;
     }
-
-    .order_table .table > ul {
-        position: relative;
-        width: 100%;
-        display: table;
-        border-bottom: 1px solid #ddd;
-        margin-bottom: 0;
-    }
-
-    .order_table .table > ul >li {
-        float: left;
-        padding: 7.5px 0;
-        text-align: center;
-        width: 11.1%;
-        display: table-cell;
-    }
-
-    .order_table .table > ul >li a {
-        color: #003077;
-    }
-
-    .order_table .table_hover > ul:hover {
-        background: #f5f5f5;
-    }
-
-    .order_table .table > ul >li img {
-        margin: auto;
-    }
-    .v-spinner {
-        text-align: center;
+    #table_box table th,#table_box table td{
+      width: 95px;
+      min-width: 94px;
     }
     .order_pagination{
         text-align: center;

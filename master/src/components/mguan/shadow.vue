@@ -2,7 +2,7 @@
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
     <div class="container modal_con" v-show="param.show" >
         <div class="top-title" @click="param.show=false">
-            <span class="glyphicon glyphicon-remove-circle" ></span>
+            <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <slot></slot>
     </div>
@@ -16,7 +16,6 @@ export default {
             name:''
         }
     }
-
 }
 </script>
 <style scoped>

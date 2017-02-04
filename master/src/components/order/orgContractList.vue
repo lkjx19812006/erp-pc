@@ -224,7 +224,7 @@
         common('tab','table_box',1);
       },
     created() {
-      changeMenu(this.$store.state.count.isTop,this.getMyContractList,this.loadParam,localStorage.myFundParam); 
+      changeMenu(this.$store.state.count.isTop,this.getMyContractList,this.loadParam,localStorage.myFundParam);
     }
   }
 </script>

@@ -141,7 +141,7 @@
                       <th>{{$t('static.transcation_amount')}}</th>
                       <th>{{$t('static.wait_payment')}}</th>
                       <th>{{$t('static.paid')}}</th>
-                      <!-- <th>{{$t('static.supplier_name')}}</th> -->
+                      <th>{{$t('static.currency')}}</th>
                       <th>{{$t('static.salesman')}}</th>
                       <th>{{$t('static.consignee_name')}}</th>
                       <th>{{$t('static.consignee_phone')}}</th>
@@ -174,7 +174,7 @@
                     <td>{{item.total}}</td>
                     <td>{{item.unpaid}}</td>
                     <td>{{item.prepaid}}</td>
-                    
+                    <td>{{item.currency | Currency}}</td>
                     <td>{{item.employeeName}}</td>
                     <td>{{item.consignee}}</td>
                     <td>{{item.consigneePhone}}</td>
@@ -619,13 +619,12 @@
     .order_table .table_hover > ul:hover {
         background: #f5f5f5;
     }
-
+    #table_box table th,#table_box table td{
+      width: 95px;
+      min-width: 94px;
+    }
     .order_table .table > ul >li img {
         margin: auto;
-    }
-
-    .v-spinner {
-        text-align: center;
     }
     .order_pagination{
         text-align: center;

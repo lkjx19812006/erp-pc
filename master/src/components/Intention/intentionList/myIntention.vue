@@ -17,14 +17,14 @@
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top" style="letter-spacing:3px">客户名：{{height}}</dt>
+                   <dt class="left transfer marg_top">客户名：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
                 </dl>
 
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top" style="letter-spacing:3px" >客户手机：</dt>
+                   <dt class="left transfer marg_top">客户手机：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>

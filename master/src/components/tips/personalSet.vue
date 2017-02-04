@@ -10,7 +10,7 @@
                         <div>
                             <div class="clearfix col-md-6 col-xs-6" style="padding:0">
                                 <div class="client-detailInfo  col-md-12" style="height:150px;padding-bottom:0">
-                                    <label>{{$t('static.file')}}</label>
+                                    <label>头像</label>
                                     <press-image :value.sync="param.image_f" :showurl.sync="param.photo" :type.sync="param.fileType" :param="imageParam"  style="width:120px" v-if="param.photo!==''"></press-image>
                                     <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="param.fileType" :param="imageParam" style="width:120px" v-else></press-image>
                                 </div>
