@@ -4569,6 +4569,7 @@ export const createIntlIntention = ({ dispatch }, param) => { //新增国际意�
         country: param.country,
         province: param.province,
         city: param.city,
+        port: param.port,
         district: param.district,
         address: param.address,
         duedate: param.duedate,

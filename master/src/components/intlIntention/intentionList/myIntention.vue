@@ -316,6 +316,7 @@ export default {
                 country:'',
                 province:'',
                 city:'',
+                port:'',
                 district:'',
                 address:'',
                 duedate:'',
