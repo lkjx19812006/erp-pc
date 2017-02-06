@@ -187,7 +187,7 @@
                        </div>
 
                        <div class="editpage-input">
-                         <label class="editlabel">港口</label>
+                         <label class="editlabel">Port of destination</label>
                          <input type="text" v-model='param.port' class="form-control edit-input" />
                        </div>
                     

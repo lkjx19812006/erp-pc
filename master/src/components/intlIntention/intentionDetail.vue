@@ -89,6 +89,10 @@
                                     <label class="editlabel">{{$t('static.packaging')}}：</label>
                                     <span>{{initIntlIntentionDetail.pack}}</span>
                                 </div>
+                                <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6">
+                                    <label class="editlabel">Port of destination：</label>
+                                    <span>{{initIntlIntentionDetail.port}}</span>
+                                </div>
                             </div>
                             
                         </div>
