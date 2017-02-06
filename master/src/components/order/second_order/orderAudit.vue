@@ -28,7 +28,7 @@
                        <label class="editlabel">名称 <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
                        <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
                        <select class="form-control edit-input" v-model="param.payName">
-                            <option>线下转账</option>
+                            <option>线下打款</option>
                             <option>支付宝</option>
                             <option>Wechat</option>
                             <option>药款支付</option>
@@ -56,7 +56,8 @@
                     </div>
                     <div class="editpage-input col-md-6"  v-if="param.payWay==2">
                        <label class="editlabel">银行支行</label>
-                       <input type="text" v-model="param.paySubName"  class="form-control edit-input" @click="branch({
+                       <input type="text" v-model="param.paySubName" v-if="payName.name==''" disabled="true"  class="form-control edit-input" placeholder="请先选择一个银行" />
+                       <input type="text" v-model="param.paySubName" v-if="payName.name!==''"  class="form-control edit-input" @click="branch({
                           show:true,
                           name:this.payName.name
                         })"/> 
@@ -108,7 +109,7 @@
                        <label class="editlabel">名称 <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
                        <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
                        <select class="form-control edit-input" v-model="param.payName">
-                            <option>线下转账</option>
+                            <option>线下打款</option>
                             <option>支付宝</option>
                             <option>Wechat</option>
                             <option>药款支付</option>
@@ -193,7 +194,7 @@
                        <label class="editlabel">名称 <span class="system_danger" v-if="$validation.name.required">{{$t('static.required')}}</span></label>
                        <input type="text" v-validate:name="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" />
                        <select class="form-control edit-input" v-model="param.payName">
-                            <option>线下转账</option>
+                            <option>线下打款</option>
                             <option>支付宝</option>
                             <option>Wechat</option>
                             <option>药款支付</option>
@@ -350,7 +351,7 @@ export default {
         },
         selectname:function(){
            if(this.param.payWay==0){
-              this.param.payName ='线下转账';
+              this.param.payName ='线下打款';
               this.param.paySubName = "";
            }else if(this.param.payWay==1){
               this.param.payName ='支付宝';
