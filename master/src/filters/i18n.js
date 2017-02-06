@@ -62,7 +62,7 @@ var locales = {
       box:'瓦楞纸箱',
       packing:'真空包装',
       come_to_see_product:'上门看货',
-      packaging:'包装',
+      packaging:'包装要求',
       international:'是否国际',
       Number_of_inquiries:'询价次数',
       quotation_number:'报价次数',

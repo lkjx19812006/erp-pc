@@ -19,13 +19,13 @@
                 <input type="text" style='float:left;' class="search_input" v-model="loadParam.name" placeholder="按品种名称搜索" @keyup.enter="categoryNameSearch()">
               </div>
               <div class="ordertel_search clearfix" style='border:0;'>
-                  <button class="new_btn" @click="categoryNameSearch()">搜索</button>
-                  <button text="button" class="new_btn transfer" @click="reset()">清空条件</button>
+                  <button class="new_btn" @click="categoryNameSearch()">{{$t('static.search')}}</button>
+                  <button text="button" class="new_btn transfer" @click="reset()">{{$t('static.clear_all')}}</button>
               </div>
             </div>
             <div class="right">
-                <button class="btn btn-default" @click="createBreed()">新建</button>
-                <button class="btn btn-primary" @click="categoryNameSearch()">刷新</button>
+                <button class="btn btn-default" @click="createBreed()">{{$t('static.new')}}</button>
+                <button class="btn btn-primary" @click="categoryNameSearch()">{{$t('static.refresh')}}</button>
             </div>
         </div>
         <!-- 中间列表 -->
@@ -36,14 +36,14 @@
             <table class="table table-hover table_color table-striped" v-cloak id="tab">
                 <thead>
                     <tr> 
-                        <th>创建时间</th>  
+                        <th>{{$t('static.create_time')}}</th>  
                         <th>编码</th>
-                        <th>品种名称</th>
+                        <th>{{$t('static.breed')}}</th>
                         <th>品种类别</th>
                         <th>拼音</th>
                         <th>英文</th>
                         <th>拉丁文</th>
-                        <th>操作</th>
+                        <th>{{$t('static.handle')}}</th>
                     </tr>
                 </thead>
                 <tbody>
