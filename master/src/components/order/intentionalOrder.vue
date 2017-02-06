@@ -167,52 +167,50 @@
                   <td v-if="item.validate==-2"><div style="background:red;color:#fff">{{$t('static.unapproved')}}</div></td>
                   <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                   <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
-                  <td>
-                      <div v-if="item.validate==2">
-                        <button class="btn btn-danger" @click="applyOrder({
-                          show:true,
-                          id:item.id,
-                          index:$index,
-                          type:item.type,
-                          consigner:item.consigner,
-                          sourceType:0,
-                          sample:item.sample,
-                          intl:item.intl,
-                          customer:item.customer,
-                          currency:item.currency,
-                          consigner:item.consigner,
-                          verifierName:item.verifierName,
-                          consignee:item.consignee,
-                          consigneePhone:item.consigneePhone,
-                          customerPhone:item.consigneePhone,
-                          zipCode:item.zipCode,
-                          country:item.country,
-                          province:item.province,
-                          city:item.city,
-                          employee:item.employee,
-                          customerName:item.customerName,
-                          org:item.org,
-                          district:item.district,
-                          orderStatus:item.orderStatus,
-                          consigneeAddr:item.consigneeAddr,
-                          comments:item.comments,
-                          incidentals:item.incidentals,
-                          validate:item.validate,
-                          incidentalsDesc:item.incidentalsDesc,
-                          preferential:item.preferential,
-                          preferentialDesc:item.preferentialDesc,
-                          status:item.status,
-                          total:item.total,
-                          cost:item.cost,
-                          key:'myOrderList',
-                          link:alterOrder,
-                          url:'/order/',
-                          goods:item.goods,
-                          goodsBack:[]
-                          },item.goods)" v-if="item.orderStatus==40&&item.link==''" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">生成订单
-                        </button>         
-                      </div>
-                        
+                  <td v-if="item.validate==2">
+                    <button class="btn btn-danger" @click="applyOrder({
+                      show:true,
+                      id:item.id,
+                      index:$index,
+                      type:item.type,
+                      consigner:item.consigner,
+                      sourceType:0,
+                      sample:item.sample,
+                      intl:item.intl,
+                      customer:item.customer,
+                      currency:item.currency,
+                      consigner:item.consigner,
+                      verifierName:item.verifierName,
+                      consignee:item.consignee,
+                      consigneePhone:item.consigneePhone,
+                      customerPhone:item.consigneePhone,
+                      zipCode:item.zipCode,
+                      country:item.country,
+                      province:item.province,
+                      city:item.city,
+                      employee:item.employee,
+                      customerName:item.customerName,
+                      org:item.org,
+                      district:item.district,
+                      orderStatus:item.orderStatus,
+                      consigneeAddr:item.consigneeAddr,
+                      comments:item.comments,
+                      incidentals:item.incidentals,
+                      validate:item.validate,
+                      incidentalsDesc:item.incidentalsDesc,
+                      preferential:item.preferential,
+                      preferentialDesc:item.preferentialDesc,
+                      status:item.status,
+                      total:item.total,
+                      cost:item.cost,
+                      key:'myOrderList',
+                      link:alterOrder,
+                      url:'/order/',
+                      goods:item.goods,
+                      goodsBack:[]
+                      },item.goods)" v-if="item.orderStatus==40&&item.link==''" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">生成采购订单
+                    </button>        
+                    <button class="btn btn-default btn-gray" v-else>已生成采购订单</button> 
                   </td>
                 </tr>
             </tbody>

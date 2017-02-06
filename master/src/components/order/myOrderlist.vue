@@ -166,21 +166,6 @@
                   <td>{{item.country}} {{item.province}} {{item.city}} {{item.district}} {{item.consigneeAddr}}</td>
                   <td v-if="this.language=='zh_CN'">{{item.orderStatus | assess item.type item.logistics item.verifierName}}</td>
                   <td v-if="this.language=='en'">{{item.orderStatus | Enassess item.type item.logistics item.verifierName}}</td>   
-               <!--    <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
-               <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
-               <td v-if="item.orderStatus==20" style="color:#fa6705">{{$t('static.waiting_order')}}</td>
-               <td v-if="item.orderStatus==30">{{$t('static.awaiting_review')}}</td>
-               <td v-if="item.orderStatus==40">等待{{item.verifierName}}发货</td>
-               <td v-if="item.orderStatus==50">{{$t('static.wait_receipt')}}</td>
-               <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==3">{{$t('static.awaiting_comment')}}</td>
-               <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==40">{{$t('static.order_over')}}（质量合格）</td>
-               <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==2">已重新发货（仓库审核）</td>
-               <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==50">{{$t('static.order_over')}}（补充合同申请）</td>
-               <td v-if="item.orderStatus==60&&item.type==1&&item.logistics==60">{{$t('static.order_over')}}（售后处理中）</td>
-               <td v-if="item.orderStatus==60&&item.type==0">{{$t('static.order_over')}}</td>
-               <td v-if="item.orderStatus==70">{{$t('static.order_over')}}</td>
-               <td v-if="item.orderStatus==-1">{{$t('static.cancle_order')}}</td>
-               <td v-if="item.orderStatus==-2">{{$t('static.expired_order')}}</td> -->
                   <td v-if="item.sourceType==0">{{$t('static.new')}}</td>
                   <td v-if="item.sourceType==1">{{$t('static.intention')}}</td>
                   <td v-if="item.sourceType==2">{{$t('static.quote')}}</td>
@@ -190,7 +175,7 @@
                   <td v-if="item.validate==0">{{$t('static.wait_approval')}}</td>
                   <td v-if="item.validate==1">{{$t('static.approving')}}(待{{item.verifierName}}审核)</td>
                   <td>
-                      <a class="operate" v-if="item.validate==0||item.validate==-2"  @click="updateOrder({
+                      <button class="btn btn-primary btn-edit" v-if="(item.validate==0||item.validate==-2)&&item.orderStatus!==-1"  @click="updateOrder({
                         show:true,
                         id:item.id,
                         index:$index,
@@ -230,12 +215,18 @@
                         url:'/order/',
                         goods:item.goods,
                         goodsBack:[]
-                        },item.goods)"><img src="/static/images/{{$t('static.img_edit')}}.png"   alt="编辑" title="编辑"/>
-                      </a>
+                        },item.goods)">编辑
+                      </button>
                       <div v-if="item.validate==2">
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="(item.orderStatus==20||item.orderStatus==10)&&item.type==0">
-                             <img src="/static/images/{{$t('static.img_payorder')}}.png"  title="待财务付款" alt="待财务付款"/>
-                        </a>
+                        <button class="btn btn-danger"  @click="clickOn({
+                                show:true,
+                                id:item.id,
+                                loading:true,
+                                key:'orderDetail',
+                                orderStatus:item.orderStatus,
+                                contact:'/order/myList'
+                        })" v-if="(item.orderStatus==20||item.orderStatus==10)&&item.type==0" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">申请付款
+                        </button>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==0">
                               <img src="/static/images/{{$t('static.img_paid')}}.png"  title="待客户收款" alt="待客户收款" />
                         </a>
@@ -259,12 +250,9 @@
                         <button class="btn btn-warning" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.consigner==item.employee" style="background:#fff;color:#eea236;padding:1px 5px;">发货
                         </button>
                         <!-- 销售订单发货流程end -->
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0">
-                            <img src="/static/images/{{$t('static.img_take')}}.png"   alt="等待收货"/>
-                        </a>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70||(item.orderStatus >=60&&item.type==0)">
-                           <img src="/static/images/{{$t('static.img_finish')}}.png"   title="已完成订单" alt="已完成订单"/>
-                        </a>
+                        <button class="btn btn-success" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70||(item.orderStatus >=60&&item.type==0)" style="background:#fff;color:#eea236;padding:1px 5px;color:#398439">订单已完成
+                           <!-- <img src="/static/images/{{$t('static.img_finish')}}.png"   title="已完成订单" alt="已完成订单"/> -->
+                         </button>
                         <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==3" style="background:#fff;color:#eea236;padding:1px 5px;">质量检验
                         </button>
                         <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==2" style="background:#fff;color:#eea236;padding:1px 5px;">确认收货
@@ -272,13 +260,10 @@
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==10&&item.type==1">
                             <img src="/static/images/{{$t('static.img_payorder')}}.png"  title="待客户付款" alt="待客户付款"/>
                         </a>
-                        <!-- <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==20&&item.type==1">
-                            <img src="/static/images/{{$t('static.img_collection')}}.png"  title="申请收款" alt="申请收款"/>
-                        </a> -->
-                        <!--<a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==30&&item.type==1"><img src="/static/images/uncheck.png" height="18" width="38" title="申请收款" alt="申请收款"/></a>-->
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0">
-                             <img src="/static/images/{{$t('static.img_deliver')}}.png" title="待发货" alt="待发货"/>
-                        </a>
+                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==0" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">收货
+                        </button>
+                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">待客户发货
+                        </button>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1">
                             <img src="/static/images/{{$t('static.img_take')}}.png"  title="待客户收货" alt="待客户收货"/>
                         </a>
@@ -292,12 +277,9 @@
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==-2">
                             <img src="/static/images/{{$t('static.deadline')}}.png"  title="订单已过期" alt="订单已过期"/>
                         </a>
-                        <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)">
-                            <img src="/static/images/{{$t('static.img_apply')}}.png"  title="申请审核" alt="申请审核" />
-                        </a>
-                        <a class="operate" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2&&(item.orderStatus==0||item.orderStatus==70)">
-                            <img src="/static/images/{{$t('static.img_reset')}}.png"  title="重新申请" alt="重新申请" />
-                        </a>  
+                        <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==0&&(item.orderStatus==0||item.orderStatus==70)">申请审核</button>
+                        <button class="btn btn-default btn-apply" @click="orderCheck(item.id,$index,item.validate)" v-if="item.validate==-2&&(item.orderStatus==0||item.orderStatus==70)">重新申请
+                        </button>  
                   </td>
                 </tr>
             </tbody>
