@@ -57,6 +57,7 @@ import {
    BATCH_UPDATE_USER_DATA,
    BATCH_USER_INTENTION_AUDIT,
    ORG_DATA,
+   ORG_DETAIL,
    ROLE_DATA,
    QUICK_EDIT,
    FILE_DATA,
@@ -671,7 +672,8 @@ const state = {
   },
   identify:{},
   trackingDetail:{},
-  employeeDetail:{}
+  employeeDetail:{},
+  orgDetail:{}
 }
 
 const mutations = {
@@ -1648,6 +1650,9 @@ const mutations = {
 
     [ORG_DATA](state, data) { // 部门列表
         state.basicBaseList.orgList = data;
+    },
+    [ORG_DETAIL](state, data) { // 部门详情页面
+        state.orgDetail = data;
     },
     [ROLE_DATA](state, data) { // 部门列表
         state.basicBaseList.roleList = data;

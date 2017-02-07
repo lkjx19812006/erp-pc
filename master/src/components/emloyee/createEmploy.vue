@@ -1,4 +1,5 @@
 <template>
+<div>
     <orgsearch-model :param="orgNameParam" v-if="orgNameParam.show"></orgsearch-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
@@ -108,6 +109,7 @@
             </form>
         </validator>
     </div>
+</div>
 </template>
 <script>
 import calendar from '../calendar/vue.datepicker'

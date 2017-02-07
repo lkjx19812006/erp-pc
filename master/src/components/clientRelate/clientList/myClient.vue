@@ -644,12 +644,12 @@ export default {
             this.getClientList(this.loadParam);
         },
         selectEmpOrOrg: function (param) {
-        this.transferParam.employeeId = param.employeeId;
-        this.transferParam.employeeName = param.employeeName;
-        this.transferParam.orgId = param.orgId;
-        this.transferParam.orgName = param.orgName;
-        this.transferInfo(this.transferParam);
-      }
+            this.transferParam.employeeId = param.employeeId;
+            this.transferParam.employeeName = param.employeeName;
+            this.transferParam.orgId = param.orgId;
+            this.transferParam.orgName = param.orgName;
+            this.transferInfo(this.transferParam);
+        }
     },
     created() {
         this.getProvinceList(this.provinceParam);

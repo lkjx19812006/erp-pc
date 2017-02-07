@@ -1,4 +1,5 @@
 <template>
+  <div>
     <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
     <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
@@ -8,7 +9,7 @@
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <apply-model :param="applyDetails" v-if="applyDetails.show"></apply-model>
     <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
-    <shadow-model :param="param">
+    <shadow-model :param="param" >
         <div class="cover_loading">
              <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
         </div>
@@ -39,7 +40,14 @@
                                     key:'orderDetail',
                                     contact:'/order/myList'
                                     })">（采购订单详情）</a></mg-label>
-                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0">{{$t('static.purchase')}}</mg-label>
+                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link==''">{{$t('static.purchase')}}</mg-label>
+                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link!==''">{{$t('static.purchase')}}<a slot="" @click="linkDetail({
+                                    show:true,
+                                    id:initOrderDetail.link,
+                                    loading:true,
+                                    key:'orderDetail',
+                                    contact:'/order/myList'
+                                    })">（销售订单详情）</a></mg-label>
                                   <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
                                   <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
                                   <mg-label :title="$t('static.consignee_phone')">{{initOrderDetail.consigneePhone}}</mg-label>
@@ -149,7 +157,6 @@
                                       <table class="table  contactSet">
                                         <thead>
                                           <th>分期类型</th>
-<!--                                           <th>分期期数</th> -->
                                           <th colspan="6">分期说明</th>
                                           <!-- <th>付款比例</th> -->
                                          <!--  <th>分期支付时间</th> -->
@@ -530,6 +537,7 @@
           </div>
         </section>
     </shadow-model>
+  </div>
   <!-- <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
   <div class="container modal_con" v-show="param.show" >
       <div class="top-title">

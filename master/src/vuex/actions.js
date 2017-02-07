@@ -2739,7 +2739,10 @@ export const specDel = ({ dispatch }, param) => { //删除药材相关信息
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('删除成功')
+        console.log('删除成功');
+        if(param.url=='/org/'){
+            param.callback(res.json().msg)
+        }
         dispatch(types.DELETE_SPECS_DATA, param);
     }, (res) => {
         console.log('fail');
@@ -3158,8 +3161,6 @@ export const customerTransferBlacklist = ({ dispatch }, param) => {    //客户�
     });
 }
 
-
-
 export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及搜索
     console.log(param)
     param.loading = true;
@@ -3240,7 +3241,6 @@ export const getOrgList = ({ dispatch }, param) => { //部门列表
     }).then((res) => {
         var org = res.json().result;
         var arr = [];
-
         function getLeaf(tree, arr) { //获取树的叶子节点
             if (tree.lowerList.length == 0) {
                 arr.push(tree);
@@ -3266,6 +3266,24 @@ export const getOrgList = ({ dispatch }, param) => { //部门列表
     })
 }
 
+export const getOrgDetail = ({ dispatch }, param) => { //部门详情页面
+    param.loading = true;
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.clientList + '/org/'+param.id,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var orgDetail = res.json().result;
+        dispatch(types.ORG_DETAIL, orgDetail);
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
 export const getRoleList = ({ dispatch }, param) => { //获取角色列表
     console.log(param)
     param.loading = true;
@@ -4033,7 +4051,6 @@ export const transferEmploy = ({ dispatch }, param) => { //客户业务员划转
     });
 }
 export const transferInfo = ({ dispatch }, param) => { //客户部门划转信息
-
     const transferdata = {
         orgId: param.orgId,
         customerIds: param.arr
@@ -4060,6 +4077,32 @@ export const transferInfo = ({ dispatch }, param) => { //客户部门划转信�
     });
 }
 
+export const transferOrg = ({ dispatch }, param) => { //员工部门划转信息
+    console.log(param)
+    const transferdata = {
+        orgid: param.orgId,
+        id: param.employeeId,
+        transferCustomer:param.transferCustomer
+    }
+    console.log(transferdata)
+    Vue.http({
+        method: 'POST',
+        url: apiUrl.clientList + '/employee/transferOrg',
+        emulateHTTP: false,
+        body: transferdata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log('划转部门成功')
+        /*dispatch(types.CUSTOMER_TRANSFER, param);*/
+        param.callback(res.json().msg);
+    }, (res) => {
+        console.log('fail');
+    });
+}
 export const getIntentionList = ({ dispatch }, param) => { //意向信息列表以及搜索
     param.loading = true;
     console.log(param);

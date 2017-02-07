@@ -264,9 +264,8 @@
                         </button>
                         <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.type==0" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">待客户发货
                         </button>
-                        <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1">
-                            <img src="/static/images/{{$t('static.img_take')}}.png"  title="待客户收货" alt="待客户收货"/>
-                        </a>
+                        <button class="btn btn-primary" @click="pendingOrder(item,$index)" v-if="item.orderStatus==50&&item.type==1" style="background:#fff;color:#eea236;padding:1px 5px;border-color:#eea236">收货
+                          </button>
                         <a class="operate" @click="pendingOrder(item,$index)" v-if="item.orderStatus==0">
                             <img src="/static/images/{{$t('static.img_handle')}}.png"  title="订单待处理" alt="订单待处理"/>
                         </a>

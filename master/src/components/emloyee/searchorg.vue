@@ -10,22 +10,6 @@
     			<div class="cover_loading">
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 	            </div>
-	            <!-- <table class="table table-hover table_head table-striped " v-cloak>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>部门</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in initOrgList">
-                            <td  @click.stop="">
-                               <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"  @click="serviceselected($index,item.id,item.name,item.code)" ></label>
-                            </td>
-                            <td>{{item.name}}</td>
-                        </tr>
-                    </tbody>
-                </table> -->
                 <div class="trans_parten">
                     <treeview :value.sync="id"
                         :model="$store.state.table.basicBaseList.orgList"
