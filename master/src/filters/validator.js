@@ -15,8 +15,9 @@ Vue.validator('tel', function (val) {    //电话
 });
 
 Vue.validator('phone', function (val) {    //手机
+
   var val=val.replace(/[-+ ]/g,'');
-  return(/^\d{7,17}?$/.test(val));
+  return(/^\d{7,30}?$/.test(val));
   /*return (/^1(3[0-9]|4[57]|5[0-35-9]|7[01678]|8[0-9])\d{8}$/.test(val));*/
 });
 Vue.validator('intlphone', function (val) {    //国际手机验证
@@ -56,7 +57,7 @@ Vue.validator('postcode', function (val) {    //邮编
   return (/^[1-9][0-9]{5}$/.test(val)||(val===''));
 });
 
-Vue.validator('test', function (val) {    //邮编
+Vue.validator('test', function (val) {    
   console.log(val);
   return true;
 });
@@ -66,3 +67,5 @@ Vue.validator('pwd', function (val) {    //密码
  /* return (/^[0-9A-Za-z]{6,}$/.test(val));*/
  return (/^[\w]{6,12}$/.test(val));
 });
+
+

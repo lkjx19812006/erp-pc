@@ -1,4 +1,5 @@
 <template>
+<div>
   <create-model :param="createParam" v-if="createParam.show"></create-model>
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
   <supplydetail-model :param="supplyParam" v-if="supplyParam.show"></supplydetail-model>
@@ -167,16 +168,7 @@
       <!--底部分页-->
       <pagination :combination="loadParam"  slot="page"></pagination>
   </mglist-model>
-
-  <div>
-    
-
-    
-
-    <div class="base_pagination" id="base_pagination">
-      <pagination :combination="loadParam"></pagination>
-    </div>
-  </div>
+</div>
 </template>
 <script>
   import pagination from '../pagination'

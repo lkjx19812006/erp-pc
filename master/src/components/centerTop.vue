@@ -161,7 +161,7 @@ export default {
     white-space: nowrap;
     left:200px;
     box-shadow: 0px 2px 2px #999;
-    z-index: 1000;
+    z-index: 9999;
 }
 .nav_tab{
   position: absolute;

@@ -11,13 +11,6 @@
     <mglist-model>
         <!-- 头部搜索-->
         <div slot="top">
-            <div class="clearfix">
-                <!-- <div class="my_enterprise col-xs-1">所有客户</div> -->
-                <div class="right">
-                  
-                </div>
-            </div>
-
             <div class="clear" style="margin-top:3px;"> 
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">客户名称：</dt>
@@ -166,6 +159,7 @@
                         <th>联系人</th>
                         <th>联系人职位</th>
                         <th>联系人电话</th>
+                        <th>联系人手机</th>
                         <th>手机归属地</th>
                         <th>客户归属地</th>
                         <th>详细地址</th>
@@ -199,6 +193,7 @@
                         <td>{{item.type | customerType}}</td>
                         <td>{{item.mainContact}}</td>
                         <td>{{item.mainPosition}}</td>
+                        <td>{{item.tel}}</td>
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
@@ -630,8 +625,8 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 115px;
-    min-width: 115px;
+    width: 107px;
+    min-width: 106px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;

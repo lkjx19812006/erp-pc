@@ -3,14 +3,16 @@
         <div class="service-nav clearfix" id="top">
         	<slot name="top"></slot>
         </div>
-        <div class="order_table" id="table_box">
-	        <slot name="form"></slot>
-	        <!-- <table is="my_table"></table> -->
-        </div>
+        <div>
+	        <div class="order_table" id="table_box">
+		        <slot name="form"></slot>
+		        <!-- <table is="my_table"></table> -->
+	        </div>
 
-        <div id="base_pagination" class="base_pagination">
-            <slot name="page"></slot>
-        </div>
+	        <div id="base_pagination" class="base_pagination">
+	            <slot name="page"></slot>
+	        </div>
+	    </div>
     </div>
 </template>
 <script>
@@ -41,8 +43,5 @@ export default{
 }
 </script>
 <style scoped>
-.base_pagination{
-	position: fixed;
-	bottom: 20px;
-}
+
 </style>

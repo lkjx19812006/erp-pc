@@ -209,6 +209,9 @@ export const initEmployeeDetail = (state) => { //员工详情
 export const initOrgList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.orgList));
 }
+export const initOrgDetail = (state) => {
+    return JSON.parse(JSON.stringify(state.table.orgDetail));
+}
 export const initRoleList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.roleList));
 }

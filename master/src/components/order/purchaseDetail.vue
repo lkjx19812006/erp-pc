@@ -1,4 +1,5 @@
 <template>
+  <div>
     <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
     <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
@@ -7,7 +8,8 @@
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <apply-model :param="applyDetails" v-if="applyDetails.show"></apply-model>
-    <shadow-model :param="param">
+    <particular-model :param="particularParam" v-if="particularParam.show"></particular-model>
+    <shadow-model :param="param" >
         <div class="cover_loading">
              <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
         </div>
@@ -31,8 +33,21 @@
                               <ul class="clearfix" style="font-size: 14px;padding:5px 0">
                                   <mg-label :title="$t('static.order_no')">{{initOrderDetail.no}}</mg-label>
                                   <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link==''">{{$t('static.sell')}}</mg-label>
-                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link!==''">{{$t('static.sell')}}</mg-label>
-                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0">{{$t('static.purchase')}}</mg-label>
+                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link!==''">{{$t('static.sell')}}<a slot="" @click="linkDetail({
+                                    show:true,
+                                    id:initOrderDetail.link,
+                                    loading:true,
+                                    key:'orderDetail',
+                                    contact:'/order/myList'
+                                    })">（采购订单详情）</a></mg-label>
+                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link==''">{{$t('static.purchase')}}</mg-label>
+                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link!==''">{{$t('static.purchase')}}<a slot="" @click="linkDetail({
+                                    show:true,
+                                    id:initOrderDetail.link,
+                                    loading:true,
+                                    key:'orderDetail',
+                                    contact:'/order/myList'
+                                    })">（销售订单详情）</a></mg-label>
                                   <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
                                   <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
                                   <mg-label :title="$t('static.consignee_phone')">{{initOrderDetail.consigneePhone}}</mg-label>
@@ -142,7 +157,6 @@
                                       <table class="table  contactSet">
                                         <thead>
                                           <th>分期类型</th>
-<!--                                           <th>分期期数</th> -->
                                           <th colspan="6">分期说明</th>
                                           <!-- <th>付款比例</th> -->
                                          <!--  <th>分期支付时间</th> -->
@@ -531,6 +545,7 @@
       </div>
      
      </div> -->
+   </div>
 </template>
 <script>
 import trackingModel from '../order/ordergoods'
@@ -544,6 +559,7 @@ import auditModel from './second_order/orderAudit'
 import applyModel from './second_order/applyDetaillist'
 import mgLabel from '../mguan/mgLabel.vue'
 import shadowModel from '../mguan/shadow.vue'
+import particularModel from '../order/orderDetail.vue'
 import {
   initOrderDetail,
   initMyFundList
@@ -568,6 +584,7 @@ export default {
       applyModel,
       mgLabel,
       shadowModel,
+      particularModel
     },
     props:['param'],
     data(){
@@ -600,6 +617,9 @@ export default {
             express:false,
             delivery:false,
             tips:''
+        },
+        particularParam:{
+          show:false
         },
         pictureParam:{
             show:false,
@@ -667,21 +687,12 @@ export default {
                         item.currency = this.initMyFundList[0].currency;
                         item.comment = this.initMyFundList[0].comment;
                         this.auditParam.show=true;
-                        /* item.amount = this.initMyFundList[this.initMyFundList.length-1].amount;
-                        item.payName = this.initMyFundList[this.initMyFundList.length-1].payName;
-                        item.payUserName = this.initMyFundList[this.initMyFundList.length-1].payUserName;
-                        item.payNumber = this.initMyFundList[this.initMyFundList.length-1].payNumber;
-                        item.payWay = this.initMyFundList[this.initMyFundList.length-1].payWay;
-                        item.paySubName = this.initMyFundList[this.initMyFundList.length-1].paySubName;
-                        item.images = this.initMyFundList[this.initMyFundList.length-1].images;
-                        this.auditParam.show=true;*/
                     }else{
                         this.auditParam.show=false;
                     }
                 }else{
                     this.auditParam.show=true;
                 }
-                
           },
           apply_Record:function(item){
              this.applyDetails.show=true;
@@ -709,6 +720,9 @@ export default {
              this.credenceParam=initOrderDetail;
              this.credenceParam.creCallback = this.pictureCallback;
              console.log(this.credenceParam)
+         },
+         linkDetail:function(detail){ //关联采购详情
+            this.particularParam=detail;
          },
          clickBig:function(img){
               this.pictureParam.show=true;

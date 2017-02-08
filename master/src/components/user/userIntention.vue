@@ -522,9 +522,7 @@ export default {
         this.param.callback=this.param.callback;
       },
       reset:function(){
-        console.log(this.param.duedate)
           this.param.duedate="";
-           console.log(this.param.duedate)
       },
       selectProvince:function(){
         this.province = '';
@@ -574,6 +572,12 @@ export default {
       var year = date.getFullYear();
       var month = date.getMonth()+1;
       var day = date.getDate();
+      if(month < 10){
+        month = '0'+month;
+      }
+      if(day < 10){
+        day = '0'+day;
+      }
       this.param.duedate = year+"-"+month+"-"+day+" 00:00:00";
       
       if(this.param.breedId){
