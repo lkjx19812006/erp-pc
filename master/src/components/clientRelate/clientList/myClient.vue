@@ -181,6 +181,7 @@
                         <th>{{$t('static.contact')}}</th>
                         <th>{{$t('static.position')}}</th>
                         <th>{{$t('static.cellphone')}}</th>
+                        <th>{{$t('static.telephone')}}</th>
                         <th>{{$t('static.phone_origin')}}</th>
                         <th>{{$t('static.client_origin')}}</th>
                         <th>{{$t('static.detailed_address')}}</th>
@@ -228,6 +229,7 @@
                         <td>{{item.mainContact}}</td>
                         <td>{{item.mainPosition}}</td>
                         <td>{{item.mainPhone}}</td>
+                        <td>{{item.tel}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
                         <td>{{item.address}}</td>
@@ -247,6 +249,7 @@
                                     principal:item.principal,
                                     bizScope:item.bizScope,
                                     mainPhone:item.mainPhone,
+                                    tel:item.tel,
                                     email:item.email,
                                     country:item.country,
                                     countryName:item.countryName,

@@ -3,7 +3,7 @@
     <orgsearch-model :param="orgNameParam" v-if="orgNameParam.show"></orgsearch-model>
     <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
-        <div @click="param.show=false" class="top-title">
+        <div @click="close()" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
         <div class="cover_loading">
@@ -20,37 +20,37 @@
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label>部门业务类型</label>
                                 <select class="form-control edit-input" v-model="param.bizType">
-                                    <option>{{param.bizType}}</option>
                                     <option>Tech</option>
                                     <option>Finance</option>
                                     <option>HR</option>
                                     <option>Sales</option>
                                 </select>
                             </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                            <div class="client-detailInfo  pull-left col-md-6 col-xs-12" v-if="param.distinct=='editparten'">
                                 <label>部门编码</label>
-                                <input type="text" class="form-control edit-input" v-model="param.code" value="{{initOrgDetail.code}}" />
+                                <input type="text" class="form-control edit-input" v-model="param.code" readonly="true" />
                             </div>
-                        </div>
-                        <div class="clearfix">
+
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
-                                <label>部门名称 <span class="system_danger" v-if="$validation.name.required">请输入名称</span></label>
-                                <input type="text" class="form-control edit-input"  v-model="param.name" v-validate:name="['required']" value="{{initOrgDetail.name}}"/>
+                                <label>部门名称 <span class="system_danger" v-if="$validation.orgname.required">请输入名称</span></label>
+                                <input type="text" class="form-control edit-input"  v-model="param.name"  v-validate:orgname="['required']" />
                             </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
-                                <label>上级部门 <span class="system_danger" v-if="$validation.pid.required">请输入上级部门</span></label>
-                                <input type="email" class="form-control edit-input" v-model="param.pid" value="{{initOrgDetail.pid}}" v-validate:pid="['required']"/>
+                            <div class="client-detailInfo  pull-left col-md-6 col-xs-12" v-if="param.distinct=='editparten'">
+                                <label>上级部门 <span class="system_danger" v-if="$validation.level.required">请输入上级部门</span></label>
+                                 <input type="text" class="form-control edit-input" v-model="orgNameParam.orgName" value="{{param.pid}}" v-validate:level="['required']" @click="selectOrg(orgid,orgName)"  />
                             </div>
-                        </div>
-                        <div class="clearfix">
-                            <div class="client-detailInfo pull-left col-md-6 col-xs-12">
+                            <div class="client-detailInfo  pull-left col-md-6 col-xs-12" v-else >
+                                <label>上级部门 <span class="system_danger" v-if="$validation.level1.required">请输入上级部门</span></label>
+                                <input type="text" class="form-control edit-input" v-model="orgNameParam.orgName"  v-validate:level1="['required']" @click="selectOrg(orgid,orgName)" v-else @click="selectOrg(orgid,orgName)" />
+                               
+                            </div>
+                            <div class="client-detailInfo pull-left col-md-6 col-xs-12" v-if="param.distinct=='editparten'">
                                 <label>级别</label>
-                                <input type="text" class="form-control edit-input"  v-model="param.level" value="{{initOrgDetail.level}}"/>
+                                <input type="text" class="form-control edit-input"  v-model="param.level"/>
                             </div>
-                            <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
+                            <div class="client-detailInfo  pull-left col-md-6 col-xs-12" v-if="param.distinct=='editparten'">
                                 <label>可用状态</label>
                                 <select class="form-control edit-input" v-model="param.status">
-                                    <option>{{param.status}}</option>
                                     <option value="1">可用</option>
                                     <option value="0">无用</option>
                                 </select>
@@ -61,7 +61,7 @@
                 <div class="edit_footer">
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                     <button type="button" class="btn btn-confirm" v-if="$validation.valid"  @click="save()">保存</button>
-                    <button type="button" class="btn btn-confirm" v-else v-else disabled="disabled">保存</button>
+                    <button type="button" class="btn btn-confirm" v-else  disabled="disabled">保存</button>
                 </div>
             </form>
         </validator>
@@ -75,7 +75,9 @@ import {
 } from '../../vuex/getters'
 import {
     getOrgDetail,
-    createEmploy
+    createEmploy,
+    alterOrg,
+    createOrg
 } from '../../vuex/actions'
 export default {
     components: {
@@ -108,31 +110,12 @@ export default {
         },
         actions: {
             getOrgDetail,
-            createEmploy
+            createEmploy,
+            alterOrg,
+            createOrg
         }
     },
     methods:{
-         createDateText() {
-            let date = new Date()
-            let year = date.getFullYear()
-            let month = date.getMonth() + 1
-            let day = date.getDate()
-            let str = `${year}/${month}/${day}`
-            this.dateText = str.replace(/\b(\w)\b/g, "0$1")
-        },
-        save:function(){
-            var temp = '';
-            this.initRoleList.forEach(function(item){
-                if(item.checked){
-                    temp += item.id + ',';
-                }         
-            })
-            console.log(temp);
-            this.param.privilege = temp.substring(0,temp.length-1);
-            this.param.show = false
-            this.param.callback = this.param.callback;
-            this.param.link(this.param);
-        },
         checked:function(item){
             if(item.checked){
                 item.checked=false;
@@ -141,35 +124,70 @@ export default {
             }
             console.log(item.checked);
         },
-        selectorg:function(){
+        save:function(){
+            console.log(this.param)
+            this.param.show=false;
+            if(this.param.distinct=='editparten'){
+                this.param.pid = this.orgNameParam.orgid;
+                this.alterOrg(this.param);
+            }else{
+                this.param.pid = this.orgNameParam.orgid;
+                this.createOrg(this.param);
+            }
+            this.param.bizType ='';
+            this.param.code = '';
+            this.param.level ='';
+            this.param.name = '';
+            this.param.pid = '';
+            this.param.status = '';
+        },
+        close:function(){
+            console.log('111')
+            this.param.show=false;
+            this.param.bizType =" ";
+            this.param.code = " ";
+            this.param.level =" ";
+            this.param.name = " ";
+            this.param.pid = " ";
+            this.param.status = " ";
+        },
+        selectOrg:function(){
             this.orgNameParam.show=true;
-            this.param.orgName = this.orgNameParam.orgName;
-            this.param.orgid = this.orgNameParam.orgid;
-            this.param.orgcode = this.orgNameParam.orgcode;
+            this.param.pid = this.orgNameParam.orgid;
         }
     },
     events:{
-        org:function(qq){
-            this.param.orgName = qq.orgName;
-            this.param.orgid = qq.orgid;
-            this.param.orgcode = qq.orgcode;
+        org:function(org){
+            this.orgNameParam.orgName = org.orgName;
+            this.orgNameParam.orgid = org.orgid;
+            this.orgNameParam.orgcode = org.orgcode;
         }
     },
     created(){
-        this.getOrgDetail(this.loadParam)
-        console.log(this.initOrgDetail)
-        if(this.initOrgDetail.id!==''){
-            console.log(';;;;')
-        }
+        this.getOrgDetail(this.loadParam);
     },
-    ready() {
-        this.createDateText()
+    watch:{
+        'initOrgDetail':function (to,from){
+            if(this.param.distinct == 'editparten'){
+                this.param.bizType = to.bizType;
+                this.param.code = to.code;
+                this.param.level = to.level;
+                this.param.name = to.name;
+                this.param.pid = to.pid;
+                this.param.status = to.status;
+                this.orgNameParam.orgName = to.pid;
+            }  
+        }
     }
 }
 </script>
 <style scoped>
-.editsection{
-    margin-bottom: 50px;
+.modal_con{
+    height: 600px;
+}
+.edit_footer{
+    position: absolute;
+    bottom:0;
 }
 .top-title{
     position: absolute;
@@ -187,26 +205,6 @@ export default {
 .client-detailInfo label{
     display: inline-block;
 }
-.editpage {
-    display: -webkit-flex;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -ms-box-orient: horizontal;
-    box-orient: horizontal;
-}
-.editpage-input {
-    margin-top: 15px;
-}
-
-.editlabel {
-    color: #333;
-    font-size: 14px;
-    display: block;
-}
-
 .edit-input {
     height: 36px;
     line-height: 36px;
@@ -218,22 +216,8 @@ export default {
     -ms-border-radius: 5px;
 }
 
-.edit-input:focus {
-    border-color: #fa6705;
-}
-
-.addblack span {
-    color: #333;
-    font-size: 14px;
-    display: inline-block;
-    margin-left: 10px;
-    margin-top: 5px;
-}
-
 .edit_footer button {
     margin-left: 15px;
 }
-.role{
-    margin-right: 10px;
-}
+
 </style>

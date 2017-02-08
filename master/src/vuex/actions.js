@@ -2602,7 +2602,6 @@ export const createSpec = ({ dispatch }, param, id) => { //新增药材相关
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('添加成功')
         param.callback(res.json().msg);
         param.id = res.json().result.id;
         param.breedId = id;
@@ -2632,7 +2631,6 @@ export const saveAlias = ({ dispatch }, param, id) => { //新增药材别名
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('别名添加成功')
         param.callback(res.json().msg);
         param.id = res.json().result.id;
         param.breedId = id;
@@ -2643,7 +2641,6 @@ export const saveAlias = ({ dispatch }, param, id) => { //新增药材别名
 }
 
 export const updateBreedInfo = ({ dispatch }, param) => { //修改药材信息
-    console.log(param)
     const updatedata = {
         code: param.code,
         name: param.name,
@@ -2680,9 +2677,7 @@ export const updateBreedInfo = ({ dispatch }, param) => { //修改药材信息
     })
 }
 export const alterSpec = ({ dispatch }, param) => { //修改药材相关
-    console.log(param);
     const alterdata = {
-
         name: param.name,
         id: param.id,
         breedId: param.breedId
@@ -2728,7 +2723,6 @@ export const alterAlias = ({ dispatch }, param) => { //修改药材别名
     })
 }
 export const specDel = ({ dispatch }, param) => { //删除药材相关信息
-    console.log(param)
     Vue.http({
         method: 'DELETE',
         url: apiUrl.clientList + param.url + param.id,
@@ -2742,8 +2736,10 @@ export const specDel = ({ dispatch }, param) => { //删除药材相关信息
         console.log('删除成功');
         if(param.url=='/org/'){
             param.callback(res.json().msg)
+        }else{
+            dispatch(types.DELETE_SPECS_DATA, param);
         }
-        dispatch(types.DELETE_SPECS_DATA, param);
+        
     }, (res) => {
         console.log('fail');
     });
@@ -2751,8 +2747,6 @@ export const specDel = ({ dispatch }, param) => { //删除药材相关信息
 
 export const getClientList = ({ dispatch }, param) => { //客户信息列表与搜索
     param.loading = true;
-    console.log(param);
-
     var clienturl = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     for (var search in param) {
         if (search == 'name' && param[search] !== '' && param[search] != 'undefined') {
@@ -2811,7 +2805,6 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
             clienturl += '&trackingDay=' + param.trackingDay
         }
     }
-
     Vue.http({
         method: 'GET',
         url: clienturl,
@@ -2849,9 +2842,7 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
         if(param.link=="/customer/suppliers"){
             localStorage.supplyClientParam = JSON.stringify(param);
         }
-        
-        
-        
+    
     }, (res) => {
         console.log('fail');
         param.loading = false;
@@ -2860,7 +2851,6 @@ export const getClientList = ({ dispatch }, param) => { //客户信息列表与�
 
 export const getCallRecordList = ({ dispatch }, param) => { //客户通话记录列表与搜索
     param.loading = true;
-    console.log(param);
     var url = apiUrl.clientList + param.link + '?&page=' + param.cur + '&pageSize=15';
     for (var search in param) {
         if (search == 'customerPhone' && param[search] !== '') {
@@ -3173,12 +3163,13 @@ export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及�
         if (seach == 'mobile' && param[seach] !== '') {
             apiurl += '&phone=' + param.mobile
         }
-        if (seach == 'orgId' && param[seach] !== '') {
-            apiurl += '&org=' + param.orgId
-        }
+        
         if (seach == 'orgCode' && param[seach] !== '') {
             apiurl += '&orgCode=' + param.orgCode
         }
+        /*if (seach == 'orgId' && param[seach] !== '') {
+            apiurl += '&org=' + param.orgId
+        }*/
         if (seach == 'leave' && param[seach] !== '') {
             apiurl += '&leave=' + param.leave
         }
@@ -3284,6 +3275,64 @@ export const getOrgDetail = ({ dispatch }, param) => { //部门详情页面
         param.loading = false;
     })
 }
+export const createOrg = ({ dispatch }, data) => { //新增部门信息
+    const Cdata = {
+        'name': data.name,
+        'pid': data.pid,
+        'bizType': data.bizType
+    }
+    console.log(Cdata);
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + '/org/',
+        emulateHTTP: true,
+        body: Cdata,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        if(data.callback){
+            data.callback(res.json().msg);
+        }
+        if(res.json().code==200){
+            dispatch(types.ORG_DATA, data);
+        }
+    }, (res) => {
+        console.log('fail');
+    })
+}
+export const alterOrg = ({ dispatch }, param) => { //修改部门信息
+    console.log(param);
+    var data = {
+        name: param.name,
+        code: param.code,
+        status: param.status,
+        id: param.id,
+        pid: param.pid,
+        level: param.level,
+        bizType: param.bizType
+    }
+    Vue.http({
+        method: 'PUT',
+        url: apiUrl.clientList + '/org/',
+        emulateHTTP: false,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
+        dispatch(types.ORG_DATA, param);
+    }, (res) => {
+        console.log('fail');
+    })
+}
 export const getRoleList = ({ dispatch }, param) => { //获取角色列表
     console.log(param)
     param.loading = true;
@@ -3310,7 +3359,6 @@ export const getRoleList = ({ dispatch }, param) => { //获取角色列表
                 }
             }
         }
-        console.log('获取角色成功')
         dispatch(types.ROLE_DATA, role)
         param.all = res.json().result.pages;
         param.total = res.json().result.total;
@@ -3424,6 +3472,7 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
         city: param.city,
         address: param.address,
         comments: param.comments,
+        tel:param.tel,
         id: param.id,
         orgId: param.orgId,
         employeeId: param.employeeId,

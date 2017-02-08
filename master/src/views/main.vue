@@ -33,7 +33,8 @@
             </div>
         </div>
         <div class="employee_right col-md-4">
-            <p class="employee_right_title">消息
+            <p class="employee_right_title clear">
+                <span class="left">消息</span>
                 <button class="btn btn-primary right" @click="refresh()">刷新</button>
             </p>
             <div class="employee_right_message">

@@ -217,8 +217,8 @@
           <div class="clear">
             <button class="btn btn-default pull-left" @click="addOrg()">添加部门</button>
             <button class="btn btn-default pull-right transfer" @click="deleteOrg({
-              show:true,
               id:'',
+              show:false,
               link:specDel,
               url:'/org/'
               })">删除部门</button>
@@ -227,11 +227,13 @@
           <div class="trans_parten">
               <div>
                   <treeview :value.sync="id"
-                      :model="initOrgList"
+                      :model="$store.state.table.basicBaseList.orgList"
                       class="form-control"
                       labelname="name"
                       valuename="id"
+                      codename="code"
                       children="lowerList"
+                      @click="slectedOne"
                   ></treeview>
               </div>
           </div>
@@ -267,7 +269,8 @@ import {
     updatePawd,
     transferOrg,
     specDel,
-    getOrgDetail
+    getOrgDetail,
+    alterOrg
 } from '../vuex/actions'
 export default {
     components:{
@@ -383,28 +386,41 @@ export default {
             }
             this.transferParam.callback=this.callback;
         },
-        addOrg:function(initOrgList){
-            this.createParam=initOrgList;
-            this.createParam.callback = this.callback;
+        addOrg:function(){
+            this.complierParam.show=true;
+            this.complierParam.title='添加部门';
+            this.complierParam.distinct = '';
+            this.complierParam.bizType ='';
+            this.complierParam.code = '';
+            this.complierParam.level ='';
+            this.complierParam.name = '';
+            this.complierParam.pid = '';
+            this.complierParam.status = '';
+            this.complierParam.callback = this.callback;
         },
         editOrg:function(){ //编辑部门
+          console.log(this.loadParam.orgId)
           if(this.loadParam.orgId!==''){
-              this.complierParam.show=true;
-              this.complierParam.title='编辑部门';
               this.complierParam.id = this.loadParam.orgId;
-              this.loadParam.id = this.loadParam.orgId;
-              this.getOrgDetail(this.loadParam);
+              this.complierParam.name = this.loadParam.orgName;
+              this.complierParam.show=true;
+              this.complierParam.distinct = 'editparten';
+              this.complierParam.title='编辑部门';
           }else{
               this.tipsParam.show=true;
               this.tipsParam.alert=true;
               this.tipsParam.name='请选择部门';
               this.tipsParam.confirm=false;
           }
+          this.complierParam.callback = this.callback;
         },
         deleteOrg:function(item){ //删除部门
           if(this.loadParam.orgId!==''){
               item.id=this.loadParam.orgId;
               this.deleteParam = item;
+              this.deleteParam.show=true;
+              this.deleteParam.title = '此部门';
+              console.log(this.deleteParam)
           }else{
                 this.tipsParam.show=true;
                 this.tipsParam.alert=true;
@@ -458,6 +474,9 @@ export default {
         confirmPassword:function(){
             this.passwordParam.callback = this.callback;
             this.updatePawd(this.passwordParam);
+        },
+        slectedOne:function(){
+          this.getEmployeeList(this.loadParam);
         }
     },
     vuex: {
@@ -475,8 +494,9 @@ export default {
             updatePawd,
             transferOrg,
             specDel,
-            getOrgDetail
-        },
+            getOrgDetail,
+            alterOrg
+        }
     },
     events: {
         fresh: function(input) {
@@ -496,12 +516,13 @@ export default {
           this.transferOrg(this.transferParam);
         },
         treeview_click:function(param){
+            this.loadParam.orgId ="";
+            this.loadParam.orgCode = param.code;
             if(param.children.length==0){
-                console.log(param.value);
-                console.log(param.label);
-                this.loadParam.orgId = param.value;
-                this.loadParam.orgName = param.label;
+              this.loadParam.orgId = param.value;
+              this.loadParam.orgName = param.label;
             }
+            
         }
     },
     ready(){
@@ -510,10 +531,6 @@ export default {
     created() {
         changeMenu(this.$store.state.table.isTop,this.getEmployeeList,this.loadParam,localStorage.employeeParam); 
         this.getOrgList(this.loadParam);
-        if(this.loadParam.orgId!==''){
-          this.loadParam.id = this.loadParam.orgId;
-          this.getOrgDetail(this.loadParam)
-        }
     },
     filter:(filter,{})
 }

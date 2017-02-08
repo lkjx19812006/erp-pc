@@ -147,13 +147,11 @@ export default{
             this.getOrgList(this.orgParam);
         },
         treeview_click:function(param){
-            console.log(param);
-            if(param.children.length==0){
-                console.log(param.value);
-                console.log(param.label);
-                this.param.orgId = param.value;
-                this.param.orgName = param.label;
-            }
+            console.log(param)
+            console.log(param.value);
+            console.log(param.label);
+            this.param.orgId = param.value;
+            this.param.orgName = param.label;
         }
     },
 	created() {

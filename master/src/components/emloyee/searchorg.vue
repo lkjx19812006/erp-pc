@@ -97,11 +97,10 @@ export default{
             this.param.orgName = param.label;
         }else if('leaf' in this.param&&this.param.leaf===true){
             console.log('叶子');
-            if(param.children.length==0){   //获取叶子节点部门信息
-                this.param.orgid= param.value;
-                this.param.orgcode= param.code;
-                this.param.orgName = param.label;
-            }
+              //获取叶子节点部门信息
+            this.param.orgid= param.value;
+            this.param.orgcode= param.code;
+            this.param.orgName = param.label; 
         }
         
       }
