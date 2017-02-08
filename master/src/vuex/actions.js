@@ -392,6 +392,37 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
     })
 }
 
+export const getToDoOrderList = ({ dispatch }, param) => { //待处理订单列表
+    param.loading = true;
+    var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
+    if(param.processDefineKey!=''){
+        url += '&processDefineKey=' + param.processDefineKey
+    }
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var orderList = res.json().result.list;
+        
+        orderList.key = param.key;
+        dispatch(types.ORDER_TABLE, orderList);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+
+        //localStorage.allOrderList = JSON.stringify(orderList);
+        localStorage.toDoOrderParam = JSON.stringify(param);
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const getOrderStatistical = ({ dispatch }, param) => {   //简单的订单统计接口
     param.loading = true;
     var body = {

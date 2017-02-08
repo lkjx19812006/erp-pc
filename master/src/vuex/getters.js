@@ -76,6 +76,9 @@ export const initSellOrderlist = (state) => {
 export const initPurchaseOrderlist = (state) => {
     return parseJson(state.table.basicBaseList.purchaseOrderList);
 }
+export const initToDoOrderlist = (state) => {
+    return parseJson(state.table.basicBaseList.toDoOrderList);
+}
 export const initOrderlist = (state) => {
     return parseJson(state.table.basicBaseList.orderList);
 }
