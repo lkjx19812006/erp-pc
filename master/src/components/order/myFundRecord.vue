@@ -328,7 +328,7 @@
     background-position: 5px;
   }
    #table_box  table th,#table_box  table td{
-    width:156px;
-    min-width: 156px;
+    width:155px;
+    min-width: 153px;
   }
 </style>

@@ -399,10 +399,14 @@ export default {
             this.complierParam.callback = this.callback;
         },
         editOrg:function(){ //编辑部门
-          console.log(this.loadParam.orgId)
           if(this.loadParam.orgId!==''){
               this.complierParam.id = this.loadParam.orgId;
               this.complierParam.name = this.loadParam.orgName;
+              this.complierParam.bizType = this.initOrgDetail.bizType;
+              this.complierParam.code = this.initOrgDetail.code;
+              this.complierParam.level = this.initOrgDetail.level;
+              this.complierParam.pid = this.initOrgDetail.pid;
+              this.complierParam.status = this.initOrgDetail.status;
               this.complierParam.show=true;
               this.complierParam.distinct = 'editparten';
               this.complierParam.title='编辑部门';
@@ -477,6 +481,8 @@ export default {
         },
         slectedOne:function(){
           this.getEmployeeList(this.loadParam);
+          this.loadParam.id = this.loadParam.orgId;
+          this.getOrgDetail(this.loadParam)
         }
     },
     vuex: {

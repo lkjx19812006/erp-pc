@@ -618,7 +618,23 @@ Vue.filter('date',function(val){      //将时间的时分秒去掉
 })
 Vue.filter('dateTime',function(val){      //将时间的时分秒去掉
 	var val = val;
-	val = new Date(parseInt(val)).toLocaleString().substr(0,20);
+	var now = new Date();
+  	var  year=now.getFullYear();     
+  	var  month=now.getMonth()+1;     
+  	var  date=now.getDate();     
+  	var  hour=now.getHours();     
+  	var  minute=now.getMinutes();     
+  	var  second=now.getSeconds();  
+  	if(month < 10){
+  		month = '0'+month;
+  	} 
+  	if(date < 10){
+  		date = '0'+date;
+  	}  
+	return val =  year+"-"+month+"-"+date+"   "+hour+":"+minute+":"+second;     
+	  
+	/*val = new Date(parseInt(val)).toLocaleString().substr(0,20);*/
+	/*val= new Date(parseInt(val) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");*/
 	return val;
 })
 
@@ -677,7 +693,7 @@ Vue.filter('Auditing',function(val){     //订单审核
 	}else if(val==-2){
 		 return '审核未通过';
 	}else if(val==-1){
-		 return '取消申请';
+		 return '已取消申请';
 	}else{
 		return val;
 	}

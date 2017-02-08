@@ -138,22 +138,9 @@
                               titles:'确认付款',
                               link:paymentAudit
                           })">确认付款</button>
-                 <!--  <a class="operate" v-if="item.validate==1" @click="applyInfo({
-                             show:true,
-                             sub:$index,
-                             id:item.id,
-                             validate:item.validate,
-                             description:'',
-                             image_f:'',
-                             image_s:'',
-                             image_t:'',
-                             images:'',
-                             url:'/fund/validate',
-                             titles:'分期审核',
-                             link:paymentAudit
-                         })"> 
-                     <img src="/static/images/orgcheck.png" />
-                 </a> -->
+                  <a class="operate" v-if="item.pr==0&&item.validate==2">
+                    等待业务员{{item.employeeName}}确认
+                  </a>
                 </td>
               </tr>
             </tbody>

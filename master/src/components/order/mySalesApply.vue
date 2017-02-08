@@ -123,8 +123,7 @@
                           titles:'重新申请审核',
                           link:contractCheck
                       })"><img src="/static/images/{{$t('static.img_reset')}}.png"/></a>
-                    <button class="btn btn-primary" v-if="item.validate==1&&item.taskKey=='after_sales_receipt'" style="background:#fff;color:#2e6da4;padding:2px 5px;" 
-                          @click="applyInfo({
+                    <button class="btn btn-primary" v-if="item.validate==1&&item.taskKey=='after_sales_receipt'" style="background:#fff;color:#2e6da4;padding:2px 5px;" @click="applyInfo({
                               show:true,
                               sub:$index,
                               id:item.id,
