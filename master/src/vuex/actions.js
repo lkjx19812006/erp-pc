@@ -3199,8 +3199,7 @@ export const getEmployeeList = ({ dispatch }, param) => { //员工列表以及�
         }
         if (seach == 'mobile' && param[seach] !== '') {
             apiurl += '&phone=' + param.mobile
-        }
-        
+        } 
         if (seach == 'orgCode' && param[seach] !== '') {
             apiurl += '&orgCode=' + param.orgCode
         }

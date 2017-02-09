@@ -9,7 +9,7 @@
    <delete-model :param="deleteParam" v-if="deleteParam.show"></delete-model>
    <newly-model :param="complierParam" v-if="complierParam.show"></newly-model>
    <!-- 右侧员工 -->
-   <mglist-model style="width:69%;float:right">
+   <mglist-model style="width:79%;float:right">
         <!-- 头部搜索 -->
         <div slot="top">
             <div class="clear">
@@ -205,7 +205,7 @@
         <pagination :combination="loadParam"  slot="page"></pagination>
    </mglist-model>
    <!-- 左侧部门 -->
-   <mglist-model style="width:30%;float:left">
+   <mglist-model style="width:20%;float:left">
         <!-- 头部搜索 -->
         <div slot="top" style="height:42px;">
         </div>
@@ -399,10 +399,14 @@ export default {
             this.complierParam.callback = this.callback;
         },
         editOrg:function(){ //编辑部门
-          console.log(this.loadParam.orgId)
           if(this.loadParam.orgId!==''){
               this.complierParam.id = this.loadParam.orgId;
               this.complierParam.name = this.loadParam.orgName;
+              this.complierParam.bizType = this.initOrgDetail.bizType;
+              this.complierParam.code = this.initOrgDetail.code;
+              this.complierParam.level = this.initOrgDetail.level;
+              this.complierParam.pid = this.initOrgDetail.pid;
+              this.complierParam.status = this.initOrgDetail.status;
               this.complierParam.show=true;
               this.complierParam.distinct = 'editparten';
               this.complierParam.title='编辑部门';
@@ -477,6 +481,8 @@ export default {
         },
         slectedOne:function(){
           this.getEmployeeList(this.loadParam);
+          this.loadParam.id = this.loadParam.orgId;
+          this.getOrgDetail(this.loadParam)
         }
     },
     vuex: {
@@ -578,5 +584,9 @@ export default {
    z-index: 1100;
    left: 0;
    right: 0
+}
+#table_box table th,#table_box table td{
+  width: 96px;
+  min-width:94px;
 }
 </style>

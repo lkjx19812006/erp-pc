@@ -31,9 +31,9 @@
                    </dd>
                 </dl>
 
-                <dl class="clear left transfer" style="width:338px">
+                <dl class="clear left transfer" style="width:330px">
                    <dt class="left transfer marg_top">{{$t("static.client_type")}}：</dt>
-                   <dd class="left" style="width:50%;">
+                   <dd class="left" style="width:60%;">
                       <select v-model="loadParam.type"   class="form-control" @change="selectSearch()">
                             <option value="">{{$t("static.please_select")}}</option>
                             <option value="0">Others 其它</option>
@@ -200,6 +200,7 @@
                     <th colspan="14"></th>
                     <th  v-if="this.initLogin.orgId==29"></th>
                     <th  v-if="this.initLogin.orgId==29"></th>
+                    <th  v-if="this.initLogin.orgId==29"></th>
                 </tr>
                 <tbody>
                     <tr>
@@ -209,7 +210,6 @@
                         <td  @click.stop="">
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
-                        
                         <td>{{item.employeeName}}</td>
                         <td>{{item.ctime}}</td>
                         <td>{{item.lastOrderTime}}</td>

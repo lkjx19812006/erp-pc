@@ -1,4 +1,5 @@
 <template>
+<div>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -73,6 +74,7 @@
             </div>
         </validator>
     </div>
+</div>
 </template>
 <script>
 import pressImage from '../../imagePress'

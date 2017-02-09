@@ -99,8 +99,8 @@
                 <td>{{item.comment}}</td>
                 <td>{{item.prNo}}</td>
                 <td v-if="item.validate==0">未审核</td>
-                <td v-if="item.validate==1"><div  style="background:#483D8B;color:#fff;">申请中</div></td>
-                <td v-if="item.validate==2"><div  style="background:green;color:#fff;">审核成功</div></td>
+                <td v-if="item.validate==1"><div style="background:#483D8B;color:#fff;">申请收/付款中</div></td>
+                <td v-if="item.validate==2"><div style="background:green;color:#fff;">审核成功</div></td>
                 <td v-if="item.validate==3"><div style="background:red;color:#fff;">审核未通过</div></td>
                 <td v-if="item.pr==0&&item.type==0">未付款</td>
                 <td v-if="item.pr==0&&item.type==1">未收款</td>
@@ -138,22 +138,9 @@
                               titles:'确认付款',
                               link:paymentAudit
                           })">确认付款</button>
-                 <!--  <a class="operate" v-if="item.validate==1" @click="applyInfo({
-                             show:true,
-                             sub:$index,
-                             id:item.id,
-                             validate:item.validate,
-                             description:'',
-                             image_f:'',
-                             image_s:'',
-                             image_t:'',
-                             images:'',
-                             url:'/fund/validate',
-                             titles:'分期审核',
-                             link:paymentAudit
-                         })"> 
-                     <img src="/static/images/orgcheck.png" />
-                 </a> -->
+                  <a class="operate" v-if="item.pr==0&&item.validate==2">
+                    等待业务员{{item.employeeName}}确认
+                  </a>
                 </td>
               </tr>
             </tbody>

@@ -6,9 +6,6 @@
         <div @click="close()" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
-        <div class="cover_loading">
-            <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-        </div>
         <div class="edit-content">
             <h3>{{param.title}}</h3>
         </div>
@@ -46,7 +43,7 @@
                             </div>
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12" v-if="param.distinct=='editparten'">
                                 <label>级别</label>
-                                <input type="text" class="form-control edit-input"  v-model="param.level"/>
+                                <input type="text" class="form-control edit-input"  v-model="param.level" readonly="true" />
                             </div>
                             <div class="client-detailInfo  pull-left col-md-6 col-xs-12" v-if="param.distinct=='editparten'">
                                 <label>可用状态</label>
@@ -142,7 +139,6 @@ export default {
             this.param.status = '';
         },
         close:function(){
-            console.log('111')
             this.param.show=false;
             this.param.bizType =" ";
             this.param.code = " ";
@@ -164,11 +160,11 @@ export default {
         }
     },
     created(){
-        this.getOrgDetail(this.loadParam);
+
     },
     watch:{
         'initOrgDetail':function (to,from){
-            if(this.param.distinct == 'editparten'){
+           /* if(this.param.distinct == 'editparten'){
                 this.param.bizType = to.bizType;
                 this.param.code = to.code;
                 this.param.level = to.level;
@@ -176,7 +172,7 @@ export default {
                 this.param.pid = to.pid;
                 this.param.status = to.status;
                 this.orgNameParam.orgName = to.pid;
-            }  
+            }  */
         }
     }
 }

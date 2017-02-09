@@ -126,7 +126,7 @@
                    url:'/customer/file/',
                    key:'files'
                  })">
-                 <a class="operate"><img src="/static/images/uploadPro.png" height="18" width="67"/></a>
+                 <a class="operate"><img src="/static/images/uploadPro.png" /></a>
               </td>
               <td  @click="modifySupply({
                        sub:$index,

@@ -8,7 +8,6 @@
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <apply-model :param="applyDetails" v-if="applyDetails.show"></apply-model>
-    <detail-model :param="detailParam" v-if="detailParam.show"></detail-model>
     <shadow-model :param="param" >
         <div class="cover_loading">
              <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
@@ -182,7 +181,7 @@
                                                   bizId:item.orderId,
                                                   bizSubId:item.id,
                                                   url:'/fund/requestRecord'
-                                                  })">{{$t('static.wait_approval')}}</td>
+                                                  })">未申请收款/付款</td>
                                               <td v-if="item.validate==1"  style="color:#91a0ff;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,
@@ -192,7 +191,7 @@
                                                   bizId:item.orderId,
                                                   bizSubId:item.id,
                                                   url:'/fund/requestRecord'
-                                                  })">{{$t('static.applied')}}</td>
+                                                  })">申请收款/付款中</td>
                                               <td v-if="item.validate==2" style="color:green;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,
@@ -202,7 +201,7 @@
                                                   bizId:item.orderId,
                                                   bizSubId:item.id,
                                                   url:'/fund/requestRecord'
-                                                  })">{{$t('static.approved')}}</td>
+                                                  })">已收款/付款</td>
                                               <td v-if="item.validate==3" style="color:red;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,
@@ -558,7 +557,6 @@ import auditModel from './second_order/orderAudit'
 import applyModel from './second_order/applyDetaillist'
 import mgLabel from '../mguan/mgLabel.vue'
 import shadowModel from '../mguan/shadow.vue'
-import detailModel from '../order/purchaseDetail.vue'
 import {
   initOrderDetail,
   initMyFundList
@@ -582,8 +580,7 @@ export default {
       auditModel,
       applyModel,
       mgLabel,
-      shadowModel,
-      detailModel
+      shadowModel
     },
     props:['param'],
     data(){
@@ -634,9 +631,6 @@ export default {
             url:'/order/updateStages/',
             stages:[],
             orderStatus:''
-        },
-        detailParam:{
-          show:false
         },
         auditParam:{
             show:false,
@@ -724,7 +718,8 @@ export default {
                 this.trackingParam.show = true;
           },
           linkDetail:function(detail){ //关联采购详情
-            this.detailParam=detail;
+            this.param.id = detail.id;
+            this.getOrderDetail(this.param);
           },
          createcredence:function(initOrderDetail){
             console.log(initOrderDetail)

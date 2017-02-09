@@ -215,7 +215,7 @@
                         <td v-if="item.source==3"><div style="background:#0000CC;color:#fff">{{item.sourceType}}</div></td>
                         <td v-if="item.source==4"><div style="background:#CC0099;color:#fff">{{item.sourceType}}</div></td>
                         <!-- <td v-if="item.source==4" style="background:#9966FF;color:#fff">{{item.sourceType}}</td> -->
-                        <td v-if="!item.source" >其它</td>
+                        <td v-if="item.source!==1&&item.source!==2&&item.source!==3&&item.source!==4" >其它</td>
                         <td>{{item.bizTypeName}}</td>
                         <td>{{item.province+item.city}}</td>
                         <td>{{item.auditResult}}</td>
