@@ -132,6 +132,7 @@ export default {
                 this.showurl='';
             },
             upload:function(data,url){
+               console.log(data);
                 var _self=this;
                    this.$http({
                         method: 'POST',
