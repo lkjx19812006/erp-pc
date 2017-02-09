@@ -38,14 +38,32 @@
                   发货审核
                </button>
                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.processDefineKey=='order_supplementary_contract'}" @click="selectType('order_supplementary_contract')">
-                  合同审核
+                  补充合同审核
                </button>
                <button type="button" class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.processDefineKey==='order_after_sales'}" @click="selectType('order_after_sales')">
-                  售后申请
+                  售后审核
                </button>
                
            </div>
         </dl>
+
+        <dl class="clear left transfer">
+            <div class="left">
+                <dt class="left transfer marg_top">起止时间：</dt>
+                <mz-datepicker :time.sync="loadParam.startTime" format="yyyy-MM-dd HH:mm:ss">
+                </mz-datepicker>
+            </div>
+
+            <div class="left">
+                <dt class="left marg_top">~~</dt>
+                <mz-datepicker :time.sync="loadParam.endTime" format="yyyy-MM-dd HH:mm:ss">
+                </mz-datepicker>
+            </div>
+        </dl>
+
+        <button type="button" class="new_btn transfer"  @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                
+        <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
       </div>
       <!-- 中间列表 -->
       <div slot="form">
@@ -72,8 +90,8 @@
                   <td>
                     <div v-if="item.bizType=='order_validate'">订单审核</div>
                     <div v-if="item.bizType=='order_send'">发货审核</div>
-                    <div v-if="item.bizType=='order_supplementary_contract'">合同审核</div>
-                    <div v-if="item.bizType=='order_after_sales'">售后申请</div>
+                    <div v-if="item.bizType=='order_supplementary_contract'">补充合同审核</div>
+                    <div v-if="item.bizType=='order_after_sales'">售后审核</div>
                   </td>
                   <td>
                     <!-- 订单审核 -->
@@ -190,6 +208,8 @@
                     all:1,
                     total:0,
                     processDefineKey:'',
+                    startTime:'',
+                    endTime:'',
                     link:'/order/toDoOrderList',
                     //link:'/order/doneOrderList',
                     key:'toDoOrderList'
@@ -279,6 +299,15 @@
             },
             selectType:function(type){
                 this.loadParam.processDefineKey = type;
+                this.getToDoOrderList(this.loadParam);
+            },
+            selectSearch:function(){
+                this.getToDoOrderList(this.loadParam);
+            },
+            resetCondition:function(){
+                this.loadParam.processDefineKey = '';
+                this.loadParam.startTime = '';
+                this.loadParam.endTime = '';
                 this.getToDoOrderList(this.loadParam);
             },
             showRecord:function(item){
