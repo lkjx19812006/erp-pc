@@ -83,7 +83,7 @@
                 
                 <dl class="clear left transfer" style="width:330px">
                    <dt class="left transfer marg_top">{{$t("static.client_type")}}：</dt>
-                   <dd class="left" style="width:71%">
+                   <dd class="left" style="width:50%">
                        <select v-model="loadParam.type"   class="form-control" @change="selectSearch()">
                           <option value="">{{$t("static.please_select")}}</option>
                           <option value="0">Others 其它</option>
@@ -168,6 +168,8 @@
                         <th>{{$t('static.client_origin')}}</th>
                         <th>{{$t('static.detailed_address')}}</th>
                         <th>{{$t('static.main_product')}}</th> 
+                        <th v-if="this.initLogin.orgId==29">跟进状态</th> 
+                        <th v-if="this.initLogin.orgId==29">跟进说明</th>
                         <th>{{$t("static.operation")}}</th>
                     </tr>
                 </thead>
@@ -204,7 +206,8 @@
                         <td>{{item.provinceName}}{{item.cityName}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.bizScope}}</td>
-
+                        <td v-if="this.initLogin.orgId==29">{{item.audit | tracking}}</td> 
+                        <td v-if="this.initLogin.orgId==29">{{item.auditComment}}</td> 
                     <!-- <td>{{item.typeDesc}}</td>
                         <td>{{item.classifyDesc | classify}}</td>
                         <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
@@ -701,8 +704,8 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 107px;
-    min-width: 106px;
+    width: 108px;
+    min-width: 102px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;

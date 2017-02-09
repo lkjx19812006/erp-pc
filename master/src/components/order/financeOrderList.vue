@@ -99,8 +99,8 @@
                 <td>{{item.comment}}</td>
                 <td>{{item.prNo}}</td>
                 <td v-if="item.validate==0">未审核</td>
-                <td v-if="item.validate==1"><div  style="background:#483D8B;color:#fff;">申请中</div></td>
-                <td v-if="item.validate==2"><div  style="background:green;color:#fff;">审核成功</div></td>
+                <td v-if="item.validate==1"><div style="background:#483D8B;color:#fff;">申请收/付款中</div></td>
+                <td v-if="item.validate==2"><div style="background:green;color:#fff;">审核成功</div></td>
                 <td v-if="item.validate==3"><div style="background:red;color:#fff;">审核未通过</div></td>
                 <td v-if="item.pr==0&&item.type==0">未付款</td>
                 <td v-if="item.pr==0&&item.type==1">未收款</td>

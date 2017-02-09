@@ -379,7 +379,7 @@
                link:'/order/quality/qualified',
                key:param.key
               })">合格</button>
-            <button type="button" class="btn btn-info margin-10 right"  @click="addContract({
+            <!-- <button type="button" class="btn btn-info margin-10 right"  @click="addContract({
                 show:true,
                 orderId:param.id,
                 total:initOrderDetail.total,
@@ -402,7 +402,7 @@
                 link:afterSalesApply,
                 titles:'售后申请',
                 images:'',
-              })">售后申请</button>
+              })">售后申请</button> -->
             <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">{{$t('static.cancel')}}</button>
           </div>
         </div>

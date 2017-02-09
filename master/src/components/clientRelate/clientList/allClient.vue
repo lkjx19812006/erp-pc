@@ -29,9 +29,9 @@
                    </dd>
                 </dl>
 
-                <dl class="clear left transfer" style="width:338px">
+                <dl class="clear left transfer" style="width:192px">
                    <dt class="left transfer marg_top">客户类型：</dt>
-                   <dd class="left" style="width:71%">
+                   <dd class="left" style="width:64%">
                        <select v-model="loadParam.type"   class="form-control" @change="selectSearch()">
                           <option value="">{{$t("static.please_select")}}</option>
                           <option value="0">Others 其它</option>

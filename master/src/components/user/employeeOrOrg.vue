@@ -128,7 +128,7 @@ export default{
                 all: 7,
                 total:''
             },
-              loadParam: {
+            loadParam: {
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
@@ -138,6 +138,7 @@ export default{
                 all: 7,
                 total:'',
                 name:'',
+                leave:1,
                 no:''
               },
               treeParam:{

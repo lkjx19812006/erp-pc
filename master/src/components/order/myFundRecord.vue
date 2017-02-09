@@ -40,8 +40,6 @@
               <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.validate===1}" @click="clickday(1)">申请中</button>
               <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.validate===2}" @click="clickday(2)">审核通过</button>
               <button class="btn btn-default"  v-bind:class="{ 'btn-warning':  this.loadParam.validate===3}" @click="clickday(3)">审核未通过</button>
-              <!-- <button type="button" class="new_btn transfer pull-left"  @click="resetTime()">{{$t('static.clear_all')}}</button>
-              <button class="new_btn transfer pull-left" @click="selectSearch()">{{$t('static.search')}}</button> -->
           </div>
           <div class="btn-group transfer">
               <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===''}" @click="clickType('')">{{$t('static.please_select')}}</button>
@@ -137,6 +135,7 @@
                           show:true,
                           sub:$index,
                           id:item.id,
+                          name:item.payName,
                           comment:item.comment,
                           image_f:'',
                           image_s:'',
@@ -146,6 +145,7 @@
                           titles:'申请审核',
                           link:paymentConfirm
                       })" style="padding:1px 4px;background:#fff;color:#398439;margin-top:-22px;">申请审核</button>
+                  <a class="operate btn-gray" v-if="item.validate==1&&item.pr==0">待财务确认收付款</a>
                 </td>
               </tr>
             </tbody>
@@ -254,8 +254,15 @@
         this.getMyFundList(this.loadParam);
       },
       applyInfo:function(item){
-        this.financeParam.show = true;
-        this.financeParam = item;
+        console.log(item)
+        if(item.name==''){
+          this.tipsParam.show= true;
+          this.tipsParam.name= '请先完善客户账户信息';
+        }else{
+          this.financeParam.show = true;
+          this.financeParam = item;
+        }
+        
         this.financeParam.callback = this.callback;
       },
       editClick:function(receipt){

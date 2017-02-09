@@ -8,6 +8,8 @@
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <applysend-model :param="applyParam" v-if="applyParam.show"></applysend-model>
     <reapply-model :param="reapplyParam" v-if="reapplyParam.show"></reapply-model>
+    <contract-model :param="contractParam" v-if="contractParam.show"></contract-model>
+    <saleapply-model :param="applicationParam" v-if="applicationParam.show"></saleapply-model>
     <language-model v-show="false"></language-model>
     <mglist-model>
 
@@ -242,16 +244,43 @@
                         <!-- 销售订单发货流程start-->
                         <button class="btn btn-danger" @click="applySend(item,$index)" v-if="item.orderStatus==40&&item.type==1&&item.logistics==0" style="background:#fff;color:#ac2925;padding:2px 4px;font-size: 12px;">申请发货
                         </button>
-                        <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.logistics==1" style="color:#333;">等待主管{{item.verifierName}}审核</a>
+                        <a class="operate" v-if="item.orderStatus==40&&item.type==1&&item.logistics==1&&item.consigner!=item.employee" style="color:#333;">等待主管{{item.verifierName}}审核</a>
                         <button class="btn btn-danger" @click="reapplySend(item,$index)" v-if="item.orderStatus==40&&item.logistics==-1&&item.type==1&&item.verifier==item.employee" style="background:#fff;color:#eea236;padding:1px 3px;">重新申请发货
                         </button>
                         <button class="btn btn-warning" @click="pendingOrder(item,$index)" v-if="item.orderStatus==40&&item.logistics==1&&item.type==1&&item.taskKey=='order_send_warehouse_validate'&&item.consigner==item.employee" style="background:#fff;color:#eea236;padding:1px 5px;">发货
                         </button>
                         <!-- 销售订单发货流程end -->
                         <button class="btn btn-success" @click="pendingOrder(item,$index)" v-if="item.orderStatus ==70||(item.orderStatus >=60&&item.type==0)" style="background:#fff;color:#eea236;padding:1px 5px;color:#398439">订单已完成
-                           <!-- <img src="/static/images/{{$t('static.img_finish')}}.png"   title="已完成订单" alt="已完成订单"/> -->
                          </button>
-                        <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==3" style="background:#fff;color:#eea236;padding:1px 5px;">质量检验
+                        <button class="btn btn-success"  @click="pendingOrder(item,$index)" v-if="item.orderStatus==60&&item.type==1&&item.logistics==3" style="background:#fff;color:#398439;padding:1px 5px;">质量检验合格
+                        </button>
+                        <button class="btn btn-danger"  @click="addContract({
+                            show:true,
+                            sub:$index,
+                            orderId:item.id,
+                            total:item.total,
+                            adjusted:'',
+                            comment:'',
+                            contractText:'',
+                            url:'/order/quality/contract/start',
+                            link:applyContract,
+                            titles:'订单补充合同',
+                            images:''
+                          })" v-if="item.orderStatus==60&&item.type==1&&item.logistics==3" style="background:#fff;color:#eea236;padding:1px 5px;">补充合同
+                        </button>
+                        <button class="btn btn-danger"  @click="afterSales({
+                            show:true,
+                            sub:$index,
+                            orderId:item.id,
+                            consignee:'',
+                            comment:'',
+                            shipper:'',
+                            type:'',
+                            url:'/order/quality/after/sales/start',
+                            link:afterSalesApply,
+                            titles:'售后申请',
+                            images:''
+                          })" v-if="item.orderStatus==60&&item.type==1&&item.logistics==3" style="background:#fff;color:#eea236;padding:1px 5px;">售后申请
                         </button>
                         <button class="btn btn-danger"  @click="pendingOrder(item,$index)" v-if="item.orderStatus ==60&&item.type==1&&item.logistics==2" style="background:#fff;color:#eea236;padding:1px 5px;">确认收货
                         </button>
@@ -304,6 +333,8 @@
     import reapplyModel from '../tips/auditDialog'
     import mglistModel from '../mguan/mgListComponent.vue'
     import languageModel  from '../tools/language.vue'
+    import contractModel from '../order/second_order/contractItems'
+    import saleapplyModel from '../order/second_order/afterSalesApply'
     import {
         getList,
         initMyOrderlist,
@@ -314,8 +345,9 @@
         alterOrder,
         createOrder,
         orderStatu,
-        getOrderDetail
-        
+        getOrderDetail,
+        applyContract,
+        afterSalesApply
     } from '../../vuex/actions'
     export default {
         components: {
@@ -332,6 +364,8 @@
             mglistModel,
             reapplyModel,
             applysendModel,
+            contractModel,
+            saleapplyModel,
             languageModel
         },
         data() {
@@ -442,6 +476,12 @@
                     alert:true,
                     name:"请选择要申请审核的订单",
                 },
+                contractParam:{
+                  show:false
+                },
+                applicationParam:{
+                  show:false
+                },
                 applyParam:{
                   show:false,
                   orderId:'',
@@ -473,7 +513,9 @@
                 alterOrder,
                 createOrder,
                 orderStatu,
-                getOrderDetail
+                getOrderDetail,
+                applyContract,
+                afterSalesApply
             }
         },
         methods: {
@@ -674,10 +716,20 @@
                 }
                 this.disposeParam.callback = this.orderBack;
             },
+            addContract:function(contract){
+                this.contractParam = contract;
+                this.contractParam.show=true;
+                this.contractParam.callback = this.orderBack;
+            },
+            afterSales:function(sales){
+                this.applicationParam = sales;
+                this.applicationParam.show=true;
+                this.applicationParam.callback = this.orderBack;
+            },
             orderBack:function(title){
                 this.tipsParam.show = true;
                 this.tipsParam.name=title;
-                /*this.tipsParam.alert=true;*/
+                this.tipsParam.alert=true;
                 this.getEmpolyeeOrder(this.loadParam);
             },
             resetTime:function(){

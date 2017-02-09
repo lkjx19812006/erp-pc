@@ -13,12 +13,6 @@
             <form novalidate>
                 <div class="edit-model">
                     <section class="editsection"  v-cloak>
-                        <!-- <div class="client-detailInfo col-xs-12">
-                             <label class="editlabel">产品图片</label>
-                             <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-                             <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-                             <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-                                               </div> -->
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label class="editlabel">名称 <span class="system_danger" v-if="$validation.username.required">请输入产品名称</span></label>

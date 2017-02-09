@@ -687,7 +687,7 @@ Vue.filter('Auditing',function(val){     //订单审核
 	}else if(val==0){
 		 return '初始状态';
 	}else if(val==1){
-		 return '申请审核';
+		 return '申请审核中';
 	}else if(val==2){
 		 return '审核通过';
 	}else if(val==-2){
