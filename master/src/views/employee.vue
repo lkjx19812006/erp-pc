@@ -9,7 +9,7 @@
    <delete-model :param="deleteParam" v-if="deleteParam.show"></delete-model>
    <newly-model :param="complierParam" v-if="complierParam.show"></newly-model>
    <!-- 右侧员工 -->
-   <mglist-model style="width:69%;float:right">
+   <mglist-model style="width:79%;float:right">
         <!-- 头部搜索 -->
         <div slot="top">
             <div class="clear">
@@ -205,7 +205,7 @@
         <pagination :combination="loadParam"  slot="page"></pagination>
    </mglist-model>
    <!-- 左侧部门 -->
-   <mglist-model style="width:30%;float:left">
+   <mglist-model style="width:20%;float:left">
         <!-- 头部搜索 -->
         <div slot="top" style="height:42px;">
         </div>
@@ -584,5 +584,9 @@ export default {
    z-index: 1100;
    left: 0;
    right: 0
+}
+#table_box table th,#table_box table td{
+  width: 96px;
+  min-width:94px;
 }
 </style>
