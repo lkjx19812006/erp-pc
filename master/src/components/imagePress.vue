@@ -1,5 +1,17 @@
-<template>
+<template> 
     <div class="img_div">
+        <div class="cover_loading"  v-show="loadParam.loading">
+            <div class="loadEffect"> 
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span> 
+                <span></span>
+                <span></span>
+            </div>
+        </div>
         <form>
             <input type="file" @change="previewImg" class="input_image" name="photo" accept="{{type}}">
             <img v-bind:src="image" class="image_show" v-if="imageShow&&!showurl">
@@ -19,7 +31,12 @@ export default {
             image: "../../static/images/default_image.png",
             close:false,
             imageShow:true,
-            fileName:''
+            fileName:'',
+            loadParam:{
+                loading: false,
+                color: '#5dc596',
+                size: '15px'
+            }
         }
     },
     props: {
@@ -129,6 +146,7 @@ export default {
         },
         upload:function(data,url){
             console.log(data);
+            this.loadParam.loading = true;
             var _self=this;
             console.log(this);
                this.$http({
@@ -138,12 +156,14 @@ export default {
                     emulateHTTP: false,
                     body: data
                     }).then((res) => {
-                    _self.$dispatch("getImageData", res.json());
-                    _self.value=res.json().result.path;
-                    _self.showurl=res.json().result.url;
-                    console.log(res.json());
+                        _self.$dispatch("getImageData", res.json());
+                        _self.value=res.json().result.path;
+                        _self.showurl=res.json().result.url;
+                        this.loadParam.loading = false;
+                        console.log(res.json());
                     }, (res) => {
-                  console.log('fail');
+                        this.loadParam.loading = false;
+                        console.log('fail');
                 })
 
 
@@ -178,8 +198,18 @@ h1 {
     right: -14px;
     width: 30px;
 }
-
-.select_button{
-
-}
+.loadEffect{ width: 90px; height:90px; position: absolute;margin: 0 auto; left: 0;right: 0;margin-top:-30px;} 
+.loadEffect span{ display: inline-block; width: 16px; height: 16px; border-radius: 50%; background: #fa6705; position: absolute; -webkit-animation: load 1.04s ease infinite; } 
+@-webkit-keyframes load{
+ 0%{ opacity: 0.8; } 
+ 100%{ opacity: 0.2; } 
+ } 
+.loadEffect span:nth-child(1){ left: 0; top: 50%; margin-top:-8px; -webkit-animation-delay:0.13s; } 
+.loadEffect span:nth-child(2){ left: 11px; top: 11px; -webkit-animation-delay:0.26s; } 
+.loadEffect span:nth-child(3){ left: 50%; top: 0; margin-left: -8px; -webkit-animation-delay:0.39s; } 
+.loadEffect span:nth-child(4){ top: 11px; right:11px; -webkit-animation-delay:0.52s; } 
+.loadEffect span:nth-child(5){ right: 0; top: 50%; margin-top:-8px; -webkit-animation-delay:0.65s; }
+.loadEffect span:nth-child(6){ right: 9px; bottom:11px; -webkit-animation-delay:0.78s; } 
+.loadEffect span:nth-child(7){ bottom: 0; left: 50%; margin-left: -8px; -webkit-animation-delay:0.91s; }
+.loadEffect span:nth-child(8){ bottom: 10px; left: 10px; -webkit-animation-delay:1.04s; }
 </style>
