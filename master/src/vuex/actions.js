@@ -395,6 +395,43 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
     })
 }
 
+export const getToDoOrderList = ({ dispatch }, param) => { //待处理订单列表
+    param.loading = true;
+    var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
+    if(param.processDefineKey!=''){
+        url += '&processDefineKey=' + param.processDefineKey
+    }
+    if(param.startTime!=''){
+        url += '&startTime=' + param.startTime
+    }
+    if(param.endTime!=''){
+        url += '&endTime=' + param.endTime
+    }
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var orderList = res.json().result.list;
+        
+        orderList.key = param.key;
+        dispatch(types.ORDER_TABLE, orderList);
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+
+        //localStorage.allOrderList = JSON.stringify(orderList);
+        localStorage.toDoOrderParam = JSON.stringify(param);
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const getOrderStatistical = ({ dispatch }, param) => {   //简单的订单统计接口
     param.loading = true;
     var body = {
@@ -1220,11 +1257,11 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         console.log(param.payPics)
     }
     if (param.titles == "上传附件凭证") {
-        if (param.image_f) {
+        /*if (param.image_f) {
             param.attachFiles += param.image_f + ','
         }
         if (param.image_s) { param.attachFiles += param.image_s + ',' }
-        if (param.image_t) { param.attachFiles += param.image_t };
+        if (param.image_t) { param.attachFiles += param.image_t };*/
         console.log(param.attachFiles)
     }
     if (param.titles == "上传物流凭证") {
@@ -1244,11 +1281,16 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         console.log(param.orderContractList)
     }
 
+
+
     const body = {
         orderId: param.orderId,
         description: param.description,
         fileType: param.fileType,
         bizType: param.bizType
+    }
+    if (param.titles == "上传附件凭证"){
+        body.attachFiles = param.files;
     }
     if (param.payPics) {
         body.payPics = param.payPics;

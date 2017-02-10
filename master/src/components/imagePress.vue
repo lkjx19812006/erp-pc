@@ -9,7 +9,6 @@
                 <div>{{fileName}}</div>
                 <input type="button" value="重新选择文件" class="btn btn-default select_button">
             </div>
-
         </form>
     </div>
 </template>
@@ -87,6 +86,7 @@ export default {
                 let param =new FormData();
                 param.append("qiniu", _self.param.qiniu);
                 param.append("mFile", file);
+                console.log(file);
                 _self.upload(param,'');
             }
                 return 1;
@@ -128,7 +128,9 @@ export default {
             this.showurl='';
         },
         upload:function(data,url){
+            console.log(data);
             var _self=this;
+            console.log(this);
                this.$http({
                     method: 'POST',
                     url: '/crm/api/v1/file/'+url,

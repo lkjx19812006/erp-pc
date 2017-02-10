@@ -47,13 +47,17 @@
     <div class="myOrder" v-if="$route.path.split('=')[1]==11">
       <orgcontract-model></orgcontract-model>
     </div>
-    <!-- 我的补充合同 -->
+    <!-- 我的售后申请 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==12">
       <myafterapply-model></myafterapply-model>
     </div>
-    <!-- 部门补充合同 -->
+    <!-- 部门售后申请 -->
     <div class="myOrder" v-if="$route.path.split('=')[1]==13">
       <orgafterapply-model></orgafterapply-model>
+    </div>
+    <!-- 订单处理 -->
+    <div class="myOrder" v-if="$route.path.split('=')[1]==14">
+      <orderhandle-model></orderHandle-model>
     </div>
 </template>
 <script>
@@ -70,7 +74,9 @@ import mycontractModel from '../components/order/myContractList'
 import orgcontractModel from '../components/order/orgContractList'
 import myafterapplyModel from '../components/order/mySalesApply'
 import orgafterapplyModel from  '../components/order/orgSalesApply'
+import orderhandleModel from '../components/order/orderHandle'
 import ordersupplyList from '../components/order/intentionalOrder'
+
 export default {
     components: {
         paymentRecord,
@@ -86,7 +92,9 @@ export default {
         orgcontractModel,
         orgafterapplyModel,
         myafterapplyModel,
-        ordersupplyList
+        ordersupplyList,
+        orderhandleModel
+
     }
 }
 </script>

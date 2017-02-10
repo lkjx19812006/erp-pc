@@ -270,7 +270,6 @@ export default {
             this.auditParam.show = true;
         },
         sendAudit:function(item){ //发货
-            console.log(item)
             if(item.taskKey=='order_send_employee_handle'){
                 this.auditParam.audit = false;
                 this.auditParam.title = '重新申请审核';
