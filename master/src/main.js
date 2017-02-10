@@ -32,8 +32,7 @@ Vue.use(VueRouter)
 Vue.use(VueResource)
 Vue.use(iView)
 
-/*Vue.use(alert)*/
-
+Vue.config.debug = false
 Vue.http.options.root = '/src/assets/data'
 Vue.http.options.emulateJSON = true
 Vue.http.options.emulateHTTP = true

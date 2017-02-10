@@ -293,6 +293,7 @@
                     no:'',
                     endTime:'',
                     startTime:'',
+                    intl:1,
                     mode:'',
                     total:0
                 },
