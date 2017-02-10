@@ -13,11 +13,11 @@
                 <section class="editsection clearfix">
                     <div class="editpage-input clearfix">
                         <label class="editlabel">{{$t('static.file')}}</label>
-                        <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                       <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                       <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                        <press-image :value.sync="param.image_f" :type="type" :param="imageParam" ></press-image>
+                       <!-- <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
+                       <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image> -->
                     </div>
-                    
+
                     <div class="editpage-input">
                         <label class="editlabel">{{$t('static.description')}}</label>
                         <textarea style="width:100%;resize:none;border:1px solid #ddd;border-radius:5px;" rows="5" v-model="param.description">
@@ -35,7 +35,7 @@
     </div>
 </template>
 <script>
-import pressImage from '../imagePress'
+import pressImage from '../tools/upload/imagePressMul'
 import uploadFile from '../tools/upload/uploadFile'
 export default {
     components: {
@@ -66,6 +66,16 @@ export default {
             console.log(imageData);
             var paths = new Array();
             this.param.path=imageData.result.path;
+        },
+        getFiles: function(files){
+            this.param.files = '';
+            for(let i = 0;i<files.length;i++){
+                if(i==0){
+                    this.param.files = files[0].path;
+                }else{
+                    this.param.files = this.param.files + "," + files[i].path;
+                }
+            }
         }
     }
 }

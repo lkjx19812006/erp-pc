@@ -1245,7 +1245,7 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
 
 export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各个凭证
     console.log(param)
-    if (param.titles == "上传支付凭证") {
+    /*if (param.titles == "上传支付凭证") {
         if (param.image_f) {
             param.payPics += param.image_f + ','
         }
@@ -1254,11 +1254,11 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         console.log(param.payPics)
     }
     if (param.titles == "上传附件凭证") {
-        /*if (param.image_f) {
+        if (param.image_f) {
             param.attachFiles += param.image_f + ','
         }
         if (param.image_s) { param.attachFiles += param.image_s + ',' }
-        if (param.image_t) { param.attachFiles += param.image_t };*/
+        if (param.image_t) { param.attachFiles += param.image_t };
         console.log(param.attachFiles)
     }
     if (param.titles == "上传物流凭证") {
@@ -1276,9 +1276,7 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         if (param.image_s) { param.orderContractList += param.image_s + ',' }
         if (param.image_t) { param.orderContractList += param.image_t };
         console.log(param.orderContractList)
-    }
-
-
+    }*/
 
     const body = {
         orderId: param.orderId,
@@ -1286,10 +1284,7 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         fileType: param.fileType,
         bizType: param.bizType
     }
-    if (param.titles == "上传附件凭证"){
-        body.attachFiles = param.files;
-    }
-    if (param.payPics) {
+    /*if (param.payPics) {
         body.payPics = param.payPics;
     }
     if (param.sendPics) {
@@ -1300,6 +1295,18 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
     }
     if (param.orderContractList) {
         body.orderContractList = param.orderContractList;
+    }*/
+    if (param.titles == "上传支付凭证"){
+        body.payPics = param.files;
+    }
+    if (param.titles == "上传附件凭证"){
+        body.attachFiles = param.files;
+    }
+    if (param.titles == "上传物流凭证"){
+        body.sendPics = param.files;
+    }
+    if (param.titles == "上传合同"){
+        body.orderContractList = param.files;
     }
     Vue.http({
         method: 'POST',
