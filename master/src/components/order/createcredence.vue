@@ -17,7 +17,7 @@
                        <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
                        <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
                     </div>
-
+                    
                     <div class="editpage-input">
                         <label class="editlabel">{{$t('static.description')}}</label>
                         <textarea style="width:100%;resize:none;border:1px solid #ddd;border-radius:5px;" rows="5" v-model="param.description">

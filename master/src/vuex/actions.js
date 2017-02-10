@@ -1254,11 +1254,11 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         console.log(param.payPics)
     }
     if (param.titles == "上传附件凭证") {
-        if (param.image_f) {
+        /*if (param.image_f) {
             param.attachFiles += param.image_f + ','
         }
         if (param.image_s) { param.attachFiles += param.image_s + ',' }
-        if (param.image_t) { param.attachFiles += param.image_t };
+        if (param.image_t) { param.attachFiles += param.image_t };*/
         console.log(param.attachFiles)
     }
     if (param.titles == "上传物流凭证") {
@@ -1278,11 +1278,16 @@ export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各
         console.log(param.orderContractList)
     }
 
+
+
     const body = {
         orderId: param.orderId,
         description: param.description,
         fileType: param.fileType,
         bizType: param.bizType
+    }
+    if (param.titles == "上传附件凭证"){
+        body.attachFiles = param.files;
     }
     if (param.payPics) {
         body.payPics = param.payPics;

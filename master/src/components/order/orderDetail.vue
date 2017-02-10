@@ -446,6 +446,7 @@
                                           description:'',
                                           fileType:'image',
                                           bizType:'attach_files',
+                                          files:'',
                                           attachFiles:'',
                                           titles:'上传附件凭证'
                                           })" v-if="initOrderDetail.attachFiles.arr.length!==null&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
