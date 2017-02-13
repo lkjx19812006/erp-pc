@@ -59,10 +59,6 @@
                           show:true,
                           name:this.payName.name
                         })"/> 
-                       <!-- <select class="form-control edit-input" v-model="param.paySubName">
-                            <option>虹口支行</option>
-                            <option>杨浦支行</option>
-                       </select> -->
                     </div>
                     <div class="editpage-input col-md-6" >
                        <label class="editlabel">用户名 <span class="system_danger" v-if="$validation.payuser.required">{{$t('static.required')}}</span></label>
@@ -83,7 +79,7 @@
                        <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" value="{{param.comment}}"></textarea>
                     </div>
                     
-                    <div class="editpage-input col-md-12" style="max-height: 200px;overflow-y: auto">
+                    <div class="editpage-input col-md-12" style="max-height:200px;overflow-y:auto">
                          <label class="editlabel">支付/收款凭证</label>
                          <press-image :value.sync="param.image_f" :type.sync="type" :param="imageParam"></press-image>
                     </div>
@@ -158,9 +154,9 @@
                        <label class="editlabel">备注</label>
                        <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" value="{{param.comment}}"></textarea>
                     </div>
-                    <div class="editpage-input col-md-12">
+                    <div class="editpage-input col-md-12" style="max-height:200px;overflow-y:auto;">
                          <label class="editlabel">支付/收款凭证</label>
-                         <img :src="param.images" />
+                         <!-- <img :src="param.images" /> -->
                          <press-image :value.sync="param.image_f"  :type="type" :param="imageParam" ></press-image>
                     </div>
                </section>

@@ -924,7 +924,6 @@ export default {
 }
 .modal_con{
   z-index: 1083;
-  top:45px;
 }
 .top-title{
   position: fixed;

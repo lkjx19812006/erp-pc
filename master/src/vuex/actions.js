@@ -1127,7 +1127,6 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     }
     if(data.title1 == '采购订单'){
         body.link = data.link;
-        console.log(body.link)
     }
     if (data.email) {
         body.email = data.email;
@@ -1338,12 +1337,12 @@ export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分
 
 export const paymentConfirm = ({ dispatch }, param) => { //确定收款
     console.log(param)
-    param.images = '';
+/*    param.images = '';
     if (param.image_f) {
         param.images += param.image_f + ','
     }
     if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t }
+    if (param.image_t) { param.images += param.image_t }*/
     var ss= param.images;
     var img = ss.split(",");//字符串转化为数组
     img.toString();
@@ -1378,16 +1377,9 @@ export const paymentConfirm = ({ dispatch }, param) => { //确定收款
 
 export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     console.log(param)
-    /*param.images = '';
-    if (param.image_f) {
-        param.images += param.image_f + ','
-    }
-    if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t }
-    var ss= param.images;
-    var sss = ss.split(",");//字符串转化为数组
-    sss.toString();*/
-
+    var files= param.images;
+    var img = files.split(",");//字符串转化为数组
+    img.toString();
     const body = {
         payWay:param.payWay,
     };
@@ -1431,7 +1423,7 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
         body.paySubName = param.paySubName;
     }
     if (param.images) {
-        body.images = param.images;
+        body.images = img;
     }
     console.log(body)
     Vue.http({
@@ -1512,12 +1504,12 @@ export const editPayment = ({ dispatch }, param) => { //编辑我的收付款
 };
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     console.log(param)
-    param.images = '';
+   /* param.images = '';
     if (param.image_f) {
         param.images += param.image_f + ','
     }
     if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t };
+    if (param.image_t) { param.images += param.image_t };*/
     const body = {
         orderId: param.id
     }
@@ -1657,8 +1649,9 @@ export const orderCancle = ({ dispatch }, param, data) => { //订单取消状态
     })
 }
 
-export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单支付状态
+export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单支付状态(已更改流程，此步骤接口未经过)
     console.log(param)
+    console.log(undelinePay)
     undelinePay.images = '';
     if (undelinePay.image_f) {
         undelinePay.images += undelinePay.image_f + ','
@@ -4276,7 +4269,7 @@ export const getSupplyDemandList = ({ dispatch }, param) => { //匹配供求信�
     })
 }
 
-export const getIntentionDetail = ({ dispatch }, param) => { //意向详情
+export const getIntentionDetail = ({ dispatch }, param,imageParam) => { //意向详情
     param.loading = true;
     var url = apiUrl.clientList + '/intention/' + param.id;
     Vue.http({
@@ -4325,7 +4318,6 @@ export const getIntentionDetail = ({ dispatch }, param) => { //意向详情
             param.image_t = res.json().result.pics[2].path;
             param.image_t_show = res.json().result.pics[2].url;
         }
-        // console.log(param);
 
         param.loading = false;
     }, (res) => {
@@ -5731,9 +5723,9 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
     if (!param.images) {
         param.images = '';
     }
-    if (param.image_f) { param.images += param.image_f + ',' }
+/*    if (param.image_f) { param.images += param.image_f + ',' }
     if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t };
+    if (param.image_t) { param.images += param.image_t };*/
     var today = new Date();
     const data1 = {
         "userId": param.userId,
