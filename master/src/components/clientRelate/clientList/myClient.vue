@@ -311,7 +311,8 @@ import {
     alterInfo,
     saveCreate,
     transferInfo,
-    customerTransferBlacklist
+    customerTransferBlacklist,
+    customerAudit
 } from '../../../vuex/actions'
 
 export default {
@@ -343,7 +344,8 @@ export default {
             alterInfo,
             saveCreate,
             transferInfo,
-            customerTransferBlacklist
+            customerTransferBlacklist,
+            customerAudit
         }
     },
     data() {
@@ -403,9 +405,12 @@ export default {
                 show:false,
                 title:'跟进',
                 tracking:true,
+                link:'/customer/audit',
                 key:'myCustomerList',
                 sub:'',
+                indexs:'',  
                 id:'',
+                ids:'',
                 audit:'',
                 auditComment:'',
                 wait:this.waitTracking,
@@ -455,21 +460,23 @@ export default {
         },
         updateTracking:function(item,index){
             this.updateTrackingParam.sub = index;
+            this.updateTrackingParam.indexs = [index];
             this.updateTrackingParam.id = item.id;
+            this.updateTrackingParam.ids = [item.id];
             this.updateTrackingParam.auditComment = item.auditComment;
             this.updateTrackingParam.show = true;
         },
         waitTracking:function(){
             this.updateTrackingParam.audit = 1;
-            this.alterInfo(this.updateTrackingParam);
+            this.customerAudit(this.updateTrackingParam);
         },
         passTracking:function(){
             this.updateTrackingParam.audit = 2;
-            this.alterInfo(this.updateTrackingParam);
+            this.customerAudit(this.updateTrackingParam);
         },
         rejectTracking:function(){
             this.updateTrackingParam.audit = 3;
-            this.alterInfo(this.updateTrackingParam);
+            this.customerAudit(this.updateTrackingParam);
         },
         trackingback:function(title){
           this.tipsParam.show = true;

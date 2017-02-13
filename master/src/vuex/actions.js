@@ -3167,6 +3167,35 @@ export const getOrgClientList = ({ dispatch }, param) => { //部门客户信息�
     })
 }
 
+export const customerAudit = ({ dispatch }, param) => {   //客户审核(跟进)
+    console.log(param);
+    const data = {
+        customerIds:param.ids,
+        audit:param.audit,
+        auditComment:param.auditComment
+    };
+
+  
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + param.link,
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        param.loading = false;
+        if(param.callback){
+            param.callback(res.json().msg);
+        }
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    });
+}
 export const customerTransferBlacklist = ({ dispatch }, param) => {    //客户转供应商,拉黑,移出黑名单
     param.loading = true;
     console.log(param);
@@ -3554,7 +3583,6 @@ export const alterInfo = ({ dispatch }, param) => { //修改客户信息
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('修改成功') 
         if(param.callback){
             param.callback(res.json().msg);
         }
