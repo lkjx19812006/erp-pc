@@ -189,7 +189,7 @@ h1 {
 
 .image_show {
     width: 100%;
-    max-height: 200px;
+    height:120px;
 }
 
 .close_image{
