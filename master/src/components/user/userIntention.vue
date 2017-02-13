@@ -341,7 +341,7 @@ import searchcustomerModel  from '../Intention/clientname'
 import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipdialogModel from '../tips/tipDialog'
-import pressImage from '../tools/upload/imagePressMul'
+import pressImage from '../imagePress.vue'
 import {
     initCountrylist,
     initProvince,

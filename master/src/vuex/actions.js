@@ -4297,7 +4297,7 @@ export const getSupplyDemandList = ({ dispatch }, param) => { //匹配供求信�
     })
 }
 
-export const getIntentionDetail = ({ dispatch }, param,imageParam) => { //意向详情
+export const getIntentionDetail = ({ dispatch }, param) => { //意向详情
     param.loading = true;
     var url = apiUrl.clientList + '/intention/' + param.id;
     Vue.http({
