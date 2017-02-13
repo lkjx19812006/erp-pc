@@ -1,6 +1,6 @@
-<!-- 单文件上传 -->
+<!-- 多文件上传 -->
 <template>
-    <div class="img_div">
+    <div class="img_div" style="float:left;margin-left:15px;width:20%">
         <div class="cover_loading"  v-show="loadParam.loading">
             <div class="loadEffect"> 
                 <span></span>
@@ -16,28 +16,48 @@
         <form>
             <input type="file" @change="previewImg" class="input_image" name="photo" accept="{{type}}">
             <img v-bind:src="image" class="image_show" v-if="imageShow&&!showurl">
-            <img v-bind:src="showurl" class="image_show" v-if="imageShow&&showurl" >
-            <img src="../../static/images/close.png" v-show="showurl" @click="delImage" class="close_image">
+            <img src="../../../../static/images/default_image.png" class="image_show" v-if="imageShow&&showurl" >
+            <!-- <img v-bind:src="showurl" class="image_show" v-if="imageShow&&showurl" > -->
+            <!-- <img src="../../static/images/close.png" v-show="showurl" @click="delImage" class="close_image"> -->
             <div v-show="!imageShow">
-                <div>{{fileName}}</div>
-                <input type="button" value="重新选择文件" class="btn btn-default select_button">
+                <img src="../../../../static/images/default_image.png" class="image_show" >
+                <!-- <div>{{fileName}}</div>
+                <input type="button" value="重新选择文件" class="btn btn-default select_button"> -->
             </div>
-
         </form>
     </div>
+    
+
+    <ul class="img_div" v-for="item in files" style="float:left;margin-left:15px;width:20%">
+        <form>
+            <img v-bind:src="item.showurl" class="image_show" v-if="item.imageShow" >
+            <img src="../../../../static/images/close.png" v-show="item.showurl" @click="delFile($index)" class="close_image">
+            <div v-show="!item.imageShow">
+                <div>{{item.fileName}}</div>
+                <input type="button" value="重新选择文件" class="btn btn-default select_button">
+            </div>
+        </form>
+    </ul>
+
 </template>
 <script>
 export default {
     data() {
         return {
-            image: "../../static/images/default_image.png",
-            close:false,
-            imageShow:true,
-            fileName:'',
             loadParam:{
                 loading: false,
                 color: '#5dc596',
                 size: '15px'
+            },
+            image: "../../../../static/images/default_image.png",
+            close:false,
+            imageShow:true,
+            fileName:'',
+            files:[],
+            file:{
+                imageShow:true,
+                showurl:'../../../../static/images/default_image.png',
+                fileName:''
             }
         }
     },
@@ -84,7 +104,7 @@ export default {
                           if(_self.param&&_self.param.qiniu){param.qiniu=_self.param.qiniu;}
                           else{ param.qiniu=false;}
                           _self.close=true;
-                          _self.upload(param,'base64');
+                          _self.upload(param,file,'base64');
                         }
                     } else {
                         _self.image = e.target.result;
@@ -94,7 +114,7 @@ export default {
                       if(_self.param&&_self.param.qiniu){param.qiniu=_self.param.qiniu;}
                       else{ param.qiniu=false;}
                       _self.close=true;
-                      _self.upload(param,'base64');
+                      _self.upload(param,file,'base64');
                     }
 
                 }
@@ -105,7 +125,8 @@ export default {
                 let param =new FormData();
                 param.append("qiniu", _self.param.qiniu);
                 param.append("mFile", file);
-                _self.upload(param,'');
+                console.log(file);
+                _self.upload(param,file,'');
             }
                 return 1;
             }
@@ -145,10 +166,15 @@ export default {
             this.value='';
             this.showurl='';
         },
-        upload:function(data,url){
+        delFile:function(index){
+            this.files.splice(index,1);
+            this.$dispatch("getFiles", this.files);
+        },
+        upload:function(data,file,url){
             console.log(data);
             this.loadParam.loading = true;
             var _self=this;
+            console.log(this);
                this.$http({
                     method: 'POST',
                     url: '/crm/api/v1/file/'+url,
@@ -156,14 +182,33 @@ export default {
                     emulateHTTP: false,
                     body: data
                     }).then((res) => {
-                        _self.$dispatch("getImageData", res.json());
-                        _self.value=res.json().result.path;
-                        _self.showurl=res.json().result.url;
-                        this.loadParam.loading = false;
-                        console.log(res.json());
+                    //上传成功后
+                    let temp = {
+                        imageShow:true,
+                        showurl:'../../static/images/default_image.png',
+                        path:'',
+                        fileName:''
+                    };
+
+                    temp.showurl = res.json().result.url;
+                    temp.path = res.json().result.path;
+                    temp.fileName = file.name;
+                    if(file.type.split('/')[0]=='image'){
+                        temp.imageShow = true;
+                    }else{
+                        temp.imageShow = false;
+                    }
+                    _self.files.push(temp);
+                    _self.$dispatch("getImageData", res.json());
+                    _self.$dispatch("getFiles", _self.files);
+                    _self.value=res.json().result.path;
+                    _self.showurl=res.json().result.url;
+
+                    this.loadParam.loading = false;
+                    console.log(res.json());
                     }, (res) => {
-                        this.loadParam.loading = false;
-                        console.log('fail');
+                      console.log('fail');
+                      this.loadParam.loading = false;
                 })
 
 
@@ -189,14 +234,18 @@ h1 {
 
 .image_show {
     width: 100%;
-    height: 120px;
+    height:94px;
 }
 
 .close_image{
     position: absolute;
-    top: -16px;
-    right: -14px;
-    width: 30px;
+    top: -9px;
+    right: -8px;
+    width:23px;
+}
+
+.select_button{
+
 }
 .loadEffect{ width: 90px; height:90px; position: absolute;margin: 0 auto; left: 0;right: 0;margin-top:-30px;} 
 .loadEffect span{ display: inline-block; width: 16px; height: 16px; border-radius: 50%; background: #fa6705; position: absolute; -webkit-animation: load 1.04s ease infinite; } 
