@@ -468,14 +468,17 @@ export default {
         },
         waitTracking:function(){
             this.updateTrackingParam.audit = 1;
+            this.updateTrackingParam.callback = this.trackCallback;
             this.customerAudit(this.updateTrackingParam);
         },
         passTracking:function(){
             this.updateTrackingParam.audit = 2;
+            this.updateTrackingParam.callback = this.trackCallback;
             this.customerAudit(this.updateTrackingParam);
         },
         rejectTracking:function(){
             this.updateTrackingParam.audit = 3;
+            this.updateTrackingParam.callback = this.trackCallback;
             this.customerAudit(this.updateTrackingParam);
         },
         trackingback:function(title){
@@ -585,26 +588,26 @@ export default {
               this.tipsParam.confirm=false;
             }
         },
-          clientTransferBlack:function(){
-            this.auditParam.title="客户踢入黑名单备注";
-            this.auditParam.arr=[];
-            for(var i in this.initMyCustomerlist){
-              if(this.initMyCustomerlist[i].checked){
-                this.auditParam.arr.push(this.initMyCustomerlist[i].id);
-              }
-            }
+      clientTransferBlack:function(){
+        this.auditParam.title="客户踢入黑名单备注";
+        this.auditParam.arr=[];
+        for(var i in this.initMyCustomerlist){
+          if(this.initMyCustomerlist[i].checked){
+            this.auditParam.arr.push(this.initMyCustomerlist[i].id);
+          }
+        }
 
-            if(this.auditParam.arr.length>0){
-              this.auditParam.show=true;
-              this.auditParam.confirm=true;
-              this.auditParam.callback=this.callback;
-            }else{
-              this.tipsParam.show=true;
-              this.tipsParam.alert=true;
-              this.tipsParam.name='请先选择客户';
-              this.tipsParam.confirm=false;
-            }
-          },
+        if(this.auditParam.arr.length>0){
+          this.auditParam.show=true;
+          this.auditParam.confirm=true;
+          this.auditParam.callback=this.callback;
+        }else{
+          this.tipsParam.show=true;
+          this.tipsParam.alert=true;
+          this.tipsParam.name='请先选择客户';
+          this.tipsParam.confirm=false;
+        }
+      },
       callback:function(){
         this.auditParam.blackComments=this.auditParam.auditComment;
         this.auditParam.customerIds=this.auditParam.arr;
@@ -616,7 +619,13 @@ export default {
         this.tipsParam.show = true;
         this.tipsParam.name=title;
         this.tipsParam.alert=true;
-     },
+      },
+      trackCallback:function(title){
+         this.tipsParam.show = true;
+         this.tipsParam.name=title;
+         this.tipsParam.alert=true;
+         this.getClientList(this.loadParam);
+      },
         checkedAll: function() {
            this.checked=!this.checked;
            if(this.checked){
