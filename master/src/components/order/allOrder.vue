@@ -185,7 +185,7 @@
                     <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                     <td v-if="item.payWay==4">WeChat</td>
                     <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td>
-                    <td>{{item.orderStatus | assess item.type item.logistics item.verifierName}}</td>          
+                    <td>{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</td>          
                     <!--<td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
                     <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                     <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>

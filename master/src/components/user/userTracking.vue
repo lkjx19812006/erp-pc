@@ -1,4 +1,5 @@
 <template>
+<div>
   <biz-model :param="bizParam" v-if="bizParam.show"></biz-model>
   <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
   <div class="container modal_con" v-show="param.show">
@@ -160,6 +161,7 @@
         </div>
     </validator>
   </div>
+</div>
 </template>
 <script>
   import bizModel from './selectBizId'

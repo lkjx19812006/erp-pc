@@ -41,10 +41,11 @@ Vue.filter('bizType', function(val){
 	}
 });
 
-Vue.filter('assess', function(val,type,logistic,name){ //订单状态判断
+Vue.filter('assess', function(val,type,logistic,name,taskKey){ //订单状态判断
 	var val = val;
 	var type = type;
 	var logistic = logistic;
+	var taskKey = taskKey;
 	var name = name;
 	if(name==null){
 		name='';
@@ -52,7 +53,7 @@ Vue.filter('assess', function(val,type,logistic,name){ //订单状态判断
 		name=name;
 	}
 	if(val==60&&type==1&&logistic==2){
-		 return '已重新发货（仓库审核）';
+		 return '已发货（仓库审核）';
 	}else if(val==60&&type==1&&logistic==3){
 		return '等待检验'
 	}else if(val==60&&type==1&&logistic==40){
@@ -73,8 +74,12 @@ Vue.filter('assess', function(val,type,logistic,name){ //订单状态判断
 		return '等待支付'
 	}else if(val==30){
 		return '等待审核'
-	}else if(val==40){
+	}else if(val==40&&taskKey=='order_send_warehouse_validate'){
 		return '等待'+name+'发货'
+	}else if(val==40&&taskKey=='order_send_governor_validate'){
+		return '等待'+name+'审核'
+	}else if(val==40&&(taskKey!=='order_send_governor_validate'||taskKey=='order_send_governor_validate')){
+		return '等待发货'
 	}else if(val==50){
 		return '等待收货'
 	}else if(val==-1){
@@ -85,11 +90,12 @@ Vue.filter('assess', function(val,type,logistic,name){ //订单状态判断
 		return '';
 	}
 });
-Vue.filter('Enassess', function(val,type,logistic,name){ //订单状态判断英文展示
+Vue.filter('Enassess', function(val,type,logistic,name,taskKey){ //订单状态判断英文展示
 	var val = val;
 	var type = type;
 	var logistic = logistic;
 	var name = name;
+	var taskKey = taskKey;
 	if(name==null){
 		name='';
 	}else{
@@ -117,8 +123,12 @@ Vue.filter('Enassess', function(val,type,logistic,name){ //订单状态判断英
 		return 'Processing with payment'
 	}else if(val==30){
 		return 'Bulk order phas'
-	}else if(val==40){
+	}else if(val==40&&taskKey=='order_send_warehouse_validate'){
 		return 'Payment received'+name
+	}else if(val==40&&taskKey=='order_send_governor_validate'){
+		return 'Bulk order phas'+name
+	}else if(val==40&&(taskKey!=='order_send_governor_validate'||taskKey=='order_send_governor_validate')){
+		return 'Bulk order phas'
 	}else if(val==50){
 		return 'Follow up order'
 	}else if(val==-1){

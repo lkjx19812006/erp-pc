@@ -1,4 +1,5 @@
 <template>
+  <div>
     <cancle-model :param="cancleReason" v-if="cancleReason.show"></cancle-model>
     <alert-model :param="tipParam" v-if="tipParam.show"></alert-model>
     <undeline-model :param="undelinePay" v-if="undelinePay.show"></undeline-model>
@@ -408,6 +409,7 @@
         </div>
 
     </div>
+  </div>
 </template>
 <script>
 import cancleModel from  '../order/cancleMsg'

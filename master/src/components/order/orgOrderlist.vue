@@ -1,4 +1,5 @@
-  <template>
+<template>
+  <div>
     <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
     <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
@@ -192,8 +193,8 @@
                     <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                     <td v-if="item.payWay==4">WeChat</td>
                     <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td> -->
-                    <td v-if="this.language=='zh_CN'">{{item.orderStatus | assess item.type item.logistics item.verifierName}}</td>
-                    <td v-if="this.language=='en'">{{item.orderStatus | Enassess item.type item.logistics item.verifierName}}</td>
+                    <td v-if="this.language=='zh_CN'">{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</td>
+                    <td v-if="this.language=='en'">{{item.orderStatus | Enassess item.type item.logistics item.verifierName item.taskKey}}</td>
                     <!-- <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
                     <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                     <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
@@ -310,8 +311,8 @@
         <span style="margin-left:1%;">特惠总金额：{{initOrgOrderStatis.preferentialSum  | money}}元</span>
         <span style="margin-left:1%;">杂费总金额：{{initOrgOrderStatis.incidentalsSum | money}}元</span>
       </div>
-    
-  </template>
+  </div>  
+</template>
   <script>
     import pagination from '../pagination'
     import editorderModel from '../order/orderInformationDialog'
@@ -513,16 +514,6 @@
             changeMenu(this.$store.state.table.isTop,this.getOrgOrder,this.loadParam,localStorage.orgOrderParam); 
             changeMenu(this.$store.state.table.isTop,this.getOrderStatistical,this.loadParam,localStorage.orgOrderParam); 
             this.language = localStorage.lang;
-            
-            /*if(!this.$store.state.table.isTop){
-                console.log("刷新数据");
-                this.getOrgOrder(this.loadParam);
-            }else{
-                console.log("不刷新数据");
-                this.loadParam = JSON.parse(localStorage.orgOrderParam);
-                this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.orgOrderList);
-            }
-            */
         },
         methods: {
             selectSearch:function(){
@@ -611,32 +602,31 @@
                 this.orderOrgAudit(this.auditParam);
             },
             onlyselected: function(index){
-                  const _self=this;
-                    this.$store.state.table.basicBaseList.orgOrderList[index].checked=!this.$store.state.table.basicBaseList.orgOrderList[index].checked;
-                    if(_self.checked){
-                      _self.checked=false;
-                    }else {
-                      _self.checked=true;
-                      this.$store.state.table.basicBaseList.orgOrderList.forEach(function (item) {
-                        if(!item.checked){
-                          if(item.validate==1){
-                            _self.checked=item.checked;
-                            _self.validate = item.validate;
-                          }
+                const _self=this;
+                  this.$store.state.table.basicBaseList.orgOrderList[index].checked=!this.$store.state.table.basicBaseList.orgOrderList[index].checked;
+                  if(_self.checked){
+                    _self.checked=false;
+                  }else {
+                    _self.checked=true;
+                    this.$store.state.table.basicBaseList.orgOrderList.forEach(function (item) {
+                      if(!item.checked){
+                        if(item.validate==1){
+                          _self.checked=item.checked;
+                          _self.validate = item.validate;
                         }
-                      })
-                    }
+                      }
+                    })
+                  }
             },
             select:function(){
-                  this.checked=!this.checked;
-                  const checked=this.checked;
-                  this.$store.state.table.basicBaseList.orgOrderList.forEach(function(item){
-                    if(item.validate==1)item.checked=checked;
-                  })
-
+                this.checked=!this.checked;
+                const checked=this.checked;
+                this.$store.state.table.basicBaseList.orgOrderList.forEach(function(item){
+                  if(item.validate==1)item.checked=checked;
+                })
             },
             newOrder:function(param){
-                 this.dialogParam=param;
+                this.dialogParam=param;
             },
             createSearch:function(){
                  this.loadParam.show=true;
@@ -649,8 +639,7 @@
             updateOrder:function(param){
                 
                 this.dialogParam=param;
-            },
-
+            }
         },
         filter:(filter,{}),
         ready(){
@@ -681,28 +670,6 @@
     }
     .order_search {
         padding: 35px 10px 0 10px;
-    }
-    .checkbox_unselect{
-        background-image: url(/static/images/unselect.png);
-        display: inline-block;
-        background-repeat: no-repeat;
-        width: 24px;
-        height: 24px;
-        background-size: 80%;
-        margin: auto;
-        text-align: center;
-        background-position: 5px;
-    }
-    .checkbox_select{
-        background-image: url(/static/images/selected.png);
-        display: inline-block;
-        background-repeat: no-repeat;
-        width: 24px;
-        height: 24px;
-        background-size: 80%;
-        margin: auto;
-        text-align: center;
-        background-position: 5px;
     }
     .transfer{
         margin-right: 15px;

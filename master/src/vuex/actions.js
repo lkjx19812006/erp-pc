@@ -360,6 +360,9 @@ export const getOrderList = ({ dispatch }, param) => { //全部订单列表以�
         if (key == 'breedId' && param[key] !== '') {
             url += '&breedId=' + param[key];
         }
+        if (key == 'intl' && param[key] !== '') {
+            url += '&intl=' + param[key];
+        }
         if (key == 'employeeId' && param[key] !== '') {
             url += '&employee=' + param[key];
         }

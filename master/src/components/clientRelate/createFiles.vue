@@ -1,4 +1,5 @@
 <template>
+  <div>
     <tip-model :param="tipParam" v-if="tipParam.show"></tip-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
@@ -41,6 +42,7 @@
             <button type="button" class="btn btn-confirm" @click="save()">{{$t('static.save')}}</button>
         </div>
     </div>
+  </div>
 </template>
 <script>
 import pressImage from '../imagePress'
@@ -66,9 +68,7 @@ export default {
             }
     },
     vuex: {
-        actions: {
-
-        }
+        
     },
     methods:{
         save:function(){
