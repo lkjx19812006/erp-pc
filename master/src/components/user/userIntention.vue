@@ -111,7 +111,7 @@
                               <label class="editlabel">单位<span class="system_danger" v-if="$validation.unit.required">单位不能为空</span></label>
                               <input type="text"  v-model="param.unit" class="form-control edit-input" v-validate:unit="{required:true}"  v-show="false"/>
                                <select v-model="param.unit" class="form-control edit-input" >
-                                    <option v-for="item in initUnitlist">{{item.name}}（{{item.ename}}）</option>
+                                    <option v-for="item in initUnitlist">{{item.name}}</option>
                                </select> 
                          </div> 
                          
