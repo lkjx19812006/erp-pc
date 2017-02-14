@@ -8,6 +8,7 @@
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <apply-model :param="applyDetails" v-if="applyDetails.show"></apply-model>
+    <delete-model :param="deleteParam" v-if="deleteParam.show"></delete-model>
     <shadow-model :param="param" >
         <div class="cover_loading">
              <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
@@ -279,9 +280,6 @@
                                                           payUserName:'',
                                                           payNumber:'',
                                                           comment:'',
-                                                          image_f:'',
-                                                          image_s:'',
-                                                          image_t:'',
                                                           images:'',
                                                           url:'/fund/createByOrderStages',
                                                           titles:'重新申请支付',
@@ -358,6 +356,7 @@
                                           <th>{{$t('static.file_path')}}</th>
                                           <th>{{$t('static.description')}}</th>
                                           <th>{{$t('static.create_time')}}</th>
+                                          <th v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2"></th>
                                         </thead>
                                         <tbody>
                                           <tr v-for="item in initOrderDetail.contractList.arr">
@@ -369,6 +368,19 @@
                                               </td>
                                               <td>{{item.description}}</td>
                                               <td>{{item.ctime}}</td>
+                                              <td v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2">
+                                                <button class="btn btn-default" @click="deleteCompact({
+                                                    id:item.id,
+                                                    sub:$index,
+                                                    show:true,
+                                                    name:'合同凭证',
+                                                    title:'合同凭证',
+                                                    link:specDel,
+                                                    url:'/customer/file/',
+                                                    key:'contractList',
+                                                    headline:'orderDetail'
+                                                  })">删除</button>
+                                              </td>
                                           </tr>
                                        </tbody>
                                     </table>
@@ -558,6 +570,7 @@ import auditModel from './second_order/orderAudit'
 import applyModel from './second_order/applyDetaillist'
 import mgLabel from '../mguan/mgLabel.vue'
 import shadowModel from '../mguan/shadow.vue'
+import deleteModel from '../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import {
   initOrderDetail,
   initMyFundList
@@ -567,7 +580,8 @@ import {
   uploadDocument,
   dividedPayment,
   paymentAudit,
-  getMyFundList
+  getMyFundList,
+  specDel
 } from '../../vuex/actions'
 export default {
     components: {
@@ -581,7 +595,8 @@ export default {
       auditModel,
       applyModel,
       mgLabel,
-      shadowModel
+      shadowModel,
+      deleteModel
     },
     props:['param'],
     data(){
@@ -639,6 +654,9 @@ export default {
         },
         applyDetails:{
             show:false
+        },
+        deleteParam:{
+          show:false
         }
       }
     },
@@ -652,7 +670,8 @@ export default {
         uploadDocument,
         dividedPayment,
         paymentAudit,
-        getMyFundList
+        getMyFundList,
+        specDel
       }
     },
     methods:{
@@ -696,6 +715,10 @@ export default {
                     this.auditParam.show=true;
                 }
                 
+          },
+          deleteCompact:function(item){
+            this.deleteParam = item;
+            this.deleteParam.show=true;
           },
           apply_Record:function(item){
              this.applyDetails.show=true;
@@ -816,7 +839,7 @@ section article {
 }
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
-  text-align: left;
+  text-align: center;
 }
 .edit-detail {
     border: 1px solid #ddd;

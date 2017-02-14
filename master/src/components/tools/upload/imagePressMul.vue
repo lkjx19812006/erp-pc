@@ -1,6 +1,6 @@
 <!-- 多文件上传 -->
 <template>
-    <div class="img_div" style="float:left;margin-left:15px;width:30%">
+    <div class="img_div" style="float:left;margin-left:15px;width:20%">
         <div class="cover_loading"  v-show="loadParam.loading">
             <div class="loadEffect"> 
                 <span></span>
@@ -28,7 +28,7 @@
     </div>
     
 
-    <ul class="img_div" v-for="item in files" style="float:left;margin-left:15px;width:30%">
+    <ul class="img_div" v-for="item in files" style="float:left;margin-left:15px;width:20%">
         <form>
             <img v-bind:src="item.showurl" class="image_show" v-if="item.imageShow" >
             <img src="../../../../static/images/close.png" v-show="item.showurl" @click="delFile($index)" class="close_image">
@@ -240,14 +240,14 @@ h1 {
 
 .image_show {
     width: 100%;
-    height: 120px;
+    height:94px;
 }
 
 .close_image{
     position: absolute;
-    top: -16px;
-    right: -14px;
-    width: 30px;
+    top: -9px;
+    right: -8px;
+    width:23px;
 }
 
 .select_button{

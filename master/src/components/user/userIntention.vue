@@ -49,13 +49,12 @@
                     <img src="/static/images/breedinfo@2x.png" style="display:inline"/>
                     <h5 style="display:inline">药材信息</h5>
                  </div>
-
-
-                   <div class="editpage-input clearfix" style="width:100%">
+                   <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                      <label class="editlabel">药材图片</label>
                      <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
                      <!-- <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
                      <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image> -->
+
                    </div>
 
                  <div class="editpage">
@@ -143,7 +142,6 @@
                            <label class="editlabel">产地<span class="system_danger" v-if="$validation.location.required">产地不能为空</span></label>
                            <input type="text" v-model="param.location" v-show="false" class="form-control edit-input" v-validate:location="{required:true}"/>
                            <input type="text" v-model="param.location" v-show="!breedParam.id" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个品种" />
-
                            <div type="text" class="edit-input" v-if="breedParam.id">
                              <input-select
                                :prevalue="param.location"

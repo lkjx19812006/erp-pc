@@ -35,8 +35,6 @@
                        </select>
                     </div>
                     <div class="editpage-input col-md-6" v-if="param.payWay==2"> 
-                      <!--  <label class="editlabel">银行名称 <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
-                      <input type="text" v-validate:payname="{required:true}" v-show="false" v-model="param.payName" class="form-control edit-input" /> -->
                         <label class="editlabel">银行名称 <span class="system_danger" v-if="$validation.payname.required">{{$t('static.required')}}</span></label>
                         <input type="text" v-validate:payname="{required:true}" v-show="false"  v-model="payName.name" class="form-control edit-input" />
                           <div  class="form-control edit-input" style="padding:0;border:none" >
@@ -61,10 +59,6 @@
                           show:true,
                           name:this.payName.name
                         })"/> 
-                       <!-- <select class="form-control edit-input" v-model="param.paySubName">
-                            <option>虹口支行</option>
-                            <option>杨浦支行</option>
-                       </select> -->
                     </div>
                     <div class="editpage-input col-md-6" >
                        <label class="editlabel">用户名 <span class="system_danger" v-if="$validation.payuser.required">{{$t('static.required')}}</span></label>
@@ -85,11 +79,9 @@
                        <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" value="{{param.comment}}"></textarea>
                     </div>
                     
-                    <div class="editpage-input col-md-12">
+                    <div class="editpage-input col-md-12" style="max-height:200px;overflow-y:auto">
                          <label class="editlabel">支付/收款凭证</label>
-                         <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;width:20%"></press-image>
-                         <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
-                         <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                         <press-image :value.sync="param.image_f" :type.sync="type" :param="imageParam"></press-image>
                     </div>
                </section>
                <!-- 重新申请审核 -->
@@ -162,12 +154,10 @@
                        <label class="editlabel">备注</label>
                        <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5" value="{{param.comment}}"></textarea>
                     </div>
-                    <div class="editpage-input col-md-12">
+                    <div class="editpage-input col-md-12" style="max-height:200px;overflow-y:auto;">
                          <label class="editlabel">支付/收款凭证</label>
-                         <img :src="param.images" />
-                         <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;width:20%"></press-image>
-                         <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
-                         <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                         <!-- <img :src="param.images" /> -->
+                         <press-image :value.sync="param.image_f"  :type="type" :param="imageParam" ></press-image>
                     </div>
                </section>
                <!-- 重新申请审核end -->
@@ -260,7 +250,7 @@
 </template>
 <script>
 import tipsdialogModel  from '../../tips/tipDialog'
-import pressImage from '../../imagePress'
+import pressImage from '../../tools/upload/imagePressMul.vue'
 import vSelect from '../../tools/vueSelect/components/Select'
 import bankModel from './bankBranch'
 import {
@@ -387,10 +377,26 @@ export default {
     events:{
       subName: function(branch) {
         this.param.paySubName=branch.paySubName;
-       /* console.log(this.initMyFundList)
-        this.initMyFundList[0].paySubName = branch.paySubName;
-        console.log(this.initMyFundList[0].paySubName)*/
       },
+       getImageData: function(imageData) {
+            console.log('返回信息');
+            console.log(imageData);
+            var paths = new Array();
+            this.param.path=imageData.result.path;
+        },
+      getFiles: function(files){
+            this.param.images = '';
+            for(let i = 0;i<files.length;i++){
+                if(i==0){
+                    this.param.images = files[0].path;
+                }else{
+                    this.param.images = this.param.images + "," + files[i].path;
+                }
+            }
+        }
+    },
+    watch:{
+
     },
     created() {
         this.getCurrencyList(this.loadParam);

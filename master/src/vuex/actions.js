@@ -1127,7 +1127,6 @@ export const createOrder = ({ dispatch }, data) => { //创建订单
     }
     if(data.title1 == '采购订单'){
         body.link = data.link;
-        console.log(body.link)
     }
     if (data.email) {
         body.email = data.email;
@@ -1248,57 +1247,12 @@ export const alterOrder = ({ dispatch }, param) => { //修改订单
 
 export const uploadDocument = ({ dispatch }, param) => { //新建订单详情各个凭证
     console.log(param)
-    /*if (param.titles == "上传支付凭证") {
-        if (param.image_f) {
-            param.payPics += param.image_f + ','
-        }
-        if (param.image_s) { param.payPics += param.image_s + ',' }
-        if (param.image_t) { param.payPics += param.image_t };
-        console.log(param.payPics)
-    }
-    if (param.titles == "上传附件凭证") {
-        if (param.image_f) {
-            param.attachFiles += param.image_f + ','
-        }
-        if (param.image_s) { param.attachFiles += param.image_s + ',' }
-        if (param.image_t) { param.attachFiles += param.image_t };
-        console.log(param.attachFiles)
-    }
-    if (param.titles == "上传物流凭证") {
-        if (param.image_f) {
-            param.sendPics += param.image_f + ','
-        }
-        if (param.image_s) { param.sendPics += param.image_s + ',' }
-        if (param.image_t) { param.sendPics += param.image_t };
-        console.log(param.sendPics)
-    }
-    if (param.titles == "上传合同") {
-        if (param.image_f) {
-            param.orderContractList += param.image_f + ','
-        }
-        if (param.image_s) { param.orderContractList += param.image_s + ',' }
-        if (param.image_t) { param.orderContractList += param.image_t };
-        console.log(param.orderContractList)
-    }*/
-
     const body = {
         orderId: param.orderId,
         description: param.description,
         fileType: param.fileType,
         bizType: param.bizType
     }
-    /*if (param.payPics) {
-        body.payPics = param.payPics;
-    }
-    if (param.sendPics) {
-        body.sendPics = param.sendPics;
-    }
-    if (param.attachFiles) {
-        body.attachFiles = param.attachFiles;
-    }
-    if (param.orderContractList) {
-        body.orderContractList = param.orderContractList;
-    }*/
     if (param.titles == "上传支付凭证"){
         body.payPics = param.files;
     }
@@ -1383,12 +1337,12 @@ export const dividedPayment = ({ dispatch }, param) => { //新建订单付款分
 
 export const paymentConfirm = ({ dispatch }, param) => { //确定收款
     console.log(param)
-    param.images = '';
+/*    param.images = '';
     if (param.image_f) {
         param.images += param.image_f + ','
     }
     if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t }
+    if (param.image_t) { param.images += param.image_t }*/
     var ss= param.images;
     var img = ss.split(",");//字符串转化为数组
     img.toString();
@@ -1423,15 +1377,9 @@ export const paymentConfirm = ({ dispatch }, param) => { //确定收款
 
 export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     console.log(param)
-    param.images = '';
-    if (param.image_f) {
-        param.images += param.image_f + ','
-    }
-    if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t }
-    var ss= param.images;
-    var sss = ss.split(",");//字符串转化为数组
-    sss.toString();
+    var files= param.images;
+    var img = files.split(",");//字符串转化为数组
+    img.toString();
     const body = {
         payWay:param.payWay,
     };
@@ -1440,7 +1388,6 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
     }
     if(param.currency&&param.currency!=''){
         body.currency = param.currency;
-        console.log(body.currency)
     }
     if(param.validate&&param.validate!=''){
         body.validate = param.validate;
@@ -1476,7 +1423,7 @@ export const paymentAudit = ({ dispatch }, param) => { //订单分期审核
         body.paySubName = param.paySubName;
     }
     if (param.images) {
-        body.images = sss;
+        body.images = img;
     }
     console.log(body)
     Vue.http({
@@ -1557,12 +1504,12 @@ export const editPayment = ({ dispatch }, param) => { //编辑我的收付款
 };
 export const orderStatu = ({ dispatch }, param) => { //订单状态详情
     console.log(param)
-    param.images = '';
+   /* param.images = '';
     if (param.image_f) {
         param.images += param.image_f + ','
     }
     if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t };
+    if (param.image_t) { param.images += param.image_t };*/
     const body = {
         orderId: param.id
     }
@@ -1702,8 +1649,9 @@ export const orderCancle = ({ dispatch }, param, data) => { //订单取消状态
     })
 }
 
-export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单支付状态
+export const yankuanPayorder = ({ dispatch }, param, undelinePay) => { //订单支付状态(已更改流程，此步骤接口未经过)
     console.log(param)
+    console.log(undelinePay)
     undelinePay.images = '';
     if (undelinePay.image_f) {
         undelinePay.images += undelinePay.image_f + ','
@@ -4398,7 +4346,7 @@ export const getIntentionDetail = ({ dispatch }, param) => { //意向详情
             param.image_t = res.json().result.pics[2].path;
             param.image_t_show = res.json().result.pics[2].url;
         }
-        
+
         param.loading = false;
     }, (res) => {
         console.log('fail');
@@ -5810,10 +5758,6 @@ export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增
     if (param.files) {
         param.images = param.files;
     }
-    /*if (param.image_f) { param.images += param.image_f + ',' }
-    if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t };*/
-    
     var today = new Date();
     const data1 = {
         "userId": param.userId,

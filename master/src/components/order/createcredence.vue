@@ -12,11 +12,9 @@
           <form novalidate>
             <div class="edit-model">
                 <section class="editsection clearfix">
-                    <div class="editpage-input clearfix">
+                    <div class="editpage-input clear" style="max-height: 200px;overflow-y:auto">
                         <label class="editlabel">{{$t('static.file')}}</label>
                         <press-image :value.sync="param.image_f" :type="type" :param="imageParam" ></press-image>
-                       <!-- <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image>
-                       <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:30%"></press-image> -->
                     </div>
 
                     <div class="editpage-input">
