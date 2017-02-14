@@ -134,7 +134,7 @@
                                                 <p class="line_text">{{subItem.cname}}</p>
                                                 <!-- 三级功能 -->
                                                 <!-- <div  class="sub_second clear" v-for="secondItem in subItem.subcategory"> </div> -->
-                                                <ul  class="sub_second clear"> 
+                                                <ul  class="sub_second clear" v-show="false"> 
                                                     <li class="clear">
                                                         <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
                                                         </label>
@@ -222,7 +222,7 @@ export default {
      },
      save:function(){
         function CurentTime()
-    { 
+        { 
         var now = new Date();
         var year = now.getFullYear();       //年
         var month = now.getMonth() + 1;     //月

@@ -5981,7 +5981,6 @@ export const baseGetData = ({ dispatch }, param) => { //查询权限
         }
     }).then((res) => {
         param.loading = false;
-        console.log('查询成功！')
         const json = {
             list: res.json(),
             name: param.keyName,
