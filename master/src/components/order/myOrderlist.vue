@@ -320,7 +320,7 @@
     import editorderModel from '../order/orderInformationDialog'
     import createorderModel from '../order/createOrderDialog'
     import detailModel from '../order/orderDetail'
-    import searchModel from '../order/orderSearch'
+    /*import searchModel from '../order/orderSearch'*/
     import deletebreedModel from  '../serviceBaselist/breedDetailDialog/deleteBreedDetail'
     import disposeModel  from  '../order/orderStatus'
     import tipsdialogModel  from '../tips/tipDialog'
@@ -353,7 +353,6 @@
             pagination,
             createorderModel,
             detailModel,
-            searchModel,
             deletebreedModel,
             disposeModel,
             auditModel,
@@ -589,11 +588,10 @@
                   this.$store.state.table.basicBaseList.myOrderList.forEach(function(item){
                     if(item.validate==0)item.checked=checked;
                   })
-
             },
             newOrder:function(){ 
-                 this.createParam.show = true;
-                 this.createParam.callback = this.newBack;
+               this.createParam.show = true;
+               this.createParam.callback = this.newBack;
             },
             newBack:function(title){
               this.tipsParam.show = true;

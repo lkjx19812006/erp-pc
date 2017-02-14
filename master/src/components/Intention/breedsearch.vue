@@ -10,20 +10,27 @@
     			<div class="cover_loading">
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 	            </div>
-				<div class="left">
-	                <div class="name_search clearfix">
-	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入品种名称" @keyUp.enter="employNameSearch()">
-
-	                </div>
-	                <div class="name_search clearfix">
+				<div class="clear">
+					<dl class="clear left transfer">
+	                     <dt class="left marg_top">品种：</dt>
+	                     <dd class="left">
+	                        <input type="text" class="form-control" v-model="loadParam.name"  @keyUp.enter="employNameSearch()"  placeholder="请输入品种名称"/>
+	                     </dd>
+	                </dl>
+	                <dl class="clear left transfer">
+	                     <dt class="left marg_top">{{$t('static.breed')}}：</dt>
+	                     <dd class="left">
+	                        <input type="text" class="form-control" v-model="loadParam.eName"  @keyUp.enter="employNameSearch()"  placeholder="Please enter the name of the breed"/>
+	                     </dd>
+	                </dl>
+	                <!-- <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
 	                    <input type="text" class=" search_input" v-model="loadParam.eName" placeholder="Please enter the name of the breed" @keyUp.enter="employNameSearch()">
-
-	                </div>
-          			<div class="name_search clearfix" style="border:none">
-          			 	<input type="button" class="search_input btn btn-default"   height="24" width="24" value="{{$t('static.search')}}" @click="employNameSearch()">
-          			 	<button type="button" class="search_input btn btn-default transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+	                
+	                </div> -->
+          			<div class="name_search clearfix transfer" style="border:none">
+          			 	<input type="button" class="btn btn-default"   height="24" width="24" value="{{$t('static.search')}}" @click="employNameSearch()">
+          			 	<button type="button" class="btn btn-default transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
           			</div>
 
 	            </div>
@@ -150,35 +157,9 @@ export default{
 	margin: auto;
 	left: 0;
 }
-.con_trans{
-	margin-top: 40px;
-}
-.tans_tab{
-	height: 40px;
-	line-height: 40px;
-	border-bottom: 1px solid #fa6705;
-	text-align: left;
-}
+
 .transfer{
-	margin-left: 5px;
-}
-.tans_tab > .tabs{
-	width: 100px;
-	display: inline-block;
-	font-size:16px;
-	text-align: center;
-	background-color: #f5f5f5;
-	color: #333;
-	float: left;
-	height: 40px;
-	border-bottom: 1px solid #fa6705;
-	cursor: pointer;
-}
-.tans_tab .tabs_active{
-	background-color: #fff;
-	color: #fa6705;
-	border: 1px solid #fa6705;
-	border-bottom: 0;
+	margin-left: 10px;
 }
 .checkbox_unselect{
     background-image: url(/static/images/unselect.png);
