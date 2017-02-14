@@ -283,6 +283,7 @@
                                    link:editintentInfo,
                                    url:'/intention/',
                                    key:'userIntentionList',
+                                   images:item.pics,
                                    image_f:'',
                                    image_s:'',
                                    image_t:'',
@@ -384,7 +385,6 @@ import {
   intentionUpAndDown,
   deleteInfo,
   editintentInfo,
-  createIntentionInfo,
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -413,8 +413,7 @@ export default {
             getSupplyDemandList,
             intentionUpAndDown,
             deleteInfo,
-            editintentInfo,
-            createIntentionInfo,
+            editintentInfo
         }
     },
     data() {
@@ -675,7 +674,8 @@ export default {
             this.createParam = param;
             this.createParam.callback = this.modifyback;
         },
-        modifyback:function(title){
+        modifyback:function(title){    //修改完成后刷新页面数据
+            this.getIntentionList(this.loadParam);
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;

@@ -369,6 +369,7 @@
                                                     validate:item.validate,
                                                     inType:3,
                                                     loading:false,
+                                                    images:item.pics,
                                                     image_f:'',
                                                     image_s:'',
                                                     image_t:'',

@@ -5244,7 +5244,7 @@ export const auditQuickEdit = ({ dispatch }) => {
         });
 };
 
-export const getUserDetail = ({ dispatch }, param) => { //会员详情
+export const getUserDetail = ({ dispatch }, param,doSomething) => { //会员详情
     param.loading = true;
     Vue.http({
         method: 'GET',
@@ -5292,6 +5292,10 @@ export const getUserDetail = ({ dispatch }, param) => { //会员详情
         userDetail.companyAuthShow = false;
         for (var i in userDetail) {
             param[i] = userDetail[i];
+        }
+
+        if(doSomething=="editIntention"){
+            userDetail.intention.show = true;
         }
 
         dispatch(types.USER_DETAIL_DATA, userDetail);
@@ -5682,10 +5686,13 @@ export const updateEmploy = ({ dispatch }, param) => { //修改员工信息
 }
 
 export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意向
-    param.images = '';
-    if (param.image_f) { param.images += param.image_f + ',' }
+    
+    if (param.files) {
+        param.images = param.files;
+    }
+    /*if (param.image_f) { param.images += param.image_f + ',' }
     if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t };
+    if (param.image_t) { param.images += param.image_t };*/
     const data1 = {
         "id": param.id,
         "type": param.type,
@@ -5747,12 +5754,9 @@ export const editintentInfo = ({ dispatch }, param, tipParam) => { //修改意�
 
 export const createIntentionInfo = ({ dispatch }, param, tipParam) => { //新增意向
     console.log(param);
-    if (!param.images) {
-        param.images = '';
+    if (param.files) {
+        param.images = param.files;
     }
-/*    if (param.image_f) { param.images += param.image_f + ',' }
-    if (param.image_s) { param.images += param.image_s + ',' }
-    if (param.image_t) { param.images += param.image_t };*/
     var today = new Date();
     const data1 = {
         "userId": param.userId,

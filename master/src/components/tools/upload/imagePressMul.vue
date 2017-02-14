@@ -213,6 +213,12 @@ export default {
 
 
         }
+    },
+    created(){
+        if(this.param.files&&this.param.files.length>0){
+            this.files = this.param.files;
+        }
+        
     }
 }
 </script>
