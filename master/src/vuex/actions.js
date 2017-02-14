@@ -966,6 +966,7 @@ export const orderApplyAuditAgain = ({ dispatch }, param) => { //订单重新申
         data.index = param.index;
         data.key = param.key;
         data.validate = 1;
+        console.log(res.json().result)
         if(res.json().code==200){
            dispatch(types.ORG_ORDER_AUDIT, data);
         }
@@ -3122,8 +3123,6 @@ export const customerAudit = ({ dispatch }, param) => {   //客户审核(跟进)
         audit:param.audit,
         auditComment:param.auditComment
     };
-
-  
     Vue.http({
         method: "POST",
         url: apiUrl.clientList + param.link,

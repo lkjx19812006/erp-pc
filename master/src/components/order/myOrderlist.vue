@@ -550,6 +550,7 @@
                 this.tipsParam.show = true;
                 this.tipsParam.name=title;
                 this.tipsParam.alert=true;
+                this.getEmpolyeeOrder(this.loadParam);
             },
             orderCheck:function(id,index,validate){ 
                 this.auditParam.id = id;

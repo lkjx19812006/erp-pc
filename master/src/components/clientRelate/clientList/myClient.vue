@@ -576,7 +576,6 @@ export default {
                 this.auditParam.arr.push(this.initMyCustomerlist[i].id);
               }
             }
-
             if(this.auditParam.arr.length>0){
               this.auditParam.show=true;
               this.auditParam.confirm=true;
@@ -596,7 +595,6 @@ export default {
             this.auditParam.arr.push(this.initMyCustomerlist[i].id);
           }
         }
-
         if(this.auditParam.arr.length>0){
           this.auditParam.show=true;
           this.auditParam.confirm=true;
