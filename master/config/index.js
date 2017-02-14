@@ -18,7 +18,7 @@ module.exports = {
     },
     dev: {
         env: require('./dev.env'),
-        port: 8080,
+        port: 80,
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
@@ -26,8 +26,8 @@ module.exports = {
                 /* target: 'http://192.168.1.248:70',*/
                 /*target: 'http://192.168.1.136:8080',*/
                 /*target: 'http://192.168.1.134:8080',*/
-               target: 'http://192.168.1.200:8080',
-              /* target: 'http://127.0.0.1:8080',*/
+               /*target: 'http://192.168.1.200:8080',*/
+               target: 'http://127.0.0.1:8080',
                 changeOrigin: true
             }
         },

@@ -594,18 +594,21 @@ export default {
 
       
       //设置过期时间,7天后
-      var date = new Date();
-      date.setDate(date.getDate()+7);
-      var year = date.getFullYear();
-      var month = date.getMonth()+1;
-      var day = date.getDate();
-      if(month < 10){
-        month = '0'+month;
+      if(!this.param.duedate){
+          var date = new Date();
+          date.setDate(date.getDate()+7);
+          var year = date.getFullYear();
+          var month = date.getMonth()+1;
+          var day = date.getDate();
+          if(month < 10){
+            month = '0'+month;
+          }
+          if(day < 10){
+            day = '0'+day;
+          }
+          this.param.duedate = year+"-"+month+"-"+day+" 00:00:00";
       }
-      if(day < 10){
-        day = '0'+day;
-      }
-      this.param.duedate = year+"-"+month+"-"+day+" 00:00:00";
+      
       
       if(this.param.breedId){
         this.breedParam.breedName = this.param.breedName;

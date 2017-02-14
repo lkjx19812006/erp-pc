@@ -538,6 +538,15 @@ export const getOrderPayList = ({ dispatch }, param) => { //订单支付记录�
 export const getDrugAccountList = ({ dispatch }, param) => { //药款账户列表 
     param.loading = true;
     var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
+    if(param.name&&param.name!==''){
+        url += '&name='+param.name;
+    }
+    if(param.startTime&&param.startTime!==''){
+        url += '&startTime='+param.startTime;
+    }
+    if(param.endTime&&param.endTime!==''){
+        url += '&endTime='+param.endTime;
+    }
     Vue.http({
         method: 'GET',
         url: url,
@@ -564,6 +573,15 @@ export const getRolloutList = ({ dispatch }, param) => { //药款转出记录列
     var url = apiUrl.orderList + param.link + '?page=' + param.cur + '&pageSize=15';
     if(param.bank&&param.bank!=""){
          url += '&bank=' + param.bank;
+    }
+    if(param.name&&param.name!==''){
+        url += '&name='+param.name;
+    }
+    if(param.startTime&&param.startTime!==''){
+        url += '&startTime='+param.startTime;
+    }
+    if(param.endTime&&param.endTime!==''){
+        url += '&endTime='+param.endTime;
     }
     Vue.http({
         method: 'GET',
@@ -2892,6 +2910,31 @@ export const getCallRecordList = ({ dispatch }, param) => { //客户通话记录
     }, (res) => {
         console.log('fail');
         param.loading = false;
+    })
+}
+
+export const getCallRecordVoice = ({ dispatch }, param) => { //获取录音
+    const data = {
+        id:param.id,
+    }
+    Vue.http({
+        method: "POST",
+        url: apiUrl.clientList + '/callRecord/getVoice',
+        emulateHTTP: true,
+        body: data,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        
+        param.refile = res.json().result;
+        dispatch(types.CALL_RECORD_VOICE_DATA, param);
+
+        console.log("成功");
+    }, (res) => {
+        console.log('fail');
     })
 }
 

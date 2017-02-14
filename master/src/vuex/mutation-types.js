@@ -92,6 +92,7 @@ export const PRODUCT_DETAIL_DATA = 'PRODUCT_DETAIL_DATA' // 供应商产品详�
 export const CUSTOMER_TRANSFER='CUSTOMER_TRANSFER' //客户划转
 
 export const CALL_RECORD_DATA='CALL_RECORD_DATA' //客户通话记录
+export const CALL_RECORD_VOICE_DATA='CALL_RECORD_VOICE_DATA' //客户通话记录录音
 
 export const INTENTION_LIST_DATA ='INTENTION_LIST_DATA'  //意向数据列表
 export const SUPPLY_DEMAND_DATA ='SUPPLY_DEMAND_DATA'  //意向数据列表

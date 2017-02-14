@@ -402,7 +402,6 @@ export const initReceiptDetail= (state) => { //补充合同，售后详情
 
 /*--药款管理记录--*/
 export const initDrugAccountList= (state) => { //获取药款账户的数据
-    console.log(state.table.basicBaseList.drugAccountList);
   return JSON.parse(JSON.stringify(state.table.basicBaseList.drugAccountList));
 }
 

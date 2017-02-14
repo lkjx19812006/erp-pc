@@ -118,7 +118,8 @@ import {
    ROLLOUT_STATUS,
    ROLLOUT_DETAIL,
    USER_TYPE,
-   CALL_RECORD_DATA
+   CALL_RECORD_DATA,
+   CALL_RECORD_VOICE_DATA
 
 } from '../mutation-types'
 
@@ -1930,8 +1931,10 @@ const mutations = {
     [CALL_RECORD_DATA](state,data){
         state.basicBaseList.callRecordList = data;
     },
+    [CALL_RECORD_VOICE_DATA](state,data){
+        state.basicBaseList.callRecordList[data.index].refile = data.refile;
+    }
     
-
 
 }
 
