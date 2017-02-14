@@ -52,9 +52,6 @@
                    <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                      <label class="editlabel">药材图片</label>
                      <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
-                     <!-- <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
-                     <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image> -->
-
                    </div>
 
                  <div class="editpage">
@@ -111,7 +108,7 @@
                               <label class="editlabel">单位<span class="system_danger" v-if="$validation.unit.required">单位不能为空</span></label>
                               <input type="text"  v-model="param.unit" class="form-control edit-input" v-validate:unit="{required:true}"  v-show="false"/>
                                <select v-model="param.unit" class="form-control edit-input" >
-                                    <option v-for="item in initUnitlist">{{item.name}}（{{item.ename}}）</option>
+                                    <option v-for="item in initUnitlist">{{item.name}}</option>
                                </select> 
                          </div> 
                          

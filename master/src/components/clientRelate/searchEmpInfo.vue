@@ -7,24 +7,44 @@
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
 	    <div class="model-header">
-	    	<h4>业务员信息</h4>
+	    	<h4>{{$t('static.salesman')}}</h4>
 			<div class="trans_service clearfix">
     			<div class="cover_loading">
 	                <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
 	            </div>
-	            <div class="col-xs-12">
-                    <div v-if="!param.org" class="name_search clearfix">
+	            <div class="clear">
+                    <!-- <div  class="name_search clearfix">
                         <img src="/static/images/search.png" height="24" width="24">
                         <input type="text" class="search_input" v-model="loadParam.orgName" placeholder="请选择部门" @click="selectOrg()" readonly="true">
-                    </div>
-	                <div class="name_search clearfix">
+                    </div> -->
+                    <dl class="clear left transfer" v-if="!param.org">
+	                     <dt class="left marg_top">{{$t('static.department')}}：</dt>
+	                     <dd class="left">
+	                        <input type="text" class="form-control" v-model="loadParam.orgName"  @click="selectOrg()" readonly="true"  placeholder="请选择部门" />
+	                     </dd>
+	                </dl>
+                    <dl class="clear left transfer">
+	                     <dt class="left marg_top">{{$t('static.salesman')}}：</dt>
+	                     <dd class="left">
+	                        <input type="text" class="form-control" v-model="loadParam.name"  @keyUp.enter="employNameSearch()"  placeholder="{{$t('static.enter_salesman')}}"/>
+	                     </dd>
+	                </dl>
+	                <dl class="clear left transfer">
+	                     <dt class="left marg_top">{{$t('static.cellphone')}}：</dt>
+	                     <dd class="left">
+	                        <input type="text" class="form-control" v-model="loadParam.mobile"  @keyUp.enter="employNameSearch()"  placeholder="{{$t('static.enter_phone')}}"/>
+	                     </dd>
+	                </dl>
+	                <button class="new_btn transfer pull-left"  @click="employNameSearch()">{{$t('static.search')}}</button> 
+	                <button class="new_btn transfer pull-left"  @click="resetContional()">{{$t('static.clear_all')}}</button> 
+	                <!-- <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
-	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="请输入业务员名字" @keyup.enter="employNameSearch()">
-	                </div>
-	                 <div class="name_search clearfix">
+	                    <input type="text" class="search_input" v-model="loadParam.name" placeholder="{{$t('static.enter_salesman')}}" @keyup.enter="employNameSearch()">
+	                </div> -->
+	                 <!-- <div class="name_search clearfix">
 	                    <img src="/static/images/search.png" height="24" width="24">
 	                    <input type="text" class="search_input" v-model="loadParam.mobile" placeholder="请输入业务员手机号"  @keyup.enter="employNameSearch()">
-	                </div>
+	                 	                </div> -->
 	            </div>
 	            <table class="table table-hover table_head table-striped " v-cloak>
 	                <thead>
@@ -140,6 +160,10 @@ export default{
         },
 		employNameSearch: function() {
             this.getEmployeeList(this.loadParam);
+        },
+        resetContional:function(){
+        	this.loadParam.name="";
+        	this.loadParam.mobile="";
         }
 	},
     events: {
@@ -167,8 +191,8 @@ export default{
 .change_trans{
 	margin-top: 20px;
 }
-.con_trans{
-	margin-top: 40px;
+.transfer{
+	margin-left:10px;
 }
 .top-title {
     left:0;

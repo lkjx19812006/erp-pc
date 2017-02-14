@@ -98,7 +98,6 @@
           this.param.show = false;
        },
        confirmApply:function(item){
-        console.log(item)
           this.param.show = false;
           this.sendRestart(item);
        },
@@ -108,7 +107,7 @@
        }
     },
     created(){
-        console.log(this.param);  
+         
     }
 
   }
