@@ -1,6 +1,7 @@
 <template>
-<div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-    <div class="container  modal_con  "  >
+<div>
+    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
+    <div class="container  modal_con">
         <div @click="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
         </div>
@@ -24,101 +25,131 @@
                                 <input type="text" class="form-control" value="{{param.remark}}" v-model="param.remark"  />
                             </div>
                         </div>
-                        <div class="clearfix" >
+                        <div class="clearfix" v-show="false">
                             <div class="table-responsive">
-                                <table class="table">
-                                <tr  v-for="item in list.result" v-if="$index%5==0">
-                                <td >
-                                 <div style="float:left;width:20%">
-                                   <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!list.result[$index].show,'checkbox_select_base':list.result[$index].show}"   @click="selectShow(list.result[$index])" >
-                                   </label>
-                                   <p style="padding-top:10px;float:left">{{list.result[$index].cname}}</p>
-                              
-                                <div v-for="subItem in list.result[$index].subcategory" style="margin-left:8px">
-                                    <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!subItem.show,'checkbox_select_base':subItem.show}"   @click="selectShow(subItem)" >
-                                    </label>
-                                    <p style="padding-top:10px;float:left">{{subItem.cname}}</p>
-                                    <div v-if="list.result[$index].subcategory" style="margin-left:8px" v-for="secondItem in subItem.subcategory"> 
-                                            <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
-                                            </label>
-                                            <p style="padding-top:10px;float:left">{{secondItem.cname}}</p>
-                                    </div> 
-                                   </div>
-                                </div>
+                                <table class="table" >
+                                    <tr  v-for="item in list.result">
+                                        <td v-if="$index%5==0">
+                                            <div style="float:left;width:20%">
+                                               <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!list.result[$index].show,'checkbox_select_base':list.result[$index].show}"   @click="selectShow(list.result[$index])" >
+                                               </label>
+                                               <p style="padding-top:10px;float:left">{{list.result[$index].cname}}</p>
+                                          
+                                                <div v-for="subItem in list.result[$index].subcategory" style="margin-left:8px">
+                                                    <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!subItem.show,'checkbox_select_base':subItem.show}"   @click="selectShow(subItem)" >
+                                                    </label>
+                                                    <p style="padding-top:10px;float:left">{{subItem.cname}}</p>
 
-                            <div v-if="list.result[$index+1]" style="float:left;width:20%">
-                                   <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!list.result[$index+1].show,'checkbox_select_base':list.result[$index+1].show}"   @click="selectShow(list.result[$index+1])" >
-                                   </label>
-                                   <p style="padding-top:10px;float:left">{{list.result[$index+1].cname}}</p>
-                              
-                                <div v-for="subItem in list.result[$index+1].subcategory" style="margin-left:8px">
-                                    <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!subItem.show,'checkbox_select_base':subItem.show}"   @click="selectShow(subItem)" >
-                                    </label>
-                                    <p style="padding-top:10px;float:left">{{subItem.cname}}</p>
-                                    <div v-if="list.result[$index+1].subcategory" style="margin-left:8px" v-for="secondItem in subItem.subcategory"> 
-                                            <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
-                                            </label>
-                                            <p style="padding-top:10px;float:left">{{secondItem.cname}}</p>
-                                    </div> 
-                                </div>
-                            </div>
+                                                    <div v-if="list.result[$index].subcategory" style="margin-left:8px" v-for="secondItem in subItem.subcategory"> 
+                                                            <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
+                                                            </label>
+                                                            <p style="padding-top:10px;float:left">{{secondItem.cname}}</p>
+                                                    </div> 
+                                                </div>
+                                            </div>
 
-                            <div v-if="list.result[$index+2]" style="float:left;width:20%">
-                                <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!list.result[$index+2].show,'checkbox_select_base':list.result[$index+2].show}"   @click="selectShow(list.result[$index+2])" >
-                               </label>
-                                <p style="padding-top:10px;float:left">{{list.result[$index+2].cname}}</p>
-                              
-                                <div v-for="subItem in list.result[$index+2].subcategory" style="margin-left:8px">
-                                    <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!subItem.show,'checkbox_select_base':subItem.show}"   @click="selectShow(subItem)" >
-                                    </label>
-                                    <p style="padding-top:10px;float:left">{{subItem.cname}}</p>
-                                    <div v-if="list.result[$index+2].subcategory" style="margin-left:8px" v-for="secondItem in subItem.subcategory"> 
-                                            <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
-                                            </label>
-                                            <p style="padding-top:10px;float:left">{{secondItem.cname}}</p>
-                                    </div> 
-                                </div>
-                               </div>
+                                            <div v-if="list.result[$index+1]" style="float:left;width:20%">
+                                                <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!list.result[$index+1].show,'checkbox_select_base':list.result[$index+1].show}"   @click="selectShow(list.result[$index+1])" >
+                                                </label>
+                                                <p class="line_text">{{list.result[$index+1].cname}}</p>
+                                              
+                                                <div v-for="subItem in list.result[$index+1].subcategory" style="margin-left:8px">
+                                                    <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!subItem.show,'checkbox_select_base':subItem.show}"   @click="selectShow(subItem)" >
+                                                    </label>
+                                                    <p class="line_text">{{subItem.cname}}</p>
+                                                    <div v-if="list.result[$index+1].subcategory" style="margin-left:8px" v-for="secondItem in subItem.subcategory"> 
+                                                            <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
+                                                            </label>
+                                                            <p style="padding-top:10px;float:left">{{secondItem.cname}}</p>
+                                                    </div> 
+                                                </div>
+                                            </div>
 
-
-                               <div v-if="list.result[$index+3]" style="float:left;width:20%">
-                                <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!list.result[$index+3].show,'checkbox_select_base':list.result[$index+3].show}"   @click="selectShow(list.result[$index+3])" >
-                               </label>
-                               <p style="padding-top:10px;float:left">{{list.result[$index+3].cname}}</p>
-                              
-                                <div v-for="subItem in list.result[$index+3].subcategory" style="margin-left:8px">
-                                    <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!subItem.show,'checkbox_select_base':subItem.show}"   @click="selectShow(subItem)" >
-                                    </label>
-                                    <p style="padding-top:10px;float:left">{{subItem.cname}}</p>
-                                    <div v-if="list.result[$index+3].subcategory" style="margin-left:8px" v-for="secondItem in subItem.subcategory"> 
-                                            <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
-                                            </label>
-                                            <p style="padding-top:10px;float:left">{{secondItem.cname}}</p>
-                                    </div> 
-                                </div>
-                               </div>
-
-
-                                <div v-if="list.result[$index+4]" style="float:left;width:20%">
-                                <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!list.result[$index+4].show,'checkbox_select_base':list.result[$index+4].show}"   @click="selectShow(list.result[$index+4])" >
-                               </label>
-                               <p style="padding-top:10px;float:left">{{list.result[$index+4].cname}}</p>
-                              
-                                 <div v-for="subItem in list.result[$index+4].subcategory" style="margin-left:8px">
-                                    <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!subItem.show,'checkbox_select_base':subItem.show}"   @click="selectShow(subItem)" >
-                                    </label>
-                                    <p style="padding-top:10px;float:left">{{subItem.cname}}</p>
-                                    <div v-if="list.result[$index+4].subcategory" style="margin-left:8px" v-for="secondItem in subItem.subcategory"> 
-                                            <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
-                                            </label>
-                                            <p style="padding-top:10px;float:left">{{secondItem.cname}}</p>
-                                    </div> 
-                                  </div>
-                               </div>
-
-                                </td>
-                                </tr>
+                                            <div v-if="list.result[$index+2]" style="float:left;width:20%">
+                                                <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!list.result[$index+2].show,'checkbox_select_base':list.result[$index+2].show}"   @click="selectShow(list.result[$index+2])" >
+                                                </label>
+                                                <p class="line_text">{{list.result[$index+2].cname}}</p>
+                                              
+                                                <div v-for="subItem in list.result[$index+2].subcategory" style="margin-left:8px">
+                                                    <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!subItem.show,'checkbox_select_base':subItem.show}"   @click="selectShow(subItem)" >
+                                                    </label>
+                                                    <p class="line_text">{{subItem.cname}}</p>
+                                                    <div v-if="list.result[$index+2].subcategory" style="margin-left:8px" v-for="secondItem in subItem.subcategory"> 
+                                                            <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
+                                                            </label>
+                                                            <p style="padding-top:10px;float:left">{{secondItem.cname}}</p>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                            <div v-if="list.result[$index+3]" style="float:left;width:20%">
+                                                <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!list.result[$index+3].show,'checkbox_select_base':list.result[$index+3].show}"   @click="selectShow(list.result[$index+3])" >
+                                               </label>
+                                               <p class="line_text">{{list.result[$index+3].cname}}</p>
+                                              
+                                                <div v-for="subItem in list.result[$index+3].subcategory" style="margin-left:8px">
+                                                    <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!subItem.show,'checkbox_select_base':subItem.show}"   @click="selectShow(subItem)" >
+                                                    </label>
+                                                    <p class="line_text">{{subItem.cname}}</p>
+                                                    <div v-if="list.result[$index+3].subcategory" style="margin-left:8px" v-for="secondItem in subItem.subcategory"> 
+                                                            <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
+                                                            </label>
+                                                            <p style="padding-top:10px;float:left">{{secondItem.cname}}</p>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                            <div v-if="list.result[$index+4]" style="float:left;width:20%">
+                                                <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!list.result[$index+4].show,'checkbox_select_base':list.result[$index+4].show}"   @click="selectShow(list.result[$index+4])" >
+                                                </label>
+                                                <p class="line_text">{{list.result[$index+4].cname}}</p>
+                                              
+                                                <div v-for="subItem in list.result[$index+4].subcategory" style="margin-left:8px">
+                                                    <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!subItem.show,'checkbox_select_base':subItem.show}"   @click="selectShow(subItem)" >
+                                                    </label>
+                                                    <p class="line_text">{{subItem.cname}}</p>
+                                                    <div v-if="list.result[$index+4].subcategory" style="margin-left:8px" v-for="secondItem in subItem.subcategory"> 
+                                                            <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
+                                                            </label>
+                                                            <p style="padding-top:10px;float:left">{{secondItem.cname}}</p>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </table>
+                            </div>
+                        </div>
+                        <!-- 权限修改设计 -->
+                        <div>
+                            <div class="clear">
+                                <ul v-for="item in list.result">
+                                    <li>
+                                        <div class="clear">
+                                            <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!list.result[$index].show,'checkbox_select_base':list.result[$index].show}"   @click="selectShow(list.result[$index])" >
+                                            </label>
+                                            <p class="line_text">{{list.result[$index].cname}}</p>
+                                            <!-- 二级目录 -->
+                                            <div v-for="subItem in list.result[$index].subcategory"  class="sub_second clear">
+                                                <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!subItem.show,'checkbox_select_base':subItem.show}"   @click="selectShow(subItem)" >
+                                                </label>
+                                                <p class="line_text">{{subItem.cname}}</p>
+                                                <!-- 三级功能 -->
+                                                <!-- <div  class="sub_second clear" v-for="secondItem in subItem.subcategory"> </div> -->
+                                                <ul  class="sub_second clear"> 
+                                                    <li class="clear">
+                                                        <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
+                                                        </label>
+                                                        <p class="line_text">{{secondItem.cname}}22</p>
+                                                    </li>
+                                                    <li class="clear">
+                                                        <label  class="checkbox_unselect_base" v-bind:class="{'checkbox_unselect_ base':!secondItem.show,'checkbox_select_base':secondItem.show}"   @click="selectShow(secondItem)" >
+                                                        </label>
+                                                        <p class="line_text">{{secondItem.cname}}22</p>
+                                                    </li>
+                                                </ul> 
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </section>
@@ -127,11 +158,11 @@
                     <button type="button" class="btn btn-default btn-close" @click="param.show = false">取消</button>
                     <button type="button" class="btn  btn-confirm" v-if="$validation.valid" @click="save()">保存</button>
                     <button type="button" class="btn  btn-confirm" v-else disabled="disabled">保存</button>
-
                 </div>
             </form>
         </validator>
     </div>
+</div>
 </template>
 <script>
 import {
@@ -249,14 +280,13 @@ export default {
         for(let item in idArr){
             for(let m in this.list.result){
                 if(this.list.result[m].id==idArr[item]){
-
                     this.list.result[m].show=true;
                 }
                 for(let n in this.list.result[m].subcategory){
-                        if(this.list.result[m].subcategory[n].id==idArr[item]){
-                            this.list.result[m].subcategory[n].show=true;
-                        }
+                    if(this.list.result[m].subcategory[n].id==idArr[item]){
+                        this.list.result[m].subcategory[n].show=true;
                     }
+                }
             }
         }
        }
@@ -292,7 +322,18 @@ export default {
     right: 0;
     width: 800px;
 }
-
+.line_text{
+    padding-top:10px;
+    float:left;
+}
+.sub_second{
+    margin-left: 26px;
+    clear:both;
+    white-space: normal;
+}
+.sub_second > li{
+    display: inline-block;
+}
 .btn-confirm {
     background-color: #fa6705;
     color: #fff;
@@ -301,37 +342,10 @@ export default {
 .btn-close {
     color: #fa6705;
 }
-
-.checkbox_unselect{
-    background-image: url(/static/images/unselect.png);
-    display: inline-block;
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    background-size: 80%;
-    margin: auto;
-    text-align: center;
-    background-position: 5px;
-    float: left;
-    margin-right: 10px;
-}
 .role{
     margin-right: 10px;
 }
 .table{
     display: table;
-}
-.checkbox_select{
-    background-image: url(/static/images/selected.png);
-    display: inline-block;
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    background-size: 80%;
-    margin: auto;
-    text-align: center;
-    background-position: 5px;
-    float: left;
-    margin-right: 10px;
 }
 </style>

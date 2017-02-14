@@ -18,8 +18,6 @@ export const getList = (state) => {
     return JSON.parse(JSON.stringify(state.category.list));
 }
 
-
-
 export const getCharList = (state) => {
     const option={
     	options:JSON.parse(JSON.stringify(state.echarts.barChartOption)),
@@ -77,6 +75,9 @@ export const initSellOrderlist = (state) => {
 }
 export const initPurchaseOrderlist = (state) => {
     return parseJson(state.table.basicBaseList.purchaseOrderList);
+}
+export const initToDoOrderlist = (state) => {
+    return parseJson(state.table.basicBaseList.toDoOrderList);
 }
 export const initOrderlist = (state) => {
     return parseJson(state.table.basicBaseList.orderList);
@@ -198,12 +199,18 @@ export const initClientDetail = (state) => {
     return JSON.parse(JSON.stringify(state.table.clientDetail));
 }
 
-export const initEmployeeList = (state) => {
+export const initEmployeeList = (state) => { //员工
     return JSON.parse(JSON.stringify(state.table.basicBaseList.employeeList));
 }
 
+export const initEmployeeDetail = (state) => { //员工详情
+    return JSON.parse(JSON.stringify(state.table.employeeDetail));
+}
 export const initOrgList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.orgList));
+}
+export const initOrgDetail = (state) => {
+    return JSON.parse(JSON.stringify(state.table.orgDetail));
 }
 export const initRoleList = (state) => {
     return JSON.parse(JSON.stringify(state.table.basicBaseList.roleList));

@@ -7,8 +7,8 @@
      <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
      <mglist-model>
          <div slot="top">
-            <div class="clear" >
-                  <dl class="clear left transfer">
+            <div class="clear">
+                  <dl class="clear left">
                      <dt class="left  marg_top">{{$t('static.breed')}}：</dt>
                      <dd class="left">
                            <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
@@ -38,15 +38,16 @@
                            <input type="text" class="form-control" v-model="loadParam.customerEmail" @keyup.enter="intentionSearch()"/>
                      </dd>
                   </dl>
-                  <button class="new_btn left transfer pull-left" @click="resetCondition()">{{$t('static.clear_all')}}</button>
-                  <button class="new_btn left transfer pull-left" @click="intentionSearch()">{{$t('static.search')}}</button>        
+                       
             </div>
             <div class="btn-group pull-left">
                 <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === ''}" @click="selectInquire('')">{{$t('static.please_select')}}</button>
                 <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 0}" @click="selectInquire(0)">{{$t('static.not_inquiry')}}</button>
                 <button  class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 1}" @click="selectInquire(1)">{{$t('static.inquiry')}}</button>
                 <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 2}" @click="selectInquire(2)">{{$t('static.quotation')}}</button>
-                <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 3}" @click="selectInquire(3)">{{$t('static.quo_complete')}}</button>
+                <button class="btn btn-default" v-bind:class="{ 'btn-warning': loadParam.inquire === 3}" @click="selectInquire(3)">{{$t('static.quo_complete')}}</button> 
+                <button class="new_btn left transfer pull-left" @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                  <button class="new_btn left transfer pull-left" @click="intentionSearch()">{{$t('static.search')}}</button>  
             </div>
             <button class="btn btn-primary pull-right" style="margin-right:20px" @click="intentionSearch()">{{$t('static.refresh')}}</button> 
          </div>
@@ -274,6 +275,7 @@ export default {
             this.loadParam.employeeName='';
             this.loadParam.breedId='';
             this.loadParam.breedName='';
+            this.loadParam.inquire='';
             this.loadParam.customerEmail='';
             this.getIntlIntentionInquireList(this.loadParam);
         },

@@ -1,7 +1,8 @@
 <template>
     <alert-model :param="tipParam" v-if="tipParam.show"></alert-model> 
     <password-model :param="pwdParam" v-if="pwdParam.show"></password-model>
-    
+    <setting-model :param="personalParam" v-if="personalParam.show"></setting-model>
+
     <div class="center_top light_bg mui-clearfix" v-bind:class="{'center_top':getMenu==240,'center_nav':getMenu==50}" transition="expand">
         <div class="title_top mui-clearfix">
           <div class="new_time left">{{$t('static.login_time_recently')}}:{{ initLogin.time }}</div>
@@ -11,6 +12,9 @@
               <img src="/static/images/head.png" class="left" height="52" width="52" @click="show=!show"/>
               <div class="component_action" v-show="show">
                 <ul>
+                  <li @click="personalSet()">
+                     {{$t('static.setting')}}
+                  </li>
                   <li @click="upwd()">
                      {{$t('static.modify_password')}}
                   </li>
@@ -33,22 +37,25 @@ import alertModel from './tips/tipDialog'
 import languageModel from '../components/tools/language'
 import passwordModel  from '../components/tips/updatePwd'
 import tabsModel  from '../components/tools/tabs/tabs.vue'
+import settingModel from '../components/tips/personalSet.vue'
 import {
     initLogin,
     getMenu,
     getList,
     getTabs,
-    
+    initEmployeeDetail
 } from '../vuex/getters'
 import {
     initList,
+    getEmployeeDetail
 } from '../vuex/actions'
 export default {
   components: {
     languageModel,
     passwordModel,
     alertModel,
-    tabsModel
+    tabsModel,
+    settingModel
   },
   data() {
       return {
@@ -62,8 +69,24 @@ export default {
             name:'新密码两次输入不一致！',
             alert:true
          },
-
+         loadParam:{
+            id:this.initLogin.id,
+            loading:false
+         },
          
+         personalParam:{
+            show:false,
+            gender:'',
+            mobile:'',
+            extno:'',
+            qq:'',
+            wechat:'',
+            goodfield:'',
+            name:'',
+            image_f_show:'',
+            path:'',
+            id:this.initLogin.id
+         }
       }
   },
   vuex: {
@@ -71,10 +94,12 @@ export default {
         getMenu,
         initLogin,
         getList,
-        getTabs
+        getTabs,
+        initEmployeeDetail
       },
       actions:{
-        initList
+        initList,
+        getEmployeeDetail
       }
   },
   methods:{
@@ -88,20 +113,38 @@ export default {
     upwd:function(){
         this.pwdParam.show = true;
     },
+    personalSet:function(){
+      this.personalParam.gender= this.initEmployeeDetail.gender;
+      this.personalParam.mobile= this.initEmployeeDetail.mobile;
+      this.personalParam.extno= this.initEmployeeDetail.extno;
+      this.personalParam.qq= this.initEmployeeDetail.qq;
+      this.personalParam.wechat= this.initEmployeeDetail.wechat;
+      this.personalParam.goodfield= this.initEmployeeDetail.goodfield;
+      this.personalParam.name= this.initEmployeeDetail.name;
+      this.personalParam.photo = this.initEmployeeDetail.photo;
+      this.personalParam.url ='/employee/';
+      this.personalParam.key='employeeList';
+      this.personalParam.title = 'first';
+      this.personalParam.show=true;
+      this.personalParam.callback = this.personCallback;
+    },
     callback:function(title){
-      console.log(title)
-             // this.param.show=false;
-            this.tipParam.show = true;
-            this.tipParam.name=title;
-            this.tipParam.alert=true;
-            console.log(this.tipParam);
+        this.tipParam.show = true;
+        this.tipParam.name=title;
+        this.tipParam.alert=true;
+    },
+    personCallback:function(title){
+        this.tipParam.show = true;
+        this.tipParam.name=title;
+        this.tipParam.alert=true;
+        this.getEmployeeDetail(this.loadParam)
     },
     close:function(index){
       this.tabs.splice(index,1);
     }
   },
   created(){
-    
+    this.getEmployeeDetail(this.loadParam);
   }
   /*events:{
       lang:function(val){
@@ -118,7 +161,7 @@ export default {
     white-space: nowrap;
     left:200px;
     box-shadow: 0px 2px 2px #999;
-    z-index: 1000;
+    z-index: 9999;
 }
 .nav_tab{
   position: absolute;

@@ -2,10 +2,6 @@
   <tree-dialog v-if="treeParam.show" :param="treeParam" ></tree-dialog>
 	 <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
 
-     <div class="cover_loading">
-         <pulse-loader :loading="loadParam.loading||orgParam.loading" :color="color" :size="size"></pulse-loader>
-     </div>
-
 	 <div class="container modal_con" v-show="param.show">
        <div @click="param.show = false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -70,7 +66,7 @@
                     </div>
                     <div class="edit_footer">
                         <button type="button" class="btn btn-close"  @click="param.show = fasle">取消</button>
-                        <button type="button"  class="btn btn-orange" v-if="param.employeeId==''" @click="confirmEmp()" disabled="true">确定</button>
+                        <button type="button"  class="btn btn-orange" v-if="param.employeeId==''" disabled="true">确定</button>
                         <button type="button"  class="btn btn-orange" v-else  @click="confirmEmp()" >确定</button>
                     </div>
     			</div>
@@ -132,7 +128,7 @@ export default{
                 all: 7,
                 total:''
             },
-              loadParam: {
+            loadParam: {
                 loading: true,
                 color: '#5dc596',
                 size: '15px',
@@ -142,6 +138,7 @@ export default{
                 all: 7,
                 total:'',
                 name:'',
+                leave:1,
                 no:''
               },
               treeParam:{
@@ -308,7 +305,7 @@ export default{
                 this.param.orgId = param.value;
                 this.param.orgName = param.label;
             }
-      }
+        }
     },
 	created() {
       //this.getClientList(this.orgParam, this.orgParam.all);

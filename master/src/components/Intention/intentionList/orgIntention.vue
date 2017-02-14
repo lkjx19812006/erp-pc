@@ -16,14 +16,14 @@
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top" style="letter-spacing:3px" >客户名：</dt>
+                   <dt class="left transfer marg_top">客户名：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
                 </dl>
 
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top" style="letter-spacing:3px" >客户手机：</dt>
+                   <dt class="left transfer marg_top">客户手机：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
@@ -120,6 +120,7 @@
                     <tr>
                         <th>类型</th>
                         <th>发布时间</th>
+                        <th>所属业务员</th>
                         <th>客户名称</th>
                         <th>主要联系人</th>
                         <th>联系方式</th>
@@ -143,7 +144,8 @@
                             <span v-if="item.especial==1&&item.type==0">紧急求购</span>
                             <span v-if="item.especial==1&&item.type==1">低价资源</span>
                         </td>
-                        <td>{{item.ctime | date}}</td>
+                        <td>{{item.ctime}}</td>
+                        <td>{{item.employeeName}}</td>
                         <td  class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
@@ -670,8 +672,8 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 121px;
-    min-width: 110px;
+    width: 107px;
+    min-width: 106px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;

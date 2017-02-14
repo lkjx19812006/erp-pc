@@ -129,7 +129,8 @@
                                                   <div v-if="item.validate==9">审核中</div>
                                                 </td>
                                                 <td>{{item.description}}</td>
-                                                <td   @click="updateIntention(
+                                                <td>
+                                                  <a class="operate" v-if="item.validate==-1||item.validate==0" @click="updateIntention(
                                                             intentionParam.loading=true,
                                                             intentionParam.sub=$index,
                                                             intentionParam.id=item.id,
@@ -162,15 +163,16 @@
                                                             intentionParam.key='user',
                                                             intentionParam.validate=item.validate,
                                                             intentionParam.description=item.description,
+                                                            intentionParam.images=item.pics,
                                                             intentionParam.image_f='',
                                                             intentionParam.image_s='',
                                                             intentionParam.image_t='',
                                                             intentionParam.image_f_show='',
                                                             intentionParam.image_s_show='',
                                                             intentionParam.image_t_show='',
-                                                            intentionParam.inType=2
-                                                        )">
-                                                  <a class="operate" v-if="item.validate==-1||item.validate==0"><img src="/static/images/edit.png" height="18" width="30"/>
+                                                            intentionParam.inType=2,
+                                                            intentionParam.callback=intentionCallback
+                                                        )"><img src="/static/images/edit.png" height="18" width="30" />
                                                   </a>
                                               </td>
                                           <!--  <td  @click="clickShow($index,{
@@ -704,7 +706,7 @@ export default {
             if (this.$store.state.table.userDetail[param.concrete].arr[index].show) {
                 this.$store.state.table.userDetail[param.concrete].arr[index].show = false;
             } else {
-                this.$store.state.table.userDetail[param.concrete].arr[index].show = true
+                this.$store.state.table.userDetail[param.concrete].arr[index].show = true;
             }
 
         },
@@ -776,12 +778,13 @@ export default {
 
         },
         updateIntention:function(){
-          console.log(this.intentionParam);
           this.intentionParam.flag = 1;
           this.intentionParam.show = true;
         },
 
         intentionCallback:function(title){
+            let editIntention = "editIntention";   //表示是编辑意向后调用的回调函数
+            this.getUserDetail(this.param,editIntention);
             this.tipParam.show = true;
             this.tipParam.name=title;
             this.tipParam.alert=true;

@@ -17,6 +17,7 @@
                         <tr>
                           <th>分期类型</th> 
                           <th>支付金额</th>
+                          <th>币种</th>
                           <th>业务类型</th>
                           <th>支付名称</th>
                           <th>用户名</th>
@@ -32,6 +33,7 @@
                              <td v-if="item.type==0">付款</td>
                              <td v-if="item.type==1">收款</td>
                              <td>{{item.amount}}</td>
+                             <td>{{item.currency | Currency}}</td>
                              <td>{{item.bizType}}</td>
                              <td>{{item.payName}}</td>
                              <td>{{item.payUserName}}</td>

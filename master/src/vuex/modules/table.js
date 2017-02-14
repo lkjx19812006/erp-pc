@@ -39,6 +39,7 @@ import {
    CUSTOMER_BATCH_DELETE,
    CUSTOMER_BATCH_SUPPLIER,
    UPDATE_CUSTOMER_DETAIL,
+   EMPLOYEE_DETAIL,
    CUSTOMER_UPDATE_DATA,
    UPDATE_ADDR_DETAIL,
    ADDRESS_TABLE,
@@ -56,6 +57,7 @@ import {
    BATCH_UPDATE_USER_DATA,
    BATCH_USER_INTENTION_AUDIT,
    ORG_DATA,
+   ORG_DETAIL,
    ROLE_DATA,
    QUICK_EDIT,
    FILE_DATA,
@@ -295,6 +297,7 @@ const state = {
                 "no":"20160502134843429001","clients":0,"cancleCauses":null,"comments":"快点，急用","ftime":null,"updater":null,
                 "utime":"2016-09-13 14:32","creater":"b11741af0efc49ed815545c0d88ddc98","ctime":"2016-05-02 13:48","goods":null,
                 "payPics":null,"sendPics":null}],
+        toDoOrderList:[],      
         orderList: [{"id":"5726ea3bf22125bcdcff7820","type":0,"sample":0,"intl":0,"sourceType":1,"link":"1234567890",
                 "customer":null,"user":null,"amount":200.000000,"incidentals":0.000000,"incidentalsDesc":null,
                 "preferential":0.000000,"preferentialDesc":null,"total":200.000000,"currency":0,"lcompanyId":null,
@@ -669,7 +672,9 @@ const state = {
       }
   },
   identify:{},
-  trackingDetail:{}
+  trackingDetail:{},
+  employeeDetail:{},
+  orgDetail:{}
 }
 
 const mutations = {
@@ -717,7 +722,6 @@ const mutations = {
         state.logisticsDetail = data;
     },
     [ORG_ORDER_AUDIT](state, data) {   //审核部门订单(个人)
-        console.log(data);
         state.basicBaseList[data.key][data.index].validate = data.validate;
         state.basicBaseList[data.key][data.index].logistics = data.logistics;
     },
@@ -1647,6 +1651,9 @@ const mutations = {
     [ORG_DATA](state, data) { // 部门列表
         state.basicBaseList.orgList = data;
     },
+    [ORG_DETAIL](state, data) { // 部门详情页面
+        state.orgDetail = data;
+    },
     [ROLE_DATA](state, data) { // 部门列表
         state.basicBaseList.roleList = data;
     },
@@ -1710,13 +1717,22 @@ const mutations = {
         state.clientDetail.trackings.arr.unshift(temp);
         state.basicBaseList.intentionDetail.trackings.arr.unshift(temp);
     },
-
-
-
+    [EMPLOYEE_DETAIL](state,data){ //员工详情
+        state.employeeDetail = data;
+    },
     [UPDATE_EMPLOY_DATA](state, data) { //修改员工信息
+      if(data.title=='first'){
+        state.basicBaseList[data.key].gender = data.gender;
+        state.basicBaseList[data.key].goodfield = data.goodfield;
+        state.basicBaseList[data.key].qq = data.qq;
+        state.basicBaseList[data.key].wechat = data.wechat;
+        state.basicBaseList[data.key].mobile = data.mobile;
+      }else{
         for (var key in data) {
             state.basicBaseList[data.key][data.sub][key] = data[key];
         }
+      }
+        
     },
     [UPDATA_INTENTION_DATA](state,data){ //修改意向
       if(data.key=='user'){   //会员详情页修改意向

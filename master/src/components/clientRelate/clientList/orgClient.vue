@@ -83,7 +83,7 @@
                 
                 <dl class="clear left transfer" style="width:330px">
                    <dt class="left transfer marg_top">{{$t("static.client_type")}}：</dt>
-                   <dd class="left" style="width:71%">
+                   <dd class="left" style="width:50%">
                        <select v-model="loadParam.type"   class="form-control" @change="selectSearch()">
                           <option value="">{{$t("static.please_select")}}</option>
                           <option value="0">Others 其它</option>
@@ -162,33 +162,14 @@
                         <th>{{$t('static.client_type')}}</th>
                         <th>{{$t('static.contact')}}</th>
                         <th>{{$t('static.position')}}</th>
+                        <th>{{$t('static.telephone')}}</th>
                         <th>{{$t('static.cellphone')}}</th>
                         <th>{{$t('static.phone_origin')}}</th>
                         <th>{{$t('static.client_origin')}}</th>
                         <th>{{$t('static.detailed_address')}}</th>
                         <th>{{$t('static.main_product')}}</th> 
-
-                        <!-- <th>{{$t("static.type")}}</th>
-                        <th>{{$t("static.classification")}}</th>
-                        <th>{{$t("static.customer_source")}}</th>
-                        <th>{{$t("static.credit_rating")}}</th>
-                        <th>{{$t("static.client_name")}}</th>
-                        <th>{{$t("static.classification_code")}}</th>
-                        <th>所属分类</th>
-                        <th>{{$t("static.salesman")}}</th>
-                        <th>{{$t("static.principals")}}</th>
-                        <th style="min-width:120px;">{{$t("static.business_scope")}}</th>
-                        <th>{{$t("static.client_phone")}}</th>
-                        <th>{{$t("static.province_of_phone")}}</th>
-                        <th>{{$t("static.city_of_phone")}}</th>
-                        <th>{{$t("static.client_email")}}</th>
-                        <th>{{$t("static.country")}}</th>
-                        <th>{{$t("static.province")}}</th>
-                        <th>{{$t("static.city")}}</th>
-                        <th>{{$t("static.registered_address")}}</th>
-                        <th>{{$t("static.create_time")}}</th>
-                        <th>{{$t("static.whether_supplier")}}</th>
-                        <th style="min-width:200px">{{$t("static.comment")}}</th> -->
+                        <th v-if="this.initLogin.orgId==29">跟进状态</th> 
+                        <th v-if="this.initLogin.orgId==29">跟进说明</th>
                         <th>{{$t("static.operation")}}</th>
                     </tr>
                 </thead>
@@ -219,12 +200,14 @@
                         <td v-if="this.language=='en'">{{item.type | customerTypeEn}}</td>
                         <td>{{item.mainContact}}</td>
                         <td>{{item.mainPosition}}</td>
+                        <td>{{item.tel}}</td>
                         <td>{{item.mainPhone}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
                         <td>{{item.address}}</td>
                         <td>{{item.bizScope}}</td>
-
+                        <td v-if="this.initLogin.orgId==29">{{item.audit | tracking}}</td> 
+                        <td v-if="this.initLogin.orgId==29">{{item.auditComment}}</td> 
                     <!-- <td>{{item.typeDesc}}</td>
                         <td>{{item.classifyDesc | classify}}</td>
                         <td v-if="item.sourceType=='pc'" style="background:#CC3333;color:#fff">{{item.sourceType}}</td>
@@ -721,8 +704,8 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 115px;
-    min-width: 115px;
+    width: 108px;
+    min-width: 102px;
 }
 .service-nav {
     padding: 23px 30px 0px 4px;

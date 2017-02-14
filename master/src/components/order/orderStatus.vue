@@ -1,4 +1,5 @@
 <template>
+  <div>
     <cancle-model :param="cancleReason" v-if="cancleReason.show"></cancle-model>
     <alert-model :param="tipParam" v-if="tipParam.show"></alert-model>
     <undeline-model :param="undelinePay" v-if="undelinePay.show"></undeline-model>
@@ -178,10 +179,8 @@
                 </div>
                 <div class="logical_color col-md-12">
                   <label class="editlabel">{{$t('static.upload_logistcs')}}</label>
-                  <div class="clearfix">
+                  <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
                       <press-image :value.sync="uploadLogistic.image_f" :type="type" :param="imageParam" style="float:left;width:15%"></press-image>
-                     <press-image :value.sync="uploadLogistic.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
-                     <press-image :value.sync="uploadLogistic.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
                   </div>
                 </div>
               </div>
@@ -219,11 +218,11 @@
                 </div>
                 <div class="logical_color col-md-12">
                   <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img.required">{{$t('static.required')}}</span></span>
-                  <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f||salesLogistic.image_s||salesLogistic.image_t" v-validate:img="{required:true}" />
-                  <div class="clearfix">
-                      <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam" style="float:left;width:15%"></press-image>
-                     <press-image :value.sync="salesLogistic.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
-                     <press-image :value.sync="salesLogistic.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
+                  <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f" v-validate:img="{required:true}" />
+                  <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
+                      <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam"></press-image>
+                     <!-- <press-image :value.sync="salesLogistic.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
+                     <press-image :value.sync="salesLogistic.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image> -->
                   </div>
                 </div>
               </div>
@@ -247,11 +246,9 @@
                 </div>
                 <div class="logical_color col-md-12">
                   <span class="editlabel">{{$t('static.upload_logistcs')}} <span class="system_danger" v-if="$validation.img1.required">{{$t('static.required')}}</span></span>
-                  <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f||salesLogistic.image_s||salesLogistic.image_t" v-validate:img1="{required:true}" />
-                  <div class="clearfix">
-                      <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam" style="float:left;width:15%"></press-image>
-                     <press-image :value.sync="salesLogistic.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
-                     <press-image :value.sync="salesLogistic.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:15%"></press-image>
+                  <input type="text" class="form-control left" v-show="false" v-model="salesLogistic.image_f" v-validate:img1="{required:true}" />
+                  <div class="editpage-input clearfix" style="max-height:200px;overflow-y:auto;">
+                      <press-image :value.sync="salesLogistic.image_f" :type="type" :param="imageParam"></press-image>
                   </div>
                 </div>
               </div>
@@ -379,7 +376,7 @@
                link:'/order/quality/qualified',
                key:param.key
               })">合格</button>
-            <button type="button" class="btn btn-info margin-10 right"  @click="addContract({
+            <!-- <button type="button" class="btn btn-info margin-10 right"  @click="addContract({
                 show:true,
                 orderId:param.id,
                 total:initOrderDetail.total,
@@ -402,18 +399,19 @@
                 link:afterSalesApply,
                 titles:'售后申请',
                 images:'',
-              })">售后申请</button>
+              })">售后申请</button> -->
             <button type="button" class="btn btn-default btn-close right"  @click="param.show = false">{{$t('static.cancel')}}</button>
           </div>
         </div>
 
     </div>
+  </div>
 </template>
 <script>
 import cancleModel from  '../order/cancleMsg'
 import undelineModel from  '../order/uploadPayment'
 import contractModel from '../order/second_order/contractItems'
-import pressImage from '../imagePress'
+import pressImage from '../tools/upload/imagePressMul.vue'
 import logisticsModel  from  '../order/logisticsDetail'
 import editorderModel  from  '../order/ordergoods'
 import alertModel from  '../tips/tipDialog'
@@ -522,8 +520,6 @@ export default {
             link:'/order/send',
             key:this.param.key,
             image_f:'',
-            image_s:'',
-            image_t:'',
             name:''
           },
           salesLogistic:{
@@ -543,8 +539,6 @@ export default {
             link:'/order/sendflowSend',
             key:this.param.key,
             image_f:'',
-            image_s:'',
-            image_t:'',
             name:''
           },
           tipParam:{
@@ -671,6 +665,25 @@ export default {
           this.tipParam.name = title;
           this.param.show =false;
           this.getEmpolyeeOrder(this.myOrderParam);
+        }
+    },
+    events: {
+        getImageData: function(imageData) {
+            var paths = new Array();
+            this.param.path=imageData.result.path;
+        },
+        getFiles: function(files){
+            this.salesLogistic.images = '';
+            this.uploadLogistic.images = '';
+            for(let i = 0;i<files.length;i++){
+                if(i==0){
+                    this.salesLogistic.images = files[0].path;
+                    this.uploadLogistic.images = files[0].path;
+                }else{
+                    this.salesLogistic.images = this.salesLogistic.images + "," + files[i].path;
+                    this.uploadLogistic.images = this.uploadLogistic.images + "," + files[i].path;
+                }
+            }
         }
     },
     created() {

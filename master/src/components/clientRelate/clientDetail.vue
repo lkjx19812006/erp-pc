@@ -1,4 +1,5 @@
 <template>
+<div>
 	<createcust-model :param="custParam" v-if="custParam.show"></createcust-model>
 	<createaddr-model :param="addressParam" v-if="addressParam.show"></createaddr-model>
 	<createlabel-model :param="labelParam" v-if="labelParam.show"></createlabel-model>
@@ -14,7 +15,7 @@
   <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
   <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
   <createorder-model :param="orderParam" v-if="orderParam.show"></createorder-model>
-    <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"  @click="param.show=false"></div>
+    <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"  @click="param.show=false"></div>
     <div class="container modal_con modal_overall" v-show="param.show" @click="param.show=false">
     	  <div @click.stop="param.show=false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -368,6 +369,7 @@
                                                     validate:item.validate,
                                                     inType:3,
                                                     loading:false,
+                                                    images:item.pics,
                                                     image_f:'',
                                                     image_s:'',
                                                     image_t:'',
@@ -932,6 +934,7 @@
           </div>
         </section>
     </div>
+</div>
 </template>
 <script>
 import pressImage from '../../components/imagePress'

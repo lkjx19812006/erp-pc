@@ -36,7 +36,7 @@
                     <article>
                         <div class="edit-detail">
                             <div class="clearfix">
-                                <div class="client-detailInfo col-md-9 col-xs-12">
+                                <div class="client-detailInfo col-md-9 col-xs-12" style="max-height:200px;overflow-y: auto;">
                                     <div class="editlabel">图片:</div>
                                     <img v-for="item in initIntentionDetail.pics" :src="item.url"  width="140px;" class="left" @click="clickBig(item.url)"/>
                                 </div>

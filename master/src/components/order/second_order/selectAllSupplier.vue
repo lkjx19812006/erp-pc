@@ -1,9 +1,6 @@
 <template>
+   <div>
 	 <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
-     <div class="cover_loading">
-         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
-     </div>
-
 	 <div class="container modal_con" v-show="param.show">
        <div @click="param.show = false" class="top-title">
             <span class="glyphicon glyphicon-remove-circle"></span>
@@ -11,6 +8,46 @@
 	    <div class="model-header">
 	    	<h4>选择供应商</h4>
 	    	<div class="con_list">
+                <div style="margin:10px 10px 15px 10px" class="clearfix">
+                    <div class="input-group col-xs-4 pull-left">
+                        <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
+                        <input type="text" class="form-control"  placeholder="供应商姓名" v-model="loadParam.name"  @keyup.enter="selectSearch()">
+                    </div> 
+                    <div class="col-xs-1 pull-left"></div>
+                    <div class="input-group col-xs-4 pull-left">
+                        <div class="input-group-addon"><img src="/static/images/search.png" height="20" width="20"></div>
+                        <select v-model="loadParam.type"  class="form-control"  @change="selectSearch()">
+                            <option value="">全部</option>
+                            <option value="0">其它</option>
+                            <option value="1">合作社</option>
+                            <option value="2">药商</option>
+                            <option value="3">药厂</option>
+                            <option value="4">个体户</option>
+                            <option value="5">药店</option>
+                            <option value="6">医院</option>
+                            <option value="7">贸易公司</option>
+                            <option value="8">零售商行</option>
+                            <option value="9">药农</option>
+                            <option value="10">介绍人</option>
+                            <option value="11">药贩子</option>
+                            <option value="12">产地药商</option>
+                            <option value="13">销地药商</option>
+                            <option value="14">养生诊所</option>
+                            <option value="15">化工厂</option>
+                            <option value="16">化妆品厂</option>
+                            <option value="17">提取物厂</option>
+                            <option value="18">食品厂</option>
+                            <option value="19">实验室</option>
+                            <option value="20">网上电商</option>
+                            <option value="21">中成药生产商</option>
+                            <option value="22">西药生产商</option>
+                            <option value="23">饮片厂</option>
+                            <option value="24">茶类公司</option>
+                      </select>
+                    </div>
+                    <button type="button" class="new_btn" @click="reset()">{{$t('static.clear_all')}}</button>
+                    <button type="button" class="new_btn" style="margin-right:10px;" @click="selectSearch()">{{$t('static.search')}}</button>
+                </div>
     			<div class="trans_service clearfix">
                     <div class="cover_loading">
                         <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
@@ -49,6 +86,7 @@
 	    	</div>
 	    </div>
 	</div>
+  </div>
 </template>
 <script>
 import pagination from '../../pagination.vue'
@@ -73,8 +111,11 @@ export default{
                 all: 7,
                 total:0,
                 link:this.param.link,
-                employeeId:this.param.employee
-            },
+                employeeId:'',
+                name:'',
+                type:'',
+                typeDesc:''
+            }
 		}
 	},
 	vuex:{
@@ -86,6 +127,15 @@ export default{
 		}
 	},
 	methods:{
+        reset:function(){
+            this.loadParam.name="";
+            this.loadParam.type="";
+            this.loadParam.typeDesc="";
+            this.getProductList(this.loadParam);
+        },
+        selectSearch:function(){
+            this.getProductList(this.loadParam);
+        },
 		selectEmployee:function(sub,item){
 			this.$store.state.table.basicBaseList.productList[sub].checked=!this.$store.state.table.basicBaseList.productList[sub].checked;
             if(this.$store.state.table.basicBaseList.productList[sub].checked==true){

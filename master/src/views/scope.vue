@@ -1,4 +1,5 @@
-	<template>
+<template>
+  <div>
   	<create-model :param.sync="createParam" v-if="createParam.show"></create-model>
   	<tip-model :param.sync="tipParam" v-if="tipParam.show"></tip-model>
     <mglist-model>
@@ -50,7 +51,8 @@
         <pagination :combination="loadParam"  slot="page"></pagination>
     </mglist-model>
 		 
-	</template>
+	</div>
+</template>
 
 <script>
 import createModel  from '../components/role/createRole'
@@ -219,10 +221,6 @@ export default {
     height: 10px;
 }
 
-.base_pagination{
-    margin: auto;
-    text-align: center;
-}
  #table_box  table th,#table_box  table td{
   width: 425px;
   min-width: 425px;

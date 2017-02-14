@@ -148,6 +148,7 @@
                         <th><!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> --></th>
                         <th>类型</th>
                         <th>发布时间</th>
+                        <th>所属业务员</th>
                         <th>会员名称</th>
                         <th>主要联系人</th>
                         <th>联系方式</th>
@@ -160,7 +161,7 @@
                         <th>剩余有效期</th>
                         <th>客户备注</th>
                         <th>录入类型</th>
-                        <th style="min-width: 250px;">操作</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -176,7 +177,9 @@
                             <span v-if="item.especial==1&&item.type==0">紧急求购</span>
                             <span v-if="item.especial==1&&item.type==1">低价资源</span>
                         </td>
-                        <td>{{item.ctime | date}}</td>
+                        <td>{{item.ctime}}</td>
+                        <td v-if="item.employeeName!==''">{{item.employeeName}}</td>
+                        <td v-if="item.employeeName==''">暂无归属业务员</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
@@ -280,6 +283,7 @@
                                    link:editintentInfo,
                                    url:'/intention/',
                                    key:'userIntentionList',
+                                   images:item.pics,
                                    image_f:'',
                                    image_s:'',
                                    image_t:'',
@@ -381,7 +385,6 @@ import {
   intentionUpAndDown,
   deleteInfo,
   editintentInfo,
-  createIntentionInfo,
 } from '../../../vuex/actions'
 export default {
     components: {
@@ -410,8 +413,7 @@ export default {
             getSupplyDemandList,
             intentionUpAndDown,
             deleteInfo,
-            editintentInfo,
-            createIntentionInfo,
+            editintentInfo
         }
     },
     data() {
@@ -672,7 +674,8 @@ export default {
             this.createParam = param;
             this.createParam.callback = this.modifyback;
         },
-        modifyback:function(title){
+        modifyback:function(title){    //修改完成后刷新页面数据
+            this.getIntentionList(this.loadParam);
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
@@ -716,31 +719,13 @@ export default {
 .transfer{
     margin-right: 8px;
 }
-.checkbox_unselect{
-    background-image: url(/static/images/unselect.png);
-    display: inline-block;
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    background-size: 80%;
-    margin: auto;
-    text-align: center;
-    background-position: 5px;
-}
-.checkbox_select{
-    background-image: url(/static/images/selected.png);
-    display: inline-block;
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    background-size: 80%;
-    margin: auto;
-    text-align: center;
-    background-position: 5px;
-}
+
 #table_box table th,#table_box table td{
     width: 100px;
     min-width: 100px;
+}
+.operate{
+  margin:0;
 }
 .service-nav {
     padding: 23px 10px 0px 4px;

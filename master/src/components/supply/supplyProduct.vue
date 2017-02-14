@@ -1,4 +1,5 @@
 <template>
+<div>
   <create-model :param="createParam" v-if="createParam.show"></create-model>
   <detail-model :param.sync="changeParam" v-if="changeParam.show"></detail-model>
   <supplydetail-model :param="supplyParam" v-if="supplyParam.show"></supplydetail-model>
@@ -12,48 +13,47 @@
   <mglist-model>
       <!-- 头部搜索-->
       <div slot="top">
-          <div class="my_order_search left">
-               <div class="filter_search clearfix">
-                    <dl class="clearfix">
-                        <dt>类型：</dt>
-                        <dd>
-                            <select class="form-control"  v-model="loadParam.type" @change="searchProduct()">
-                                <option value="">全部</option>
-                                <option>药材</option>
-                                <option>提取物</option>
-                                <option>饮片</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    
-                    <dl class="clearfix">
-                        <dt>产品名称：</dt>
-                        <dd>
-                            <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>品种名称：</dt>
-                        <dd>
-                            <input type="text"  class="form-control"  class="search_input"  v-model="loadParam.breedName"  @click="selectBreed()"/>
-                        </dd>
-                    </dl>
-                    <dl class="clearfix">
-                        <dt>供应商名称：</dt>
-                        <dd>
-                            <input type="text"  class="form-control" placeholder="按回车搜索" class="search_input"  v-model="loadParam.cName"  @keyup.enter="searchProduct()"/>
-                        </dd>
-                    </dl>
-
-                    <dl class="clearfix">
-                        <button class="btn btn-default transfer"  @click="searchProduct()">搜索</button>
-                        <button class="btn btn-default"  @click="reset()">清空条件</button>
-                    </dl>
-               </div>
+        <div class="my_order_search left">
+          <div class="filter_search clearfix">
+            <dl class="clearfix">
+                <dt>类型：</dt>
+                <dd>
+                    <select class="form-control"  v-model="loadParam.type" @change="searchProduct()">
+                        <option value="">全部</option>
+                        <option>药材</option>
+                        <option>提取物</option>
+                        <option>饮片</option>
+                    </select>
+                </dd>
+            </dl>
+            
+            <dl class="clearfix">
+                <dt>产品名称：</dt>
+                <dd>
+                    <input type="text"  class="form-control" placeholder="按回车键搜索" class="search_input"  v-model="loadParam.name"  @keyup.enter="searchProduct()"/>
+                </dd>
+            </dl>
+            <dl class="clearfix">
+                <dt>品种名称：</dt>
+                <dd>
+                    <input type="text"  class="form-control"  class="search_input"  v-model="loadParam.breedName"  @click="selectBreed()"/>
+                </dd>
+            </dl>
+            <dl class="clearfix">
+                <dt>供应商名称：</dt>
+                <dd>
+                    <input type="text"  class="form-control" placeholder="按回车搜索" class="search_input"  v-model="loadParam.cName"  @keyup.enter="searchProduct()"/>
+                </dd>
+            </dl>
+            <dl class="clearfix">
+                <button class="btn btn-default transfer"  @click="searchProduct()">搜索</button>
+                <button class="btn btn-default"  @click="reset()">清空条件</button>
+            </dl>
           </div>
-          <div class="right">
-            <button class="btn btn-primary transfer"  @click="searchProduct()">刷新</button>
-          </div>
+        </div>
+        <div class="right">
+          <button class="btn btn-primary transfer"  @click="searchProduct()">刷新</button>
+        </div>
       </div>
 
       <!--中间列表-->
@@ -125,7 +125,7 @@
                    url:'/customer/file/',
                    key:'files'
                  })">
-                 <a class="operate"><img src="/static/images/uploadPro.png" height="18" width="67"/></a>
+                 <a class="operate"><img src="/static/images/uploadPro.png" /></a>
               </td>
               <td  @click="modifySupply({
                        sub:$index,
@@ -167,16 +167,7 @@
       <!--底部分页-->
       <pagination :combination="loadParam"  slot="page"></pagination>
   </mglist-model>
-
-  <div>
-    
-
-    
-
-    <div class="base_pagination" id="base_pagination">
-      <pagination :combination="loadParam"></pagination>
-    </div>
-  </div>
+</div>
 </template>
 <script>
   import pagination from '../pagination'

@@ -122,7 +122,7 @@
                     <tr>
                         <th><!-- <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!checked,'checkbox_select':checked}" id="client_ids"  @click="checkedAll()"></label> --></th>
                         <th>类型</th>
-                        <!-- <th>特殊的</th> -->
+                        <th>所属业务员</th>
                         <th>客户名称</th>
                         <th>客户手机号</th>
                         <th>品种名称</th>
@@ -148,13 +148,13 @@
                             <label v-if="item.validate==0" class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" >
                             </label>
                         </td>
-                        <!-- <td>{{item.type | chanceType}}</td> -->
                         <td>
                             <div v-if="item.especial==0&&item.type==0">普通求购</div>
                             <div v-if="item.especial==0&&item.type==1">普通供应</div>
                             <div v-if="item.especial==1&&item.type==0">紧急求购</div>
                             <div v-if="item.especial==1&&item.type==1">低价资源</div>
                         </td>
+                        <td>{{item.employeeName}}</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
@@ -261,6 +261,7 @@
                                                link:editintentInfo,
                                                url:'/intention/',
                                                key:'unIntentionList',
+                                               images:item.pics,
                                                image_f:'',
                                                image_s:'',
                                                image_t:'',
@@ -615,6 +616,7 @@ export default {
           this.createParam.callback = this.modifyback;
         },
         modifyback:function(title){
+            this.getIntentionList(this.loadParam);
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
@@ -653,33 +655,16 @@ export default {
 .transfer{
     margin-right: 8px;
 }
-.checkbox_unselect{
-    background-image: url(/static/images/unselect.png);
-    display: inline-block;
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    background-size: 80%;
-    margin: auto;
-    text-align: center;
-    background-position: 5px;
-}
-.checkbox_select{
-    background-image: url(/static/images/selected.png);
-    display: inline-block;
-    background-repeat: no-repeat;
-    width: 24px;
-    height: 24px;
-    background-size: 80%;
-    margin: auto;
-    text-align: center;
-    background-position: 5px;
-}
+
 .service-nav {
     padding: 35px 10px 0px 4px;
 }
 dl{
     margin-bottom: 5px;
+}
+#table_box table th,#table_box table td{
+  min-width: 87px;
+  width:88px;
 }
 </style>
 

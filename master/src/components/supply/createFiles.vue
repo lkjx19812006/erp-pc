@@ -48,8 +48,9 @@
                     <div class="editpage-input">
                         <label class="editlabel">新建文件</label>
                         <press-image :value.sync="param.image_f" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-                       <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
-                       <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+                        <press-image :value.sync="param.image_s" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+                        <press-image :value.sync="param.image_t" :type="type" :param="imageParam" style="float:left;margin-left:15px;width:20%"></press-image>
+
                     </div>
                 </section>
             </div>

@@ -4,7 +4,7 @@
     <div class="model-header">
       <h4>{{param.title}}</h4>
       <div class="model-tips clearfix" v-if="param.key!=='mySampleList'">
-        <label class="left" style="font-size: 14px;font-weight: 100">{{param.title}}</label>
+        <!-- <label class="left" style="font-size: 14px;font-weight: 100">{{param.title}}</label> -->
         <textarea v-model='param.auditComment' class="form-control" style="width:100%;overflow:auto;word-break:break-all" rows="5" value="{{param.auditComment}}"></textarea>
       </div>
       <div class="model-tips clearfix" v-if="param.key=='mySampleList'">
@@ -98,7 +98,6 @@
           this.param.show = false;
        },
        confirmApply:function(item){
-        console.log(item)
           this.param.show = false;
           this.sendRestart(item);
        },
@@ -108,7 +107,7 @@
        }
     },
     created(){
-        console.log(this.param);  
+         
     }
 
   }

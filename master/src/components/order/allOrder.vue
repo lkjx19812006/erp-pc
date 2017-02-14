@@ -12,68 +12,62 @@
         <!-- 头部搜索 -->
         <div slot="top">
           <div class="clear left">
-             <dl class="clear left transfer">
-                <dt class="left transfer marg_top">部门：</dt>
+              <dl class="clear left transfer">
+                <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
                 <dd class="left">
-                    <input type="text"  class="form-control" v-model="loadParam.orgName"  placeholder="请选择部门"  readonly="true"  @click="selectOrg()"/>
-                </dd>
-             </dl>
-             <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
-                 <dd class="left">
-                    <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
-                 </dd>
-              </dl>
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
-                 <dd class="left">
-                    <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
-                 </dd>
-              </dl>
-              <dl class="clear left transfer">
-                  <dt class="left transfer marg_top">{{$t('static.breed')}}：</dt>
-                  <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
-                  </dd>
-              </dl>
-              <!-- 单个业务员搜索 -->
-              <dl class="clear left transfer">
-                 <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
-                 <dd class="left">
-                      <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
-                 </dd>
-              </dl>
-              <button type="button" class="new_btn transfer"  @click="resetCondition()">{{$t('static.clear_all')}}</button>
-              
-              <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
-          </div>
-          <div class="clear left">
-            <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.order_type')}}：</dt>
-               <dd class="left">
                     <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
                         <option value="">{{$t('static.please_select')}}</option>
                         <option value="0">{{$t('static.purchase')}}</option>
                         <option value="1">{{$t('static.sell')}}</option>
                     </select>
                </dd>
-            </dl>
-            <dl class="clear left transfer">
-               <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
-               <dd class="left">
-                     <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
-                            <option value="">{{$t('static.please_select')}}</option>
-                            <option value="0">{{$t('static.create_order')}}</option>
-                            <!-- <option value="10">{{$t('static.pending')}}</option> -->
-                            <option value="20">{{$t('static.wait_for_payment')}}</option>
-                            <option value="30">{{$t('static.wait_for_audit')}}</option>
-                            <option value="40">{{$t('static.wait_for_delivery')}}</option>
-                            <option value="50">{{$t('static.wait_for_receiving')}}</option>
-                            <option value="60">{{$t('static.awaiting_comment')}}</option>
-                            <option value="70">{{$t('static.completed')}}</option>
+              </dl> 
+              <dl class="clear left transfer">
+                <dt class="left transfer marg_top">{{$t('static.order_status')}}：</dt>
+                <dd class="left">
+                    <select v-model="loadParam.orderStatus"  class="form-control" @change="selectSearch()">
+                          <option value="">{{$t('static.please_select')}}</option>
+                          <option value="0">{{$t('static.create_order')}}</option>
+                          <!-- <option value="10">{{$t('static.pending')}}</option> -->
+                          <option value="20">{{$t('static.wait_for_payment')}}</option>
+                          <option value="30">{{$t('static.wait_for_audit')}}</option>
+                          <option value="40">{{$t('static.wait_for_delivery')}}</option>
+                          <option value="50">{{$t('static.wait_for_receiving')}}</option>
+                          <option value="60">{{$t('static.awaiting_comment')}}</option>
+                          <option value="70">{{$t('static.order_over')}}</option>
                     </select>
-               </dd>
-            </dl>
+                </dd>
+              </dl>
+              <dl class="clear left transfer">
+                <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                <dd class="left">
+                    <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
+                </dd>
+              </dl>
+
+              <dl class="clear left transfer">
+                  <dt class="left transfer marg_top">{{$t('static.breed')}}：</dt>
+                  <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
+                  </dd>
+              </dl>
+
+              <dl class="clear left transfer">
+                  <div class="left">
+                      <dt class="left transfer marg_top">起止时间：</dt>
+                      <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
+                      </mz-datepicker>
+                  </div>
+                  <div class="left">
+                      <dt class="left marg_top">~~</dt>
+                      <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
+                      </mz-datepicker>
+                  </div>
+              </dl>
+
+              
+          </div>
+          <div class="clear left">
             <dl class="clear left transfer">
                <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
                <dd class="left">
@@ -87,21 +81,44 @@
             </dl>
             
             <dl class="clear left transfer">
-                <div class="col-xs-6">
-                    <dt class="left transfer marg_top">起始时间：</dt>
-                    <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
-                    </mz-datepicker>
-                </div>
+                <dt class="left transfer marg_top">审核状态：</dt>
+                <dd class="left">
+                    <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
+                        <option value="">{{$t('static.please_select')}}</option>
+                        <option value="0">未审核</option>
+                        <option value="1">待审核</option>
+                        <option value="2">审核通过</option>
+                        <option value="-2">审核未通过</option>
+                    </select>
+                </dd>
             </dl>
-
-            <dl class="clear left transfer" style="margin-left:-33px;">
-                <div class="col-xs-6">
-                    <dt class="left transfer marg_top">结束时间：</dt>
-                    <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
-                    </mz-datepicker>
-                </div>
+            
+            <dl class="clear left transfer">
+                <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
+                <dd class="left">
+                  <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
+                </dd>
             </dl>
+            <dl class="clear left transfer">
+              <dt class="left transfer marg_top">部门：</dt>
+              <dd class="left">
+                  <input type="text"  class="form-control" v-model="loadParam.orgName"  placeholder="请选择部门"  readonly="true"  @click="selectOrg()"/>
+              </dd>
+            </dl>
+            
+            <!-- 单个业务员搜索 -->
+            <dl class="clear left transfer">
+               <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
+               <dd class="left">
+                    <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
+               </dd>
+            </dl>
+            
             <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
+            <button type="button" class="new_btn transfer"  @click="resetCondition()">{{$t('static.clear_all')}}</button>
+
+            <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+
           </div>
           <div class="right">
               <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
@@ -124,7 +141,7 @@
                       <th>{{$t('static.transcation_amount')}}</th>
                       <th>{{$t('static.wait_payment')}}</th>
                       <th>{{$t('static.paid')}}</th>
-                      <!-- <th>{{$t('static.supplier_name')}}</th> -->
+                      <th>{{$t('static.currency')}}</th>
                       <th>{{$t('static.salesman')}}</th>
                       <th>{{$t('static.consignee_name')}}</th>
                       <th>{{$t('static.consignee_phone')}}</th>
@@ -157,7 +174,7 @@
                     <td>{{item.total}}</td>
                     <td>{{item.unpaid}}</td>
                     <td>{{item.prepaid}}</td>
-                    
+                    <td>{{item.currency | Currency}}</td>
                     <td>{{item.employeeName}}</td>
                     <td>{{item.consignee}}</td>
                     <td>{{item.consigneePhone}}</td>
@@ -168,7 +185,7 @@
                     <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                     <td v-if="item.payWay==4">WeChat</td>
                     <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td>
-                    <td>{{item.orderStatus | assess item.type item.logistics item.verifierName}}</td>          
+                    <td>{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</td>          
                     <!--<td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
                     <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                     <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
@@ -326,6 +343,7 @@
                     startTime:'',
                     endTime:'',
                     mode:'',
+                    validate:'',
                     total:0
                 },
                 selectOrgParam:{
@@ -409,6 +427,9 @@
                 if(this.loadParam.mode){
                   url  +=  "&mode=" + this.loadParam.mode;
                 }
+                if(this.loadParam.validate){
+                  url  +=  "&validate=" + this.loadParam.validate;
+                }
                 if(this.loadParam.breedId){
                   url  +=  "&breedId=" + this.loadParam.breedId;
                 }
@@ -480,7 +501,6 @@
                  this.dialogParam=initOrderlist;
             },*/
             createSearch:function(){
-              console.log(this.loadParam)
                  this.loadParam.show=true;
                  this.loadParam.loading=false;
             },
@@ -501,6 +521,7 @@
               this.loadParam.dataStatus="";
               this.loadParam.no="";
               this.loadParam.mode="";
+              this.loadParam.validate = "";
               this.loadParam.type="";
               this.loadParam.clients="";
               this.loadParam.payWay="";
@@ -598,13 +619,12 @@
     .order_table .table_hover > ul:hover {
         background: #f5f5f5;
     }
-
+    #table_box table th,#table_box table td{
+      width: 95px;
+      min-width: 94px;
+    }
     .order_table .table > ul >li img {
         margin: auto;
-    }
-
-    .v-spinner {
-        text-align: center;
     }
     .order_pagination{
         text-align: center;

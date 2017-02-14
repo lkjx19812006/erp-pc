@@ -81,12 +81,20 @@
                                     <label class="editlabel">{{$t('static.address')}}：</label>
                                     <span>{{initIntlIntentionDetail.address}}</span>
                                 </div>
-                                 <div class="client-detailInfo col-md-6 col-sm-12 col-xs-12">
+                                <div class="client-detailInfo col-md-6 col-sm-12 col-xs-12">
                                     <label class="editlabel">{{$t('static.inquiry_state')}}：</label>
                                     <span v-if="initIntlIntentionDetail.inquire==0">{{$t('static.initial')}}</span>
                                     <span v-if="initIntlIntentionDetail.inquire==1">{{$t('static.inquiry')}}</span>
                                     <span v-if="initIntlIntentionDetail.inquire==2">{{$t('static.quotation')}}</span>
                                     <span v-if="initIntlIntentionDetail.inquire==3">{{$t('static.quo_complete')}}</span>
+                                </div>
+                                <div class="client-detailInfo col-md-6 col-sm-12 col-xs-12">
+                                    <label class="editlabel">{{$t('static.packaging')}}：</label>
+                                    <span>{{initIntlIntentionDetail.pack}}</span>
+                                </div>
+                                <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6">
+                                    <label class="editlabel">目的港口：</label>
+                                    <span>{{initIntlIntentionDetail.port}}</span>
                                 </div>
                             </div>
                         </div>

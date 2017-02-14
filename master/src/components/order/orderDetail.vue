@@ -1,4 +1,5 @@
 <template>
+  <div>
     <tracking-model :param="trackingParam" v-if="trackingParam.show"></tracking-model>
     <credence-model :param="credenceParam" v-if="credenceParam.show"></credence-model>
     <dispose-model :param="disposeParam" v-if="disposeParam.show"></dispose-model>
@@ -7,8 +8,8 @@
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <audit-model :param="auditParam" v-if="auditParam.show"></audit-model>
     <apply-model :param="applyDetails" v-if="applyDetails.show"></apply-model>
-
-    <shadow-model :param="param">
+    <delete-model :param="deleteParam" v-if="deleteParam.show"></delete-model>
+    <shadow-model :param="param" >
         <div class="cover_loading">
              <pulse-loader :loading="param.loading" :color="color" :size="size"></pulse-loader>
         </div>
@@ -31,8 +32,22 @@
                           <div class="panel panel-default" style="border:none">
                               <ul class="clearfix" style="font-size: 14px;padding:5px 0">
                                   <mg-label :title="$t('static.order_no')">{{initOrderDetail.no}}</mg-label>
-                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1">{{$t('static.sell')}}</mg-label>
-                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0">{{$t('static.purchase')}}</mg-label>
+                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link==''">{{$t('static.sell')}}</mg-label>
+                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==1&&initOrderDetail.link!==''">{{$t('static.sell')}}<a slot="" @click="linkDetail({
+                                    show:true,
+                                    id:initOrderDetail.link,
+                                    loading:true,
+                                    key:'orderDetail',
+                                    contact:'/order/myList'
+                                    })">（采购订单详情）</a></mg-label>
+                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link==''">{{$t('static.purchase')}}</mg-label>
+                                  <mg-label :title="$t('static.order_type')" v-if="initOrderDetail.type==0&&initOrderDetail.link!==''">{{$t('static.purchase')}}<a slot="" @click="linkDetail({
+                                    show:true,
+                                    id:initOrderDetail.link,
+                                    loading:true,
+                                    key:'orderDetail',
+                                    contact:'/order/myList'
+                                    })">（销售订单详情）</a></mg-label>
                                   <mg-label :title="$t('static.breed')">{{initOrderDetail.goodsDesc}}</mg-label>
                                   <mg-label :title="$t('static.consignee_name')">{{initOrderDetail.consignee}}</mg-label>
                                   <mg-label :title="$t('static.consignee_phone')">{{initOrderDetail.consigneePhone}}</mg-label>
@@ -142,7 +157,6 @@
                                       <table class="table  contactSet">
                                         <thead>
                                           <th>分期类型</th>
-<!--                                           <th>分期期数</th> -->
                                           <th colspan="6">分期说明</th>
                                           <!-- <th>付款比例</th> -->
                                          <!--  <th>分期支付时间</th> -->
@@ -158,7 +172,7 @@
                                               <td v-if="item.type==1">收款</td>
                                               <td colspan="6" v-if="item.extra==0">{{item.orderStatus | orderDescript}}立即支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
                                               <td colspan="6" v-if="item.extra!==0">{{item.orderStatus | orderDescript}}的{{item.extra}}天内支付{{item.amount}}元（合同金额的{{item.ratio | advanced}}）</td>
-                                              <td>{{item.description}}</td>
+                                              <td>{{item.comment}}</td>
                                               <td v-if="item.validate==0" style="color:#91a0ff;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,
@@ -168,7 +182,7 @@
                                                   bizId:item.orderId,
                                                   bizSubId:item.id,
                                                   url:'/fund/requestRecord'
-                                                  })">{{$t('static.wait_approval')}}</td>
+                                                  })">未申请收款/付款</td>
                                               <td v-if="item.validate==1"  style="color:#91a0ff;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,
@@ -178,7 +192,7 @@
                                                   bizId:item.orderId,
                                                   bizSubId:item.id,
                                                   url:'/fund/requestRecord'
-                                                  })">{{$t('static.applied')}}</td>
+                                                  })">申请收款/付款中</td>
                                               <td v-if="item.validate==2" style="color:green;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,
@@ -188,7 +202,7 @@
                                                   bizId:item.orderId,
                                                   bizSubId:item.id,
                                                   url:'/fund/requestRecord'
-                                                  })">{{$t('static.approved')}}</td>
+                                                  })">已收款/付款</td>
                                               <td v-if="item.validate==3" style="color:red;cursor:pointer" @click="apply_Record({
                                                   sub:$index,
                                                   show:true,
@@ -211,6 +225,7 @@
                                                           type:item.type,
                                                           payWay:'',
                                                           payName:'',
+                                                          currency:initOrderDetail.currency,
                                                           paySubName:'',
                                                           payUserName:'',
                                                           extra:item.extra,
@@ -226,7 +241,7 @@
                                                       })"> 
                                                   <img src="/static/images/apply.png"  style="width:47px" />
                                                   </a>
-                                                  <a class="operate" v-if="item.type==0&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
+                                                  <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;"  v-if="item.type==0&&item.validate==0&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                           show:true,
                                                           sub:$index,
                                                           bizId:item.orderId,
@@ -236,6 +251,7 @@
                                                           payWay:'',
                                                           payName:'',
                                                           paySubName:'',
+                                                          currency:initOrderDetail.currency,
                                                           payUserName:'',
                                                           payNumber:'',
                                                           comment:'',
@@ -246,8 +262,7 @@
                                                           url:'/fund/createByOrderStages',
                                                           titles:'申请支付',
                                                           link:paymentAudit
-                                                      })"> 
-                                                  <img src="/static/images/payorder.png"  style="width:38px" />
+                                                        })">申请付款</button>
                                                   </a>
                                                   <button class="btn btn-warning" style="font-size: 12px;background: #fff;color: #eea236;padding: 3px;" v-if="item.type==0&&item.validate==3&&(initOrderDetail.orderStatus==30||initOrderDetail.orderStatus==item.orderStatus)" @click="applyInfo({
                                                           show:true,
@@ -259,14 +274,12 @@
                                                           type:item.type,
                                                           validate:item.validate,
                                                           payWay:'',
+                                                          currency:1,
                                                           payName:'',
                                                           paySubName:'',
                                                           payUserName:'',
                                                           payNumber:'',
                                                           comment:'',
-                                                          image_f:'',
-                                                          image_s:'',
-                                                          image_t:'',
                                                           images:'',
                                                           url:'/fund/createByOrderStages',
                                                           titles:'重新申请支付',
@@ -279,6 +292,7 @@
                                                           bizSubId:item.id,
                                                           loading:false,
                                                           cur:1,
+                                                          currency:1,
                                                           type:item.type,
                                                           validate:item.validate,
                                                           payWay:'',
@@ -342,6 +356,7 @@
                                           <th>{{$t('static.file_path')}}</th>
                                           <th>{{$t('static.description')}}</th>
                                           <th>{{$t('static.create_time')}}</th>
+                                          <th v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2"></th>
                                         </thead>
                                         <tbody>
                                           <tr v-for="item in initOrderDetail.contractList.arr">
@@ -353,6 +368,19 @@
                                               </td>
                                               <td>{{item.description}}</td>
                                               <td>{{item.ctime}}</td>
+                                              <td v-if="initOrderDetail.validate==0||initOrderDetail.validate==-2">
+                                                <button class="btn btn-default" @click="deleteCompact({
+                                                    id:item.id,
+                                                    sub:$index,
+                                                    show:true,
+                                                    name:'合同凭证',
+                                                    title:'合同凭证',
+                                                    link:specDel,
+                                                    url:'/customer/file/',
+                                                    key:'contractList',
+                                                    headline:'orderDetail'
+                                                  })">删除</button>
+                                              </td>
                                           </tr>
                                        </tbody>
                                     </table>
@@ -430,6 +458,7 @@
                                           description:'',
                                           fileType:'image',
                                           bizType:'attach_files',
+                                          files:'',
                                           attachFiles:'',
                                           titles:'上传附件凭证'
                                           })" v-if="initOrderDetail.attachFiles.arr.length!==null&&param.contact=='/order/myList'">{{$t('static.new')}}</button>
@@ -520,6 +549,7 @@
           </div>
         </section>
     </shadow-model>
+  </div>
   <!-- <div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog" @click="param.show=false"></div>
   <div class="container modal_con" v-show="param.show" >
       <div class="top-title">
@@ -540,6 +570,7 @@ import auditModel from './second_order/orderAudit'
 import applyModel from './second_order/applyDetaillist'
 import mgLabel from '../mguan/mgLabel.vue'
 import shadowModel from '../mguan/shadow.vue'
+import deleteModel from '../../components/serviceBaselist/breedDetailDialog/deleteBreedDetail'
 import {
   initOrderDetail,
   initMyFundList
@@ -549,7 +580,8 @@ import {
   uploadDocument,
   dividedPayment,
   paymentAudit,
-  getMyFundList
+  getMyFundList,
+  specDel
 } from '../../vuex/actions'
 export default {
     components: {
@@ -563,7 +595,8 @@ export default {
       auditModel,
       applyModel,
       mgLabel,
-      shadowModel
+      shadowModel,
+      deleteModel
     },
     props:['param'],
     data(){
@@ -621,6 +654,9 @@ export default {
         },
         applyDetails:{
             show:false
+        },
+        deleteParam:{
+          show:false
         }
       }
     },
@@ -634,7 +670,8 @@ export default {
         uploadDocument,
         dividedPayment,
         paymentAudit,
-        getMyFundList
+        getMyFundList,
+        specDel
       }
     },
     methods:{
@@ -660,6 +697,8 @@ export default {
                         item.payWay = this.initMyFundList[0].payWay;
                         item.paySubName = this.initMyFundList[0].paySubName;
                         item.images = this.initMyFundList[0].images;
+                        item.currency = this.initMyFundList[0].currency;
+                        item.comment = this.initMyFundList[0].comment;
                         this.auditParam.show=true;
                         /* item.amount = this.initMyFundList[this.initMyFundList.length-1].amount;
                         item.payName = this.initMyFundList[this.initMyFundList.length-1].payName;
@@ -677,12 +716,16 @@ export default {
                 }
                 
           },
+          deleteCompact:function(item){
+            this.deleteParam = item;
+            this.deleteParam.show=true;
+          },
           apply_Record:function(item){
              this.applyDetails.show=true;
              this.applyDetails = item;
           },
           divided_payments:function(id,total,stages){
-            console.log(stages)
+              console.log(stages)
               console.log(this.initOrderDetail)
               this.divideParam.show = true;
               this.divideParam.id = id;
@@ -697,6 +740,10 @@ export default {
                 item.index = index;
                 this.trackingParam = item;
                 this.trackingParam.show = true;
+          },
+          linkDetail:function(detail){ //关联采购详情
+            this.param.id = detail.id;
+            this.getOrderDetail(this.param);
           },
          createcredence:function(initOrderDetail){
             console.log(initOrderDetail)
@@ -792,7 +839,7 @@ section article {
 }
 
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
-  text-align: left;
+  text-align: center;
 }
 .edit-detail {
     border: 1px solid #ddd;

@@ -111,7 +111,6 @@ const mutations = {
         state.orgFundlist = data;
     },
     [ADD_SAMPLE](state,data){
-        console.log(data)
         state.mySampleList.unshift({  //新建寄样申请表
            'customerName':data.customerName,
            'customerPhone':data.customerPhone,
@@ -135,7 +134,6 @@ const mutations = {
         })
     },
     [UPDATE_SAMPLE](state, data) { //修改寄样申请表
-        console.log(data)
         for(var key in data){
             state.mySampleList[data.index][key] = data[key];
         }   
@@ -147,7 +145,6 @@ const mutations = {
         state[data.key].splice(data.sub, 1);
     },
     [APPLY_DATA](state,data){ //审核寄样申请
-        console.log(data)
         if(data.url=='/sample/validate/'){
           for (var key in data) {
                 console.log(state.orgSampleList[data.sub])
@@ -167,7 +164,6 @@ const mutations = {
       state.fundDetail = data;
     },
     [FINANCE_LIST](state,data){
-      console.log(data)
         if(data.titles=='分期审核'||data.titles=='确认收款'||data.titles=='确认付款'){
             state.financeList[data.sub].validate =  data.validate;
             state.financeList[data.sub].pr =  data.pr;
@@ -177,7 +173,6 @@ const mutations = {
         }
     },
     [REQUEST_RECORD](state,data){
-      console.log(data)
       state.recordList = data;
     },
     [ITEM_SUPPLIER_LIST](state,data){
@@ -190,8 +185,7 @@ const mutations = {
       state.bankBranchList = data;
     },
     [CONTRACT_LIST](state,data){  //补充合同列表
-      console.log(data)
-      console.log(data.url)
+      
       if(data.link=='/order/contract/list/employee'){
          state.myContractList = data;
       }else if(data.link=='/order/contract/list/org'){
@@ -214,7 +208,7 @@ const mutations = {
       }
     },
     [AFTER_SALES](state,data){
-      console.log(data)
+    
       if(data.link=='/order/after/sales/list/employee'){
          state.mySalesList = data;
       }else if(data.link=='/order/after/sales/list/org'){

@@ -41,10 +41,11 @@ Vue.filter('bizType', function(val){
 	}
 });
 
-Vue.filter('assess', function(val,type,logistic,name){ //订单状态判断
+Vue.filter('assess', function(val,type,logistic,name,taskKey){ //订单状态判断
 	var val = val;
 	var type = type;
 	var logistic = logistic;
+	var taskKey = taskKey;
 	var name = name;
 	if(name==null){
 		name='';
@@ -52,7 +53,7 @@ Vue.filter('assess', function(val,type,logistic,name){ //订单状态判断
 		name=name;
 	}
 	if(val==60&&type==1&&logistic==2){
-		 return '已重新发货（仓库审核）';
+		 return '已发货（仓库审核）';
 	}else if(val==60&&type==1&&logistic==3){
 		return '等待检验'
 	}else if(val==60&&type==1&&logistic==40){
@@ -62,9 +63,7 @@ Vue.filter('assess', function(val,type,logistic,name){ //订单状态判断
 	}else if(val==60&&type==1&&logistic==60){
 		return '已完成订单（售后处理中）'
 	}else if(val==60&&type==0){
-		return '已完成订单'
-	}else if(val==60&&type==0){
-		return '已完成订单'
+		return '质量检验'
 	}else if(val==70){
 		return '已完成订单'
 	}else if(val==0){
@@ -75,8 +74,12 @@ Vue.filter('assess', function(val,type,logistic,name){ //订单状态判断
 		return '等待支付'
 	}else if(val==30){
 		return '等待审核'
-	}else if(val==40){
+	}else if(val==40&&taskKey=='order_send_warehouse_validate'){
 		return '等待'+name+'发货'
+	}else if(val==40&&taskKey=='order_send_governor_validate'){
+		return '等待'+name+'审核'
+	}else if(val==40&&(taskKey!=='order_send_governor_validate'||taskKey=='order_send_governor_validate')){
+		return '等待发货'
 	}else if(val==50){
 		return '等待收货'
 	}else if(val==-1){
@@ -87,11 +90,12 @@ Vue.filter('assess', function(val,type,logistic,name){ //订单状态判断
 		return '';
 	}
 });
-Vue.filter('Enassess', function(val,type,logistic,name){ //订单状态判断英文展示
+Vue.filter('Enassess', function(val,type,logistic,name,taskKey){ //订单状态判断英文展示
 	var val = val;
 	var type = type;
 	var logistic = logistic;
 	var name = name;
+	var taskKey = taskKey;
 	if(name==null){
 		name='';
 	}else{
@@ -119,8 +123,12 @@ Vue.filter('Enassess', function(val,type,logistic,name){ //订单状态判断英
 		return 'Processing with payment'
 	}else if(val==30){
 		return 'Bulk order phas'
-	}else if(val==40){
+	}else if(val==40&&taskKey=='order_send_warehouse_validate'){
 		return 'Payment received'+name
+	}else if(val==40&&taskKey=='order_send_governor_validate'){
+		return 'Bulk order phas'+name
+	}else if(val==40&&(taskKey!=='order_send_governor_validate'||taskKey=='order_send_governor_validate')){
+		return 'Bulk order phas'
 	}else if(val==50){
 		return 'Follow up order'
 	}else if(val==-1){
@@ -620,7 +628,23 @@ Vue.filter('date',function(val){      //将时间的时分秒去掉
 })
 Vue.filter('dateTime',function(val){      //将时间的时分秒去掉
 	var val = val;
-	val = new Date(parseInt(val)).toLocaleString().substr(0,20);
+	var now = new Date();
+  	var  year=now.getFullYear();     
+  	var  month=now.getMonth()+1;     
+  	var  date=now.getDate();     
+  	var  hour=now.getHours();     
+  	var  minute=now.getMinutes();     
+  	var  second=now.getSeconds();  
+  	if(month < 10){
+  		month = '0'+month;
+  	} 
+  	if(date < 10){
+  		date = '0'+date;
+  	}  
+	return val =  year+"-"+month+"-"+date+"   "+hour+":"+minute+":"+second;     
+	  
+	/*val = new Date(parseInt(val)).toLocaleString().substr(0,20);*/
+	/*val= new Date(parseInt(val) * 1000).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");*/
 	return val;
 })
 
@@ -673,13 +697,13 @@ Vue.filter('Auditing',function(val){     //订单审核
 	}else if(val==0){
 		 return '初始状态';
 	}else if(val==1){
-		 return '申请审核';
+		 return '申请审核中';
 	}else if(val==2){
 		 return '审核通过';
 	}else if(val==-2){
 		 return '审核未通过';
 	}else if(val==-1){
-		 return '取消申请';
+		 return '已取消申请';
 	}else{
 		return val;
 	}

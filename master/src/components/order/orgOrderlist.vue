@@ -1,4 +1,5 @@
-  <template>
+<template>
+  <div>
     <editorder-model :param="dialogParam" v-if="dialogParam.show"></editorder-model>
     <detail-model :param.sync="detailParam" v-if="detailParam.show"></detail-model>
     <search-model  :param="loadParam" v-if="loadParam.show"></search-model>
@@ -40,6 +41,37 @@
                    </dd>
                 </dl>
                 <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
+                   <dd class="left">
+                      <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                    <div class="left">
+                        <dt class="left transfer marg_top">起止时间：</dt>
+                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+
+                    <div class="left">
+                        <dt class="left marg_top">~~</dt>
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </dl>
+
+              </div>
+            </div>
+            <div class="clear">
+              <div class="right">
+                <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
+                  <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button>
+                 -->
+                  <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+              </div>
+              <div class="left">
+                <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
                    <dd class="left">
                          <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
@@ -48,6 +80,25 @@
                             <option value="2">{{$t('static.three_side')}}</option>
                             <option value="3">{{$t('static.self_support')}}</option>
                         </select>
+                   </dd>
+                </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">审核状态：</dt>
+                   <dd class="left">
+                         <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
+                            <option value="">{{$t('static.please_select')}}</option>
+                            <option value="0">未审核</option>
+                            <option value="1">待审核</option>
+                            <option value="2">审核通过</option>
+                            <option value="-2">审核未通过</option>
+                        </select>
+                   </dd>
+                </dl>
+                
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
+                   <dd class="left">
+                      <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
                    </dd>
                 </dl>
 
@@ -60,50 +111,16 @@
                 </dl>
 
                 <dl class="clear left transfer">
-                    <div class="col-xs-6">
-                        <dt class="left transfer marg_top">起始时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </dl>
-              </div>
-            </div>
-            <div class="clear">
-              <div class="right">
-                <!-- <button class="new_btn transfer" @click="createSearch()">{{$t('static.search')}}</button> -->
-                  <!-- <button class="btn btn-default transfer" @click="orgCheck()">{{$t('static.review')}}</button>
-                 -->
-                  <button class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-              </div>
-              <div class="left">
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">{{$t('static.consignee_name')}}：</dt>
-                   <dd class="left">
-                      <input type="text"  class="form-control" v-model="loadParam.consignee"  @keyup.enter="selectSearch()"/>
-                   </dd>
-                </dl>
-                <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">{{$t('static.consignee_phone')}}：</dt>
-                   <dd class="left">
-                      <input type="text"  class="form-control" v-model="loadParam.consigneePhone"  @keyup.enter="selectSearch()"/>
-                   </dd>
-                </dl>
-                <dl class="clear left transfer">
                     <dt class="left transfer marg_top">{{$t('static.breed')}}：</dt>
                     <dd class="left">
                           <input type="text" class="form-control" v-model="loadParam.breedName" readonly="true" @click="breedSearch()" />
                     </dd>
                 </dl>
 
-                <dl class="clear left" style="margin-left:-20px;">
-                    <div class="col-xs-6">
-                        <dt class="left transfer marg_top">结束时间：</dt>
-                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
-                        </mz-datepicker>
-                    </div>
-                </dl>
-                <button type="button" class="new_btn"  @click="resetTime()">{{$t('static.clear_all')}}</button>
                 <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
+
+                <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+                
                 <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
               </div>  
             </div>
@@ -128,7 +145,7 @@
                       <th>{{$t('static.transcation_amount')}}</th>
                       <th>{{$t('static.wait_payment')}}</th>
                       <th>{{$t('static.paid')}}</th>
-                      <!-- <th>{{$t('static.supplier_name')}}</th> -->
+                      <th>{{$t('static.currency')}}</th>
                       <th>{{$t('static.salesman')}}</th>
                       <th>{{$t('static.consignee_name')}}</th>
                       <th>{{$t('static.consignee_phone')}}</th>
@@ -165,6 +182,7 @@
                     <td>{{item.total}}</td>
                     <td>{{item.unpaid}}</td>
                     <td>{{item.prepaid}}</td>
+                    <td>{{item.currency | Currency}}</td>
                     <td>{{item.employeeName}}</td>
                     <td>{{item.consignee}}</td>
                     <td>{{item.consigneePhone}}</td>
@@ -175,8 +193,8 @@
                     <td v-if="item.payWay==3">{{$t('static.yaokuan')}}</td>
                     <td v-if="item.payWay==4">WeChat</td>
                     <td v-if="item.payWay!=0&&item.payWay!=1&&item.payWay!=2&&item.payWay!=3&&item.payWay!=4">{{$t('static.none')}}</td> -->
-                    <td v-if="this.language=='zh_CN'">{{item.orderStatus | assess item.type item.logistics item.verifierName}}</td>
-                    <td v-if="this.language=='en'">{{item.orderStatus | Enassess item.type item.logistics item.verifierName}}</td>
+                    <td v-if="this.language=='zh_CN'">{{item.orderStatus | assess item.type item.logistics item.verifierName item.taskKey}}</td>
+                    <td v-if="this.language=='en'">{{item.orderStatus | Enassess item.type item.logistics item.verifierName item.taskKey}}</td>
                     <!-- <td v-if="item.orderStatus==0">{{$t('static.create_order')}}</td>
                     <td v-if="item.orderStatus==10">{{$t('static.order_procing')}}</td>
                     <td v-if="item.orderStatus==20">{{$t('static.waiting_order')}}</td>
@@ -293,8 +311,8 @@
         <span style="margin-left:1%;">特惠总金额：{{initOrgOrderStatis.preferentialSum  | money}}元</span>
         <span style="margin-left:1%;">杂费总金额：{{initOrgOrderStatis.incidentalsSum | money}}元</span>
       </div>
-    
-  </template>
+  </div>  
+</template>
   <script>
     import pagination from '../pagination'
     import editorderModel from '../order/orderInformationDialog'
@@ -373,6 +391,7 @@
                     ctime:'',
                     ftime:'',
                     mode:'',
+                    validate:'',
                     total:0
                 },
                 language:'',
@@ -468,6 +487,9 @@
                 if(this.loadParam.endTime){
                   url  +=  "&endTime=" + this.loadParam.endTime;
                 }
+                if(this.loadParam.validate){
+                  url  +=  "&validate=" + this.loadParam.validate;
+                }
                 return url;
             }
         },
@@ -492,16 +514,6 @@
             changeMenu(this.$store.state.table.isTop,this.getOrgOrder,this.loadParam,localStorage.orgOrderParam); 
             changeMenu(this.$store.state.table.isTop,this.getOrderStatistical,this.loadParam,localStorage.orgOrderParam); 
             this.language = localStorage.lang;
-            
-            /*if(!this.$store.state.table.isTop){
-                console.log("刷新数据");
-                this.getOrgOrder(this.loadParam);
-            }else{
-                console.log("不刷新数据");
-                this.loadParam = JSON.parse(localStorage.orgOrderParam);
-                this.$store.state.table.basicBaseList.orderList = JSON.parse(localStorage.orgOrderList);
-            }
-            */
         },
         methods: {
             selectSearch:function(){
@@ -530,6 +542,7 @@
               this.loadParam.dataStatus="";
               this.loadParam.no="";
               this.loadParam.mode="";
+              this.loadParam.validate="";
               this.loadParam.type="";
               this.loadParam.clients="";
               this.loadParam.payWay="";
@@ -589,32 +602,31 @@
                 this.orderOrgAudit(this.auditParam);
             },
             onlyselected: function(index){
-                  const _self=this;
-                    this.$store.state.table.basicBaseList.orgOrderList[index].checked=!this.$store.state.table.basicBaseList.orgOrderList[index].checked;
-                    if(_self.checked){
-                      _self.checked=false;
-                    }else {
-                      _self.checked=true;
-                      this.$store.state.table.basicBaseList.orgOrderList.forEach(function (item) {
-                        if(!item.checked){
-                          if(item.validate==1){
-                            _self.checked=item.checked;
-                            _self.validate = item.validate;
-                          }
+                const _self=this;
+                  this.$store.state.table.basicBaseList.orgOrderList[index].checked=!this.$store.state.table.basicBaseList.orgOrderList[index].checked;
+                  if(_self.checked){
+                    _self.checked=false;
+                  }else {
+                    _self.checked=true;
+                    this.$store.state.table.basicBaseList.orgOrderList.forEach(function (item) {
+                      if(!item.checked){
+                        if(item.validate==1){
+                          _self.checked=item.checked;
+                          _self.validate = item.validate;
                         }
-                      })
-                    }
+                      }
+                    })
+                  }
             },
             select:function(){
-                  this.checked=!this.checked;
-                  const checked=this.checked;
-                  this.$store.state.table.basicBaseList.orgOrderList.forEach(function(item){
-                    if(item.validate==1)item.checked=checked;
-                  })
-
+                this.checked=!this.checked;
+                const checked=this.checked;
+                this.$store.state.table.basicBaseList.orgOrderList.forEach(function(item){
+                  if(item.validate==1)item.checked=checked;
+                })
             },
             newOrder:function(param){
-                 this.dialogParam=param;
+                this.dialogParam=param;
             },
             createSearch:function(){
                  this.loadParam.show=true;
@@ -627,8 +639,7 @@
             updateOrder:function(param){
                 
                 this.dialogParam=param;
-            },
-
+            }
         },
         filter:(filter,{}),
         ready(){
@@ -659,28 +670,6 @@
     }
     .order_search {
         padding: 35px 10px 0 10px;
-    }
-    .checkbox_unselect{
-        background-image: url(/static/images/unselect.png);
-        display: inline-block;
-        background-repeat: no-repeat;
-        width: 24px;
-        height: 24px;
-        background-size: 80%;
-        margin: auto;
-        text-align: center;
-        background-position: 5px;
-    }
-    .checkbox_select{
-        background-image: url(/static/images/selected.png);
-        display: inline-block;
-        background-repeat: no-repeat;
-        width: 24px;
-        height: 24px;
-        background-size: 80%;
-        margin: auto;
-        text-align: center;
-        background-position: 5px;
     }
     .transfer{
         margin-right: 15px;
@@ -716,9 +705,9 @@
     .order_table .table > ul >li img {
         margin: auto;
     }
-
-    .v-spinner {
-        text-align: center;
+    #table_box table th,#table_box table td{
+      width: 95px;
+      min-width: 94px;
     }
     .base_pagination{
         position: fixed;

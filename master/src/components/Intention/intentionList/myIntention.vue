@@ -1,14 +1,14 @@
 <template>
-    <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
+    <chancedetail-model :param="chanceParam" v-if="chanceParam.show"></chancedetail-model>
     <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
     <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
     <tipsdialog-model :param="tipsParam" v-if="tipsParam.show"></tipsdialog-model>
     <deletebreed-model :param="deleteParam" v-if="deleteParam.show"></deletebreed-model>
     <createintent-model :param="createParam" v-if="createParam.show"></createintent-model>
     <supdem-model :param="supdemParam" v-if="supdemParam.show"></supdem-model>
-    <search-model :param.sync="loadParam" v-if="loadParam.show"></search-model>
+    <search-model :param="loadParam" v-if="loadParam.show"></search-model>
     <breedsearch-model :param="breedSearchParam" v-if="breedSearchParam.show"></breedsearch-model>
-    <audit-dialog :param.sync="auditParam" v-if="auditParam.show"></audit-dialog>
+    <audit-dialog :param="auditParam" v-if="auditParam.show"></audit-dialog>
     <createorder-model :param="createOrderParam" v-if="createOrderParam.show"></createorder-model>
     <sendapply-model :param="sampleOrderParam" v-if="sampleOrderParam.send"></sendapply-model>
 
@@ -17,14 +17,14 @@
         <div slot="top">
             <div class="clear" style="margin-top:3px;">
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top" style="letter-spacing:3px">客户名：{{height}}</dt>
+                   <dt class="left transfer marg_top">客户名：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerName" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
                 </dl>
 
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top" style="letter-spacing:3px" >客户手机：</dt>
+                   <dt class="left transfer marg_top">客户手机：</dt>
                    <dd class="left">
                         <input type="text" class="form-control" v-model="loadParam.customerPhone" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
                    </dd>
@@ -197,7 +197,7 @@
                             <span v-if="item.especial==1&&item.type==0">紧急求购</span>
                             <span v-if="item.especial==1&&item.type==1">低价资源</span>
                         </td>
-                        <td>{{item.ctime | date}}</td>
+                        <td>{{item.ctime}}</td>
                         <td class="underline" @click.stop="detailClick({
                                 id:item.id,
                                 sub:$index,
@@ -293,6 +293,7 @@
                                                link:editintentInfo,
                                                url:'/intention/',
                                                key:'myIntentionList',
+                                               images:item.pics,
                                                image_f:'',
                                                image_s:'',
                                                image_t:'',
@@ -774,6 +775,7 @@ export default {
             this.createParam.callback = this.modifyback;
         },
         modifyback:function(title){
+            this.getIntentionList(this.loadParam);
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
@@ -783,6 +785,7 @@ export default {
             this.createParam.callback = this.createback;
         },
         createback:function(title){
+            this.getIntentionList(this.loadParam);
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
@@ -801,7 +804,7 @@ export default {
           this.batchUserIntentionAudit(this.auditParam);
         },
         selectSearch:function(){
-          this.getIntentionList(this.loadParam)
+          this.getIntentionList(this.loadParam);
         },
         sengSample:function(item,sub){
            this.sampleOrderParam.send = true;

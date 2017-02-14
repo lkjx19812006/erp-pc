@@ -203,9 +203,6 @@ export default{
 .trans_service .col-xs-8{
 	margin-bottom: 20px;
 }
-.table{
-	margin-bottom: 5px;
-}
 .table_head>thead>tr{
 	background-color: #f5f5f5;
 	color: #333;
@@ -213,6 +210,7 @@ export default{
 }
 .base_pagination{
 	margin-top: 0;
+	position: relative;
 }
 table{
 	display: table;

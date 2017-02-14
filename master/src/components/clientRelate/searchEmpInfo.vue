@@ -1,4 +1,5 @@
 <template>
+<div>
 	<div v-show="param.show"  class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <selectorg-model :param="selectOrgParam" v-if="selectOrgParam.show"></selectorg-model>
 	<div class="container modal_con" v-show="param.show">
@@ -75,6 +76,7 @@
 	        </div>
 	    </div>
 	</div>
+</div>
 </template>
 <script>
 import pagination from '../pagination'
@@ -101,7 +103,8 @@ export default{
                 total:0,
                 name:'',
                 mobile:'',
-                orgId:''
+                orgId:'',
+                leave:1
             },
             selectOrgParam:{
                 show:false,

@@ -130,11 +130,13 @@ export const BATCH_USER_INTENTION_AUDIT = 'BATCH_USER_INTENTION_AUDIT'  //批量
 export const USER_DETAIL_DATA = 'USER_DETAIL_DATA'   //会员详情
 
 export const ORG_DATA = 'ORG_DATA'    //部门列表
+export const ORG_DETAIL = 'ORG_DETAIL'    //部门详情页面
 export const ROLE_DATA = 'ROLE_DATA'    //角色列表
 
 export const EMPLOYEE_DATA ='EMPLOYEE_DATA'  //员工（业务员）列表数据
 export const ADD_EMPLOYEE_DATA = 'ADD_EMPLOYEE_DATA'  //新增员工信息
 export const UPDATE_EMPLOY_DATA ='UPDATE_EMPLOY_DATA' //修改员工信息
+export const EMPLOYEE_DETAIL = 'EMPLOYEE_DETAIL' //员工详情
 
 export const IDENTIFY_DATA ='IDENTIFY_DATA' //认证信息
 

@@ -31,9 +31,9 @@
                    </dd>
                 </dl>
 
-                <dl class="clear left transfer" style="width:338px">
+                <dl class="clear left transfer" style="width:330px">
                    <dt class="left transfer marg_top">{{$t("static.client_type")}}：</dt>
-                   <dd class="left" style="width:50%;">
+                   <dd class="left" style="width:60%;">
                       <select v-model="loadParam.type"   class="form-control" @change="selectSearch()">
                             <option value="">{{$t("static.please_select")}}</option>
                             <option value="0">Others 其它</option>
@@ -181,6 +181,7 @@
                         <th>{{$t('static.contact')}}</th>
                         <th>{{$t('static.position')}}</th>
                         <th>{{$t('static.cellphone')}}</th>
+                        <th>{{$t('static.telephone')}}</th>
                         <th>{{$t('static.phone_origin')}}</th>
                         <th>{{$t('static.client_origin')}}</th>
                         <th>{{$t('static.detailed_address')}}</th>
@@ -199,6 +200,7 @@
                     <th colspan="14"></th>
                     <th  v-if="this.initLogin.orgId==29"></th>
                     <th  v-if="this.initLogin.orgId==29"></th>
+                    <th  v-if="this.initLogin.orgId==29"></th>
                 </tr>
                 <tbody>
                     <tr>
@@ -208,7 +210,6 @@
                         <td  @click.stop="">
                             <label  class="checkbox_unselect" v-bind:class="{'checkbox_unselect':!item.checked,'checkbox_select':item.checked}"   @click="onlyselected($index,item.id)" ></label>
                         </td>
-                        
                         <td>{{item.employeeName}}</td>
                         <td>{{item.ctime}}</td>
                         <td>{{item.lastOrderTime}}</td>
@@ -228,6 +229,7 @@
                         <td>{{item.mainContact}}</td>
                         <td>{{item.mainPosition}}</td>
                         <td>{{item.mainPhone}}</td>
+                        <td>{{item.tel}}</td>
                         <td>{{item.phoneProvince}}{{item.phoneCity}}</td>
                         <td>{{item.provinceName}}{{item.cityName}}</td>
                         <td>{{item.address}}</td>
@@ -247,6 +249,7 @@
                                     principal:item.principal,
                                     bizScope:item.bizScope,
                                     mainPhone:item.mainPhone,
+                                    tel:item.tel,
                                     email:item.email,
                                     country:item.country,
                                     countryName:item.countryName,
@@ -308,7 +311,8 @@ import {
     alterInfo,
     saveCreate,
     transferInfo,
-    customerTransferBlacklist
+    customerTransferBlacklist,
+    customerAudit
 } from '../../../vuex/actions'
 
 export default {
@@ -340,7 +344,8 @@ export default {
             alterInfo,
             saveCreate,
             transferInfo,
-            customerTransferBlacklist
+            customerTransferBlacklist,
+            customerAudit
         }
     },
     data() {
@@ -400,9 +405,12 @@ export default {
                 show:false,
                 title:'跟进',
                 tracking:true,
+                link:'/customer/audit',
                 key:'myCustomerList',
                 sub:'',
+                indexs:'',  
                 id:'',
+                ids:'',
                 audit:'',
                 auditComment:'',
                 wait:this.waitTracking,
@@ -452,21 +460,26 @@ export default {
         },
         updateTracking:function(item,index){
             this.updateTrackingParam.sub = index;
+            this.updateTrackingParam.indexs = [index];
             this.updateTrackingParam.id = item.id;
+            this.updateTrackingParam.ids = [item.id];
             this.updateTrackingParam.auditComment = item.auditComment;
             this.updateTrackingParam.show = true;
         },
         waitTracking:function(){
             this.updateTrackingParam.audit = 1;
-            this.alterInfo(this.updateTrackingParam);
+            this.updateTrackingParam.callback = this.trackCallback;
+            this.customerAudit(this.updateTrackingParam);
         },
         passTracking:function(){
             this.updateTrackingParam.audit = 2;
-            this.alterInfo(this.updateTrackingParam);
+            this.updateTrackingParam.callback = this.trackCallback;
+            this.customerAudit(this.updateTrackingParam);
         },
         rejectTracking:function(){
             this.updateTrackingParam.audit = 3;
-            this.alterInfo(this.updateTrackingParam);
+            this.updateTrackingParam.callback = this.trackCallback;
+            this.customerAudit(this.updateTrackingParam);
         },
         trackingback:function(title){
           this.tipsParam.show = true;
@@ -563,7 +576,6 @@ export default {
                 this.auditParam.arr.push(this.initMyCustomerlist[i].id);
               }
             }
-
             if(this.auditParam.arr.length>0){
               this.auditParam.show=true;
               this.auditParam.confirm=true;
@@ -575,26 +587,25 @@ export default {
               this.tipsParam.confirm=false;
             }
         },
-          clientTransferBlack:function(){
-            this.auditParam.title="客户踢入黑名单备注";
-            this.auditParam.arr=[];
-            for(var i in this.initMyCustomerlist){
-              if(this.initMyCustomerlist[i].checked){
-                this.auditParam.arr.push(this.initMyCustomerlist[i].id);
-              }
-            }
-
-            if(this.auditParam.arr.length>0){
-              this.auditParam.show=true;
-              this.auditParam.confirm=true;
-              this.auditParam.callback=this.callback;
-            }else{
-              this.tipsParam.show=true;
-              this.tipsParam.alert=true;
-              this.tipsParam.name='请先选择客户';
-              this.tipsParam.confirm=false;
-            }
-          },
+      clientTransferBlack:function(){
+        this.auditParam.title="客户踢入黑名单备注";
+        this.auditParam.arr=[];
+        for(var i in this.initMyCustomerlist){
+          if(this.initMyCustomerlist[i].checked){
+            this.auditParam.arr.push(this.initMyCustomerlist[i].id);
+          }
+        }
+        if(this.auditParam.arr.length>0){
+          this.auditParam.show=true;
+          this.auditParam.confirm=true;
+          this.auditParam.callback=this.callback;
+        }else{
+          this.tipsParam.show=true;
+          this.tipsParam.alert=true;
+          this.tipsParam.name='请先选择客户';
+          this.tipsParam.confirm=false;
+        }
+      },
       callback:function(){
         this.auditParam.blackComments=this.auditParam.auditComment;
         this.auditParam.customerIds=this.auditParam.arr;
@@ -606,7 +617,13 @@ export default {
         this.tipsParam.show = true;
         this.tipsParam.name=title;
         this.tipsParam.alert=true;
-     },
+      },
+      trackCallback:function(title){
+         this.tipsParam.show = true;
+         this.tipsParam.name=title;
+         this.tipsParam.alert=true;
+         this.getClientList(this.loadParam);
+      },
         checkedAll: function() {
            this.checked=!this.checked;
            if(this.checked){
@@ -644,12 +661,12 @@ export default {
             this.getClientList(this.loadParam);
         },
         selectEmpOrOrg: function (param) {
-        this.transferParam.employeeId = param.employeeId;
-        this.transferParam.employeeName = param.employeeName;
-        this.transferParam.orgId = param.orgId;
-        this.transferParam.orgName = param.orgName;
-        this.transferInfo(this.transferParam);
-      }
+            this.transferParam.employeeId = param.employeeId;
+            this.transferParam.employeeName = param.employeeName;
+            this.transferParam.orgId = param.orgId;
+            this.transferParam.orgName = param.orgName;
+            this.transferInfo(this.transferParam);
+        }
     },
     created() {
         this.getProvinceList(this.provinceParam);

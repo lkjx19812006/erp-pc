@@ -1,4 +1,5 @@
 <template>
+<div>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -34,11 +35,9 @@
                        <label class="editlabel">备注</label>
                        <textarea v-model='param.comment' class="form-control" style="width:100%;overflow:auto;word-break:break-all;resize:none;" rows="5"></textarea>
                     </div>
-                    <div class="editpage-input col-md-12" v-if="param.titles!='审核合同'&&param.titles!='重新申请审核'&&param.titles!='售后审核'&&param.titles!='售后异议处理'&&param.titles!=='确认收货'">
+                    <div class="editpage-input col-md-12" v-if="param.titles!='审核合同'&&param.titles!='重新申请审核'&&param.titles!='售后审核'&&param.titles!='售后异议处理'&&param.titles!=='确认收货'" style="max-height:200px;overflow-y:auto;">
                          <label class="editlabel">支付/收款凭证</label>
-                         <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;width:25%"></press-image>
-                         <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:25%"></press-image>
-                         <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:25%"></press-image>
+                         <press-image :value.sync="param.image_f" :type.sync="type" :param="imageParam"></press-image>
                     </div>
                </section>
             </div>
@@ -73,15 +72,10 @@
             </div>
         </validator>
     </div>
+</div>
 </template>
 <script>
-import pressImage from '../../imagePress'
-import {
-
-} from '../../../vuex/getters'
-import {
-
-} from '../../../vuex/actions'
+import pressImage from '../../tools/upload/imagePressMul.vue'
 export default {
     components: {
         pressImage
@@ -96,12 +90,20 @@ export default {
             }
         }
     },
-    vuex: {
-       getters: {
-
+    events: {
+        getImageData: function(imageData) {
+            var paths = new Array();
+            this.param.path=imageData.result.path;
         },
-        actions: {
-            
+        getFiles: function(files){
+            this.param.images = '';
+            for(let i = 0;i<files.length;i++){
+                if(i==0){
+                    this.param.images = files[0].path;
+                }else{
+                    this.param.images = this.param.images + "," + files[i].path;
+                }
+            }
         }
     },
     methods: {

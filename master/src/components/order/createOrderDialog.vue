@@ -145,11 +145,11 @@
                         </div>
                         <div class="editpage-input col-md-8" v-if="param.type==1">
                             <label class="editlabel">{{$t('static.detailed_address')}} <span class="system_danger" v-if="$validation.addr.required">{{$t('static.enter_address')}}</span></label>
-                            <input type="text" class="form-control edit-input" v-model="param.consigneeAddr"    v-validate:addr="['required']" value="{{param.consigneeAdd}}" />
+                            <input type="text" class="form-control edit-input" style="width:95%" v-model="param.consigneeAddr"    v-validate:addr="['required']" value="{{param.consigneeAdd}}" />
                         </div>
                         <div class="editpage-input col-md-8" v-if="param.type==0">
                             <label class="editlabel">{{$t('static.detailed_address')}}</label>
-                            <input type="text" class="form-control edit-input" v-model="param.consigneeAddr" />
+                            <input type="text" class="form-control edit-input" style="width:95%" v-model="param.consigneeAddr" />
                         </div>
                         <div class="editpage-input col-md-4">
                             <label class="editlabel">{{$t('static.postcodes')}} <span class="system_danger" v-if="$validation.code.postcode">{{$t('static.enter_code')}}</span></label>
@@ -354,7 +354,7 @@
             </div>
             <div class="edit_footer">
               <button type="button" class="btn btn-default btn-close" @click="param.show = false">{{$t('static.cancel')}}</button>
-              <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&$inner.valid&&param.goods.length>0&&param.goods[param.goods.length-1].breedId!=''"  @click="confirm(param)">{{$t('static.confirm')}}</button>
+              <button type="button" class="btn  btn-confirm"  v-if="$validation.valid&&param.goods.length>0&&param.goods[param.goods.length-1].breedId!=''"  @click="confirm(param)">{{$t('static.confirm')}}</button>
               <button type="button" class="btn  btn-confirm" v-else  disabled="true">{{$t('static.confirm')}}</button>
             </div>
         </validator>
@@ -908,6 +908,13 @@ export default {
           this.city.cname=this.param.city;
           this.district.cname=this.param.district;
         }
+        if(this.param.goods.length>0){
+            for(var i=0;i < this.param.goods.length;i++){
+                this.altogether +=parseFloat(this.param.goods[i].number)*parseFloat(this.param.goods[i].price);
+                this.costmoney +=parseFloat(this.param.goods[i].number)*parseFloat(this.param.goods[i].costPrice);
+            }
+            this.supplierParam.supplierName = this.param.customerName;
+        }
     }
 }
 </script>
@@ -917,7 +924,6 @@ export default {
 }
 .modal_con{
   z-index: 1083;
-  top:45px;
 }
 .top-title{
   position: fixed;

@@ -8,16 +8,6 @@
       <div slot="top">
         <div class="clearfix">
           <dl class="clear left">
-             <dt class="left  marg_top">类型：</dt>
-             <dd class="left">
-                  <select class="form-control" v-model="loadParam.type" @change="selectSearch()">
-                      <option value="">{{$t('static.please_select')}}</option>
-                      <option value="0">付款</option>
-                      <option value="1">收款</option>
-                  </select>
-             </dd>
-          </dl>
-          <dl class="clear left transfer">
              <dt class="left  marg_top">支付名称：</dt>
              <dd class="left">
                 <input type="text"  class="form-control" v-model="loadParam.payName"  @keyup.enter="selectSearch()"/>
@@ -43,12 +33,19 @@
           </dl>
         </div>
         <div class="clearfix left">
-          <div class="btn-group ">
+          <div class="btn-group">
               <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===''}" @click="clickday('')">{{$t('static.please_select')}}</button>
               <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.validate===0}" @click="clickday(0)">未审核</button>
               <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.validate===1}" @click="clickday(1)">申请中</button>
               <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.validate===2}" @click="clickday(2)">审核通过</button>
               <button class="btn btn-default"  v-bind:class="{ 'btn-warning':  this.loadParam.validate===3}" @click="clickday(3)">审核未通过</button>
+              <!-- <button type="button" class="new_btn transfer pull-left"  @click="resetTime()">{{$t('static.clear_all')}}</button>
+              <button class="new_btn transfer pull-left" @click="selectSearch()">{{$t('static.search')}}</button> -->
+          </div>
+          <div class="btn-group transfer">
+              <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===''}" @click="clickType('')">{{$t('static.please_select')}}</button>
+              <button class="btn btn-default" v-bind:class="{ 'btn-warning': this.loadParam.type===0}" @click="clickType(0)">付款</button>
+              <button  class="btn btn-default" v-bind:class="{ 'btn-warning':  this.loadParam.type===1}" @click="clickType(1)">收款</button>
               <button type="button" class="new_btn transfer pull-left"  @click="resetTime()">{{$t('static.clear_all')}}</button>
               <button class="new_btn transfer pull-left" @click="selectSearch()">{{$t('static.search')}}</button>
           </div>
@@ -68,6 +65,7 @@
                   <th>日期</th>
                   <th>类型</th>
                   <th>金额</th>
+                  <th>货币类型</th>
                   <th>支付名称</th>
                   <th>业务员</th>
                   <th>用户名</th>
@@ -92,6 +90,7 @@
                   })">{{item.bizType | bizType}}{{item.type | payMent}}</a>
                 </td>
                 <td>{{item.amount}}</td>
+                <td>{{item.currency | Currency}}</td>
                 <td>{{item.payName}}<span v-if="item.paySubName!==''">（{{item.paySubName}}）</span></td>
                 <td>{{item.employeeName}}</td>
                 <td>{{item.payUserName}}</td>
@@ -100,8 +99,8 @@
                 <td>{{item.comment}}</td>
                 <td>{{item.prNo}}</td>
                 <td v-if="item.validate==0">未审核</td>
-                <td v-if="item.validate==1"><div  style="background:#483D8B;color:#fff;">申请中</div></td>
-                <td v-if="item.validate==2"><div  style="background:green;color:#fff;">审核成功</div></td>
+                <td v-if="item.validate==1"><div style="background:#483D8B;color:#fff;">申请收/付款中</div></td>
+                <td v-if="item.validate==2"><div style="background:green;color:#fff;">审核成功</div></td>
                 <td v-if="item.validate==3"><div style="background:red;color:#fff;">审核未通过</div></td>
                 <td v-if="item.pr==0&&item.type==0">未付款</td>
                 <td v-if="item.pr==0&&item.type==1">未收款</td>
@@ -118,8 +117,6 @@
                               prNo:'',
                               description:'',
                               image_f:'',
-                              image_s:'',
-                              image_t:'',
                               images:'',
                               url:'/fund/validate',
                               titles:'确认收款',
@@ -132,29 +129,14 @@
                               validate:item.validate,
                               description:'',
                               image_f:'',
-                              image_s:'',
-                              image_t:'',
                               images:'',
                               url:'/fund/validate',
                               titles:'确认付款',
                               link:paymentAudit
                           })">确认付款</button>
-                 <!--  <a class="operate" v-if="item.validate==1" @click="applyInfo({
-                             show:true,
-                             sub:$index,
-                             id:item.id,
-                             validate:item.validate,
-                             description:'',
-                             image_f:'',
-                             image_s:'',
-                             image_t:'',
-                             images:'',
-                             url:'/fund/validate',
-                             titles:'分期审核',
-                             link:paymentAudit
-                         })"> 
-                     <img src="/static/images/orgcheck.png" />
-                 </a> -->
+                  <a class="operate" v-if="item.pr==0&&item.validate==2">
+                    等待业务员{{item.employeeName}}确认
+                  </a>
                 </td>
               </tr>
             </tbody>
@@ -238,12 +220,17 @@
           this.loadParam.validate = validate;
           this.getFinanceList(this.loadParam);
       },
+      clickType:function(type){
+          this.loadParam.type = type;
+          this.selectSearch();
+      },
       selectSearch:function(){
           this.getFinanceList(this.loadParam);
       },
       resetTime:function(){
         this.loadParam.amount='';
         this.loadParam.type='';
+        this.loadParam.validate='';
         this.loadParam.payName='';
         this.loadParam.payUserName='';
         this.loadParam.payNumber='';
@@ -316,7 +303,7 @@
     background-position: 5px;
   }
    #table_box  table th,#table_box  table td{
-    width:132px;
-    min-width: 132px;
+    width:122px;
+    min-width: 120px;
   }
 </style>
