@@ -293,6 +293,7 @@
                                                link:editintentInfo,
                                                url:'/intention/',
                                                key:'myIntentionList',
+                                               images:item.pics,
                                                image_f:'',
                                                image_s:'',
                                                image_t:'',
@@ -774,6 +775,7 @@ export default {
             this.createParam.callback = this.modifyback;
         },
         modifyback:function(title){
+            this.getIntentionList(this.loadParam);
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
@@ -783,6 +785,7 @@ export default {
             this.createParam.callback = this.createback;
         },
         createback:function(title){
+            this.getIntentionList(this.loadParam);
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
@@ -801,7 +804,7 @@ export default {
           this.batchUserIntentionAudit(this.auditParam);
         },
         selectSearch:function(){
-          this.getIntentionList(this.loadParam)
+          this.getIntentionList(this.loadParam);
         },
         sengSample:function(item,sub){
            this.sampleOrderParam.send = true;

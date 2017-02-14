@@ -54,8 +54,8 @@
                    <div class="editpage-input clearfix" style="width:100%">
                      <label class="editlabel">药材图片</label>
                      <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
-                     <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
-                     <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                     <!-- <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
+                     <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image> -->
                    </div>
 
                  <div class="editpage">
@@ -344,7 +344,8 @@ import searchcustomerModel  from '../Intention/clientname'
 import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import tipdialogModel from '../tips/tipDialog'
-import pressImage from '../imagePress'
+/*import pressImage from '../imagePress'*/
+import pressImage from '../tools/upload/imagePressMul'
 import {
     initCountrylist,
     initProvince,
@@ -448,7 +449,8 @@ export default {
           type:"image/jpeg,image/jpg,image/png",
           imageParam:{
             url:'/crm/api/v1/file/',
-            qiniu:false
+            qiniu:false,
+            files:[]
           }
         }
     },
@@ -564,9 +566,35 @@ export default {
             this.param.customerName = customer.customerName;
             this.param.customerId = customer.customerId;
             this.param.customerPhone = customer.customerPhone;
+        },
+        getFiles:function(files){
+          this.param.files = [];
+            for(let i = 0;i<files.length;i++){
+                if(i==0){
+                    this.param.files = files[0].path;
+                }else{
+                    this.param.files = this.param.files + "," + files[i].path;
+                }
+            } 
         }
     },
     created(){
+      this.imageParam.files = [];
+      for(let i=0;i<this.param.images.length;i++){
+        if(i==0){
+            this.param.files = this.param.images[0].path;
+        }else{
+            this.param.files = this.param.files + "," + this.param.images[i].path;
+        }
+        let temp = {
+            imageShow:true,
+            showurl:this.param.images[i].url,
+            path:this.param.images[i].path
+        }
+        this.imageParam.files.push(temp);
+      }
+
+      
       //设置过期时间,7天后
       var date = new Date();
       date.setDate(date.getDate()+7);
@@ -604,6 +632,7 @@ export default {
       }
       this.getCountryList(this.countryParam);
       this.getUnitList();
+
     }
 }
 </script>

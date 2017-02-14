@@ -261,6 +261,7 @@
                                                link:editintentInfo,
                                                url:'/intention/',
                                                key:'unIntentionList',
+                                               images:item.pics,
                                                image_f:'',
                                                image_s:'',
                                                image_t:'',
@@ -615,6 +616,7 @@ export default {
           this.createParam.callback = this.modifyback;
         },
         modifyback:function(title){
+            this.getIntentionList(this.loadParam);
             this.tipsParam.name = title;
             this.tipsParam.alert = true;
             this.tipsParam.show = true;
