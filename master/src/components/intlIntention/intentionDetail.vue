@@ -132,7 +132,10 @@
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.inquires.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td><a class="underline" @click="getInquireInfo(item.id)">{{item.inquireType}}</a></td>
+                                                <td>
+                                                    <a class="underline" v-if="item.inquire==3" @click="getInquireInfo(item.id)">{{item.inquireType}}</a>
+                                                    <span v-else>{{item.inquireType}}</span>
+                                                </td>
                                                 <td>{{item.ctime}}</td>
                                                 <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
                                                 <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.inquiry')}}</td>
@@ -191,7 +194,9 @@
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.items.arr">
-                                                <td><a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a></td>
+                                                <td>
+                                                    <a style="cursor:pointer" @click="getItemHistory(item.id)">{{item.breedName}}</a>
+                                                </td>
                                                 <td>{{item.location}}</td>
                                                 <td>{{item.spec}}</td>
                                                 <td>{{item.quality}}</td>

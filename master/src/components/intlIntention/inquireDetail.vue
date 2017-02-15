@@ -136,7 +136,10 @@
                                       </thead>
                                       <tbody>
                                            <tr v-for="item in initIntlIntentionDetail.inquires.arr">
-                                              <td><a class="underline" @click="getInquireInfo(item.id)">{{item.inquireType}}</a></td>
+                                              <td>
+                                                 <a class="underline" v-if="item.inquire==3" @click="getInquireInfo(item.id)">{{item.inquireType}}</a>
+                                                 <span v-else>{{item.inquireType}}</span>
+                                              </td>
                                               <td>{{item.ctime}}</td>
                                               <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
                                               <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.inquiry')}}</td>
