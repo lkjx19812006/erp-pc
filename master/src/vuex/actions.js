@@ -6008,6 +6008,46 @@ export const baseGetData = ({ dispatch }, param) => { //查询权限
         console.log('fail');
     })
 }
+export const scopedOperate = ({ dispatch }, param) => { //查询权限功能
+    console.log(param)
+    Vue.http({
+        method: 'GET',
+        url: apiUrl.base + '/sys/menu/'+ param.id,
+        emulateHTTP: false,
+        emulateJSON: false,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest",
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then((res) => {
+        console.log(res.json().result)
+        /*const json = {
+            list: res.json(),
+            name: param.keyName,
+            callback: param.getDataInit
+        };
+        if (json.list.result && Object.prototype.toString.call(json.list.result) === '[object Array]') {
+            for (let i in json.list.result) {
+                json.list.result[i].show = false;
+            }
+        } else if (json.list.result.list && Object.prototype.toString.call(json.list.result.list) === '[object Array]') {
+            for (let i in json.list.result.list) {
+                json.list.result.list[i].show = false;
+            }
+        }
+        param.all = json.list.result.pages;
+        param.total = res.json().result.total;
+        console.log(json);
+        dispatch(types.ABSTRACT_GET_DATA, json);
+
+        localStorage.scopeList = JSON.stringify(json);
+        localStorage.scopeParam = JSON.stringify(param);*/
+
+    }, (res) => {
+        param.loading = false;
+        console.log('fail');
+    })
+}
 
 export const baseAddData = ({ dispatch }, param) => { //新增权限
 
