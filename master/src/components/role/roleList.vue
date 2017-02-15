@@ -1,18 +1,20 @@
 <template>
 	<div class="clear">
+		<editscope-model :param="editMenuParam" v-if="editMenuParam.show"></editscope-model>
+		<tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
         <div  style="width:25%;float:left;position:relative;">
           <div class="cover_loading">
               <pulse-loader :loading="loadParam.loading" :color="color" :size="size"></pulse-loader>
           </div>
           <div class="clear operate_menu">
-            <button class="btn btn-default pull-left" @click="addOrg()">添加菜单</button>
-            <button class="btn btn-default pull-right transfer" @click="deleteOrg({
+            <button class="btn btn-default pull-left" @click="addMenu()">添加菜单</button>
+            <button class="btn btn-default pull-right transfer" @click="deleteMenu({
               id:'',
               show:false,
               link:specDel,
               url:'/org/'
               })">删除菜单</button>
-            <button class="btn btn-default pull-right" @click="editOrg()">编辑菜单</button>
+            <button class="btn btn-default pull-right" @click="editMenu()">编辑菜单</button>
           </div>
           <div class="trans_parten clear">
                 <div class="clear">
@@ -49,6 +51,11 @@
 <script>
 /*import mglistModel from '../mguan/mgListComponent'*/
 import treeDialog from '../generalModule/orgComponent'
+import editscopeModel from '../role/editScope'
+import tipsModel from '../tips/tipDialog'
+import {
+	initScopeDetail
+} from '../../vuex/getters.js'
 import {
    baseGetData,
    scopedOperate,
@@ -58,7 +65,9 @@ import {
 export default {
     components: {
        /*mglistModel,*/
-       treeDialog
+       treeDialog,
+       editscopeModel,
+       tipsModel
     },
     props: ['param'],
     data() {
@@ -73,6 +82,21 @@ export default {
                 url:'/sys/menu/',
                 cur:1,
                 keyName:'menu'
+            },
+            tipsParam:{
+            	show:false,
+            	name:'',
+            	alert:true
+            },
+            editMenuParam:{
+            	show:false,
+            	cname:'',
+            	ename:'',
+            	icon:'',
+            	id:'',
+            	pid:'',
+            	type:'',
+            	remark:''
             }
         }
     },
@@ -92,12 +116,41 @@ export default {
         	}
 	        item.show =true; 
 	        this.scopedOperate(item);
+	        console.log(this.initScopeDetail)
 	        console.log(item)
+	    },
+	    addMenu:function(){
+	       this.editMenuParam.show=true;
+           this.editMenuParam.title='添加菜单';
+           this.editMenuParam.cname='';
+           this.editMenuParam.ename='';
+           this.editMenuParam.icon='';
+           this.editMenuParam.pid='';
+           this.editMenuParam.remark='';
+           this.editMenuParam.type=''; // 0/1 页面/功能 
+           this.editMenuParam.url='';
+	    },
+	    editMenu:function(){
+	       this.editMenuParam.show=true;
+           this.editMenuParam.title='编辑菜单';
+           this.editMenuParam.link = '/sys/menu/';
+           this.editMenuParam.cname=this.initScopeDetail.cname;
+           this.editMenuParam.ename=this.initScopeDetail.ename;
+           this.editMenuParam.icon=this.initScopeDetail.icon;
+           this.editMenuParam.pid=this.initScopeDetail.pid;
+           this.editMenuParam.remark=this.initScopeDetail.remark;
+           this.editMenuParam.type=this.initScopeDetail.type; // 0/1 页面/功能 
+           this.editMenuParam.url=this.initScopeDetail.url;
+           this.editMenuParam.callback = this.callback;
+	    },
+	    callback:function(title){
+	    	this.tipsParam.show = true;
 	    }
     },
     vuex: {
         getters: {
-          list:state => state.tablelist.menu.list
+          list:state => state.tablelist.menu.list,
+          initScopeDetail
         },
         actions: {
            baseGetData,
@@ -117,7 +170,7 @@ export default {
     }
 }
 </script>
-<style type="scoped">
+<style  scoped>
 .line_text{
     margin-top:10px;
     float:left;

@@ -6021,28 +6021,8 @@ export const scopedOperate = ({ dispatch }, param) => { //查询权限功能
         }
     }).then((res) => {
         console.log(res.json().result)
-        /*const json = {
-            list: res.json(),
-            name: param.keyName,
-            callback: param.getDataInit
-        };
-        if (json.list.result && Object.prototype.toString.call(json.list.result) === '[object Array]') {
-            for (let i in json.list.result) {
-                json.list.result[i].show = false;
-            }
-        } else if (json.list.result.list && Object.prototype.toString.call(json.list.result.list) === '[object Array]') {
-            for (let i in json.list.result.list) {
-                json.list.result.list[i].show = false;
-            }
-        }
-        param.all = json.list.result.pages;
-        param.total = res.json().result.total;
-        console.log(json);
-        dispatch(types.ABSTRACT_GET_DATA, json);
-
-        localStorage.scopeList = JSON.stringify(json);
-        localStorage.scopeParam = JSON.stringify(param);*/
-
+        var json = res.json().result;
+        dispatch(types.ABSTRACT_GET_DETAIL, json);
     }, (res) => {
         param.loading = false;
         console.log('fail');
@@ -6050,10 +6030,9 @@ export const scopedOperate = ({ dispatch }, param) => { //查询权限功能
 }
 
 export const baseAddData = ({ dispatch }, param) => { //新增权限
-
     Vue.http({
         method: 'POST',
-        url: apiUrl.base + param.url,
+        url: apiUrl.base + param.link,
         body: param.body,
         emulateHTTP: true,
         emulateJSON: false,
@@ -6081,11 +6060,36 @@ export const baseAddData = ({ dispatch }, param) => { //新增权限
 }
 
 export const baseUpdateData = ({ dispatch }, param) => { //修改权限
-    console.log(param.body);
+    console.log(param);
+    const data = {
+
+    }
+    if(param.body){
+        data.body = param.body; 
+    }
+    if(param.cname){
+        data.cname = param.cname; 
+    }
+    if(param.ename){
+        data.ename = param.ename; 
+    }
+    if(param.type!==''){
+        data.type = param.type; 
+    }
+    if(param.remark){
+        data.remark = param.remark; 
+    }
+    if(param.url){
+        data.url = param.url; 
+    }
+    if(param.icon){
+        data.icon = param.icon; 
+    }
+    console.log(data)
     Vue.http({
         method: 'PUT',
-        url: apiUrl.base + param.url,
-        body: param.body,
+        url: apiUrl.base + param.link,
+        body:data,
         emulateHTTP: false,
         emulateJSON: false,
         headers: {

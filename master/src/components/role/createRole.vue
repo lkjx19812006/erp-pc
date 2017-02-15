@@ -262,7 +262,7 @@ export default {
                 menus:idArr.join(","),
                 remark:this.param.remark
             };
-            this.param.url='/sys/role/';
+            this.param.link='/sys/role/';
             this.param.keyName='power';
             this.param.loading=true;
             this.param.utime=CurentTime();

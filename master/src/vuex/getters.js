@@ -412,3 +412,6 @@ export const initAddressList= (state) => { //获取药款账户的数据
   return JSON.parse(JSON.stringify(state.table.basicBaseList.addressList));
 }
 
+export const initScopeDetail = (state) => { //获取权限详情
+  return JSON.parse(JSON.stringify(state.tablelist.power.detail));
+}
