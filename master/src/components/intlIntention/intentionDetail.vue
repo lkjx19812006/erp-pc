@@ -90,7 +90,7 @@
                                     <span>{{initIntlIntentionDetail.pack}}</span>
                                 </div>
                                 <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6">
-                                    <label class="editlabel">Port of destination：</label>
+                                    <label class="editlabel">{{$t('static.destination')}}：</label>
                                     <span>{{initIntlIntentionDetail.port}}</span>
                                 </div>
                             </div>
@@ -244,9 +244,9 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>{{$t('static.currency')}}</th>
-                                          <th>{{$t('static.expense')}}</th>
                                           <th>{{$t('static.expense_explanation')}}</th>
+                                          <th>{{$t('static.expense')}}</th>
+                                          <th>{{$t('static.currency')}}</th>
                                           <th>{{$t('static.all_in_cost')}}</th>
                                           <th>{{$t('static.comment')}}</th>
                                          
@@ -254,9 +254,9 @@
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.offers.arr">
                                                 <!-- <td><img :src="item.path" /></td> -->
-                                                <td>{{item.currency | Currency}}</td>
-                                                <td>{{item.cost}}</td>
                                                 <td>{{item.costDesc}}</td>
+                                                <td>{{item.cost}}</td>
+                                                <td>{{item.currency | Currency}}</td>
                                                 <td>{{item.total}}</td>
                                                 <td>{{item.comment}}</td>
                                             </tr>
