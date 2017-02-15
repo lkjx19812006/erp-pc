@@ -2939,6 +2939,38 @@ export const getCallRecordVoice = ({ dispatch }, param) => { //获取录音
     })
 }
 
+export const getCallCountList = ({ dispatch }, param) => { //客户通话记录统计列表与搜索
+    param.loading = true;
+    var url = apiUrl.clientList + param.link;
+    if(param.date){
+        url += "?date=" + param.date;
+    }
+    
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var callCount = res.json().result;
+
+        dispatch(types.CALL_COUNT_DATA, callCount);
+
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        param.loading = false;
+
+        localStorage.callCountParam = JSON.stringify(param);
+        
+        
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
 export const getUserTypeList = ({ dispatch }, param) => { //客户类型
     param.loading = true;
     console.log(param);

@@ -183,6 +183,10 @@ export const initCustomerlist = (state) => {
 export const initCallRecordList = (state) => {
     return parseJson(state.table.basicBaseList.callRecordList);
 }
+/*---客户通话记录统计---*/
+export const initCallCountList = (state) => {
+    return parseJson(state.table.basicBaseList.callCountList);
+}
 /*供应商产品列表以及详情*/
 export const initProductlist = (state) => {
     return parseJson(state.table.basicBaseList.productList);

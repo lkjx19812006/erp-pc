@@ -19,7 +19,7 @@
               <div class="editpageleft">
                 <div v-if="param.flag==0" class="editpage-input">
                 </div>
-                <div v-if="param.flag==0&&!param.customer&&!param.bizType" class="editpage-input">
+                <div v-if="param.flag==0&&!param.customer" class="editpage-input">
                   <label class="editlabel">业务类型</label>
                   <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType">
                     <option value="">请选择业务类型</option>
@@ -27,7 +27,7 @@
                   </select>
                 </div>
 
-                <div v-if="param.flag==0&&param.customer&&!param.bizType" class="editpage-input">
+                <div v-if="param.flag==0&&param.customer" class="editpage-input">
                   <label class="editlabel">业务类型</label>
                   <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType">
                     <option value="">请选择业务类型</option>
@@ -35,14 +35,14 @@
                     <option value="2">订单</option>
                   </select>
                 </div>
-                <div v-if="param.bizType" class="editpage-input">
+                <!-- <div v-if="param.bizType" class="editpage-input">
                   <label class="editlabel">业务类型</label>
                   <select type="text" @change="selectBizId()" class="form-control edit-input" v-model="param.bizType" disabled=true>
                     <option value="">请选择业务类型</option>
                     <option value="1">意向</option>
                     <option value="2">订单</option>
                   </select>
-                </div>
+                </div> -->
 
                 <div class="editpage-input">
                   <label class="editlabel">联系账号
@@ -82,7 +82,7 @@
                           style="height:100px;line-height:20px;width:95%" value="{{param.coments}}"></textarea>
               </div>
               </div>
-
+              <!-- 跟进类型是意向 -->
               <div class="editpage" v-if="intention.breedName">
                 <div class="editpageleft">
                   <div  class="editpage-input">
@@ -120,7 +120,7 @@
                 </div>
 
               </div>
-
+            <!-- 跟进类型是订单 -->
             <div class="editpage" v-if="intention.no">
               <div class="editpageleft">
 
@@ -225,6 +225,9 @@
           this.bizParam.show = true;
           this.bizParam.bizType = this.param.bizType;
           this.bizParam.userId=this.param.objId;
+        }else{
+          this.intention.no = '';
+          this.intention.breedName = '';
         }
 
       }

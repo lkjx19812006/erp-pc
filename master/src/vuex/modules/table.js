@@ -119,6 +119,7 @@ import {
    ROLLOUT_DETAIL,
    USER_TYPE,
    CALL_RECORD_DATA,
+   CALL_COUNT_DATA,
    CALL_RECORD_VOICE_DATA
 
 } from '../mutation-types'
@@ -365,6 +366,8 @@ const state = {
         addressList:[],
         //客户通话记录
         callRecordList:[],
+        //客户通话记录统计
+        callCountList:[],
         //产品列表
         productList:[
              {"id": "442","cid": 1,"type": "1","name": "1111","breedId": 1111,"quality": "1111","location": "111","spec": "干","number": 1111,"price": 11,"unit": "1111","duedate": "2016-10-23 00:00","coa": 0,"comments": null,"status": 1,"show":true}
@@ -1929,6 +1932,9 @@ const mutations = {
     },
     [CALL_RECORD_DATA](state,data){
         state.basicBaseList.callRecordList = data;
+    },
+    [CALL_COUNT_DATA](state,data){
+        state.basicBaseList.callCountList = data;
     },
     [CALL_RECORD_VOICE_DATA](state,data){
         state.basicBaseList.callRecordList[data.index].refile = data.refile;
