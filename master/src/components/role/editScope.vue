@@ -40,7 +40,7 @@
 	                            </div>
 	                            <div class="client-detailInfo  col-md-12 col-xs-12">
 	                                <label>说明</label>
-	                                <textarea style="border:1px solid #ddd;resize: none;width: 100%;border-radius: 5px;" rows="5" v-model="param.remark"></textarea>
+	                                <textarea style="border:1px solid #ddd;resize: none;width: 100%;border-radius: 5px;" class="form-control edit-input" rows="5" v-model="param.remark"></textarea>
 	                            </div>
 	                            <div class="client-detailInfo  col-md-6 col-xs-12">
 	                                <label>图标路径</label>
