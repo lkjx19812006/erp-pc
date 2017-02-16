@@ -183,6 +183,7 @@ export default {
                 currency:1,     //货币品种
                 consignee:'',    //收货人姓名
                 consigneePhone:'',
+                consigner:'', //发货人
                 zipCode:'',     //邮编
                 country:'',
                 province:'',
@@ -259,10 +260,10 @@ export default {
      			}
         },
         adopt:function(item,index){
-            console.log("创建订单");
             this.orderParam.show = true;
             this.orderParam.index = index;
             this.orderParam.customer = item.customerId;
+            this.orderParam.customerName = item.customerName;
             this.orderParam.incidentals = item.incidentals;
             this.orderParam.incidentalsDesc = item.incidentalsDesc;
             this.orderParam.type = item.type;

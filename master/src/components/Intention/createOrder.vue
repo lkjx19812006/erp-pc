@@ -1,5 +1,8 @@
 <template>
+<div>
     <searchemg-model :param="employeeParam" v-if="employeeParam.show"></searchemg-model>
+    <supplier-dialog :param="supplierParam" v-if="supplierParam.show"></supplier-dialog>
+    <searchcustomer-model :param="empNameParam" v-if="empNameParam.show"></searchcustomer-model>
     <div v-show="param.show"  id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"></div>
     <div class="container modal_con" v-show="param.show">
         <div @click="param.show=false" class="top-title">
@@ -62,7 +65,7 @@
                                        </div>
                                        <div class="left" style="width:45%;">
                                           <select  class="form-control edit-input"  v-model="breedInfo.cunit" disabled="true">
-                                              <option v-for="item in initUnitlist"  value="{{item.id+','+item.name}}">{{item.name}}({{item.ename}})</option>
+                                              <option v-for="item in initUnitlist"  value="{{item.id+','+item.name}}">{{item.name}}</option>
                                           </select>
                                        </div>
                                    </div>
@@ -71,7 +74,7 @@
                                      <label class="editlabel" >{{$t('static.unit')}}<span class="system_danger" v-if="$inner.unit.required">{{$t('static.required')}}</span></label>
                                      <!-- <input type="text"  /> -->
                                      <select v-model="breedInfo.cunit" class="form-control edit-input" v-validate:unit="{required:true}">
-                                        <option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}({{item.ename}})</option>
+                                        <option v-for="item in initUnitlist" value="{{item.id+','+item.name}}">{{item.name}}</option>
                                      </select>
                                 </div>  
                                 <div class="editpage-input col-md-6">
@@ -82,7 +85,7 @@
                                        </div>
                                        <div class="left" style="width:45%;">
                                           <select  class="form-control edit-input"  v-model="breedInfo.cunit" disabled="true">
-                                              <option v-for="item in initUnitlist"  value="{{item.id+','+item.name}}">{{item.name}}({{item.ename}})</option>
+                                              <option v-for="item in initUnitlist"  value="{{item.id+','+item.name}}">{{item.name}}</option>
                                           </select>
                                        </div>
                                    </div>
@@ -129,6 +132,28 @@
                     </validator> 
                     <h5 style="border-bottom:1px solid #ddd;color:#fa6705;margin-bottom: 0;padding-bottom:10px">订单信息</h5>
                     <div class="clear">
+                      <div class="editpage-input col-md-6">
+                          <label class="editlabel">{{$t('static.order_type')}} <span class="system_danger" v-if="$validation.type.required">{{$t('static.select_order_type')}}</span></label>
+                          <input v-show="false" type="text" class="form-control" v-model="param.type" v-validate:type="['required']" readonly="readonly"/>
+                          <select  class="form-control edit-input" v-model="param.type" @click="exChange()">
+                              <option value="0">{{$t('static.purchase')}}</option>
+                              <option value="1">{{$t('static.sell')}}</option>
+                          </select>
+                      </div>
+                      <div class="editpage-input col-md-6" v-if="param.type==1">
+                        <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required" >{{$t('static.required')}}</span></label>
+                        <input  type="text" class="form-control edit-input"  readonly="true"  v-model="employeeParam.consignerName" v-validate:shipper="{required:true}"  @click="selectEmployee(param.consigner,employeeParam.consignerName)"  />
+                      </div>
+                      <!-- 客户选择 -->
+                      <div class="editpage-input col-md-6"  v-if="param.type==1">
+                          <label class="editlabel">{{$t('static.client_name')}} <span class="system_danger" v-if="$validation.custname.required">{{$t('static.required')}}</span></label>
+                          <input type="text" class="form-control edit-input" v-model="param.customerName"  v-validate:custname="['required']" readonly="true" @click="searchCustomer(param.customerName,param.customer)"/>
+                      </div>
+                      <!-- 供应商选择 -->
+                      <div class="editpage-input col-md-6" v-if="param.type==0">
+                          <label class="editlabel">{{$t('static.supplier_name')}} <span class="system_danger" v-if="$validation.supplier.required">{{$t('static.required')}}</span></label>
+                          <input type="text" class="form-control edit-input" v-model="supplierParam.supplierName"  v-validate:supplier="{required:true}" readonly="true" @click="selectSupplier()"/>
+                      </div>
                        <div class="editpage-input col-md-6">
                            <label class="editlabel">{{$t('static.sundry_fees')}}：</label>
                            <div class="clearfix">
@@ -146,10 +171,25 @@
                             </div>
                         </div>
                         <div class="editpage-input col-md-6">
+                            <label class="editlabel">杂费说明</label>
+                            <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc"/>
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">优惠说明</label>
+                            <input type="text" class="form-control edit-input" v-model="param.preferentialDesc"/>
+                        </div>
+                        <div class="editpage-input col-md-6">
                             <label class="editlabel">收货人姓名 <span class="system_danger" v-if="$validation.customer.required">必填项</span></label>
                             <input type="text" class="form-control edit-input" v-model="param.consignee" v-validate:customer="['required']"/>
                         </div>
-
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">收货人电话 <span class="system_danger" v-if="$validation.mobile.phone">必填项</span></label>
+                            <input type="tel" class="form-control edit-input" v-model="param.consigneePhone" v-validate:mobile="['phone']"/>
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">收货人地址 <span class="system_danger" v-if="$validation.addr.required">必填项</span></label>
+                            <input type="text" class="form-control edit-input" v-model="param.consigneeAddr" v-validate:addr="['required']"/>
+                        </div>
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">国家</label>
                             <div type="text" class="edit-input">
@@ -163,6 +203,21 @@
                                   >
                                  </v-select>
                            </div>
+                        </div>
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">省</label>
+                            <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
+                            <div v-if="country.cname" type="text" class="edit-input">
+                                <v-select
+                                  :debounce="250"
+                                  :value.sync="province"
+                                  :on-change="selectCity"
+                                  :options="initProvince"
+                                  placeholder="省"
+                                  label="cname"
+                                >
+                                </v-select>
+                            </div>
                         </div>
                         <div class="editpage-input col-md-6">
                             <label class="editlabel">市</label>
@@ -180,42 +235,6 @@
                             </div>
                         </div>
                         <div class="editpage-input col-md-6">
-                            <label class="editlabel">收货人地址 <span class="system_danger" v-if="$validation.addr.required">必填项</span></label>
-                            <input type="text" class="form-control edit-input" v-model="param.consigneeAddr" v-validate:addr="['required']"/>
-                        </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">总价</label>
-                            <input type="text" class="form-control edit-input" v-model="param.total"  readonly="true" />
-                        </div>
-                        
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">杂费说明</label>
-                            <input type="text" class="form-control edit-input" v-model="param.incidentalsDesc"/>
-                        </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">优惠说明</label>
-                            <input type="text" class="form-control edit-input" v-model="param.preferentialDesc"/>
-                        </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">收货人电话 <span class="system_danger" v-if="$validation.mobile.phone">必填项</span></label>
-                            <input type="tel" class="form-control edit-input" v-model="param.consigneePhone" v-validate:mobile="['phone']"/>
-                        </div>
-                        <div class="editpage-input col-md-6">
-                            <label class="editlabel">省</label>
-                            <input type="text" v-if="!country.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个国家" />
-                            <div v-if="country.cname" type="text" class="edit-input">
-                                <v-select
-                                  :debounce="250"
-                                  :value.sync="province"
-                                  :on-change="selectCity"
-                                  :options="initProvince"
-                                  placeholder="省"
-                                  label="cname"
-                                >
-                                </v-select>
-                        </div>
-                        </div>
-                        <div class="editpage-input col-md-6">
                             <label class="editlabel">区</label>
                             <input type="text" v-if="!city.cname" class="form-control edit-input" disabled="disabled" placeholder="请先选择一个市" />
                              <div v-if="city.cname" type="text" class="edit-input">
@@ -229,9 +248,10 @@
                                 </v-select>
                              </div>
                         </div>
-                        <div class="editpage-input col-md-6" v-if="param.type==1">
-                          <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">选择发货人</span></label>
-                          <input  type="text" class="form-control edit-input" v-model="employeeParam.consignerName" v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
+                        
+                        <div class="editpage-input col-md-6">
+                            <label class="editlabel">总价</label>
+                            <input type="text" class="form-control edit-input" v-model="param.total"  readonly="true" />
                         </div>
                         <div class="editpage-input col-md-6">
                                <label class="editlabel">成本总价</label>
@@ -251,12 +271,15 @@
             </div>
         </validator>
     </div>
+</div>
 </template>
 <script>
 import vSelect from '../tools/vueSelect/components/Select'
 import inputSelect from '../tools/vueSelect/components/inputselect'
 import pressImage from '../../components/imagePress'
 import searchemgModel from '../order/second_order/allEmployee'
+import searchcustomerModel  from '../Intention/clientname'
+import supplierDialog from '../order/second_order/selectAllSupplier'
 import {
     initCountrylist,
     initProvince,
@@ -277,7 +300,9 @@ export default {
         vSelect,
         pressImage,
         searchemgModel,
-        inputSelect
+        inputSelect,
+        searchcustomerModel,
+        supplierDialog
     },
     props: ['param'],
     data() {
@@ -305,6 +330,12 @@ export default {
               price:'',
               id:''
             },
+            empNameParam:{
+              show:false,
+              customer:'',
+              customerName:'',
+              customerPhone:''
+            },
             updateParam:{
               show:false,
               index:0
@@ -325,6 +356,16 @@ export default {
               show:false,
               consigner:'',
               consignerName:''
+            },
+            supplierParam:{
+              show:false,
+              customer:'',
+              customerName:'',
+              consignee:'',
+              consigneePhone:'',
+              supplierName:'',
+              employee:this.param.employee,
+              link:'/customer/suppliers'
             },
             saith:0, //点击按钮计算
             sum:0, //点击按钮计算
@@ -471,6 +512,17 @@ export default {
            this.employeeParam.consigner= id;
            this.employeeParam.consignerName = name;
         },
+        selectSupplier:function(){
+           this.supplierParam.show=true;
+        },
+        searchCustomer:function(customerName,customer){
+            this.empNameParam.show=true;
+        },
+        selectEmployee:function(id,name){
+           this.employeeParam.show = true;
+           this.employeeParam.consigner= id;
+           this.employeeParam.consignerName = name;
+        }
     },
     watch:{
         'param.incidentals':'changeTotal',
@@ -485,9 +537,28 @@ export default {
             this.employeeParam.consigner = employee.employeeId;
             this.employeeParam.consignerName = employee.employeeName;
             this.param.consigner = this.employeeParam.consigner;
-        }
+        },
+        supplier:function(item){
+          console.log(item)
+          this.supplierParam.customer = item.customer;
+          this.supplierParam.customerName = item.customerName;
+          this.supplierParam.supplierName = item.customerName;
+          this.supplierParam.consignee = item.consignee;
+          this.supplierParam.consigneePhone = item.consigneePhone;
+          this.param.customer = this.supplierParam.customer ;
+          this.param.customerName = this.supplierParam.customerName ;
+          this.param.consignee = this.supplierParam.consignee;
+          this.param.consigneePhone = this.supplierParam.consigneePhone;
+        },
+        customer:function(customer){
+            this.param.customerName = customer.customerName;
+            this.param.customerPhone = customer.customerPhone;
+            this.param.consigneePhone = customer.customerPhone;
+            this.param.consignee = customer.customerName;
+            this.param.customer = customer.customerId;
+            this.consigneeParam.customerId = customer.customerId;
+        },
       },
-   
     created(){
         this.getCountryList(this.countryParam);
         this.getUnitList();
@@ -495,6 +566,9 @@ export default {
         console.log(this.param.total);
         this.param.total = (parseFloat(this.param.goods[0].price*this.param.goods[0].number)*100+parseFloat(this.param.incidentals)*100 - parseFloat(this.param.preferential)*100)/100;
         this.param.cost = (parseFloat(this.param.goods[0].costPrice*this.param.goods[0].number)*100+parseFloat(this.param.incidentals)*100 - parseFloat(this.param.preferential)*100)/100;
+        if(this.param.customerName){
+           this.supplierParam.supplierName = this.param.customerName;
+        }
     }
 }
 </script>
