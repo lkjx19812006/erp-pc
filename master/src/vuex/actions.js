@@ -12,6 +12,9 @@ export const login = ({ dispatch }, data) => { //登录
         no: data.no,
         password: data.password
     }
+    if(data.captcha){
+        body.captcha = data.captcha;
+    }
     console.log(body);
     Vue.http({
         method: 'POST',
@@ -114,9 +117,12 @@ export const login = ({ dispatch }, data) => { //登录
             }
             localStorage.menus = JSON.stringify(result.menus);
 
-
+            data.required = false;
+            
             data.loginCallback();
-        } else {
+        } else if(res.json().code == "160104"){
+            data.required = true;
+        }else{
 
             data.name = res.json().msg;
             data.show = true;
