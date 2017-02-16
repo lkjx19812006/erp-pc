@@ -206,7 +206,9 @@ const mutations = {
     [ABSTRACT_UPDATE_DATA](state,data){
         console.log(data);
     	// state[data.name].list.result.list[data.index]=data.body;
-
+        if(data.title == '编辑菜单'){
+            state.menu.list = data;
+        }
         for(let i in state[data.name].list.result.list[data.index]){
             for(let m in data.body){
                 if(i==m){

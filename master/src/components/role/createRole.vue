@@ -18,11 +18,11 @@
                         <div class="clearfix">
                             <div class="client-detailInfo pull-left col-md-6 col-xs-12">
                                 <label>名称<span class="system_danger" v-if="$validation.cname.minlength">请输入至少两位</span></label>
-                                <input type="text" id="cname" value="{{param.cname}}" class="form-control" maxlength="11" v-model="param.cname" v-validate:cname="{minlength:2}" />
+                                <input type="text" id="cname"  class="form-control" maxlength="11" v-model="param.cname" v-validate:cname="{minlength:2}" />
                             </div>
                             <div class="client-detailInfo  pull-right col-md-6 col-xs-12">
                                 <label>备注</label>
-                                <input type="text" class="form-control" value="{{param.remark}}" v-model="param.remark"  />
+                                <input type="text" class="form-control"  v-model="param.remark"  />
                             </div>
                         </div>
                         <div class="clearfix" v-show="false">

@@ -1,6 +1,7 @@
 <template>
 	<div class="clear">
 		<editscope-model :param="editMenuParam" v-if="editMenuParam.show"></editscope-model>
+		<delete-model :param="deleteParam" v-if="deleteParam.show"></delete-model>
 		<tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
         <div  style="width:25%;float:left;position:relative;">
           <div class="cover_loading">
@@ -8,13 +9,17 @@
           </div>
           <div class="clear operate_menu">
             <button class="btn btn-default pull-left" @click="addMenu()">添加菜单</button>
+            <button class="btn btn-default pull-right transfer" @click="resetConditional()">刷新</button>
             <button class="btn btn-default pull-right transfer" @click="deleteMenu({
               id:'',
               show:false,
               link:specDel,
-              url:'/org/'
+              type:'',
+              title:'',
+              url:'/sys/menu/'
               })">删除菜单</button>
             <button class="btn btn-default pull-right" @click="editMenu()">编辑菜单</button>
+            
           </div>
           <div class="trans_parten clear">
                 <div class="clear">
@@ -53,6 +58,7 @@
 import treeDialog from '../generalModule/orgComponent'
 import editscopeModel from '../role/editScope'
 import tipsModel from '../tips/tipDialog'
+import deleteModel from '../serviceBaselist/breedDetailDialog/deleteBreedDetail.vue'
 import {
 	initScopeDetail
 } from '../../vuex/getters.js'
@@ -60,14 +66,16 @@ import {
    baseGetData,
    scopedOperate,
    baseAddData,
-   baseUpdateData
+   baseUpdateData,
+   specDel
 } from '../../vuex/actions.js'
 export default {
     components: {
        /*mglistModel,*/
        treeDialog,
        editscopeModel,
-       tipsModel
+       tipsModel,
+       deleteModel
     },
     props: ['param'],
     data() {
@@ -88,6 +96,9 @@ export default {
             	name:'',
             	alert:true
             },
+            deleteParam:{
+            	show:false
+            },
             editMenuParam:{
             	show:false,
             	cname:'',
@@ -96,7 +107,8 @@ export default {
             	id:'',
             	pid:'',
             	type:'',
-            	remark:''
+            	remark:'',
+            	url:'',
             }
         }
     },
@@ -116,12 +128,11 @@ export default {
         	}
 	        item.show =true; 
 	        this.scopedOperate(item);
-	        console.log(this.initScopeDetail)
-	        console.log(item)
 	    },
 	    addMenu:function(){
 	       this.editMenuParam.show=true;
            this.editMenuParam.title='添加菜单';
+           this.editMenuParam.link = '/sys/menu/';
            this.editMenuParam.cname='';
            this.editMenuParam.ename='';
            this.editMenuParam.icon='';
@@ -129,22 +140,51 @@ export default {
            this.editMenuParam.remark='';
            this.editMenuParam.type=''; // 0/1 页面/功能 
            this.editMenuParam.url='';
+           this.editMenuParam.callback = this.callback;
 	    },
 	    editMenu:function(){
-	       this.editMenuParam.show=true;
-           this.editMenuParam.title='编辑菜单';
-           this.editMenuParam.link = '/sys/menu/';
-           this.editMenuParam.cname=this.initScopeDetail.cname;
-           this.editMenuParam.ename=this.initScopeDetail.ename;
-           this.editMenuParam.icon=this.initScopeDetail.icon;
-           this.editMenuParam.pid=this.initScopeDetail.pid;
-           this.editMenuParam.remark=this.initScopeDetail.remark;
-           this.editMenuParam.type=this.initScopeDetail.type; // 0/1 页面/功能 
-           this.editMenuParam.url=this.initScopeDetail.url;
-           this.editMenuParam.callback = this.callback;
+	    	if(!this.initScopeDetail.id){
+	    	   this.tipsParam.show = true;
+		       	this.tipsParam.name='请选择菜单'
+	       }else{
+	       	   this.editMenuParam.show=true;
+	           this.editMenuParam.title='编辑菜单';
+	           this.editMenuParam.link = '/sys/menu/';
+	           this.editMenuParam.cname=this.initScopeDetail.cname;
+	           this.editMenuParam.ename=this.initScopeDetail.ename;
+	           this.editMenuParam.icon=this.initScopeDetail.icon;
+	           this.editMenuParam.pid=this.initScopeDetail.pid;
+	           this.editMenuParam.remark=this.initScopeDetail.remark;
+	           this.editMenuParam.type=this.initScopeDetail.type; // 0/1 页面/功能 
+	           this.editMenuParam.url=this.initScopeDetail.url;
+	           this.editMenuParam.id=this.initScopeDetail.id;
+	           this.editMenuParam.callback = this.callback;
+	       }     
+           
+	    },
+	    deleteMenu:function(item){
+	    	if(!this.initScopeDetail.id){
+	    	   this.tipsParam.show = true;
+		       	this.tipsParam.name='请选择菜单'
+	       	}else{
+	           this.deleteParam = item;
+	           this.deleteParam.show=true;
+	           this.deleteParam.title='菜单';
+	           this.deleteParam.type=this.initScopeDetail.type; // 0/1 页面/功能 
+	           this.deleteParam.id=this.initScopeDetail.id;
+	           this.deleteParam.callback = this.callback;
+	        }
+            
+	    },
+	    resetConditional:function(){
+	    	this.baseGetData(this.loadParam);
 	    },
 	    callback:function(title){
 	    	this.tipsParam.show = true;
+	    	this.tipsParam.name = title;
+	    	this.tipsParam.alert = true;
+	    	this.baseGetData(this.loadParam);
+	    	
 	    }
     },
     vuex: {
@@ -156,7 +196,8 @@ export default {
            baseGetData,
            baseAddData,
            scopedOperate,
-           baseUpdateData
+           baseUpdateData,
+           specDel
         }
     },
     watch:{

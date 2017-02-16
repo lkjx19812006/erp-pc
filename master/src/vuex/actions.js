@@ -2737,6 +2737,8 @@ export const specDel = ({ dispatch }, param) => { //删除药材相关信息
         console.log('删除成功');
         if(param.url=='/org/'){
             param.callback(res.json().msg)
+        }else if(param.url=='/sys/menu/'){
+            param.callback(res.json().msg)
         }else{
             dispatch(types.DELETE_SPECS_DATA, param);
         }
@@ -5970,6 +5972,7 @@ export const getAuthInfo = ({ dispatch }, param) => { //查询认证信息
 
 
 export const baseGetData = ({ dispatch }, param) => { //查询权限
+    param.loading = true;
     Vue.http({
         method: 'GET',
         url: apiUrl.base + param.url + '?page=' + param.cur,
@@ -6030,10 +6033,39 @@ export const scopedOperate = ({ dispatch }, param) => { //查询权限功能
 }
 
 export const baseAddData = ({ dispatch }, param) => { //新增权限
+    const data = {
+    }
+    if(param.link=='/sys/role/'&&param.body){
+        data.cname = param.body.cname; 
+        data.menus = param.body.menus; 
+        data.remark = param.body.remark;
+    }
+    if(param.link=='/sys/menu/'&&param.cname){
+        data.cname = param.cname; 
+    }
+    if(param.link=='/sys/menu/'&&param.ename){
+        data.ename = param.ename; 
+    }
+    if(param.link=='/sys/menu/'&&param.pid){
+        data.pid = param.pid; 
+    }
+    if(param.link=='/sys/menu/'&&param.type!==''){
+        data.type = param.type; 
+    }
+    if(param.link=='/sys/menu/'&&param.remark){
+        data.remark = param.remark; 
+    }
+    if(param.link=='/sys/menu/'&&param.url){
+        data.url = param.url; 
+    }
+    if(param.link=='/sys/menu/'&&param.icon){
+        data.icon = param.icon.substring(34); 
+    }
+    console.log(data)
     Vue.http({
         method: 'POST',
         url: apiUrl.base + param.link,
-        body: param.body,
+        body: data,
         emulateHTTP: true,
         emulateJSON: false,
         headers: {
@@ -6041,18 +6073,23 @@ export const baseAddData = ({ dispatch }, param) => { //新增权限
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log('新增成功')
         console.log(res.json());
-        if (res.json().result.id) param.body.id = res.json().result.id;
-        param.body.utime = param.utime;
-        param.body.show = false;
-        let json = {
-            name: param.keyName,
-            body: param.body
+        if(param.pid){
+            param.callback(res.json().msg)
+            dispatch(types.ABSTRACT_UPDATE_DATA, param);
+        }else{
+            if (res.json().result.id) param.body.id = res.json().result.id;
+            param.body.utime = param.utime;
+            param.body.show = false;
+            let json = {
+                name: param.keyName,
+                body: param.body
+            }
+            param.loading = false;
+            param.show = false;
+            dispatch(types.ABSTRACT_ADD_DATA, json);
         }
-        param.loading = false;
-        param.show = false;
-        dispatch(types.ABSTRACT_ADD_DATA, json);
+        
     }, (res) => {
         param.loading = false;
         console.log('fail');
@@ -6062,28 +6099,41 @@ export const baseAddData = ({ dispatch }, param) => { //新增权限
 export const baseUpdateData = ({ dispatch }, param) => { //修改权限
     console.log(param);
     const data = {
-
     }
-    if(param.body){
-        data.body = param.body; 
+    if(param.link=='/sys/role/'&&param.body){
+        data.cname = param.body.cname; 
+        data.id = param.body.id; 
+        data.menus = param.body.menus; 
+        data.remark = param.body.remark;
     }
-    if(param.cname){
+    if(param.link=='/sys/menu/'&&param.cname){
         data.cname = param.cname; 
     }
-    if(param.ename){
+    if(param.link=='/sys/menu/'&&param.ename){
         data.ename = param.ename; 
     }
-    if(param.type!==''){
+    if(param.link=='/sys/menu/'&&param.id){
+        data.id = param.id; 
+    }
+    if(param.link=='/sys/menu/'&&param.pid){
+        data.pid = param.pid; 
+    }
+    if(param.link=='/sys/menu/'&&param.type!==''){
         data.type = param.type; 
     }
-    if(param.remark){
+    if(param.link=='/sys/menu/'&&param.remark){
         data.remark = param.remark; 
     }
-    if(param.url){
+    if(param.link=='/sys/menu/'&&param.url){
         data.url = param.url; 
     }
-    if(param.icon){
-        data.icon = param.icon; 
+    if(param.link=='/sys/menu/'&&param.icon){
+        if(param.icon.indexOf("static")>0){
+            data.icon = param.icon;
+        }else{
+            data.icon = param.icon.substring(34);
+        }
+         
     }
     console.log(data)
     Vue.http({
@@ -6098,16 +6148,22 @@ export const baseUpdateData = ({ dispatch }, param) => { //修改权限
         }
     }).then((res) => {
         console.log('修改成功')
-        console.log(res.json());
-        param.body.utime = param.utime;
-        let json = {
-            name: param.keyName,
-            body: param.body,
-            index: param.index
+        if(param.body){
+            param.body.utime = param.utime;
+            let json = {
+                name: param.keyName,
+                body: param.body,
+                index: param.index
+            }
+            param.loading = false;
+            param.show = false; 
+            dispatch(types.ABSTRACT_UPDATE_DATA, json);
+        }else{
+            param.callback(res.json().msg)
+            dispatch(types.ABSTRACT_UPDATE_DATA, param);
         }
-        param.loading = false;
-        param.show = false;
-        dispatch(types.ABSTRACT_UPDATE_DATA, json);
+        
+       
     }, (res) => {
         param.loading = false;
         console.log('fail');
