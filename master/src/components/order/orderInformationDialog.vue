@@ -32,7 +32,7 @@
                   </div>
                   <div class="editpage-input col-md-6" v-if="param.type==1">
                     <label class="editlabel">选择发货人 <span class="system_danger" v-if="$validation.shipper.required">{{$t('static.required')}}</span></label>
-                    <input  type="text" class="form-control edit-input" value="{{param.verifierName}}" v-model="employeeParam.consignerName"  v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
+                    <input  type="text" class="form-control edit-input"  v-model="employeeParam.consignerName"  v-validate:shipper="['required']" readonly="readonly" @click="selectEmployee(param.consigner,employeeParam.consignerName)"/>
                   </div>
               </div>
               <section class="editsection">
@@ -847,8 +847,6 @@ export default {
         this.getProvinceList(this.countryParam);
         this.getCurrencyList();
         this.getUnitList();
-        console.log(this.param);
-
          if(this.param.customer){
             this.consigneeParam.customerId = this.param.customer;
          }
@@ -876,6 +874,9 @@ export default {
                 this.costmoney +=parseFloat(this.param.goods[i].number)*parseFloat(this.param.goods[i].costPrice);
             }
         }
+        if(this.param.consigner){
+          this.employeeParam.consignerName = this.param.consigner;
+        }
     }
 }
 </script>
@@ -885,7 +886,6 @@ export default {
 }
 .modal_con{
   z-index: 1083;
-  top:45px;
 }
 .top-title{
   position: fixed;

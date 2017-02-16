@@ -35,6 +35,18 @@
                         </select>
                    </dd>
                 </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">企业名称：</dt>
+                   <dd class="left">
+                        <input type="text" v-model="loadParam.name" class="form-control" placeholder="按回车搜索" @keyup.enter="selectSearch()"/>
+                   </dd>
+                </dl>
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top">所在省：</dt>
+                   <dd class="left">
+                        <input type="text" v-model="loadParam.province" class="form-control" placeholder="按回车搜索" @keyup.enter="selectSearch()"/>
+                   </dd>
+                </dl>
                 <button class="btn btn-default transfer"   @click="selectSearch()">搜索</button>
                 <button class="btn btn-default transfer"   @click="resetCondition()">清空条件</button>
             </div>
@@ -166,7 +178,7 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 8,
-                conName:'',
+                name:'',
                 conType:'',
                 province:'',
                 category:'',
@@ -223,11 +235,12 @@ export default {
             this.getCompanyData(this.loadParam);
         },
         resetCondition:function(){
-            this.loadParam.conName='';
+            this.loadParam.name='';
             this.loadParam.conType='';
             this.loadParam.conProvince='';
             this.loadParam.category='';
             this.loadParam.transform='';
+            this.loadParam.province='';
             this.getEnterpriseData(this.loadParam);
         },
         companyClick:function(sub){

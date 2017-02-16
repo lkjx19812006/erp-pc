@@ -71,10 +71,9 @@
                                 </mg-label>
                                 <mg-label title="发布时间">{{initIntentionDetail.pubdate}}</mg-label>
                                 <mg-label title="过期时间">{{initIntentionDetail.duedate}}</mg-label>
-                                <mg-label title="审核状态">{{initIntentionDetail.validate | intentionAudit}}({{initIntentionDetail.description}})</mg-label>
+                                <mg-label title="备注说明">{{initIntentionDetail.validate | intentionAudit}}({{initIntentionDetail.description}})</mg-label>
                                 <mg-label title="来源">{{initIntentionDetail.source | intentionSource}}</mg-label>
                                 <mg-label title="归属业务员">{{initIntentionDetail.employeeName}}</mg-label>
-                                <mg-label title="来源">{{initIntentionDetail.source | intentionSource}}</mg-label>
 
                                 <div class="client-detailInfo col-md-12 col-xs-12">
                                     <label style="display:inline;font-size:14px;">{{$t('static.label')}}：</label><Tag color="blue" v-for="item in initIntentionDetail.labels" closable @on-close="deleteLabel(item,$index)">{{item.label}}</Tag>
@@ -139,8 +138,9 @@
                                                   <div v-else>已采纳</div>
 
                                                 </td>
-                                                <td v-if="item.orderTime==0"  @click="adopt(item,$index)">
-                                                     <a class="operate"><img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
+                                                <td>
+                                                    <a class="operate" v-if="item.orderTime==0"  @click="adopt(item,$index)">
+                                                        <img src="/static/images/adopt.png" height="18" width="46"  alt="我要采纳" title="我要采纳"/>
                                                     </a>
                                                     <!-- <img src="/static/images/default_arrow.png" height="24" width="24" />
                                                     <div class="files_action" v-show="item.show" >
@@ -352,6 +352,7 @@ export default {
                 key:'intentionDetail',
                 type:this.initIntentionDetail.type,
                 customer:this.initIntentionDetail.customerId,
+                customerName:this.initIntentionDetail.customerName,
                 sample:0,
                 intl:0,
                 employee:this.initLogin.id,   //业务员ID
@@ -363,11 +364,13 @@ export default {
                 currency:'',     //货币品种
                 consignee:'',    //收货人姓名
                 consigneePhone:'',
+                consigner:'',
                 zipCode:'',     //邮编
                 country:'',
                 province:'',
                 city:'',
                 district:'',
+                cost:0,
                 total:0,
                 consigneeAddr:'',
                 comments:'',
@@ -384,6 +387,7 @@ export default {
                   spec:'',
                   price:'',
                   unit:'',
+                  costPrice:'',
                   number:''
               }]
 

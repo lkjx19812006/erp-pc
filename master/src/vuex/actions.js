@@ -2162,9 +2162,9 @@ export const getCompanyData = ({ dispatch }, param) => { //企业搜索
         } else if (key == 'conType') {
             url += '&type='
         }
-        if (key == 'conName' && param[key] !== '') {
-            url += '&name=' + param.conName
-        } else if (key == 'conName') {
+        if (key == 'name' && param[key] !== '') {
+            url += '&name=' + param.name
+        } else if (key == 'name') {
             url += '&name='
         }
         if (key == 'category' && param[key] !== '') {
