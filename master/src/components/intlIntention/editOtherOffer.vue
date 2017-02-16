@@ -21,14 +21,6 @@
                  <div v-if="true" class="editpage" >
                        <div class="editpageleft">
                           <div class="editpage-input">
-                               <label class="editlabel" >{{$t('static.currency')}}<span class="system_danger" v-if="$validation.currency.required">{{$t('static.required')}}</span></label>
-                               <input v-show="false" type="text" v-model="param.currency" class="form-control edit-input" v-validate:currency="{required:true}"/>
-                               <select type="text" class="form-control edit-input" v-model="param.currency">
-                                 <option v-for="item in initCurrencylist"  value="{{item.id}}">{{item.name}}（{{item.cname}}）</option>
-                               </select>
-                          </div>
-                          
-                          <div class="editpage-input">
                                <label class="editlabel" >{{$t('static.expense_explanation')}}<span class="system_danger" v-if="$validation.expense.required">{{$t('static.required')}}</span></label>
                                <input type="text" v-show="false" v-model="param.costDesc" class="form-control edit-input" v-validate:expense="{required:true}" />
                                <select v-model="param.costDesc" class="form-control edit-input">
@@ -37,6 +29,14 @@
                                   <option>{{$t('static.cour_fee')}}</option>
                                   <option>{{$t('static.premium')}}</option>
                                   <option>{{$t('static.other_fee')}}</option>
+                               </select>
+                          </div>
+                          
+                          <div class="editpage-input">
+                               <label class="editlabel" >{{$t('static.currency')}}<span class="system_danger" v-if="$validation.currency.required">{{$t('static.required')}}</span></label>
+                               <input v-show="false" type="text" v-model="param.currency" class="form-control edit-input" v-validate:currency="{required:true}"/>
+                               <select type="text" class="form-control edit-input" v-model="param.currency">
+                                 <option v-for="item in initCurrencylist"  value="{{item.id}}">{{item.name}}（{{item.cname}}）</option>
                                </select>
                           </div>
                        </div>

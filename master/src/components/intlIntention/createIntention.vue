@@ -187,7 +187,7 @@
                        </div>
 
                        <div class="editpage-input">
-                         <label class="editlabel">Port of destination</label>
+                         <label class="editlabel">{{$t('static.destination')}}</label>
                          <input type="text" v-model='param.port' class="form-control edit-input" />
                        </div>
                     

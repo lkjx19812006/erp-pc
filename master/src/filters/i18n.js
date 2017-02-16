@@ -94,8 +94,8 @@ var locales = {
       new:'新建',
       search:'搜索',
       refresh:'刷新',
-      item_details:'条目详情',
-      other_quotations:'其他报价',
+      item_details:'产品报价',
+      other_quotations:'运费及其他费用',
       quatation_name:'报价人',
       original_file:'原文件',
       quotation_file:'报价文件',
@@ -409,7 +409,8 @@ var locales = {
       wait_payment:'待支付',
       //client
       installment:'分期付款',
-      paid:'已支付'
+      paid:'已支付',
+      destination:'抵达港口'
     }
   },
   en: {
@@ -517,8 +518,8 @@ var locales = {
       new:'New',
       search:'Search',
       refresh:'Refresh',
-      item_details:'Item details',
-      other_quotations:'Other quotations',
+      item_details:'Product price',
+      other_quotations:'Freight and other charges',
       quatation_name:'Agent',
       original_file:'Original file',
       quotation_file:'Quotation file',
@@ -813,7 +814,8 @@ var locales = {
       transcation_amount:'Transaction amount',
       wait_payment:'Waiting to pay',
       installment:'Installment payment',
-      paid:'Paid'
+      paid:'Paid',
+      destination:'Port of destination'
     }
   }
 }

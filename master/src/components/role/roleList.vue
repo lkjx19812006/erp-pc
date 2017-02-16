@@ -69,10 +69,12 @@ import {
    baseUpdateData,
    specDel
 } from '../../vuex/actions.js'
+/*import mglistModel from '../mguan/mgListComponent'
+import treeDialog from '../generalModule/orgComponent'*/
+
 export default {
     components: {
-       /*mglistModel,*/
-       treeDialog,
+        treeDialog,
        editscopeModel,
        tipsModel,
        deleteModel

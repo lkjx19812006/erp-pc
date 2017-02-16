@@ -3,9 +3,40 @@
     <mglist-model>
         <!-- 头部搜索 -->
         <div slot="top">
-            <dd class="pull-right" style="margin-right:20px">
-                <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
-            </dd>
+            <div class="clear" style="margin-top:10px;">
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >客户名：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                    <div class="left">
+                        <dt class="left transfer marg_top">起止时间：</dt>
+                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+
+                    <div class="left">
+                        <dt class="left marg_top">~~</dt>
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </dl>
+            
+                <dl class="clear left transfer">
+                   <button type="button" class="new_btn transfer"  @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                
+                   <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+                </dl>
+
+                
+                <dd class="pull-right" style="margin-right:20px">
+                    <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+                </dd>
+            </div>
+            
         </div>
         <!-- 中间列表 -->
         <div slot="form">
@@ -61,6 +92,7 @@ import pagination from '../../../components/pagination'
 import common from '../../../common/common'
 import changeMenu from '../../../components/tools/tabs/tabs.js'
 import mglistModel from '../../mguan/mgListComponent.vue'
+import mzDatepicker from '../../calendar/vue.datepicker'
 import {
     initDrugAccountList
 } from '../../../vuex/getters'
@@ -91,6 +123,9 @@ export default {
                 size: '15px',
                 cur: 1,
                 all: 7,
+                name:'',
+                startTime:'',
+                endTime:'',
                 link:'/money/',
                 //key:'myCustomerList',
                
@@ -107,9 +142,14 @@ export default {
             this.getDrugAccountList(this.loadParam);
         },
         clickOn:function(initRolloutlist){
-           console.log(initRolloutlist)
            this.detailParam = initRolloutlist;
         },
+        resetCondition:function(){
+            this.loadParam.name='';
+            this.loadParam.startTime='';
+            this.loadParam.endTime='';
+            this.getDrugAccountList(this.loadParam);
+        }
     },
     events: {
         fresh: function(input) {

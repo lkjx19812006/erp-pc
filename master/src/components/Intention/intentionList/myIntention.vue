@@ -474,6 +474,7 @@ export default {
                 key:'intentionDetail',
                 type:'',
                 customer:'',
+                customerName:'',
                 sample:0,
                 intl:0,
                 employee:this.initLogin.id,   //业务员ID
@@ -485,6 +486,7 @@ export default {
                 currency:1,     //货币品种
                 consignee:'',    //收货人姓名
                 consigneePhone:'',
+                consigner:'',
                 zipCode:'',     //邮编
                 country:'',
                 province:'',
@@ -710,6 +712,7 @@ export default {
            this.createOrderParam.sub = sub;
            console.log(item)
            this.createOrderParam.customer = item.customerId;
+           this.createOrderParam.customerName = item.customerName;
            this.createOrderParam.type = item.type;
            this.createOrderParam.goods[0].sourceId= item.id;
            this.createOrderParam.goods[0].breedName= item.breedName;

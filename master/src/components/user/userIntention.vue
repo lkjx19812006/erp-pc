@@ -53,9 +53,6 @@
                    <div class="editpage-input clearfix" style="width:100%;max-height: 200px;overflow-y: auto">
                      <label class="editlabel">药材图片</label>
                      <press-image :value.sync="param.image_f" :showurl.sync="param.image_f_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
-                     <!-- <press-image :value.sync="param.image_s" :showurl.sync="param.image_s_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image>
-                     <press-image :value.sync="param.image_t" :showurl.sync="param.image_t_show" :type.sync="type" :param="imageParam" style="float:left;margin-left:5%;width:20%"></press-image> -->
-
                    </div>
 
                  <div class="editpage">
@@ -596,18 +593,21 @@ export default {
 
       
       //设置过期时间,7天后
-      var date = new Date();
-      date.setDate(date.getDate()+7);
-      var year = date.getFullYear();
-      var month = date.getMonth()+1;
-      var day = date.getDate();
-      if(month < 10){
-        month = '0'+month;
+      if(!this.param.duedate){
+          var date = new Date();
+          date.setDate(date.getDate()+7);
+          var year = date.getFullYear();
+          var month = date.getMonth()+1;
+          var day = date.getDate();
+          if(month < 10){
+            month = '0'+month;
+          }
+          if(day < 10){
+            day = '0'+day;
+          }
+          this.param.duedate = year+"-"+month+"-"+day+" 00:00:00";
       }
-      if(day < 10){
-        day = '0'+day;
-      }
-      this.param.duedate = year+"-"+month+"-"+day+" 00:00:00";
+      
       
       if(this.param.breedId){
         this.breedParam.breedName = this.param.breedName;

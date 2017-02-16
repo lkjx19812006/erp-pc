@@ -61,15 +61,15 @@
             <table class="table table-hover table_color table-striped " v-cloak id="tab">
                 <thead>
                     <tr>
-                        <th style="width:10%">员工</th>
-                        <th style="width:10%">员工工号</th>
-                        <th style="width:10%">主叫</th>
-                        <th style="width:10%">分机号</th>
-                        <th style="width:10%">被叫</th>
-                        <th style="width:20%">开始时间</th>
-                        <th style="width:20%">应答时间</th>
-                        <th style="width:20%">结束时间</th> 
-                        <th></th>
+                        <th>员工</th>
+                        <th>员工工号</th>
+                        <th>主叫</th>
+                        <th>分机号</th>
+                        <th>被叫</th>
+                        <th>开始时间</th>
+                        <th>应答时间</th>
+                        <th>结束时间</th> 
+                        <th style="width:250px">通话录音</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,7 +82,17 @@
                        <td>{{item.startt}}</td>
                        <td>{{item.answert}}</td>
                        <td>{{item.end}}</td>
-                       <td></td>
+                       <td style="width:250px">
+                            <div v-if="item.refile.substring(0,5)=='http:'"> 
+                                <audio v-bind:src="item.refile" controls="controls" style="width:250px">
+                                    您的浏览器不支持 audio 标签。
+                                </audio>
+                            </div>
+                            <div v-if="item.refile.substring(0,5)=='/home'"> 
+                                <!-- <a @click="getCallRecordVoice"><img src="/static/images/download.png" alt=""></a> -->
+                                <a @click="getVoice(item.id,$index)"><img src="/static/images/download.png" alt=""></a>  
+                            </div>
+                       </td>
                     </tr>
                 </tbody>
             </table>
@@ -103,7 +113,8 @@ import {
     initCallRecordList
 } from '../../../vuex/getters'
 import {
-    getCallRecordList
+    getCallRecordList,
+    getCallRecordVoice
 } from '../../../vuex/actions'
 
 export default {
@@ -118,7 +129,8 @@ export default {
             initCallRecordList
         },
         actions: {
-           getCallRecordList
+           getCallRecordList,
+           getCallRecordVoice
         }
     },
     data() {
@@ -137,6 +149,10 @@ export default {
                 startTime:'',
                 endTime:''
             },
+            voiceParam: {
+                id:'',
+                index:''
+            }
         
         }
     },
@@ -153,6 +169,11 @@ export default {
              this.loadParam.startTime = '';
              this.loadParam.endTime = '';
              this.getCallRecordList(this.loadParam);
+          },
+          getVoice:function(id,index){
+             this.voiceParam.id = id;
+             this.voiceParam.index = index;
+             this.getCallRecordVoice(this.voiceParam);
           }
     },
     events: {
@@ -212,8 +233,8 @@ export default {
     background-position: 5px;
 }
 #table_box table th,#table_box table td{
-    width: 115px;
-    min-width: 115px;
+    width: 180px;
+    min-width: 180px;
 }
 .service-nav {
     padding: 35px 10px 0px 4px;

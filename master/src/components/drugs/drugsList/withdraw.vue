@@ -4,7 +4,47 @@
     <mglist-model>
         <!-- 头部搜索 -->
         <div slot="top">
-            <div class="btn btn-primary pull-right" @click="selectSearch()">{{$t('static.refresh')}}</div>
+            <div class="clear" style="margin-top:10px;">
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >客户名：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.name" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                   <dt class="left transfer marg_top" style="letter-spacing:3px" >银行名：</dt>
+                   <dd class="left">
+                        <input type="text" class="form-control" v-model="loadParam.bank" placeholder="按回车键搜索" @keyup.enter="selectSearch()">
+                   </dd>
+                </dl>
+
+                <dl class="clear left transfer">
+                    <div class="left">
+                        <dt class="left transfer marg_top">起止时间：</dt>
+                        <mz-datepicker :time.sync="loadParam.startTime" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+
+                    <div class="left">
+                        <dt class="left marg_top">~~</dt>
+                        <mz-datepicker :time.sync="loadParam.endTime" format="yyyy/MM/dd HH:mm:ss">
+                        </mz-datepicker>
+                    </div>
+                </dl>
+            
+                <dl class="clear left transfer">
+                   <button type="button" class="new_btn transfer"  @click="resetCondition()">{{$t('static.clear_all')}}</button>
+                
+                   <button class="new_btn transfer" @click="selectSearch()">{{$t('static.search')}}</button>
+                </dl>
+
+                
+                <dd class="pull-right" style="margin-right:20px">
+                    <button type="button" class="btn btn-primary" @click="selectSearch()">{{$t('static.refresh')}}</button>
+                </dd>
+            </div>
+            
         </div>
         <!-- 中间列表 -->
         <div slot="form">
@@ -101,6 +141,8 @@
           type:'',
           status:'',
           bank:'',
+          startTime:'',
+          endTime:'',
           total:0
         },
         checked:false,
@@ -122,9 +164,12 @@
         selectSearch:function(){
             this.getRolloutList(this.loadParam);
         },
-        resetTime:function(){
-          this.loadParam.bank="";
-          this.getRolloutList(this.loadParam);
+        resetCondition:function(){
+            this.loadParam.name='';
+            this.loadParam.startTime='';
+            this.loadParam.endTime='';
+            this.loadParam.bank='';
+            this.getRolloutList(this.loadParam);
         },
         drugs:function(item,sub){
           item.show=!item.show;

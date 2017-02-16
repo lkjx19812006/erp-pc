@@ -183,6 +183,10 @@ export const initCustomerlist = (state) => {
 export const initCallRecordList = (state) => {
     return parseJson(state.table.basicBaseList.callRecordList);
 }
+/*---客户通话记录统计---*/
+export const initCallCountList = (state) => {
+    return parseJson(state.table.basicBaseList.callCountList);
+}
 /*供应商产品列表以及详情*/
 export const initProductlist = (state) => {
     return parseJson(state.table.basicBaseList.productList);
@@ -402,7 +406,6 @@ export const initReceiptDetail= (state) => { //补充合同，售后详情
 
 /*--药款管理记录--*/
 export const initDrugAccountList= (state) => { //获取药款账户的数据
-    console.log(state.table.basicBaseList.drugAccountList);
   return JSON.parse(JSON.stringify(state.table.basicBaseList.drugAccountList));
 }
 

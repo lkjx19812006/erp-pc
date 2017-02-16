@@ -1,4 +1,5 @@
 <template>
+  <div>
     <chancedetail-model :param.sync="chanceParam" v-if="chanceParam.show"></chancedetail-model>
     <transferintent-model :param="intentionParam" v-if="intentionParam.show"></transferintent-model>
     <intentionaudit-model :param="intentionAuditParam" v-if="intentionAuditParam.show"></intentionaudit-model>
@@ -316,7 +317,7 @@
         <pagination :combination="loadParam"  slot="page"></pagination>
               
     </mglist-model>
-
+  </div>
 </template>
 <script>
 import pagination from '../../pagination'

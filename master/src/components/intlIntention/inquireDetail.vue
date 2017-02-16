@@ -12,7 +12,7 @@
     <tips-model :param="tipsParam" v-if="tipsParam.show"></tips-model>
     <supply-model :param="supplyParam" v-if="supplyParam.show"></supply-model>
     <div v-show="param.show" id="myModal" class="modal modal-main fade account-modal" tabindex="-1" role="dialog"  @click="param.show=false"></div>
-    <div class="container modal_con modal_overall" v-show="param.show"   @click="param.show=false">
+    <div class="container modal_con modal_overall" v-show="param.show" >
         <div class="top-title">
             <span class="glyphicon glyphicon-remove-circle"  @click="param.show=false" ></span>
         </div>
@@ -33,7 +33,7 @@
             </nav>
         </div>
         <section>
-            <div class="client-section clearfix" @click.stop="">
+            <div class="client-section clearfix">
                 <div class="col-md-12">
                     <h4 class="section_title">{{$t('static.details')}}</h4>
                     <article>
@@ -93,7 +93,7 @@
                                     <span>{{initIntlIntentionDetail.pack}}</span>
                                 </div>
                                 <div class="client-detailInfo  col-md-3 col-sm-4 col-xs-6">
-                                    <label class="editlabel">目的港口：</label>
+                                    <label class="editlabel">{{$t('static.destination')}}：</label>
                                     <span>{{initIntlIntentionDetail.port}}</span>
                                 </div>
                             </div>
@@ -136,7 +136,10 @@
                                       </thead>
                                       <tbody>
                                            <tr v-for="item in initIntlIntentionDetail.inquires.arr">
-                                              <td><a class="underline" @click="getInquireInfo(item.id)">{{item.inquireType}}</a></td>
+                                              <td>
+                                                 <a class="underline" v-if="item.inquire==3" @click="getInquireInfo(item.id)">{{item.inquireType}}</a>
+                                                 <span v-else>{{item.inquireType}}</span>
+                                              </td>
                                               <td>{{item.ctime}}</td>
                                               <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
                                               <td v-if="item.inquire==1" style="color:#00BFFF">{{$t('static.inquiry')}}</td>
@@ -255,9 +258,9 @@
                                  <div class="panel-body panel-set">
                                       <table class="table contactSet">
                                         <thead>
-                                          <th>{{$t('static.currency')}}</th>
-                                          <th>{{$t('static.expense')}}</th>
                                           <th>{{$t('static.expense_explanation')}}</th>
+                                          <th>{{$t('static.expense')}}</th>
+                                          <th>{{$t('static.currency')}}</th>
                                           <th>{{$t('static.comment')}}</th>
                                           <th></th>
                                           <th></th>
@@ -265,9 +268,9 @@
                                         </thead>
                                         <tbody>
                                              <tr v-for="item in initIntlIntentionDetail.offers.arr">
-                                                <td>{{item.currency | Currency}}</td>
-                                                <td>{{item.cost}}</td>
                                                 <td>{{item.costDesc}}</td>
+                                                <td>{{item.cost}}</td>
+                                                <td>{{item.currency | Currency}}</td>
                                                 <td>{{item.comment}}</td>
                                                 <td><a v-if="initIntlIntentionDetail.inquire !=3&&param.inquire!=3" style="cursor:pointer" @click="editOtherOffer(item,$index)"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑" /></a></td>
                                                 <td><a v-if="initIntlIntentionDetail.inquire !=3&&param.inquire!=3" style="cursor:pointer" @click="delOtherOffer(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>

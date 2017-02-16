@@ -591,7 +591,9 @@ export default {
         },
         satisfied:function(checkout){ //收货
             this.param.show = false;
-            checkout.callback = this.checkCallback;
+            checkout.callback = this.param.callback;
+/*            console.log(this.param)
+            console.log(checkout)*/
             this.orderReceive(checkout);  
         },
         addContract:function(contract){
