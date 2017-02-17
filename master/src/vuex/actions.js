@@ -6093,7 +6093,6 @@ export const baseGetData = ({ dispatch }, param) => { //查询权限
     })
 }
 export const scopedOperate = ({ dispatch }, param) => { //查询权限功能
-    console.log(param)
     Vue.http({
         method: 'GET',
         url: apiUrl.base + '/sys/menu/'+ param.id,
@@ -6104,9 +6103,9 @@ export const scopedOperate = ({ dispatch }, param) => { //查询权限功能
             'Content-Type': 'application/json;charset=UTF-8'
         }
     }).then((res) => {
-        console.log(res.json().result)
         var json = res.json().result;
         dispatch(types.ABSTRACT_GET_DETAIL, json);
+        
     }, (res) => {
         param.loading = false;
         console.log('fail');
@@ -6159,7 +6158,7 @@ export const baseAddData = ({ dispatch }, param) => { //新增权限
             param.callback(res.json().msg)
             dispatch(types.ABSTRACT_UPDATE_DATA, param);
         }else{
-            if (res.json().result.id) param.body.id = res.json().result.id;
+            if (res.json().result.id) {param.body.id = res.json().result.id;}
             param.body.utime = param.utime;
             param.body.show = false;
             let json = {

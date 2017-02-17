@@ -300,7 +300,13 @@
                                                 <td>{{item.fileType}}</td>
                                                 <td>{{item.description}}</td>
                                                 <td>{{item.ctime}}</td>
-                                                <td><img :src="item.url" style="max-width: 150px;"  @click="clickBig(item.url)"/></td>
+                                                <td>
+                                                  <img :src="item.url" v-if="item.fileType=='images'" style="max-width: 150px;"  @click="clickBig(item.url)"/>
+                                                  <img  src="/static/images/pdf.png" v-if="item.fileType=='pdf'">
+                                                  <img  src="/static/images/word.png" v-if="item.fileType=='word'">
+                                                  <img  src="/static/images/excel.png" v-if="item.fileType=='excel'">
+                                                  <img  src="/static/images/breedinfo.png" v-if="item.fileType=='other'">
+                                                </td>
                                                 <td><a href="{{item.url}}" download=""><img src="/static/images/{{$t('static.img_download')}}.png" alt="下载" /></a></td>
                                                 <td><a @click="delFile(item,$index)"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" /></a></td>
                                                 

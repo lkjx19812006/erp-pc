@@ -105,21 +105,21 @@
                         <td>{{item.source}}</td>
                         <td>
                             <div v-if="item.inquire===0||item.inquire===3" style="display:inline-block;margin-right:7px" @click="deleteIntention({
-                                        id:item.id,
-                                        sub:$index,
-                                        show:true,
-                                        name:item.customerName,
-                                        title:'意向',
-                                        link:deleteInfo,
-                                        url:'/intlIntention/',
-                                        key:'myIntlIntentionList'
-                                        })"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除"  /></div>
+                                id:item.id,
+                                sub:$index,
+                                show:true,
+                                name:item.customerName,
+                                title:'意向',
+                                link:deleteInfo,
+                                url:'/intlIntention/',
+                                key:'myIntlIntentionList'
+                                })"><img src="/static/images/{{$t('static.img_del')}}.png" alt="删除" />
+                            </div>
                             <!-- <div style="display:inline-block;margin-right:7px" @click="confirmOffer(item.id,$index)"><img src="/static/images/confirmOffer.png" alt="确认报价"  /></div> -->
                             <div style="display:inline-block;margin-right:7px"  @click.stop="newOrder(item,$index)"><img src="/static/images/{{$t('static.img_adopt')}}.png" alt="生成订单" /></div>
                             <div v-if="item.inquire===0||item.inquire===3"  style="display:inline-block;margin-right:7px" @click="modifyIntention(item.id,$index)"><img src="/static/images/{{$t('static.img_edit')}}.png" alt="编辑"  /></div>
                             <div v-if="item.inquire===0" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_inquire')}}.png" alt="询价" /></div>
                             <div v-if="item.inquire===3" style="display:inline-block;margin-right:7px" @click="inquire(item.id,$index,item.inquireTime)"><img src="/static/images/{{$t('static.img_askagain')}}.png" alt="再次询价" /></div>
-
                             <div v-if="item.inquire===1" style="display:inline-block;margin-right:7px" @click="cancelInquire(item,$index)"><img src="/static/images/{{$t('static.img_cancelinquire')}}.png" alt="取消询价" /></div>
                         </td>
                     </tr>
