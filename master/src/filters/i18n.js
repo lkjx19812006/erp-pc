@@ -410,7 +410,7 @@ var locales = {
       //client
       installment:'分期付款',
       paid:'已支付',
-      destination:'抵达港口'
+      destination:'目的港口'
     }
   },
   en: {
@@ -815,7 +815,7 @@ var locales = {
       wait_payment:'Waiting to pay',
       installment:'Installment payment',
       paid:'Paid',
-      destination:'Port of destination'
+      destination:'Destination port'
     }
   }
 }

@@ -122,6 +122,7 @@
                                       <table class="table contactSet">
                                         <thead>
                                           <th>{{$t('static.inquire_type')}}</th>
+                                          <th>{{$t('static.destination')}}/{{$t('static.postcodes')}}</th>
                                           <th>{{$t('static.inquire_time')}}</th>
                                           <th>{{$t('static.inquiry_state')}}</th>
                                           <th>{{$t('static.product_price')}}</th>
@@ -135,6 +136,10 @@
                                                 <td>
                                                     <a class="underline" v-if="item.inquire==3" @click="getInquireInfo(item.id)">{{item.inquireType}}</a>
                                                     <span v-else>{{item.inquireType}}</span>
+                                                </td>
+                                                <td>
+                                                  <div v-if="item.inquireType=='CIF'||item.inquireType=='FCA'||item.inquireType=='FAS'||item.inquireType=='CPT'||item.inquireType=='CFR'||item.inquireType=='CIP'||item.inquireType=='DAT'||item.inquireType=='DAP'||item.inquireType=='DDP'||item.inquireType=='DAP'||item.inquireType=='EXW'||item.inquireType=='FOB'||item.inquireType=='DDP'">{{item.port}}</div>
+                                                  <div v-else>{{item.postcode}}</div>
                                                 </td>
                                                 <td>{{item.ctime}}</td>
                                                 <td v-if="item.inquire==0">{{$t('static.initial')}}</td>
