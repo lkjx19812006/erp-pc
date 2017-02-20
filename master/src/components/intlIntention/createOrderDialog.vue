@@ -404,6 +404,8 @@ export default {
             },
             updateParam:{
               show:false,
+              number:'',
+              price:'',
               index:0
             },
             tipParam:{
@@ -488,6 +490,7 @@ export default {
 
         },
         addCompute:function(){ //优惠增加
+          this.altogether = this.param.itemsTotal;
           var saith = 0;
           if(this.param.preferential&&this.param.preferential!=''){
              saith=parseFloat(this.param.preferential);
@@ -501,6 +504,7 @@ export default {
           }
         },
         reduce:function(){ //优惠减少
+          this.altogether = this.param.itemsTotal;
           var saith = 0;
           if(this.param.preferential&&this.param.preferential!=''&&this.param.preferential>0){
              saith=parseFloat(this.param.preferential);
@@ -512,6 +516,7 @@ export default {
           
         },
         addIncidentals:function(){ //杂费增加
+          this.altogether = this.param.itemsTotal;
           var saith = 0;
           if(this.param.incidentals&&this.param.incidentals!=''){
              saith=parseFloat(this.param.incidentals);
@@ -525,6 +530,7 @@ export default {
           }
         },
         subduction:function(){ //杂费减少
+          this.altogether = this.param.itemsTotal;
           var saith = 0;
           if(this.param.incidentals&&this.param.incidentals!=''&&this.param.incidentals>0){
              saith=parseFloat(this.param.incidentals);
@@ -546,7 +552,7 @@ export default {
             }*/
         },
         addBreed:function(){
-          console.log(this.param.goods[this.param.goods.length-1]);
+
           this.param.goods[this.param.goods.length-1].breedId = this.breedInfo.breedId;
           this.param.goods[this.param.goods.length-1].breedName = this.breedInfo.breedName;
           this.param.goods[this.param.goods.length-1].title = this.breedInfo.breedName;
@@ -558,7 +564,7 @@ export default {
           this.param.goods[this.param.goods.length-1].price = this.breedInfo.price;
           this.param.goods[this.param.goods.length-1].costPrice = this.breedInfo.costPrice;
           this.param.goods[this.param.goods.length-1].sourceType = this.breedInfo.sourceType;
-          console.log(this.param.goods[this.param.goods.length-1]);
+          
           this.breedInfo.status = 0;
           this.addParam.show = false; 
           this.altogether += (parseFloat(this.param.goods[this.param.goods.length-1].price)*parseFloat(this.param.goods[this.param.goods.length-1].number)*1000)/1000;
@@ -569,24 +575,29 @@ export default {
           if(this.param.goods[index].costPrice==undefined){
             this.param.goods[index].costPrice=0;
           }
+          
+          this.altogether = this.param.itemsTotal;
           this.breedInfo.status = 2;
           this.updateParam.index = index;
-          this.breedInfo.breedId=this.param.goods[index].breedId,
-          this.breedInfo.breedName=this.param.goods[index].breedName,
-          this.breedInfo.title=this.param.goods[index].title,
-          this.breedInfo.quality=this.param.goods[index].quality,
-          this.breedInfo.location=this.param.goods[index].location,
-          this.breedInfo.spec=this.param.goods[index].spec,
-          this.breedInfo.number=this.param.goods[index].number,
-          this.breedInfo.unit=this.param.goods[index].unit,
-          this.breedInfo.price=this.param.goods[index].price,
-          this.breedInfo.costPrice=this.param.goods[index].costPrice,
-          this.breedInfo.sourceType=this.param.goods[index].sourceType,
+          this.breedInfo.breedId=this.param.goods[index].breedId;
+          this.breedInfo.breedName=this.param.goods[index].breedName;
+          this.breedInfo.title=this.param.goods[index].title;
+          this.breedInfo.quality=this.param.goods[index].quality;
+          this.breedInfo.location=this.param.goods[index].location;
+          this.breedInfo.spec=this.param.goods[index].spec;
+          this.breedInfo.number=this.param.goods[index].number;
+          this.breedInfo.unit=this.param.goods[index].unit;
+          this.breedInfo.price=this.param.goods[index].price;
+          this.breedInfo.costPrice=this.param.goods[index].costPrice;
+          this.breedInfo.sourceType=this.param.goods[index].sourceType;
+
+          this.updateParam.number = this.param.goods[index].number;
+          this.updateParam.price = this.param.goods[index].price;
           this.updateParam.show = true;
-          console.log(this.breedInfo.price)
+       
           this.altogether -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.price);
           this.costmoney -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.costPrice);
-          console.log(this.costmoney)
+
           /*if(this.param.goods[index].price==''||this.param.goods[index].price==null){
             this.breedInfo.price=0;
              this.altogether -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.price);
@@ -594,8 +605,9 @@ export default {
           this.costmoney -=parseFloat(this.breedInfo.number)*parseFloat(this.breedInfo.costPrice);*/
         },
         showAddBreed:function(){
+          this.altogether = this.param.itemsTotal;
           if(this.param.goods.length == 0||this.param.goods[this.param.goods.length-1].breedId != ''){
-              this.breedInfo.status = 1;    
+              this.breedInfo.status = 1; 
               this.breedInfo.breedId='';
               this.breedInfo.breedName='';
               this.breedInfo.title='';
@@ -635,6 +647,7 @@ export default {
             this.addParam.show = false; 
         },
         modifyBreed:function(){
+
           if((/\.\d{3,}/).test(this.breedInfo.price)){
               this.breedInfo.price = this.breedInfo.price.replace(/^(\-?)(\d+)\.(\d{2})(\d*)/,'$1$2.$3');
           }
@@ -654,10 +667,10 @@ export default {
           this.param.goods[this.updateParam.index].sourceType=this.breedInfo.sourceType,
           this.breedInfo.status = 0;
           this.updateParam.show = false;
-          console.log(parseFloat(this.param.goods[this.updateParam.index].number)*parseFloat(this.param.goods[this.updateParam.index].price))
+          
           this.altogether += (parseFloat(this.param.goods[this.updateParam.index].number)*parseFloat(this.param.goods[this.updateParam.index].price)*100)/100;
           this.costmoney += (parseFloat(this.param.goods[this.updateParam.index].number)*parseFloat(this.param.goods[this.updateParam.index].costPrice)*100)/100;
-          console.log(this.costmoney)
+          
         },
         cancelModifyBreed:function(){
           this.breedInfo.status = 0;
@@ -668,7 +681,6 @@ export default {
           this.updateParam.price = 0;
         },
         selectBizType:function(){
-           console.log('addad');
            this.param.currency = '';
            if(this.param.intl==0){
 
@@ -677,28 +689,21 @@ export default {
         },
         confirm:function(param){
             this.param.country =this.country.cnameEn;
-            console.log(this.param.country);
             /*this.param.province = this.province.cname;
             this.param.city = this.city.cname;
             this.param.district = this.district.cname;*/
             //进入生成订单页面时,价格不存在,需要编辑
-            /*this.param.goods.forEach(function(item){
-                if(!item.price){
-                    alert("你大爷");
-                    return false;
-                } 
-            })*/
             for(var i=0;i<this.param.goods.length;i++){
-                if(!this.param.goods[i].price){
+                if(this.param.goods[i].price===''||this.param.goods[i].price===undefined){
                     this.tipParam.show = true;
                     return ;
                 } 
             }
             this.param.show=false;
-            console.log(this.param);
             this.createOrder(this.param);
         },
         changeTotal:function(){
+
             var patt=new RegExp(/\.\d{3,}/);
             if(!this.param.incidentals){
                this.param.incidentals=0
@@ -760,6 +765,7 @@ export default {
         }
     },
     created(){
+      console.log(this.param);
         this.getCountryList(this.countryParam);
         this.getProvinceList(this.countryParam);
         this.getIntlIntentionDetail(this.param);

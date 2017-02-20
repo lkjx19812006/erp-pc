@@ -233,45 +233,6 @@ export default {
                 }
             }
         },
-        /*selectShow:function(item){
-            item.show = !item.show;
-            if(item.subcategory.length!==0){
-                for(let i=0;i< item.subcategory.length;i++){
-                    item.subcategory[i].show = item.show;
-                    if(item.subcategory[i].subcategory.length!==0){
-                        for(let j=0; j<item.subcategory[i].subcategory.length;j++){
-                            item.subcategory[i].subcategory[j].show = item.show;
-                        }
-                    }
-                    
-                }
-            }
-            if(item.pid!==0){
-                for(let j in this.list.result){
-                    if(this.list.result[j].id == item.pid){
-                        if(item.show){
-                            this.list.result[j].show = true;
-                            break;
-                        }else{
-                            if(item.type==1){
-                                this.list.result[j].show = true;
-                                break;
-                            }else{
-                                this.list.result[j].show = false;
-                               for(let k in this.list.result[j].subcategory){
-                                    if(this.list.result[j].subcategory[k].show){
-                                        this.list.result[j].show = true;
-                                        break;
-                                    }
-                               } 
-                            }
-                            
-                        }
-                    }
-                }
-            }
-            
-        },*/
         save:function(){
             function CurentTime(){ 
                 var now = new Date();
