@@ -176,6 +176,11 @@ export const AFTER_SALES ='AFTER_SALES' //售后申请列表的数据
 
 export const SALES_DETAIL ='SALES_DETAIL' //合同、售后详情页面
 
+export const EMAIL_DATA ='EMAIL_DATA' //邮件列表
+export const EMAIL_COUNT ='EMAIL_COUNT' //邮件列表
+
+
+
 
 
 
