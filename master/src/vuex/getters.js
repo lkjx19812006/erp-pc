@@ -415,6 +415,16 @@ export const initAddressList= (state) => { //获取药款账户的数据
   return JSON.parse(JSON.stringify(state.table.basicBaseList.addressList));
 }
 
+/*--邮件列表--*/
+export const initEmailList= (state) => { //获取邮件列表
+  return JSON.parse(JSON.stringify(state.table.basicBaseList.emailList));
+}
+/*--邮件统计--*/
+export const initEmailCount= (state) => { //获取邮件统计
+  return JSON.parse(JSON.stringify(state.table.basicBaseList.emailCount));
+}
+
 export const initScopeDetail = (state) => { //获取权限详情
   return JSON.parse(JSON.stringify(state.tablelist.power.detail));
 }
+

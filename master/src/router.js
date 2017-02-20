@@ -129,6 +129,11 @@ export default (router) => router.map({
                     require(['./views/drugMoney'], resolve)
                 }
             },
+            '/email': {
+                component: function(resolve) {
+                    require(['./views/email'], resolve)
+                }
+            },
 
         }
     },

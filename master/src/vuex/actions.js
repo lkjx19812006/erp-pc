@@ -7516,7 +7516,7 @@ export const afterResend = ({ dispatch }, param) => {   //售后重新发货
 
 
 
-export const getCustomerAddReport = ({ dispatch }, param) => { //合同、售后详情页面
+export const getCustomerAddReport = ({ dispatch }, param) => { //客户新增统计
     
     var url = apiUrl.clientList + "/count/getCustomerAddReport?role=org";
     Vue.http({
@@ -7529,6 +7529,103 @@ export const getCustomerAddReport = ({ dispatch }, param) => { //合同、售后
     }).then((res) => {
         
       console.log("dassssssssss");
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const getEmailList = ({ dispatch }, param) => { //邮件列表
+    
+    var url = apiUrl.clientList + "/email/?page=" + param.cur + "&pageSize=15";
+    if(param.emailNo){
+        url += "&emailNo="+param.emailNo;
+    }
+    if(param.theme){
+        url += "&theme="+param.theme;
+    }
+    if(param.sendNo){
+        url += "&sendNo="+param.sendNo;
+    }
+    if(param.sendName){
+        url += "&sendName="+param.sendName;
+    }
+    if(param.receiveNo){
+        url += "&receiveNo="+param.receiveNo;
+    }
+    if(param.startTime){
+        url += "&startTime="+param.startTime;
+    }
+    if(param.endTime){
+        url += "&endTime="+param.endTime;
+    }
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        let list = res.json().result.list;
+
+        for(let i=0;i<list.length;i++){
+            list[i].show = false;
+        }
+
+        dispatch(types.EMAIL_DATA, list);
+        param.loading = false;
+        param.all = res.json().result.pages;
+        param.total = res.json().result.total;
+        localStorage.emailParam = JSON.stringify(param);
+
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const getEmailDetail = ({ dispatch }, param) => { //获取邮件详情
+    param.loading = true;
+    var url = apiUrl.orderList + param.link + '/' +param.id;
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var emailDetail = res.json().result;
+       
+        //dispatch(types.EMAIL_DETAIL, emailDetail);
+        
+        param.loading = false;
+    }, (res) => {
+        console.log('fail');
+        param.loading = false;
+    })
+}
+
+export const getEmailCount = ({ dispatch }, param) => { //邮件统计
+    param.loading = true;
+    var url = apiUrl.orderList + "/email/count" ;
+    if(param.date){
+        url += "?date="+param.date
+    }
+    Vue.http({
+        method: 'GET',
+        url: url,
+        emulateJSON: true,
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then((res) => {
+        var emailCount = res.json().result;
+        
+        dispatch(types.EMAIL_COUNT, emailCount);
+        
+        param.loading = false;
     }, (res) => {
         console.log('fail');
         param.loading = false;

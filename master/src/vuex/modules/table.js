@@ -120,7 +120,9 @@ import {
    USER_TYPE,
    CALL_RECORD_DATA,
    CALL_COUNT_DATA,
-   CALL_RECORD_VOICE_DATA
+   CALL_RECORD_VOICE_DATA,
+   EMAIL_DATA,
+   EMAIL_COUNT
 
 } from '../mutation-types'
 
@@ -480,6 +482,10 @@ const state = {
         orderRolloutList:{
           list:[]
         },
+        //邮件列表
+        emailList:[],
+        //邮件统计
+        emailCount:[],
         userTypeList:[{
           "name": "其它","id": 0
         }]
@@ -1938,9 +1944,14 @@ const mutations = {
     },
     [CALL_RECORD_VOICE_DATA](state,data){
         state.basicBaseList.callRecordList[data.index].refile = data.refile;
+    },
+    [EMAIL_DATA](state,data){
+        state.basicBaseList.emailList = data;
+    },
+    [EMAIL_COUNT](state,data){
+        state.basicBaseList.emailCount = data;
     }
     
-
 }
 
 export default {
