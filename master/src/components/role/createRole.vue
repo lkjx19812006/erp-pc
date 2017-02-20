@@ -194,39 +194,40 @@ export default {
     methods:{
         selectShow:function(item){
             item.show = !item.show;
+            this.selectParentNode(item);
+            this.selectChildNode(item);
+        },
+        //选择父节点时，所有子节点做相应的改变
+        selectParentNode:function(item){
             if(item.subcategory.length!==0){
                 for(let i=0;i< item.subcategory.length;i++){
                     item.subcategory[i].show = item.show;
-                    if(item.subcategory[i].subcategory.length!==0){
-                        console.log('1111');
-                        for(let j=0; j<item.subcategory[i].subcategory.length;j++){
-                            item.subcategory[i].subcategory[j].show = item.show;
-                        }
-                    }
-                    
+                    this.selectParentNode(item.subcategory[i]);
                 }
-            }else{
-                if(item.pid!==0){
-                    for(let j in this.list.result){
-                        if(this.list.result[j].id == item.pid){
-                            if(item.show){
+            }    
+        },
+        //选择子节点
+        selectChildNode:function(item){
+            if(item.pid!==0){
+                for(let j=0; j< this.list.result.length; j++){
+                    if(this.list.result[j].subcategory.length>0 && this.list.result[j].id == item.pid){
+                        if(item.show){
+                            this.list.result[j].show = true;
+                            break;
+                        }else{
+                            if(item.type==1){
                                 this.list.result[j].show = true;
                                 break;
                             }else{
-                                if(item.type==1){
-                                    this.list.result[j].show = true;
-                                    break;
-                                }else{
-                                    this.list.result[j].show = false;
-                                   for(let k in this.list.result[j].subcategory){
-                                        if(this.list.result[j].subcategory[k].show){
-                                            this.list.result[j].show = true;
-                                            break;
-                                        }
-                                   } 
-                                }
-                                
+                                this.list.result[j].show = false;
+                                for(let k=0; k<this.list.result[j].subcategory.length; k++){
+                                    if(this.list.result[j].subcategory[k].show){
+                                        this.list.result[j].show = true;
+                                        break;
+                                    }
+                                } 
                             }
+                            
                         }
                     }
                 }

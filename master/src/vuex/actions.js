@@ -4731,9 +4731,15 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
 
             dispatch(types.INTLINTENTION_DETAIL_DATA, intent);
         }
-        if (param.key == 'orderList') {
+        if (param.key == 'orderList') {   //意向详情生成订单
             /*param.goods = intent.items;*/
+            param.total = 0;
+            param.itemsTotal = 0;
+
             intent.items.forEach(function(item) {
+                if(!item.costPrice){
+                    item.costPrice=0;
+                }
                 var temp = {
                     breedId: item.breedId,
                     breedName: item.breedName,
@@ -4747,8 +4753,22 @@ export const getIntlIntentionDetail = ({ dispatch }, param) => { //按ID查询�
                     costPrice: item.costPrice,
                     sourceType: 1
                 }
+                
+                
+                param.itemsTotal += temp.number * temp.price * 100/100 ;
+
+                //param.cost += temp.number * temp.costPrice * 100/100 ;
+
                 param.goods.push(temp);
             })
+            if(!param.incidentals){
+                param.incidentals = 0;
+            }
+            if(!param.preferential){
+                param.preferential = 0;
+            }
+
+            param.total = (param.itemsTotal * 1000 + parseFloat(param.incidentals)*1000 - parseFloat(param.preferential)*1000)/1000
         }
 
         param.loading = false;
