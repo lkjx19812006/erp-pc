@@ -99,7 +99,7 @@
                     </article>
                 </div>
 
-                <div class="col-md-11 client-detail">
+                <div class="col-md-12 client-detail">
                     <h4 class="section_title">{{$t('static.related_information')}}</h4>
                     <article>
                         <div class="panel-group">

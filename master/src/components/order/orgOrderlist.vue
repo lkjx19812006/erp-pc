@@ -74,7 +74,7 @@
                 <dl class="clear left transfer">
                    <dt class="left transfer marg_top">{{$t('static.trading_patterns')}}：</dt>
                    <dd class="left">
-                         <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
+                        <select v-model="loadParam.mode"  class="form-control" @change="selectSearch()">
                             <option value="">{{$t('static.please_select')}}</option>
                             <option value="1">{{$t('static.together')}}</option>
                             <option value="2">{{$t('static.three_side')}}</option>
@@ -83,14 +83,14 @@
                    </dd>
                 </dl>
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top">审核状态：</dt>
+                   <dt class="left transfer marg_top">{{$t('static.review_status')}}：</dt>
                    <dd class="left">
-                         <select v-model="loadParam.validate"  class="form-control" @change="selectSearch()">
+                        <select class="form-control" v-model="loadParam.validate" @change="selectSearch()">
                             <option value="">{{$t('static.please_select')}}</option>
-                            <option value="0">未审核</option>
-                            <option value="1">待审核</option>
-                            <option value="2">审核通过</option>
-                            <option value="-2">审核未通过</option>
+                            <option value="0">{{$t('static.wait_approval')}}</option>
+                            <option value="1">{{$t('static.approving')}}</option>
+                            <option value="2">{{$t('static.approved')}}</option>
+                            <option value="-2">{{$t('static.unapproved')}}</option>
                         </select>
                    </dd>
                 </dl>
@@ -104,9 +104,9 @@
 
                 <!-- 单个业务员搜索 -->
                 <dl class="clear left transfer">
-                   <dt class="left transfer marg_top" style="letter-spacing:3px" >所属业务员：</dt>
+                   <dt class="left transfer marg_top">{{$t('static.salesman')}}：</dt>
                    <dd class="left">
-                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="请选择业务员" @click="selectEmployee()">
+                        <input type="text" class="form-control" v-model="loadParam.employeeName" placeholder="{{$t('static.select_salesman')}}" @click="selectEmployee()">
                    </dd>
                 </dl>
 
@@ -117,7 +117,7 @@
                     </dd>
                 </dl>
 
-                <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">导出订单</a></button>
+                <button class="new_btn transfer" @click="selectSearch()"><a href="/crm/api/v1/order/exportExcel?{{exportUrl}}">{{$t('static.export_order')}}</a></button>
 
                 <button type="button" class="new_btn transfer"  @click="resetTime()">{{$t('static.clear_all')}}</button>
                 
